@@ -64,6 +64,11 @@ void fn_800C0980(void) {
     fn_80018AE4();
 }
 
+void fn_800C10B4(void) {
+    M2C_UNK fn_80016180();
+    fn_80016180();
+}
+
 void fn_800C11F4(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x60) = -1;
     M2C_FIELD(arg0, s16 *, 0x28) = 0x10;
