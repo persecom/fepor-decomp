@@ -390,6 +390,12 @@ void fn_800E8FBC(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
     M2C_FIELD(arg0, f32 *, 0xF8) = farg2;
 }
 
+void fn_800E8FCC(void *arg0, void *arg1) {
+    M2C_FIELD(arg0, f32 *, 0) = (f32) M2C_FIELD(arg1, f32 *, 0xF0);
+    M2C_FIELD(arg0, f32 *, 4) = (f32) M2C_FIELD(arg1, f32 *, 0xF4);
+    M2C_FIELD(arg0, f32 *, 8) = (f32) M2C_FIELD(arg1, f32 *, 0xF8);
+}
+
 f32 fn_800E9018(void *arg0) {
     return M2C_FIELD(arg0, f32 *, 0x104);
 }
