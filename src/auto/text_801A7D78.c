@@ -7,6 +7,12 @@ void fn_801A949C(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x2B6) = 0;
 }
 
+void fn_801A9CB8(void *arg0, s32 arg1) {
+    M2C_UNK fn_80037E88();
+    fn_80037E88();
+    M2C_FIELD(arg0, s32 *, 0x280) = arg1;
+}
+
 s32 fn_801A9FC8(void) {
     return 0;
 }
