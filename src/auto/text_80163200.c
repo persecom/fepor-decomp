@@ -45,3 +45,7 @@ void fn_80180620(void) {
 
 }
 
+s32 fn_8018256C(void) {
+    return 1;
+}
+
