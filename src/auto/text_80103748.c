@@ -85,3 +85,11 @@ s32 fn_80104944(void) {
     extern s32 lbl_803679C0;
     return lbl_803679C0;
 }
+
+void fn_801053CC(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 0) = 0;
+    M2C_FIELD(arg0, s32 *, 4) = 0;
+    M2C_FIELD(arg0, s32 *, 8) = 0;
+    M2C_FIELD(arg0, s32 *, 0xC) = 0;
+}
+
