@@ -21,6 +21,10 @@ s32 fn_80074ADC(void) {
     return 0;
 }
 
+s32 fn_800754E0(void) {
+    return 1;
+}
+
 s32 fn_80075568(void) {
     return 0;
 }
