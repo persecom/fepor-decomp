@@ -5,6 +5,11 @@ void fn_800AE904(void *arg0) {
     M2C_FIELD(M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), void **, 0x4C), s32 *, 0x4C) = 0;
 }
 
+void fn_800B4060(void) {
+    M2C_UNK fn_800AECC0();
+    fn_800AECC0();
+}
+
 void fn_800B4794(void) {
     extern s8 lbl_80367810;
     lbl_80367810 = 0;
