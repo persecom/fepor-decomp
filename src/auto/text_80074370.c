@@ -66,6 +66,12 @@ s32 fn_800766B0(void) {
     return 0;
 }
 
+s32 fn_80076970(void) {
+    M2C_UNK fn_8004A1F0();
+    fn_8004A1F0();
+    return 0;
+}
+
 s32 fn_80077560(void) {
     return 0xB;
 }
