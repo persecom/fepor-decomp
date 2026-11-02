@@ -43,6 +43,13 @@ void fn_801FF33C(void) {
 
 }
 
+void fn_801FF3AC(void *arg0) {
+    M2C_UNK fn_8013CD7C();
+    fn_8013CD7C();
+    M2C_FIELD(arg0, s32 *, 0x2C) = 0x258;
+    M2C_FIELD(arg0, s32 *, 0x28) = 0;
+}
+
 s32 fn_801FFD54(void) {
     return 0;
 }
