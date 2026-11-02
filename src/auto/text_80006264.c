@@ -88,6 +88,18 @@ void fn_8000C188(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x10) = 0;
 }
 
+void fn_8000C5B8(void *arg0) {
+    u8 temp_r4;
+    void *temp_r4_2;
+
+    temp_r4 = M2C_FIELD(arg0, u8 *, 0x2C);
+    if (temp_r4 & 2) {
+        M2C_FIELD(arg0, u8 *, 0x2C) = (u8) (temp_r4 & 0xFFFFFFFD);
+        temp_r4_2 = M2C_FIELD(arg0, void **, 0x18);
+        M2C_FIELD(temp_r4_2, u8 *, 0x2D) = (u8) (M2C_FIELD(temp_r4_2, u8 *, 0x2D) - 1);
+    }
+}
+
 void fn_8000CD80(s32 arg0) {
     extern s32 lbl_80367158;
     lbl_80367158 = arg0;
