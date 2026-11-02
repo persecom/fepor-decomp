@@ -188,6 +188,18 @@ s32 fn_8006A37C(void) {
     return lbl_80367308;
 }
 
+void fn_8006CC6C(s32 arg0) {
+    M2C_UNK fn_8003F670(s32);
+    M2C_UNK fn_8003FCF0();
+    s32 fn_8005C368();
+    M2C_UNK fn_80068558(s32, M2C_UNK, M2C_UNK);
+    fn_8003FCF0();
+    if (fn_8005C368() <= 1) {
+        fn_80068558(arg0, 0, 0);
+    }
+    fn_8003F670(arg0);
+}
+
 void fn_8006D8E8(s32 arg0) {
     M2C_UNK fn_8006EDA0(s32 *);
     s32 sp8;
