@@ -95,6 +95,12 @@ void fn_80118388(s32 arg0) {
     fn_8000C188(arg0);
 }
 
+void fn_80118404(s32 arg0) {
+    fn_8013FEC0();
+    fn_800A8400();
+    fn_8000C188(arg0);
+}
+
 void fn_8011843C(s32 arg0) {
     M2C_UNK fn_8013FED0();
     M2C_UNK fn_801AA120(s32);
