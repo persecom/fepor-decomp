@@ -78,6 +78,10 @@ void fn_800DEE94(void) {
 
 }
 
+s32 fn_800DEEBC(s32 arg0) {
+    return arg0 + 4;
+}
+
 void fn_800DEEFC(void) {
 
 }
