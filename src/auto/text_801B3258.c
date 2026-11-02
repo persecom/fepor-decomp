@@ -107,6 +107,11 @@ void fn_801D8D58(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0) = 0;
 }
 
+void fn_801D8D68(void *arg0) {
+    M2C_FIELD(arg0, s16 *, 2) = 0;
+    M2C_FIELD(arg0, s16 *, 0) = 0;
+}
+
 u8 fn_801DE350(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x63);
 }
