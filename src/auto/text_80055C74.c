@@ -5,6 +5,10 @@ s32 fn_80055C74(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 8);
 }
 
+u8 fn_80055C7C(void *arg0) {
+    return M2C_FIELD(arg0, u8 *, 5);
+}
+
 s32 fn_80055C84(s32 *arg0) {
     return *arg0;
 }
