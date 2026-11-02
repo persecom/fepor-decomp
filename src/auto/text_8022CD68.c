@@ -45,6 +45,10 @@ void fn_8023C560(void) {
 
 }
 
+s32 AMC_IsStub(void) {
+    return 1;
+}
+
 void fn_8024C5C8(void) {
 
 }
