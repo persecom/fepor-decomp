@@ -154,6 +154,15 @@ s32 fn_80078E98(void *arg0) {
     return 1;
 }
 
+s32 fn_80078EAC(void *arg0) {
+    u8 fn_80018A08(M2C_UNK);
+    if (fn_80018A08(0) != 0) {
+        return 0;
+    }
+    M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + 4);
+    return 1;
+}
+
 s32 fn_80078FF0(void *arg0) {
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + 4);
     return 1;
