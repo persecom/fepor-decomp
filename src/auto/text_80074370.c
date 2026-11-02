@@ -78,6 +78,15 @@ s32 fn_80076970(void) {
     return 0;
 }
 
+void fn_80077008(void) {
+    M2C_UNK fn_80007668(s32 *);
+    s32 *fn_8018D900(M2C_UNK);
+    s32 sp8;
+
+    sp8 = *fn_8018D900(6);
+    fn_80007668(&sp8);
+}
+
 s32 fn_80077560(void) {
     return 0xB;
 }
