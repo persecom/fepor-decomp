@@ -189,6 +189,14 @@ s32 fn_8006D910(s32 arg0, s32 arg1) {
     return sp8;
 }
 
+s32 fn_8006D948(s32 arg0) {
+    s32 sp8;
+
+    sp8 = 0;
+    fn_8006EDE8(&sp8, arg0, 0);
+    return sp8;
+}
+
 void fn_8006DA5C(s32 *arg0, s32 arg1) {
     *arg0 = arg1;
 }
