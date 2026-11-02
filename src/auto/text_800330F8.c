@@ -60,6 +60,22 @@ void fn_8003C56C(void *arg0, s32 arg1) {
     }
 }
 
+void fn_8003C67C(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 0x238) = 0;
+    M2C_FIELD(arg0, s32 *, 0x23C) = 0;
+    M2C_FIELD(arg0, s32 *, 0x240) = 0;
+    M2C_FIELD(arg0, s32 *, 0x244) = 0;
+    M2C_FIELD(arg0, s8 *, 0x248) = 0;
+    M2C_FIELD(arg0, s32 *, 0x24C) = 0;
+    M2C_FIELD(arg0, s8 *, 0x250) = 0;
+    M2C_FIELD(arg0, s8 *, 0x251) = 0;
+    M2C_FIELD(arg0, s32 *, 0x254) = 0;
+    M2C_FIELD(arg0, s16 *, 0x258) = 0;
+    M2C_FIELD(arg0, s16 *, 0x25A) = 0;
+    M2C_FIELD(arg0, s32 *, 0x25C) = 0;
+    M2C_FIELD(arg0, s8 *, 0x260) = 0x10;
+}
+
 void fn_8003D5FC(void *arg0, u8 arg1) {
     if (arg1 != 0) {
         M2C_FIELD(arg0, u8 *, 0x199) = arg1;
