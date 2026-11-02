@@ -8,6 +8,13 @@ void fn_801F1DC4(void *arg0) {
     *temp_r3 &= 0xFFFFFFFE;
 }
 
+void fn_801F1E78(void *arg0) {
+    s32 *temp_r3;
+
+    temp_r3 = M2C_FIELD(arg0, s32 **, 0x30);
+    *temp_r3 |= 1;
+}
+
 void fn_801F5BAC(void) {
 
 }
