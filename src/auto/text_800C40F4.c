@@ -144,6 +144,12 @@ s32 fn_800DB668(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x9C) != 0;
 }
 
+void fn_800DB964(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
+    M2C_FIELD(arg0, f32 *, 0x48) = (f32) (M2C_FIELD(arg0, f32 *, 0x48) + farg0);
+    M2C_FIELD(arg0, f32 *, 0x4C) = (f32) (M2C_FIELD(arg0, f32 *, 0x4C) + farg1);
+    M2C_FIELD(arg0, f32 *, 0x50) = (f32) (M2C_FIELD(arg0, f32 *, 0x50) + farg2);
+}
+
 void fn_800DB98C(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
     M2C_FIELD(arg0, f32 *, 0x6C) = farg0;
     M2C_FIELD(arg0, f32 *, 0x70) = farg1;
