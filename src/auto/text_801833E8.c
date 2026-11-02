@@ -166,6 +166,14 @@ s32 fn_8019FCAC(void) {
     return 1;
 }
 
+s32 fn_8019FE2C(void) {
+    M2C_UNK fn_800C0658();
+    M2C_UNK fn_800177E0();
+    fn_800C0658();
+    fn_800177E0();
+    return 1;
+}
+
 void fn_801A06CC(void) {
     M2C_UNK fn_8003BE50();
     fn_8003BE50();
