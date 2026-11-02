@@ -15,6 +15,13 @@ void fn_80163214(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
     M2C_FIELD(arg0, s16 *, 6) = arg4;
 }
 
+void fn_80163708(void *arg0) {
+    M2C_FIELD(arg0, s16 *, 0x12) = 2;
+    M2C_FIELD(arg0, s16 *, 0x14) = 2;
+    M2C_FIELD(arg0, s16 *, 0x16) = 0x106;
+    M2C_FIELD(arg0, s16 *, 0x18) = 0x10E;
+}
+
 s32 fn_801651D0(void) {
     return 0x18;
 }
