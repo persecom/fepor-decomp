@@ -83,6 +83,13 @@ void fn_80127084(void) {
     fn_800F1BFC();
 }
 
+void fn_80127150(void *arg0) {
+    extern void *lbl_80367A68;
+    if (((u8) M2C_FIELD(arg0, u8 *, 0x2D) == 0) && (M2C_FIELD(arg0, u8 *, 0x2C) & 2)) {
+        lbl_80367A68 = arg0;
+    }
+}
+
 void fn_80127C70(void) {
 
 }
