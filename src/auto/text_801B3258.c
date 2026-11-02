@@ -43,6 +43,10 @@ s32 fn_801CD3E4(void) {
     return 0x24;
 }
 
+s32 fn_801CD3EC(void) {
+    return 0x24;
+}
+
 s32 fn_801DE360(void) {
     return 1;
 }
