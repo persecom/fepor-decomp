@@ -37,6 +37,11 @@ s32 fn_80132A5C(void) {
     return 0;
 }
 
+void fn_80132CDC(void) {
+    M2C_UNK fn_8000C188();
+    fn_8000C188();
+}
+
 s32 fn_80134E40(void) {
     return 4;
 }
