@@ -85,6 +85,10 @@ void fn_802624D8(void) {
 
 }
 
+s32 fn_80262B14(s32 arg0) {
+    return arg0 - 0x500;
+}
+
 void fn_80266FFC(void) {
 
 }
