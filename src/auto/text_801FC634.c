@@ -188,6 +188,10 @@ s32 udp_cc_shutdown(void) {
     return -1;
 }
 
+s32 udp_cc_initialize(void) {
+    return -1;
+}
+
 s32 ddh_cc_close(void) {
     return 0;
 }
