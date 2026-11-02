@@ -111,6 +111,10 @@ void fn_801DE3BC(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 0x1E8) = arg1;
 }
 
+void fn_801DE3C4(void *arg0) {
+    M2C_FIELD(arg0, s16 *, 2) = 0xC8;
+}
+
 u8 fn_801DE3D0(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x10);
 }
