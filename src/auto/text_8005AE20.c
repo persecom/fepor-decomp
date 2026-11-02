@@ -71,6 +71,11 @@ u8 fn_80069DB4(void) {
     return lbl_80367302;
 }
 
+u8 fn_80069E74(void) {
+    extern u8 lbl_80367300;
+    return lbl_80367300;
+}
+
 s32 fn_8006A374(void) {
     extern s32 lbl_8036730C;
     return lbl_8036730C;
