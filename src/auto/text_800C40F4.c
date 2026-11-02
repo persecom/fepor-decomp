@@ -73,3 +73,7 @@ void fn_800E43E8(void) {
 
 }
 
+void fn_800E78DC(void) {
+
+}
+
