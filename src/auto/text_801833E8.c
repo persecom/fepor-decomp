@@ -290,6 +290,15 @@ void fn_8019D360(void *arg0) {
     }
 }
 
+void fn_8019D458(void *arg0) {
+    M2C_UNK fn_80184618(s32, void *);
+    M2C_UNK fn_80184BE8(s32, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80184C7C(s32, M2C_UNK, M2C_UNK, M2C_UNK);
+    fn_80184C7C(M2C_FIELD(arg0, s32 *, 0x30), 5, 0x10, 0);
+    fn_80184BE8(M2C_FIELD(arg0, s32 *, 0x30), 0, 0x10, 0);
+    fn_80184618(M2C_FIELD(arg0, s32 *, 0x30), arg0);
+}
+
 void fn_8019D4F4(void *arg0) {
     M2C_UNK fn_8004FC70(s32, M2C_UNK);
     fn_8004FC70(M2C_FIELD(arg0, s32 *, 0x30), 5);
