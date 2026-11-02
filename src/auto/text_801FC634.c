@@ -138,6 +138,10 @@ u8 fn_80213B08(void) {
     return (u8) *(s32 *)0xCC006C04;
 }
 
+u8 fn_80213B34(void) {
+    return (u8) ((u32) *(u32 *)0xCC006C04 >> 8U);
+}
+
 s32 fn_802142B0(void) {
     return 0x4000;
 }
