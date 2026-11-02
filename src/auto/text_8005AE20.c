@@ -222,6 +222,69 @@ s32 fn_8006A37C(void) {
     return lbl_80367308;
 }
 
+void fn_8006C748(void *arg0, s32 arg1) {
+    M2C_UNK fn_80067490(M2C_UNK);
+    M2C_UNK fn_80223E5C(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_802245D8(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_8022462C(M2C_UNK);
+    M2C_UNK fn_80224658(M2C_UNK);
+    M2C_UNK fn_80224684(M2C_UNK, M2C_UNK, M2C_UNK);
+    s32 temp_r30;
+    s32 temp_r3;
+
+    temp_r30 = M2C_FIELD(arg0, s32 *, 0);
+    if (temp_r30 & 0xF025C820) {
+        if (temp_r30 & 0x200020) {
+            switch (arg1) {                         /* switch 1; irregular */
+            case 0:                                 /* switch 1 */
+                fn_802245D8(1, 4, 5, 7);
+                fn_80224684(1, 3, 1);
+                /* fallthrough */
+            case 1:                                 /* switch 1 */
+                fn_80223E5C(4, 0, 1, 0, 0);
+                break;
+            }
+        }
+        if (temp_r30 & 0x8000) {
+            fn_80223E5C(4, 0, 1, 0, 0);
+            fn_80224658(1);
+        }
+        if (temp_r30 & 0x4000) {
+            fn_8022462C(0);
+        }
+        if (temp_r30 & 0x800) {
+            fn_802245D8(1, 4, 1, 0);
+        }
+        if (temp_r30 & 0x40000) {
+            fn_80067490(0);
+        }
+        if (temp_r30 & 0x10000) {
+            fn_802245D8(0, 0, 0, 0);
+        }
+        temp_r3 = temp_r30 & 0x70000000;
+        switch (temp_r3) {                          /* switch 2; irregular */
+        case 0x10000000:                            /* switch 2 */
+            fn_80224684(0, 7, 0);
+            break;
+        case 0x20000000:                            /* switch 2 */
+            fn_80224684(1, 4, 0);
+            break;
+        case 0x30000000:                            /* switch 2 */
+            fn_80224684(1, 5, 0);
+            break;
+        case 0x50000000:                            /* switch 2 */
+            fn_80224684(1, 3, 1);
+            break;
+        case 0x40000000:                            /* switch 2 */
+            fn_80224684(1, 3, 0);
+            break;
+        }
+        if (M2C_FIELD(arg0, s32 *, 0) & 0x80000000) {
+            M2C_FIELD(arg0, M2C_UNK (**)(void *, M2C_UNK), 0x94)(arg0, 0);
+        }
+    }
+}
+
 void fn_8006CC6C(s32 arg0) {
     M2C_UNK fn_8003F670(s32);
     M2C_UNK fn_8003FCF0();
