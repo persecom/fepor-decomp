@@ -5,6 +5,12 @@ void fn_80121328(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x4E) = (u8) (M2C_FIELD(arg0, u8 *, 0x4E) + 1);
 }
 
+void fn_80122DEC(void *arg0, s32 arg1, s16 arg2, s16 arg3) {
+    M2C_FIELD(arg0, s32 *, 0x5C) = arg1;
+    M2C_FIELD(arg0, s16 *, 0x60) = arg2;
+    M2C_FIELD(arg0, s16 *, 0x62) = arg3;
+}
+
 void fn_80122DFC(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 0x49) = arg1;
 }
