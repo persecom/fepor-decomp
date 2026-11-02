@@ -13,3 +13,7 @@ s32 fn_8005A2B8(void) {
     return 2;
 }
 
+s32 fn_8005A2C0(void) {
+    return 6;
+}
+
