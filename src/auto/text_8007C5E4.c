@@ -27,6 +27,11 @@ void fn_8007CFB8(void) {
     fn_80082298();
 }
 
+void fn_8007D004(void) {
+    M2C_UNK fn_80086020();
+    fn_80086020();
+}
+
 void fn_8007D7E8(void *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s16 *, 6) = 7;
 }
