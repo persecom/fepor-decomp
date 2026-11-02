@@ -257,6 +257,18 @@ s32 fn_8019FE2C(void) {
     return 1;
 }
 
+s32 fn_801A01D8(s8 arg0) {
+    M2C_UNK fn_80013864();
+    M2C_UNK fn_80040844();
+    M2C_UNK fn_80040DA4();
+    extern s8 lbl_8036728A;
+    lbl_8036728A = arg0;
+    fn_80040844();
+    fn_80040DA4();
+    fn_80013864();
+    return 1;
+}
+
 void fn_801A06CC(void) {
     M2C_UNK fn_8003BE50();
     fn_8003BE50();
