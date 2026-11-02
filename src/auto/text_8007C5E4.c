@@ -122,6 +122,12 @@ void fn_8008F49C(void) {
     fn_8008F4BC();
 }
 
+void fn_8008FE24(void *arg0) {
+    M2C_UNK fn_800C4588(s32);
+    fn_800C4588(M2C_FIELD(arg0, s32 *, 0x30));
+    M2C_FIELD(arg0, s32 *, 0x30) = 0;
+}
+
 void fn_80092414(s32 arg0) {
     M2C_UNK fn_8001CBA0(s32);
     fn_8001CBA0(arg0 + 0x20C);
