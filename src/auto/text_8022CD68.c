@@ -197,6 +197,14 @@ void fn_80258D74(void) {
     fn_80262410();
 }
 
+void fn_80259A5C(void) {
+    M2C_UNK DCFlushRangeNoSync(s32, M2C_UNK);
+    M2C_UNK memset(s32, M2C_UNK, M2C_UNK);
+    extern s32 lbl_80368A94;
+    memset(lbl_80368A94, 0, 0x100);
+    DCFlushRangeNoSync(lbl_80368A94, 0x100);
+}
+
 u8 fn_8025ED80(void) {
     extern u8 lbl_80368978;
     return lbl_80368978;
