@@ -105,6 +105,11 @@ s32 fn_8006EB9C(void) {
     return lbl_80367320;
 }
 
+void fn_8006F00C(s8 arg0) {
+    extern s8 lbl_80366DE9;
+    lbl_80366DE9 = arg0;
+}
+
 s32 fn_8006F370(void) {
     return 0;
 }
