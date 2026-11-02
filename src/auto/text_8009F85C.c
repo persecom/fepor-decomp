@@ -128,6 +128,19 @@ s32 fn_800A319C(void) {
     return 5;
 }
 
+s32 fn_800A320C(void) {
+    extern void *lbl_80367240;
+    extern u8 lbl_80367558;
+    extern u8 lbl_80367559;
+    if (((s8) lbl_80367558 > 0) && (M2C_FIELD(lbl_80367240, s32 *, 0xC) & 0x01000001)) {
+        lbl_80367558 -= 1;
+    }
+    if (((s8) lbl_80367558 < (s8) lbl_80367559) && (M2C_FIELD(lbl_80367240, s32 *, 0xC) & 0x02000002)) {
+        lbl_80367558 += 1;
+    }
+    return 0;
+}
+
 f32 fn_800A3554(void) {
     extern f32 lbl_80369A10;
     return lbl_80369A10;
