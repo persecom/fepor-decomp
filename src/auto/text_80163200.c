@@ -45,6 +45,10 @@ s32 fn_80178A6C(void) {
     return 0;
 }
 
+s32 fn_80178A74(void) {
+    return 0x1C;
+}
+
 s32 fn_8017DF4C(void) {
     return 0;
 }
