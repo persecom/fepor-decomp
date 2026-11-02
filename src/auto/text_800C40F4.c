@@ -464,6 +464,17 @@ void fn_800E4B84(void *arg0) {
     }
 }
 
+void fn_800E4BA4(void *arg0, s8 arg1) {
+    void *temp_r6;
+
+    if ((u32) M2C_FIELD(arg0, u32 *, 0xDC) != 0U) {
+        temp_r6 = M2C_FIELD(arg0, void **, 0xE0);
+        M2C_FIELD(temp_r6, s32 *, 0) = (s32) (M2C_FIELD(temp_r6, s32 *, 0) | 0x8000);
+        M2C_FIELD(M2C_FIELD(arg0, void **, 0xE0), s8 *, 0x87) = 4;
+        M2C_FIELD(M2C_FIELD(arg0, void **, 0xE0), s8 *, 0x84) = arg1;
+    }
+}
+
 s32 fn_800E4BD8(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x114);
 }
