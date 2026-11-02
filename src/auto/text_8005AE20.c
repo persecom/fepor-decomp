@@ -122,6 +122,10 @@ void fn_80070EDC(void) {
 
 }
 
+s32 fn_80072194(void) {
+    return 0xA0;
+}
+
 s32 fn_80072394(void) {
     return 0;
 }
