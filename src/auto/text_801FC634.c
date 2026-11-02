@@ -134,6 +134,10 @@ s32 fn_80213ADC(void) {
     return ((u32) *(u32 *)0xCC006C00 >> 1U) & 1;
 }
 
+u8 fn_80213B08(void) {
+    return (u8) *(s32 *)0xCC006C04;
+}
+
 s32 fn_802142B0(void) {
     return 0x4000;
 }
