@@ -1,6 +1,10 @@
 /* Functions from 0x800C40F4 to 0x801035C8, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_800C5F78(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 0x34) = 4;
+}
+
 void fn_800D588C(s32 arg0) {
     extern s32 lbl_8036787C;
     lbl_8036787C = arg0;
