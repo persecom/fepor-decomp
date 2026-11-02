@@ -37,6 +37,10 @@ void fn_8013B32C(void) {
 
 }
 
+s32 fn_8013C3AC(void) {
+    return 0;
+}
+
 void fn_8013D13C(void) {
 
 }
