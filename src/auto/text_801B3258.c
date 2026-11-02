@@ -106,6 +106,12 @@ void fn_801D888C(void *arg0, s16 arg1) {
     M2C_FIELD(arg0, s16 *, 2) = arg1;
 }
 
+void fn_801D8894(void *arg0) {
+    M2C_FIELD(arg0, s16 *, 2) = 0x12C;
+    M2C_FIELD(arg0, s16 *, 4) = 0;
+    M2C_FIELD(arg0, s16 *, 6) = 0x18;
+}
+
 void fn_801D88B0(s8 *arg0, s8 arg1) {
     *arg0 = arg1;
 }
