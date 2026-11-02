@@ -157,6 +157,17 @@ s32 fn_80178A74(void) {
     return 0x1C;
 }
 
+void fn_801793B4(void) {
+    M2C_UNK fn_80009B80(M2C_UNK);
+    M2C_UNK fn_8000A174(M2C_UNK, M2C_UNK);
+    M2C_UNK fn_8000A248();
+    M2C_UNK fn_8000A258();
+    fn_8000A258();
+    fn_8000A174(0, 0x13);
+    fn_80009B80(0x80);
+    fn_8000A248();
+}
+
 s32 fn_80179D40(s32 arg0) {
     M2C_UNK fn_8014510C();
     fn_8014510C();
