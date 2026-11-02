@@ -9,6 +9,10 @@ void fn_801EBFA4(void) {
 
 }
 
+s32 fn_801EBFA8(void) {
+    return 0xB0;
+}
+
 s32 fn_801EC17C(void) {
     return 0x60;
 }
