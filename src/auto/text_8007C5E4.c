@@ -151,6 +151,13 @@ void fn_80099ED0(void *arg0) {
     fn_80096418(M2C_FIELD(arg0, s16 *, 0x46));
 }
 
+void fn_80099EF4(void *arg0) {
+    M2C_UNK fn_8017E35C();
+    if ((u8) M2C_FIELD(arg0, u8 *, 0x34) != 2) {
+        fn_8017E35C();
+    }
+}
+
 void fn_8009EA14(void) {
     M2C_UNK fn_801E2594(M2C_UNK *);
     extern M2C_UNK lbl_803682F0;
