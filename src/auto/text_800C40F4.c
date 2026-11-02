@@ -140,6 +140,15 @@ s32 fn_800D77B0(void) {
     return 0;
 }
 
+s32 fn_800D7834(void) {
+    M2C_UNK fn_800D75C4(s32);
+    M2C_UNK fn_800DA2CC(s32);
+    extern s32 lbl_80367A50;
+    fn_800D75C4(lbl_80367A50);
+    fn_800DA2CC(lbl_80367A50);
+    return 0;
+}
+
 void fn_800DA31C(void) {
     extern s8 lbl_803678BE;
     extern s8 lbl_803678BF;
