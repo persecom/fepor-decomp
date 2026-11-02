@@ -65,6 +65,10 @@ s32 fn_8006F370(void) {
     return 0;
 }
 
+s32 fn_800703D4(void) {
+    return 0;
+}
+
 void fn_80070EDC(void) {
 
 }
