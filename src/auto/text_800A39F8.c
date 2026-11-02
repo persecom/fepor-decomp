@@ -85,6 +85,12 @@ void fn_800A8A64(void *arg0) {
     fn_8000E0E4(M2C_FIELD(arg0, s32 *, 8));
 }
 
+void fn_800A9274(s32 arg0) {
+    M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
+    extern M2C_UNK lbl_803677EC;
+    fn_80024398(&lbl_803677EC, arg0, 0);
+}
+
 void fn_800A92A0(void) {
     M2C_UNK fn_801E2594(M2C_UNK *);
     extern M2C_UNK lbl_803682F0;
