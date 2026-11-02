@@ -5,6 +5,10 @@ void fn_801FF33C(void) {
 
 }
 
+s32 fn_801FFD54(void) {
+    return 0;
+}
+
 void fn_802015A0(void) {
 
 }
