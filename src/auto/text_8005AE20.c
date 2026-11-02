@@ -154,6 +154,10 @@ s32 fn_80072200(void) {
     return 0x108;
 }
 
+s32 fn_80072208(void) {
+    return 0x78;
+}
+
 s32 fn_80072394(void) {
     return 0;
 }
