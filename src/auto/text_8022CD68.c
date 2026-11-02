@@ -205,6 +205,25 @@ void fn_80259A5C(void) {
     DCFlushRangeNoSync(lbl_80368A94, 0x100);
 }
 
+void fn_8025EC10(u32 arg0) {
+    extern s8 lbl_80368AAF;
+    extern s8 lbl_80368AB0;
+    extern s8 lbl_80368AB1;
+    extern s8 lbl_80368AB2;
+    extern s32 lbl_80368AB4;
+    extern s32 lbl_80368AB8;
+    extern s32 lbl_80368ABC;
+    extern s8 lbl_80368AC0;
+    lbl_80368ABC = 0;
+    lbl_80368AB8 = 0;
+    lbl_80368AB4 = 0;
+    lbl_80368AB2 = 1;
+    lbl_80368AB1 = 3;
+    lbl_80368AC0 = 0;
+    lbl_80368AB0 = (arg0 >> 1U) & 1;
+    lbl_80368AAF = (arg0 >> 2U) & 1;
+}
+
 u8 fn_8025ED80(void) {
     extern u8 lbl_80368978;
     return lbl_80368978;
