@@ -52,6 +52,12 @@ s32 fn_8001B95C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 8);
 }
 
+void fn_8001B9DC(void *arg0) {
+    M2C_FIELD(arg0, s8 *, 9) = 0x14;
+    M2C_FIELD(arg0, s8 *, 0xA) = 0;
+    M2C_FIELD(arg0, s8 *, 0xB) = 0;
+}
+
 u8 fn_8001DDB4(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1E);
 }
