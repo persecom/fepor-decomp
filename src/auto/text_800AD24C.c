@@ -47,6 +47,15 @@ void fn_800B6F48(void) {
     fn_801E2594(&lbl_803682F0);
 }
 
+s32 fn_800B7250(void) {
+    M2C_UNK fn_800162B8();
+    M2C_UNK fn_800163F8();
+    fn_800162B8();
+    fn_800163F8();
+    fn_80016180();
+    return 1;
+}
+
 s32 fn_800B7948(void) {
     M2C_UNK fn_801453F0();
     fn_801453F0();
