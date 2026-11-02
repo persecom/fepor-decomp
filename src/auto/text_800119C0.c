@@ -100,6 +100,14 @@ void fn_80014F30(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s8 *, 3) = fn_8017A9DC(arg1);
 }
 
+void fn_80014F94(void *arg0, s32 arg1) {
+    M2C_UNK fn_8017A5EC(s32, u8);
+    fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 0));
+    fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 1));
+    fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 2));
+    fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 3));
+}
+
 void fn_8001520C(void *arg0, u8 arg1) {
     M2C_FIELD(arg0, u8 *, 1) = arg1;
     M2C_FIELD(arg0, u8 *, 0) = (u8) (arg1 == 3);
