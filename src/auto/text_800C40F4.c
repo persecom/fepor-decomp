@@ -69,3 +69,7 @@ void fn_800E4174(void) {
 
 }
 
+void fn_800E43E8(void) {
+
+}
+
