@@ -130,6 +130,12 @@ void fn_800B8D34(void) {
     fn_8006F014();
 }
 
+s32 fn_800BAEF8(void) {
+    M2C_UNK fn_8011D650();
+    fn_8011D650();
+    return 1;
+}
+
 s32 fn_800BB9E0(void) {
     return 1;
 }
