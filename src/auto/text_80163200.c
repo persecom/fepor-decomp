@@ -9,3 +9,7 @@ void fn_80169AF0(void) {
 
 }
 
+void fn_8016EC70(void) {
+
+}
+
