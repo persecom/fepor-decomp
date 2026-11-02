@@ -49,3 +49,7 @@ void fn_80144D7C(void) {
 
 }
 
+void fn_80144D80(void) {
+
+}
+
