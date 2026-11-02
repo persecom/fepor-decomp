@@ -141,6 +141,12 @@ s32 fn_80178A74(void) {
     return 0x1C;
 }
 
+s32 fn_80179D40(s32 arg0) {
+    M2C_UNK fn_8014510C();
+    fn_8014510C();
+    return arg0;
+}
+
 void fn_8017A5EC(void *arg0, s8 arg1) {
     s8 *temp_r5;
 
