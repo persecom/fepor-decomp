@@ -17,6 +17,12 @@ void fn_800C428C(void) {
     fn_800C4588();
 }
 
+s32 fn_800C42D8(s32 arg0) {
+    s32 fn_800C5A48(s32, s32);
+    extern s32 lbl_80367870;
+    return fn_800C5A48(lbl_80367870, arg0) + 0x20;
+}
+
 void fn_800C5F78(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x34) = 4;
 }
