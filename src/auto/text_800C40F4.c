@@ -165,6 +165,12 @@ void fn_800CF588(void *arg0) {
     }
 }
 
+s32 fn_800D3534(s32 *arg0, s32 arg1) {
+    s32 fn_800C9400(s32 *, M2C_UNK, s32, s32, s32);
+    s32 strlen(s32);
+    return fn_800C9400(arg0, 0, *arg0, arg1, strlen(arg1)) == 0;
+}
+
 s32 fn_800D3590(void *arg0) {
     s32 temp_r4;
 
