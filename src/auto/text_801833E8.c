@@ -6,6 +6,10 @@ f32 fn_801833E8(void) {
     return lbl_8036ACC0;
 }
 
+s32 fn_801833F0(void) {
+    return 0x1B0;
+}
+
 s32 fn_801833F8(void) {
     return 0x90;
 }
