@@ -9,3 +9,7 @@ s32 fn_8014A960(void) {
     return 0;
 }
 
+s32 fn_8014AD88(void) {
+    return 0;
+}
+
