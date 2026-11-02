@@ -29,6 +29,10 @@ s32 fn_8005AE60(void) {
     return 0x20;
 }
 
+s32 fn_8005B42C(u32 *arg0, u32 arg1) {
+    return (u32) *arg0 <= arg1;
+}
+
 u8 fn_8005BA00(void) {
     extern u8 lbl_803672E8;
     return lbl_803672E8;
