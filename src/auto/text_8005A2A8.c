@@ -49,3 +49,7 @@ s32 fn_8005A300(void) {
     return 0x18;
 }
 
+s32 fn_8005A308(void) {
+    return 0x18;
+}
+
