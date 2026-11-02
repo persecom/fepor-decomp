@@ -106,6 +106,10 @@ void fn_80079F44(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x38) = 0;
 }
 
+void fn_8007A198(void *arg0) {
+    M2C_FIELD(arg0, s16 *, 0x38) = 0;
+}
+
 void fn_8007A2A0(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x38) = 0;
 }
