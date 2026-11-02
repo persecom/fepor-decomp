@@ -76,3 +76,10 @@ void fn_8011CB18(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x64) = (s32) M2C_FIELD(arg0, s32 *, 0xC8);
 }
 
+void fn_801207BC(void) {
+    extern s32 lbl_80367110;
+    extern u16 lbl_80367A58;
+    lbl_80367A58 &= 0xFFFFFFFB;
+    lbl_80367110 |= 2;
+}
+
