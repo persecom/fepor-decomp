@@ -37,6 +37,17 @@ s32 fn_80132A5C(void) {
     return 0;
 }
 
+void fn_80132B58(void *arg0) {
+    M2C_UNK fn_8003F670(s32);
+    M2C_UNK fn_80161F7C();
+    M2C_UNK fn_8016A650(void *, M2C_UNK);
+    fn_80161F7C();
+    fn_8003F670(M2C_FIELD(arg0, s32 *, 0x48));
+    if (arg0 != NULL) {
+        fn_8016A650(arg0, 0);
+    }
+}
+
 void fn_80132BA0(void *arg0) {
     s32 fn_8003FCCC();
     M2C_UNK fn_80162018();
