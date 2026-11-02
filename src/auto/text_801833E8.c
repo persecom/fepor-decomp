@@ -71,6 +71,17 @@ s32 fn_80185B94(void *arg0) {
     return 0;
 }
 
+void fn_80186028(void *arg0) {
+    M2C_UNK fn_800536B0(void *, void *, f32, f32, f32);
+    s32 *temp_r3;
+    void *temp_r4;
+
+    temp_r4 = M2C_FIELD(arg0, void **, 0x30);
+    fn_800536B0(M2C_FIELD(arg0, void **, 0x34), temp_r4, M2C_FIELD(temp_r4, f32 *, 4), M2C_FIELD(temp_r4, f32 *, 8), M2C_FIELD(temp_r4, f32 *, 0xC));
+    temp_r3 = M2C_FIELD(M2C_FIELD(M2C_FIELD(arg0, void **, 0x34), void **, 0x30), s32 **, 0x5C);
+    *temp_r3 &= 0xFFFFFFBF;
+}
+
 void fn_8018B004(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x38) = 0;
 }
