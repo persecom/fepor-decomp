@@ -22,6 +22,11 @@ s32 fn_8002EA74(void) {
     return 0;
 }
 
+void fn_8002F0B0(void) {
+    M2C_UNK fn_800F20E0();
+    fn_800F20E0();
+}
+
 void fn_8002F61C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + 1);
 }
