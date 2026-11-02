@@ -120,6 +120,12 @@ void fn_800DB9AC(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
     M2C_FIELD(arg0, f32 *, 0x5C) = farg2;
 }
 
+void fn_800DB9BC(void *arg0, void *arg1) {
+    M2C_FIELD(arg0, f32 *, 0x48) = (f32) M2C_FIELD(arg1, f32 *, 0);
+    M2C_FIELD(arg0, f32 *, 0x4C) = (f32) M2C_FIELD(arg1, f32 *, 4);
+    M2C_FIELD(arg0, f32 *, 0x50) = (f32) M2C_FIELD(arg1, f32 *, 8);
+}
+
 void fn_800DB9D8(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
     M2C_FIELD(arg0, f32 *, 0x48) = farg0;
     M2C_FIELD(arg0, f32 *, 0x4C) = farg1;
