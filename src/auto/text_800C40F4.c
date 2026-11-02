@@ -37,3 +37,7 @@ void fn_800DBED4(void) {
 
 }
 
+void fn_800DEE90(void) {
+
+}
+
