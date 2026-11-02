@@ -132,6 +132,10 @@ void fn_80199CEC(void *arg0) {
     fn_800498A4(M2C_FIELD(arg0, s32 *, 0x34), 0, 2);
 }
 
+void fn_8019AB90(void *arg0) {
+    fn_800498A4(M2C_FIELD(arg0, s32 *, 0x5C), 0, 2);
+}
+
 void fn_8019D360(void *arg0) {
     void *temp_r5;
 
