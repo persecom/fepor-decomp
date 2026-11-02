@@ -40,6 +40,13 @@ void fn_80185060(void *arg0, void *arg1) {
     }
 }
 
+void fn_80185244(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 0x34) = (s32) (M2C_FIELD(arg0, s32 *, 0x34) + 1);
+    if ((s32) M2C_FIELD(arg0, s32 *, 0x34) > (s32) M2C_FIELD(arg0, s32 *, 0x3C)) {
+        fn_8000C188();
+    }
+}
+
 void fn_8018548C(void *arg0) {
     fn_8004FC70(M2C_FIELD(arg0, s32 *, 0x30), 0xB);
 }
