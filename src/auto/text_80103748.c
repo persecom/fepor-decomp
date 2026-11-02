@@ -81,6 +81,13 @@ s32 fn_80103E48(void) {
     return 0;
 }
 
+u32 fn_801044C4(void *arg0) {
+    s32 temp_r4;
+
+    temp_r4 = ((u8) M2C_FIELD(arg0, u8 *, 2) >> 5U) & 7;
+    return (u32) ((7 - temp_r4) | (temp_r4 - 7)) >> 0x1FU;
+}
+
 s32 fn_80104944(void) {
     extern s32 lbl_803679C0;
     return lbl_803679C0;
