@@ -362,6 +362,11 @@ void fn_8014519C(void) {
     fn_800B2D94();
 }
 
+void fn_801452A8(void) {
+    M2C_UNK fn_800B3248();
+    fn_800B3248();
+}
+
 s32 fn_80146AE4(void) {
     extern s32 lbl_80367AF8;
     return lbl_80367AF8 & 1;
