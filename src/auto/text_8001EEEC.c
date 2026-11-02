@@ -9,6 +9,10 @@ s32 fn_80022FC4(void) {
     return 0x2000;
 }
 
+s32 fn_80024390(void) {
+    return 0;
+}
+
 void fn_800255B8(void) {
 
 }
