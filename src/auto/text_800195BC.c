@@ -41,6 +41,11 @@ s32 fn_80019DF0(u8 arg0) {
     return lbl_803671E8 + (arg0 * 0x28);
 }
 
+void fn_80019E04(void) {
+    M2C_UNK fn_8000D354();
+    fn_8000D354();
+}
+
 void fn_8001A5D0(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0xC) = 0;
     M2C_FIELD(arg0, s32 *, 0x3C) = 0;
