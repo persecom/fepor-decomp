@@ -41,6 +41,10 @@ void fn_8016FE5C(void) {
 
 }
 
+void fn_80170E08(void *arg0) {
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x54), s8 *, 0x4C) = 1;
+}
+
 void fn_80174204(void) {
 
 }
