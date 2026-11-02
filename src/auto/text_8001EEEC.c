@@ -5,6 +5,10 @@ void fn_8001EF7C(void) {
 
 }
 
+s32 fn_8001FC34(s32 arg0) {
+    return arg0 + 0x14194;
+}
+
 s32 fn_80022FC4(void) {
     return 0x2000;
 }
