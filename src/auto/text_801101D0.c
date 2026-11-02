@@ -9,3 +9,7 @@ void fn_8011B574(void) {
 
 }
 
+s32 fn_8011B578(void) {
+    return 0xB0;
+}
+
