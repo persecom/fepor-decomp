@@ -84,6 +84,15 @@ u16 fn_8008A56C(void) {
     return M2C_FIELD(lbl_803674E0, u16 *, 0x32);
 }
 
+void fn_8008CD34(void) {
+    M2C_UNK fn_8000A174(M2C_UNK, M2C_UNK);
+    M2C_UNK fn_8000A248();
+    M2C_UNK fn_8000A258();
+    fn_8000A258();
+    fn_8000A174(0, 0x13);
+    fn_8000A248();
+}
+
 void fn_8008D834(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x3A) = 0x10;
     M2C_FIELD(arg0, s8 *, 0x3B) = 0;
