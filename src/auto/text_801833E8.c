@@ -136,6 +136,20 @@ void fn_80196844(void) {
 
 }
 
+void fn_801968CC(void *arg0, s32 arg1) {
+    s32 temp_r0;
+    s32 temp_r5;
+
+    temp_r0 = M2C_FIELD(arg0, s32 *, 0x7C);
+    temp_r5 = M2C_FIELD(arg0, s32 *, 0x78);
+    if (temp_r0 != temp_r5) {
+        M2C_FIELD(arg0, s32 *, 0x7C) = (s32) (temp_r0 + arg1);
+    } else {
+        M2C_FIELD(arg0, s32 *, 0x7C) = (s32) (temp_r5 + arg1);
+    }
+    M2C_FIELD(arg0, s32 *, 0x8C) = 3;
+}
+
 void fn_801985F0(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x148) = arg1;
 }
