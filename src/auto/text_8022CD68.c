@@ -170,6 +170,11 @@ void fn_80262290(void) {
     fn_80263074();
 }
 
+void fn_802622B0(void) {
+    M2C_UNK fn_802631E4();
+    fn_802631E4();
+}
+
 void fn_802622F4(void) {
 
 }
