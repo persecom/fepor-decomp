@@ -321,6 +321,24 @@ s16 fn_8013E834(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0x1E);
 }
 
+void fn_8013ED84(void *arg0, s16 arg1) {
+    s16 temp_r5;
+
+    if ((s16) M2C_FIELD(arg0, s16 *, 0x3C) > 0) {
+        temp_r5 = M2C_FIELD(arg0, s16 *, 0x40);
+        if (temp_r5 != arg1) {
+            if (arg1 < temp_r5) {
+                M2C_FIELD(arg0, s16 *, 0x62) = 1;
+                M2C_FIELD(arg0, s8 *, 0x59) = 0;
+            } else {
+                M2C_FIELD(arg0, s16 *, 0x8A) = 1;
+                M2C_FIELD(arg0, s8 *, 0x81) = 0;
+            }
+            M2C_FIELD(arg0, s16 *, 0x40) = arg1;
+        }
+    }
+}
+
 s16 fn_8013EED8(void *arg0) {
     return (s16) (M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA));
 }
