@@ -63,6 +63,11 @@ s32 fn_8010CAA4(void) {
     return 0;
 }
 
+void fn_8010CAAC(void) {
+    M2C_UNK fn_8010EA20();
+    fn_8010EA20();
+}
+
 void fn_8010FBD4(void) {
 
 }
