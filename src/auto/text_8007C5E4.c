@@ -93,6 +93,13 @@ void fn_8008CD34(void) {
     fn_8000A248();
 }
 
+void fn_8008CD64(f32 farg0) {
+    M2C_UNK fn_80009C0C(f32);
+    fn_8000A258();
+    fn_80009C0C(farg0);
+    fn_8000A248();
+}
+
 void fn_8008D834(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x3A) = 0x10;
     M2C_FIELD(arg0, s8 *, 0x3B) = 0;
