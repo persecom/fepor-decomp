@@ -31,6 +31,10 @@ void fn_8000A420(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x2D) = (u8) (M2C_FIELD(arg0, u8 *, 0x2D) - 1);
 }
 
+void fn_8000A430(void *arg0) {
+    M2C_FIELD(arg0, u8 *, 0x2D) = (u8) (M2C_FIELD(arg0, u8 *, 0x2D) + 1);
+}
+
 s32 fn_8000ACD8(void) {
     return 0;
 }
