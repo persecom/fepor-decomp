@@ -153,6 +153,10 @@ s32 fn_8013E470(void) {
     return 0x1C;
 }
 
+void fn_8013E4DC(void *arg0, s32 arg1) {
+    M2C_FIELD(arg0, s32 *, 4) = arg1;
+}
+
 s32 fn_8013E588(void) {
     return 0x1C;
 }
