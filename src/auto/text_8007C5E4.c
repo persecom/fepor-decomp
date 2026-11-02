@@ -409,3 +409,21 @@ void fn_8009F000(s32 arg0) {
     fn_801E3118(&lbl_803682F0, arg0, 0);
 }
 
+void fn_8009F054(s32 arg0) {
+    M2C_UNK fn_8000C188(s32);
+    u8 fn_800A5C88();
+    M2C_UNK fn_800A5CBC();
+    extern void *lbl_80367240;
+    s32 temp_r3;
+
+    temp_r3 = M2C_FIELD(lbl_80367240, s32 *, 4);
+    if (temp_r3 & (M2C_FIELD(lbl_80367240, s32 *, 8) ^ temp_r3) & 0x1000) {
+        fn_800A5CBC();
+        fn_8000C188(arg0);
+        return;
+    }
+    if (fn_800A5C88() == 0) {
+        fn_8000C188(arg0);
+    }
+}
+
