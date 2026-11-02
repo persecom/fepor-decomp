@@ -31,6 +31,10 @@ s32 fn_8003F1D0(s32 *arg0, s32 arg1) {
     return *arg0 & arg1;
 }
 
+void fn_8003F1DC(s32 *arg0, s32 arg1) {
+    *arg0 |= arg1;
+}
+
 void fn_8003F1EC(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x194) = arg1;
 }
