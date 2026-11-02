@@ -134,6 +134,10 @@ void fn_8011DCB4(void) {
     fn_8008A290(2, 0x10B);
 }
 
+void fn_8011DCDC(void *arg0) {
+    fn_8008A290(3, M2C_FIELD(arg0, s16 *, 0x68));
+}
+
 void fn_801207BC(void) {
     extern s32 lbl_80367110;
     extern u16 lbl_80367A58;
