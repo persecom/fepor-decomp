@@ -27,6 +27,11 @@ void __kill_critical_regions(void) {
 
 }
 
+void fn_80238788(void) {
+    M2C_UNK fn_80235B4C();
+    fn_80235B4C();
+}
+
 s32 Hu_IsStub(void) {
     return 0;
 }
