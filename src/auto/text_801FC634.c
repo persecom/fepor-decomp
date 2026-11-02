@@ -480,6 +480,15 @@ s32 ddh_cc_close(void) {
     return 0;
 }
 
+s32 ddh_cc_open(void) {
+    extern s32 lbl_803687B8;
+    if ((s32) lbl_803687B8 != 0) {
+        return -0x2715;
+    }
+    lbl_803687B8 = 1;
+    return 0;
+}
+
 s32 ddh_cc_shutdown(void) {
     return 0;
 }
