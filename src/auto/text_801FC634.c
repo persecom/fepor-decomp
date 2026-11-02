@@ -378,6 +378,11 @@ s32 fn_802287B8(void) {
     return 0;
 }
 
+void EnableMetroTRKInterrupts(void) {
+    M2C_UNK fn_8022B120();
+    fn_8022B120();
+}
+
 void TRKUARTInterruptHandler(void) {
 
 }
