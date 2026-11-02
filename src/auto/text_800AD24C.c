@@ -78,6 +78,11 @@ s32 fn_800C273C(void *arg0, u16 arg1) {
     return M2C_FIELD(M2C_FIELD(arg0, void **, 8), s32 *, 0x24) + arg1;
 }
 
+void fn_800C28CC(void) {
+    M2C_UNK fn_80013880();
+    fn_80013880();
+}
+
 s32 fn_800C30CC(s32 arg0, s32 arg1) {
     return arg0 + ((arg1 - 1) * 0x18);
 }
