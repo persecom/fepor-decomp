@@ -53,6 +53,16 @@ s32 fn_80165250(void) {
     return 0;
 }
 
+void fn_801658DC(s32 arg0, s32 arg1) {
+    s32 fn_8000E0E4(s32);
+    M2C_UNK fn_800C96F8(s32, s32, s32);
+    s32 strlen();
+    s32 temp_r31;
+
+    temp_r31 = fn_8000E0E4(arg1);
+    fn_800C96F8(arg0 + 0x3C, temp_r31, strlen());
+}
+
 s32 fn_80165B04(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x50);
 }
