@@ -189,6 +189,13 @@ void fn_8016EC70(void) {
 
 }
 
+void fn_8016F194(void *arg0) {
+    M2C_UNK fn_801AE3F8(void *);
+    fn_8000A408(M2C_FIELD(arg0, s32 *, 0x5C));
+    fn_8013FED0(arg0);
+    fn_801AE3F8(arg0);
+}
+
 void fn_8016FE5C(void) {
 
 }
