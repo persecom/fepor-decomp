@@ -49,3 +49,7 @@ void fn_800DEEFC(void) {
 
 }
 
+void fn_800E4164(void) {
+
+}
+
