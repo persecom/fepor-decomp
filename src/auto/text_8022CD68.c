@@ -52,6 +52,11 @@ f32 fn_80238A30(void) {
     return (f32) fn_80238638();
 }
 
+f32 fn_80238A54(void) {
+    f64 fn_802380D0();
+    return (f32) fn_802380D0();
+}
+
 void fn_80238A9C(void) {
     M2C_UNK fn_802387E8();
     fn_802387E8();
