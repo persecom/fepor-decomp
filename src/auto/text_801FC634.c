@@ -138,6 +138,10 @@ s32 udp_cc_peek(void) {
     return 0;
 }
 
+s32 udp_cc_write(void) {
+    return 0;
+}
+
 void fn_8022C08C(void) {
 
 }
