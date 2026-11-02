@@ -459,6 +459,12 @@ s32 fn_8022BC94(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x10);
 }
 
+s32 gdev_cc_initinterrupts(void) {
+    M2C_UNK fn_8026738C();
+    fn_8026738C();
+    return 0;
+}
+
 s32 gdev_cc_close(void) {
     return 0;
 }
