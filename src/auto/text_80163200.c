@@ -326,6 +326,13 @@ void fn_80174204(void) {
 
 }
 
+u8 fn_80175924(s32 **arg0, s32 arg1) {
+    s32 *temp_r5;
+
+    temp_r5 = *arg0;
+    return fn_80093DA8(arg1, *temp_r5, temp_r5);
+}
+
 s32 fn_80178664(void) {
     return 0;
 }
