@@ -17,6 +17,17 @@ void fn_800C5FFC(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x34) = 0;
 }
 
+M2C_UNK *fn_800C93EC(void *arg0) {
+    extern M2C_UNK lbl_80369DC0;
+    M2C_UNK *temp_r3;
+
+    temp_r3 = M2C_FIELD(arg0, M2C_UNK **, 8);
+    if (temp_r3 == NULL) {
+        return &lbl_80369DC0;
+    }
+    return temp_r3;
+}
+
 void fn_800D588C(s32 arg0) {
     extern s32 lbl_8036787C;
     lbl_8036787C = arg0;
