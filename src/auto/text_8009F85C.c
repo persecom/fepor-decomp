@@ -40,6 +40,14 @@ s32 fn_800A1710(void) {
     return 0;
 }
 
+s32 fn_800A1D00(void) {
+    M2C_UNK fn_80037AB8();
+    M2C_UNK fn_800AA794();
+    fn_800AA794();
+    fn_80037AB8();
+    return 6;
+}
+
 s32 fn_800A2A50(void) {
     return 0x10;
 }
