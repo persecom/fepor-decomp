@@ -13,3 +13,7 @@ void fn_800255D4(void) {
 
 }
 
+void fn_800255E8(void) {
+
+}
+
