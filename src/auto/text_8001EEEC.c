@@ -82,6 +82,10 @@ s32 fn_800255C4(void) {
     return 0;
 }
 
+s32 fn_800255CC(void) {
+    return 0;
+}
+
 void fn_800255D4(void) {
 
 }
