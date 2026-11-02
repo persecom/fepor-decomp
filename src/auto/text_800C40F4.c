@@ -115,6 +115,10 @@ void fn_800DF664(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x2C) = 0;
 }
 
+void fn_800DF670(void *arg0) {
+    M2C_FIELD(arg0, s8 *, 0x2C) = 1;
+}
+
 u8 fn_800DF6A8(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x2C);
 }
