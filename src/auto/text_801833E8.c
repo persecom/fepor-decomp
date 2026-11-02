@@ -29,3 +29,7 @@ void fn_80196844(void) {
 
 }
 
+s32 fn_8019ED74(void) {
+    return 1;
+}
+
