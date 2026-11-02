@@ -138,6 +138,11 @@ s32 fn_8021C080(void) {
     return 0;
 }
 
+void fn_8021ED98(void *arg0, s32 arg1, s32 arg2) {
+    M2C_FIELD(arg0, s32 *, 0xC) = arg1;
+    M2C_FIELD(arg0, s32 *, 0x10) = arg2;
+}
+
 s32 fn_8021F250(s32 *arg0) {
     return *arg0;
 }
