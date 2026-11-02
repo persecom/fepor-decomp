@@ -45,6 +45,11 @@ void fn_801EDEC8(void *arg0) {
     lbl_80367110 |= 4;
 }
 
+void fn_801EED74(void) {
+    M2C_UNK fn_801EE0C8();
+    fn_801EE0C8();
+}
+
 s32 fn_801F1100(void) {
     return 0;
 }
