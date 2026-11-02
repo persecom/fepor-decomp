@@ -65,6 +65,13 @@ void fn_801C7F60(void) {
     fn_801C7F80();
 }
 
+void fn_801C7FC0(u32 arg0) {
+    M2C_UNK fn_801C7FE8();
+    if (arg0 != 0U) {
+        fn_801C7FE8();
+    }
+}
+
 s32 fn_801C9704(void) {
     extern s32 lbl_803682AC;
     return lbl_803682AC;
