@@ -38,6 +38,14 @@ s32 fn_80116604(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x11C);
 }
 
+void fn_8011660C(void *arg0, s32 arg1) {
+    M2C_FIELD(arg0, s32 *, 0x1B8) = arg1;
+    if ((s32) M2C_FIELD(arg0, s32 *, 0x1B8) > 1) {
+        M2C_FIELD(arg0, s8 *, 0x1A4) = 1;
+        M2C_FIELD(arg0, s8 *, 0x1A5) = 1;
+    }
+}
+
 s32 fn_80117CC0(void *arg0, s32 arg1) {
     return M2C_FIELD(arg0, s32 *, 8) + arg1;
 }
