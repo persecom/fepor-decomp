@@ -260,6 +260,13 @@ void fn_802634E4(void) {
     fn_802137E8();
 }
 
+void fn_802636C8(void) {
+    extern s32 lbl_80368AF8;
+    extern s16 lbl_80368AFC;
+    lbl_80368AF8 = OSDisableInterrupts();
+    lbl_80368AFC = 1;
+}
+
 void fn_80263764(void) {
     M2C_UNK OSDisableInterrupts();
     OSDisableInterrupts();
