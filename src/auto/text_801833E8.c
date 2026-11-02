@@ -53,6 +53,13 @@ void fn_8018B004(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x38) = 0;
 }
 
+void fn_8018B2C4(void *arg0) {
+    M2C_UNK fn_80050BCC(s32, M2C_UNK);
+    M2C_FIELD(arg0, s32 *, 0x50) = 0;
+    M2C_FIELD(arg0, s32 *, 0x54) = 0x10;
+    fn_80050BCC(M2C_FIELD(arg0, s32 *, 0x30), 0);
+}
+
 void fn_8018B698(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x40) = 0;
 }
