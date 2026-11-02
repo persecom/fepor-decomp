@@ -85,6 +85,21 @@ s32 fn_800A1D00(void) {
     return 6;
 }
 
+s32 fn_800A29E8(void) {
+    M2C_UNK fn_80019DF0(u8);
+    u8 fn_80105BC0(s32, u8);
+    M2C_UNK fn_80105D4C(s32, u8);
+    extern u8 lbl_80366E08;
+    s32 temp_r31;
+
+    temp_r31 = fn_800AA794();
+    fn_80019DF0(lbl_80366E08);
+    if (fn_80105BC0(temp_r31 + 0x1BC, lbl_80366E08) == 0) {
+        fn_80105D4C(temp_r31 + 0x1BC, lbl_80366E08);
+    }
+    return 5;
+}
+
 s32 fn_800A2A50(void) {
     return 0x10;
 }
