@@ -73,6 +73,10 @@ s32 fn_8014B234(void) {
     return 0x1FFF;
 }
 
+s32 fn_8014B264(void) {
+    return 0xFF;
+}
+
 s32 fn_8014B2E4(void) {
     return 0;
 }
