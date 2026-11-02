@@ -138,6 +138,10 @@ void fn_800E43E8(void) {
 
 }
 
+s32 fn_800E4BD8(void *arg0) {
+    return M2C_FIELD(arg0, s32 *, 0x114);
+}
+
 void fn_800E78DC(void) {
 
 }
