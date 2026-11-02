@@ -25,3 +25,7 @@ s32 fn_8014B2E4(void) {
     return 0;
 }
 
+s32 fn_8014B314(void) {
+    return 1;
+}
+
