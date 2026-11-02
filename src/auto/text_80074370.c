@@ -25,6 +25,10 @@ s32 fn_800754E0(void) {
     return 1;
 }
 
+s32 fn_800754E8(void) {
+    return 9;
+}
+
 s32 fn_80075568(void) {
     return 0;
 }
