@@ -249,6 +249,10 @@ s32 fn_80222A74(void *arg0) {
     return (M2C_FIELD(arg0, s32 *, 0xC) << 5) & 0x03FFFFE0;
 }
 
+s32 fn_80222A80(void *arg0) {
+    return (M2C_FIELD(arg0, s32 *, 8) & 0x3FF) + 1;
+}
+
 s32 fn_80222AA0(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x14);
 }
