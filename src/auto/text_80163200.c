@@ -302,6 +302,12 @@ s32 fn_80179D40(s32 arg0) {
     return arg0;
 }
 
+void fn_8017A480(void *arg0, s32 arg1, s32 arg2) {
+    M2C_UNK fn_80234450(s32, s32);
+    fn_80234450(M2C_FIELD(arg0, s32 *, 4), arg2);
+    M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + arg1);
+}
+
 void fn_8017A5EC(void *arg0, s8 arg1) {
     s8 *temp_r5;
 
