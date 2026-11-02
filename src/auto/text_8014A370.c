@@ -94,3 +94,7 @@ s32 fn_8014B314(void) {
     return 1;
 }
 
+void fn_8014C5F4(void *arg0, s32 arg1) {
+    M2C_FIELD(arg0, s16 *, 0x70) = (s16) (M2C_FIELD(arg0, s16 *, 0x70) + arg1);
+}
+
