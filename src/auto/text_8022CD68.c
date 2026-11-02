@@ -25,3 +25,7 @@ void fn_8023C55C(void) {
 
 }
 
+void fn_8023C560(void) {
+
+}
+
