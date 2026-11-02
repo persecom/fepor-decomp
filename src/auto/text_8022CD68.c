@@ -235,6 +235,11 @@ void fn_80259A5C(void) {
     DCFlushRangeNoSync(lbl_80368A94, 0x100);
 }
 
+void fn_80259CD8(u16 *arg0, u16 *arg1, s16 arg2) {
+    *arg0 = (arg2 - (s16) *arg1) / 160;
+    *arg1 += (s16) *arg0 * 0xA0;
+}
+
 void fn_8025EC10(u32 arg0) {
     extern s8 lbl_80368AAF;
     extern s8 lbl_80368AB0;
