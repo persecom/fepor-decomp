@@ -94,6 +94,28 @@ s32 fn_8014B314(void) {
     return 1;
 }
 
+void fn_8014BB58(s32 arg0, s32 arg1, s32 *arg2, s32 arg3) {
+    M2C_UNK fn_80007124(s32);
+    M2C_UNK fn_80007668(s32 *);
+    M2C_UNK fn_80007858(f32, f32);
+    M2C_UNK fn_80007884();
+    M2C_UNK fn_80007898(M2C_UNK);
+    M2C_UNK fn_8000A174(M2C_UNK, M2C_UNK);
+    M2C_UNK fn_8000A248();
+    M2C_UNK fn_8000A258();
+    s32 sp8;
+
+    fn_8000A258();
+    fn_8000A174(0, 0x23);
+    fn_8000A248();
+    fn_80007898(0xA);
+    fn_80007858((f32) arg0, (f32) arg1);
+    sp8 = *arg2;
+    fn_80007668(&sp8);
+    fn_80007124(arg3);
+    fn_80007884();
+}
+
 void fn_8014C5F4(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s16 *, 0x70) = (s16) (M2C_FIELD(arg0, s16 *, 0x70) + arg1);
 }
