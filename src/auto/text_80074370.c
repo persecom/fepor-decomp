@@ -214,6 +214,13 @@ void fn_8007AD08(void *arg0, s16 arg1, s16 arg2) {
     }
 }
 
+void fn_8007C018(void *arg0) {
+    M2C_UNK fn_80200270(s32);
+    if ((u32) M2C_FIELD(arg0, u32 *, 0x30) != 0U) {
+        fn_80200270(*M2C_FIELD(arg0, s32 **, 0x34));
+    }
+}
+
 s32 fn_8007C3F8(void) {
     extern s32 lbl_80367478;
     return lbl_80367478;
