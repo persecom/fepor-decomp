@@ -11,3 +11,7 @@ s32 fn_801C970C(void) {
     return lbl_803682A8;
 }
 
+s32 fn_801C9A88(void) {
+    return 0;
+}
+
