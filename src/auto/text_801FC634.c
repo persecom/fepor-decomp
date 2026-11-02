@@ -65,6 +65,11 @@ s32 fn_8021F4D4(void) {
     return lbl_80368774;
 }
 
+s32 fn_8021F4DC(void) {
+    extern s32 lbl_80368788;
+    return lbl_80368788;
+}
+
 void fn_80223978(void) {
 
 }
