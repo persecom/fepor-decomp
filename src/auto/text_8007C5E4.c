@@ -238,6 +238,22 @@ s32 fn_80094A08(s32 arg0) {
     return 0;
 }
 
+s32 fn_80095614(s32 arg0) {
+    u32 *fn_80037BBC(s32, s32);
+    s32 var_r31;
+
+    var_r31 = 0;
+loop_1:
+    if ((u32) *fn_80037BBC(arg0, var_r31) == 0U) {
+        return var_r31;
+    }
+    var_r31 += 1;
+    if (var_r31 >= 4) {
+        return -1;
+    }
+    goto loop_1;
+}
+
 s32 fn_80098094(void) {
     extern s32 lbl_80367500;
     return lbl_80367500;
