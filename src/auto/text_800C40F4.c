@@ -28,6 +28,13 @@ M2C_UNK *fn_800C93EC(void *arg0) {
     return temp_r3;
 }
 
+s32 fn_800D3590(void *arg0) {
+    s32 temp_r4;
+
+    temp_r4 = M2C_FIELD(arg0, s32 *, 4);
+    return temp_r4 & (M2C_FIELD(arg0, s32 *, 8) ^ temp_r4);
+}
+
 void fn_800D588C(s32 arg0) {
     extern s32 lbl_8036787C;
     lbl_8036787C = arg0;
