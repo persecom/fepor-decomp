@@ -39,6 +39,12 @@ void fn_801ED838(void) {
     lbl_803683D0 -= 1;
 }
 
+void fn_801EDEC8(void *arg0) {
+    extern s32 lbl_80367110;
+    M2C_FIELD(arg0, s32 *, 0x34) = (s32) (lbl_80367110 & 4);
+    lbl_80367110 |= 4;
+}
+
 s32 fn_801F1100(void) {
     return 0;
 }
