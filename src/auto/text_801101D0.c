@@ -21,6 +21,10 @@ u8 fn_8011388C(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1B4);
 }
 
+s32 fn_80116604(void *arg0) {
+    return M2C_FIELD(arg0, s32 *, 0x11C);
+}
+
 void fn_8011B570(void) {
 
 }
