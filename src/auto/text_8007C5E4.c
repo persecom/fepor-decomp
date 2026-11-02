@@ -15,3 +15,8 @@ s32 fn_80098094(void) {
     extern s32 lbl_80367500;
     return lbl_80367500;
 }
+
+void fn_80098B74(void *arg0) {
+    M2C_FIELD(arg0, s8 *, 0x40) = 1;
+}
+
