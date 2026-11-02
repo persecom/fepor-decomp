@@ -205,6 +205,10 @@ s32 fn_800DF6B0(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x28);
 }
 
+s32 fn_800E2168(s32 *arg0, s32 *arg1) {
+    return (s32) (*arg0 - *arg1) / 4;
+}
+
 void fn_800E2180(s32 *arg0, s32 *arg1) {
     s32 temp_r5;
 
