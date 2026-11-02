@@ -22,3 +22,7 @@ u8 fn_8001DDB4(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1E);
 }
 
+u8 fn_8001DDBC(void *arg0) {
+    return M2C_FIELD(arg0, u8 *, 0x1E);
+}
+
