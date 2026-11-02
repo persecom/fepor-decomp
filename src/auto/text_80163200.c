@@ -332,6 +332,11 @@ void fn_8017A5EC(void *arg0, s8 arg1) {
     *temp_r5 = arg1;
 }
 
+void fn_8017A810(void *arg0, s32 arg1, s32 arg2) {
+    memcpy(arg2, M2C_FIELD(arg0, s32 *, 4), arg1);
+    M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + arg1);
+}
+
 u8 fn_8017A9DC(void *arg0) {
     u8 *temp_r4;
 
