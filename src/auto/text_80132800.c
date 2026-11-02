@@ -93,3 +93,7 @@ void fn_80149ECC(void) {
 
 }
 
+void fn_80149ED0(void) {
+
+}
+
