@@ -10,6 +10,10 @@ void fn_8000A280(void) {
 
 }
 
+u8 fn_8000A418(void *arg0) {
+    return M2C_FIELD(arg0, u8 *, 0x2E);
+}
+
 void fn_8000B4D0(void) {
 
 }
