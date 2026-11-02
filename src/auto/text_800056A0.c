@@ -10,6 +10,13 @@ void fn_800059B0(void) {
 
 }
 
+void fn_80005C18(void) {
+    M2C_UNK fn_800111FC();
+    extern s32 lbl_80367108;
+    fn_800111FC();
+    lbl_80367108 = fn_801047D0();
+}
+
 void fn_80005C40(void) {
     M2C_UNK fn_801047D0();
     fn_801047D0();
