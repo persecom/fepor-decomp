@@ -74,6 +74,13 @@ void fn_801F9D1C(s32 arg0, s32 arg1) {
     M2C_FIELD(fn_801F9D50(arg1), s32 *, 0x48) = arg0;
 }
 
+void fn_801F9DC0(u32 arg0) {
+    M2C_UNK fn_801FB1C0(s32, M2C_UNK);
+    if ((arg0 != 0U) && ((arg0 + 0x30) != 0) && ((arg0 + 0x30) != 0)) {
+        fn_801FB1C0(arg0 + 0x30, 0);
+    }
+}
+
 void fn_801FC400(void) {
 
 }
