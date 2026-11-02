@@ -201,6 +201,17 @@ s16 fn_801D2FDC(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0x58);
 }
 
+void fn_801D37CC(void *arg0) {
+    s32 fn_8003FCCC();
+    M2C_UNK fn_80162054();
+    M2C_UNK fn_801620AC();
+    extern s32 lbl_80367110;
+    fn_801620AC();
+    M2C_FIELD(arg0, s32 *, 0x44) = fn_8003FCCC();
+    fn_80162054();
+    lbl_80367110 &= 0xFFFFFFFC;
+}
+
 u8 fn_801D8840(void *arg0) {
     return (u8) (M2C_FIELD(arg0, u8 *, 0x16) == 0x20);
 }
