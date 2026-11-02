@@ -63,6 +63,11 @@ s32 fn_8003F21C(s32 arg0) {
     return arg0 + 0x1A0;
 }
 
+void fn_8003FFD8(void) {
+    M2C_UNK fn_8003FFF8();
+    fn_8003FFF8();
+}
+
 s32 fn_80040844(void) {
     extern s32 lbl_803672AC;
     return lbl_803672AC;
