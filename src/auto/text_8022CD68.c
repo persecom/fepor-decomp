@@ -165,6 +165,11 @@ void fn_80261714(s32 arg0) {
     lbl_80368AA4 = arg0;
 }
 
+void fn_80262290(void) {
+    M2C_UNK fn_80263074();
+    fn_80263074();
+}
+
 void fn_802622F4(void) {
 
 }
