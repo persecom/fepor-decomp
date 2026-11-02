@@ -94,6 +94,10 @@ s32 fn_800255D8(void) {
     return 0;
 }
 
+s32 fn_800255E0(void) {
+    return 0xC0;
+}
+
 void fn_800255E8(void) {
 
 }
