@@ -261,6 +261,10 @@ s32 fn_80140B04(s32 arg0) {
     return arg0 + 4;
 }
 
+void fn_801426B4(void *arg0) {
+    M2C_FIELD(arg0, s16 *, 0x40) = 0;
+}
+
 void fn_80144688(void) {
 
 }
