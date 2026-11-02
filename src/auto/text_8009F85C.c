@@ -14,6 +14,10 @@ f32 fn_800A2CC0(void) {
     return lbl_80369A08;
 }
 
+s32 fn_800A2CC8(void) {
+    return 0x140;
+}
+
 s32 fn_800A30D8(void) {
     return 0;
 }
