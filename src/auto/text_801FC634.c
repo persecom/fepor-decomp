@@ -156,6 +156,10 @@ void TRKUARTInterruptHandler(void) {
 
 }
 
+s32 udp_cc_pre_continue(void) {
+    return -1;
+}
+
 s32 udp_cc_peek(void) {
     return 0;
 }
