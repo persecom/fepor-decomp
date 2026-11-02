@@ -13,3 +13,7 @@ void fn_8016EC70(void) {
 
 }
 
+void fn_8016FE5C(void) {
+
+}
+
