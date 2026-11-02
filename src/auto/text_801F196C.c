@@ -39,6 +39,14 @@ void fn_801F5D08(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x4C) = 4;
 }
 
+void fn_801F726C(void *arg0) {
+    s32 temp_r31;
+
+    temp_r31 = M2C_FIELD(arg0, s32 *, 0x30);
+    fn_8006EDA0(temp_r31);
+    fn_800C4588(temp_r31);
+}
+
 void fn_801F892C(void) {
     M2C_UNK fn_8002D4B8();
     fn_8002D4B8();
