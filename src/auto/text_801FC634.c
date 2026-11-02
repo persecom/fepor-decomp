@@ -40,6 +40,11 @@ s32 fn_801FFD74(void) {
     return 0;
 }
 
+void fn_80201160(void *arg0) {
+    M2C_FIELD(arg0, s8 *, 0x30) = 0;
+    M2C_FIELD(arg0, s16 *, 0x28) = 4;
+}
+
 void fn_80201174(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x30) = 1;
     M2C_FIELD(arg0, s16 *, 0x28) = 0xD2;
