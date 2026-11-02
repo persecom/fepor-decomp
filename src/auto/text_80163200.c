@@ -33,6 +33,10 @@ s32 fn_80178A64(void) {
     return 0;
 }
 
+s32 fn_80178A6C(void) {
+    return 0;
+}
+
 void fn_80180620(void) {
 
 }
