@@ -86,6 +86,16 @@ s32 fn_8013507C(void) {
     return 0;
 }
 
+s32 fn_80136268(void *arg0, void *arg1) {
+    u8 (*temp_r12)(void *, s32);
+
+    temp_r12 = M2C_FIELD(arg0, u8 (**)(void *, s32), 0x74);
+    if (temp_r12 != NULL) {
+        return temp_r12(arg1, M2C_FIELD(arg0, s32 *, 0x78)) != 0;
+    }
+    return M2C_FIELD(arg1, u8 *, 0x19) != 0;
+}
+
 s16 fn_80136474(void *arg0) {
     return (s16) ((s32) ((s16) (M2C_FIELD(arg0, s16 *, 0x18) - M2C_FIELD(arg0, s16 *, 0x14)) - (M2C_FIELD(arg0, s16 *, 0x5E) * 2)) / 32);
 }
