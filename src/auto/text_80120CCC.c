@@ -166,3 +166,18 @@ void fn_80127C74(void) {
 
 }
 
+void fn_80127C78(void *arg0) {
+    M2C_UNK fn_8000C188(void *);
+    M2C_UNK fn_80013778(s32, s32);
+    M2C_UNK fn_800138BC(s32);
+    s32 fn_800142B8();
+    if ((u8) M2C_FIELD(arg0, u8 *, 0x58) != 0) {
+        M2C_FIELD(arg0, u8 *, 0x58) = 0U;
+        fn_80013778(M2C_FIELD(arg0, s32 *, 0x54), M2C_FIELD(arg0, s32 *, 0x50));
+    }
+    fn_800138BC(M2C_FIELD(arg0, s32 *, 0x54));
+    if (fn_800142B8() != 6) {
+        fn_8000C188(arg0);
+    }
+}
+
