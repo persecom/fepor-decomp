@@ -9,6 +9,10 @@ s32 fn_80074864(void) {
     return 0;
 }
 
+s32 fn_80074A28(void) {
+    return 9;
+}
+
 s32 fn_80074ADC(void) {
     return 0;
 }
