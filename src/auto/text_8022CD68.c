@@ -37,3 +37,7 @@ void fn_802622F4(void) {
 
 }
 
+void fn_802624D8(void) {
+
+}
+
