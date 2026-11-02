@@ -95,6 +95,12 @@ void fn_802015A0(void) {
 
 }
 
+void fn_80201610(void *arg0) {
+    fn_8013CD7C();
+    M2C_FIELD(arg0, s32 *, 0x2C) = 0x258;
+    M2C_FIELD(arg0, s32 *, 0x28) = 0;
+}
+
 s32 fn_802016E4(void) {
     return 0x9C;
 }
