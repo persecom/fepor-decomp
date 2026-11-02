@@ -6,6 +6,16 @@ void fn_800A5944(s32 arg0) {
     fn_8006EDA0(arg0 + 0x34);
 }
 
+void fn_800A5BB4(s32 arg0) {
+    M2C_UNK fn_8000C188(s32);
+    s32 fn_8005C6A0(s32);
+    M2C_UNK fn_8006EEFC(s32, s32);
+    if (fn_8005C6A0(arg0 + 0x44) & 0x2000) {
+        fn_8006EEFC(arg0 + 0x34, arg0 + 0x44);
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_800A5CF4(void) {
     M2C_UNK fn_800A3A68(M2C_UNK, M2C_UNK);
     fn_800A3A68(0, 0x64);
