@@ -23,6 +23,18 @@ void fn_80055D9C(void *arg0) {
     }
 }
 
+void fn_80057880(void *arg0, s32 arg1) {
+    s32 temp_r0;
+    s32 var_r4;
+
+    var_r4 = arg1;
+    temp_r0 = M2C_FIELD(arg0, s32 *, 0x14);
+    if (var_r4 > temp_r0) {
+        var_r4 = temp_r0;
+    }
+    M2C_FIELD(arg0, s32 *, 0x18) = var_r4;
+}
+
 void fn_80057898(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x14) = arg1;
 }
