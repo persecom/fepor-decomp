@@ -58,6 +58,11 @@ u8 fn_8025ED80(void) {
     return lbl_80368978;
 }
 
+void fn_802616E4(s8 arg0) {
+    extern s8 lbl_80368AD0;
+    lbl_80368AD0 = arg0;
+}
+
 u8 fn_802616EC(void) {
     extern u8 lbl_80368AD0;
     return lbl_80368AD0;
