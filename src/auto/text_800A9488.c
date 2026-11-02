@@ -37,3 +37,7 @@ s32 fn_800A96D0(void) {
     return 0;
 }
 
+void fn_800AA27C(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 0x60) = 0;
+}
+
