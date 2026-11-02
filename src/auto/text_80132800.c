@@ -46,6 +46,14 @@ void fn_80132BA0(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x48) = fn_8003FCCC();
 }
 
+void fn_80132BD8(s32 arg0) {
+    M2C_UNK fn_8000C188(s32);
+    s32 fn_80161FB8();
+    if (fn_80161FB8() != 0) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_80132CDC(void) {
     M2C_UNK fn_8000C188();
     fn_8000C188();
