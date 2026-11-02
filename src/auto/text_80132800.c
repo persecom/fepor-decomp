@@ -21,6 +21,10 @@ s32 fn_80132A5C(void) {
     return 0;
 }
 
+s32 fn_80134FF0(void) {
+    return 0;
+}
+
 void fn_8013B308(void) {
 
 }
