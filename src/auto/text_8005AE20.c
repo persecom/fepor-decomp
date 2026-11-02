@@ -181,6 +181,11 @@ s32 fn_8006F370(void) {
     return 0;
 }
 
+void fn_8006F378(void) {
+    M2C_UNK fn_80024DE4();
+    fn_80024DE4();
+}
+
 s32 fn_800703D4(void) {
     return 0;
 }
