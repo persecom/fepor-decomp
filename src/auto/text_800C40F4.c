@@ -47,6 +47,20 @@ void fn_800C5F90(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x34) = 2;
 }
 
+void fn_800C5F9C(void *arg0) {
+    extern void *lbl_80367240;
+    s32 temp_r5;
+    u32 temp_r0;
+
+    M2C_FIELD(arg0, s8 *, 0x38) = 1;
+    temp_r0 = M2C_FIELD(arg0, u32 *, 0x3C) + 1;
+    M2C_FIELD(arg0, u32 *, 0x3C) = temp_r0;
+    if ((temp_r0 >= 0xDB6U) || (temp_r5 = M2C_FIELD(lbl_80367240, s32 *, 4), (((temp_r5 & (M2C_FIELD(lbl_80367240, s32 *, 8) ^ temp_r5) & 0x1F70) == 0) == 0))) {
+        M2C_FIELD(arg0, u32 *, 0x3C) = 0U;
+        fn_8000C188();
+    }
+}
+
 void fn_800C5FFC(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x34) = 0;
 }
