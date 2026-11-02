@@ -61,6 +61,22 @@ void fn_800B49E0(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     M2C_FIELD(arg0, s32 *, 0x88) = 0;
 }
 
+s32 fn_800B4A14(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    M2C_FIELD(arg0, s32 *, 0x7C) = arg1;
+    M2C_FIELD(arg0, s32 *, 0x80) = arg2;
+    M2C_FIELD(arg0, s32 *, 0x84) = arg3;
+    M2C_FIELD(arg0, u16 *, 0x90) = (u16) (M2C_FIELD(arg0, u16 *, 0x90) | 1);
+    M2C_FIELD(arg0, u16 *, 0x90) = (u16) (M2C_FIELD(arg0, u16 *, 0x90) & 0xFFFFFFFD);
+    M2C_FIELD(arg0, s32 *, 0x8C) = 0;
+    M2C_FIELD(arg0, s32 *, 0x88) = 0;
+loop_1:
+    if (!(M2C_FIELD(arg0, u16 *, 0x90) & 2)) {
+        fn_8020A51C();
+        goto loop_1;
+    }
+    return M2C_FIELD(arg0, s32 *, 0x74);
+}
+
 void fn_800B50E4(void) {
     M2C_UNK fn_800B4C20();
     M2C_UNK fn_8020A51C();
