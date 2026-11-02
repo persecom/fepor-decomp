@@ -32,6 +32,19 @@ s8 fn_8003A1C4(void *arg0) {
     return (s8) (M2C_FIELD(M2C_FIELD(arg0, void **, 0x18C), u8 *, 0x41) + (((u8) M2C_FIELD(arg0, u8 *, 0x1A6) >> 2U) & 7));
 }
 
+s8 fn_8003B518(void *arg0) {
+    s8 var_r3;
+
+    var_r3 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x188), u8 *, 0x22) + M2C_FIELD(arg0, u8 *, 0x1B0);
+    if (var_r3 > 0x28) {
+        var_r3 = 0x28;
+    }
+    if (var_r3 < 0) {
+        return 0;
+    }
+    return var_r3;
+}
+
 void fn_8003B69C(s32 arg0) {
     M2C_UNK fn_800173B4(s32, s32);
     fn_800173B4(arg0 + 0x236, arg0);
