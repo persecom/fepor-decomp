@@ -149,6 +149,22 @@ void fn_80058910(void *arg0, u8 arg1) {
     M2C_FIELD(arg0, u16 *, 0x54) = (u16) (M2C_FIELD(arg0, u16 *, 0x54) & 0xFFFFFFFB);
 }
 
+void fn_8005906C(void *arg0) {
+    M2C_UNK fn_8000C188();
+    extern void *lbl_80367240;
+    s32 temp_r5;
+
+    temp_r5 = M2C_FIELD(lbl_80367240, s32 *, 4);
+    if (temp_r5 & (M2C_FIELD(lbl_80367240, s32 *, 8) ^ temp_r5) & 0x1F70) {
+        fn_8000C188();
+        return;
+    }
+    M2C_FIELD(arg0, s16 *, 0x30) = (s16) (M2C_FIELD(arg0, s16 *, 0x30) + 1);
+    if ((s16) M2C_FIELD(arg0, s16 *, 0x30) == (s16) M2C_FIELD(arg0, s16 *, 0x32)) {
+        fn_8000C188();
+    }
+}
+
 void fn_800590CC(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x30) = 0;
 }
