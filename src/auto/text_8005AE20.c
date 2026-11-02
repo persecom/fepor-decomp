@@ -94,6 +94,15 @@ void fn_8005F780(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 0x84) = arg1;
 }
 
+void fn_8005F7B0(void *arg0, u8 arg1) {
+    M2C_FIELD(arg0, u8 *, 0xB) = arg1;
+    if (arg1 != 0xFF) {
+        M2C_FIELD(arg0, s32 *, 0) = (s32) (M2C_FIELD(arg0, s32 *, 0) | 0x20);
+        return;
+    }
+    M2C_FIELD(arg0, s32 *, 0) = (s32) (M2C_FIELD(arg0, s32 *, 0) & 0xFFFFFFDF);
+}
+
 void fn_8005F7E0(void *arg0, s8 arg1, s8 arg2, s8 arg3) {
     M2C_FIELD(arg0, s8 *, 8) = arg1;
     M2C_FIELD(arg0, s8 *, 9) = arg2;
