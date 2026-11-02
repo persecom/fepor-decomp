@@ -27,6 +27,11 @@ void fn_8020CED0(void) {
 
 }
 
+s32 fn_80211690(void) {
+    extern s32 lbl_80368604;
+    return lbl_80368604;
+}
+
 void fn_80215C5C(void) {
 
 }
