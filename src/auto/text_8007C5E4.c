@@ -60,6 +60,17 @@ void fn_80089970(void) {
     M2C_FIELD(lbl_803674EC, s16 *, 0x32) = 0;
 }
 
+s32 fn_80089ED8(void) {
+    extern void *lbl_803674E8;
+    u16 temp_r0;
+
+    temp_r0 = M2C_FIELD(lbl_803674E8, u16 *, 0x32);
+    if ((temp_r0 == 1) || (temp_r0 == 2)) {
+        return 1;
+    }
+    return 0;
+}
+
 u16 fn_8008A56C(void) {
     extern void *lbl_803674E0;
     return M2C_FIELD(lbl_803674E0, u16 *, 0x32);
