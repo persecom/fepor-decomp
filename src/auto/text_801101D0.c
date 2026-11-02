@@ -102,6 +102,13 @@ u8 fn_8011BD44(void) {
     return (u8) (lbl_80367A48 == 0x86);
 }
 
+s32 fn_8011C5B4(void) {
+    M2C_UNK fn_800D758C(s32);
+    extern s32 lbl_80367A50;
+    fn_800D758C(lbl_80367A50);
+    return 0;
+}
+
 s32 fn_8011C9E4(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0xEC);
 }
