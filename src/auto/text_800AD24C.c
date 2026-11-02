@@ -190,6 +190,14 @@ s32 fn_800B861C(void) {
     return 0;
 }
 
+s32 fn_800B870C(u32 arg0) {
+    s32 fn_8000BCA4();
+    if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
+        return 0;
+    }
+    return fn_8000BCA4();
+}
+
 void fn_800B8804(s32 arg0) {
     M2C_UNK fn_8000C188(s32);
     u8 fn_80089948();
