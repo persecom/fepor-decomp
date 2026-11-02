@@ -101,3 +101,7 @@ void fn_80149ED4(void) {
 
 }
 
+void fn_80149ED8(void) {
+
+}
+
