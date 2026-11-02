@@ -1,6 +1,12 @@
 /* Functions from 0x800C40F4 to 0x801035C8, found by decomp-toolkit. */
 #include "common.h"
 
+s32 fn_800C4240(s32 arg0) {
+    s32 fn_800C5A48(s32, s32);
+    extern s32 lbl_80367870;
+    return fn_800C5A48(lbl_80367870, arg0) + 0x20;
+}
+
 void fn_800C426C(void) {
     M2C_UNK fn_800C4588();
     fn_800C4588();
