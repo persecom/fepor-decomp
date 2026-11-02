@@ -77,6 +77,10 @@ void fn_80144688(void) {
 
 }
 
+s32 fn_8014468C(void) {
+    return 0;
+}
+
 void fn_80144694(void) {
 
 }
