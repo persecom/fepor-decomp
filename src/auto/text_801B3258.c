@@ -98,6 +98,10 @@ s16 fn_801D2FDC(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0x58);
 }
 
+u8 fn_801D8840(void *arg0) {
+    return (u8) (M2C_FIELD(arg0, u8 *, 0x16) == 0x20);
+}
+
 void fn_801D888C(void *arg0, s16 arg1) {
     M2C_FIELD(arg0, s16 *, 2) = arg1;
 }
