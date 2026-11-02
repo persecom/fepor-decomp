@@ -259,3 +259,7 @@ s32 fn_800723CC(void) {
     return 0x14;
 }
 
+s32 fn_800723D4(void) {
+    return 0x190;
+}
+
