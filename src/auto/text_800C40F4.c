@@ -823,6 +823,12 @@ void fn_800FB308(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x251) = (u8) (M2C_FIELD(arg0, u8 *, 0x251) + 1);
 }
 
+s32 fn_800FB3AC(void *arg0) {
+    s32 fn_802342B8(s32, s32, void *);
+    extern void *lbl_803678F8;
+    return fn_802342B8(M2C_FIELD(lbl_803678F8, s32 *, 0x14), *M2C_FIELD(arg0, s32 **, 0x18C), lbl_803678F8) == 0;
+}
+
 void fn_800FC150(void) {
     M2C_UNK fn_800FF918();
     fn_800FF918();
