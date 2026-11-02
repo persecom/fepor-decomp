@@ -9,6 +9,10 @@ s32 fn_8012C3D8(void) {
     return 0x128;
 }
 
+s32 fn_8012C3E0(void) {
+    return 0x16;
+}
+
 s32 fn_8012D554(void) {
     return 0;
 }
