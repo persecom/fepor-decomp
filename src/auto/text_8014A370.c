@@ -105,3 +105,13 @@ void fn_8014D254(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
     M2C_FIELD(arg0, s8 *, 0x17) = arg4;
 }
 
+void fn_8014D2B0(void *arg0, u8 arg1) {
+    u8 temp_r5;
+
+    temp_r5 = M2C_FIELD(arg0, u8 *, 0x10);
+    if (temp_r5 != arg1) {
+        M2C_FIELD(arg0, u8 *, 0x51E) = temp_r5;
+        M2C_FIELD(arg0, u8 *, 0x10) = arg1;
+    }
+}
+
