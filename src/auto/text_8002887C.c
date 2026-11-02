@@ -9,6 +9,10 @@ void fn_8002D39C(void) {
 
 }
 
+s32 fn_8002EA74(void) {
+    return 0;
+}
+
 void fn_8002F76C(void) {
 
 }
