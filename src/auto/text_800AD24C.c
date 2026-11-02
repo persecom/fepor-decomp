@@ -113,6 +113,14 @@ s32 fn_800B8174(void) {
     return 1;
 }
 
+s32 fn_800B8198(void) {
+    M2C_UNK fn_800C0658();
+    M2C_UNK fn_8016B6D4();
+    fn_800C0658();
+    fn_8016B6D4();
+    return 1;
+}
+
 s32 fn_800B8840(void) {
     M2C_UNK fn_80089970();
     fn_80089970();
