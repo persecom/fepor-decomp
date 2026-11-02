@@ -54,6 +54,24 @@ void fn_8007D7E8(void *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s16 *, 6) = 7;
 }
 
+void fn_8007D924(void *arg0) {
+    void *temp_r4;
+
+    temp_r4 = M2C_FIELD(arg0, void **, 0x30);
+    if ((s32) M2C_FIELD(temp_r4, s32 *, 0x20) == 1) {
+        M2C_FIELD(temp_r4, u8 *, 9) = (u8) (M2C_FIELD(temp_r4, u8 *, 9) + 1);
+        if ((s8) M2C_FIELD(temp_r4, u8 *, 9) > 2) {
+            M2C_FIELD(temp_r4, u8 *, 9) = 0U;
+        }
+    } else {
+        M2C_FIELD(temp_r4, u8 *, 9) = (u8) (M2C_FIELD(temp_r4, u8 *, 9) - 1);
+        if ((s8) M2C_FIELD(temp_r4, u8 *, 9) < 0) {
+            M2C_FIELD(temp_r4, u8 *, 9) = 2U;
+        }
+    }
+    M2C_FIELD(temp_r4, s16 *, 6) = 7;
+}
+
 void fn_8007DAB4(void *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s16 *, 6) = 7;
 }
