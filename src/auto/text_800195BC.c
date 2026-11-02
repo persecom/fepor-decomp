@@ -5,6 +5,12 @@ void fn_800195CC(void) {
 
 }
 
+void fn_800195D0(void *arg0) {
+    M2C_FIELD(arg0, f32 *, 0x18) = (f32) M2C_FIELD(arg0, f32 *, 0xC);
+    M2C_FIELD(arg0, f32 *, 0x10) = (f32) M2C_FIELD(arg0, f32 *, 4);
+    M2C_FIELD(arg0, f32 *, 0x14) = (f32) M2C_FIELD(arg0, f32 *, 8);
+}
+
 f32 fn_800195EC(void) {
     extern f32 lbl_80368CE8;
     return lbl_80368CE8;
