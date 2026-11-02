@@ -4,3 +4,8 @@
 void fn_800D67E4(void) {
 
 }
+
+void fn_800D67E8(void) {
+
+}
+
