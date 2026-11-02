@@ -50,6 +50,11 @@ void fn_801EC7B4(void) {
 
 }
 
+void fn_801ED7D0(void *arg0) {
+    s32 fn_8005E55C();
+    M2C_FIELD(arg0, s32 *, 0x58) = fn_8005E55C();
+}
+
 void fn_801ED838(void) {
     extern s32 lbl_803683D0;
     lbl_803683D0 -= 1;
