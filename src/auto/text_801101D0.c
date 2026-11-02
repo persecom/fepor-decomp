@@ -5,6 +5,19 @@ u8 fn_80110220(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1A7);
 }
 
+void fn_80112DFC(void *arg0, u8 arg1) {
+    s32 *temp_r3;
+
+    temp_r3 = M2C_FIELD(arg0, s32 **, 0xE0);
+    if (temp_r3 != NULL) {
+        if (arg1 != 0) {
+            *temp_r3 |= 0x80;
+            return;
+        }
+        *temp_r3 &= 0xFFFFFF7F;
+    }
+}
+
 u8 fn_80112F3C(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1A4);
 }
