@@ -60,6 +60,15 @@ s32 fn_80117CC0(void *arg0, s32 arg1) {
     return M2C_FIELD(arg0, s32 *, 8) + arg1;
 }
 
+void fn_8011AB98(void) {
+    M2C_UNK fn_801620AC();
+    M2C_UNK fn_8005C8B4();
+    M2C_UNK fn_80162018();
+    fn_801620AC();
+    fn_8005C8B4();
+    fn_80162018();
+}
+
 void fn_8011B2EC(void) {
     M2C_UNK fn_800F20E0();
     M2C_UNK fn_800F214C();
