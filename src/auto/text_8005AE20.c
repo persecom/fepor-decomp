@@ -29,6 +29,11 @@ s32 fn_8005AE60(void) {
     return 0x20;
 }
 
+u8 fn_8005BA00(void) {
+    extern u8 lbl_803672E8;
+    return lbl_803672E8;
+}
+
 s32 fn_80067478(void) {
     extern s32 lbl_80366DDC;
     return lbl_80366DDC;
