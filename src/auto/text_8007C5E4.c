@@ -400,6 +400,28 @@ void fn_80098D04(s32 arg0) {
     fn_8018CAD8(0x64, 0x1E, arg0);
 }
 
+void fn_80099DC4(s32 arg0) {
+    M2C_UNK fn_8000C070(s32, M2C_UNK);
+    s32 fn_80096D64();
+    s32 temp_r3;
+
+    temp_r3 = fn_80096D64();
+    switch (temp_r3) {                              /* irregular */
+    case 0:
+        fn_8000C070(arg0, 3);
+        return;
+    case 1:
+        fn_8000C070(arg0, 2);
+        return;
+    case 2:
+        fn_8000C070(arg0, 4);
+        return;
+    case 3:
+        fn_8000C070(arg0, 5);
+        return;
+    }
+}
+
 void fn_80099ED0(void *arg0) {
     M2C_UNK fn_80096418(s16);
     fn_80096418(M2C_FIELD(arg0, s16 *, 0x46));
