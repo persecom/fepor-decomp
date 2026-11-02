@@ -53,3 +53,8 @@ void fn_80154BE4(void) {
     fn_8015C674();
 }
 
+void fn_8015BA88(void) {
+    M2C_UNK fn_8015FC7C();
+    fn_8015FC7C();
+}
+
