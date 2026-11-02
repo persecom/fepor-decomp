@@ -198,6 +198,14 @@ s32 fn_800DF6B0(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x28);
 }
 
+void fn_800E2180(s32 *arg0, s32 *arg1) {
+    s32 temp_r5;
+
+    temp_r5 = *arg0;
+    *arg0 = *arg1;
+    *arg1 = temp_r5;
+}
+
 void fn_800E2218(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x64) = arg1;
 }
