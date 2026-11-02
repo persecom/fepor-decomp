@@ -53,6 +53,10 @@ s32 fn_80025580(void) {
     return 0;
 }
 
+s32 fn_80025588(void) {
+    return 1;
+}
+
 void fn_800255B8(void) {
 
 }
