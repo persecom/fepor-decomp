@@ -1,6 +1,11 @@
 /* Functions from 0x801FC634 to 0x8022C1E8, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_801FEF30(void *arg0) {
+    M2C_FIELD(arg0, s8 *, 0x30) = 0;
+    M2C_FIELD(arg0, s16 *, 0x28) = 4;
+}
+
 void fn_801FF33C(void) {
 
 }
