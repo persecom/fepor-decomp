@@ -27,6 +27,14 @@ void fn_8007CFB8(void) {
     fn_80082298();
 }
 
+void fn_8007CFD8(s32 *arg0) {
+    M2C_UNK fn_8008563C(s32 *);
+    s32 sp8;
+
+    sp8 = *arg0;
+    fn_8008563C(&sp8);
+}
+
 void fn_8007D004(void) {
     M2C_UNK fn_80086020();
     fn_80086020();
