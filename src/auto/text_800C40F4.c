@@ -537,6 +537,12 @@ void fn_800EB558(void) {
     lbl_80367110 &= 0xFFFFFEFF;
 }
 
+s32 fn_800EC2B8(void) {
+    extern s32 lbl_803678C0;
+    fn_800D758C(lbl_803678C0);
+    return 0;
+}
+
 s32 fn_800ED754(void) {
     M2C_UNK fn_800D758C(s32);
     extern s32 lbl_803678C8;
