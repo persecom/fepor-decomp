@@ -9,3 +9,9 @@ void fn_800056A0(s8 arg0) {
 void fn_800059B0(void) {
 
 }
+
+void fn_80005C40(void) {
+    M2C_UNK fn_801047D0();
+    fn_801047D0();
+}
+
