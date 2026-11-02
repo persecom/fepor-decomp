@@ -6,6 +6,11 @@ s32 fn_80067478(void) {
     return lbl_80366DDC;
 }
 
+s32 fn_800675E0(void) {
+    extern s32 lbl_80366DD4;
+    return lbl_80366DD4;
+}
+
 void fn_80070EDC(void) {
 
 }
