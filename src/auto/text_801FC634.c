@@ -53,6 +53,10 @@ void fn_80209E68(void) {
 
 }
 
+s32 fn_8020CEC8(void) {
+    return 1;
+}
+
 void fn_8020CED0(void) {
 
 }
