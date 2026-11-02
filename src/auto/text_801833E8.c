@@ -1,6 +1,11 @@
 /* Functions from 0x801833E8 to 0x801A2AB4, found by decomp-toolkit. */
 #include "common.h"
 
+f32 fn_801833E8(void) {
+    extern f32 lbl_8036ACC0;
+    return lbl_8036ACC0;
+}
+
 s32 fn_8018386C(void) {
     return 0;
 }
