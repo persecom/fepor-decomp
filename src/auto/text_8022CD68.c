@@ -143,6 +143,12 @@ s32 fn_80255E88(void *arg0) {
     return M2C_FIELD(M2C_FIELD(arg0, void **, 0xF8), s32 *, 8);
 }
 
+void fn_80257C04(void *arg0) {
+    M2C_UNK fn_80257998();
+    M2C_FIELD(arg0, s8 *, 1) = 0;
+    fn_80257998();
+}
+
 void fn_80258D74(void) {
     M2C_UNK fn_80262410();
     fn_80262410();
