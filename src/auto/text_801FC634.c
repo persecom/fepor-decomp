@@ -519,6 +519,15 @@ s32 gdev_cc_close(void) {
     return 0;
 }
 
+s32 gdev_cc_open(void) {
+    extern s32 lbl_803687C0;
+    if ((s32) lbl_803687C0 != 0) {
+        return -0x2715;
+    }
+    lbl_803687C0 = 1;
+    return 0;
+}
+
 s32 gdev_cc_shutdown(void) {
     return 0;
 }
