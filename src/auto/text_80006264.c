@@ -64,6 +64,12 @@ s32 fn_8000B4D4(void *arg0) {
     return 1;
 }
 
+s32 fn_8000B76C(void *arg0) {
+    M2C_FIELD(arg0, u8 *, 0x2C) = (u8) (M2C_FIELD(arg0, u8 *, 0x2C) | 4);
+    M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + 4);
+    return 1;
+}
+
 void fn_8000C060(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0xC) = arg1;
 }
