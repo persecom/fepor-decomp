@@ -53,6 +53,13 @@ s32 fn_800142D4(s32 arg0) {
     return temp_r0;
 }
 
+s32 fn_8001451C(void *arg0) {
+    M2C_UNK fn_800C4B8C();
+    fn_800C4B8C();
+    M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + 4);
+    return 1;
+}
+
 u8 fn_80014E70(void) {
     extern u8 lbl_803671B8;
     return lbl_803671B8;
