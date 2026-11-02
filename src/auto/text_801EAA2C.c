@@ -96,6 +96,24 @@ void fn_801ED838(void) {
     lbl_803683D0 -= 1;
 }
 
+void fn_801EDAC8(void *arg0) {
+    M2C_UNK fn_80169714(s32);
+    M2C_UNK fn_8016978C(s32);
+    u8 temp_r0;
+
+    temp_r0 = M2C_FIELD(arg0, u8 *, 0x38);
+    switch ((s32) temp_r0) {                        /* irregular */
+    case 2:
+        fn_80169714(M2C_FIELD(arg0, s32 *, 0x18));
+        fn_8000C070(arg0, 0x63);
+        return;
+    case 3:
+        fn_8016978C(M2C_FIELD(arg0, s32 *, 0x18));
+        fn_8000C070(arg0, 0x63);
+        return;
+    }
+}
+
 void fn_801EDEC8(void *arg0) {
     extern s32 lbl_80367110;
     M2C_FIELD(arg0, s32 *, 0x34) = (s32) (lbl_80367110 & 4);
