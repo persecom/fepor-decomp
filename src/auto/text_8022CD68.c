@@ -132,6 +132,13 @@ void fn_8024B3A0(s32 arg0) {
     fn_802636F4();
 }
 
+void fn_8024B420(s32 arg0) {
+    M2C_UNK fn_80245188(s32);
+    fn_8026372C();
+    fn_80245188(arg0);
+    fn_802636F4();
+}
+
 void fn_8024C5C8(void) {
 
 }
