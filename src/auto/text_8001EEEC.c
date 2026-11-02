@@ -73,6 +73,11 @@ void fn_800255B8(void) {
 
 }
 
+f32 fn_800255BC(void) {
+    extern f32 lbl_80368DC0;
+    return lbl_80368DC0;
+}
+
 void fn_800255D4(void) {
 
 }
