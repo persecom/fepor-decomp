@@ -13,6 +13,10 @@ s32 fn_8014A380(void) {
     return 0x10;
 }
 
+s32 fn_8014A4D8(void) {
+    return 2;
+}
+
 s32 fn_8014A4E0(void) {
     return 0;
 }
