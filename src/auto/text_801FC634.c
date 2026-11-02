@@ -63,6 +63,11 @@ s32 fn_802016E4(void) {
     return 0x9C;
 }
 
+s32 __DBIsExceptionMarked(u8 arg0) {
+    extern void *__DBInterface;
+    return M2C_FIELD(__DBInterface, s32 *, 4) & (1 << arg0);
+}
+
 void OSCreateAlarm(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
