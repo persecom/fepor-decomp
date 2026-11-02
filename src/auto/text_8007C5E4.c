@@ -125,6 +125,20 @@ s32 fn_80098094(void) {
     return lbl_80367500;
 }
 
+s32 fn_80098110(void) {
+    extern void **lbl_80367504;
+    void *temp_r3;
+
+    if ((void **) lbl_80367504 == NULL) {
+        return 0;
+    }
+    temp_r3 = *lbl_80367504;
+    if (temp_r3 != NULL) {
+        return M2C_FIELD(temp_r3, s32 *, 0x280);
+    }
+    return 0;
+}
+
 void fn_80098B74(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x40) = 1;
 }
