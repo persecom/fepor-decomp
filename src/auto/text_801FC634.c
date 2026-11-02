@@ -98,6 +98,10 @@ void fn_80223978(void) {
 
 }
 
+s32 fn_80226B68(void) {
+    return 0;
+}
+
 void usr_put_initialize(void) {
 
 }
