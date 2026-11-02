@@ -13,3 +13,7 @@ s32 fn_80055C84(s32 *arg0) {
     return *arg0;
 }
 
+s32 fn_80055D94(void) {
+    return 0;
+}
+
