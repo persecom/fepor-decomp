@@ -465,6 +465,12 @@ s32 gdev_cc_initinterrupts(void) {
     return 0;
 }
 
+s32 gdev_cc_post_stop(void) {
+    M2C_UNK fn_80267000();
+    fn_80267000();
+    return 0;
+}
+
 s32 gdev_cc_close(void) {
     return 0;
 }
