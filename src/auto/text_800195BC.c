@@ -134,6 +134,44 @@ void fn_8001C21C(void *arg0, s32 arg1) {
     fn_8017A5C4(arg1, M2C_FIELD(arg0, u16 *, 4));
 }
 
+s32 fn_8001CCE4(u8 arg0) {
+    u8 var_r0;
+
+    if (arg0 >= 0xFBU) {
+        var_r0 = 0xFB;
+    } else if (arg0 >= 0xB5U) {
+        var_r0 = 0xB5;
+    } else if (arg0 >= 0x79U) {
+        var_r0 = 0x79;
+    } else if (arg0 >= 0x47U) {
+        var_r0 = 0x47;
+    } else if (arg0 >= 0x1FU) {
+        var_r0 = 0x1F;
+    } else if (arg0 >= 1U) {
+        var_r0 = 1;
+    } else {
+        var_r0 = 0;
+    }
+    switch ((s32) var_r0) {                         /* irregular */
+    case 0x0:
+        return 0;
+    case 0xFB:
+        return 0xFB;
+    case 0x1:
+        return 0x1F;
+    case 0x1F:
+        return 0x47;
+    case 0x47:
+        return 0x79;
+    case 0x79:
+        return 0xB5;
+    case 0xB5:
+        return 0xFB;
+    default:
+        return 0;
+    }
+}
+
 void fn_8001D018(s32 arg0, s32 arg1) {
     M2C_UNK fn_8017A810(s32, M2C_UNK, s32);
     fn_8017A810(arg1, 8, arg0);
