@@ -21,6 +21,11 @@ s32 fn_801EC17C(void) {
     return 0x60;
 }
 
+u8 fn_801EC3AC(void) {
+    extern u8 lbl_803683B8;
+    return (u8) (lbl_803683B8 == 0x86);
+}
+
 s32 fn_801EC6CC(void) {
     return 2;
 }
