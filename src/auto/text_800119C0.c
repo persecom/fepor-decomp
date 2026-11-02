@@ -92,6 +92,14 @@ u8 fn_80014E70(void) {
     return lbl_803671B8;
 }
 
+void fn_80014F30(void *arg0, s32 arg1) {
+    s8 fn_8017A9DC(s32);
+    M2C_FIELD(arg0, s8 *, 0) = fn_8017A9DC(arg1);
+    M2C_FIELD(arg0, s8 *, 1) = fn_8017A9DC(arg1);
+    M2C_FIELD(arg0, s8 *, 2) = fn_8017A9DC(arg1);
+    M2C_FIELD(arg0, s8 *, 3) = fn_8017A9DC(arg1);
+}
+
 void fn_8001520C(void *arg0, u8 arg1) {
     M2C_FIELD(arg0, u8 *, 1) = arg1;
     M2C_FIELD(arg0, u8 *, 0) = (u8) (arg1 == 3);
