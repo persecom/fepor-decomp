@@ -1,6 +1,13 @@
 /* Functions from 0x8022CD68 to 0x80267A7C, found by decomp-toolkit. */
 #include "common.h"
 
+s32 fn_80230BBC(s32 arg0) {
+    s32 temp_r4;
+
+    temp_r4 = arg0 >> 0x1F;
+    return (temp_r4 ^ arg0) - temp_r4;
+}
+
 void __end_critical_region(void) {
 
 }
