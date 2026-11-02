@@ -6,6 +6,11 @@ void fn_80105A04(s32 arg0, s32 arg1) {
     fn_8017A810(arg1, 0x10, arg0);
 }
 
+void fn_80105A30(s32 arg0, s32 arg1) {
+    M2C_UNK fn_8017A430(s32, M2C_UNK, s32);
+    fn_8017A430(arg1, 0x10, arg0);
+}
+
 void fn_8010671C(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x65) = 0;
 }
