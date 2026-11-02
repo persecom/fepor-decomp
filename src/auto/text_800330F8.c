@@ -13,6 +13,10 @@ void fn_80037814(void) {
 
 }
 
+s8 fn_8003A1C4(void *arg0) {
+    return (s8) (M2C_FIELD(M2C_FIELD(arg0, void **, 0x18C), u8 *, 0x41) + (((u8) M2C_FIELD(arg0, u8 *, 0x1A6) >> 2U) & 7));
+}
+
 void fn_8003D5FC(void *arg0, u8 arg1) {
     if (arg1 != 0) {
         M2C_FIELD(arg0, u8 *, 0x199) = arg1;
