@@ -60,6 +60,13 @@ void fn_800D7588(void) {
 
 }
 
+void fn_800DA31C(void) {
+    extern s8 lbl_803678BE;
+    extern s8 lbl_803678BF;
+    lbl_803678BE = 1;
+    lbl_803678BF = 0;
+}
+
 void fn_800DA330(void) {
     extern s8 lbl_803678BC;
     extern s8 lbl_803678BD;
