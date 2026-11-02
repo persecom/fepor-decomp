@@ -181,6 +181,16 @@ void fn_8007ACCC(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x34) = 1;
 }
 
+void fn_8007ACE4(void *arg0) {
+    void *temp_r5;
+
+    temp_r5 = M2C_FIELD(arg0, void **, 0x50);
+    if (temp_r5 != NULL) {
+        M2C_FIELD(arg0, u16 *, 0x46) = (u16) (M2C_FIELD(arg0, u16 *, 0x46) & 0xFFFFFF1F);
+        M2C_FIELD(temp_r5, s16 *, 0x36) = 1;
+    }
+}
+
 s32 fn_8007C3F8(void) {
     extern s32 lbl_80367478;
     return lbl_80367478;
