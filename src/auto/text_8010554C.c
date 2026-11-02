@@ -111,6 +111,10 @@ void fn_8010FB7C(s32 arg0, s32 arg1) {
     fn_8017A810(arg1, 0x204, arg0);
 }
 
+void fn_8010FBA8(s32 arg0, s32 arg1) {
+    fn_8017A430(arg1, 0x204, arg0);
+}
+
 void fn_8010FBD4(void) {
 
 }
