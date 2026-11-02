@@ -194,6 +194,11 @@ void fn_80070EDC(void) {
 
 }
 
+void fn_80071B34(void) {
+    M2C_UNK fn_8018DAD4();
+    fn_8018DAD4();
+}
+
 s32 fn_80072150(void) {
     extern s8 lbl_80366DE8;
     lbl_80366DE8 = 0;
