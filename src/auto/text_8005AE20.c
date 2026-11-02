@@ -33,6 +33,11 @@ s32 fn_8005B42C(u32 *arg0, u32 arg1) {
     return (u32) *arg0 <= arg1;
 }
 
+void fn_8005B73C(void *arg0) {
+    M2C_UNK fn_8000E0E4(s32);
+    fn_8000E0E4(M2C_FIELD(arg0, s32 *, 4));
+}
+
 s32 fn_8005B8CC(void) {
     extern void *lbl_803672F4;
     if ((void *) lbl_803672F4 == NULL) {
