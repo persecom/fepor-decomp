@@ -210,6 +210,10 @@ s16 fn_800F8310(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0x2A2);
 }
 
+s16 fn_800F8318(void *arg0) {
+    return M2C_FIELD(arg0, s16 *, 0x29A);
+}
+
 void fn_800F834C(void) {
 
 }
