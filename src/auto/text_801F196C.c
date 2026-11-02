@@ -8,6 +8,19 @@ void fn_801F1DC4(void *arg0) {
     *temp_r3 &= 0xFFFFFFFE;
 }
 
+void fn_801F1DD8(s32 arg0) {
+    u8 fn_800A5C88(s32, void *);
+    extern void *lbl_80367240;
+    s32 temp_r31;
+    s32 temp_r3;
+
+    temp_r3 = M2C_FIELD(lbl_80367240, s32 *, 4);
+    temp_r31 = temp_r3 & (M2C_FIELD(lbl_80367240, s32 *, 8) ^ temp_r3);
+    if ((fn_800A5C88(temp_r3, lbl_80367240) == 0) || (temp_r31 & 0x1000)) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_801F1E78(void *arg0) {
     s32 *temp_r3;
 
