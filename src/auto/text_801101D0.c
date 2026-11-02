@@ -207,6 +207,17 @@ void fn_8011CB18(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x64) = (s32) M2C_FIELD(arg0, s32 *, 0xC8);
 }
 
+void fn_8011CB2C(void *arg0) {
+    M2C_UNK (*temp_r12)();
+
+    M2C_FIELD(arg0, s8 *, 0xF0) = 0;
+    M2C_FIELD(arg0, s32 *, 0x64) = (s32) M2C_FIELD(arg0, s32 *, 0xC8);
+    temp_r12 = M2C_FIELD(arg0, M2C_UNK (**)(), 0xFC);
+    if (temp_r12 != NULL) {
+        temp_r12();
+    }
+}
+
 void fn_8011DCB4(void) {
     M2C_UNK fn_8008A290(M2C_UNK, M2C_UNK);
     fn_8008A290(2, 0x10B);
