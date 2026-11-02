@@ -17,3 +17,7 @@ s32 fn_801F1100(void) {
     return 0;
 }
 
+s32 fn_801F1108(void) {
+    return 0;
+}
+
