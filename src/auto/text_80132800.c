@@ -103,6 +103,12 @@ void fn_801388D4(void) {
     fn_80059C2C(0, 0, 0x260, 0x1C0, 0);
 }
 
+s32 fn_80138908(void) {
+    f32 fn_8013893C();
+    extern f32 lbl_8036A618;
+    return (s32) (lbl_8036A618 * fn_8013893C());
+}
+
 s32 fn_80138AB8(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x38);
 }
