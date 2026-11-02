@@ -34,6 +34,36 @@ void __kill_critical_regions(void) {
 
 }
 
+s32 fn_80235A7C(s32 arg0, s32 arg1, s32 *arg2, s32 arg3) {
+    s32 fn_80203AAC();
+    M2C_UNK fn_8022B530(s32, s32, s32 *, s32);
+    s32 fn_8023A964(M2C_UNK);
+    s32 fn_8023A9D4(s32, s32);
+    extern s32 lbl_803687F8;
+    s32 var_r3;
+
+    if (!(fn_80203AAC() & 0x20000000)) {
+        var_r3 = 0;
+        if ((s32) lbl_803687F8 == 0) {
+            var_r3 = fn_8023A964(0xE100);
+            if (var_r3 == 0) {
+                lbl_803687F8 = 1;
+            }
+        }
+        if (var_r3 != 0) {
+            return 1;
+        }
+        if (fn_8023A9D4(arg1, *arg2) != 0) {
+            *arg2 = 0;
+            return 1;
+        }
+        goto block_8;
+    }
+block_8:
+    fn_8022B530(arg0, arg1, arg2, arg3);
+    return 0;
+}
+
 void fn_80238788(void) {
     M2C_UNK fn_80235B4C();
     fn_80235B4C();
