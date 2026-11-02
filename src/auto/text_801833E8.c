@@ -203,6 +203,30 @@ void fn_80195880(void *arg0) {
     M2C_FIELD(arg0, s16 *, 6) = 1;
 }
 
+s32 fn_80196420(s32 arg0, void *arg1) {
+    s8 fn_8003A398();
+    s8 fn_8003A5B4(s32);
+    s8 temp_r31;
+    s8 temp_r3;
+    s8 var_r4;
+    s8 var_r5;
+
+    temp_r31 = fn_8003A398();
+    temp_r3 = fn_8003A5B4(arg0);
+    var_r4 = temp_r31 + M2C_FIELD(arg1, u8 *, 0x27);
+    var_r5 = temp_r3 + M2C_FIELD(arg1, u8 *, 0x28);
+    if (var_r4 > 0x14) {
+        var_r4 = 0x14;
+    }
+    if (var_r5 > 0x63) {
+        var_r5 = 0x63;
+    }
+    if ((var_r4 == temp_r31) && (var_r5 == temp_r3)) {
+        return 0;
+    }
+    return 1;
+}
+
 void fn_80196794(void) {
     M2C_UNK fn_8003D538();
     fn_8003D538();
