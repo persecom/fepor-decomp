@@ -72,3 +72,18 @@ void fn_8015BA88(void) {
     fn_8015FC7C();
 }
 
+void fn_80161F7C(void) {
+    M2C_UNK fn_8006EDA0(M2C_UNK *);
+    extern M2C_UNK lbl_803680C8;
+    extern M2C_UNK lbl_803680CC;
+    extern s32 lbl_803680D0;
+    s32 temp_r0;
+
+    temp_r0 = lbl_803680D0 - 1;
+    lbl_803680D0 = temp_r0;
+    if (temp_r0 == 0) {
+        fn_8006EDA0(&lbl_803680C8);
+        fn_8006EDA0(&lbl_803680CC);
+    }
+}
+
