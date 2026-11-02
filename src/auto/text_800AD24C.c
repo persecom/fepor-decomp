@@ -291,6 +291,47 @@ void fn_800B8938(s32 arg0) {
     }
 }
 
+s32 fn_800B8974(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    M2C_UNK fn_80089F00(u8, u8, u8, s32, s32);
+    s32 var_r3;
+    s32 var_r4;
+    s32 var_r5;
+    s32 var_r6;
+    s32 var_r7;
+
+    var_r3 = arg0;
+    var_r4 = arg1;
+    var_r5 = arg2;
+    var_r6 = arg3;
+    var_r7 = arg4;
+    if (var_r3 < 0) {
+        var_r3 = 0;
+    }
+    if (var_r3 > 0xFF) {
+        var_r3 = 0xFF;
+    }
+    if (var_r4 < 0) {
+        var_r4 = 0;
+    }
+    if (var_r4 > 0xFF) {
+        var_r4 = 0xFF;
+    }
+    if (var_r5 < 0) {
+        var_r5 = 0;
+    }
+    if (var_r5 > 0xFF) {
+        var_r5 = 0xFF;
+    }
+    if (var_r6 < 0) {
+        var_r6 = 0x1F4;
+    }
+    if (var_r7 < 0) {
+        var_r7 = 0x1F4;
+    }
+    fn_80089F00((u8) var_r3, (u8) var_r4, (u8) var_r5, var_r6, var_r7);
+    return 1;
+}
+
 s32 fn_800B8AD8(void) {
     M2C_UNK fn_801C18FC();
     fn_801C18FC();
