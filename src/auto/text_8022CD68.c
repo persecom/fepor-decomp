@@ -73,6 +73,10 @@ void fn_8024C7F8(void *arg0, s8 arg1, s8 arg2, s8 arg3) {
     M2C_FIELD(arg0, s8 *, 0x5D) = arg3;
 }
 
+s32 fn_80250698(void *arg0, void *arg1) {
+    return M2C_FIELD(arg0, u16 *, 4) - M2C_FIELD(arg1, u16 *, 4);
+}
+
 u8 fn_8025ED80(void) {
     extern u8 lbl_80368978;
     return lbl_80368978;
