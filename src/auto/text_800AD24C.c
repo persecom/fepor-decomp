@@ -91,6 +91,17 @@ void fn_800B6FB8(s32 arg0) {
     fn_801E3118(&lbl_803682F0, arg0, 1);
 }
 
+s32 fn_800B6FE4(u32 arg0) {
+    M2C_UNK fn_80013864();
+    M2C_UNK fn_801EAABC(u32, s32);
+    if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
+        return 0;
+    }
+    fn_801EAABC(arg0, fn_800C0658());
+    fn_80013864();
+    return 1;
+}
+
 s32 fn_800B7250(void) {
     M2C_UNK fn_800162B8();
     M2C_UNK fn_800163F8();
