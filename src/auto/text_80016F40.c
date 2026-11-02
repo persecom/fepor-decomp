@@ -12,3 +12,8 @@ void fn_80018B18(void) {
     lbl_80366DB0 = lbl_803671C0;
 }
 
+void fn_800193CC(void *arg0, f32 farg0) {
+    M2C_FIELD(arg0, f32 *, 0xC) = farg0;
+    M2C_FIELD(arg0, f32 *, 0x18) = farg0;
+}
+
