@@ -172,6 +172,33 @@ void fn_800CA644(void) {
     fn_800CA664();
 }
 
+s32 fn_800CAD4C(void *arg0, s32 arg1, u8 arg2) {
+    u8 var_r5;
+
+    M2C_FIELD(arg0, s32 *, 0x268) = arg1;
+    M2C_FIELD(arg0, s32 *, 0x26C) = (s32) arg2;
+    var_r5 = 0;
+    M2C_FIELD(arg0, s32 *, 0x25C) = 0;
+    if ((arg1 == 0) && (((s32) M2C_FIELD(arg0, s32 *, 0x254) > 0) || ((s32) M2C_FIELD(arg0, s32 *, 0x258) > 0))) {
+        var_r5 = 1;
+    }
+    if ((arg1 == 1) && ((s32) M2C_FIELD(arg0, s32 *, 0x254) > 0)) {
+        var_r5 = 1;
+    }
+    if ((arg1 == 2) && ((s32) M2C_FIELD(arg0, s32 *, 0x258) > 0)) {
+        var_r5 = 1;
+    }
+    if ((arg1 == 3) && ((s32) M2C_FIELD(arg0, s32 *, 0x254) > 0)) {
+        var_r5 = 1;
+    }
+    if (var_r5 != 0) {
+        M2C_FIELD(arg0, s32 *, 0x14) = (s32) M2C_FIELD(arg0, s32 *, 0xC);
+        M2C_FIELD(arg0, s32 *, 0xC) = 6;
+        return 1;
+    }
+    return 0;
+}
+
 void fn_800CF588(void *arg0) {
     M2C_UNK fn_800E7B80(s32);
     if ((u8) M2C_FIELD(arg0, u8 *, 0x196) != 0) {
