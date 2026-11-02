@@ -129,6 +129,12 @@ void fn_800536D8(void *arg0, s32 arg1) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s32 *, 0x30) = arg1;
 }
 
+void fn_800536E4(void *arg0, void *arg1) {
+    if ((u32) M2C_FIELD(arg0, u32 *, 0x18) == (u32) M2C_FIELD(arg1, u32 *, 0)) {
+        M2C_FIELD(arg1, void **, 4) = arg0;
+    }
+}
+
 void fn_80053D84(void *arg0) {
     void *temp_r3;
 
