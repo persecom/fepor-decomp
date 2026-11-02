@@ -68,6 +68,11 @@ void fn_8010CAAC(void) {
     fn_8010EA20();
 }
 
+void fn_8010D364(void) {
+    M2C_UNK fn_8010D384();
+    fn_8010D384();
+}
+
 void fn_8010FBD4(void) {
 
 }
