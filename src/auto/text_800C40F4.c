@@ -505,6 +505,11 @@ void fn_800FC540(void) {
     fn_800FC49C();
 }
 
+void fn_800FC560(void) {
+    M2C_UNK fn_800FEC0C();
+    fn_800FEC0C();
+}
+
 s32 fn_800FC5F8(void) {
     extern s32 lbl_80367904;
     return lbl_80367904;
