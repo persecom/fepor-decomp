@@ -18,6 +18,10 @@ s32 fn_8018361C(void) {
     return 4;
 }
 
+s32 fn_801837CC(void) {
+    return 3;
+}
+
 s32 fn_8018386C(void) {
     return 0;
 }
