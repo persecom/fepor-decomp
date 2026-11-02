@@ -99,6 +99,13 @@ void fn_80169E50(void *arg0) {
     fn_8000A430(M2C_FIELD(arg0, s32 *, 0x50));
 }
 
+void *fn_8016A6A4(void *arg0) {
+    M2C_UNK fn_801403F0();
+    fn_801403F0();
+    M2C_FIELD(arg0, s32 *, 0x40) = 0;
+    return arg0;
+}
+
 void fn_8016B5E8(void) {
     M2C_UNK fn_8004327C();
     M2C_UNK fn_80040844();
