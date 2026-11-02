@@ -14,6 +14,10 @@ s32 fn_801838CC(void) {
     return 1;
 }
 
+s32 fn_8018394C(void) {
+    return 2;
+}
+
 void fn_801908B4(void) {
 
 }
