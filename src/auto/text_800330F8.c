@@ -1,6 +1,10 @@
 /* Functions from 0x800330F8 to 0x80055C70, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_800340E4(s16 *arg0) {
+    *arg0 = 0;
+}
+
 void fn_80037814(void) {
 
 }
