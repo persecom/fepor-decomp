@@ -66,3 +66,12 @@ u8 fn_8001DDBC(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1E);
 }
 
+void fn_8001EDA0(u8 *arg0) {
+    u8 temp_r4;
+
+    temp_r4 = *arg0;
+    if (temp_r4 & 0x80) {
+        *arg0 = temp_r4 | 3;
+    }
+}
+
