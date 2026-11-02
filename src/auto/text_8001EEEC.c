@@ -21,6 +21,10 @@ s32 fn_80024390(void) {
     return 0;
 }
 
+void fn_80024728(void *arg0) {
+    M2C_FIELD(arg0, s8 *, 0x61) = 0;
+}
+
 s32 fn_80025538(void) {
     return 0;
 }
