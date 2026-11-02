@@ -13,6 +13,10 @@ s32 fn_8011B578(void) {
     return 0xB0;
 }
 
+s32 fn_8011B74C(void) {
+    return 0x40;
+}
+
 s32 fn_8011C9EC(s32 arg0) {
     return arg0 + 0xAC;
 }
