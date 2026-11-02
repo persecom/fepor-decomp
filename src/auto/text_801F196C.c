@@ -25,6 +25,13 @@ void fn_801F1E8C(void *arg0) {
     fn_800C4588(temp_r31);
 }
 
+void fn_801F31D0(void *arg0) {
+    s32 fn_8005C6A0(s32);
+    if (fn_8005C6A0(M2C_FIELD(arg0, s32 *, 0x30) + 0xB4) & 0x2000) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_801F5518(s32 arg0) {
     M2C_UNK fn_801E3118(M2C_UNK *, s32, M2C_UNK);
     extern M2C_UNK lbl_803682F0;
