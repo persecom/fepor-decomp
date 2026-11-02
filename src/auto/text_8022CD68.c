@@ -58,6 +58,10 @@ u8 fn_8025ED80(void) {
     return lbl_80368978;
 }
 
+u32 fn_802614C4(u32 arg0) {
+    return arg0 >> 8U;
+}
+
 void fn_802616E4(s8 arg0) {
     extern s8 lbl_80368AD0;
     lbl_80368AD0 = arg0;
