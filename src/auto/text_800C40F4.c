@@ -14,6 +14,10 @@ void fn_800D67E8(void) {
 
 }
 
+s32 fn_800D6810(s32 arg0) {
+    return arg0 + 4;
+}
+
 void fn_800D6874(void) {
 
 }
