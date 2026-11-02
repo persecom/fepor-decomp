@@ -133,6 +133,10 @@ void fn_80149E68(void) {
 
 }
 
+s32 fn_80149E6C(void) {
+    return 0;
+}
+
 void fn_80149E74(void) {
 
 }
