@@ -63,6 +63,10 @@ s16 fn_801CD40C(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0x40);
 }
 
+void fn_801D2FD4(void *arg0, s16 arg1) {
+    M2C_FIELD(arg0, s16 *, 0x58) = arg1;
+}
+
 s32 fn_801DE360(void) {
     return 1;
 }
