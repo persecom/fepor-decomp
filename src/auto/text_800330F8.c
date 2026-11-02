@@ -5,6 +5,10 @@ void fn_800340E4(s16 *arg0) {
     *arg0 = 0;
 }
 
+void fn_80034120(void *arg0) {
+    M2C_FIELD(arg0, u8 *, 0x60) = (u8) (M2C_FIELD(arg0, u8 *, 0x60) + 1);
+}
+
 void fn_80037814(void) {
 
 }
