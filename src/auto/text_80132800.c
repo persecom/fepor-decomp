@@ -308,6 +308,12 @@ void fn_8013F3CC(void) {
 
 }
 
+s32 fn_8013FA10(void) {
+    f32 fn_80138AC0();
+    extern f32 lbl_8036A728;
+    return (s32) (lbl_8036A728 * fn_80138AC0());
+}
+
 s32 fn_8013FBC0(s32 arg0) {
     return arg0 + 0x12;
 }
