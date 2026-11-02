@@ -166,6 +166,10 @@ void fn_800E76D0(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 0x3D) = arg1;
 }
 
+void fn_800E76D8(void *arg0, s8 arg1) {
+    M2C_FIELD(arg0, s8 *, 0x3C) = arg1;
+}
+
 void fn_800E78DC(void) {
 
 }
