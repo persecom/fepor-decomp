@@ -53,6 +53,10 @@ s32 fn_8006EB9C(void) {
     return lbl_80367320;
 }
 
+s32 fn_8006F370(void) {
+    return 0;
+}
+
 void fn_80070EDC(void) {
 
 }
