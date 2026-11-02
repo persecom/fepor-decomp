@@ -106,3 +106,9 @@ void fn_80099ED0(void *arg0) {
     fn_80096418(M2C_FIELD(arg0, s16 *, 0x46));
 }
 
+void fn_8009EA14(void) {
+    M2C_UNK fn_801E2594(M2C_UNK *);
+    extern M2C_UNK lbl_803682F0;
+    fn_801E2594(&lbl_803682F0);
+}
+
