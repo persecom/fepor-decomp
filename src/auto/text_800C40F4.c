@@ -154,6 +154,10 @@ s32 fn_800E5690(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0xCC);
 }
 
+s32 fn_800E56BC(void *arg0) {
+    return M2C_FIELD(arg0, s32 *, 0xE0);
+}
+
 void fn_800E78DC(void) {
 
 }
