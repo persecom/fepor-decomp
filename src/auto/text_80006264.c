@@ -35,3 +35,7 @@ void fn_8000CD80(s32 arg0) {
     lbl_80367158 = arg0;
 }
 
+s32 fn_800113B4(void) {
+    return 0;
+}
+
