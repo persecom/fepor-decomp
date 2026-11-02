@@ -42,6 +42,15 @@ u8 fn_8011388C(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1B4);
 }
 
+s32 fn_80113894(void *arg0) {
+    u8 fn_8019906C(s32);
+    s32 fn_80199114(s32);
+    if ((fn_8019906C(M2C_FIELD(arg0, s32 *, 0x11C)) != 0) && (fn_80199114(M2C_FIELD(arg0, s32 *, 0x11C)) != -1)) {
+        return 1;
+    }
+    return 0;
+}
+
 void fn_801138E8(void *arg0) {
     M2C_UNK fn_801990A4(s32);
     fn_801990A4(M2C_FIELD(arg0, s32 *, 0x11C));
