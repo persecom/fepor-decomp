@@ -95,6 +95,15 @@ void fn_8010AC54(void) {
 
 }
 
+s32 fn_8010C4B0(void *arg0) {
+    void *fn_8000D354(s32);
+    u8 fn_80102EA8();
+    if (fn_80102EA8() != 0) {
+        return 1;
+    }
+    return M2C_FIELD(fn_8000D354(M2C_FIELD(arg0, s32 *, 0x240)), u8 *, 7) != 0;
+}
+
 s32 fn_8010CA94(void) {
     return 0;
 }
