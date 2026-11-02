@@ -158,6 +158,10 @@ s32 gdev_cc_close(void) {
     return 0;
 }
 
+s32 gdev_cc_shutdown(void) {
+    return 0;
+}
+
 void fn_8022C08C(void) {
 
 }
