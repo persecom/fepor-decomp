@@ -27,6 +27,12 @@ s32 fn_801AA034(void) {
     return 0;
 }
 
+void fn_801AA14C(void *arg0) {
+    M2C_UNK fn_800A7EC4();
+    M2C_FIELD(arg0, u8 *, 0x30) = (u8) (M2C_FIELD(arg0, u8 *, 0x30) & 0xFE);
+    fn_800A7EC4();
+}
+
 void fn_801AE2D0(void) {
 
 }
