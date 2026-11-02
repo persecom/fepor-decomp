@@ -113,6 +113,11 @@ s32 fn_80199310(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x124);
 }
 
+void fn_8019D4F4(void *arg0) {
+    M2C_UNK fn_8004FC70(s32, M2C_UNK);
+    fn_8004FC70(M2C_FIELD(arg0, s32 *, 0x30), 5);
+}
+
 s32 fn_8019D90C(void) {
     M2C_UNK fn_80194E10();
     fn_80194E10();
