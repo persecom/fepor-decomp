@@ -218,6 +218,11 @@ void fn_800DC598(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x73) = 0;
 }
 
+s32 fn_800DDC04(s32 arg0) {
+    void *fn_800DE73C(s32);
+    return M2C_FIELD(fn_800DE73C(arg0 + 0x58), s32 *, 0xC);
+}
+
 void fn_800DEE90(void) {
 
 }
