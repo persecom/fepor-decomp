@@ -394,6 +394,10 @@ void fn_800F834C(void) {
 
 }
 
+s32 fn_800F8350(s32 *arg0) {
+    return *arg0 != 0;
+}
+
 void fn_800FC490(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x31) = 0;
 }
