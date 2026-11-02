@@ -4,3 +4,9 @@
 void fn_80037814(void) {
 
 }
+
+s32 fn_80040844(void) {
+    extern s32 lbl_803672AC;
+    return lbl_803672AC;
+}
+
