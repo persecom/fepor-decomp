@@ -122,6 +122,11 @@ s16 fn_8013B6A4(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0xD4);
 }
 
+void fn_8013C388(void *arg0) {
+    M2C_UNK fn_8000E0E4(s32);
+    fn_8000E0E4(M2C_FIELD(arg0, s32 *, 4));
+}
+
 s32 fn_8013C3AC(void) {
     return 0;
 }
