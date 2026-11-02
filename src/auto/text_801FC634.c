@@ -13,6 +13,12 @@ void fn_801FCC44(void) {
     fn_8006EDA0(&lbl_80368418);
 }
 
+void fn_801FDE64(void) {
+    M2C_UNK fn_8006EDA0(M2C_UNK *);
+    extern M2C_UNK lbl_80368418;
+    fn_8006EDA0(&lbl_80368418);
+}
+
 void fn_801FDEB8(void) {
     M2C_UNK fn_801FDED8();
     fn_801FDED8();
