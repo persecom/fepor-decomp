@@ -29,6 +29,11 @@ void fn_801EC7B4(void) {
 
 }
 
+void fn_801ED838(void) {
+    extern s32 lbl_803683D0;
+    lbl_803683D0 -= 1;
+}
+
 s32 fn_801F1100(void) {
     return 0;
 }
