@@ -156,6 +156,12 @@ void fn_800536E4(void *arg0, void *arg1) {
     }
 }
 
+void fn_80053750(void *arg0, void *arg1) {
+    if ((u16) M2C_FIELD(arg1, u16 *, 0) == (u16) *M2C_FIELD(arg0, u16 **, 0x30)) {
+        M2C_FIELD(arg1, void **, 4) = arg0;
+    }
+}
+
 void fn_80053D84(void *arg0) {
     void *temp_r3;
 
