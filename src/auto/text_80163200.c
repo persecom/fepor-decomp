@@ -87,6 +87,14 @@ void fn_8017A5EC(void *arg0, s8 arg1) {
     *temp_r5 = arg1;
 }
 
+u8 fn_8017A9DC(void *arg0) {
+    u8 *temp_r4;
+
+    temp_r4 = M2C_FIELD(arg0, u8 **, 4);
+    M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r4 + 1);
+    return *temp_r4;
+}
+
 s32 fn_8017DF4C(void) {
     return 0;
 }
