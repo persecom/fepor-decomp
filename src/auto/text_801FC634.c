@@ -29,3 +29,7 @@ void fn_80223978(void) {
 
 }
 
+void usr_put_initialize(void) {
+
+}
+
