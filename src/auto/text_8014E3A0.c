@@ -17,6 +17,13 @@ s32 fn_8014E414(void) {
     return 0;
 }
 
+void fn_8014E7F8(void *arg0) {
+    M2C_UNK fn_8014E864();
+    if ((u32) M2C_FIELD(arg0, u32 *, 0x54) != 0U) {
+        fn_8014E864();
+    }
+}
+
 s32 fn_801512D8(void) {
     M2C_UNK fn_800D758C(s32);
     extern s32 lbl_80367BA0;
