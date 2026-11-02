@@ -57,6 +57,15 @@ void fn_800A8450(void) {
     fn_8018DC18();
 }
 
+void fn_800A8478(void) {
+    M2C_UNK fn_8009A5BC();
+    M2C_UNK fn_800A6AE4();
+    M2C_UNK fn_8018DC58();
+    fn_8009A5BC();
+    fn_800A6AE4();
+    fn_8018DC58();
+}
+
 void fn_800A84A0(void) {
     M2C_UNK fn_8009A5F4();
     M2C_UNK fn_800A6B1C();
