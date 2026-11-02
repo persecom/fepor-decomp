@@ -56,6 +56,13 @@ void fn_801854B4(void *arg0) {
     fn_8004B1B4(M2C_FIELD(arg0, s32 *, 0x30));
 }
 
+void fn_801857F0(void *arg0) {
+    u8 fn_8004BF80(s32);
+    if (fn_8004BF80(M2C_FIELD(arg0, s32 *, 0x30)) != 0) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_8018B004(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x38) = 0;
 }
