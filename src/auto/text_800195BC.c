@@ -146,6 +146,24 @@ u8 fn_8001DD04(void) {
     return var_r3;
 }
 
+u8 fn_8001DD54(void *arg0, s32 arg1) {
+    s8 temp_r3;
+    u8 var_r3;
+
+    var_r3 = M2C_FIELD(arg0, u8 *, 0x1E);
+    if (var_r3 == 0xFF) {
+        temp_r3 = fn_8003AFA0(arg1);
+        var_r3 = (u8) ((s32) (((u32) temp_r3 >> 0x1FU) + temp_r3) >> 1);
+        if (var_r3 < 5U) {
+            var_r3 = 5;
+        }
+        if (var_r3 > 0xFU) {
+            var_r3 = 0xF;
+        }
+    }
+    return var_r3;
+}
+
 u8 fn_8001DDB4(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1E);
 }
