@@ -590,6 +590,13 @@ void fn_800E8BBC(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x2B4) = arg1;
 }
 
+s32 fn_800E8BC4(void *arg0) {
+    if (((s32) M2C_FIELD(arg0, s32 *, 0x160) != 0) || ((s32) M2C_FIELD(arg0, s32 *, 0x1C0) != 0) || ((s32) M2C_FIELD(arg0, s32 *, 0x280) != 0)) {
+        return 1;
+    }
+    return 0;
+}
+
 void fn_800E8FAC(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0xE0) = arg1;
 }
