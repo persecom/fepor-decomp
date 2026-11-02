@@ -30,6 +30,15 @@ void fn_800A828C(s32 arg0) {
     fn_8006EDA0(arg0 + 0x30);
 }
 
+void fn_800A8400(void) {
+    M2C_UNK fn_8009A514();
+    M2C_UNK fn_800A6A3C();
+    M2C_UNK fn_8018DB4C();
+    fn_8009A514();
+    fn_800A6A3C();
+    fn_8018DB4C();
+}
+
 void fn_800A8A64(void *arg0) {
     M2C_UNK fn_8000E0E4(s32);
     fn_8000E0E4(M2C_FIELD(arg0, s32 *, 8));
