@@ -73,6 +73,10 @@ void fn_80209E68(void) {
 
 }
 
+s32 fn_80209FD4(void) {
+    return *(s32 *)0x800000E4;
+}
+
 s32 fn_8020CEC8(void) {
     return 1;
 }
