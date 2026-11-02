@@ -111,6 +111,11 @@ s32 fn_801CAF50(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x70);
 }
 
+void fn_801CAF58(void *arg0) {
+    s32 fn_800E7F60(s32);
+    M2C_FIELD(arg0, s32 *, 0x6C) = fn_800E7F60(M2C_FIELD(arg0, s32 *, 0));
+}
+
 s32 fn_801CAF8C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x6C);
 }
