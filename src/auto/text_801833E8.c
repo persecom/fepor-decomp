@@ -266,6 +266,20 @@ void fn_801994B8(void *arg0, s32 arg1) {
     fn_800E5DEC(arg0, arg1);
 }
 
+void fn_80199B88(void *arg0, s32 arg1) {
+    M2C_UNK fn_8017A430(s32, M2C_UNK, void *);
+    M2C_UNK fn_8017A5EC(s32, u8);
+    fn_8017A430(arg1, 4, arg0);
+    fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 4));
+    fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 5));
+    fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 6));
+    fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 7));
+    fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 8));
+    fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 9));
+    fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 0xA));
+    fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 0xB));
+}
+
 void fn_80199CEC(void *arg0) {
     M2C_UNK fn_800498A4(s32, M2C_UNK, M2C_UNK);
     fn_800498A4(M2C_FIELD(arg0, s32 *, 0x34), 0, 2);
