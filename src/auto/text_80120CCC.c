@@ -78,6 +78,12 @@ void fn_801260D4(void) {
     lbl_80367110 &= 0xFFFFFF7F;
 }
 
+s32 fn_80126C90(void) {
+    M2C_UNK fn_8016969C();
+    fn_8016969C();
+    return 1;
+}
+
 void fn_80127084(void) {
     M2C_UNK fn_800F1BFC();
     fn_800F1BFC();
