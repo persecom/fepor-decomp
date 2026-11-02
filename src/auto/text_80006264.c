@@ -45,6 +45,16 @@ s32 fn_8000ACD8(void) {
     return 0;
 }
 
+s32 fn_8000B37C(void *arg0) {
+    void *temp_r4;
+
+    temp_r4 = M2C_FIELD(M2C_FIELD(arg0, void **, 4), void **, 4);
+    M2C_FIELD(arg0, void **, 0) = temp_r4;
+    M2C_FIELD(arg0, void **, 4) = temp_r4;
+    M2C_FIELD(arg0, s32 *, 0x10) = 0;
+    return 1;
+}
+
 void fn_8000B4D0(void) {
 
 }
