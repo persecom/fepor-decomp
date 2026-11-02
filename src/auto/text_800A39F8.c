@@ -39,6 +39,15 @@ void fn_800A8400(void) {
     fn_8018DB4C();
 }
 
+void fn_800A8428(void) {
+    M2C_UNK fn_8009A54C();
+    M2C_UNK fn_800A6A74();
+    M2C_UNK fn_8018DB90();
+    fn_8009A54C();
+    fn_800A6A74();
+    fn_8018DB90();
+}
+
 void fn_800A8A64(void *arg0) {
     M2C_UNK fn_8000E0E4(s32);
     fn_8000E0E4(M2C_FIELD(arg0, s32 *, 8));
