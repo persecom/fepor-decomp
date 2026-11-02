@@ -33,6 +33,13 @@ void fn_800561C8(void *arg0) {
     fn_80067304(M2C_FIELD(arg0, s32 *, 0x4C));
 }
 
+void fn_80056698(void *arg0) {
+    M2C_UNK fn_800C4588(s32);
+    fn_800C4588(M2C_FIELD(arg0, s32 *, 0x30));
+    M2C_FIELD(arg0, s32 *, 0x30) = 0;
+    M2C_FIELD(arg0, s32 *, 0x30) = 0;
+}
+
 void fn_80056AE0(void *arg0, u32 arg1) {
     M2C_UNK fn_80234450(s32);
     if (arg1 != 0U) {
