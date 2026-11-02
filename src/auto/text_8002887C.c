@@ -21,6 +21,12 @@ void fn_8002F61C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + 1);
 }
 
+void fn_8002F728(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 0) = 0;
+    M2C_FIELD(arg0, s32 *, 4) = 0;
+    M2C_FIELD(arg0, s8 *, 8) = -1;
+}
+
 void fn_8002F76C(void) {
 
 }
