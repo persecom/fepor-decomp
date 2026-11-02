@@ -1,6 +1,10 @@
 /* Functions from 0x800AD24C to 0x800C3F18, found by decomp-toolkit. */
 #include "common.h"
 
+s32 fn_800B49C8(void *arg0) {
+    return M2C_FIELD(arg0, s32 *, 0x74);
+}
+
 s32 fn_800B6A30(void) {
     return 0;
 }
