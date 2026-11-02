@@ -64,6 +64,11 @@ void fn_8018B698(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x40) = 0;
 }
 
+void fn_8018B6A4(void *arg0) {
+    M2C_UNK fn_8005F7E0(s32, u8, u8, u8);
+    fn_8005F7E0(M2C_FIELD(arg0, s32 *, 0x30) + 0x1C, M2C_FIELD(arg0, u8 *, 0x34), M2C_FIELD(arg0, u8 *, 0x35), M2C_FIELD(arg0, u8 *, 0x36));
+}
+
 void fn_8018B854(void *arg0) {
     void *temp_r5;
 
