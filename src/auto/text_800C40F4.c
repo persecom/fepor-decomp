@@ -21,3 +21,7 @@ void fn_800DB520(void) {
 
 }
 
+void fn_800DB524(void) {
+
+}
+
