@@ -6,6 +6,11 @@ void fn_801FEF30(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x28) = 4;
 }
 
+void fn_801FEF44(void *arg0) {
+    M2C_FIELD(arg0, s8 *, 0x30) = 1;
+    M2C_FIELD(arg0, s16 *, 0x28) = 0xD2;
+}
+
 void fn_801FF33C(void) {
 
 }
