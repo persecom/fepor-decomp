@@ -285,3 +285,11 @@ void fn_80053D84(void *arg0) {
     M2C_FIELD(temp_r3, s32 *, 8) = (s32) (M2C_FIELD(temp_r3, s32 *, 8) | 0x80000000);
 }
 
+void fn_80054808(void *arg0) {
+    M2C_UNK fn_8000C188(void *);
+    u8 fn_80055248(s32);
+    if (fn_80055248(*M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s32 **, 0x2C)) != 0) {
+        fn_8000C188(arg0);
+    }
+}
+
