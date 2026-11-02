@@ -25,6 +25,14 @@ void fn_801295DC(void *arg0) {
     }
 }
 
+void fn_8012975C(void *arg0) {
+    u8 fn_80040824();
+    M2C_UNK fn_80049B78(s32, M2C_UNK);
+    if (fn_80040824() != 0) {
+        fn_80049B78(M2C_FIELD(arg0, s32 *, 0x30), 1);
+    }
+}
+
 void fn_80129F68(void *arg0) {
     M2C_UNK fn_80049174(s32, void *, s32 *, M2C_UNK);
     extern s32 lbl_8036A40C;
