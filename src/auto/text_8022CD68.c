@@ -13,6 +13,10 @@ void __kill_critical_regions(void) {
 
 }
 
+s32 Hu_IsStub(void) {
+    return 0;
+}
+
 void fn_8023C53C(void) {
 
 }
