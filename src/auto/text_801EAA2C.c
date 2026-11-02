@@ -13,3 +13,7 @@ void fn_801EC7B4(void) {
 
 }
 
+s32 fn_801F1100(void) {
+    return 0;
+}
+
