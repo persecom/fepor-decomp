@@ -38,6 +38,10 @@ void fn_800DB528(void) {
 
 }
 
+s32 fn_800DBEC8(void *arg0) {
+    return M2C_FIELD(arg0, s32 *, 0x9C);
+}
+
 void fn_800DBED0(void) {
 
 }
