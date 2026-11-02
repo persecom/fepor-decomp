@@ -63,6 +63,24 @@ void fn_801857F0(void *arg0) {
     }
 }
 
+void fn_80185AF4(void *arg0) {
+    extern void *lbl_80367240;
+    s32 temp_r0;
+
+    if ((u8) M2C_FIELD(arg0, u8 *, 0x3E) != 0) {
+        temp_r0 = M2C_FIELD(lbl_80367240, s32 *, 4);
+        if ((s32) M2C_FIELD(arg0, s32 *, 0x34) == 1) {
+            if (temp_r0 & 0x100) {
+                M2C_FIELD(arg0, s32 *, 0x34) = 2;
+                M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), f32 *, 0x78) = (f32) M2C_FIELD(arg0, s32 *, 0x34);
+            }
+        } else if (!(temp_r0 & 0x100)) {
+            M2C_FIELD(arg0, s32 *, 0x34) = 1;
+            M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), f32 *, 0x78) = (f32) M2C_FIELD(arg0, s32 *, 0x34);
+        }
+    }
+}
+
 s32 fn_80185B94(void *arg0) {
     void *temp_r5;
 
