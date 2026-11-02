@@ -65,6 +65,10 @@ void fn_8020CED0(void) {
 
 }
 
+s32 fn_8020F404(void) {
+    return 0x80000000;
+}
+
 s32 fn_80211690(void) {
     extern s32 lbl_80368604;
     return lbl_80368604;
