@@ -44,6 +44,11 @@ void OSSetArenaHi(s32 arg0) {
     __OSArenaHi_803684A8 = arg0;
 }
 
+void OSSetArenaLo(s32 arg0) {
+    extern s32 __OSArenaLo_80366F30;
+    __OSArenaLo_80366F30 = arg0;
+}
+
 void fn_80209E68(void) {
 
 }
