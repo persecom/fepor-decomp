@@ -124,6 +124,21 @@ void fn_8000C5E0(void *arg0) {
     }
 }
 
+void *fn_8000CAA0(void) {
+    void *fn_8000CAF0();
+    void *temp_r3;
+    void *temp_r5;
+
+    temp_r3 = fn_8000CAF0();
+    if ((u32) M2C_FIELD(temp_r3, u32 *, 0) == 0U) {
+        return NULL;
+    }
+    M2C_FIELD(temp_r3, u8 *, 0x2C) = (u8) (M2C_FIELD(temp_r3, u8 *, 0x2C) | 2);
+    temp_r5 = M2C_FIELD(temp_r3, void **, 0x18);
+    M2C_FIELD(temp_r5, u8 *, 0x2D) = (u8) (M2C_FIELD(temp_r5, u8 *, 0x2D) + 1);
+    return temp_r3;
+}
+
 void fn_8000CD80(s32 arg0) {
     extern s32 lbl_80367158;
     lbl_80367158 = arg0;
