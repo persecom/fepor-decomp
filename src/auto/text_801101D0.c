@@ -5,6 +5,10 @@ u8 fn_80110220(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1A7);
 }
 
+u8 fn_80112F3C(void *arg0) {
+    return M2C_FIELD(arg0, u8 *, 0x1A4);
+}
+
 void fn_8011B570(void) {
 
 }
