@@ -1013,6 +1013,17 @@ void fn_800FF36C(void *arg0) {
     }
 }
 
+s32 fn_80100130(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    M2C_UNK fn_8003FF90(M2C_UNK, M2C_UNK);
+    s32 fn_80100284(s32, M2C_UNK, s32, s32, s32);
+    s32 temp_r31;
+
+    fn_8003FF90(0, 0);
+    temp_r31 = fn_80100284(arg0, 1, arg1, arg2, arg3);
+    fn_8003FF90(0, 0);
+    return temp_r31;
+}
+
 s32 fn_80100CC8(void) {
     void *fn_80016BDC();
     s32 temp_r3;
