@@ -15,6 +15,11 @@ void fn_800B4794(void) {
     lbl_80367810 = 0;
 }
 
+void fn_800B47A0(void) {
+    M2C_UNK fn_800C4588();
+    fn_800C4588();
+}
+
 s32 fn_800B49C8(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x74);
 }
