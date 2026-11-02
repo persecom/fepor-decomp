@@ -106,6 +106,16 @@ s32 fn_8014C6B8(void) {
     return 1;
 }
 
+s32 fn_8014C6E0(void) {
+    u8 fn_80040824();
+    M2C_UNK fn_800AA134();
+    if (fn_80040824() == 0) {
+        return 0;
+    }
+    fn_800AA134();
+    return 1;
+}
+
 void fn_8014C774(void) {
     M2C_UNK fn_80040854();
     M2C_UNK fn_80040844();
