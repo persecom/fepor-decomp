@@ -1,6 +1,11 @@
 /* Functions from 0x80074370 to 0x8007C534, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_80074370(void *arg0) {
+    extern s32 lbl_80367468;
+    M2C_FIELD(arg0, s32 *, 0xC) = (s32) lbl_80367468;
+}
+
 s32 fn_8007485C(void) {
     return 0;
 }
