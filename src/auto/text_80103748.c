@@ -5,6 +5,10 @@ s32 fn_80103818(void) {
     return 0;
 }
 
+s32 fn_80103918(void) {
+    return 0x20;
+}
+
 s32 fn_80103950(void) {
     return 0;
 }
