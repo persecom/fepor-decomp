@@ -201,6 +201,15 @@ void fn_800DF430(void *arg0, void *arg1) {
     M2C_FIELD(arg1, f32 *, 8) = (f32) M2C_FIELD(arg0, f32 *, 8);
 }
 
+void fn_800DF478(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
+    M2C_FIELD(arg0, f32 *, 0xC) = farg0;
+    M2C_FIELD(arg0, f32 *, 0x10) = farg1;
+    M2C_FIELD(arg0, f32 *, 0x14) = farg2;
+    M2C_FIELD(arg0, f32 *, 0) = farg0;
+    M2C_FIELD(arg0, f32 *, 4) = farg1;
+    M2C_FIELD(arg0, f32 *, 8) = farg2;
+}
+
 void fn_800DF664(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x2C) = 0;
 }
