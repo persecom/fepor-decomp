@@ -164,6 +164,14 @@ void fn_80050BA8(s32 arg0) {
     fn_8005F788(arg0 + 0x1C);
 }
 
+void fn_80051538(s32 *arg0) {
+    M2C_UNK fn_80051564(s32 *);
+    s32 sp8;
+
+    sp8 = *arg0;
+    fn_80051564(&sp8);
+}
+
 void fn_80052B44(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
