@@ -1,6 +1,16 @@
 /* Functions from 0x8002887C to 0x80033080, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_80029784(void) {
+    u8 fn_800AA188();
+    M2C_UNK fn_800F214C();
+    extern s32 lbl_80367110;
+    if ((fn_800AA188() != 0) && !(lbl_80367110 & 0x80)) {
+        fn_800F214C();
+        fn_800F20E0();
+    }
+}
+
 s32 fn_80029848(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 4) - M2C_FIELD(arg0, s32 *, 0);
 }
