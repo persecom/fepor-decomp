@@ -116,6 +116,13 @@ u8 fn_8001DDBC(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1E);
 }
 
+s32 fn_8001DDC4(u8 arg0) {
+    if ((arg0 >= 4U) && (arg0 <= 7U)) {
+        return 1;
+    }
+    return 0;
+}
+
 void fn_8001EDA0(u8 *arg0) {
     u8 temp_r4;
 
