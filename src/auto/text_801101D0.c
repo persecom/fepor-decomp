@@ -21,6 +21,10 @@ void fn_8011386C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x14C) = -1;
 }
 
+s32 fn_80113878(void *arg0) {
+    return M2C_FIELD(arg0, s32 *, 0x19C) != 0;
+}
+
 u8 fn_8011388C(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1B4);
 }
