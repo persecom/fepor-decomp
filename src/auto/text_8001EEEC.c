@@ -143,6 +143,14 @@ void fn_8002666C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x60) = 0;
 }
 
+void fn_800281D8(void *arg0) {
+    void *temp_r3;
+
+    M2C_FIELD(arg0, s8 *, 0x12) = 1;
+    temp_r3 = M2C_FIELD(arg0, void **, 0);
+    M2C_FIELD(temp_r3, s32 *, 0x1A0) = (s32) (M2C_FIELD(temp_r3, s32 *, 0x1A0) & 0xFFFFFFFE);
+}
+
 void fn_8002863C(void) {
 
 }
