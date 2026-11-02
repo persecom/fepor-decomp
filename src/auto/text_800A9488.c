@@ -37,6 +37,13 @@ s32 fn_800A96D0(void) {
     return 0;
 }
 
+void fn_800AA244(void) {
+    M2C_UNK fn_800F0774();
+    M2C_UNK fn_800F2E70();
+    fn_800F2E70();
+    fn_800F0774();
+}
+
 s32 fn_800AA268(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x60) != 0;
 }
