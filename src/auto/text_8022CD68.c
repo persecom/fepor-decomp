@@ -108,6 +108,14 @@ s32 AMC_IsStub(void) {
     return 1;
 }
 
+u32 fn_8024B370(void) {
+    s32 fn_80243F50();
+    s32 temp_r3;
+
+    temp_r3 = fn_80243F50();
+    return (u32) ((-1 - temp_r3) | (temp_r3 + 1)) >> 0x1FU;
+}
+
 void fn_8024C5C8(void) {
 
 }
