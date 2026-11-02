@@ -10,6 +10,10 @@ s32 fn_800B49C8(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x74);
 }
 
+void fn_800B49D0(void *arg0) {
+    M2C_FIELD(arg0, u16 *, 0x90) = (u16) (M2C_FIELD(arg0, u16 *, 0x90) | 8);
+}
+
 s32 fn_800B6A30(void) {
     return 0;
 }
