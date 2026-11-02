@@ -32,6 +32,10 @@ void fn_800C6008(void) {
     fn_800C6028();
 }
 
+void fn_800C73F0(s32 arg0) {
+    fn_8006EDA0(arg0 + 0x30);
+}
+
 void fn_800C7EF8(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x24) = 0;
     M2C_FIELD(arg0, s32 *, 0x20) = 0;
