@@ -12,6 +12,12 @@ void fn_800A01B4(void) {
     fn_80018AAC();
 }
 
+s32 fn_800A022C(void) {
+    M2C_UNK fn_80018E0C();
+    fn_80018E0C();
+    return 0;
+}
+
 s32 fn_800A1710(void) {
     return 0;
 }
