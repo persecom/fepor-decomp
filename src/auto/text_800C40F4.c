@@ -691,6 +691,15 @@ void fn_800FA5D4(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x251) = (u8) (M2C_FIELD(arg0, u8 *, 0x251) + 1);
 }
 
+void fn_800FAA50(void *arg0) {
+    extern s32 lbl_803678F4;
+    if ((s32) lbl_803678F4 == 0) {
+        M2C_FIELD(arg0, u8 *, 0x250) = (u8) (M2C_FIELD(arg0, u8 *, 0x250) + 1);
+        return;
+    }
+    M2C_FIELD(arg0, u8 *, 0x251) = (u8) (M2C_FIELD(arg0, u8 *, 0x251) + 1);
+}
+
 void fn_800FC150(void) {
     M2C_UNK fn_800FF918();
     fn_800FF918();
