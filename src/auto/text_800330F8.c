@@ -94,6 +94,11 @@ void fn_8004FE90(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 2) = arg1;
 }
 
+void fn_80052B44(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 0) = 0;
+    M2C_FIELD(arg0, s32 *, 4) = 0;
+}
+
 void fn_80052F90(void *arg0) {
     extern f32 lbl_80369084;
     M2C_FIELD(arg0, f32 *, 0x50) = (f32) lbl_80369084;
