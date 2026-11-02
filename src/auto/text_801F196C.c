@@ -39,6 +39,11 @@ void fn_801F9464(void) {
     fn_80059C2C(0, 0, 0x260, 0x1C0, 0);
 }
 
+void fn_801F9D1C(s32 arg0, s32 arg1) {
+    void *fn_801F9D50(s32);
+    M2C_FIELD(fn_801F9D50(arg1), s32 *, 0x48) = arg0;
+}
+
 void fn_801FC400(void) {
 
 }
