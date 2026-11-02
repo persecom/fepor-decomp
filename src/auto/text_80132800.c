@@ -29,3 +29,7 @@ void fn_8013F3CC(void) {
 
 }
 
+void fn_8013FC64(void) {
+
+}
+
