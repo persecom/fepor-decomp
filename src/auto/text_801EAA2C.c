@@ -13,6 +13,10 @@ s32 fn_801EC17C(void) {
     return 0x60;
 }
 
+s32 fn_801EC6CC(void) {
+    return 2;
+}
+
 void fn_801EC7B4(void) {
 
 }
