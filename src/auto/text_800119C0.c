@@ -58,6 +58,13 @@ u8 fn_80014E70(void) {
     return lbl_803671B8;
 }
 
+void fn_8001520C(void *arg0, u8 arg1) {
+    M2C_FIELD(arg0, u8 *, 1) = arg1;
+    M2C_FIELD(arg0, u8 *, 0) = (u8) (arg1 == 3);
+    M2C_FIELD(arg0, s8 *, 2) = -1;
+    M2C_FIELD(arg0, s8 *, 3) = -1;
+}
+
 void fn_8001594C(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
