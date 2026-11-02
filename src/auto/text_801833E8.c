@@ -102,6 +102,13 @@ void fn_8018B854(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x44) = 0;
 }
 
+void fn_8018C964(void *arg0) {
+    u8 fn_8004BF80(s32);
+    if (fn_8004BF80(M2C_FIELD(arg0, s32 *, 0x30)) != 0) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_8018C9A4(void *arg0) {
     M2C_UNK fn_8005FA14(s32, M2C_UNK);
     fn_8005FA14(M2C_FIELD(arg0, s32 *, 0x34), 1);
