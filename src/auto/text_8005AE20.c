@@ -163,6 +163,40 @@ void fn_80068550(s32 arg0) {
     lbl_803672F8 = arg0;
 }
 
+void fn_80069010(s32 *arg0, void *arg1) {
+    M2C_UNK fn_8022100C(M2C_UNK);
+    s32 temp_r0;
+    s32 temp_r0_2;
+
+    if (*arg0 & 0x1000) {
+        temp_r0 = M2C_FIELD(arg1, u16 *, 8) & 0x1800;
+        switch (temp_r0) {                          /* switch 1; irregular */
+        case 0x800:                                 /* switch 1 */
+            fn_8022100C(2);
+            return;
+        case 0x1000:                                /* switch 1 */
+            fn_8022100C(1);
+            return;
+        case 0x1800:                                /* switch 1 */
+            fn_8022100C(3);
+            return;
+        }
+    } else {
+        temp_r0_2 = M2C_FIELD(arg1, u16 *, 8) & 0x1800;
+        switch (temp_r0_2) {                        /* switch 2; irregular */
+        case 0x800:                                 /* switch 2 */
+            fn_8022100C(1);
+            return;
+        case 0x1000:                                /* switch 2 */
+            fn_8022100C(2);
+            return;
+        case 0x1800:                                /* switch 2 */
+            fn_8022100C(0);
+            return;
+        }
+    }
+}
+
 u8 fn_80069DB4(void) {
     extern u8 lbl_80367302;
     return lbl_80367302;
