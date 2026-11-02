@@ -81,3 +81,7 @@ void fn_800536CC(void *arg0, s32 arg1) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s32 *, 0x34) = arg1;
 }
 
+void fn_800536D8(void *arg0, s32 arg1) {
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s32 *, 0x30) = arg1;
+}
+
