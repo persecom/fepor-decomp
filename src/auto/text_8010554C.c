@@ -13,6 +13,10 @@ void fn_8010AC54(void) {
 
 }
 
+s32 fn_8010CA94(void) {
+    return 0;
+}
+
 void fn_8010FBD4(void) {
 
 }
