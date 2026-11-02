@@ -49,3 +49,8 @@ void fn_8002F774(void) {
 
 }
 
+void fn_80033024(void) {
+    M2C_UNK fn_8004A224();
+    fn_8004A224();
+}
+
