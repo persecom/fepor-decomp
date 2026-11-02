@@ -189,6 +189,18 @@ void fn_80059240(void *arg0) {
     M2C_FIELD(arg0, M2C_UNK (**)(s32), 0x30)(M2C_FIELD(arg0, s32 *, 0x18));
 }
 
+f32 fn_80059EB8(s32 arg0, s32 arg1, f32 farg0, f32 farg1) {
+    s32 temp_r0;
+    s32 temp_r5;
+
+    temp_r5 = arg0 >> 1;
+    temp_r0 = arg1 % arg0;
+    if (temp_r0 < temp_r5) {
+        return farg0 + (((f32) temp_r0 * (farg1 - farg0)) / (f32) temp_r5);
+    }
+    return farg1 + (((f32) (temp_r0 - temp_r5) * (farg0 - farg1)) / (f32) temp_r5);
+}
+
 f32 fn_80059F64(f32 farg0, f32 farg1, f32 farg2, f32 farg3) {
     return farg0 + ((farg3 * (farg1 - farg0)) / farg2);
 }
