@@ -119,3 +119,7 @@ u8 fn_801DE3D0(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x10);
 }
 
+s32 fn_801E33F4(void *arg0) {
+    return M2C_FIELD(arg0, u16 *, 0x10) & 1;
+}
+
