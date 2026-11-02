@@ -364,6 +364,11 @@ void fn_80225BF4(void) {
     M2C_FIELD(__cpReg, s16 *, 4) = 4;
 }
 
+void TRKDestructEvent(void *arg0) {
+    M2C_UNK fn_8022699C(s32);
+    fn_8022699C(M2C_FIELD(arg0, s32 *, 8));
+}
+
 void fn_80225F4C(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0) = arg1;
     M2C_FIELD(arg0, s32 *, 4) = 0;
