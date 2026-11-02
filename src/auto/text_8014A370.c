@@ -144,3 +144,9 @@ void fn_8014D8FC(void *arg0) {
     fn_80019F04(M2C_FIELD(arg0, u8 *, 0x10));
 }
 
+void fn_8014DFE8(s32 arg0) {
+    M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
+    extern M2C_UNK lbl_80367B94;
+    fn_80024398(&lbl_80367B94, arg0, 0);
+}
+
