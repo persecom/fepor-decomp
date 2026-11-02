@@ -224,6 +224,11 @@ void fn_802634E4(void) {
     fn_802137E8();
 }
 
+void fn_80263764(void) {
+    M2C_UNK OSDisableInterrupts();
+    OSDisableInterrupts();
+}
+
 void fn_80266FFC(void) {
 
 }
