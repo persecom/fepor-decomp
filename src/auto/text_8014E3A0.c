@@ -17,6 +17,13 @@ s32 fn_8014E414(void) {
     return 0;
 }
 
+s32 fn_801512D8(void) {
+    M2C_UNK fn_800D758C(s32);
+    extern s32 lbl_80367BA0;
+    fn_800D758C(lbl_80367BA0);
+    return 0;
+}
+
 void fn_801515AC(void) {
     extern s32 lbl_80367BA8;
     lbl_80367BA8 = 0;
