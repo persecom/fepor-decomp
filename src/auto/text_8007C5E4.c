@@ -101,3 +101,8 @@ void fn_80098B74(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x40) = 1;
 }
 
+void fn_80099ED0(void *arg0) {
+    M2C_UNK fn_80096418(s16);
+    fn_80096418(M2C_FIELD(arg0, s16 *, 0x46));
+}
+
