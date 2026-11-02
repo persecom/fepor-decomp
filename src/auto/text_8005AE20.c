@@ -72,3 +72,8 @@ s32 fn_800703D4(void) {
 void fn_80070EDC(void) {
 
 }
+
+s32 fn_80072394(void) {
+    return 0;
+}
+
