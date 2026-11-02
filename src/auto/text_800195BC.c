@@ -120,6 +120,20 @@ void fn_8001B9DC(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0xB) = 0;
 }
 
+void fn_8001C21C(void *arg0, s32 arg1) {
+    M2C_UNK fn_8017A574(s32, M2C_UNK);
+    M2C_UNK fn_8017A5C4(s32, u16);
+    void *temp_r3;
+
+    temp_r3 = M2C_FIELD(arg0, void **, 0);
+    if (temp_r3 == NULL) {
+        fn_8017A574(arg1, 0);
+        return;
+    }
+    fn_8017A5C4(arg1, M2C_FIELD(temp_r3, u16 *, 0xE));
+    fn_8017A5C4(arg1, M2C_FIELD(arg0, u16 *, 4));
+}
+
 void fn_8001D018(s32 arg0, s32 arg1) {
     M2C_UNK fn_8017A810(s32, M2C_UNK, s32);
     fn_8017A810(arg1, 8, arg0);
