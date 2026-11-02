@@ -17,6 +17,10 @@ void fn_80109B18(void *arg0, s8 arg1) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s8 *, 0xD) = arg1;
 }
 
+u8 fn_80109B24(void *arg0) {
+    return M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), u8 *, 0xD);
+}
+
 void fn_8010AC4C(void) {
 
 }
