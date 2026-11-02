@@ -102,6 +102,10 @@ void fn_800255E8(void) {
 
 }
 
+s32 fn_800255EC(void) {
+    return 0;
+}
+
 void fn_8002863C(void) {
 
 }
