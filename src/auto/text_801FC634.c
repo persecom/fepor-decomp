@@ -87,6 +87,11 @@ void fn_80209E68(void) {
 
 }
 
+void OSInitThreadQueue(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 4) = 0;
+    M2C_FIELD(arg0, s32 *, 0) = 0;
+}
+
 s32 fn_80209FD4(void) {
     return *(s32 *)0x800000E4;
 }
