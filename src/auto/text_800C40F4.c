@@ -29,3 +29,7 @@ void fn_800DB528(void) {
 
 }
 
+void fn_800DBED0(void) {
+
+}
+
