@@ -156,6 +156,13 @@ s32 fn_800D7864(void) {
     return 0;
 }
 
+s32 fn_800D7894(void) {
+    extern s32 lbl_803679D0;
+    fn_800D75C4(lbl_803679D0);
+    fn_800DA2CC(lbl_803679D0);
+    return 0;
+}
+
 void fn_800DA31C(void) {
     extern s8 lbl_803678BE;
     extern s8 lbl_803678BF;
