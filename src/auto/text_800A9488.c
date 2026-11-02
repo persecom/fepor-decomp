@@ -69,6 +69,20 @@ s32 fn_800A9CF0(void) {
     return 5;
 }
 
+s32 fn_800A9D34(void) {
+    extern void *lbl_80367240;
+    extern u8 lbl_80367701;
+    extern s8 lbl_80367702;
+    fn_80006220(4);
+    if ((u32) (M2C_FIELD(lbl_80367240, s32 *, 4) & 0x60) == 0x60) {
+        lbl_80367701 ^= 1;
+    }
+    if (M2C_FIELD(lbl_80367240, s32 *, 4) & 0x10) {
+        lbl_80367702 = 1;
+    }
+    return 5;
+}
+
 s32 fn_800A9DA0(void) {
     fn_80006220(2);
     return 5;
