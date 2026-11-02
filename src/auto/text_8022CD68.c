@@ -359,6 +359,26 @@ s32 fn_80262B14(s32 arg0) {
     return arg0 - 0x500;
 }
 
+void fn_80262B1C(s32 arg0, s32 arg1) {
+    u32 fn_80215F30();
+    extern u32 lbl_80368AE4;
+    extern s32 lbl_80368AE8;
+    u32 temp_r31;
+    u32 temp_r3;
+    u32 var_r0;
+
+    if (arg0 != 0) {
+        temp_r31 = (arg1 + 0x1F) & 0xFFFFFFE0;
+        temp_r3 = fn_80215F30();
+        var_r0 = temp_r31;
+        if (temp_r31 < temp_r3) {
+            var_r0 = temp_r3;
+        }
+        lbl_80368AE4 = var_r0;
+    }
+    lbl_80368AE8 = arg0;
+}
+
 void fn_80263384(void) {
     extern s32 lbl_80368B08;
     extern s32 lbl_80368B18;
