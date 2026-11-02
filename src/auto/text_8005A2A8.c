@@ -41,3 +41,7 @@ s32 fn_8005A2F0(void) {
     return 0x20;
 }
 
+s32 fn_8005A2F8(void) {
+    return 0xA;
+}
+
