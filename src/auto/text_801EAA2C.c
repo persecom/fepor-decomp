@@ -66,6 +66,15 @@ void fn_801EDEC8(void *arg0) {
     lbl_80367110 |= 4;
 }
 
+void fn_801EE098(void) {
+    M2C_UNK fn_80146B00();
+    M2C_UNK fn_801478D0(M2C_UNK);
+    M2C_UNK fn_80147FA8(M2C_UNK);
+    fn_80147FA8(0x3E8);
+    fn_801478D0(0x3E8);
+    fn_80146B00();
+}
+
 void fn_801EED74(void) {
     M2C_UNK fn_801EE0C8();
     fn_801EE0C8();
