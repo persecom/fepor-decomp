@@ -57,6 +57,10 @@ s32 fn_8013E458(void) {
     return 0;
 }
 
+s32 fn_8013E824(void) {
+    return 1;
+}
+
 void fn_8013F3C0(void) {
 
 }
