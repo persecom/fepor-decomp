@@ -14,6 +14,11 @@ s32 OSGetArenaHi(void) {
     return __OSArenaHi_803684A8;
 }
 
+s32 OSGetArenaLo(void) {
+    extern s32 __OSArenaLo_80366F30;
+    return __OSArenaLo_80366F30;
+}
+
 void fn_80209E68(void) {
 
 }
