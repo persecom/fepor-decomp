@@ -16,125 +16,305 @@ Sections:
 auto/text_800056A0.c:
 	.text       start:0x800056A0 end:0x80006258
 
+auto/text_80006258.c:
+	.text       start:0x80006258 end:0x80006264
+	.ctors      start:0x80267A84 end:0x80267A88
+
 auto/text_80006264.c:
 	.text       start:0x80006264 end:0x80011968
+
+auto/text_80011968.c:
+	.text       start:0x80011968 end:0x800119C0
+	.ctors      start:0x80267A88 end:0x80267A8C
 
 auto/text_800119C0.c:
 	.text       start:0x800119C0 end:0x80016EE8
 
+auto/text_80016EE8.c:
+	.text       start:0x80016EE8 end:0x80016F40
+	.ctors      start:0x80267A8C end:0x80267A90
+
 auto/text_80016F40.c:
 	.text       start:0x80016F40 end:0x80019558
+
+auto/text_80019558.c:
+	.text       start:0x80019558 end:0x800195BC
+	.ctors      start:0x80267A90 end:0x80267A94
 
 auto/text_800195BC.c:
 	.text       start:0x800195BC end:0x8001EE58
 
+auto/text_8001EE58.c:
+	.text       start:0x8001EE58 end:0x8001EEEC
+	.ctors      start:0x80267A94 end:0x80267A98
+
 auto/text_8001EEEC.c:
 	.text       start:0x8001EEEC end:0x80028864
+
+auto/text_80028864.c:
+	.text       start:0x80028864 end:0x8002887C
+	.ctors      start:0x80267A98 end:0x80267A9C
 
 auto/text_8002887C.c:
 	.text       start:0x8002887C end:0x80033080
 
+auto/text_80033080.c:
+	.text       start:0x80033080 end:0x800330F8
+	.ctors      start:0x80267A9C end:0x80267AA0
+
 auto/text_800330F8.c:
 	.text       start:0x800330F8 end:0x80055C70
+
+auto/text_80055C70.c:
+	.text       start:0x80055C70 end:0x80055C74
+	.ctors      start:0x80267AA0 end:0x80267AA4
 
 auto/text_80055C74.c:
 	.text       start:0x80055C74 end:0x8005A29C
 
+auto/text_8005A29C.c:
+	.text       start:0x8005A29C end:0x8005A2A8
+	.ctors      start:0x80267AA4 end:0x80267AA8
+
 auto/text_8005A2A8.c:
 	.text       start:0x8005A2A8 end:0x8005ADE4
+
+auto/text_8005ADE4.c:
+	.text       start:0x8005ADE4 end:0x8005AE20
+	.ctors      start:0x80267AA8 end:0x80267AAC
 
 auto/text_8005AE20.c:
 	.text       start:0x8005AE20 end:0x80072408
 
+auto/text_80072408.c:
+	.text       start:0x80072408 end:0x800725C8
+	.ctors      start:0x80267AAC end:0x80267AB0
+
 auto/text_800725C8.c:
 	.text       start:0x800725C8 end:0x800732BC
+
+auto/text_800732BC.c:
+	.text       start:0x800732BC end:0x80073394
+	.ctors      start:0x80267AB0 end:0x80267AB4
 
 auto/text_80073394.c:
 	.text       start:0x80073394 end:0x80073E70
 
+auto/text_80073E70.c:
+	.text       start:0x80073E70 end:0x80074370
+	.ctors      start:0x80267AB4 end:0x80267AB8
+
 auto/text_80074370.c:
 	.text       start:0x80074370 end:0x8007C534
+
+auto/text_8007C534.c:
+	.text       start:0x8007C534 end:0x8007C5E4
+	.ctors      start:0x80267AB8 end:0x80267ABC
 
 auto/text_8007C5E4.c:
 	.text       start:0x8007C5E4 end:0x8009F0BC
 
+auto/text_8009F0BC.c:
+	.text       start:0x8009F0BC end:0x8009F85C
+	.ctors      start:0x80267ABC end:0x80267AC0
+
 auto/text_8009F85C.c:
 	.text       start:0x8009F85C end:0x800A399C
+
+auto/text_800A399C.c:
+	.text       start:0x800A399C end:0x800A39AC
+	.ctors      start:0x80267AC0 end:0x80267AC4
 
 auto/text_800A39AC.c:
 	.text       start:0x800A39AC end:0x800A39C4
 
+auto/text_800A39C4.c:
+	.text       start:0x800A39C4 end:0x800A39F8
+	.ctors      start:0x80267AC4 end:0x80267AC8
+
 auto/text_800A39F8.c:
 	.text       start:0x800A39F8 end:0x800A9384
+
+auto/text_800A9384.c:
+	.text       start:0x800A9384 end:0x800A9488
+	.ctors      start:0x80267AC8 end:0x80267ACC
 
 auto/text_800A9488.c:
 	.text       start:0x800A9488 end:0x800AD1F4
 
+auto/text_800AD1F4.c:
+	.text       start:0x800AD1F4 end:0x800AD24C
+	.ctors      start:0x80267ACC end:0x80267AD0
+
 auto/text_800AD24C.c:
 	.text       start:0x800AD24C end:0x800C3F18
+
+auto/text_800C3F18.c:
+	.text       start:0x800C3F18 end:0x800C40F4
+	.ctors      start:0x80267AD0 end:0x80267AD4
 
 auto/text_800C40F4.c:
 	.text       start:0x800C40F4 end:0x801035C8
 
+auto/text_801035C8.c:
+	.text       start:0x801035C8 end:0x80103748
+	.ctors      start:0x80267AD4 end:0x80267AD8
+
 auto/text_80103748.c:
 	.text       start:0x80103748 end:0x80105504
+
+auto/text_80105504.c:
+	.text       start:0x80105504 end:0x8010554C
+	.ctors      start:0x80267AD8 end:0x80267ADC
 
 auto/text_8010554C.c:
 	.text       start:0x8010554C end:0x80110128
 
+auto/text_80110128.c:
+	.text       start:0x80110128 end:0x801101D0
+	.ctors      start:0x80267ADC end:0x80267AE0
+
 auto/text_801101D0.c:
 	.text       start:0x801101D0 end:0x80120CC0
+
+auto/text_80120CC0.c:
+	.text       start:0x80120CC0 end:0x80120CCC
+	.ctors      start:0x80267AE0 end:0x80267AE4
 
 auto/text_80120CCC.c:
 	.text       start:0x80120CCC end:0x80127D80
 
+auto/text_80127D80.c:
+	.text       start:0x80127D80 end:0x80127E94
+	.ctors      start:0x80267AE4 end:0x80267AE8
+
 auto/text_80127E94.c:
 	.text       start:0x80127E94 end:0x8012C368
+
+auto/text_8012C368.c:
+	.text       start:0x8012C368 end:0x8012C3D0
+	.ctors      start:0x80267AE8 end:0x80267AEC
 
 auto/text_8012C3D0.c:
 	.text       start:0x8012C3D0 end:0x8013275C
 
+auto/text_8013275C.c:
+	.text       start:0x8013275C end:0x80132800
+	.ctors      start:0x80267AEC end:0x80267AF0
+
 auto/text_80132800.c:
 	.text       start:0x80132800 end:0x80149F38
+
+auto/text_80149F38.c:
+	.text       start:0x80149F38 end:0x80149FB8
+	.ctors      start:0x80267AF0 end:0x80267AF4
 
 auto/text_80149FB8.c:
 	.text       start:0x80149FB8 end:0x8014A25C
 
+auto/text_8014A25C.c:
+	.text       start:0x8014A25C end:0x8014A370
+	.ctors      start:0x80267AF4 end:0x80267AF8
+
 auto/text_8014A370.c:
 	.text       start:0x8014A370 end:0x8014E350
+
+auto/text_8014E350.c:
+	.text       start:0x8014E350 end:0x8014E3A0
+	.ctors      start:0x80267AF8 end:0x80267AFC
 
 auto/text_8014E3A0.c:
 	.text       start:0x8014E3A0 end:0x801620BC
 
+auto/text_801620BC.c:
+	.text       start:0x801620BC end:0x80163200
+	.ctors      start:0x80267AFC end:0x80267B00
+
 auto/text_80163200.c:
 	.text       start:0x80163200 end:0x80183374
+
+auto/text_80183374.c:
+	.text       start:0x80183374 end:0x801833E8
+	.ctors      start:0x80267B00 end:0x80267B04
 
 auto/text_801833E8.c:
 	.text       start:0x801833E8 end:0x801A2AB4
 
+auto/text_801A2AB4.c:
+	.text       start:0x801A2AB4 end:0x801A2AC4
+	.ctors      start:0x80267B04 end:0x80267B08
+
 auto/text_801A2AC4.c:
 	.text       start:0x801A2AC4 end:0x801A7D3C
+
+auto/text_801A7D3C.c:
+	.text       start:0x801A7D3C end:0x801A7D78
+	.ctors      start:0x80267B08 end:0x80267B0C
 
 auto/text_801A7D78.c:
 	.text       start:0x801A7D78 end:0x801AE2D4
 
+auto/text_801AE2D4.c:
+	.text       start:0x801AE2D4 end:0x801AE3F8
+	.ctors      start:0x80267B0C end:0x80267B10
+
 auto/text_801AE3F8.c:
 	.text       start:0x801AE3F8 end:0x801B3220
+
+auto/text_801B3220.c:
+	.text       start:0x801B3220 end:0x801B3258
+	.ctors      start:0x80267B10 end:0x80267B14
 
 auto/text_801B3258.c:
 	.text       start:0x801B3258 end:0x801E4380
 
+auto/text_801E4380.c:
+	.text       start:0x801E4380 end:0x801E4540
+	.ctors      start:0x80267B14 end:0x80267B18
+
 auto/text_801E4540.c:
 	.text       start:0x801E4540 end:0x801EA8C0
+
+auto/text_801EA8C0.c:
+	.text       start:0x801EA8C0 end:0x801EAA2C
+	.ctors      start:0x80267B18 end:0x80267B1C
 
 auto/text_801EAA2C.c:
 	.text       start:0x801EAA2C end:0x801F18D4
 
+auto/text_801F18D4.c:
+	.text       start:0x801F18D4 end:0x801F196C
+	.ctors      start:0x80267B1C end:0x80267B20
+
 auto/text_801F196C.c:
 	.text       start:0x801F196C end:0x801FC620
 
+auto/text_801FC620.c:
+	.text       start:0x801FC620 end:0x801FC634
+	.ctors      start:0x80267B20 end:0x80267B24
+
 auto/text_801FC634.c:
 	.text       start:0x801FC634 end:0x8022C1E8
+
+auto/text_8022C1E8.c:
+	extab       start:0x80005600 end:0x80005608
+	extabindex  start:0x80005640 end:0x8000564C
+	.text       start:0x8022C1E8 end:0x8022C260
+
+auto/text_8022C260.c:
+	extab       start:0x80005608 end:0x80005620
+	extabindex  start:0x8000564C end:0x80005658
+	.text       start:0x8022C260 end:0x8022C35C
+
+auto/text_8022C35C.c:
+	extab       start:0x80005620 end:0x80005628
+	extabindex  start:0x80005658 end:0x80005664
+	.text       start:0x8022C35C end:0x8022C414
+
+auto/text_8022C414.c:
+	extab       start:0x80005628 end:0x80005640
+	extabindex  start:0x80005664 end:0x80005670
+	.text       start:0x8022C414 end:0x8022C518
 
 auto/text_8022C518.c:
 	.text       start:0x8022C518 end:0x8022CCF8
