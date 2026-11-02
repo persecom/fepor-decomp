@@ -77,3 +77,7 @@ void fn_80052F90(void *arg0) {
     M2C_FIELD(arg0, f32 *, 0x50) = (f32) lbl_80369084;
 }
 
+void fn_800536CC(void *arg0, s32 arg1) {
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s32 *, 0x34) = arg1;
+}
+
