@@ -29,6 +29,10 @@ u8 fn_8003F214(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x19F);
 }
 
+s32 fn_8003F21C(s32 arg0) {
+    return arg0 + 0x1A0;
+}
+
 s32 fn_80040844(void) {
     extern s32 lbl_803672AC;
     return lbl_803672AC;
