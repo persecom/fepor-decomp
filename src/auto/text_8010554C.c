@@ -83,6 +83,19 @@ f32 fn_80109BA8(void *arg0) {
     return M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), f32 *, 8);
 }
 
+void fn_80109CE8(void *arg0) {
+    f32 fn_800067BC(M2C_UNK, f32, f32, f32, f32);
+    M2C_UNK fn_8000C188(void *);
+    void *temp_r31;
+
+    temp_r31 = M2C_FIELD(arg0, void **, 0x30);
+    M2C_FIELD(arg0, s32 *, 0x34) = (s32) (M2C_FIELD(arg0, s32 *, 0x34) + 1);
+    M2C_FIELD(temp_r31, s8 *, 0x60) = (s8) fn_800067BC(0, (f32) M2C_FIELD(arg0, s32 *, 0x3C), (f32) M2C_FIELD(arg0, s32 *, 0x40), (f32) M2C_FIELD(arg0, s32 *, 0x34), (f32) M2C_FIELD(arg0, s32 *, 0x38));
+    if ((s32) M2C_FIELD(arg0, s32 *, 0x34) >= (s32) M2C_FIELD(arg0, s32 *, 0x38)) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_8010AC4C(void) {
 
 }
