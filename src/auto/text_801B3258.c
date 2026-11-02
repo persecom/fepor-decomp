@@ -83,6 +83,10 @@ u8 fn_801DE350(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x63);
 }
 
+u8 fn_801DE358(void *arg0) {
+    return M2C_FIELD(arg0, u8 *, 0x47);
+}
+
 s32 fn_801DE360(void) {
     return 1;
 }
