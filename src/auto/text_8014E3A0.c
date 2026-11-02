@@ -5,6 +5,10 @@ s32 fn_8014E3A0(void) {
     return 0;
 }
 
+s32 fn_8014E3A8(void) {
+    return 0x260;
+}
+
 s32 fn_8014E3C0(void) {
     return 9;
 }
