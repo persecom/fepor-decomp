@@ -426,6 +426,16 @@ void fn_801426B4(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x40) = 0;
 }
 
+s32 fn_8014351C(void *arg0, s32 arg1) {
+    u8 (*temp_r12)(s32, s32);
+
+    temp_r12 = M2C_FIELD(arg0, u8 (**)(s32, s32), 0x120);
+    if (temp_r12 != NULL) {
+        return temp_r12(arg1, M2C_FIELD(arg0, s32 *, 0x124)) != 0;
+    }
+    return 1;
+}
+
 void fn_80144688(void) {
 
 }
