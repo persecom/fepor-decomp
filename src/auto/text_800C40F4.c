@@ -9,6 +9,10 @@ void fn_800C5F84(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x34) = 3;
 }
 
+void fn_800C5F90(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 0x34) = 2;
+}
+
 void fn_800D588C(s32 arg0) {
     extern s32 lbl_8036787C;
     lbl_8036787C = arg0;
