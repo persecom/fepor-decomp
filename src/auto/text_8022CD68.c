@@ -141,6 +141,15 @@ s32 fn_8024A430(u16 arg0) {
     return 0;
 }
 
+void fn_8024A674(s32 arg0, s32 arg1) {
+    M2C_UNK fn_80260060(M2C_UNK, s32, s32);
+    fn_80260060(7, arg0, arg1);
+    fn_80260060(0xA, arg0, arg1);
+    fn_80260060(0x5B, arg0, arg1);
+    fn_80260060(0x80, arg0, arg1);
+    fn_80260060(0x84, arg0, arg1);
+}
+
 u32 fn_8024B370(void) {
     s32 fn_80243F50();
     s32 temp_r3;
