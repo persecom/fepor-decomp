@@ -43,6 +43,12 @@ void fn_8005F780(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 0x84) = arg1;
 }
 
+void fn_8005F7E0(void *arg0, s8 arg1, s8 arg2, s8 arg3) {
+    M2C_FIELD(arg0, s8 *, 8) = arg1;
+    M2C_FIELD(arg0, s8 *, 9) = arg2;
+    M2C_FIELD(arg0, s8 *, 0xA) = arg3;
+}
+
 f32 fn_80060460(void *arg0) {
     return M2C_FIELD(arg0, f32 *, 0x78);
 }
