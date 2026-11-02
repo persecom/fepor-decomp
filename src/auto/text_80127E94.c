@@ -17,6 +17,15 @@ s32 fn_801287B8(void) {
     return 0;
 }
 
+void fn_80129F68(void *arg0) {
+    M2C_UNK fn_80049174(s32, void *, s32 *, M2C_UNK);
+    extern s32 lbl_8036A40C;
+    s32 sp8;
+
+    sp8 = lbl_8036A40C;
+    fn_80049174(*M2C_FIELD(arg0, s32 **, 0x30), arg0, &sp8, 0xA);
+}
+
 void fn_8012A240(void) {
     M2C_UNK fn_8012A530();
     fn_8012A530();
