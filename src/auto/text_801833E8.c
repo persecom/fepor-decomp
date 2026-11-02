@@ -309,3 +309,16 @@ void fn_801A0C3C(void *arg0, u32 arg1) {
     }
 }
 
+void fn_801A25C4(void) {
+    M2C_UNK fn_80016180();
+    M2C_UNK fn_8005376C();
+    M2C_UNK fn_800C1BDC();
+    extern s32 lbl_80367110;
+    if (lbl_80367110 & 1) {
+        fn_8000C60C();
+        fn_800C1BDC();
+        fn_80016180();
+        fn_8005376C();
+    }
+}
+
