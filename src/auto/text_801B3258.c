@@ -232,6 +232,13 @@ void fn_801D8E08(s16 *arg0) {
     *arg0 &= 0xFFFFFFFE;
 }
 
+void fn_801DE2FC(s32 arg0) {
+    u8 fn_8005BB2C();
+    if (fn_8005BB2C() != 0) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_801DE338(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0) = -1;
     M2C_FIELD(arg0, s32 *, 4) = -1;
