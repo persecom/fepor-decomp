@@ -75,6 +75,10 @@ void fn_801D888C(void *arg0, s16 arg1) {
     M2C_FIELD(arg0, s16 *, 2) = arg1;
 }
 
+void fn_801D88B0(s8 *arg0, s8 arg1) {
+    *arg0 = arg1;
+}
+
 s32 fn_801DE360(void) {
     return 1;
 }
