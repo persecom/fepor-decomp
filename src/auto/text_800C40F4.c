@@ -55,6 +55,11 @@ void fn_800CA5FC(void) {
     fn_800CA61C();
 }
 
+void fn_800CA644(void) {
+    M2C_UNK fn_800CA664();
+    fn_800CA664();
+}
+
 s32 fn_800D3590(void *arg0) {
     s32 temp_r4;
 
