@@ -230,6 +230,11 @@ s32 fn_801E2568(s32 *arg0, s32 arg1) {
     return ((arg1 * 0x6000) + 0x20000 + *arg0) - 0x6000;
 }
 
+void fn_801E3214(void *arg0) {
+    M2C_UNK fn_800EA540(s32, void *);
+    fn_800EA540(M2C_FIELD(arg0, s32 *, 0x54), arg0);
+}
+
 s32 fn_801E33F4(void *arg0) {
     return M2C_FIELD(arg0, u16 *, 0x10) & 1;
 }
