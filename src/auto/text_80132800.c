@@ -157,6 +157,10 @@ void fn_8013E4BC(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, u8 *, 9) = (u8) (M2C_FIELD(arg0, u8 *, 9) | arg1);
 }
 
+u8 fn_8013E4CC(void *arg0, s32 arg1) {
+    return (u8) (M2C_FIELD(arg0, u8 *, 9) & arg1);
+}
+
 void fn_8013E4DC(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 4) = arg1;
 }
