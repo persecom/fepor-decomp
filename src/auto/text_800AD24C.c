@@ -41,6 +41,12 @@ s32 fn_800B6A30(void) {
     return 0;
 }
 
+void fn_800B6F48(void) {
+    M2C_UNK fn_801E2594(M2C_UNK *);
+    extern M2C_UNK lbl_803682F0;
+    fn_801E2594(&lbl_803682F0);
+}
+
 void fn_800B8D34(void) {
     M2C_UNK fn_8006F014();
     fn_8006F014();
