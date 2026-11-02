@@ -422,6 +422,33 @@ s32 fn_800DDC04(s32 arg0) {
     return M2C_FIELD(fn_800DE73C(arg0 + 0x58), s32 *, 0xC);
 }
 
+void *fn_800DDC90(void *arg0) {
+    M2C_UNK fn_8006140C(void *);
+    void *fn_80061870();
+    u32 temp_r0;
+    u32 temp_r0_2;
+    u32 temp_r0_3;
+    void *temp_r3;
+
+    temp_r3 = fn_80061870();
+    if (temp_r3 != NULL) {
+        temp_r0 = M2C_FIELD(arg0, u32 *, 0x4C);
+        if (temp_r0 != 0U) {
+            M2C_FIELD(temp_r3, u32 *, 0x40) = temp_r0;
+        }
+        temp_r0_2 = M2C_FIELD(arg0, u32 *, 0x50);
+        if (temp_r0_2 != 0U) {
+            M2C_FIELD(temp_r3, u32 *, 0x48) = temp_r0_2;
+        }
+        temp_r0_3 = M2C_FIELD(arg0, u32 *, 0x54);
+        if (temp_r0_3 != 0U) {
+            M2C_FIELD(temp_r3, u32 *, 0x4C) = temp_r0_3;
+        }
+        fn_8006140C(temp_r3);
+    }
+    return temp_r3;
+}
+
 void fn_800DEE90(void) {
 
 }
