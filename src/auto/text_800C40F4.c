@@ -931,6 +931,22 @@ s32 fn_800FE8E8(void *arg0, void *arg1) {
     return (u32) M2C_FIELD(arg0, u32 *, 0x24C) < (u32) M2C_FIELD(arg1, u32 *, 0x24C);
 }
 
+s32 fn_80100CC8(void) {
+    void *fn_80016BDC();
+    s32 temp_r3;
+    void *temp_r3_2;
+
+    temp_r3_2 = fn_80016BDC();
+    if (temp_r3_2 == NULL) {
+        return 0;
+    }
+    temp_r3 = M2C_FIELD(temp_r3_2, s32 *, 0x1A0);
+    if (temp_r3 & 4) {
+        return 1;
+    }
+    return (temp_r3 & 0x98) == 0;
+}
+
 s32 fn_801032F8(void) {
     M2C_UNK fn_800D758C(s32);
     extern s32 lbl_80367918;
