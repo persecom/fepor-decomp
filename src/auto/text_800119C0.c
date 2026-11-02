@@ -65,6 +65,17 @@ void fn_8001520C(void *arg0, u8 arg1) {
     M2C_FIELD(arg0, s8 *, 3) = -1;
 }
 
+void fn_800152F8(s8 arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4, s8 arg5, s8 arg6, s8 arg7, void *arg_sp8) {
+    M2C_FIELD(arg_sp8, s8 *, 0) = arg0;
+    M2C_FIELD(arg_sp8, s8 *, 1) = arg1;
+    M2C_FIELD(arg_sp8, s8 *, 2) = arg2;
+    M2C_FIELD(arg_sp8, s8 *, 3) = arg3;
+    M2C_FIELD(arg_sp8, s8 *, 4) = arg4;
+    M2C_FIELD(arg_sp8, s8 *, 5) = arg5;
+    M2C_FIELD(arg_sp8, s8 *, 6) = arg6;
+    M2C_FIELD(arg_sp8, s8 *, 7) = arg7;
+}
+
 void fn_8001594C(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
