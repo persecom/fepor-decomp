@@ -66,3 +66,8 @@ s32 fn_8011C9EC(s32 arg0) {
     return arg0 + 0xAC;
 }
 
+void fn_8011CB18(void *arg0) {
+    M2C_FIELD(arg0, s8 *, 0xF0) = 0;
+    M2C_FIELD(arg0, s32 *, 0x64) = (s32) M2C_FIELD(arg0, s32 *, 0xC8);
+}
+
