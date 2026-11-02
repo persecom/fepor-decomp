@@ -141,6 +141,11 @@ void fn_80098BD8(void *arg0) {
     }
 }
 
+void fn_80098D04(s32 arg0) {
+    M2C_UNK fn_8018CAD8(M2C_UNK, M2C_UNK, s32);
+    fn_8018CAD8(0x64, 0x1E, arg0);
+}
+
 void fn_80099ED0(void *arg0) {
     M2C_UNK fn_80096418(s16);
     fn_80096418(M2C_FIELD(arg0, s16 *, 0x46));
