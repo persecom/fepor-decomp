@@ -454,6 +454,11 @@ void fn_800EB558(void) {
     lbl_80367110 &= 0xFFFFFEFF;
 }
 
+void fn_800EE090(void) {
+    M2C_UNK fn_800E43EC();
+    fn_800E43EC();
+}
+
 u8 fn_800F8308(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1A8);
 }
