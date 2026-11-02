@@ -51,6 +51,10 @@ s16 fn_801CD3F4(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0x46);
 }
 
+s16 fn_801CD3FC(void *arg0) {
+    return M2C_FIELD(arg0, s16 *, 0x42);
+}
+
 s32 fn_801DE360(void) {
     return 1;
 }
