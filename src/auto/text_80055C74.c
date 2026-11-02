@@ -40,6 +40,17 @@ void fn_80056698(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x30) = 0;
 }
 
+void *fn_80056A04(void *arg0, s16 arg1) {
+    if (arg0 != NULL) {
+        fn_800C4588(M2C_FIELD(arg0, s32 *, 0x14));
+        M2C_FIELD(arg0, s32 *, 0x14) = 0;
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_80056AE0(void *arg0, u32 arg1) {
     M2C_UNK fn_80234450(s32);
     if (arg1 != 0U) {
