@@ -123,6 +123,24 @@ void fn_80243F14(void *arg0, u8 *arg1) {
     M2C_FIELD(arg0, u8 **, 0) = (u8 *) (M2C_FIELD(arg0, u8 **, 0) + 1);
 }
 
+s32 fn_8024A430(u16 arg0) {
+    void *fn_802509D8();
+    s32 fn_80256738(u8, u8, s32, M2C_UNK, s32 *);
+    s32 sp8;
+    s32 temp_r31;
+    void *temp_r3;
+
+    temp_r3 = fn_802509D8();
+    if (temp_r3 == NULL) {
+        return 0;
+    }
+    temp_r31 = arg0 | 0x80000000;
+    if (fn_80256738(M2C_FIELD(temp_r3, u8 *, 5), M2C_FIELD(temp_r3, u8 *, 4), temp_r31, 1, &sp8) != 0) {
+        return temp_r31 == sp8;
+    }
+    return 0;
+}
+
 u32 fn_8024B370(void) {
     s32 fn_80243F50();
     s32 temp_r3;
