@@ -1,6 +1,15 @@
 /* Functions from 0x801B3258 to 0x801E4380, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_801B3D30(void *arg0) {
+    M2C_UNK fn_801B5E2C(void *);
+    void *temp_r31;
+
+    temp_r31 = M2C_FIELD(arg0, void **, 0x30);
+    fn_801B5E2C(temp_r31);
+    M2C_FIELD(temp_r31, s32 *, 0x18) = 0;
+}
+
 void fn_801B6600(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x3C) = 0;
 }
