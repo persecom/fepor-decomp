@@ -115,6 +115,14 @@ s32 AMC_IsStub(void) {
     return 1;
 }
 
+void fn_80243F14(void *arg0, u8 *arg1) {
+    M2C_FIELD(arg0, u8 **, 0) = arg1;
+    M2C_FIELD(arg0, s32 *, 4) = 2;
+    M2C_FIELD(arg0, s8 *, 8) = (s8) (((u8) *M2C_FIELD(arg0, u8 **, 0) >> 4U) & 7);
+    M2C_FIELD(arg0, s8 *, 9) = (s8) (*M2C_FIELD(arg0, u8 **, 0) & 0xF);
+    M2C_FIELD(arg0, u8 **, 0) = (u8 *) (M2C_FIELD(arg0, u8 **, 0) + 1);
+}
+
 u32 fn_8024B370(void) {
     s32 fn_80243F50();
     s32 temp_r3;
