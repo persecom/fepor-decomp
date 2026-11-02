@@ -49,6 +49,11 @@ void fn_8024C5C8(void) {
 
 }
 
+void fn_80261714(s32 arg0) {
+    extern s32 lbl_80368AA4;
+    lbl_80368AA4 = arg0;
+}
+
 void fn_802622F4(void) {
 
 }
