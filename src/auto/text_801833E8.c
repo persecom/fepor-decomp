@@ -93,6 +93,15 @@ void fn_8018B2C4(void *arg0) {
     fn_80050BCC(M2C_FIELD(arg0, s32 *, 0x30), 0);
 }
 
+void fn_8018B3DC(void *arg0) {
+    M2C_UNK fn_8005F7B0(s32, u8);
+    s32 temp_r31;
+
+    temp_r31 = M2C_FIELD(arg0, s32 *, 0x30) + 0x1C;
+    fn_8005F7E0(temp_r31, M2C_FIELD(arg0, u8 *, 0x38), M2C_FIELD(arg0, u8 *, 0x39), M2C_FIELD(arg0, u8 *, 0x3A));
+    fn_8005F7B0(temp_r31, M2C_FIELD(arg0, u8 *, 0x3B));
+}
+
 void fn_8018B698(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x40) = 0;
 }
