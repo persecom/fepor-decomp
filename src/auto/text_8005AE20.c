@@ -43,6 +43,10 @@ void fn_8005F780(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 0x84) = arg1;
 }
 
+f32 fn_80060460(void *arg0) {
+    return M2C_FIELD(arg0, f32 *, 0x78);
+}
+
 s32 fn_80067478(void) {
     extern s32 lbl_80366DDC;
     return lbl_80366DDC;
