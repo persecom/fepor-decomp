@@ -378,6 +378,10 @@ void fn_80050BA8(s32 arg0) {
     fn_8005F788(arg0 + 0x1C);
 }
 
+void fn_80050BCC(s32 arg0, u8 arg1) {
+    fn_8005F7B0(arg0 + 0x1C, arg1);
+}
+
 void fn_80051538(s32 *arg0) {
     M2C_UNK fn_80051564(s32 *);
     s32 sp8;
