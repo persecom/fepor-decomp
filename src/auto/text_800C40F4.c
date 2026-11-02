@@ -655,6 +655,25 @@ s32 fn_800E5070(void *arg0, s32 arg1) {
     return M2C_FIELD(arg0, s32 *, 0xFC) + (arg1 * 0x1C);
 }
 
+void fn_800E5600(void *arg0, s32 arg1, u8 arg2) {
+    M2C_UNK fn_8005FEE8(void *, f32);
+    s32 temp_r0;
+    s32 var_r4;
+
+    var_r4 = arg1;
+    if ((u32) M2C_FIELD(M2C_FIELD(arg0, void **, 0xE0), u32 *, 0x44) != 0U) {
+        if (arg2 != 0) {
+            M2C_FIELD(arg0, s8 *, 0xD0) = 0;
+        }
+        temp_r0 = M2C_FIELD(arg0, s32 *, 0xC8);
+        if (var_r4 >= temp_r0) {
+            var_r4 = temp_r0;
+        }
+        M2C_FIELD(arg0, s32 *, 0xCC) = var_r4;
+        fn_8005FEE8(M2C_FIELD(arg0, void **, 0xE0), (f32) var_r4);
+    }
+}
+
 s32 fn_800E5674(void *arg0) {
     if ((u8) M2C_FIELD(arg0, u8 *, 0xD0) != 0) {
         return M2C_FIELD(arg0, s32 *, 0xC8);
