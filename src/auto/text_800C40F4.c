@@ -931,6 +931,22 @@ s32 fn_800FE8E8(void *arg0, void *arg1) {
     return (u32) M2C_FIELD(arg0, u32 *, 0x24C) < (u32) M2C_FIELD(arg1, u32 *, 0x24C);
 }
 
+void fn_800FF36C(void *arg0) {
+    M2C_UNK fn_8000C188(void *);
+    u8 (*temp_r12)();
+    u8 var_r3;
+
+    temp_r12 = M2C_FIELD(arg0, u8 (**)(), 0x30);
+    if (temp_r12 != NULL) {
+        var_r3 = temp_r12();
+    } else {
+        var_r3 = 1;
+    }
+    if (var_r3 == 1) {
+        fn_8000C188(arg0);
+    }
+}
+
 s32 fn_80100CC8(void) {
     void *fn_80016BDC();
     s32 temp_r3;
