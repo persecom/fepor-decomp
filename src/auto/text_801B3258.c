@@ -241,6 +241,18 @@ void fn_801D8E08(s16 *arg0) {
     *arg0 &= 0xFFFFFFFE;
 }
 
+void *fn_801DC0CC(void) {
+    void *fn_801E09B4(M2C_UNK *);
+    extern M2C_UNK lbl_803682F0;
+    void *temp_r3;
+
+    temp_r3 = fn_801E09B4(&lbl_803682F0);
+    if ((temp_r3 != NULL) && ((u8) M2C_FIELD(temp_r3, u8 *, 0x60) == 3)) {
+        return temp_r3;
+    }
+    return NULL;
+}
+
 void fn_801DE2FC(s32 arg0) {
     u8 fn_8005BB2C();
     if (fn_8005BB2C() != 0) {
