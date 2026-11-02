@@ -340,6 +340,10 @@ s32 fn_800B8974(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     return 1;
 }
 
+u8 fn_800B8A04(void) {
+    return fn_8008A59C();
+}
+
 s32 fn_800B8AD8(void) {
     M2C_UNK fn_801C18FC();
     fn_801C18FC();
