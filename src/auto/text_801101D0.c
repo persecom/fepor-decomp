@@ -73,6 +73,13 @@ s32 fn_80117CC0(void *arg0, s32 arg1) {
     return M2C_FIELD(arg0, s32 *, 8) + arg1;
 }
 
+void fn_80117F1C(void *arg0) {
+    M2C_UNK fn_8000C070(void *, u8);
+    M2C_UNK fn_8013FEC0();
+    fn_8013FEC0();
+    fn_8000C070(arg0, M2C_FIELD(arg0, u8 *, 0x48));
+}
+
 void fn_801181D0(void) {
     M2C_UNK fn_80006198();
     M2C_UNK fn_80006220(M2C_UNK);
