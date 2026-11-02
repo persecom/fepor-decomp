@@ -126,6 +126,10 @@ s32 fn_8021381C(void) {
     return (*(u16 *)0xCC005036 << 5) & 0xFFFE0;
 }
 
+s32 fn_80213904(void) {
+    return *(s32 *)0xCC006C00 & 1;
+}
+
 s32 fn_802142B0(void) {
     return 0x4000;
 }
