@@ -127,6 +127,11 @@ s32 fn_80199310(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x124);
 }
 
+void fn_80199CEC(void *arg0) {
+    M2C_UNK fn_800498A4(s32, M2C_UNK, M2C_UNK);
+    fn_800498A4(M2C_FIELD(arg0, s32 *, 0x34), 0, 2);
+}
+
 void fn_8019D360(void *arg0) {
     void *temp_r5;
 
