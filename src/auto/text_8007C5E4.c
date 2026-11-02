@@ -265,6 +265,23 @@ loop_1:
     goto loop_1;
 }
 
+s32 fn_800958C4(s32 arg0) {
+    s32 fn_80095FF8(M2C_UNK);
+    if (arg0 & 0x80) {
+        return fn_80095FF8(0x80);
+    }
+    if (arg0 & 0x20) {
+        return fn_80095FF8(0x20);
+    }
+    if (arg0 & 8) {
+        return fn_80095FF8(8);
+    }
+    if (arg0 & 0x10) {
+        return fn_80095FF8(0x10);
+    }
+    return 0;
+}
+
 s32 fn_80098094(void) {
     extern s32 lbl_80367500;
     return lbl_80367500;
