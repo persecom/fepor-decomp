@@ -105,6 +105,15 @@ void fn_8014C774(void) {
     fn_80040854();
 }
 
+void fn_8014C798(void) {
+    M2C_UNK fn_80018EC0();
+    M2C_UNK fn_80040844();
+    M2C_UNK fn_80042558();
+    fn_80018EC0();
+    fn_80040844();
+    fn_80042558();
+}
+
 void fn_8014D254(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
     M2C_FIELD(arg0, s8 *, 0x14) = arg1;
     M2C_FIELD(arg0, s8 *, 0x15) = arg2;
