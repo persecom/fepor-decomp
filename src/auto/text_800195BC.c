@@ -72,6 +72,14 @@ void fn_80019E8C(void) {
     fn_8000D354();
 }
 
+s32 fn_80019EAC(s32 arg0) {
+    extern s32 lbl_803671D4;
+    if (arg0 == 0) {
+        return 0;
+    }
+    return lbl_803671D4 + ((arg0 - 1) * 0x64);
+}
+
 void fn_8001A5D0(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0xC) = 0;
     M2C_FIELD(arg0, s32 *, 0x3C) = 0;
