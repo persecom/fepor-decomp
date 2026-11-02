@@ -191,6 +191,13 @@ s32 fn_8024B714(s32 arg0) {
     return temp_r31;
 }
 
+void fn_8024B8EC(s32 arg0, s32 arg1, s32 arg2) {
+    M2C_UNK fn_8024A780(s32, s32, s32, M2C_UNK, M2C_UNK);
+    fn_8026372C();
+    fn_8024A780(arg0, arg1, arg2, 0, -1);
+    fn_802636F4();
+}
+
 void fn_8024C5C8(void) {
 
 }
