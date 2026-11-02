@@ -34,6 +34,11 @@ void fn_801F892C(void) {
     fn_8002D4B8();
 }
 
+void fn_801F9464(void) {
+    M2C_UNK fn_80059C2C(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    fn_80059C2C(0, 0, 0x260, 0x1C0, 0);
+}
+
 void fn_801FC400(void) {
 
 }
