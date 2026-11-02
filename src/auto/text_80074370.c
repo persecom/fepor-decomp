@@ -9,6 +9,10 @@ s32 fn_80074864(void) {
     return 0;
 }
 
+s32 fn_80074ADC(void) {
+    return 0;
+}
+
 s32 fn_8007C3F8(void) {
     extern s32 lbl_80367478;
     return lbl_80367478;
