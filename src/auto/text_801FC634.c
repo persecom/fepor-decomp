@@ -346,6 +346,12 @@ void fn_80225F4C(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 8) = -1;
 }
 
+s32 TRKTerminateNub(void) {
+    M2C_UNK fn_80226B68();
+    fn_80226B68();
+    return 0;
+}
+
 s32 fn_80226B68(void) {
     return 0;
 }
