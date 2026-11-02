@@ -84,6 +84,12 @@ s32 fn_80126C90(void) {
     return 1;
 }
 
+s32 fn_80126CE8(void) {
+    M2C_UNK fn_8011AC44();
+    fn_8011AC44();
+    return 1;
+}
+
 void fn_80127084(void) {
     M2C_UNK fn_800F1BFC();
     fn_800F1BFC();
