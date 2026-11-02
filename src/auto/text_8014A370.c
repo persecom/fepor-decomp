@@ -98,6 +98,14 @@ void fn_8014C5F4(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s16 *, 0x70) = (s16) (M2C_FIELD(arg0, s16 *, 0x70) + arg1);
 }
 
+s32 fn_8014C6B8(void) {
+    M2C_UNK fn_80040844();
+    M2C_UNK fn_80040854();
+    fn_80040844();
+    fn_80040854();
+    return 1;
+}
+
 void fn_8014C774(void) {
     M2C_UNK fn_80040854();
     M2C_UNK fn_80040844();
