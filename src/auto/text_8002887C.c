@@ -13,6 +13,11 @@ void fn_8002D39C(void) {
 
 }
 
+void fn_8002D44C(void) {
+    M2C_UNK fn_800C4B8C();
+    fn_800C4B8C();
+}
+
 s32 fn_8002EA74(void) {
     return 0;
 }
