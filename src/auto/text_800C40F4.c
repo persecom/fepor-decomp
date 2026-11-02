@@ -88,6 +88,13 @@ void fn_800CA644(void) {
     fn_800CA664();
 }
 
+void fn_800CF588(void *arg0) {
+    M2C_UNK fn_800E7B80(s32);
+    if ((u8) M2C_FIELD(arg0, u8 *, 0x196) != 0) {
+        fn_800E7B80(M2C_FIELD(arg0, s32 *, 4));
+    }
+}
+
 s32 fn_800D3590(void *arg0) {
     s32 temp_r4;
 
