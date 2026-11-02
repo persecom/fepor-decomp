@@ -25,6 +25,11 @@ s32 fn_80019DBC(u8 arg0) {
     return lbl_803671EC + (arg0 * 0xC);
 }
 
+s32 fn_80019DF0(u8 arg0) {
+    extern s32 lbl_803671E8;
+    return lbl_803671E8 + (arg0 * 0x28);
+}
+
 s32 fn_8001B954(s32 *arg0) {
     return *arg0;
 }
