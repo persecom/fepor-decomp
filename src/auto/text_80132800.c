@@ -25,3 +25,7 @@ void fn_8013F3C8(void) {
 
 }
 
+void fn_8013F3CC(void) {
+
+}
+
