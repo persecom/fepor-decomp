@@ -48,3 +48,8 @@ void fn_801518B4(void *arg0, void *arg1) {
     M2C_FIELD(arg0, f32 *, 0xBC) = (f32) M2C_FIELD(arg1, f32 *, 8);
 }
 
+void fn_80154BE4(void) {
+    M2C_UNK fn_8015C674();
+    fn_8015C674();
+}
+
