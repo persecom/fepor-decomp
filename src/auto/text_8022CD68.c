@@ -270,6 +270,12 @@ void fn_80263784(void) {
     OSEnableInterrupts();
 }
 
+void fn_80264B7C(void *arg0) {
+    M2C_UNK fn_802649AC();
+    M2C_FIELD(arg0, s32 *, 0x30) = 0;
+    fn_802649AC();
+}
+
 void fn_80266FFC(void) {
 
 }
