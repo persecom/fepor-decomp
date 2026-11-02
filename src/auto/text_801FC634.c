@@ -104,6 +104,15 @@ void fn_8020CED0(void) {
 
 }
 
+s32 fn_8020F058(s32 arg0) {
+    extern s32 autoInvalidation_80366F6C;
+    s32 temp_r0;
+
+    temp_r0 = autoInvalidation_80366F6C;
+    autoInvalidation_80366F6C = arg0;
+    return temp_r0;
+}
+
 s32 fn_8020F404(void) {
     return 0x80000000;
 }
