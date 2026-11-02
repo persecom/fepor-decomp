@@ -265,6 +265,14 @@ s32 fn_8019ED74(void) {
     return 1;
 }
 
+void fn_8019FC4C(s32 arg0) {
+    M2C_UNK fn_8000C188(s32);
+    u8 fn_8001772C();
+    if (fn_8001772C() == 0) {
+        fn_8000C188(arg0);
+    }
+}
+
 s32 fn_8019FC88(void) {
     M2C_UNK fn_80017774();
     fn_80017774();
