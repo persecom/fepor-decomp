@@ -18,6 +18,12 @@ s32 fn_800A022C(void) {
     return 0;
 }
 
+s32 fn_800A0804(void) {
+    M2C_UNK fn_80016538();
+    fn_80016538();
+    return 0;
+}
+
 s32 fn_800A1710(void) {
     return 0;
 }
