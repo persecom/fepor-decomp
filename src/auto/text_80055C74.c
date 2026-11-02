@@ -51,3 +51,7 @@ void fn_800590CC(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x30) = 0;
 }
 
+f32 fn_80059F64(f32 farg0, f32 farg1, f32 farg2, f32 farg3) {
+    return farg0 + ((farg3 * (farg1 - farg0)) / farg2);
+}
+
