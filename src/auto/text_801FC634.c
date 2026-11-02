@@ -169,6 +169,10 @@ s32 fn_80215F38(void) {
     return lbl_8036871C;
 }
 
+s32 fn_80215F40(void) {
+    return ((u16) *(u16 *)0xCC005000 >> 0xFU) & 1;
+}
+
 void fn_80216994(void) {
 
 }
