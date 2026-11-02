@@ -137,6 +137,12 @@ void fn_80070EDC(void) {
 
 }
 
+s32 fn_80072150(void) {
+    extern s8 lbl_80366DE8;
+    lbl_80366DE8 = 0;
+    return 5;
+}
+
 s32 fn_80072194(void) {
     return 0xA0;
 }
