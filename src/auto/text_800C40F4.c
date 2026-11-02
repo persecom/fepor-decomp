@@ -347,6 +347,11 @@ s32 fn_800E2E68(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x54);
 }
 
+void fn_800E3BD8(void *arg0, s32 arg1, s32 arg2) {
+    M2C_FIELD(arg0, s32 *, 0x58) = (s32) (arg1 + (M2C_FIELD(arg0, s32 *, 0x7C) - M2C_FIELD(arg0, s32 *, 0x74)));
+    M2C_FIELD(arg0, s32 *, 0x5C) = (s32) (arg2 + (M2C_FIELD(arg0, s32 *, 0x80) - M2C_FIELD(arg0, s32 *, 0x78)));
+}
+
 void fn_800E3F48(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x9C) = 0;
 }
