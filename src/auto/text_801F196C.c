@@ -1,6 +1,13 @@
 /* Functions from 0x801F196C to 0x801FC620, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_801F1DC4(void *arg0) {
+    s32 *temp_r3;
+
+    temp_r3 = M2C_FIELD(arg0, s32 **, 0x30);
+    *temp_r3 &= 0xFFFFFFFE;
+}
+
 void fn_801F5BAC(void) {
 
 }
