@@ -183,6 +183,10 @@ f32 fn_80072238(void) {
     return lbl_80369360;
 }
 
+s32 fn_80072270(void) {
+    return 4;
+}
+
 s32 fn_80072394(void) {
     return 0;
 }
