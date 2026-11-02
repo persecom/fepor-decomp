@@ -1,6 +1,22 @@
 /* Functions from 0x800A39F8 to 0x800A9384, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_800A4FF8(void) {
+    s32 OSDisableInterrupts();
+    M2C_UNK OSRestoreInterrupts(s32);
+    M2C_UNK fn_8021371C(u32);
+    extern s32 lbl_803677B0;
+    extern u32 lbl_803677B8;
+    s32 temp_r31;
+
+    temp_r31 = OSDisableInterrupts();
+    if ((u32) lbl_803677B8 != 0U) {
+        fn_8021371C(lbl_803677B8);
+    }
+    OSRestoreInterrupts(temp_r31);
+    lbl_803677B0 = 0;
+}
+
 void fn_800A5944(s32 arg0) {
     M2C_UNK fn_8006EDA0(s32);
     fn_8006EDA0(arg0 + 0x34);
