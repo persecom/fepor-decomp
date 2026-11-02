@@ -78,6 +78,10 @@ f32 fn_800255BC(void) {
     return lbl_80368DC0;
 }
 
+s32 fn_800255C4(void) {
+    return 0;
+}
+
 void fn_800255D4(void) {
 
 }
