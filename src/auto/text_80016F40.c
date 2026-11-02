@@ -1,6 +1,19 @@
 /* Functions from 0x80016F40 to 0x80019558, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_80017414(void *arg0, s32 arg1) {
+    s16 fn_8017A9B0(s32);
+    s8 fn_8017A9DC(s32);
+    M2C_FIELD(arg0, s16 *, 0) = fn_8017A9B0(arg1);
+    M2C_FIELD(arg0, s16 *, 2) = fn_8017A9B0(arg1);
+    M2C_FIELD(arg0, s16 *, 4) = fn_8017A9B0(arg1);
+    M2C_FIELD(arg0, s16 *, 6) = fn_8017A9B0(arg1);
+    M2C_FIELD(arg0, s16 *, 8) = fn_8017A9B0(arg1);
+    M2C_FIELD(arg0, s16 *, 0xA) = fn_8017A9B0(arg1);
+    M2C_FIELD(arg0, s8 *, 0xC) = fn_8017A9DC(arg1);
+    M2C_FIELD(arg0, s8 *, 0xD) = fn_8017A9DC(arg1);
+}
+
 void fn_8001753C(s16 *arg0) {
     s16 fn_8000CEE4(M2C_UNK);
     *arg0 = fn_8000CEE4(0xE4C);
