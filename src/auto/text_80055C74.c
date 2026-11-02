@@ -104,6 +104,10 @@ void fn_800591A0(void *arg0) {
     M2C_FIELD(arg0, M2C_UNK (**)(s32), 0x30)(M2C_FIELD(arg0, s32 *, 0x34));
 }
 
+void fn_80059240(void *arg0) {
+    M2C_FIELD(arg0, M2C_UNK (**)(s32), 0x30)(M2C_FIELD(arg0, s32 *, 0x18));
+}
+
 f32 fn_80059F64(f32 farg0, f32 farg1, f32 farg2, f32 farg3) {
     return farg0 + ((farg3 * (farg1 - farg0)) / farg2);
 }
