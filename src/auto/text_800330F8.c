@@ -14,6 +14,16 @@ void fn_80034120(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x60) = (u8) (M2C_FIELD(arg0, u8 *, 0x60) + 1);
 }
 
+u8 fn_8003701C(void *arg0) {
+    void *temp_r3;
+
+    temp_r3 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x188), void **, 0x50);
+    if (temp_r3 == NULL) {
+        return 0U;
+    }
+    return (u8) M2C_FIELD(temp_r3, s32 *, 4);
+}
+
 void fn_80037814(void) {
 
 }
