@@ -34,6 +34,12 @@ s32 fn_8018394C(void) {
     return 2;
 }
 
+void fn_80185060(void *arg0, void *arg1) {
+    if ((u32) M2C_FIELD(arg0, u32 *, 0x30) == (u32) M2C_FIELD(arg1, u32 *, 0x30)) {
+        M2C_FIELD(arg1, void **, 0x34) = arg0;
+    }
+}
+
 void fn_8018B004(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x38) = 0;
 }
