@@ -321,6 +321,12 @@ void fn_80225BF4(void) {
     M2C_FIELD(__cpReg, s16 *, 4) = 4;
 }
 
+void fn_80225F4C(void *arg0, s32 arg1) {
+    M2C_FIELD(arg0, s32 *, 0) = arg1;
+    M2C_FIELD(arg0, s32 *, 4) = 0;
+    M2C_FIELD(arg0, s32 *, 8) = -1;
+}
+
 s32 fn_80226B68(void) {
     return 0;
 }
