@@ -175,6 +175,10 @@ void fn_802220DC(void *arg0, s32 *arg1) {
     M2C_FIELD(arg0, s32 *, 0xC) = (s32) *arg1;
 }
 
+s32 fn_80222A74(void *arg0) {
+    return (M2C_FIELD(arg0, s32 *, 0xC) << 5) & 0x03FFFFE0;
+}
+
 s32 fn_80222AA0(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x14);
 }
