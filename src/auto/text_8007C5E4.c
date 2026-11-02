@@ -67,6 +67,14 @@ void fn_80083E34(s32 arg0) {
     fn_80081CF4(arg0);
 }
 
+void fn_80089424(s32 arg0) {
+    M2C_UNK fn_8000A3F8(s32);
+    s32 fn_8000A418();
+    if (fn_8000A418() != 0) {
+        fn_8000A3F8(arg0);
+    }
+}
+
 u16 fn_80089634(void) {
     extern void *lbl_803674E4;
     return M2C_FIELD(lbl_803674E4, u16 *, 0x32);
