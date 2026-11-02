@@ -277,6 +277,11 @@ void fn_8026146C(s32 *arg0) {
     *arg0 <<= 8;
 }
 
+void fn_8026147C(u32 *arg0, s32 arg1) {
+    u32 fn_80247F60(s32);
+    *arg0 = (u32) (((u32) (*arg0 << 0x10) / fn_80247F60(arg1)) * 0x3E8) >> 5U;
+}
+
 u32 fn_802614C4(u32 arg0) {
     return arg0 >> 8U;
 }
