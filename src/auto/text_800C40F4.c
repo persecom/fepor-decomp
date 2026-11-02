@@ -323,6 +323,16 @@ void fn_800DC598(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x73) = 0;
 }
 
+s32 fn_800DDAA4(s32 arg0) {
+    void *temp_r3;
+
+    temp_r3 = M2C_FIELD(fn_800DE73C(arg0 + 0x58), void **, 0xC);
+    if (temp_r3 != NULL) {
+        return M2C_FIELD(temp_r3, s32 *, 0x18);
+    }
+    return 0;
+}
+
 s32 fn_800DDC04(s32 arg0) {
     void *fn_800DE73C(s32);
     return M2C_FIELD(fn_800DE73C(arg0 + 0x58), s32 *, 0xC);
