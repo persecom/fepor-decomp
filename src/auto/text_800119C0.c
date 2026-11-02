@@ -14,3 +14,8 @@ void fn_800142B0(s32 arg0) {
     lbl_803671A8 = arg0;
 }
 
+u8 fn_80014E70(void) {
+    extern u8 lbl_803671B8;
+    return lbl_803671B8;
+}
+
