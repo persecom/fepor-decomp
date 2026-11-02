@@ -423,6 +423,12 @@ s32 udp_cc_initialize(void) {
     return -1;
 }
 
+s32 ddh_cc_initinterrupts(void) {
+    M2C_UNK fn_8023C540();
+    fn_8023C540();
+    return 0;
+}
+
 s32 ddh_cc_close(void) {
     return 0;
 }
