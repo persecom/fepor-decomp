@@ -35,6 +35,10 @@ void fn_8000C068(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 8) = arg1;
 }
 
+void fn_8000C188(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 0x10) = 0;
+}
+
 void fn_8000CD80(s32 arg0) {
     extern s32 lbl_80367158;
     lbl_80367158 = arg0;
