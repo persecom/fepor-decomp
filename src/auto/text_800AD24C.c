@@ -101,6 +101,12 @@ s32 fn_800B812C(void) {
     return 1;
 }
 
+s32 fn_800B8150(void) {
+    M2C_UNK fn_8016B60C();
+    fn_8016B60C();
+    return 1;
+}
+
 void fn_800B8D34(void) {
     M2C_UNK fn_8006F014();
     fn_8006F014();
