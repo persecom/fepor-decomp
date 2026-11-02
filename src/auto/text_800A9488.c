@@ -73,6 +73,21 @@ void fn_800AA27C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x60) = 0;
 }
 
+s32 fn_800AA76C(s32 arg0, s32 arg1, s32 arg2) {
+    s32 temp_r0;
+    s32 var_r5;
+
+    var_r5 = arg2;
+    temp_r0 = arg0 + var_r5;
+    if (temp_r0 > arg1) {
+        return arg1 - arg0;
+    }
+    if (temp_r0 < 0) {
+        var_r5 = -arg0;
+    }
+    return var_r5;
+}
+
 void fn_800AB73C(void) {
     M2C_UNK fn_800AB75C();
     fn_800AB75C();
