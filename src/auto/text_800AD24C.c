@@ -35,6 +35,11 @@ s32 fn_800BF694(void) {
     return 1;
 }
 
+void fn_800C11F4(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 0x60) = -1;
+    M2C_FIELD(arg0, s16 *, 0x28) = 0x10;
+}
+
 s32 fn_800C30CC(s32 arg0, s32 arg1) {
     return arg0 + ((arg1 - 1) * 0x18);
 }
