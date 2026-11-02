@@ -250,3 +250,10 @@ void fn_801E3560(void *arg0, s8 arg1, s8 arg2, s8 arg3) {
     M2C_FIELD(arg0, s8 *, 0x42) = arg3;
 }
 
+void fn_801E35BC(s32 arg0, s32 arg1) {
+    M2C_UNK fn_80105D4C(s32, u8);
+    if (arg1 < 0x80) {
+        fn_80105D4C(arg0 + 0x30, (u8) arg1);
+    }
+}
+
