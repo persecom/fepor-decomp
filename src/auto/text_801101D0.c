@@ -53,6 +53,11 @@ s32 fn_8011B74C(void) {
     return 0x40;
 }
 
+u8 fn_8011B9B4(void) {
+    extern u8 lbl_80367A48;
+    return (u8) (lbl_80367A48 == 0x88);
+}
+
 s32 fn_8011C9E4(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0xEC);
 }
