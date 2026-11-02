@@ -522,6 +522,12 @@ void fn_800EE090(void) {
     fn_800E43EC();
 }
 
+s32 fn_800F7E78(void) {
+    M2C_UNK fn_800F75F8();
+    fn_800F75F8();
+    return 1;
+}
+
 u8 fn_800F8308(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1A8);
 }
