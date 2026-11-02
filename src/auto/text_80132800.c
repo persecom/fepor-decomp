@@ -53,3 +53,7 @@ void fn_80144D80(void) {
 
 }
 
+void fn_80149DB0(void) {
+
+}
+
