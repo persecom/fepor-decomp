@@ -211,6 +211,14 @@ s32 fn_8004AFB4(void *arg0, s32 arg1) {
     return (M2C_FIELD(arg0, s32 *, 0x10) & (1 << arg1)) != 0;
 }
 
+void fn_8004BCCC(void *arg0, s32 arg1) {
+    M2C_UNK fn_8017A5C4(s32, u16);
+    M2C_UNK fn_8017A5EC(s32, M2C_UNK);
+    fn_8017A5C4(arg1, (u16) M2C_FIELD(arg0, s16 *, 0x15C));
+    fn_8017A5EC(arg1, 0);
+    fn_8017A5EC(arg1, 0);
+}
+
 void fn_8004DC54(s8 arg0) {
     extern s8 lbl_803672BC;
     lbl_803672BC = arg0;
