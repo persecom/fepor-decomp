@@ -17,6 +17,13 @@ void fn_800C5FFC(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x34) = 0;
 }
 
+void fn_800C7EF8(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 0x24) = 0;
+    M2C_FIELD(arg0, s32 *, 0x20) = 0;
+    M2C_FIELD(arg0, s32 *, 0x1C) = 0;
+    M2C_FIELD(arg0, s32 *, 0x18) = 0;
+}
+
 M2C_UNK *fn_800C93EC(void *arg0) {
     extern M2C_UNK lbl_80369DC0;
     M2C_UNK *temp_r3;
