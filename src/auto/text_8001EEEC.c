@@ -110,6 +110,10 @@ s32 fn_80025604(void) {
     return 0;
 }
 
+s32 fn_8002560C(void) {
+    return 0;
+}
+
 void fn_8002863C(void) {
 
 }
