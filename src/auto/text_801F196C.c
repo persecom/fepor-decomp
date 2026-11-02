@@ -13,3 +13,7 @@ void fn_801FC404(void) {
 
 }
 
+void fn_801FC434(void) {
+
+}
+
