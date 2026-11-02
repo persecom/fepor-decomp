@@ -190,6 +190,10 @@ void fn_800E8FAC(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0xE0) = arg1;
 }
 
+u8 fn_800E8FB4(void *arg0) {
+    return M2C_FIELD(arg0, u8 *, 0xFD);
+}
+
 void fn_800F834C(void) {
 
 }
