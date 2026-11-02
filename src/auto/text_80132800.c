@@ -377,6 +377,11 @@ void fn_801452E8(void) {
     fn_800B2E78();
 }
 
+void fn_80145E9C(void) {
+    M2C_UNK fn_800B28FC();
+    fn_800B28FC();
+}
+
 s32 fn_80146AE4(void) {
     extern s32 lbl_80367AF8;
     return lbl_80367AF8 & 1;
