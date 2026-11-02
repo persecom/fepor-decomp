@@ -235,6 +235,12 @@ u16 fn_80220970(void) {
     return M2C_FIELD(__peReg, u16 *, 0xE);
 }
 
+void fn_80221FE8(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
+    M2C_FIELD(arg0, f32 *, 0x28) = farg0;
+    M2C_FIELD(arg0, f32 *, 0x2C) = farg1;
+    M2C_FIELD(arg0, f32 *, 0x30) = farg2;
+}
+
 void fn_802220DC(void *arg0, s32 *arg1) {
     M2C_FIELD(arg0, s32 *, 0xC) = (s32) *arg1;
 }
