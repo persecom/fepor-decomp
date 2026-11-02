@@ -9,3 +9,7 @@ void fn_8010AC50(void) {
 
 }
 
+void fn_8010AC54(void) {
+
+}
+
