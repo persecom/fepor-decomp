@@ -168,6 +168,27 @@ void fn_8014D2B0(void *arg0, u8 arg1) {
     }
 }
 
+void fn_8014D3B4(void *arg0) {
+    u8 temp_r0;
+
+    temp_r0 = M2C_FIELD(arg0, u8 *, 0x11);
+    switch ((s32) temp_r0) {                        /* irregular */
+    case 0:
+        M2C_FIELD(arg0, u8 *, 0x11) = 3U;
+        return;
+    case 3:
+        M2C_FIELD(arg0, u8 *, 0x11) = 1U;
+        return;
+    case 1:
+        M2C_FIELD(arg0, u8 *, 0x11) = 2U;
+        return;
+    case 2:
+        M2C_FIELD(arg0, u8 *, 0x11) = 0U;
+        M2C_FIELD(arg0, s16 *, 0x12) = (s16) (M2C_FIELD(arg0, s16 *, 0x12) + 1);
+        return;
+    }
+}
+
 void fn_8014D8FC(void *arg0) {
     M2C_UNK fn_80019F04(u8);
     fn_80019F04(M2C_FIELD(arg0, u8 *, 0x10));
