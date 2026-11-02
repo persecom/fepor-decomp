@@ -36,6 +36,14 @@ void fn_8001A5D0(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x38) = 0;
 }
 
+u8 fn_8001B940(u8 **arg0) {
+    u8 *temp_r4;
+
+    temp_r4 = *arg0;
+    *arg0 = temp_r4 + 1;
+    return *temp_r4;
+}
+
 s32 fn_8001B954(s32 *arg0) {
     return *arg0;
 }
