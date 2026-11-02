@@ -42,6 +42,22 @@ void fn_801F5BAC(void) {
 
 }
 
+void fn_801F5C88(void *arg0) {
+    M2C_UNK fn_80009D74(f32, f32, f32, f32);
+    M2C_UNK fn_8000A248();
+    M2C_UNK fn_8000A258();
+    M2C_UNK fn_801DCD3C(s32);
+    M2C_UNK fn_801DDAC8(s32);
+    extern f32 lbl_8036B8E8;
+    extern f32 lbl_8036B8EC;
+    extern f32 lbl_8036B908;
+    fn_8000A258();
+    fn_80009D74(lbl_8036B8E8, lbl_8036B8E8, lbl_8036B908, lbl_8036B8EC);
+    fn_8000A248();
+    fn_801DDAC8(M2C_FIELD(arg0, s32 *, 0x50));
+    fn_801DCD3C(M2C_FIELD(arg0, s32 *, 0x50));
+}
+
 void fn_801F5D08(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x4C) = 4;
 }
