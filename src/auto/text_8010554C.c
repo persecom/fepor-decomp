@@ -21,6 +21,10 @@ s32 fn_8010CA9C(void) {
     return 0;
 }
 
+s32 fn_8010CAA4(void) {
+    return 0;
+}
+
 void fn_8010FBD4(void) {
 
 }
