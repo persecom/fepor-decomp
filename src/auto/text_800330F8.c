@@ -125,3 +125,10 @@ void fn_800536D8(void *arg0, s32 arg1) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s32 *, 0x30) = arg1;
 }
 
+void fn_80053D84(void *arg0) {
+    void *temp_r3;
+
+    temp_r3 = M2C_FIELD(arg0, void **, 0x30);
+    M2C_FIELD(temp_r3, s32 *, 8) = (s32) (M2C_FIELD(temp_r3, s32 *, 8) | 0x80000000);
+}
+
