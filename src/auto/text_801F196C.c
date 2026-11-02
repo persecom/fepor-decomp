@@ -92,6 +92,17 @@ void fn_801FA478(void *arg0) {
     }
 }
 
+void fn_801FA874(void *arg0) {
+    s32 temp_r0;
+
+    M2C_FIELD(arg0, f32 *, 0x38) = (f32) (M2C_FIELD(arg0, f32 *, 0x38) - M2C_FIELD(arg0, f32 *, 0x40));
+    temp_r0 = M2C_FIELD(arg0, s32 *, 0x44) - 1;
+    M2C_FIELD(arg0, s32 *, 0x44) = temp_r0;
+    if (temp_r0 < 0) {
+        fn_8000C188();
+    }
+}
+
 void fn_801FC400(void) {
 
 }
