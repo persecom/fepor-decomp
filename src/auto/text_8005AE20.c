@@ -34,6 +34,11 @@ u8 fn_8005BA00(void) {
     return lbl_803672E8;
 }
 
+void fn_8005BA08(s8 arg0) {
+    extern s8 lbl_803672E8;
+    lbl_803672E8 = arg0;
+}
+
 s32 fn_80067478(void) {
     extern s32 lbl_80366DDC;
     return lbl_80366DDC;
