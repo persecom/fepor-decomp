@@ -53,3 +53,10 @@ s32 fn_8005A308(void) {
     return 0x18;
 }
 
+void fn_8005AC5C(u32 *arg0) {
+    M2C_UNK fn_8006EDA0();
+    if ((u32) *arg0 != 0U) {
+        fn_8006EDA0();
+    }
+}
+
