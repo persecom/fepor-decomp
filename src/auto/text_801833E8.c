@@ -40,6 +40,10 @@ void fn_80185060(void *arg0, void *arg1) {
     }
 }
 
+void fn_8018548C(void *arg0) {
+    fn_8004FC70(M2C_FIELD(arg0, s32 *, 0x30), 0xB);
+}
+
 void fn_801854B4(void *arg0) {
     M2C_UNK fn_8004B1B4(s32);
     fn_8004B1B4(M2C_FIELD(arg0, s32 *, 0x30));
