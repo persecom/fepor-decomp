@@ -1,6 +1,19 @@
 /* Functions from 0x801A7D78 to 0x801AE2D4, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_801A85F4(s32 arg0) {
+    M2C_UNK fn_80105CEC(s32, M2C_UNK);
+    fn_80105CEC(arg0 + 0x1BC, 0x4C);
+    fn_80105CEC(arg0 + 0x1BC, 0x31);
+    fn_80105CEC(arg0 + 0x1BC, 0x30);
+    fn_80105CEC(arg0 + 0x1BC, 0x5A);
+    fn_80105CEC(arg0 + 0x1BC, 0x2F);
+    fn_80105CEC(arg0 + 0x1BC, 0x38);
+    fn_80105CEC(arg0 + 0x1BC, 0x35);
+    fn_80105CEC(arg0 + 0x1BC, 0x39);
+    fn_80105CEC(arg0 + 0x1BC, 0x33);
+}
+
 void fn_801A8F14(void *arg0, void *arg1) {
     u8 fn_801B8550(s32);
     if (fn_801B8550(M2C_FIELD(arg1, s32 *, 0x280)) != 0) {
