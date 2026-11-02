@@ -174,6 +174,18 @@ void fn_80092414(s32 arg0) {
     fn_8001CBA0(arg0 + 0x20C);
 }
 
+s32 fn_80094A08(s32 arg0) {
+    u8 fn_8001D684();
+    M2C_UNK fn_80037BD0();
+    M2C_UNK fn_800947E0(s32);
+    fn_80037BD0();
+    if (fn_8001D684() != 0) {
+        fn_800947E0(arg0);
+        return 1;
+    }
+    return 0;
+}
+
 s32 fn_80098094(void) {
     extern s32 lbl_80367500;
     return lbl_80367500;
