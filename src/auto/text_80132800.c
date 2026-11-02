@@ -1,6 +1,10 @@
 /* Functions from 0x80132800 to 0x80149F38, found by decomp-toolkit. */
 #include "common.h"
 
+s32 fn_80132874(void) {
+    return 0x10;
+}
+
 s32 fn_8013289C(void) {
     return 0;
 }
