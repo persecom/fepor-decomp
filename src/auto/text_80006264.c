@@ -4,3 +4,8 @@
 void fn_8000A280(void) {
 
 }
+
+void fn_8000B4D0(void) {
+
+}
+
