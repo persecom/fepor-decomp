@@ -83,6 +83,11 @@ void fn_80195880(void *arg0) {
     M2C_FIELD(arg0, s16 *, 6) = 1;
 }
 
+void fn_80196794(void) {
+    M2C_UNK fn_8003D538();
+    fn_8003D538();
+}
+
 void fn_80196840(void) {
 
 }
