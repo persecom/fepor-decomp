@@ -25,6 +25,10 @@ s32 fn_800A96B8(void) {
     return 0x40;
 }
 
+s32 fn_800A96C0(void) {
+    return 0x110;
+}
+
 s32 fn_800A96D0(void) {
     return 0;
 }
