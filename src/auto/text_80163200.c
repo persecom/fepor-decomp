@@ -34,6 +34,13 @@ void fn_80164A24(void *arg0) {
     fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58));
 }
 
+void fn_801650DC(void *arg0) {
+    M2C_FIELD(arg0, s16 *, 0x12) = 2;
+    M2C_FIELD(arg0, s16 *, 0x14) = 0x1A;
+    M2C_FIELD(arg0, s16 *, 0x16) = 0x106;
+    M2C_FIELD(arg0, s16 *, 0x18) = 0x12A;
+}
+
 s32 fn_801651D0(void) {
     return 0x18;
 }
