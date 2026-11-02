@@ -29,6 +29,17 @@ void fn_80163E50(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x18) = 0x86;
 }
 
+s32 fn_801649C8(void *arg0, s32 *arg1) {
+    s32 fn_80093DA8(s32, s32);
+    u8 (*temp_r12)(s32 *, s32);
+
+    temp_r12 = M2C_FIELD(arg0, u8 (**)(s32 *, s32), 0x70);
+    if (temp_r12 != NULL) {
+        return temp_r12(arg1, M2C_FIELD(arg0, s32 *, 0x74)) != 0;
+    }
+    return fn_80093DA8(M2C_FIELD(arg0, s32 *, 0x58), *arg1);
+}
+
 void fn_80164A24(void *arg0) {
     M2C_UNK fn_80037BD0(s32);
     fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58));
