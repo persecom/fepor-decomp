@@ -57,3 +57,7 @@ void fn_800E4168(void) {
 
 }
 
+void fn_800E416C(void) {
+
+}
+
