@@ -437,6 +437,18 @@ void TRKUARTInterruptHandler(void) {
 
 }
 
+s32 TRKTargetContinue(void) {
+    M2C_UNK ReserveEXI2Port();
+    M2C_UNK TRKSwapAndGo();
+    M2C_UNK TRKTargetSetStopped(M2C_UNK);
+    M2C_UNK UnreserveEXI2Port();
+    TRKTargetSetStopped(0);
+    UnreserveEXI2Port();
+    TRKSwapAndGo();
+    ReserveEXI2Port();
+    return 0;
+}
+
 s32 udp_cc_post_stop(void) {
     return -1;
 }
