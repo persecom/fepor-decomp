@@ -161,6 +161,13 @@ s32 fn_8017DF4C(void) {
     return 0;
 }
 
+void fn_8017E1B8(void *arg0, u32 arg1) {
+    M2C_UNK fn_8000C60C();
+    if ((u32) M2C_FIELD(arg0, u32 *, 0x30) == arg1) {
+        fn_8000C60C();
+    }
+}
+
 void fn_8017E2AC(void *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), f32 *, 4) = (f32) M2C_FIELD(arg0, f32 *, 0x44);
 }
