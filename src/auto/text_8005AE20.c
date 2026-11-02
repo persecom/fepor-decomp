@@ -99,6 +99,13 @@ void fn_8005EB80(s32 arg0, s32 arg1) {
     }
 }
 
+void fn_8005EBCC(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        fn_8005EA14();
+        fn_8005EC18(arg0, arg1, 0x40400000);
+    }
+}
+
 void fn_8005F780(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 0x84) = arg1;
 }
