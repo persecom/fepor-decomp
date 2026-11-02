@@ -14,6 +14,10 @@ u8 fn_8000A418(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x2E);
 }
 
+s32 fn_8000ACD8(void) {
+    return 0;
+}
+
 void fn_8000B4D0(void) {
 
 }
