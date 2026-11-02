@@ -9,3 +9,7 @@ void fn_80127C70(void) {
 
 }
 
+void fn_80127C74(void) {
+
+}
+
