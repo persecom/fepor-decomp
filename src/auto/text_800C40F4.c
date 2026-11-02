@@ -306,6 +306,11 @@ void fn_800E9050(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0xAC) = 1;
 }
 
+void fn_800EB558(void) {
+    extern s32 lbl_80367110;
+    lbl_80367110 &= 0xFFFFFEFF;
+}
+
 u8 fn_800F8308(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1A8);
 }
