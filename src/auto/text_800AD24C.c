@@ -302,6 +302,22 @@ void fn_800B8D34(void) {
     fn_8006F014();
 }
 
+s32 fn_800B8DE4(u32 arg0, u32 arg1, u32 arg2) {
+    M2C_UNK fn_8006F09C();
+    if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
+        return 0;
+    }
+    if ((arg1 < 0x80000000U) || (arg1 >= 0x81800000U)) {
+        return 0;
+    }
+    if ((arg2 < 0x80000000U) || (arg2 >= 0x81800000U)) {
+        return 0;
+    }
+    fn_8006F09C();
+    fn_80013864();
+    return 1;
+}
+
 s32 fn_800B8E5C(u32 arg0, u32 arg1) {
     M2C_UNK fn_8006F10C();
     if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
