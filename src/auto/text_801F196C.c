@@ -15,6 +15,16 @@ void fn_801F1E78(void *arg0) {
     *temp_r3 |= 1;
 }
 
+void fn_801F1E8C(void *arg0) {
+    M2C_UNK fn_8006EDA0(s32);
+    M2C_UNK fn_800C4588(s32);
+    s32 temp_r31;
+
+    temp_r31 = M2C_FIELD(arg0, s32 *, 0x30);
+    fn_8006EDA0(temp_r31 + 0x4C);
+    fn_800C4588(temp_r31);
+}
+
 void fn_801F5518(s32 arg0) {
     M2C_UNK fn_801E3118(M2C_UNK *, s32, M2C_UNK);
     extern M2C_UNK lbl_803682F0;
