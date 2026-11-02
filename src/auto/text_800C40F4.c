@@ -210,6 +210,13 @@ void fn_800E2218(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x64) = arg1;
 }
 
+void fn_800E29B8(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
+    M2C_FIELD(arg0, s8 *, 0x50) = arg1;
+    M2C_FIELD(arg0, s8 *, 0x51) = arg2;
+    M2C_FIELD(arg0, s8 *, 0x52) = arg3;
+    M2C_FIELD(arg0, s8 *, 0x53) = arg4;
+}
+
 void fn_800E29E0(void *arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(arg0, s32 *, 0x48) = arg1;
     M2C_FIELD(arg0, s32 *, 0x4C) = arg2;
