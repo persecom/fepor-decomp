@@ -305,6 +305,14 @@ void fn_800C0980(void) {
     fn_80018AE4();
 }
 
+void fn_800C09E4(s32 arg0) {
+    s32 fn_800142B8();
+    fn_80013880();
+    if (fn_800142B8() != 6) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_800C0C1C(void) {
     u16 fn_80089634();
     M2C_UNK fn_80089650(M2C_UNK, M2C_UNK);
