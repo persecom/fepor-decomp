@@ -178,6 +178,11 @@ s32 fn_80072230(void) {
     return 0xB0;
 }
 
+f32 fn_80072238(void) {
+    extern f32 lbl_80369360;
+    return lbl_80369360;
+}
+
 s32 fn_80072394(void) {
     return 0;
 }
