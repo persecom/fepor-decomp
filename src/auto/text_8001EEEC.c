@@ -160,3 +160,8 @@ void fn_8002863C(void) {
 
 }
 
+void fn_80028674(void) {
+    M2C_UNK fn_800C4B8C();
+    fn_800C4B8C();
+}
+
