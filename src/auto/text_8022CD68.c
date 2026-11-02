@@ -184,6 +184,11 @@ void fn_80262410(void) {
     fn_80262B1C();
 }
 
+void fn_802624B8(void) {
+    M2C_UNK fn_802627D4();
+    fn_802627D4();
+}
+
 void fn_802624D8(void) {
 
 }
