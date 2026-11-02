@@ -17,3 +17,8 @@ s32 fn_800BBC50(void) {
     extern s32 lbl_80367110;
     return lbl_80367110;
 }
+
+s32 fn_800BF694(void) {
+    return 1;
+}
+
