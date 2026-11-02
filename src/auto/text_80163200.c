@@ -117,6 +117,10 @@ void fn_80172C44(void *arg0) {
     fn_8000A430(M2C_FIELD(arg0, s32 *, 0x5C));
 }
 
+void fn_801731FC(void *arg0) {
+    fn_8000A430(M2C_FIELD(arg0, s32 *, 0x5C));
+}
+
 void fn_80174204(void) {
 
 }
