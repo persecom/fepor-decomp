@@ -175,6 +175,10 @@ void fn_8017F1D4(void *arg0) {
     fn_8006D8E8(M2C_FIELD(arg0, s32 *, 0x34));
 }
 
+void fn_8017F5C8(void *arg0) {
+    fn_8006D8E8(M2C_FIELD(arg0, s32 *, 0x34));
+}
+
 void fn_80180620(void) {
 
 }
