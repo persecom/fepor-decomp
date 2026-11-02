@@ -1,6 +1,17 @@
 /* Functions from 0x8007C5E4 to 0x8009F0BC, found by decomp-toolkit. */
 #include "common.h"
 
+s32 fn_8007C65C(void) {
+    extern void *lbl_80367488;
+    void *temp_r3;
+
+    temp_r3 = M2C_FIELD(lbl_80367488, void **, 0x54);
+    if (temp_r3 != NULL) {
+        M2C_FIELD(temp_r3, s16 *, 0x36) = 7;
+    }
+    return 0;
+}
+
 void fn_8007D7E8(void *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s16 *, 6) = 7;
 }
