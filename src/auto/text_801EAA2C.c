@@ -126,6 +126,13 @@ void fn_801F09E8(void) {
     fn_801F0BC4();
 }
 
+void fn_801F109C(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 0x3C) = (s32) (M2C_FIELD(arg0, s32 *, 0x3C) - 1);
+    if ((s32) M2C_FIELD(arg0, s32 *, 0x3C) < 0) {
+        fn_8000C188();
+    }
+}
+
 s32 fn_801F1100(void) {
     return 0;
 }
