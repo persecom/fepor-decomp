@@ -5,3 +5,9 @@ s32 fn_801C9704(void) {
     extern s32 lbl_803682AC;
     return lbl_803682AC;
 }
+
+s32 fn_801C970C(void) {
+    extern s32 lbl_803682A8;
+    return lbl_803682A8;
+}
+
