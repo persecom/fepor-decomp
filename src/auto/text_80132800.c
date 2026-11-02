@@ -357,3 +357,7 @@ void fn_80149F2C(void) {
 
 }
 
+s32 fn_80149F30(void) {
+    return -1;
+}
+
