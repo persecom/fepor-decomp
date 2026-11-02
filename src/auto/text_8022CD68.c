@@ -25,6 +25,10 @@ void fn_8023C540(void) {
 
 }
 
+s32 fn_8023C544(void) {
+    return 0;
+}
+
 void fn_8023C55C(void) {
 
 }
