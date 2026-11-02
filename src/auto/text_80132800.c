@@ -37,6 +37,15 @@ s32 fn_80132A5C(void) {
     return 0;
 }
 
+void fn_80132BA0(void *arg0) {
+    s32 fn_8003FCCC();
+    M2C_UNK fn_80162018();
+    M2C_UNK fn_801620AC();
+    fn_80162018();
+    fn_801620AC();
+    M2C_FIELD(arg0, s32 *, 0x48) = fn_8003FCCC();
+}
+
 void fn_80132CDC(void) {
     M2C_UNK fn_8000C188();
     fn_8000C188();
