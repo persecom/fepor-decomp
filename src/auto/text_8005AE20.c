@@ -163,6 +163,14 @@ s32 fn_8006A37C(void) {
     return lbl_80367308;
 }
 
+void fn_8006D8E8(s32 arg0) {
+    M2C_UNK fn_8006EDA0(s32 *);
+    s32 sp8;
+
+    sp8 = arg0;
+    fn_8006EDA0(&sp8);
+}
+
 void fn_8006DA5C(s32 *arg0, s32 arg1) {
     *arg0 = arg1;
 }
