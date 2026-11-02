@@ -49,6 +49,10 @@ s32 fn_8007565C(void) {
     return 0;
 }
 
+s32 fn_80077560(void) {
+    return 0xB;
+}
+
 s32 fn_80077934(void) {
     return 0;
 }
