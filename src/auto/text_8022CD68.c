@@ -85,6 +85,11 @@ void fn_802624D8(void) {
 
 }
 
+void fn_802624F8(void) {
+    extern s32 lbl_80368A90;
+    lbl_80368A90 = 0;
+}
+
 s32 fn_80262B14(s32 arg0) {
     return arg0 - 0x500;
 }
