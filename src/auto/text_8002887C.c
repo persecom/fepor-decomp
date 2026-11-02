@@ -18,6 +18,13 @@ void fn_8002D44C(void) {
     fn_800C4B8C();
 }
 
+void fn_8002D82C(void) {
+    M2C_UNK fn_80146AF0();
+    extern s32 lbl_80367254;
+    fn_80146AF0();
+    lbl_80367254 = 0;
+}
+
 s32 fn_8002EA74(void) {
     return 0;
 }
