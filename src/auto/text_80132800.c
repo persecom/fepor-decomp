@@ -149,6 +149,10 @@ void fn_8013FC64(void) {
 
 }
 
+s32 fn_80140B04(s32 arg0) {
+    return arg0 + 4;
+}
+
 void fn_80144688(void) {
 
 }
