@@ -10,3 +10,7 @@ f32 fn_800195EC(void) {
     return lbl_80368CE8;
 }
 
+s32 fn_8001B954(s32 *arg0) {
+    return *arg0;
+}
+
