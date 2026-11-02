@@ -334,6 +334,12 @@ void fn_800E7C88(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x2C) = 1;
 }
 
+void fn_800E8A88(void *arg0, f32 farg0) {
+    extern f32 lbl_80369F7C;
+    M2C_FIELD(arg0, f32 *, 0x110) = (f32) (lbl_80369F7C * farg0);
+    M2C_FIELD(arg0, s32 *, 0x120) = 0x3C;
+}
+
 s32 fn_800E8BB4(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x2B4);
 }
