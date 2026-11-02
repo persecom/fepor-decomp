@@ -37,6 +37,14 @@ void fn_800A5CF4(void) {
     fn_800A3A68(0, 0x64);
 }
 
+s32 fn_800A65D4(s32 arg0) {
+    u8 fn_80105BC0(s32, M2C_UNK);
+    if (fn_80105BC0(arg0 + 0x1BC, 8) == 0) {
+        return 0;
+    }
+    return fn_80105BC0(arg0 + 0x1BC, 9) == 0;
+}
+
 s32 fn_800A6850(void *arg0) {
     return (((u8) M2C_FIELD(arg0, u8 *, 0x1A4) >> 5U) & 7) != 0;
 }
