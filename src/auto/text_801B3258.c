@@ -15,3 +15,7 @@ s32 fn_801C9A88(void) {
     return 0;
 }
 
+s32 fn_801DE360(void) {
+    return 1;
+}
+
