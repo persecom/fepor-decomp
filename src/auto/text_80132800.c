@@ -45,6 +45,10 @@ s32 fn_80136D78(void) {
     return 0x10;
 }
 
+s32 fn_80136D80(void) {
+    return 0x20;
+}
+
 s32 fn_80136E68(void) {
     return 1;
 }
