@@ -219,6 +219,11 @@ void fn_80263384(void) {
     lbl_80368B08 = 1;
 }
 
+void fn_802634E4(void) {
+    M2C_UNK fn_802137E8();
+    fn_802137E8();
+}
+
 void fn_80266FFC(void) {
 
 }
