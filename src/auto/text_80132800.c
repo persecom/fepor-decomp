@@ -73,6 +73,10 @@ s32 fn_80136E78(void) {
     return 0x10;
 }
 
+s32 fn_80136F24(void) {
+    return 6;
+}
+
 void fn_8013B308(void) {
 
 }
