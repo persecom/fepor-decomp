@@ -93,6 +93,10 @@ s32 fn_8021C080(void) {
     return 0;
 }
 
+s32 fn_8021F250(s32 *arg0) {
+    return *arg0;
+}
+
 s32 fn_8021F4CC(void) {
     extern s32 lbl_80368770;
     return lbl_80368770;
