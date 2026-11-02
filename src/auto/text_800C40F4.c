@@ -313,6 +313,13 @@ s32 fn_800DC3B8(s32 arg0) {
     return arg0 + 0xAC;
 }
 
+void fn_800DC408(void *arg0, u32 arg1, s32 arg2) {
+    M2C_UNK fn_800C9758(s32, s32, M2C_UNK, M2C_UNK);
+    if (arg1 < (u32) M2C_FIELD(arg0, u32 *, 0xB0)) {
+        fn_800C9758(M2C_FIELD(arg0, s32 *, 0xB4) + (arg1 * 0xC), arg2, 0, -1);
+    }
+}
+
 s32 fn_800DC44C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0xB0);
 }
