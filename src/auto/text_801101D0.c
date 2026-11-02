@@ -80,6 +80,13 @@ void fn_801181D0(void) {
     fn_80006198();
 }
 
+void fn_8011843C(s32 arg0) {
+    M2C_UNK fn_8013FED0();
+    M2C_UNK fn_801AA120(s32);
+    fn_8013FED0();
+    fn_801AA120(arg0);
+}
+
 void fn_8011AB98(void) {
     M2C_UNK fn_801620AC();
     M2C_UNK fn_8005C8B4();
