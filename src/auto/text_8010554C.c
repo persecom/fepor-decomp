@@ -78,6 +78,11 @@ void fn_8010EF34(void) {
     fn_8010EF74();
 }
 
+void fn_8010EF54(void) {
+    M2C_UNK fn_8010EF74();
+    fn_8010EF74();
+}
+
 void fn_8010FBD4(void) {
 
 }
