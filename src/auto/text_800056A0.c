@@ -20,3 +20,8 @@ void fn_80005EB4(void) {
     fn_800C4B8C();
 }
 
+void fn_800060F8(void) {
+    M2C_UNK fn_80016DE0();
+    fn_80016DE0();
+}
+
