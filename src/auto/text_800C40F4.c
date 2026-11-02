@@ -41,3 +41,7 @@ void fn_800DEE90(void) {
 
 }
 
+void fn_800DEE94(void) {
+
+}
+
