@@ -32,6 +32,11 @@ s8 fn_8003A1C4(void *arg0) {
     return (s8) (M2C_FIELD(M2C_FIELD(arg0, void **, 0x18C), u8 *, 0x41) + (((u8) M2C_FIELD(arg0, u8 *, 0x1A6) >> 2U) & 7));
 }
 
+void fn_8003B69C(s32 arg0) {
+    M2C_UNK fn_800173B4(s32, s32);
+    fn_800173B4(arg0 + 0x236, arg0);
+}
+
 void fn_8003D5FC(void *arg0, u8 arg1) {
     if (arg1 != 0) {
         M2C_FIELD(arg0, u8 *, 0x199) = arg1;
