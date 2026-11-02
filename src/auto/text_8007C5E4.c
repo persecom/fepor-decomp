@@ -112,3 +112,9 @@ void fn_8009EA14(void) {
     fn_801E2594(&lbl_803682F0);
 }
 
+void fn_8009EA90(void) {
+    M2C_UNK fn_801E2594(M2C_UNK *);
+    extern M2C_UNK lbl_803682F0;
+    fn_801E2594(&lbl_803682F0);
+}
+
