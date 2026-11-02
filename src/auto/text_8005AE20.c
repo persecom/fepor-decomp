@@ -85,3 +85,7 @@ s32 fn_80072394(void) {
     return 0;
 }
 
+s32 fn_800723C4(void) {
+    return 0;
+}
+
