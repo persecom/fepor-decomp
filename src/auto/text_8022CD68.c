@@ -98,6 +98,10 @@ u8 fn_8025ED80(void) {
     return lbl_80368978;
 }
 
+void fn_8026146C(s32 *arg0) {
+    *arg0 <<= 8;
+}
+
 u32 fn_802614C4(u32 arg0) {
     return arg0 >> 8U;
 }
