@@ -41,6 +41,20 @@ s32 fn_8000A930(void *arg0) {
     return 1;
 }
 
+s32 fn_8000ACA0(void *arg0) {
+    u8 temp_r4;
+    void *temp_r5;
+
+    temp_r4 = M2C_FIELD(arg0, u8 *, 0x2C);
+    if (temp_r4 & 2) {
+        M2C_FIELD(arg0, u8 *, 0x2C) = (u8) (temp_r4 & 0xFFFFFFFD);
+        temp_r5 = M2C_FIELD(arg0, void **, 0x18);
+        M2C_FIELD(temp_r5, u8 *, 0x2D) = (u8) (M2C_FIELD(temp_r5, u8 *, 0x2D) - 1);
+    }
+    M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + 4);
+    return 1;
+}
+
 s32 fn_8000ACD8(void) {
     return 0;
 }
