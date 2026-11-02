@@ -4,3 +4,8 @@
 void fn_80169640(void) {
 
 }
+
+void fn_80169AF0(void) {
+
+}
+
