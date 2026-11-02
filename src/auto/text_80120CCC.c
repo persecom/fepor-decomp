@@ -9,6 +9,11 @@ void fn_80121328(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x4E) = (u8) (M2C_FIELD(arg0, u8 *, 0x4E) + 1);
 }
 
+void fn_80121D30(void) {
+    M2C_UNK fn_80225058(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    fn_80225058(0, 0x33, 0x260, 0x177);
+}
+
 void fn_80122DD0(void *arg0, s16 arg1, s16 arg2) {
     if (arg1 >= 0) {
         M2C_FIELD(arg0, s16 *, 0x60) = arg1;
