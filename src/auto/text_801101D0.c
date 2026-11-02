@@ -236,6 +236,24 @@ void fn_8011DCDC(void *arg0) {
     fn_8008A290(3, M2C_FIELD(arg0, s16 *, 0x68));
 }
 
+void fn_8011DD08(void *arg0) {
+    s32 fn_8008A56C();
+    if (fn_8008A56C() & 2) {
+        if (fn_8008A56C() & 4) {
+            M2C_FIELD(arg0, s8 *, 0x64) = 2;
+            return;
+        }
+        if (fn_8008A56C() & 8) {
+            M2C_FIELD(arg0, s8 *, 0x64) = 5;
+            return;
+        }
+        goto block_5;
+    }
+block_5:
+    fn_8008A290(3, M2C_FIELD(arg0, s16 *, 0x68));
+    M2C_FIELD(arg0, s8 *, 0x64) = 2;
+}
+
 void fn_801207BC(void) {
     extern s32 lbl_80367110;
     extern u16 lbl_80367A58;
