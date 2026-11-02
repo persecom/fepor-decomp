@@ -57,6 +57,18 @@ void fn_801F9464(void) {
     fn_80059C2C(0, 0, 0x260, 0x1C0, 0);
 }
 
+void fn_801F9498(void *arg0) {
+    M2C_UNK fn_8000C188();
+    s32 temp_r0;
+
+    M2C_FIELD(arg0, f32 *, 0x3C) = (f32) (M2C_FIELD(arg0, f32 *, 0x3C) - M2C_FIELD(arg0, f32 *, 0x44));
+    temp_r0 = M2C_FIELD(arg0, s32 *, 0x48) - 1;
+    M2C_FIELD(arg0, s32 *, 0x48) = temp_r0;
+    if (temp_r0 < 0) {
+        fn_8000C188();
+    }
+}
+
 void fn_801F9D1C(s32 arg0, s32 arg1) {
     void *fn_801F9D50(s32);
     M2C_FIELD(fn_801F9D50(arg1), s32 *, 0x48) = arg0;
