@@ -53,6 +53,11 @@ s32 fn_800A9DA0(void) {
     return 5;
 }
 
+s32 fn_800A9DD8(void) {
+    fn_80006220(5);
+    return 5;
+}
+
 void fn_800AA244(void) {
     M2C_UNK fn_800F0774();
     M2C_UNK fn_800F2E70();
