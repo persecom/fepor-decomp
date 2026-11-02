@@ -537,6 +537,13 @@ void fn_800EB558(void) {
     lbl_80367110 &= 0xFFFFFEFF;
 }
 
+s32 fn_800ED754(void) {
+    M2C_UNK fn_800D758C(s32);
+    extern s32 lbl_803678C8;
+    fn_800D758C(lbl_803678C8);
+    return 0;
+}
+
 void fn_800EDF18(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0xB4) = (s32) ((s32) (M2C_FIELD(arg0, s32 *, 0xB0) * (arg1 - M2C_FIELD(arg0, s32 *, 0x48))) / (s32) M2C_FIELD(arg0, s32 *, 0x60));
 }
