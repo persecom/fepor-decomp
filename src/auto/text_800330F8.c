@@ -86,6 +86,10 @@ void fn_8004982C(void *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), f32 *, 8) = (f32) M2C_FIELD(arg0, f32 *, 0x48);
 }
 
+s32 fn_80049D58(void *arg0) {
+    return (M2C_FIELD(arg0, u8 *, 2) & 3) == 0;
+}
+
 s32 fn_80049E1C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x10);
 }
