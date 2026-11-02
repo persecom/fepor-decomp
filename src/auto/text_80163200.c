@@ -343,6 +343,32 @@ void fn_8017A5EC(void *arg0, s8 arg1) {
     *temp_r5 = arg1;
 }
 
+s32 fn_8017A6C4(void *arg0, void *arg1) {
+    u8 *temp_r5;
+    u8 *temp_r5_2;
+    u8 *temp_r5_3;
+    u8 *temp_r5_4;
+
+    temp_r5 = M2C_FIELD(arg0, u8 **, 4);
+    M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r5 + 1);
+    if ((s8) *temp_r5 == (s8) M2C_FIELD(arg1, u8 *, 0)) {
+        temp_r5_2 = M2C_FIELD(arg0, u8 **, 4);
+        M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r5_2 + 1);
+        if ((s8) *temp_r5_2 == (s8) M2C_FIELD(arg1, u8 *, 1)) {
+            temp_r5_3 = M2C_FIELD(arg0, u8 **, 4);
+            M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r5_3 + 1);
+            if ((s8) *temp_r5_3 == (s8) M2C_FIELD(arg1, u8 *, 2)) {
+                temp_r5_4 = M2C_FIELD(arg0, u8 **, 4);
+                M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r5_4 + 1);
+                if ((s8) *temp_r5_4 == (s8) M2C_FIELD(arg1, u8 *, 3)) {
+                    return 1;
+                }
+            }
+        }
+    }
+    return 0;
+}
+
 void fn_8017A810(void *arg0, s32 arg1, s32 arg2) {
     memcpy(arg2, M2C_FIELD(arg0, s32 *, 4), arg1);
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + arg1);
