@@ -203,6 +203,11 @@ void fn_80262504(void) {
     lbl_80368A8C = 1;
 }
 
+void fn_80262AD0(void) {
+    M2C_UNK fn_802142B0();
+    fn_802142B0();
+}
+
 s32 fn_80262B14(s32 arg0) {
     return arg0 - 0x500;
 }
