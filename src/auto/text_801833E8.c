@@ -90,6 +90,12 @@ void fn_8018CB7C(void) {
     fn_8018CCB8();
 }
 
+void fn_8018D25C(void *arg0) {
+    s32 fn_80018ADC();
+    M2C_FIELD(arg0, s32 *, 0x30) = 0;
+    M2C_FIELD(arg0, s32 *, 0x44) = fn_80018ADC();
+}
+
 void fn_801908B4(void) {
 
 }
