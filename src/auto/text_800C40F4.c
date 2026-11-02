@@ -81,3 +81,8 @@ void fn_800F834C(void) {
 
 }
 
+s32 fn_800FC5F8(void) {
+    extern s32 lbl_80367904;
+    return lbl_80367904;
+}
+
