@@ -5,6 +5,13 @@ void fn_801EAA2C(s8 *arg0) {
     *arg0 = -1;
 }
 
+void fn_801EAFEC(s32 arg0) {
+    M2C_UNK fn_8013FED0();
+    M2C_UNK fn_801AA120(s32);
+    fn_8013FED0();
+    fn_801AA120(arg0);
+}
+
 void fn_801EBE60(void) {
     M2C_UNK fn_801620AC();
     M2C_UNK fn_8005C8B4();
