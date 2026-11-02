@@ -57,6 +57,11 @@ s32 fn_802059EC(void) {
     return *(s32 *)0x800000D4;
 }
 
+void fn_80206888(void) {
+    extern s32 lbl_803684B0;
+    lbl_803684B0 = 1;
+}
+
 void fn_80209E68(void) {
 
 }
