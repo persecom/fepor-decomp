@@ -106,6 +106,10 @@ u16 fn_80217AD8(void) {
     return lbl_80368740;
 }
 
+s32 fn_80219258(void *arg0) {
+    return M2C_FIELD(arg0, s32 *, 0x88);
+}
+
 s32 fn_8021C080(void) {
     return 0;
 }
