@@ -4,3 +4,8 @@
 s32 fn_800119D0(void) {
     return 0x18;
 }
+
+s32 fn_800119D8(void) {
+    return 0x18;
+}
+
