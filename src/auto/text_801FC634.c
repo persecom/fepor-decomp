@@ -226,6 +226,10 @@ s32 fn_8021F4DC(void) {
     return lbl_80368788;
 }
 
+void fn_80220198(void) {
+    *(s8 *)0xCC008000 = 0x48;
+}
+
 u16 fn_80220970(void) {
     extern void *__peReg;
     return M2C_FIELD(__peReg, u16 *, 0xE);
