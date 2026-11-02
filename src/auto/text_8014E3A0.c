@@ -17,6 +17,11 @@ s32 fn_8014E414(void) {
     return 0;
 }
 
+void fn_801515AC(void) {
+    extern s32 lbl_80367BA8;
+    lbl_80367BA8 = 0;
+}
+
 u8 fn_801517C0(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0xC4);
 }
