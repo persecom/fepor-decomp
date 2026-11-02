@@ -63,6 +63,11 @@ void fn_80123BE8(void) {
 
 }
 
+void fn_80123CFC(void) {
+    M2C_UNK fn_801246FC();
+    fn_801246FC();
+}
+
 void fn_8012600C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
