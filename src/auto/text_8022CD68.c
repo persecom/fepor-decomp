@@ -420,6 +420,19 @@ void fn_80263830(void *arg0) {
     fn_8026386C(M2C_FIELD(arg0, f32 *, 0x140), M2C_FIELD(arg0, f32 *, 0x148), M2C_FIELD(arg0, f32 *, 0x144), M2C_FIELD(arg0, f32 *, 0x14C), M2C_FIELD(arg0, f32 *, 0x150));
 }
 
+void fn_80263C94(u8 arg0, void *arg1, void *arg2) {
+    M2C_UNK fn_802648CC(s32, s32, s32, void *);
+    switch ((s32) arg0) {                           /* irregular */
+    case 0:
+        if ((u8) M2C_FIELD(arg2, u8 *, 0x1C4) == 0) {
+            fn_802648CC(M2C_FIELD(arg1, s32 *, 0), M2C_FIELD(arg1, s32 *, 4), M2C_FIELD(arg1, s32 *, 8), arg2);
+        }
+        /* fallthrough */
+    case 1:
+        return;
+    }
+}
+
 void fn_80263CF0(void *arg0) {
     M2C_UNK fn_80263D30(f32, f32, f32, f32, f32, f32);
     M2C_FIELD(arg0, s8 *, 0x1C4) = 0;
