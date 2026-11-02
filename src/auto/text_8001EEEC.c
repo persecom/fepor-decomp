@@ -162,6 +162,11 @@ void fn_8002666C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x60) = 0;
 }
 
+void fn_80026F5C(void *arg0) {
+    M2C_UNK fn_8012AA90(s32, s32, void *);
+    fn_8012AA90((s32) M2C_FIELD(arg0, f32 *, 0x30), (s32) M2C_FIELD(arg0, f32 *, 0x34), arg0);
+}
+
 void fn_800281D8(void *arg0) {
     void *temp_r3;
 
