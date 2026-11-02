@@ -97,3 +97,7 @@ void fn_80149ED0(void) {
 
 }
 
+void fn_80149ED4(void) {
+
+}
+
