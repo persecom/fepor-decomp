@@ -17,3 +17,8 @@ s32 fn_801287B8(void) {
     return 0;
 }
 
+void fn_8012A240(void) {
+    M2C_UNK fn_8012A530();
+    fn_8012A530();
+}
+
