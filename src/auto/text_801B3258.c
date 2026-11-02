@@ -152,3 +152,9 @@ s32 fn_801E33F4(void *arg0) {
     return M2C_FIELD(arg0, u16 *, 0x10) & 1;
 }
 
+void fn_801E3560(void *arg0, s8 arg1, s8 arg2, s8 arg3) {
+    M2C_FIELD(arg0, s8 *, 0x40) = arg1;
+    M2C_FIELD(arg0, s8 *, 0x41) = arg2;
+    M2C_FIELD(arg0, s8 *, 0x42) = arg3;
+}
+
