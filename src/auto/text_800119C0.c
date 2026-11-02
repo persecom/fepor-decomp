@@ -9,3 +9,8 @@ s32 fn_800119D8(void) {
     return 0x18;
 }
 
+void fn_800142B0(s32 arg0) {
+    extern s32 lbl_803671A8;
+    lbl_803671A8 = arg0;
+}
+
