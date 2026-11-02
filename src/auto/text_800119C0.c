@@ -28,6 +28,13 @@ s32 fn_800142B8(void) {
     return lbl_803671A8;
 }
 
+void fn_800142C0(s32 *arg0, s16 *arg1) {
+    extern s16 lbl_8036719E;
+    extern s32 lbl_803671A0;
+    *arg0 = lbl_803671A0;
+    *arg1 = lbl_8036719E;
+}
+
 s32 fn_800142D4(s32 arg0) {
     extern s32 lbl_803671A4;
     s32 temp_r0;
