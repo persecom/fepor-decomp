@@ -122,3 +122,8 @@ void fn_8014D2B0(void *arg0, u8 arg1) {
     }
 }
 
+void fn_8014D8FC(void *arg0) {
+    M2C_UNK fn_80019F04(u8);
+    fn_80019F04(M2C_FIELD(arg0, u8 *, 0x10));
+}
+
