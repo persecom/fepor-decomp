@@ -118,6 +118,17 @@ s32 fn_801C9A88(void) {
     return 0;
 }
 
+void fn_801CA1DC(void *arg0, s32 arg1) {
+    M2C_UNK fn_800C9A60(M2C_UNK *, M2C_UNK);
+    M2C_UNK fn_8011CAAC(s32, M2C_UNK *, s32);
+    M2C_UNK fn_801CB280(M2C_UNK *);
+    M2C_UNK sp8;
+
+    fn_801CB280(&sp8);
+    fn_8011CAAC(M2C_FIELD(arg0, s32 *, 0x430), &sp8, arg1);
+    fn_800C9A60(&sp8, -1);
+}
+
 s32 fn_801CAF2C(void *arg0, s32 arg1) {
     if (arg1 < (s32) M2C_FIELD(arg0, s32 *, 0x70)) {
         return M2C_FIELD(arg0, s32 *, 0x50) + (arg1 << 5);
