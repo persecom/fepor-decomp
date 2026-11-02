@@ -160,6 +160,10 @@ s32 fn_80213904(void) {
     return *(s32 *)0xCC006C00 & 1;
 }
 
+s32 fn_802139F4(void) {
+    return (((u32) *(u32 *)0xCC006C00 >> 6U) & 1) ^ 1;
+}
+
 s32 fn_80213ADC(void) {
     return ((u32) *(u32 *)0xCC006C00 >> 1U) & 1;
 }
