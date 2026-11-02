@@ -72,6 +72,17 @@ void fn_80165B1C(void) {
     fn_800472D4();
 }
 
+void fn_80168ED4(void *arg0) {
+    M2C_UNK fn_8003F670(s32);
+    M2C_UNK fn_80161F7C();
+    M2C_UNK fn_8016A650(void *, M2C_UNK);
+    fn_80161F7C();
+    fn_8003F670(M2C_FIELD(arg0, s32 *, 0x44));
+    if (arg0 != NULL) {
+        fn_8016A650(arg0, 0);
+    }
+}
+
 void fn_80168F1C(void *arg0) {
     s32 fn_8003FCCC();
     M2C_UNK fn_80162018();
