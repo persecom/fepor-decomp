@@ -53,6 +53,11 @@ void fn_8024C5C8(void) {
 
 }
 
+u8 fn_8025ED80(void) {
+    extern u8 lbl_80368978;
+    return lbl_80368978;
+}
+
 void fn_80261714(s32 arg0) {
     extern s32 lbl_80368AA4;
     lbl_80368AA4 = arg0;
