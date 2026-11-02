@@ -127,6 +127,18 @@ void fn_8024C5C8(void) {
 
 }
 
+void fn_8024C7C4(s8 *arg0, s8 *arg1) {
+    extern s32 lbl_803689A4;
+    if (lbl_803689A4 & 1) {
+        *arg0 = 0x40;
+        *arg1 = 0;
+        return;
+    }
+    if (!(lbl_803689A4 & 2)) {
+        *arg1 = 0;
+    }
+}
+
 void fn_8024C7F8(void *arg0, s8 arg1, s8 arg2, s8 arg3) {
     M2C_FIELD(arg0, s8 *, 0x59) = arg1;
     M2C_FIELD(arg0, s8 *, 0x5C) = arg2;
