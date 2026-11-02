@@ -18,6 +18,15 @@ void fn_801B77F0(s32 arg0, s32 arg1) {
     fn_8000E0E4(arg0 + (arg1 << 6));
 }
 
+void fn_801C2250(void *arg0) {
+    M2C_UNK fn_8000C188();
+    if (arg0 != NULL) {
+        M2C_FIELD(arg0, s8 *, 0x31) = 0;
+        M2C_FIELD(arg0, s16 *, 0x34) = 0;
+        fn_8000C188();
+    }
+}
+
 s32 fn_801C4428(void) {
     return 3;
 }
