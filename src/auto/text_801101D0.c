@@ -29,6 +29,11 @@ u8 fn_8011388C(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1B4);
 }
 
+void fn_801138E8(void *arg0) {
+    M2C_UNK fn_801990A4(s32);
+    fn_801990A4(M2C_FIELD(arg0, s32 *, 0x11C));
+}
+
 u8 fn_80113F68(void *arg0) {
     extern f32 lbl_8036A184;
     return (u8) (lbl_8036A184 != M2C_FIELD(arg0, f32 *, 0x104));
