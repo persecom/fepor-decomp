@@ -236,6 +236,20 @@ void fn_8007AD30(void *arg0, s32 arg1) {
     }
 }
 
+void fn_8007B128(void *arg0) {
+    f32 fn_800067BC(M2C_UNK, f32, f32, f32, f32);
+    M2C_UNK fn_8000C188(void *);
+    s32 temp_r3;
+
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x40), f32 *, 0x38) = fn_800067BC(5, M2C_FIELD(arg0, f32 *, 0x30), M2C_FIELD(arg0, f32 *, 0x34), (f32) M2C_FIELD(arg0, s32 *, 0x3C), (f32) M2C_FIELD(arg0, s32 *, 0x38));
+    temp_r3 = M2C_FIELD(arg0, s32 *, 0x3C);
+    if (temp_r3 == (s32) M2C_FIELD(arg0, s32 *, 0x38)) {
+        fn_8000C188(arg0);
+        return;
+    }
+    M2C_FIELD(arg0, s32 *, 0x3C) = (s32) (temp_r3 + 1);
+}
+
 void fn_8007C018(void *arg0) {
     M2C_UNK fn_80200270(s32);
     if ((u32) M2C_FIELD(arg0, u32 *, 0x30) != 0U) {
