@@ -219,6 +219,29 @@ s32 fn_80098140(void) {
     return 0;
 }
 
+s32 fn_80098170(void **arg0) {
+    s32 fn_800A8A88(s32);
+    void *temp_r3;
+    void *var_r0;
+    void *var_r3;
+
+    temp_r3 = *arg0;
+    if (temp_r3 != NULL) {
+        var_r0 = M2C_FIELD(temp_r3, void **, 0x280);
+    } else {
+        var_r0 = NULL;
+    }
+    if (var_r0 != NULL) {
+        if (temp_r3 != NULL) {
+            var_r3 = M2C_FIELD(temp_r3, void **, 0x280);
+        } else {
+            var_r3 = NULL;
+        }
+        return fn_800A8A88(M2C_FIELD(var_r3, s32 *, 0x188));
+    }
+    return 0;
+}
+
 u8 fn_800981D0(void **arg0) {
     void *temp_r3;
     void *temp_r3_2;
