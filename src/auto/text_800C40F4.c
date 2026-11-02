@@ -222,6 +222,10 @@ s16 fn_800F833C(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0x29C);
 }
 
+s32 fn_800F8344(s32 arg0) {
+    return arg0 + 0x2E0;
+}
+
 void fn_800F834C(void) {
 
 }
