@@ -276,3 +276,10 @@ void fn_801E35BC(s32 arg0, s32 arg1) {
     }
 }
 
+s32 fn_801E3620(void *arg0) {
+    if ((u32) (M2C_FIELD(arg0, s32 *, 0) + 0xACA70000) != 0x5346U) {
+        return 0;
+    }
+    return M2C_FIELD(arg0, s32 *, 4) == 0x20050201;
+}
+
