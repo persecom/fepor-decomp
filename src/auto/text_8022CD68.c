@@ -103,6 +103,15 @@ u8 fn_8025ED80(void) {
     return lbl_80368978;
 }
 
+u16 fn_802611F8(void) {
+    extern u32 lbl_803670B8;
+    u32 temp_r0;
+
+    temp_r0 = lbl_803670B8 * 0xA8351D63;
+    lbl_803670B8 = temp_r0;
+    return (u16) (temp_r0 >> 6U);
+}
+
 void fn_8026146C(s32 *arg0) {
     *arg0 <<= 8;
 }
