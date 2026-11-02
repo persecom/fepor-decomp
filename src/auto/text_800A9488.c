@@ -27,6 +27,11 @@ s32 fn_800A9648(void) {
     return 5;
 }
 
+s32 fn_800A9680(void) {
+    fn_80006220(5);
+    return 5;
+}
+
 s32 fn_800A96B8(void) {
     return 0x40;
 }
