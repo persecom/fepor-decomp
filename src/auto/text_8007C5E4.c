@@ -182,3 +182,9 @@ void fn_8009EC38(void) {
     fn_801E2594(&lbl_803682F0);
 }
 
+void fn_8009F000(s32 arg0) {
+    M2C_UNK fn_801E3118(M2C_UNK *, s32, M2C_UNK);
+    extern M2C_UNK lbl_803682F0;
+    fn_801E3118(&lbl_803682F0, arg0, 0);
+}
+
