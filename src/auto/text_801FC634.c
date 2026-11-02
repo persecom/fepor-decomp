@@ -435,6 +435,12 @@ s32 ddh_cc_initinterrupts(void) {
     return 0;
 }
 
+s32 ddh_cc_post_stop(void) {
+    M2C_UNK fn_8023C55C();
+    fn_8023C55C();
+    return 0;
+}
+
 s32 ddh_cc_close(void) {
     return 0;
 }
