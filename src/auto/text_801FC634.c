@@ -13,6 +13,10 @@ s32 fn_801FFD5C(void) {
     return 0;
 }
 
+s32 fn_801FFD64(void) {
+    return 0;
+}
+
 void fn_802015A0(void) {
 
 }
