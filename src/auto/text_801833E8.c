@@ -63,6 +63,14 @@ void fn_801857F0(void *arg0) {
     }
 }
 
+s32 fn_80185B94(void *arg0) {
+    void *temp_r5;
+
+    temp_r5 = M2C_FIELD(arg0, void **, 0x30);
+    M2C_FIELD(M2C_FIELD(temp_r5, void **, 0x5C), f32 *, 0x5C) = (f32) M2C_FIELD(M2C_FIELD(temp_r5, void **, 0x4C), s32 *, 0x34);
+    return 0;
+}
+
 void fn_8018B004(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x38) = 0;
 }
