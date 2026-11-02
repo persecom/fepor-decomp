@@ -55,6 +55,11 @@ void fn_801EED94(void) {
     fn_801EE76C();
 }
 
+void fn_801F09E8(void) {
+    M2C_UNK fn_801F0BC4();
+    fn_801F0BC4();
+}
+
 s32 fn_801F1100(void) {
     return 0;
 }
