@@ -70,6 +70,12 @@ s32 fn_8000B76C(void *arg0) {
     return 1;
 }
 
+s32 fn_8000B82C(void) {
+    M2C_UNK fn_8000C60C();
+    fn_8000C60C();
+    return 0;
+}
+
 void fn_8000C060(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0xC) = arg1;
 }
