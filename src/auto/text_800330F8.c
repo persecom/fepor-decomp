@@ -148,6 +148,22 @@ void fn_8004084C(s32 arg0) {
     lbl_803672AC = arg0;
 }
 
+u8 fn_80040B1C(void *arg0, s32 arg1, s32 arg2) {
+    u8 temp_r6;
+
+    temp_r6 = M2C_FIELD(arg0, u8 *, 0x61);
+    if (arg1 < (s32) temp_r6) {
+        return 1U;
+    }
+    if (arg2 < (s32) temp_r6) {
+        return 1U;
+    }
+    if (arg1 >= (s32) (M2C_FIELD(arg0, s16 *, 0) - temp_r6)) {
+        return 1U;
+    }
+    return (u8) ((M2C_FIELD(arg0, s16 *, 2) - temp_r6) <= arg2);
+}
+
 s32 fn_800431E4(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x1C);
 }
