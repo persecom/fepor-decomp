@@ -34,6 +34,15 @@ void fn_80108F38(void) {
     fn_800AA208();
 }
 
+void fn_8010913C(void *arg0) {
+    s32 fn_802342B8(s32, s32);
+    extern s32 lbl_803679D8;
+    extern void *lbl_803679DC;
+    if (fn_802342B8(*M2C_FIELD(arg0, s32 **, 0x30), lbl_803679D8) == 0) {
+        lbl_803679DC = arg0;
+    }
+}
+
 void fn_80109B00(void *arg0, s8 arg1) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s8 *, 0xE) = arg1;
 }
