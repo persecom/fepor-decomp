@@ -60,6 +60,17 @@ void fn_800C73F0(s32 arg0) {
     fn_8006EDA0(arg0 + 0x30);
 }
 
+void fn_800C7884(void *arg0) {
+    M2C_UNK fn_8005BA08(s8);
+    M2C_UNK fn_8005BC8C(s8);
+    M2C_UNK fn_800C4728(s32);
+    M2C_UNK fn_800C47E8();
+    fn_8005BC8C((s8) M2C_FIELD(arg0, s32 *, 0x44));
+    fn_800C47E8();
+    fn_800C4728(M2C_FIELD(arg0, s32 *, 0x40));
+    fn_8005BA08((s8) M2C_FIELD(arg0, s32 *, 0x40));
+}
+
 void fn_800C792C(void) {
     M2C_UNK fn_801FE32C();
     M2C_UNK fn_8020055C();
