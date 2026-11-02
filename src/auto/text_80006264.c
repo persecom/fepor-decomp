@@ -157,3 +157,12 @@ s32 fn_800113BC(void) {
     return 0;
 }
 
+void fn_80011910(void) {
+    M2C_UNK fn_802201A8(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_802239D0(M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80223F2C(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    fn_802201A8(0, 1, 4, 0x21, 0, 0x7D);
+    fn_802239D0(0, 0);
+    fn_80223F2C(0, 0, 1, 4);
+}
+
