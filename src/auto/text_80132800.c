@@ -98,6 +98,10 @@ void fn_8013B308(void) {
 
 }
 
+s16 fn_8013B30C(void *arg0) {
+    return (s16) ((s16) (M2C_FIELD(arg0, s16 *, 0x16) - M2C_FIELD(arg0, s16 *, 0x12)) / (s16) M2C_FIELD(arg0, s16 *, 0x58));
+}
+
 void fn_8013B32C(void) {
 
 }
