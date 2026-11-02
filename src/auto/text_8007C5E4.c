@@ -77,6 +77,11 @@ void fn_8008D850(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x3C) = 1;
 }
 
+void fn_8008DA60(void) {
+    M2C_UNK fn_8008DA80();
+    fn_8008DA80();
+}
+
 s32 fn_80098094(void) {
     extern s32 lbl_80367500;
     return lbl_80367500;
