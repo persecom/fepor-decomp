@@ -80,6 +80,18 @@ s32 fn_800B7990(void) {
     return 1;
 }
 
+s32 fn_800B79B4(s32 arg0) {
+    M2C_UNK fn_801455B8(s32);
+    s32 var_r3;
+
+    var_r3 = arg0;
+    if (var_r3 < 0) {
+        var_r3 = 0;
+    }
+    fn_801455B8(var_r3);
+    return 1;
+}
+
 s32 fn_800B79E4(void) {
     M2C_UNK fn_80145684();
     fn_80145684();
