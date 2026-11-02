@@ -185,3 +185,8 @@ s32 fn_800C30CC(s32 arg0, s32 arg1) {
     return arg0 + ((arg1 - 1) * 0x18);
 }
 
+void fn_800C3864(s32 arg0, s32 arg1) {
+    M2C_UNK fn_8001D580(s32);
+    fn_8001D580(arg0 + (arg1 * 8));
+}
+
