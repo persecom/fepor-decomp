@@ -71,6 +71,11 @@ void fn_8000CD80(s32 arg0) {
     lbl_80367158 = arg0;
 }
 
+void fn_80010FF0(void) {
+    M2C_UNK fn_801047D0();
+    fn_801047D0();
+}
+
 s32 fn_800113B4(void) {
     return 0;
 }
