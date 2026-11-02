@@ -56,6 +56,11 @@ void fn_8005BC8C(void) {
     fn_8005C8D8();
 }
 
+void fn_8005BCD0(void) {
+    M2C_UNK fn_8005CBC8();
+    fn_8005CBC8();
+}
+
 void fn_8005F780(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 0x84) = arg1;
 }
