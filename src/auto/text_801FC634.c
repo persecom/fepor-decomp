@@ -114,6 +114,10 @@ s32 fn_80227E34(void) {
     return 0;
 }
 
+s32 fn_80227E3C(void) {
+    return 0;
+}
+
 void TRKUARTInterruptHandler(void) {
 
 }
