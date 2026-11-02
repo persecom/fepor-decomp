@@ -58,6 +58,17 @@ void fn_8007DAB4(void *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s16 *, 6) = 7;
 }
 
+void fn_80081CB0(s32 arg0) {
+    M2C_UNK fn_8007FF58(s32);
+    M2C_UNK fn_80080698(s32);
+    M2C_UNK fn_800810BC(s32);
+    M2C_UNK fn_80081830();
+    fn_80081830();
+    fn_800810BC(arg0);
+    fn_80080698(arg0);
+    fn_8007FF58(arg0);
+}
+
 void fn_80083E34(s32 arg0) {
     M2C_UNK fn_80081CF4(s32);
     M2C_UNK fn_80083278(s32);
