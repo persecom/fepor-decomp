@@ -48,6 +48,11 @@ void fn_8018B698(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x40) = 0;
 }
 
+void fn_8018CB7C(void) {
+    M2C_UNK fn_8018CCB8();
+    fn_8018CCB8();
+}
+
 void fn_801908B4(void) {
 
 }
