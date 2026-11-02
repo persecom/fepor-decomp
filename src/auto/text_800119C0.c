@@ -18,6 +18,15 @@ void fn_80013874(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x1C) = 1;
 }
 
+void fn_80013F48(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 0x18) = (s32) M2C_FIELD(arg0, s32 *, 0);
+    M2C_FIELD(arg0, s32 *, 0x10) = 0;
+    M2C_FIELD(arg0, s32 *, 0x14) = 0;
+    M2C_FIELD(arg0, s32 *, 0xC) = 0;
+    M2C_FIELD(arg0, s32 *, 8) = 0;
+    M2C_FIELD(arg0, s8 *, 0x1C) = 0;
+}
+
 void fn_800142B0(s32 arg0) {
     extern s32 lbl_803671A8;
     lbl_803671A8 = arg0;
