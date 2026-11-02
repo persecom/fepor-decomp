@@ -22,6 +22,11 @@ s32 fn_800A30D8(void) {
     return 0;
 }
 
+f32 fn_800A30E0(void) {
+    extern f32 lbl_80369A0C;
+    return lbl_80369A0C;
+}
+
 s32 fn_800A3914(void) {
     return 0;
 }
