@@ -135,6 +135,10 @@ void fn_80025680(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x18) = (s32) (M2C_FIELD(arg0, s32 *, 0x18) & ~arg1);
 }
 
+void fn_80025690(void *arg0, s32 arg1) {
+    M2C_FIELD(arg0, s32 *, 0x18) = (s32) (M2C_FIELD(arg0, s32 *, 0x18) | arg1);
+}
+
 void fn_8002666C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x60) = 0;
 }
