@@ -1,6 +1,15 @@
 /* Functions from 0x80127E94 to 0x8012C368, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_801285C4(void *arg0) {
+    f32 fn_801099A0(s32, M2C_UNK);
+    s32 temp_r31;
+
+    temp_r31 = M2C_FIELD(arg0, s32 *, 0x18);
+    M2C_FIELD(arg0, f32 *, 0x30) = fn_801099A0(temp_r31, 0);
+    M2C_FIELD(arg0, f32 *, 0x34) = fn_801099A0(temp_r31, 1);
+}
+
 void fn_801286F8(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, u8 *, 9) = (u8) (M2C_FIELD(arg0, u8 *, 9) & ~arg1);
 }
