@@ -37,3 +37,7 @@ void TRKUARTInterruptHandler(void) {
 
 }
 
+void fn_8022C08C(void) {
+
+}
+
