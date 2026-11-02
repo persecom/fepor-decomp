@@ -184,6 +184,11 @@ void fn_800E43E8(void) {
 
 }
 
+void fn_800E45CC(void *arg0, s32 arg1, s32 arg2) {
+    M2C_FIELD(arg0, s32 *, 0x58) = arg1;
+    M2C_FIELD(arg0, s32 *, 0x5C) = arg2;
+}
+
 s32 fn_800E4BD8(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x114);
 }
