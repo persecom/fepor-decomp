@@ -84,6 +84,14 @@ void fn_800A84C8(s32 arg0) {
     fn_8018DCC0(arg0);
 }
 
+s32 fn_800A8978(void *arg0) {
+    s32 fn_8000E0E4(s32);
+    if (fn_8000D354(M2C_FIELD(arg0, s32 *, 4)) != 0U) {
+        return fn_8000E0E4(M2C_FIELD(arg0, s32 *, 4));
+    }
+    return M2C_FIELD(arg0, s32 *, 0);
+}
+
 s32 fn_800A8A00(s32 *arg0) {
     s32 strchr(s32, M2C_UNK);
     return strchr(*arg0, 0x5F) + 1;
