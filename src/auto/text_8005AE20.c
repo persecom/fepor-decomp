@@ -138,6 +138,10 @@ s32 fn_800721AC(void) {
     return 0x88;
 }
 
+s32 fn_800721D8(void) {
+    return 0x160;
+}
+
 s32 fn_80072394(void) {
     return 0;
 }
