@@ -17,6 +17,11 @@ void fn_80022FCC(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x14190) = arg1;
 }
 
+void fn_80023E18(void) {
+    M2C_UNK fn_8000C188();
+    fn_8000C188();
+}
+
 void fn_80023ED0(void) {
     extern s32 lbl_8036723C;
     lbl_8036723C += 1;
