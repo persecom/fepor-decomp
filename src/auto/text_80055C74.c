@@ -28,6 +28,11 @@ void fn_800561A8(void) {
     fn_800561EC();
 }
 
+void fn_800561C8(void *arg0) {
+    M2C_UNK fn_80067304(s32);
+    fn_80067304(M2C_FIELD(arg0, s32 *, 0x4C));
+}
+
 void fn_80057860(void *arg0, s32 arg1) {
     s32 temp_r0;
     s32 var_r4;
