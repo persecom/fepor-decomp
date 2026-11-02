@@ -296,6 +296,11 @@ void fn_801402C4(void) {
     fn_80141B00();
 }
 
+void fn_801402E4(void) {
+    M2C_UNK fn_80141D94();
+    fn_80141D94();
+}
+
 s32 fn_80140B04(s32 arg0) {
     return arg0 + 4;
 }
