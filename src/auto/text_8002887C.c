@@ -17,3 +17,7 @@ void fn_8002F770(void) {
 
 }
 
+void fn_8002F774(void) {
+
+}
+
