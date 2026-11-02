@@ -18,6 +18,15 @@ void fn_800B49D0(void *arg0) {
     M2C_FIELD(arg0, u16 *, 0x90) = (u16) (M2C_FIELD(arg0, u16 *, 0x90) | 8);
 }
 
+void fn_800B50E4(void) {
+    M2C_UNK fn_800B4C20();
+    M2C_UNK fn_8020A51C();
+loop_1:
+    fn_800B4C20();
+    fn_8020A51C();
+    goto loop_1;
+}
+
 s32 fn_800B6A30(void) {
     return 0;
 }
