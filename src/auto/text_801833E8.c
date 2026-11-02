@@ -57,6 +57,17 @@ void fn_8018B698(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x40) = 0;
 }
 
+void fn_8018B854(void *arg0) {
+    void *temp_r5;
+
+    temp_r5 = M2C_FIELD(arg0, void **, 0x30);
+    M2C_FIELD(arg0, u8 *, 0x34) = (u8) M2C_FIELD(temp_r5, u8 *, 0x24);
+    M2C_FIELD(arg0, u8 *, 0x35) = (u8) M2C_FIELD(temp_r5, u8 *, 0x25);
+    M2C_FIELD(arg0, u8 *, 0x36) = (u8) M2C_FIELD(temp_r5, u8 *, 0x26);
+    M2C_FIELD(arg0, u8 *, 0x37) = (u8) M2C_FIELD(temp_r5, u8 *, 0x27);
+    M2C_FIELD(arg0, s32 *, 0x44) = 0;
+}
+
 void fn_8018C9A4(void *arg0) {
     M2C_UNK fn_8005FA14(s32, M2C_UNK);
     fn_8005FA14(M2C_FIELD(arg0, s32 *, 0x34), 1);
