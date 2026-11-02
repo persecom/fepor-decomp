@@ -552,6 +552,11 @@ void fn_8022C038(s32 *arg0) {
     OSRestoreInterrupts(*arg0);
 }
 
+void fn_8022C05C(s32 *arg0) {
+    s32 OSDisableInterrupts();
+    *arg0 = OSDisableInterrupts();
+}
+
 void fn_8022C08C(void) {
 
 }
