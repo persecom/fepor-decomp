@@ -4,3 +4,9 @@
 void fn_800195CC(void) {
 
 }
+
+f32 fn_800195EC(void) {
+    extern f32 lbl_80368CE8;
+    return lbl_80368CE8;
+}
+
