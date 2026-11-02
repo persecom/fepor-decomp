@@ -45,6 +45,10 @@ void fn_8013D13C(void) {
 
 }
 
+s32 fn_8013E450(void) {
+    return 0;
+}
+
 void fn_8013F3C0(void) {
 
 }
