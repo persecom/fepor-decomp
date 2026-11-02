@@ -350,6 +350,15 @@ void fn_800E4B64(void *arg0) {
     }
 }
 
+void fn_800E4B84(void *arg0) {
+    void *temp_r3;
+
+    if ((u32) M2C_FIELD(arg0, u32 *, 0xDC) != 0U) {
+        temp_r3 = M2C_FIELD(arg0, void **, 0xE0);
+        M2C_FIELD(temp_r3, u8 *, 0x85) = (u8) (M2C_FIELD(temp_r3, u8 *, 0x85) | 0xF0);
+    }
+}
+
 s32 fn_800E4BD8(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x114);
 }
