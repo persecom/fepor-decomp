@@ -370,6 +370,10 @@ void fn_80149EDC(void) {
 
 }
 
+u8 fn_80149EE0(void **arg0) {
+    return M2C_FIELD(*arg0, u8 *, 7);
+}
+
 void fn_80149F28(void) {
 
 }
