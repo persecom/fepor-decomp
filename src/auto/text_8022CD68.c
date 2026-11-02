@@ -123,6 +123,15 @@ u32 fn_8024B370(void) {
     return (u32) ((-1 - temp_r3) | (temp_r3 + 1)) >> 0x1FU;
 }
 
+void fn_8024B3A0(s32 arg0) {
+    M2C_UNK fn_80244D64(s32);
+    M2C_UNK fn_802636F4();
+    M2C_UNK fn_8026372C();
+    fn_8026372C();
+    fn_80244D64(arg0);
+    fn_802636F4();
+}
+
 void fn_8024C5C8(void) {
 
 }
