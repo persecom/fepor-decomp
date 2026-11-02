@@ -28,6 +28,15 @@ s32 fn_800142B8(void) {
     return lbl_803671A8;
 }
 
+s32 fn_800142D4(s32 arg0) {
+    extern s32 lbl_803671A4;
+    s32 temp_r0;
+
+    temp_r0 = lbl_803671A4;
+    lbl_803671A4 = arg0;
+    return temp_r0;
+}
+
 u8 fn_80014E70(void) {
     extern u8 lbl_803671B8;
     return lbl_803671B8;
