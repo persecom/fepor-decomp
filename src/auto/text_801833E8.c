@@ -381,6 +381,12 @@ s32 fn_8019FCAC(void) {
     return 1;
 }
 
+s32 fn_8019FCD0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    M2C_UNK fn_80017840(M2C_UNK, s32, f32, f32, f32);
+    fn_80017840(1, arg0, (f32) arg1, (f32) arg2, (f32) arg3);
+    return 1;
+}
+
 s32 fn_8019FE2C(void) {
     M2C_UNK fn_800C0658();
     M2C_UNK fn_800177E0();
