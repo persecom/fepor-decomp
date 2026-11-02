@@ -196,6 +196,14 @@ u8 fn_801D8840(void *arg0) {
     return (u8) (M2C_FIELD(arg0, u8 *, 0x16) == 0x20);
 }
 
+void fn_801D8854(void *arg0, u32 arg1) {
+    M2C_UNK fn_801475FC(u32, M2C_UNK);
+    M2C_FIELD(arg0, s16 *, 2) = 0x12C;
+    if (arg1 != 0U) {
+        fn_801475FC(arg1, 0x64);
+    }
+}
+
 void fn_801D888C(void *arg0, s16 arg1) {
     M2C_FIELD(arg0, s16 *, 2) = arg1;
 }
