@@ -25,6 +25,11 @@ s32 fn_801C4438(void) {
     return 5;
 }
 
+void fn_801C7BF8(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 0) = 0;
+    M2C_FIELD(arg0, s32 *, 4) = 0;
+}
+
 s32 fn_801C9704(void) {
     extern s32 lbl_803682AC;
     return lbl_803682AC;
