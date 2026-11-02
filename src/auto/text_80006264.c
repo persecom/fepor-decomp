@@ -100,6 +100,16 @@ void fn_8000C5B8(void *arg0) {
     }
 }
 
+void fn_8000C5E0(void *arg0) {
+    void *temp_r4;
+
+    if ((void *) M2C_FIELD(arg0, void **, 0x18) != NULL) {
+        M2C_FIELD(arg0, u8 *, 0x2C) = (u8) (M2C_FIELD(arg0, u8 *, 0x2C) | 2);
+        temp_r4 = M2C_FIELD(arg0, void **, 0x18);
+        M2C_FIELD(temp_r4, u8 *, 0x2D) = (u8) (M2C_FIELD(temp_r4, u8 *, 0x2D) + 1);
+    }
+}
+
 void fn_8000CD80(s32 arg0) {
     extern s32 lbl_80367158;
     lbl_80367158 = arg0;
