@@ -77,6 +77,14 @@ void fn_80057E64(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 0x55) = arg1;
 }
 
+void fn_80057E6C(void *arg0) {
+    if ((u8) M2C_FIELD(arg0, u8 *, 0x54) != 0) {
+        M2C_FIELD(arg0, s32 *, 0x4C) = 0x1E;
+        return;
+    }
+    M2C_FIELD(arg0, s32 *, 0x4C) = 1;
+}
+
 void fn_80057E90(void *arg0, f32 farg0) {
     M2C_FIELD(arg0, f32 *, 0x40) = farg0;
 }
