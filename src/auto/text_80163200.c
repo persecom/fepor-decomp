@@ -207,6 +207,13 @@ void fn_8016F194(void *arg0) {
     fn_801AE3F8(arg0);
 }
 
+void fn_8016F1D4(void *arg0) {
+    M2C_UNK fn_8013FF00(void *, s32);
+    s32 fn_8013FF94(void *, M2C_UNK, M2C_UNK);
+    fn_8000A430(M2C_FIELD(arg0, s32 *, 0x60));
+    fn_8013FF00(arg0, fn_8013FF94(arg0, -0x1000, 0));
+}
+
 void fn_8016F2EC(void *arg0) {
     M2C_UNK fn_80193DD8(void *);
     fn_8000A408(M2C_FIELD(arg0, s32 *, 0x5C));
