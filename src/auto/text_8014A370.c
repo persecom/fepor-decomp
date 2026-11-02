@@ -29,6 +29,10 @@ s32 fn_8014A918(void) {
     return 0x10;
 }
 
+s32 fn_8014A920(void) {
+    return 0x130;
+}
+
 s32 fn_8014A960(void) {
     return 0;
 }
