@@ -15,6 +15,14 @@ s32 fn_800A6850(void *arg0) {
     return (((u8) M2C_FIELD(arg0, u8 *, 0x1A4) >> 5U) & 7) != 0;
 }
 
+s32 fn_800A68D8(void *arg0) {
+    s8 fn_8003B2D0();
+    u8 temp_r31;
+
+    temp_r31 = M2C_FIELD(arg0, u8 *, 0x1A8);
+    return (s8) temp_r31 < fn_8003B2D0();
+}
+
 void fn_800A6FB8(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x39) = 0;
     M2C_FIELD(arg0, s8 *, 0x38) = 0;
