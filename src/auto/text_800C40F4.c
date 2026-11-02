@@ -77,3 +77,7 @@ void fn_800E78DC(void) {
 
 }
 
+void fn_800F834C(void) {
+
+}
+
