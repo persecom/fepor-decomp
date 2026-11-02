@@ -53,6 +53,13 @@ s32 fn_80165B14(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x48);
 }
 
+void fn_80165B1C(void) {
+    M2C_UNK fn_800472D4();
+    M2C_UNK fn_80040844();
+    fn_80040844();
+    fn_800472D4();
+}
+
 void fn_80169640(void) {
 
 }
