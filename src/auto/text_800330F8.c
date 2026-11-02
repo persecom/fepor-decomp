@@ -1,6 +1,11 @@
 /* Functions from 0x800330F8 to 0x80055C70, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_80033E70(void *arg0) {
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x400), s16 *, 2) = (s16) (M2C_FIELD(arg0, s16 *, 0) - M2C_FIELD(arg0, s16 *, 2));
+    M2C_FIELD(arg0, void **, 0x400) = NULL;
+}
+
 void fn_800340E4(s16 *arg0) {
     *arg0 = 0;
 }
