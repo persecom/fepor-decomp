@@ -1,6 +1,11 @@
 /* Functions from 0x800A39F8 to 0x800A9384, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_800A5944(s32 arg0) {
+    M2C_UNK fn_8006EDA0(s32);
+    fn_8006EDA0(arg0 + 0x34);
+}
+
 s32 fn_800A6850(void *arg0) {
     return (((u8) M2C_FIELD(arg0, u8 *, 0x1A4) >> 5U) & 7) != 0;
 }
