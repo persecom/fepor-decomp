@@ -1,0 +1,10 @@
+# Made by decomp.wtf. See config.example.yml for every option.
+object_base: orig/GFEE01
+object: sys/main.dol
+hash: 9d00d7d407750b82cb1cfccc56f8aa8a89cc8851
+symbols: config/GFEE01/symbols.txt
+splits: config/GFEE01/splits.txt
+mw_comment_version: 10
+detect_objects: true
+detect_strings: true
+write_asm: true

@@ -1,0 +1,143 @@
+Sections:
+	.init       type:code align:4
+	extab       type:rodata align:32
+	extabindex  type:rodata align:4
+	.text       type:code align:32
+	.ctors      type:rodata align:8
+	.dtors      type:rodata align:32
+	.rodata     type:rodata align:32
+	.data       type:data align:4
+	.bss        type:bss align:4
+	.sdata      type:data align:4
+	.sbss       type:bss align:32
+	.sdata2     type:rodata align:32
+	.sbss2      type:bss align:16
+
+auto/text_800056A0.c:
+	.text       start:0x800056A0 end:0x80006258
+
+auto/text_80006264.c:
+	.text       start:0x80006264 end:0x80011968
+
+auto/text_800119C0.c:
+	.text       start:0x800119C0 end:0x80016EE8
+
+auto/text_80016F40.c:
+	.text       start:0x80016F40 end:0x80019558
+
+auto/text_800195BC.c:
+	.text       start:0x800195BC end:0x8001EE58
+
+auto/text_8001EEEC.c:
+	.text       start:0x8001EEEC end:0x80028864
+
+auto/text_8002887C.c:
+	.text       start:0x8002887C end:0x80033080
+
+auto/text_800330F8.c:
+	.text       start:0x800330F8 end:0x80055C70
+
+auto/text_80055C74.c:
+	.text       start:0x80055C74 end:0x8005A29C
+
+auto/text_8005A2A8.c:
+	.text       start:0x8005A2A8 end:0x8005ADE4
+
+auto/text_8005AE20.c:
+	.text       start:0x8005AE20 end:0x80072408
+
+auto/text_800725C8.c:
+	.text       start:0x800725C8 end:0x800732BC
+
+auto/text_80073394.c:
+	.text       start:0x80073394 end:0x80073E70
+
+auto/text_80074370.c:
+	.text       start:0x80074370 end:0x8007C534
+
+auto/text_8007C5E4.c:
+	.text       start:0x8007C5E4 end:0x8009F0BC
+
+auto/text_8009F85C.c:
+	.text       start:0x8009F85C end:0x800A399C
+
+auto/text_800A39AC.c:
+	.text       start:0x800A39AC end:0x800A39C4
+
+auto/text_800A39F8.c:
+	.text       start:0x800A39F8 end:0x800A9384
+
+auto/text_800A9488.c:
+	.text       start:0x800A9488 end:0x800AD1F4
+
+auto/text_800AD24C.c:
+	.text       start:0x800AD24C end:0x800C3F18
+
+auto/text_800C40F4.c:
+	.text       start:0x800C40F4 end:0x801035C8
+
+auto/text_80103748.c:
+	.text       start:0x80103748 end:0x80105504
+
+auto/text_8010554C.c:
+	.text       start:0x8010554C end:0x80110128
+
+auto/text_801101D0.c:
+	.text       start:0x801101D0 end:0x80120CC0
+
+auto/text_80120CCC.c:
+	.text       start:0x80120CCC end:0x80127D80
+
+auto/text_80127E94.c:
+	.text       start:0x80127E94 end:0x8012C368
+
+auto/text_8012C3D0.c:
+	.text       start:0x8012C3D0 end:0x8013275C
+
+auto/text_80132800.c:
+	.text       start:0x80132800 end:0x80149F38
+
+auto/text_80149FB8.c:
+	.text       start:0x80149FB8 end:0x8014A25C
+
+auto/text_8014A370.c:
+	.text       start:0x8014A370 end:0x8014E350
+
+auto/text_8014E3A0.c:
+	.text       start:0x8014E3A0 end:0x801620BC
+
+auto/text_80163200.c:
+	.text       start:0x80163200 end:0x80183374
+
+auto/text_801833E8.c:
+	.text       start:0x801833E8 end:0x801A2AB4
+
+auto/text_801A2AC4.c:
+	.text       start:0x801A2AC4 end:0x801A7D3C
+
+auto/text_801A7D78.c:
+	.text       start:0x801A7D78 end:0x801AE2D4
+
+auto/text_801AE3F8.c:
+	.text       start:0x801AE3F8 end:0x801B3220
+
+auto/text_801B3258.c:
+	.text       start:0x801B3258 end:0x801E4380
+
+auto/text_801E4540.c:
+	.text       start:0x801E4540 end:0x801EA8C0
+
+auto/text_801EAA2C.c:
+	.text       start:0x801EAA2C end:0x801F18D4
+
+auto/text_801F196C.c:
+	.text       start:0x801F196C end:0x801FC620
+
+auto/text_801FC634.c:
+	.text       start:0x801FC634 end:0x8022C1E8
+
+auto/text_8022C518.c:
+	.text       start:0x8022C518 end:0x8022CCF8
+
+auto/text_8022CD68.c:
+	.text       start:0x8022CD68 end:0x80267A7C
