@@ -91,6 +91,16 @@ s32 fn_80015610(void *arg0, void *arg1) {
     return 2;
 }
 
+s32 fn_80015648(u8 arg0, u8 arg1) {
+    if (arg0 == arg1) {
+        return 0;
+    }
+    if ((arg0 == 1) || (arg1 == 1)) {
+        return 1;
+    }
+    return 2;
+}
+
 void fn_8001594C(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
