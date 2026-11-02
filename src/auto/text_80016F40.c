@@ -1,6 +1,11 @@
 /* Functions from 0x80016F40 to 0x80019558, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_8001753C(s16 *arg0) {
+    s16 fn_8000CEE4(M2C_UNK);
+    *arg0 = fn_8000CEE4(0xE4C);
+}
+
 void fn_80017BFC(void) {
     M2C_UNK fn_8001840C();
     fn_8001840C();
