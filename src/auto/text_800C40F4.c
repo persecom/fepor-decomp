@@ -500,6 +500,11 @@ void fn_800FC490(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x31) = 0;
 }
 
+void fn_800FC540(void) {
+    M2C_UNK fn_800FC49C();
+    fn_800FC49C();
+}
+
 s32 fn_800FC5F8(void) {
     extern s32 lbl_80367904;
     return lbl_80367904;
