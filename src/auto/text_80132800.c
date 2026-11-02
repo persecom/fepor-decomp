@@ -81,6 +81,10 @@ void fn_801378E8(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x44) = arg1;
 }
 
+void fn_80137EA0(void *arg0, s32 arg1) {
+    M2C_FIELD(arg0, s32 *, 0x44) = arg1;
+}
+
 void fn_8013B308(void) {
 
 }
