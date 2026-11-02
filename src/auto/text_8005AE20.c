@@ -148,6 +148,11 @@ u8 fn_80069E74(void) {
     return lbl_80367300;
 }
 
+void fn_80069F04(s32 arg0) {
+    M2C_UNK fn_80069F2C(M2C_UNK, s32);
+    fn_80069F2C(-1, arg0);
+}
+
 s32 fn_8006A374(void) {
     extern s32 lbl_8036730C;
     return lbl_8036730C;
