@@ -30,6 +30,11 @@ void fn_801C4564(void) {
     fn_801C45A4();
 }
 
+void fn_801C4584(void) {
+    M2C_UNK fn_801C5B80();
+    fn_801C5B80();
+}
+
 void fn_801C7BF8(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
