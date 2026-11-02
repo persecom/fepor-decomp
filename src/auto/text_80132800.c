@@ -143,6 +143,15 @@ s32 fn_8013C3AC(void) {
     return 0;
 }
 
+void fn_8013D10C(void) {
+    M2C_UNK fn_8000A174(M2C_UNK, M2C_UNK);
+    M2C_UNK fn_8000A248();
+    M2C_UNK fn_8000A258();
+    fn_8000A258();
+    fn_8000A174(0, 0x13);
+    fn_8000A248();
+}
+
 void fn_8013D13C(void) {
 
 }
