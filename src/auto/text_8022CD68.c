@@ -47,6 +47,11 @@ void fn_80238A9C(void) {
     fn_802387E8();
 }
 
+void fn_80238ABC(void) {
+    M2C_UNK fn_8023108C();
+    fn_8023108C();
+}
+
 s32 Hu_IsStub(void) {
     return 0;
 }
