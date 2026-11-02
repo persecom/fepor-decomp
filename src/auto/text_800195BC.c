@@ -145,6 +145,14 @@ s32 fn_8001DDC4(u8 arg0) {
     return 0;
 }
 
+s32 fn_8001ED58(void *arg0) {
+    s32 fn_8000E0E4(s32);
+    if (fn_8000D354(M2C_FIELD(arg0, s32 *, 4)) != 0U) {
+        return fn_8000E0E4(M2C_FIELD(arg0, s32 *, 4));
+    }
+    return M2C_FIELD(arg0, s32 *, 0);
+}
+
 void fn_8001EDA0(u8 *arg0) {
     u8 temp_r4;
 
