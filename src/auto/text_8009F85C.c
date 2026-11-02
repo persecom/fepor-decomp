@@ -1,6 +1,12 @@
 /* Functions from 0x8009F85C to 0x800A399C, found by decomp-toolkit. */
 #include "common.h"
 
+s32 fn_8009FF7C(void) {
+    M2C_UNK fn_800EBF58();
+    fn_800EBF58();
+    return 0;
+}
+
 void fn_800A01B4(void) {
     M2C_UNK fn_80018AAC();
     fn_80018AAC();
