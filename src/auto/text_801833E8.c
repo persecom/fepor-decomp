@@ -124,6 +124,18 @@ void fn_8019E5B0(void) {
     fn_8000A274(0);
 }
 
+s32 fn_8019E690(s32 arg0) {
+    extern u8 lbl_8036728B;
+    u8 var_r0;
+
+    var_r0 = lbl_8036728B | 1;
+    if (arg0 != 0) {
+        var_r0 = lbl_8036728B & 0xFE;
+    }
+    lbl_8036728B = var_r0;
+    return 1;
+}
+
 s32 fn_8019E6B4(void) {
     M2C_UNK fn_8018CF08();
     fn_8018CF08();
