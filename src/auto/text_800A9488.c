@@ -50,3 +50,8 @@ void fn_800AB73C(void) {
     fn_800AB75C();
 }
 
+void fn_800ACCF8(void) {
+    M2C_UNK fn_800ACD18();
+    fn_800ACD18();
+}
+
