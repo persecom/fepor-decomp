@@ -94,6 +94,11 @@ s32 fn_80077EF8(void) {
     return 0;
 }
 
+s32 fn_80078E70(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + 4);
+    return 1;
+}
+
 s32 fn_800790CC(void) {
     return 0;
 }
