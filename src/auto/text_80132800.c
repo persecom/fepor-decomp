@@ -97,6 +97,10 @@ void fn_80144D80(void) {
 
 }
 
+s32 fn_80149B3C(void) {
+    return 0;
+}
+
 void fn_80149DB0(void) {
 
 }
