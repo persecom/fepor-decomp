@@ -228,6 +228,13 @@ s32 fn_800B8894(s32 arg0) {
     return 1;
 }
 
+void fn_800B8938(s32 arg0) {
+    u8 fn_80089ED8();
+    if (fn_80089ED8() == 0) {
+        fn_8000C188(arg0);
+    }
+}
+
 s32 fn_800B8AD8(void) {
     M2C_UNK fn_801C18FC();
     fn_801C18FC();
