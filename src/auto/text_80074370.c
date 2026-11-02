@@ -62,6 +62,10 @@ void fn_80077568(s8 *arg0) {
     *arg0 = 2;
 }
 
+void fn_80077694(s8 *arg0) {
+    *arg0 = 1;
+}
+
 s32 fn_800777D4(void) {
     return 0xC;
 }
