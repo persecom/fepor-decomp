@@ -25,3 +25,8 @@ s32 fn_80130858(void) {
     return 0;
 }
 
+void fn_80130860(void) {
+    M2C_UNK fn_80225058(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    fn_80225058(0, 0, 0x80, 0x1E0);
+}
+
