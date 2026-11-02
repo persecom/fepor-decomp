@@ -362,6 +362,15 @@ void fn_8017C028(void *arg0) {
     fn_80105D4C(temp_r5 + 0x1BC, M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), u8 *, 0x18), temp_r5);
 }
 
+void fn_8017C0EC(void *arg0) {
+    s32 temp_r5;
+
+    temp_r5 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s32 *, 0x4C);
+    fn_80105CEC(temp_r5 + 0x1BC, M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), u8 *, 0x18), temp_r5);
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s8 *, 0x3C) = 0;
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s32 *, 0x58) = 0;
+}
+
 void fn_8017C304(void *arg0) {
     M2C_UNK fn_80105CEC(s32, u8, s32);
     s32 temp_r5;
