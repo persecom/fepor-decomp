@@ -15,6 +15,12 @@ void fn_801F1E78(void *arg0) {
     *temp_r3 |= 1;
 }
 
+void fn_801F5518(s32 arg0) {
+    M2C_UNK fn_801E3118(M2C_UNK *, s32, M2C_UNK);
+    extern M2C_UNK lbl_803682F0;
+    fn_801E3118(&lbl_803682F0, arg0, 1);
+}
+
 void fn_801F5BAC(void) {
 
 }
