@@ -194,6 +194,10 @@ u8 fn_800E8FB4(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0xFD);
 }
 
+f32 fn_800E9018(void *arg0) {
+    return M2C_FIELD(arg0, f32 *, 0x104);
+}
+
 void fn_800F834C(void) {
 
 }
