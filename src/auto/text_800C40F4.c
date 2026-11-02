@@ -465,3 +465,7 @@ s32 fn_800FC5F8(void) {
     return lbl_80367904;
 }
 
+s32 fn_800FE8E8(void *arg0, void *arg1) {
+    return (u32) M2C_FIELD(arg0, u32 *, 0x24C) < (u32) M2C_FIELD(arg1, u32 *, 0x24C);
+}
+
