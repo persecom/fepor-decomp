@@ -9,3 +9,7 @@ void fn_800D67E8(void) {
 
 }
 
+void fn_800D6874(void) {
+
+}
+
