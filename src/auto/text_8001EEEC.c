@@ -5,6 +5,10 @@ void fn_8001EF7C(void) {
 
 }
 
+s32 fn_80022FC4(void) {
+    return 0x2000;
+}
+
 void fn_800255B8(void) {
 
 }
