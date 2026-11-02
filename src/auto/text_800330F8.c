@@ -55,3 +55,7 @@ void fn_8004DC54(s8 arg0) {
     lbl_803672BC = arg0;
 }
 
+void fn_8004FE90(void *arg0, s8 arg1) {
+    M2C_FIELD(arg0, s8 *, 2) = arg1;
+}
+
