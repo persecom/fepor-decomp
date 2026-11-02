@@ -102,6 +102,11 @@ void fn_80196794(void) {
     fn_8003D538();
 }
 
+void fn_80196818(void *arg0) {
+    M2C_UNK fn_801B3258(s32, void *);
+    fn_801B3258(M2C_FIELD(arg0, s32 *, 0x30), arg0);
+}
+
 void fn_80196840(void) {
 
 }
