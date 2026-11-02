@@ -240,6 +240,17 @@ s32 fn_8019D930(void) {
     return 1;
 }
 
+s32 fn_8019E4EC(void) {
+    u8 fn_800A69D8(M2C_UNK *, s32 *);
+    M2C_UNK spC;
+    s32 sp8;
+
+    if (fn_800A69D8(&spC, &sp8) != 0) {
+        return sp8;
+    }
+    return 0;
+}
+
 void fn_8019E5B0(void) {
     M2C_UNK fn_8000A274(M2C_UNK);
     fn_8000A274(0);
