@@ -188,6 +188,11 @@ s32 fn_8019E6B4(void) {
     return 1;
 }
 
+void fn_8019EAC8(void *arg0) {
+    M2C_UNK fn_800F18A4(s32, s32);
+    fn_800F18A4(M2C_FIELD(arg0, s32 *, 0x30), M2C_FIELD(arg0, s32 *, 0x34));
+}
+
 s32 fn_8019ED74(void) {
     return 1;
 }
