@@ -387,6 +387,11 @@ void fn_800E7C88(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x2C) = 1;
 }
 
+void fn_800E8888(void) {
+    M2C_UNK fn_800E43EC();
+    fn_800E43EC();
+}
+
 void fn_800E8A88(void *arg0, f32 farg0) {
     extern f32 lbl_80369F7C;
     M2C_FIELD(arg0, f32 *, 0x110) = (f32) (lbl_80369F7C * farg0);
