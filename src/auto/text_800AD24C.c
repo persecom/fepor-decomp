@@ -241,6 +241,17 @@ s32 fn_800BBC50(void) {
     return lbl_80367110;
 }
 
+u16 fn_800BBD68(void) {
+    void *fn_80019E04();
+    void *temp_r3;
+
+    temp_r3 = fn_80019E04();
+    if (temp_r3 == NULL) {
+        return 0U;
+    }
+    return M2C_FIELD(temp_r3, u16 *, 0xE);
+}
+
 s32 fn_800BF694(void) {
     return 1;
 }
