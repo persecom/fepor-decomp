@@ -139,6 +139,25 @@ void fn_8014D254(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
     M2C_FIELD(arg0, s8 *, 0x17) = arg4;
 }
 
+void fn_8014D268(void *arg0, s32 arg1) {
+    s32 temp_r0;
+    s32 temp_r5;
+    s32 var_r4;
+
+    var_r4 = arg1;
+    temp_r0 = M2C_FIELD(arg0, s32 *, 0x18);
+    temp_r5 = var_r4 - temp_r0;
+    if (temp_r5 < 0) {
+        M2C_FIELD(arg0, s32 *, 0x6C) = (s32) (M2C_FIELD(arg0, s32 *, 0x6C) + (temp_r0 - var_r4));
+    } else {
+        M2C_FIELD(arg0, s32 *, 0x68) = (s32) (M2C_FIELD(arg0, s32 *, 0x68) + temp_r5);
+    }
+    if (var_r4 > 0x98967F) {
+        var_r4 = 0x98967F;
+    }
+    M2C_FIELD(arg0, s32 *, 0x18) = var_r4;
+}
+
 void fn_8014D2B0(void *arg0, u8 arg1) {
     u8 temp_r5;
 
