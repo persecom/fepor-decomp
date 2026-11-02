@@ -252,6 +252,17 @@ u16 fn_800BBD68(void) {
     return M2C_FIELD(temp_r3, u16 *, 0xE);
 }
 
+u8 fn_800BD5AC(void) {
+    void *fn_80016BDC();
+    void *temp_r3;
+
+    temp_r3 = fn_80016BDC();
+    if (temp_r3 == NULL) {
+        return 0U;
+    }
+    return M2C_FIELD(temp_r3, u8 *, 0x198);
+}
+
 s32 fn_800BF694(void) {
     return 1;
 }
