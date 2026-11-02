@@ -100,6 +100,16 @@ void fn_80194174(void) {
 
 }
 
+void fn_801950CC(void *arg0) {
+    M2C_UNK fn_800C426C(s32);
+    u32 temp_r3;
+
+    temp_r3 = M2C_FIELD(arg0, u32 *, 0x30);
+    if (temp_r3 != 0U) {
+        fn_800C426C(temp_r3 - 0x10);
+    }
+}
+
 void fn_80195170(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 4) = arg1;
 }
