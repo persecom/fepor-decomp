@@ -38,6 +38,15 @@ void OSCreateAlarm(void *arg0) {
     M2C_FIELD(arg0, s32 *, 4) = 0;
 }
 
+s32 fn_80204CD4(s32 arg0) {
+    extern s32 lbl_80366F28;
+    s32 temp_r0;
+
+    temp_r0 = lbl_80366F28;
+    lbl_80366F28 = arg0;
+    return temp_r0;
+}
+
 s32 OSGetArenaHi(void) {
     extern s32 __OSArenaHi_803684A8;
     return __OSArenaHi_803684A8;
