@@ -228,6 +228,10 @@ void fn_80262AD0(void) {
     fn_802142B0();
 }
 
+s32 fn_80262AF0(void) {
+    return fn_802142B0() + 0x500;
+}
+
 s32 fn_80262B14(s32 arg0) {
     return arg0 - 0x500;
 }
