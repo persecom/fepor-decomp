@@ -376,6 +376,15 @@ void fn_800E4E3C(void *arg0) {
     }
 }
 
+void fn_800E4E5C(void *arg0) {
+    s32 *temp_r3;
+
+    if ((u32) M2C_FIELD(arg0, u32 *, 0xDC) != 0U) {
+        temp_r3 = M2C_FIELD(arg0, s32 **, 0xE0);
+        *temp_r3 &= 0xFFFFFBFF;
+    }
+}
+
 s32 fn_800E5068(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0xF8);
 }
