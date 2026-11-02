@@ -273,6 +273,11 @@ void fn_8013FED0(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x30) = (u8) (M2C_FIELD(arg0, u8 *, 0x30) + 1);
 }
 
+void fn_8013FEE0(void) {
+    extern u8 lbl_80367AD8;
+    lbl_80367AD8 -= 1;
+}
+
 s32 fn_80140B04(s32 arg0) {
     return arg0 + 4;
 }
