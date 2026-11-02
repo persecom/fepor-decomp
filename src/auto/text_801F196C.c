@@ -13,6 +13,10 @@ void fn_801FC404(void) {
 
 }
 
+s32 fn_801FC42C(s32 arg0) {
+    return arg0 + 4;
+}
+
 void fn_801FC434(void) {
 
 }
