@@ -106,6 +106,10 @@ void usr_put_initialize(void) {
 
 }
 
+s32 TRKInitializeDispatcher(void) {
+    return 0;
+}
+
 void TRKUARTInterruptHandler(void) {
 
 }
