@@ -82,6 +82,17 @@ void fn_800C7960(void) {
     fn_801FE360();
 }
 
+void fn_800C7994(void) {
+    M2C_UNK fn_801FEF6C();
+    M2C_UNK fn_8020119C();
+    extern s32 lbl_803682A4;
+    if (lbl_803682A4 & 0x60000) {
+        fn_8020119C();
+        return;
+    }
+    fn_801FEF6C();
+}
+
 void fn_800C7EF8(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x24) = 0;
     M2C_FIELD(arg0, s32 *, 0x20) = 0;
