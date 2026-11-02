@@ -334,6 +334,26 @@ void fn_800DBED4(void) {
 
 }
 
+void fn_800DBF38(void *arg0, s32 arg1, f32 farg0, f32 farg1) {
+    extern f32 lbl_80369E88;
+    extern f32 lbl_80369E8C;
+    extern f32 lbl_80369E90;
+    s32 var_r4;
+
+    var_r4 = arg1;
+    if ((s32) M2C_FIELD(arg0, s32 *, 0x5C) <= 0x3E7) {
+        M2C_FIELD(arg0, f32 *, 0x4C) = (f32) (lbl_80369E88 * farg0);
+        if (var_r4 != -1) {
+            M2C_FIELD(arg0, f32 *, 0x54) = (f32) (lbl_80369E8C * farg0);
+        } else {
+            var_r4 = 0x98967F;
+            M2C_FIELD(arg0, f32 *, 0x54) = (f32) lbl_80369E90;
+        }
+        M2C_FIELD(arg0, f32 *, 0x50) = farg1;
+        M2C_FIELD(arg0, s32 *, 0x5C) = var_r4;
+    }
+}
+
 void fn_800DC010(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x48) = arg1;
 }
