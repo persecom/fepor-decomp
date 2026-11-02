@@ -277,6 +277,14 @@ void fn_800C0980(void) {
     fn_80018AE4();
 }
 
+void fn_800C0C1C(void) {
+    u16 fn_80089634();
+    M2C_UNK fn_80089650(M2C_UNK, M2C_UNK);
+    if (fn_80089634() != 6) {
+        fn_80089650(3, 0x85);
+    }
+}
+
 void fn_800C10B4(void) {
     M2C_UNK fn_80016180();
     fn_80016180();
