@@ -9,3 +9,7 @@ void fn_801FC400(void) {
 
 }
 
+void fn_801FC404(void) {
+
+}
+
