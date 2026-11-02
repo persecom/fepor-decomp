@@ -471,6 +471,12 @@ s32 gdev_cc_post_stop(void) {
     return 0;
 }
 
+s32 gdev_cc_pre_continue(void) {
+    M2C_UNK fn_80266FFC();
+    fn_80266FFC();
+    return 0;
+}
+
 s32 gdev_cc_close(void) {
     return 0;
 }
