@@ -245,6 +245,10 @@ s32 fn_8013FBC0(s32 arg0) {
     return arg0 + 0x12;
 }
 
+s32 fn_8013FBD4(s32 arg0) {
+    return arg0 + 0xA;
+}
+
 void fn_8013FC64(void) {
 
 }
