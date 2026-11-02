@@ -31,6 +31,11 @@ s32 fn_80019DBC(u8 arg0) {
     return lbl_803671EC + (arg0 * 0xC);
 }
 
+void fn_80019DD0(void) {
+    M2C_UNK fn_8000D354();
+    fn_8000D354();
+}
+
 s32 fn_80019DF0(u8 arg0) {
     extern s32 lbl_803671E8;
     return lbl_803671E8 + (arg0 * 0x28);
