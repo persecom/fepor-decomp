@@ -122,6 +122,10 @@ s32 fn_802287A8(void) {
     return 0;
 }
 
+s32 fn_802287B0(void) {
+    return 0;
+}
+
 void TRKUARTInterruptHandler(void) {
 
 }
