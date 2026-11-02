@@ -66,6 +66,15 @@ void fn_80122E28(void *arg0, s16 arg1, s16 arg2) {
     M2C_FIELD(arg0, s16 *, 0x4E) = arg2;
 }
 
+void fn_80122E34(void *arg0, u32 arg1) {
+    s32 fn_80109180(u32, void *);
+    if (arg1 != 0U) {
+        M2C_FIELD(arg0, s32 *, 0x64) = fn_80109180(arg1, arg0);
+        return;
+    }
+    M2C_FIELD(arg0, s32 *, 0x64) = 0;
+}
+
 void fn_801232F4(void *arg0, f32 farg0, f32 farg1) {
     M2C_FIELD(arg0, f32 *, 0x70) = farg0;
     M2C_FIELD(arg0, f32 *, 0x74) = farg1;
