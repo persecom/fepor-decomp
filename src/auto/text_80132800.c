@@ -109,3 +109,7 @@ void fn_80149EDC(void) {
 
 }
 
+void fn_80149F28(void) {
+
+}
+
