@@ -80,6 +80,18 @@ s32 fn_80019EAC(s32 arg0) {
     return lbl_803671D4 + ((arg0 - 1) * 0x64);
 }
 
+s32 fn_80019ED0(s32 arg0) {
+    extern s32 lbl_80367204;
+    extern s32 lbl_80367208;
+    if (arg0 < 0) {
+        return 0;
+    }
+    if (arg0 >= (s32) lbl_80367208) {
+        return 0;
+    }
+    return lbl_80367204 + (arg0 * 0x60);
+}
+
 void fn_8001A5D0(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0xC) = 0;
     M2C_FIELD(arg0, s32 *, 0x3C) = 0;
