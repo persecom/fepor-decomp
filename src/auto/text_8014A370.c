@@ -49,6 +49,10 @@ s32 fn_8014AD98(void) {
     return 0;
 }
 
+s32 fn_8014ADA0(void) {
+    return 0xFFFF;
+}
+
 s32 fn_8014B20C(void) {
     return 0x7F;
 }
