@@ -4,3 +4,8 @@
 s32 fn_8014A4E0(void) {
     return 0;
 }
+
+s32 fn_8014A960(void) {
+    return 0;
+}
+
