@@ -247,6 +247,18 @@ void fn_80071B34(void) {
     fn_8018DAD4();
 }
 
+void fn_80071B88(void) {
+    M2C_UNK fn_80009C0C(f32);
+    M2C_UNK fn_8000A174(M2C_UNK, M2C_UNK);
+    M2C_UNK fn_8000A248();
+    M2C_UNK fn_8000A258();
+    extern f32 lbl_80369300;
+    fn_8000A258();
+    fn_80009C0C(lbl_80369300);
+    fn_8000A174(0, 0x13);
+    fn_8000A248();
+}
+
 s32 fn_80072150(void) {
     extern s8 lbl_80366DE8;
     lbl_80366DE8 = 0;
