@@ -53,6 +53,10 @@ void OSSetArenaLo(s32 arg0) {
     __OSArenaLo_80366F30 = arg0;
 }
 
+s32 fn_802059EC(void) {
+    return *(s32 *)0x800000D4;
+}
+
 void fn_80209E68(void) {
 
 }
