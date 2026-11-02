@@ -17,3 +17,7 @@ void fn_800D7588(void) {
 
 }
 
+void fn_800DB520(void) {
+
+}
+
