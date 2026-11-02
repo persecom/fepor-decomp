@@ -153,6 +153,14 @@ s16 fn_801CD40C(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0x40);
 }
 
+void fn_801D03E4(void *arg0, s32 arg1, u8 arg2) {
+    if (arg2 != 0) {
+        M2C_FIELD(arg0, s32 *, 8) = (s32) (M2C_FIELD(arg0, s32 *, 8) | (0x800 << arg1));
+        return;
+    }
+    M2C_FIELD(arg0, s32 *, 8) = (s32) (M2C_FIELD(arg0, s32 *, 8) & ~(0x800 << arg1));
+}
+
 void fn_801D041C(void *arg0, u8 arg1) {
     if (arg1 != 0) {
         M2C_FIELD(arg0, s32 *, 8) = (s32) (M2C_FIELD(arg0, s32 *, 8) & 0xFFFFFFFB);
