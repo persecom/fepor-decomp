@@ -79,6 +79,13 @@ s32 fn_801C9A88(void) {
     return 0;
 }
 
+s32 fn_801CAF2C(void *arg0, s32 arg1) {
+    if (arg1 < (s32) M2C_FIELD(arg0, s32 *, 0x70)) {
+        return M2C_FIELD(arg0, s32 *, 0x50) + (arg1 << 5);
+    }
+    return 0;
+}
+
 s32 fn_801CAF50(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x70);
 }
