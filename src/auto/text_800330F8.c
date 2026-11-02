@@ -146,6 +146,11 @@ void fn_8004FE90(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 2) = arg1;
 }
 
+void fn_80050BA8(s32 arg0) {
+    M2C_UNK fn_8005F788(s32);
+    fn_8005F788(arg0 + 0x1C);
+}
+
 void fn_80052B44(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
