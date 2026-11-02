@@ -50,6 +50,11 @@ M2C_UNK *fn_800C93EC(void *arg0) {
     return temp_r3;
 }
 
+void fn_800CA5FC(void) {
+    M2C_UNK fn_800CA61C();
+    fn_800CA61C();
+}
+
 s32 fn_800D3590(void *arg0) {
     s32 temp_r4;
 
