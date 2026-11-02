@@ -17,3 +17,7 @@ s32 fn_800A392C(void) {
     return 0;
 }
 
+s32 fn_800A3944(void) {
+    return 0;
+}
+
