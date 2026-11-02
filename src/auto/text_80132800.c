@@ -205,6 +205,10 @@ s16 fn_8013E6E0(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0x12);
 }
 
+s16 fn_8013E6E8(void *arg0) {
+    return M2C_FIELD(arg0, s16 *, 0x14);
+}
+
 s32 fn_8013E824(void) {
     return 1;
 }
