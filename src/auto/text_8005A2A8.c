@@ -29,3 +29,7 @@ s32 fn_8005A2D8(void) {
     return 0;
 }
 
+s32 fn_8005A2E0(void) {
+    return 0x300;
+}
+
