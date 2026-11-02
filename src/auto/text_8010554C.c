@@ -1,6 +1,11 @@
 /* Functions from 0x8010554C to 0x80110128, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_80105A04(s32 arg0, s32 arg1) {
+    M2C_UNK fn_8017A810(s32, M2C_UNK, s32);
+    fn_8017A810(arg1, 0x10, arg0);
+}
+
 void fn_8010671C(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x65) = 0;
 }
