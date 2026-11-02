@@ -141,6 +141,10 @@ s32 fn_8021F4DC(void) {
     return lbl_80368788;
 }
 
+s32 fn_80222AA0(void *arg0) {
+    return M2C_FIELD(arg0, s32 *, 0x14);
+}
+
 void fn_80223978(void) {
 
 }
