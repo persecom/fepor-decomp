@@ -17,6 +17,12 @@ s32 fn_80055D94(void) {
     return 0;
 }
 
+void fn_80055D9C(void *arg0) {
+    if (arg0 != NULL) {
+        M2C_FIELD(arg0, s8 *, 0x32) = -1;
+    }
+}
+
 void fn_80057898(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x14) = arg1;
 }
