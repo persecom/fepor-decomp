@@ -19,6 +19,10 @@ void fn_8000A3F8(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x2E) = (u8) (M2C_FIELD(arg0, u8 *, 0x2E) - 1);
 }
 
+void fn_8000A408(void *arg0) {
+    M2C_FIELD(arg0, u8 *, 0x2E) = (u8) (M2C_FIELD(arg0, u8 *, 0x2E) + 1);
+}
+
 u8 fn_8000A418(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x2E);
 }
