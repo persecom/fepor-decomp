@@ -298,6 +298,12 @@ void fn_80144694(void) {
 
 }
 
+void fn_801447A4(void *arg0, s32 arg1) {
+    extern s32 lbl_80367AE0;
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x128), s32 *, 0x3C) = arg1;
+    lbl_80367AE0 = arg1;
+}
+
 s32 fn_80144850(void *arg0) {
     return M2C_FIELD(M2C_FIELD(arg0, void **, 0x128), s32 *, 0x3C);
 }
