@@ -308,6 +308,33 @@ void fn_80259CD8(u16 *arg0, u16 *arg1, s16 arg2) {
     *arg1 += (s16) *arg0 * 0xA0;
 }
 
+void fn_80259D94(s32 *arg0, s16 *arg1, s32 *arg2) {
+    s16 var_r0;
+    s16 var_r0_2;
+    s32 temp_r0;
+
+    temp_r0 = *arg2;
+    if (temp_r0 <= -0xA0) {
+        if (temp_r0 <= -0xC80) {
+            var_r0 = 0x14;
+        } else {
+            var_r0 = (s16) (-temp_r0 / 160);
+        }
+        *arg1 = var_r0;
+    } else if (temp_r0 >= 0xA0) {
+        if (temp_r0 >= 0xC80) {
+            var_r0_2 = -0x14;
+        } else {
+            var_r0_2 = (s16) (-temp_r0 / 160);
+        }
+        *arg1 = var_r0_2;
+    } else {
+        *arg1 = 0;
+    }
+    *arg0 = *arg2;
+    *arg2 += *arg1 * 0xA0;
+}
+
 void fn_8025EC10(u32 arg0) {
     extern s8 lbl_80368AAF;
     extern s8 lbl_80368AB0;
