@@ -68,6 +68,15 @@ void fn_801C6F7C(void) {
     fn_801C7210();
 }
 
+void fn_801C7604(void) {
+    M2C_UNK fn_80059A4C(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80067984(M2C_UNK);
+    M2C_UNK fn_80067EDC(M2C_UNK);
+    fn_80067EDC(0);
+    fn_80059A4C(0, 0, 0x260, 0x1C0);
+    fn_80067984(0);
+}
+
 void fn_801C7BF8(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
