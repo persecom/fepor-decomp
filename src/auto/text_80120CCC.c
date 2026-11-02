@@ -1,6 +1,10 @@
 /* Functions from 0x80120CCC to 0x80127D80, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_80122DFC(void *arg0, s8 arg1) {
+    M2C_FIELD(arg0, s8 *, 0x49) = arg1;
+}
+
 void fn_80123BE8(void) {
 
 }
