@@ -376,6 +376,12 @@ void fn_80263830(void *arg0) {
     fn_8026386C(M2C_FIELD(arg0, f32 *, 0x140), M2C_FIELD(arg0, f32 *, 0x148), M2C_FIELD(arg0, f32 *, 0x144), M2C_FIELD(arg0, f32 *, 0x14C), M2C_FIELD(arg0, f32 *, 0x150));
 }
 
+void fn_80263CF0(void *arg0) {
+    M2C_UNK fn_80263D30(f32, f32, f32, f32, f32, f32);
+    M2C_FIELD(arg0, s8 *, 0x1C4) = 0;
+    fn_80263D30(M2C_FIELD(arg0, f32 *, 0x1C8), M2C_FIELD(arg0, f32 *, 0x1D0), M2C_FIELD(arg0, f32 *, 0x1CC), M2C_FIELD(arg0, f32 *, 0x1D4), M2C_FIELD(arg0, f32 *, 0x1D8), M2C_FIELD(arg0, f32 *, 0x1DC));
+}
+
 void fn_80264B7C(void *arg0) {
     M2C_UNK fn_802649AC();
     M2C_FIELD(arg0, s32 *, 0x30) = 0;
