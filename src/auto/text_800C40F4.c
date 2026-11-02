@@ -200,6 +200,17 @@ s32 fn_800D6F0C(void) {
     return 0;
 }
 
+void fn_800D6FA4(void *arg0) {
+    M2C_UNK fn_800C9A60(M2C_UNK *, M2C_UNK);
+    M2C_UNK fn_800C9B6C(M2C_UNK *);
+    M2C_UNK fn_800DC518(s32, M2C_UNK *, M2C_UNK);
+    M2C_UNK sp8;
+
+    fn_800C9B6C(&sp8);
+    fn_800DC518(M2C_FIELD(arg0, s32 *, 0x424), &sp8, 0);
+    fn_800C9A60(&sp8, -1);
+}
+
 void fn_800D7588(void) {
 
 }
