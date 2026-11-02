@@ -127,6 +127,13 @@ void fn_80098B80(void *arg0) {
     }
 }
 
+void fn_80098BAC(void *arg0) {
+    M2C_UNK fn_800956A0();
+    if ((u8) M2C_FIELD(arg0, u8 *, 0x34) != 2) {
+        fn_800956A0();
+    }
+}
+
 void fn_80099ED0(void *arg0) {
     M2C_UNK fn_80096418(s16);
     fn_80096418(M2C_FIELD(arg0, s16 *, 0x46));
