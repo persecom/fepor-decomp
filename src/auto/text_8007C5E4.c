@@ -109,6 +109,17 @@ void fn_80083E34(s32 arg0) {
     fn_80081CF4(arg0);
 }
 
+void fn_800852BC(s32 arg0) {
+    M2C_UNK fn_80069F04(s32);
+    M2C_UNK fn_80223E5C(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_802246B8(M2C_UNK);
+    fn_802246B8(0);
+    fn_80223E5C(6, 0x80, 1, 0, 0);
+    fn_80069F04(arg0);
+    fn_802246B8(1);
+    fn_80223E5C(7, 0, 1, 7, 0);
+}
+
 void fn_80089424(s32 arg0) {
     M2C_UNK fn_8000A3F8(s32);
     s32 fn_8000A418();
