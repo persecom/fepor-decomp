@@ -34,6 +34,10 @@ s32 fn_8018394C(void) {
     return 2;
 }
 
+void fn_8018B004(void *arg0) {
+    M2C_FIELD(arg0, s32 *, 0x38) = 0;
+}
+
 void fn_801908B4(void) {
 
 }
