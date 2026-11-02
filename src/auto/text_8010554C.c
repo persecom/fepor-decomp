@@ -22,6 +22,17 @@ s32 fn_8010866C(void) {
     return 0;
 }
 
+void fn_801086CC(void *arg0) {
+    M2C_UNK fn_800C9A60(M2C_UNK *, M2C_UNK);
+    M2C_UNK fn_800C9B6C(M2C_UNK *);
+    M2C_UNK fn_800DC518(s32, M2C_UNK *, M2C_UNK);
+    M2C_UNK sp8;
+
+    fn_800C9B6C(&sp8);
+    fn_800DC518(M2C_FIELD(arg0, s32 *, 0x424), &sp8, 0);
+    fn_800C9A60(&sp8, -1);
+}
+
 s32 fn_80108948(void) {
     M2C_UNK fn_800D758C(s32);
     extern s32 lbl_803679D0;
