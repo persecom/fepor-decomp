@@ -21,6 +21,10 @@ void fn_800A7EC0(void) {
 
 }
 
+void fn_800A828C(s32 arg0) {
+    fn_8006EDA0(arg0 + 0x30);
+}
+
 void fn_800A92A0(void) {
     M2C_UNK fn_801E2594(M2C_UNK *);
     extern M2C_UNK lbl_803682F0;
