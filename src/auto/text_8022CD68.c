@@ -143,6 +143,13 @@ s32 fn_80262B14(s32 arg0) {
     return arg0 - 0x500;
 }
 
+void fn_80263384(void) {
+    extern s32 lbl_80368B08;
+    extern s32 lbl_80368B18;
+    lbl_80368B18 = 1;
+    lbl_80368B08 = 1;
+}
+
 void fn_80266FFC(void) {
 
 }
