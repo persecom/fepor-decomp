@@ -50,6 +50,10 @@ void fn_800DBED4(void) {
 
 }
 
+void fn_800DC010(void *arg0, s32 arg1) {
+    M2C_FIELD(arg0, s32 *, 0x48) = arg1;
+}
+
 void fn_800DEE90(void) {
 
 }
