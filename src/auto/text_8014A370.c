@@ -41,6 +41,10 @@ s32 fn_8014AD88(void) {
     return 0;
 }
 
+s32 fn_8014AD90(void) {
+    return 0x200;
+}
+
 s32 fn_8014AD98(void) {
     return 0;
 }
