@@ -86,6 +86,10 @@ void fn_800DEEFC(void) {
 
 }
 
+u8 fn_800DF6A8(void *arg0) {
+    return M2C_FIELD(arg0, u8 *, 0x2C);
+}
+
 void fn_800E4164(void) {
 
 }
