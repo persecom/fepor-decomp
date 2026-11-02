@@ -13,6 +13,10 @@ s32 fn_80022FC4(void) {
     return 0x2000;
 }
 
+void fn_80022FCC(void *arg0, s32 arg1) {
+    M2C_FIELD(arg0, s32 *, 0x14190) = arg1;
+}
+
 s32 fn_80024390(void) {
     return 0;
 }
