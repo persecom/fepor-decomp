@@ -107,6 +107,17 @@ void fn_8004DC54(s8 arg0) {
     lbl_803672BC = arg0;
 }
 
+void fn_8004DF04(void) {
+    extern s16 lbl_803672C4;
+    extern s16 lbl_803672C6;
+    extern s16 lbl_803672C8;
+    extern s16 lbl_803672CA;
+    lbl_803672C4 = 0x3E8;
+    lbl_803672C6 = 0x3E8;
+    lbl_803672C8 = -0x3E8;
+    lbl_803672CA = -0x3E8;
+}
+
 void fn_8004FE90(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 2) = arg1;
 }
