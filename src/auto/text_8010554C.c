@@ -5,6 +5,13 @@ void fn_8010671C(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x65) = 0;
 }
 
+s32 fn_8010866C(void) {
+    M2C_UNK fn_800D758C(s32);
+    extern s32 lbl_803679C8;
+    fn_800D758C(lbl_803679C8);
+    return 0;
+}
+
 void fn_80108F38(void) {
     M2C_UNK fn_800AA208();
     fn_800AA208();
