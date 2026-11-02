@@ -90,6 +90,10 @@ void fn_800255D4(void) {
 
 }
 
+s32 fn_800255D8(void) {
+    return 0;
+}
+
 void fn_800255E8(void) {
 
 }
