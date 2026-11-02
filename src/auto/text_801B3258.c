@@ -31,6 +31,10 @@ s32 fn_801C9A88(void) {
     return 0;
 }
 
+s32 fn_801CAF50(void *arg0) {
+    return M2C_FIELD(arg0, s32 *, 0x70);
+}
+
 s32 fn_801DE360(void) {
     return 1;
 }
