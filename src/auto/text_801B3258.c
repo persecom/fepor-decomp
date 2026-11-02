@@ -77,6 +77,24 @@ void fn_801C7604(void) {
     fn_80067984(0);
 }
 
+void fn_801C7644(s32 arg0) {
+    u32 fn_80055D94(M2C_UNK);
+    M2C_UNK fn_8005956C(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, s32 *, s32, f32);
+    M2C_UNK fn_800599D0(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, s32);
+    extern s32 lbl_8036B3E8;
+    extern f32 lbl_8036B424;
+    s32 sp8;
+
+    sp8 = lbl_8036B3E8;
+    fn_80067EDC(0);
+    if (fn_80055D94(0x80) == 0U) {
+        fn_800599D0(0, 0, 0x260, 0x1C0, arg0);
+        fn_8005956C(0, 0, 0x260, 0x1C0, 1, &sp8, arg0, lbl_8036B424);
+    }
+    fn_80059C2C(0, 0, 0x260, 0x1C0, 0);
+    fn_80067984(0);
+}
+
 void fn_801C7BF8(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
