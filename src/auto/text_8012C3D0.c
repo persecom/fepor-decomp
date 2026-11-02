@@ -9,3 +9,7 @@ s32 fn_8012F26C(void) {
     return 0;
 }
 
+s32 fn_80130858(void) {
+    return 0;
+}
+
