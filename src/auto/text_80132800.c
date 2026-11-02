@@ -58,6 +58,10 @@ s32 fn_8013507C(void) {
     return 0;
 }
 
+s16 fn_801366E4(void *arg0) {
+    return (s16) ((s32) ((s16) (M2C_FIELD(arg0, s16 *, 0x18) - M2C_FIELD(arg0, s16 *, 0x14)) - M2C_FIELD(arg0, s16 *, 0x5E)) / 32);
+}
+
 s32 fn_80136D78(void) {
     return 0x10;
 }
