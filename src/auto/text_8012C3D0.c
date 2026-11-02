@@ -13,6 +13,34 @@ s32 fn_8012C3E0(void) {
     return 0x16;
 }
 
+s32 fn_8012C700(void) {
+    M2C_UNK fn_80109B54(s32, f32);
+    f32 fn_80109BA8(s32);
+    extern void *lbl_80367240;
+    extern s32 lbl_80367A88;
+    extern f32 lbl_8036A4AC;
+    extern f32 lbl_8036A4D8;
+    f32 var_f1;
+    s32 temp_r4;
+
+    var_f1 = fn_80109BA8(lbl_80367A88);
+    temp_r4 = M2C_FIELD(lbl_80367240, s32 *, 0x10);
+    if (temp_r4 & 0x01000001) {
+        var_f1 -= lbl_8036A4D8;
+    }
+    if (temp_r4 & 0x02000002) {
+        var_f1 += lbl_8036A4D8;
+    }
+    if (var_f1 > lbl_8036A4AC) {
+        var_f1 = lbl_8036A4AC;
+    }
+    if (var_f1 < lbl_8036A4D8) {
+        var_f1 = lbl_8036A4D8;
+    }
+    fn_80109B54(lbl_80367A88, var_f1);
+    return 0;
+}
+
 s32 fn_8012D554(void) {
     return 0;
 }
