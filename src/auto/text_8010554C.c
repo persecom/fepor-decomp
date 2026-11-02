@@ -12,6 +12,13 @@ s32 fn_8010866C(void) {
     return 0;
 }
 
+s32 fn_80108948(void) {
+    M2C_UNK fn_800D758C(s32);
+    extern s32 lbl_803679D0;
+    fn_800D758C(lbl_803679D0);
+    return 0;
+}
+
 void fn_80108F38(void) {
     M2C_UNK fn_800AA208();
     fn_800AA208();
