@@ -13,6 +13,10 @@ void fn_80113648(void *arg0, f32 farg0) {
     M2C_FIELD(arg0, f32 *, 0x128) = farg0;
 }
 
+f32 fn_80113650(void *arg0) {
+    return M2C_FIELD(arg0, f32 *, 0x128);
+}
+
 void fn_8011B570(void) {
 
 }
