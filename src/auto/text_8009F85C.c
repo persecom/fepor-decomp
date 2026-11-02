@@ -55,6 +55,12 @@ f32 fn_800A3554(void) {
     return lbl_80369A10;
 }
 
+s32 fn_800A3634(void) {
+    M2C_UNK fn_800C0C54();
+    fn_800C0C54();
+    return 0;
+}
+
 void fn_800A3808(void) {
     M2C_UNK fn_8005B8E8();
     fn_8005B8E8();
