@@ -101,6 +101,11 @@ void fn_80216994(void) {
 
 }
 
+u16 fn_80217AD8(void) {
+    extern u16 lbl_80368740;
+    return lbl_80368740;
+}
+
 s32 fn_8021C080(void) {
     return 0;
 }
