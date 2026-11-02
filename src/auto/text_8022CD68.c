@@ -85,6 +85,10 @@ s32 fn_80250874(void *arg0, void *arg1) {
     return M2C_FIELD(arg0, u16 *, 4) - M2C_FIELD(arg1, u16 *, 4);
 }
 
+s32 fn_8025093C(void *arg0, void *arg1) {
+    return M2C_FIELD(arg0, u16 *, 4) - M2C_FIELD(arg1, u16 *, 4);
+}
+
 u8 fn_8025ED80(void) {
     extern u8 lbl_80368978;
     return lbl_80368978;
