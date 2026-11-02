@@ -6,6 +6,11 @@ void fn_800A5944(s32 arg0) {
     fn_8006EDA0(arg0 + 0x34);
 }
 
+void fn_800A5CF4(void) {
+    M2C_UNK fn_800A3A68(M2C_UNK, M2C_UNK);
+    fn_800A3A68(0, 0x64);
+}
+
 s32 fn_800A6850(void *arg0) {
     return (((u8) M2C_FIELD(arg0, u8 *, 0x1A4) >> 5U) & 7) != 0;
 }
