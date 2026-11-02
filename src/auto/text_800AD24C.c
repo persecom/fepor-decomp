@@ -148,6 +148,14 @@ s32 fn_800B8198(void) {
     return 1;
 }
 
+s32 fn_800B85EC(void) {
+    M2C_UNK fn_80025680(s32, s32);
+    s32 fn_800B864C();
+    extern s32 lbl_80367240;
+    fn_80025680(lbl_80367240, fn_800B864C());
+    return 0;
+}
+
 s32 fn_800B8840(void) {
     M2C_UNK fn_80089970();
     fn_80089970();
