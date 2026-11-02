@@ -97,6 +97,10 @@ s32 fn_8021F250(s32 *arg0) {
     return *arg0;
 }
 
+s32 fn_8021F258(void *arg0) {
+    return M2C_FIELD(arg0, s32 *, 8);
+}
+
 s32 fn_8021F4CC(void) {
     extern s32 lbl_80368770;
     return lbl_80368770;
