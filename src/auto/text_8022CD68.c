@@ -123,6 +123,11 @@ s32 fn_80255E88(void *arg0) {
     return M2C_FIELD(M2C_FIELD(arg0, void **, 0xF8), s32 *, 8);
 }
 
+void fn_80258D74(void) {
+    M2C_UNK fn_80262410();
+    fn_80262410();
+}
+
 u8 fn_8025ED80(void) {
     extern u8 lbl_80368978;
     return lbl_80368978;
