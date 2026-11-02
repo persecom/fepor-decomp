@@ -5,6 +5,10 @@ void fn_801F5BAC(void) {
 
 }
 
+void fn_801F5D08(void *arg0) {
+    M2C_FIELD(arg0, s8 *, 0x4C) = 4;
+}
+
 void fn_801FC400(void) {
 
 }
