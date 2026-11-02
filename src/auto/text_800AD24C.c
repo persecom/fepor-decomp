@@ -31,3 +31,7 @@ s32 fn_800BF694(void) {
     return 1;
 }
 
+s32 fn_800C30CC(s32 arg0, s32 arg1) {
+    return arg0 + ((arg1 - 1) * 0x18);
+}
+
