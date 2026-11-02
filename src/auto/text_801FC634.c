@@ -146,6 +146,10 @@ s32 udp_cc_read(void) {
     return 0;
 }
 
+s32 ddh_cc_close(void) {
+    return 0;
+}
+
 void fn_8022C08C(void) {
 
 }
