@@ -441,6 +441,12 @@ s32 ddh_cc_post_stop(void) {
     return 0;
 }
 
+s32 ddh_cc_pre_continue(void) {
+    M2C_UNK fn_8023C560();
+    fn_8023C560();
+    return 0;
+}
+
 s32 ddh_cc_close(void) {
     return 0;
 }
