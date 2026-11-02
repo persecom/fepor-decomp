@@ -169,6 +169,10 @@ void fn_80144B5C(void) {
 
 }
 
+s32 fn_80144D74(s32 arg0) {
+    return arg0 + 4;
+}
+
 void fn_80144D7C(void) {
 
 }
