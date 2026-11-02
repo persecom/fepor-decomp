@@ -5,6 +5,10 @@ s32 fn_8005AE30(void) {
     return 1;
 }
 
+s32 fn_8005AE38(void) {
+    return 0x400;
+}
+
 s32 fn_80067478(void) {
     extern s32 lbl_80366DDC;
     return lbl_80366DDC;
