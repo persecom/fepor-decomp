@@ -20,6 +20,14 @@ typedef int BOOL;
 #define NULL ((void*)0)
 #endif
 
+/* Global variables from the original game code */
+extern u8 lbl_803671C0;
+extern u8 lbl_80366DB0;
+extern s32 lbl_803671C4;
+extern u8 lbl_803671C8;
+extern f32 lbl_80368C8C;
+extern f32 lbl_80368CAC;
+
 
 /* What machine drafts (m2c) use for what they can't tell yet: autopilot tries them as they are. */
 #ifndef M2C_DEFINES
