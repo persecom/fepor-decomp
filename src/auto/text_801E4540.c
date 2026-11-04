@@ -1,6 +1,11 @@
 /* Functions from 0x801E4540 to 0x801EA8C0, found by decomp-toolkit. */
 #include "common.h"
 
+s32 fn_801E45FC(void) {
+    extern char lbl_80299FA8[];
+    return *(s32*)((u8*)lbl_80299FA8 + 4);
+}
+
 void fn_801E4CF8(void *arg0) {
     M2C_UNK fn_801E4D54();
     M2C_UNK fn_801E4E8C();
