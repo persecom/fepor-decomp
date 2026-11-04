@@ -98,3 +98,8 @@ void fn_80161F7C(void) {
     }
 }
 
+s32 fn_801620AC(void) {
+    extern char lbl_80293B10[];
+    return *(s32*)((u8*)lbl_80293B10 + 4);
+}
+
