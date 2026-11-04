@@ -29,6 +29,11 @@ s32 fn_80103938(void) {
     return 0xA0;
 }
 
+void *fn_80103940(void) {
+    extern char lbl_802734D0[];
+    return &lbl_802734D0[0xCF];
+}
+
 s32 fn_80103950(void) {
     return 0;
 }
