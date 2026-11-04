@@ -198,6 +198,39 @@ u8 fn_8011BD44(void) {
     return (u8) (lbl_80367A48 == 0x86);
 }
 
+u8 fn_8011BDAC(void) {
+    extern u8 lbl_80367A48;
+    u8 temp = lbl_80367A48;
+    temp = 0x85 - temp;
+    return (u8) __builtin_ctz(temp);
+}
+
+u8 fn_8011BEB4(void) {
+    extern u8 lbl_80367A48;
+    u8 temp = lbl_80367A48;
+    temp = 0x83 - temp;
+    return (u8) __builtin_clz(temp);
+}
+
+u8 fn_8011BF1C(void) {
+    extern u8 lbl_80367A48;
+    u8 temp = lbl_80367A48;
+    temp = 0x82 - temp;
+    return (u8) __builtin_clz(temp);
+}
+
+void *fn_8011BF74(void) {
+    extern u8 lbl_80274508[];
+    return &lbl_80274508[0x442];
+}
+
+u8 fn_8011BFEC(void) {
+    extern u8 lbl_80367A48;
+    u8 temp = lbl_80367A48;
+    temp = 0x80 - temp;
+    return (u8) __builtin_clz(temp);
+}
+
 s32 fn_8011C5B4(void) {
     M2C_UNK fn_800D758C(s32);
     extern s32 lbl_80367A50;
