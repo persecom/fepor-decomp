@@ -1,6 +1,8 @@
 /* Functions from 0x801101D0 to 0x80120CC0, found by decomp-toolkit. */
 #include "common.h"
 
+extern u8 lbl_80367A48;
+
 u8 fn_80110220(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1A7);
 }
@@ -184,8 +186,29 @@ s32 fn_8011B578(void) {
     return 0xB0;
 }
 
+void fn_8011B580(void *arg0, void *arg1) {
+    s8 temp_r31;
+    void *temp_r3;
+    s32 (*func_ptr)(void) = (s32 (*)(void))M2C_FIELD(M2C_FIELD(arg0, void **, 4), s32 (**)(void *), 0x7C);
+    
+    temp_r31 = (s8) M2C_FIELD(arg1, u8 *, 0x60);
+    func_ptr();
+    temp_r3 = M2C_FIELD(arg1, void **, 0x3C);
+    fn_8008C1D8(0, 0, 0, (temp_r31 * M2C_FIELD(M2C_FIELD(temp_r3, void **, 4), s16 (**)(void *), 0x58)(temp_r3)) + 0x20, 2);
+}
+
 s32 fn_8011B74C(void) {
     return 0x40;
+}
+
+void fn_8011B978(void) {
+    extern u32 lbl_80274508;
+    fn_8000E0E4(&lbl_80274508 + 0x357);
+}
+
+void *fn_8011B9A4(void) {
+    extern u32 lbl_80274508;
+    return &lbl_80274508 + 0x364;
 }
 
 u8 fn_8011B9B4(void) {
@@ -202,14 +225,30 @@ u8 fn_8011BDAC(void) {
     extern u8 lbl_80367A48;
     u8 temp = lbl_80367A48;
     temp = 0x85 - temp;
-    return (u8) __builtin_ctz(temp);
+    return (u8) __builtin_clz(temp) >> 24;
+}
+
+extern s8 lbl_802EF4C8[];
+s32 fn_8011BDC0(void) {
+    lbl_802EF4C8[8] = 0x85;
+    return 5;
 }
 
 u8 fn_8011BEB4(void) {
     extern u8 lbl_80367A48;
     u8 temp = lbl_80367A48;
     temp = 0x83 - temp;
-    return (u8) __builtin_clz(temp);
+    return (u8) __builtin_clz(temp) >> 24;
+}
+
+void fn_8011BEE0(void) {
+    extern u8 lbl_80274508;
+    fn_8000E0E4(&lbl_80274508 + 0x41D);
+}
+
+void *fn_8011BF0C(void) {
+    extern u8 lbl_80274508;
+    return &lbl_80274508 + 0x429;
 }
 
 u8 fn_8011BF1C(void) {
@@ -219,9 +258,32 @@ u8 fn_8011BF1C(void) {
     return (u8) __builtin_clz(temp);
 }
 
+void fn_8011BF48(void) {
+    extern u8 lbl_80274508;
+    fn_8000E0E4(&lbl_80274508 + 0x435);
+}
+
 void *fn_8011BF74(void) {
     extern u8 lbl_80274508[];
     return &lbl_80274508[0x442];
+}
+
+u8 fn_8011BF84(void) {
+    extern u8 lbl_80367A48;
+    u8 temp = lbl_80367A48;
+    temp = 0x81 - temp;
+    return (u8) __builtin_ctz(temp);
+}
+
+void fn_8011BFB0(void) {
+    M2C_UNK fn_8000E0E4(void *);
+    extern u8 lbl_80274508;
+    fn_8000E0E4(&lbl_80274508 + 0x44F);
+}
+
+void *fn_8011BFDC(void) {
+    extern u8 lbl_80274508;
+    return &lbl_80274508 + 0x45C;
 }
 
 u8 fn_8011BFEC(void) {
@@ -229,6 +291,11 @@ u8 fn_8011BFEC(void) {
     u8 temp = lbl_80367A48;
     temp = 0x80 - temp;
     return (u8) __builtin_clz(temp);
+}
+
+s32 fn_8011C000(void) {
+    M2C_FIELD(&lbl_802EF4C8, s8 *, 8) = 0x80;
+    return 5;
 }
 
 s32 fn_8011C5B4(void) {
