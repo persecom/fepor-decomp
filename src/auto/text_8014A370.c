@@ -91,6 +91,11 @@ s32 fn_8014B264(void) {
     return 0xFF;
 }
 
+void *fn_8014B26C(void) {
+    extern char lbl_80276F00[];
+    return &lbl_80276F00[0x119];
+}
+
 s32 fn_8014B2E4(void) {
     return 0;
 }
