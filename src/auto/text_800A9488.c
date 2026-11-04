@@ -42,6 +42,11 @@ s32 fn_800A9680(void) {
     return 5;
 }
 
+void *fn_800A96A8(void) {
+    extern u8 lbl_8026E470[];
+    return (void *)((u32)lbl_8026E470 + 0x13F);
+}
+
 s32 fn_800A96B8(void) {
     return 0x40;
 }
