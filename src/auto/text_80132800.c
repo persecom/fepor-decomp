@@ -387,6 +387,11 @@ s16 fn_8013E6F0(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0x1C);
 }
 
+void *fn_8013E804(void) {
+    extern u8 lbl_80276908[];
+    return &lbl_80276908[0xAF];
+}
+
 void *fn_8013E814(void) {
     extern u8 lbl_80276908[];
     return &lbl_80276908[0xC8];
