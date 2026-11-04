@@ -1,6 +1,8 @@
 /* Functions from 0x8007C5E4 to 0x8009F0BC, found by decomp-toolkit. */
 #include "common.h"
 
+extern s32 lbl_803682F0;
+
 s32 fn_8007C65C(void) {
     extern void *lbl_80367488;
     void *temp_r3;
