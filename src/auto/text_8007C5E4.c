@@ -177,7 +177,7 @@ u16 fn_80089634(void) {
 }
 
 u16 fn_80089640(void) {
-    extern u16 lbl_803674E4[];
+    extern u16 *lbl_803674E4;
     return lbl_803674E4[0x19];
 }
 
