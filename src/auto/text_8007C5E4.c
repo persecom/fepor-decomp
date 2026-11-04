@@ -543,6 +543,10 @@ void fn_8009F000(s32 arg0) {
     fn_801E3118(&lbl_803682F0, arg0, 0);
 }
 
+void fn_8009F02C(s32 arg0) {
+    fn_801E323C(&lbl_803682F0, arg0);
+}
+
 void fn_8009F054(s32 arg0) {
     M2C_UNK fn_8000C188(s32);
     u8 fn_800A5C88();
