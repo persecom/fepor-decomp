@@ -51,6 +51,12 @@ void fn_80018AF4(void) {
     lbl_803671C0 += 1;
 }
 
+void fn_80018B04(void) {
+    u8 temp = lbl_80366DB0;
+    lbl_803671C0 = temp;
+    lbl_80366DB0 = 0xFF;
+}
+
 void fn_80018B18(void) {
     extern u8 lbl_80366DB0;
     extern u8 lbl_803671C0;
