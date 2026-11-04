@@ -1,5 +1,27 @@
 /* Functions from 0x801FC634 to 0x8022C1E8, found by decomp-toolkit. */
 #include "common.h"
+#include <dolphin/os.h>
+
+extern s32 lbl_80368614;
+extern void (*lbl_803685E8)(void);
+extern void* lbl_80368618;
+extern void* lbl_8036861C;
+extern void* lbl_80368620;
+extern void* lbl_80368624;
+extern void* lbl_80368628;
+extern void* lbl_8036862C;
+extern void* lbl_80368630;
+extern void* lbl_80368634;
+extern void* lbl_80368638;
+extern void* lbl_8036863C;
+extern void* lbl_80368640;
+extern void* lbl_80368644;
+extern void* lbl_80368648;
+extern void* lbl_8036864C;
+extern void* lbl_80368650;
+extern void* lbl_80368654;
+
+u8 ErrorCode2Num(s32);
 
 void fn_801FC95C(void) {
     M2C_UNK fn_8006EDA0(M2C_UNK *);
@@ -108,6 +130,10 @@ s32 fn_802016E4(void) {
 s32 __DBIsExceptionMarked(u8 arg0) {
     extern void *__DBInterface;
     return M2C_FIELD(__DBInterface, s32 *, 4) & (1 << arg0);
+}
+
+void fn_80204294(void) {
+    M2C_ERROR(/* unknown instruction: bla 0x60 */);
 }
 
 void OSCreateAlarm(void *arg0) {
