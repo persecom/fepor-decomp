@@ -9,6 +9,14 @@ void fn_80121328(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x4E) = (u8) (M2C_FIELD(arg0, u8 *, 0x4E) + 1);
 }
 
+void fn_801213EC(void *arg0) {
+    *(u8 *)((u8 *)arg0 + 0x4C) = 0;
+    *(u8 *)((u8 *)arg0 + 0x4D) = 0xFF;
+    *(u8 *)((u8 *)arg0 + 0x4E) = 0;
+    *(u8 *)((u8 *)arg0 + 0x4F) = 8;
+    *(s16 *)((u8 *)arg0 + 0x28) = (u8)*(u8 *)((u8 *)arg0 + 0x4F);
+}
+
 void fn_80121D30(void) {
     M2C_UNK fn_80225058(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
     fn_80225058(0, 0x33, 0x260, 0x177);
