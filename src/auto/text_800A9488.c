@@ -69,11 +69,22 @@ s32 fn_800A96D0(void) {
 }
 
 s32 fn_800A96D8(void) {
-    extern u8 lbl_80330708[];
-    u8 *temp_r5 = &lbl_80330708[0xA6];
-    u8 temp_r0 = *temp_r5 + 1;
-    *temp_r5 = temp_r0;
+    extern M2C_UNK lbl_80330708;
+    u32 temp_r0_2;
+    u32 temp_r4;
+    u8 temp_r0;
+
+    temp_r0 = M2C_FIELD(&lbl_80330708, u8 *, 0xA6) + 1;
+    M2C_FIELD(&lbl_80330708, u8 *, 0xA6) = temp_r0;
+    temp_r4 = temp_r0 >> 0x1FU;
+    temp_r0_2 = (temp_r0 << 0x1E) - temp_r4;
+    M2C_FIELD(&lbl_80330708, u8 *, 0xA6) = (u8) (((temp_r0_2 << 2) | (temp_r0_2 >> 0x1EU)) + temp_r4);
     return 0;
+}
+
+void *fn_800A9AFC(void) {
+    extern char lbl_8026E470[];
+    return &lbl_8026E470[0x19B];
 }
 
 s32 fn_800A9B0C(void) {
