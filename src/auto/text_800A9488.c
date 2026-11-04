@@ -116,6 +116,11 @@ s32 fn_800A9DD8(void) {
     return 5;
 }
 
+void *fn_800A9E00(void) {
+    extern u8 lbl_8026E470[];
+    return (void *)((u32)lbl_8026E470 + 0xCC);
+}
+
 void fn_800AA244(void) {
     M2C_UNK fn_800F0774();
     M2C_UNK fn_800F2E70();
