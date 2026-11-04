@@ -680,6 +680,11 @@ void fn_80146AF0(void) {
     lbl_80367AF8 &= 0xFFFFFFFE;
 }
 
+void fn_80146B00(void) {
+    extern s32 lbl_80367AF8;
+    lbl_80367AF8 |= 1;
+}
+
 s8 fn_80149734(void) {
     s32 fn_800AF704(s8);
     s8 var_r31;
