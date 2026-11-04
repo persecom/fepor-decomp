@@ -36,6 +36,11 @@ void *fn_80074DDC(void) {
     return &lbl_8026C0B8[0x191];
 }
 
+void fn_80074F0C(void *arg0) {
+    extern s32 lbl_802EF4C8[];
+    *(s32 *)((u8 *)arg0 + 0xC) = lbl_802EF4C8[1];
+}
+
 void fn_80075364(void) {
     extern u8 lbl_8026C0B8;
     fn_8000E0E4(&lbl_8026C0B8 + 0x1D6);
