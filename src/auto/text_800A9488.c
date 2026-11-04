@@ -1,6 +1,11 @@
 /* Functions from 0x800A9488 to 0x800AD1F4, found by decomp-toolkit. */
 #include "common.h"
 
+void *fn_800A9488(void) {
+    extern u8 lbl_8026E470[];
+    return (void *)((u32)lbl_8026E470 + 0xCC);
+}
+
 s32 fn_800A9498(void) {
     return 0x100;
 }
@@ -45,6 +50,14 @@ s32 fn_800A96C8(void) {
 }
 
 s32 fn_800A96D0(void) {
+    return 0;
+}
+
+s32 fn_800A96D8(void) {
+    extern u8 lbl_80330708[];
+    u8 *temp_r5 = &lbl_80330708[0xA6];
+    u8 temp_r0 = *temp_r5 + 1;
+    *temp_r5 = temp_r0;
     return 0;
 }
 
