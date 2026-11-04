@@ -13,6 +13,11 @@ s32 fn_8014A380(void) {
     return 0x10;
 }
 
+void *fn_8014A4C8(void) {
+    extern char lbl_80276F00[];
+    return &lbl_80276F00[0xCF];
+}
+
 s32 fn_8014A4D8(void) {
     return 2;
 }
