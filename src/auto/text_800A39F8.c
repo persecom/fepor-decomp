@@ -1,6 +1,11 @@
 /* Functions from 0x800A39F8 to 0x800A9384, found by decomp-toolkit. */
 #include "common.h"
 
+void *fn_800A3A30(void) {
+    extern u8 lbl_8026E168[];
+    return &lbl_8026E168[0x2E];
+}
+
 void fn_800A4FF8(void) {
     s32 OSDisableInterrupts();
     M2C_UNK OSRestoreInterrupts(s32);
