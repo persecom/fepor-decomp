@@ -1,6 +1,8 @@
 /* Functions from 0x801FC634 to 0x8022C1E8, found by decomp-toolkit. */
 #include "common.h"
 #include <dolphin/os.h>
+extern s32 lbl_803682F0;
+
 
 extern s32 lbl_80368614;
 extern void (*lbl_803685E8)(void);
@@ -44,6 +46,16 @@ void fn_801FDE64(void) {
 void fn_801FDEB8(void) {
     M2C_UNK fn_801FDED8();
     fn_801FDED8();
+}
+
+s32 fn_801FE430(void) {
+    extern s32 lbl_803682A4;
+    s32 temp_r3 = lbl_803682A4;
+    temp_r3 &= 0x20;
+    if (temp_r3 == 0) {
+        return 1;
+    }
+    return 0;
 }
 
 void fn_801FEF30(void *arg0) {
@@ -96,6 +108,10 @@ void fn_801FFE8C(void) {
     M2C_UNK fn_801E2594(M2C_UNK *);
     extern M2C_UNK lbl_803682F0;
     fn_801E2594(&lbl_803682F0);
+}
+
+void fn_801FFF08(s32 arg0) {
+    fn_801E2F9C(&lbl_803682F0, arg0);
 }
 
 void fn_80201160(void *arg0) {
@@ -243,6 +259,57 @@ s32 fn_8020F058(s32 arg0) {
 
 s32 fn_8020F404(void) {
     return 0x80000000;
+}
+
+void __DVDStoreErrorCode(u32 arg0) {
+    u8 ErrorCode2Num(s32);
+    void *__OSLockSramEx();
+    M2C_UNK __OSUnlockSramEx(M2C_UNK);
+    s8 var_r31;
+    u32 temp_r0;
+    u32 var_r31_2;
+    u8 temp_r3;
+
+    temp_r0 = arg0 + 0xFEDD0000;
+    if (temp_r0 == 0x4567U) {
+        var_r31 = 0xFF;
+    } else if (temp_r0 == 0x4568U) {
+        var_r31 = 0xFE;
+    } else {
+        var_r31_2 = arg0 >> 0x18U;
+        temp_r3 = ErrorCode2Num(arg0 & 0xFFFFFF);
+        if (var_r31_2 >= 6U) {
+            var_r31_2 = 6;
+        }
+        var_r31 = temp_r3 + (var_r31_2 * 0x1E);
+    }
+    M2C_FIELD(__OSLockSramEx(), s8 *, 0x24) = var_r31;
+    __OSUnlockSramEx(1);
+}
+
+void fn_8020FAE0(void) {
+    if (lbl_803685E8 != NULL) {
+        lbl_803685E8();
+    }
+}
+
+s32 fn_8020FFC4(s32 arg0) {
+    s32 temp_r31;
+
+    temp_r31 = lbl_80368614;
+    OSDisableInterrupts();
+    lbl_80368614 = arg0;
+    OSRestoreInterrupts();
+    return temp_r31;
+}
+
+void fn_8021004C(s32 arg0) {
+    switch(arg0) {
+        case 0 ... 31:
+            return;
+        default:
+            return;
+    }
 }
 
 s32 fn_80211690(void) {
