@@ -866,6 +866,17 @@ void fn_800C3364(s32 arg0, s32 arg1) {
     } while (r30 < 0xC8);
 }
 
+void fn_800C33C0(s32 arg0, s32 arg1) {
+    s32 r31 = arg0;
+    s32 r30 = 0;
+    
+    do {
+        fn_8001C21C(r31, arg1);
+        r30 += 1;
+        r31 += 8;
+    } while (r30 < 0xC8);
+}
+
 void fn_800C3864(s32 arg0, s32 arg1) {
     M2C_UNK fn_8001D580(s32);
     fn_8001D580(arg0 + (arg1 * 8));
