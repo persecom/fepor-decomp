@@ -13,6 +13,11 @@ s32 fn_8012C3E0(void) {
     return 0x16;
 }
 
+void *fn_8012C6F0(void) {
+    extern char lbl_802758F8[];
+    return &lbl_802758F8[0x19B];
+}
+
 s32 fn_8012C700(void) {
     M2C_UNK fn_80109B54(s32, f32);
     f32 fn_80109BA8(s32);
