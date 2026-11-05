@@ -1,6 +1,6 @@
 /* Functions from 0x801B3258 to 0x801E4380, found by decomp-toolkit. */
 #include "common.h"
-extern void *lbl_803682D8;
+extern u16 lbl_80331D00[];
 
 typedef struct {
     u32 unk0;
