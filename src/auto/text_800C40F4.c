@@ -2,6 +2,8 @@
 #include "common.h"
 #include "structs.h"
 
+extern u32 lbl_80271FC0;
+
 extern f32 lbl_80369F3C;
 extern f32 lbl_80369F5C;
 extern f32 lbl_80369F60;
