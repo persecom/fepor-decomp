@@ -160,6 +160,22 @@ void fn_80165B1C(void) {
     fn_800472D4();
 }
 
+u8 fn_801661CC(void *arg0) {
+    extern u8 lbl_80330708[];
+    switch ((s32) lbl_80330708[0xA6]) { /* irregular */
+    case 0:
+        return M2C_FIELD(arg0, u8 *, 0x3D);
+    case 1:
+        return M2C_FIELD(arg0, u8 *, 0x3E);
+    case 2:
+        return M2C_FIELD(arg0, u8 *, 0x3F);
+    case 3:
+        return M2C_FIELD(arg0, u8 *, 0x40);
+    default:
+        return 0U;
+    }
+}
+
 void *fn_801662F0(u32 *arg0) {
     extern u16 lbl_802778A8[];
     u32 temp = (u32)*arg0;
