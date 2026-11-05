@@ -217,6 +217,15 @@ s32 fn_800B6C00(s32 arg0) {
     return 1;
 }
 
+s32 fn_800B6C6C(s32 arg0) {
+    M2C_UNK fn_801FA4B8(s32, s32);
+    extern f32 lbl_80369CF4;
+
+    fn_801FA4B8((f32) arg0 / lbl_80369CF4, fn_800C0658());
+    fn_80013864();
+    return 1;
+}
+
 extern M2C_UNK lbl_8028E7F8;
 s32 fn_800B6CD8(u32 arg0) {
     if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
