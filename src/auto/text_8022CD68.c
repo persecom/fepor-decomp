@@ -4,6 +4,7 @@
 extern s32 lbl_803689A8;
 extern void (*lbl_80368B34)(s16);
 extern s32 lbl_80368B0C;
+u32 fn_8026367C(void);
 
 // The structure being used in functions in this file - assumed based on offset 0xF4
 typedef struct {
