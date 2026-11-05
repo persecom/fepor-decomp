@@ -4,6 +4,19 @@
 extern s32 lbl_802AEE20[5]; // array of 5 pointers
 extern f64 lbl_80368C28;    // global float constant
 
+void fn_80006298(s32 arg0, s32 arg1, u32 arg2) {
+    s32 *var_r3;
+    u32 var_ctr;
+
+    var_r3 = (s32*)((char*)arg0 - 4);
+    var_ctr = arg2 >> 2U;
+    do {
+        var_r3++;
+        *var_r3 = arg1;
+        var_ctr--;
+    } while (var_ctr != 0);
+}
+
 s32 fn_800067B4(void) {
     extern s32 lbl_80367118;
     return lbl_80367118;
@@ -79,6 +92,11 @@ void fn_8000A420(void *arg0) {
 
 void fn_8000A430(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x2D) = (u8) (M2C_FIELD(arg0, u8 *, 0x2D) + 1);
+}
+
+void fn_8000A440(s32 arg0, s32 arg1) {
+    extern u16 lbl_802ADAFC[9]; // 36 bytes / 2 bytes per element
+    lbl_802ADAFC[arg0 * 2] = (u16)arg1;
 }
 
 s32 fn_8000A930(void *arg0) {
@@ -185,6 +203,11 @@ s32 fn_8000B82C(void) {
     M2C_UNK fn_8000C60C();
     fn_8000C60C();
     return 0;
+}
+
+void *fn_8000B908(u8 arg0) {
+    extern u16 lbl_802A66D8[];
+    return &lbl_802A66D8[arg0 * 0xE0];
 }
 
 void fn_8000C060(void *arg0, s32 arg1) {
@@ -334,3 +357,7 @@ void fn_80011910(void) {
 extern u16 lbl_80367140;
 extern u16 lbl_80367140;
 extern u16 lbl_80367140;
+extern u16 lbl_80367120;
+extern u16 lbl_80367128;
+extern u16 lbl_80367124;
+extern u16 lbl_8036712C;
