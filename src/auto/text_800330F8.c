@@ -89,6 +89,10 @@ void fn_80037AB8(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x1AA) = (s8) (0x14 - M2C_FIELD(M2C_FIELD(arg0, void **, 0x18C), u8 *, 0x3E));
 }
 
+s32 fn_80037BBC(s32 arg0, s32 arg1) {
+    return (arg1 * 8) + arg0 + 0x1CC;
+}
+
 s32 fn_80037CCC(void *arg0) {
     if ((((u8) M2C_FIELD(arg0, u8 *, 0x1F1) >> 7U) & 1) && ((u32) M2C_FIELD(arg0, u32 *, 0x1EC) != 0U)) {
         return 0;
