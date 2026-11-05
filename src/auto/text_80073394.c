@@ -3,6 +3,7 @@
 extern void fn_80006220(s32);
 extern void fn_8002D780(s32);
 extern void fn_8000BD98(void *);
+s32 fn_8000E0E4(void *);
 
 void *fn_80073394(void) {
     extern u16 lbl_8026BE40[];
