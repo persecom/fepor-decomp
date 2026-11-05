@@ -408,6 +408,11 @@ void fn_801D0460(void *arg0, s32 arg1) {
     }
 }
 
+void *fn_801D2C20(void) {
+    extern u16 lbl_8027E0F8[];
+    return &lbl_8027E0F8[0x12];
+}
+
 void fn_801D2E9C(void) {
     M2C_UNK fn_80059C2C(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
     fn_80059C2C(0, 0, 0x260, 0x1C0, 0);
