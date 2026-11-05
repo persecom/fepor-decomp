@@ -61,6 +61,11 @@ void fn_8017E8A0(void) {
     fn_8017E8C0();
 }
 
+void fn_8017F5C8(void *arg0) {
+    M2C_UNK fn_8006D8E8(s32);
+    fn_8006D8E8(M2C_FIELD(arg0, s32 *, 0x34));
+}
+
 s32 fn_8018256C(void) {
     return 1;
 }
