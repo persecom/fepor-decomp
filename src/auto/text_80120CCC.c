@@ -162,6 +162,11 @@ u8 fn_8012687C(void) {
     return lbl_80330708[0xA5];
 }
 
+void fn_8012688C(s8 arg0) {
+    extern u16 lbl_80330708;
+    *(u8*)(((char*)&lbl_80330708) + 0xA8) = arg0;
+}
+
 void fn_80126C44(u16 *arg0, u16 arg1) {
     *arg0 = (*arg0 & ~0x130) | (arg1 & 0x130);
 }
@@ -304,4 +309,4 @@ void fn_80127C78(void *arg0) {
         fn_8000C188(arg0);
     }
 }
-
+extern u32 lbl_80367110;
