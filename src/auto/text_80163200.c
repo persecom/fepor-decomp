@@ -2667,46 +2667,34 @@ typedef struct ListOwner {
     List list;
 } ListOwner;
 
-void *fn_80181CA4(void *arg0, s16 arg1) {
-    struct Node {
-        void *prev;
-        void *next;
-    };
-    struct List {
-        u32 unk0;
-        struct Node node;
-    };
-    struct Obj {
-        void *vtbl;
-        u8 pad[0x58];
-        struct List list;
-    };
+ListOwner *fn_80181CA4(ListOwner *arg0, s16 arg1) {
     M2C_UNK fn_8013F2A4(void *, s32);
     M2C_UNK fn_800C428C(void *);
-    M2C_UNK fn_80136F2C(void *, struct List *, void **, void **);
+    M2C_UNK fn_80136F2C(void *, List *, ListNode **, ListNode **);
     extern u8 lbl_802956B8[];
-    struct Obj *obj = arg0;
-    void *sp10;
-    void *spC;
+    ListNode *sp10;
+    ListNode *spC;
     u8 sp8[4];
+    ListNode *end;
 
-    if (obj != NULL) {
-        obj->vtbl = lbl_802956B8;
-        if (&obj->list != NULL) {
-            if (&obj->list != NULL) {
-                if (&obj->list != NULL) {
-                    sp10 = &obj->list.node;
-                    spC = obj->list.node.next;
-                    fn_80136F2C(sp8, &obj->list, &spC, &sp10);
+    if (arg0 != NULL) {
+        arg0->vtbl = lbl_802956B8;
+        if (&arg0->list != NULL) {
+            if (&arg0->list != NULL) {
+                if (&arg0->list != NULL) {
+                    end = &arg0->list.node;
+                    sp10 = end;
+                    spC = end->next;
+                    fn_80136F2C(sp8, &arg0->list, &spC, &sp10);
                 }
             }
         }
-        fn_8013F2A4(obj, 0);
+        fn_8013F2A4(arg0, 0);
         if (arg1 > 0) {
-            fn_800C428C(obj);
+            fn_800C428C(arg0);
         }
     }
-    return obj;
+    return arg0;
 }
 #pragma opt_common_subs reset
 s32 fn_8018256C(void) {
