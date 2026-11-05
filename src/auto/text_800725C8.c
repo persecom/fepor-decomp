@@ -1,6 +1,19 @@
 /* Functions from 0x800725C8 to 0x800732BC, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_80072900(s32 arg0) {
+    extern s32 lbl_802EF4C8;
+    extern s32 lbl_8036737C;
+
+    *(volatile u8 *) (lbl_802EF4C8 + 8) = 0;
+    fn_80024398(&lbl_8036737C, arg0, 0);
+}
+
+void fn_8007293C(void) {
+    extern u8 lbl_80330708[];
+    lbl_80330708[0x54] = (u8)(lbl_80330708[0x54] & 0x7F);
+}
+
 void fn_80072CB0(s32 arg0) {
     M2C_UNK fn_801E3118(M2C_UNK *, s32, M2C_UNK);
     extern M2C_UNK lbl_803682F0;
