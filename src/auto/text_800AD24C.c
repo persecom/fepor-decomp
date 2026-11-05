@@ -180,7 +180,6 @@ s32 fn_800B6B20(void) {
     return 1;
 }
 
-extern void *lbl_8033216C;
 void fn_800B6B58(s32 arg0) {
     extern void *lbl_80367240;
     s32 temp_r5;
