@@ -1,5 +1,11 @@
 /* Functions from 0x801F196C to 0x801FC620, found by decomp-toolkit. */
 #include "common.h"
+extern struct {
+    u32 pad0;
+    u32 pad4;
+    u32 *pad8;
+    u32 padC;
+} lbl_8029B068;
 extern void* fn_800C08AC(void *, s32, void *);
 extern void* lbl_8029A8C8[];
 
@@ -15,6 +21,17 @@ void fn_801F196C(M2C_UNK **arg0) {
     *arg0 = (M2C_UNK *)&lbl_80286610;
     *arg0 = (M2C_UNK *)&lbl_802862E4;
     *arg0 = (M2C_UNK *)&lbl_8029A874;
+}
+
+void fn_801F1D70(s32 arg0) {
+    void *fn_8000CAA0(M2C_UNK *, s32, M2C_UNK *);
+    s32 fn_800C4638(M2C_UNK, void *, M2C_UNK);
+    extern M2C_UNK lbl_8027F730;
+    extern M2C_UNK lbl_8029A910;
+    void *temp_r31;
+
+    temp_r31 = fn_8000CAA0(&lbl_8029A910, arg0, &lbl_8029A910);
+    M2C_FIELD(temp_r31, s32 *, 0x30) = fn_800C4638(0xB0, &lbl_8027F730 + 0xA4, 0);
 }
 
 void fn_801F1DC4(void *arg0) {
@@ -59,6 +76,20 @@ void fn_801F20A8(s32 arg0) {
     if (fn_8005C6A0(&lbl_8027F730 + 0xE1, &lbl_8027F730) & 0x2000) {
         fn_8000C188(arg0);
     }
+}
+
+void fn_801F2DB4(s32 arg0) {
+    void *fn_8000CAA0(void *, s32, void *);
+    s32 fn_800C4638(s32, void *, s32);
+    extern u16 lbl_8029AF78[];
+    extern char lbl_8027F868[];
+
+    void *temp_r31;
+    void *temp_r5;
+
+    temp_r5 = lbl_8029AF78;
+    temp_r31 = fn_8000CAA0(temp_r5, arg0, temp_r5);
+    *(s32 *)((u8 *)temp_r31 + 0x30) = fn_800C4638(0xE8, (u8 *)lbl_8027F868 + 0x11BC, 0);
 }
 
 void fn_801F31D0(void *arg0) {
