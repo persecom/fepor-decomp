@@ -31,13 +31,16 @@ static inline u8 *FindEntryByName(char *name) {
     return NULL;
 }
 
-static inline void *FindUnk48(void *p) {
-    while (p != NULL) {
-        void *v = M2C_FIELD(p, void **, 0x48);
-        if (v != NULL) {
-            return v;
+static inline void *FindUnk48(void *arg0) {
+    void *current = arg0;
+    void *value;
+
+    while (current != NULL) {
+        value = M2C_FIELD(current, void **, 0x48);
+        if (value != NULL) {
+            return value;
         }
-        p = M2C_FIELD(p, void **, 4);
+        current = M2C_FIELD(current, void **, 4);
     }
     return NULL;
 }
@@ -905,10 +908,8 @@ u32 fn_800604F4(void *arg0) {
 
 u32 fn_80060520(void *arg0) {
     s32 fn_80068548(void);
-    void *var_r30;
     u32 var_r31;
-    void *var_r3;
-    void *var_r4;
+    void *var_r30;
 
     var_r30 = arg0;
     while (var_r30 != NULL) {
@@ -921,17 +922,7 @@ u32 fn_80060520(void *arg0) {
     return 0U;
 found:
     if (((u8 *)fn_80068548())[3] & 1) {
-        var_r3 = var_r30;
-        while (var_r3 != NULL) {
-            var_r4 = M2C_FIELD(var_r3, void **, 0x48);
-            if (var_r4 != NULL) {
-                goto found2;
-            }
-            var_r3 = M2C_FIELD(var_r3, void **, 4);
-        }
-        var_r4 = NULL;
-found2:
-        var_r31 += (((M2C_FIELD(M2C_FIELD(var_r4, void **, 0x48), s16 *, 0xA) * 12) + 31) & ~31) / 2 * 2;
+        var_r31 += (((M2C_FIELD(M2C_FIELD(FindUnk48(var_r30), void **, 0x48), s16 *, 0xA) * 12) + 31) & ~31) / 2 * 2;
     }
     return var_r31;
 }
