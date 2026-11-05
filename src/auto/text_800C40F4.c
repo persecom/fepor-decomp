@@ -1241,6 +1241,10 @@ void fn_800F1BFC(void) {
     fn_800F1C24(&lbl_8032AC58);
 }
 
+void fn_800F214C(void) {
+    fn_800F2174(&lbl_8032AC58);
+}
+
 s32 fn_800F7E78(void) {
     M2C_UNK fn_800F75F8();
     fn_800F75F8();
