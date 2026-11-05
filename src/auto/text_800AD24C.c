@@ -356,6 +356,42 @@ s32 fn_800B7378(void) {
     return 1;
 }
 
+s32 fn_800B7410(void) {
+    M2C_UNK fn_80016628(void *);
+    M2C_UNK fn_800C2930(void *, void *);
+    M2C_UNK fn_8017A7D4(void *, s32);
+    M2C_UNK fn_80023DC0();
+    extern u8 lbl_802842A4[];
+    extern u8 lbl_802842B8[];
+    extern u8 lbl_803206EC[];
+    extern s32 lbl_80367840;
+    struct {
+        s32 handle;
+        u8 pad4[8];
+        u8 owned;
+        u8 padD[3];
+        void *vtbl;
+    } obj;
+
+    fn_800162B8();
+    fn_8017A7D4(&obj, lbl_80367840);
+    fn_80016628(&obj);
+    fn_800C2930(lbl_803206EC, &obj);
+    fn_80023DC0();
+    fn_800163F8();
+    fn_80016180();
+    fn_800C4588(lbl_80367840);
+    lbl_80367840 = 0;
+    obj.vtbl = lbl_802842B8;
+    obj.vtbl = lbl_802842A4;
+    if (obj.owned) {
+        fn_800C4588(obj.handle);
+        obj.handle = 0;
+        obj.owned = 0;
+    }
+    return 1;
+}
+
 s32 fn_800B7948(void) {
     M2C_UNK fn_801453F0();
     fn_801453F0();
