@@ -172,16 +172,18 @@ u8 fn_800736F0(void) {
     u8 fn_801E3620(M2C_UNK *);
     extern u8 lbl_80331FB8[];
     extern s32 lbl_80367110;
-    u8 var_r3;
+    u8 res;
+    s32 ret;
 
     if (lbl_80367110 & 0x10) {
         return 0;
     }
-    var_r3 = 2;
-    if (fn_801E3620((M2C_UNK *)lbl_80331FB8) != 0) {
-        var_r3 = 0;
+    res = fn_801E3620((M2C_UNK *)lbl_80331FB8);
+    ret = 2;
+    if (res != 0) {
+        ret = 0;
     }
-    return var_r3;
+    return ret;
 }
 
 void fn_80073740(void) {
