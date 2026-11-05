@@ -350,6 +350,30 @@ void fn_800C7EF8(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x18) = 0;
 }
 
+void fn_800C8CB4(String *arg0, void *arg1) {
+    void fn_800C96F8(String *, char *, u32);
+    u32 strlen(const char *);
+    String tmp;
+    char *name;
+    void *list;
+    s32 index;
+
+    tmp.cap = 0;
+    tmp.size = 0;
+    tmp.data = 0;
+    tmp.cap = 0;
+    list = M2C_FIELD(arg1, void **, 0x1C);
+    index = M2C_FIELD(arg1, s32 *, 0x24);
+    if (list != NULL && index < M2C_FIELD(list, s32 *, 0)) {
+        name = M2C_FIELD(list, char **, 4) + index * 0x38;
+    } else {
+        name = NULL;
+    }
+    fn_800C96F8(&tmp, name, strlen(name));
+    fn_800C9B6C(arg0, &tmp);
+    fn_800C9A60(&tmp, -1);
+}
+
 s32 fn_800C8EFC(void *arg0) {
     s32 var_r6;
 
