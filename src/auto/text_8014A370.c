@@ -58,6 +58,11 @@ s32 fn_8014ADA0(void) {
     return 0xFFFF;
 }
 
+void *fn_8014ADAC(void) {
+    extern char lbl_80276F00[];
+    return &lbl_80276F00[0x104];
+}
+
 u16 fn_8014ADBC(void) {
     extern void *lbl_80367B14;
     return M2C_FIELD(lbl_80367B14, u16 *, 0x12);
