@@ -46,8 +46,8 @@ void *fn_80132B00(s32 arg0, s32 arg1) {
     temp_r3 = fn_8000CAA0(lbl_80276270, arg0);
     if (temp_r3 != NULL) {
         fn_8016A6A4(temp_r3);
-        M2C_FIELD(temp_r3, s32 *, 0x44) = arg1;
     }
+    M2C_FIELD(temp_r3, s32 *, 0x44) = arg1;
     return temp_r3;
 }
 
