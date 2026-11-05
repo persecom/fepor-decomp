@@ -14,6 +14,32 @@ void fn_80009B80(s8 arg0) {
     M2C_FIELD(lbl_80367140, s8 *, 0x24) = arg0;
 }
 
+extern u16 lbl_80367140;
+void fn_80009B8C(s8 arg0) {
+    s8 temp = arg0;
+    lbl_80367140 = (u16)temp;
+}
+
+void fn_80009BF4(f32 farg0) {
+    *(f32*)((char*)lbl_80367140 + 0x28) = farg0;
+}
+
+f32 fn_80009C00(void) {
+    return *(f32*)((char*)&lbl_80367140 + 0x28);
+}
+
+void fn_8000A248(void) {
+    lbl_80367140 = 2;
+}
+
+u8 fn_8000A268(void) {
+    return *(u8*)((u8*)lbl_80367140 + 0xA9);
+}
+
+void fn_8000A274(s8 arg0) {
+    *(u16*)(&lbl_80367140) = (u16)arg0;
+}
+
 void fn_8000A280(void) {
 
 }
@@ -288,4 +314,4 @@ void fn_80011910(void) {
     fn_80223F2C(0, 0, 1, 4);
 }
 #include "common.h"
-
+extern u16 lbl_80367140;
