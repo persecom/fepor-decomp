@@ -169,6 +169,77 @@ void fn_801184A8(s32 arg0) {
     fn_8016B730(arg0);
 }
 
+void fn_8011A2FC(s32 arg0) {
+    s32 temp_r3;
+    s32 temp_r4;
+    s32 temp_r5;
+    s32 temp_r6;
+    s32 temp_r7;
+    s32 temp_r8;
+    s32 temp_r9;
+    s32 temp_r31;
+    
+    // Call fn_8013FF94 with parameters 0x40 and 0
+    temp_r3 = fn_8013FF94(0x40, 0);
+    
+    // Check if return value is zero
+    if (temp_r3 == 0) {
+        // Call fn_800C42D8 with parameter 0x3C
+        temp_r31 = fn_800C42D8(0x3C);
+        
+        // Check if the return value is not null
+        if (temp_r31 != 0) {
+            // Setup for structure initialization - load the addresses of our globals
+            temp_r4 = (s32)&lbl_8028FDB0;
+            temp_r5 = (s32)&lbl_80292230;
+            temp_r6 = (s32)&lbl_802921E0;
+            
+            // Initialize structure fields
+            *(u32*)temp_r31 = temp_r4;
+            *(u32*)(temp_r31 + 4) = 0;
+            *(u32*)(temp_r31 + 0x0) = temp_r5;
+            
+            *(s16*)(temp_r31 + 8) = -1;
+            *(s16*)(temp_r31 + 0xa) = 0;
+            *(s16*)(temp_r31 + 0xc) = 0;
+            *(s16*)(temp_r31 + 0xe) = 0x260;
+            *(s16*)(temp_r31 + 0x10) = 0x1C0;
+            *(s16*)(temp_r31 + 0x12) = 0;
+            *(s16*)(temp_r31 + 0x14) = 0;
+            
+            *(u8*)(temp_r31 + 0x1e) = 0xFF;
+            *(u8*)(temp_r31 + 0x1f) = 0xFF;
+            *(u8*)(temp_r31 + 0x20) = 0xFF;
+            *(u8*)(temp_r31 + 0x21) = 0xFF;
+            *(s16*)(temp_r31 + 0x22) = 0x316;
+            *(s16*)(temp_r31 + 0x24) = 0;
+            
+            *(f32*)(temp_r31 + 0x28) = 1.0f;
+            *(f32*)(temp_r31 + 0x2c) = 1.0f;
+            *(f32*)(temp_r31 + 0x30) = 1.0f;
+            
+            *(u32*)(temp_r31 + 0x34) = 0;
+            *(u32*)(temp_r31 + 0x38) = 0;
+            
+            // Update the base address
+            *(u32*)temp_r31 = temp_r6;
+            
+            // Continue initialization
+            *(s16*)(temp_r31 + 8) = 0x40;
+            *(u8*)(temp_r31 + 0x24) = 8;
+            *(f32*)(temp_r31 + 0x2c) = 0.0f;
+            
+            // Call fn_801400F4 with parameters
+            temp_r5 = *(u32*)(temp_r31 + 0x34);
+            temp_r5 = temp_r5 | 0x10;
+            *(u32*)(temp_r31 + 0x34) = temp_r5;
+            
+            fn_801400F4(arg0, (void*)temp_r31, temp_r5);
+            fn_80140234(arg0, (void*)temp_r31, 1);
+        }
+    }
+}
+
 void fn_8011AB98(void) {
     M2C_UNK fn_801620AC();
     M2C_UNK fn_8005C8B4();
