@@ -20,6 +20,16 @@ static inline u8 GetItemKind(void *item) {
 
 void *fn_80019E04(char *);
 
+/* std::equal on chars */
+static inline BOOL CharsEqual(const char *first1, const char *last1, const char *first2) {
+    for (; first1 < last1; first1++, first2++) {
+        if (*first1 != *first2) {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
 /* std::min on references */
 static inline const u32 *MinU32(const u32 *a, const u32 *b) {
     return (*b < *a) ? b : a;
