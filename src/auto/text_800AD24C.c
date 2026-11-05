@@ -2348,6 +2348,11 @@ s8 fn_800C2C84(s32 arg0, s32 arg1) {
     return ptr[(arg1 * 0x18) - 7];
 }
 
+s8 fn_800C2D60(s32 arg0, s32 arg1) {
+    u8 *ptr = (u8 *)arg0;
+    return ptr[(arg1 * 0x18) - 8];
+}
+
 s32 fn_800C30CC(s32 arg0, s32 arg1) {
     return arg0 + ((arg1 - 1) * 0x18);
 }
