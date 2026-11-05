@@ -1445,10 +1445,8 @@ void fn_8017A430(void *arg0, s32 arg1, s32 arg2) {
 }
 
 void fn_8017A480(void *arg0, s32 arg1, s32 arg2) {
-    M2C_UNK fn_80234450(s32, s32);
-    s32 *ptr = (s32 *)M2C_FIELD(arg0, s32 *, 4);
-    fn_80234450(*ptr, arg2);
-    *ptr += arg1;
+    fn_80234450(M2C_FIELD(arg0, s32 *, 4), arg2);
+    M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + arg1);
 }
 
 void fn_8017A574(void *arg0, u32 arg1) {
