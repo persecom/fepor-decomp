@@ -44,6 +44,22 @@ static inline u32 FindUnk48(void *arg0) {
     return 0U;
 }
 
+static inline void *AllocNamed(s8 heap, u32 size, char *name) {
+    u32 fn_800C44F4(s8);
+    void *fn_800C4604(s8, u32, char *, u32);
+    unsigned long strlen(const char *);
+    s32 ofs;
+
+    if (fn_800C44F4(heap) < size) {
+        return NULL;
+    }
+    ofs = strlen(name) - 15;
+    if (ofs < 0) {
+        ofs = 0;
+    }
+    return fn_800C4604(heap, size, name + ofs, size);
+}
+
 void *fn_8005AE20(void) {
     extern void *lbl_8026AE88;
     return (void *)(((u32)&lbl_8026AE88) + 0x9);
@@ -506,6 +522,7 @@ u32 fn_8005E55C(void) {
     return (u32)fn_8022C7E0(0x0, (*(u32 *)0x800000F8 >> 2));
 }
 
+#pragma dont_inline on
 void *fn_8005E594(s8 arg0, u32 arg1, char *arg2) {
     M2C_UNK fn_800056CC(char *, ...);
     u32 fn_800C44F4(s8);
@@ -532,7 +549,7 @@ void *fn_8005E594(s8 arg0, u32 arg1, char *arg2) {
     }
     return var_r31;
 }
-
+#pragma dont_inline reset
 void fn_8005EB5C(u8 *arg0, u8 *arg1) {
     u8 temp_r5;
 
