@@ -19,6 +19,10 @@ s32 fn_8007C65C(void) {
     return 0;
 }
 
+s32 fn_8007C68C(void) {
+    return 0;
+}
+
 void *fn_8007C6AC(void) {
     extern u16 lbl_8026C640[];
     return &lbl_8026C640[0x2B4];
@@ -811,3 +815,5 @@ extern f32 lbl_80369470;
 extern f32 lbl_80369478;
 extern f32 lbl_8036947C;
 extern void *lbl_80367488;
+extern void *lbl_80367488;
+extern u32 lbl_80312040[8];
