@@ -20,10 +20,10 @@ s32 fn_800AD2DC(s32 arg0) {
     return arg0;
 }
 
-extern M2C_UNK lbl_802EF4E0;
-extern void fn_8002F61C(M2C_UNK *);
-extern void fn_8002F62C(M2C_UNK *);
-extern void fn_8002F740(void);
+extern u8 lbl_802EF4E0[];
+extern void fn_8002F61C(void *);
+extern void *fn_8002F62C(void *);
+extern u8 *fn_8002F740(void);
 extern void fn_8003E8DC(void);
 void fn_800ADD48(void) {
     fn_8002F62C(&lbl_802EF4E0);
