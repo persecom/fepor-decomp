@@ -125,6 +125,14 @@ void fn_80122000(void *arg0) {
     }
 }
 
+void fn_80122170(u32 *arg0) {
+    u32 temp_r3;
+    
+    if ((*(u16 *)((u8 *)arg0 + 0x4000) & 0x4000) == 0) {
+        *(u32 *)((u8 *)arg0 + 0x4000) = (*(u32 *)((u8 *)arg0 + 0x4000) | 0x40000000);
+    }
+}
+
 u8 fn_801229C4(void *arg0) {
     return (u8) ((s8) M2C_FIELD(arg0, u8 *, 0x45) <= ((s8) M2C_FIELD(arg0, u8 *, 0x47) - (s8) M2C_FIELD(arg0, u8 *, 0x46)));
 }
@@ -211,6 +219,24 @@ void fn_801232F4(void *arg0, f32 farg0, f32 farg1) {
 
 void fn_80123300(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x68) = arg1;
+}
+
+void fn_8012391C(void *arg0) {
+    void *fn_8000C0C0(M2C_UNK *, M2C_UNK *);
+    M2C_UNK fn_8000C60C();
+    M2C_UNK fn_80123988(void *);
+    extern M2C_UNK lbl_80290408;
+    extern u8 lbl_8036728A;
+    void *temp_r3;
+
+    temp_r3 = fn_8000C0C0(&lbl_80290408, &lbl_80290408);
+    if ((temp_r3 == NULL) || ((s32) M2C_FIELD(temp_r3, s32 *, 0x34) != (s32) lbl_8036728A)) {
+        if ((u32) M2C_FIELD(arg0, u32 *, 0x30) != 0U) {
+            fn_8000C60C();
+        }
+        M2C_FIELD(arg0, u32 *, 0x30) = 0U;
+        fn_80123988(arg0);
+    }
 }
 
 void fn_80123BE8(void) {
@@ -514,3 +540,37 @@ void fn_80127C78(void *arg0) {
     }
 }
 extern u32 lbl_80367110;
+#include "common.h"
+
+extern f32 lbl_8036A278;
+extern f32 lbl_8036A27C;
+extern f32 lbl_8036A280;
+extern f32 lbl_8036A284;
+extern f32 lbl_8036A288;
+extern f32 lbl_8036A28C;
+extern f32 lbl_8036A290;
+extern f32 lbl_8036A294;
+extern f32 lbl_8036A298;
+extern f64 lbl_8036A2A0;
+
+extern s32 *fn_8018D900(s32);
+extern void fn_80007124(void *);
+extern void fn_80007668(s32 *);
+extern void fn_800076AC(s32, s32, s32, s32);
+extern void fn_80007790(f32, f32, f32, f32);
+extern void fn_80007858(f32, f32);
+extern void fn_80007884(void);
+extern void fn_80007898(s32);
+extern void fn_80009B8C(u8);
+extern void fn_80009B98(void);
+extern void fn_80009BC0(void *, s32);
+extern void fn_80009D74(f32, f32, f32, f32);
+extern void fn_8000A174(s32, s32);
+extern void fn_8000A248(void);
+extern void fn_8000A258(void);
+extern void fn_80057020(u32);
+extern void fn_80057860(s32);
+extern s32 fn_80231D94(void *, void *, s32);
+extern s32 fn_80234200(void *, s32);
+
+void fn_80121D30(void);
