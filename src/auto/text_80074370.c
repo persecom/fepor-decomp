@@ -743,6 +743,31 @@ s32 fn_80077D98(void) {
     return 0;
 }
 
+void fn_80077DA0(void) {
+    extern u16 lbl_802EF4C8[12];
+    extern u8 lbl_8026C0B8[];
+    
+    if (fn_80105BC0((s32*)(lbl_802EF4C8 + 0x1BC), 0x16) != 0) {
+        fn_8000E0E4(&lbl_8026C0B8[0x44D]);
+        return;
+    }
+    fn_8000E0E4(&lbl_8026C0B8[0x459]);
+}
+
+void fn_80077E00(void) {
+    u8 fn_80105BC0(s32, s32);
+    void fn_8000E0E4(void *);
+    extern u32 lbl_802EF4C8;
+    extern u8 lbl_8026C0B8[];
+    
+    s32 r3_val = *(u32*)((u8*)&lbl_802EF4C8 + 0x1BC);
+    if (fn_80105BC0(r3_val, 0x16) != 0) {
+        fn_8000E0E4((void*)((u8*)&lbl_8026C0B8 + 0x464));
+        return;
+    }
+    fn_8000E0E4((void*)((u8*)&lbl_8026C0B8 + 0x46E));
+}
+
 s32 fn_80077ED0(void) {
     extern u16 lbl_802EF4C8;
     lbl_802EF4C8 = 0x19;
@@ -1051,6 +1076,22 @@ s32 fn_800790CC(void) {
     return 0;
 }
 
+void fn_80079138(void *arg0) {
+    M2C_UNK fn_8000C60C();
+    extern M2C_UNK lbl_80312040;
+    s32 temp_r30;
+    void *temp_r3;
+
+    temp_r3 = M2C_FIELD(arg0, void **, 0x30);
+    if (temp_r3 != NULL) {
+        temp_r30 = M2C_FIELD(temp_r3, u8 *, 0x40) * 4;
+        if ((u32) *(&lbl_80312040 + temp_r30) != 0U) {
+            fn_8000C60C();
+        }
+        *(&lbl_80312040 + temp_r30) = 0;
+    }
+}
+
 void fn_80079198(s32 arg0) {
     void *fn_8000CA64(M2C_UNK *, M2C_UNK *);
     extern M2C_UNK lbl_80288CAC;
@@ -1264,3 +1305,6 @@ extern u16 lbl_80288CAC;
 #include "global.h"
 
 extern u16 lbl_80288CAC;
+#include "common.h"
+#include "structs.h"
+extern u16 lbl_80312040[8];
