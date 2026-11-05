@@ -1245,6 +1245,10 @@ void fn_800F214C(void) {
     fn_800F2174(&lbl_8032AC58);
 }
 
+void fn_800F2E50(s8 arg0) {
+    M2C_FIELD(&lbl_8032AC58, s8 *, 0x65C) = arg0;
+}
+
 s32 fn_800F7E78(void) {
     M2C_UNK fn_800F75F8();
     fn_800F75F8();
