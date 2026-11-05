@@ -213,7 +213,7 @@ void fn_80073188(void *arg0) {
     void fn_801E3118(void *, void *, s32);
     extern u8 lbl_8026BE40[];
     extern u16 lbl_80311D50[];
-    extern u8 lbl_803682F0[];
+    extern M2C_UNK lbl_803682F0;
     memset(lbl_80311D50, 0, 0x1EA);
     lbl_80311D50[1] = 0;
     lbl_80311D50[0] = 0;
@@ -221,7 +221,7 @@ void fn_80073188(void *arg0) {
     M2C_FIELD(arg0, u8 **, 0x34) = lbl_8026BE40 + 0x1A6;
     M2C_FIELD(arg0, u16 *, 0x38) = 0;
     M2C_FIELD(arg0, u16 *, 0x3A) = 0x20;
-    fn_801E3118(lbl_803682F0, arg0, 1);
+    fn_801E3118(&lbl_803682F0, arg0, 1);
 }
 
 extern u16 lbl_802EF4C8[12];
