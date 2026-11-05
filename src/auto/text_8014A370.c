@@ -548,3 +548,6 @@ extern s32 lbl_80367B04;
 extern u8 lbl_80367B0D;
 
 void fn_801475FC(s32, s32); /* extern */
+#include "global.h"
+
+extern void* fn_80019F04();
