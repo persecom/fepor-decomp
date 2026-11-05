@@ -2410,3 +2410,6 @@ typedef struct {
 } SomeStruct;
 extern u16 lbl_8032BB58[258];
 extern u16 lbl_80367110;
+#include "common.h"
+extern s32 lbl_80368230;
+extern u16 lbl_8028D4F8[38];
