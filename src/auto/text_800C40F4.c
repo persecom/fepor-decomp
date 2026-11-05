@@ -24,6 +24,10 @@ static inline BOOL IsItemNamed(void *item, char *name) {
     return fn_80019E04(name) == item;
 }
 
+static inline BOOL ItemIs(char *name, void *item) {
+    return fn_80019E04(name) == item;
+}
+
 void **fn_80037BBC(void *, s32);
 u8 fn_8009326C(void *, void *);
 extern struct {
@@ -2707,6 +2711,7 @@ void fn_801001B8(s32 arg1, s32 arg2, s32 arg3) {
     fn_80100284(2, arg1, arg2, arg3, arg1);
 }
 
+#pragma opt_loop_invariants off
 void fn_801007A0(void *arg0) {
     struct UnitBits {
         u16 f0 : 3;
@@ -2766,27 +2771,32 @@ void fn_801007A0(void *arg0) {
         }
         if (fn_8009326C(arg0, *item)) {
             M2C_FIELD(arg0, u32 *, 0x254) |= 0x200;
-            if (IsItemNamed(*item, (char *)&lbl_80273304 + 0xF9)) {
+            if (IsItemNamed(*item, lbl_80273304.iidSilence)) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x400;
-            } else if (IsItemNamed(*item, (char *)&lbl_80273304 + 0x105)) {
+            } else if (IsItemNamed(*item, lbl_80273304.iidSleep)) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x800;
-            } else if (IsItemNamed(*item, (char *)&lbl_80273304 + 0x10F)) {
+            } else if (IsItemNamed(*item, lbl_80273304.iidBerserk)) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x1000;
             }
         }
     }
 
-    for (i = 0; i < 4; i++) {
-        item = fn_80037BBC(arg0, i);
-        if (*item == NULL) {
-            break;
-        }
-        if (fn_8009339C(arg0, *item)) {
-            if (GetItemUnk1D(*item) == 1) {
-                M2C_FIELD(arg0, u32 *, 0x254) |= 0x4000;
+    {
+        s32 j;
+        void **slot;
+
+        for (j = 0; j < 4; j++) {
+            slot = fn_80037BBC(arg0, j);
+            if (*slot == NULL) {
+                break;
             }
-            if (GetItemDD54(*item, arg0) > 1) {
-                M2C_FIELD(arg0, u32 *, 0x254) |= 0x2000;
+            if (fn_8009339C(arg0, *slot)) {
+                if (GetItemUnk1D(*slot) == 1) {
+                    M2C_FIELD(arg0, u32 *, 0x254) |= 0x4000;
+                }
+                if (GetItemDD54(*slot, arg0) > 1) {
+                    M2C_FIELD(arg0, u32 *, 0x254) |= 0x2000;
+                }
             }
         }
     }
@@ -2796,6 +2806,7 @@ void fn_801007A0(void *arg0) {
         M2C_FIELD(arg0, u32 *, 0x254) |= 0x01000000;
     }
 }
+#pragma opt_loop_invariants reset
 s32 fn_80100CC8(void) {
     void *fn_80016BDC();
     s32 temp_r3;
