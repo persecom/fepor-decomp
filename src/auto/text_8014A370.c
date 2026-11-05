@@ -619,4 +619,3 @@ extern void* fn_80019F04();
 extern u16 lbl_802CA264[50];
 extern u16 lbl_802B14E4[];
 #include "common.h"
-extern u16 lbl_802CA264[50]; // 100 bytes = 50 u16
