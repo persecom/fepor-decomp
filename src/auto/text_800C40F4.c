@@ -2012,4 +2012,4 @@ s32 fn_801032F8(void) {
 }
 extern s32 lbl_80320C20;
 extern u16 lbl_803678F4;
-extern u8 lbl_8032B3C0[544];
+extern u8 lbl_8032B3C0[];
