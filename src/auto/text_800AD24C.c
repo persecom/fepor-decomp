@@ -737,6 +737,17 @@ s32 fn_800B7D08(u8 arg0, s16 arg1) {
     return 1;
 }
 
+s32 fn_800B7F98(u8 arg0, u8 arg1, s16 arg2) {
+    extern u16 lbl_8032FF08[];
+    s32 temp_r6;
+    s32 temp_r3;
+
+    temp_r6 = arg0 * 0x30;
+    temp_r3 = temp_r6 << 1;
+    fn_8014876C(&lbl_8032FF08[temp_r3], arg1, arg2, temp_r6);
+    return 1;
+}
+
 s32 fn_800B8108(void) {
     M2C_UNK fn_8016B5E8();
     fn_8016B5E8();
@@ -766,6 +777,12 @@ s32 fn_800B8198(void) {
     M2C_UNK fn_8016B6D4();
     fn_800C0658();
     fn_8016B6D4();
+    return 1;
+}
+
+extern u16 lbl_8032BB58[];
+s32 fn_800B8298(s8 arg0, s8 arg1) {
+    fn_8010FEEC(lbl_8032BB58, arg0, arg1, 9, 0);
     return 1;
 }
 
