@@ -195,6 +195,11 @@ s32 fn_801C4438(void) {
     return 5;
 }
 
+extern u8 lbl_8029824C[16];
+void fn_801C4440(void) {
+    fn_8000BF00(&lbl_8029824C);
+}
+
 void fn_801C4564(void) {
     M2C_UNK fn_801C45A4();
     fn_801C45A4();
