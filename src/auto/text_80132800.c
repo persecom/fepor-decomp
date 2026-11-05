@@ -2,7 +2,8 @@
 #include "common.h"
 #include "dolphin/os.h"
 
-extern u16 lbl_80276BC8[];
+extern u8 lbl_80276BC8[29];
+extern u8 lbl_803301A8[1344];
 
 typedef struct Vec2s {
     s16 x;
