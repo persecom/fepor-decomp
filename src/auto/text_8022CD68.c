@@ -16,6 +16,20 @@ extern s32 D_80368AD0;
 extern s32 lbl_80368B0C;
 u32 fn_8026367C(void);
 
+typedef struct Voice {
+    u8 pad0[0x114];
+    u32 flags;
+    u8 pad118[0x5C];
+    s32 unk174;
+    s32 unk178;
+    s32 unk17C;
+    s32 unk180;
+    s32 unk184;
+    s32 unk188;
+    u32 unk18C;
+    u32 unk190;
+} Voice;
+
 typedef struct {
     char gpr;
     char fpr;
