@@ -1430,6 +1430,21 @@ s32 fn_800BD034(u8 arg0) {
     return fn_8003B2D0(unit);
 }
 
+s32 fn_800BD08C(u8 arg0) {
+    extern u8 lbl_802B14E4[];
+    void *unit;
+
+    if (arg0 != 0) {
+        unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
+    } else {
+        unit = NULL;
+    }
+    if (unit == NULL) {
+        return 0;
+    }
+    return M2C_FIELD(unit, s8 *, 0x19F);
+}
+
 u8 fn_800BD5AC(void) {
     void *fn_80016BDC();
     void *temp_r3;
