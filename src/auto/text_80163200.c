@@ -4,6 +4,7 @@ extern u16 lbl_80278080[];
 extern u8 lbl_80330708[];
 extern u16 lbl_803680E8[];
 extern f32 lbl_8036AB94;
+extern u32 lbl_80294604;
 extern f32 lbl_8036ABB0;
 extern f32 lbl_8036ABBC;
 extern f32 lbl_8036ABA0;
@@ -410,6 +411,22 @@ void *fn_8016A6A4(void *arg0) {
     fn_801403F0(arg0);
     M2C_FIELD(arg0, s32 *, 0x40) = 0;
     return arg0;
+}
+
+void fn_8016A738(void) {
+    void fn_8013E300(void);
+    void fn_8000C0C0(s32);
+    s32 fn_8013FF94(s32, s32);
+    void fn_801658DC(s32, s32);
+
+    extern u8 lbl_80293D8C[];
+    extern u8 lbl_80277BC0[];
+
+    fn_8013E300();
+    fn_8000C0C0((s32)&lbl_80293D8C);
+    if (fn_8013FF94(-0x1000, 0) != 0) {
+        fn_801658DC((s32)&lbl_80277BC0 + 0x14C, 0);
+    }
 }
 
 void fn_8016A7F8(void) {
