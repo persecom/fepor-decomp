@@ -1906,16 +1906,15 @@ void fn_800EB288(void) {
 }
 
 void fn_800EB2DC(s32 arg0) {
-    s32 fn_8021A7D4(s32, void (*)(void));
     void fn_800EB80C(void);
     extern u8 lbl_80320C20[];
 
-    switch (M2C_FIELD(lbl_80320C20, s32 *, 0xA004)) {
+    switch (M2C_FIELD(lbl_80320C20, volatile s32 *, 0xA004)) {
     case 0:
     case -6:
-        M2C_FIELD(lbl_80320C20, u8 *, 0xA01A) = 1;
-        M2C_FIELD(lbl_80320C20, s32 *, 0xA004) = fn_8021A7D4(M2C_FIELD(lbl_80320C20, s32 *, 0xA000), fn_800EB80C);
-        if (M2C_FIELD(lbl_80320C20, s32 *, 0xA004) < 0) {
+        M2C_FIELD(lbl_80320C20, volatile u8 *, 0xA01A) = 1;
+        M2C_FIELD(lbl_80320C20, volatile s32 *, 0xA004) = fn_8021A7D4(M2C_FIELD(lbl_80320C20, s32 *, 0xA000), fn_800EB80C);
+        if (M2C_FIELD(lbl_80320C20, volatile s32 *, 0xA004) < 0) {
             fn_8000C070(arg0, 0x50);
         }
         break;
@@ -1923,27 +1922,38 @@ void fn_800EB2DC(s32 arg0) {
 }
 
 void fn_800EB374(s32 arg0) {
-    s32 fn_8021AFD0(s32, void *, void (*)(void), void (*)(void));
+    struct CardWork {
+        u8 workArea[0xA000];
+        s32 chan;
+        volatile s32 result;
+        s32 sectorSize;
+        s32 unkA00C;
+        s32 unkA010;
+        s32 unkA014;
+        u8 unkA018;
+        u8 unkA019;
+        u8 busy;
+    };
     void fn_800EB7E4(void);
     void fn_800EB80C(void);
-    extern u8 lbl_80320C20[];
+    extern struct CardWork lbl_80320C20;
     u8 ok;
 
     ok = 0;
-    if (M2C_FIELD(lbl_80320C20, s32 *, 0xA004) == 0 && M2C_FIELD(lbl_80320C20, u8 *, 0xA01A) == 0) {
+    if (lbl_80320C20.result == 0 && lbl_80320C20.busy == 0) {
         ok = 1;
     }
     if (!ok) {
         fn_8000C070(arg0, 0x63);
         return;
     }
-    if (M2C_FIELD(lbl_80320C20, s32 *, 0xA008) != 0x2000) {
-        M2C_FIELD(lbl_80320C20, s32 *, 0xA004) = -0x41;
+    if (lbl_80320C20.sectorSize != 0x2000) {
+        lbl_80320C20.result = -0x41;
         fn_8000C070(arg0, 0x63);
         return;
     }
-    M2C_FIELD(lbl_80320C20, u8 *, 0xA01A) = 1;
-    M2C_FIELD(lbl_80320C20, s32 *, 0xA004) = fn_8021AFD0(M2C_FIELD(lbl_80320C20, s32 *, 0xA000), lbl_80320C20, fn_800EB7E4, fn_800EB80C);
+    lbl_80320C20.busy = 1;
+    lbl_80320C20.result = fn_8021AFD0(lbl_80320C20.chan, lbl_80320C20.workArea, fn_800EB7E4, fn_800EB80C);
 }
 
 s32 fn_800EB520(char *arg0) {
