@@ -1,6 +1,21 @@
 /* Functions from 0x801B3258 to 0x801E4380, found by decomp-toolkit. */
 #include "common.h"
 
+/* Message box: up to 7 text lines, opened/closed through state (0x64/0x6E open, 0xC8/0xD2 close). */
+typedef struct MsgBox {
+    /* 0x000 */ s16 flags;
+    /* 0x002 */ s16 state;
+    /* 0x004 */ s16 type;
+    /* 0x006 */ u8 unk6[4];
+    /* 0x00A */ s16 width;
+    /* 0x00C */ s16 height;
+    /* 0x00E */ u8 unkE[0x10];
+    /* 0x01E */ s16 timer;
+    /* 0x020 */ char lines[7][0x41];
+    /* 0x1E7 */ s8 numLines;
+    /* 0x1E8 */ u8 unk1E8[2];
+} MsgBox;
+
 void fn_801B3D30(void *arg0) {
     M2C_UNK fn_801B5E2C(void *);
     void *temp_r31;
@@ -559,6 +574,88 @@ void fn_801DDAC8(void *arg0) {
         break;
     }
     fn_801DC588();
+}
+
+extern void *lbl_801D3B14;
+void fn_801DDBA8(void *arg0, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
+    void *memset(void *, s32, u32);
+    void *memcpy(void *, const void *, u32);
+    char *fn_8000E0E4(s32);
+    s32 fn_80010B78(char *, s32, f32);
+    M2C_UNK fn_801DC588();
+    typedef struct {
+        s16 flags;
+        s16 state;
+        s16 type;
+        u8 pad6[4];
+        s16 width;
+        s16 height;
+        u8 padE[0x10];
+        s16 timer;
+        char lines[7][0x41];
+        s8 numLines;
+        u8 pad1E8[2];
+    } Window;
+    Window *w = arg0;
+    char *s;
+    char *start;
+    s32 len;
+    s32 n;
+    f32 width;
+
+    memset(w, 0, sizeof(Window));
+    w->state = 0;
+    w->flags = 0;
+    w->timer = 0;
+    w->state = 100;
+    w->type = arg4;
+    if (arg3) {
+        w->flags |= 4;
+    } else {
+        w->flags &= ~4;
+    }
+    w->width = 200;
+    if (w->type == 1 || w->type == 2 || w->type == 3) {
+        w->width = 400;
+    }
+    s = fn_8000E0E4(arg1);
+    n = len = 0;
+    start = s;
+    for (;;) {
+        if (*s == 0 || *s == '\n') {
+            if (len > 0) {
+                memcpy(w->lines[n], start, len);
+            }
+            w->lines[n][len] = 0;
+            width = fn_80010B78(w->lines[n], -1, 1.0f);
+            if (width > w->width) {
+                w->width = width;
+            }
+            n++;
+            if (*s == 0) {
+                break;
+            }
+            s++;
+            len = 0;
+            start = s;
+        } else {
+            s++;
+            len++;
+        }
+    }
+    w->numLines = n;
+    w->width += 0x18;
+    w->height = w->numLines * 20 + (arg2 ? 20 : 0) + ((w->flags & 4) ? 40 : 0) + 32;
+    if (w->type == 1 || w->type == 2) {
+        w->height += 0x88;
+    }
+    if (w->type == 3) {
+        w->height += 10;
+    }
+    if (arg2) {
+        w->flags |= 2;
+    }
+    fn_801DC588(w);
 }
 
 void fn_801DE2FC(s32 arg0) {
