@@ -56,6 +56,36 @@ void fn_80034120(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x60) = (u8) (M2C_FIELD(arg0, u8 *, 0x60) + 1);
 }
 
+void fn_80036834(void *arg0) {
+    s32 i=0;
+    u32 zero=0;
+    M2C_FIELD(arg0,u8*,0x214)=zero;
+    M2C_FIELD(arg0,u8*,0x21E)=zero;
+    M2C_FIELD(arg0,u8*,0x215)=zero;
+    M2C_FIELD(arg0,u8*,0x21F)=zero;
+    M2C_FIELD(arg0,u8*,0x216)=zero;
+    M2C_FIELD(arg0,u8*,0x220)=zero;
+    M2C_FIELD(arg0,u8*,0x217)=zero;
+    M2C_FIELD(arg0,u8*,0x221)=zero;
+    M2C_FIELD(arg0,u8*,0x218)=zero;
+    M2C_FIELD(arg0,u8*,0x222)=zero;
+    M2C_FIELD(arg0,u8*,0x219)=zero;
+    M2C_FIELD(arg0,u8*,0x223)=zero;
+    M2C_FIELD(arg0,u8*,0x21A)=zero;
+    M2C_FIELD(arg0,u8*,0x224)=zero;
+    M2C_FIELD(arg0,u8*,0x21B)=zero;
+    M2C_FIELD(arg0,u8*,0x225)=zero;
+    M2C_FIELD(arg0,u8*,0x21C)=zero;
+    M2C_FIELD(arg0,u8*,0x226)=zero;
+    M2C_FIELD(arg0,u8*,0x21D)=zero;
+    M2C_FIELD(arg0,u8*,0x227)=zero;
+    if (M2C_FIELD(M2C_FIELD(arg0,void**,0x188),void**,0x50) == NULL) return;
+    do {
+       M2C_FIELD((u8*)arg0+i,u8*,0x21E)=5;
+       i++;
+    } while (i < (u8)M2C_FIELD(M2C_FIELD(M2C_FIELD(arg0,void**,0x188),void**,0x50),u8*,4));
+}
+
 void fn_800368C8(void *arg0, u8 arg1, void *arg2) {
     void *fn_80019DA8(u8);
     void *temp_r3;
@@ -72,6 +102,49 @@ void fn_800368C8(void *arg0, u8 arg1, void *arg2) {
 void fn_80036984(s32 arg0, s32 arg1) {
     u8 *ptr = (u8 *)(arg0 + 0x214);
     ptr[arg1] += 1;
+}
+
+void fn_80036998(void *arg0,s32 arg1) {
+    u8 fn_80036B20(void);
+    u8 *target;
+    s32 offset;
+    u8 old;
+    void *table;
+    if (fn_80036B20()!=0) return;
+    target = (u8 *)arg0 + arg1;
+    offset = arg1 << 3;
+    old = target[0x214];
+    target[0x214] = old + 1;
+    table = M2C_FIELD(M2C_FIELD(arg0,void**,0x188),void**,0x50);
+    if (target[0x214] > ((u8 *)table)[offset + 0xE] + 1) {
+        target[0x214] = ((u8 *)table)[offset + 0xE] + 1;
+    }
+}
+
+s32 fn_80036EAC(void *arg0, s32 arg1) {
+    s32 result;
+    u8 value;
+    void *unit;
+    void *table;
+    result = 3;
+    table = M2C_FIELD(M2C_FIELD(arg0, void **, 0x188), void **, 0x50);
+    table = (u8 *)table + arg1 * 8 + 8;
+    if (table == NULL) {
+        value = 0;
+    } else {
+        unit = (void *)((s32)arg0 + arg1);
+        value = M2C_FIELD(unit, u8 *, 0x214);
+        if (value <= M2C_FIELD(table, u8 *, 4)) value = 0;
+        else if (value <= M2C_FIELD(table, u8 *, 5)) value = 1;
+        else if (value <= M2C_FIELD(table, u8 *, 6)) value = 2;
+        else value = 3;
+    }
+    switch (value) {
+    case 0: result = 1; break;
+    case 1: result = 2; break;
+    case 2: result = 3; break;
+    }
+    return result;
 }
 
 s32 fn_80036F5C(void *arg0, s32 arg1) {
@@ -163,13 +236,15 @@ extern f32 lbl_80368EAC;
 extern f32 lbl_80368EB0;
 extern f32 lbl_80368EB4;
 extern f64 lbl_80368EB8;
-f32 fn_80037818(void *arg0, u8 arg1) {
+f32 fn_80037818(void *arg0,u8 arg1) {
     u8 value;
-    u8 fn_80105BC0(s32, s32);
+    u8 fn_80105BC0(s32,s32);
+    f32 result;
     if (arg1 == 0) return lbl_80368EA8;
-    if (fn_80105BC0((s32)arg0 + 0x1BC, 2)) value=M2C_FIELD(arg0,u8*,0x19A)+0x14;
+    if ((u8)fn_80105BC0((s32)arg0+0x1BC,2)) value=M2C_FIELD(arg0,u8*,0x19A)+0x14;
     else value=M2C_FIELD(arg0,u8*,0x19A);
-    return ((f32)arg1 / (lbl_80368EAC-lbl_80368EB0*(f32)value))+lbl_80368EB4;
+    result = (f32)arg1 / (lbl_80368EAC - lbl_80368EB0 * (f32)value);
+    return result + lbl_80368EB4;
 }
 
 s32 fn_800378CC(s32 arg0) {
