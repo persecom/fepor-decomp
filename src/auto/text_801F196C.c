@@ -144,6 +144,12 @@ s32 fn_801F87C4(void) {
     return (0x20 - val) & 0x1F;
 }
 
+void fn_801F8850(s32 arg0) {
+    extern u16 lbl_80281028[];
+
+    fn_800C08AC((u8 *)lbl_80281028 + 0x20E, arg0, lbl_80281028);
+}
+
 void fn_801F892C(void) {
     M2C_UNK fn_8002D4B8();
     fn_8002D4B8();
