@@ -410,6 +410,12 @@ s32 fn_80077D98(void) {
     return 0;
 }
 
+s32 fn_80077ED0(void) {
+    extern u16 lbl_802EF4C8;
+    lbl_802EF4C8 = 0x19;
+    return 5;
+}
+
 void *fn_80077EE8(void) {
     extern u16 lbl_8026C0B8[];
     return (void*)((uintptr_t)&lbl_8026C0B8 + 0x478);
@@ -417,6 +423,12 @@ void *fn_80077EE8(void) {
 
 s32 fn_80077EF8(void) {
     return 0;
+}
+
+s32 fn_80077FE0(void) {
+    extern u16 lbl_802EF4C8;
+    lbl_802EF4C8 = 0x14;
+    return 5;
 }
 
 void *fn_80077FF8(void) {
@@ -647,4 +659,7 @@ s32 fn_8007C400(void) {
     extern s32 lbl_8036747C;
     return lbl_8036747C;
 }
+#include "common.h"
+#include "structs.h"
 
+extern u8 lbl_802EF4C8[0x40];
