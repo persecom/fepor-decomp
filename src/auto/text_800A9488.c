@@ -143,18 +143,17 @@ s32 fn_800AA078(void *arg0) {
     void *fn_80019ED0(s32);
     void fn_8014D2B0(void *, u8);
     void fn_8014D698(void *, u8, M2C_UNK, M2C_UNK, M2C_UNK);
-    extern M2C_UNK lbl_80330708;
-    extern M2C_UNK lbl_80331FB8;
-    u8 *s = (u8 *)&lbl_80330708;
+    extern u8 lbl_80330708[];
+    extern u64 lbl_80331FB8[];
+    u8 *s = lbl_80330708;
     u8 saved;
 
     saved = s[0xA6];
     fn_80016DE0();
-    fn_8014D698(&lbl_80330708, (u8)(fn_8000CEE4(0x1E) + 1), 0, 0, 1);
+    fn_8014D698(lbl_80330708, (u8)(fn_8000CEE4(0x1E) + 1), 0, 0, 1);
     s[0xA6] = saved;
-    fn_8014D2B0(&lbl_80330708, M2C_FIELD(fn_80019ED0((s8)M2C_FIELD(arg0, u8 *, 4)), u8 *, 0x3C));
-    M2C_FIELD(&lbl_80331FB8, s32 *, 0xC) = 0x89ABCDEF;
-    M2C_FIELD(&lbl_80331FB8, s32 *, 8) = 0x01234567;
+    fn_8014D2B0(lbl_80330708, M2C_FIELD(fn_80019ED0(M2C_FIELD(arg0, s8 *, 4)), u8 *, 0x3C));
+    lbl_80331FB8[1] = 0x0123456789ABCDEFULL;
     fn_80006220(0xA);
     return 5;
 }
@@ -245,32 +244,36 @@ s32 fn_800AA288(s32 arg0) {
 }
 
 s32 fn_800AA304(s8 arg0, s8 arg1) {
-    extern u8 lbl_802CA518[];
+    extern struct {
+        u8 pad0[0xD];
+        u8 unitMap[0x6100];
+        u8 pad1;
+        s16 costMap[0x4040];
+        s8 fogMap[64];
+    } lbl_802CA518;
     extern u8 lbl_802B14E4[];
-    extern void *lbl_802EF4C8;
+    extern void *lbl_802EF4C8[];
     s16 val;
-    s32 row;
     u8 id;
     void *unit;
 
-    row = arg1 << 6;
-    val = *(s16 *)(lbl_802CA518 + 0x610E + (arg0 + row) * 2);
+    val = lbl_802CA518.costMap[arg0 + arg1 * 64];
     if (val < 0) {
         return 0;
     }
     if (val == 0) {
         return 1;
     }
-    if (*(s8 *)(lbl_802CA518 + 0xE18E + arg0 + row) != 0) {
+    if (lbl_802CA518.fogMap[arg0 + arg1 * 64] != 0) {
         return 0;
     }
-    id = *(lbl_802CA518 + 0xD + arg0 + row);
+    id = lbl_802CA518.unitMap[arg0 + arg1 * 64];
     if (id != 0) {
         unit = lbl_802B14E4 + (id - 1) * 0x280;
     } else {
         unit = NULL;
     }
-    if (unit != NULL && unit != lbl_802EF4C8) {
+    if (unit != NULL && unit != lbl_802EF4C8[0]) {
         return 0;
     }
     return 1;
