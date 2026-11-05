@@ -518,6 +518,36 @@ u8 fn_800981D0(void **arg0) {
     return M2C_FIELD(temp_r3, u8 *, 8);
 }
 
+void fn_80098AE4(void *arg0) {
+    M2C_UNK fn_8004B1B4(s32);
+    M2C_UNK fn_8009799C();
+    M2C_UNK fn_8004FE98(s32, M2C_UNK);
+    M2C_UNK fn_8005376C();
+    M2C_UNK fn_800980D4(s32);
+    s32 fn_800980E8(s32);
+    u8 fn_80098568();
+    register s32 var_r31;
+    unsigned int temp_r3;
+
+    fn_8005376C();
+    if ((u8) M2C_FIELD(arg0, u8 *, 0x40) == 0) {
+        fn_8009799C();
+        var_r31 = 0;
+        do {
+            temp_r3 = fn_800980E8(var_r31);
+            if (temp_r3 != 0) {
+                fn_800980D4(var_r31);
+                if (fn_80098568() != 0) {
+                    fn_8004B1B4(temp_r3);
+                } else {
+                    fn_8004FE98(temp_r3, 0);
+                }
+            }
+            var_r31 += 1;
+        } while (var_r31 < 3);
+    }
+}
+
 void fn_80098B74(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x40) = 1;
 }
