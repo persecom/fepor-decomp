@@ -540,6 +540,14 @@ void fn_8005F7E0(void *arg0, s8 arg1, s8 arg2, s8 arg3) {
     M2C_FIELD(arg0, s8 *, 0xA) = arg3;
 }
 
+s32 fn_8005F7F0(void *arg0) {
+    if (*(u16 *)((u8 *)arg0 + 0x7C) != 0xFFFF) return 1;
+    if (*(u16 *)((u8 *)arg0 + 0x7E) != 0xFFFF) return 1;
+    if (*(u16 *)((u8 *)arg0 + 0x80) != 0xFFFF) return 1;
+    if (*(u16 *)((u8 *)arg0 + 0x82) != 0xFFFF) return 1;
+    return 0;
+}
+
 void fn_8005F84C(void *arg0) {
     extern void *fn_80065484(u32);
     void **current = (void**)arg0;
@@ -577,6 +585,31 @@ loop_4:
         }
     }
     fn_80065484(var_r0, -1, arg1);
+}
+
+s32 fn_8005F9B8(void *arg0, u16 arg1) {
+    u16 val = M2C_FIELD(arg0, u16 *, 0x7C);
+    
+    if (val == arg1) {
+        return 1;
+    }
+    
+    val = M2C_FIELD(arg0, u16 *, 0x7E);
+    if (val == arg1) {
+        return 1;
+    }
+    
+    val = M2C_FIELD(arg0, u16 *, 0x80);
+    if (val == arg1) {
+        return 1;
+    }
+    
+    val = M2C_FIELD(arg0, u16 *, 0x82);
+    if (val == arg1) {
+        return 1;
+    }
+    
+    return 0;
 }
 
 s32 fn_80060440(void *arg0) {
