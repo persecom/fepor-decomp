@@ -4,6 +4,12 @@
 extern s32 lbl_803689A8;
 extern void (*lbl_80368B34)(s16);
 
+// The structure being used in functions in this file - assumed based on offset 0xF4
+typedef struct {
+    u8 unkF4;  // This is likely the member accessed in function with 0xF4 offset 
+} SStructType;
+
+
 s32 fn_80230BBC(s32 arg0) {
     s32 temp_r4;
 
@@ -354,6 +360,16 @@ void fn_8024C7F8(void *arg0, s8 arg1, s8 arg2, s8 arg3) {
     M2C_FIELD(arg0, s8 *, 0x5D) = arg3;
 }
 
+s32 fn_8024CE1C(s32 arg0, s32 arg1) {
+    s32 temp_r3;
+
+    if (arg1 & 1) {
+        temp_r3 = (arg0 + 0xD) / 7;
+        return (((((u32) ((arg0 + 0xD) - temp_r3) >> 1U) + temp_r3) & 0xFFFFFFF8) + 0x1F) & 0xFFFFFFE0;
+    }
+    return ((arg0 * 2) + 0x1F) & 0xFFFFFFE0;
+}
+
 s32 fn_80250698(void *arg0, void *arg1) {
     return M2C_FIELD(arg0, u16 *, 4) - M2C_FIELD(arg1, u16 *, 4);
 }
@@ -538,6 +554,15 @@ void fn_8025EEE8(s32 arg0, s32 arg1, s32 arg2) {
     *(u16*)((char*)temp_r4 + temp_r3) |= arg2;
 }
 
+void *fn_8025FF28(u8 arg0, u8 arg1) {
+    extern u16 lbl_80363C18;
+    extern u16 lbl_80361618;
+    if (arg1 == 0xFF) {
+        return ((u16*)((u8*)&lbl_80363C18 + (arg0 * 9)));
+    }
+    return ((u16*)((u8*)&lbl_80361618 + (arg1 * 0x90) + (arg0 * 9)));
+}
+
 void fn_80260174(u8 arg0, u8 arg1, s8 arg2) {
     extern u16 lbl_80363E58[];
     extern u8 lbl_80363ED8[];
@@ -557,6 +582,153 @@ u8 fn_802601B0(u8 arg0, u8 arg1) {
         return lbl_80363E58[((arg1 & 0xFF) * 0x10) & 0xFF0] + arg0;
     }
     return lbl_80363ED8[arg0];
+}
+
+u16 fn_8026068C(void *arg0) {
+    s32 temp_r4;
+    u16 ret;
+
+    temp_r4 = *(s32 *)((u8 *)arg0 + 0x220);
+    if (!(temp_r4 & 1)) {
+        return *(u16 *)((u8 *)arg0 + 0x244);
+    }
+    *(s32 *)((u8 *)arg0 + 0x220) = (s32)(temp_r4 & 0xFFFFFFFE);
+    ret = fn_802601EC((u8 *)arg0 + 0x224, *(u8 *)((u8 *)arg0 + 0x121), *(u8 *)((u8 *)arg0 + 0x122));
+    return ret;
+}
+
+u16 fn_802606D4(void *arg0) {
+    u32 temp_r4;
+
+    temp_r4 = *(u32 *)((char *)arg0 + 0x220);
+    if (!(temp_r4 & 2)) {
+        return *(u16 *)((char *)arg0 + 0x268);
+    }
+    *(u32 *)((char *)arg0 + 0x220) = temp_r4 & 0xFFFFFFFD;
+    return fn_802601EC((char *)arg0 + 0x248, *(u8 *)((char *)arg0 + 0x121), *(u8 *)((char *)arg0 + 0x122));
+}
+
+u16 fn_8026071C(void *arg0) {
+    s32 temp_r4;
+    u16 ret;
+
+    temp_r4 = *(s32 *)((char *)arg0 + 0x220);
+    if (!(temp_r4 & 4)) {
+        return *(u16 *)((char *)arg0 + 0x28C);
+    }
+    *(u32 *)((char *)arg0 + 0x220) = temp_r4 & 0xFFFFFFFB;
+    ret = fn_802601EC((char *)arg0 + 0x26C, *(u8 *)((char *)arg0 + 0x121), *(u8 *)((char *)arg0 + 0x122));
+    return ret;
+}
+
+u16 fn_802607AC(void *arg0) {
+    s32 temp_r4;
+    u16 temp_r3;
+
+    temp_r4 = *(s32*)((char*)arg0 + 0x220);
+    if (!(temp_r4 & 0x10)) {
+        return *(u16*)((char*)arg0 + 0x2D4);
+    }
+    *(u32*)((char*)arg0 + 0x220) = (s32) (temp_r4 & 0xFFFFFFEF);
+    temp_r3 = fn_802601EC((char*)arg0 + 0x2B4, *(u8*)((char*)arg0 + 0x121), *(u8*)((char*)arg0 + 0x122));
+    return (u16)temp_r3;
+}
+
+u16 fn_802607F4(void *arg0) {
+    s32 temp_r4;
+    void *temp_r5;
+
+    temp_r4 = *(s32 *)((char *)arg0 + 0x220);
+    if (!(temp_r4 & 0x20)) {
+        return *(u16 *)((char *)arg0 + 0x2F8);
+    }
+    *(s32 *)((char *)arg0 + 0x220) = (s32) (temp_r4 & 0xFFFFFFDF);
+    temp_r5 = (char *)arg0 + 0x2D8;
+    return fn_802601EC(temp_r5, *(u8 *)((char *)arg0 + 0x121), *(u8 *)((char *)arg0 + 0x122));
+}
+
+u16 fn_8026083C(void *arg0) {
+    s32 temp_r4;
+    u16 return_val;
+    
+    temp_r4 = *(s32 *)((char *)arg0 + 0x220);
+    if (!(temp_r4 & 0x40)) {
+        return_val = *(u16 *)((char *)arg0 + 0x31C);
+        return return_val;
+    }
+    *(u32 *)((char *)arg0 + 0x220) = temp_r4 & 0xFFFFFFBF;
+    
+    return fn_802601EC((char *)arg0 + 0x2FC, *(u8 *)((char *)arg0 + 0x121), *(u8 *)((char *)arg0 + 0x122));
+}
+
+u16 fn_80260884(void *arg0) {
+    u32 temp_r4;
+    u16 result;
+
+    temp_r4 = *((u32*)((char*)arg0 + 0x220));
+    if (!(temp_r4 & 0x100)) {
+        return *((u16*)((char*)arg0 + 0x364));
+    }
+    *((u32*)((char*)arg0 + 0x220)) = (s32) (temp_r4 & 0xFFFFFEFF);
+    result = fn_802601EC((char*)arg0 + 0x344, *((u8*)((char*)arg0 + 0x121)), *((u8*)((char*)arg0 + 0x122)));
+    return (u16)result;
+}
+
+u16 fn_802608CC(void *arg0) {
+    u32 temp_r4;
+    u16 result;
+
+    temp_r4 = *((u32*)((char*)arg0 + 0x220));
+    if (!(temp_r4 & 0x200)) {
+        return *((u16*)((char*)arg0 + 0x388));
+    }
+    *((u32*)((char*)arg0 + 0x220)) = (s32) (temp_r4 & 0xFFFFFDFF);
+    result = fn_802601EC((char*)arg0 + 0x368, *((u8*)((char*)arg0 + 0x121)), *((u8*)((char*)arg0 + 0x122)));
+    return result;
+}
+
+u16 fn_80260914(void *arg0) {
+    u32 temp_r4;
+    u16 result;
+
+    temp_r4 = *(u32 *)((char *)arg0 + 0x220);
+    if (!(temp_r4 & 0x400)) {
+        return *(u16 *)((char *)arg0 + 0x3AC);
+    }
+    *(u32 *)((char *)arg0 + 0x220) = (u32)(temp_r4 & 0xFFFFFBFF);
+
+    result = fn_802601EC((char *)arg0 + 0x38C, *(u8 *)((char *)arg0 + 0x121), *(u8 *)((char *)arg0 + 0x122));
+    return result;
+}
+
+void fn_8026095C(struct unit* param_1, s32 param_2, s32 param_3) {
+    param_1->unk_0x8 = param_2;
+    param_1->unk_0xC = param_3;
+    lbl_803689A8 = 1;
+    lbl_80368B34(0);
+}
+
+u16 fn_802609A4(void *arg0) {
+    s32 temp_r4;
+    u16 temp_r3;
+
+    temp_r4 = *(s32*)((char*)arg0 + 0x220);
+    if (!(temp_r4 & 0x1000)) {
+        return *(u16*)((char*)arg0 + 0x3F4);
+    }
+    *(s32*)((char*)arg0 + 0x220) = temp_r4 & 0xFFFFEFFF;
+    temp_r3 = fn_802601EC((char*)arg0 + 0x3D4, *(u8*)((char*)arg0 + 0x121), *(u8*)((char*)arg0 + 0x122));
+    return temp_r3;
+}
+
+void fn_802609EC(struct unit* param_1)
+{
+    s32 r4;
+    
+    if ((param_1->unk_0x8 & 0x400) != 0)
+        param_1->unk_0xC = param_1->unk_0xC | 0x8000;
+    else
+        param_1->unk_0xC = param_1->unk_0xC & 0xFFFF7FFF;
 }
 
 u16 fn_802611F8(void) {
@@ -923,6 +1095,7 @@ extern s32 lbl_80368B2C;
 extern u16 lbl_80368AA0[];
 extern u16 lbl_803670C0;
 #include "common.h"
+#include "include/common.h"
 extern u16 lbl_80368AFC;
 extern s32 lbl_80368AF8;
 extern u16 lbl_80368AFC;
