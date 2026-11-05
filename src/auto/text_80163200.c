@@ -220,6 +220,14 @@ s32 fn_80178A74(void) {
     return 0x1C;
 }
 
+void fn_801793B4(void) {
+    M2C_UNK fn_80009B80(M2C_UNK);
+    fn_8000A258();
+    fn_8000A174(0, 0x13);
+    fn_80009B80(0x80);
+    fn_8000A248();
+}
+
 void fn_8017A810(void *arg0, s32 arg1, s32 arg2) {
     M2C_UNK memcpy(s32, s32, s32);
     memcpy(arg2, M2C_FIELD(arg0, s32 *, 4), arg1);
