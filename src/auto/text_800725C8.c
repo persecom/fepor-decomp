@@ -1,5 +1,8 @@
 /* Functions from 0x800725C8 to 0x800732BC, found by decomp-toolkit. */
 #include "common.h"
+extern u16 lbl_801D3B14[];
+extern void *lbl_801D8A28;
+extern void *lbl_801D8A30;
 
 void fn_800725C8(M2C_UNK **arg0) {
     extern M2C_UNK lbl_8028459C;
@@ -34,6 +37,14 @@ void fn_80072A2C(void) {
     extern u16 lbl_80311D50[];
     lbl_80311D50[0x54] = 0xC8;
     lbl_80311D50[0x3A] = -0x20;
+}
+
+void fn_80072AD4(void) {
+    M2C_UNK fn_8000C188();
+    extern void *lbl_80367240;
+    if (M2C_FIELD(lbl_80367240, s32 *, 4) & 0x300) {
+        fn_8000C188();
+    }
 }
 
 void fn_80072CB0(s32 arg0) {
