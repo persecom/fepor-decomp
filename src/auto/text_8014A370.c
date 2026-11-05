@@ -388,6 +388,39 @@ void fn_8014C798(void) {
     fn_80042558();
 }
 
+void fn_8014C7C0(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    s32 temp_r3;
+    s32 temp_r4;
+    s32 temp_r5;
+
+    if (arg0 < 0) {
+        arg0 = 0;
+    }
+
+    if (arg1 < 0) {
+        arg1 = 0;
+    }
+
+    temp_r3 = arg2 - arg0;
+    if (temp_r3 <= 0) {
+        temp_r3 = 1;
+    }
+
+    temp_r4 = arg3 - arg1;
+    if (temp_r4 <= 0) {
+        temp_r4 = 1;
+    }
+
+    temp_r5 = temp_r3 * temp_r4;
+    if (temp_r5 > 0x4000) {
+        s32 temp_r6 = temp_r3 / 2;
+        s32 temp_r7 = temp_r4 / 2;
+        arg2 = arg0 + temp_r6;
+        arg3 = arg1 + temp_r7;
+    }
+}
+
 void fn_8014CA20(s32 arg0, s32 arg1) {
     s32 r0 = arg1 + 2;
     s32 r3 = r0 * 0xC;
@@ -585,3 +618,5 @@ extern void* fn_80019F04();
 #include "common.h"
 extern u16 lbl_802CA264[50];
 extern u16 lbl_802B14E4[];
+#include "common.h"
+extern u16 lbl_802CA264[50]; // 100 bytes = 50 u16
