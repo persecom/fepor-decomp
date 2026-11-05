@@ -49,6 +49,15 @@ void fn_800ADD48(void) {
     fn_8002F61C(lbl_802EF4E0);
 }
 
+void fn_800ADD84(void) {
+    M2C_UNK fn_80033418(void *);
+    M2C_UNK fn_801A4BE0(void *);
+    extern u8 lbl_80330EAC[];
+
+    fn_801A4BE0(lbl_80330EAC);
+    fn_80033418(lbl_80330EAC + 0x8A0);
+}
+
 extern void fn_8003BE50(void);
 void fn_800AE1FC(void) {
     fn_8002F62C(&lbl_802EF4E0);
