@@ -1948,6 +1948,30 @@ void fn_800E8888(void) {
     fn_800E43EC();
 }
 
+void *fn_800E89EC(void *arg0, s16 arg1) {
+    void fn_8022C1E8(void *, void *, s32, s32);
+    M2C_UNK fn_800C9A60(void *, s32);
+    void fn_800DF724(void *, s32);
+    void fn_800C428C(void *);
+    extern void *lbl_8028E2B0[];
+    extern void *lbl_8028DED0[];
+
+    if (arg0 != NULL) {
+        M2C_FIELD(arg0, void ***, 0x40) = lbl_8028E2B0;
+        fn_8022C1E8((s8 *)arg0 + 0xBC, (void *)fn_800C9A60, 0xC, 3);
+        fn_800C9A60((s8 *)arg0 + 0xB0, -1);
+        if (arg0 != NULL) {
+            M2C_FIELD(arg0, void ***, 0x40) = lbl_8028DED0;
+            fn_800DF724(arg0, 0);
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+#pragma dont_inline reset
+
 void fn_800E8A88(void *arg0, f32 farg0) {
     extern f32 lbl_80369F7C;
     M2C_FIELD(arg0, f32 *, 0x110) = (f32) (lbl_80369F7C * farg0);
@@ -2114,11 +2138,25 @@ void fn_800E9B80(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 }
 
 void fn_800EA540(s32 arg0) {
-    extern s32 lbl_8028E3EC;
-    extern s32 lbl_80320C20;
+    struct CardWork {
+        u8 workArea[0xA000];
+        s32 chan;
+        volatile s32 result;
+        s32 sectorSize;
+        s32 unkA00C;
+        s32 unkA010;
+        s32 unkA014;
+        u8 unkA018;
+        u8 unkA019;
+        u8 busy;
+        u8 padA01B[0x19];
+        s32 unkA034;
+    };
+    extern struct CardWork lbl_80320C20;
+    extern u8 lbl_8028E3EC[];
 
-    M2C_FIELD(&lbl_80320C20, s32 *, 0xA034) = arg0;
-    fn_8000CAA0(&lbl_8028E3EC, &lbl_8028E3EC, &lbl_80320C20 + 0x10000);
+    lbl_80320C20.unkA034 = arg0;
+    fn_8000CAA0(lbl_8028E3EC);
 }
 
 void fn_800EB210(u32 arg0) {
