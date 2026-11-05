@@ -30,6 +30,7 @@ typedef struct {
     u32 unk62;
 } struct0;
 
+
 /* Message box: up to 7 text lines, opened/closed through state (0x64/0x6E open, 0xC8/0xD2 close). */
 typedef struct MsgBox {
     /* 0x000 */ s16 flags;
