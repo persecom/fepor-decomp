@@ -1,8 +1,6 @@
 /* Functions from 0x8010554C to 0x80110128, found by decomp-toolkit. */
 #include "common.h"
 
-void *fn_8000E0E4(void);
-
 void *fn_801057BC(void *arg0) {
     void *fn_8000E0E4();
     extern u16 lbl_802738A8;
