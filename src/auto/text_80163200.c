@@ -80,6 +80,15 @@ M2C_UNK **fn_801659D4(M2C_UNK **arg0, s16 arg1) {
     return arg0;
 }
 
+void fn_80165B04(void *arg0) {
+    void **r3 = (void **)((char *)arg0 + 0x50);
+    return;
+}
+
+s32 fn_80165B0C(void *arg0) {
+    return *(s32 *)((char *)arg0 + 0x4C);
+}
+
 s32 fn_80165B14(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x48);
 }
