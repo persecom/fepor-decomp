@@ -1027,7 +1027,6 @@ void fn_80170E08(void *arg0) {
 }
 
 u8 fn_801723A0(u32 *arg0, s32 arg1) {
-    u8 fn_800939FC(s32, u32);
     u32 temp_r0;
 
     if ((arg0 == NULL) || (temp_r0 = *arg0, ((temp_r0 == 0U) != 0))) {
