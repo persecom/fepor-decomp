@@ -1,6 +1,8 @@
 /* Functions from 0x80103748 to 0x80105504, found by decomp-toolkit. */
 #include "common.h"
 
+extern u32 lbl_802A66D8[];
+
 void fn_80105D4C(void *, u8);
 
 s32 fn_80103748(void) {
@@ -302,6 +304,36 @@ s32 fn_8010424C(void *arg0) {
     return var_r4;
 }
 
+void fn_801042A8(s32 arg0, s32 arg1, u8 arg2)
+{
+    switch (arg0)
+    {
+    case 0:
+        *(u8*)(arg1) |= (arg2 << 5) & 0x20;
+        break;
+    case 1:
+        *(u16*)(arg1) |= (arg2 << 7) & 0x400;
+        break;
+    case 2:
+        *(u8*)(arg1 + 1) |= (arg2 << 4) & 0x18;
+        break;
+    case 3:
+        *(u8*)(arg1) |= (arg2 << 2) & 0x6;
+        break;
+    case 4:
+        *(u8*)(arg1 + 1) |= (arg2 << 0) & 0x1;
+        break;
+    case 5:
+        *(u8*)(arg1 + 2) |= (arg2 << 5) & 0x20;
+        break;
+    case 6:
+        *(u8*)(arg1 + 2) |= (arg2 << 2) & 0x6;
+        break;
+    default:
+        break;
+    }
+}
+
 void fn_80104410(void *arg0) {
     u8 *ptr = (u8 *)arg0;
     u32 temp;
@@ -431,10 +463,81 @@ u16 fn_80104E58(void) {
     return *(u16 *)((char *)lbl_803679C0 + 0x4);
 }
 
+void *fn_80105334(void *arg0, s16 arg1) {
+    M2C_UNK fn_8005C7E8();
+    M2C_UNK fn_800C428C(void *);
+    M2C_UNK fn_800C4588();
+    if (arg0 != NULL) {
+        if (((s32) M2C_FIELD(arg0, s32 *, 0) != 0) && ((u32) M2C_FIELD(arg0, u32 *, 4) != 0U)) {
+            fn_800C4588();
+            M2C_FIELD(arg0, u32 *, 4) = 0U;
+        } else if ((u32) M2C_FIELD(arg0, u32 *, 4) != 0U) {
+            fn_8005C7E8();
+        }
+        M2C_FIELD(arg0, u32 *, 4) = 0U;
+        M2C_FIELD(arg0, s32 *, 0) = 0;
+        M2C_FIELD(arg0, s32 *, 8) = 0;
+        M2C_FIELD(arg0, s32 *, 0xC) = 0;
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_801053CC(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
     M2C_FIELD(arg0, s32 *, 8) = 0;
     M2C_FIELD(arg0, s32 *, 0xC) = 0;
 }
+
+s32 fn_801053E4(s32 arg0, s32 arg1, u16 *arg2, u8 (*arg3)(s32, u16)) {
+    s32 temp_r29;
+    s32 temp_r30;
+    s32 var_r26;
+    s32 var_r31;
+
+    var_r26 = arg0;
+    var_r31 = (s32) (arg1 - var_r26) / 16;
+loop_4:
+    if (var_r31 > 0) {
+        temp_r29 = (s32) (((u32) var_r31 >> 0x1FU) + var_r31) >> 1;
+        temp_r30 = var_r26 + (temp_r29 * 0x10);
+        if (arg3(temp_r30, *arg2) != 0) {
+            var_r26 = temp_r30 + 0x10;
+            var_r31 -= temp_r29 + 1;
+        } else {
+            var_r31 = temp_r29;
+        }
+        goto loop_4;
+    }
+    return var_r26;
+}
+
+s32 fn_80105474(s32 arg0, s32 arg1, s32 *arg2, u8 (*arg3)(s32, u16)) {
+    s32 temp_r28;
+    s32 temp_r29;
+    s32 temp_r31;
+    s32 var_r26;
+    s32 var_r30;
+
+    var_r26 = arg0;
+    temp_r31 = *arg2;
+    var_r30 = (s32) (arg1 - var_r26) / 16;
+loop_4:
+    if (var_r30 > 0) {
+        temp_r28 = (s32) (((u32) var_r30 >> 0x1FU) + var_r30) >> 1;
+        temp_r29 = var_r26 + (temp_r28 * 0x10);
+        if (arg3(temp_r29, (u16) temp_r31) != 0) {
+            var_r26 = temp_r29 + 0x10;
+            var_r30 -= temp_r28 + 1;
+        } else {
+            var_r30 = temp_r28;
+        }
+        goto loop_4;
+    }
+    return var_r26;
+}
+
 extern u16 lbl_802734D0;
