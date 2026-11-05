@@ -87,3 +87,8 @@ void fn_80073164(void) {
     extern M2C_UNK lbl_803682F0;
     fn_801E2594(&lbl_803682F0);
 }
+extern u16 lbl_802EF4C8[12];
+extern u8 lbl_8036723A;
+extern u8 lbl_8026BE40[];
+extern u8 lbl_80286DA8[];
+extern u16 lbl_80311D50[124];
