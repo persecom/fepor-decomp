@@ -1,6 +1,10 @@
 /* Functions from 0x801B3258 to 0x801E4380, found by decomp-toolkit. */
 #include "common.h"
 
+typedef struct {
+    u8 unk30;
+} SomeStruct;
+
 /* Message box: up to 7 text lines, opened/closed through state (0x64/0x6E open, 0xC8/0xD2 close). */
 typedef struct MsgBox {
     /* 0x000 */ s16 flags;
@@ -187,6 +191,17 @@ void *fn_801BE748(s32 arg0) {
 void fn_801BE7CC(void) {
     extern M2C_UNK lbl_8027C698;
     fn_8000E0E4(&lbl_8027C698 + 0xDF);
+}
+
+void fn_801C0A9C(void)
+{
+    extern u8 lbl_802EF4C8[0x18];
+    
+    if (lbl_802EF4C8[8] >= 0x81) {
+        if (lbl_802EF4C8[8] == 0x81) {
+            fn_8000C070(4);
+        }
+    }
 }
 
 void fn_801C19E4(void *arg0, void *arg1) {
@@ -445,6 +460,31 @@ s16 fn_801CD404(void *arg0) {
 
 s16 fn_801CD40C(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0x40);
+}
+
+void fn_801CD508(s32 arg0) {
+    extern u8 *lbl_802984C0;
+    u8 **var_r0;
+    u8 **var_r5;
+
+    var_r0 = NULL;
+    if (arg0 != 0) {
+
+    } else {
+        var_r0 = &lbl_802984C0;
+    }
+    var_r5 = var_r0;
+loop_5:
+    if ((s32) **var_r5 != 0xA) {
+        var_r5 += 4;
+        goto loop_5;
+    }
+}
+
+void fn_801CEC28(s32 arg0) {
+    M2C_UNK fn_8013FF00(s32, s32);
+    s32 fn_8013FF94(M2C_UNK, M2C_UNK);
+    fn_8013FF00(arg0, fn_8013FF94(0, 0));
 }
 
 s32 fn_801CF5FC(void *arg0) {
@@ -831,6 +871,16 @@ void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     }
     fn_801DC588(w);
 }
+
+void fn_801DDE44(void *arg0) {
+    extern f32 lbl_8036B630;
+    *(f32*)((char*)arg0 + 0x30) += lbl_8036B630;
+    
+    if (*(f32*)((char*)arg0 + 0x30) == *(f32*)((char*)arg0 + 0x34)) {
+        fn_8000C188();
+    }
+}
+
 #pragma use_lmw_stmw reset
 void fn_801DE2FC(s32 arg0) {
     u8 fn_8005BB2C();
@@ -863,6 +913,13 @@ u8 fn_801DE368(void *arg0) {
 
 s32 fn_801DE370(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0xC);
+}
+
+void fn_801DE378(void *arg0) {
+    memset(arg0, 0, 0x1EA);
+    *((s16 *)arg0 + 0xF) = 0;
+    *(s16 *)arg0 = 0;
+    *((s16 *)arg0 + 1) = 0;
 }
 
 void fn_801DE3BC(void *arg0, s8 arg1) {
@@ -990,6 +1047,15 @@ void fn_801E218C(void) {
     }
 }
 
+void fn_801E21B0(void *arg0) {
+    void *temp_r6;
+    s32 temp_r5;
+
+    temp_r6 = *(void **)((char *)arg0 + 0x54);
+    temp_r5 = *(s32 *)((char *)arg0 + 0x4C);
+    fn_800E9B80(temp_r6, temp_r6, temp_r5, temp_r5, arg0);
+}
+
 s32 fn_801E2568(s32 *arg0, s32 arg1) {
     return ((arg1 * 0x6000) + 0x20000 + *arg0) - 0x6000;
 }
@@ -1014,6 +1080,13 @@ void fn_801E3214(void *arg0) {
 void fn_801E329C(void *arg0) {
     M2C_UNK fn_800EA7CC(s32, void *);
     fn_800EA7CC(M2C_FIELD(arg0, s32 *, 0x54), arg0);
+}
+
+void fn_801E32C4(s32 arg1) {
+    extern u16 lbl_8027E980[];
+    u16* temp = &lbl_8027E980[0x1AD];
+    fn_800056CC(temp);
+    fn_800E9AE4(arg1);
 }
 
 u8 fn_801E3308(s32 arg0) {
