@@ -15,6 +15,11 @@ void fn_801EAA38(s32 arg0) {
     fn_80024398(arg0, 0);
 }
 
+extern u16 lbl_8029A164[10];
+s32 fn_801EAA88(void) {
+    return fn_8000C0C0(&lbl_8029A164) != 0;
+}
+
 void *fn_801EAABC(s32 arg0, u32 arg1) {
     extern s32 lbl_802CA264[];
     u32 r8;
