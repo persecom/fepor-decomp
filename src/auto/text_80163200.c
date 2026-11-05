@@ -31,6 +31,11 @@ void fn_8016B5E8(void) {
     fn_8004327C();
 }
 
+void fn_80170034(void *arg0) {
+    M2C_UNK fn_8000A430(s32);
+    fn_8000A430(M2C_FIELD(arg0, s32 *, 0x5C));
+}
+
 s32 fn_80178664(void) {
     return 0;
 }
