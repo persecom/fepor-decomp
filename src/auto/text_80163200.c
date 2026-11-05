@@ -1603,6 +1603,46 @@ s32 fn_80178664(void) {
     return 0;
 }
 
+s32 fn_801788A0(struct unit* arg0, s32 arg1, s32 arg2) {
+    u32 temp_r3;
+    s32 temp_r4;
+    s32 temp_r5;
+    s32 temp_r6;
+    s32 temp_r7;
+    s32 temp_r8;
+    
+    if (arg0 == NULL) {
+        return 0;
+    }
+    
+    temp_r3 = M2C_FIELD(arg0, u32*, 0x34);
+    temp_r5 = temp_r3 - 1;
+    if (temp_r5 & 0xFFFF) {
+        temp_r6 = lbl_802EF4C8[(temp_r3 & 0xFFFF)];
+    } else {
+        temp_r6 = temp_r5;
+    }
+    
+    temp_r7 = M2C_FIELD(arg0, s32*, 0x10);
+    if (temp_r7 < 0) {
+        temp_r7 = arg2;
+    }
+    
+    temp_r8 = M2C_FIELD(arg0, s32*, 0x14);
+    if (temp_r8 < 0) {
+        temp_r8 = arg1;
+    }
+    
+    if (arg2 >= temp_r7 && arg2 <= temp_r8) {
+        temp_r4 = lbl_80278080[(arg2 - temp_r7)];
+        if (temp_r4 >= temp_r6) {
+            return 1;
+        }
+    }
+    
+    return 0;
+}
+
 s32 fn_80178A64(void) {
     return 0;
 }
@@ -2501,6 +2541,26 @@ void fn_801812CC(void *arg0) {
         fn_8000C188(arg0);
     }
 }
+
+#pragma cplusplus on
+extern "C" s32 fn_80036A24(s32, s16);
+extern "C" void fn_80157700(s32, s16, u8, s32);
+extern "C" void fn_80157930(s32, s32, s16, s16, s32, s32);
+extern "C" void fn_8018179C(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    s16 y;
+
+    ((Obj *)arg0)->v2();
+    fn_80157930(0, 0, (s16)(M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA)), (s16)(M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC)), 0xE6, 0x10);
+    y = (s16)(M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC)) + 2;
+    fn_80157700(0, y, 5 - fn_80036A24(M2C_FIELD(arg0, s32 *, 0x48), (s16)(M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC))), 0x10);
+}
+#pragma cplusplus reset
+
 #pragma opt_common_subs reset
 s32 fn_8018256C(void) {
     return 1;
