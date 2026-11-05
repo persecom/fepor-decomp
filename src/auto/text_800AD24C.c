@@ -590,6 +590,14 @@ u8 fn_800B78F0(void) {
     return lbl_80330708[0xA6] == 1;
 }
 
+u8 fn_800B790C(void) {
+    extern u8 lbl_80330708[];
+    s32 state;
+
+    state = lbl_80330708[0xA6];
+    return state == 0 || state == 3;
+}
+
 u8 fn_800B7938(void) {
     extern u8 lbl_80330708[];
     return lbl_80330708[0xA6];
