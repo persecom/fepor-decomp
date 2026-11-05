@@ -25,6 +25,12 @@ void fn_80165B1C(void) {
     fn_800472D4();
 }
 
+void fn_8016B5E8(void) {
+    M2C_UNK fn_8004327C();
+    fn_80040844();
+    fn_8004327C();
+}
+
 s32 fn_80178664(void) {
     return 0;
 }
