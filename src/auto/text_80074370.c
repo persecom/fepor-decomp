@@ -656,6 +656,16 @@ s32 fn_80077C8C(void) {
     return 0;
 }
 
+void fn_80077C94(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4(&lbl_8026C0B8[0x2168]);
+}
+
+void fn_80077CC0(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4(&lbl_8026C0B8[0x21D]);
+}
+
 s32 fn_80077D70(void) {
     extern u8 lbl_802EF4C8[24];
     lbl_802EF4C8[8] = 0x1A;
@@ -969,3 +979,4 @@ extern u16 lbl_8026C0B8[];
 extern u8 lbl_802EF4C8[];
 extern void *fn_8001CB64(void);
 extern void *fn_800285C0(void *);
+extern u16 lbl_8026C0B8[];
