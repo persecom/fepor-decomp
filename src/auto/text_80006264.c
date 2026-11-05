@@ -58,6 +58,12 @@ void fn_80007628(s32 arg0, s32 arg1, s32 arg2) {
     *(u32*)(temp_r3 + 0x18) = (u32)arg2;
 }
 
+f32 fn_800076CC(void* arg0) {
+    f32 val = *(f32*)((char*)arg0 + 0x1C);
+    *(f32*)((char*)arg0 + 0x2C) = val;
+    return val;
+}
+
 void fn_80007884(void *arg0, u32 arg1) {
     *(void**)0x80367140 = arg0;
     *(u16*)(0x80367140 + 0x28) = (u16)arg1;
@@ -85,6 +91,14 @@ f32 fn_80009C00(void) {
 void fn_80009C0C(f32 farg0) {
     f32 *ptr = (f32 *)lbl_80367140;
     *ptr = *ptr + farg0;
+}
+
+f32 fn_80009E44(void* arg0) {
+    if (arg0 == NULL) {
+        return 0.0f;
+    } else {
+        return *(f32*)((char*)arg0 + 0x28);
+    }
 }
 
 void fn_8000A248(void) {
@@ -192,6 +206,13 @@ s32 fn_8000AF94(void *arg0) {
     return 1;
 }
 
+s32 fn_8000AFB4(void **arg0) {
+    void *temp = arg0[1];  // Load pointer from arg0[1] (field4)
+    arg0[4] = temp;       // Store it in arg0[4] (field16)
+    arg0[1] = (void *)((u8 *)temp + 8);  // Add 8 and store back in arg0[1]
+    return 0;
+}
+
 s32 fn_8000B37C(void *arg0) {
     void *temp_r4;
 
@@ -200,6 +221,13 @@ s32 fn_8000B37C(void *arg0) {
     M2C_FIELD(arg0, void **, 4) = temp_r4;
     M2C_FIELD(arg0, s32 *, 0x10) = 0;
     return 1;
+}
+
+s32 fn_8000B474(void *arg0) {
+    void **ptr = (void **)arg0;
+    ptr[1] = (void *)((u32)ptr[1] + 4);
+    ptr[4] = (void *)0x8000B4D0;
+    return 0;
 }
 
 void fn_8000B4D0(void) {
@@ -214,6 +242,24 @@ s32 fn_8000B4D4(void *arg0) {
 s32 fn_8000B76C(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x2C) = (u8) (M2C_FIELD(arg0, u8 *, 0x2C) | 4);
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + 4);
+    return 1;
+}
+
+s32 fn_8000B78C(void *arg0) {
+    void **temp = (void **) *((void **)((char *)arg0 + 4));
+    *(u32 *)((char *)arg0 + 0xC) = (u32)*temp;
+    temp = (void **) *((void **)((char *)arg0 + 4));
+    *(void **)((char *)arg0 + 4) = (void *)(((char *)temp) + 8);
+    return 1;
+}
+
+s32 fn_8000B7AC(void *arg0) {
+    void **temp_r4;
+    
+    temp_r4 = (void **)M2C_FIELD(arg0, void **, 4);
+    M2C_FIELD(arg0, void **, 8) = (void *)temp_r4[1];
+    temp_r4 = (void **)M2C_FIELD(arg0, void **, 4);
+    M2C_FIELD(arg0, void **, 4) = (void *)((u32)temp_r4 + 8);
     return 1;
 }
 
