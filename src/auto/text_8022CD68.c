@@ -251,7 +251,6 @@ void fn_8024B458(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 void fn_8024B4B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    M2C_UNK fn_8024534C(s32, s32, s32, s32);
     fn_8026372C();
     fn_8024534C(arg0, arg1, arg2, arg3);
     fn_802636F4();
