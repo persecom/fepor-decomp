@@ -360,6 +360,25 @@ void fn_80191374(void *arg0) {
     }
 }
 
+void *fn_80193AF0(void *arg0, s16 arg1) {
+    M2C_UNK fn_80165100(void *, s32);
+    M2C_UNK fn_800C428C(void *);
+    extern u8 lbl_8029656C[];
+    extern u8 lbl_80293B74[];
+
+    if (arg0 != NULL) {
+        M2C_FIELD(arg0, void **, 0) = lbl_8029656C;
+        if (arg0 != NULL) {
+            M2C_FIELD(arg0, void **, 0) = lbl_80293B74;
+            fn_80165100(arg0, 0);
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_80193E58(void) {
 
 }
