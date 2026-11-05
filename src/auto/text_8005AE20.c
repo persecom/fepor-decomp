@@ -4,10 +4,10 @@
 static inline u8 *FindEntryByName(char *name) {
     extern u8 lbl_802F04E0[];
     s32 fn_802342B8();
-    s32 i;
-    u32 hash;
-    char *start;
     u8 *e;
+    char *start;
+    u32 hash;
+    s32 i;
 
     if (*name == '/') {
         name++;
@@ -223,34 +223,7 @@ loop_1:
 }
 
 void fn_8005C5A8(char *name) {
-    extern u8 lbl_802F04E0[];
-    s32 fn_802342B8(char *, u8 *);
-    s32 i;
-    u32 hash;
-    char *start;
-    u8 *e;
-    u8 *found;
-
-    if (*name == '/') {
-        name++;
-    }
-    start = name;
-    hash = 0;
-    while (*name != 0) {
-        if (*name >= 'A' && *name <= 'Z') {
-            *name += 0x20;
-        }
-        hash = *name++ + hash * 37;
-    }
-    for (i = 0, e = lbl_802F04E0; i < 0x400; i++, e += 0x7C) {
-        if (hash == *(u32 *)(e + 0x2C) && fn_802342B8(start, e) == 0) {
-            found = lbl_802F04E0 + i * 0x7C;
-            goto done;
-        }
-    }
-    found = NULL;
-done:
-    *(u16 *)(found + 0x30) |= 0x4000;
+    *(u16 *)(FindEntryByName(name) + 0x30) |= 0x4000;
 }
 
 void fn_8005C7A4(void) {
