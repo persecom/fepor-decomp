@@ -1,5 +1,6 @@
 /* Functions from 0x801B3258 to 0x801E4380, found by decomp-toolkit. */
 #include "common.h"
+extern void *lbl_803682D8;
 
 typedef struct {
     u32 unk0;
@@ -230,6 +231,23 @@ void fn_801C0A9C(void)
     }
 }
 
+void fn_801C0FDC(s32 arg0) {
+    void *fn_800C42D8(s32);
+    s32 fn_801400F4(s32);
+    void *fn_801C14B4(s32, s32, s32);
+    void *var_r4;
+    s32 var_r3;
+
+    var_r4 = fn_800C42D8(0xC8);
+    if (var_r4 != NULL) {
+        var_r3 = 0x1F4;
+        var_r4 = fn_801C14B4(0x80, 0x70, var_r3);
+    }
+    *(s16 *)((char *)var_r4 + 8) = 0x81;
+    *(s32 *)((char *)var_r4 + 0x34) |= 0x10;
+    fn_801400F4(arg0);
+}
+
 void fn_801C19E4(void *arg0, void *arg1) {
     u8 temp_r6;
 
@@ -268,6 +286,18 @@ void fn_801C32D4(s32 arg0) {
         fn_80162054();
         fn_8000C188(arg0);
     }
+}
+
+void *fn_801C43C8(void *arg0, s16 arg1) {
+    extern u16 lbl_802981AC;
+    if (arg0 != NULL) {
+        *(u16**)((char*)arg0 + 0x2C) = &lbl_802981AC;
+        fn_800578F0(0, &lbl_802981AC);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
 }
 
 s32 fn_801C4428(void) {
@@ -317,6 +347,28 @@ void fn_801C60C8(void) {
 void fn_801C6F7C(void) {
     M2C_UNK fn_801C7210();
     fn_801C7210();
+}
+
+extern u32 lbl_8036C510;
+void fn_801C7598(void* arg0) {
+    void* temp_r3;
+    
+    temp_r3 = (void*)fn_800675E0();
+    if (temp_r3 != NULL && *(u8*)temp_r3 != 0) {
+        u8 r6 = ((u8*)temp_r3)[1];
+        u8 r5 = ((u8*)temp_r3)[2];
+        u8 r0 = ((u8*)temp_r3)[3];
+        
+        u32 temp_r4 = lbl_8036C510;
+        u32 arg_ptr;
+        
+        *(u8*)((char*)&temp_r4 + 0xC) = r6;
+        *(u8*)((char*)&temp_r4 + 0xD) = r5;
+        *(u8*)((char*)&temp_r4 + 0xE) = r0;
+        
+        arg_ptr = (u32)temp_r4;
+        fn_802217AC(&arg_ptr, 0xFFFFFF, r5, r6);
+    }
 }
 
 void fn_801C7604(void) {
@@ -416,6 +468,21 @@ s32 fn_801C98EC(void) {
 }
 
 s32 fn_801C9A88(void) {
+    return 0;
+}
+
+s32 fn_801C9C5C(void) {
+    s32 fn_800DC3B0(s32, void *);
+    s32 fn_8011C984(s32, s32);
+    s32 fn_8011C9E4(s32);
+    M2C_UNK fn_801CADBC(s32, s32);
+    extern void *lbl_803682B8;
+    s32 temp_r31_2;
+    void *temp_r31;
+
+    temp_r31 = lbl_803682B8;
+    temp_r31_2 = fn_8011C984(M2C_FIELD(temp_r31, s32 *, 0x430), fn_8011C9E4(M2C_FIELD(temp_r31, s32 *, 0x430)));
+    fn_801CADBC(temp_r31_2, fn_800DC3B0(M2C_FIELD(lbl_803682B8, s32 *, 0x438), lbl_803682B8));
     return 0;
 }
 
@@ -546,6 +613,23 @@ loop_5:
     if ((s32) **var_r5 != 0xA) {
         var_r5 += 4;
         goto loop_5;
+    }
+}
+
+void fn_801CDDC8(s32 arg0, s8 *arg1) {
+    u32 *var_r31;
+
+    var_r31 = (u32 *) (arg0 + 0x3C);
+    *arg1 = 0;
+    if ((u32) *var_r31 != 0U) {
+        goto loop_2;
+    }
+    return;
+loop_2:
+    fn_802343E0(arg1, var_r31);
+    var_r31 += 4;
+    if ((u32) *var_r31 != 0U) {
+        goto loop_2;
     }
 }
 
@@ -1271,6 +1355,15 @@ void fn_801E25EC(void) {
 void fn_801E3214(void *arg0) {
     M2C_UNK fn_800EA540(s32, void *);
     fn_800EA540(M2C_FIELD(arg0, s32 *, 0x54), arg0);
+}
+
+void fn_801E323C(s32 *arg0, s32 arg1) {
+    M2C_UNK fn_800056CC(void *, M2C_UNK *);
+    void *fn_8000CAA0(M2C_UNK *, s32);
+    extern M2C_UNK lbl_8027E980;
+    extern M2C_UNK lbl_80299DC8;
+    fn_800056CC(&lbl_8027E980 + 0x197, &lbl_8027E980);
+    M2C_FIELD(fn_8000CAA0(&lbl_80299DC8, arg1), s32 *, 0x54) = (s32) *arg0;
 }
 
 void fn_801E329C(void *arg0) {
