@@ -734,6 +734,18 @@ void fn_801E0D30(void *arg0) {
     fn_801E0D78(&lbl_803682F0, arg0, *(s32 *) ((u8 *) arg0 + 0x60), *(s32 *) ((u8 *) arg0 + 0x64));
 }
 
+void fn_801E1168(void *arg0) {
+    u8 fn_800EB788(void);
+    void fn_801E11AC(void *, void *, s32);
+    extern u32 lbl_803682F0;
+
+    if (fn_800EB788() != 0) {
+        return;
+    }
+
+    fn_801E11AC(&lbl_803682F0, arg0, *(s32 *) ((u8 *) arg0 + 0x60));
+}
+
 s32 fn_801E2568(s32 *arg0, s32 arg1) {
     return ((arg1 * 0x6000) + 0x20000 + *arg0) - 0x6000;
 }
