@@ -2791,7 +2791,6 @@ void fn_801007A0(void *arg0) {
         M2C_FIELD(arg0, u32 *, 0x254) |= 0x01000000;
     }
 }
-#pragma readonly_strings reset
 s32 fn_80100CC8(void) {
     void *fn_80016BDC();
     s32 temp_r3;
