@@ -1424,6 +1424,27 @@ u16 fn_802611F8(void) {
     return (u16) (temp_r0 >> 6U);
 }
 
+s16 fn_80261214(s32 arg0) {
+    u32 temp_r0;
+    s16 *ptr;
+
+    temp_r0 = arg0 & 0xFFF;
+    if (temp_r0 < 0x400U) {
+        ptr = (s16*)((char*)lbl_802A1E90 + ((temp_r0 * 2) & 0x1FFFE));
+        return *ptr;
+    }
+    if (temp_r0 < 0x800U) {
+        ptr = (s16*)((char*)lbl_802A1E90 + ((0x3FF - (temp_r0 & 0x3FF)) * 2));
+        return *ptr;
+    }
+    if (temp_r0 < 0xC00U) {
+        ptr = (s16*)((char*)lbl_802A1E90 + ((temp_r0 * 2) & 0x7FE));
+        return -(*ptr);
+    }
+    ptr = (s16*)((char*)lbl_802A1E90 + ((0x3FF - (temp_r0 & 0x3FF)) * 2));
+    return -(*ptr);
+}
+
 f64 fn_80261344(f32 farg0) {
     extern f32 lbl_802831B8[3];
     f64 temp_f3;
