@@ -628,6 +628,10 @@ s32 fn_80178A74(void) {
     return 0x1C;
 }
 
+void *fn_80179274(void) {
+    return (char *)&lbl_80278080 + 0x674;
+}
+
 void fn_801793B4(void) {
     M2C_UNK fn_80009B80(M2C_UNK);
     fn_8000A258();
