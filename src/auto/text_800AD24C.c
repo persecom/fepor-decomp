@@ -572,6 +572,11 @@ u8 fn_800B78F0(void) {
     return lbl_80330708[0xA6] == 1;
 }
 
+u8 fn_800B7938(void) {
+    extern u8 lbl_80330708[];
+    return lbl_80330708[0xA6];
+}
+
 s32 fn_800B7948(void) {
     M2C_UNK fn_801453F0();
     fn_801453F0();
