@@ -342,9 +342,40 @@ s32 fn_8012AA68(void) {
     return 1;
 }
 
+void fn_8012ABAC(void *arg0) {
+    if (fn_80049D58() != 0) {
+        s32 temp_r3;
+        if (arg0 == 0) {
+            temp_r3 = fn_8000CAF0(0x3, arg0);
+        } else {
+            temp_r3 = fn_8000CAA0(0x81, arg0);
+        }
+        *(s32*)((u8*)arg0 + 0x30) = temp_r3;
+    } else {
+        *(s32*)((u8*)arg0 + 0x30) = 0;
+    }
+}
+
 void fn_8012AD80(void) {
     extern u16 lbl_80275740[];
     fn_800558D8(&lbl_80275740[0x164 / sizeof(u16)]);
+}
+
+void fn_8012AEC4(void *arg0) {
+    void *temp_r3;
+    void *temp_r3_2;
+
+    fn_8005F7B0((u8 *)arg0 + 0x4C, 0);
+    temp_r3 = (u8 *)arg0 + 0x38;
+    *(u8 *)((u8 *)temp_r3 + 0x2) |= 1;
+    fn_8005F7B0((u8 *)arg0 + 0x50, 0xFF);
+    temp_r3_2 = (u8 *)arg0 + 0x3C;
+    *(u8 *)((u8 *)temp_r3_2 + 0x2) &= 0xFE;
+    fn_80049D08((u8 *)arg0 + 0x3C);
+    if (fn_80040824() != 0) {
+        fn_80040844();
+        fn_80044450(1);
+    }
 }
 
 void fn_8012B394(void) {
@@ -394,4 +425,7 @@ void fn_8012C330(void *arg0) {
     temp = ptr[temp];
     lbl_80367A88 = fn_80109180(temp, 0);
 }
+#include "common.h"
+#include "structs.h"
 
+extern s32 lbl_80367A88;
