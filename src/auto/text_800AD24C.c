@@ -272,7 +272,7 @@ s32 fn_800B3194(void) {
     void fn_802590E0(void);
     extern u8 lbl_80317338[];
     extern u8 lbl_80319A58[16];
-    s32 i;
+    u32 i;
 
     while (M2C_FIELD(lbl_80317338, u32 *, 0xC4) != 0) {
         fn_802590E0();
