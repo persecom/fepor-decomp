@@ -817,6 +817,11 @@ block_9:
     return 3;
 }
 
+void fn_800787A0(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4((u16*)((u8*)lbl_8026C0B8 + 0x4FE));
+}
+
 s32 fn_800787F8(void) {
     extern M2C_UNK lbl_802EF4C8;
     M2C_FIELD(&lbl_802EF4C8, s8 *, 8) = 0xF;
