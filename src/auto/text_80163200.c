@@ -1,7 +1,7 @@
 #include "common.h"
 extern u32 lbl_802EF4C8[];
 extern u16 lbl_80278080[];
-
+extern u8 lbl_80330708[];
 
 extern void (*lbl_802B14E4)(void **);
 void fn_80163200(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
@@ -457,6 +457,11 @@ void fn_8016ECDC(void) {
     }
 }
 
+void fn_8016F0C4(void *arg0) {
+    u8 temp = *(u8 *)((uintptr_t)arg0 + 0x65);
+    fn_8000C070(temp);
+}
+
 void fn_8016F194(void *arg0) {
     fn_8000A408(*(s32**)((u8*)arg0 + 0x5C));
     fn_8013FED0(arg0);
@@ -589,6 +594,17 @@ void *fn_80176EA4(void) {
 extern u16 lbl_80278080[257];
 void *fn_801772C8(void) {
     return &lbl_80278080[0x23A];
+}
+
+u8 fn_801772D8(void) {
+    extern u8 lbl_80330708[];
+    u8 var_r4;
+
+    var_r4 = 0;
+    if (lbl_80330708[0x51] != 0) {
+        var_r4 = 2;
+    }
+    return var_r4;
 }
 
 void *fn_80177430(void) {
