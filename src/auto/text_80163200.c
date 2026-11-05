@@ -339,6 +339,16 @@ void *fn_8016AC5C(void) {
     return &lbl_80277BC0[0x1C8 / sizeof(u16)];
 }
 
+void *fn_8016ADD8(void) {
+    extern u16 lbl_80277BC0[80];
+    return &lbl_80277BC0[0x1EC / sizeof(u16)];
+}
+
+void *fn_8016AE6C(void) {
+    extern u16 lbl_80277BC0[];
+    return &lbl_80277BC0[0x101];
+}
+
 void fn_8016B5E8(void) {
     M2C_UNK fn_8004327C();
     fn_80040844();
