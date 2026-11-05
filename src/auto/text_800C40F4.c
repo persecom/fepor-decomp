@@ -18,7 +18,7 @@ static inline u8 GetItemKind(void *item) {
     return 0xC;
 }
 
-void *fn_80019E04();
+void *fn_80019E04(char *);
 
 static inline BOOL IsItemNamed(void *item, char *name) {
     return fn_80019E04(name) == item;
