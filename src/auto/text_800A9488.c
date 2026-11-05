@@ -138,21 +138,27 @@ void *fn_800A9E00(void) {
 }
 
 s32 fn_800AA078(void *arg0) {
+    struct unk3C_s {
+        u8 pad[0x3C];
+        u8 unk3C;
+    };
     s32 fn_8000CEE4(M2C_UNK);
     void fn_80016DE0(void);
-    void *fn_80019ED0(s32);
+    struct unk3C_s *fn_80019ED0(s32);
     void fn_8014D2B0(void *, u8);
     void fn_8014D698(void *, u8, M2C_UNK, M2C_UNK, M2C_UNK);
-    extern u8 lbl_80330708[];
+    extern struct {
+        u8 pad[0xA6];
+        u8 unkA6;
+    } lbl_80330708;
     extern u64 lbl_80331FB8[];
-    u8 *s = lbl_80330708;
     u8 saved;
 
-    saved = s[0xA6];
+    saved = lbl_80330708.unkA6;
     fn_80016DE0();
-    fn_8014D698(lbl_80330708, (u8)(fn_8000CEE4(0x1E) + 1), 0, 0, 1);
-    s[0xA6] = saved;
-    fn_8014D2B0(lbl_80330708, M2C_FIELD(fn_80019ED0(M2C_FIELD(arg0, s8 *, 4)), u8 *, 0x3C));
+    fn_8014D698(&lbl_80330708, (u8)(fn_8000CEE4(0x1E) + 1), 0, 0, 1);
+    lbl_80330708.unkA6 = saved;
+    fn_8014D2B0(&lbl_80330708, fn_80019ED0(((s8 *)arg0)[4])->unk3C);
     lbl_80331FB8[1] = 0x0123456789ABCDEFULL;
     fn_80006220(0xA);
     return 5;
@@ -220,6 +226,7 @@ void fn_800AA27C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x60) = 0;
 }
 
+#pragma use_lmw_stmw on
 s32 fn_800AA288(s32 arg0) {
     s32 fn_8003F224(s32, s32);
     s32 fn_8003F47C(void);
@@ -242,7 +249,6 @@ s32 fn_800AA288(s32 arg0) {
     }
     return 0;
 }
-
 s32 fn_800AA304(s8 arg0, s8 arg1) {
     extern struct {
         u8 pad0[0xD];
