@@ -2,6 +2,13 @@
 #include "common.h"
 extern s32 lbl_80368230;
 
+/* 0x18-byte record used by fn_800C29D0 / fn_800C2ACC / fn_800C30CC (1-based index) */
+typedef struct Unk800C2ACC {
+    u8 unk0[0x13];
+    u8 unk13;
+    u8 unk14[4];
+} Unk800C2ACC;
+
 s32 fn_800AD284(s32 arg0, s16 arg1) {
     M2C_UNK fn_8001C5F8(s32, M2C_UNK);
     M2C_UNK fn_800C428C(s32);
@@ -1485,6 +1492,10 @@ void fn_800C2980(s32 arg0, s32 arg1) {
 
 s32 fn_800C29D0(s32 arg0, s32 arg1) {
     return (s32)&((u8 (*)[0x18])arg0)[arg1 - 1][0x14];
+}
+
+s8 fn_800C2ACC(s32 arg0, s32 arg1) {
+    return (s8)((u8 (*)[0x18])arg0)[arg1 - 1][0x13];
 }
 
 s32 fn_800C30CC(s32 arg0, s32 arg1) {
