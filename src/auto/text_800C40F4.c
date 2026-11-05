@@ -8,6 +8,29 @@ extern s8 lbl_803678BF;
 extern s32 lbl_8028D788;
 extern void (*lbl_802B14E4)(void **);
 
+u8 fn_8001DD54(void *, void *);
+
+static inline u8 GetItemKind(void *item) {
+    if (item != NULL) {
+        return M2C_FIELD(item, u8 *, 0x14);
+    }
+    return 0xC;
+}
+
+static inline u8 GetItemUnk1D(void *item) {
+    if (item != NULL) {
+        return M2C_FIELD(item, u8 *, 0x1D);
+    }
+    return 0;
+}
+
+static inline u8 GetItemDD54(void *item, void *unit) {
+    if (item != NULL) {
+        return fn_8001DD54(item, unit);
+    }
+    return 0;
+}
+
 void fn_800C40F4(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0) = 0;
     M2C_FIELD(arg0, s8 *, 1) = 0;
