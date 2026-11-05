@@ -6,6 +6,14 @@ typedef struct Vec2s {
     s16 y;
 } Vec2s;
 
+typedef struct ListNode {
+    struct ListNode *prev;
+    struct ListNode *next;
+    void *val;
+} ListNode;
+
+typedef struct RefObj RefObj;
+
 void *fn_80132800(void) {
     extern u16 lbl_80276008[];
     return &lbl_80276008[0x50 / 2];
@@ -1332,6 +1340,42 @@ s16 fn_8013EED8(void *arg0) {
 s16 fn_8013EEEC(void *arg0) {
     return (s16) (M2C_FIELD(arg0, s16 *, 0x18) - M2C_FIELD(arg0, s16 *, 0x14));
 }
+
+#pragma cplusplus on
+extern "C" void fn_8013FC68(void ***, s32 *, void ***);
+#pragma cplusplus on
+extern "C" void fn_8013F0F0(void *arg0, void *arg1_raw, void *arg2) {
+    struct RefObj {
+        virtual ~RefObj();
+        s32 refCount;
+    };
+    struct ListNode {
+        void *prev;
+        struct ListNode *next;
+        void *val;
+    };
+    RefObj *arg1 = (RefObj *)arg1_raw;
+
+    if (arg1 != NULL) {
+        struct ListNode *end = (struct ListNode *)((char *)arg0 + 0x40);
+        struct ListNode *curr = *(struct ListNode **)((char *)arg0 + 0x44);
+        while (curr != end && curr->val != arg1) {
+            curr = curr->next;
+        }
+        if (curr != end) {
+            void *spC = curr;
+            void *sp8;
+            *(s32 *)((char *)arg1 + 0x38) = 0;
+            fn_8013FC68((void ***)&sp8, (s32 *)((char *)arg0 + 0x3C), (void ***)&spC);
+            if (arg1 != NULL) {
+                if (--arg1->refCount == 0) {
+                    delete arg1;
+                }
+            }
+        }
+    }
+}
+#pragma cplusplus off
 
 void fn_8013F3C0(void) {
 
