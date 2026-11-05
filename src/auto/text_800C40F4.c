@@ -393,6 +393,35 @@ void fn_800C8F48(void *arg0) {
     fn_800C802C(M2C_FIELD(arg0, s32 *, 0x20) + 1);
 }
 
+void fn_800C908C(void *arg0, String *arg1, s32 *arg2) {
+    M2C_UNK *fn_800C93EC(void *);
+    char *fn_80234450(char *, const char *);
+    void fn_800C802C(void *, s32);
+    s32 *dst;
+    s32 b;
+    s32 a;
+
+    fn_80234450((char *)arg0 + 0x28, (char *)fn_800C93EC(arg1));
+    dst = (s32 *)((char *)arg0 + 0x40);
+    a = arg2[0];
+    b = arg2[1];
+    dst[0] = a;
+    a = arg2[2];
+    dst[1] = b;
+    b = arg2[3];
+    dst[2] = a;
+    a = arg2[4];
+    dst[3] = b;
+    b = arg2[5];
+    dst[4] = a;
+    a = arg2[6];
+    dst[5] = b;
+    b = arg2[7];
+    dst[6] = a;
+    dst[7] = b;
+    fn_800C802C(arg0, 0);
+}
+
 M2C_UNK *fn_800C93EC(void *arg0) {
     extern M2C_UNK lbl_80369DC0;
     M2C_UNK *temp_r3;
@@ -416,6 +445,27 @@ void fn_800C984C(void) {
     s32 r6 = 0;
     s32 r7 = 0;
     fn_800C94F8(r6, r7);
+}
+
+String *fn_800C9874(String *arg0, u32 arg1, char arg2) {
+    void fn_800CA7F4(String *, u32, s32);
+    M2C_UNK fn_8022CF78(void);
+    M2C_UNK fn_80232058(void *, const char *, ...);
+    void *memset(void *, s32, u32);
+    extern char __files[];
+    extern char lbl_80270350[];
+    u32 size;
+
+    if (arg1 != 0) {
+        if (arg1 > (u32)-2 || arg0->size > (u32)-2 - arg1) {
+            fn_80232058(__files + 0xA0, lbl_80270350 + 0xBC);
+            fn_8022CF78();
+        }
+        size = arg0->size;
+        fn_800CA7F4(arg0, size + arg1, 1);
+        memset(arg0->data + size, (u8)arg2, arg1);
+    }
+    return arg0;
 }
 
 void fn_800CA5FC(void) {
