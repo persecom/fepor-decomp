@@ -731,6 +731,28 @@ void fn_8024C5C8(void) {
 
 }
 
+void fn_8024C5CC(u32 arg0) {
+    extern u16 *lbl_8034D4B8;
+    s32 i;
+    u16 *entry;
+    
+    entry = lbl_8034D4B8;
+    for (i = 0x40; i != 0; i--) {
+        if ((entry[0xC / 2] == 1) || (entry[0xC / 2] == 2)) {
+            u32 temp_r4 = entry[0x4C / 2];
+            if (temp_r4 == arg0) {
+                if (entry[0xC / 2] == 2) {
+                    fn_80256DD8(temp_r4);
+                }
+                entry[0xC / 2] = 3;
+                ((void (*)(u32, u32, u32, u32, s32))entry[0x10 / 2])(0, 0, 0, 0, entry[0x50 / 2]);
+                return;
+            }
+        }
+        entry += 0x68 / 2;
+    }
+}
+
 void fn_8024C7C4(s8 *arg0, s8 *arg1) {
     extern s32 lbl_803689A4;
     if (lbl_803689A4 & 1) {
@@ -885,24 +907,6 @@ void fn_802511F8(void *arg0, u32 *arg1) {
 }
 
 void fn_8026146C(s32 *);
-
-static inline void Voice_StartRamp(Voice *v, u32 *data, u32 *time, s32 *base, s32 *target, s32 *step) {
-    u32 t;
-    s32 delta;
-
-    t = data[0] >> 16;
-    *time = t;
-    fn_8026146C((s32 *)time);
-    delta = (s8)data[1] << 16;
-    *base = (data[0] << 8) & 0xFF0000;
-    *target = *base + delta;
-    if (*time != 0) {
-        *step = delta / (s32)t;
-    } else {
-        *step = delta;
-    }
-    v->flags |= 0x2000;
-}
 
 void fn_80251DEC(Voice *arg0, u32 *arg1) {
     u32 time;
