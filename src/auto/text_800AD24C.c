@@ -1455,6 +1455,18 @@ void fn_800C28CC(void) {
     fn_80013880();
 }
 
+void fn_800C28EC(void) {
+    M2C_UNK fn_800138F4();
+    M2C_UNK fn_80013A90(void *);
+    M2C_UNK fn_80013E24(void *);
+    M2C_UNK fn_800AA1CC();
+    extern u8 lbl_80270000[];
+    fn_800AA1CC();
+    fn_80013E24(lbl_80270000 + 0x26);
+    fn_80013A90(lbl_80270000 + 0x37);
+    fn_800138F4();
+}
+
 void fn_800C2930(s32 arg0, s32 arg1) {
     M2C_UNK fn_8017A810(s32, s32, s32);
     M2C_UNK fn_801A7CDC(void *);
