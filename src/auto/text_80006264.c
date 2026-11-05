@@ -263,6 +263,16 @@ s32 fn_8000B7AC(void *arg0) {
     return 1;
 }
 
+s32 fn_8000B7CC(void *arg0) {
+    void **temp_r4;
+    
+    temp_r4 = (void **)M2C_FIELD(arg0, void **, 4);
+    M2C_FIELD(arg0, void **, 0x14) = (void *)temp_r4[1];
+    temp_r4 = (void **)M2C_FIELD(arg0, void **, 4);
+    M2C_FIELD(arg0, void **, 4) = (void *)((u32)temp_r4 + 8);
+    return 1;
+}
+
 s32 fn_8000B7EC(void *arg0) {
     u32 *temp_r4;
 
