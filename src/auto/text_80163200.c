@@ -353,6 +353,10 @@ void fn_8016E0E4(void *arg0) {
     fn_8000A248();
 }
 
+void fn_8016EC70(void) {
+    return;
+}
+
 void fn_8016ECDC(void) {
     M2C_UNK fn_8003BE50(void *);
     register void *temp_r31;
