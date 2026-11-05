@@ -18,8 +18,8 @@ extern s16 lbl_802A1E90[];
 u32 fn_8026367C(void);
 
 typedef struct Voice {
-    u8 pad0[0x114];
-    u32 flags;
+    u8 pad0[0x110];
+    u64 flags;
     u8 pad118[0x5C];
     s32 unk174;
     s32 unk178;
@@ -905,7 +905,22 @@ static inline void Voice_StartRamp(Voice *v, u32 *data, u32 *time, s32 *base, s3
 }
 
 void fn_80251DEC(Voice *arg0, u32 *arg1) {
-    Voice_StartRamp(arg0, arg1, &arg0->unk18C, &arg0->unk174, &arg0->unk184, &arg0->unk17C);
+    u32 time;
+    s32 delta;
+
+    time = arg1[0] >> 16;
+    arg0->unk18C = time;
+    fn_8026146C((s32 *)&arg0->unk18C);
+    delta = (s8)arg1[1] << 16;
+    arg0->unk174 = (arg1[0] << 8) & 0xFF0000;
+    arg0->unk184 = arg0->unk174 + delta;
+    if (arg0->unk18C != 0) {
+        arg0->unk17C = delta / (s32)time;
+    } else {
+        arg0->unk17C = delta;
+    }
+    arg0->flags |= 0x2000;
+    return;
 }
 
 void fn_80251E88(Voice *arg0, u32 *arg1) {
