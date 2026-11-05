@@ -91,6 +91,10 @@ void fn_80169DEC(void *arg0) {
     fn_8000C188(arg0);
 }
 
+void fn_80169E2C(void *arg0) {
+    fn_8000A420(M2C_FIELD(arg0, s32 *, 0x50));
+}
+
 void fn_80169E50(void *arg0) {
     fn_8000A430(M2C_FIELD(arg0, s32 *, 0x50));
 }
