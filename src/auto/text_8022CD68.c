@@ -3,6 +3,7 @@
 
 extern u8 lbl_8034C110[];
 extern f64 lbl_8036C368;
+extern s32 lbl_803687F8;
 extern f32 lbl_8036C374;
 extern s32 lbl_80368A28;
 extern s32 lbl_80368A2C;
@@ -853,6 +854,18 @@ void fn_80257C04(void *arg0) {
     M2C_UNK fn_80257998();
     M2C_FIELD(arg0, s8 *, 1) = 0;
     fn_80257998();
+}
+
+s32 fn_8025807C(s32 arg0, s32 arg1, s32 arg2) {
+    u32 fn_80257EE4(s32, s32, s32);
+    s32 i;
+
+    for (i = 0; i < 15; i++) {
+        if (fn_80257EE4(arg0, arg1, arg2) != 0) {
+            return 1;
+        }
+    }
+    return 0;
 }
 
 void fn_80258A98(s32 arg0, s32 arg1) {
