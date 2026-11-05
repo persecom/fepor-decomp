@@ -1036,6 +1036,27 @@ void fn_8016EC70(void) {
     return;
 }
 
+void fn_8016EC74(void *arg0) {
+    M2C_UNK fn_80184C7C(void *, s32, s32, s32);
+    M2C_UNK fn_80138808(void *, void *);
+    void *temp_r31;
+    void *temp_r3;
+    void *temp_r4;
+
+    temp_r31 = M2C_FIELD(arg0, void **, 0x18);
+    temp_r3 = M2C_FIELD(lbl_802EF4C8, void **, 0);
+    if (temp_r3 != NULL) {
+        fn_80184C7C(temp_r3, 0, 4, 0);
+    }
+    temp_r3 = M2C_FIELD(temp_r31, void **, 0x44);
+    if (temp_r3 != NULL) {
+        temp_r4 = M2C_FIELD(temp_r3, void **, 0x3C);
+        if (temp_r4 != NULL) {
+            fn_80138808(temp_r3, temp_r4);
+        }
+    }
+}
+
 void fn_8016ECDC(void) {
     M2C_UNK fn_8003BE50(void *);
     register void *temp_r31;
