@@ -109,3 +109,4 @@ extern "C" void fn_8005ADB4(void *arg0) {
     };
     fn_8005C8B4(((Obj *)arg0)->v8());
 }
+#pragma cplusplus reset
