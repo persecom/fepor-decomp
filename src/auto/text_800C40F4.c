@@ -264,7 +264,6 @@ void fn_800C73F0(s32 arg0) {
     fn_8006EDA0(arg0 + 0x30);
 }
 
-extern s32 lbl_8028D788;
 void fn_800C77B8(s32 arg0) {
     u8 fn_8005BA10(s32, void *);
     void fn_8000C188(s32);
