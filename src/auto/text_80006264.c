@@ -1,6 +1,9 @@
 /* Functions from 0x80006264 to 0x80011968, found by decomp-toolkit. */
 #include "common.h"
 
+extern s32 lbl_802AEE20[5]; // array of 5 pointers
+extern f64 lbl_80368C28;    // global float constant
+
 s32 fn_800067B4(void) {
     extern s32 lbl_80367118;
     return lbl_80367118;
@@ -216,34 +219,37 @@ void fn_8000CD80(s32 arg0) {
 
 s32 fn_8000D2BC(u8 *arg0) {
     extern void *lbl_802ADB20;
-    s32 var_r6;
-    u32 var_r5;
-    u8 *var_r3_2;
+    s32 temp_r6;
+    u32 temp_r5;
     u8 temp_r7;
-    void *var_r3;
+    void *temp_r3;
+    s32 var_r4;
 
     if (arg0 == NULL) {
         return 0;
     }
-    var_r6 = 0;
-    var_r5 = 0;
+    
+    temp_r6 = 0;
+    temp_r5 = 0;
+    
 loop_4:
     temp_r7 = *arg0;
     if ((s8) temp_r7 != 0) {
         arg0 += 1;
-        var_r6 = (s8) temp_r7 + (var_r6 * 0x25);
-        var_r5 = (s8) temp_r7 + (var_r5 * 0x1F);
-        goto loop_4;
+        temp_r6 = (s8) temp_r7 + (temp_r6 * 0x25);
+        temp_r5 = (s8) temp_r7 + (temp_r5 * 0x1F);
+        goto loop_4; 
     }
-    var_r3 = (void *) ((s32 *) lbl_802ADB20 + ((var_r6 % 509) * 4));
+    
+    temp_r3 = (void *) ((s32 *) lbl_802ADB20 + ((temp_r6 % 509) * 4));
 loop_9:
-    if (var_r3 == NULL) {
+    if (temp_r3 == NULL) {
         return 0;
     }
-    if (var_r5 == (u32) M2C_FIELD(var_r3, u32 *, 4)) {
-        return M2C_FIELD(var_r3, s32 *, 0xC);
+    if (temp_r5 == (u32) M2C_FIELD(temp_r3, u32 *, 4)) {
+        return M2C_FIELD(temp_r3, s32 *, 0xC);
     }
-    var_r3 = M2C_FIELD(var_r3, void **, 0);
+    temp_r3 = M2C_FIELD(temp_r3, void **, 0);
     goto loop_9;
 }
 
