@@ -199,12 +199,12 @@ void fn_800B6B58(s32 arg0) {
 
 extern s32 lbl_8036B3A4;
 extern s32 lbl_8036B3A4;
-s32 fn_800B6B94(s32 arg0, s32 arg1) {
-    if (arg0 < 0) {
-        arg0 = 0;
-    }
-    *(s32 *)(arg0 + 0x7C) = arg1;
-    *(s32 *)(arg0 + 0x80) = lbl_8036B3A4;
+s32 fn_800B6B94(s32 arg0) {
+    M2C_UNK fn_801F89AC(s32, s32);
+    extern f32 lbl_80369CF4;
+
+    fn_801F89AC((f32) arg0 / lbl_80369CF4, fn_800C0658());
+    fn_80013864();
     return 1;
 }
 
