@@ -542,3 +542,30 @@ void fn_801FC4F8(s32 arg0, s32 arg1, s32 arg2) {
 extern u16 lbl_80280B58[18];
 extern u16* lbl_8027F730;
 extern u16* lbl_8029A910;
+extern u8 lbl_8027F710[32];
+extern u8 lbl_80330708[1400];
+
+u8 fn_801F19A0(void) {
+    u32 temp_r3;
+    u8 var_r0;
+
+    temp_r3 = fn_8000D354(&lbl_8027F710 + 0x15);
+    switch (lbl_80330708[0xA6]) {
+    case 0:
+        var_r0 = 0;
+        break;
+    case 1:
+        var_r0 = 1;
+        break;
+    case 2:
+        var_r0 = 2;
+        break;
+    case 3:
+        var_r0 = 3;
+        break;
+    default:
+        var_r0 = 0;
+        break;
+    }
+    return *(u8*)(temp_r3 + var_r0);
+}
