@@ -118,6 +118,11 @@ s32 fn_8014B234(void) {
     return 0x1FFF;
 }
 
+extern u16 *g_AccessoryArray;
+s16 fn_8014B24C(void) {
+    return *(u16*)((char*)g_AccessoryArray + 0x10);
+}
+
 s32 fn_8014B264(void) {
     return 0xFF;
 }
@@ -301,4 +306,4 @@ void fn_8014DFE8(s32 arg0) {
     extern M2C_UNK lbl_80367B94;
     fn_80024398(&lbl_80367B94, arg0, 0);
 }
-
+extern u16 lbl_80367B14;
