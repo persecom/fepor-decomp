@@ -2221,6 +2221,12 @@ void fn_8017E2BC(void) {
     }
 }
 
+s32 fn_8017E328(void) {
+    extern u16 lbl_80295550[];
+    s32 v = fn_8000C0C0(lbl_80295550);
+    return v != 0;
+}
+
 void fn_8017E35C(void) {
     u32 fn_8000C0C0(u16 *param);
     void fn_8000C070(s32 param);
