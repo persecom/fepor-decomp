@@ -291,7 +291,8 @@ void fn_80025FA4(void *arg0) {
 }
 
 void fn_80025FC8(void) {
-    fn_801A4BE0(0x80330EAC);
+    extern M2C_UNK lbl_80330EAC[];
+    fn_801A4BE0(lbl_80330EAC);
 }
 
 void fn_8002666C(void *arg0) {
