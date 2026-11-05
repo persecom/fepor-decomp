@@ -53,6 +53,29 @@ s32 fn_8005A308(void) {
     return 0x18;
 }
 
+s32 fn_8005A310(void *arg0, u8 arg1, u8 arg2) {
+    switch (arg1) {
+    case 0:
+    case 8:
+        return 0x10;
+    case 1:
+        return 0x11;
+    case 2:
+        return 0x12;
+    case 3:
+        return 0x13;
+    case 4:
+        return 0x15;
+    case 5:
+        return 0x17;
+    case 6:
+        return 0x16;
+    case 7:
+        return arg2 ? 0x18 : 0x14;
+    }
+    return 0;
+}
+
 void fn_8005AC5C(u32 *arg0) {
     M2C_UNK fn_8006EDA0();
     if ((u32) *arg0 != 0U) {
