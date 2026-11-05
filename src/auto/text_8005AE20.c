@@ -305,6 +305,11 @@ loop_5:
     goto loop_1;
 }
 
+void fn_8005D690(u8 *);
+void fn_8005D1DC(char *name) {
+    fn_8005D690(FindEntryByName(name));
+}
+
 void fn_8005EB80(s32 arg0, s32 arg1) {
     M2C_UNK fn_8005EA14();
     M2C_UNK fn_8005EC18(s32, s32, M2C_UNK);
