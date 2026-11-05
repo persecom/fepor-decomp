@@ -761,15 +761,15 @@ u8 fn_800B8790(void) {
 }
 
 s32 fn_800B87B4(void) {
-    M2C_UNK fn_8000CAA0(M2C_UNK *, s32, M2C_UNK *);
-    M2C_UNK fn_80013864();
-    M2C_UNK fn_80013874(M2C_UNK *);
-    extern M2C_UNK lbl_8028D1EC;
-    extern M2C_UNK lbl_80320060;
+    u8 fn_80089948();
+    M2C_UNK fn_8000CAA0(void *, s32);
+    M2C_UNK fn_80013874(void *);
+    extern u8 lbl_8028D1EC[];
+    extern u8 lbl_80320060[];
     if (fn_80089948() != 0) {
-        fn_8000CAA0(&lbl_8028D1EC, fn_800C0658(), &lbl_8028D1EC);
+        fn_8000CAA0(lbl_8028D1EC, fn_800C0658());
         fn_80013864();
-        fn_80013874(&lbl_80320060);
+        fn_80013874(lbl_80320060);
     }
     return 1;
 }
