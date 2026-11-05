@@ -924,7 +924,21 @@ void fn_80251DEC(Voice *arg0, u32 *arg1) {
 }
 
 void fn_80251E88(Voice *arg0, u32 *arg1) {
-    Voice_StartRamp(arg0, arg1, &arg0->unk190, &arg0->unk178, &arg0->unk188, &arg0->unk180);
+    u32 time;
+    s32 delta;
+
+    time = arg1[0] >> 16;
+    arg0->unk190 = time;
+    fn_8026146C((s32 *)&arg0->unk190);
+    delta = (s8)arg1[1] << 16;
+    arg0->unk178 = (arg1[0] << 8) & 0xFF0000;
+    arg0->unk188 = arg0->unk178 + delta;
+    if (arg0->unk190 != 0) {
+        arg0->unk180 = delta / (s32)time;
+    } else {
+        arg0->unk180 = delta;
+    }
+    arg0->flags |= 0x2000;
 }
 
 s16 fn_802537F8(s32 arg0, u32 arg1, s32 arg2) {
