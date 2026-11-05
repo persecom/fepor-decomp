@@ -128,6 +128,15 @@ void fn_8016746C(void *arg0, s32 arg1, s32 arg2, f32 farg0, f32 farg1) {
     fn_80166DD0(arg0, arg2, farg0, farg1);
 }
 
+void fn_80168F1C(void *arg0) {
+    s32 fn_8003FCCC();
+    M2C_UNK fn_80162018(void *);
+    M2C_UNK fn_801620AC();
+    fn_80162018(arg0);
+    fn_801620AC();
+    M2C_FIELD(arg0, s32 *, 0x44) = fn_8003FCCC();
+}
+
 void fn_80168F54(s32 arg0) {
     M2C_UNK fn_8000C188(s32);
     s32 fn_80161FB8();
