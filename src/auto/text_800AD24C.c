@@ -1190,6 +1190,21 @@ s32 fn_800BA230(u32 arg0, s32 arg1) {
     return 1;
 }
 
+s32 fn_800BA96C(void) {
+    void *fn_8000D354(void);
+    M2C_UNK fn_800A87D4(s32);
+    void *fn_801A46BC(void *);
+    extern u8 lbl_80330EAC[];
+    void *p;
+
+    p = fn_801A46BC(lbl_80330EAC);
+    if (p == NULL) {
+        return 0;
+    }
+    fn_800A87D4(M2C_FIELD(p, s32 *, 0x188));
+    return fn_8000D354() != NULL;
+}
+
 s32 fn_800BAAD4(void) {
     void *fn_8000D354(void);
     void *fn_8000BCA4(void *);
