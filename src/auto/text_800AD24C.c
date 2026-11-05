@@ -640,9 +640,9 @@ u8 fn_800B8A04(void) {
 }
 
 s32 fn_800B8A28(u8 arg0, s32 arg1) {
-    extern void fn_8008A290(u8, s32);
-    s32 var_r4 = arg1;
+    s32 var_r4;
 
+    var_r4 = arg1;
     if (var_r4 < 0) {
         var_r4 = 0x1F4;
     }
