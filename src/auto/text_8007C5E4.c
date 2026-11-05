@@ -685,4 +685,11 @@ void fn_8009F054(s32 arg0) {
         fn_8000C188(arg0);
     }
 }
-
+extern f32 lbl_80369418;
+extern f32 lbl_80369450;
+extern f32 lbl_80369458;
+extern f32 lbl_80369468;
+extern f32 lbl_8036946C;
+extern f32 lbl_80369470;
+extern f32 lbl_80369478;
+extern f32 lbl_8036947C;
