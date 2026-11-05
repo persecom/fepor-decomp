@@ -672,6 +672,14 @@ s32 fn_800B8198(void) {
     return 1;
 }
 
+s32 fn_800B850C(s32 arg0, s8 arg1, s16 arg2) {
+    extern u8 lbl_802EFDB8[];
+    lbl_802EFDB8[0x61] = 1;
+    lbl_802EFDB8[arg0] = arg1;
+    *(s16 *)(lbl_802EFDB8 + 0x20 + arg0 * 2) = arg2;
+    return 1;
+}
+
 s32 fn_800B8534(void) {
     extern M2C_UNK lbl_802EFDB8;
     M2C_UNK *var_r3;
