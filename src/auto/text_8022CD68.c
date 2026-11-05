@@ -393,6 +393,11 @@ void fn_80257C04(void *arg0) {
     fn_80257998();
 }
 
+void *fn_80258AD8(void) {
+    extern u16 lbl_8035B220[];
+    return &lbl_8035B220[0x60C];
+}
+
 void fn_80258D74(void) {
     M2C_UNK fn_80262410();
     fn_80262410();
@@ -646,3 +651,6 @@ void fn_80267000(void) {
 extern u16 lbl_802A1E10[4];
 extern u16 lbl_8034CBB4[288];
 extern u16 lbl_8035D118[];
+#include "common.h"
+
+extern s32 lbl_80368B2C;
