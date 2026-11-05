@@ -61,6 +61,18 @@ s32 fn_80074A30(void) {
     return 0x18;
 }
 
+s32 fn_80074A38(void) {
+    M2C_UNK fn_80029C08(s32);
+    u8 fn_80105BC0(s32, M2C_UNK);
+    extern s32 lbl_802EF4C8;
+    extern s32 lbl_802EF4E0;
+    if (fn_80105BC0(lbl_802EF4C8 + 0x1BC, 0x18) == 0) {
+        return 3;
+    }
+    fn_80029C08(lbl_802EF4C8);
+    return 2 & ~((s32) (-lbl_802EF4E0 | lbl_802EF4E0) >> 0x1F);
+}
+
 void fn_80074AA8(void **arg0) {
     M2C_UNK fn_80019DF0();
     M2C_UNK fn_8010586C();
@@ -460,6 +472,24 @@ void fn_80076D90(void) {
     fn_8000E0E4(&lbl_8026C0B8[offset]);
 }
 
+s32 fn_80076DBC(void) {
+    extern u8 lbl_802EF4C8[24];
+    extern s32 lbl_802EF4E0[502];
+    
+    if ((s8) lbl_802EF4C8[0x12] != 0) {
+        return 3;
+    }
+    
+    if (fn_80105BC0(*(s32**)lbl_802EF4C8 + 0x1bc, 0x18) != 0) {
+        fn_80029C08(*(s32**)lbl_802EF4C8);
+        if (lbl_802EF4E0[0] != 0) {
+            return 0;
+        }
+    }
+    
+    return 3;
+}
+
 s32 fn_80076E9C(void) {
     extern u16 lbl_802EF4C8;
     *(u8 *)((u32)&lbl_802EF4C8 + 8) = 6;
@@ -501,6 +531,23 @@ void fn_80077074(void) {
 void fn_800770A0(void) {
     extern u16 lbl_8026C0B8[];
     fn_8000E0E4(&lbl_8026C0B8[0xD74]);
+}
+
+s32 fn_800770CC(void) {
+    extern u32 lbl_802EF4C8;
+    extern u8 lbl_802CA264;
+    extern u32 lbl_80330708;
+    extern u8 fn_80105BC0(u32, u8);
+    extern s32 fn_80015680(u8 *);
+    extern u8 fn_8014D8BC(u32 *);
+
+    if (fn_80105BC0((u32)(lbl_802EF4C8 + 0x1BC), 0) == 0) {
+        return 3;
+    }
+    if (fn_80015680(&lbl_802CA264) <= 1) {
+        return 3;
+    }
+    return (fn_8014D8BC(&lbl_80330708) == 0) ? 3 : 0;
 }
 
 void fn_800771BC(void) {
@@ -1107,6 +1154,33 @@ void fn_80079198(s32 arg0) {
     M2C_FIELD(temp_r3, s32 *, 0x40) = 0;
 }
 
+void *fn_80079380(s8 arg0) {
+    extern void *lbl_80312040;
+    s32 var_ctr;
+    s32 var_r6;
+    void **var_r4;
+    void *temp_r5;
+
+    if (arg0 < 0) {
+        return NULL;
+    }
+    var_r4 = &lbl_80312040;
+    var_r6 = 0;
+    var_ctr = 8;
+loop_3:
+    temp_r5 = *var_r4;
+    if ((temp_r5 != NULL) && (arg0 == (s8) (((u8*)temp_r5)[0x43]))) {
+        return (&lbl_80312040)[var_r6];
+    }
+    var_r4 += 1;
+    var_r6 += 1;
+    var_ctr -= 1;
+    if (var_ctr == 0) {
+        return NULL;
+    }
+    goto loop_3;
+}
+
 void fn_80079E08(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x38) = 0;
 }
@@ -1318,6 +1392,7 @@ extern u16 lbl_8026C0B8[];
 extern u8 D_802EF4C8[24];
 extern u16 lbl_80288CAC;
 #include "global.h"
+extern u16 gSomeGlobalVar[0x12]; // lbl_802EF4C8
 extern void* (*fn_80024398_ptr)(void*, s32, s32);
 
 extern u16 lbl_80288CAC;
