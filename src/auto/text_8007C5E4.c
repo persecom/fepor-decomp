@@ -848,4 +848,4 @@ extern f32 lbl_8036947C;
 extern void *lbl_80367488;
 extern void *lbl_80367488;
 extern u32 lbl_80312040[8];
-extern u16* lbl_803674EC;
+extern u16 lbl_803674EC[0x32/2 + 1];
