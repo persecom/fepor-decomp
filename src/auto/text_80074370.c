@@ -515,34 +515,22 @@ extern "C" void fn_80076174(void *arg0, void *arg1) {
         virtual void v17() = 0;
         virtual s16 v18() = 0;
     };
-    struct Unit {
-        u8 pad[0x30];
-        s16 unk30;
-        s16 unk32;
-        u8 pad2[6];
-        s16 unk3A;
-    };
-    struct Self {
-        u8 pad[0xC];
-        s32 unkC;
-    };
     extern u8 lbl_80330EAC[];
-    Unit *unit = (Unit *)arg1;
     f32 t;
 
-    t = fn_80023EE0(unit);
-    unit->unk30 = 0;
-    unit->unk32 = 0;
+    t = fn_80023EE0(arg1);
+    *(s16 *)((u8 *)arg1 + 0x30) = 0;
+    *(s16 *)((u8 *)arg1 + 0x32) = 0;
     fn_8000A258();
     fn_80009B8C((s32)(255.0f * t));
     fn_8000A248();
-    fn_80071740(arg0, ((Self *)arg0)->unkC, 16.0f * t + 16.0f, 35.0f);
-    fn_8007149C(arg0, unit, ((Self *)arg0)->unkC, 1, 16.0f * t + 16.0f, 136.0f);
-    if (unit->unk3A >= 5) {
+    fn_80071740(arg0, 16.0f * t + 16.0f, 35.0f, *(s32 *)((u8 *)arg0 + 0xC));
+    fn_8007149C(arg0, arg1, 16.0f * t + 16.0f, 136.0f, *(s32 *)((u8 *)arg0 + 0xC), 1);
+    if (*(s16 *)((u8 *)arg1 + 0x3A) >= 5) {
         fn_8000A258();
         fn_80009C0C(-0.1f);
         fn_8000A248();
-        fn_8008AB7C(((Obj *)arg0)->v18() / 2 + 0x28, unit->unk3A + fn_800102BC(-1, 1.0f) / 2,
+        fn_8008AB7C(((Obj *)arg0)->v18() / 2 + 0x28, *(s16 *)((u8 *)arg1 + 0x3A) + fn_800102BC(-1, 1.0f) / 2,
                     (s32)(0.9f * ((Obj *)arg0)->v18()), 0x18, 0x19, 0x4B, 1);
         fn_8000A258();
         fn_80009C0C(0.1f);
