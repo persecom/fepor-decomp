@@ -335,31 +335,35 @@ s32 fn_800B72CC(void) {
 }
 
 s32 fn_800B7378(void) {
-    M2C_UNK fn_80016628(s32 *);
-    M2C_UNK fn_800C2930(M2C_UNK *, s32 *);
-    M2C_UNK fn_8017A7D4(s32 *, s32);
-    extern M2C_UNK lbl_802842A4;
-    extern M2C_UNK lbl_802842B8;
-    extern M2C_UNK lbl_803206EC;
+    M2C_UNK fn_80016628(void *);
+    M2C_UNK fn_800C2930(void *, void *);
+    M2C_UNK fn_8017A7D4(void *, s32);
+    extern u8 lbl_802842A4[];
+    extern u8 lbl_802842B8[];
+    extern u8 lbl_803206EC[];
     extern s32 lbl_80367840;
-    M2C_UNK *sp18;
-    u8 sp14;
-    s32 sp8;
+    struct {
+        s32 handle;
+        u8 pad4[8];
+        u8 owned;
+        u8 padD[3];
+        void *vtbl;
+    } obj;
 
     fn_800162B8();
-    fn_8017A7D4(&sp8, lbl_80367840);
-    fn_80016628(&sp8);
-    fn_800C2930(&lbl_803206EC, &sp8);
+    fn_8017A7D4(&obj, lbl_80367840);
+    fn_80016628(&obj);
+    fn_800C2930(lbl_803206EC, &obj);
     fn_800163F8();
     fn_80016180();
     fn_800C4588(lbl_80367840);
-    sp18 = &lbl_802842B8;
     lbl_80367840 = 0;
-    sp18 = &lbl_802842A4;
-    if (sp14 != 0) {
-        fn_800C4588(sp8);
-        sp8 = 0;
-        sp14 = 0;
+    obj.vtbl = lbl_802842B8;
+    obj.vtbl = lbl_802842A4;
+    if (obj.owned) {
+        fn_800C4588(obj.handle);
+        obj.handle = 0;
+        obj.owned = 0;
     }
     return 1;
 }
