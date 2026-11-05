@@ -281,7 +281,7 @@ void fn_800C7800(void *arg0) {
     OSDisableScheduler();
     OSRestoreInterrupts(temp_r31);
     fn_8005BA08((s8) M2C_FIELD(arg0, s32 *, 0x44));
-    fn_8005C870(lbl_8028D788 + 4, 4); // Simple direct call
+    fn_8005C870(&lbl_8028D788[1], 4);
     fn_8005BA08((s8) M2C_FIELD(arg0, s32 *, 0x40));
     temp_r31_2 = OSDisableInterrupts();
     OSEnableScheduler();
