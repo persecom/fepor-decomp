@@ -2598,6 +2598,7 @@ extern "C" void fn_8018179C(void *arg0) {
     y = (s16)(M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC)) + 2;
     fn_80157700(0, y, 5 - fn_80036A24(M2C_FIELD(arg0, s32 *, 0x48), (s16)(M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC))), 0x10);
 }
+#pragma cplusplus reset
 
 u8 fn_80181B9C(void *arg0, void *arg1) {
     s8 fn_80036DE0(s32);
