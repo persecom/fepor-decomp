@@ -12,8 +12,6 @@ typedef struct ListNode {
     void *val;
 } ListNode;
 
-typedef struct RefObj RefObj;
-
 void *fn_80132800(void) {
     extern u16 lbl_80276008[];
     return &lbl_80276008[0x50 / 2];
