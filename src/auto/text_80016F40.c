@@ -3,6 +3,12 @@
 extern u8 lbl_802841B0[16];
 
 
+void fn_80016F40(void) {
+    extern u16 lbl_802B14E4[];
+    extern void fn_800169A8(void);
+    fn_8022C1E8(lbl_802B14E4, fn_800169A8, 0x280, 0x9F);
+}
+
 void fn_80017414(void *arg0, s32 arg1) {
     s16 fn_8017A9B0(s32);
     s8 fn_8017A9DC(s32);
