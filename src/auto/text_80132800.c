@@ -2595,4 +2595,3 @@ extern u8 lbl_8032FF08[];
 extern u32 lbl_802922F0;
 #include "include/structs.h"
 extern s32 gUnknown_0x8013C030;
-void fn_80139D60_C(void *arg0, void *arg1);
