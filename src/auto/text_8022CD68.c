@@ -1,8 +1,9 @@
 /* Functions from 0x8022CD68 to 0x80267A7C, found by decomp-toolkit. */
 #include "common.h"
-
+  
 extern s32 lbl_803689A8;
 extern void (*lbl_80368B34)(s16);
+extern s32 lbl_80368B0C;
 
 // The structure being used in functions in this file - assumed based on offset 0xF4
 typedef struct {
@@ -329,6 +330,19 @@ s32 fn_8024B714(s32 arg0) {
     temp_r31 = fn_8024A6F8(arg0);
     fn_802636F4();
     return temp_r31;
+}
+
+s32 fn_8024B7DC(s32 arg0) {
+    s32 fn_80255FB0(s32);
+    s32 var_r31;
+
+    var_r31 = arg0;
+    fn_8026372C();
+    if ((u32) (fn_80255FB0(var_r31) + 0x10000) == -1U) {
+        var_r31 = -1;
+    }
+    fn_802636F4();
+    return var_r31;
 }
 
 void fn_8024B8EC(s32 arg0, s32 arg1, s32 arg2) {
@@ -729,6 +743,31 @@ void fn_802609EC(struct unit* param_1)
         param_1->unk_0xC = param_1->unk_0xC | 0x8000;
     else
         param_1->unk_0xC = param_1->unk_0xC & 0xFFFF7FFF;
+}
+
+s32 fn_80260EA8(u8 arg0) {
+    switch (arg0) {
+    case 0:
+        return 0;
+    case 1:
+        return 0x7;
+    case 2:
+        return 0x9;
+    case 3:
+        return 0x8;
+    case 4:
+        return 0x4;
+    case 5:
+        return 0x6;
+    case 6:
+        return 0x5;
+    case 7:
+        return 0x2;
+    case 8:
+        return 0x3;
+    default:
+        return 0;
+    }
 }
 
 u16 fn_802611F8(void) {
