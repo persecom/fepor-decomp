@@ -142,6 +142,12 @@ void fn_80057EDC(void) {
     fn_8000BF00(&lbl_80285B6C);
 }
 
+void fn_80057FD4(void *arg0, u32 arg1) {
+    if ((u32) M2C_FIELD(arg0, u32 *, 0x34) == arg1) {
+        fn_8000BF00(&lbl_80285B6C);
+    }
+}
+
 void fn_80058008(void *arg0) {
     M2C_UNK fn_8000C60C(s32);
     if (M2C_FIELD(arg0, u16 *, 0x54) & 4) {
