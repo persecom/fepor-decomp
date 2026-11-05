@@ -14,6 +14,7 @@ extern void (*lbl_80368B34)(s16);
 extern f32 lbl_8034C324[];
 extern s32 D_80368AD0;
 extern s32 lbl_80368B0C;
+extern s16 lbl_802A1E90[];
 u32 fn_8026367C(void);
 
 typedef struct Voice {
@@ -733,7 +734,7 @@ s32 fn_8024FD80(u16 id, s32 arg1) {
     extern u16 lbl_80368A18;
     struct Group *g;
     struct Entry *e;
-    s32 i;
+    u32 i;
 
     g = lbl_803542B8;
     for (i = 0; i < lbl_80368A18; i++, g++) {
@@ -842,42 +843,42 @@ void fn_802511F8(void *arg0, u32 *arg1) {
     fn_80250B58(arg0, arg1);
 }
 
-void fn_80251DEC(void *arg0, u32 *arg1) {
+void fn_80251DEC(Voice *arg0, u32 *arg1) {
     void fn_8026146C(s32 *);
     u32 time;
     s32 delta;
 
     time = arg1[0] >> 16;
-    M2C_FIELD(arg0, u32 *, 0x18C) = time;
-    fn_8026146C((s32 *)((u8 *)arg0 + 0x18C));
-    M2C_FIELD(arg0, s32 *, 0x174) = (arg1[0] << 8) & 0xFF0000;
+    arg0->unk18C = time;
+    fn_8026146C((s32 *)&arg0->unk18C);
+    arg0->unk174 = (arg1[0] << 8) & 0xFF0000;
     delta = (s8)arg1[1] << 16;
-    M2C_FIELD(arg0, s32 *, 0x184) = M2C_FIELD(arg0, s32 *, 0x174) + delta;
-    if (M2C_FIELD(arg0, u32 *, 0x18C) != 0) {
-        M2C_FIELD(arg0, s32 *, 0x17C) = delta / (s32)time;
+    arg0->unk184 = arg0->unk174 + delta;
+    if (arg0->unk18C != 0) {
+        arg0->unk17C = delta / (s32)time;
     } else {
-        M2C_FIELD(arg0, s32 *, 0x17C) = delta;
+        arg0->unk17C = delta;
     }
-    M2C_FIELD(arg0, u32 *, 0x114) |= 0x2000;
+    arg0->flags |= 0x2000;
 }
 
-void fn_80251E88(void *arg0, u32 *arg1) {
+void fn_80251E88(Voice *arg0, u32 *arg1) {
     void fn_8026146C(s32 *);
     u32 time;
     s32 delta;
 
     time = arg1[0] >> 16;
-    M2C_FIELD(arg0, u32 *, 0x190) = time;
-    fn_8026146C((s32 *)((u8 *)arg0 + 0x190));
-    M2C_FIELD(arg0, s32 *, 0x178) = (arg1[0] << 8) & 0xFF0000;
+    arg0->unk190 = time;
+    fn_8026146C((s32 *)&arg0->unk190);
+    arg0->unk178 = (arg1[0] << 8) & 0xFF0000;
     delta = (s8)arg1[1] << 16;
-    M2C_FIELD(arg0, s32 *, 0x188) = M2C_FIELD(arg0, s32 *, 0x178) + delta;
-    if (M2C_FIELD(arg0, u32 *, 0x190) != 0) {
-        M2C_FIELD(arg0, s32 *, 0x180) = delta / (s32)time;
+    arg0->unk188 = arg0->unk178 + delta;
+    if (arg0->unk190 != 0) {
+        arg0->unk180 = delta / (s32)time;
     } else {
-        M2C_FIELD(arg0, s32 *, 0x180) = delta;
+        arg0->unk180 = delta;
     }
-    M2C_FIELD(arg0, u32 *, 0x114) |= 0x2000;
+    arg0->flags |= 0x2000;
 }
 
 s16 fn_802537F8(s32 arg0, u32 arg1, s32 arg2) {
