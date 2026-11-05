@@ -207,6 +207,11 @@ void fn_80075878(void) {
     fn_8000E0E4(&lbl_8026C0B8[0x220 / sizeof(u16)]);
 }
 
+void fn_800758A4(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4(&lbl_8026C0B8[0x22A / sizeof(u16)]);
+}
+
 s32 fn_80076380(void *arg0) {
     if (*(u8 *)((uintptr_t)arg0 + 0x39) == 2) {
         return 0x10;
