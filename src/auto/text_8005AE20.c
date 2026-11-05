@@ -1458,6 +1458,59 @@ void fn_800708B0(void* arg1) {
     lbl_80366DE9 = -1;
 }
 
+#pragma cplusplus on
+extern "C" void *fn_8000B908(u8);
+extern "C" void fn_80070B3C(void *arg0, void *arg1) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual s32 v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual s32 v20() = 0;
+    };
+    struct Grp {
+        u8 pad[0x3C];
+        Obj *obj;
+        u8 ids[0x20];
+        s8 count;
+    };
+    struct Ent {
+        u8 pad[0x32];
+        s16 y;
+        u8 pad2[6];
+        u8 level;
+    };
+    Grp *g = (Grp *)arg1;
+    s32 i;
+    Ent *p;
+
+    for (i = 0; i < g->count; i++) {
+        p = (Ent *)fn_8000B908(g->ids[i]);
+        if (p->level >= 4) {
+            p->y = g->obj->v17() + 0x90;
+            p->y += g->obj->v20() * (u32)(p->level - 4);
+        }
+    }
+}
+#pragma cplusplus reset
+
 void fn_80070C24(void **arg0, void *arg2) {
     M2C_UNK fn_8008D510(s32, s16, s16);
     M2C_FIELD(*arg0, M2C_UNK (**)(), 0x4C)();
@@ -1506,6 +1559,49 @@ s32 fn_80071410(s32 arg0, s32 arg1, f32 farg0, f32 farg1) {
     }
     return var_r3;
 }
+
+#pragma cplusplus on
+extern "C" M2C_UNK fn_8000A258();
+extern "C" M2C_UNK fn_8000A248();
+extern "C" void fn_80009D74(f32, f32, f32, f32);
+extern "C" void fn_8008B464(s32, s32, s32);
+extern "C" void fn_80071740(void *arg0, s32 arg1, f32 x, f32 y) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual void v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual f32 v25() = 0;
+    };
+
+    fn_8000A258();
+    fn_80009D74(0.0f, 0.0f, ((Obj *)arg0)->v25(), 1.0f);
+    fn_8000A248();
+    fn_8008B464(arg1, (s32)x, (s32)y);
+}
+#pragma cplusplus reset
 
 void fn_80071B34(void) {
     M2C_UNK fn_8018DAD4();
