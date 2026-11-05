@@ -3695,5 +3695,5 @@ extern u16 lbl_803678F4;
 extern u8 lbl_8032B3C0[];
 extern u8 lbl_8032B3C0[544];
 extern u16 *lbl_803678C8;
-extern u16 lbl_80320B88[32]; // 64 bytes = 32 * 2
-extern u32 lbl_80367870;      // 4 bytes
+extern u16 lbl_80320B88[];    // array of u16, size 32
+extern s32 lbl_80367870;      // 4 bytes
