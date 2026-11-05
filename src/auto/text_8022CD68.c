@@ -504,6 +504,26 @@ void fn_80261714(s32 arg0) {
     lbl_80368AA4 = arg0;
 }
 
+void fn_8026171C(s32 arg0, s32 arg1) {
+    extern s32 lbl_80368AA0;
+    M2C_FIELD((lbl_80368AA0 + (arg0 * 0xF8)), s32 *, 0x1C) = arg1;
+}
+
+u8 fn_80261B00(s32 arg0) {
+    extern s32 lbl_80368AA0;
+    return M2C_FIELD((lbl_80368AA0 + (arg0 * 0xF8)), u8 *, 0x9C);
+}
+
+u8 fn_80261B14(s32 arg0) {
+    extern s32 lbl_80368AA0;
+    return M2C_FIELD((lbl_80368AA0 + (arg0 * 0xF8)), u8 *, 0x90);
+}
+
+u16 fn_80261B28(s32 arg0) {
+    extern s32 lbl_80368AA0;
+    return M2C_FIELD((lbl_80368AA0 + (arg0 * 0xF8)), u16 *, 0x70);
+}
+
 void fn_80262290(void) {
     M2C_UNK fn_80263074();
     fn_80263074();
@@ -654,3 +674,4 @@ extern u16 lbl_8035D118[];
 #include "common.h"
 
 extern s32 lbl_80368B2C;
+extern u16 lbl_80368AA0;
