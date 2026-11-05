@@ -1880,6 +1880,22 @@ void fn_800E45D8(s32 *arg0, s32 *arg1) {
     *arg0 = temp_r0;
 }
 
+u8 fn_800E49D0(void) {
+    void *fn_80067440(M2C_UNK);
+    u8 var_r0;
+    void *temp_r3;
+
+    temp_r3 = fn_80067440(0);
+    var_r0 = (((M2C_FIELD(temp_r3, u8 *, 4) + (M2C_FIELD(temp_r3, u8 *, 5) + M2C_FIELD(temp_r3, u8 *, 6))) / 3) * (0xFF - ((M2C_FIELD(temp_r3, u8 *, 0) + (M2C_FIELD(temp_r3, u8 *, 1) + M2C_FIELD(temp_r3, u8 *, 2))) / 3))) / 255;
+    if (var_r0 < 0) {
+        var_r0 = 0;
+    }
+    if ((s32) var_r0 > 0xC0) {
+        var_r0 = 0xC0;
+    }
+    return var_r0;
+}
+
 void fn_800E4B44(void *arg0) {
     s32 *temp_r3;
 
@@ -3102,8 +3118,8 @@ void fn_800F8364(void *arg0) {
 }
 
 void fn_800F8FF4(void *arg0) {
-    extern s32 lbl_803678F4;
-    if ((s32) lbl_803678F4 == 0) {
+    extern void *lbl_803678F8;
+    if ((s32) lbl_803678F8 == 0) {
         M2C_FIELD(arg0, u8 *, 0x250) = (u8) (M2C_FIELD(arg0, u8 *, 0x250) + 1);
         return;
     }
