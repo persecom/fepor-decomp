@@ -1,0 +1,23 @@
+struct Unit {
+    u16 unk0;
+    u16 unk2;
+    u16 unk4;
+    u16 unk6;
+    u16 unk8;
+    u16 unkA;
+    u16 unkC;
+    u16 unkE;
+    u8  unk10 /* [27] */;
+    u16 unk2B;
+    u8  unk2D;
+    u16 unk2E;
+    u16 unk30;
+    u16 unk32;
+    u16 unk34;
+    u16 unk36;
+    u16 unk38;
+    u16 unk3A;
+    u16 unk3C;
+    u16 unk3E;
+    u16 unk40;
+};
