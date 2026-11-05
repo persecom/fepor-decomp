@@ -1,6 +1,8 @@
 /* Functions from 0x80127E94 to 0x8012C368, found by decomp-toolkit. */
 #include "common.h"
 
+extern s32 lbl_80367A88;
+
 extern f32 lbl_8036A3C0;
 extern f32 lbl_8036A3C4;
 extern f32 lbl_8036A3C8;
@@ -8,6 +10,13 @@ extern f32 lbl_8036A3C8;
 void fn_80127E94(void *arg0) {
     void (**vtable)(void) = (void (**)(void))(*(int **)((char *)arg0 + 4));
     ((void (**)(void))vtable)[8]();
+}
+
+s32 fn_80127EC0(void) {
+    extern u16 lbl_80275048[];
+    s32 var = (u32)(&lbl_80275048[0x521]);
+    fn_801475FC((u16*)var, 0x64);
+    return 9;
 }
 
 void fn_80127EF4(void) {
@@ -303,6 +312,17 @@ void fn_8012A4CC(void *arg0) {
 s32 fn_8012AA68(void) {
     fn_8000C070(1);
     return 1;
+}
+
+void fn_8012AD80(void) {
+    extern u16 lbl_80275740[];
+    fn_800558D8(&lbl_80275740[0x164 / sizeof(u16)]);
+}
+
+void fn_8012B394(void) {
+    extern u16 lbl_80275740;
+    s32 addr = (s32)&lbl_80275740 + 0x1A7;
+    fn_800558D8((u16*)addr);
 }
 
 void fn_8012B458(void *arg0) {
