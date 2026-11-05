@@ -1354,3 +1354,5 @@ extern u16 lbl_80278080[];
 extern u16 lbl_80294550[];
 extern f32 lbl_8036AB94;
 extern u16 lbl_80277EA0;
+extern u16 lbl_80293D8C;
+extern void *lbl_8028D9A4[];
