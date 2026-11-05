@@ -469,7 +469,7 @@ void *fn_800A19B0(void) {
 
 void *fn_800A1AB0(void) {
     extern u16 lbl_8026D8D8;
-    return &lbl_8026D8D8 + 0x66F;
+    return (u16 *)&lbl_8026D8D8 + 0x66F;
 }
 
 s32 fn_800A1D00(void) {
@@ -656,6 +656,7 @@ void fn_800A3980(void **arg0) {
     *(arg0 + 0) = lbl_8028459C;
     *(arg0 + 1) = lbl_8028A42C;
 }
+extern u16 lbl_8026D8D8;
 extern u16 lbl_8026D8D8;
 extern u16 lbl_8026D8D8;
 extern u16 lbl_8026D8D8;
