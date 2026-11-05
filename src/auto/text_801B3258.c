@@ -1381,6 +1381,7 @@ void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     }
     fn_801DC588(w);
 }
+#pragma opt_loop_invariants reset
 
 void fn_801DDDE8(s32 arg0) {
     void *fn_8000CAA0(M2C_UNK *, M2C_UNK *);
