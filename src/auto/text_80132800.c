@@ -2142,6 +2142,14 @@ void fn_80149DB0(void) {
 
 }
 
+void fn_80149DB4(void *arg0) {
+    M2C_FIELD(M2C_FIELD(arg0, void **, 8), M2C_UNK (**)(u8), 0x28)(M2C_FIELD(arg0, u8 *, 0xD));
+    M2C_FIELD(M2C_FIELD(arg0, void **, 8), M2C_UNK (**)(void *, u8), 0x20)(arg0, M2C_FIELD(arg0, u8 *, 0xE));
+    M2C_FIELD(M2C_FIELD(arg0, void **, 8), M2C_UNK (**)(void *, u8), 0x24)(arg0, M2C_FIELD(arg0, u8 *, 0xF));
+    M2C_FIELD(M2C_FIELD(arg0, void **, 8), M2C_UNK (**)(void *, u8), 0x3C)(arg0, M2C_FIELD(arg0, u8 *, 0x10));
+    M2C_FIELD(M2C_FIELD(arg0, void **, 8), M2C_UNK (**)(void *, s16), 0x38)(arg0, M2C_FIELD(arg0, s16 *, 0x12));
+}
+
 void fn_80149E50(void) {
 
 }
@@ -2280,3 +2288,5 @@ extern u32 lbl_80291B70;
 extern u32 lbl_80295478;
 extern u8 lbl_803301A8[];
 extern u8 lbl_8032FF08[];
+#include "common.h"
+extern u32 lbl_802922F0;
