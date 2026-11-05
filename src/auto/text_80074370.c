@@ -738,3 +738,5 @@ s32 fn_8007C400(void) {
 #include "structs.h"
 
 extern u8 lbl_802EF4C8[0x40];
+extern u16 lbl_8026C0B8[];
+extern u8 lbl_802EF4C8[];
