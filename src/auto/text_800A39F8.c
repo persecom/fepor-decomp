@@ -1,6 +1,7 @@
 /* Functions from 0x800A39F8 to 0x800A9384, found by decomp-toolkit. */
 #include "common.h"
 extern u8 lbl_8028C750[16];
+extern u16 lbl_8026E408[];
 
 
 void *fn_800A3A30(void) {
