@@ -622,10 +622,10 @@ void fn_80262504(void) {
 }
 
 s32 fn_80262538(s32 arg0) {
-    extern u16* lbl_80368AA0;
-    s32 var = ((u8*)lbl_80368AA0)[(arg0 * 0xF8) + 0xF0];
-    return var == 1;
-}
+      extern u16* lbl_80368AA0;
+      s32 var = ((u8*)lbl_80368AA0)[(arg0 * 0xF8) + 0xF0];
+      return var == 1;
+  }
 
 void fn_802627D4(void) {
     extern u8 lbl_80363F28[];
