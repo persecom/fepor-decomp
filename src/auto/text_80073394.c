@@ -93,7 +93,17 @@ void fn_80073588(void) {
 
 void fn_800735E4(void) {
     extern u16 lbl_8026BE40[];
-    fn_8000E0E4(&lbl_8026BE40[0x22F]);
+    fn_8000E0E4(&lbl_8026BE40[0x22f]);
+}
+
+void fn_80073740(void) {
+    extern u16 lbl_8026BE40[];
+    fn_8000E0E4(&lbl_8026BE40[0x24c]);
+}
+
+void fn_8007376C(void) {
+    extern u16 lbl_8026BE40[];
+    fn_8000E0E4(&lbl_8026BE40[0x254 / sizeof(u16)]);
 }
 
 void fn_80073808(void) {
