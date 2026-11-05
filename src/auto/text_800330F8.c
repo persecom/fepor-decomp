@@ -310,13 +310,13 @@ void fn_8003FFD8(void) {
 }
 
 s32 fn_80040844(void) {
-    extern s32 lbl_803672AC;
-    return lbl_803672AC;
+    extern u16 *lbl_803672AC;
+    return (s32)lbl_803672AC;
 }
 
 void fn_8004084C(s32 arg0) {
-    extern s32 lbl_803672AC;
-    lbl_803672AC = arg0;
+    extern u16 *lbl_803672AC;
+    lbl_803672AC = (u16 *)arg0;
 }
 
 u8 fn_80040B1C(void *arg0, s32 arg1, s32 arg2) {
