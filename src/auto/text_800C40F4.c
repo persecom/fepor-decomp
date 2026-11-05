@@ -2,6 +2,194 @@
 #include "common.h"
 #include "structs.h"
 
+typedef struct {
+    u32 field_0x0;
+    u8 unk250; // from the target assembly
+    u8 field_0x4;
+    u16 field_0x5;
+    u8 field_0x7;
+    u32 field_0x8;
+    u8 field_0xC;
+    u8 field_0xD;
+    u8 field_0xE;
+    u8 field_0xF;
+    u8 field_0x10;
+    u8 field_0x11;
+    u8 field_0x12;
+    u8 field_0x13;
+    u8 field_0x14;
+    u8 field_0x15;
+    u8 field_0x16;
+    u8 field_0x17;
+    u8 field_0x18;
+    u8 field_0x19;
+    u8 field_0x1A;
+    u8 field_0x1B;
+    u8 field_0x1C;
+    u8 field_0x1D;
+    u8 field_0x1E;
+    u8 field_0x1F;
+    u8 field_0x20;
+    u8 field_0x21;
+    u8 field_0x22;
+    u8 field_0x23;
+    u8 field_0x24;
+    u16 field_0x25;
+    u16 field_0x27;
+    u32 field_0x29;
+    u16 field_0x2D;
+    u16 field_0x2F;
+    u32 field_0x31;
+    u8* field_0x35;
+    u8 field_0x39;
+    u8 field_0x3A;
+    u8 field_0x3B;
+    u8 field_0x3C;
+    u8 field_0x3D;
+    u8 field_0x3E;
+    u8 field_0x3F;
+    s32 field_0x40;
+    u32 field_0x44;
+    u32 field_0x48;
+    u32 field_0x4C;
+    u32 field_0x50;
+    u32 field_0x54;
+    u32 field_0x58;
+    u32 field_0x5C;
+    u32 field_0x60;
+    u32 field_0x64;
+    u32 field_0x68;
+    u32 field_0x6C;
+    u32 field_0x70;
+    u8 field_0x74;
+    u8 field_0x75;
+    u8 field_0x76;
+    u8 field_0x77;
+    s32 field_0x78;
+    u32 field_0x7C;
+    u32 field_0x80;
+    u32 field_0x84;
+    u32 field_0x88;
+    u32 field_0x8C;
+    u16 field_0x90;
+    u16 field_0x92;
+    u16 field_0x94;
+    u16 field_0x96;
+    u32 field_0x98;
+    s32 field_0x9C;
+    u32 field_0xA0;
+    u32 field_0xA4;
+    u32 field_0xA8;
+    u32 field_0xAC;
+    u32 field_0xB0;
+    u32 field_0xB4;
+    u32 field_0xB8;
+    u32 field_0xBC;
+    u32 field_0xC0;
+    u32 field_0xC4;
+    u32 field_0xC8;
+    u32 field_0xCC;
+    u32 field_0xD0;
+    u32 field_0xD4;
+    u32 field_0xD8;
+    u32 field_0xDC;
+    u32 field_0xE0;
+    u32 field_0xE4;
+    u32 field_0xE8;
+    u32 field_0xEC;
+    u32 field_0xF0;
+    u32 field_0xF4;
+    u32 field_0xF8;
+    u32 field_0xFC;
+    u32 field_0x100;
+    u32 field_0x104;
+    u32 field_0x108;
+    u32 field_0x10C;
+    u32 field_0x110;
+    u32 field_0x114;
+    s32 field_0x118;
+    s32 field_0x11C;
+    s32 field_0x120;
+    s32 field_0x124;
+    s32 field_0x128;
+    s32 field_0x12C;
+    u32 field_0x130;
+    u32 field_0x134;
+    u32 field_0x138;
+    u32 field_0x13C;
+    u32 field_0x140;
+    u32 field_0x144;
+    u32 field_0x148;
+    u32 field_0x14C;
+    u32 field_0x150;
+    u32 field_0x154;
+    u32 field_0x158;
+    u32 field_0x15C;
+    u32 field_0x160;
+    u32 field_0x164;
+    u32 field_0x168;
+    u32 field_0x16C;
+    u32 field_0x170;
+    u32 field_0x174;
+    u32 field_0x178;
+    u32 field_0x17C;
+    u32 field_0x180;
+    u32 field_0x184;
+    u32 field_0x188;
+    u32 field_0x18C;
+    u32 field_0x190;
+    u32 field_0x194;
+    u32 field_0x198;
+    u32 field_0x19C;
+    u32 field_0x1A0;
+    u32 field_0x1A4;
+    u32 field_0x1A8;
+    u32 field_0x1AC;
+    u32 field_0x1B0;
+    u32 field_0x1B4;
+    u32 field_0x1B8;
+    u32 field_0x1BC;
+    u32 field_0x1C0;
+    u32 field_0x1C4;
+    u32 field_0x1C8;
+    u32 field_0x1CC;
+    u32 field_0x1D0;
+    u32 field_0x1D4;
+    u32 field_0x1D8;
+    u32 field_0x1DC;
+    u32 field_0x1E0;
+    u32 field_0x1E4;
+    u32 field_0x1E8;
+    u32 field_0x1EC;
+    u32 field_0x1F0;
+    u32 field_0x1F4;
+    u32 field_0x1F8;
+    u32 field_0x1FC;
+    u32 field_0x200;
+    u32 field_0x204;
+    u32 field_0x208;
+    u32 field_0x20C;
+    u32 field_0x210;
+    u32 field_0x214;
+    u32 field_0x218;
+    u32 field_0x21C;
+    u32 field_0x220;
+    u32 field_0x224;
+    u32 field_0x228;
+    u32 field_0x22C;
+    u32 field_0x230;
+    u32 field_0x234;
+    u32 field_0x238;
+    u32 field_0x23C;
+    u32 field_0x240;
+    u32 field_0x244;
+    u32 field_0x248;
+    s32 field_0x24C;
+    u32 field_0x250; // This field is accessed in the function
+    /* Padding for alignment */
+    u8 pad[0x10];
+} Unit;
+
 extern u32 lbl_80271FC0;
 
 extern f32 lbl_80369F3C;
@@ -3144,6 +3332,30 @@ void fn_800F9924(void *arg0) {
         return;
     }
     M2C_FIELD(arg0, u8 *, 0x251) = (u8) (M2C_FIELD(arg0, u8 *, 0x251) + 1);
+}
+
+void fn_800F9B58(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    s32 temp_r3;
+    s32 temp_r4;
+    s32 r30;
+    s32 r29;
+    
+    if (arg0 == 0) {
+        return;
+    }
+    
+    r30 = arg0;
+    r29 = 0;
+    
+    while (r30 != 0) {
+        temp_r3 = (s32)((u32)(r30 + 1) >> 1);
+        temp_r4 = (temp_r3 * (arg1 + arg1)) >> 1;
+        r30 = r30 - 1;
+        r29 = r29 + temp_r4;
+    }
+    
+    *(u32*)r29 = (arg2 * 16) + arg3;
 }
 
 void fn_800F9E64(void *arg0) {
