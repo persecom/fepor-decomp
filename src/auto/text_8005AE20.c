@@ -504,9 +504,8 @@ void fn_8005E0F0(void) {
 }
 
 u32 fn_8005E55C(void) {
-    u64 fn_8022C7E0(u32, u32);
-    OSGetTime();
-    return (u32)fn_8022C7E0(0, (*(u32 *)0x800000F8 >> 2));
+    s64 OSGetTime(void);
+    return OSGetTime() / (*(u32 *)0x800000F8 >> 2);
 }
 
 #pragma dont_inline on
