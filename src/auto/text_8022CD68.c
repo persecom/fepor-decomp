@@ -920,7 +920,6 @@ void fn_80251DEC(Voice *arg0, u32 *arg1) {
         arg0->unk17C = delta;
     }
     arg0->flags |= 0x2000;
-    return;
 }
 
 void fn_80251E88(Voice *arg0, u32 *arg1) {
