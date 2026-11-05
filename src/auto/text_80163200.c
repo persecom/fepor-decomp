@@ -579,6 +579,27 @@ void *fn_80177B00(void) {
     return &lbl_80278080[0x13d8];
 }
 
+u8 fn_80177B10(void) {
+    return 0;
+}
+
+u16 fn_80177C78(void) {
+    return *(u16 *)((char *)lbl_80278080 + 0x50A * 2);
+}
+
+void *fn_80177CA4(void) {
+    return (void *)&lbl_80278080[0x516];
+}
+
+void *fn_80177E74(void) {
+    extern u16 lbl_80278080[];
+    return &lbl_80278080[0x14e0];
+}
+
+void *fn_801780A8(void) {
+    return (char *)&lbl_80278080 + 0x55B;
+}
+
 s32 fn_80178664(void) {
     return 0;
 }
