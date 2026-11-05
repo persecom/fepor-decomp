@@ -7,6 +7,34 @@ extern s32 lbl_80367110;
 
 extern s32 lbl_80330708[];
 
+typedef struct {
+    void *unk0;
+    void *unk4;
+    void *unk8;
+    void *unkC;
+    void *unk10;
+    void *unk14;
+    void *unk18;
+    void *unk1C;
+    void *unk20;
+    void *unk24;
+    void *unk28;
+    void *unk2C;
+    void *unk30;
+    void *unk34;
+    void *unk38;
+    void *unk3C;
+    void *unk40;
+    s32 unk44;
+    s32 unk48;
+    s32 unk4C;
+    s32 unk50;
+    s32 unk54;
+    s32 unk58;
+    s32 unk5C;
+    // ... (more fields if needed)
+} UnitStruct;
+
 // Global data for this function
 u8 lbl_8028FDB0[0x10] = { 0 };
 u8 lbl_80292230[0x28] = { 0 };
@@ -67,6 +95,11 @@ void fn_80113658(void* arg0) {
         (*ptr)[6] = 0;
         (*ptr)[7] = 0;
     }
+}
+
+void fn_801136EC(void) {
+    lbl_80273DF8[0] = 0x2D004300;
+    lbl_80273DF8[1] = 0x42004100;
 }
 
 void fn_8011386C(void *arg0) {
@@ -860,6 +893,23 @@ u32 fn_8011D484(void) {
         }
     }
     return 0U;
+}
+
+extern u16 lbl_80274BB0[];
+void fn_8011D79C(s32 arg0) {
+    if (arg0 != 0) {
+        u16 *var_r4 = &lbl_80274BB0[arg0];
+        s32 temp_r3 = var_r4[0];
+        s32 temp_r5 = var_r4[1];
+        u16 *var_r8 = &lbl_80296128[temp_r3];
+        s32 temp_r7 = var_r8[1];
+        
+        if (temp_r7 != 0) {
+            if (temp_r5 == temp_r7) {
+                var_r4[2] = var_r8[2];
+            }
+        }
+    }
 }
 
 void fn_8011DCB4(void) {
