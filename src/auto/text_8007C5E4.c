@@ -545,6 +545,21 @@ s32 fn_80098094(void) {
     return lbl_80367500;
 }
 
+void *fn_8009809C(void) {
+    extern void *lbl_80367500;
+    extern void *lbl_80367504;
+    extern char lbl_803120C0[0x40];
+
+    u32* temp = (u32*)0x80330EAC;
+    if ((*temp & 0x100) != 0) {
+        return &lbl_803120C0 + 0x14;
+    }
+    if (lbl_80367504 == NULL) {
+        return lbl_80367500;
+    }
+    return lbl_80367504;
+}
+
 void *fn_800980D4(s32 arg0) {
     extern u16 lbl_803120C0[];
     return &lbl_803120C0[arg0 * 0x28];
@@ -854,10 +869,22 @@ void fn_8009E638(void) {
     *(u16*)((u8*)lbl_80312100 + 0xe) = 0;
 }
 
+void fn_8009E64C(void) {
+    s32 OSGetTick(M2C_UNK *);
+    extern M2C_UNK lbl_80312100;
+    M2C_FIELD(&lbl_80312100, s32 *, 0x1C) = (s32) (OSGetTick(&lbl_80312100) - M2C_FIELD(&lbl_80312100, s32 *, 0x1C));
+}
+
 void fn_8009E688(void) {
     extern u16 lbl_80312100;
     u32* ptr = (u32*)((char*)&lbl_80312100 + 0x1C);
     *ptr = OSGetTick();
+}
+
+void fn_8009E6B4(void) {
+    s32 OSGetTick(M2C_UNK *);
+    extern M2C_UNK lbl_80312100;
+    M2C_FIELD(&lbl_80312100, s32 *, 0x10) = (s32) (OSGetTick(&lbl_80312100) - M2C_FIELD(&lbl_80312100, s32 *, 0x10));
 }
 
 void fn_8009E6F0(void) {
@@ -870,10 +897,22 @@ void fn_8009E774(void) {
     *(u32*)((char*)&lbl_80312100 + 0x1C) = OSGetTick();
 }
 
+void fn_8009E7A0(void) {
+    s32 OSGetTick(M2C_UNK *);
+    extern M2C_UNK lbl_80312100;
+    M2C_FIELD(&lbl_80312100, s32 *, 8) = (s32) (OSGetTick(&lbl_80312100) - M2C_FIELD(&lbl_80312100, s32 *, 8));
+}
+
 void fn_8009E7DC(void) {
     extern u16 lbl_80312100[100];
     s32 tick = OSGetTick();
     lbl_80312100[0] = (u16)tick;
+}
+
+void fn_8009E808(void) {
+    s32 OSGetTick(M2C_UNK *);
+    extern M2C_UNK lbl_80312100;
+    M2C_FIELD(&lbl_80312100, s32 *, 4) = (s32) (OSGetTick(&lbl_80312100) - M2C_FIELD(&lbl_80312100, s32 *, 4));
 }
 
 void fn_8009E844(void) {
@@ -956,3 +995,4 @@ extern void *lbl_80367488;
 extern u32 lbl_80312040[8];
 extern u16 lbl_803674EC[0x32/2 + 1];
 extern u16 lbl_803120C0[0x10];
+extern u16 lbl_80312100[100];
