@@ -132,7 +132,7 @@ s32 fn_800B1BFC(s32 arg0)
 }
 
 s32 fn_800B1DEC(s32 arg0, s32 arg1) {
-    extern u16 lbl_80317338[0x26E8];
+    extern u16 lbl_80317338[];
     s32 temp;
     
     temp = (s32)lbl_80317338[arg0 * 0x14 + 0xF4 / 2];
