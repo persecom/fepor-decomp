@@ -887,9 +887,24 @@ s32 fn_800B8A28(u8 arg0, s32 arg1) {
     return 1;
 }
 
+s32 fn_800B8A5C(s32 arg0, s32 arg1, u32 arg2, s32 arg3, s32 arg4) {
+    M2C_UNK fn_801C1D54(s16, s16, u32, s32, s32, s32);
+    if ((arg2 < 0x80000000U) || (arg2 >= 0x81800000U)) {
+        return 0;
+    }
+    fn_801C1D54(arg0, arg1, arg2, arg3, arg4, fn_800C0658());
+    return 1;
+}
+
 s32 fn_800B8AD8(void) {
     M2C_UNK fn_801C18FC();
     fn_801C18FC();
+    return 1;
+}
+
+s32 fn_800B8AFC(s32 arg0) {
+    M2C_UNK fn_801C1970(s8);
+    fn_801C1970(arg0);
     return 1;
 }
 
