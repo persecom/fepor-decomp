@@ -2404,12 +2404,12 @@ void fn_800F09A8(s32 arg0) {
 
 void fn_800F0B18(u8 *arg0) {
     extern u8 lbl_8032B2B8[];
-    u8 *p;
     s32 i;
+    u8 *p;
     s8 dx;
     s8 dy;
 
-    for (i = 0, p = lbl_8032B2B8; i < (s8)lbl_8032B2B8[0x100]; i++, p++) {
+    for (i = 0, p = lbl_8032B2B8; i < (s8)lbl_8032B2B8[0x100]; p++, i++) {
         dx = p[1] - p[0];
         dy = p[0x41] - p[0x40];
         if (dx < 0) {
