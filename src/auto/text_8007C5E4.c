@@ -596,6 +596,54 @@ void fn_8009149C(s32 arg0, s32 arg1) {
     fn_801B79A0((u8 *)&lbl_8026CD60 + 0x1AC, temp_r31, 0);
 }
 
+void fn_80091518(void **arg0, s32 arg1, s32 arg2) {
+    void fn_8000D864(s32, void *);
+    void fn_8000D910(void *, s32, void *);
+    s32 fn_8001D070(void **, s32);
+    s32 fn_8001D2C8(void **);
+    s32 fn_80105BC0(s32, s32);
+    void fn_801B79A0(void *, s32, s32);
+    void fn_80231E74(void *, s32, void *, s32, s32, s32);
+    extern u8 lbl_8026CD60[];
+    
+    void *temp_r3;
+    s32 temp_r31;
+    u8 var_r30;
+    
+    temp_r3 = *arg0;
+    if (temp_r3 != NULL) {
+        var_r30 = *(u8 *)((uintptr_t)temp_r3 + 0x15);
+    } else {
+        var_r30 = 0;
+    }
+    
+    temp_r31 = fn_8001D2C8(arg0);
+    fn_80231E74(&temp_r31, 0x80, lbl_8026CD60 + 0x214, fn_8001D070(arg0, 0), temp_r31, var_r30 + 0x60);
+    fn_8000D864(0, &temp_r31);
+    fn_8000D910(lbl_8026CD60 + 0x25A, fn_80105BC0(arg2 + 0x1BC, 1), lbl_8026CD60);
+    fn_801B79A0(lbl_8026CD60 + 0x23E, arg1, 0);
+}
+
+void fn_800916B8(void **arg0, s32 arg1, s32 arg2) {
+    void *temp_r3;
+    u8 var_r30;
+
+    temp_r3 = *arg0;
+    if (temp_r3 != NULL) {
+        var_r30 = *(u8 *)((char *)temp_r3 + 0x15);
+    } else {
+        var_r30 = 0;
+    }
+    
+    fn_80231E74((void *)0x80, (void *)0, (u8 *)0x214, 
+                fn_8001D070(arg0, 0), fn_8001D2C8(arg0), var_r30 + 0x60);
+    
+    fn_8000D864(0, (void *)0);
+    
+    fn_8000D910((void *)0x270, fn_80105BC0(arg2 + 0x1BC, 1), (void *)0);
+    fn_801B79A0((void *)0x23E, arg1, 0);
+}
+
 void fn_80091858(void) {
     extern u32 lbl_803120A0[8];
     extern u32 lbl_80289A38[10];
@@ -727,6 +775,31 @@ u8 fn_80092F38(void *arg0) {
     }
 
     return var_r4;
+}
+
+s32 fn_80093088(void *arg0) {
+    s32 i = 0;
+    for (;;) {
+        if (*(u32 *)fn_80037BBC(arg0, i) != 0)
+            break;
+        i++;
+        if (i == 4) {
+            i = -1;
+            break;
+        }
+    }
+    if (i == 0) {
+        if (*(u32 *)((u8 *)arg0 + 0x1ec) != 0)
+            return 0;
+        if (*(u32 *)((u8 *)arg0 + 0x1f4) != 0)
+            return 1;
+        if (*(u32 *)((u8 *)arg0 + 0x1fc) != 0)
+            return 2;
+        if (*(u32 *)((u8 *)arg0 + 0x204) != 0)
+            return 3;
+        return -1;
+    }
+    return -1;
 }
 
 void fn_80093154(s32 arg0, u8 arg1, s32 arg2) {
@@ -1578,3 +1651,4 @@ typedef struct {
 } SomeStruct;
 extern u16 lbl_803120A0[8];
 extern s32 lbl_803674F8;
+extern u8 lbl_8026CD60[];
