@@ -54,6 +54,81 @@ void __kill_critical_regions(void) {
 
 }
 
+s32 fn_802342B8(u8 *arg0, u8 *arg1) {
+    register u8 *left = arg0;
+    register u8 *right = arg1;
+    u32 align;
+    u32 mask;
+    register u32 l1;
+    register u32 r1;
+    register s32 x;
+
+    l1 = *left;
+    x = l1 - *right;
+    if (x != 0) {
+        return x;
+    }
+    if ((align = (u32)left & 3) != ((u32)right & 3)) {
+        goto bytecopy;
+    }
+    if (align != 0) {
+        if (l1 == 0) {
+            return 0;
+        }
+        for (align = 3 - align; align != 0; align--) {
+            l1 = *(++left);
+            r1 = *(++right);
+            x = l1 - r1;
+            if (x != 0) {
+                return x;
+            }
+            if (l1 == 0) {
+                return 0;
+            }
+        }
+        left++;
+        right++;
+    }
+    l1 = *(u32 *)left;
+    mask = 0x80808080;
+    r1 = *(u32 *)right;
+    if ((l1 - 0x01010101) & mask) {
+        goto adjust;
+    }
+    while (l1 == r1) {
+        left += 4;
+        right += 4;
+        l1 = *(u32 *)left;
+        r1 = *(u32 *)right;
+        if ((l1 - 0x01010101) & mask) {
+            goto adjust;
+        }
+    }
+    if (l1 > r1) {
+        return 1;
+    }
+    return -1;
+
+adjust:
+    l1 = *left;
+    x = l1 - *right;
+    if (x != 0) {
+        return x;
+    }
+bytecopy:
+    if (l1 == 0) {
+        return 0;
+    }
+    do {
+        l1 = *(++left);
+        x = l1 - *(++right);
+        if (x != 0) {
+            return x;
+        }
+    } while (l1 != 0);
+    return 0;
+}
+
 s32 fn_80235A7C(s32 arg0, s32 arg1, s32 *arg2, s32 arg3) {
     s32 fn_80203AAC();
     M2C_UNK fn_8022B530(s32, s32, s32 *, s32);
@@ -1467,6 +1542,30 @@ void fn_80265430(s32 arg0) {
         }
         *(u8 *) *(u32 *) (temp_r3 + 0x14) = *(u8 *) (temp_r3 + 7) & 0x3A;
     }
+}
+
+s32 fn_80265C34(s32 arg0, s32 arg1) {
+    s32 *var_r3;
+    s32 temp_r3;
+    s32 var_r4;
+    s32 var_r5;
+    
+    temp_r3 = arg0 + 1;
+    if (arg0 != -1) {
+        var_r3 = (s32 *) fn_8026367C();
+        if (var_r3 == NULL) {
+            return 0;
+        }
+        temp_r3 = arg0 & 0xFF;
+        var_r4 = *(var_r3 + 0x18/4) >> 8;
+        var_r5 = arg1 - var_r4;
+        if (var_r5 >= 0) {
+            if ((u32) var_r5 < (u32) *(var_r3 + 0x1C/4)) {
+                return 1;
+            }
+        }
+    }
+    return temp_r3;
 }
 
 void fn_802668D4(s32 arg0) {
