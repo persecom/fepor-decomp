@@ -250,6 +250,12 @@ void fn_80077008(void) {
     fn_80007668(&sp8);
 }
 
+s32 fn_800773C8(void) {
+    extern u8 lbl_802EF4C8[24];
+    lbl_802EF4C8[8] = 0x11;
+    return 5;
+}
+
 s32 fn_80077560(void) {
     return 0xB;
 }
