@@ -2380,6 +2380,19 @@ s32 fn_80180E2C(s32 arg0) {
     return 0;
 }
 
+#pragma cplusplus on
+extern "C" void fn_80180ED4(void *arg0) {
+    struct Obj {
+        u8 pad[0x40];
+        virtual void v0(s32) = 0;
+    };
+    if (M2C_FIELD(arg0, u32 *, 0x44) != 0) {
+        fn_8003F670(M2C_FIELD(arg0, u32 *, 0x44));
+    }
+    ((Obj *)arg0)->v0(-1);
+}
+#pragma cplusplus reset
+
 s32 fn_8018256C(void) {
     return 1;
 }
