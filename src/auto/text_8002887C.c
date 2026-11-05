@@ -148,6 +148,15 @@ void fn_8002E648(void) {
     fn_8014D3B4(lbl_80330708);
 }
 
+void fn_8002E738(s32 arg0) {
+    M2C_UNK fn_8000CAA0(void *, s32);
+    extern u8 lbl_80330708[];
+    extern u8 lbl_80284AC8[];
+    if (lbl_80330708[lbl_80330708[0x11] + 0x14] == 1) {
+        fn_8000CAA0(lbl_80284AC8, arg0);
+    }
+}
+
 s32 fn_8002EA74(void) {
     return 0;
 }
