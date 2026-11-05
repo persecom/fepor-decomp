@@ -1638,6 +1638,16 @@ s32 fn_800FC5F8(void) {
     return lbl_80367904;
 }
 
+u16 fn_800FCF48(s8 arg0, s8 arg1) {
+    extern u16 lbl_802CA518[];
+    s32 temp_r3;
+    s32 temp_r4;
+    
+    temp_r4 = (arg0 + (arg1 << 6)) * 2;
+    temp_r3 = (s32)lbl_802CA518 + 0x10000 + temp_r4;
+    return *(u16*)((char*)temp_r3 - 0x5E72);
+}
+
 s32 fn_800FE8E8(void *arg0, void *arg1) {
     return (u32) M2C_FIELD(arg0, u32 *, 0x24C) < (u32) M2C_FIELD(arg1, u32 *, 0x24C);
 }
