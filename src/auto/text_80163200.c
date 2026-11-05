@@ -238,11 +238,9 @@ void fn_8017BE00(void *arg0) {
 
 void fn_8017C028(void *arg0) {
     s32 temp_r5;
-    u8 temp_r4;
-    
-    temp_r5 = *(s32 *)((u8 *)arg0 + 0x30);
-    temp_r4 = *(u8 *)((u8 *)arg0 + 0x38 + 0x18);
-    fn_80105D4C(temp_r5 + 0x1BC, temp_r4, temp_r5);
+
+    temp_r5 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s32 *, 0x4C);
+    fn_80105D4C(temp_r5 + 0x1BC, M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), u8 *, 0x18), temp_r5);
 }
 
 void fn_8017C0EC(void *arg0) {
