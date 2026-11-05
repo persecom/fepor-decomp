@@ -400,7 +400,6 @@ block_9:
 
 s32 fn_80078E24(void *arg0) {
     fn_80006220((s16) ((u32) *M2C_FIELD(arg0, u32 **, 4) >> 0x10U));
-    M2C_UNK fn_80006220(s16);
     M2C_FIELD(arg0, u32 **, 4) = (u32 *) (M2C_FIELD(arg0, u32 **, 4) + 4);
     return 1;
 }
