@@ -29,9 +29,11 @@ void fn_800ADC9C(s32 arg0) {
     M2C_UNK fn_8019B6B4(s32, void (*)(void));
     M2C_UNK fn_801A4958(void *);
     M2C_UNK fn_801A75DC(void *, u8 *, s32);
+    u8 *p;
 
     fn_8002F62C(lbl_802EF4E0);
-    fn_801A75DC(lbl_80330EAC, fn_8002F740(), -1);
+    p = fn_8002F740();
+    fn_801A75DC(lbl_80330EAC, p, -1);
     fn_801A4958(lbl_80330EAC);
     fn_8019B6B4(arg0, fn_800ADD04);
 }
