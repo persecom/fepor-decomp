@@ -158,6 +158,26 @@ void fn_80017BFC(void) {
     fn_8001840C();
 }
 
+void fn_800187F0(void) {
+    void *p;
+
+    p = (void *)lbl_803671C4;
+    if (p != NULL) {
+        M2C_FIELD(p, f32 *, 0x4C) = M2C_FIELD(lbl_80330708, f32 *, 0x52C);
+        M2C_FIELD(p, f32 *, 0x50) = M2C_FIELD(lbl_80330708, f32 *, 0x530);
+        M2C_FIELD(p, f32 *, 0x54) = M2C_FIELD(lbl_80330708, f32 *, 0x53C);
+        M2C_FIELD(p, f32 *, 0x40) = M2C_FIELD(p, f32 *, 0x4C);
+        M2C_FIELD(p, f32 *, 0x44) = M2C_FIELD(p, f32 *, 0x50);
+        M2C_FIELD(p, f32 *, 0x48) = M2C_FIELD(p, f32 *, 0x54);
+    }
+    p = (void *)lbl_803671C4;
+    if (p != NULL) {
+        M2C_FIELD(p, f32 *, 0x10) = M2C_FIELD(p, f32 *, 0x4);
+        M2C_FIELD(p, f32 *, 0x14) = M2C_FIELD(p, f32 *, 0x8);
+        M2C_FIELD(p, f32 *, 0x18) = M2C_FIELD(p, f32 *, 0xC);
+    }
+}
+
 s32 fn_80018A08(u8 arg0) {
     f32 var_f2;
     
