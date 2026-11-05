@@ -139,6 +139,23 @@ s32 fn_800B1BFC(s32 arg0)
     return val;
 }
 
+void fn_800B1D68(s32 arg0, u8 arg1) {
+    void fn_8024B654(u32, s32, u8);
+    extern u8 lbl_80317338[];
+    u8 *entry;
+    u32 handle;
+
+    entry = M2C_FIELD(lbl_80317338, u8 **, 0xF4) + arg0 * 0x14;
+    handle = M2C_FIELD(entry, u32 *, 0xC);
+    if (handle != 0xFFFFFFFF) {
+        M2C_FIELD(entry, u16 *, 4) = arg1;
+        fn_8024B654(handle, 7, arg1);
+        if (M2C_FIELD(lbl_80317338, u16 *, 0x12C) != 0) {
+            fn_8024B654(handle, 7, 0);
+        }
+    }
+}
+
 s32 fn_800B1DEC(s32 arg0, s32 arg1) {
     extern u16 lbl_80317338[];
     s32 temp;
