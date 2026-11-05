@@ -1475,6 +1475,18 @@ void fn_800C2930(s32 arg0, s32 arg1) {
     fn_8017A810(arg1, 0x480, arg0);
 }
 
+void fn_800C2980(s32 arg0, s32 arg1) {
+    M2C_UNK fn_8017A430(s32, s32, s32);
+    M2C_UNK fn_801A7CDC(void *);
+    extern u8 lbl_80330EAC[];
+    fn_801A7CDC(lbl_80330EAC);
+    fn_8017A430(arg1, 0x480, arg0);
+}
+
+s32 fn_800C29D0(s32 arg0, s32 arg1) {
+    return arg0 + (((arg1 - 1) * 0x18) + 0x14);
+}
+
 s32 fn_800C30CC(s32 arg0, s32 arg1) {
     return arg0 + ((arg1 - 1) * 0x18);
 }
