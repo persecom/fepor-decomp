@@ -1,5 +1,6 @@
 /* Functions from 0x801B3258 to 0x801E4380, found by decomp-toolkit. */
 #include "common.h"
+extern s32 lbl_8032FF08;
 extern u16 lbl_80331D00[];
 
 typedef struct {
@@ -664,6 +665,20 @@ s32 fn_801CF614(void *arg0) {
         return 0;
     }
     return -1;
+}
+
+void fn_801CF92C(void *arg0) {
+    void *temp_r4;
+    u8 temp_r4_2;
+
+    temp_r4 = (u16 *)&lbl_80331D00 + (M2C_FIELD(arg0, u8 *, 0x30) * 0x2B8);
+    if (!(M2C_FIELD(temp_r4, s32 *, 8) & 1)) {
+        fn_8000C188();
+        return;
+    }
+    fn_801D15D4(temp_r4);
+    temp_r4_2 = M2C_FIELD(arg0, u8 *, 0x30);
+    fn_801D107C((u16 *)&lbl_80331D00 + (temp_r4_2 * 0x2B8), temp_r4_2);
 }
 
 void fn_801CFC4C(void *arg0, s16 arg1) {
