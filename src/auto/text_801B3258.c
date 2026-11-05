@@ -1310,7 +1310,6 @@ void fn_801DDAC8(void *arg0) {
 
 extern void *lbl_801D3B14;
 #pragma use_lmw_stmw on
-#pragma opt_loop_invariants off
 void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     void *memset(void *, s32, u32);
     void *memcpy(void *, const void *, u32);
