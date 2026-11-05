@@ -28,28 +28,6 @@ void **fn_80037BBC(void *, s32);
 u8 fn_8009326C(void *, void *);
 extern char lbl_80273304[];
 
-static inline void CheckStatusStaves(void *unit) {
-    s32 i;
-    void **item;
-
-    for (i = 0; i < 4; i++) {
-        item = fn_80037BBC(unit, i);
-        if (*item == NULL) {
-            break;
-        }
-        if (fn_8009326C(unit, *item)) {
-            M2C_FIELD(unit, u32 *, 0x254) |= 0x200;
-            if (IsItemNamed(*item, lbl_80273304 + 0xF9)) {
-                M2C_FIELD(unit, u32 *, 0x254) |= 0x400;
-            } else if (IsItemNamed(*item, lbl_80273304 + 0x105)) {
-                M2C_FIELD(unit, u32 *, 0x254) |= 0x800;
-            } else if (IsItemNamed(*item, lbl_80273304 + 0x10F)) {
-                M2C_FIELD(unit, u32 *, 0x254) |= 0x1000;
-            }
-        }
-    }
-}
-
 static inline u8 GetItemUnk1D(void *item) {
     if (item != NULL) {
         return M2C_FIELD(item, u8 *, 0x1D);
