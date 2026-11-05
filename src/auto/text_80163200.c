@@ -2580,6 +2580,7 @@ void fn_801812CC(void *arg0) {
         fn_8000C188(arg0);
     }
 }
+#pragma opt_common_subs reset
 
 #pragma cplusplus on
 extern "C" s32 fn_80036A24(s32, s16);
