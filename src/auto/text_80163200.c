@@ -39,6 +39,10 @@ loop_18:
     M2C_FIELD(arg0, s16 *, 0x4C) = var_r3;
 }
 
+void fn_80164A24(void *arg0) {
+    fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58));
+}
+
 s32 fn_801651D0(void) {
     return 0x18;
 }
@@ -85,6 +89,43 @@ void fn_80165B1C(void) {
     M2C_UNK fn_800472D4();
     fn_80040844();
     fn_800472D4();
+}
+
+void fn_8016746C(void *arg0, s32 arg1, s32 arg2, f32 farg0, f32 farg1) {
+    void *fn_8000C0C0(void *, void *);
+    void fn_8000CAF0(void *, s32);
+    void fn_8005C8B4(void *);
+    void fn_801475FC(void *, s32);
+    void fn_80166DD0(void *, s32, f32, f32);
+    void *memset(void *, s32, s32);
+    extern u8 lbl_80293D20[];
+    extern u8 lbl_80330D68[];
+    extern u8 lbl_80277A20[];
+    extern f32 lbl_8036A92C;
+    
+    void *temp_r3 = fn_8000C0C0(lbl_80293D20, lbl_80293D20);
+    
+    if (temp_r3 == NULL) {
+        return;
+    }
+    
+    if (*(u8*)((u8*)temp_r3 + 0x2E) != 0) {
+        return;
+    }
+    
+    fn_8000CAF0(lbl_80293D20, arg1);
+    memset(lbl_80330D68, 0, 0x124);
+    
+    *(f32*)((u8*)arg0 + 0xDC) = farg0;
+    *(f32*)((u8*)arg0 + 0xE0) = farg1;
+    *(f32*)((u8*)arg0 + 0xF4) = farg0;
+    *(f32*)((u8*)arg0 + 0xF8) = farg1;
+    *(f32*)((u8*)arg0 + 0x10C) = lbl_8036A92C;
+    *(f32*)((u8*)arg0 + 0x110) = lbl_8036A92C;
+    
+    fn_8005C8B4(lbl_80277A20 + 0x42);
+    fn_801475FC(lbl_80277A20 + 0x52, 0x64);
+    fn_80166DD0(arg0, arg2, farg0, farg1);
 }
 
 void fn_80168F54(s32 arg0) {
@@ -282,6 +323,46 @@ void fn_80172C44(void *arg0) {
 void fn_801731FC(void *arg0) {
     M2C_UNK fn_8000A430(s32);
     fn_8000A430(M2C_FIELD(arg0, s32 *, 0x5C));
+}
+
+void fn_801734D8(void *arg0) {
+    s32 temp_r30;
+    void **temp_r31;
+    void **temp_r3;
+    void *temp_r4;
+    void fn_80143570(s32);
+    void fn_801436AC(s32);
+    void fn_80143784(s32, s32);
+    void fn_80143C9C(s32);
+    void fn_8000CAA0(void *, void *);
+    void fn_8000C188(void *);
+    void fn_8013FEC0(void *);
+
+    extern u32 lbl_802EF4C8[];
+    extern u8 lbl_80294B10[];
+
+    temp_r3 = (void **)((u32 *)arg0 + 0x4C / sizeof(u32));
+    temp_r31 = (void **)((u32 *)arg0 + 0x50 / sizeof(u32));
+    ((void (*)(void **, s32))((u32 *)*temp_r3)[0x34 / sizeof(u32)])(temp_r3, lbl_802EF4C8[0]);
+    ((void (*)(void **, s32))((u32 *)*temp_r31)[0x34 / sizeof(u32)])(temp_r31, lbl_802EF4C8[1]);
+    temp_r30 = ((s32 *)arg0)[0x54 / sizeof(s32)];
+    fn_80143784(temp_r30, lbl_802EF4C8[0]);
+    fn_80143784(temp_r30, lbl_802EF4C8[1]);
+    fn_80143570(temp_r30);
+    // Simple loop without complex field access
+    {
+        s8 i;
+        for (i = 0; i < 8; i++) {
+            temp_r4 = *(void**)((u32*)arg0 + 0x68 / sizeof(u32));
+            if ((u32)temp_r4 != 0U) {
+                fn_801436AC(temp_r30);
+            }
+        }
+    }
+    fn_80143C9C(temp_r30);
+    fn_8013FEC0(arg0);
+    fn_8000CAA0(lbl_80294B10, arg0);
+    fn_8000C188(arg0);
 }
 
 s32 fn_80178664(void) {
