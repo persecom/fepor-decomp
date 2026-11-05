@@ -852,13 +852,13 @@ void fn_801D88B0(s8 *arg0, s8 arg1) {
     *arg0 = arg1;
 }
 
-void fn_801D8C0C(void *arg0, s16 arg1) {
-    s16 *ptr = (s16 *)arg0;
-    memset(arg0, 0, 0x4C);
-    ptr[1] = 0;
-    ptr[0] = 0;
-    ptr[4] = arg1;
-    ptr[1] = 0x64;
+void fn_801D8C0C(void *arg0, s16 arg1)
+{
+  memset(arg0, 0, 0x4C);
+  *((s16 *) (((char *) arg0) + 2)) = 0;
+  *((s16 *) (((char *) arg0) + 0)) = 0;
+  *((s16 *) (((char *) arg0) + 8)) = arg1 ^ 0;
+  *((s16 *) (((char *) arg0) + 2)) = 0x64;
 }
 
 void fn_801D8D58(void *arg0) {
@@ -1044,6 +1044,18 @@ void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
         w->flags |= 2;
     }
     fn_801DC588(w);
+}
+
+void fn_801DDDE8(s32 arg0) {
+    void *fn_8000CAA0(M2C_UNK *, M2C_UNK *);
+    extern M2C_UNK lbl_80299C74;
+    extern f32 lbl_8036B634;
+    extern f64 lbl_8036B670;
+    void *temp_r3;
+
+    temp_r3 = fn_8000CAA0(&lbl_80299C74, &lbl_80299C74);
+    M2C_FIELD(temp_r3, f32 *, 0x30) = lbl_8036B634;
+    *(f32*)((char*) temp_r3 + 0x34) = (f32) arg0;
 }
 
 void fn_801DDE44(void *arg0) {
