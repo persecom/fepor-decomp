@@ -219,6 +219,22 @@ void fn_8016A57C(void *arg0) {
     }
 }
 
+void fn_8016A5DC(void *arg0, void *arg1, f32 arg2) {
+    M2C_UNK fn_80109020(void *);
+    s32 fn_80109180(void *, void *);
+    M2C_UNK fn_80109A54(s32, s32, f32);
+    void *p;
+
+    p = M2C_FIELD(arg0, void **, 0x40);
+    if (p != NULL) {
+        fn_80109020(p);
+    }
+    if (arg1 != NULL) {
+        M2C_FIELD(arg0, void **, 0x40) = arg1;
+        fn_80109A54(fn_80109180(arg1, arg0), 2, arg2);
+    }
+}
+
 void fn_8016B5E8(void) {
     M2C_UNK fn_8004327C();
     fn_80040844();
