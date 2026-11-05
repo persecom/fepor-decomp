@@ -1702,7 +1702,7 @@ void fn_801DF4A4(void *arg0, s32 arg1) {
     fn_80161AA8(0x10, arg1, h - 0x10, arg1, 0x10, &col);
 }
 
-extern u8 lbl_80299F4C[16];
+extern u8 lbl_80299F4C[];
 void fn_801DF5D8(void) {
     extern u8 lbl_80299F4C[];
     void fn_8000CAA0(void *);
