@@ -927,9 +927,9 @@ loop_4:
 }
 
 s32 fn_80061824(s32 arg0) {
-    extern void* lbl_8026B590;
+    extern char lbl_8026B590[];
     if (arg0 == 0) {
-        fn_8006DA64(&lbl_8026B590 + 0x28, 0x50, &lbl_8026B590 + 0xAB);
+        fn_8006DA64(lbl_8026B590 + 0x28, 0x50, lbl_8026B590 + 0xAB);
     }
     return fn_800618E4(arg0);
 }
