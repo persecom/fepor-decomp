@@ -1397,6 +1397,39 @@ s32 fn_800BC82C(u8 arg0, s32 arg1) {
     return fn_80093010(var_r31, fn_80019E04(arg1));
 }
 
+s32 fn_800BCF44(u8 arg0) {
+    M2C_UNK fn_8003868C(void *);
+    extern u8 lbl_802B14E4[];
+    void *unit;
+
+    if (arg0 != 0) {
+        unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
+    } else {
+        unit = NULL;
+    }
+    if (unit == NULL) {
+        return 0;
+    }
+    fn_8003868C(unit);
+    return 0;
+}
+
+s32 fn_800BD034(u8 arg0) {
+    s8 fn_8003B2D0(void *);
+    extern u8 lbl_802B14E4[];
+    void *unit;
+
+    if (arg0 != 0) {
+        unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
+    } else {
+        unit = NULL;
+    }
+    if (unit == NULL) {
+        return 0;
+    }
+    return fn_8003B2D0(unit);
+}
+
 u8 fn_800BD5AC(void) {
     void *fn_80016BDC();
     void *temp_r3;
