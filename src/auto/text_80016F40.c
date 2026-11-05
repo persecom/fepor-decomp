@@ -64,6 +64,17 @@ void fn_8001753C(s16 *arg0) {
     *arg0 = fn_8000CEE4(0xE4C);
 }
 
+s32 fn_8001772C(void) {
+    void *fn_8000C0C0(void *);
+    void *p;
+
+    p = fn_8000C0C0(lbl_802841B0);
+    if (p != NULL && M2C_FIELD(p, u8 *, 0x3C) == 0) {
+        return 1;
+    }
+    return 0;
+}
+
 void fn_80017774(void) {
     fn_8000BF00(&lbl_802841B0);
 }
