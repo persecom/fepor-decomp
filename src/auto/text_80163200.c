@@ -38,6 +38,11 @@ s32 fn_8017DF4C(void) {
     return 0;
 }
 
+void fn_8017E8A0(void) {
+    M2C_UNK fn_8017E8C0();
+    fn_8017E8C0();
+}
+
 s32 fn_8018256C(void) {
     return 1;
 }
