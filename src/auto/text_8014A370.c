@@ -522,3 +522,6 @@ void fn_8014DFE8(s32 arg0) {
 }
 extern u16 lbl_80367B14;
 extern u16 lbl_80367B14;
+#include "common.h"
+extern f32 lbl_8036A7F0;
+extern u8 lbl_802CA518[];
