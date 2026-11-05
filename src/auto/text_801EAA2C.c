@@ -138,6 +138,11 @@ void *fn_801EC654(void) {
     return (void *)&lbl_8027EE08[0x2E4];
 }
 
+void fn_801EC690(void) {
+    extern u16 lbl_8027EE08[];
+    fn_8000E0E4(&lbl_8027EE08[0x2F0 / sizeof(u16)]);
+}
+
 void *fn_801EC6BC(void) {
     extern u16 lbl_8027EE08[];
     return &lbl_8027EE08[0x5FB];
