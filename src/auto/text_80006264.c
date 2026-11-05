@@ -316,6 +316,10 @@ s32 fn_80009E64(s32 arg0, s32 arg1, u32 arg2) {
     return 1;
 }
 
+void fn_80009EB0(s8 arg0) {
+    *(u8*)((u8*)lbl_80367140 + 0x22) = arg0;
+}
+
 void fn_80009F90(s32 arg0, s32 arg1) {
  extern void fn_8006ECCC(s32 *, s32);
  s32 sp[8]; u32 *p=(u32*)0x80367140;
@@ -325,6 +329,8 @@ void fn_80009F90(s32 arg0, s32 arg1) {
  *(u16*)((u8*)p+0x20)=(*(u16*)((u8*)p+0x20)&0xFFFF7B0C);
  *(u16*)((u8*)p+0x20)=(*(u16*)((u8*)p+0x20)|arg1);
 }
+
+void fn_8000A174(void *arg0,u16 arg1){void fn_80006298(void*,s32,u32);u16 var_r31;var_r31=arg1;if(arg0){M2C_FIELD(lbl_80367140,s32*,52)=M2C_FIELD(arg0,s32*,0);M2C_FIELD(lbl_80367140,s32*,56)=M2C_FIELD(arg0,s32*,4);M2C_FIELD(lbl_80367140,s32*,60)=M2C_FIELD(arg0,s32*,8);M2C_FIELD(lbl_80367140,s32*,64)=M2C_FIELD(arg0,s32*,12);M2C_FIELD(lbl_80367140,s32*,68)=M2C_FIELD(arg0,s32*,16);M2C_FIELD(lbl_80367140,s32*,72)=M2C_FIELD(arg0,s32*,20);M2C_FIELD(lbl_80367140,s32*,76)=M2C_FIELD(arg0,s32*,24);M2C_FIELD(lbl_80367140,s32*,80)=M2C_FIELD(arg0,s32*,28);}else{fn_80006298((u8*)lbl_80367140+52,0,44);if((var_r31&3)==0)var_r31=(var_r31&0xFFFC)|2;}M2C_FIELD(lbl_80367140,s8*,34)=0xFF;M2C_FIELD(lbl_80367140,u16*,32)=M2C_FIELD(lbl_80367140,u16*,32)&0xFFFF7B0C;M2C_FIELD(lbl_80367140,u16*,32)=M2C_FIELD(lbl_80367140,u16*,32)|var_r31;}
 
 void fn_8000A248(void) {
     lbl_80367140 = 2;
@@ -829,6 +835,45 @@ void fn_8000CD80(s32 arg0) {
     lbl_80367158 = arg0;
 }
 
+s32 fn_8000CD88(s32 arg0) {
+    extern u16 lbl_80367150[4];
+    u16 temp_r0;
+    u16 temp_r5;
+    u16 temp_r7;
+    u16 temp_r9;
+    u16 temp_r8;
+    s32 temp_r6;
+    u32 temp_r8_2;
+    u16 temp_r5_2;
+    
+    temp_r5 = lbl_80367150[2] >> 5;
+    temp_r0 = (lbl_80367150[0]) & 0x7FFF;
+    temp_r7 = (lbl_80367150[1]) << 0xB;
+    lbl_80367150[2] = temp_r5 + temp_r7;
+    temp_r9 = ((u16) (temp_r7 + (temp_r0 >> 5))) ^ lbl_80367150[2];
+    lbl_80367150[2] = temp_r9;
+    if ((lbl_80367150[0]) & 0x8000) {
+        lbl_80367150[2] = (u16)(temp_r9 + 1);
+    }
+    temp_r8 = (lbl_80367150[2]);
+    temp_r5_2 = (lbl_80367150[1]) * 2;
+    lbl_80367150[1] = temp_r8;
+    temp_r0 = lbl_80367150[0] & 0x7FFF;
+    temp_r6 = (s32)(temp_r0 << 0xB);
+    lbl_80367150[0] = temp_r9;
+    lbl_80367150[2] = temp_r5_2;
+    if ((lbl_80367150[0]) & 0x8000) {
+        lbl_80367150[2] = (u16)(temp_r5_2 + 1);
+    }
+    temp_r7 = ((u16) (temp_r6 + (temp_r0 >> 5))) ^ lbl_80367150[2];
+    lbl_80367150[2] = temp_r7;
+    lbl_80367150[1] = lbl_80367150[0];
+    lbl_80367150[0] = temp_r7;
+    temp_r8_2 = (temp_r8 * 0x64U) / (u32)0x10000;
+    temp_r8_2 += (temp_r0 * 0x64U) / (u32)0x10000;
+    return ((s32)((temp_r8_2 >> 0x1F) + temp_r8_2) >> 1) < arg0;
+}
+
 s32 fn_8000CE68(s32 arg0) {
     extern u16 lbl_80367150[4];
     u16 temp_r0;
@@ -1021,3 +1066,6 @@ extern u16 lbl_802A66D8[];
 extern u16 lbl_802A66D8[0x7000];
 #include "global.h"
 extern u16 lbl_802A66D8[0x7000];
+typedef struct NodeD1D0 { struct NodeD1D0 *next; u32 hash; u8 pad[0x4]; struct NodeD1D0 *bucketNext; } NodeD1D0;
+typedef struct BucketD1D0 { u8 pad[8]; NodeD1D0 *head; u8 tail[0x7f4]; s32 count; } BucketD1D0;
+extern BucketD1D0 lbl_802ADB20[255];
