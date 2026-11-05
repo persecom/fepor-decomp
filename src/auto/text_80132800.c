@@ -1599,7 +1599,6 @@ extern "C" void *fn_8013F038(void *arg0, s16 arg1, u8 arg2) {
 #pragma cplusplus off
 
 #pragma cplusplus on
-extern "C" void fn_8013FC68(void ***, s32 *, void ***);
 #pragma cplusplus on
 void fn_8013F0F0(void) {
     return;
