@@ -2,6 +2,9 @@
 #include "common.h"
 #include "structs.h"
 
+extern s8 lbl_803678BC;
+extern s8 lbl_803678BD;
+extern s8 lbl_803678BF;
 extern s32 lbl_8028D788;
 extern void (*lbl_802B14E4)(void **);
 
@@ -50,6 +53,13 @@ s32 fn_800C4638(s32 arg0) {
     s32 fn_800C5A48(s32, s32);
     extern s32 lbl_80367870;
     return fn_800C5A48(lbl_80367870, arg0) + 0x20;
+}
+
+void fn_800C4728(s32 arg0) {
+    extern u16 lbl_80320B88[];
+    extern s32 lbl_80367870;
+    s32 temp = (arg0 * 2);
+    lbl_80367870 = (s32)lbl_80320B88[temp];
 }
 
 void fn_800C47E8(void) {
@@ -1345,6 +1355,10 @@ s16 fn_800F8318(void *arg0) {
 
 s16 fn_800F8320(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0x298);
+}
+
+s32 fn_800F8328(void *arg0, s32 arg2, s32 arg3) {
+    return *(u32*)((u8*)arg0 + 4) & arg3;
 }
 
 s16 fn_800F833C(void *arg0) {
