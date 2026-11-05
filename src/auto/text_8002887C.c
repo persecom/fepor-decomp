@@ -1,6 +1,8 @@
 /* Functions from 0x8002887C to 0x80033080, found by decomp-toolkit. */
 #include "common.h"
 
+extern M2C_UNK lbl_802EF4C8;
+
 void fn_80029784(void) {
     u8 fn_800AA188();
     M2C_UNK fn_800F214C();
