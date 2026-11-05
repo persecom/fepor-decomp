@@ -366,6 +366,13 @@ void fn_801CB280(s32 arg1) {
     fn_800C9B6C(arg1);
 }
 
+void fn_801CCEA8(void* arg0, int arg1) {
+    short val1 = *(short*)((char*)arg0 + 0x48);
+    short val2 = *(short*)((char*)arg0 + 0x4a);
+    void* vtable_ptr = *(void**)((char*)arg0 + 0x3c);
+    fn_801CD480((int)vtable_ptr, val1, val2);
+}
+
 void *fn_801CCF78(void) {
     extern u16 lbl_8027DD30[];
     return &lbl_8027DD30[0x11];
@@ -407,6 +414,30 @@ s32 fn_801CF614(void *arg0) {
         return 0;
     }
     return -1;
+}
+
+void fn_801CFD60(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s8 arg4) {
+    s32 temp_r8;
+
+    temp_r8 = arg1 * 8;
+    temp_r8 += 0xEC;
+    temp_r8 += arg0;
+    *(u8 *)(temp_r8 + 0x0) = 1;
+    *(u16 *)(temp_r8 + 0x2) = arg2;
+    *(u16 *)(temp_r8 + 0x4) = arg3;
+    *(u8 *)(temp_r8 + 0x6) = arg4;
+    *(u8 *)(temp_r8 + 0x7) = 0;
+}
+
+void fn_801CFD8C(s32 arg0, s32 arg1, u8 arg2) {
+    s32 temp_r4;
+
+    temp_r4 = (arg1 * 0xE) + 0x60;
+    if (arg2 != 0) {
+        *(u8*)(arg0 + temp_r4) = *(u8*)(arg0 + temp_r4) | 2;
+        return;
+    }
+    *(u8*)(arg0 + temp_r4) = *(u8*)(arg0 + temp_r4) & 0xFFFFFFFD;
 }
 
 void fn_801CFDBC(s32 arg0, s32 arg1) {
