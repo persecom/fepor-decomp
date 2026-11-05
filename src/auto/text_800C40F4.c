@@ -480,7 +480,7 @@ void fn_800C7800(void *arg0) {
     OSDisableScheduler();
     OSRestoreInterrupts(temp_r31);
     fn_8005BA08((s8) M2C_FIELD(arg0, s32 *, 0x44));
-    fn_8005C870(&lbl_8028D788[1], 4);
+    fn_8005C870(M2C_FIELD(&lbl_8028D788, s32 *, 4), 4);
     fn_8005BA08((s8) M2C_FIELD(arg0, s32 *, 0x40));
     temp_r31_2 = OSDisableInterrupts();
     OSEnableScheduler();
@@ -762,6 +762,19 @@ void fn_800CAE38(void *arg0) {
     ptr[0x15] = 0x80;
     ptr[0x14] = 0x80;
     ptr[0x17] = 0xFF;
+}
+
+void fn_800CB070(void) {
+    *(s32*)0x803620C4 = 0;
+    *(s32*)0x803821A0 = 0;
+    *(s32*)0x803821A4 = 0;
+}
+
+extern void (*lbl_802B14E4)(void**);
+void fn_800CB27C(void** arg0) {
+    if (arg0 != NULL) {
+        lbl_802B14E4(arg0);
+    }
 }
 
 void fn_800CBF24(s32 arg0, s32 arg2) {
