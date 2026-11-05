@@ -314,6 +314,27 @@ s32 AMC_IsStub(void) {
     return 1;
 }
 
+s32 fn_80243E84(void *arg0) {
+    register u8 *temp_r5;
+    s32 var_r5;
+
+    if (!(M2C_FIELD(arg0, s32 *, 4) & 0xF)) {
+        M2C_FIELD(arg0, s8 *, 8) = (s8) (((u8) *M2C_FIELD(arg0, u8 **, 0) >> 4U) & 7);
+        M2C_FIELD(arg0, s8 *, 9) = (s8) (*M2C_FIELD(arg0, u8 **, 0) & 0xF);
+        M2C_FIELD(arg0, u8 **, 0) = (u8 *) (M2C_FIELD(arg0, u8 **, 0) + 1);
+        M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + 2);
+    }
+    if (M2C_FIELD(arg0, s32 *, 4) & 1) {
+        temp_r5 = M2C_FIELD(arg0, u8 **, 0);
+        var_r5 = (s32) (*temp_r5 << 0x1C) >> 0x1C;
+        M2C_FIELD(arg0, u8 **, 0) = (u8 *) (temp_r5 + 1);
+    } else {
+        var_r5 = (s32) ((*M2C_FIELD(arg0, u8 **, 0) << 0x18) & 0xF0000000) >> 0x1C;
+    }
+    M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + 1);
+    return var_r5;
+}
+
 void fn_80243F14(void *arg0, u8 *arg1) {
     M2C_FIELD(arg0, u8 **, 0) = arg1;
     M2C_FIELD(arg0, s32 *, 4) = 2;
@@ -377,6 +398,28 @@ void fn_80244A84(void *arg0) {
     M2C_FIELD(arg0, void ***, 4) = NULL;
     lbl_80368970 = arg0;
     M2C_FIELD(arg0, s8 *, 8) = 2;
+}
+
+void fn_80245014(u16 arg0) {
+    extern void *lbl_80368970;
+    extern void *lbl_80368974;
+    void *var_r30;
+
+    var_r30 = lbl_80368974;
+    while (var_r30 != NULL) {
+        if ((u16) M2C_FIELD(var_r30, u16 *, 0xA) == arg0) {
+            fn_80244D64(M2C_FIELD(var_r30, s32 *, 0xC));
+        }
+        var_r30 = M2C_FIELD(var_r30, void **, 0);
+    }
+
+    var_r30 = lbl_80368970;
+    while (var_r30 != NULL) {
+        if ((u16) M2C_FIELD(var_r30, u16 *, 0xA) == arg0) {
+            fn_80244D64(M2C_FIELD(var_r30, s32 *, 0xC));
+        }
+        var_r30 = M2C_FIELD(var_r30, void **, 0);
+    }
 }
 
 void fn_80247F1C(s32 arg0, u8 arg1, s32 arg2) {
@@ -862,41 +905,11 @@ static inline void Voice_StartRamp(Voice *v, u32 *data, u32 *time, s32 *base, s3
 }
 
 void fn_80251DEC(Voice *arg0, u32 *arg1) {
-    void fn_8026146C(s32 *);
-    u32 time;
-    s32 delta;
-
-    time = arg1[0] >> 16;
-    arg0->unk18C = time;
-    fn_8026146C((s32 *)&arg0->unk18C);
-    delta = (s8)arg1[1] << 16;
-    arg0->unk174 = (arg1[0] << 8) & 0xFF0000;
-    arg0->unk184 = arg0->unk174 + delta;
-    if (arg0->unk18C != 0) {
-        arg0->unk17C = delta / (s32)time;
-    } else {
-        arg0->unk17C = delta;
-    }
-    arg0->flags |= 0x2000;
+    Voice_StartRamp(arg0, arg1, &arg0->unk18C, &arg0->unk174, &arg0->unk184, &arg0->unk17C);
 }
 
 void fn_80251E88(Voice *arg0, u32 *arg1) {
-    void fn_8026146C(s32 *);
-    u32 time;
-    s32 delta;
-
-    time = arg1[0] >> 16;
-    arg0->unk190 = time;
-    fn_8026146C((s32 *)&arg0->unk190);
-    delta = (s8)arg1[1] << 16;
-    arg0->unk178 = (arg1[0] << 8) & 0xFF0000;
-    arg0->unk188 = arg0->unk178 + delta;
-    if (arg0->unk190 != 0) {
-        arg0->unk180 = delta / (s32)time;
-    } else {
-        arg0->unk180 = delta;
-    }
-    arg0->flags |= 0x2000;
+    Voice_StartRamp(arg0, arg1, &arg0->unk190, &arg0->unk178, &arg0->unk188, &arg0->unk180);
 }
 
 s16 fn_802537F8(s32 arg0, u32 arg1, s32 arg2) {
