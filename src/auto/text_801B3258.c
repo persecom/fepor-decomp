@@ -345,10 +345,9 @@ void fn_801C19E4(void *arg0, void *arg1) {
 }
 
 void fn_801C2250(void *arg0) {
-    M2C_UNK fn_8000C188();
     if (arg0 != NULL) {
-        M2C_FIELD(arg0, s8 *, 0x31) = 0;
-        M2C_FIELD(arg0, s16 *, 0x34) = 0;
+        *(u8 *)((u32)arg0 + 0x31) = 0;
+        *(u16 *)((u32)arg0 + 0x34) = 0;
         fn_8000C188();
     }
 }
@@ -907,10 +906,10 @@ void fn_801D027C(s32 arg0, s32 arg1) {
 
 void fn_801D03E4(void *arg0, s32 arg1, u8 arg2) {
     if (arg2 != 0) {
-        M2C_FIELD(arg0, s32 *, 8) = (s32) (M2C_FIELD(arg0, s32 *, 8) | (0x800 << arg1));
+        *(s32*)((char*)arg0 + 8) |= (0x800 << arg1);
         return;
     }
-    M2C_FIELD(arg0, s32 *, 8) = (s32) (M2C_FIELD(arg0, s32 *, 8) & ~(0x800 << arg1));
+    *(s32*)((char*)arg0 + 8) &= ~(0x800 << arg1);
 }
 
 void fn_801D041C(void *arg0, u8 arg1) {
@@ -981,7 +980,7 @@ void *fn_801D2E40(void *arg0, s16 arg1) {
 }
 
 void fn_801D2E9C(void) {
-    M2C_UNK fn_80059C2C(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    void fn_80059C2C(int, int, int, int, int);
     fn_80059C2C(0, 0, 0x260, 0x1C0, 0);
 }
 
