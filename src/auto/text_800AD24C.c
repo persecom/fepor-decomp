@@ -999,11 +999,10 @@ s32 fn_800BAF1C(s32 arg0) {
 }
 
 s32 fn_800BAFE4(s32 arg0) {
-    extern s32 lbl_80330708;
-    void *temp_r3;
-    
-    temp_r3 = (void *)(&lbl_80330708 + 0xB4);
-    fn_800BDBC8(temp_r3, arg0, &lbl_80330708);
+    M2C_UNK fn_800BDBC8(void *, s32);
+    extern u8 lbl_80330708[];
+
+    fn_800BDBC8(lbl_80330708 + 0xB4, arg0);
     return 0;
 }
 
