@@ -771,5 +771,5 @@ extern u16 lbl_8035D118[];
 #include "common.h"
 
 extern s32 lbl_80368B2C;
-extern u16 lbl_80368AA0;
+extern u16 *lbl_80368AA0;
 extern u16 lbl_803670C0;
