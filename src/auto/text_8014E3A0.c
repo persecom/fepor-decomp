@@ -228,4 +228,5 @@ s32 fn_801620AC(void) {
     extern char lbl_80293B10[];
     return *(s32*)((u8*)lbl_80293B10 + 4);
 }
-
+extern f64 lbl_8036A868;
+extern f32 lbl_8036A870;
