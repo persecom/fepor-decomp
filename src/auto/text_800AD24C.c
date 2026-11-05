@@ -137,6 +137,11 @@ void fn_800B47A0(void) {
     fn_800C4588();
 }
 
+void fn_800B47C0(void) {
+    extern u16 lbl_8026EB70[];
+    fn_800C4638((u16*)((u8*)lbl_8026EB70 + 0x5C), 0);
+}
+
 s32 fn_800B49C8(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x74);
 }
@@ -1267,6 +1272,12 @@ s32 fn_800BA230(u32 arg0, s32 arg1) {
     return 1;
 }
 
+s32 fn_800BA75C(s8 arg0, s8 arg1, s8 arg2) {
+    extern M2C_UNK lbl_802CA518;
+    M2C_FIELD((&lbl_802CA518 + arg0 + (arg1 << 6)), s8 *, 0x100D) = arg2;
+    return 0;
+}
+
 s32 fn_800BA8F8(u8 arg0) {
     void fn_8002297C(void *);
     M2C_UNK fn_8003DFB8(void *);
@@ -1540,6 +1551,24 @@ s32 fn_800BBC50(void) {
     return lbl_80367110;
 }
 
+u8 fn_800BBCFC(s8 arg0, s8 arg1) {
+    extern u16 lbl_802CA518[];
+    s32 index = (arg1 << 6) + arg0;
+    return lbl_802CA518[index + 0x200D];
+}
+
+u8 fn_800BBD20(s8 arg0, s8 arg1) {
+    extern u16 lbl_802CA518[];
+    s32 index = ((arg1 << 6) + arg0);
+    return (u8)(lbl_802CA518[index] & 0xFF);
+}
+
+u8 fn_800BBD44(s8 arg0, s8 arg1) {
+    extern u16 lbl_802CA518[];
+    u16 *ptr = lbl_802CA518 + (arg1 << 1) + arg0;
+    return ptr[0xD];
+}
+
 u16 fn_800BBD68(void) {
     void *fn_80019E04();
     void *temp_r3;
@@ -1668,6 +1697,14 @@ u8 fn_800BCD24(void) {
     return lbl_802EF4C8[9];
 }
 
+u8 fn_800BCD58(void) {
+    extern u8 lbl_802EF4C8[24];
+    if (lbl_802EF4C8 != NULL) {
+        return lbl_802EF4C8[0x198];
+    }
+    return 0U;
+}
+
 s32 fn_800BCDF0(u8 arg0) {
     extern u8 lbl_802B14E4[];
     void *unit;
@@ -1763,6 +1800,52 @@ u8 fn_800BD5AC(void) {
         return 0U;
     }
     return M2C_FIELD(temp_r3, u8 *, 0x198);
+}
+
+void fn_800BD5E0(s32 arg0) {
+    extern u16 lbl_802CA264[];
+    s32 temp_r4;
+    s32 temp_r3;
+    
+    temp_r4 = arg0 * 0xC;
+    temp_r3 = temp_r4 << 2;
+    fn_80015680(&lbl_802CA264[temp_r3], temp_r4);
+}
+
+extern u16 lbl_802CA264[50];
+u8 fn_800BD610(s32 arg0) {
+    u16 *temp_r3;
+
+    temp_r3 = &lbl_802CA264[arg0 * 0x18];
+    if (temp_r3 == NULL) {
+        return 0U;
+    }
+    return temp_r3[0x198/2]; // offset 0x198 is 0x198/2 words into the array
+}
+
+void fn_800BDB54(s32 arg0, s32 arg1) {
+    s32 temp_r5;
+    u8 *ptr;
+    
+    temp_r5 = arg1 >> 3; // srawi r5, r4, 3 (sign-extend right shift by 3)
+    ptr = (u8*)(arg0 + temp_r5);
+    *ptr &= ~(1 << (arg1 & 0x1F));  // clear bit in byte at offset
+}
+
+void fn_800BDB78(s32 arg0, s32 arg1) {
+    u8 *ptr;
+    u32 temp;
+    
+    ptr = (u8 *)arg0 + (arg1 >> 3);
+    temp = 1 << (arg1 & 7);
+    *(volatile u8 *)ptr |= temp;
+}
+
+s32 fn_800BDB9C(s32 arg0, s32 arg1) {
+    s32 shift = arg1 & 7;
+    u8 *ptr = (u8*)arg0 + (arg1 >> 3);
+    u8 byte = ptr[0x300];
+    return (byte & (1 << shift)) != 0;
 }
 
 s32 fn_800BF694(void) {
@@ -1902,3 +1985,4 @@ void fn_800B0AC8(void) {
 }
 
 extern u16 lbl_80317338[];
+extern u16 lbl_80330EAC;
