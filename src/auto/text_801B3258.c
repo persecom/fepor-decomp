@@ -357,6 +357,11 @@ s32 fn_801CAF8C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x6C);
 }
 
+void *fn_801CCF78(void) {
+    extern u16 lbl_8027DD30[];
+    return &lbl_8027DD30[0x11];
+}
+
 s32 fn_801CD3E4(void) {
     return 0x24;
 }
@@ -797,6 +802,25 @@ void fn_801E3214(void *arg0) {
 void fn_801E329C(void *arg0) {
     M2C_UNK fn_800EA7CC(s32, void *);
     fn_800EA7CC(M2C_FIELD(arg0, s32 *, 0x54), arg0);
+}
+
+u8 fn_801E3308(s32 arg0) {
+    u8 *ptr = (u8*) arg0;
+    s32 count = 0;
+    s32 i, j;
+    
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 10; j++) {
+            if (ptr[0x12 + j] != 0) {
+                count++;
+            } else {
+                break;
+            }
+        }
+        ptr += 0xA;
+    }
+    
+    return (u8) (count + 1);
 }
 
 s32 fn_801E33F4(void *arg0) {
