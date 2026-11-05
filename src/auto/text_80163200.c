@@ -562,6 +562,23 @@ void fn_80169BB4(void *arg0) {
     fn_8017FB80(arg0);
 }
 
+void fn_80169BF4(void *arg0) {
+    M2C_UNK fn_8000A3F8(s32);
+    M2C_UNK fn_8013FEC0(void *);
+    M2C_UNK fn_80023FF4(void *);
+    M2C_UNK fn_8000C188(void *);
+    s32 temp_r31;
+    void *temp_r3;
+
+    fn_8000A3F8(M2C_FIELD(arg0, s32 *, 0x4C));
+    fn_8013FEC0(arg0);
+    temp_r3 = M2C_FIELD(arg0, void **, 0x50);
+    temp_r31 = M2C_FIELD(temp_r3, s8 *, 0x62);
+    fn_80023FF4(temp_r3);
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x50), s8 *, 0x62) = temp_r31;
+    fn_8000C188(arg0);
+}
+
 void fn_80169C54(void *arg0) {
     M2C_UNK fn_801C1464(void *);
     fn_8000A408(M2C_FIELD(arg0, s32 *, 0x4C));
