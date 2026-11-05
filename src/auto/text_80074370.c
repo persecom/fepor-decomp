@@ -334,6 +334,14 @@ void fn_80076840(void) {
     fn_8000E0E4(&lbl_8026C0B8[0x2DC / sizeof(u16)]);
 }
 
+void fn_80076910(void *arg2) {
+    extern u16 lbl_802EF4C8[];
+    if ((u8) M2C_FIELD(arg2, u8 *, 0x39) == 0) {
+        M2C_FIELD(&lbl_802EF4C8, s8 *, 8) = 0x1D;
+    }
+    return;
+}
+
 s32 fn_8007693C(void) {
     M2C_UNK fn_8004A224();
     M2C_UNK fn_800AA80C(s32);
@@ -349,10 +357,41 @@ s32 fn_80076970(void) {
     return 0;
 }
 
+void fn_80076994(void) {
+    extern u16 lbl_8026C0B8[];
+    s32 var = 0x2ef;
+    fn_8000E0E4(&lbl_8026C0B8[var]);
+}
+
+void fn_800769C0(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4(&lbl_8026C0B8[0x5ea]);
+}
+
+void fn_80076B3C(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4(&lbl_8026C0B8[0x60a]);
+}
+
+void fn_80076B68(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4(&lbl_8026C0B8[0x612]);
+}
+
 s32 fn_80076C38(void) {
     extern u16 lbl_802EF4C8;
     ((u8 *)&lbl_802EF4C8)[8] = 0x21;
     return 5;
+}
+
+void fn_80076C50(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4(&lbl_8026C0B8[0xc5c]);
+}
+
+void fn_80076C7C(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4(&lbl_8026C0B8[0x636]);
 }
 
 s32 fn_80076D4C(void) {
@@ -361,10 +400,33 @@ s32 fn_80076D4C(void) {
     return 5;
 }
 
+void fn_80076D64(void) {
+    M2C_UNK fn_8000E0E4(void *);
+    extern u16 lbl_8026C0B8[];
+    
+    fn_8000E0E4((void *) (lbl_8026C0B8 + 0x652));
+}
+
+void fn_80076D90(void) {
+    extern u16 lbl_8026C0B8[];
+    s32 offset = 0x332; // Trying to match the instruction directly, using exact value from target
+    fn_8000E0E4(&lbl_8026C0B8[offset]);
+}
+
 s32 fn_80076E9C(void) {
     extern u16 lbl_802EF4C8;
     *(u8 *)((u32)&lbl_802EF4C8 + 8) = 6;
     return 5;
+}
+
+void fn_80076F28(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4(&lbl_8026C0B8[0x33C]);
+}
+
+void fn_80076F54(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4(&lbl_8026C0B8[0xD24]);
 }
 
 void fn_80077008(void) {
@@ -374,6 +436,22 @@ void fn_80077008(void) {
 
     sp8 = *fn_8018D900(6);
     fn_80007668(&sp8);
+}
+
+void fn_80077074(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4(&lbl_8026C0B8[0x1A9]);
+}
+
+void fn_800770A0(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4(&lbl_8026C0B8[0xD74]);
+}
+
+void fn_800771BC(void) {
+    extern u16 lbl_8026C0B8[];
+    M2C_UNK fn_8000E0E4(void *);
+    fn_8000E0E4(&lbl_8026C0B8[0x366 / sizeof(u16)]);
 }
 
 s32 fn_800773C8(void) {
