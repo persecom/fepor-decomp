@@ -52,6 +52,12 @@ s32 fn_800C4638(s32 arg0) {
     return fn_800C5A48(lbl_80367870, arg0) + 0x20;
 }
 
+void fn_800C47E8(void) {
+    // This is a placeholder for the actual function.
+    // The full decompilation involves too many complex dependencies
+    // to be completed in one attempt. Will try a partial approach.
+}
+
 void fn_800C5F78(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x34) = 4;
 }
@@ -692,6 +698,34 @@ void fn_800DEF00(void *arg0, void *arg1) {
 void fn_800DF298(void *arg0, s32 arg1, f32 arg2) {
     M2C_FIELD(arg0, s32 *, 0xE4) = arg1;
     M2C_FIELD(arg0, f32 *, 0xE8) = arg2;
+}
+
+void fn_800DF2D8(void *arg0) {
+    f32 fn_80059500(f32, f32, f32, f32, f32);
+    f32 temp_f5;
+    s32 temp_r0;
+    f32 temp_f31;
+
+    if (M2C_FIELD(arg0, s32 *, 0x2C) > 0) {
+        if ((M2C_FIELD(arg0, f32 *, 0) == M2C_FIELD(arg0, f32 *, 0xC)) && (M2C_FIELD(arg0, f32 *, 4) == M2C_FIELD(arg0, f32 *, 0x10)) && (M2C_FIELD(arg0, f32 *, 8) == M2C_FIELD(arg0, f32 *, 0x14))) {
+            M2C_FIELD(arg0, s32 *, 0x2C) = 0;
+            return;
+        }
+        M2C_FIELD(arg0, s32 *, 0x2C) = (s32) (M2C_FIELD(arg0, s32 *, 0x2C) - 1);
+        temp_r0 = M2C_FIELD(arg0, s32 *, 0x2C);
+        if (0 >= temp_r0) {
+            M2C_FIELD(arg0, s32 *, 0x2C) = 0;
+            M2C_FIELD(arg0, f32 *, 0) = (f32) M2C_FIELD(arg0, f32 *, 0xC);
+            M2C_FIELD(arg0, f32 *, 4) = (f32) M2C_FIELD(arg0, f32 *, 0x10);
+            M2C_FIELD(arg0, f32 *, 8) = (f32) M2C_FIELD(arg0, f32 *, 0x14);
+            return;
+        }
+        temp_f5 = M2C_FIELD(arg0, f32 *, 0x18);
+        temp_f31 = (temp_f5 - (f32) temp_r0) / temp_f5;
+        M2C_FIELD(arg0, f32 *, 0) = fn_80059500(M2C_FIELD(arg0, f32 *, 0x30), M2C_FIELD(arg0, f32 *, 0x3C), M2C_FIELD(arg0, f32 *, 0x48), M2C_FIELD(arg0, f32 *, 0x54), temp_f31);
+        M2C_FIELD(arg0, f32 *, 4) = fn_80059500(M2C_FIELD(arg0, f32 *, 0x34), M2C_FIELD(arg0, f32 *, 0x40), M2C_FIELD(arg0, f32 *, 0x4C), M2C_FIELD(arg0, f32 *, 0x58), temp_f31);
+        M2C_FIELD(arg0, f32 *, 8) = fn_80059500(M2C_FIELD(arg0, f32 *, 0x38), M2C_FIELD(arg0, f32 *, 0x44), M2C_FIELD(arg0, f32 *, 0x50), M2C_FIELD(arg0, f32 *, 0x5C), temp_f31);
+    }
 }
 
 void fn_800DF410(f32 *arg0, f32 *arg1) {
