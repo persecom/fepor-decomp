@@ -28,7 +28,7 @@ extern s32 lbl_803671C4;
 extern u8 lbl_803671C8;
 extern f32 lbl_80368C8C;
 extern f32 lbl_80368CAC;
-extern s32 lbl_802704F8;
+extern char lbl_802704F8[];
 
 
 /* What machine drafts (m2c) use for what they can't tell yet: autopilot tries them as they are. */
