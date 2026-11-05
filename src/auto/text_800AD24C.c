@@ -1602,6 +1602,19 @@ u8 fn_800BCAFC(void) {
     return (*(u8*)((u8*)&lbl_80330708[0x10/2]));
 }
 
+extern u16 lbl_80330708[];
+s32 fn_800BCB70(void) {
+    return *(s32*)(((char*)&lbl_80330708) + 0x18);
+}
+
+void fn_800BCC14(s8 arg0) {
+    *(u8*)((u8*)lbl_80330708 + 0x11) = arg0;
+}
+
+s16 fn_800BCC24(void) {
+    return *(s16*)((char*)lbl_80330708 + 0x12);
+}
+
 s32 fn_800BCDF0(u8 arg0) {
     extern u8 lbl_802B14E4[];
     void *unit;
