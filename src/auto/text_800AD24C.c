@@ -824,6 +824,20 @@ u8 fn_800B88C4(void) {
     return fn_80089ED8();
 }
 
+s32 fn_800B88E8(void) {
+    u8 fn_80089ED8();
+    M2C_UNK fn_8000CAA0(void *, s32);
+    M2C_UNK fn_80013874(void *);
+    extern u8 lbl_8028D1D8[];
+    extern u8 lbl_80320060[];
+    if (fn_80089ED8() != 0) {
+        fn_8000CAA0(lbl_8028D1D8, fn_800C0658());
+        fn_80013864();
+        fn_80013874(lbl_80320060);
+    }
+    return 1;
+}
+
 void fn_800B8938(s32 arg0) {
     u8 fn_80089ED8();
     if (fn_80089ED8() == 0) {
