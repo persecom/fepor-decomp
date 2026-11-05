@@ -520,26 +520,25 @@ s32 fn_800D5948(u32 *arg0, char *arg1, u32 arg2, u32 arg3) {
     return -1;
 }
 
-void fn_800D5D04(u32 *arg0, const u32 *arg1, u32 arg2, u32 arg3) {
-    M2C_UNK fn_800D6898(u32 *, const u32 *, u32, u32, void *);
-    M2C_UNK fn_8022CF78(void);
-    M2C_UNK fn_80232058(void *, const char *, ...);
-    extern char __files[];
+u32 *fn_800D6898(u32 *, u32 *, u32, u32, void *);
+M2C_UNK fn_8022CF78(void);
+M2C_UNK fn_80232058(void *, const char *, ...);
+extern char __files[];
+
+void fn_800D5D04(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3) {
     u32 rem;
     u32 alloc;
-    u32 n;
-    const u32 *len;
+    const u32 *n;
 
-    n = arg3;
     if (arg2 > arg1[0]) {
         fn_80232058(__files + 0xA0, lbl_802704F8 + 0x8E7);
         fn_8022CF78();
     }
     rem = arg1[0] - arg2;
-    len = MinU32(&n, &rem);
-    fn_800D6898(arg0, arg1, arg2, *len, &alloc);
+    n = MinU32(&arg3, &rem);
+    fn_800D6898(arg0, arg1, arg2, *n, &alloc);
 }
-
+#pragma cplusplus reset
 void fn_800D67E4(void) {
 
 }
