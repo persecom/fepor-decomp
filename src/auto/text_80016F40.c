@@ -79,7 +79,7 @@ void fn_80017774(void) {
     fn_8000BF00(&lbl_802841B0);
 }
 
-void fn_8001779C(u8 arg0) {
+void fn_8001779C(s32 arg0) {
     void *fn_8000C0C0(void *);
     void fn_800180F4(void *, u8);
     void *p;
