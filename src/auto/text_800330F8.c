@@ -37,6 +37,10 @@ u8 fn_80036FC4(s32 arg0, s32 arg1) {
     return *(u8 *)addr;
 }
 
+s32 fn_80037004(void *arg0, s32 arg1) {
+    return M2C_FIELD((M2C_FIELD(M2C_FIELD(arg0, void **, 0x188), s32 *, 0x50) + (arg1 * 8)), s32 *, 8);
+}
+
 u8 fn_8003701C(void *arg0) {
     void *temp_r3;
 
@@ -125,6 +129,21 @@ s32 fn_80037E00(void *arg0) {
     return -1;
 }
 
+void fn_8003868C(void *arg0, s8 arg1) {
+    if (arg1 != -1) {
+        if (arg1 >= 0) {
+            if (arg1 > 0x64) {
+                return;
+            }
+            /* Duplicate return node #4. Try simplifying control flow for better match */
+            M2C_FIELD(arg0, s8 *, 0x19B) = arg1;
+            return;
+        }
+        return;
+    }
+    M2C_FIELD(arg0, s8 *, 0x19B) = arg1;
+}
+
 s8 fn_8003A1C4(void *arg0) {
     return (s8) (M2C_FIELD(M2C_FIELD(arg0, void **, 0x18C), u8 *, 0x41) + (((u8) M2C_FIELD(arg0, u8 *, 0x1A6) >> 2U) & 7));
 }
@@ -145,6 +164,11 @@ s8 fn_8003B518(void *arg0) {
 void fn_8003B69C(s32 arg0) {
     M2C_UNK fn_800173B4(s32, s32);
     fn_800173B4(arg0 + 0x236, arg0);
+}
+
+void fn_8003B6C4(void* arg0, s32 arg1) {
+    *(s32*)((char*)arg0 + 0x190) = arg1;
+    fn_800173B4((char*)arg0 + 0x236, arg0);
 }
 
 void fn_8003B8D4(void *arg0) {
@@ -271,6 +295,11 @@ s32 fn_8003DC80(s32 arg0, s32 arg1) {
 
     temp_r31 = fn_8003AEB0(arg1);
     return temp_r31 < fn_8003AEB0(arg0);
+}
+
+void *fn_8003F1AC(s32 arg0) {
+    extern u16 lbl_802CA264;
+    return (void*)((char*)&lbl_802CA264 + (arg0 * 0x18));
 }
 
 u8 fn_8003F1C0(void *arg0) {
