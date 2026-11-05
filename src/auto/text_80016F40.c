@@ -32,6 +32,16 @@ void *fn_80016F78(void *arg0) {
     return arg0;
 }
 
+void *fn_80017240(u8 *arg0) {
+    void *fn_80016BDC(char *);
+    extern char lbl_80268128[];
+
+    if (fn_8014C5A8(lbl_80330708, *arg0) == NULL) {
+        return NULL;
+    }
+    return fn_80016BDC(lbl_80268128 + 0x4C);
+}
+
 u8 fn_80017290(u8 *arg0) {
     void *fn_8014C5A8(u16 *, u8);
     u16* temp_r3;
