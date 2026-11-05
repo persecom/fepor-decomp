@@ -606,4 +606,5 @@ loop_1:
     }
     return var_r5;
 }
-
+#include "global.h"
+extern u16 lbl_8028F3AC;
