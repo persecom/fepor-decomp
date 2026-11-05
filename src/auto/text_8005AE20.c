@@ -2,6 +2,8 @@
 #include "common.h"
 #include "global.h"
 
+extern u16 lbl_80330708[1400];
+
 static inline u8 *FindEntryByName(char *name) {
     extern u8 lbl_802F04E0[];
     s32 fn_802342B8();
@@ -1060,6 +1062,15 @@ void fn_80070F3C(void *arg0) {
 void fn_80071B34(void) {
     M2C_UNK fn_8018DAD4();
     fn_8018DAD4();
+}
+
+void fn_80071B54(void) {
+    extern u16 lbl_80330708[1400];
+    
+    /* Direct addressing approach */
+    lbl_80330708[0x51D] = 0xF;
+    fn_8018DBD8(lbl_80330708);
+    fn_8018DB10();
 }
 
 void fn_80071B88(void) {
