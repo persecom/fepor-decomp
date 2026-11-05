@@ -26,7 +26,12 @@ static inline BOOL IsItemNamed(void *item, char *name) {
 
 void **fn_80037BBC(void *, s32);
 u8 fn_8009326C(void *, void *);
-extern char lbl_80273304[];
+extern struct {
+    char pad0[0xF9];
+    char iidSilence[0xC];
+    char iidSleep[0xA];
+    char iidBerserk[0xD];
+} lbl_80273304;
 
 static inline u8 GetItemUnk1D(void *item) {
     if (item != NULL) {
