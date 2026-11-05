@@ -2,25 +2,9 @@
 #include "common.h"
 #include "global.h"
 
-struct UnkStruct_80299FE0 {
-    u8 pad[0x30];
-    u8 unk_30;
-    u8 unk_31;
-    u8 unk_32;
-    u8 unk_33;
-    u8 unk_34;
-    u16 unk_36;
-    u16 unk_38;
-    u16 unk_3A;
-    u16 unk_3C;
-    u16 unk_3E;
-    u32 unk_40;
-    u32 unk_44;
-    u32 unk_48;
-    u32 unk_4C;
-    u32 unk_50;
-    u32 unk_54;
-    u32 unk_58[7];
+struct UnkStruct {
+    u32 field_0[0x10];
+    u32 field_8;
 };
 
 s32 fn_801E45FC(void) {
