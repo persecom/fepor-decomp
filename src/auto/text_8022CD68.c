@@ -646,4 +646,4 @@ void fn_80267000(void) {
 }
 extern u16 lbl_802A1E10[4];
 extern u16 lbl_8034CBB4[288];
-extern u16 lbl_8035D118[128];
+extern u16 lbl_8035D118[];
