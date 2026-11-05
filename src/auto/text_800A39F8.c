@@ -8,6 +8,14 @@ void *fn_800A3A30(void) {
     return &lbl_8026E168[0x2E];
 }
 
+s32 fn_800A3D08(void) {
+    extern M2C_UNK lbl_803123A0;
+    if ((s32) M2C_FIELD(&lbl_803123A0, s32 *, 0xA0) != 0) {
+        return M2C_FIELD(&lbl_803123A0, s32 *, 0x50);
+    }
+    return 0;
+}
+
 s32 fn_800A45C4(void) {
     M2C_UNK fn_8020F334(M2C_UNK *);
     extern M2C_UNK lbl_803123A0;
@@ -348,5 +356,11 @@ void fn_800A92C4(s32 arg0) {
     extern M2C_UNK lbl_803682F0;
     fn_801E3118(&lbl_803682F0, arg0, 0);
 }
+
+void fn_800A92F0(void) {
+    extern u16 lbl_8026E470[];
+    fn_8005C7C8(&lbl_8026E470[0x58 / sizeof(u16)]);
+}
+
 #include "common.h"
 extern u16 lbl_8026E168[];
