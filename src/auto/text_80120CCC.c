@@ -152,6 +152,11 @@ void fn_801260D4(void) {
     lbl_80367110 &= 0xFFFFFF7F;
 }
 
+extern u8 lbl_80290480[16];
+void fn_80126184(void) {
+    fn_8000BF00(&lbl_80290480);
+}
+
 void fn_80126C44(u16 *arg0, u16 arg1) {
     *arg0 = (*arg0 & ~0x130) | (arg1 & 0x130);
 }
