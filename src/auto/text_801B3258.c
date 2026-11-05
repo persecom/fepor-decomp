@@ -593,6 +593,11 @@ u8 fn_801DE3D0(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x10);
 }
 
+extern u8 lbl_80299F4C[16];
+void fn_801DF5D8(void) {
+    fn_8000CAA0(&lbl_80299F4C);
+}
+
 void fn_801E0114(s32 arg0) {
     M2C_UNK fn_800EB788(void);
     void fn_801E0154(void *, s32);
