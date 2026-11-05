@@ -4,6 +4,13 @@ extern u16 lbl_80278080[];
 
 
 extern void (*lbl_802B14E4)(void **);
+void fn_80163200(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
+    *(s8*)((u8*)arg0 + 0) = arg1;
+    *(s8*)((u8*)arg0 + 1) = arg2;
+    *(s8*)((u8*)arg0 + 2) = arg3;
+    *(s8*)((u8*)arg0 + 3) = arg4;
+}
+
 void fn_801635CC(void *arg0, s32 arg1) {
     u32 *fn_80037BD0(s32, s16);
     s16 var_r31;
