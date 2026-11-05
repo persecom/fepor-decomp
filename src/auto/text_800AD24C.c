@@ -1456,10 +1456,10 @@ void fn_800C28CC(void) {
 }
 
 void fn_800C2930(s32 arg0, s32 arg1) {
-    M2C_UNK fn_8017A810(s32, M2C_UNK, s32);
-    M2C_UNK fn_801A7CDC(M2C_UNK *, M2C_UNK *);
-    extern M2C_UNK lbl_80330EAC;
-    fn_801A7CDC(&lbl_80330EAC, &lbl_80330EAC);
+    M2C_UNK fn_8017A810(s32, s32, s32);
+    M2C_UNK fn_801A7CDC(void *);
+    extern u8 lbl_80330EAC[];
+    fn_801A7CDC(lbl_80330EAC);
     fn_8017A810(arg1, 0x480, arg0);
 }
 
