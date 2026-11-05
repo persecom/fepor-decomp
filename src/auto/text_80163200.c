@@ -1,7 +1,44 @@
 #include "common.h"
+extern u32 lbl_802EF4C8;
+extern u32 lbl_80278080[];
 
 
 extern void (*lbl_802B14E4)(void **);
+void fn_801635CC(void *arg0, s32 arg1) {
+    u32 *fn_80037BD0(s32, s16);
+    s16 var_r31;
+    s16 var_r3;
+    u32 *temp_r29;
+    u8 var_r0;
+
+    M2C_FIELD(arg0, s32 *, 0x58) = arg1;
+    var_r31 = 0;
+loop_18:
+    if (var_r31 < 8) {
+        if ((var_r31 >= 0) && (var_r31 <= 3) && !(M2C_FIELD(arg0, s32 *, 0x60) & 1)) {
+            var_r0 = 0;
+        } else if ((var_r31 >= 4) && (var_r31 <= 7) && !(M2C_FIELD(arg0, s32 *, 0x60) & 2)) {
+            var_r0 = 0;
+        } else {
+            temp_r29 = fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58), var_r31);
+            if (((s32) M2C_FIELD(arg0, s32 *, 0x5C) == 1) && ((u32) *temp_r29 == 0U) && ((var_r31 == 0) || (var_r31 == 4) || ((u32) *fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58), var_r31 - 1) != 0U))) {
+                var_r0 = 1;
+            } else {
+                var_r0 = *temp_r29 != 0U;
+            }
+        }
+        if (var_r0 == 0) {
+            var_r31 += 1;
+            goto loop_18;
+        }
+    }
+    var_r3 = -1;
+    if (var_r31 < 8) {
+        var_r3 = var_r31;
+    }
+    M2C_FIELD(arg0, s16 *, 0x4C) = var_r3;
+}
+
 s32 fn_801651D0(void) {
     return 0x18;
 }
@@ -12,6 +49,31 @@ s32 fn_801651D8(void) {
 
 s32 fn_80165250(void) {
     return 0;
+}
+
+M2C_UNK **fn_801659D4(M2C_UNK **arg0, s16 arg1) {
+    M2C_UNK fn_800C428C(M2C_UNK **);
+    M2C_UNK fn_800C9A60(void *, M2C_UNK);
+    extern M2C_UNK lbl_8028FDB0;
+    extern M2C_UNK lbl_80292230;
+    extern M2C_UNK lbl_80293C2C;
+    extern M2C_UNK lbl_80293C84;
+
+    if (arg0 != NULL) {
+        *arg0 = &lbl_80293C2C;
+        *arg0 = &lbl_80293C84;
+        fn_800C9A60((void *) (arg0 + 0x3C), -1);
+        if (arg0 != NULL) {
+            *arg0 = &lbl_80292230;
+            *arg0 = &lbl_8028FDB0;
+        }
+    }
+
+    if (arg1 > 0) {
+        fn_800C428C(arg0);
+    }
+
+    return arg0;
 }
 
 s32 fn_80165B14(void *arg0) {
@@ -333,14 +395,13 @@ void fn_8017F4B0(void *arg0) {
     extern f32 lbl_8036AC30;
     extern f32 lbl_8036AC84;
     extern f64 lbl_8036AC38;
-    
-    s32 temp_r3;
-    s32 *temp_r31;
 
-    temp_r31 = (s32 *) arg0;
-    temp_r3 = M2C_FIELD(temp_r31, s32 *, 0x3c);
+    s32 *temp_r31 = (s32 *) arg0;
+    s32 temp_r3 = M2C_FIELD(temp_r31, s32 *, 0x3c);
     M2C_FIELD(temp_r31, s32 *, 0x3c) = temp_r3 + 1;
+
     M2C_FIELD(temp_r31, s32 *, 0x40) = (s32) fn_80059F64(temp_r3, lbl_8036AC2C, lbl_8036AC30, lbl_8036AC84, (f32) M2C_FIELD(temp_r31, s32 *, 0x3c));
+    
     if ((s32) M2C_FIELD(temp_r31, s32 *, 0x3c) >= 5) {
         M2C_FIELD(temp_r31, s32 *, 0x3c) = 0;
         fn_8000C188(arg0);
