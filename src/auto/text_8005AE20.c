@@ -593,7 +593,11 @@ u8 fn_80069DB4(void) {
 
 u8 fn_80069E74(void) {
     extern u8 lbl_80367300;
-    return lbl_80367300;
+extern u8 lbl_80367301;
+extern u8 lbl_80367302;
+extern u8 lbl_80367303;
+extern u8 lbl_80367304;
+return lbl_80367300;
 }
 
 void fn_80069F04(s32 arg0) {
@@ -823,6 +827,13 @@ s32 fn_800703D4(void) {
 
 void fn_80070EDC(void) {
 
+}
+
+void fn_80070F3C(void *arg0) {
+    extern s32 lbl_802EF4C8;
+    extern s32 lbl_803674F4;
+    M2C_FIELD(arg0, s32 *, 0xC) = (s32) lbl_802EF4C8;
+    M2C_FIELD(arg0, s32 *, 8) = (s32) lbl_803674F4;
 }
 
 void fn_80071B34(void) {
