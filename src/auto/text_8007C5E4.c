@@ -63,6 +63,12 @@ s32 fn_8007C74C(void) {
     return 0;
 }
 
+s32 fn_8007CB08(void) {
+    extern u16 lbl_80289894[];
+    s32 v = fn_8000C0C0(lbl_80289894);
+    return v != 0;
+}
+
 void fn_8007CCE8(void) {
     M2C_UNK fn_80087F50();
     fn_80087F50();
