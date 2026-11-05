@@ -131,6 +131,13 @@ s32 fn_8005B760(s32 arg0) {
     return ((s32 *) ((u32) jumptable_80285D18 + (temp_r0 << 2)))[0];
 }
 
+s32 fn_8005B8AC(s32 arg0) {
+    if ((u32) *(void **)0x803672F4 == 0U) {
+        return 0;
+    }
+    return *(u16 *)0x803672F4 + (arg0 << 6);
+}
+
 s32 fn_8005B8CC(void) {
     extern void *lbl_803672F4;
     if ((void *) lbl_803672F4 == NULL) {
@@ -418,6 +425,23 @@ void fn_8005F84C(void *arg0) {
     }
 
     fn_80065484(0);
+}
+
+s32 fn_80060440(void *arg0) {
+    s32 var_r4;
+    void *var_r3;
+
+    var_r3 = arg0;
+    var_r4 = 1;
+    goto loop_2;
+loop_1:
+    var_r4 += 1;
+loop_2:
+    var_r3 = M2C_FIELD(var_r3, void **, 0x74);
+    if (var_r3 != NULL) {
+        goto loop_1;
+    }
+    return var_r4;
 }
 
 f32 fn_80060460(void *arg0) {
