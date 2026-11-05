@@ -89,6 +89,25 @@ s32 fn_80231D94(char *dest, const char *fmt, ...) {
     return n;
 }
 
+s32 fn_80231F48(char *s, const char *fmt, va_list args) {
+    __OutStr out;
+    s32 n;
+    u32 idx;
+
+    out.buffer = s;
+    out.length = -1;
+    out.position = 0;
+    n = __pformatter(fn_80232220, &out, fmt, args);
+    if (s != NULL) {
+        idx = (u32)-2;
+        if ((u32)n < (u32)-1) {
+            idx = (u32)n;
+        }
+        s[idx] = 0;
+    }
+    return n;
+}
+
 s32 fn_802342B8(u8 *arg0, u8 *arg1) {
     register u8 *left = arg0;
     register u8 *right = arg1;
