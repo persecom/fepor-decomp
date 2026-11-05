@@ -603,6 +603,11 @@ void fn_801DF5D8(void) {
     fn_8000CAA0(&lbl_80299F4C);
 }
 
+extern u8 lbl_80299F1C[16];
+void fn_801E00EC(void) {
+    fn_8000CAA0(&lbl_80299F1C);
+}
+
 void fn_801E0114(s32 arg0) {
     M2C_UNK fn_800EB788(void);
     void fn_801E0154(void *, s32);
