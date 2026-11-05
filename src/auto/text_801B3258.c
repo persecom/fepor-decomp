@@ -746,6 +746,17 @@ void fn_801E1168(void *arg0) {
     fn_801E11AC(&lbl_803682F0, arg0, *(s32 *) ((u8 *) arg0 + 0x60));
 }
 
+void fn_801E1440(s32 arg0, s32 arg1, s32 arg2) {
+    void fn_8014D698(void *, s32, u8, u8, s32);
+    extern u8 lbl_80330708[];
+    extern s32 lbl_80331FB8[];
+
+    fn_8014D698(lbl_80330708, 0, arg1, arg2, 1);
+    lbl_80331FB8[0] = -1;
+    lbl_80331FB8[1] = -1;
+    ((u8 *) lbl_80331FB8)[0x44] = 1;
+}
+
 s32 fn_801E2568(s32 *arg0, s32 arg1) {
     return ((arg1 * 0x6000) + 0x20000 + *arg0) - 0x6000;
 }
