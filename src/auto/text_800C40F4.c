@@ -265,10 +265,10 @@ void fn_800C73F0(s32 arg0) {
 }
 
 void fn_800C77B8(s32 arg0) {
-    u8 fn_8005BA10(s32, void *);
+    u8 fn_8005BA10(s32);
     void fn_8000C188(s32);
-    
-    if (fn_8005BA10(*(s32 *) (lbl_8028D788 + 4), &lbl_8028D788) != 0) {
+
+    if (fn_8005BA10(lbl_8028D788[1])) {
         fn_8000C188(arg0);
     }
 }
