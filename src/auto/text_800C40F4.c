@@ -474,6 +474,55 @@ void fn_800D5894(u32 *arg0) {
     }
 }
 
+s32 fn_800D5948(u32 *arg0, char *arg1, u32 arg2, u32 arg3) {
+    u32 size;
+    char *data;
+    char *end;
+    char *p;
+    u32 rem;
+    char *a;
+    char *b;
+
+    size = arg0[0];
+    if (arg2 > size) {
+        return -1;
+    }
+    data = (char *)arg0[2];
+    end = arg1 + arg3;
+    for (rem = size - arg2, p = data + arg2; rem >= arg3; p++, rem--) {
+        for (a = arg1, b = p; a < end; a++, b++) {
+            if (*a != *b) {
+                goto next;
+            }
+        }
+        return p - data;
+    next:;
+    }
+    return -1;
+}
+
+void fn_800D5D04(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3) {
+    M2C_UNK fn_800D6898(u32 *, u32 *, u32, u32, void *);
+    M2C_UNK fn_8022CF78(void);
+    M2C_UNK fn_80232058(void *, const char *, ...);
+    extern char __files[];
+    extern M2C_UNK lbl_802704F8;
+    u32 alloc;
+    u32 rem;
+    u32 *n;
+
+    if (arg2 > arg1[0]) {
+        fn_80232058(__files + 0xA0, (char *)&lbl_802704F8 + 0x8E7);
+        fn_8022CF78();
+    }
+    n = &arg3;
+    rem = arg1[0] - arg2;
+    if (rem < *n) {
+        n = &rem;
+    }
+    fn_800D6898(arg0, arg1, arg2, *n, &alloc);
+}
+
 void fn_800D67E4(void) {
 
 }
@@ -515,6 +564,32 @@ void fn_800D6878(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x4) = 0;
     M2C_FIELD(arg0, s16 *, 0xC) = 0;
     M2C_FIELD(arg0, s16 *, 0xE) = 0;
+}
+
+u32 *fn_800D6898(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3, void *arg4) {
+    struct Tag { u8 b; } tag;
+    M2C_UNK fn_800CA728(u32 *, char *, char *, void *, struct Tag);
+    M2C_UNK fn_8022CF78(void);
+    M2C_UNK fn_80232058(void *, const char *, ...);
+    extern char __files[];
+    extern M2C_UNK lbl_802704F8;
+    u32 size;
+    u32 len;
+    char *p;
+
+    size = arg1[0];
+    arg0[1] = 0;
+    if (arg2 > size) {
+        fn_80232058(__files + 0xA0, (char *)&lbl_802704F8 + 0x9B3);
+        fn_8022CF78();
+    }
+    len = size - arg2;
+    if (len > arg3) {
+        len = arg3;
+    }
+    p = (char *)arg1[2] + arg2;
+    fn_800CA728(arg0, p, p + len, arg4, tag);
+    return arg0;
 }
 
 void fn_800D6940(void *arg0) {
@@ -624,6 +699,15 @@ s32 fn_800D78C4(void) {
     extern s32 lbl_803679C8;
     fn_800D75C4(lbl_803679C8);
     fn_800DA2CC(lbl_803679C8);
+    return 0;
+}
+
+s32 fn_800D7C5C(void) {
+    M2C_UNK fn_800D758C(s32);
+    extern s32 lbl_803678A8;
+    extern s32 lbl_803678C8;
+    fn_800D758C(lbl_803678A8);
+    fn_800D758C(lbl_803678C8);
     return 0;
 }
 
