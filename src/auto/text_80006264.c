@@ -17,6 +17,24 @@ void fn_80006298(s32 arg0, s32 arg1, u32 arg2) {
     } while (var_ctr != 0);
 }
 
+void fn_800062CC(s32 arg0, s32 arg1, u32 arg2) {
+    s32 temp_r11;
+    u32 var_ctr;
+    char *var_r3;
+    char *var_r4;
+
+    var_r3 = (char*)(arg0 - 4);
+    var_r4 = (char*)(arg1 - 4);
+    var_ctr = arg2 >> 2U;
+    do {
+        temp_r11 = *(s32*)var_r4;
+        var_r4 += 4;
+        var_r3 += 4;
+        *(s32*)var_r3 = temp_r11;
+        var_ctr -= 1;
+    } while (var_ctr != 0);
+}
+
 s32 fn_80006798(void) {
     extern s32 lbl_80367120;
     extern s32 lbl_80367128;
@@ -26,6 +44,18 @@ s32 fn_80006798(void) {
 s32 fn_800067B4(void) {
     extern s32 lbl_80367118;
     return lbl_80367118;
+}
+
+void fn_80007290(s32 arg0, s32 arg1, s32 arg2) {
+    u8* temp = (u8*)arg0;
+    temp[0x14] = (u8)arg1;
+    temp[0x15] = (u8)arg2;
+}
+
+void fn_80007628(s32 arg0, s32 arg1, s32 arg2) {
+    s32 temp_r3 = *(s32*)(arg0 + 0x10);
+    *(u32*)(temp_r3 + 0x14) = (u32)arg1;
+    *(u32*)(temp_r3 + 0x18) = (u32)arg2;
 }
 
 void fn_80007884(void *arg0, u32 arg1) {
