@@ -17,12 +17,12 @@ typedef struct MsgBox {
 } MsgBox;
 
 void fn_801B3D30(void *arg0) {
-    M2C_UNK fn_801B5E2C(void *);
+    void fn_801B5E2C(void *);
     void *temp_r31;
-
-    temp_r31 = M2C_FIELD(arg0, void **, 0x30);
+    
+    temp_r31 = *(void **)((char *)arg0 + 0x30);
     fn_801B5E2C(temp_r31);
-    M2C_FIELD(temp_r31, s32 *, 0x18) = 0;
+    *(s32 *)((char *)temp_r31 + 0x18) = 0;
 }
 
 s32 fn_801B6098(s32 arg0) {
@@ -357,6 +357,15 @@ s32 fn_801CAF8C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x6C);
 }
 
+void fn_801CB25C(s32 arg0) {
+    fn_800C9B6C(arg0 + 0x60);
+}
+
+void fn_801CB280(s32 arg1) {
+    arg1 += 0x54;
+    fn_800C9B6C(arg1);
+}
+
 void *fn_801CCF78(void) {
     extern u16 lbl_8027DD30[];
     return &lbl_8027DD30[0x11];
@@ -405,6 +414,15 @@ void fn_801CFDBC(s32 arg0, s32 arg1) {
     
     temp_r4 = (arg1 * 0xE) + 0x60;
     *(u8*)(arg0 + temp_r4) |= 1;
+}
+
+void fn_801CFE80(s32 arg0, s32 arg1) {
+    u8 *temp_r4;
+
+    temp_r4 = (u8 *)(arg0 + ((arg1 * 0xE) + 0x60));
+    if ((s8)(*temp_r4) != 0) {
+        *(temp_r4 + 1) = 0x63;
+    }
 }
 
 void fn_801D027C(s32 arg0, s32 arg1) {
@@ -587,6 +605,16 @@ void *fn_801DC0CC(void) {
         return temp_r3;
     }
     return NULL;
+}
+
+void fn_801DC1C8(void *arg0) {
+    void *temp_r4;
+    s32 temp_r0;
+
+    temp_r4 = *(void**)((char*)arg0 + 0x30);
+    *(u8*)((char*)temp_r4 + 0x332) = 0xC8;
+    temp_r0 = (*(s32*)((char*)arg0 + 0x40) * 0x14) + 0x51A;
+    *(s16*)((char*)temp_r4 + temp_r0) = (*(s16*)((char*)temp_r4 + temp_r0)) & 0xFFFFFFFE;
 }
 
 void fn_801DDAC8(void *arg0) {
@@ -831,6 +859,13 @@ void fn_801E2084(s32 arg0) {
     }
 
     fn_801E1CB4(&lbl_803682F0, arg0);
+}
+
+void fn_801E218C(void) {
+    fn_800EB788();
+    if (0) {
+        // Dummy to add the clrlwi. r0, r3, 24 instruction
+    }
 }
 
 s32 fn_801E2568(s32 *arg0, s32 arg1) {
