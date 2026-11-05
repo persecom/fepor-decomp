@@ -6,6 +6,7 @@ extern u8 lbl_80330708[];
 extern u16 lbl_803680E8[];
 extern f32 lbl_8036AB94;
 extern u16 lbl_80294604[];
+extern u16 lbl_80295580[10];
 extern f32 lbl_8036ABB0;
 extern f32 lbl_8036ABBC;
 extern f32 lbl_8036ABA0;
@@ -2489,13 +2490,17 @@ void fn_801812A0(void) {
 }
 
 void fn_801812CC(void *arg0) {
+    struct Data {
+        u8 pad[0x116];
+        u8 unk116[0x10];
+    };
     u8 fn_8005BA10(void *);
     s32 fn_8003FCCC(void *);
     void fn_8000C188(void *);
-    extern u8 lbl_802789F0[];
+    extern struct Data lbl_802789F0;
 
-    if (fn_8005BA10(lbl_802789F0 + 0x116)) {
-        M2C_FIELD(arg0, s32 *, 0x44) = fn_8003FCCC(lbl_802789F0 + 0x116);
+    if (fn_8005BA10(lbl_802789F0.unk116)) {
+        M2C_FIELD(arg0, s32 *, 0x44) = fn_8003FCCC(lbl_802789F0.unk116);
         fn_8000C188(arg0);
     }
 }
