@@ -1088,6 +1088,16 @@ void fn_8007C018(void *arg0) {
     }
 }
 
+void fn_8007C318(u16 arg1) {
+    void fn_80225058(u32, u32, u16, u32);
+    u32 r0 = (u32)arg1;
+    u32 r3 = r0 >> 16;
+    u32 r4 = 0;
+    u32 r5 = r0 & 0xFFFF;
+    u32 r6 = 0x1E0;
+    fn_80225058(r3, r4, arg1, r6);
+}
+
 void fn_8007C34C(void) {
     extern M2C_UNK lbl_80312040;
     M2C_FIELD(&lbl_80312040, s32 *, 0) = 0;
@@ -1118,3 +1128,5 @@ extern u8 lbl_802EF4C8[];
 extern void *fn_8001CB64(void);
 extern void *fn_800285C0(void *);
 extern u16 lbl_8026C0B8[];
+#include "global.h"
+extern u8 D_802EF4C8[24];
