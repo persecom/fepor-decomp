@@ -337,6 +337,11 @@ s32 fn_80077B4C(void) {
     return 0;
 }
 
+void *fn_80077C7C(void) {
+    extern u16 lbl_8026C0B8[];
+    return (void*)((uintptr_t)&lbl_8026C0B8 + 0x421);
+}
+
 s32 fn_80077C8C(void) {
     return 0;
 }
