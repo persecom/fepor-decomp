@@ -235,6 +235,17 @@ void fn_8016A5DC(void *arg0, void *arg1, f32 arg2) {
     }
 }
 
+s32 fn_8016A650(s32 arg0, s16 arg1) {
+    M2C_UNK fn_80140304(s32, s32);
+    if (arg0 != 0) {
+        fn_80140304(arg0, 0);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_8016B5E8(void) {
     M2C_UNK fn_8004327C();
     fn_80040844();
