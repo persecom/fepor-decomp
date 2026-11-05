@@ -193,6 +193,14 @@ s32 fn_8005C0AC(u8 *arg0) {
     return (s8) *arg0 == 0;
 }
 
+s32 fn_8005C268(char *name) {
+    u8 *e = FindEntryByName(name);
+    if (e != NULL) {
+        return *(s32 *)(e + 0x3C);
+    }
+    return 0;
+}
+
 u16 fn_8005C368(u32 arg0) {
     extern M2C_UNK lbl_802F04E0;
     M2C_UNK *var_r5;
