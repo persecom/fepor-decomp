@@ -1,6 +1,9 @@
 /* Functions from 0x8022CD68 to 0x80267A7C, found by decomp-toolkit. */
 #include "common.h"
 
+extern u8 lbl_8034C110[];
+extern f64 lbl_8036C368;
+extern f32 lbl_8036C374;
 extern s32 lbl_80368A28;
 extern s32 lbl_80368A2C;
 extern s32 lbl_80368A30;
@@ -973,6 +976,22 @@ s32 fn_80261C40(s32 arg0, s32 arg1) {
 extern u32 lbl_803670C8;
 s32 fn_80261C6C(s32 arg0) {
     return *(u32*)((char*)lbl_803670C8 + (arg0 * 4)) & 0xFFFFFF;
+}
+
+void fn_80261E10(s32 arg0, u8 arg1) {
+    extern s32 lbl_80368AA0;
+    s32 temp_r5;
+    s32 *temp_r3;
+
+    if (arg1 != 0) {
+        temp_r5 = arg0 * 0xF8;
+        temp_r3 = (s32 *) (lbl_80368AA0 + temp_r5);
+        temp_r3[0x3D] |= 0x80000000;
+    } else {
+        temp_r5 = arg0 * 0xF8;
+        temp_r3 = (s32 *) (lbl_80368AA0 + temp_r5);
+        temp_r3[0x3D] &= 0x7FFFFFFF;
+    }
 }
 
 void fn_8026212C(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
