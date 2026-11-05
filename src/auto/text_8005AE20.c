@@ -230,6 +230,13 @@ loop_1:
     return M2C_FIELD(var_r3, u16 *, 0x32);
 }
 
+s32 fn_8005C3C4(char *name) {
+    if (FindEntryByName(name) == NULL) {
+        return 0;
+    }
+    return 1;
+}
+
 void fn_8005C5A8(char *name) {
     *(u16 *)(FindEntryByName(name) + 0x30) |= 0x4000;
 }
