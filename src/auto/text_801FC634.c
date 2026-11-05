@@ -261,6 +261,11 @@ void fn_801FFF08(s32 arg0) {
     fn_801E2F9C(&lbl_803682F0, arg0);
 }
 
+extern u16 lbl_8029B7FC[10];
+s32 fn_8020055C(void) {
+    return fn_8000C0C0(&lbl_8029B7FC) != 0;
+}
+
 void fn_80200750(void *arg0) {
     extern f32 lbl_8036BBD8;
     s16 temp_r3;
