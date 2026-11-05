@@ -36,6 +36,17 @@ void fn_800ADC9C(s32 arg0) {
     fn_8019B6B4(arg0, fn_800ADD04);
 }
 
+void fn_800ADD04(void) {
+    extern u8 lbl_802EF4E0[];
+    void *fn_8002F62C(void *);
+    u8 *fn_8002F740(void);
+    M2C_UNK fn_8010455C(void *, u8);
+    void *p;
+
+    p = fn_8002F62C(lbl_802EF4E0);
+    fn_8010455C(fn_8002F740() + 0x1A4, M2C_FIELD(p, u8 *, 3));
+}
+
 extern u8 lbl_802EF4E0[];
 extern void fn_8002F61C(void *);
 extern void *fn_8002F62C(void *);
