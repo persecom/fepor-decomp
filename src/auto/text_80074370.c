@@ -452,6 +452,14 @@ void fn_80077008(void) {
     fn_80007668(&sp8);
 }
 
+s32 fn_8007703C(s32 arg1) {
+    M2C_UNK fn_801832F8(s32);
+    extern M2C_UNK lbl_802EF4C8;
+    M2C_FIELD(&lbl_802EF4C8, s8 *, 8) = 0x33;
+    fn_801832F8(arg1);
+    return 4;
+}
+
 void fn_80077074(void) {
     extern u16 lbl_8026C0B8[];
     fn_8000E0E4(&lbl_8026C0B8[0x1A9]);
