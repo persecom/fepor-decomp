@@ -385,6 +385,11 @@ void fn_80194174(void) {
 
 }
 
+extern u8 lbl_802966D8[16];
+void fn_80194E10(void) {
+    fn_8000BF00(&lbl_802966D8);
+}
+
 void fn_801950CC(void *arg0) {
     M2C_UNK fn_800C426C(s32);
     u32 temp_r3;
