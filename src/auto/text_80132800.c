@@ -21,6 +21,14 @@ typedef struct ListNode {
     void *val;
 } ListNode;
 
+typedef struct ListIter {
+    ListNode *node;
+} ListIter;
+
+typedef struct List {
+    s32 size;
+} List;
+
 void *fn_80132800(void) {
     extern u16 lbl_80276008[];
     return &lbl_80276008[0x50 / 2];
@@ -269,6 +277,43 @@ void fn_80133E50(s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
     fn_8008AB7C(r3, r4, arg3, 0x18, 0x19, 0x4C, arg5);
 }
 
+void fn_80133EA4(s32 *arg0, void *arg1) {
+    s32 fn_800102BC(M2C_UNK, s32, s16, s32, s16, s16, s16, f32);
+    s32 *fn_8013F748(void *, M2C_UNK *, s16 *);
+    extern f32 lbl_8036A5AC;
+    M2C_UNK spC;
+    s16 spA;
+    s16 sp8;
+    s16 temp_r29;
+    s16 temp_r5;
+    s16 temp_r6_2;
+    s16 temp_r7;
+    s16 temp_r9;
+    s16 var_r27;
+    s16 var_r28;
+    s32 temp_r4;
+    s32 temp_r6;
+    s32 temp_r8;
+
+    temp_r9 = M2C_FIELD(arg1, s16 *, 0x44);
+    temp_r7 = M2C_FIELD(arg1, s16 *, 0x3E);
+    temp_r29 = M2C_FIELD(arg1, s16 *, 0x46);
+    temp_r8 = (s16) (M2C_FIELD(arg1, s16 *, 0x16) - M2C_FIELD(arg1, s16 *, 0x12)) / temp_r9;
+    temp_r6 = (s16) temp_r8 * (s16) (M2C_FIELD(arg1, s16 *, 0x3E) % temp_r9);
+    temp_r4 = temp_r29 * (s16) (temp_r7 / temp_r9);
+    temp_r5 = temp_r6 + M2C_FIELD(arg1, s16 *, 0x48);
+    var_r28 = temp_r5;
+    var_r27 = temp_r4 + M2C_FIELD(arg1, s16 *, 0x4A);
+    temp_r6_2 = (s16) ((s32) (temp_r29 - fn_800102BC(-1, temp_r4, temp_r5, temp_r6, temp_r7, (s16) temp_r8, temp_r9, lbl_8036A5AC)) >> 1);
+    if ((s16) M2C_FIELD(arg1, s16 *, 0x3E) == 4) {
+        var_r28 = (s16) (M2C_FIELD(arg1, s16 *, 0x16) - M2C_FIELD(arg1, s16 *, 0x12)) - 0x50;
+        var_r27 = (s16) (M2C_FIELD(arg1, s16 *, 0x18) - M2C_FIELD(arg1, s16 *, 0x14)) - 0x10;
+    }
+    sp8 = var_r28;
+    spA = var_r27 + temp_r6_2;
+    *arg0 = *fn_8013F748(arg1, &spC, &sp8);
+}
+
 s16 fn_8013432C(void *arg0) {
     s16 var_r4;
     u32 temp_r3;
@@ -434,6 +479,42 @@ loop_2:
     }
 }
 
+void fn_80136168(void *arg0, s16 arg1, s16 arg2, void *arg4, u8 arg5) {
+    M2C_UNK fn_8000A258(u8);
+    M2C_UNK fn_8000A174(s32, u16);
+    M2C_UNK fn_8000A248(void);
+    M2C_UNK fn_8001019C(s16, s16, s32, void *, s32);
+    M2C_UNK fn_8005AC24(M2C_UNK *, s16, s16, u8);
+    s32 fn_8010586C(void *);
+    s32 *fn_8018D900(s32);
+    extern M2C_UNK lbl_80276720;
+    extern M2C_UNK lbl_802F0350;
+    extern f32 lbl_8036A5E0;
+    
+    s32 sp4;
+    s16 temp_r30;
+    s16 temp_r29;
+    s32 temp_r0;
+    u16 temp_r4;
+    s32 temp_r7;
+
+    temp_r0 = arg5 != 0;
+    fn_8000A258(arg5);
+    fn_8000A174(0, (u16) ((s32) M2C_FIELD(arg0, s32 *, 0x34) | 0x13));
+    fn_8000A248();
+    temp_r30 = arg1 + 0x20;
+    temp_r29 = arg2;
+    temp_r7 = fn_8010586C(arg4);
+    fn_8001019C(temp_r30, (s16) (temp_r29 + 4), temp_r0, &lbl_80276720 + 0x1D, temp_r7);
+    fn_80007898(6);
+    sp4 = *fn_8018D900(temp_r0);
+    fn_80007668(&sp4);
+    fn_80007220(1, lbl_8036A5E0);
+    fn_80006B18(temp_r30, temp_r29 + 8, 0, 0, M2C_FIELD(arg4, u8 *, 0x1A));
+    fn_80007884();
+    fn_8005AC24(&lbl_802F0350, arg1, arg2, M2C_FIELD(arg4, u8 *, 0x19));
+}
+
 s32 fn_80136268(void *arg0, void *arg1) {
     u8 (*temp_r12)(void *, s32);
 
@@ -539,6 +620,18 @@ void fn_80136430(void *arg0) {
 
 s16 fn_80136474(void *arg0) {
     return (s16) ((s32) ((s16) (M2C_FIELD(arg0, s16 *, 0x18) - M2C_FIELD(arg0, s16 *, 0x14)) - (M2C_FIELD(arg0, s16 *, 0x5E) * 2)) / 32);
+}
+
+void fn_801364A0(void) {
+    extern u16 lbl_80276008[];
+    
+    s32 i;
+
+    lbl_80276008[0x1C0] = 0;
+    
+    for (i = 0; i < 0xA; i++) {
+        lbl_80276008[i * 2 + 0x1C0] = 0;
+    }
 }
 
 s16 fn_801366E4(void *arg0) {
@@ -747,6 +840,28 @@ void *fn_80138DCC(void *arg0, s16 arg1) {
 void *fn_80139A50(void) {
     extern u16 lbl_80276008[];
     return &lbl_80276008[0x1D8];
+}
+
+void fn_80139D60(void *arg0, void *arg1) {
+    u8 *ptr = (u8*)arg1;
+    
+    if (*(u8*)(ptr + 0x17) & 1) {
+        if (*(u8*)(ptr + 0x17) & 2) {
+            *(u8*)(ptr + 0x54) |= 0x10;
+        } else {
+            *(u8*)(ptr + 0x54) |= 0x20;
+        }
+    } else {
+        *(u8*)(ptr + 0x54) = 0x0;
+    }
+
+    if (*(u8*)(ptr + 0x17) & 8) {
+        *(u8*)(ptr + 0x54) |= 0x40;
+    } else {
+        *(u8*)(ptr + 0x54) |= 0x80;
+    }
+    
+    *(u8*)(ptr + 0x5C) = 2;
 }
 
 void fn_8013A9F4(void *arg0) {
