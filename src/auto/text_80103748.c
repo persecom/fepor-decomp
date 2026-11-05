@@ -5,6 +5,11 @@ s32 fn_80103748(void) {
     return 0x21;
 }
 
+void *fn_80103750(void) {
+    extern u16 lbl_802734D0[29];
+    return &lbl_802734D0[0x56/2];
+}
+
 s32 fn_80103818(void) {
     return 0;
 }
@@ -164,6 +169,19 @@ void* fn_8010494C(void* arg0) {
     }
     
     return temp_r0;
+}
+
+void* fn_80104970(void* arg0) {
+    u8 temp_r0 = *(u8*)arg0;
+    
+    if ((temp_r0 >= 0x81 && temp_r0 <= 0x9F) || (temp_r0 >= 0xE0 && temp_r0 <= 0xFC)) {
+        u8 temp_r0_2 = *((u8*)arg0 + 1);
+        if (((temp_r0_2 < 0x40) == 0 && temp_r0_2 <= 0x7E) || (temp_r0_2 >= 0x80 && temp_r0_2 <= 0xFC)) {
+            return (u8*)arg0 + 2;
+        }
+    }
+    
+    return (u8*)arg0 + 1;
 }
 
 extern void *lbl_803679C0;
