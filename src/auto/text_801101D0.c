@@ -555,6 +555,12 @@ void fn_8011ABC0(s32 arg0) {
     fn_80024398(arg0, 0);
 }
 
+s32 fn_8011AC10(void) {
+    extern u16 lbl_8028F814[];
+    s32 v = fn_8000C0C0(lbl_8028F814);
+    return v != 0;
+}
+
 void fn_8011AC44(void) {
     u32 fn_8000C0C0(M2C_UNK *);
     M2C_UNK fn_8000C60C();
