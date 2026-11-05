@@ -53,6 +53,28 @@ u8 fn_80017290(u8 *arg0) {
     return *(u8*)((char*)temp_r3 + 3);
 }
 
+s32 fn_80017318(u8 *arg0) {
+    u8 *p;
+
+    p = fn_8014C5A8(lbl_80330708, *arg0);
+    if (p == NULL) {
+        return 0;
+    }
+    switch (*p) {
+    case 0:
+        return 0;
+    case 1:
+        return 8;
+    case 2:
+        return 7;
+    case 3:
+        return 4;
+    case 4:
+        return 5;
+    }
+    return 0;
+}
+
 void fn_800173B4(u8 *arg0, void *arg1) {
     u8 fn_80105BC0(void *, M2C_UNK);
     if (fn_80105BC0((u8 *)arg1 + 0x1BC, 0)) {
