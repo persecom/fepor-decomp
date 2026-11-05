@@ -1,5 +1,7 @@
 /* Functions from 0x800A39F8 to 0x800A9384, found by decomp-toolkit. */
 #include "common.h"
+extern u8 lbl_8028C750[16];
+
 
 void *fn_800A3A30(void) {
     extern u8 lbl_8026E168[];
@@ -153,6 +155,13 @@ s32 fn_800A6990(void *arg0) {
 
     temp_r31 = M2C_FIELD(arg0, u8 *, 0x1A8);
     return (s8) temp_r31 < fn_8003B2D0();
+}
+
+void fn_800A6AE4(void) {
+    u32 temp_r3 = fn_8000C0C0(lbl_8028C750);
+    if (temp_r3 != 0) {
+        fn_8000C070(temp_r3, 4);
+    }
 }
 
 extern u8 lbl_8028C750[16];
