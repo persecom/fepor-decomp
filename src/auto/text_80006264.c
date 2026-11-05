@@ -289,4 +289,3 @@ void fn_80011910(void) {
 }
 #include "common.h"
 extern s32 lbl_802AEE20[5]; // 5 s32 values, from .bss
-extern f64 lbl_80368C28; // From .sdata2
