@@ -898,4 +898,5 @@ void fn_801207BC(void) {
     lbl_80367A58 &= 0xFFFFFFFB;
     lbl_80367110 |= 2;
 }
-
+#include "common.h"
+extern struct SomeStruct* lbl_80320C20; // example struct
