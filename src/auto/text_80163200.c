@@ -490,6 +490,10 @@ void fn_801734D8(void *arg0) {
     fn_8000C188(arg0);
 }
 
+void fn_80174204(void) {
+    return;
+}
+
 s32 fn_80178664(void) {
     return 0;
 }
