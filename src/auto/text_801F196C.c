@@ -1,6 +1,7 @@
 /* Functions from 0x801F196C to 0x801FC620, found by decomp-toolkit. */
 #include "common.h"
 extern void* fn_800C08AC(void *, s32, void *);
+extern void* lbl_8029A8C8[];
 
 extern void* lbl_80367240;
 extern u16 lbl_80280B58[18];
@@ -141,6 +142,14 @@ void fn_801F64C8(void) {
     fn_80109020(&lbl_80280CF0 + 0x20);
 }
 
+void fn_801F6594(void) {
+    M2C_UNK fn_80108FA8(void *);
+    M2C_UNK fn_801480D8(M2C_UNK);
+    extern M2C_UNK lbl_80280CF0;
+    fn_80108FA8(&lbl_80280CF0 + 0x20);
+    fn_801480D8(0x1388);
+}
+
 void fn_801F726C(void *arg0) {
     s32 temp_r31;
 
@@ -248,6 +257,22 @@ void fn_801FA874(void *arg0) {
     }
 }
 
+void fn_801FB548(void *arg0) {
+    u32 temp_r4;
+    u32 temp_r5;
+    u32 var_ctr;
+
+    temp_r4 = M2C_FIELD(arg0, u32 *, 8);
+    temp_r5 = temp_r4 + (M2C_FIELD(arg0, s32 *, 4) * 8);
+    var_ctr = (u32) ((temp_r5 + 7) - temp_r4) >> 3U;
+    if (temp_r5 > temp_r4) {
+        do {
+            var_ctr -= 1;
+        } while (var_ctr != 0);
+    }
+    M2C_FIELD(arg0, s32 *, 4) = 0;
+}
+
 u32 fn_801FB9CC(void *arg0, u16 arg1) {
     return (u32) (M2C_FIELD(arg0, u16 *, 0x120) - arg1) >> 0x1FU;
 }
@@ -256,6 +281,16 @@ extern u16 lbl_8029B520[];
 s32 fn_801FBC30(s32 arg0) {
     s32 temp = arg0 * 2;
     return lbl_8029B520[temp];
+}
+
+void fn_801FBC48(void) {
+    extern u16 lbl_80368410;
+    u16* ptr = (u16*)&lbl_80368410;
+    if (*ptr == 0) {
+        *ptr = 0;
+        *(ptr + 2) = 0;
+        fn_801FBC84();
+    }
 }
 
 void fn_801FC400(void) {
@@ -277,4 +312,12 @@ void fn_801FC434(void) {
 void fn_801FC438(void) {
 
 }
+
+void fn_801FC4F8(s32 arg0, s32 arg1, s32 arg2) {
+    s32 temp_arg2 = (arg2 < 0 ? 0 : arg2);
+    
+    *(s32*)(arg0 + 0x4) = arg1;
+    *(u32*)(arg0 + 0x8) = (u32)temp_arg2;
+}
+
 extern u16 lbl_80280B58[18];
