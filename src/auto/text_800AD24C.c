@@ -192,6 +192,14 @@ void fn_800B2648(s32 arg0) {
     }
 }
 
+void fn_800B28DC(void) {
+    extern u8 lbl_80317338[];
+
+    if (M2C_FIELD(lbl_80317338, u16 *, 0x12C) == 0) {
+        M2C_FIELD(lbl_80317338, u16 *, 0x12C) = 1;
+    }
+}
+
 void fn_800B28FC(s32 arg0) {
     M2C_UNK fn_8024B94C(M2C_UNK *);
     extern M2C_UNK lbl_80317338;
