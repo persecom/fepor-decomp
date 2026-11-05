@@ -144,6 +144,14 @@ void fn_80072E80(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x30) = -2;
 }
 
+void fn_80072ED4(void *arg0) {
+    void fn_801DDBA8(void *, u8 *, s32, s32, s32);
+    extern u8 lbl_8026BE40[];
+    extern u16 lbl_80311D50[];
+    fn_801DDBA8(lbl_80311D50, lbl_8026BE40 + 0x12D, 0, 1, 0);
+    M2C_FIELD(arg0, s32 *, 0x30) = -3;
+}
+
 void fn_8007303C(s32 arg0) {
     M2C_UNK fn_8000C070(s32, M2C_UNK);
     s32 fn_800EB774();
