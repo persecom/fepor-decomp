@@ -200,6 +200,10 @@ void fn_801C4440(void) {
     fn_8000BF00(&lbl_8029824C);
 }
 
+void fn_801C4468(s32 arg0) {
+    M2C_FIELD(fn_8000CAF0(&lbl_8029824C, 4), s32 *, 0x3C) = arg0;
+}
+
 void fn_801C4564(void) {
     M2C_UNK fn_801C45A4();
     fn_801C45A4();
