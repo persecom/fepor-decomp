@@ -205,6 +205,12 @@ u8 fn_80126830(void) {
     return temp;
 }
 
+void fn_8012684C(s8 arg0) {
+    extern u8 lbl_80330708[];
+    lbl_80330708[0xA5] = arg0;
+    fn_80199818(&lbl_80330708[0x9C], &lbl_80330708);
+}
+
 u8 fn_8012687C(void) {
     extern u8 lbl_80330708[];
     return lbl_80330708[0xA5];
@@ -311,6 +317,12 @@ s32 fn_80126FA0(s32 arg0) {
         return 1;
     }
     fn_8011D908(arg0, 0);
+    return 1;
+}
+
+s32 fn_80127000(void) {
+    M2C_UNK fn_8008D6D8(M2C_UNK);
+    fn_8008D6D8(0);
     return 1;
 }
 
