@@ -26,6 +26,16 @@ s32 fn_8001FC34(s32 arg0) {
     return arg0 + 0x14194;
 }
 
+void fn_8001FC40(s32 arg0) {
+    s32 temp_r3;
+    
+    // Simple conditional assignment - get sign bit and use it to clamp input to 0 or more
+    s32 sign = arg0 >> 31;
+    temp_r3 = (arg0 + sign) ^ sign;
+    
+    fn_8001FC7C(temp_r3);
+}
+
 void fn_800227D0(s32 arg0, s32 arg1, s8 arg2) {
     void *temp_r3;
 
@@ -107,6 +117,30 @@ void fn_80024734(void *arg0) {
     M2C_FIELD(arg0, void **, 0x3C);
     temp_r3 = (void **)M2C_FIELD(arg0, void **, 0x3C);
     M2C_FIELD(M2C_FIELD(temp_r3, void **, 4), M2C_UNK (**)(void *, void *), 0x18)(temp_r3, arg0);
+}
+
+s32 fn_80025440(void) {
+    u8 fn_80166D8C(M2C_UNK *);
+    extern M2C_UNK lbl_80330D68;
+    s32 var_r3;
+
+    var_r3 = 0x20;
+    if (fn_80166D8C(&lbl_80330D68) != 0) {
+        var_r3 = 0x40;
+    }
+    return var_r3;
+}
+
+s32 fn_80025478(void) {
+    u8 fn_80166D8C(M2C_UNK *);
+    extern M2C_UNK lbl_80330D68;
+    s32 var_r3;
+
+    var_r3 = 9;
+    if (fn_80166D8C(&lbl_80330D68) != 0) {
+        var_r3 = 0x40;
+    }
+    return var_r3;
 }
 
 void fn_800254B0(void **arg0) {
@@ -615,6 +649,15 @@ void fn_80028674(void) {
 void fn_80028694(void) {
     extern u16 lbl_80268E40[];
     fn_800C50FC(&lbl_80268E40[0x212 / sizeof(u16)], fn_800C52C8(), lbl_80268E40);
+}
+
+void fn_800287E4(void) {
+    extern u8 lbl_80330708[];
+    
+    fn_8014C7C0(lbl_80330708, lbl_80330708 + 0x504);
+    fn_8014C798(lbl_80330708);
+    fn_800163F8();
+    fn_80016180();
 }
 
 void fn_80028824(s32 arg0) {
