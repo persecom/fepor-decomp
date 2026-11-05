@@ -385,6 +385,18 @@ u8 fn_80047AF8(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x61);
 }
 
+void fn_80048A70(s8 arg0) {
+    extern u8 lbl_80330708[];
+    extern s8 lbl_80367289;
+    s8 var_r3;
+
+    var_r3 = arg0;
+    if ((u8) lbl_80330708[0xA6] != 1) {
+        var_r3 = 0;
+    }
+    lbl_80367289 = var_r3;
+}
+
 void fn_80049144(void *arg0) {
     void *temp_r5;
 
