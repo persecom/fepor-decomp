@@ -441,6 +441,15 @@ s32 fn_800B76D0(u32 arg0) {
     return 1;
 }
 
+void fn_800B7748(s32 arg0) {
+    u8 fn_800A5C88(void);
+    extern s32 lbl_80367110;
+
+    if (fn_800A5C88() == 0 || (lbl_80367110 & 1)) {
+        fn_8000C188(arg0);
+    }
+}
+
 s32 fn_800B7948(void) {
     M2C_UNK fn_801453F0();
     fn_801453F0();
