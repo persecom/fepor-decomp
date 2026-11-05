@@ -53,6 +53,13 @@ loop_18:
     M2C_FIELD(arg0, s16 *, 0x4C) = var_r3;
 }
 
+void fn_80163708(void *arg0) {
+    *(s16 *)((char *)arg0 + 0x12) = 2;
+    *(s16 *)((char *)arg0 + 0x14) = 2;
+    *(s16 *)((char *)arg0 + 0x16) = 0x106;
+    *(s16 *)((char *)arg0 + 0x18) = 0x10E;
+}
+
 void fn_80164A24(void *arg0) {
     fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58));
 }
