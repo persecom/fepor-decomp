@@ -199,6 +199,7 @@ extern u32* lbl_80367860;
 extern u32 lbl_80367864;
 extern u32* lbl_80367868;
 extern u32 lbl_8036786C;
+extern s32 lbl_80366DDC;
 s32 fn_800C52C8(void) {
     s32 var_r3;
     
