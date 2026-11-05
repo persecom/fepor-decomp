@@ -2702,7 +2702,6 @@ void fn_801001B8(s32 arg1, s32 arg2, s32 arg3) {
     fn_80100284(2, arg1, arg2, arg3, arg1);
 }
 
-#pragma readonly_strings on
 void fn_801007A0(void *arg0) {
     struct UnitBits {
         u16 f0 : 3;
