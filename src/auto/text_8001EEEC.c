@@ -30,7 +30,13 @@ void fn_80022FCC(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x14190) = arg1;
 }
 
-extern u8 lbl_802CA518[16];
+extern struct {
+    u8 pad0[0xD];
+    u8 unitMap[0x6100];
+    u8 pad1;
+    s16 costMap[0x4040];
+    s8 fogMap[64];
+} lbl_802CA518;
 void fn_80023DC0(void) {
     fn_8002297C(&lbl_802CA518);
 }
@@ -283,6 +289,30 @@ void fn_800256CC(void *arg0) {
             }
         }
     }
+}
+
+s32 fn_80025F0C(s8 arg0, s8 arg1, s32 arg2) {
+    void *fn_8000CAA0(void *, s32);
+    extern u8 lbl_802848DC[];
+    extern u8 lbl_802B14E4[];
+    u8 *p;
+    void *obj;
+    void *unit;
+    u8 id;
+
+    p = (u8 *)&lbl_802CA518 + 0xD + arg0 + arg1 * 64;
+    if (*p == 0) {
+        return 0;
+    }
+    obj = fn_8000CAA0(lbl_802848DC, arg2);
+    id = *p;
+    if (id != 0) {
+        unit = lbl_802B14E4 + (id - 1) * 0x280;
+    } else {
+        unit = NULL;
+    }
+    M2C_FIELD(obj, void **, 0x30) = unit;
+    return 1;
 }
 
 void fn_80025FA4(void *arg0) {
