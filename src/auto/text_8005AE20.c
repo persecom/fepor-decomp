@@ -1513,8 +1513,8 @@ void fn_80071B34(void) {
 }
 
 void fn_80071B54(void) {
-    lbl_80330708[0x51D] = 0xF;
-    fn_8018DBD8(lbl_80330708);
+    M2C_FIELD(&lbl_80330708, s8 *, 0x51D) = 0xF;
+    fn_8018DBD8(&lbl_80330708);
     fn_8018DB10();
 }
 
