@@ -1354,6 +1354,28 @@ void fn_8013F3D0(void) {
     fn_80059C2C(0, 0, 0x260, 0x1C0, 0);
 }
 
+void *fn_8013F6B8(void *arg0, void *arg1, void *arg2) {
+    void fn_8013F748(void *, void *, void *);
+    struct Point {
+        s16 x;
+        s16 y;
+    };
+    struct Point pt;
+    struct Point temp2;
+    struct Point temp;
+
+    pt.x = 0;
+    pt.y = 0;
+    fn_8013F748(arg0, &pt, &pt);
+    temp = *(struct Point *)arg2;
+    temp.x -= pt.x;
+    temp.y -= pt.y;
+    temp2 = temp;
+    *(s16 *)((char *)arg1 + 0) = temp2.x;
+    *(s16 *)((char *)arg1 + 2) = temp2.y;
+    return arg1;
+}
+
 s32 fn_8013FA10(void) {
     f32 fn_80138AC0();
     extern f32 lbl_8036A728;
