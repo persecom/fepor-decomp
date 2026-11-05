@@ -15,14 +15,14 @@ extern s32 D_80368AD0;
 extern s32 lbl_80368B0C;
 u32 fn_8026367C(void);
 
-typedef struct __va_list {
+typedef struct {
     char gpr;
     char fpr;
     char reserved[2];
     char *input_arg_area;
     char *reg_save_area;
-} __va_list[1];
-typedef __va_list va_list;
+} __va_list;
+typedef __va_list va_list[1];
 void __va_start(va_list, ...);
 
 typedef struct {
