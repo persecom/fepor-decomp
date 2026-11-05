@@ -416,11 +416,10 @@ void fn_800CBF24(s32 arg0, s32 arg2) {
 
 s32 fn_800CD53C(void *arg0) {
     s32 fn_801519C0();
-    extern M2C_UNK lbl_802704F8;
     void *temp_r3;
 
     temp_r3 = M2C_FIELD(arg0, void **, 4);
-    if (M2C_FIELD(M2C_FIELD(temp_r3, void **, 0x10), u32 (**)(void *, void *, void *), 0x14)(temp_r3, &lbl_802704F8 + 0x3D0, &lbl_802704F8 + 0x3D7) != 0U) {
+    if (M2C_FIELD(M2C_FIELD(temp_r3, void **, 0x10), u32 (**)(void *, void *, void *), 0x14)(temp_r3, (char *)lbl_802704F8 + 0x3D0, (char *)lbl_802704F8 + 0x3D7) != 0U) {
         return fn_801519C0();
     }
     return 0;
