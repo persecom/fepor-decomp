@@ -769,6 +769,11 @@ s32 fn_80178A74(void) {
     return 0x1C;
 }
 
+void fn_80179248(void) {
+    extern u16 lbl_80278080[];
+    fn_8000E0E4(&lbl_80278080[0x66A / sizeof(u16)]);
+}
+
 void *fn_80179274(void) {
     return (char *)&lbl_80278080 + 0x674;
 }
