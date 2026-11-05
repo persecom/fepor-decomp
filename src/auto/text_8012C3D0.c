@@ -1,5 +1,12 @@
 /* Functions from 0x8012C3D0 to 0x8013275C, found by decomp-toolkit. */
 #include "common.h"
+#include "global.h"
+
+f32 lbl_8036A500 = 300.0f;
+f32 lbl_8036A50C = 1.0f;
+f32 lbl_8036A510 = 0.0f;
+f32 lbl_8036A514 = 288.0f;
+f32 lbl_8036A518 = 24.0f;
 
 s32 fn_8012C3D0(void) {
     return 0x168;
@@ -310,6 +317,48 @@ void fn_80130CDC(s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5) {
     }
 }
 
+extern u16 jumptable_802911EC[];
+s32 fn_80131020(s32 arg0, s32 arg1)
+{
+    if (arg1 >= 8) {
+        return 0;
+    }
+    
+    switch (arg1) {
+        case 0:
+            return fn_80092ADC(0x0);
+        case 1:
+            return fn_80092ADC(0x1);
+        case 2:
+            return fn_80092ADC(0x2);
+        case 3:
+            return fn_80092ADC(0x3);
+        case 4:
+            return fn_80092ADC(0x4);
+        case 5:
+            return fn_80092ADC(0x5);
+        case 6:
+            return fn_80092ADC(0x6);
+        case 7:
+            return fn_80092ADC(0x7);
+    }
+    
+    return 0;
+}
+
+void *fn_801310F4(s32 arg1) {
+    extern u32 jumptable_80291210[];
+    extern u8 lbl_80275AC0[];
+    
+    if (arg1 >= 8) {
+        // Return default case (offset 0x247 from lbl_80275AC0)
+        return &lbl_80275AC0[0x247];
+    }
+    
+    // Jump table access
+    return (void *) jumptable_80291210[arg1];
+}
+
 extern s32 fn_8010424C(void*);
 s32 fn_80131464(void** arg1, s32 arg2) {
     void* temp_r3;
@@ -419,6 +468,26 @@ s32 fn_80131714(s32 arg0, s32 arg1)
     }
 }
 
+void *fn_801317B0(s32 arg1) {
+    extern u8 lbl_80275AC0[];
+    switch (arg1) {                                 /* irregular */
+    case 1:
+        return &lbl_80275AC0[0x34B];
+    case 2:
+        return &lbl_80275AC0[0x35F];
+    case 3:
+        return &lbl_80275AC0[0x376];
+    case 4:
+        return &lbl_80275AC0[0x38B];
+    case 5:
+        return &lbl_80275AC0[0x39F];
+    case 6:
+        return &lbl_80275AC0[0x3B4];
+    default:
+        return &lbl_80275AC0[0x247];
+    }
+}
+
 u16 fn_80131AA8(void *arg1, s32 arg2) {
     void *temp_r3;
     u16 temp_r0;
@@ -442,6 +511,78 @@ u16 fn_80131AA8(void *arg1, s32 arg2) {
         return (u16) M2C_FIELD(arg1, u8 *, 0x1E);
     default:
         return 0U;
+    }
+}
+
+void fn_80131B9C(s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5) {
+    switch (arg1) {                                 /* irregular */
+    case 0:
+        *arg2 = 0;
+        *arg3 = 0;
+        *arg4 = 0x30;
+        *arg5 = 0x14;
+        return;
+    case 1:
+        *arg2 = 0;
+        *arg3 = 0x104;
+        *arg4 = 0x30;
+        *arg5 = 0x118;
+        return;
+    case 2:
+        *arg2 = 0;
+        *arg3 = 0x118;
+        *arg4 = 0x30;
+        *arg5 = 0x12C;
+        return;
+    case 3:
+        *arg2 = 0;
+        *arg3 = 0x12C;
+        *arg4 = 0x30;
+        *arg5 = 0x140;
+        return;
+    case 4:
+        *arg2 = 0;
+        *arg3 = 0x140;
+        *arg4 = 0x30;
+        *arg5 = 0x154;
+        return;
+    }
+}
+
+void fn_80131F70(void)
+{
+    // Implementation for fn_80131F70
+    return;
+}
+
+void fn_80132018(s32 arg0)
+{
+    if (arg0 > 7) {
+        return;
+    }
+}
+
+s8 fn_8013236C(void **arg1, s32 arg2) {
+    u8 fn_800386B0();
+    s8 fn_8003B2D0();
+    void *temp_r3;
+
+    temp_r3 = *arg1;
+    switch (arg2) {                                 /* irregular */
+    case 1:
+        return -(s8) M2C_FIELD(M2C_FIELD(temp_r3, void **, 0x18C), u16 *, 0x38);
+    case 3:
+        return (s8) fn_800386B0();
+    case 5:
+        return fn_8003B2D0();
+    case 4:
+        return (s8) M2C_FIELD(temp_r3, u8 *, 0x1A8);
+    case 2:
+        return (s8) M2C_FIELD(temp_r3, u8 *, 0x19A);
+    case 0:
+        return -(s8) M2C_FIELD(M2C_FIELD(temp_r3, void **, 0x188), u16 *, 0x5A);
+    default:
+        return 0;
     }
 }
 
