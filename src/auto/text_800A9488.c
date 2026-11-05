@@ -228,7 +228,7 @@ void fn_800AA27C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x60) = 0;
 }
 
-#pragma use_lmw_stmw on
+
 s32 fn_800AA288(s32 arg0) {
     s32 fn_8003F224(s32, s32);
     s32 fn_8003F47C(void);
