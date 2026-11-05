@@ -226,6 +226,14 @@ void fn_8005C5A8(char *name) {
     *(u16 *)(FindEntryByName(name) + 0x30) |= 0x4000;
 }
 
+u16 fn_8005C6A0(char *name) {
+    u8 *e = FindEntryByName(name);
+    if (e == NULL) {
+        return 0x8000;
+    }
+    return *(u16 *)(e + 0x30);
+}
+
 void fn_8005C7A4(void) {
     fn_8005D474(1);
 }
