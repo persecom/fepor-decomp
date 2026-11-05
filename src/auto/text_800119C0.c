@@ -70,30 +70,27 @@ void fn_80013A6C(s32 arg0) {
 
 u32 fn_80013B60(void *arg0) {
     extern void *lbl_80367190;
-    u32 temp_r3;
-    void *temp_r4;
-    void *var_r3;
+    void *owner;
+    void *p;
+    u32 ret;
 
     if (arg0 == NULL) {
-        return *M2C_FIELD(lbl_80367190, u32 **, 0x28);
+        return **(u32 **)((u8 *)lbl_80367190 + 0x28);
     }
-    temp_r4 = M2C_FIELD(arg0, void **, 8);
-    temp_r3 = M2C_FIELD((M2C_FIELD(temp_r4, s32 *, 0x28) + (M2C_FIELD(arg0, s16 *, 0x10) * 4)), u32 *, 4);
-    if (temp_r3 == 0U) {
-        var_r3 = M2C_FIELD(temp_r4, void **, 0x1C);
-loop_6:
-        if (var_r3 != NULL) {
-            if ((s32) M2C_FIELD(var_r3, u8 *, 3) == 0x53) {
-                var_r3 = M2C_FIELD(var_r3, void **, 0x1C);
-                goto loop_6;
-            }
-        }
-        if (var_r3 == NULL) {
-            return 0U;
-        }
-        return *M2C_FIELD(var_r3, u32 **, 0x28);
+    owner = *(void **)((u8 *)arg0 + 8);
+    ret = (*(u32 **)((u8 *)owner + 0x28))[*(s16 *)((u8 *)arg0 + 0x10) + 1];
+    if (ret != 0) {
+        return ret;
     }
-    return temp_r3;
+    for (p = *(void **)((u8 *)owner + 0x1C); p != NULL; p = *(void **)((u8 *)p + 0x1C)) {
+        if ((s32)*(u8 *)((u8 *)p + 3) != 0x53) {
+            break;
+        }
+    }
+    if (p == NULL) {
+        return 0;
+    }
+    return **(u32 **)((u8 *)p + 0x28);
 }
 
 s32 fn_80013C78(char *arg0) {
