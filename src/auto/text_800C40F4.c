@@ -875,6 +875,16 @@ void fn_800E45CC(void *arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(arg0, s32 *, 0x5C) = arg2;
 }
 
+void fn_800E45D8(s32 *arg0, s32 *arg1) {
+    s32 temp_r5;
+    s32 temp_r0;
+
+    temp_r5 = *arg0;
+    temp_r0 = *arg1;
+    *arg1 = temp_r5;
+    *arg0 = temp_r0;
+}
+
 void fn_800E4B44(void *arg0) {
     s32 *temp_r3;
 
@@ -1206,9 +1216,9 @@ void fn_800E9A94(void) {
     s32 fn_8021CDC4(s32, void *, void *);
 
     extern s32 lbl_802725D8;
-    extern s32 lbl_80320C20;
+extern u16 lbl_80320C20;
 
-    fn_800EBF58();
+      fn_800EBF58();
     M2C_FIELD(&lbl_80320C20, s32 *, 0xA004) = fn_8021CDC4(M2C_FIELD(&lbl_80320C20, s32 *, 0xA000), &lbl_802725D8 + 0x70, &lbl_80320C20 + 0x10000);
 }
 
