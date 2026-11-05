@@ -14,3 +14,4 @@ void fn_800AD1F4(void) {
     fn_8022C260(lbl_80312ACC, fn_800AD2DC, fn_800AD284, 0x10, 0x10);
     __register_global_object(NULL, fn_800AD24C, lbl_80312AC0);
 }
+__declspec(section ".ctors") static void (*const lbl_80267ACC)(void) = fn_800AD1F4;
