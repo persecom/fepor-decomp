@@ -1,8 +1,32 @@
 /* Functions from 0x80006264 to 0x80011968, found by decomp-toolkit. */
 #include "common.h"
 
+typedef struct {
+    void *unk0;
+    void *unk4;
+    s32 unk8;
+} Struct_8000B090;
+
 extern s32 lbl_802AEE20[5]; // array of 5 pointers
 extern f64 lbl_80368C28;    // global float constant
+
+s32 fn_80006264(s32 arg0, s32 arg1, u32 arg2) {
+    u32 *var_r3;
+    u32 *var_r4;
+    u32 var_ctr;
+
+    var_r3 = (u32 *)(arg0 - 4);
+    var_r4 = (u32 *)(arg1 - 4);
+    var_ctr = arg2 >> 2U;
+
+    do {
+        if (*(var_r3++) != *(var_r4++)) {
+            return 1;
+        }
+    } while (--var_ctr != 0);
+
+    return 0;
+}
 
 void fn_80006298(s32 arg0, s32 arg1, u32 arg2) {
     s32 *var_r3;
@@ -35,6 +59,20 @@ void fn_800062CC(s32 arg0, s32 arg1, u32 arg2) {
     } while (var_ctr != 0);
 }
 
+void fn_800062EC(s32 arg0, s32 arg1, u32 arg2) {
+    s32 *dst = (s32*)(arg0 - 4);
+    s32 *src = (s32*)(arg1 - 4);
+    u32 count = arg2 >> 3U;
+    
+    if (count != 0) {
+        do {
+            *dst++ = *src++;
+            *dst++ = *src++;
+            count--;
+        } while (count != 0);
+    }
+}
+
 s32 fn_80006798(void) {
     extern s32 lbl_80367120;
     extern s32 lbl_80367128;
@@ -44,6 +82,27 @@ s32 fn_80006798(void) {
 s32 fn_800067B4(void) {
     extern s32 lbl_80367118;
     return lbl_80367118;
+}
+
+s32 fn_80006AC0(void *arg0) {
+    if ((u8) M2C_FIELD(arg0, u8 *, 0) != 0x10) {
+        return 0;
+    }
+    return M2C_FIELD(arg0, u8 *, 1) + ((M2C_FIELD(arg0, u8 *, 2) << 8) & 0xFF00) + ((M2C_FIELD(arg0, u8 *, 3) << 0x10) & 0xFF0000);
+}
+
+s32 fn_80006AF4(s32 arg0) {
+    s32 var_r11;
+    s32 *var_r3;
+    s32 var_ctr;
+
+    var_r3 = (s32 *)arg0 - 1;
+    var_r11 = 0;
+    var_ctr = 0x1c;
+    do {
+        var_r11 += *var_r3++;
+    } while (--var_ctr != 0);
+    return var_r11;
 }
 
 void fn_80007290(s32 arg0, s32 arg1, s32 arg2) {
@@ -56,6 +115,11 @@ void fn_80007628(s32 arg0, s32 arg1, s32 arg2) {
     s32 temp_r3 = *(s32*)(arg0 + 0x10);
     *(u32*)(temp_r3 + 0x14) = (u32)arg1;
     *(u32*)(temp_r3 + 0x18) = (u32)arg2;
+}
+
+void fn_80007668(s32 arg0, s32 arg1) {
+    u16 *ptr = (u16*)0x80367140;
+    ptr[arg0] = arg1;
 }
 
 f32 fn_800076CC(void* arg0) {
@@ -78,6 +142,20 @@ extern u16 lbl_80367140;
 void fn_80009B8C(s8 arg0) {
     s8 temp = arg0;
     lbl_80367140 = (u16)temp;
+}
+
+void fn_80009B98(void) {
+    u16* ptr = (u16*)0x80367140;
+    ptr[0x2C/2] = 0;
+    ptr[0x30/2] = 0;
+    ptr[0x20/2] = (u16)(ptr[0x20/2] & 0x7FF);
+}
+
+void fn_80009BC0(s32 arg0, s32 arg1) {
+    u16* ptr = (u16*)lbl_80367140;
+    ptr[0x16] = arg0;
+    ptr[0x18] = arg1;
+    ptr[0x10] = (ptr[0x10] & 0x8FFF) | 0x2000;
 }
 
 void fn_80009BF4(f32 farg0) {
@@ -122,6 +200,18 @@ void fn_8000A274(s8 arg0) {
 
 void fn_8000A280(void) {
 
+}
+
+void fn_8000A284(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
+    *(f32*)((u8*)lbl_80367140 + 0x98) = arg0;
+    *(f32*)((u8*)lbl_80367140 + 0x94) = arg1;
+    *(f32*)((u8*)lbl_80367140 + 0xa0) = arg2;
+    *(f32*)((u8*)lbl_80367140 + 0x9c) = arg3;
+}
+
+void fn_8000A358(void) {
+    extern u16 lbl_80267C70[];
+    fn_800C4638(&lbl_80267C70[0x3A * 2], 0);
 }
 
 void fn_8000A3F8(void *arg0) {
@@ -213,6 +303,42 @@ s32 fn_8000AFB4(void **arg0) {
     return 0;
 }
 
+s32 fn_8000B018(void *arg0) {
+    void **obj = (void **)((char *)arg0 + 4);
+    void **vtable_ptr = *obj;
+    s32 (*func)(void *obj) = (s32 (*)(void *))vtable_ptr[1]; // offset 0x4 is vtable[1] (second entry)
+    
+    void *new_val = (char *)*obj + 0xc;
+    *obj = new_val;
+    
+    return func(arg0);
+}
+
+void fn_8000B050(void *arg0) {
+    void **vtable = (void**)((char*)arg0 + 4);
+    void *obj = *vtable;
+    *vtable = (void*)((char*)obj + 0xC);
+    ((void (*)(s16, s16))((char*)obj + 8))((s16) 0, (s16) 0);
+}
+
+void fn_8000B1C0(void *arg0) {
+    void **vtable = (void**)((char*)arg0 + 4);
+    void *obj = *vtable;
+    *vtable = (void*)((char*)obj + 8);
+    (*(void(**)(void))((char*)obj + 4))();
+}
+
+s32 fn_8000B344(void *arg0) {
+    void **vtable_entry;
+    void *temp_r4;
+
+    vtable_entry = (void **) arg0;
+    temp_r4 = *(vtable_entry + 1);
+    *(vtable_entry + 1) = (void *) ((u8 *) temp_r4 + 8);
+    ((void (*)(void)) temp_r4)();
+    return 1;
+}
+
 s32 fn_8000B37C(void *arg0) {
     void *temp_r4;
 
@@ -228,6 +354,12 @@ s32 fn_8000B474(void *arg0) {
     ptr[1] = (void *)((u32)ptr[1] + 4);
     ptr[4] = (void *)0x8000B4D0;
     return 0;
+}
+
+s32 fn_8000B494(s32 arg0)
+{
+    s32* array = (s32*)lbl_802AEE20;
+    return array[arg0];
 }
 
 void fn_8000B4D0(void) {
@@ -312,6 +444,14 @@ void fn_8000C068(void *arg0, s32 arg1) {
 
 void fn_8000C188(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x10) = 0;
+}
+
+void fn_8000C194(s32 arg0) {
+    M2C_UNK fn_8000C1CC();
+    extern u16 lbl_802ADADC[];
+    if (lbl_802ADADC[arg0] != 0) {
+        fn_8000C1CC();
+    }
 }
 
 void fn_8000C52C(s32 arg0) {
@@ -409,6 +549,21 @@ loop_9:
     }
     temp_r3 = M2C_FIELD(temp_r3, void **, 0);
     goto loop_9;
+}
+
+s32 fn_8000D598(u8 *arg0) {
+    s32 var_r5;
+    u8 *var_r3;
+
+    var_r3 = arg0;
+    var_r5 = 0;
+loop_2:
+    if ((s8)*var_r3 != 0) {
+        u8 temp = *(var_r3++);
+        var_r5 = (temp + (var_r5 * 0x25));
+        goto loop_2;
+    }
+    return var_r5;
 }
 
 void fn_80010FF0(void) {
