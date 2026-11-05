@@ -329,6 +329,11 @@ void fn_80076814(void) {
     fn_8000E0E4(&lbl_8026C0B8[0x2D0 / sizeof(u16)]);
 }
 
+void fn_80076840(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4(&lbl_8026C0B8[0x2DC / sizeof(u16)]);
+}
+
 s32 fn_8007693C(void) {
     M2C_UNK fn_8004A224();
     M2C_UNK fn_800AA80C(s32);
