@@ -6,6 +6,11 @@ typedef struct Vec2s {
     s16 y;
 } Vec2s;
 
+void *fn_80132800(void) {
+    extern u16 lbl_80276008[];
+    return &lbl_80276008[0x50 / 2];
+}
+
 s32 fn_8013286C(void) {
     return 2;
 }
@@ -1309,9 +1314,10 @@ void fn_80142018(Vec2s *out, void *arg0) {
 }
 
 void fn_8014203C(void *arg0, Vec2s *size) {
+    s16 x = M2C_FIELD(arg0, s16 *, 0xA);
     s16 w = size->x;
     s16 h = size->y;
-    M2C_FIELD(arg0, s16 *, 0xE) = M2C_FIELD(arg0, s16 *, 0xA) + w;
+    M2C_FIELD(arg0, s16 *, 0xE) = x + w;
     M2C_FIELD(arg0, s16 *, 0x10) = M2C_FIELD(arg0, s16 *, 0xC) + h;
 }
 
@@ -1373,13 +1379,12 @@ s32 fn_8014351C(void *arg0, s32 arg1) {
 
 void fn_80143570(void *arg0) {
     typedef struct { u8 unk0; } Unk1;
-    typedef struct { u8 pad[0x90]; u8 elems[11][0xC]; } Obj;
     M2C_UNK fn_80144B60(void *, Unk1);
     Unk1 e;
     s32 i;
 
     for (i = 0; i != 11; i++) {
-        fn_80144B60(((Obj *)arg0)->elems[i], e);
+        fn_80144B60((u8 *)arg0 + (i * 0xC + 0x90), e);
     }
 }
 
