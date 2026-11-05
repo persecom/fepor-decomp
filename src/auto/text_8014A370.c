@@ -393,6 +393,24 @@ void fn_8014CAD4(void *arg0, f32 farg0, f32 farg1) {
     M2C_FIELD(arg0, f32 *, 0x53C) = fn_80023068(&lbl_802CA518);
 }
 
+void fn_8014CBD8(void *arg0, f32 farg0, f32 farg1) {
+    f32 fn_80023068(M2C_UNK *, M2C_UNK *, f32, f32);
+    extern M2C_UNK lbl_802CA518;
+    extern f32 lbl_8036A7F0;
+    f32 temp_f30;
+    f32 temp_f31;
+
+    temp_f30 = farg0 + lbl_8036A7F0;
+    temp_f31 = farg1 + lbl_8036A7F0;
+    M2C_FIELD(arg0, f32 *, 0x524) = temp_f30;
+    M2C_FIELD(arg0, f32 *, 0x528) = temp_f31;
+    M2C_FIELD(arg0, f32 *, 0x52C) = temp_f30;
+    M2C_FIELD(arg0, f32 *, 0x530) = temp_f31;
+    M2C_FIELD(arg0, f32 *, 0x53C) = fn_80023068(&lbl_802CA518, &lbl_802CA518, temp_f30, temp_f31);
+    M2C_FIELD(arg0, f32 *, 0x534) = temp_f30;
+    M2C_FIELD(arg0, f32 *, 0x538) = temp_f31;
+}
+
 void fn_8014CF10(s8* arg0, s8 arg1, s8 arg2) {
     s8 temp = *arg0;
     *(arg0 + (temp * 2 + 0x545)) = arg1;
@@ -525,3 +543,8 @@ extern u16 lbl_80367B14;
 #include "common.h"
 extern f32 lbl_8036A7F0;
 extern u8 lbl_802CA518[];
+extern s32 lbl_80367B00;
+extern s32 lbl_80367B04;
+extern u8 lbl_80367B0D;
+
+void fn_801475FC(s32, s32); /* extern */
