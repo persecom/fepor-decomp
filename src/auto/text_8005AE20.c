@@ -1020,6 +1020,19 @@ void fn_80063934(void) {
     fn_8005C7E8();
 }
 
+#pragma inline_depth(0)
+M2C_UNK fn_80063954(char *arg0) {
+    M2C_UNK fn_80063A14(M2C_UNK);
+    M2C_UNK temp_r31;
+
+    temp_r31 = fn_8005C82C();
+    if (!(fn_8005C6A0(arg0) & 0x4000)) {
+        fn_80063A14(temp_r31);
+        fn_8005C5A8(arg0);
+    }
+    return temp_r31;
+}
+#pragma inline_depth(reset)
 s32 fn_800639B4(void) {
     return 0;
 }
