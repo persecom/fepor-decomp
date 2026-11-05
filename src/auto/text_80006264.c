@@ -67,6 +67,14 @@ s32 fn_8000ADA0(void *arg0) {
     return 1;
 }
 
+s32 fn_8000AEB4(void *arg0) {
+    s32 fn_8000CAF0(s32, s16);
+    s32 temp_r3 = ((s32 *) arg0)[1];
+    fn_8000CAF0(((s32 *) temp_r3)[1], (s16) (((u32) ((s32 *) temp_r3)[0]) >> 16));
+    ((s32 **) arg0)[1] = (s32 *) ((s32 *) arg0)[1] + 2;
+    return 1;
+}
+
 s32 fn_8000AF94(void *arg0) {
     u32 *temp_r4;
 
