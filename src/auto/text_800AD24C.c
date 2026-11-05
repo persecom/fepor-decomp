@@ -1052,6 +1052,17 @@ s32 fn_800B8FFC(u32 arg0) {
     return 0;
 }
 
+extern void fn_80070018(u32 arg0, u32 arg1, u32 arg2);
+s32 fn_800B9060(u32 arg0) {
+    M2C_UNK fn_80070018(s32, u32, s32, s32);
+    if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
+        return 0;
+    }
+    fn_80070018(fn_800C0658(), arg0, 0, 0);
+    fn_80013864();
+    return 0;
+}
+
 s32 fn_800B90C4(u32 arg0) {
     extern s32 lbl_80367110;
     s32 fn_801CF760(void);
