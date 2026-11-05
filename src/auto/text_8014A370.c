@@ -132,6 +132,16 @@ void *fn_8014B26C(void) {
     return &lbl_80276F00[0x119];
 }
 
+void fn_8014B288(s8 arg1) {
+    // This is a placeholder that at least avoids the compilation error by adding necessary include.
+    // But it will not match until we get the global declaration correct.
+}
+
+u8 fn_8014B2A4(void) {
+    extern void *lbl_80367B14;
+    return *(u8 *)((char *) lbl_80367B14 + 0xC);
+}
+
 s32 fn_8014B2E4(void) {
     return 0;
 }
