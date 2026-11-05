@@ -602,8 +602,9 @@ void fn_80099EF4(void *arg0) {
 
 extern u8 lbl_80289EB8[16];
 void fn_8009A514(void) {
-    if (fn_8000C0C0(&lbl_80289EB8) != 0U) {
-        fn_8000C070(4);
+    u32 temp_r3 = fn_8000C0C0(lbl_80289EB8);
+    if (temp_r3 != 0) {
+        fn_8000C070(temp_r3, 4);
     }
 }
 
