@@ -1251,6 +1251,11 @@ void fn_800EB558(void) {
     lbl_80367110 &= 0xFFFFFEFF;
 }
 
+extern u16 lbl_80367110;
+void fn_800EB568(void) {
+    lbl_80367110 |= 0x100;
+}
+
 s32 fn_800EC2B8(void) {
     extern s32 lbl_803678C0;
     fn_800D758C(lbl_803678C0);
@@ -1287,7 +1292,7 @@ s32 fn_800EE490(void) {
     return temp_r31;
 }
 
-extern u8 lbl_8032AC58[16];
+extern s8 lbl_8032AC58[];
 void fn_800F1BFC(void) {
     fn_800F1C24(&lbl_8032AC58);
 }
