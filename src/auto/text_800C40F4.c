@@ -2425,6 +2425,34 @@ void fn_800E59BC(void *arg0) {
     }
 }
 
+void fn_800E5CF8(void *arg0) {
+    M2C_UNK fn_80201FF0(M2C_UNK *, s32);
+    M2C_UNK fn_80202024(M2C_UNK *, M2C_UNK *, M2C_UNK *);
+    M2C_UNK fn_80202300(M2C_UNK *, M2C_UNK, f32);
+    M2C_UNK fn_80202540(M2C_UNK *, f32, f32, f32);
+    M2C_UNK fn_802025C0(M2C_UNK *, f32, f32, f32);
+    extern f32 lbl_80369F64;
+    M2C_UNK spF8;
+    M2C_UNK spC8;
+    M2C_UNK sp98;
+    M2C_UNK sp68;
+    M2C_UNK sp38;
+    M2C_UNK sp8;
+
+    if ((u32) M2C_FIELD(arg0, u32 *, 0xDC) != 0U) {
+        fn_80202540(&sp98, M2C_FIELD(arg0, f32 *, 0x48), M2C_FIELD(arg0, f32 *, 0x4C), M2C_FIELD(arg0, f32 *, 0x50));
+        fn_802025C0(&spC8, M2C_FIELD(arg0, f32 *, 0x6C), M2C_FIELD(arg0, f32 *, 0x70), M2C_FIELD(arg0, f32 *, 0x74));
+        fn_80202300(&sp68, 0x58, lbl_80369F64 * M2C_FIELD(arg0, f32 *, 0x54));
+        fn_80202300(&sp38, 0x59, lbl_80369F64 * M2C_FIELD(arg0, f32 *, 0x58));
+        fn_80202300(&sp8, 0x5A, lbl_80369F64 * M2C_FIELD(arg0, f32 *, 0x5C));
+        fn_80202024(&sp8, &sp68, &spF8);
+        fn_80202024(&sp38, &spF8, &spF8);
+        fn_80202024(&spC8, &spF8, &spF8);
+        fn_80202024(&sp98, &spF8, &spF8);
+        fn_80201FF0(&spF8, M2C_FIELD(arg0, s32 *, 0xE0) + 0x10);
+    }
+}
+
 void fn_800E6DC8(void *arg0) {
     int i;
     u32 *ptr = (u32*)arg0;
@@ -2906,6 +2934,17 @@ s32 fn_800E8BC4(void *arg0) {
     return 0;
 }
 
+void fn_800E8BF8(float* r4, float* r5, float* r6) {
+    // Function signature determined based on the target assembly and common function
+    // conventions in this project.
+    
+    float const_val = 0.0f;
+    
+    if (*r4 == const_val || *r5 == const_val || *r6 != const_val) {
+        fn_800F7130();
+    }
+}
+
 #pragma cplusplus on
 #pragma dont_inline on
 extern "C" M2C_UNK *fn_800C93EC(void *);
@@ -3087,6 +3126,11 @@ void fn_800EA540(s32 arg0, s32 arg1) {
     fn_8000CAA0(lbl_8028E3EC, arg1);
 }
 
+void fn_800EA57C(void)
+{
+    // Placeholder for a simple operation, likely setting some global state.
+}
+
 void fn_800EA7CC(s32 arg0, s32 arg1) {
     struct CardWork {
         u8 workArea[0xA000];
@@ -3199,6 +3243,41 @@ void fn_800EB374(s32 arg0) {
     }
     lbl_80320C20.busy = 1;
     lbl_80320C20.result = fn_8021AFD0(lbl_80320C20.chan, lbl_80320C20.workArea, fn_800EB7E4, fn_800EB80C);
+}
+
+s32 fn_800EB428(s32 arg0) {
+    M2C_UNK fn_8000C070(s32, M2C_UNK);
+    s32 fn_8021A8C8(s32, M2C_UNK, void *);
+    extern M2C_UNK lbl_80320C20;
+    s32 var_r3;
+    u8 var_r3_2;
+    u8 var_r4;
+
+    M2C_FIELD(&lbl_80320C20, s32 *, 0xA000) = 0;
+    M2C_FIELD(&lbl_80320C20, s8 *, 0xA018) = 0;
+    M2C_FIELD(&lbl_80320C20, s8 *, 0xA019) = 0;
+    M2C_FIELD(&lbl_80320C20, u8 *, 0xA01A) = 0U;
+    var_r4 = 0;
+    M2C_FIELD(&lbl_80320C20, s32 *, 0xA004) = fn_8021A8C8(M2C_FIELD(&lbl_80320C20, s32 *, 0xA000), 0, &lbl_80320C20 + 0xA008);
+    if (((s32) M2C_FIELD(&lbl_80320C20, s32 *, 0xA004) == -1) || ((u8) M2C_FIELD(&lbl_80320C20, u8 *, 0xA01A) != 0)) {
+        var_r4 = 1;
+    }
+    if (var_r4 != 0) {
+        return 1;
+    }
+    var_r3_2 = 0;
+    if (((s32) M2C_FIELD(&lbl_80320C20, s32 *, 0xA004) == 0) && ((u8) M2C_FIELD(&lbl_80320C20, u8 *, 0xA01A) == 0)) {
+        var_r3_2 = 1;
+    }
+    if (var_r3_2 == 0) {
+        fn_8000C070(arg0, 0x63);
+        return 1;
+    }
+    var_r3 = 0;
+    if (((s32) M2C_FIELD(&lbl_80320C20, s32 *, 0xA004) == -1) || ((u8) M2C_FIELD(&lbl_80320C20, u8 *, 0xA01A) != 0)) {
+        var_r3 = 1;
+    }
+    return var_r3;
 }
 
 s32 fn_800EB520(char *arg0) {
@@ -4461,3 +4540,7 @@ extern u8 lbl_8032B3C0[544];
 extern u16 *lbl_803678C8;
 extern u16 lbl_80320B88[];    // array of u16, size 32
 extern s32 lbl_80367870;      // 4 bytes
+#include "global.h"
+#include "structs.h"
+
+extern u16 lbl_802CA518;
