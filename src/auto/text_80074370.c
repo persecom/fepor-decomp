@@ -1290,6 +1290,20 @@ void fn_8007C484(void *arg0) {
     fn_8005BA10(&sp8);
 }
 
+void fn_8007C4D4(void *arg0, s32 arg1) {
+    extern u16 lbl_8026C640[];
+    void fn_80234450(void *, void *, void *);
+    void fn_802343E0(void *, s32);
+    void fn_8005C870(void *, s32);
+
+    u16 *var_8026C640_ptr = lbl_8026C640;
+    void *sp8;
+
+    fn_80234450(&sp8, &var_8026C640_ptr[0x122], var_8026C640_ptr);
+    fn_802343E0(&sp8, *(s32*)((char*)arg0 + 8));
+    fn_8005C870(&sp8, arg1);
+}
+
 #include "common.h"
 #include "structs.h"
 
@@ -1303,6 +1317,7 @@ extern u16 lbl_8026C0B8[];
 extern u8 D_802EF4C8[24];
 extern u16 lbl_80288CAC;
 #include "global.h"
+extern void* (*fn_80024398_ptr)(void*, s32, s32);
 
 extern u16 lbl_80288CAC;
 #include "common.h"
