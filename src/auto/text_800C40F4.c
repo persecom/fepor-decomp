@@ -2,6 +2,7 @@
 #include "common.h"
 
 extern s32 lbl_8028D788;
+extern void (*lbl_802B14E4)(void **);
 
 void fn_800C40F4(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0) = 0;
@@ -222,6 +223,17 @@ s32 fn_800CAD4C(void *arg0, s32 arg1, u8 arg2) {
         return 1;
     }
     return 0;
+}
+
+void fn_800CBF24(s32 arg0, s32 arg2) {
+    M2C_UNK spC;
+    M2C_UNK sp8;
+    s32 fn_800C99A0(M2C_UNK *, s32, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_800C9ABC(M2C_UNK *, M2C_UNK *);
+
+    fn_800C9B6C(arg0, fn_800C99A0(&spC, arg2, 0, -1));
+    fn_800C9ABC(&spC, &sp8);
+    fn_800C9A60(&spC, -1);
 }
 
 s32 fn_800CD53C(void *arg0) {
@@ -1013,15 +1025,11 @@ void fn_800E7970(void *arg0) {
     s32 i;
     void **temp_r12;
 
-    i = 0;
-loop_2:
-    if (i < *(s32*)((char*)arg0 + 4)) {
+    for (i = 0; i < *(s32 *)((char *)arg0 + 4); i++) {
         temp_r12 = *(void***)((char*)arg0 + 0x10);
         temp_r12 = *(void***)((char*)temp_r12 + 0x18);
         ((void(*)(void*, s32))temp_r12)(arg0, i);
         fn_800DF5E0();
-        i += 1;
-        goto loop_2;
     }
 }
 
