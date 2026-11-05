@@ -167,10 +167,11 @@ s32 fn_800B6D20(s32 arg0) {
     return 1;
 }
 
-s32 fn_800B6D50(s8 arg0, s8 arg1) {
-    M2C_UNK fn_8014CF10(M2C_UNK *, s8, s8);
-    extern M2C_UNK lbl_80330708;
-    fn_8014CF10(&lbl_80330708, arg0, arg1);
+s32 fn_800B6D50(s32 arg0, s32 arg1) {
+    M2C_UNK fn_8014CF10(void *, s8, s8);
+    extern u8 lbl_80330708[];
+
+    fn_8014CF10(lbl_80330708, arg0, arg1);
     return 1;
 }
 
