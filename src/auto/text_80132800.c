@@ -1337,9 +1337,8 @@ void fn_801427D4(void *arg0, s16 arg1, s16 arg2, s32 *arg4, s32 arg5) {
     fn_8008D264(*arg4, arg5, arg1, arg2, *(f32 *)((u8 *)arg0 + 0x128));
 }
 
-void fn_80142814(s16 arg1, s16 arg2, s32 *arg4, s32 arg5) {
-    M2C_UNK fn_8008D000(u32, u32, s16, s16);
-    
+void fn_80142814(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 *arg4, s32 arg5) {
+    M2C_UNK fn_8008D000(s32, s32, s32, s32);
     fn_8008D000(*arg4, arg5, arg1, arg2);
 }
 
