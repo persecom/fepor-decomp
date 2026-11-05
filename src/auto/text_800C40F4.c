@@ -2159,6 +2159,28 @@ void fn_800EA540(s32 arg0, s32 arg1) {
     fn_8000CAA0(lbl_8028E3EC, arg1);
 }
 
+void fn_800EA7CC(s32 arg0, s32 arg1) {
+    struct CardWork {
+        u8 workArea[0xA000];
+        s32 chan;
+        volatile s32 result;
+        s32 sectorSize;
+        s32 unkA00C;
+        s32 unkA010;
+        s32 unkA014;
+        u8 unkA018;
+        u8 unkA019;
+        u8 busy;
+        u8 padA01B[0x19];
+        s32 unkA034;
+    };
+    extern struct CardWork lbl_80320C20;
+    extern u8 lbl_8028E358[];
+
+    lbl_80320C20.unkA034 = arg0;
+    fn_8000CAA0(lbl_8028E358, arg1);
+}
+
 void fn_800EB210(u32 arg0) {
     extern u16 lbl_8028E308[40]; // 80 bytes = 40 words
     
