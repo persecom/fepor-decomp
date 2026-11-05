@@ -27,6 +27,11 @@ typedef struct String {
     char *data;
 } String;
 
+/* list object helpers (construct, destroy, get item) */
+void fn_800E01C8(void *);
+void fn_800E0140(void *, s32);
+void fn_800E8A88(void *, f32);
+
 /* std::equal on chars */
 static inline BOOL CharsEqual(const char *first1, const char *last1, const char *first2) {
     for (; first1 < last1; first1++, first2++) {
