@@ -27,6 +27,16 @@ void fn_800368C8(void *arg0, u8 arg1, void *arg2) {
     M2C_FIELD(arg2, u8 *, 9) = (u8) (M2C_FIELD(arg2, u8 *, 9) + (arg1 * M2C_FIELD(temp_r3, u8 *, 9)));
 }
 
+void fn_80036984(s32 arg0, s32 arg1) {
+    u8 *ptr = (u8 *)(arg0 + 0x214);
+    ptr[arg1] += 1;
+}
+
+u8 fn_80036FC4(s32 arg0, s32 arg1) {
+    u32 addr = (arg0 + arg1 + 0x214);
+    return *(u8 *)addr;
+}
+
 u8 fn_8003701C(void *arg0) {
     void *temp_r3;
 
