@@ -71,6 +71,13 @@ void fn_80164A24(void *arg0) {
     fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58));
 }
 
+void fn_801650DC(void *arg0) {
+    *(s16 *)((char *)arg0 + 0x12) = 2;
+    *(s16 *)((char *)arg0 + 0x14) = 0x1A;
+    *(s16 *)((char *)arg0 + 0x16) = 0x106;
+    *(s16 *)((char *)arg0 + 0x18) = 0x12A;
+}
+
 s32 fn_801651D0(void) {
     return 0x18;
 }
