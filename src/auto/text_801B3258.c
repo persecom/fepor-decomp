@@ -485,10 +485,11 @@ void fn_801C7644(s32 arg0) {
 extern u8 lbl_802981D0[16];
 void fn_801C777C(void) {
     fn_8000BF00(&lbl_802981D0);
+    return;
 }
 
 void fn_801C77A4(void) {
-    fn_8000CAF0(&lbl_802981D0, 4);
+    fn_8000CAF0((void*)&lbl_802981D0, 4);
 }
 
 void fn_801C7BF8(void *arg0) {
@@ -511,6 +512,7 @@ void fn_801C7FC0(u32 arg0) {
     if (arg0 != 0U) {
         fn_801C7FE8();
     }
+    return;
 }
 
 void fn_801C8490(void) {
@@ -1308,6 +1310,7 @@ void fn_801DDAC8(void *arg0) {
 
 extern void *lbl_801D3B14;
 #pragma use_lmw_stmw on
+#pragma opt_loop_invariants off
 void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     void *memset(void *, s32, u32);
     void *memcpy(void *, const void *, u32);
