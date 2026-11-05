@@ -137,6 +137,11 @@ void fn_80057E98(void *arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(arg0, f32 *, 0x3C) = (f32) arg2;
 }
 
+extern u8 lbl_80285B6C[16];
+void fn_80057EDC(void) {
+    fn_8000BF00(&lbl_80285B6C);
+}
+
 void fn_80058008(void *arg0) {
     M2C_UNK fn_8000C60C(s32);
     if (M2C_FIELD(arg0, u16 *, 0x54) & 4) {
@@ -183,6 +188,12 @@ void fn_800590CC(void *arg0) {
 
 void fn_800591A0(void *arg0) {
     M2C_FIELD(arg0, M2C_UNK (**)(s32), 0x30)(M2C_FIELD(arg0, s32 *, 0x34));
+}
+
+void fn_80059208(s32 arg0) {
+    void *fn_8000CAF0(void *, void *);
+    extern void lbl_80285AF0;
+    *(s32*)((char*)fn_8000CAF0(&lbl_80285AF0, &lbl_80285AF0) + 0x30) = arg0;
 }
 
 void fn_80059240(void *arg0) {
