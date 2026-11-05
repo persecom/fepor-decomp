@@ -2137,7 +2137,7 @@ void fn_800E9B80(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     fn_8000CAA0(&lbl_8028E420, arg4, &lbl_8028E420, &lbl_80320C20 + 0x10000);
 }
 
-void fn_800EA540(s32 arg0) {
+void fn_800EA540(s32 arg0, s32 arg1) {
     struct CardWork {
         u8 workArea[0xA000];
         s32 chan;
@@ -2156,7 +2156,7 @@ void fn_800EA540(s32 arg0) {
     extern u8 lbl_8028E3EC[];
 
     lbl_80320C20.unkA034 = arg0;
-    fn_8000CAA0(lbl_8028E3EC);
+    fn_8000CAA0(lbl_8028E3EC, arg1);
 }
 
 void fn_800EB210(u32 arg0) {
