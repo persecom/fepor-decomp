@@ -43,6 +43,12 @@ typedef s32 M2C_UNK32;
 #define M2C_ERROR(desc) (0)
 #define M2C_CARRY 0
 #define M2C_OVERFLOW(a) (0)
+
+struct unit {
+    u8 pad_0x0[0x8];
+    s32 unk_0x8;
+    s32 unk_0xC;
+};
 #endif
 
 #endif
