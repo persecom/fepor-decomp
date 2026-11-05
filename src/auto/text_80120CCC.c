@@ -156,6 +156,12 @@ void fn_8012600C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 4) = 0;
 }
 
+void fn_8012601C(void *arg0) {
+    extern s32 lbl_80367110;
+    fn_80088F34();
+    lbl_80367110 = ((s32*)arg0)[0x1B];
+}
+
 void fn_80126050(void) {
     extern u8 lbl_80367A6C;
     fn_8000C070(lbl_80367A6C);
