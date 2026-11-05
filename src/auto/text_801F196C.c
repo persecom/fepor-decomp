@@ -1,5 +1,6 @@
 /* Functions from 0x801F196C to 0x801FC620, found by decomp-toolkit. */
 #include "common.h"
+extern void *lbl_803683F4;
 extern struct {
     u32 pad0;
     u32 pad4;
@@ -277,6 +278,45 @@ void fn_801F661C(s32 arg0) {
     *(s32 *)((u8 *)temp_r31 + 0x30) = fn_800C4638(0x210, &lbl_80280D38[0x6A], 0);
 }
 
+extern s32 lbl_80368400;
+extern u8 lbl_80368404;
+void fn_801F66D4(void *arg0) {
+    s32 temp_r5;
+    void *temp_r6;
+    s32 temp_r0;
+    s32 temp_r5_2;
+
+    temp_r5 = *(s32*)((char*)lbl_80367240 + 4);
+    temp_r6 = (void*)((char*)arg0 + 0x30);
+    temp_r5_2 = temp_r5 & (*(s32*)((char*)lbl_80367240 + 8) ^ temp_r5);
+    
+    if ((u8)*(char*)&lbl_80368404 == 0) {
+        lbl_80368400 = 0;
+        lbl_80368404 = 1;
+    }
+    
+    temp_r0 = *(s32*)temp_r6;
+    switch (temp_r0) {
+    case 0:
+        *(s32*)temp_r6 = 1;
+        *(s32*)((char*)temp_r6 + 4) = 0;
+        lbl_80368400 = 0;
+        return;
+    case 1:
+        if ((temp_r5_2 & 0x100) || (temp_r5_2 & 0x200)) {
+            fn_8000C188();
+        }
+        return;
+    default:
+        if ((temp_r5_2 & 0x80000) == 0) {
+            if ((temp_r5_2 & 0x40000) != 0) {
+                fn_8000C188();
+            }
+        }
+        return;
+    }
+}
+
 void fn_801F7194(void *arg0) {
     s32 fn_80059208(M2C_UNK *, void *);
     s32 fn_80161FB8();
@@ -512,6 +552,29 @@ void fn_801FBC48(void) {
     }
 }
 
+s32 fn_801FBF98(s32 arg0, s32 arg1, u16 *arg2, u8 (*arg3)(s32, u16)) {
+    s32 temp_r29;
+    s32 temp_r30;
+    s32 var_r26;
+    u32 var_r31;
+
+    var_r26 = arg0;
+    var_r31 = (arg1 - var_r26) / 320;
+loop_4:
+    if ((s32) var_r31 > 0) {
+        temp_r29 = (s32) ((var_r31 >> 0x1FU) + var_r31) >> 1;
+        temp_r30 = var_r26 + (temp_r29 * 0x140);
+        if (arg3(temp_r30, *arg2) != 0) {
+            var_r26 = temp_r30 + 0x140;
+            var_r31 -= temp_r29 + 1;
+        } else {
+            var_r31 = (u32) temp_r29;
+        }
+        goto loop_4;
+    }
+    return var_r26;
+}
+
 void fn_801FC400(void) {
 
 }
@@ -569,6 +632,33 @@ u8 fn_801F19A0(void) {
     }
     return *(u8*)(temp_r3 + var_r0);
 }
+
+u8 fn_801F1C5C(void) {
+    s32 fn_8000D354(void *);
+    s32 temp_r3;
+    u8 var_r0;
+
+    temp_r3 = fn_8000D354(&lbl_8027F710[0x15]);
+    switch ((s32) lbl_80330708[0xA6]) { /* irregular */
+    case 3:
+        var_r0 = 3;
+        break;
+    case 0:
+        var_r0 = 0;
+        break;
+    case 1:
+        var_r0 = 1;
+        break;
+    case 2:
+        var_r0 = 2;
+        break;
+    default:
+        var_r0 = 0;
+        break;
+    }
+    return lbl_80330708[temp_r3 + var_r0 + 0x4];
+}
+
 #include "common.h"
 extern u8 lbl_8027F710[];
 extern u8 lbl_80330708[];
