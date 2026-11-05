@@ -1393,6 +1393,15 @@ s32 fn_800EC2B8(void) {
     return 0;
 }
 
+extern void *lbl_803678C0;
+s32 fn_800ECCB8(void) {
+    s32 temp_r3;
+    
+    temp_r3 = *(s32*)((char*)lbl_803678C0 + 0x478);
+    fn_800DC454(temp_r3);
+    return 0;
+}
+
 s32 fn_800ED754(void) {
     M2C_UNK fn_800D758C(s32);
     extern s32 lbl_803678C8;
