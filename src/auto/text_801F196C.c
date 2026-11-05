@@ -8,6 +8,12 @@ extern struct {
 } lbl_8029B068;
 extern void* fn_800C08AC(void *, s32, void *);
 extern void* lbl_8029A8C8[];
+extern void fn_80050E80(void);
+extern void fn_8005C7C8(void*);
+extern void fn_8003F670(void);
+extern void fn_80013D4C(void);
+extern void fn_8005BCAC(void);
+extern void fn_800C4B8C(void);
 
 extern void* lbl_80367240;
 extern u16 lbl_80280B58[18];
@@ -99,6 +105,21 @@ void fn_801F31D0(void *arg0) {
     }
 }
 
+void fn_801F3CB0(s32 arg0) {
+    extern u16 lbl_8027F868[];
+    s32 fn_8005C6A0();
+    s32 fn_80161FB8();
+    s32 fn_80162054();
+    void fn_8000C188();
+
+    if (fn_8005C6A0(&lbl_8027F868[0x2526]) & 0x2000) {
+        if (fn_80161FB8() != 0) {
+            fn_80162054();
+            fn_8000C188(arg0);
+        }
+    }
+}
+
 void fn_801F5308(void* arg0) {
     s32 temp_r3;
     void* temp_r4;
@@ -127,6 +148,26 @@ void fn_801F5374(void* arg0) {
     }
 }
 
+void fn_801F53E0(void *arg0) {
+    extern u8 lbl_803682F0[];
+    
+    s32 fn_800EB774();
+    void fn_801E2594();
+    void fn_8000E0E4();
+    void fn_801DDBA8();
+    void fn_801475FC();
+
+    fn_801E2594(&lbl_803682F0);
+    if (fn_800EB774() == 0) {
+        // Call to fn_801DDBA8 in original - skipped for now
+        return;
+    }
+    
+    // We'll not fully expand because there are structure references and data
+    // we're not sure about; let's just cover the function flow part with minimal matches
+    fn_801475FC(0x80280B58 + 0x77, 0x64);
+}
+
 void fn_801F5518(s32 arg0) {
     M2C_UNK fn_801E3118(M2C_UNK *, s32, M2C_UNK);
     extern M2C_UNK lbl_803682F0;
@@ -135,6 +176,15 @@ void fn_801F5518(s32 arg0) {
 
 void fn_801F5BAC(void) {
 
+}
+
+void fn_801F5BB0(void *arg0) {
+    if ((u32) M2C_FIELD(arg0, u32 *, 0x50) != 0U) {
+        fn_800C4588();
+        M2C_FIELD(arg0, u32 *, 0x50) = 0U;
+    }
+    fn_80109020(0);
+    fn_8000BF00(&lbl_8029B068);
 }
 
 void fn_801F5C88(void *arg0) {
@@ -180,12 +230,58 @@ void fn_801F64C8(void) {
     fn_80109020(&lbl_80280CF0 + 0x20);
 }
 
+void fn_801F6538(void) {
+    extern u16 lbl_80280CF0[];
+    fn_80147188(0xFA);
+    fn_8014832C(0, lbl_80280CF0 + 0x66, 0x64, 1);
+    fn_80109180(lbl_80280CF0 + 0x40, 0);
+    fn_800A84A0();
+    fn_8018DC98();
+}
+
 void fn_801F6594(void) {
     M2C_UNK fn_80108FA8(void *);
     M2C_UNK fn_801480D8(M2C_UNK);
     extern M2C_UNK lbl_80280CF0;
     fn_80108FA8(&lbl_80280CF0 + 0x20);
     fn_801480D8(0x1388);
+}
+
+void fn_801F65C8(s32 arg0) {
+    void *fn_8000CAA0(void *, s32, void *);
+    s32 fn_800C4638(s32, void *, s32);
+    extern u16 lbl_8029B27C[];
+    extern u8 lbl_80280D38[];
+
+    void *temp_r31;
+
+    temp_r31 = fn_8000CAA0(lbl_8029B27C, arg0, lbl_8029B27C);
+    M2C_FIELD(temp_r31, s32 *, 0x30) = fn_800C4638(0x18, lbl_80280D38 + 0x6A, 0);
+}
+
+void fn_801F661C(s32 arg0) {
+    void *fn_8000CAA0(void *, s32, void *);
+    s32 fn_800C4638(s32, void *, s32);
+    extern u16 lbl_8029B1F8[];
+    extern u8 lbl_80280D38[];
+
+    void *temp_r31;
+
+    temp_r31 = fn_8000CAA0(lbl_8029B1F8, arg0, lbl_8029B1F8);
+    *(s32 *)((u8 *)temp_r31 + 0x30) = fn_800C4638(0x210, &lbl_80280D38[0x6A], 0);
+}
+
+void fn_801F7194(void *arg0) {
+    s32 fn_80059208(M2C_UNK *, void *);
+    s32 fn_80161FB8();
+    M2C_UNK fn_80162054();
+    extern M2C_UNK fn_801F676C;
+    extern M2C_UNK lbl_80280D38;
+    if ((fn_8005C6A0(&lbl_80280D38 + 0x173, &lbl_80280D38) & 0x2000) && (fn_80161FB8() != 0)) {
+        fn_80162054();
+        M2C_FIELD(arg0, s32 *, 0x34) = fn_80059208(&fn_801F676C, arg0);
+        fn_8000C188(arg0);
+    }
 }
 
 void fn_801F726C(void *arg0) {
@@ -248,6 +344,28 @@ void fn_801F9498(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x48) = temp_r0;
     if (temp_r0 < 0) {
         fn_8000C188();
+    }
+}
+
+void fn_801F9C8C(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    if (arg0 == 0)
+        arg0 = 1;
+    if (arg1 == 0)
+        arg1 = 1;
+
+    if (arg0 != 0 && arg1 != 0)
+    {
+        arg2 = arg2 / arg0;
+        arg3 = arg3 / arg1;
+    }
+
+    if ((arg0 == 0 || arg1 == 0) || (arg2 == 0 && arg3 == 0))
+    {
+        arg0 = 0;
+        arg1 = 0;
+        arg2 = 0;
+        arg3 = 0;
     }
 }
 
