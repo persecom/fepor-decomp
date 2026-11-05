@@ -1072,13 +1072,9 @@ u8 fn_800BB04C(s32 arg0) {
 
 s32 fn_800BB080(s32 arg0) {
     M2C_UNK fn_800BDDCC(void *, s32);
-    extern M2C_UNK lbl_80330708;
+    extern u8 lbl_80330708[];
 
-    if (arg0 < 0) {
-        return 0;
-    }
-
-    fn_800BDDCC((void *)(&lbl_80330708 + 0xB4), arg0);
+    fn_800BDDCC(lbl_80330708 + 0xB4, arg0);
     return 1;
 }
 
