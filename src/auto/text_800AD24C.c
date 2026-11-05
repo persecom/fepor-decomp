@@ -2246,3 +2246,4 @@ void fn_800B0AC8(void) {
 extern u16 lbl_80317338[];
 extern u16 lbl_80330EAC;
 extern u16 lbl_80317338[4976];
+extern u16 lbl_80317338[];
