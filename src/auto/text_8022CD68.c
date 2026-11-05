@@ -732,13 +732,11 @@ s32 fn_8024FD80(u16 id, s32 arg1) {
     void fn_80262430(void *, u32, s32);
     extern struct Group lbl_803542B8[];
     extern u16 lbl_80368A18;
-    struct Group *g;
     struct Entry *e;
     u32 i;
 
-    g = lbl_803542B8;
-    for (i = 0; i < lbl_80368A18; i++, g++) {
-        e = g->entries;
+    for (i = 0; i < lbl_80368A18; i++) {
+        e = lbl_803542B8[i].entries;
         while (e->id != 0xFFFF) {
             if (e->id == id && e->ref != 0) {
                 e->ref--;
@@ -851,8 +849,8 @@ void fn_80251DEC(Voice *arg0, u32 *arg1) {
     time = arg1[0] >> 16;
     arg0->unk18C = time;
     fn_8026146C((s32 *)&arg0->unk18C);
-    arg0->unk174 = (arg1[0] << 8) & 0xFF0000;
     delta = (s8)arg1[1] << 16;
+    arg0->unk174 = (arg1[0] << 8) & 0xFF0000;
     arg0->unk184 = arg0->unk174 + delta;
     if (arg0->unk18C != 0) {
         arg0->unk17C = delta / (s32)time;
@@ -870,8 +868,8 @@ void fn_80251E88(Voice *arg0, u32 *arg1) {
     time = arg1[0] >> 16;
     arg0->unk190 = time;
     fn_8026146C((s32 *)&arg0->unk190);
-    arg0->unk178 = (arg1[0] << 8) & 0xFF0000;
     delta = (s8)arg1[1] << 16;
+    arg0->unk178 = (arg1[0] << 8) & 0xFF0000;
     arg0->unk188 = arg0->unk178 + delta;
     if (arg0->unk190 != 0) {
         arg0->unk180 = delta / (s32)time;
