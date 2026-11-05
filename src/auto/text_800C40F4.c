@@ -120,6 +120,15 @@ s32 fn_800C52C8(void) {
     }
 }
 
+void fn_800C5EF8(s32 arg0) {
+    extern u16 lbl_8028D908[];
+    extern u8 lbl_8028D7A4[];
+    s32 r3 = arg0;
+    r3 = (s32)lbl_8028D908;
+    fn_8000CAA0((u16*)r3, arg0, lbl_8028D908);
+    fn_8000CAF0(lbl_8028D7A4, 5);
+}
+
 void fn_800C5F78(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x34) = 4;
 }
@@ -385,6 +394,24 @@ void fn_800D6878(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x4) = 0;
     M2C_FIELD(arg0, s16 *, 0xC) = 0;
     M2C_FIELD(arg0, s16 *, 0xE) = 0;
+}
+
+void fn_800D6940(void *arg0) {
+    s32 r4;
+    s32 r5;
+    s32 r6;
+    s32 r7;
+
+    r4 = M2C_FIELD(arg0, s32 *, 4);
+    r5 = M2C_FIELD(arg0, u32 *, 8);
+    r6 = r5 + (r4 * 0x58);
+    r7 = ((r6 + 0x57) - r5) / 0x58;
+    if (r6 > r5) {
+        do {
+            r7 -= 1;
+        } while (r7 != 0);
+    }
+    M2C_FIELD(arg0, s32 *, 4) = 0;
 }
 
 void fn_800D6A84(u32 arg1, s32 arg2) {
@@ -1732,6 +1759,20 @@ s32 fn_800FB45C(void *arg0) {
     return fn_802342B8(((s32*)lbl_803678F8)[0x14/4], ((s32**)arg0)[0x188/4][0], lbl_803678F8) == 0;
 }
 
+void fn_800FB9C0(s8 arg0, s32 arg1, s8 arg2, s8 arg3, s8 arg4, s8 arg5, s8 arg6) {
+    extern u8 lbl_802EF4C8[24];
+    extern u8 lbl_8032B3C0[544];
+    
+    lbl_802EF4C8[8] = arg0;
+    lbl_802EF4C8[4] = arg1;
+    lbl_802EF4C8[0xF] = arg2;
+    lbl_802EF4C8[0x10] = arg3;
+    lbl_802EF4C8[0xA] = arg4;
+    lbl_802EF4C8[0x14] = arg5;
+    lbl_802EF4C8[0x15] = arg6;
+    lbl_8032B3C0[0x21C] = 1;
+}
+
 void fn_800FBF54(void) {
     extern void *lbl_802EF4C8;
     M2C_FIELD(lbl_802EF4C8, s32 *, 0x1A0) = (s32) (M2C_FIELD(lbl_802EF4C8, s32 *, 0x1A0) | 1);
@@ -1759,6 +1800,15 @@ void fn_800FC560(void) {
 s32 fn_800FC5F8(void) {
     extern s32 lbl_80367904;
     return lbl_80367904;
+}
+
+void fn_800FC678(void) {
+    extern u16 lbl_802731D0[29];
+    extern s32 lbl_80367900;
+    
+    lbl_80367900 = fn_8003FCCC(&lbl_802731D0[0x2D]);
+    fn_8010F970();
+    fn_80129374();
 }
 
 u16 fn_800FCF48(s8 arg0, s8 arg1) {
@@ -1823,6 +1873,11 @@ s32 fn_80100130(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     temp_r31 = fn_80100284(arg0, 1, arg1, arg2, arg3);
     fn_8003FF90(0, 0);
     return temp_r31;
+}
+
+void fn_801001B8(s32 arg1, s32 arg2, s32 arg3) {
+    M2C_UNK fn_80100284(M2C_UNK, s32, s32, s32, s32);
+    fn_80100284(2, arg1, arg2, arg3, arg1);
 }
 
 s32 fn_80100CC8(void) {
