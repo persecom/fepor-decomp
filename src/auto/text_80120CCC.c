@@ -151,6 +151,13 @@ void fn_80125E5C(void *arg0) {
     }
 }
 
+void fn_80125FC8(void *arg0) {
+    extern u8 lbl_80125BB0[];
+    fn_80040844();
+    fn_800462FC(0, lbl_80125BB0);
+    fn_8006D8E8(((s32*)arg0)[0x15]);
+}
+
 void fn_8012600C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
