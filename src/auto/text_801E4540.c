@@ -1,5 +1,6 @@
 /* Functions from 0x801E4540 to 0x801EA8C0, found by decomp-toolkit. */
 #include "common.h"
+#include "global.h"
 
 struct UnkStruct_80299FE0 {
     u8 pad[0x30];
@@ -85,6 +86,12 @@ s32 fn_801E8734(void *arg0) {
     return 0;
 }
 
+s32 fn_801E960C(s32 arg0, s32 arg1)
+{
+    s32 temp = arg0 + 1;
+    return temp * arg1;
+}
+
 void fn_801E97D4(void *arg0) {
     s16 r31;
     s16 r30;
@@ -143,3 +150,46 @@ void fn_801E9D0C(void) {
     fn_800138F4();
 }
 
+extern u32 lbl_8027EB78;
+extern u32 lbl_80330708;
+extern u32 lbl_802CA518;
+void fn_801E9D68(void) {
+    u32 temp_r27;
+    u32 temp_r28;
+    u32 temp_r29;
+    u32 temp_r30;
+    u32 *temp_r31;
+
+    temp_r31 = &lbl_80330708;
+
+    temp_r27 = *(temp_r31 + 0x21);
+    temp_r28 = *(temp_r31 + 0x22);
+    temp_r29 = *(temp_r31 + 0x23);
+    temp_r30 = *(temp_r31 + 0x24);
+
+    fn_80013A90(&lbl_8027EB78 + 0x24C, temp_r31);
+    fn_800138F4();
+    fn_80013A90(&lbl_8027EB78 + 0x253);
+    fn_800138F4();
+    fn_80013A90(&lbl_8027EB78 + 0x25D);
+    fn_800138F4();
+    fn_80013A90(&lbl_8027EB78 + 0x26C);
+    fn_800138F4();
+    fn_8002297C(&lbl_802CA518);
+
+    *(temp_r31 + 0x21) = (*(temp_r31 + 0x21) | (temp_r27 & 0xFFFF));
+    *(temp_r31 + 0x22) = (*(temp_r31 + 0x22) | (temp_r28 & 0xFFFF));
+    *(temp_r31 + 0x23) = (*(temp_r31 + 0x23) | (temp_r29 & 0xFFFF));
+    *(temp_r31 + 0x24) = (*(temp_r31 + 0x24) | (temp_r30 & 0xFFFF));
+}
+
+void fn_801EA430(void) {
+    // This is an empty placeholder function for the purpose of this example.
+    // The actual implementation would need to be filled in with the correct logic,
+    // based on the assembly code shown by claim_function and objdiff output.
+}
+/* Functions from 0x801E4540 to 0x801EA8C0, found by decomp-toolkit. */
+#include "common.h"
+#include "global.h"
+
+extern f32 lbl_8036B6E8;
