@@ -1072,6 +1072,19 @@ void fn_80098D04(s32 arg0) {
     fn_8018CAD8(0x64, 0x1E, arg0);
 }
 
+void fn_80098D30(void *arg0) {
+    s32 temp_r31;
+    s32 temp_r30;
+
+    fn_80055204(*((s32**)arg0 + 0xE), 0);
+    fn_8000D354();
+    temp_r31 = fn_80098140();
+    temp_r30 = fn_80098110();
+    fn_8018CAD8(0x32, 0x1E, arg0);
+    fn_8018CA68(temp_r31);
+    fn_8018CA68(temp_r30);
+}
+
 void fn_80099D2C(void *arg0) {
     M2C_UNK fn_800056A0(M2C_UNK);
     M2C_FIELD(arg0, u8 *, 0x42) = (u8) (M2C_FIELD(arg0, u8 *, 0x42) + 1);
@@ -1375,3 +1388,10 @@ extern u32 lbl_80312040[8];
 extern u16 lbl_803674EC[0x32/2 + 1];
 extern u16 lbl_803120C0[0x10];
 extern u16 lbl_80312100[100];
+#include "global.h"
+
+typedef struct {
+    u32 unk0;
+    u8 unk4;
+    u8 unk5;
+} SomeStruct;
