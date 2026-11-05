@@ -2260,6 +2260,14 @@ void fn_800C0980(void) {
     fn_80018AE4();
 }
 
+void fn_800C09A0(void) {
+    M2C_UNK fn_8008A290(M2C_UNK, M2C_UNK);
+    if (fn_80089634() == 6) {
+        fn_80089650(2, 0x85);
+        fn_8008A290(0, 0);
+    }
+}
+
 void fn_800C09E4(s32 arg0) {
     s32 fn_800142B8();
     fn_80013880();
@@ -2368,6 +2376,44 @@ s32 fn_800C30CC(s32 arg0, s32 arg1) {
     return arg0 + ((arg1 - 1) * 0x18);
 }
 
+void fn_800C3220(s32 arg0, s32 arg1) {
+    void *temp_r3;
+    
+    temp_r3 = (void *)(arg0 + (arg1 * 0x18));
+    *(s8*)((char*)temp_r3 - 0x18) = 0;
+    *(s8*)((char*)temp_r3 - 0x17) = 0;
+    *(s8*)((char*)temp_r3 - 0x5) = 0;
+    *(s8*)((char*)temp_r3 - 0x6) = 0;
+    *(s8*)((char*)temp_r3 - 0x7) = 0;
+    *(s8*)((char*)temp_r3 - 0x8) = 0;
+    *(s8*)((char*)temp_r3 - 0x2) = (s8)0x80;
+    *(s8*)((char*)temp_r3 - 0x3) = (s8)0x80;
+    *(s8*)((char*)temp_r3 - 0x4) = (s8)0x80;
+    *(s8*)((char*)temp_r3 - 0x1) = (s8)-1;
+}
+
+s32 fn_800C3260(u8 *arg0) {
+    s32 i;
+    u8 *ptr;
+    u8 *base;
+
+    base = arg0;
+    ptr = arg0;
+    i = 0x30;
+
+    do {
+        if (*ptr == 0) {
+            *(base + (i * 0x18)) = 1;
+            return i + 1;
+        }
+        ptr += 0x18;
+        i++;
+        i &= 0x3F;
+    } while (i != 0);
+
+    return 0;
+}
+
 void fn_800C3364(s32 arg0, s32 arg1) {
     s32 r31 = arg0;
     s32 r30 = 0;
@@ -2385,6 +2431,17 @@ void fn_800C33C0(s32 arg0, s32 arg1) {
     
     do {
         fn_8001C21C(r31, arg1);
+        r30 += 1;
+        r31 += 8;
+    } while (r30 < 0xC8);
+}
+
+void fn_800C341C(s32 arg0) {
+    s32 r31 = arg0;
+    s32 r30 = 0;
+    
+    do {
+        fn_8001D580(r31);
         r30 += 1;
         r31 += 8;
     } while (r30 < 0xC8);
