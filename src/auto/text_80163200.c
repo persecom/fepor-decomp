@@ -179,6 +179,10 @@ void fn_80169640(void) {
     return;
 }
 
+void fn_80169AF0(void) {
+    return;
+}
+
 void fn_80169AF4(void *arg0) {
     M2C_UNK fn_8000A408(s32);
     M2C_UNK fn_8013FED0(void *);
