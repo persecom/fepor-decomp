@@ -409,9 +409,19 @@ void *fn_8016AE6C(void) {
     return &lbl_80277BC0[0x101];
 }
 
+void fn_8016AFC4(void) {
+    extern u16 lbl_80277BC0[];
+    fn_8000E0E4(&lbl_80277BC0[0x20A]);
+}
+
 void *fn_8016AFF0(void) {
     extern u16 lbl_80277BC0[];
     return &lbl_80277BC0[0x438];
+}
+
+void fn_8016B30C(void) {
+    extern u16 lbl_80277BC0[];
+    fn_8000E0E4(&lbl_80277BC0[0x230 / sizeof(u16)]);
 }
 
 void *fn_8016B338(void) {
