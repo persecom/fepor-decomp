@@ -2321,6 +2321,31 @@ void fn_80180620(void) {
 
 }
 
+s32 fn_80180E2C(s32 arg0) {
+    u8 fn_80036B20(s32, s32);
+    void *fn_80036FD0(s32, s32);
+    u8 fn_8003701C(void);
+    u8 count;
+    s32 i;
+    void *obj;
+
+    count = fn_8003701C();
+    for (i = 0; i < count; i++) {
+        obj = fn_80036FD0(arg0, i);
+        if (obj != NULL) {
+            switch (M2C_FIELD(M2C_FIELD(obj, void **, 0x190), u8 *, 8)) {
+            case 0:
+            case 5:
+                if (fn_80036B20(arg0, i)) {
+                    return 1;
+                }
+                break;
+            }
+        }
+    }
+    return 0;
+}
+
 s32 fn_8018256C(void) {
     return 1;
 }
