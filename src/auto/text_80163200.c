@@ -4,7 +4,7 @@ extern u16 lbl_80278080[];
 extern u8 lbl_80330708[];
 extern u16 lbl_803680E8[];
 extern f32 lbl_8036AB94;
-extern u32 lbl_80294604;
+extern u16 lbl_80294604[];
 extern f32 lbl_8036ABB0;
 extern f32 lbl_8036ABBC;
 extern f32 lbl_8036ABA0;
@@ -327,6 +327,18 @@ void fn_80169C54(void *arg0) {
     fn_8000A408(M2C_FIELD(arg0, s32 *, 0x4C));
     fn_8013FED0(arg0);
     fn_801C1464(arg0);
+}
+
+void fn_80169D58(void *arg0) {
+    void *temp_r3;
+    temp_r3 = *(void**)((u8*)arg0 + 0x4C);
+    fn_8000A3F8(temp_r3);
+    if (*(u32*)((u8*)arg0 + 0x40) != 0) {
+        fn_801090C0();
+        fn_8000A420();
+    }
+    fn_8013FEC0(arg0);
+    fn_8000C188(arg0);
 }
 
 void fn_80169DAC(void *arg0) {
@@ -1000,6 +1012,24 @@ void fn_8017A480(void *arg0, s32 arg1, s32 arg2) {
     s32 *ptr = (s32 *)M2C_FIELD(arg0, s32 *, 4);
     fn_80234450(*ptr, arg2);
     *ptr += arg1;
+}
+
+void fn_8017A574(void *arg0, u32 arg1) {
+    u8* r5_ptr = *(u8**)((char*)arg0 + 4);
+    *(u8**)((char*)arg0 + 4) = r5_ptr + 1;
+    *r5_ptr = (u8)(arg1 >> 24);
+
+    r5_ptr = *(u8**)((char*)arg0 + 4);
+    *(u8**)((char*)arg0 + 4) = r5_ptr + 1;
+    *r5_ptr = (u8)(arg1 >> 16);
+
+    r5_ptr = *(u8**)((char*)arg0 + 4);
+    *(u8**)((char*)arg0 + 4) = r5_ptr + 1;
+    *r5_ptr = (u8)(arg1 >> 8);
+
+    r5_ptr = *(u8**)((char*)arg0 + 4);
+    *(u8**)((char*)arg0 + 4) = r5_ptr + 1;
+    *r5_ptr = (u8)arg1;
 }
 
 void fn_8017A5C4(void *arg0, u8 arg1) {
