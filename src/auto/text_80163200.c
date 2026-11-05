@@ -11,6 +11,13 @@ void fn_80163200(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
     *(s8*)((u8*)arg0 + 3) = arg4;
 }
 
+void fn_80163214(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
+    *(s16*)((u8*)arg0 + 0) = arg1;
+    *(s16*)((u8*)arg0 + 2) = arg2;
+    *(s16*)((u8*)arg0 + 4) = arg3;
+    *(s16*)((u8*)arg0 + 6) = arg4;
+}
+
 void fn_801635CC(void *arg0, s32 arg1) {
     u32 *fn_80037BD0(s32, s16);
     s16 var_r31;
