@@ -547,6 +547,15 @@ void fn_80174204(void) {
     return;
 }
 
+void *fn_80176EA4(void) {
+    return &lbl_80278080[0x874];
+}
+
+extern u16 lbl_80278080[257];
+void *fn_801772C8(void) {
+    return &lbl_80278080[0x23A];
+}
+
 s32 fn_80178664(void) {
     return 0;
 }
