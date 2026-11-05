@@ -556,6 +556,29 @@ void *fn_801772C8(void) {
     return &lbl_80278080[0x23A];
 }
 
+void *fn_80177430(void) {
+    return &lbl_80278080[0x936];
+}
+
+void *fn_801774D4(void) {
+    u16* temp = &lbl_80278080[0x4AF];
+    return (void*)temp;
+}
+
+void *fn_80177578(void) {
+    extern u16 lbl_80278080[];
+    return &lbl_80278080[0x4AF];
+}
+
+void *fn_8017761C(void) {
+    return &lbl_80278080[0x4d7];
+}
+
+void *fn_80177B00(void) {
+    extern u16 lbl_80278080[];
+    return &lbl_80278080[0x13d8];
+}
+
 s32 fn_80178664(void) {
     return 0;
 }
@@ -698,4 +721,6 @@ void fn_8017F86C(void *arg0) {
 s32 fn_8018256C(void) {
     return 1;
 }
-
+#include "common.h"
+extern u32 lbl_802EF4C8[];
+extern u16 lbl_80278080[];
