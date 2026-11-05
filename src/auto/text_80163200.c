@@ -8,6 +8,7 @@ extern u16 lbl_80294604[];
 extern f32 lbl_8036ABB0;
 extern f32 lbl_8036ABBC;
 extern f32 lbl_8036ABA0;
+extern f32 lbl_8036A9C0;
 
 extern void (*lbl_802B14E4)(void **);
 void fn_80163200(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
