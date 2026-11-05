@@ -9,6 +9,7 @@ extern s32 lbl_8028D788;
 extern void (*lbl_802B14E4)(void **);
 
 u8 fn_8001DD54(void *, void *);
+void fn_801007A0(void *);
 
 static inline u8 GetItemKind(void *item) {
     if (item != NULL) {
