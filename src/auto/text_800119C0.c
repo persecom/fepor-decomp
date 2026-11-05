@@ -108,6 +108,20 @@ s32 fn_8001434C(void *arg0) {
     return 1;
 }
 
+s32 fn_80014398(void *arg0) {
+    s32 temp_r31;
+    void *temp_r3;
+
+    temp_r3 = *(void **)((u8 *)arg0 + 4);
+    temp_r31 = *(s32 *)((u8 *)temp_r3 + 4);
+    *(void **)((u8 *)arg0 + 4) = (void *) ((u8 *)temp_r3 + 8);
+    if (fn_8000D354(temp_r31) == 0U) {
+        return 1;
+    }
+    fn_800C08AC(temp_r31, arg0);
+    return 0;
+}
+
 s32 fn_800144D0(void *arg0) {
     u8 fn_80089640();
     if (fn_80089640() != 0) {
@@ -182,6 +196,19 @@ void fn_80014EA8(void) {
         fn_8020A9E0(lbl_803671B4);
         fn_802107A8();
     }
+}
+
+s32 fn_80014EDC(s32 arg0) {
+    u32 fn_8000D354(s32, s32);
+    s32 fn_8000E0E4(s32);
+    extern s32 lbl_80367210;
+    s32 var_r31;
+
+    var_r31 = M2C_FIELD((lbl_80367210 + ((arg0 * 4) & 0x3FC)), s32 *, 4);
+    if (fn_8000D354(var_r31, lbl_80367210) != 0U) {
+        var_r31 = fn_8000E0E4(var_r31);
+    }
+    return var_r31;
 }
 
 void fn_80014F30(void *arg0, s32 arg1) {
