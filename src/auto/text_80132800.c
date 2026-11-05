@@ -1,6 +1,11 @@
 /* Functions from 0x80132800 to 0x80149F38, found by decomp-toolkit. */
 #include "common.h"
 
+typedef struct Vec2s {
+    s16 x;
+    s16 y;
+} Vec2s;
+
 s32 fn_8013286C(void) {
     return 2;
 }
