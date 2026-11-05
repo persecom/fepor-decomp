@@ -1,5 +1,6 @@
 /* Functions from 0x801101D0 to 0x80120CC0, found by decomp-toolkit. */
 #include "common.h"
+extern u16 lbl_80296128[];
 
 extern s32 lbl_80367110;
 
@@ -377,6 +378,26 @@ void fn_8011A2FC(s32 arg0) {
             fn_801400F4(arg0, (void*)temp_r31, temp_r5);
             fn_80140234(arg0, (void*)temp_r31, 1);
         }
+    }
+}
+
+void fn_8011A470(s32 arg0) {
+    M2C_UNK fn_80018AF4();
+    M2C_UNK fn_800A8450();
+    M2C_UNK fn_8011A2FC(s32);
+    M2C_UNK fn_8011A4E4(s32);
+    u32 fn_8013FF94(s32, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_801658DC(void *);
+    extern M2C_UNK lbl_80274508;
+    extern u8 lbl_803671C0;
+    if ((u8) lbl_803671C0 == 0) {
+        fn_80018AF4();
+    }
+    fn_800A8450();
+    fn_8011A4E4(arg0);
+    fn_8011A2FC(arg0);
+    if (fn_8013FF94(arg0, -0x1000, 0) != 0U) {
+        fn_801658DC(&lbl_80274508 + 0x2F5);
     }
 }
 
