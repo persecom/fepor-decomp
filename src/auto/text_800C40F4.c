@@ -300,6 +300,13 @@ void fn_800D588C(s32 arg0) {
     lbl_8036787C = arg0;
 }
 
+void fn_800D5894(u32 *arg0) {
+    u32 val = *arg0;
+    if (val != 0U) {
+        fn_8005C7E8();
+    }
+}
+
 void fn_800D67E4(void) {
 
 }
@@ -435,6 +442,14 @@ void fn_800DAA60(s32 arg0, s32 arg1) {
 
 void fn_800DAB24(void *arg1, s32 arg2) {
     fn_800C9B6C(M2C_FIELD(arg1, s32 *, 0x3C) + (arg2 * 0xC));
+}
+
+void fn_800DB1FC(s32 arg0) {
+    M2C_UNK fn_800C9758(s32, s32, s32);
+    s32 r3arg = arg0 + 0xAC;
+    s32 r5arg = 0;
+    s32 r6arg = -1;
+    fn_800C9758(r3arg, r5arg, r6arg);
 }
 
 void fn_800DB520(void) {
@@ -775,6 +790,10 @@ void fn_800DF430(void *arg0, void *arg1) {
     M2C_FIELD(arg1, f32 *, 8) = (f32) M2C_FIELD(arg0, f32 *, 8);
 }
 
+void fn_800DF44C(f32 farg0, f32 farg1, f32 farg2) {
+    fn_800DF110(farg0, farg1, farg2);
+}
+
 void fn_800DF478(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
     M2C_FIELD(arg0, f32 *, 0xC) = farg0;
     M2C_FIELD(arg0, f32 *, 0x10) = farg1;
@@ -784,12 +803,23 @@ void fn_800DF478(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
     M2C_FIELD(arg0, f32 *, 8) = farg2;
 }
 
+void fn_800DF60C(void *arg0) {
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x40), M2C_UNK (**)(), 0xC)();
+}
+
 void fn_800DF664(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x2C) = 0;
 }
 
 void fn_800DF670(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x2C) = 1;
+}
+
+void fn_800DF67C(s32 arg0) {
+    M2C_UNK fn_800C9758(s32, M2C_UNK, M2C_UNK);
+    s32 temp_r4 = 0;
+    s32 temp_r5 = -1;
+    fn_800C9758(arg0 + 0x10, temp_r4, temp_r5);
 }
 
 u8 fn_800DF6A8(void *arg0) {
@@ -811,6 +841,18 @@ void fn_800DF6DC(s32 arg1) {
 void fn_800DF700(s32 arg1) {
     s32 temp = arg1 + 4;
     fn_800C9B6C(temp);
+}
+
+s32 fn_800DFFF4(void *arg0, s32 arg1) {
+    s32 temp_r0;
+    s32 temp_r3;
+
+    temp_r3 = *(s32*)((char*)arg0 + 4);
+    if ((temp_r3 == 0) || (arg1 >= temp_r3)) {
+        return 0;
+    }
+    temp_r0 = (*(s32*)((char*)arg0 + 8)) + (arg1 * 4);
+    return *(s32*)((char*)temp_r0);
 }
 
 s32 fn_800E2168(s32 *arg0, s32 *arg1) {
@@ -1335,6 +1377,14 @@ void fn_800EB568(void) {
 s32 fn_800EB774(void) {
     extern u32 lbl_80320C20[];
     return *(u32*)((u8*)lbl_80320C20 + 0xA004);
+}
+
+void fn_800EB7E4(void) {
+    extern u16 lbl_80320C20;
+    *(u8 *)((s32)&lbl_80320C20 + 0xA018) = 0;
+    *(u8 *)((s32)&lbl_80320C20 + 0xA019) = 0;
+    *(u8 *)((s32)&lbl_80320C20 + 0xA01A) = 0;
+    *(s32 *)((s32)&lbl_80320C20 + 0xA004) = -3;
 }
 
 s32 fn_800EC2B8(void) {
