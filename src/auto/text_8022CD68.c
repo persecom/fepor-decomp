@@ -1,8 +1,10 @@
 /* Functions from 0x8022CD68 to 0x80267A7C, found by decomp-toolkit. */
 #include "common.h"
-  
+
 extern s32 lbl_803689A8;
 extern void (*lbl_80368B34)(s16);
+extern f32 lbl_8034C324[];
+extern s32 D_80368AD0;
 extern s32 lbl_80368B0C;
 u32 fn_8026367C(void);
 
@@ -1011,6 +1013,12 @@ s32 fn_80263504(void) {
     return lbl_80368B1C + ((u8) (((temp_r0 << 2) | (temp_r0 >> 0x1EU)) + temp_r3) * 0x280);
 }
 
+u32 fn_8026367C(void) {
+    s32 OSGetTick();
+    extern s32 lbl_80368B0C;
+    return (u32) ((OSGetTick() - lbl_80368B0C) * 8) / (u32) (*(u32 *)0x800000F8 / 500000);
+}
+
 void fn_802636C8(void) {
     extern s32 lbl_80368AF8;
     extern s16 lbl_80368AFC;
@@ -1067,6 +1075,15 @@ void fn_80264B7C(void *arg0) {
     M2C_UNK fn_802649AC();
     M2C_FIELD(arg0, s32 *, 0x30) = 0;
     fn_802649AC();
+}
+
+extern u32 lbl_800000F8;
+s32 fn_80264BA4(void) {
+    s32 OSGetTick();
+    s32 temp_r31;
+    
+    temp_r31 = OSGetTick() - lbl_80368B0C;
+    return (temp_r31 * 8) / (lbl_800000F8 / 500000);
 }
 
 void fn_802668D4(s32 arg0) {
