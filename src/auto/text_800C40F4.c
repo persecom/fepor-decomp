@@ -1501,6 +1501,13 @@ void fn_800F0BC8(void) {
     fn_8006785C(1, fn_800F0C54, lbl_8032B2B8);
 }
 
+void fn_800F0BFC(s32 arg0, s32 arg1) {
+    extern u16 lbl_8032B2B8[];
+    extern void fn_800F0F90(u16 *, s32, s32);
+    
+    fn_800F0F90(lbl_8032B2B8, arg0, arg1);
+}
+
 void fn_800F0C30(s8 arg0, s8 arg1, s8 arg2) {
     extern u8 lbl_8032B2B8[];
     lbl_8032B2B8[0] = arg0;
