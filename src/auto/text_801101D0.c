@@ -915,3 +915,7 @@ void fn_801207BC(void) {
 }
 #include "common.h"
 extern struct SomeStruct* lbl_80320C20; // example struct
+#include "common.h"
+#include "unit.h"
+
+extern u16 lbl_8028F6C8[];
