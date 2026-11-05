@@ -17,6 +17,12 @@ void fn_80006298(s32 arg0, s32 arg1, u32 arg2) {
     } while (var_ctr != 0);
 }
 
+s32 fn_80006798(void) {
+    extern s32 lbl_80367120;
+    extern s32 lbl_80367128;
+    return (lbl_80367128 - lbl_80367120) - !M2C_CARRY;
+}
+
 s32 fn_800067B4(void) {
     extern s32 lbl_80367118;
     return lbl_80367118;
@@ -284,7 +290,7 @@ void fn_8000CD80(s32 arg0) {
 }
 
 s32 fn_8000D2BC(u8 *arg0) {
-    extern void *lbl_802ADB20;
+    extern u16 lbl_802ADB20[];
     s32 temp_r6;
     u32 temp_r5;
     u8 temp_r7;
