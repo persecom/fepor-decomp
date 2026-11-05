@@ -287,6 +287,21 @@ void fn_80014F94(void *arg0, s32 arg1) {
     fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 3));
 }
 
+s32 fn_8001512C(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    s32 temp_r3;
+    s32 temp_r4;
+    s32 temp_r5;
+    s32 temp_r6;
+
+    temp_r3 = arg0 + 0x1F;
+    temp_r4 = (arg1 + 0x1F) >> 5;
+    temp_r5 = arg2 >> 5;
+    temp_r6 = (arg3 + 0x1F) >> 5;
+
+    return ((temp_r3 >> 5) - temp_r4) * (temp_r5 - temp_r6);
+}
+
 void fn_8001520C(void *arg0, u8 arg1) {
     M2C_FIELD(arg0, u8 *, 1) = arg1;
     M2C_FIELD(arg0, u8 *, 0) = (u8) (arg1 == 3);
@@ -765,3 +780,6 @@ loop_3:
 extern void* lbl_80367190;
 extern u16 lbl_80367196;
 extern s32 lbl_803671A8;
+#include "common.h"
+extern u32 lbl_802CA264[];
+extern u32 lbl_80330708[];
