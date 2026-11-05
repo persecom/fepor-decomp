@@ -719,6 +719,19 @@ loop_1:
     goto loop_1;
 }
 
+u32 *fn_8000C0C0(u32 arg0) {
+    extern u8 lbl_802A66D8[];
+    u32 *p = (u32 *)lbl_802A66D8;
+    s32 i;
+
+    for (i = 0; i < 256; i++, p += 0x1C) {
+        if (*p == arg0) {
+            return p;
+        }
+    }
+    return NULL;
+}
+
 void fn_8000C188(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x10) = 0;
 }
@@ -891,6 +904,86 @@ s32 fn_8000CE68(s32 arg0) {
     lbl_80367150[1] = lbl_80367150[0];
     lbl_80367150[0] = temp_r6;
     return ((s32) (temp_r0 * 0x64) / 65536) < arg0;
+}
+
+void fn_8000CF4C(s32 arg0) {
+    extern s32 lbl_80267D30[];
+    extern u16 lbl_80367150[];
+    
+    s32 sp14;
+    s32 sp10;
+    s32 spC;
+    s32 sp8;
+    s32 temp_r0;
+    s32 temp_r5;
+    s32 temp_r7;
+    s32 var_ctr;
+    u16 temp_r3;
+    u16 temp_r6;
+
+    temp_r5 = arg0 / 7;
+    sp10 = lbl_80267D30[2];
+    sp8 = lbl_80267D30[0];
+    spC = lbl_80267D30[1];
+    sp14 = lbl_80267D30[3];
+    temp_r7 = arg0 - (((u32) (((u32) (arg0 - temp_r5) >> 1U) + temp_r5) >> 2U) * 7);
+    temp_r0 = arg0 % 23;
+    
+    lbl_80367150[0] = *(u16*)(&sp8 + ((temp_r7 * 2) & 0xE));
+    lbl_80367150[1] = *(u16*)(&sp8 + (((temp_r7 + 1) * 2) & 0xE));
+    lbl_80367150[2] = *(u16*)(&sp8 + (((temp_r7 + 2) * 2) & 0xE));
+    
+    var_ctr = temp_r0;
+    if (temp_r0 > 0) {
+        do {
+            temp_r3 = (lbl_80367150[2] * 2) & 0xFFFE;
+            lbl_80367150[2] = temp_r3;
+            if (lbl_80367150[1] & 0x8000) {
+                lbl_80367150[2] = (u16) (temp_r3 + 1);
+            }
+            temp_r6 = (u16) ((lbl_80367150[1] << 0xB) + ((s32) lbl_80367150[0] >> 5)) ^ lbl_80367150[2];
+            lbl_80367150[2] = (u16) lbl_80367150[1];
+            lbl_80367150[1] = (u16) lbl_80367150[0];
+            lbl_80367150[0] = temp_r6;
+            var_ctr -= 1;
+        } while (var_ctr != 0);
+    }
+}
+
+s32 fn_8000D1D0(u8 *arg0) {
+    extern u8 lbl_802ADB20[];
+    struct Node { struct Node *next; u32 hash; s32 unk8; };
+    s32 h = 0;
+    u32 h2 = 0;
+    u8 *p = arg0;
+    struct Node *node;
+    struct Node *prev;
+    u32 index;
+    while ((s8)*p != 0) {
+        s32 c = (s8)*p++;
+        h = c + h * 0x25;
+        h2 = c + h2 * 0x1f;
+    }
+    index = h % 509;
+    node = *(struct Node **)(lbl_802ADB20 + index * 4 + 8);
+    while (node != 0) {
+        if (h2 == node->hash) {
+            s32 *count = (s32 *)(lbl_802ADB20 + index * 4 + 0x7fc);
+            *count -= 1;
+            if (*(struct Node **)(lbl_802ADB20 + index * 4 + 8) == node) {
+                *(struct Node **)(lbl_802ADB20 + index * 4 + 8) = node->next;
+                node->unk8 = 0;
+                return 1;
+            }
+            prev = *(struct Node **)(lbl_802ADB20 + index * 4 + 8);
+            while (prev->next != node) prev = prev->next;
+            prev->next = node->next;
+            node->unk8 = 0;
+            return 1;
+        }
+        node = node->next;
+    }
+    return 0;
 }
 
 s32 fn_8000D2BC(u8 *arg0) {
