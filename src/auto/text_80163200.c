@@ -163,6 +163,12 @@ s32 fn_80178A74(void) {
     return 0x1C;
 }
 
+void fn_8017A810(void *arg0, s32 arg1, s32 arg2) {
+    M2C_UNK memcpy(s32, s32, s32);
+    memcpy(arg2, M2C_FIELD(arg0, s32 *, 4), arg1);
+    M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + arg1);
+}
+
 s32 fn_8017DF4C(void) {
     return 0;
 }
