@@ -174,6 +174,14 @@ s32 fn_800B6D50(s8 arg0, s8 arg1) {
     return 1;
 }
 
+s32 fn_800B6D88(s32 arg0) {
+    M2C_UNK fn_8014CF48(void *, s32);
+    extern u8 lbl_80330708[];
+
+    fn_8014CF48(lbl_80330708, arg0);
+    return 1;
+}
+
 s32 fn_800B6E8C(s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     f32 fn_800067BC(f32, f32, f32, f32);
     return (s32) fn_800067BC((f32) arg1, (f32) arg2, (f32) arg3, (f32) arg4);
