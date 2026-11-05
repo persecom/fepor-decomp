@@ -761,6 +761,7 @@ void fn_800281D8(void *arg0) {
 }
 
 void fn_8002846C(void *arg0) {
+    /* Initialize a struct to 0 with some special values. */
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s8 *, 0xB) = -1;
     M2C_FIELD(arg0, s8 *, 0xC) = -1;
