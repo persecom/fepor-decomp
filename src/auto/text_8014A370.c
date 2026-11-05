@@ -135,6 +135,19 @@ s32 fn_8014B314(void) {
     return 1;
 }
 
+s32 fn_8014B328(void) {
+    u8 *fn_8000D2BC(s32);
+    s8 fn_80146BE4(s32);
+    void fn_801475FC(s32, s32);
+    extern s32 *lbl_80367B14;
+
+    s32 temp_r31 = *lbl_80367B14;
+    if (!(fn_8000D2BC(temp_r31)[5] & 4) || (fn_80146BE4(temp_r31) < 0)) {
+        fn_801475FC(temp_r31, 0x64);
+    }
+    return 0;
+}
+
 void fn_8014BB58(s32 arg0, s32 arg1, s32 *arg2, s32 arg3) {
     M2C_UNK fn_80007124(s32);
     M2C_UNK fn_80007668(s32 *);
