@@ -1397,6 +1397,27 @@ s32 fn_800BC82C(u8 arg0, s32 arg1) {
     return fn_80093010(var_r31, fn_80019E04(arg1));
 }
 
+s32 fn_800BCDF0(u8 arg0) {
+    extern u8 lbl_802B14E4[];
+    void *unit;
+
+    if (arg0 != 0) {
+        unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
+    } else {
+        unit = NULL;
+    }
+    if (unit == NULL || M2C_FIELD(unit, void **, 0x188) == NULL) {
+        return 0;
+    }
+    switch (M2C_FIELD(M2C_FIELD(unit, void **, 0x190), u8 *, 8)) {
+    case 0:
+    case 5:
+        M2C_FIELD(unit, u32 *, 0x1A0) |= 0x10000;
+        break;
+    }
+    return 1;
+}
+
 s32 fn_800BCF44(u8 arg0) {
     M2C_UNK fn_8003868C(void *);
     extern u8 lbl_802B14E4[];
