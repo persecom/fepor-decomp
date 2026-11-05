@@ -491,6 +491,18 @@ void fn_8024A674(s32 arg0, s32 arg1) {
     fn_80260060(0x84, arg0, arg1);
 }
 
+s32 fn_8024A6F8(void) {
+    if (lbl_803687F8 == 0) {
+        s32 var_r3 = fn_8023A964(0xE100);
+        if (var_r3 == 0) {
+            lbl_803687F8 = 1;
+            return 1;
+        }
+        return 0;
+    }
+    return 0;
+}
+
 u32 fn_8024B370(void) {
     s32 fn_80243F50();
     s32 temp_r3;
@@ -557,6 +569,54 @@ s32 fn_8024B518(s32 arg0, s32 arg1, s32 arg2, s32 arg3, M2C_UNK arg_sp0) {
 u16 fn_8024B594(s32 arg0, s32 arg1) {
     extern M2C_UNK lbl_8034BDD0;
     return *(&lbl_8034BDD0 + ((arg0 << 5) & 0x1FE0) + ((arg1 * 2) & 0x1FE));
+}
+
+s32 fn_8024B5B0(u32 arg0) {
+    extern void *lbl_80368974;
+    s32 i;
+    void *r5;
+    void *r6;
+
+    i = 8;
+loop_1:
+    r6 = lbl_80368974;
+loop_18:
+    if (r6 == NULL) {
+        i -= 1;
+        if (i == 0) {
+            return -1;
+        }
+        goto loop_1;
+    }
+    r5 = *(void**)((u8*)r6 + 0xE64);
+loop_6:
+    if (r5 == NULL) {
+        r5 = *(void**)((u8*)r6 + 0xE68);
+loop_11:
+        if (r5 == NULL) {
+            r5 = *(void**)((u8*)r6 + 0xE6C);
+loop_16:
+            if (r5 == NULL) {
+                r6 = *(void**)((u8*)r6);
+                goto loop_18;
+            }
+            if (*(u32*)((u8*)r5 + 8) == arg0) {
+                return *(s32*)((u8*)r6 + 0xC);
+            }
+            r5 = *(void**)((u8*)r5);
+            goto loop_16;
+        }
+        if (*(u32*)((u8*)r5 + 8) == arg0) {
+            return *(s32*)((u8*)r6 + 0xC);
+        }
+        r5 = *(void**)((u8*)r5);
+        goto loop_11;
+    }
+    if (*(u32*)((u8*)r5 + 8) == arg0) {
+        return *(s32*)((u8*)r6 + 0xC);
+    }
+    r5 = *(void**)((u8*)r5);
+    goto loop_6;
 }
 
 s32 fn_8024B654(s32 arg0, s32 arg1, s32 arg2) {
@@ -653,14 +713,23 @@ s32 fn_80250874(void *arg0, void *arg1) {
     return M2C_FIELD(arg0, u16 *, 4) - M2C_FIELD(arg1, u16 *, 4);
 }
 
-void fn_80250884(void) {
-    extern u32 lbl_803689E4;
-    s32 temp_r31;
+s32 fn_80250884(u16 id) {
+    struct Key {
+        s32 data;
+        u16 id;
+        u16 pad;
+    };
+    s32 *fn_802612A0(void *, void *, u16, s32, s32 (*)(void *, void *));
+    extern struct Key lbl_803689E4;
+    extern struct Key lbl_803502B8[];
+    extern u16 lbl_80368A10;
+    extern s32 *lbl_803689E0;
 
-    temp_r31 = lbl_803689E4;
-    if (temp_r31 != 0) {
-        fn_80183BE4(temp_r31, 0x1D);
+    lbl_803689E4.id = id;
+    if ((lbl_803689E0 = fn_802612A0(&lbl_803689E4, lbl_803502B8, lbl_80368A10, 8, fn_80250874)) != NULL) {
+        return *lbl_803689E0;
     }
+    return 0;
 }
 
 s32 fn_8025093C(void *arg0, void *arg1) {
