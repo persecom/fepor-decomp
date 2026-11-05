@@ -24,6 +24,32 @@ static inline BOOL IsItemNamed(void *item, char *name) {
     return fn_80019E04(name) == item;
 }
 
+void **fn_80037BBC(void *, s32);
+u8 fn_8009326C(void *, void *);
+extern char lbl_80273304[];
+
+static inline void CheckStatusStaves(void *unit) {
+    s32 i;
+    void **item;
+
+    for (i = 0; i < 4; i++) {
+        item = fn_80037BBC(unit, i);
+        if (*item == NULL) {
+            break;
+        }
+        if (fn_8009326C(unit, *item)) {
+            M2C_FIELD(unit, u32 *, 0x254) |= 0x200;
+            if (IsItemNamed(*item, lbl_80273304 + 0xF9)) {
+                M2C_FIELD(unit, u32 *, 0x254) |= 0x400;
+            } else if (IsItemNamed(*item, lbl_80273304 + 0x105)) {
+                M2C_FIELD(unit, u32 *, 0x254) |= 0x800;
+            } else if (IsItemNamed(*item, lbl_80273304 + 0x10F)) {
+                M2C_FIELD(unit, u32 *, 0x254) |= 0x1000;
+            }
+        }
+    }
+}
+
 static inline u8 GetItemUnk1D(void *item) {
     if (item != NULL) {
         return M2C_FIELD(item, u8 *, 0x1D);
@@ -2711,8 +2737,6 @@ void fn_801007A0(void *arg0) {
     u8 fn_8009326C(void *, void *);
     u8 fn_8009339C(void *, void *);
     u64 *fn_8001CB64(void **);
-    void *fn_80019E04(char *);
-    extern char lbl_80273304[];
     s32 i;
     void **item;
 
@@ -2761,11 +2785,11 @@ void fn_801007A0(void *arg0) {
         }
         if (fn_8009326C(arg0, *item)) {
             M2C_FIELD(arg0, u32 *, 0x254) |= 0x200;
-            if (fn_80019E04(lbl_80273304 + 0xF9) == *item) {
+            if (IsItemNamed(*item, "IID_SILENCE")) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x400;
-            } else if (fn_80019E04(lbl_80273304 + 0x105) == *item) {
+            } else if (IsItemNamed(*item, "IID_SLEEP")) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x800;
-            } else if (fn_80019E04(lbl_80273304 + 0x10F) == *item) {
+            } else if (IsItemNamed(*item, "IID_BERSERK")) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x1000;
             }
         }
