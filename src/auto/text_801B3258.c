@@ -883,6 +883,31 @@ void fn_801D0460(void *arg0, s32 arg1) {
     }
 }
 
+s32 fn_801D2A38(void *arg0) {
+    s32 *var_r4;
+    s16 var_r3;
+
+    if ((u32) *(u32 *) ((char *) arg0 + 0x6C) == 0U) {
+        return 0;
+    }
+    var_r4 = (s32 *) ((char *) arg0 + 0x74);
+    var_r3 = *(s16 *) ((char *) arg0 + 0x4E);
+    if (var_r3 >= 0) {
+loop_2:
+        while (var_r3 > 0) {
+            var_r4 = (s32 *) *var_r4;
+            var_r3 -= 1;
+        }
+    } else {
+loop_3:
+        while (var_r3 < 0) {
+            var_r4 = (s32 *) *var_r4;
+            var_r3 += 1;
+        }
+    }
+    return fn_800BE890(*(s32 *) ((char *) var_r4 + 0x8));
+}
+
 void *fn_801D2C20(void) {
     extern u16 lbl_8027E0F8[];
     return &lbl_8027E0F8[0x12];
@@ -1558,3 +1583,6 @@ s32 fn_801E434C(void *arg0) {
 }
 extern u16 lbl_80299E10;
 extern u8 lbl_80331FB8[];
+#include "global.h"
+
+extern void *lbl_803682B8;
