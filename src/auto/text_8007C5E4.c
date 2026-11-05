@@ -492,6 +492,13 @@ void fn_80095678(void) {
     fn_8000BF00(&lbl_80289B00);
 }
 
+void fn_800956A0(s32 arg0) {
+    extern u8 lbl_8036728B;
+    if (!(lbl_8036728B & 2)) {
+        fn_8000CAF0(&lbl_80289B00, arg0);
+    }
+}
+
 void fn_80095850(void *arg0) {
     void *fn_80018ADC();
     M2C_UNK fn_80018AE4();
