@@ -562,6 +562,14 @@ void fn_80261B50(s32 arg0, s8 arg1) {
     M2C_FIELD((lbl_80368AA0 + (arg0 * 0xF8)), s8 *, 0xA0) = arg1;
 }
 
+extern u16 lbl_803670C0;
+s32 fn_80261C40(s32 arg0, s32 arg1) {
+    if (arg1 == 0) {
+        return (lbl_803670C0 & 0xFFFF);
+    }
+    return (lbl_803670C0 >> 0x10);
+}
+
 void fn_8026212C(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     extern u16 lbl_8035B838[];
     void *temp_r3;
@@ -764,3 +772,4 @@ extern u16 lbl_8035D118[];
 
 extern s32 lbl_80368B2C;
 extern u16 lbl_80368AA0;
+extern u16 lbl_803670C0;
