@@ -143,6 +143,25 @@ s32 fn_801651D8(void) {
     return 0x10;
 }
 
+void *fn_801651E0(void *arg0, s16 arg1) {
+    M2C_UNK fn_8013F2A4(void *, s32);
+    M2C_UNK fn_800C428C(void *);
+    extern u8 lbl_80293B74[];
+    extern u8 lbl_80293BB8[];
+
+    if (arg0 != NULL) {
+        M2C_FIELD(arg0, void **, 0) = lbl_80293B74;
+        if (arg0 != NULL) {
+            M2C_FIELD(arg0, void **, 0) = lbl_80293BB8;
+            fn_8013F2A4(arg0, 0);
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 s32 fn_80165250(void) {
     return 0;
 }
@@ -2579,6 +2598,81 @@ extern "C" void fn_8018179C(void *arg0) {
     y = (s16)(M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC)) + 2;
     fn_80157700(0, y, 5 - fn_80036A24(M2C_FIELD(arg0, s32 *, 0x48), (s16)(M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC))), 0x10);
 }
+
+u8 fn_80181B9C(void *arg0, void *arg1) {
+    s8 fn_80036DE0(s32);
+    u8 fn_80036B20(s32, s32);
+    u8 ret;
+    u8 res;
+    s32 obj;
+    s8 idx;
+
+    if (arg1 == NULL) {
+        return 0;
+    }
+    ret = 0;
+    switch (M2C_FIELD(M2C_FIELD(arg1, void **, 0x190), u8 *, 8)) {
+    case 0:
+    case 5:
+        obj = M2C_FIELD(arg0, s32 *, 0x48);
+        if (M2C_FIELD(M2C_FIELD(arg1, void **, 0x188), u32 *, 0x50) == 0) {
+            res = 0;
+        } else {
+            idx = fn_80036DE0(obj);
+            if (idx < 0) {
+                res = 0;
+            } else {
+                res = fn_80036B20(obj, idx);
+            }
+        }
+        ret = res;
+        break;
+    }
+    return ret;
+}
+
+void fn_80181C40(s32 *arg0, void *arg1) {
+    struct Point {
+        s16 x;
+        s16 y;
+    };
+    struct Point *fn_8013F748(void *, struct Point *, struct Point *);
+    struct Point out;
+    struct Point in;
+
+    in.x = M2C_FIELD(arg1, s16 *, 0x56);
+    in.y = M2C_FIELD(arg1, s16 *, 0x54) * M2C_FIELD(arg1, s16 *, 0x4E) + M2C_FIELD(arg1, s16 *, 0x58);
+    *(struct Point *)arg0 = *fn_8013F748(arg1, &out, &in);
+}
+
+void *fn_80181CA4(void *arg0, s16 arg1) {
+    M2C_UNK fn_8013F2A4(void *, s32);
+    M2C_UNK fn_800C428C(void *);
+    M2C_UNK fn_80136F2C(void *, void *, void **, void **);
+    extern u8 lbl_802956B8[];
+    u8 sp8[4];
+    void *spC;
+    void *sp10;
+
+    if (arg0 != NULL) {
+        M2C_FIELD(arg0, void **, 0) = lbl_802956B8;
+        if ((u8 *)arg0 + 0x5C != NULL) {
+            if ((u8 *)arg0 + 0x5C != NULL) {
+                if ((u8 *)arg0 + 0x5C != NULL) {
+                    sp10 = (u8 *)arg0 + 0x60;
+                    spC = M2C_FIELD(arg0, void **, 0x64);
+                    fn_80136F2C(sp8, (u8 *)arg0 + 0x5C, &spC, &sp10);
+                }
+            }
+        }
+        fn_8013F2A4(arg0, 0);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 #pragma cplusplus reset
 
 #pragma opt_common_subs reset
