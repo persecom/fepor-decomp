@@ -629,7 +629,7 @@ extern u32 lbl_802ADAFC[9];
 void fn_8000B850(void *arg0){u32 *table;u32 v;u32 *entry;register u8 *obj=(u8*)arg0;if(*(u32*)obj!=0&&obj[0x2d]==0&&obj[0x2e]==0&&*(u32*)(obj+0x10)==0){table=(u32*)lbl_802ADAFC;v=*(u32*)*(u32**)(obj+4);entry=(u32*)table[(v>>6)&7];if(((u8(*)(void*))(*(u32*)((u8*)entry+((v&0xff)<<2))))(obj)){if(*(u32*)obj!=0&&obj[0x2d]==0&&obj[0x2e]!=0)return;}}}
 
 void *fn_8000B908(u8 arg0) {
-    extern u16 lbl_802A66D8[];
+    extern u16 lbl_802A66D8[0x7000];
     return &lbl_802A66D8[arg0 * 0xE0];
 }
 
