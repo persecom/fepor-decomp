@@ -786,6 +786,11 @@ void fn_801793B4(void) {
     fn_8000A248();
 }
 
+void fn_80179594(void) {
+    extern u16 lbl_80278080[];
+    fn_8000E0E4(&lbl_80278080[0x690 / sizeof(u16)]);
+}
+
 void *fn_801795C0(void) {
     return (char *)&lbl_80278080 + 0x69A;
 }
