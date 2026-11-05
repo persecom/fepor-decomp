@@ -823,14 +823,14 @@ void fn_801CFD60(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s8 arg4) {
 }
 
 void fn_801CFD8C(s32 arg0, s32 arg1, u8 arg2) {
-    s32 temp_r4;
+    u32 temp_r4;
 
     temp_r4 = (arg1 * 0xE) + 0x60;
     if (arg2 != 0) {
-        *(u8*)(arg0 + temp_r4) = *(u8*)(arg0 + temp_r4) | 2;
+        *(u8*)(arg0 + temp_r4) |= 2;
         return;
     }
-    *(u8*)(arg0 + temp_r4) = *(u8*)(arg0 + temp_r4) & 0xFFFFFFFD;
+    *(u8*)(arg0 + temp_r4) &= 0xFFFFFFFD;
 }
 
 void fn_801CFDBC(s32 arg0, s32 arg1) {
