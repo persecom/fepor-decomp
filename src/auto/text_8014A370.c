@@ -142,6 +142,11 @@ u8 fn_8014B2A4(void) {
     return *(u8 *)((char *) lbl_80367B14 + 0xC);
 }
 
+u16 fn_8014B2B0(void) {
+    extern u16 lbl_80367B14;
+    return lbl_80367B14;
+}
+
 s32 fn_8014B2E4(void) {
     return 0;
 }
@@ -316,4 +321,4 @@ void fn_8014DFE8(s32 arg0) {
     extern M2C_UNK lbl_80367B94;
     fn_80024398(&lbl_80367B94, arg0, 0);
 }
-extern u16 lbl_80367B14[];
+extern u16 lbl_80367B14;
