@@ -164,6 +164,29 @@ void fn_80116944(void *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x40), M2C_UNK (**)(void *), 0xC)(arg0);
 }
 
+void fn_80116F84(void *arg0, void *arg1) {
+    s32 temp_r0;
+    s32 temp_r5;
+    s32 temp_r6;
+    s32 sp8;
+    s32 spC;
+    s32 sp10;
+
+    temp_r6 = M2C_FIELD(arg1, s32 *, 0);
+    temp_r5 = M2C_FIELD(arg1, s32 *, 4);
+    temp_r0 = M2C_FIELD(arg1, s32 *, 8);
+    
+    sp8 = temp_r6;
+    spC = temp_r5;
+    sp10 = temp_r0;
+    
+    fn_800DB7A4(&sp8, temp_r5, temp_r6);
+    
+    if ((u8) M2C_FIELD(arg0, u8 *, 0x195) != 0) {
+        M2C_FIELD(arg0, s32 *, 0x9C) = (s32) (M2C_FIELD(arg0, s32 *, 0xC8) * M2C_FIELD(arg0, s32 *, 0x198));
+    }
+}
+
 s32 fn_80117CC0(void *arg0, s32 arg1) {
     return M2C_FIELD(arg0, s32 *, 8) + arg1;
 }
@@ -789,7 +812,7 @@ void fn_8011D428(s32 arg0) {
 
 u32 fn_8011D484(void) {
     void *fn_8000C0C0(M2C_UNK *);
-    extern u16 lbl_8028FE50;
+    extern u32* lbl_8028FE50;
     u32 temp_r3;
     void *temp_r3_2;
 
@@ -828,6 +851,24 @@ void fn_8011DD08(void *arg0) {
 block_5:
     fn_8008A290(3, M2C_FIELD(arg0, s16 *, 0x68));
     M2C_FIELD(arg0, s8 *, 0x64) = 2;
+}
+
+void fn_8012075C(void *arg0) {
+    s32 i;
+    void **ptr_array;
+    s32 r3 = (s32)arg0;
+    
+    if (!(lbl_80367110 & 3)) {
+        i = 0; // This is likely what the extra instruction is for
+        ptr_array = (void**)arg0;
+        do {
+            if (*ptr_array != NULL) {
+                fn_80122AA8(*ptr_array);
+            }
+            i += 1;
+            ptr_array++;
+        } while (i < 4);
+    }
 }
 
 void fn_801207BC(void) {
