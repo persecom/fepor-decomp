@@ -1905,6 +1905,11 @@ void fn_800EB288(void) {
     }
 }
 
+s32 fn_800EB520(char *arg0) {
+    extern char lbl_802725D8[];
+    return fn_802342B8(arg0, lbl_802725D8 + 0xE0) != 0;
+}
+
 void fn_800EB558(void) {
     extern s32 lbl_80367110;
     lbl_80367110 &= 0xFFFFFEFF;
