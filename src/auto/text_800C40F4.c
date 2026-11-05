@@ -2762,11 +2762,11 @@ void fn_801007A0(void *arg0) {
         }
         if (fn_8009326C(arg0, *item)) {
             M2C_FIELD(arg0, u32 *, 0x254) |= 0x200;
-            if (IsItemNamed(*item, "IID_SILENCE")) {
+            if (IsItemNamed(*item, lbl_80273304 + 0xF9)) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x400;
-            } else if (IsItemNamed(*item, "IID_SLEEP")) {
+            } else if (IsItemNamed(*item, lbl_80273304 + 0x105)) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x800;
-            } else if (IsItemNamed(*item, "IID_BERSERK")) {
+            } else if (IsItemNamed(*item, lbl_80273304 + 0x10F)) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x1000;
             }
         }
