@@ -230,16 +230,42 @@ void *fn_800A0530(void) {
     return (char *)&lbl_8026D8D8 + 0x437;
 }
 
+void *fn_800A0584(void) {
+    extern u16 lbl_8026D8D8;
+    void *ptr = &lbl_8026D8D8;
+    return (void *)((u32)ptr + 0x444);
+}
+
 s32 fn_800A0594(void) {
     M2C_UNK fn_800C418C();
     fn_800C418C();
     return 5;
 }
 
+void *fn_800A05B8(void) {
+    extern u16 lbl_8026D8D8;
+    return (u16 *)((char *)&lbl_8026D8D8 + 0x454);
+}
+
 s32 fn_800A05C8(void) {
     M2C_UNK fn_8005BCAC();
     fn_8005BCAC();
     return 5;
+}
+
+void *fn_800A05EC(void) {
+    extern u16 lbl_8026D8D8;
+    return &lbl_8026D8D8 + 0x460;
+}
+
+void *fn_800A0638(void) {
+    extern u16 lbl_8026D8D8;
+    return (char*)&lbl_8026D8D8 + 0x918;
+}
+
+void *fn_800A069C(void) {
+    extern u16 lbl_8026D8D8;
+    return (u8 *)&lbl_8026D8D8 + 0x4B0;
 }
 
 s32 fn_800A06AC(void) {
@@ -250,11 +276,28 @@ s32 fn_800A06AC(void) {
     return 5;
 }
 
+void *fn_800A06D8(void) {
+    extern u16 lbl_8026D8D8;
+    return (u8 *)&lbl_8026D8D8 + 0x4BB;
+}
+
+void *fn_800A073C(void) {
+    extern u16 lbl_8026D8D8;
+    return (char *)&lbl_8026D8D8 + 0x4DC;
+}
+
 s32 fn_800A074C(void) {
     M2C_UNK fn_800C4384();
     fn_800056A0(0);
     fn_800C4384();
     return 5;
+}
+
+void *fn_800A0778(void) {
+    extern u16 lbl_8026D8D8;
+    // Force 32-bit address loading to match target
+    void *ptr = (void *)((u32)&lbl_8026D8D8);
+    return (char *)ptr + 0x4E9;
 }
 
 s32 fn_800A0788(void) {
@@ -264,10 +307,25 @@ s32 fn_800A0788(void) {
     return 6;
 }
 
+void *fn_800A07B4(void) {
+    extern u16 lbl_8026D8D8;
+    return &lbl_8026D8D8 + 0x4ee;
+}
+
+void *fn_800A07F4(void) {
+    extern u16 lbl_8026D8D8;
+    return &lbl_8026D8D8 + 0x13C8;
+}
+
 s32 fn_800A0804(void) {
     M2C_UNK fn_80016538();
     fn_80016538();
     return 0;
+}
+
+void *fn_800A0AA8(void) {
+    extern u16 lbl_8026D8D8;
+    return (char *)&lbl_8026D8D8 + 0x527;
 }
 
 extern s32 lbl_80367670;
@@ -573,6 +631,7 @@ void fn_800A3980(void **arg0) {
     *(arg0 + 0) = lbl_8028459C;
     *(arg0 + 1) = lbl_8028A42C;
 }
+extern u16 lbl_8026D8D8;
 extern u16 lbl_8026D8D8;
 extern u16 lbl_8026D8D8;
 extern u16 lbl_8026D8D8;
