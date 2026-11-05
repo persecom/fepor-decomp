@@ -252,6 +252,21 @@ void fn_800C77B8(s32 arg0) {
     }
 }
 
+void fn_800C7800(void *arg0) {
+    s32 temp_r31;
+    s32 temp_r31_2;
+
+    temp_r31 = OSDisableInterrupts();
+    OSDisableScheduler();
+    OSRestoreInterrupts(temp_r31);
+    fn_8005BA08((s8) M2C_FIELD(arg0, s32 *, 0x44));
+    fn_8005C870(lbl_8028D788 + 4, 4); // Simple direct call
+    fn_8005BA08((s8) M2C_FIELD(arg0, s32 *, 0x40));
+    temp_r31_2 = OSDisableInterrupts();
+    OSEnableScheduler();
+    OSRestoreInterrupts(temp_r31_2);
+}
+
 void fn_800C7884(void *arg0) {
     M2C_UNK fn_8005BA08(s8);
     M2C_UNK fn_8005BC8C(s8);
@@ -505,25 +520,24 @@ s32 fn_800D5948(u32 *arg0, char *arg1, u32 arg2, u32 arg3) {
     return -1;
 }
 
-void fn_800D5D04(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3) {
-    M2C_UNK fn_800D6898(u32 *, u32 *, u32, u32, void *);
+void fn_800D5D04(u32 *arg0, const u32 *arg1, u32 arg2, u32 arg3) {
+    M2C_UNK fn_800D6898(u32 *, const u32 *, u32, u32, void *);
     M2C_UNK fn_8022CF78(void);
     M2C_UNK fn_80232058(void *, const char *, ...);
     extern char __files[];
     u32 rem;
     u32 alloc;
-    u32 *n;
+    u32 n;
+    const u32 *len;
 
+    n = arg3;
     if (arg2 > arg1[0]) {
         fn_80232058(__files + 0xA0, lbl_802704F8 + 0x8E7);
         fn_8022CF78();
     }
     rem = arg1[0] - arg2;
-    n = &arg3;
-    if (rem < *n) {
-        n = &rem;
-    }
-    fn_800D6898(arg0, arg1, arg2, *n, &alloc);
+    len = MinU32(&n, &rem);
+    fn_800D6898(arg0, arg1, arg2, *len, &alloc);
 }
 
 void fn_800D67E4(void) {
@@ -570,9 +584,9 @@ void fn_800D6878(void *arg0) {
 }
 
 #pragma use_lmw_stmw on
-u32 *fn_800D6898(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3, struct Tag { u8 b; } arg4) {
-    struct Tag tag;
-    M2C_UNK fn_800CA728(u32 *, char *, char *, struct Tag *, struct Tag);
+u32 *fn_800D6898(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3, void *arg4) {
+    struct Tag { u8 b; } tag;
+    M2C_UNK fn_800CA728(u32 *, char *, char *, void *, struct Tag);
     M2C_UNK fn_8022CF78(void);
     M2C_UNK fn_80232058(void *, const char *, ...);
     extern char __files[];
