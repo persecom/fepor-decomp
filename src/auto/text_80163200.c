@@ -3,6 +3,10 @@ extern u32 lbl_802EF4C8[];
 extern u16 lbl_80278080[];
 extern u8 lbl_80330708[];
 extern u16 lbl_803680E8[];
+extern f32 lbl_8036AB94;
+extern f32 lbl_8036ABB0;
+extern f32 lbl_8036ABBC;
+extern f32 lbl_8036ABA0;
 
 extern void (*lbl_802B14E4)(void **);
 void fn_80163200(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
@@ -906,6 +910,16 @@ void fn_8017C0EC(void *arg0) {
     fn_80105CEC(temp_r5 + 0x1BC, M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), u8 *, 0x18), temp_r5);
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s8 *, 0x3C) = 0;
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s32 *, 0x58) = 0;
+}
+
+void fn_8017C140(void *arg0) {
+    extern f32 lbl_8036AB94;
+    s32 *temp_r4;
+    *(s32 *)((char *)arg0 + 0x34) = 0;
+    temp_r4 = *(s32 **)((char *)arg0 + 0x30);
+    *(s32 *)((char *)temp_r4 + 0x58) = 2;
+    *(s32 *)((char *)temp_r4 + 0x5C) = *(s32 *)((char *)arg0 + 0x38);
+    *(f32 *)((char *)temp_r4 + 0x60) = lbl_8036AB94;
 }
 
 void fn_8017C304(void *arg0) {
