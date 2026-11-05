@@ -173,6 +173,11 @@ u8 fn_800A0144(void) {
     return var_r3;
 }
 
+void *fn_800A0160(void) {
+    extern u16 lbl_8026D8D8[];
+    return (char *)lbl_8026D8D8 + 0x3AC;
+}
+
 void fn_800A01B4(void) {
     M2C_UNK fn_80018AAC();
     fn_80018AAC();
