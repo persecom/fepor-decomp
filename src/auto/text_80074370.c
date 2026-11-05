@@ -766,6 +766,11 @@ s32 fn_80078618(void) {
     return 0;
 }
 
+void fn_8007863C(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4((u16*)((u8*)lbl_8026C0B8 + 0x4EE));
+}
+
 s32 fn_80078694(void) {
     extern u16 lbl_802EF4C8;
     ((u8*)&lbl_802EF4C8)[8] = 0x27;
