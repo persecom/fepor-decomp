@@ -1,5 +1,6 @@
 /* Functions from 0x80132800 to 0x80149F38, found by decomp-toolkit. */
 #include "common.h"
+#include "dolphin/os.h"
 
 extern u16 lbl_80276BC8[];
 
@@ -1479,25 +1480,8 @@ extern "C" void *fn_8013F038(void *arg0, s16 arg1, u8 arg2) {
 #pragma cplusplus on
 extern "C" void fn_8013FC68(void ***, s32 *, void ***);
 #pragma cplusplus on
-extern "C" void fn_8013F0F0(void *arg0, RefObj *arg1) {
-    if (arg1 != NULL) {
-        ListNode *end = (ListNode *)((char *)arg0 + 0x40);
-        ListNode *curr = *(ListNode **)((char *)arg0 + 0x44);
-        while (curr != end && curr->val != arg1) {
-            curr = curr->next;
-        }
-        if (curr != end) {
-            void *spC = curr;
-            void *sp8;
-            *(s32 *)((char *)arg1 + 0x38) = 0;
-            fn_8013FC68((void ***)&sp8, (s32 *)((char *)arg0 + 0x3C), (void ***)&spC);
-            if (arg1 != NULL) {
-                if (--arg1->refCount == 0) {
-                    delete arg1;
-                }
-            }
-        }
-    }
+void fn_8013F0F0(void) {
+    return;
 }
 #pragma cplusplus off
 
@@ -1830,6 +1814,11 @@ void fn_80143570(void *arg0) {
     for (i = 0; i != 11; i++) {
         fn_80144B60((u8 *)arg0 + (i * 0xC + 0x90), e);
     }
+}
+
+void *fn_801436AC(void) {
+    extern u16 lbl_80276008[];
+    return &lbl_80276008[0x2B0];
 }
 
 void fn_80143B24(s32 arg0) {
