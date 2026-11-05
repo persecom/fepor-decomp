@@ -886,5 +886,7 @@ extern u16 lbl_8026D8D8;
 extern u16 lbl_8026D8D8;
 extern u16 lbl_803200AC;
 #include "global.h"
+extern u32* lbl_80367240;
+extern u8 lbl_80330708[];
 extern u16 lbl_8026D8D8;
 extern u16 lbl_8026D8D8;
