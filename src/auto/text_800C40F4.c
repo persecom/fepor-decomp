@@ -505,12 +505,12 @@ void fn_800D5D04(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3) {
     M2C_UNK fn_8022CF78(void);
     M2C_UNK fn_80232058(void *, const char *, ...);
     extern char __files[];
-    u32 alloc;
     u32 rem;
+    u32 alloc;
     u32 *n;
 
     if (arg2 > arg1[0]) {
-        fn_80232058(__files + 0xA0, (char *)&lbl_802704F8 + 0x8E7);
+        fn_80232058(__files + 0xA0, lbl_802704F8 + 0x8E7);
         fn_8022CF78();
     }
     n = &arg3;
@@ -564,6 +564,7 @@ void fn_800D6878(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0xE) = 0;
 }
 
+#pragma use_lmw_stmw on
 u32 *fn_800D6898(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3, void *arg4) {
     struct Tag { u8 b; } tag;
     M2C_UNK fn_800CA728(u32 *, char *, char *, void *, struct Tag);
