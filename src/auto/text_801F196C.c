@@ -194,8 +194,10 @@ void fn_801F5C88(void *arg0) {
     M2C_UNK fn_801DCD3C(s32);
     M2C_UNK fn_801DDAC8(s32);
     extern f32 lbl_8036B8E8;
-    extern f32 lbl_8036B8EC;
-    extern f32 lbl_8036B908;
+extern f32 lbl_8036B8EC;
+extern f32 lbl_8036B908;
+extern s32 lbl_80368408;
+extern s32 lbl_8036840C;
     fn_8000A258();
     fn_80009D74(lbl_8036B8E8, lbl_8036B8E8, lbl_8036B908, lbl_8036B8EC);
     fn_8000A248();
