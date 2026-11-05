@@ -482,13 +482,15 @@ s32 fn_800B7828(s32 arg0) {
     M2C_UNK fn_8000CAA0(void *, s32);
     extern u8 lbl_8028D22C[];
     extern s32 lbl_80367110;
+    void *obj;
 
     fn_80013864();
     if (lbl_80367110 & 1) {
         return 0;
     }
     if (arg0 > 1) {
-        M2C_FIELD(fn_8000CAA0(lbl_8028D22C, fn_800C0658()), s32 *, 0x60) = arg0 - 1;
+        obj = (void *) fn_8000CAA0(lbl_8028D22C, fn_800C0658());
+        M2C_FIELD(obj, s32 *, 0x60) = arg0 - 1;
     }
     return 1;
 }
