@@ -181,8 +181,14 @@ s32 fn_800B6B20(void) {
 }
 
 extern void *lbl_8033216C;
-void fn_800B6B58(void) {
-    *(u16 *)lbl_8033216C = 0;
+void fn_800B6B58(s32 arg0) {
+    extern void *lbl_80367240;
+    s32 temp_r5;
+
+    temp_r5 = M2C_FIELD(lbl_80367240, s32 *, 4);
+    if (temp_r5 & (M2C_FIELD(lbl_80367240, s32 *, 8) ^ temp_r5) & 0x1F70) {
+        fn_8000C188(arg0);
+    }
 }
 
 extern s32 lbl_8036B3A4;
