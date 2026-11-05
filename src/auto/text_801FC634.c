@@ -296,6 +296,11 @@ void fn_80201188(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x28) = 4;
 }
 
+extern u16 lbl_8029B7A4[10];
+s32 fn_8020119C(void) {
+    return fn_8000C0C0(&lbl_8029B7A4) != 0;
+}
+
 void fn_802015A0(void) {
 
 }
