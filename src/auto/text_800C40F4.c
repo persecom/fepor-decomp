@@ -20,6 +20,11 @@ static inline u8 GetItemKind(void *item) {
 
 void *fn_80019E04(char *);
 
+/* std::min on references */
+static inline const u32 *MinU32(const u32 *a, const u32 *b) {
+    return (*b < *a) ? b : a;
+}
+
 
 void **fn_80037BBC(void *, s32);
 u8 fn_8009326C(void *, void *);
@@ -513,8 +518,8 @@ void fn_800D5D04(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3) {
         fn_80232058(__files + 0xA0, lbl_802704F8 + 0x8E7);
         fn_8022CF78();
     }
-    n = &arg3;
     rem = arg1[0] - arg2;
+    n = &arg3;
     if (rem < *n) {
         n = &rem;
     }
@@ -565,9 +570,9 @@ void fn_800D6878(void *arg0) {
 }
 
 #pragma use_lmw_stmw on
-u32 *fn_800D6898(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3, void *arg4) {
-    struct Tag { u8 b; } tag;
-    M2C_UNK fn_800CA728(u32 *, char *, char *, void *, struct Tag);
+u32 *fn_800D6898(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3, struct Tag { u8 b; } arg4) {
+    struct Tag tag;
+    M2C_UNK fn_800CA728(u32 *, char *, char *, struct Tag *, struct Tag);
     M2C_UNK fn_8022CF78(void);
     M2C_UNK fn_80232058(void *, const char *, ...);
     extern char __files[];
@@ -578,7 +583,7 @@ u32 *fn_800D6898(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3, void *arg4) {
     size = arg1[0];
     arg0[1] = 0;
     if (arg2 > size) {
-        fn_80232058(__files + 0xA0, (char *)&lbl_802704F8 + 0x9B3);
+        fn_80232058(__files + 0xA0, lbl_802704F8 + 0x9B3);
         fn_8022CF78();
     }
     len = size - arg2;
@@ -586,7 +591,7 @@ u32 *fn_800D6898(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3, void *arg4) {
         len = arg3;
     }
     p = (char *)arg1[2] + arg2;
-    fn_800CA728(arg0, p, p + len, arg4, tag);
+    fn_800CA728(arg0, p, p + len, &arg4, tag);
     return arg0;
 }
 #pragma use_lmw_stmw reset
