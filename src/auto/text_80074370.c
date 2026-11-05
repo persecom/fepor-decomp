@@ -2,6 +2,7 @@
 #include "common.h"
 #include "structs.h"
 extern u8 D_802EF4C8[24];
+extern u8 lbl_8036723A;
 
 void fn_80074370(void *arg0) {
     extern s32 lbl_80367468;
