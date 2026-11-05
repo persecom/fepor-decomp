@@ -660,6 +660,10 @@ void fn_8017A810(void *arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + arg1);
 }
 
+s32 fn_8017B8F8(s32 arg1) {
+    return arg1 != 0;
+}
+
 void fn_8017BE00(void *arg0) {
     M2C_UNK fn_80105D4C(s32, u8, s32);
     s32 temp_r5;
@@ -718,6 +722,11 @@ void fn_8017C304(void *arg0) {
 
 s32 fn_8017DF4C(void) {
     return 0;
+}
+
+void fn_8017E2AC(void *arg0) {
+    f32 temp = *(f32*)((u8*)arg0 + 0x44);
+    *(f32*)((u8*)*(void**)((u8*)arg0 + 0x30) + 0x4) = temp;
 }
 
 void fn_8017E8A0(void) {
