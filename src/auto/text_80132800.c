@@ -1344,23 +1344,47 @@ s16 fn_8013EEEC(void *arg0) {
 }
 
 #pragma cplusplus on
+extern "C" void *fn_8013F038(void *arg0, s16 arg1, u8 arg2) {
+    struct Item {
+        virtual ~Item();
+        virtual void *find(s16, u8);
+        u8 pad[4];
+        s16 id;
+    };
+    struct Node {
+        Node *next;
+        void *pad;
+        Item *item;
+    };
+    Node *end = (Node *)((char *)arg0 + 0x40);
+    Node *it;
+    Node *head = *(Node **)((char *)arg0 + 0x44);
+    Item *res = 0;
+
+    for (it = end; it != head; it = it->next) {
+        Item *item = it->item;
+        if (arg1 == item->id) {
+            res = item;
+            break;
+        }
+        if (arg2 != 0) {
+            res = (Item *)item->find(arg1, arg2);
+            if (res != 0) {
+                break;
+            }
+        }
+    }
+    return res;
+}
+#pragma cplusplus off
+
+#pragma cplusplus on
 extern "C" void fn_8013FC68(void ***, s32 *, void ***);
 #pragma cplusplus on
-extern "C" void fn_8013F0F0(void *arg0, void *arg1_raw, void *arg2) {
-    struct RefObj {
-        virtual ~RefObj();
-        s32 refCount;
-    };
-    struct ListNode {
-        void *prev;
-        struct ListNode *next;
-        void *val;
-    };
-    RefObj *arg1 = (RefObj *)arg1_raw;
-
+extern "C" void fn_8013F0F0(void *arg0, RefObj *arg1) {
     if (arg1 != NULL) {
-        struct ListNode *end = (struct ListNode *)((char *)arg0 + 0x40);
-        struct ListNode *curr = *(struct ListNode **)((char *)arg0 + 0x44);
+        ListNode *end = (ListNode *)((char *)arg0 + 0x40);
+        ListNode *curr = *(ListNode **)((char *)arg0 + 0x44);
         while (curr != end && curr->val != arg1) {
             curr = curr->next;
         }
@@ -2066,3 +2090,5 @@ typedef struct {
 extern u32 lbl_80291A74;
 extern u32 lbl_80291B70;
 extern u32 lbl_80295478;
+extern u8 lbl_803301A8[];
+extern u8 lbl_8032FF08[];
