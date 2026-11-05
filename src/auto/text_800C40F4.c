@@ -8,7 +8,7 @@ extern s8 lbl_803678BF;
 extern s32 lbl_8028D788;
 extern void (*lbl_802B14E4)(void **);
 
-u8 fn_8001DD54(void *, void *);
+s32 fn_8001DD54(void *, void *);
 void fn_801007A0(void *);
 
 static inline u8 GetItemKind(void *item) {
@@ -2690,6 +2690,100 @@ s32 fn_80100130(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 void fn_801001B8(s32 arg1, s32 arg2, s32 arg3) {
     M2C_UNK fn_80100284(M2C_UNK, s32, s32, s32, s32);
     fn_80100284(2, arg1, arg2, arg3, arg1);
+}
+
+void fn_801007A0(void *arg0) {
+    struct UnitBits {
+        u16 f0 : 3;
+        u16 f1 : 3;
+        u16 f2 : 3;
+        u16 f3 : 4;
+        u16 f4 : 3;
+    };
+    void fn_8010C504(void *);
+    void **fn_80037BBC(void *, s32);
+    u8 fn_8009326C(void *, void *);
+    u8 fn_8009339C(void *, void *);
+    u64 *fn_8001CB64(void **);
+    void *fn_80019E04(char *);
+    extern char lbl_80273304[];
+    s32 i;
+    void **item;
+
+    M2C_FIELD(arg0, u32 *, 0x254) &= 0xFEFF80EB;
+    fn_8010C504(arg0);
+
+    for (i = 0; i < 4; i++) {
+        item = fn_80037BBC(arg0, i);
+        if (*item == NULL) {
+            break;
+        }
+        if (fn_8009326C(arg0, *item)) {
+            if (GetItemKind(*item) == 0x81 || GetItemKind(*item) == 0x82) {
+                M2C_FIELD(arg0, u32 *, 0x254) |= 0x4;
+            }
+        }
+    }
+
+    for (i = 0; i < 4; i++) {
+        item = fn_80037BBC(arg0, i);
+        if (*item == NULL) {
+            break;
+        }
+        if (fn_8009326C(arg0, *item)) {
+            if (GetItemKind(*item) == 0x86) {
+                M2C_FIELD(arg0, u32 *, 0x254) |= 0x10;
+            }
+        }
+    }
+
+    for (i = 0; i < 4; i++) {
+        item = fn_80037BBC(arg0, i);
+        if (*item == NULL) {
+            break;
+        }
+        if (fn_8009339C(arg0, *item) && (*fn_8001CB64(item) & 2)) {
+            M2C_FIELD(arg0, u32 *, 0x254) |= 0x100;
+            break;
+        }
+    }
+
+    for (i = 0; i < 4; i++) {
+        item = fn_80037BBC(arg0, i);
+        if (*item == NULL) {
+            break;
+        }
+        if (fn_8009326C(arg0, *item)) {
+            M2C_FIELD(arg0, u32 *, 0x254) |= 0x200;
+            if (*item == fn_80019E04(lbl_80273304 + 0xF9)) {
+                M2C_FIELD(arg0, u32 *, 0x254) |= 0x400;
+            } else if (*item == fn_80019E04(lbl_80273304 + 0x105)) {
+                M2C_FIELD(arg0, u32 *, 0x254) |= 0x800;
+            } else if (*item == fn_80019E04(lbl_80273304 + 0x10F)) {
+                M2C_FIELD(arg0, u32 *, 0x254) |= 0x1000;
+            }
+        }
+    }
+
+    for (i = 0; i < 4; i++) {
+        item = fn_80037BBC(arg0, i);
+        if (*item == NULL) {
+            break;
+        }
+        if (fn_8009339C(arg0, *item)) {
+            if (GetItemUnk1D(*item) == 1) {
+                M2C_FIELD(arg0, u32 *, 0x254) |= 0x4000;
+            }
+            if (GetItemDD54(*item, arg0) > 1) {
+                M2C_FIELD(arg0, u32 *, 0x254) |= 0x2000;
+            }
+        }
+    }
+
+    if (M2C_FIELD(arg0, struct UnitBits *, 0x1A4).f2 || M2C_FIELD(arg0, struct UnitBits *, 0x1A4).f1 ||
+        M2C_FIELD(arg0, struct UnitBits *, 0x1A4).f4) {
+        M2C_FIELD(arg0, u32 *, 0x254) |= 0x01000000;
+    }
 }
 
 s32 fn_80100CC8(void) {
