@@ -1056,6 +1056,14 @@ s32 fn_800BAFE4(s32 arg0) {
     return 0;
 }
 
+s32 fn_800BB018(s32 arg0) {
+    M2C_UNK fn_800BDC68(void *, s32);
+    extern u8 lbl_80330708[];
+
+    fn_800BDC68(lbl_80330708 + 0xB4, arg0);
+    return 0;
+}
+
 u8 fn_800BB04C(s32 arg0) {
     u8 fn_800BDD08(void *, s32, M2C_UNK *);
     extern M2C_UNK lbl_80330708;
