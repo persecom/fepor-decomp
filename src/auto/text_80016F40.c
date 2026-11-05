@@ -1,5 +1,9 @@
 /* Functions from 0x80016F40 to 0x80019558, found by decomp-toolkit. */
 #include "common.h"
+
+extern u16 lbl_80330708[700]; // 1400 bytes / 2 = 700 u16s
+
+void* fn_8014C5A8(u16 *, u8);
 extern u8 lbl_802841B0[16];
 
 
