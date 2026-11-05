@@ -569,3 +569,6 @@ u8 fn_801F19A0(void) {
     }
     return *(u8*)(temp_r3 + var_r0);
 }
+#include "common.h"
+extern u8 lbl_8027F710[];
+extern u8 lbl_80330708[];
