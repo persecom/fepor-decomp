@@ -632,6 +632,13 @@ void fn_8009A660(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x3D) = (u8) M2C_FIELD(arg0, u8 *, 0x3F);
 }
 
+void fn_8009A864(void *arg0) {
+    M2C_UNK fn_8006D8E8(u32);
+    if (M2C_FIELD(arg0, u32 *, 0x38) != 0) {
+        fn_8006D8E8(M2C_FIELD(arg0, u32 *, 0x38));
+    }
+}
+
 void fn_8009A890(void *arg0) {
     M2C_UNK fn_80055C8C(void *, void *, void *);
     M2C_UNK fn_80059208(void *, void *);
