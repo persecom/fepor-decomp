@@ -20,14 +20,6 @@ static inline u8 GetItemKind(void *item) {
 
 void *fn_80019E04(char *);
 
-static inline BOOL IsItemNamed(void *item, char *name) {
-    return fn_80019E04(name) == item;
-}
-
-static inline BOOL IsSlotItemNamed(void **slot, char *name) {
-    void *item = *slot;
-    return fn_80019E04(name) == item;
-}
 
 void **fn_80037BBC(void *, s32);
 u8 fn_8009326C(void *, void *);
