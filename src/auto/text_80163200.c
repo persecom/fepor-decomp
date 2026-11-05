@@ -2641,40 +2641,72 @@ void fn_80181C40(s32 *arg0, void *arg1) {
     struct Point *fn_8013F748(void *, struct Point *, struct Point *);
     struct Point out;
     struct Point in;
+    s16 idx;
     s32 row;
 
-    row = M2C_FIELD(arg1, s16 *, 0x54) * M2C_FIELD(arg1, s16 *, 0x4E);
+    idx = M2C_FIELD(arg1, s16 *, 0x4E);
+    row = M2C_FIELD(arg1, s16 *, 0x54) * idx;
     in.x = M2C_FIELD(arg1, s16 *, 0x56);
     in.y = row + M2C_FIELD(arg1, s16 *, 0x58);
     *(struct Point *)arg0 = *fn_8013F748(arg1, &out, &in);
 }
 
+typedef struct ListNode {
+    struct ListNode *prev;
+    struct ListNode *next;
+} ListNode;
+
+typedef struct List {
+    u32 unk0;
+    ListNode node;
+} List;
+
+typedef struct ListOwner {
+    void *vtbl;
+    u8 pad4[0x58];
+    List list;
+} ListOwner;
+
 void *fn_80181CA4(void *arg0, s16 arg1) {
+    struct Node {
+        void *prev;
+        void *next;
+    };
+    struct List {
+        u32 unk0;
+        struct Node node;
+    };
+    struct Obj {
+        void *vtbl;
+        u8 pad[0x58];
+        struct List list;
+    };
     M2C_UNK fn_8013F2A4(void *, s32);
     M2C_UNK fn_800C428C(void *);
-    M2C_UNK fn_80136F2C(void *, void *, void **, void **);
+    M2C_UNK fn_80136F2C(void *, struct List *, void **, void **);
     extern u8 lbl_802956B8[];
+    struct Obj *obj = arg0;
     void *sp10;
     void *spC;
     u8 sp8[4];
 
-    if (arg0 != NULL) {
-        M2C_FIELD(arg0, void **, 0) = lbl_802956B8;
-        if ((u8 *)arg0 + 0x5C != NULL) {
-            if ((u8 *)arg0 + 0x5C != NULL) {
-                if ((u8 *)arg0 + 0x5C != NULL) {
-                    sp10 = (u8 *)arg0 + 0x60;
-                    spC = M2C_FIELD(arg0, void **, 0x64);
-                    fn_80136F2C(sp8, (u8 *)arg0 + 0x5C, &spC, &sp10);
+    if (obj != NULL) {
+        obj->vtbl = lbl_802956B8;
+        if (&obj->list != NULL) {
+            if (&obj->list != NULL) {
+                if (&obj->list != NULL) {
+                    sp10 = &obj->list.node;
+                    spC = obj->list.node.next;
+                    fn_80136F2C(sp8, &obj->list, &spC, &sp10);
                 }
             }
         }
-        fn_8013F2A4(arg0, 0);
+        fn_8013F2A4(obj, 0);
         if (arg1 > 0) {
-            fn_800C428C(arg0);
+            fn_800C428C(obj);
         }
     }
-    return arg0;
+    return obj;
 }
 #pragma opt_common_subs reset
 s32 fn_8018256C(void) {
