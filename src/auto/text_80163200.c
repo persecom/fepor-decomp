@@ -246,6 +246,13 @@ s32 fn_8016A650(s32 arg0, s16 arg1) {
     return arg0;
 }
 
+void *fn_8016A6A4(void *arg0) {
+    M2C_UNK fn_801403F0(void *);
+    fn_801403F0(arg0);
+    M2C_FIELD(arg0, s32 *, 0x40) = 0;
+    return arg0;
+}
+
 void fn_8016B5E8(void) {
     M2C_UNK fn_8004327C();
     fn_80040844();
