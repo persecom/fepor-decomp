@@ -454,6 +454,12 @@ void fn_8016969C(void) {
     }
 }
 
+s32 fn_801696E0(void) {
+    extern u16 lbl_80293D8C[];
+    s32 v = fn_8000C0C0(lbl_80293D8C);
+    return v != 0;
+}
+
 void *fn_80169714(s32 arg0) {
     void *fn_8000CAA0(void *, s32, void *);
     void fn_801403F0(void);
