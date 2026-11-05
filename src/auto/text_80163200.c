@@ -2602,7 +2602,7 @@ extern "C" void fn_8018179C(void *arg0) {
 #pragma cplusplus reset
 
 u8 fn_80181B9C(void *arg0, void *arg1) {
-    s8 fn_80036DE0(s32);
+    s8 fn_80036DE0(s32, void *);
     u8 fn_80036B20(s32, s32);
     u8 ret;
     u8 res;
@@ -2620,7 +2620,7 @@ u8 fn_80181B9C(void *arg0, void *arg1) {
         if (M2C_FIELD(M2C_FIELD(arg1, void **, 0x188), u32 *, 0x50) == 0) {
             res = 0;
         } else {
-            idx = fn_80036DE0(obj);
+            idx = fn_80036DE0(obj, arg1);
             if (idx < 0) {
                 res = 0;
             } else {
@@ -2641,9 +2641,11 @@ void fn_80181C40(s32 *arg0, void *arg1) {
     struct Point *fn_8013F748(void *, struct Point *, struct Point *);
     struct Point out;
     struct Point in;
+    s32 row;
 
+    row = M2C_FIELD(arg1, s16 *, 0x54) * M2C_FIELD(arg1, s16 *, 0x4E);
     in.x = M2C_FIELD(arg1, s16 *, 0x56);
-    in.y = M2C_FIELD(arg1, s16 *, 0x54) * M2C_FIELD(arg1, s16 *, 0x4E) + M2C_FIELD(arg1, s16 *, 0x58);
+    in.y = row + M2C_FIELD(arg1, s16 *, 0x58);
     *(struct Point *)arg0 = *fn_8013F748(arg1, &out, &in);
 }
 
@@ -2652,9 +2654,9 @@ void *fn_80181CA4(void *arg0, s16 arg1) {
     M2C_UNK fn_800C428C(void *);
     M2C_UNK fn_80136F2C(void *, void *, void **, void **);
     extern u8 lbl_802956B8[];
-    u8 sp8[4];
-    void *spC;
     void *sp10;
+    void *spC;
+    u8 sp8[4];
 
     if (arg0 != NULL) {
         M2C_FIELD(arg0, void **, 0) = lbl_802956B8;
@@ -2674,7 +2676,7 @@ void *fn_80181CA4(void *arg0, s16 arg1) {
     }
     return arg0;
 }
-
+#pragma opt_common_subs reset
 s32 fn_8018256C(void) {
     return 1;
 }
