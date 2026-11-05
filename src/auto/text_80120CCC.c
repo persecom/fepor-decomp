@@ -326,6 +326,12 @@ s32 fn_80127000(void) {
     return 1;
 }
 
+s32 fn_80127054(void) {
+    extern u16 lbl_80290510[];
+    fn_8000CAF0(lbl_80290510, 4);
+    return 0;
+}
+
 void fn_80127084(void) {
     M2C_UNK fn_800F1BFC();
     fn_800F1BFC();
