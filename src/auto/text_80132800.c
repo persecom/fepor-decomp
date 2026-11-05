@@ -835,6 +835,10 @@ s32 fn_8013C3AC(void) {
 }
 
 #pragma cplusplus on
+struct RefObj {
+    virtual ~RefObj();
+    s32 refCount;
+};
 extern "C" void fn_8015B954(s32, s32, s32);
 extern "C" void fn_8013CA2C(void *arg0) {
     struct Obj {
