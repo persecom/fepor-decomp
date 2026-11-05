@@ -9,6 +9,12 @@ typedef struct Unk800C2ACC {
     u8 unk14[4];
 } Unk800C2ACC;
 
+void fn_800AD24C(void) {
+    extern u16 lbl_80312ACC[];
+    extern void fn_800AD284(void);
+    fn_8022C1E8(lbl_80312ACC, fn_800AD284, 0x10, 0x10);
+}
+
 s32 fn_800AD284(s32 arg0, s16 arg1) {
     M2C_UNK fn_8001C5F8(s32, M2C_UNK);
     M2C_UNK fn_800C428C(s32);
@@ -25,6 +31,13 @@ s32 fn_800AD2DC(s32 arg0) {
     M2C_UNK fn_8001C76C(s32);
     fn_8001C76C(arg0 + 4);
     return arg0;
+}
+
+void fn_800AD678(void) {
+    M2C_UNK fn_801A4BE0(M2C_UNK *);
+    extern M2C_UNK lbl_80330EAC;
+    M2C_FIELD(&lbl_80330EAC, s32 *, 0xCAC) = (s32) (M2C_FIELD(&lbl_80330EAC, s32 *, 0xCAC) | 1);
+    fn_801A4BE0(&lbl_80330EAC);
 }
 
 void fn_800ADD04(void);
