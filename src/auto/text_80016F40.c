@@ -1,5 +1,7 @@
 /* Functions from 0x80016F40 to 0x80019558, found by decomp-toolkit. */
 #include "common.h"
+extern u8 lbl_802841B0[16];
+
 
 void fn_80017414(void *arg0, s32 arg1) {
     s16 fn_8017A9B0(s32);
@@ -32,9 +34,39 @@ void fn_8001753C(s16 *arg0) {
     *arg0 = fn_8000CEE4(0xE4C);
 }
 
+void fn_80017774(void) {
+    fn_8000BF00(&lbl_802841B0);
+}
+
 void fn_80017BFC(void) {
     M2C_UNK fn_8001840C();
     fn_8001840C();
+}
+
+s32 fn_80018A08(u8 arg0) {
+    f32 var_f2;
+    
+    if (lbl_803671C4 == 0) {
+        return 0;
+    }
+    if (lbl_803671C8 == 0) {
+        f32 *ptr = (f32*) 0x80330708;
+        *(f32 *) (((u32) lbl_803671C4) + 0x4C) = ptr[0x14B];
+        *(f32 *) (((u32) lbl_803671C4) + 0x50) = ptr[0x14C];
+        *(f32 *) (((u32) lbl_803671C4) + 0x54) = ptr[0x14F];
+    }
+
+    var_f2 = lbl_80368C8C;
+    if (arg0 != 0) {
+        var_f2 = lbl_80368CAC;
+    }
+    if (fabsf(*(f32 *) (((u32) lbl_803671C4) + 0x4C) - *(f32 *) (((u32) lbl_803671C4) + 0x40)) > var_f2) {
+        return 1;
+    }
+    if (fabsf(*(f32 *) (((u32) lbl_803671C4) + 0x50) - *(f32 *) (((u32) lbl_803671C4) + 0x44)) > var_f2) {
+        return 1;
+    }
+    return 0;
 }
 
 s32 fn_80018ADC(void) {
