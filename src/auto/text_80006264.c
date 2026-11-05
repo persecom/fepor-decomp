@@ -322,3 +322,4 @@ void fn_80011910(void) {
 }
 #include "common.h"
 extern u16 lbl_80367140;
+extern u16 lbl_80367140;
