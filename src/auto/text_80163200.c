@@ -668,10 +668,24 @@ void fn_8017A430(void *arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + arg1);
 }
 
+void fn_8017A5EC(void *arg0, s8 arg1) {
+    s8 **temp_r5 = (s8 **)((u8*)arg0 + 4);
+    *temp_r5 += 1;
+    **temp_r5 = arg1;
+}
+
 void fn_8017A810(void *arg0, s32 arg1, s32 arg2) {
     M2C_UNK memcpy(s32, s32, s32);
     memcpy(arg2, M2C_FIELD(arg0, s32 *, 4), arg1);
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + arg1);
+}
+
+u8 fn_8017A9DC(void *arg0) {
+    u8 *temp_r4;
+
+    temp_r4 = *(u8 **)((char *)arg0 + 4);
+    *(u8 **)((char *)arg0 + 4) = temp_r4 + 1;
+    return *temp_r4;
 }
 
 s32 fn_8017B8F8(s32 arg1) {
