@@ -2674,9 +2674,6 @@ void *fn_80181CA4(void *arg0, s16 arg1) {
     return arg0;
 }
 
-#pragma cplusplus reset
-
-#pragma opt_common_subs reset
 s32 fn_8018256C(void) {
     return 1;
 }
