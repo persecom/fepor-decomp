@@ -150,6 +150,12 @@ void fn_801FEF58(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x28) = 4;
 }
 
+s32 fn_801FEF6C(void) {
+    extern u16 lbl_8029B5DC[];
+    s32 v = fn_8000C0C0(lbl_8029B5DC);
+    return v != 0;
+}
+
 void *fn_801FEFA0(void) {
     void *fn_8000CAF0(M2C_UNK *, M2C_UNK);
     s32 fn_800C4304(void *, M2C_UNK *);
