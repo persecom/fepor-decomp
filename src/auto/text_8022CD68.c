@@ -660,6 +660,24 @@ void *fn_8025FF28(u8 arg0, u8 arg1) {
     return ((u16*)((u8*)&lbl_80361618 + (arg1 * 0x90) + (arg0 * 9)));
 }
 
+void fn_8025FF6C(u8 arg0, u8 arg1) {
+    extern u8 lbl_80361618[];
+    extern u8 lbl_80363C18[];
+    extern s32 lbl_80368AC8;
+    extern s32 lbl_80368ACC;
+    
+    char *var_r3;
+
+    if (arg1 != 0xFF) {
+        var_r3 = (char *)&lbl_80361618 + (arg1 * 0x90) + (arg0 * 9);
+    } else {
+        var_r3 = (char *)&lbl_80363C18 + (arg0 * 9);
+    }
+    *(u8 *)var_r3 = 2;
+    *(s32 *)((char *)var_r3 + 1) = lbl_80368ACC;
+    *(s32 *)((char *)var_r3 + 5) = lbl_80368AC8;
+}
+
 void fn_80260174(u8 arg0, u8 arg1, s8 arg2) {
     extern u16 lbl_80363E58[];
     extern u8 lbl_80363ED8[];
