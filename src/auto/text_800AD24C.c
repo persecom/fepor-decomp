@@ -1066,6 +1066,6 @@ void fn_800C3864(s32 arg0, s32 arg1) {
     fn_8001D580(arg0 + (arg1 * 8));
 }
 #include "common.h"
-extern u32 lbl_8032FF08;
+extern u8 lbl_8032FF08[];
 extern void fn_80148888(u32*, s16);
 extern void fn_80146B00(void);
