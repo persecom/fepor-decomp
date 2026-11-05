@@ -1,5 +1,6 @@
 /* Functions from 0x800C40F4 to 0x801035C8, found by decomp-toolkit. */
 #include "common.h"
+#include "structs.h"
 
 extern s32 lbl_8028D788;
 extern void (*lbl_802B14E4)(void **);
@@ -1439,8 +1440,8 @@ s32 fn_80100CC8(void) {
 }
 
 void fn_80101448(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
-    M2C_UNK fn_800FE2A0(M2C_UNK, s32);
-    M2C_UNK fn_80101530(s32, s32, s32, s32, s32, s32, s32, s32);
+    void fn_800FE2A0(s32, s32);
+    void fn_80101530(s32, s32, s32, s32, s32, s32, s32, s32);
 
     fn_800FE2A0(5, arg7);
     fn_80101530(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
@@ -1485,6 +1486,18 @@ s32 fn_80102360(void *arg0, s16 *arg1, s16 *arg2, s32 arg3) {
 
     // Loop and calculations continue
     return 0; /* Placeholder, complex loop logic to reassemble */
+}
+
+void fn_80103200(void *arg0, s8 arg1, s8 arg2) {
+    M2C_UNK fn_8002C6F4();
+    extern M2C_UNK lbl_802CA518;
+    s32 temp_r8;
+    u8 temp_r7;
+
+    temp_r8 = arg2 << 6;
+    if (((s8) M2C_FIELD((&lbl_802CA518 + 0x10000 + arg1 + temp_r8), u8 *, -0x1E72) == 0) && (!(M2C_FIELD(M2C_FIELD(arg0, void **, 4), s32 *, 0x254) & 0x20000) || !(M2C_FIELD((&lbl_802CA518 + arg1 + temp_r8), u8 *, 0x300D) & 2)) && ((M2C_FIELD(arg0, s8 *, 0xC) = arg1, M2C_FIELD(arg0, s8 *, 0xD) = arg2, temp_r7 = M2C_FIELD((&lbl_802CA518 + arg1 + temp_r8), u8 *, 0xD), ((temp_r7 == 0) != 0)) || (temp_r7 == (u8) M2C_FIELD(M2C_FIELD(arg0, void **, 4), u8 *, 0x198)))) {
+        fn_8002C6F4();
+    }
 }
 
 s32 fn_801032F8(void) {
