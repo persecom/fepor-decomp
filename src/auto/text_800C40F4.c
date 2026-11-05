@@ -1444,6 +1444,36 @@ void fn_800DFC2C(void *arg0) {
     fn_800E01EC(temp_r3, (temp_r3 + (temp_r3 << 2)), &temp_r0);
 }
 
+#pragma cplusplus on
+extern "C" void fn_800DFD64(void *arg0) {
+    struct Obj {
+        void *owner;
+        u8 pad[0x3C];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual ~Obj() = 0;
+    };
+    struct List {
+        void *unk0;
+        s32 count;
+        Obj **items;
+    };
+    List *list = (List *)arg0;
+    s32 i = list->count - 1;
+
+    while (i >= 0) {
+        Obj *p = list->items[i];
+        if (p->owner == list) {
+            delete p;
+        }
+        i--;
+    }
+    list->count = 0;
+}
+#pragma cplusplus reset
+
 void fn_800DFDF4(void *arg0, void *arg1) {
     s32 temp_r0;
     s32 temp_r5;
@@ -1473,6 +1503,32 @@ loop_1:
         }
     }
 }
+
+#pragma cplusplus on
+extern "C" void fn_800DFE74(void *arg0, s32 idx) {
+    struct Obj {
+        void *owner;
+        u8 pad[0x3C];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual ~Obj() = 0;
+    };
+    struct List {
+        void *unk0;
+        s32 count;
+        Obj **items;
+    };
+    s32 n = ((List *)arg0)->count;
+
+    if (n == 0 || idx >= n) {
+        return;
+    }
+    delete ((List *)arg0)->items[idx];
+    fn_800DD87C(arg0, ((List *)arg0)->items + (u32)idx);
+}
+#pragma cplusplus reset
 
 void fn_800DFFB8(void *arg0, s32 arg1) {
     M2C_UNK fn_800C9BC4(s32, M2C_UNK, s32 *);
