@@ -1392,7 +1392,6 @@ extern u16 lbl_8026C0B8[];
 extern u8 D_802EF4C8[24];
 extern u16 lbl_80288CAC;
 #include "global.h"
-extern u16 gSomeGlobalVar[0x12]; // lbl_802EF4C8
 extern void* (*fn_80024398_ptr)(void*, s32, s32);
 
 extern u16 lbl_80288CAC;
