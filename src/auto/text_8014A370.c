@@ -63,6 +63,11 @@ u16 fn_8014ADBC(void) {
     return M2C_FIELD(lbl_80367B14, u16 *, 0x12);
 }
 
+void fn_8014ADC8(s32 arg0, s16 arg1) {
+    extern void *lbl_80367B14;
+    M2C_FIELD(lbl_80367B14, s16 *, 0x12) = arg1;
+}
+
 s32 fn_8014ADD4(void) {
     extern void *lbl_80367B14;
     if (M2C_FIELD(lbl_80367B14, u8 *, 5) & 4) {
