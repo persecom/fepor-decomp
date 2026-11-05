@@ -15,7 +15,7 @@ extern s32 D_80368AD0;
 extern s32 lbl_80368B0C;
 u32 fn_8026367C(void);
 
-typedef struct {
+typedef struct __va_list {
     char gpr;
     char fpr;
     char reserved[2];
@@ -23,6 +23,7 @@ typedef struct {
     char *reg_save_area;
 } __va_list[1];
 typedef __va_list va_list;
+void __va_start(va_list, ...);
 
 typedef struct {
     char *buffer;
@@ -70,6 +71,22 @@ void __begin_critical_region(void) {
 
 void __kill_critical_regions(void) {
 
+}
+
+s32 fn_80231D94(char *dest, const char *fmt, ...) {
+    __OutStr out;
+    va_list args;
+    s32 n;
+
+    __va_start(args, fmt);
+    out.buffer = dest;
+    out.length = -1;
+    out.position = 0;
+    n = __pformatter(fn_80232220, &out, fmt, args);
+    if (dest != NULL) {
+        dest[n] = 0;
+    }
+    return n;
 }
 
 s32 fn_802342B8(u8 *arg0, u8 *arg1) {
