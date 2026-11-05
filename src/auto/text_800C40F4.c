@@ -1264,13 +1264,14 @@ void fn_800DEF00(void *arg0) {
     }
 }
 
+#pragma cplusplus on
 #pragma dont_inline on
-u8 fn_800DF298(void *arg0, const char *arg1) {
-    s32 fn_802342B8(const char *, const char *);
-
+extern "C" bool fn_800DF298(void *arg0, const char *arg1) {
     return fn_802342B8((char *)fn_800C93EC((s8 *)arg0 + 4), arg1) == 0;
 }
 #pragma dont_inline reset
+#pragma cplusplus reset
+
 void fn_800DF2D8(void *arg0) {
     f32 fn_80059500(f32, f32, f32, f32, f32);
     f32 temp_f5;
