@@ -1602,6 +1602,11 @@ u8 fn_800BCAFC(void) {
     return (*(u8*)((u8*)&lbl_80330708[0x10/2]));
 }
 
+extern u16 lbl_80330708[700];
+u16 fn_800BCB24(s32 arg0) {
+    return lbl_80330708[arg0];
+}
+
 extern u16 lbl_80330708[];
 s32 fn_800BCB70(void) {
     return *(s32*)(((char*)&lbl_80330708) + 0x18);
@@ -1845,3 +1850,10 @@ void fn_800C3864(s32 arg0, s32 arg1) {
 extern u8 lbl_8032FF08[];
 extern void fn_80148888(u32*, s16);
 extern void fn_80146B00(void);
+#include "global.h"
+
+extern u16 lbl_80317338[4976];
+
+u16 fn_800AF704(s32 arg0) {
+    return lbl_80317338[0x13C * arg0 + 0xF8 / 2];
+}
