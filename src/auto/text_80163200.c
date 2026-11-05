@@ -25,6 +25,14 @@ void fn_80165B1C(void) {
     fn_800472D4();
 }
 
+void fn_80168F54(s32 arg0) {
+    M2C_UNK fn_8000C188(s32);
+    s32 fn_80161FB8();
+    if (fn_80161FB8() != 0) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_8016B5E8(void) {
     M2C_UNK fn_8004327C();
     fn_80040844();
