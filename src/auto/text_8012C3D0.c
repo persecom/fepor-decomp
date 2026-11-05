@@ -347,6 +347,78 @@ void *fn_801314DC(s32 arg1) {
     }
 }
 
+void fn_80131524(s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5)
+{
+  s32 *new_var;
+  s32 *new_var2;
+  switch (arg1)
+  {
+    case 0:
+      *arg2 = 0;
+      *arg3 = 0;
+      *arg4 = 0x30;
+      *arg5 = 0x14;
+      return;
+
+    new_var2 = arg2;
+    case 1:
+      new_var = new_var2;
+      *new_var = 0;
+      arg2 += 0;
+      *arg3 = 0x1CC;
+      *arg4 = (float) 0x30;
+      *arg5 = 0x1E0;
+      return;
+
+    case 2:
+      *arg2 = 0;
+      *arg3 = 0x1E0;
+      *arg4 = 0x30;
+      *arg5 = 0x1F4;
+      return;
+
+  }
+
+}
+
+s32 fn_80131714(s32 arg0, s32 arg1)
+{
+    s32 r3;
+    s32 r4;
+    
+    if (arg1 >= 6) {
+        return 0;
+    }
+    
+    switch (arg1) {
+    case 0:
+        r4 = *(u32*)(arg0 + 0x0);
+        r3 = *(u16*)(r4 + 0x188);
+        return -r3;
+    case 1:
+        return *(u8*)(arg0 + 0x1F);
+    case 2:
+        return *(u8*)(arg0 + 0x20);
+    case 3:
+        {
+            s32 var = *(u8*)(arg0 + 0x22);
+            r3 = *(u8*)(arg0 + 0x21) + (var * 100);
+            return r3;
+        }
+    case 4:
+        r3 = fn_8003A398(arg0);
+        return r3;
+    case 5:
+        r3 = fn_8003A5B4(arg0);
+        return r3;
+    case 6:
+        r3 = fn_8003A1E0(arg0);
+        return r3;
+    default:
+        return 0;
+    }
+}
+
 u16 fn_80131AA8(void *arg1, s32 arg2) {
     void *temp_r3;
     u16 temp_r0;
@@ -370,6 +442,25 @@ u16 fn_80131AA8(void *arg1, s32 arg2) {
         return (u16) M2C_FIELD(arg1, u8 *, 0x1E);
     default:
         return 0U;
+    }
+}
+
+void *fn_80132414(s32 arg1) {
+    extern u8 lbl_80275AC0[];
+    s32 temp = arg1;
+    switch (temp) {                                 /* irregular */
+    case 1:
+        return &lbl_80275AC0[0x4C4];
+    case 2:
+        return &lbl_80275AC0[0x4D9];
+    case 3:
+        return &lbl_80275AC0[0x4EB];
+    case 4:
+        return &lbl_80275AC0[0x4FE];
+    case 5:
+        return &lbl_80275AC0[0x510];
+    default:
+        return &lbl_80275AC0[0x247];
     }
 }
 
@@ -425,8 +516,44 @@ void *fn_80132688(s32 arg1) {
     }
 }
 
+void fn_801326D0(s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5)
+{
+  s32 *new_var;
+  switch (arg1)
+  {
+    case 0:
+      new_var = arg2;
+      *new_var = 0;
+      *arg3 = 0;
+      *arg4 = 0x30;
+      *arg5 = 0x14;
+      return;
+
+    case 1:
+      *new_var = 0;
+      *arg3 = 0x14;
+      *arg4 = 0x30;
+      *arg5 = 0x28;
+      return;
+
+    case 2:
+      *new_var = 0;
+      *arg3 = 0x2BC;
+      if (1)
+    {
+    }
+      *arg4 = 0x30;
+      *arg5 = 0x2D0;
+      return;
+
+  }
+
+}
+
 extern f32 lbl_8036A500;
 extern f32 lbl_8036A50C;
 extern f32 lbl_8036A510;
 extern f32 lbl_8036A4F0;
+extern u8 lbl_80275AC0[];
+extern u32 jumptable_8029137C[];
 extern u8 lbl_80275AC0[];
