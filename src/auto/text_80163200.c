@@ -219,6 +219,16 @@ void fn_8016A57C(void *arg0) {
     }
 }
 
+void fn_8016A5AC(void *arg0) {
+    s32 fn_801090C0(void *);
+    void *p;
+
+    p = M2C_FIELD(arg0, void **, 0x40);
+    if (p != NULL) {
+        fn_8000A430(fn_801090C0(p));
+    }
+}
+
 void fn_8016A5DC(void *arg0, void *arg1, f32 arg2) {
     M2C_UNK fn_80109020(void *);
     s32 fn_80109180(void *, void *);
