@@ -295,17 +295,15 @@ s32 fn_80025F0C(s8 arg0, s8 arg1, s32 arg2) {
     void *fn_8000CAA0(void *, s32);
     extern u8 lbl_802848DC[];
     extern u8 lbl_802B14E4[];
-    u8 *p;
     void *obj;
     void *unit;
     u8 id;
 
-    p = (u8 *)&lbl_802CA518 + 0xD + arg0 + arg1 * 64;
-    if (*p == 0) {
+    if (lbl_802CA518.unitMap[arg0 + arg1 * 64] == 0) {
         return 0;
     }
     obj = fn_8000CAA0(lbl_802848DC, arg2);
-    id = *p;
+    id = lbl_802CA518.unitMap[arg0 + arg1 * 64];
     if (id != 0) {
         unit = lbl_802B14E4 + (id - 1) * 0x280;
     } else {
