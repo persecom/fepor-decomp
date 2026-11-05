@@ -240,6 +240,22 @@ void fn_8010FBD4(void) {
 
 }
 
+void fn_8010FD70(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
+    char *temp_r9;
+
+    temp_r9 = (char*)arg0 + (*(s32*)((char*)arg0 + 0x200) << 3);
+    *(u8*)(temp_r9 + 0x0) = arg1;
+    *(u8*)(temp_r9 + 0x1) = arg2;
+    *(u8*)(temp_r9 + 0x2) = 0xA;
+    *(u8*)(temp_r9 + 0x3) = arg3;
+    *(u8*)(temp_r9 + 0xA) = 0x0;
+    *(s32*)((char*)arg0 + 0x200) = *(s32*)((char*)arg0 + 0x200) + 1;
+    *(u8*)(temp_r9 + 0x4) = 0x0;
+    *(u8*)(temp_r9 + 0x5) = 0x0;
+    *(u8*)(temp_r9 + 0x6) = 0x0;
+    *(u8*)(temp_r9 + 0x7) = arg4;
+}
+
 void fn_8010FEEC(void *arg0) {
     *(u8*)((char*)arg0 + 4) = 0;
     *(u8*)((char*)arg0 + 5) = 0;
