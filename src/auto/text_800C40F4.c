@@ -20,6 +20,13 @@ static inline u8 GetItemKind(void *item) {
 
 void *fn_80019E04(char *);
 
+/* string object (fn_800C9B6C copies one) */
+typedef struct String {
+    u32 size;
+    u32 cap;
+    char *data;
+} String;
+
 /* std::equal on chars */
 static inline BOOL CharsEqual(const char *first1, const char *last1, const char *first2) {
     for (; first1 < last1; first1++, first2++) {
