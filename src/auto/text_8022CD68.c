@@ -15,6 +15,24 @@ extern s32 D_80368AD0;
 extern s32 lbl_80368B0C;
 u32 fn_8026367C(void);
 
+typedef struct {
+    char gpr;
+    char fpr;
+    char reserved[2];
+    char *input_arg_area;
+    char *reg_save_area;
+} __va_list[1];
+typedef __va_list va_list;
+
+typedef struct {
+    char *buffer;
+    s32 length;
+    s32 position;
+} __OutStr;
+
+s32 __pformatter(s32 (*)(void *, const char *, u32), void *, const char *, va_list);
+s32 fn_80232220(void *, const char *, u32);
+
 // The structure being used in functions in this file - assumed based on offset 0xF4
 typedef struct {
     u8 unkF4;  // This is likely the member accessed in function with 0xF4 offset 
