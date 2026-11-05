@@ -52,6 +52,12 @@ void fn_800734EC(void) {
     fn_8000E0E4(lbl_8026BE40 + 0x20C);
 }
 
+void fn_80073518(void) {
+    M2C_UNK fn_8000E0E4(void *);
+    extern u8 lbl_8026BE40[];
+    fn_8000E0E4(lbl_8026BE40 + 0x215);
+}
+
 s32 fn_80073544(void) {
     extern u16 lbl_802EF4C8;
     lbl_802EF4C8 = 0x35;
