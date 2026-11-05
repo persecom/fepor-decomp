@@ -354,6 +354,11 @@ void *fn_8016A6A4(void *arg0) {
     return arg0;
 }
 
+void fn_8016A7F8(void) {
+    extern u16 lbl_80277BC0[400];
+    fn_8000E0E4(&lbl_80277BC0[0x5AC]);
+}
+
 void *fn_8016A824(void) {
     extern u16 lbl_80277BC0;
     return (void *)((char *)&lbl_80277BC0 + 0x178);
@@ -703,6 +708,18 @@ void fn_8017A3E0(void *arg0, s32 arg1, u8 arg2) {
 void fn_8017A430(void *arg0, s32 arg1, s32 arg2) {
     memcpy(M2C_FIELD(arg0, s32 *, 4), arg2, arg1);
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + arg1);
+}
+
+void fn_8017A5C4(void *arg0, u8 arg1) {
+    u8 *temp_r5;
+    u8 *temp_r5_2;
+
+    temp_r5 = M2C_FIELD(arg0, u8 **, 4);
+    M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r5 + 1);
+    *temp_r5 = (u8) (arg1 >> 8U);
+    temp_r5_2 = M2C_FIELD(arg0, u8 **, 4);
+    M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r5_2 + 1);
+    *temp_r5_2 = arg1;
 }
 
 void fn_8017A5EC(void *arg0, s8 arg1) {
