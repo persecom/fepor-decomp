@@ -203,6 +203,13 @@ void fn_800A5BB4(s32 arg0) {
     }
 }
 
+extern u16 lbl_802B9E80;
+s32 fn_800A5C88(void) {
+    extern u16 lbl_8028C678[];
+    s32 v = fn_8000C0C0(lbl_8028C678);
+    return v != 0;
+}
+
 void fn_800A5CBC(void) {
     extern u16 lbl_8028C678[];
     u32 temp_r3 = fn_8000C0C0(&lbl_8028C678[0]);
@@ -770,6 +777,7 @@ void fn_800A90E4(s32 arg0) {
 extern void *D_800E53FC;
 void fn_800A9174(void) {
     D_800E53FC = 0;
+    return;
 }
 
 void fn_800A9274(s32 arg0) {
