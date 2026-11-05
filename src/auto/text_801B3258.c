@@ -555,7 +555,7 @@ void fn_801C7644(s32 arg0) {
 
 void fn_801C76E8(void) { extern u8 lbl_802981D0[]; void *fn_8000C0C0(void *); void fn_80067708(s32,s32,void (*)(void),s32); void fn_801C7598(void),fn_801C7604(void),fn_801C7644(void); void *x=fn_8000C0C0(lbl_802981D0); s32 *p=x?*(s32 **)((u8*)x+0x30):0; if(p){fn_80067708(3,0,fn_801C7598,0);fn_80067708(1,4,fn_801C7644,*p);fn_80067708(2,0,fn_801C7604,0);} }
 
-extern u8 lbl_802981D0[16];
+extern u8 lbl_802981D0[];
 void fn_801C777C(void){extern u8 lbl_802981D0[];void fn_8000BF00(void*);fn_8000BF00(lbl_802981D0);}
 
 void fn_801C77A4(void) {
