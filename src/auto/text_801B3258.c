@@ -344,6 +344,17 @@ s32 fn_801C9A88(void) {
     return 0;
 }
 
+s32 fn_801C9D58(void) {
+    s32 fn_8011C9E4(s32);
+    void fn_801C9EE0(void *, s32);
+    extern void *lbl_803682B8;
+
+    s32 temp_r3;
+    temp_r3 = fn_8011C9E4(*(s32 *)((char *)lbl_803682B8 + 0x430));
+    fn_801C9EE0(lbl_803682B8, temp_r3);
+    return 0;
+}
+
 void fn_801CA1DC(void *arg0, s32 arg1) {
     M2C_UNK fn_800C9A60(M2C_UNK *, M2C_UNK);
     M2C_UNK fn_8011CAAC(s32, M2C_UNK *, s32);
