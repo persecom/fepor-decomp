@@ -1236,6 +1236,11 @@ s32 fn_800EE490(void) {
     return temp_r31;
 }
 
+extern u8 lbl_8032AC58[16];
+void fn_800F1BFC(void) {
+    fn_800F1C24(&lbl_8032AC58);
+}
+
 s32 fn_800F7E78(void) {
     M2C_UNK fn_800F75F8();
     fn_800F75F8();
