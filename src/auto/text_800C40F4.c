@@ -785,6 +785,11 @@ String fn_800DAA60(s32 arg1) {
     return fn_800DAA94(lbl_803678B8, arg1);
 }
 
+String fn_800DAAF0(s32 arg1) {
+    String fn_800DAB24(s32, s32);
+    return fn_800DAB24(lbl_803678B8, arg1);
+}
+
 void fn_800DAB24(void *arg1, s32 arg2) {
     fn_800C9B6C(M2C_FIELD(arg1, s32 *, 0x3C) + (arg2 * 0xC));
 }
@@ -986,6 +991,24 @@ void fn_800DC010(void *arg0, s32 arg1) {
 
 s32 fn_800DC018(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x48);
+}
+
+void fn_800DC020(void *arg0) {
+    if (M2C_FIELD(arg0, s32 *, 0x74) == 1) {
+        M2C_FIELD(arg0, f32 *, 0x6C) += M2C_FIELD(arg0, f32 *, 0x70);
+        if (M2C_FIELD(arg0, f32 *, 0x6C) >= 1.0f) {
+            M2C_FIELD(arg0, f32 *, 0x6C) = 1.0f;
+            M2C_FIELD(arg0, s32 *, 0x74) = 0;
+        }
+        if (M2C_FIELD(arg0, f32 *, 0x6C) <= 0.0f) {
+            M2C_FIELD(arg0, f32 *, 0x6C) = 0.0f;
+            M2C_FIELD(arg0, s32 *, 0x74) = 0;
+        }
+    }
+    if (M2C_FIELD(arg0, s32 *, 0x74) > 1) {
+        M2C_FIELD(arg0, s32 *, 0x74)--;
+    }
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x40), void (**)(void *), 0x20)(arg0);
 }
 
 void fn_800DC2E4(void *arg0) {
