@@ -982,4 +982,4 @@ s32 fn_800723DC(void) {
 void fn_800723E4(void *arg0) {
     fn_8000E0E4(M2C_FIELD(arg0, s32 *, 4));
 }
-
+extern u16 lbl_803672F8;
