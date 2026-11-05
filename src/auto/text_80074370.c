@@ -1,6 +1,7 @@
 /* Functions from 0x80074370 to 0x8007C534, found by decomp-toolkit. */
 #include "common.h"
 #include "structs.h"
+extern u8 D_802EF4C8[24];
 
 void fn_80074370(void *arg0) {
     extern s32 lbl_80367468;
@@ -436,16 +437,33 @@ void *fn_80077FF8(void) {
     return (void*)((uintptr_t)&lbl_8026C0B8 + 0x498);
 }
 
+s32 fn_800780E8(void) {
+    extern u16 lbl_802EF4C8;
+    *(u8 *)((u8 *)&lbl_802EF4C8 + 8) = 0x11;
+    return 5;
+}
+
 s32 fn_80078420(void) {
     M2C_UNK fn_8004A1F0();
     fn_8004A1F0();
     return 0;
 }
 
+void fn_8007849C(void) {
+    extern u16 lbl_802EF4C8;
+    *((u8*)&lbl_802EF4C8 + 8) = 0x15;
+}
+
 s32 fn_80078618(void) {
     M2C_UNK fn_8004A1F0();
     fn_8004A1F0();
     return 0;
+}
+
+s32 fn_80078694(void) {
+    extern u16 lbl_802EF4C8;
+    ((u8*)&lbl_802EF4C8)[8] = 0x27;
+    return 5;
 }
 
 s32 fn_800786AC(void) {
@@ -481,6 +499,12 @@ loop_3:
     }
 block_9:
     return 3;
+}
+
+s32 fn_800787F8(void) {
+    extern M2C_UNK lbl_802EF4C8;
+    M2C_FIELD(&lbl_802EF4C8, s8 *, 8) = 0xF;
+    return 5;
 }
 
 s32 fn_80078E24(void *arg0) {
