@@ -1100,7 +1100,7 @@ void fn_801D37CC(void *arg0) {
 void fn_801D3810(s32 arg0) {
     M2C_UNK fn_800C0BAC(s32);
     M2C_UNK fn_8013FE0C();
-    extern u16 lbl_80367240[4];
+    extern u16 lbl_80367240[];
     s32 temp_r4;
 
     fn_8013FE0C();
