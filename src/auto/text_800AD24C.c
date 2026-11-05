@@ -1827,6 +1827,21 @@ s32 fn_800BD08C(u8 arg0) {
     return M2C_FIELD(unit, s8 *, 0x19F);
 }
 
+extern u16 lbl_802B14E4[];
+s32 fn_800BD0CC(u8 arg0) {
+    void *var_r3;
+
+    if (arg0 != 0) {
+        var_r3 = &lbl_802B14E4[(arg0 - 1) * 0x140];
+    } else {
+        var_r3 = NULL;
+    }
+    if (var_r3 == NULL) {
+        return 0;
+    }
+    return *(s8 *)((u8 *)var_r3 + 0x19E);
+}
+
 u8 fn_800BD5AC(void) {
     void *fn_80016BDC();
     void *temp_r3;
