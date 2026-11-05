@@ -431,6 +431,10 @@ void fn_8016F5DC(void *arg0) {
     fn_8013FF00(arg0, fn_8013FF94(arg0, -0x1000, 0));
 }
 
+void fn_8016FE5C(void) {
+    return;
+}
+
 void fn_80170034(void *arg0) {
     M2C_UNK fn_8000A430(s32);
     fn_8000A430(M2C_FIELD(arg0, s32 *, 0x5C));
