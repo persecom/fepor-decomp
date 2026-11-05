@@ -687,12 +687,47 @@ s32 fn_8013C3AC(void) {
     return 0;
 }
 
-void fn_8013CA2C(void *arg0) {
-    M2C_UNK fn_8015B954(M2C_UNK, M2C_UNK, M2C_UNK);
-    M2C_FIELD(M2C_FIELD(arg0, void **, 4), M2C_UNK (**)(), 0x80)();
+#pragma cplusplus on
+extern "C" void fn_8015B954(s32, s32, s32);
+extern "C" void fn_8013CA2C(void *arg0) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual void v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual void v25() = 0;
+        virtual void v26() = 0;
+        virtual void v27() = 0;
+        virtual void v28() = 0;
+        virtual void v29() = 0;
+        virtual void v30() = 0;
+    };
+    ((Obj *)arg0)->v30();
     fn_8015B954(0, 0, 0x10);
 }
-
+#pragma cplusplus reset
 void fn_8013CD7C(void) {
     extern s8 lbl_802EF4C8;
     *(s8*)((char*)&lbl_802EF4C8 + 8) = 0x80;
@@ -712,8 +747,8 @@ s32 fn_8013CDCC(void) {
 }
 
 s32 fn_8013CE64(void) {
-    extern M2C_UNK lbl_802EF4C8;
-    M2C_FIELD(&lbl_802EF4C8, s8 *, 8) = 0x81;
+    extern u16 lbl_802EF4C8;
+    *(u8*)((u32)&lbl_802EF4C8 + 8) = 0x81;
     return 5;
 }
 
