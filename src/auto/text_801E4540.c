@@ -35,3 +35,10 @@ void fn_801E9958(void) {
     M2C_UNK fn_801E9978();
     fn_801E9978();
 }
+
+void fn_801E9D0C(void) {
+    extern u16 lbl_8027EB78[40];
+    fn_80013A90(&lbl_8027EB78[0x244 / 2]);
+    fn_800138F4();
+}
+
