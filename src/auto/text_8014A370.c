@@ -1,5 +1,11 @@
 /* Functions from 0x8014A370 to 0x8014E350, found by decomp-toolkit. */
 #include "common.h"
+extern u8 lbl_80367B08;
+extern u8 lbl_80367B09;
+extern u8 lbl_80367B0A;
+extern u8 lbl_80367B0B;
+extern u8 lbl_80367B0C;
+extern u8 lbl_80367B0D;
 
 s32 fn_8014A370(void) {
     return 0x10;
@@ -54,8 +60,33 @@ s32 fn_8014A920(void) {
     return 0x130;
 }
 
+s32 fn_8014A928(void *arg2) {
+    extern u8 lbl_80367B08;
+    extern u8 lbl_80367B09;
+    extern u8 lbl_80367B0A;
+    extern u8 lbl_80367B0B;
+    extern u8 lbl_80367B0C;
+    extern u8 lbl_80367B0D;
+    if ((s8) lbl_80367B08 == 0) {
+        lbl_80367B09 = lbl_80367B0D;
+        lbl_80367B0B = *(u8 *) (((u8 *) arg2) + 0x3A);
+    } else {
+        lbl_80367B0A = lbl_80367B0D;
+        lbl_80367B0C = *(u8 *) (((u8 *) arg2) + 0x3A);
+    }
+    return 9;
+}
+
 s32 fn_8014A960(void) {
     return 0;
+}
+
+extern s32 lbl_80367B00;
+extern u8 lbl_80367B0D;
+s32 fn_8014A968(void *arg1) {
+    char temp = *(char*)((char*)arg1 + 0x3A);
+    temp = (temp * 0x18) + *(s32*)((char*)arg1 + 0x20);
+    return ((s32*)lbl_80367B00)[temp];
 }
 
 s32 fn_8014AD88(void) {
@@ -276,8 +307,25 @@ void fn_8014C798(void) {
     fn_80042558();
 }
 
+void fn_8014CA20(s32 arg0, s32 arg1) {
+    s32 r0 = arg1 + 2;
+    s32 r3 = r0 * 0xC;
+    r3 += 0x20;
+    r3 += arg0;
+    fn_8000E0E4(r3, arg0);
+}
+
 s32 fn_8014CA54(s32 arg0, s32 arg1) {
     return (arg1 * 0xC) + arg0 + 0x20;
+}
+
+void fn_8014CA68(s32 arg0, s32 arg1) {
+    s32 r3;
+    s32 temp_r4;
+
+    temp_r4 = arg1 * 0xC;
+    r3 = arg0 + (temp_r4 + 0x20);
+    fn_8000E0E4(r3, temp_r4);
 }
 
 void fn_8014D244(s32 arg0, u8 arg1, s8 arg2) {
