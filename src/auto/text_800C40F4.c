@@ -780,8 +780,9 @@ s32 fn_800DA5FC(void) {
 }
 
 extern s32 lbl_803678B8;
-void fn_800DAA60(s32 arg0, s32 arg1) {
-    fn_800DAA94(lbl_803678B8, arg1);
+String fn_800DAA60(s32 arg1) {
+    String fn_800DAA94(s32, s32);
+    return fn_800DAA94(lbl_803678B8, arg1);
 }
 
 void fn_800DAB24(void *arg1, s32 arg2) {
