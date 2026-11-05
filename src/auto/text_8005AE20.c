@@ -733,6 +733,10 @@ void fn_8006C748(void *arg0, s32 arg1) {
     }
 }
 
+void fn_8006CA8C(void) {
+    fn_8006C2A4(0x1);
+}
+
 void fn_8006CC6C(s32 arg0) {
     M2C_UNK fn_8003F670(s32);
     M2C_UNK fn_8003FCF0();
@@ -1114,3 +1118,30 @@ void fn_800723E4(void *arg0) {
 extern u16 lbl_803672F8;
 extern s32 *jumptable_80285D18;
 extern u8 lbl_80366DE9;
+extern struct Unit {
+    /* Some fields are guessed based on usage and context of similar structs */
+    u16 unk0;
+    u16 unk2;
+    u16 unk4;
+    u16 unk6;
+    u16 unk8;
+    u16 unkA;
+    u16 unkC;
+    u16 unkE;
+    u16 unk10;
+    u16 unk12;
+    u16 unk14;
+    u16 unk16;
+    u16 unk18;
+    u16 unk1A;
+    u16 unk1C;
+    u16 unk1E;
+    u16 unk20;
+    u16 unk22;
+    u16 unk24;
+    u16 unk26;
+    u16 unk28;
+    u16 unk2A;
+    u16 unk2C;
+    u16 unk2E;
+} Unit; 
