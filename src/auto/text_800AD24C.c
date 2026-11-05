@@ -1693,6 +1693,12 @@ s32 fn_800BCB70(void) {
     return *(s32*)(((char*)&lbl_80330708) + 0x18);
 }
 
+s32 fn_800BCB80(s32 arg0) {
+    extern u16 lbl_80330708[700];
+    fn_8014D268(lbl_80330708, arg0);
+    return arg0;
+}
+
 void fn_800BCC14(s8 arg0) {
     *(u8*)((u8*)lbl_80330708 + 0x11) = arg0;
 }
