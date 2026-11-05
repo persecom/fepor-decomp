@@ -463,6 +463,7 @@ s32 fn_800B7790(s32 arg0) {
     extern u8 lbl_8028D22C[];
     extern s32 lbl_80367110;
     extern f32 lbl_80369CF4;
+    void *obj;
     s32 count;
 
     fn_80013864();
@@ -471,7 +472,8 @@ s32 fn_800B7790(s32 arg0) {
     }
     count = (f32) arg0 / lbl_80369CF4;
     if (count > 1) {
-        M2C_FIELD(fn_8000CAA0(lbl_8028D22C, fn_800C0658()), s32 *, 0x60) = count - 1;
+        obj = (void *) fn_8000CAA0(lbl_8028D22C, fn_800C0658());
+        M2C_FIELD(obj, s32 *, 0x60) = count - 1;
     }
     return 1;
 }
