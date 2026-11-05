@@ -5,6 +5,17 @@ extern void* fn_800C08AC(void *, s32, void *);
 extern void* lbl_80367240;
 extern u16 lbl_80280B58[18];
 
+void fn_801F196C(M2C_UNK **arg0) {
+    extern u16 lbl_8028459C[];
+    extern u16 lbl_80286610[];
+    extern u16 lbl_802862E4[];
+    extern u16 lbl_8029A874[];
+    *arg0 = (M2C_UNK *)&lbl_8028459C;
+    *arg0 = (M2C_UNK *)&lbl_80286610;
+    *arg0 = (M2C_UNK *)&lbl_802862E4;
+    *arg0 = (M2C_UNK *)&lbl_8029A874;
+}
+
 void fn_801F1DC4(void *arg0) {
     s32 *temp_r3;
 
@@ -159,6 +170,14 @@ void fn_801F894C(s32 arg0) {
     extern u16 lbl_80281028[];
 
     fn_800C08AC((u8 *)lbl_80281028 + 0x24D, arg0, lbl_80281028);
+}
+
+void fn_801F897C(void) {
+    extern u16 lbl_80330708[];
+    u8* ptr = (u8 *)lbl_80330708;
+    
+    fn_8014D2B0(ptr + 0x24D, 0x1F);
+    fn_8002D548();
 }
 
 void fn_801F9464(void) {
