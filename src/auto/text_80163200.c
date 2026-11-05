@@ -608,6 +608,10 @@ void *fn_801784C8(void) {
     return (char *)&lbl_80278080 + 0x5A7;
 }
 
+void *fn_80178654(void) {
+    return (char *)&lbl_80278080 + 0x5CB;
+}
+
 s32 fn_80178664(void) {
     return 0;
 }
