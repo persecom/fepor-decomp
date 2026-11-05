@@ -273,6 +273,10 @@ void fn_80127594(void *arg0) {
     fn_80109C1C(M2C_FIELD(arg0, s32 *, 0x30), 5);
 }
 
+void fn_80127C48(void) {
+    fn_8000C0C0(&lbl_80290480);
+}
+
 void fn_80127C70(void) {
 
 }
