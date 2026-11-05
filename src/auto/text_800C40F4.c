@@ -2349,6 +2349,15 @@ s32 fn_800ED8C0(void) {
     }
     return 0;
 }
+
+s32 fn_800ED92C(void) {
+    void *p = M2C_FIELD(lbl_803678C8, void **, 0x440);
+    if (p != NULL) {
+        fn_800E56CC(p);
+    }
+    return 0;
+}
+
 #pragma dont_inline reset
 void fn_800EDF18(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0xB4) = (s32) ((s32) (M2C_FIELD(arg0, s32 *, 0xB0) * (arg1 - M2C_FIELD(arg0, s32 *, 0x48))) / (s32) M2C_FIELD(arg0, s32 *, 0x60));
