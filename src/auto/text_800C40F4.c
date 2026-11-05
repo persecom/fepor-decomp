@@ -2509,11 +2509,12 @@ void fn_800EE090(void) {
 s32 fn_800EE490(void) {
     s32 fn_8000CAF0(void *, s32);
     void fn_800EE124(void);
-    extern s32 lbl_8028E558;
-    
-    s32 temp_r31 = fn_8000CAF0(&lbl_8028E558, 4);
+    extern u8 lbl_8028E558[];
+    s32 result;
+
+    result = fn_8000CAF0(lbl_8028E558, 4);
     fn_800EE124();
-    return temp_r31;
+    return result;
 }
 
 void fn_800F0774(void) {
