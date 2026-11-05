@@ -14,6 +14,7 @@ typedef unsigned long long u64;
 typedef float f32;
 typedef double f64;
 typedef int BOOL;
+typedef unsigned long uintptr_t;
 #define TRUE 1
 #define FALSE 0
 #ifndef NULL
