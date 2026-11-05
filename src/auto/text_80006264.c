@@ -287,4 +287,5 @@ void fn_80011910(void) {
     fn_802239D0(0, 0);
     fn_80223F2C(0, 0, 1, 4);
 }
-
+#include "common.h"
+extern s32 lbl_802AEE20[5]; // 5 s32 values, from .bss
