@@ -18,6 +18,12 @@ static inline u8 GetItemKind(void *item) {
     return 0xC;
 }
 
+void *fn_80019E04(char *);
+
+static inline BOOL IsItemNamed(void *item, char *name) {
+    return fn_80019E04(name) == item;
+}
+
 static inline u8 GetItemUnk1D(void *item) {
     if (item != NULL) {
         return M2C_FIELD(item, u8 *, 0x1D);
@@ -2755,11 +2761,11 @@ void fn_801007A0(void *arg0) {
         }
         if (fn_8009326C(arg0, *item)) {
             M2C_FIELD(arg0, u32 *, 0x254) |= 0x200;
-            if (*item == fn_80019E04(lbl_80273304 + 0xF9)) {
+            if (fn_80019E04(lbl_80273304 + 0xF9) == *item) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x400;
-            } else if (*item == fn_80019E04(lbl_80273304 + 0x105)) {
+            } else if (fn_80019E04(lbl_80273304 + 0x105) == *item) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x800;
-            } else if (*item == fn_80019E04(lbl_80273304 + 0x10F)) {
+            } else if (fn_80019E04(lbl_80273304 + 0x10F) == *item) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x1000;
             }
         }
