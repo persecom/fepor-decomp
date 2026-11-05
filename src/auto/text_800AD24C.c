@@ -1344,6 +1344,19 @@ s32 fn_800B97B8(u32 arg0, s32 arg1) {
     return 1;
 }
 
+void fn_800B995C(void *arg0) {
+    void **temp_r3;
+    s32 temp_r5;
+    s32 temp_r4;
+
+    temp_r3 = (void **)arg0;
+    temp_r5 = *(s32 *)((char *)temp_r3[0x15] + 8);
+    temp_r4 = 0x100;
+    if (!(temp_r5 & (temp_r4 << 0)) && !(temp_r5 & (temp_r4 << 1)) && !(temp_r5 & (temp_r4 << 2))) {
+        fn_8000C188();
+    }
+}
+
 s32 fn_800B9A9C(u32 arg0, u8 arg1) {
     u32 fn_801090C0(u32);
     M2C_UNK fn_80109C1C(u8);
@@ -2247,3 +2260,7 @@ extern u16 lbl_80317338[];
 extern u16 lbl_80330EAC;
 extern u16 lbl_80317338[4976];
 extern u16 lbl_80317338[];
+typedef struct {
+    u32 field_0x2F0;
+    u32 field_0x2F4;
+} SomeStruct;
