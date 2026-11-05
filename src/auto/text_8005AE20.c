@@ -235,9 +235,9 @@ s32 fn_8005BA10(char *name) {
     return (flags >> 15) & 1;
 }
 
-void fn_8005BC8C(void) {
+void fn_8005BC8C(s32 arg0) {
     M2C_UNK fn_8005C8D8();
-    fn_8005C8D8();
+    fn_8005C8D8(arg0);
 }
 
 void fn_8005BCAC(void) {
