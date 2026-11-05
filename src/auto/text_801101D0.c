@@ -1,6 +1,14 @@
 /* Functions from 0x801101D0 to 0x80120CC0, found by decomp-toolkit. */
 #include "common.h"
 
+// Global data for this function
+u8 lbl_8028FDB0[0x10] = { 0 };
+u8 lbl_80292230[0x28] = { 0 };
+u8 lbl_802921E0[0x28] = { 0 };
+
+extern f32 lbl_8036A1E8;
+extern f32 lbl_8036A1F8;
+
 extern u8 lbl_80367A48;
 
 u8 fn_80110220(void *arg0) {
@@ -111,6 +119,16 @@ void fn_80117F1C(void *arg0) {
     fn_8000C070(arg0, M2C_FIELD(arg0, u8 *, 0x48));
 }
 
+void fn_80117F54(s32 arg0) {
+    extern s32 *lbl_802EF4C8;
+    
+    void fn_8013FED0(void);
+    void fn_8007D064(s32, s32, s32);
+
+    fn_8013FED0();
+    fn_8007D064(*lbl_802EF4C8, arg0, 0);
+}
+
 void fn_801181D0(void) {
     M2C_UNK fn_80006198();
     M2C_UNK fn_80006220(M2C_UNK);
@@ -189,12 +207,50 @@ s32 fn_8011B578(void) {
 void fn_8011B580(void *arg0, void *arg1) {
     s8 temp_r31;
     void *temp_r3;
-    s32 (*func_ptr)(void) = (s32 (*)(void))M2C_FIELD(M2C_FIELD(arg0, void **, 4), s32 (**)(void *), 0x7C);
+    void **temp_r4 = (void **)M2C_FIELD(arg0, void **, 4);
+    s32 (*func_ptr)(void) = (s32 (*)(void))temp_r4[0x7C / 4];
     
     temp_r31 = (s8) M2C_FIELD(arg1, u8 *, 0x60);
     func_ptr();
     temp_r3 = M2C_FIELD(arg1, void **, 0x3C);
     fn_8008C1D8(0, 0, 0, (temp_r31 * M2C_FIELD(M2C_FIELD(temp_r3, void **, 4), s16 (**)(void *), 0x58)(temp_r3)) + 0x20, 2);
+}
+
+void fn_8011B5FC(void *arg0, void *arg1) {
+    M2C_UNK fn_80009C0C(f32);
+    M2C_UNK fn_8000A248();
+    M2C_UNK fn_8000A258();
+    s32 fn_800102BC(M2C_UNK, f32, f32);
+    M2C_UNK fn_80071D28();
+    M2C_UNK fn_8008AB7C(s32, s32, s32, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    extern f32 lbl_8036A1E8;
+    extern f32 lbl_8036A234;
+    extern f32 lbl_8036A238;
+    extern f32 lbl_8036A23C;
+    f32 temp_f2;
+    s16 temp_r31;
+    s32 temp_r29;
+    s32 temp_r30;
+
+    fn_80071D28();
+    M2C_FIELD(M2C_FIELD(arg0, void **, 4), M2C_UNK (**)(void *, void *), 0x7C)(arg0, arg1);
+    fn_8000A258();
+    fn_80009C0C(lbl_8036A234);
+    fn_8000A248();
+    temp_f2 = (f32) M2C_FIELD(M2C_FIELD(arg0, void **, 4), s16 (**)(void *), 0x50)(arg0);
+    temp_r29 = (s32) (lbl_8036A238 * temp_f2);
+    temp_r30 = fn_800102BC(-1, lbl_8036A1E8, temp_f2) >> 1;
+    temp_r31 = M2C_FIELD(arg1, s16 *, 0x3A);
+    fn_8008AB7C(M2C_FIELD(M2C_FIELD(arg0, void **, 4), s16 (**)(void *), 0x50)(arg0) >> 1, temp_r31 + temp_r30, temp_r29, 0x17, 0xA, 0x28, 1);
+    fn_8000A258();
+    fn_80009C0C(lbl_8036A23C);
+    fn_8000A248();
+}
+
+s16 fn_8011B710(void *arg0) {
+    s16 (*func)(void) = (s16 (*)(void)) M2C_FIELD(M2C_FIELD(arg0, void **, 4), void **, 0x50);
+    s16 temp_r3 = func();
+    return (0x260 - temp_r3) >> 1;
 }
 
 s32 fn_8011B74C(void) {
