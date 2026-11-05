@@ -339,4 +339,4 @@ void fn_800A92C4(s32 arg0) {
     fn_801E3118(&lbl_803682F0, arg0, 0);
 }
 #include "common.h"
-extern u16 lbl_8026E168;
+extern u16 lbl_8026E168[];
