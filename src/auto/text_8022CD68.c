@@ -23,7 +23,6 @@ typedef struct {
     char *reg_save_area;
 } __va_list;
 typedef __va_list va_list[1];
-void __va_start(va_list, ...);
 
 typedef struct {
     char *buffer;
