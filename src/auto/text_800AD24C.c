@@ -2239,6 +2239,17 @@ s32 fn_800BF694(void) {
     return 1;
 }
 
+extern s32 lbl_80367FCC;
+s32 fn_800C0190(s32 arg0) {
+    if (arg0 < 0) {
+        return 0;
+    }
+    if (arg0 >= 8) {
+        return 0;
+    }
+    return lbl_80367FCC + (arg0 * 4);
+}
+
 void fn_800C0624(void *arg0) {
     s32 fn_80013B60(M2C_UNK);
     M2C_FIELD(arg0, s32 *, 0x30) = fn_80013B60(0);
@@ -2413,3 +2424,7 @@ extern u16 lbl_80367110;
 #include "common.h"
 extern s32 lbl_80368230;
 extern u16 lbl_8028D4F8[38];
+#include "common.h"
+extern s32 lbl_80367198;
+extern void *lbl_80367180;
+extern void *lbl_803671A4;
