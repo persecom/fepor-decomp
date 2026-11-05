@@ -5,7 +5,7 @@
 extern s8 lbl_803678BC;
 extern s8 lbl_803678BD;
 extern s8 lbl_803678BF;
-extern s32 lbl_8028D788;
+extern s32 lbl_8028D788[];
 extern void (*lbl_802B14E4)(void **);
 
 s32 fn_8001DD54(void *, void *);
