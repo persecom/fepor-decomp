@@ -6,6 +6,14 @@ typedef struct Vec2s {
     s16 y;
 } Vec2s;
 
+#pragma cplusplus on
+struct Size2s {
+    s16 x;
+    s16 y;
+    Size2s(s16 ax, s16 ay) : x(ax), y(ay) {}
+};
+#pragma cplusplus reset
+
 s32 fn_8013286C(void) {
     return 2;
 }
@@ -1301,16 +1309,18 @@ s32 fn_80140B04(s32 arg0) {
     return arg0 + 4;
 }
 
-Vec2s fn_80142018(void *arg0) {
-    Vec2s v;
-    v.x = M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA);
-    v.y = M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC);
-    return v;
+void fn_80142018(Vec2s *out, void *arg0) {
+    s16 w = M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA);
+    s16 h = M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC);
+    out->x = w;
+    out->y = h;
 }
 
-void fn_8014203C(void *arg0, Vec2s size) {
-    M2C_FIELD(arg0, s16 *, 0xE) = M2C_FIELD(arg0, s16 *, 0xA) + size.x;
-    M2C_FIELD(arg0, s16 *, 0x10) = M2C_FIELD(arg0, s16 *, 0xC) + size.y;
+void fn_8014203C(void *arg0, Vec2s *size) {
+    s16 w = size->x;
+    s16 h = size->y;
+    M2C_FIELD(arg0, s16 *, 0xE) = M2C_FIELD(arg0, s16 *, 0xA) + w;
+    M2C_FIELD(arg0, s16 *, 0x10) = M2C_FIELD(arg0, s16 *, 0xC) + h;
 }
 
 void fn_801426B4(void *arg0) {
@@ -1367,6 +1377,18 @@ s32 fn_8014351C(void *arg0, s32 arg1) {
         return temp_r12(arg1, M2C_FIELD(arg0, s32 *, 0x124)) != 0;
     }
     return 1;
+}
+
+void fn_80143570(void *arg0) {
+    typedef struct { u8 unk0; } Unk1;
+    typedef struct { u8 pad[0x90]; u8 elems[11][0xC]; } Obj;
+    M2C_UNK fn_80144B60(void *, Unk1);
+    Unk1 e;
+    s32 i;
+
+    for (i = 0; i != 11; i++) {
+        fn_80144B60(((Obj *)arg0)->elems[i], e);
+    }
 }
 
 void fn_80144584(void *arg0, s16 arg1) {
