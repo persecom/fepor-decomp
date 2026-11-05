@@ -1964,6 +1964,7 @@ extern "C" s32 fn_800E7EA0(void *arg0) {
     fn_800E0140(list, -1);
     return 0;
 }
+#pragma dont_inline reset
 #pragma cplusplus reset
 
 void fn_800E7FB4(void* arg0, u32 arg1, void* arg2) {
