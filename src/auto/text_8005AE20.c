@@ -235,9 +235,9 @@ s32 fn_8005BA10(char *name) {
     return (flags >> 15) & 1;
 }
 
-void fn_8005BC8C(s32 arg0) {
+void fn_8005BC8C() {
     M2C_UNK fn_8005C8D8();
-    fn_8005C8D8(arg0);
+    fn_8005C8D8();
 }
 
 void fn_8005BCAC(void) {
@@ -491,6 +491,33 @@ u32 fn_8005E55C(void) {
     u64 fn_8022C7E0(u32, u32);
     OSGetTime();
     return (u32)fn_8022C7E0(0x0, (*(u32 *)0x800000F8 >> 2));
+}
+
+void *fn_8005E594(s8 arg0, u32 arg1, char *arg2) {
+    M2C_UNK fn_800056CC(char *, ...);
+    u32 fn_800C44F4(s8);
+    void *fn_800C4604(s8, u32, char *, u32);
+    M2C_UNK fn_800C4384(void);
+    unsigned long strlen(const char *);
+    extern char lbl_8026B330[];
+    void *var_r31;
+    s32 var_r0;
+
+    fn_800056CC(lbl_8026B330 + 0x230, arg1, arg2);
+    fn_8005BC8C(arg0);
+    if (fn_800C44F4(arg0) < arg1) {
+        var_r31 = NULL;
+    } else {
+        var_r0 = strlen(arg2) - 15;
+        if (var_r0 < 0) {
+            var_r0 = 0;
+        }
+        var_r31 = fn_800C4604(arg0, arg1, arg2 + var_r0, arg1);
+    }
+    if (var_r31 == NULL) {
+        fn_800C4384();
+    }
+    return var_r31;
 }
 
 void fn_8005EB5C(u8 *arg0, u8 *arg1) {
@@ -863,6 +890,39 @@ u32 fn_800604F4(void *arg0) {
     }
 
     return 0U;
+}
+
+u32 fn_80060520(void *arg0) {
+    s32 fn_80068548(void);
+    void *var_r30;
+    u32 var_r31;
+    void *var_r3;
+    void *var_r4;
+
+    var_r30 = arg0;
+    while (var_r30 != NULL) {
+        if (M2C_FIELD(var_r30, u32 *, 0x68) != 0U) {
+            var_r31 = M2C_FIELD(var_r30, u32 *, 0x68);
+            goto found;
+        }
+        var_r30 = M2C_FIELD(var_r30, void **, 4);
+    }
+    return 0U;
+found:
+    if (((u8 *)fn_80068548())[3] & 1) {
+        var_r3 = var_r30;
+        while (var_r3 != NULL) {
+            var_r4 = M2C_FIELD(var_r3, void **, 0x48);
+            if (var_r4 != NULL) {
+                goto found2;
+            }
+            var_r3 = M2C_FIELD(var_r3, void **, 4);
+        }
+        var_r4 = NULL;
+found2:
+        var_r31 += (((M2C_FIELD(M2C_FIELD(var_r4, void **, 0x48), s16 *, 0xA) * 12) + 31) & ~31) / 2 * 2;
+    }
+    return var_r31;
 }
 
 u32 fn_800605E0(void *arg0) {
