@@ -138,6 +138,7 @@ void fn_8014B288(s8 arg1) {
 }
 
 u8 fn_8014B2A4(void) {
+    // Returns byte at offset 0xC in the data pointed to by lbl_80367B14
     extern void *lbl_80367B14;
     return *(u8 *)((char *) lbl_80367B14 + 0xC);
 }
@@ -145,6 +146,11 @@ u8 fn_8014B2A4(void) {
 u16 fn_8014B2B0(void) {
     extern void *lbl_80367B14;
     return *(u16 *)lbl_80367B14;
+}
+
+s32 fn_8014B2CC(s32 arg0) {
+    extern u16 *lbl_80367B14;
+    return *(u16*)((u8*)lbl_80367B14 + arg0);
 }
 
 s32 fn_8014B2E4(void) {
