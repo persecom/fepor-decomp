@@ -690,6 +690,10 @@ void fn_8006D52C(s32 arg0) {
     M2C_ERROR(/* unknown instruction: mtspr GQR6, $r4 */);
 }
 
+void fn_8006D53C(s32 arg0) {
+    M2C_ERROR(/* unknown instruction: mtspr GQR7, $r4 */);
+}
+
 void fn_8006D8E8(s32 arg0) {
     M2C_UNK fn_8006EDA0(s32 *);
     s32 sp8;
@@ -744,7 +748,7 @@ void fn_8006F00C(s8 arg0) {
 }
 
 s8 fn_8006F014(void) {
-    extern u8 lbl_80366DE8;
+    extern s8 lbl_80366DE8;
     s8 temp = (s8) lbl_80366DE8;
     return temp;
 }
