@@ -295,6 +295,18 @@ void fn_80025FC8(void) {
     fn_801A4BE0(lbl_80330EAC);
 }
 
+void fn_80025FF0(void *arg0) {
+    M2C_UNK fn_8019B704(void *, M2C_UNK);
+    M2C_UNK fn_801A4958(M2C_UNK *);
+    M2C_UNK fn_801A4A88(M2C_UNK *, M2C_UNK);
+    M2C_UNK fn_801A75DC(M2C_UNK *, s32, M2C_UNK);
+    extern M2C_UNK lbl_80330EAC[];
+    fn_801A75DC(lbl_80330EAC, M2C_FIELD(arg0, s32 *, 0x30), -1);
+    fn_801A4958(lbl_80330EAC);
+    fn_801A4A88(lbl_80330EAC, -0xA);
+    fn_8019B704(arg0, 0);
+}
+
 void fn_8002666C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x60) = 0;
 }
