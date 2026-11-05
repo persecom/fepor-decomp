@@ -1863,3 +1863,4 @@ extern u16 lbl_80317338[4976];
 u16 fn_800AF704(s32 arg0) {
     return lbl_80317338[0x13C * arg0 + 0xF8 / 2];
 }
+extern u16 lbl_80317338[];
