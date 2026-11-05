@@ -251,6 +251,21 @@ void fn_80075BAC(void) {
     fn_8000E0E4(&lbl_8026C0B8[0x25b]);
 }
 
+void fn_80075DAC(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4(&lbl_8026C0B8[0x514]);
+}
+
+void fn_80075DD8(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4(&lbl_8026C0B8[0x52A]);
+}
+
+void fn_80075FB8(void) {
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4(&lbl_8026C0B8[0x2B0 / sizeof(u16)]);
+}
+
 s32 fn_80076380(void *arg0) {
     if (*(u8 *)((uintptr_t)arg0 + 0x39) == 2) {
         return 0x10;
