@@ -149,6 +149,21 @@ void fn_8005BA08(s8 arg0) {
     lbl_803672E8 = arg0;
 }
 
+s32 fn_8005BA10(char *name) {
+    u8 *e = FindEntryByName(name);
+    u16 flags;
+
+    if (e == NULL) {
+        flags = 0x8000;
+    } else {
+        flags = *(u16 *)(e + 0x30);
+    }
+    if (flags & 0x2000) {
+        return 1;
+    }
+    return (flags >> 15) & 1;
+}
+
 void fn_8005BC8C(void) {
     M2C_UNK fn_8005C8D8();
     fn_8005C8D8();
