@@ -13,6 +13,11 @@ s32 fn_8012C3E0(void) {
     return 0x16;
 }
 
+void fn_8012C3E8(void *arg0) {
+    void (**func_ptr)(void) = (void (**)(void))((void**)arg0)[1] + 0x1F;
+    func_ptr[0]();
+}
+
 M2C_UNK *fn_8012C414(void) {
     u8 fn_80109B0C(s32);
     M2C_UNK fn_80231D94(M2C_UNK *, void *, u8, M2C_UNK *);
@@ -73,6 +78,16 @@ M2C_UNK *fn_8012C4F0(void) {
     return r3_ptr;
 }
 
+void *fn_8012C53C(void) {
+    extern u16 lbl_802758F8[];
+    return &(lbl_802758F8[0x14D]);
+}
+
+void *fn_8012C618(void) {
+    extern u16 lbl_802758F8[];
+    return &lbl_802758F8[0x2ED];
+}
+
 void *fn_8012C6F0(void) {
     extern char lbl_802758F8[];
     return &lbl_802758F8[0x19B];
@@ -106,12 +121,25 @@ s32 fn_8012C700(void) {
     return 0;
 }
 
+s32 fn_8012C9E8(void *arg1) {
+    s32 *field = (s32*)((u8*)arg1 + 0x1A0);
+    *field ^= 0x80000000;
+    return 1;
+}
+
 s32 fn_8012D554(void) {
     return 0;
 }
 
 s32 fn_8012F26C(void) {
     return 0;
+}
+
+void fn_8012F5A8(s32 *arg0, s32 *arg1, s32 *arg2, s32 *arg3) {
+    *arg0 = 0;
+    *arg1 = 0x14;
+    *arg2 = 0x30;
+    *arg3 = 0x28;
 }
 
 void fn_801302C0(void) {
@@ -147,3 +175,4 @@ extern f32 lbl_8036A500;
 extern f32 lbl_8036A50C;
 extern f32 lbl_8036A510;
 extern f32 lbl_8036A4F0;
+extern u8 lbl_80275AC0[];
