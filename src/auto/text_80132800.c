@@ -90,8 +90,8 @@ void fn_80132C14(s32 arg0) {
 
 void fn_80132C5C(void *arg0) {
     M2C_UNK fn_8016E9DC(void *);
-    M2C_UNK fn_801CE070(void *, void *, void *);
-    M2C_UNK fn_80234450(void *, void *);
+    M2C_UNK fn_801CE070(void *, const char *, void *);
+    M2C_UNK fn_80234450(void *, const char *);
     extern u8 lbl_802762DC[];
     extern u8 lbl_8032FE80[];
 
@@ -100,8 +100,8 @@ void fn_80132C5C(void *arg0) {
         fn_8016E9DC(arg0);
         break;
     case 1:
-        fn_80234450(lbl_8032FE80, lbl_802762DC + 0x2C);
-        fn_801CE070(lbl_8032FE80, lbl_802762DC + 0x2C, arg0);
+        fn_80234450(lbl_8032FE80, (const char *)lbl_802762DC + 0x2C);
+        fn_801CE070(lbl_8032FE80, (const char *)lbl_802762DC + 0x2C, arg0);
         break;
     }
 }
