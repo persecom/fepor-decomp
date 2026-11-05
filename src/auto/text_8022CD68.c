@@ -1,6 +1,8 @@
 /* Functions from 0x8022CD68 to 0x80267A7C, found by decomp-toolkit. */
 #include "common.h"
 
+extern s32 lbl_803689A8;
+
 s32 fn_80230BBC(s32 arg0) {
     s32 temp_r4;
 
