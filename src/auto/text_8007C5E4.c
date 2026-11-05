@@ -646,8 +646,8 @@ void fn_8009A890(void *arg0) {
     void fn_8009A970(void *);
     extern u8 lbl_8026D404[];
 
-    M2C_FIELD(arg0, f32 *, 0x30) = lbl_803697E4;
-    M2C_FIELD(arg0, f32 *, 0x34) = lbl_803697E4;
+    M2C_FIELD(arg0, f32 *, 0x30) = 0.0f;
+    M2C_FIELD(arg0, f32 *, 0x34) = 0.0f;
     M2C_FIELD(arg0, u8 *, 0x3D) = 0;
     M2C_FIELD(arg0, u8 *, 0x3F) = 0xC0;
     M2C_FIELD(arg0, u8 *, 0x40) = 0xA;
