@@ -1709,7 +1709,7 @@ void fn_801DF5D8(void) {
     fn_8000CAA0(lbl_80299F4C);
 }
 
-extern u8 lbl_80299F1C[16];
+extern u8 lbl_80299F1C[];
 void fn_801E00EC(void) { void fn_8000CAA0(void *); extern u8 lbl_80299F1C[]; fn_8000CAA0(lbl_80299F1C); }
 
 void fn_801E0114(s32 arg0) {
