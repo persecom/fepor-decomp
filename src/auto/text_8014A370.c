@@ -327,4 +327,4 @@ void fn_8014DFE8(s32 arg0) {
     extern M2C_UNK lbl_80367B94;
     fn_80024398(&lbl_80367B94, arg0, 0);
 }
-extern u16* lbl_80367B14;
+extern u16 lbl_80367B14;
