@@ -1418,8 +1418,8 @@ s32 fn_800BCDF0(u8 arg0) {
     return 1;
 }
 
-s32 fn_800BCF44(u8 arg0) {
-    M2C_UNK fn_8003868C(void *);
+s32 fn_800BCF44(u8 arg0, s32 arg1) {
+    M2C_UNK fn_8003868C(void *, s32);
     extern u8 lbl_802B14E4[];
     void *unit;
 
@@ -1431,7 +1431,7 @@ s32 fn_800BCF44(u8 arg0) {
     if (unit == NULL) {
         return 0;
     }
-    fn_8003868C(unit);
+    fn_8003868C(unit, arg1);
     return 0;
 }
 
