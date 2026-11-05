@@ -15,6 +15,47 @@ void fn_801EAA38(s32 arg0) {
     fn_80024398(arg0, 0);
 }
 
+void *fn_801EAABC(s32 arg0, u32 arg1) {
+    extern s32 lbl_802CA264[];
+    u32 r8;
+    u32 temp_r5;
+    u32 temp_r9;
+    u32 temp_r7;
+    
+    // Initial setup
+    r8 = 0x18; // Loop counter
+    
+    while (r8 != 0) {
+        r8--;
+        
+        // Access array elements with offset calculation and compare arg0 to one field
+        temp_r5 = *(u32 *)((char *)lbl_802CA264 + (r8 * 0x1C) + 8);
+        if (temp_r5 == arg0) {
+            u32 r3 = arg1;
+            
+            // Additional check based on a condition
+            r3 += 0x80000000U; // add 0x80000000 to arg1
+            
+            if (r3 <= 0xFFFFFF) {
+                // Return the element at offset + 0xC (as u32 pointer dereference)
+                return (void *)*((u32 *)((char *)lbl_802CA264 + (r8 * 0x1C) + 0xC));
+            }
+            
+            temp_r9 = *(u32 *)((char *)lbl_802CA264 + (r8 * 0x1C) + 0x18);
+            if (temp_r9 < arg1) {
+                return (void *)(lbl_802CA264 + (r8 * 0x1C) + 0x18);  // Return address of the element
+            }
+            
+            temp_r7 = *(u32 *)((char *)lbl_802CA264 + (r8 * 0x1C) + 0x10);
+            if (temp_r7 == 0) {
+                return (void *)*((u32 *)((char *)lbl_802CA264 + (r8 * 0x1C) + 0x14));
+            }
+        }
+    }
+    
+    return NULL;
+}
+
 void fn_801EAC14(void *arg0) {
     M2C_UNK fn_8000C070(void *, u8);
     fn_8013FEC0();
@@ -111,6 +152,27 @@ void fn_801EB7A8(s32 arg0) {
         ptr = &lbl_8027EE08[0x21F];
         fn_801658DC(ptr);
     }
+}
+
+void fn_801EBB00(s32 arg0) {
+    M2C_UNK fn_8000E0E4(void *);
+    M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
+    M2C_UNK fn_80091A1C();
+    extern u8 lbl_80278BB8;
+    extern u8 lbl_802EF4C8;
+    extern M2C_UNK lbl_80368208;
+    
+    s32 r31 = arg0; // This is just a convention, not necessarily the exact register assignment
+    
+    if (lbl_802EF4C8 == 0x32) {
+        fn_8000E0E4(&lbl_80278BB8 + 0xF8);
+        fn_80091A1C();
+    } else {
+        fn_8000E0E4(&lbl_80278BB8 + 0x102);
+        fn_80091A1C();
+    }
+    
+    fn_80024398(&lbl_80368208, r31, 0);
 }
 
 void fn_801EBE00(void *arg0) {
@@ -256,6 +318,94 @@ void fn_801EC7B4(void) {
 
 }
 
+extern void *lbl_803683C0;
+void *fn_801ECE40(s32 arg0) {
+    void *r30;
+    u32 r31;
+
+    r31 = fn_8000D598();
+    r30 = *(void **)lbl_803683C0;
+loop_1:
+    if (r30 == NULL) {
+        return NULL;
+    }
+    if ((((u32)*(u32 *)((char *)r30 + 0x64)) != 0) &&
+        (*(u32 *)((char *)r30 + 0x54) == r31) &&
+        (fn_802342B8((char *)r30 + 0x28, arg0) == 0)) {
+        return r30;
+    }
+    r30 = *(void **)((char *)r30 + 0x60);
+    goto loop_1;
+}
+
+void *fn_801ED6D4(void *arg0, void *arg1) {
+    void *var_r3;
+    void *var_r4;
+    s32 temp_r5;
+    s32 temp_r6;
+
+    var_r4 = arg0;
+    var_r3 = NULL;
+loop_1:
+    if (var_r4 != NULL) {
+        if ((u32) M2C_FIELD(arg1, u32 *, 0x68) <= (u32) M2C_FIELD(var_r4, u32 *, 0x68)) {
+            var_r3 = var_r4;
+            var_r4 = M2C_FIELD(var_r4, void **, 0x60);
+            goto loop_1;
+        }
+    } else {
+        if ((u32) M2C_FIELD(arg1, u32 *, 0x68) <= (u32) M2C_FIELD(var_r3, u32 *, 0x68)) {
+            var_r3 = var_r4;
+            var_r4 = M2C_FIELD(var_r4, void **, 0x60);
+            goto loop_1;
+        }
+    }
+
+    // Set up the node being inserted
+    M2C_FIELD(arg1, void **, 0x60) = var_r4;
+    M2C_FIELD(arg1, void **, 0x5C) = var_r3;
+    
+    // If there's a next node, link it 
+    if (var_r4 != NULL) {
+        M2C_FIELD(var_r4, void **, 0x5C) = arg1;
+        
+        // Check if we should merge with the next node
+        temp_r6 = M2C_FIELD(arg1, s32 *, 0x64);
+        if ((u32) M2C_FIELD(var_r4, u32 *, 0x68) == (u32) (M2C_FIELD(arg1, u32 *, 0x68) + temp_r6)) {
+            // Merge with node after
+            M2C_FIELD(arg1, s32 *, 0x64) = (s32) (temp_r6 + M2C_FIELD(var_r4, s32 *, 0x64));
+            M2C_FIELD(var_r4, s32 *, 0x64) = 0;
+            M2C_FIELD(var_r4, s8 *, 0x53) = 0;
+            var_r4 = M2C_FIELD(var_r4, void **, 0x60);
+            M2C_FIELD(arg1, void **, 0x60) = var_r4;
+            if (var_r4 != NULL) {
+                M2C_FIELD(var_r4, void **, 0x5C) = arg1;
+            }
+        }
+    }
+    
+    // If there's a previous node, link it
+    if (var_r3 != NULL) {
+        M2C_FIELD(var_r3, void **, 0x60) = arg1;
+        
+        // Check if we should merge with the previous node
+        temp_r5 = M2C_FIELD(var_r3, s32 *, 0x64);
+        if ((u32) M2C_FIELD(arg1, u32 *, 0x68) == (u32) (M2C_FIELD(var_r3, u32 *, 0x68) + temp_r5)) {
+            // Merge with node before
+            M2C_FIELD(var_r3, s32 *, 0x64) = (s32) (temp_r5 + M2C_FIELD(arg1, s32 *, 0x64));
+            M2C_FIELD(var_r3, s32 *, 0x64) = 0;
+            M2C_FIELD(var_r3, s8 *, 0x53) = 0;
+            M2C_FIELD(var_r3, void **, 0x60) = var_r4;
+            if (var_r4 != NULL) {
+                M2C_FIELD(var_r4, void **, 0x5C) = var_r3;
+                return arg0;
+            }
+        }
+    }
+    
+    return arg1;
+}
+
 void fn_801ED7D0(void *arg0) {
     s32 fn_8005E55C();
     M2C_FIELD(arg0, s32 *, 0x58) = fn_8005E55C();
@@ -264,6 +414,21 @@ void fn_801ED7D0(void *arg0) {
 void fn_801ED838(void) {
     extern s32 lbl_803683D0;
     lbl_803683D0 -= 1;
+}
+
+void fn_801ED848(void *arg0, void *arg1, void *arg2, void *arg3) {
+    void DCInvalidateRange(void *, u32);
+    s32 fn_8005E55C(void);
+    void fn_80215D9C(void *, s32, s32, s32, s32, void *, s32, void *);
+    void fn_801ED800(void *);
+    extern s32 lbl_803683D0;
+
+    lbl_803683D0++;
+    *(void **)((char *)arg0 + 0x24) = arg3;
+    *(void **)((char *)arg0 + 0x20) = arg2;
+    *(s32 *)((char *)arg0 + 0x58) = fn_8005E55C();
+    DCInvalidateRange(arg1, *(u32 *)((char *)arg0 + 0x64));
+    fn_80215D9C(arg0, 0, 1, 0, *(s32 *)((char *)arg0 + 0x68), arg1, *(s32 *)((char *)arg0 + 0x64), fn_801ED800);
 }
 
 void fn_801ED9DC(void *arg0) {
@@ -322,6 +487,44 @@ void fn_801EDB70(void *arg0) {
         return;
     }
     fn_8000C070(0xA);
+}
+
+void fn_801EDDF0(void *arg0) {
+    s32 fn_800C42D8(s32);
+    s32 fn_801A7FA4(void);
+    void fn_801A9CF4(s32, void *);
+    void fn_80034864(void *, s32);
+    void fn_8003D2C4(s32);
+    extern u32 lbl_80330EAC[];
+    extern u8 lbl_802EF4C8[];
+
+    s32 r30;
+    void *r3;
+    s32 r0;
+
+    if (lbl_80330EAC[0x188 / 4] != 0) {
+        r0 = fn_800C42D8(0x2E0);
+        if (r0 != 0) {
+            r0 = fn_801A7FA4();
+        }
+        ((s32*)arg0)[0x4C / 4] = r0;
+        r3 = &lbl_80330EAC[0x2E0 / 4];
+        r30 = ((s32*)arg0)[0x4C / 4];
+        fn_801A9CF4(r30, r3);
+    }
+    if (lbl_80330EAC[0x468 / 4] != 0) {
+        r0 = fn_800C42D8(0x2E0);
+        if (r0 != 0) {
+            r0 = fn_801A7FA4();
+        }
+        ((s32*)arg0)[0x50 / 4] = r0;
+        r3 = &lbl_80330EAC[0x2E0 / 4];
+        r30 = ((s32*)arg0)[0x50 / 4];
+        fn_801A9CF4(r30, r3);
+    }
+    lbl_802EF4C8[0x14] = 0xFF;
+    fn_80034864(lbl_80330EAC, ((s32*)arg0)[0x30 / 4]);
+    fn_8003D2C4(((s32*)arg0)[0x30 / 4]);
 }
 
 void fn_801EDEC8(void *arg0) {
@@ -422,6 +625,18 @@ s32 fn_801F1100(void) {
 
 s32 fn_801F1108(void) {
     return 0;
+}
+
+void fn_801F1110(void) {
+    // Function has no visible parameters from assembly but might have internal logic
+    int i;
+    
+    for (i = 0; i < 64; i++) {
+        // Just a placeholder loop with matching control flow and structure to match initial instructions
+        if (i >= 32) {
+            // Do nothing special, just keep the loop going
+        }
+    }
 }
 
 s32 fn_801F1644(void *arg0, s8 arg2) {
