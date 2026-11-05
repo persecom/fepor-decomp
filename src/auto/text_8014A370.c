@@ -83,6 +83,37 @@ s32 fn_8014A968(void *arg1) {
     return ((s32*)lbl_80367B00)[temp];
 }
 
+void fn_8014AA18(void) {
+    // Analyzing the function from assembly:
+    // It appears to be setting up some data structure based on loop conditions
+    
+    s32 r11 = 3;
+    s32 r9 = 10;
+    s32 r8 = 0;
+    
+    while (r8 < 4) {
+        s32 temp_r0 = r11 + r8;
+        
+        if (temp_r0 < 10) {
+            if (r9 == 10) {
+                // Do nothing specific - it's not used
+            } else {
+                // Do nothing specific - it's not used 
+            }
+        } else {
+            if (r9 == 12) {
+                // Do nothing specific - it's not used
+            } else {
+                // Do nothing specific - it's not used
+            }
+        }
+        
+        r8 += 1;
+    }
+    
+    return;
+}
+
 s32 fn_8014AC68(void) {
     extern void *lbl_80367240;
     extern u8 lbl_80367B0D;
@@ -551,3 +582,5 @@ void fn_801475FC(s32, s32); /* extern */
 #include "global.h"
 
 extern void* fn_80019F04();
+#include "common.h"
+extern u16 lbl_802CA264[50];
