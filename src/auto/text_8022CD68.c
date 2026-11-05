@@ -524,6 +524,16 @@ u16 fn_80261B28(s32 arg0) {
     return M2C_FIELD((lbl_80368AA0 + (arg0 * 0xF8)), u16 *, 0x70);
 }
 
+s32 fn_80261B3C(s32 arg0) {
+    extern s32 lbl_80368AA0;
+    return M2C_FIELD((lbl_80368AA0 + (arg0 * 0xF8)), s32 *, 0x7C);
+}
+
+void fn_80261B50(s32 arg0, s8 arg1) {
+    extern u16 lbl_80368AA0;
+    M2C_FIELD((lbl_80368AA0 + (arg0 * 0xF8)), u8 *, 0xA0) = arg1;
+}
+
 void fn_80262290(void) {
     M2C_UNK fn_80263074();
     fn_80263074();
