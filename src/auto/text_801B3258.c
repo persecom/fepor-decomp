@@ -478,22 +478,23 @@ void fn_801C6F9C(void) {
     u8 *fn_800675E0(void);
     void fn_8005F788(u32, s32, s32);
     void *p = fn_8000C0C0(lbl_802981D0);
-    u8 *work = p ? *(u8 **)((u8 *)p + 0x30) : 0;
+    u8 *work;
+    if (p == NULL) {
+        work = 0;
+    } else {
+        work = *(u8 **)((u8 *)p + 0x30);
+    }
     if (work) {
         u8 *data = work + 0x284;
-        u8 *ptr;
         u8 *out;
         s32 i;
-        s32 a;
+        u32 *ptr;
 
-        a = fn_80067440(0);
-        fn_800673E4(fn_80067440(1), a);
-        a = fn_80067440(2);
-        fn_800673E4(fn_80067440(3), a);
-        for (i = 0, ptr = data; i < 64; i++, ptr += 4) {
-            u32 v = *(u32 *)(ptr + 0xC);
-            if (v) {
-                fn_8005F788(v, 0, 1);
+        fn_800673E4(fn_80067440(1), fn_80067440(0));
+        fn_800673E4(fn_80067440(3), fn_80067440(2));
+        for (i = 0, ptr = (u32 *)data; i < 64; i++, ptr++) {
+            if (ptr[3]) {
+                fn_8005F788(ptr[3], 0, 1);
             }
         }
         out = fn_800675E0();
