@@ -439,10 +439,11 @@ void fn_8008BE84(s32 arg0,s32 arg1) {
  void fn_800077D8(s32,f32,f32,f32,f32); void fn_80007884(void);
  extern s32 lbl_803674F0; extern f64 lbl_803696E8; extern f64 lbl_803696F0;
  struct { u8 buf[0x20]; volatile u16 x,y; } sp;
+ s32 x=arg0-0x20; s32 y=arg1+0xc;
  fn_8006ECCC(lbl_803674F0,sp.buf,0x13);
  sp.x=fn_80222A80(sp.buf); sp.y=fn_80222A90(sp.buf);
  fn_8000A258(); fn_8000A174(sp.buf,0x10); fn_8000A248(); fn_80007898(1);
- fn_800077D8(sp.x,(f32)(arg0-0x20),(f32)(arg1+0xc),(f32)sp.x,(f32)sp.y);
+ fn_800077D8(sp.x,(f32)x,(f32)y,(f32)sp.x,(f32)sp.y);
  fn_80007884();
 }
 
@@ -1719,4 +1720,4 @@ typedef struct {
 extern u16 lbl_803120A0[8];
 extern s32 lbl_803674F8;
 extern u8 lbl_8026CD60[];
-extern u16* lbl_80330EAC;
+extern u16 lbl_80330EAC[0x8A4]; // 0x8A0 bytes plus space for some offset
