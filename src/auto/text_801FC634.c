@@ -321,6 +321,34 @@ s32 PPCMtdec(void) {
     return M2C_ERROR(/* unknown instruction: mtdec $r3 */);
 }
 
+s32 fn_802037B0(void) {
+    return 0;
+}
+
+void PPCHalt(void) {
+    sync();
+    while (1) {
+        ;
+    }
+}
+
+void PPCMtwpar(void) {
+    M2C_ERROR(/* unknown instruction: mtspr WPAR, $r3 */);
+}
+
+void fn_802038C0(void) {
+    M2C_UNK OSDumpContext(s32);
+    M2C_UNK OSReport(M2C_UNK *, s32);
+    M2C_UNK PPCHalt();
+    extern M2C_UNK lbl_8029B910;
+    s32 temp_r4;
+
+    temp_r4 = *(s32 *)0xC0;
+    OSReport(&lbl_8029B910, temp_r4);
+    OSDumpContext(temp_r4 + 0x80000000);
+    PPCHalt();
+}
+
 s32 __DBIsExceptionMarked(u8 arg0) {
     extern void *__DBInterface;
     return M2C_FIELD(__DBInterface, s32 *, 4) & (1 << arg0);
@@ -371,8 +399,16 @@ void OSSetArenaLo(s32 arg0) {
     __OSArenaLo_80366F30 = arg0;
 }
 
+void OSSaveFPUContext(void *arg0) {
+    __OSSaveFPUContext(arg0);
+}
+
 s32 fn_802059EC(void) {
     return *(s32 *)0x800000D4;
+}
+
+void *fn_80205B50(void) {
+    return (void *)__builtin_return_address(0);
 }
 
 void fn_80206888(void) {
@@ -615,8 +651,48 @@ s32 fn_8021965C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x84);
 }
 
+void fn_8021C02C(s32 *arg0) {
+    s32 fn_80217B18(s32, s32 *);
+    M2C_UNK fn_80217BD0(s32, M2C_UNK);
+    s32 spC;
+
+    if (fn_80217B18(*arg0, &spC) < 0) {
+        return;
+    }
+    *arg0 = -1;
+    fn_80217BD0(spC, 0);
+}
+
 s32 fn_8021C080(void) {
     return 0;
+}
+
+void fn_8021C84C(s32 arg0) {
+    s32 temp_r3;
+    s32 temp_r4;
+    
+    if (arg0 >= 0) {
+        temp_r3 = fn_80013E50(arg0);
+        temp_r4 = fn_80013E60(temp_r3, arg0);
+        fn_80013E74((void*)temp_r4, arg0);
+    }
+}
+
+void fn_8021CDC4(void) {
+    s32 temp_r3;
+    
+    temp_r3 = fn_80013E50(0);
+    fn_80013E74((void*)temp_r3, 0);
+}
+
+void fn_8021D28C(s32 arg0) {
+    M2C_UNK fn_80217C64(s32);
+    s32 fn_8021D118(M2C_UNK *);
+    extern M2C_UNK fn_80216998;
+    if (fn_8021D118(&fn_80216998) < 0) {
+        return;
+    }
+    fn_80217C64(arg0);
 }
 
 void fn_8021ED98(void *arg0, s32 arg1, s32 arg2) {
@@ -731,6 +807,11 @@ void fn_80225F4C(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0) = arg1;
     M2C_FIELD(arg0, s32 *, 4) = 0;
     M2C_FIELD(arg0, s32 *, 8) = -1;
+}
+
+extern u8 lbl_80289EB8[16];
+void TRKNubWelcome(void) {
+    TRK_board_display(&lbl_80289EB8);
 }
 
 s32 TRKTerminateNub(void) {
