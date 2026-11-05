@@ -915,11 +915,11 @@ s32 fn_801DE370(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0xC);
 }
 
-void fn_801DE378(void *arg0) {
-    memset(arg0, 0, 0x1EA);
-    *((s16 *)arg0 + 0xF) = 0;
-    *(s16 *)arg0 = 0;
-    *((s16 *)arg0 + 1) = 0;
+void fn_801DE378(void *arg0)
+{
+  memset(arg0, 0, 0x1EA);
+  *((s16 *) arg0) = (*(((s16 *) arg0) + 1) = 0);
+  *(((s16 *) arg0) + 0xF) = 0;
 }
 
 void fn_801DE3BC(void *arg0, s8 arg1) {
