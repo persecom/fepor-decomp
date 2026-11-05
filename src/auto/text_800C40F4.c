@@ -1901,6 +1901,31 @@ void fn_800E7C88(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x2C) = 1;
 }
 
+#pragma cplusplus on
+#pragma dont_inline on
+extern "C" void fn_800DF664(void *);
+extern "C" void fn_800E7D10(void *arg0, String *arg1) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void *v2(M2C_UNK *, M2C_UNK *) = 0;
+    };
+    extern char lbl_80272230[];
+    u8 alloc;
+    String tmp;
+    void *found;
+
+    fn_800C9ABC(&tmp, lbl_80272230 + 6, &alloc);
+    found = ((Obj *)arg0)->v2(fn_800C93EC(&tmp), fn_800C93EC(arg1));
+    if (found != NULL) {
+        fn_800DF664(found);
+    }
+    fn_800C9A60(&tmp, -1);
+}
+#pragma dont_inline reset
+#pragma cplusplus reset
+
 void fn_800E7DA4(void *arg0, s32 arg1) {
     void *vtable_ptr = *(void **)((char *)arg0 + 0x10);
     void *vtable_entry = *(void **)((char *)vtable_ptr + 0x10);
