@@ -821,6 +821,13 @@ void fn_8006F6A4(s32 arg0, u32 arg1, u32 arg2, u32 arg3) {
     fn_80024398(&lbl_80311CE0, arg0, 0);
 }
 
+extern u8 lbl_80366DE9;
+u8 fn_800701E0(u8 arg2) {
+    u8 temp = lbl_80366DE9;
+    u8 result = (u8)(arg2 == temp);
+    return result;
+}
+
 s32 fn_800703D4(void) {
     return 0;
 }
@@ -1039,3 +1046,4 @@ void fn_800723E4(void *arg0) {
 }
 extern u16 lbl_803672F8;
 extern s32 *jumptable_80285D18;
+extern u8 lbl_80366DE9;
