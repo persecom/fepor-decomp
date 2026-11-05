@@ -775,6 +775,25 @@ void fn_8013D140(void *arg0) {
     fn_8000A248();
 }
 
+void fn_8013DD1C(s32 arg0, void *arg1) {
+    M2C_UNK fn_80009B80(M2C_UNK);
+    u8 var_r3;
+    u8 var_r3_2;
+
+    fn_8000A258();
+    fn_8000A174(0, 0x13);
+    var_r3 = 0;
+    if ((M2C_FIELD(arg1, u8 *, 0x2D) == 0) && (M2C_FIELD(arg1, u8 *, 0x2E) == 0)) {
+        var_r3 = 1;
+    }
+    var_r3_2 = 0x40;
+    if (var_r3 != 0) {
+        var_r3_2 = 0x80;
+    }
+    fn_80009B80(var_r3_2);
+    fn_8000A248();
+}
+
 void fn_8013E300(void) {
     extern M2C_UNK lbl_802EF4C8;
     M2C_FIELD(&lbl_802EF4C8, s8 *, 8) = 0;
