@@ -1,5 +1,6 @@
 /* Functions from 0x8005AE20 to 0x80072408, found by decomp-toolkit. */
 #include "common.h"
+#include "global.h"
 
 static inline u8 *FindEntryByName(char *name) {
     extern u8 lbl_802F04E0[];
@@ -152,6 +153,13 @@ s32 fn_8005B8CC(void) {
         return 0;
     }
     return M2C_FIELD(lbl_803672F4, s32 *, 0x4000);
+}
+
+extern u16 lbl_803672F4;
+void fn_8005B8E8(void) {
+    u16 temp = lbl_803672F4;
+    fn_800C428C(temp);
+    lbl_803672F4 = 0;
 }
 
 u8 fn_8005BA00(void) {
@@ -781,6 +789,15 @@ extern u8 lbl_80367304;
 return lbl_80367300;
 }
 
+extern u16 lbl_80285E88[0x20];
+s32 fn_80069E7C(void) {
+    extern u8 lbl_80367300;
+    if (lbl_80367300 == 0) {
+        return 0;
+    }
+    return lbl_80285E88[(u32)(lbl_80367300 * 4) >> 10];
+}
+
 void fn_80069F04(s32 arg0) {
     M2C_UNK fn_80069F2C(M2C_UNK, s32);
     fn_80069F2C(-1, arg0);
@@ -1271,3 +1288,6 @@ extern struct Unit {
     u16 unk2C;
     u16 unk2E;
 } Unit; 
+#include "common.h"
+#include "global.h"
+extern u16 lbl_8026B980[];
