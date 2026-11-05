@@ -436,6 +436,11 @@ void fn_8016B5E8(void) {
     fn_8004327C();
 }
 
+void fn_8016B700(void) {
+    extern u16 lbl_80294550[];
+    fn_8000CAA0(lbl_80294550, fn_800C0658(), lbl_80294550);
+}
+
 void fn_8016E0E4(void *arg0) {
     M2C_UNK fn_800076AC(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
     M2C_UNK fn_800077D8(f32, f32, f32, f32);
@@ -969,3 +974,4 @@ s32 fn_8018256C(void) {
 #include "common.h"
 extern u32 lbl_802EF4C8[];
 extern u16 lbl_80278080[];
+extern u16 lbl_80294550[];
