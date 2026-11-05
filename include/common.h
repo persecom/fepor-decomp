@@ -51,4 +51,11 @@ struct unit {
 };
 #endif
 
+#ifdef __cplusplus
+struct RefObj {
+    virtual ~RefObj();
+    s32 refCount;
+};
+#endif
+
 #endif
