@@ -437,6 +437,8 @@ void fn_8005D1DC(char *name) {
     fn_8005D690(FindEntryByName(name));
 }
 
+int fn_8005DE84(void *a){u32 fn_80006AC0(u32);u32 fn_800C44F4(s8);u32 fn_800C4604(s8,u32,void*,u32);u32 fn_8005E594(s8,u32,void*);void fn_800065B0(u32,u32,void*,void*);s32 strlen(void*);extern u8 fn_8005DF60[];u32 old;u32 n;s8 ch;u32 len;old=*(u32*)((u8*)a+0x38);*(u32*)((u8*)a+0x3c)=fn_80006AC0(old);ch=*(u8*)((u8*)a+0x29);n=*(u32*)((u8*)a+0x3c);if(fn_800C44F4(ch)<n)len=0;else{len=strlen(a)-15;if((s32)len<0)len=0;len=fn_800C4604(ch,n,(u8*)a+len,n);}*(u32*)((u8*)a+0x38)=len;if(len==0){len=fn_8005E594((s8)*(u8*)((u8*)a+0x29),*(u32*)((u8*)a+0x3c),a);*(u32*)((u8*)a+0x38)=len;}fn_800065B0(old,*(u32*)((u8*)a+0x38),fn_8005DF60,a);return *(u32*)((u8*)a+0x38);}
+
 void fn_8005DF60(s32 arg0, s32 arg1) {
     M2C_UNK fn_8020AEC4(M2C_UNK *, void *, M2C_UNK, M2C_UNK *, s32);
     extern M2C_UNK lbl_8030F4E0;
@@ -1042,6 +1044,65 @@ s32 fn_800639B4(void) {
     return 0;
 }
 
+u16 fn_80065484(void ***a,s32 b,u16 c){s32 best=-1;void*p;u16 count,off,n,v;s32 i,j;u8*q;if(a==0)return 0xffff;if(*a==0)return 0xffff;p=**a;if(p==0)return 0xffff;count=*(u16*)p;for(i=0;i<count;i++){off=*(u16*)((u8*)p+*(u32*)((u8*)p+4)+i*2);q=(u8*)p+off;n=*(u16*)(q+2);for(j=0;j<n;j++){if(*(u16*)(q+4)==c){v=*(u16*)q;if(v>b&&(best<0||v<=best))best=v;}q+=2;}}return (u16)best;}
+
+u16 fn_8006555C(void ***arg0, s32 arg1, u16 arg2) {
+    void **temp_r3;
+    void *var_r8;
+    u16 var_r11;
+    u16 temp_r5;
+    s32 var_r12;
+    s32 var_r10;
+    s32 var_r9;
+    u16 var_ctr;
+
+    if (arg0 == NULL) {
+        var_r8 = NULL;
+    } else {
+        temp_r3 = *arg0;
+        if (temp_r3 != NULL) {
+            var_r8 = *temp_r3;
+        } else {
+            var_r8 = NULL;
+        }
+    }
+
+    if (var_r8 == NULL) {
+        return -1U;
+    }
+
+    var_r11 = *(u16 *)var_r8; // load from 0x0
+    var_r12 = 0;
+    var_r10 = 0;
+
+loop_16:
+    if (var_r12 >= (s32) var_r11) {
+        return -1U;
+    }
+
+    var_r9 = (s32)((u8*)var_r8 + *(u16 *)((u8 *)var_r8 + var_r10));
+    temp_r5 = *(u16 *)((u8 *)var_r9 + 2);
+
+    var_ctr = temp_r5;
+    if ((s32)temp_r5 > 0) {
+        do {
+            u16 *cur_entry = (u16 *)((u8 *)var_r9 + 4);
+            if (cur_entry[0] == arg2) {
+                u16 cur_val = *(u16 *)((u8 *)var_r9);
+                if ((arg1 > (s32)cur_val) && (var_r12 < 0 || (s32)cur_val >= var_r12)) {
+                    var_r12 = (s32)cur_val;
+                }
+            }
+            var_r9 += 2;
+            var_ctr -= 1;
+        } while (var_ctr != 0);
+    }
+
+    var_r10 += 2;
+    var_r12 += 1;
+    goto loop_16;
+}
+
 void fn_80065E68(void) {
     M2C_UNK fn_8005C7E8();
     fn_8005C7E8();
@@ -1386,6 +1447,69 @@ s32 fn_8006D948(s32 arg0) {
     sp8 = 0;
     fn_8006EDE8(&sp8, arg0, 0);
     return sp8;
+}
+
+u8 fn_8006D980(u8 *arg0, void *arg1) {
+    // Based on the detailed assembly and m2c's draft
+    u8 *ptr = arg0;
+    u8 *search_ptr = (u8 *)arg1;
+
+    if (ptr == NULL) {
+        return 0;
+    }
+
+    if (search_ptr != NULL) {
+        while (1) {
+            u8 ch = *(ptr++);
+            if (ch == 0) {
+                return 0;
+            }
+            
+            // Check if the current character matches the first character of the search string
+            if ((u8)*search_ptr == ch) {
+                u8 *cur_search = search_ptr + 1;
+                u8 *cur_ptr = ptr + 1;
+                
+                // Match subsequent characters while both are non-zero
+                while (*cur_search != 0 && *cur_ptr != 0) {
+                    if (*cur_search == *cur_ptr) {
+                        cur_search++;
+                        cur_ptr++;
+                    } else {
+                        search_ptr = NULL;
+                        goto loop_4;
+                    }
+                }
+                
+                // Check for pattern match: end of search string + next char is underscore
+                if (*cur_search == 0 && *cur_ptr == '_') {
+                    return 1;
+                }
+                
+                ptr = cur_ptr;
+                search_ptr = cur_search;
+            } else {
+loop_4:
+                if (ch == '_') {
+                    search_ptr = (u8 *)arg1;
+                } else {
+                    search_ptr = NULL;
+                }
+            }
+        }
+    } else {
+        // Simple case: check characters after the first one
+        ptr++;
+        
+        if (*ptr != '_') {
+            return 0;
+        }
+        
+        while (*ptr != 0) {
+            ptr++;
+        }
+        return *(ptr - 1) == '_';
+    }
 }
 
 void fn_8006DA5C(s32 *arg0, s32 arg1) {
@@ -1979,3 +2103,33 @@ extern u32 lbl_803672EC;
 extern s32 RunQueueBits_80368518;
 extern s32 RunQueueHint_8036851C;
 extern void *RunQueue_80339478[256];
+/* Functions from 0x8005AE20 to 0x80072408, found by decomp-toolkit. */
+#include "common.h"
+#include "global.h"
+
+typedef struct {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+    u8 unk4;
+    u8 unk5;
+    u8 unk6;
+    u8 unk7;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+} Struct_80067304;
+
+extern u16 lbl_8026B744[6];
+extern u16 lbl_8026B750[6];
+extern f32 lbl_80369224;
+extern f32 lbl_80369228;
+extern s32 lbl_8036C444;
+extern s32 lbl_8036C448;
