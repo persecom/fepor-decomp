@@ -1323,10 +1323,12 @@ s32 fn_800BAEF8(void) {
 }
 
 s32 fn_800BAF1C(s32 arg0) {
+    void *fn_8000BCA4(void *);
     M2C_UNK fn_8011D79C(s32);
     M2C_UNK fn_8011D908(s32, s32);
-    extern M2C_UNK lbl_8026ECB8;
-    if (fn_8000BCA4(&lbl_8026ECB8 + 0xA50, &lbl_8026ECB8) != 0U) {
+    extern u8 lbl_8026ECB8[];
+
+    if (fn_8000BCA4(lbl_8026ECB8 + 0xA50) != NULL) {
         fn_8011D79C(arg0);
         return 1;
     }
