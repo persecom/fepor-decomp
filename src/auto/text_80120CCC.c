@@ -128,6 +128,7 @@ void fn_80122000(void *arg0) {
 void fn_80122170(u32 *arg0) {
     u32 temp_r3;
     
+    // Direct read of the 16-bit value at offset 0x4000
     if ((*(u16 *)((u8 *)arg0 + 0x4000) & 0x4000) == 0) {
         *(u32 *)((u8 *)arg0 + 0x4000) = (*(u32 *)((u8 *)arg0 + 0x4000) | 0x40000000);
     }
@@ -251,6 +252,24 @@ void fn_80123BEC(void *arg0) {
     *ptr = 0;
 }
 
+void fn_80123C2C(void *arg0) {
+    extern void *fn_80123D1C;
+    extern s32 fn_8006785C(s32, void **, void *);
+    extern s32 fn_80124424(void *);
+    extern s32 fn_800AA188(void);
+    
+    // This is very basic - let's examine the structure carefully
+    if (*(u8*)((u8*)arg0 + 0x4D) != 0) {
+        fn_8006785C(2, &fn_80123D1C, arg0);
+        goto block_4;
+    }
+    if (fn_800AA188() != 0) {
+        fn_8006785C(2, &fn_80123D1C, arg0);
+block_4:
+        fn_80124424(arg0);
+    }
+}
+
 void fn_80123CFC(void) {
     M2C_UNK fn_801246FC();
     fn_801246FC();
@@ -268,6 +287,18 @@ void fn_80125B94(void *arg0) {
 void fn_80125E5C(void *arg0) {
     u8 fn_800AA188();
     if (fn_800AA188() != 0) {
+        M2C_FIELD(arg0, f32 *, 0x4C) = (f32) ((M2C_FIELD(arg0, f32 *, 0x38) * M2C_FIELD(arg0, f32 *, 0x34)) + M2C_FIELD(arg0, f32 *, 0x4C));
+        M2C_FIELD(arg0, f32 *, 0x50) = (f32) ((M2C_FIELD(arg0, f32 *, 0x3C) * M2C_FIELD(arg0, f32 *, 0x34)) + M2C_FIELD(arg0, f32 *, 0x50));
+    }
+}
+
+void fn_80125EB8(void *arg0) {
+    if (fn_800AA188() != 0) {
+        M2C_FIELD(arg0, u8 *, 0x49) = (u8) (M2C_FIELD(arg0, u8 *, 0x49) + 1);
+        if ((u8) M2C_FIELD(arg0, u8 *, 0x49) >= 0x80U) {
+            M2C_FIELD(arg0, u8 *, 0x49) = 0x80U;
+            fn_8000C188(arg0);
+        }
         M2C_FIELD(arg0, f32 *, 0x4C) = (f32) ((M2C_FIELD(arg0, f32 *, 0x38) * M2C_FIELD(arg0, f32 *, 0x34)) + M2C_FIELD(arg0, f32 *, 0x4C));
         M2C_FIELD(arg0, f32 *, 0x50) = (f32) ((M2C_FIELD(arg0, f32 *, 0x3C) * M2C_FIELD(arg0, f32 *, 0x34)) + M2C_FIELD(arg0, f32 *, 0x50));
     }
@@ -574,3 +605,8 @@ extern s32 fn_80231D94(void *, void *, s32);
 extern s32 fn_80234200(void *, s32);
 
 void fn_80121D30(void);
+#include "common.h"
+extern f32 lbl_8036A30C;
+extern f32 lbl_8036A35C;
+extern f32 lbl_8036A3B8;
+extern void *lbl_80274F74;
