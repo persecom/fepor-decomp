@@ -282,6 +282,16 @@ void fn_80009C0C(f32 farg0) {
     *ptr = *ptr + farg0;
 }
 
+void fn_80009D74(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
+    if (arg0 <= arg1) {
+        arg0 = arg1;
+    }
+    
+    if (arg2 <= arg3) {
+        arg2 = arg3;
+    }
+}
+
 f32 fn_80009E44(void* arg0) {
     if (arg0 == NULL) {
         return 0.0f;
@@ -1008,4 +1018,6 @@ extern u16 lbl_8036712C;
 extern u16 lbl_80367150[4];
 extern u16 lbl_802A66D8[];
 extern u16 lbl_802A66D8[];
+extern u16 lbl_802A66D8[0x7000];
+#include "global.h"
 extern u16 lbl_802A66D8[0x7000];
