@@ -506,11 +506,11 @@ void fn_800D5894(u32 *arg0) {
 s32 fn_800D5948(u32 *arg0, char *arg1, u32 arg2, u32 arg3) {
     u32 size;
     char *data;
+    u32 rem;
     char *end;
     char *p;
-    u32 rem;
-    char *a;
     char *b;
+    char *a;
 
     size = arg0[0];
     if (arg2 > size) {
@@ -519,7 +519,7 @@ s32 fn_800D5948(u32 *arg0, char *arg1, u32 arg2, u32 arg3) {
     data = (char *)arg0[2];
     end = arg1 + arg3;
     for (rem = size - arg2, p = data + arg2; rem >= arg3; p++, rem--) {
-        for (a = arg1, b = p; a < end; a++, b++) {
+        for (b = p, a = arg1; a < end; a++, b++) {
             if (*a != *b) {
                 goto next;
             }
