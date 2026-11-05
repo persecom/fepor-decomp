@@ -220,6 +220,11 @@ void *fn_800A0488(void) {
     return (char *)&lbl_8026D8D8 + 0x424;
 }
 
+void *fn_800A04DC(void) {
+    extern u16 lbl_8026D8D8[];
+    return (char *)&lbl_8026D8D8 + 0x42B;
+}
+
 s32 fn_800A0594(void) {
     M2C_UNK fn_800C418C();
     fn_800C418C();
