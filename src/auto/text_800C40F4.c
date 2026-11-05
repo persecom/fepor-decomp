@@ -1926,6 +1926,7 @@ void fn_800E7E4C(s32 arg0, s32 arg1) {
 }
 
 #pragma cplusplus on
+#pragma dont_inline on
 extern "C" void fn_800E01C8(void *);
 extern "C" void fn_800E0140(void *, s32);
 extern "C" s32 fn_800DFFF4(void *, s32);
