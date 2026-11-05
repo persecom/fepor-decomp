@@ -6,14 +6,6 @@ typedef struct Vec2s {
     s16 y;
 } Vec2s;
 
-#pragma cplusplus on
-struct Size2s {
-    s16 x;
-    s16 y;
-    Size2s(s16 ax, s16 ay) : x(ax), y(ay) {}
-};
-#pragma cplusplus reset
-
 s32 fn_8013286C(void) {
     return 2;
 }
