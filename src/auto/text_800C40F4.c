@@ -1305,6 +1305,11 @@ void fn_800F2E50(s8 arg0) {
     M2C_FIELD(&lbl_8032AC58, s8 *, 0x65C) = arg0;
 }
 
+u8 fn_800F2E60(void) {
+    extern s8 lbl_8032AC58[];
+    return lbl_8032AC58[0x65C];
+}
+
 s32 fn_800F7E78(void) {
     M2C_UNK fn_800F75F8();
     fn_800F75F8();
