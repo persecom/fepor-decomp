@@ -72,22 +72,27 @@ void __kill_critical_regions(void) {
 
 }
 
+#pragma use_lmw_stmw on
 s32 fn_80231D94(char *dest, const char *fmt, ...) {
-    __OutStr out;
     va_list args;
+    __OutStr out;
     s32 n;
 
-    __va_start(args, fmt);
+    __builtin_va_info(&args);
     out.buffer = dest;
     out.length = -1;
     out.position = 0;
     n = __pformatter(fn_80232220, &out, fmt, args);
     if (dest != NULL) {
-        dest[n] = 0;
+        u32 idx = (u32)-2;
+        if ((u32)n < (u32)-1) {
+            idx = (u32)n;
+        }
+        dest[idx] = 0;
     }
     return n;
 }
-
+#pragma use_lmw_stmw reset
 s32 fn_80231F48(char *s, const char *fmt, va_list args) {
     __OutStr out;
     s32 n;
