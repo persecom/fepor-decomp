@@ -209,6 +209,12 @@ M2C_UNK *fn_800C93EC(void *arg0) {
     return temp_r3;
 }
 
+void fn_800C984C(void) {
+    s32 r6 = 0;
+    s32 r7 = 0;
+    fn_800C94F8(r6, r7);
+}
+
 void fn_800CA5FC(void) {
     M2C_UNK fn_800CA61C();
     fn_800CA61C();
@@ -1030,6 +1036,11 @@ s32 fn_800E5070(void *arg0, s32 arg1) {
         return 0;
     }
     return M2C_FIELD(arg0, s32 *, 0xFC) + (arg1 * 0x1C);
+}
+
+void fn_800E5248(void *arg0, u16 arg1) {
+    s32 temp = *(s32 *)((u8 *)arg0 + 0xE0);
+    fn_8005F9B8(temp, arg1);
 }
 
 void fn_800E5600(void *arg0, s32 arg1, u8 arg2) {
