@@ -993,7 +993,19 @@ s32 fn_800DC018(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x48);
 }
 
-void fn_800DC020(void *arg0) {
+#pragma cplusplus on
+extern "C" void fn_800DC020(void *arg0) {
+    struct Obj {
+        u8 pad[0x40];
+        virtual void v0();
+        virtual void v1();
+        virtual void v2();
+        virtual void v3();
+        virtual void v4();
+        virtual void v5();
+        virtual void v6();
+    };
+
     if (M2C_FIELD(arg0, s32 *, 0x74) == 1) {
         M2C_FIELD(arg0, f32 *, 0x6C) += M2C_FIELD(arg0, f32 *, 0x70);
         if (M2C_FIELD(arg0, f32 *, 0x6C) >= 1.0f) {
@@ -1008,9 +1020,9 @@ void fn_800DC020(void *arg0) {
     if (M2C_FIELD(arg0, s32 *, 0x74) > 1) {
         M2C_FIELD(arg0, s32 *, 0x74)--;
     }
-    M2C_FIELD(M2C_FIELD(arg0, void **, 0x40), void (**)(void *), 0x20)(arg0);
+    ((Obj *)arg0)->v6();
 }
-
+#pragma cplusplus reset
 void fn_800DC2E4(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0) = 0;
     M2C_FIELD(arg0, s8 *, 1) = 0;
