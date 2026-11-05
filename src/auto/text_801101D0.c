@@ -1,5 +1,6 @@
 /* Functions from 0x801101D0 to 0x80120CC0, found by decomp-toolkit. */
 #include "common.h"
+extern u16 lbl_80273DF8[];
 extern u16 lbl_80296128[];
 
 extern s32 lbl_80367110;
@@ -52,6 +53,20 @@ void fn_80113648(void *arg0, f32 farg0) {
 
 f32 fn_80113650(void *arg0) {
     return M2C_FIELD(arg0, f32 *, 0x128);
+}
+
+void fn_80113658(void* arg0) {
+    if (arg0 != NULL) {
+        s32** ptr = (s32**)arg0;
+        (*ptr)[0] = 0;
+        (*ptr)[1] = 0;
+        (*ptr)[2] = 0;
+        (*ptr)[3] = -1;
+        (*ptr)[4] = 0;
+        (*ptr)[5] = 0;
+        (*ptr)[6] = 0;
+        (*ptr)[7] = 0;
+    }
 }
 
 void fn_8011386C(void *arg0) {
