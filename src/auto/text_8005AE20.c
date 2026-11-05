@@ -528,6 +528,59 @@ u32 fn_800604C8(void *arg0) {
     return 0U;
 }
 
+u32 fn_800604F4(void *arg0) {
+    void *current = arg0;
+    u32 r0;
+
+    if (current == NULL) {
+        return 0U;
+    }
+
+    r0 = M2C_FIELD(current, u32 *, 0x6C);
+    if (r0 != 0U) {
+        return r0;
+    }
+    current = M2C_FIELD(current, void **, 4);
+    if (current == NULL) {
+        return 0U;
+    }
+
+    r0 = M2C_FIELD(current, u32 *, 0x6C);
+    if (r0 != 0U) {
+        return r0;
+    }
+    current = M2C_FIELD(current, void **, 4);
+    if (current == NULL) {
+        return 0U;
+    }
+
+    r0 = M2C_FIELD(current, u32 *, 0x6C);
+    if (r0 != 0U) {
+        return r0;
+    }
+    current = M2C_FIELD(current, void **, 4);
+    if (current == NULL) {
+        return 0U;
+    }
+
+    return 0U;
+}
+
+u32 fn_800605E0(void *arg0) {
+    void *current = arg0;
+    u32 value;
+
+    while (current != NULL) {
+        value = M2C_FIELD(current, u32 *, 0x50);
+        if (value != 0U) {
+            return value;
+        }
+        current = M2C_FIELD(current, void **, 4);
+    }
+    
+    return 0U;
+}
+
 s32 fn_80060664(void *arg0) {
     void **var_r3;
     u32 temp_r0;
