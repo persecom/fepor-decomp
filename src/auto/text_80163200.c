@@ -2174,6 +2174,10 @@ s32 fn_8017DF4C(void) {
     return 0;
 }
 
+s32 fn_8017E08C(void) {
+    return fn_8000C0C0(&lbl_80295580) != 0;
+}
+
 void fn_8017E1B8(void *arg0, u32 arg1) {
     if (*(u32 *)((u8 *)arg0 + 0x30) == arg1) {
         fn_8000C60C();
