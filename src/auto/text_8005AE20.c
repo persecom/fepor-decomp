@@ -365,6 +365,44 @@ void fn_8005D1DC(char *name) {
     fn_8005D690(FindEntryByName(name));
 }
 
+void fn_8005DF60(s32 arg0, s32 arg1) {
+    M2C_UNK fn_8020AEC4(M2C_UNK *, void *, M2C_UNK, M2C_UNK *, s32);
+    extern M2C_UNK lbl_8030F4E0;
+    extern u8 lbl_803672EB;
+    extern M2C_UNK lbl_803672EC;
+    s32 temp_r8;
+    void *temp_r5;
+
+    temp_r8 = lbl_803672EB * 0xC;
+    temp_r5 = &lbl_8030F4E0 + temp_r8;
+    M2C_FIELD(temp_r5, s8 *, 0) = 3;
+    M2C_FIELD(temp_r5, s32 *, 4) = arg0;
+    M2C_FIELD(temp_r5, s32 *, 8) = arg1;
+    lbl_803672EB = (lbl_803672EB + 1) & 0x3F;
+    fn_8020AEC4(&lbl_803672EC, temp_r5, 3, &lbl_8030F4E0, temp_r8);
+}
+
+void fn_8005DFB8(void *arg0) {
+    extern u8 lbl_803672EB;
+    extern u16 lbl_8030F4E0[];
+    extern u8 lbl_803672EC[];
+
+    s32 temp_r6;
+    s32 temp_r7;
+    void *temp_r5;
+    u8 temp_r4;
+
+    temp_r6 = lbl_803672EB * 0xC;
+    temp_r7 = *(s32*)((char*)arg0 + 0x6C);
+    temp_r5 = (void*)((char*)lbl_8030F4E0 + temp_r6);
+    temp_r4 = lbl_803672EB + 1;
+    *(u8*)((char*)temp_r5 + 0x0) = 2;
+    *(void**)((char*)temp_r5 + 0x4) = arg0;
+    *(s32*)((char*)temp_r5 + 0x8) = temp_r7;
+    lbl_803672EB = temp_r4 & 0x3F;
+    fn_8020AEC4(lbl_803672EC, 2, temp_r5, temp_r6, temp_r7);
+}
+
 void fn_8005E0F0(void) {
     M2C_UNK fn_8020A824(M2C_UNK *);
     extern M2C_UNK lbl_8030F7E0;
@@ -1467,3 +1505,12 @@ extern struct Unit {
 #include "common.h"
 #include "global.h"
 extern u16 lbl_8026B980[8];
+#include "common.h"
+#include "global.h"
+
+extern u8 lbl_8030F4E0[];
+extern u8 lbl_803672EB;
+extern u32 lbl_803672EC;
+extern s32 RunQueueBits_80368518;
+extern s32 RunQueueHint_8036851C;
+extern void *RunQueue_80339478[256];
