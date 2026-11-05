@@ -531,10 +531,5 @@ extern u8 lbl_802CA518[151280];
 extern u8 lbl_802B14E4[101760];
 #include "common.h"
 
-extern u16 lbl_80269210[];
-extern u8 lbl_80330708[];
-extern u16 lbl_80284E30[];
-extern u16 lbl_80284E5C[];
-extern u16 lbl_80284E78[];
-extern u8 lbl_80367289;
-extern u8 lbl_802CA518[];
+extern u16* lbl_80269210;
+extern s32* lbl_80330708;
