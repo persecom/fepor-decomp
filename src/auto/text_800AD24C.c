@@ -956,6 +956,28 @@ s32 fn_800BA230(u32 arg0, s32 arg1) {
     return 1;
 }
 
+s32 fn_800BABFC(void) {
+    u8 fn_800188A4(s32);
+    M2C_UNK fn_800187F0(void);
+    M2C_UNK fn_8000CAA0(void *, s32);
+    M2C_UNK fn_80013874(void *);
+    extern u8 lbl_8028D19C[];
+    extern u8 lbl_80320060[];
+    extern s32 lbl_80367110;
+
+    if (lbl_80367110 & 1) {
+        fn_800187F0();
+        return 0;
+    }
+    if (fn_800188A4(1) == 0) {
+        return 0;
+    }
+    fn_8000CAA0(lbl_8028D19C, fn_800C0658());
+    fn_80013864();
+    fn_80013874(lbl_80320060);
+    return 1;
+}
+
 void fn_800BAC70(s32 arg0) {
     u8 fn_800188A4(s32);
     M2C_UNK fn_800187F0(void);
