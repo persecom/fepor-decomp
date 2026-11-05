@@ -1,6 +1,7 @@
 /* Functions from 0x800C40F4 to 0x801035C8, found by decomp-toolkit. */
 #include "common.h"
 #include "structs.h"
+#include "structs.h"
 
 extern s32 lbl_8028D788;
 extern void (*lbl_802B14E4)(void **);
