@@ -1,6 +1,15 @@
 /* Functions from 0x8010554C to 0x80110128, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_8010554C(void) {
+    extern u16 lbl_802737A0[];
+    extern u16 lbl_8028F2D0[];
+    
+    fn_8000D3EC(&lbl_802737A0[0xCE/2], &lbl_8028F2D0[0], &lbl_802737A0[0]);
+    fn_8000D3EC(&lbl_802737A0[0xE2/2], &lbl_8028F2D0[0], &lbl_802737A0[0]);
+    fn_8000D3EC(&lbl_802737A0[0xF2/2], &lbl_8028F2D0[0], &lbl_802737A0[0]);
+}
+
 void *fn_801057BC(void *arg0) {
     void *fn_8000E0E4();
     extern u16 lbl_802738A8;
@@ -26,6 +35,84 @@ void fn_80105A04(s32 arg0, s32 arg1) {
 void fn_80105A30(s32 arg0, s32 arg1) {
     M2C_UNK fn_8017A430(s32, M2C_UNK, s32);
     fn_8017A430(arg1, 0x10, arg0);
+}
+
+void fn_80105CEC(s32 *arg0, u8 arg1) {
+    s32 *r3;
+    s32 r4;
+    s32 r5;
+    s32 r6;
+    s32 temp_r0;
+
+    r3 = arg0;
+    r4 = (s32)arg1;
+    if (r4 >= 0) {
+        r5 = r4 >> 5U;
+        if (r4 >= 0x20) {
+            r6 = r5 >> 3;
+            temp_r0 = r5 << 5;
+            temp_r0 = -temp_r0;
+            if (r6 != 0) {
+                do {
+                    r3 += 0x20;
+                    r6 -= 1;
+                } while (r6 != 0);
+                r5 &= 7;
+                if (r5 == 0) {
+                    goto end;
+                }
+            }
+            // Process partial words
+            r6 = r5;
+            do {
+                r3 += 4;
+                r6 -= 1;
+            } while (r6 != 0);
+end:
+            r4 += temp_r0;
+        }
+        *r3 &= ~(1U << r4);
+    }
+}
+
+void fn_80105D4C(s32 *arg0, u8 arg1) {
+    s32 *var_r3;
+    s32 temp_r0;
+    u32 temp_r4;
+    u32 var_ctr;
+    u32 var_ctr_2;
+    u32 var_r5;
+    u8 var_r6;
+
+    var_r3 = arg0;
+    var_r6 = arg1;
+    if (var_r6 >= 0) {
+        var_r5 = var_r6 >> 5U;
+        if ((s32) var_r6 >= 0x20) {
+            temp_r4 = var_r5 >> 3U;
+            temp_r0 = -(var_r5 << 5);
+            var_ctr = temp_r4;
+            if (temp_r4 != 0) {
+                do {
+                    var_r3 += 0x20;
+                    var_ctr -= 1;
+                } while (var_ctr != 0);
+                var_r5 &= 7;
+                if (var_r5 != 0) {
+                    goto block_5;
+                }
+            } else {
+block_5:
+                var_ctr_2 = var_r5;
+                do {
+                    var_r3 += 4;
+                    var_ctr_2 -= 1;
+                } while (var_ctr_2 != 0);
+            }
+            var_r6 += temp_r0;
+        }
+        *var_r3 |= 1 << var_r6;
+    }
 }
 
 void fn_8010671C(void *arg0) {
