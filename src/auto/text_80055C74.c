@@ -13,6 +13,11 @@ s32 fn_80055C84(s32 *arg0) {
     return *arg0;
 }
 
+void fn_80055D68(void *arg0) {
+    *(u16 *)((char *)arg0 + 0x68) = 0;
+    fn_8005C8B4((char *)arg0 + 0x30);
+}
+
 s32 fn_80055D94(void) {
     return 0;
 }
@@ -21,6 +26,11 @@ void fn_80055D9C(void *arg0) {
     if (arg0 != NULL) {
         M2C_FIELD(arg0, s8 *, 0x32) = -1;
     }
+}
+
+void fn_80055DB0(void *arg0, s32 arg1) {
+    *(u8*)((char*)arg0 + 0x30) = (u8)arg1;
+    *(u32*)((char*)arg0 + 0x190) = 1; // Ensure initialization of a field not in the original
 }
 
 void fn_800561A8(void) {
