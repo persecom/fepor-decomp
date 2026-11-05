@@ -31,6 +31,7 @@ typedef struct String {
 void fn_800E01C8(void *);
 void fn_800E0140(void *, s32);
 void fn_800E8A88(void *, f32);
+s32 fn_802342B8(); /* strcmp */
 
 /* std::equal on chars */
 static inline BOOL CharsEqual(const char *first1, const char *last1, const char *first2) {
@@ -1263,11 +1264,13 @@ void fn_800DEF00(void *arg0) {
     }
 }
 
-void fn_800DF298(void *arg0, s32 arg1, f32 arg2) {
-    M2C_FIELD(arg0, s32 *, 0xE4) = arg1;
-    M2C_FIELD(arg0, f32 *, 0xE8) = arg2;
-}
+#pragma dont_inline on
+u8 fn_800DF298(void *arg0, const char *arg1) {
+    s32 fn_802342B8(const char *, const char *);
 
+    return fn_802342B8((char *)fn_800C93EC((s8 *)arg0 + 4), arg1) == 0;
+}
+#pragma dont_inline reset
 void fn_800DF2D8(void *arg0) {
     f32 fn_80059500(f32, f32, f32, f32, f32);
     f32 temp_f5;
