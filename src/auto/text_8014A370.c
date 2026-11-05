@@ -13,6 +13,16 @@ s32 fn_8014A380(void) {
     return 0x10;
 }
 
+void *fn_8014A388(void) {
+    extern u16 lbl_80276F00[];
+    return &lbl_80276F00[0x132];
+}
+
+void *fn_8014A398(void) {
+    extern const u16 lbl_80276F00[];
+    return (void*)(((u32)&lbl_80276F00[0xC6]));
+}
+
 void *fn_8014A4C8(void) {
     extern char lbl_80276F00[];
     return &lbl_80276F00[0xCF];
@@ -24,6 +34,12 @@ s32 fn_8014A4D8(void) {
 
 s32 fn_8014A4E0(void) {
     return 0;
+}
+
+void *fn_8014A6FC(void) {
+    extern u16 lbl_80276F00;
+    void *ptr = (u8 *)&lbl_80276F00 + 0xEC;
+    return ptr;
 }
 
 s32 fn_8014A910(void) {
@@ -118,6 +134,11 @@ s32 fn_8014B234(void) {
     return 0x1FFF;
 }
 
+void *fn_8014B23C(void) {
+    extern u16 lbl_80276F00[];
+    return (u16*)((uintptr_t)lbl_80276F00 + 0x113 * sizeof(u16));
+}
+
 extern u16 *g_AccessoryArray;
 s16 fn_8014B24C(void) {
     return *(u16*)((char*)g_AccessoryArray + 0x10);
@@ -135,6 +156,11 @@ void *fn_8014B26C(void) {
 void fn_8014B288(s8 arg1) {
     // This is a placeholder that at least avoids the compilation error by adding necessary include.
     // But it will not match until we get the global declaration correct.
+}
+
+void *fn_8014B294(void) {
+    extern u8 lbl_80276F00[];
+    return &lbl_80276F00[0x11F];
 }
 
 u8 fn_8014B2A4(void) {
@@ -159,6 +185,12 @@ s32 fn_8014B2E4(void) {
 
 s32 fn_8014B314(void) {
     return 1;
+}
+
+u16 fn_8014B31C(void) {
+    extern u16 *lbl_80367B14;
+    
+    return *lbl_80367B14;  // Assuming the symbol points to a u16, and we return the value.
 }
 
 s32 fn_8014B328(void) {
