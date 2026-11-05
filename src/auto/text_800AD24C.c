@@ -229,6 +229,20 @@ s32 fn_800B2DE4(s32 arg0, s32 arg1) {
     return M2C_FIELD(lbl_80317338, s32 *, 0x448);
 }
 
+s32 fn_800B2E78(void) {
+    extern u8 lbl_80319A58[16];
+    s32 i;
+    s32 count;
+
+    count = 0;
+    for (i = 0; i < 16; i++) {
+        if (lbl_80319A58[i] != 0) {
+            count++;
+        }
+    }
+    return count;
+}
+
 void fn_800B3490(void) {
     extern u16 lbl_80317338[];
     u32 index = 0x222;
