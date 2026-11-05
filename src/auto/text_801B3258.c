@@ -252,6 +252,10 @@ void fn_801C777C(void) {
     fn_8000BF00(&lbl_802981D0);
 }
 
+void fn_801C77A4(void) {
+    fn_8000CAF0(&lbl_802981D0, 4);
+}
+
 void fn_801C7BF8(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
