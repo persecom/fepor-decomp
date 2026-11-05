@@ -1035,6 +1035,15 @@ s32 fn_800E2E68(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x54);
 }
 
+s32 fn_800E378C(s32 arg0, s32 arg1) {
+    void *temp_r3;
+    
+    temp_r3 = fn_800C93EC((void*)arg1);
+    fn_8006EEFC(arg0 + 0x48, (s32)temp_r3);
+    
+    return 1;
+}
+
 void fn_800E3BD8(void *arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(arg0, s32 *, 0x58) = (s32) (arg1 + (M2C_FIELD(arg0, s32 *, 0x7C) - M2C_FIELD(arg0, s32 *, 0x74)));
     M2C_FIELD(arg0, s32 *, 0x5C) = (s32) (arg2 + (M2C_FIELD(arg0, s32 *, 0x80) - M2C_FIELD(arg0, s32 *, 0x78)));
@@ -1141,6 +1150,14 @@ void fn_800E4BE0(void *arg0, s32 arg1, s32 arg2, f32 farg0) {
 
 void fn_800E4C14(void *arg0, f32 farg0) {
     M2C_FIELD(arg0, f32 *, 0x104) = farg0;
+}
+
+void fn_800E4C1C(void *arg0) {
+    u32 *ptr = (u32*)((char*)arg0 + 0xE8);
+    if (*ptr != 0) {
+        fn_800588EC();
+        *ptr = 0;
+    }
 }
 
 u32 fn_800E4C5C(void *arg0, u32 arg1, u32 arg2, u8 arg3) {
@@ -1829,6 +1846,19 @@ void fn_800FC490(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x31) = 0;
 }
 
+void fn_800FC504(struct unit *arg0) {
+    arg0->pad_0x0[0] = 0;
+    arg0->pad_0x0[1] = 0;
+    arg0->pad_0x0[0x10] = 0;
+    arg0->pad_0x0[0x11] = 0;
+    arg0->pad_0x0[0x12] = 0;
+    arg0->pad_0x0[0x13] = 0;
+    arg0->pad_0x0[0x14] = 0x80;
+    arg0->pad_0x0[0x15] = 0x80;
+    arg0->pad_0x0[0x16] = 0x80;
+    arg0->pad_0x0[0x17] = 0xFF;
+}
+
 void fn_800FC540(void) {
     M2C_UNK fn_800FC49C();
     fn_800FC49C();
@@ -1842,6 +1872,22 @@ void fn_800FC560(void) {
 s32 fn_800FC5F8(void) {
     extern s32 lbl_80367904;
     return lbl_80367904;
+}
+
+void fn_800FC600(s32 arg0) {
+    M2C_UNK fn_8000CAA0(M2C_UNK *, s32, M2C_UNK *);
+    extern M2C_UNK lbl_8028E7F8;
+    extern M2C_UNK lbl_8032B3C0;
+    fn_8000CAA0(&lbl_8028E7F8, arg0, &lbl_8028E7F8);
+    *(u8*)((uintptr_t)&lbl_8032B3C0 + 1) = 8;
+}
+
+void fn_800FC63C(s32 arg0) {
+    extern u8 lbl_8028E7F8[64];
+    extern u8 lbl_8032B3C0[544];
+    
+    fn_8000CAA0(lbl_8028E7F8, arg0, lbl_8028E7F8);
+    lbl_8032B3C0[1] = 1;
 }
 
 void fn_800FC678(void) {
@@ -2013,3 +2059,4 @@ s32 fn_801032F8(void) {
 extern s32 lbl_80320C20;
 extern u16 lbl_803678F4;
 extern u8 lbl_8032B3C0[];
+extern u8 lbl_8032B3C0[544];
