@@ -783,3 +783,4 @@ extern s32 lbl_803671A8;
 #include "common.h"
 extern u32 lbl_802CA264[];
 extern u32 lbl_80330708[];
+#include "global.h"
