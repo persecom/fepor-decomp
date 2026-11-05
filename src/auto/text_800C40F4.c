@@ -1925,6 +1925,46 @@ void fn_800E7E4C(s32 arg0, s32 arg1) {
     lbl_80367878 = 0x10000 - (arg0 + arg1);
 }
 
+#pragma cplusplus on
+extern "C" void fn_800E01C8(void *);
+extern "C" void fn_800E0140(void *, s32);
+extern "C" s32 fn_800DFFF4(void *, s32);
+extern "C" u8 fn_800E903C(void *);
+extern "C" s32 fn_800E7EA0(void *arg0) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual s32 v10(void *, char *, s32) = 0;
+    };
+    extern char lbl_80272230[];
+    u8 list[0x18];
+    s32 count;
+    s32 item;
+    s32 i;
+
+    fn_800E01C8(list);
+    count = ((Obj *)arg0)->v10(list, lbl_80272230 + 0x16, 0);
+    for (i = 0; i < count; i++) {
+        item = fn_800DFFF4(list, i);
+        if (fn_800E903C((void *)item)) {
+            fn_800E0140(list, -1);
+            return item;
+        }
+    }
+    fn_800E0140(list, -1);
+    return 0;
+}
+#pragma cplusplus reset
+
 void fn_800E7FB4(void* arg0, u32 arg1, void* arg2) {
     void** v0 = (void**)arg0;
     *v0 = arg2;
@@ -1970,7 +2010,6 @@ void *fn_800E89EC(void *arg0, s16 arg1) {
     }
     return arg0;
 }
-#pragma dont_inline reset
 
 void fn_800E8A88(void *arg0, f32 farg0) {
     extern f32 lbl_80369F7C;
