@@ -570,7 +570,6 @@ u32 *fn_800D6898(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3, void *arg4) {
     M2C_UNK fn_8022CF78(void);
     M2C_UNK fn_80232058(void *, const char *, ...);
     extern char __files[];
-    extern M2C_UNK lbl_802704F8;
     u32 size;
     u32 len;
     char *p;
