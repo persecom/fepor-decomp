@@ -2,6 +2,7 @@
 #include "common.h"
 extern s32 lbl_80368230;
 extern s32 lbl_8028D544[];
+extern u16 lbl_80319A68[32];
 
 /* 0x18-byte record used by fn_800C29D0 / fn_800C2ACC / fn_800C30CC (1-based index) */
 typedef struct Unk800C2ACC {
@@ -948,6 +949,35 @@ s32 fn_800B7C04(void) {
 s32 fn_800B7C28(void) {
     M2C_UNK fn_80145828();
     fn_80145828();
+    return 1;
+}
+
+s32 fn_800B7C4C(u8 arg0, s16 arg1) {
+    M2C_UNK fn_80146AF0();
+    M2C_UNK fn_8014876C(void *, M2C_UNK, s16);
+    M2C_UNK fn_801487D0(void *, s16);
+    
+    extern u16 lbl_8032FF08[];
+    u16 *temp_r30;
+    u8 var_r31;
+    
+    temp_r30 = &lbl_8032FF08[arg0 * 0x30 / sizeof(u16)];
+    var_r31 = 0;
+    
+    if ((M2C_FIELD(temp_r30, u8 *, 0xC) & 1) && 
+        (M2C_FIELD(M2C_FIELD(temp_r30, void **, 8), u8 (**)(void *), 8)(temp_r30) != 0)) {
+        var_r31 = 1;
+    }
+    
+    if (var_r31 != 0) {
+        fn_801487D0(temp_r30, arg1);
+    }
+    
+    if ((s32)arg0 == 0) {
+        fn_80146AF0();
+        fn_8014876C(temp_r30, 0x64, arg1);
+    }
+    
     return 1;
 }
 
@@ -1959,6 +1989,29 @@ s32 fn_800BB9E8(u8 arg0) {
     return temp_r3;
 }
 
+u8 fn_800BBB58(s32 arg1) {
+    s8 fn_80036DE0(u32, u32);
+    u8 fn_80036F5C(u32, s8);
+    M2C_UNK fn_80036FC4(u32, s8);
+    s8 temp_r31;
+    s8 temp_r3;
+    u32 temp_r29;
+    u32 temp_r30;
+
+    temp_r30 = fn_80016BDC();
+    temp_r29 = fn_80016BDC(arg1);
+    if ((temp_r30 == 0U) || (temp_r29 == 0U)) {
+        return -1U;
+    }
+    temp_r31 = fn_80036DE0(temp_r30, temp_r29);
+    temp_r3 = fn_80036DE0(temp_r29, temp_r30);
+    if ((temp_r31 < 0) || (temp_r3 < 0)) {
+        return -1U;
+    }
+    fn_80036FC4(temp_r30, temp_r31);
+    return fn_80036F5C(temp_r30, temp_r31);
+}
+
 s32 fn_800BBC40(void) {
     extern u16 lbl_80330EAC[];
     return (s32)lbl_80330EAC[0x656];
@@ -2636,6 +2689,18 @@ loop_1:
     }
 }
 
+void fn_800BDD08(void* arg0, void* arg1, int arg2) {
+    s32* ptr0 = (s32*)arg0;
+    s32* ptr1 = (s32*)arg1;
+    int count = arg2 >> 2;
+    if (count > 0) {
+        do {
+            *ptr0++ = *ptr1++;
+            count--;
+        } while (count != 0);
+    }
+}
+
 void fn_800BDDCC(s32 arg0, s32 arg1) {
     s32 loop_counter;
     u32* ptr_17C;
@@ -3062,6 +3127,55 @@ s32 fn_800C3260(u8 *arg0) {
     } while (i != 0);
 
     return 0;
+}
+
+void fn_800C32A4(void *ptr) {
+    u8 *p = (u8 *)ptr;
+    int i;
+    
+    for (i = 0; i < 12; i++) {
+        p[0] = 0;
+        p[1] = 0;
+        p[0x13] = 0;
+        p[0x12] = 0;
+        p[0x11] = 0;
+        p[0x10] = 0;
+        p[0x16] = 0x80;
+        p[0x15] = 0x80;
+        p[0x14] = 0x80;
+        p[0x17] = 0xFF;
+        p[0x18] = 0;
+        p[0x19] = 0;
+        p[0x2B] = 0;
+        p[0x2A] = 0;
+        p[0x29] = 0;
+        p[0x28] = 0;
+        p[0x2E] = 0x80;
+        p[0x2D] = 0x80;
+        p[0x2C] = 0x80;
+        p[0x2F] = 0xFF;
+        p[0x30] = 0;
+        p[0x31] = 0;
+        p[0x43] = 0;
+        p[0x42] = 0;
+        p[0x41] = 0;
+        p[0x40] = 0;
+        p[0x46] = 0x80;
+        p[0x45] = 0x80;
+        p[0x44] = 0x80;
+        p[0x47] = 0xFF;
+        p[0x48] = 0;
+        p[0x49] = 0;
+        p[0x5B] = 0;
+        p[0x5A] = 0;
+        p[0x59] = 0;
+        p[0x58] = 0;
+        p[0x5E] = 0x80;
+        p[0x5D] = 0x80;
+        p[0x5C] = 0x80;
+        p[0x5F] = 0xFF;
+        p += 0x60;
+    }
 }
 
 void fn_800C3364(s32 arg0, s32 arg1) {
