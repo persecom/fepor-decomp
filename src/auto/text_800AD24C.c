@@ -189,6 +189,24 @@ loop_1:
     return M2C_FIELD(arg0, s32 *, 0x74);
 }
 
+extern u16 lbl_80367820;
+s32 fn_800B4FF8(u8 *arg0, u8 *arg1) {
+    s32 temp_r4;
+    u16 temp_r3;
+    u16 temp_r0_2;
+    
+    temp_r4 = lbl_80367820 + 0x92;
+    temp_r3 = *(u16*)(temp_r4 + (*arg0 * 0x98));
+    temp_r0_2 = *(u16*)(temp_r4 + (*arg1 * 0x98));
+    if (temp_r3 > temp_r0_2) {
+        return 1;
+    }
+    if (temp_r3 < temp_r0_2) {
+        return -1;
+    }
+    return 0;
+}
+
 void fn_800B50E4(void) {
     M2C_UNK fn_800B4C20();
     M2C_UNK fn_8020A51C();
@@ -777,6 +795,20 @@ s32 fn_800B8198(void) {
     M2C_UNK fn_8016B6D4();
     fn_800C0658();
     fn_8016B6D4();
+    return 1;
+}
+
+void fn_800B8208(s32 arg0) {
+    extern M2C_UNK lbl_8026ECB8;
+    if (fn_8000BCA4(&lbl_8026ECB8 + 0xA29, &lbl_8026ECB8) == 0U) {
+        fn_8000C188(arg0);
+    }
+}
+
+s32 fn_800B8250(s8 arg0, s8 arg1, u8 arg2, s32 arg3) {
+    M2C_UNK fn_8010FD70(M2C_UNK *, s8, s8, u8, s32);
+    extern M2C_UNK lbl_8032BB58;
+    fn_8010FD70(&lbl_8032BB58, arg0, arg1, arg2, arg3);
     return 1;
 }
 
@@ -1716,6 +1748,11 @@ s32 fn_800BCB80(s32 arg0) {
     return arg0;
 }
 
+s32 fn_800BCBBC(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
+    fn_8014D254(lbl_80330708, arg0, arg1, arg2, arg3, arg0);
+    return 1;
+}
+
 void fn_800BCC14(s8 arg0) {
     *(u8*)((u8*)lbl_80330708 + 0x11) = arg0;
 }
@@ -1726,6 +1763,19 @@ s16 fn_800BCC24(void) {
 
 void fn_800BCC34(s16 arg0) {
     *(u16*)((char*)lbl_80330708 + 0x12) = arg0;
+}
+
+s32 fn_800BCC44(void) {
+    void *fn_80016B7C();
+    M2C_UNK fn_80019E8C();
+    void *temp_r3;
+
+    fn_80019E8C();
+    temp_r3 = fn_80016B7C();
+    if (temp_r3 == NULL) {
+        return 0;
+    }
+    return (M2C_FIELD(temp_r3, s32 *, 0x1A0) & 8) == 0;
 }
 
 extern u8 lbl_802EF4C8[24];
@@ -1840,6 +1890,21 @@ s32 fn_800BD0CC(u8 arg0) {
         return 0;
     }
     return *(s8 *)((u8 *)var_r3 + 0x19E);
+}
+
+s32 fn_800BD3DC(u8 arg0) {
+    extern u16 lbl_802B14E4[];
+    void *var_r3;
+
+    if (arg0 != 0) {
+        var_r3 = &lbl_802B14E4[(arg0 - 1) * 0x140];
+    } else {
+        var_r3 = NULL;
+    }
+    if ((var_r3 == NULL) || (*(u32 *)((u8 *)var_r3 + 0x188) == 0U)) {
+        return 0;
+    }
+    return *(s32 *)((u8 *)var_r3 + 0x1A0);
 }
 
 u8 fn_800BD5AC(void) {
