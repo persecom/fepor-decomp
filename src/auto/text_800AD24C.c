@@ -32,6 +32,14 @@ void fn_800ADD48(void) {
     fn_8002F61C(&lbl_802EF4E0);
 }
 
+extern void fn_8003BE50(void);
+void fn_800AE1FC(void) {
+    fn_8002F62C(&lbl_802EF4E0);
+    fn_8002F740();
+    fn_8003BE50();
+    fn_8002F61C(&lbl_802EF4E0);
+}
+
 void fn_800AE904(void *arg0) {
     M2C_FIELD(M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), void **, 0x4C), s32 *, 0x4C) = 0;
 }
