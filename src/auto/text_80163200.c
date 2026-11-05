@@ -2489,22 +2489,19 @@ void fn_801812A0(void) {
     fn_8005C8B4(lbl_802789F0 + 0x116);
 }
 
+#pragma opt_common_subs off
 void fn_801812CC(void *arg0) {
-    struct Data {
-        u8 pad[0x116];
-        u8 unk116[0x10];
-    };
     u8 fn_8005BA10(void *);
     s32 fn_8003FCCC(void *);
     void fn_8000C188(void *);
-    extern struct Data lbl_802789F0;
+    extern u8 lbl_802789F0[];
 
-    if (fn_8005BA10(lbl_802789F0.unk116)) {
-        M2C_FIELD(arg0, s32 *, 0x44) = fn_8003FCCC(lbl_802789F0.unk116);
+    if (fn_8005BA10(lbl_802789F0 + 0x116)) {
+        M2C_FIELD(arg0, s32 *, 0x44) = fn_8003FCCC(lbl_802789F0 + 0x116);
         fn_8000C188(arg0);
     }
 }
-
+#pragma opt_common_subs reset
 s32 fn_8018256C(void) {
     return 1;
 }
