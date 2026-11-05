@@ -487,4 +487,9 @@ s32 fn_80016A9C(s32 arg0) {
     }
     return 0;
 }
+#include "common.h"
 
+typedef struct {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+} Struct_8001473C;
