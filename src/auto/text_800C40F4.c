@@ -589,6 +589,7 @@ u32 *fn_800D6898(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3, void *arg4) {
     fn_800CA728(arg0, p, p + len, arg4, tag);
     return arg0;
 }
+#pragma use_lmw_stmw reset
 
 void fn_800D6940(void *arg0) {
     s32 r4;
