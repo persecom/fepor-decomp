@@ -749,3 +749,4 @@ extern f32 lbl_8036A30C;
 extern f32 lbl_8036A35C;
 extern f32 lbl_8036A3B8;
 extern void *lbl_80274F74;
+extern void *lbl_80367A68;
