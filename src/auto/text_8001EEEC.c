@@ -20,13 +20,13 @@ typedef struct {
 } Actor;
 
 
-void fn_8001EEEC(void* actor) {
-    if (*((s32*)actor) == 0) {
+void fn_8001EEEC(Actor* actor) {
+    if (actor == NULL || actor->field_0x0 == 0) {
         return;
     }
-    *(s32*)((char*)actor + 0x4) = 0;
-    *(s32*)((char*)actor + 0x34) = 5;
-    *(s32*)((char*)actor + 0x38) = 1;
+    actor->field_0x4 = 0;
+    actor->field_0x34 = 5;
+    actor->field_0x38 = 1;
 }
 
 void fn_8001EF7C(void) {
@@ -54,14 +54,10 @@ s32 fn_8001FC34(s32 arg0) {
     return arg0 + 0x14194;
 }
 
-void fn_8001FC40(s32 arg0) {
-    s32 temp_r3;
-    
-    // Simple conditional assignment - get sign bit and use it to clamp input to 0 or more
-    s32 sign = arg0 >> 31;
-    temp_r3 = (arg0 + sign) ^ sign;
-    
-    fn_8001FC7C(temp_r3);
+u8 *fn_8001FC7C(void *arg0, u8 *arg1, s8 arg2, s8 arg3);
+u8 *fn_8001FC40(void *arg0, s8 arg1, s8 arg2) {
+    M2C_FIELD(arg0, u8 *, 0xC) = 1;
+    return fn_8001FC7C(arg0, (u8 *)arg0 + 0x14194, arg1, arg2);
 }
 
 void fn_8002134C(struct unit* arg0)
