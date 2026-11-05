@@ -275,6 +275,12 @@ void fn_8005BF8C(void *arg0) {
     *ptr |= 0x2004;
 }
 
+void fn_8005BFE4(void *arg0) {
+ void fn_8005D9A8(void *); void fn_8005DE84(void *); u32 fn_801ECE40(void); u8 fn_801ECECC(void *,s32,s32,void *,void *); extern u8 fn_8005DFB8[]; volatile u16 *flags=(u16*)((u8*)arg0+0x30);
+ if ((*flags&8)&&fn_801ECE40()==0&&fn_801ECECC(arg0,*(s32*)((u8*)arg0+0x38),*(s32*)((u8*)arg0+0x3c),fn_8005DFB8,arg0)) {*flags|=0x80;*(s32*)((u8*)arg0+0x6c)=*(s32*)((u8*)arg0+0x38);if(*flags&0x400)fn_8005DE84(arg0);}
+ else {if(*flags&0x400){fn_8005DE84(arg0);return;}if(*flags&0x800)fn_8005D9A8(arg0);*flags|=0x2000;}
+}
+
 s32 fn_8005C0AC(u8 *arg0) {
     u8 *sp18;
     u8 *sp8;
