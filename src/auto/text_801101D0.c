@@ -6,6 +6,8 @@ extern u16 lbl_80296128[];
 extern s32 lbl_80367110;
 
 extern s32 lbl_80330708[];
+extern f32 lbl_8036A184;
+extern f32 lbl_8036A1BC;
 
 typedef struct {
     void *unk0;
