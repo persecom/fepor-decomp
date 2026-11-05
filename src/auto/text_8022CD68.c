@@ -524,9 +524,9 @@ void fn_80261714(s32 arg0) {
 }
 
 void fn_8026171C(s32 arg0, s32 arg1) {
-    extern s32 lbl_80368AA0;
-    M2C_FIELD((lbl_80368AA0 + (arg0 * 0xF8)), s32 *, 0x1C) = arg1;
-}
+      extern u16 *lbl_80368AA0;
+      M2C_FIELD((lbl_80368AA0 + (arg0 * 0xF8)), s32 *, 0x1C) = arg1;
+  }
 
 void fn_80261AE0(s32 arg0, s32 arg1, s32 arg2) {
     extern u16 lbl_80368AA0;
