@@ -1051,6 +1051,20 @@ s32 fn_800790CC(void) {
     return 0;
 }
 
+void fn_80079198(s32 arg0) {
+    void *fn_8000CA64(M2C_UNK *, M2C_UNK *);
+    extern M2C_UNK lbl_80288CAC;
+    void *temp_r3;
+
+    temp_r3 = fn_8000CA64(&lbl_80288CAC, &lbl_80288CAC);
+    M2C_FIELD(temp_r3, s32 *, 0x30) = arg0;
+    M2C_FIELD(temp_r3, s32 *, 0x34) = 0;
+    M2C_FIELD(temp_r3, s32 *, 0x38) = 8;
+    M2C_FIELD(temp_r3, s16 *, 0x28) = 8;
+    M2C_FIELD(temp_r3, s32 *, 0x3C) = 0xFF;
+    M2C_FIELD(temp_r3, s32 *, 0x40) = 0;
+}
+
 void fn_80079E08(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x38) = 0;
 }
@@ -1246,6 +1260,7 @@ extern void *fn_800285C0(void *);
 extern u16 lbl_8026C0B8[];
 #include "global.h"
 extern u8 D_802EF4C8[24];
+extern u16 lbl_80288CAC;
 #include "global.h"
 
 extern u16 lbl_80288CAC;
