@@ -2,6 +2,7 @@
 #include "common.h"
 
 extern s32 lbl_803689A8;
+extern void (*lbl_80368B34)(s16);
 
 s32 fn_80230BBC(s32 arg0) {
     s32 temp_r4;
@@ -413,6 +414,28 @@ void fn_80257C04(void *arg0) {
     M2C_UNK fn_80257998();
     M2C_FIELD(arg0, s8 *, 1) = 0;
     fn_80257998();
+}
+
+void fn_80258A98(s32 arg0, s32 arg1) {
+    extern s32 lbl_8035B220[];
+    extern s32 lbl_80368A58;
+    extern s32 *lbl_80368A5C;
+    extern s32 *lbl_80368A60;
+    
+    s32 var_r3 = 0;
+    s32 var_r4 = -2;
+    s32 var_r5 = arg0;
+    s32 var_r6 = arg0 + arg1;
+    lbl_80368A60 = NULL;
+    lbl_8035B220[1] = var_r4;
+    lbl_8035B220[2] = var_r3;
+    lbl_8035B220[0x183] = var_r5;
+    lbl_8035B220[0x185] = var_r5;
+    lbl_8035B220[0x184] = var_r6;
+    lbl_8035B220[0] = var_r3;
+    lbl_80368A60 = &lbl_8035B220[0];
+    lbl_80368A58 = var_r3;
+    lbl_80368A5C = &lbl_8035B220[0];
 }
 
 void *fn_80258AD8(void) {
@@ -854,6 +877,20 @@ void fn_80266FFC(void) {
 void fn_80267000(void) {
 
 }
+
+extern s32 lbl_80368B30;
+extern s32 lbl_80368B44;
+void fn_80267498(s32 arg0) {
+    s32 var = arg0;
+    if (var != 0) {
+        *(s8*)&lbl_80368B44 = (s8)var;
+        if (lbl_80368B30 != 0) {
+            // Jump to lbl_80368B30
+            ((void(*)())lbl_80368B30)();
+        }
+    }
+}
+
 extern u16 lbl_802A1E10[4];
 extern u16 lbl_8034CBB4[288];
 extern u16 lbl_8035D118[];
