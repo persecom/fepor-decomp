@@ -1615,6 +1615,10 @@ s16 fn_800BCC24(void) {
     return *(s16*)((char*)lbl_80330708 + 0x12);
 }
 
+void fn_800BCC34(s16 arg0) {
+    *(u16*)((char*)lbl_80330708 + 0x12) = arg0;
+}
+
 s32 fn_800BCDF0(u8 arg0) {
     extern u8 lbl_802B14E4[];
     void *unit;
