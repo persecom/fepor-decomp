@@ -277,4 +277,4 @@ void fn_801FC434(void) {
 void fn_801FC438(void) {
 
 }
-
+extern u16 lbl_80280B58[];
