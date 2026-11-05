@@ -956,6 +956,19 @@ s32 fn_800BA230(u32 arg0, s32 arg1) {
     return 1;
 }
 
+void fn_800BAD40(s32 arg0) {
+    u8 fn_800188A4(s32);
+    M2C_UNK fn_800187F0(void);
+    extern s32 lbl_80367110;
+
+    if (fn_800188A4(0) == 0) {
+        fn_8000C188(arg0);
+    } else if (lbl_80367110 & 1) {
+        fn_800187F0();
+        fn_8000C188(arg0);
+    }
+}
+
 s32 fn_800BAD9C(s32 arg0, s32 arg1) {
     M2C_UNK fn_8001885C(void);
     M2C_UNK fn_8014CBD8(void *, f32, f32);
