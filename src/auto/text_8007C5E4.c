@@ -1576,5 +1576,5 @@ typedef struct {
     u8 unk4;
     u8 unk5;
 } SomeStruct;
-extern u16 lbl_803120A0[];
+extern u16 lbl_803120A0[8];
 extern s32 lbl_803674F8;
