@@ -325,6 +325,10 @@ s32 fn_8001DDC4(u8 arg0) {
     return 0;
 }
 
+u8 fn_8001DDE8(void *arg0) {
+    return (u8) ((((M2C_FIELD(arg0, s32 *, 0x3C) & 0x40E) ^ 0) | ((M2C_FIELD(arg0, s32 *, 0x38) & 0) ^ 0)) != 0);
+}
+
 s32 fn_8001ED58(void *arg0) {
     s32 fn_8000E0E4(s32);
     if (fn_8000D354(M2C_FIELD(arg0, s32 *, 4)) != 0U) {
@@ -341,4 +345,5 @@ void fn_8001EDA0(u8 *arg0) {
         *arg0 = temp_r4 | 3;
     }
 }
-
+extern void *lbl_80367204;
+extern s32 lbl_80367208;
