@@ -966,6 +966,20 @@ void fn_800DBF38(void *arg0, s32 arg1, f32 farg0, f32 farg1) {
     }
 }
 
+void fn_800DBF84(void *arg0) {
+    f64 fn_80238638(f64);
+
+    if (M2C_FIELD(arg0, s32 *, 0x5C) > 0) {
+        M2C_FIELD(arg0, f32 *, 0x68) = M2C_FIELD(arg0, f32 *, 0x4C) * (f32)fn_80238638(M2C_FIELD(arg0, f32 *, 0x58));
+        M2C_FIELD(arg0, f32 *, 0x58) += M2C_FIELD(arg0, f32 *, 0x50);
+        M2C_FIELD(arg0, f32 *, 0x4C) += M2C_FIELD(arg0, f32 *, 0x54);
+        if (M2C_FIELD(arg0, f32 *, 0x4C) < 0.0f) {
+            M2C_FIELD(arg0, f32 *, 0x4C) = 0.0f;
+        }
+        M2C_FIELD(arg0, s32 *, 0x5C)--;
+    }
+}
+
 void fn_800DC010(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x48) = arg1;
 }
