@@ -154,6 +154,34 @@ s32 fn_80103A6C(void) {
     return 0;
 }
 
+s32 fn_80103A74(void) {
+    s32 fn_8000BCA4(void *);
+    M2C_UNK fn_8000C070(s32, M2C_UNK);
+    M2C_UNK fn_800A8400();
+    M2C_UNK fn_800C93EC(M2C_UNK *);
+    M2C_UNK fn_800C992C(M2C_UNK *, void *, s32);
+    M2C_UNK fn_800C9A60(M2C_UNK *, M2C_UNK);
+    M2C_UNK fn_800C9ABC(M2C_UNK *, void *, M2C_UNK *);
+    M2C_UNK fn_801EAABC(s32);
+    s32 strlen(void *);
+    extern u8 lbl_802734D0[];
+    extern u8 lbl_80330708[];
+
+    s32 temp_r30;
+    M2C_UNK spC;
+    M2C_UNK sp8;
+
+    temp_r30 = fn_8000BCA4(lbl_802734D0 + 0xC4);
+    fn_800C9ABC(&spC, lbl_80330708 + 0x504, &sp8);
+    fn_800C992C(&spC, lbl_802734D0 + 0x157, strlen(lbl_802734D0 + 0x157));
+    fn_800A8400();
+    fn_8000C070(temp_r30, 0);
+    fn_800C93EC(&spC);
+    fn_801EAABC(temp_r30);
+    fn_800C9A60(&spC, -1);
+    return 6;
+}
+
 void *fn_80103B20(void) {
     extern u16 lbl_802734D0[];
     return (char*)&lbl_802734D0[0x161] + 0x0;
@@ -281,6 +309,54 @@ void fn_80104160(s32 arg0, s32 arg1) {
     fn_8017A430(arg1, 4, arg0);
 }
 
+s32 fn_8010418C(void *arg0, s32 arg1) {
+    u8 r0;
+    s32 r5;
+    
+    r5 = 0;
+    r0 = *(u8 *)arg0;
+    if ((r0 >> 5U) & 7) {
+        r5 = 1;
+    }
+    if ((arg1 + 1) == r5) {
+        return 0x1B;
+    }
+    
+    r0 = *(u16 *)arg0;
+    if ((r0 >> 7U) & 7) {
+        r5 += 1;
+    }
+    if ((arg1 + 1) == r5) {
+        return 0x1C;
+    }
+    
+    r0 = *(u8 *)(((u8 *)arg0) + 1);
+    if ((r0 >> 4U) & 7) {
+        r5 += 1;
+    }
+    if ((arg1 + 1) == r5) {
+        return 0x1D;
+    }
+    
+    r0 = *(u8 *)arg0;
+    if ((r0 >> 2U) & 7) {
+        r5 += 1;
+    }
+    if ((arg1 + 1) == r5) {
+        return 0x1E;
+    }
+
+    r0 = *(u8 *)(((u8 *)arg0) + 1);
+    if (r0 & 7) {
+        r5 += 1;
+    }
+    if ((arg1 + 1) == r5) {
+        return 0x1F;
+    }
+    
+    return 0;
+}
+
 s32 fn_8010424C(void *arg0) {
     s32 var_r4;
     u8* ptr = (u8*)arg0;
@@ -332,6 +408,28 @@ void fn_801042A8(s32 arg0, s32 arg1, u8 arg2)
     default:
         break;
     }
+}
+
+s32 fn_80104338(u8 arg0) {
+    switch (arg0) {
+    case 0: return 0x10;
+    case 1: return 0x11;
+    case 2: return 0x12;
+    case 3: return 0x13;
+    case 4: return 0x15;
+    case 5: return 0x17;
+    case 6: return 0x16;
+    case 7: return 0x18;
+    case 8: return 0x14;
+    case 9: return 0x10;
+    case 10: return 0x11;
+    case 11: return 0x12;
+    case 12: return 0x13;
+    case 13: return 0x15;
+    case 14: return 0x17;
+    case 15: return 0x16;
+    }
+    return 0;
 }
 
 void fn_80104410(void *arg0) {
@@ -541,3 +639,4 @@ loop_4:
 }
 
 extern u16 lbl_802734D0;
+extern u32 jumptable_8028F290[];
