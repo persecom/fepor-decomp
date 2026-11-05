@@ -676,6 +676,24 @@ void fn_801F1848(void *arg1) {
     }
 }
 
+void fn_801F1888(void *arg0) {
+    struct Tree {
+        s32 count;
+        void *root;
+        void *unk8;
+        void **first;
+    };
+    void fn_800D6374(struct Tree *, void *);
+    struct Tree *tree = arg0;
+
+    if (tree->root != NULL) {
+        fn_800D6374(tree, tree->root);
+        tree->count = 0;
+        tree->root = NULL;
+        tree->first = &tree->root;
+    }
+}
+
 #include "common.h"
 extern u16 lbl_8029A5FC;
 extern u16 lbl_802EF4C8;
