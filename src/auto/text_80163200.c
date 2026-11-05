@@ -389,6 +389,11 @@ void fn_801793B4(void) {
     fn_8000A248();
 }
 
+void fn_8017A3E0(void *arg0, s32 arg1, u8 arg2) {
+    memset(M2C_FIELD(arg0, s32 *, 4), arg2, arg1);
+    M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + arg1);
+}
+
 void fn_8017A430(void *arg0, s32 arg1, s32 arg2) {
     memcpy(M2C_FIELD(arg0, s32 *, 4), arg2, arg1);
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + arg1);
