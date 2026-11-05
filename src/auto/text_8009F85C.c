@@ -204,6 +204,22 @@ void *fn_800A0338(void) {
     return (void *)((u8 *)&lbl_8026D8D8 + 0x7D6);
 }
 
+void *fn_800A03E0(void) {
+    extern u16 lbl_8026D8D8;
+    void* temp = &lbl_8026D8D8;
+    return (u8*)temp + 0x806;
+}
+
+void *fn_800A0434(void) {
+    extern u16 lbl_8026D8D8;
+    return (void *)(((u32)&lbl_8026D8D8) + 0x415);
+}
+
+void *fn_800A0488(void) {
+    extern u8 lbl_8026D8D8[];
+    return (char *)&lbl_8026D8D8 + 0x424;
+}
+
 s32 fn_800A0594(void) {
     M2C_UNK fn_800C418C();
     fn_800C418C();
