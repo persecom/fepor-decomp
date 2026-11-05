@@ -44,22 +44,6 @@ static inline u32 FindUnk48(void *arg0) {
     return 0U;
 }
 
-static inline void *AllocNamed(s8 heap, u32 size, char *name) {
-    u32 fn_800C44F4(s8);
-    void *fn_800C4604(s8, u32, char *, u32);
-    unsigned long strlen(const char *);
-    s32 ofs;
-
-    if (fn_800C44F4(heap) < size) {
-        return NULL;
-    }
-    ofs = strlen(name) - 15;
-    if (ofs < 0) {
-        ofs = 0;
-    }
-    return fn_800C4604(heap, size, name + ofs, size);
-}
-
 void *fn_8005AE20(void) {
     extern void *lbl_8026AE88;
     return (void *)(((u32)&lbl_8026AE88) + 0x9);
