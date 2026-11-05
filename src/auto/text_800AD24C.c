@@ -1494,8 +1494,8 @@ s32 fn_800C29D0(s32 arg0, s32 arg1) {
     return (s32)&((u8 (*)[0x18])arg0)[arg1 - 1][0x14];
 }
 
-s8 fn_800C2ACC(s32 arg0, s32 arg1) {
-    return (s8)((u8 (*)[0x18])arg0)[arg1 - 1][0x13];
+s8 fn_800C2ACC(Unk800C2ACC *arg0, s32 arg1) {
+    return (s8)arg0[arg1 - 1].unk13;
 }
 
 s32 fn_800C30CC(s32 arg0, s32 arg1) {
