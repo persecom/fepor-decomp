@@ -521,3 +521,6 @@ void fn_8001EDA0(u8 *arg0) {
 }
 extern void *lbl_80367204;
 extern s32 lbl_80367208;
+#include "common.h"
+extern void *lbl_80367204;
+extern s32 lbl_80367208;
