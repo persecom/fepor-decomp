@@ -1622,4 +1622,4 @@ s32 fn_801032F8(void) {
     fn_800D758C(lbl_80367918);
     return 0;
 }
-
+extern s32 lbl_80320C20;
