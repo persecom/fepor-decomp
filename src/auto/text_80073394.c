@@ -113,31 +113,61 @@ void fn_80073610(void) {
     fn_8000E0E4(lbl_8026BE40 + 0x238);
 }
 
-s32 fn_8007363C(s32 arg0, void *arg1, void *arg2) {
-    M2C_UNK fn_8000CAA0(M2C_UNK *);
-    s32 fn_8000E0E4(void *);
-    M2C_UNK fn_80166AE8(s32, s32, s32, void *);
+#pragma cplusplus on
+#pragma use_lmw_stmw on
+extern "C" void fn_8000CAA0(void *);
+extern "C" void fn_80166AE8(s32, s32, s32, void *);
+extern "C" s32 fn_8007363C(s32 arg0, void *arg1, void *arg2) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual void v20() = 0;
+        virtual s16 v21() = 0;
+        virtual s16 v22() = 0;
+    };
     extern u8 lbl_8026BE40[];
     extern u8 lbl_80286ED8[];
-    s16 temp_r28;
-    s16 temp_r30;
-    s16 temp_r31_2;
-    s32 temp_r29;
-    void *temp_r31;
+    Obj *obj;
+    s32 a;
+    s32 str;
+    s32 b;
+    s16 x;
+    s16 y;
 
     if (M2C_FIELD(arg2, u8 *, 0x39) != 0) {
-        temp_r29 = fn_8000E0E4(lbl_8026BE40 + 0x242);
-        temp_r31 = M2C_FIELD(arg1, void **, 0x3C);
-        temp_r28 = M2C_FIELD(arg2, s16 *, 0x30);
-        temp_r30 = M2C_FIELD(M2C_FIELD(temp_r31, void **, 4), s16 (**)(void *), 0x60)(temp_r31);
-        temp_r31_2 = M2C_FIELD(arg2, s16 *, 0x32);
-        fn_80166AE8(M2C_FIELD(M2C_FIELD(temp_r31, void **, 4), s16 (**)(void *), 0x5C)(temp_r31) + temp_r28, temp_r30 + temp_r31_2, temp_r29, arg1);
+        str = fn_8000E0E4(lbl_8026BE40 + 0x242);
+        obj = M2C_FIELD(arg1, Obj **, 0x3C);
+        x = M2C_FIELD(arg2, s16 *, 0x30);
+        a = obj->v22();
+        y = M2C_FIELD(arg2, s16 *, 0x32);
+        b = obj->v21();
+        fn_80166AE8(b + x, a + y, str, arg1);
         return 0;
     }
-    fn_8000CAA0((M2C_UNK *)lbl_80286ED8);
+    fn_8000CAA0(lbl_80286ED8);
     return 4;
 }
-
+#pragma use_lmw_stmw reset
+#pragma cplusplus reset
 u8 fn_800736F0(void) {
     u8 fn_801E3620(M2C_UNK *);
     extern u8 lbl_80331FB8[];
