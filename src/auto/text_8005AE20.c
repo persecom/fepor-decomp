@@ -437,7 +437,7 @@ void fn_8005D1DC(char *name) {
     fn_8005D690(FindEntryByName(name));
 }
 
-int fn_8005DE84(void *a){u32 fn_80006AC0(u32);u32 fn_800C44F4(s8);u32 fn_800C4604(s8,u32,void*,u32);u32 fn_8005E594(s8,u32,void*);void fn_800065B0(u32,u32,void*,void*);s32 strlen(void*);extern u8 fn_8005DF60[];u32 old;u32 n;s8 ch;u32 len;old=*(u32*)((u8*)a+0x38);*(u32*)((u8*)a+0x3c)=fn_80006AC0(old);ch=*(u8*)((u8*)a+0x29);n=*(u32*)((u8*)a+0x3c);if(fn_800C44F4(ch)<n)len=0;else{len=strlen(a)-15;if((s32)len<0)len=0;len=fn_800C4604(ch,n,(u8*)a+len,n);}*(u32*)((u8*)a+0x38)=len;if(len==0){len=fn_8005E594((s8)*(u8*)((u8*)a+0x29),*(u32*)((u8*)a+0x3c),a);*(u32*)((u8*)a+0x38)=len;}fn_800065B0(old,*(u32*)((u8*)a+0x38),fn_8005DF60,a);return *(u32*)((u8*)a+0x38);}
+int fn_8005DE84(void *a){u32 fn_80006AC0(u32);u32 fn_800C44F4(s8);u32 fn_800C4604(s8,u32,void*,u32);u32 fn_8005E594(s8,u32,void*);void fn_800065B0(u32,u32,void*,void*);s32 strlen(void*);extern u8 fn_8005DF60[];u32 old;u32 n;s8 ch;u32 len;old=*(u32*)((u8*)a+0x38);*(u32*)((u8*)a+0x3c)=fn_80006AC0(old);ch=(s8)*(u8*)((u8*)a+0x29);n=*(u32*)((u8*)a+0x3c);if(fn_800C44F4(ch)<n)len=0;else{len=strlen(a)-15;if((s32)len<0)len=0;len=fn_800C4604(ch,n,(u8*)a+len,n);}*(u32*)((u8*)a+0x38)=len;if(len==0)len=fn_8005E594((s8)*(u8*)((u8*)a+0x29),*(u32*)((u8*)a+0x3c),a),*(u32*)((u8*)a+0x38)=len;fn_800065B0(old,*(u32*)((u8*)a+0x38),fn_8005DF60,a);return 0;}
 
 void fn_8005DF60(s32 arg0, s32 arg1) {
     M2C_UNK fn_8020AEC4(M2C_UNK *, void *, M2C_UNK, M2C_UNK *, s32);
@@ -2133,3 +2133,9 @@ extern f32 lbl_80369224;
 extern f32 lbl_80369228;
 extern s32 lbl_8036C444;
 extern s32 lbl_8036C448;
+#include "common.h"
+#include "global.h"
+
+extern f32 lbl_803692E0;
+extern f32 lbl_803692F8;
+extern f64 lbl_803692E8;
