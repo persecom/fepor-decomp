@@ -1190,6 +1190,28 @@ s32 fn_800BA230(u32 arg0, s32 arg1) {
     return 1;
 }
 
+s32 fn_800BA8F8(u8 arg0) {
+    void fn_8002297C(void *);
+    M2C_UNK fn_8003DFB8(void *);
+    M2C_UNK fn_801A251C(void);
+    extern u8 lbl_802B14E4[];
+    extern u8 lbl_802CA518[];
+    void *unit;
+
+    if (arg0 != 0) {
+        unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
+    } else {
+        unit = NULL;
+    }
+    if (unit == NULL || M2C_FIELD(unit, void **, 0x188) == NULL) {
+        return 0;
+    }
+    fn_8003DFB8(unit);
+    fn_8002297C(lbl_802CA518);
+    fn_801A251C();
+    return 1;
+}
+
 s32 fn_800BA96C(void) {
     void *fn_8000D354(void);
     M2C_UNK fn_800A87D4(s32);
