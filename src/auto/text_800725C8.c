@@ -13,11 +13,47 @@ void fn_800725C8(M2C_UNK **arg0) {
     *arg0 = &lbl_80285FE8 + 0xC;
 }
 
+void fn_8007278C(void) {
+    M2C_UNK fn_8000E0E4(void *);
+    M2C_UNK fn_80091A1C();
+    M2C_UNK fn_800A8A88(s32);
+    extern M2C_UNK lbl_8026BC88;
+    extern M2C_UNK lbl_802EF4C8;
+    if ((void *) M2C_FIELD(&lbl_802EF4C8, void **, 4) != NULL) {
+        fn_800A8A88(M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 4), s32 *, 0x188));
+        fn_80091A1C();
+        return;
+    }
+    fn_8000E0E4(&lbl_8026BC88 + 0x1A5);
+    fn_80091A1C();
+}
+
 void fn_800727E0(void) {
     extern u16 lbl_802EF4C8[12];
     fn_800285C0(lbl_802EF4C8);
     fn_8001D2C8();
     fn_80091A1C();
+}
+
+void fn_80072810(void) {
+    extern u16 lbl_802EF4C8[12];
+    extern u8 lbl_8032BB58[516];
+    u16* ptr = lbl_802EF4C8;
+    fn_8010FF24(lbl_8032BB58, ptr[0x19E], ptr[0x19F], 7);
+    fn_8010FA2C();
+    fn_8001D2C8();
+    fn_80091A1C();
+}
+
+void fn_80072890(void) {
+    M2C_UNK fn_80184C7C(s32, M2C_UNK, M2C_UNK, M2C_UNK);
+    extern M2C_UNK lbl_802EF4C8;
+    fn_80184C7C(M2C_FIELD(&lbl_802EF4C8, s32 *, 4), 0, 4, 0);
+}
+
+void fn_800728C8(void) {
+    extern u16 lbl_802EF4C8;
+    fn_80184C7C(lbl_802EF4C8, 0, 4, 0);
 }
 
 void fn_80072900(s32 arg0) {
@@ -31,6 +67,13 @@ void fn_80072900(s32 arg0) {
 void fn_8007293C(void) {
     extern u8 lbl_80330708[];
     lbl_80330708[0x54] = (u8)(lbl_80330708[0x54] & 0x7F);
+}
+
+void fn_80072954(void) {
+    M2C_UNK fn_801D3B14(M2C_UNK *);
+    extern M2C_UNK lbl_80330708;
+    M2C_FIELD(&lbl_80330708, u8 *, 0x54) = (u8) (M2C_FIELD(&lbl_80330708, u8 *, 0x54) | 0x80);
+    fn_801D3B14(&lbl_80330708);
 }
 
 void fn_80072A2C(void) {
@@ -51,6 +94,14 @@ void fn_80072CB0(s32 arg0) {
     M2C_UNK fn_801E3118(M2C_UNK *, s32, M2C_UNK);
     extern M2C_UNK lbl_803682F0;
     fn_801E3118(&lbl_803682F0, arg0, 1);
+}
+
+void fn_80072CDC(void *arg0) {
+    void fn_801DDBA8(void *, u8 *, s32, s32, s32);
+    extern u8 lbl_8026BE40[];
+    extern u16 lbl_80311D50[];
+    fn_801DDBA8(lbl_80311D50, lbl_8026BE40 + 0x155, 0, 1, 0);
+    M2C_FIELD(arg0, s32 *, 0x30) = -0x80;
 }
 
 void fn_8007303C(s32 arg0) {
