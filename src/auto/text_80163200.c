@@ -987,3 +987,4 @@ s32 fn_8018256C(void) {
 extern u32 lbl_802EF4C8[];
 extern u16 lbl_80278080[];
 extern u16 lbl_80294550[];
+extern f32 lbl_8036AB94;
