@@ -1,5 +1,8 @@
 /* Functions from 0x80073394 to 0x80073E70, found by decomp-toolkit. */
 #include "common.h"
+extern void fn_80006220(s32);
+extern void fn_8002D780(s32);
+extern void fn_8000BD98(void *);
 
 void *fn_80073394(void) {
     extern u16 lbl_8026BE40[];
@@ -132,6 +135,22 @@ s32 fn_8007363C(s32 arg0, void *arg1, void *arg2) {
     }
     fn_8000CAA0((M2C_UNK *)lbl_80286ED8);
     return 4;
+}
+
+u8 fn_800736F0(void) {
+    u8 fn_801E3620(M2C_UNK *);
+    extern u8 lbl_80331FB8[];
+    extern s32 lbl_80367110;
+    u8 var_r3;
+
+    if (lbl_80367110 & 0x10) {
+        return 0;
+    }
+    var_r3 = 2;
+    if (fn_801E3620((M2C_UNK *)lbl_80331FB8) != 0) {
+        var_r3 = 0;
+    }
+    return var_r3;
 }
 
 void fn_80073740(void) {
