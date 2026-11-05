@@ -18,7 +18,7 @@ static inline u8 GetItemKind(void *item) {
     return 0xC;
 }
 
-void *fn_80019E04(char *);
+void *fn_80019E04();
 
 static inline BOOL IsItemNamed(void *item, char *name) {
     return fn_80019E04(name) == item;
@@ -2702,6 +2702,7 @@ void fn_801001B8(s32 arg1, s32 arg2, s32 arg3) {
     fn_80100284(2, arg1, arg2, arg3, arg1);
 }
 
+#pragma readonly_strings on
 void fn_801007A0(void *arg0) {
     struct UnitBits {
         u16 f0 : 3;
@@ -2711,8 +2712,6 @@ void fn_801007A0(void *arg0) {
         u16 f4 : 3;
     };
     void fn_8010C504(void *);
-    void **fn_80037BBC(void *, s32);
-    u8 fn_8009326C(void *, void *);
     u8 fn_8009339C(void *, void *);
     u64 *fn_8001CB64(void **);
     s32 i;
@@ -2793,7 +2792,7 @@ void fn_801007A0(void *arg0) {
         M2C_FIELD(arg0, u32 *, 0x254) |= 0x01000000;
     }
 }
-
+#pragma readonly_strings reset
 s32 fn_80100CC8(void) {
     void *fn_80016BDC();
     s32 temp_r3;
