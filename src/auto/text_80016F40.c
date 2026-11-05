@@ -13,6 +13,26 @@ void fn_80016F40(void) {
     fn_8022C1E8(lbl_802B14E4, fn_800169A8, 0x280, 0x9F);
 }
 
+u8 fn_80017290(u8 *arg0) {
+    void *fn_8014C5A8(u16 *, u8);
+    u16* temp_r3;
+    
+    temp_r3 = fn_8014C5A8(lbl_80330708, *arg0);
+    if (temp_r3 == NULL) {
+        return -1; /* try signed */
+    }
+    return *(u8*)((char*)temp_r3 + 3);
+}
+
+void fn_800173B4(u8 *arg0, void *arg1) {
+    u8 fn_80105BC0(void *, M2C_UNK);
+    if (fn_80105BC0((u8 *)arg1 + 0x1BC, 0)) {
+        *arg0 = 1;
+        return;
+    }
+    *arg0 = M2C_FIELD(M2C_FIELD(arg1, void **, 0x190), u8 *, 8);
+}
+
 void fn_80017414(void *arg0, s32 arg1) {
     s16 fn_8017A9B0(s32);
     s8 fn_8017A9DC(s32);
