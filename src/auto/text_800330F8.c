@@ -704,7 +704,7 @@ void fn_8004D370(void) {
 }
 
 void fn_8004DC54(s8 arg0) {
-    extern s8 lbl_803672BC;
+    extern u8 lbl_803672BC;
     lbl_803672BC = arg0;
 }
 
