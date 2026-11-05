@@ -307,6 +307,15 @@ void fn_80025FF0(void *arg0) {
     fn_8019B704(arg0, 0);
 }
 
+void fn_80026054(s32 arg0) {
+    M2C_UNK fn_800BEAC0(s32, M2C_UNK, u8, u8);
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_80330EAC[];
+    if ((s8)lbl_80330EAC[0x488] == 0) {
+        fn_800BEAC0(arg0, 0, lbl_802EF4C8[0xF], lbl_802EF4C8[0x10]);
+    }
+}
+
 void fn_8002666C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x60) = 0;
 }
