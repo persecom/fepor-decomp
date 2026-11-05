@@ -89,6 +89,14 @@ void fn_80037814(void) {
 
 }
 
+s32 fn_800378CC(s32 arg0) {
+    M2C_UNK fn_80165E90(s32 *, s32);
+    s32 sp8;
+
+    fn_80165E90(&sp8, arg0 + 0x1BC);
+    return sp8;
+}
+
 void fn_80037AB8(void *arg0) {
     void *temp_r6;
     void *temp_r6_2;
@@ -461,6 +469,20 @@ u8 fn_80047AF8(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x61);
 }
 
+void fn_80048A3C(s8 arg0, s8 arg1, s8 arg2, void *arg3) {
+    extern s8 lbl_8036728C;
+    extern s8 lbl_8036728D;
+    extern s8 lbl_8036728E;
+    extern M2C_UNK lbl_80367290;
+    lbl_8036728C = arg0;
+    lbl_8036728D = arg1;
+    lbl_8036728E = arg2;
+    M2C_FIELD(&lbl_80367290, u8 *, 0) = (u8) M2C_FIELD(arg3, u8 *, 0);
+    M2C_FIELD(&lbl_80367290, u8 *, 1) = (u8) M2C_FIELD(arg3, u8 *, 1);
+    M2C_FIELD(&lbl_80367290, u8 *, 2) = (u8) M2C_FIELD(arg3, u8 *, 2);
+    M2C_FIELD(&lbl_80367290, u8 *, 3) = (u8) M2C_FIELD(arg3, u8 *, 3);
+}
+
 void fn_80048A70(s8 arg0) {
     extern u8 lbl_80330708[];
     extern s8 lbl_80367289;
@@ -579,6 +601,13 @@ s32 fn_80049E1C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x10);
 }
 
+void fn_8004A1F0(void) {
+    extern u32* lbl_80285858;
+    extern u16 lbl_80367110;
+    fn_8000BF00(lbl_80285858);
+    lbl_80367110 &= 0xFBFF;
+}
+
 s32 fn_8004AFB4(void *arg0, s32 arg1) {
     return (M2C_FIELD(arg0, s32 *, 0x10) & (1 << arg1)) != 0;
 }
@@ -625,6 +654,12 @@ s32 fn_8004C0F0(void *arg0) {
     return (M2C_FIELD(arg0, u8 *, 3) & 2) != 0;
 }
 
+void fn_8004D370(void) {
+    M2C_UNK fn_80067708(M2C_UNK, M2C_UNK, M2C_UNK *, M2C_UNK);
+    extern M2C_UNK fn_8004C80C;
+    fn_80067708(2, 1, &fn_8004C80C, 0);
+}
+
 void fn_8004DC54(s8 arg0) {
     extern s8 lbl_803672BC;
     lbl_803672BC = arg0;
@@ -650,6 +685,15 @@ void fn_8004DF04(void) {
     lbl_803672C6 = 0x3E8;
     lbl_803672C8 = -0x3E8;
     lbl_803672CA = -0x3E8;
+}
+
+void fn_8004DF20(void *arg0) {
+    u8 temp_r4;
+
+    temp_r4 = ((u8*)arg0)[3];
+    if ((temp_r4 & 2) && !(temp_r4 & 8)) {
+        fn_80060060((char*)arg0 + 0x1C);
+    }
 }
 
 s32 fn_8004FA88(void *arg0) {
