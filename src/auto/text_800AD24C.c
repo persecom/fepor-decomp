@@ -1763,6 +1763,26 @@ u16 fn_800BBD68(void) {
     return M2C_FIELD(temp_r3, u16 *, 0xE);
 }
 
+s32 fn_800BC0A4(u8 arg0) {
+    s32 fn_8001CA2C();
+    u32 *fn_80037BD0();
+    extern M2C_UNK lbl_802B14E4;
+    void *var_r3;
+
+    if (arg0 != 0) {
+        var_r3 = &lbl_802B14E4 + ((arg0 - 1) * 0x280);
+    } else {
+        var_r3 = NULL;
+    }
+    if ((var_r3 == NULL) || ((u32) M2C_FIELD(var_r3, u32 *, 0x188) == 0U)) {
+        return 0;
+    }
+    if ((u32) *fn_80037BD0() == 0U) {
+        return 0;
+    }
+    return fn_8001CA2C();
+}
+
 s32 fn_800BC6E8(u8 arg0, s32 arg2) {
     M2C_UNK fn_8001D780(s32);
     M2C_UNK fn_80037BD0();
@@ -2237,6 +2257,14 @@ void fn_800C09E4(s32 arg0) {
     }
 }
 
+extern u16 lbl_80367110;
+s32 fn_800C0ACC(void) {
+    u16 temp = lbl_80367110;
+    temp &= 0xFFFFFFFB;
+    lbl_80367110 = temp;
+    return 1;
+}
+
 void fn_800C0C1C(void) {
     u16 fn_80089634();
     M2C_UNK fn_80089650(M2C_UNK, M2C_UNK);
@@ -2361,3 +2389,4 @@ typedef struct {
     u32 field_0x2F4;
 } SomeStruct;
 extern u16 lbl_8032BB58[258];
+extern u16 lbl_80367110;
