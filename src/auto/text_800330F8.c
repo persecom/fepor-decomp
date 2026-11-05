@@ -206,6 +206,17 @@ s32 fn_80037BD0(s32 arg0, s32 arg1) {
     return 0;
 }
 
+void *fn_80037C20(void *arg0) {
+    s8 index;
+    if ((((u8)M2C_FIELD(arg0, u8 *, 0x1F1) >> 7) & 1) && M2C_FIELD(arg0, u32 *, 0x1EC) != 0) index = 0;
+    else if ((((u8)M2C_FIELD(arg0, u8 *, 0x1F9) >> 7) & 1) && M2C_FIELD(arg0, u32 *, 0x1F4) != 0) index = 1;
+    else if ((((u8)M2C_FIELD(arg0, u8 *, 0x201) >> 7) & 1) && M2C_FIELD(arg0, u32 *, 0x1FC) != 0) index = 2;
+    else if ((((u8)M2C_FIELD(arg0, u8 *, 0x209) >> 7) & 1) && M2C_FIELD(arg0, u32 *, 0x204) != 0) index = 3;
+    else index = -1;
+    if (index < 0) return NULL;
+    return (u8 *)arg0 + (index * 8) + 0x1EC;
+}
+
 s32 fn_80037CCC(void *arg0) {
     if ((((u8) M2C_FIELD(arg0, u8 *, 0x1F1) >> 7U) & 1) && ((u32) M2C_FIELD(arg0, u32 *, 0x1EC) != 0U)) {
         return 0;
