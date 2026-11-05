@@ -735,7 +735,7 @@ void fn_8000C5E0(void *arg0) {
     }
 }
 
-void *fn_8000CAA0(void) {
+void *fn_8000CAA0(void *arg0, s32 arg1, void *arg2) {
     void *fn_8000CAF0();
     void *temp_r3;
     void *temp_r5;
