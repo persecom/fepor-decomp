@@ -24,10 +24,6 @@ static inline BOOL IsItemNamed(void *item, char *name) {
     return fn_80019E04(name) == item;
 }
 
-static inline BOOL ItemIs(char *name, void *item) {
-    return fn_80019E04(name) == item;
-}
-
 void **fn_80037BBC(void *, s32);
 u8 fn_8009326C(void *, void *);
 extern struct {
@@ -2771,32 +2767,27 @@ void fn_801007A0(void *arg0) {
         }
         if (fn_8009326C(arg0, *item)) {
             M2C_FIELD(arg0, u32 *, 0x254) |= 0x200;
-            if (IsItemNamed(*item, lbl_80273304.iidSilence)) {
+            if (ItemIs(lbl_80273304.iidSilence, *item)) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x400;
-            } else if (IsItemNamed(*item, lbl_80273304.iidSleep)) {
+            } else if (ItemIs(lbl_80273304.iidSleep, *item)) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x800;
-            } else if (IsItemNamed(*item, lbl_80273304.iidBerserk)) {
+            } else if (ItemIs(lbl_80273304.iidBerserk, *item)) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x1000;
             }
         }
     }
 
-    {
-        s32 j;
-        void **slot;
-
-        for (j = 0; j < 4; j++) {
-            slot = fn_80037BBC(arg0, j);
-            if (*slot == NULL) {
-                break;
+    for (i = 0; i < 4; i++) {
+        item = fn_80037BBC(arg0, i);
+        if (*item == NULL) {
+            break;
+        }
+        if (fn_8009339C(arg0, *item)) {
+            if (GetItemUnk1D(*item) == 1) {
+                M2C_FIELD(arg0, u32 *, 0x254) |= 0x4000;
             }
-            if (fn_8009339C(arg0, *slot)) {
-                if (GetItemUnk1D(*slot) == 1) {
-                    M2C_FIELD(arg0, u32 *, 0x254) |= 0x4000;
-                }
-                if (GetItemDD54(*slot, arg0) > 1) {
-                    M2C_FIELD(arg0, u32 *, 0x254) |= 0x2000;
-                }
+            if (GetItemDD54(*item, arg0) > 1) {
+                M2C_FIELD(arg0, u32 *, 0x254) |= 0x2000;
             }
         }
     }
