@@ -95,6 +95,15 @@ s32 fn_80165250(void) {
     return 0;
 }
 
+void fn_801658DC(s32 arg0, s32 arg1) {
+    s32 fn_8000E0E4(s32);
+    s32 strlen(void);
+    void fn_800C96F8(s32, s32, s32);
+
+    s32 temp_r31 = fn_8000E0E4(arg1);
+    fn_800C96F8(arg0 + 0x3C, temp_r31, strlen());
+}
+
 M2C_UNK **fn_801659D4(M2C_UNK **arg0, s16 arg1) {
     M2C_UNK fn_800C428C(M2C_UNK **);
     M2C_UNK fn_800C9A60(void *, M2C_UNK);
@@ -672,6 +681,16 @@ void fn_80170E08(void *arg0) {
     *(u8*)((char*)arg0 + 0x54) = 1;
 }
 
+u8 fn_801723A0(u32 *arg0, s32 arg1) {
+    u8 fn_800939FC(s32, u32);
+    u32 temp_r0;
+
+    if ((arg0 == NULL) || (temp_r0 = *arg0, ((temp_r0 == 0U) != 0))) {
+        return 0U;
+    }
+    return fn_800939FC(arg1, temp_r0);
+}
+
 void fn_80172C44(void *arg0) {
     M2C_UNK fn_8000A430(s32);
     fn_8000A430(M2C_FIELD(arg0, s32 *, 0x5C));
@@ -957,6 +976,13 @@ void fn_8017A3E0(void *arg0, s32 arg1, u8 arg2) {
 void fn_8017A430(void *arg0, s32 arg1, s32 arg2) {
     memcpy(M2C_FIELD(arg0, s32 *, 4), arg2, arg1);
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + arg1);
+}
+
+void fn_8017A480(void *arg0, s32 arg1, s32 arg2) {
+    M2C_UNK fn_80234450(s32, s32);
+    s32 *ptr = (s32 *)M2C_FIELD(arg0, s32 *, 4);
+    fn_80234450(*ptr, arg2);
+    *ptr += arg1;
 }
 
 void fn_8017A5C4(void *arg0, u8 arg1) {
