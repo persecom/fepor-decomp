@@ -48,6 +48,11 @@ s32 fn_800A45C4(void) {
     return 0;
 }
 
+void fn_800A46CC(void) {
+    extern u8 lbl_803123A0[];
+    lbl_803123A0[0xA5] = 0;
+}
+
 void fn_800A4FF8(void) {
     s32 OSDisableInterrupts();
     M2C_UNK OSRestoreInterrupts(s32);
