@@ -1,6 +1,8 @@
 /* Functions from 0x800A9488 to 0x800AD1F4, found by decomp-toolkit. */
 #include "common.h"
 
+#pragma use_lmw_stmw on
+
 void *fn_800A9488(void) {
     extern u8 lbl_8026E470[];
     return (void *)((u32)lbl_8026E470 + 0xCC);
