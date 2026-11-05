@@ -1,5 +1,6 @@
 /* Functions from 0x8001EEEC to 0x80028864, found by decomp-toolkit. */
 #include "common.h"
+extern f64 lbl_80368D80;
 
 void fn_8001EF7C(void) {
 
@@ -97,6 +98,31 @@ void fn_80023E18(void) {
 void fn_80023ED0(void) {
     extern s32 lbl_8036723C;
     lbl_8036723C += 1;
+}
+
+void *fn_800241C8(void *arg0) {
+    void *var_r6;
+    void *var_r5;
+
+    var_r6 = M2C_FIELD(arg0, void **, 0x18);
+    var_r5 = arg0;
+    
+    if (var_r6 == NULL) {
+        return NULL;
+    }
+    
+loop_6:
+    if ((u32) M2C_FIELD(var_r6, u32 *, 0) != (u32) M2C_FIELD(arg0, u32 *, 0)) {
+        return var_r6;
+    }
+    
+    if (var_r6 == NULL) {
+        return var_r5;
+    }
+    
+    var_r5 = var_r6;
+    var_r6 = M2C_FIELD(var_r6, void **, 0x18);
+    goto loop_6;
 }
 
 void fn_80024364(void **arg0) {
@@ -586,6 +612,13 @@ s32 fn_80026A80(s32 arg0) {
     return 1;
 }
 
+void fn_80026F08(void) {
+    extern u16 lbl_802EF4C8[12];
+    fn_80050C90((u32*)&lbl_802EF4C8[2]);
+    lbl_802EF4C8[4] = 1;
+    lbl_802EF4C8[0x1A5 / 2] = (u8) ((lbl_802EF4C8[0x1A5 / 2] & ~7) | 1);
+}
+
 void fn_80026F5C(void *arg0) {
     M2C_UNK fn_8012AA90(s32, s32, void *);
     fn_8012AA90((s32) M2C_FIELD(arg0, f32 *, 0x30), (s32) M2C_FIELD(arg0, f32 *, 0x34), arg0);
@@ -630,6 +663,20 @@ void fn_800285C0(void *arg0) {
     fn_80037BD0(M2C_FIELD(arg0, s32 *, 0), (s8) M2C_FIELD(arg0, u8 *, 0xA));
 }
 
+void fn_800285EC(void) {
+    extern u8 lbl_80367707;
+    extern s32 lbl_80330EAC[];
+    
+    if (lbl_80367707 == 0) {
+        if ((*(lbl_80330EAC + 0x32B) & 0x80000000) != 0) {
+            fn_80098A9C();
+            return;
+        }
+        *(lbl_80330EAC + 0x32B) |= 0x10000000;
+        fn_800D5818();
+    }
+}
+
 void fn_8002863C(void) {
 
 }
@@ -649,6 +696,21 @@ void fn_80028674(void) {
 void fn_80028694(void) {
     extern u16 lbl_80268E40[];
     fn_800C50FC(&lbl_80268E40[0x212 / sizeof(u16)], fn_800C52C8(), lbl_80268E40);
+}
+
+void fn_80028724(void) {
+    u8 fn_800BDD08(void *, void *, M2C_UNK *);
+    M2C_UNK fn_80146AF0();
+    M2C_UNK fn_8014876C(M2C_UNK *, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_801487D0(M2C_UNK *, M2C_UNK);
+    extern M2C_UNK lbl_80268E40;
+    extern M2C_UNK lbl_8032FF08;
+    extern M2C_UNK lbl_80330708;
+    if (fn_800BDD08(&lbl_80330708 + 0xB4, &lbl_80268E40 + 0x21E, &lbl_80330708) == 0) {
+        fn_80146AF0();
+        fn_801487D0(&lbl_8032FF08, 0x3E8);
+        fn_8014876C(&lbl_8032FF08, 0x64, 0x3E8);
+    }
 }
 
 void fn_800287E4(void) {
