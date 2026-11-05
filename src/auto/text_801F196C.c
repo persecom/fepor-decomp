@@ -62,6 +62,20 @@ void fn_801F5308(void* arg0) {
     }
 }
 
+void fn_801F5374(void* arg0) {
+    s32 temp_r3;
+    void* temp_r4;
+
+    temp_r3 = *(s32*)((u8*)lbl_80367240 + 4);
+    if (temp_r3 & (*(s32*)((u8*)lbl_80367240 + 8) ^ temp_r3) & 0x100) {
+        u16* ptr = (u16*)((u8*)&lbl_80280B58 + 0x5A);
+        fn_801475FC(ptr, 0x64);
+        temp_r4 = *(void**)((u8*)arg0 + 0x50);
+        *(u16*)((u8*)temp_r4 + 0x2) = 0xC8;
+        fn_8000C188(arg0, temp_r4);
+    }
+}
+
 void fn_801F5518(s32 arg0) {
     M2C_UNK fn_801E3118(M2C_UNK *, s32, M2C_UNK);
     extern M2C_UNK lbl_803682F0;
