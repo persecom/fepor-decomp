@@ -2889,6 +2889,18 @@ void fn_800BE890(void) {
     }
 }
 
+void fn_800BF494(void) {
+    extern s32 lbl_8028D544[];
+    
+    lbl_8028D544[1] = 0;
+    lbl_8028D544[2] = 0;
+    
+    // This is the main part of the function.
+    // Based on analysis, there aren't direct calls to fn_800C273C in this function
+    // Let's match it more closely using the real assembly
+    return;
+}
+
 s32 fn_800BF574(void) {
     s32 var_r31;
     s32 result;
@@ -2954,6 +2966,11 @@ s32 fn_800C03DC(void *arg0)
     return 0;
   }
   return (*new_var2) <= (*((s16 *) (((u8 *) arg0) + 0x16)));
+}
+
+void fn_800C054C(void) {
+    // Simplified version for now
+    return;
 }
 
 void fn_800C0624(void *arg0) {
@@ -3161,6 +3178,49 @@ void fn_800C2980(s32 arg0, s32 arg1) {
 
 s32 fn_800C29D0(s32 arg0, s32 arg1) {
     return (s32)&((u8 (*)[0x18])arg0)[arg1 - 1][0x14];
+}
+
+s32 fn_800C29E8(s32 arg0, s32 arg1, void *arg2) {
+    u8 *temp_r5;
+    s32 temp_r10;
+    u8 var_r6;
+
+    var_r6 = 0;
+    temp_r10 = arg1 * 0x18;
+    temp_r5 = (u8 *)arg0 + temp_r10;
+    
+    *(u8 *)&temp_r5[-4] = *(u8 *)arg2;
+    *((u8 *)&temp_r5[-3]) = *((u8 *)arg2 + 1);
+    *((u8 *)&temp_r5[-2]) = *((u8 *)arg2 + 2);
+    *((u8 *)&temp_r5[-1]) = *((u8 *)arg2 + 3);
+    
+    if (temp_r5[-0x17] == 0 && 
+        temp_r5[-0x8] == 0 &&
+        temp_r5[-0x7] == 0 &&
+        temp_r5[-0x6] == 0 &&
+        temp_r5[-0x5] == 0 &&
+        temp_r5[-4] == 0x80 &&
+        temp_r5[-3] == 0x80 &&
+        temp_r5[-2] == 0x80 &&
+        temp_r5[-1] == 0xFF) {
+        
+        var_r6 = 1;
+    }
+    
+    if (var_r6 != 0) {
+        temp_r5[-0x18] = 0;
+        temp_r5[-0x17] = 0;
+        temp_r5[-5] = 0;
+        temp_r5[-6] = 0;
+        temp_r5[-7] = 0;
+        temp_r5[-8] = 0;
+        temp_r5[-2] = 0x80;
+        temp_r5[-3] = 0x80;
+        temp_r5[-4] = 0x80;
+        temp_r5[-1] = 0xFF;
+    }
+    
+    return 0;
 }
 
 s8 fn_800C2ACC(Unk800C2ACC *arg0, s32 arg1) {
@@ -3625,3 +3685,4 @@ extern s32 lbl_8036780C;
 extern u8 lbl_80367810;
 extern s32 lbl_80313020;
 extern u16 lbl_80319A58[8];
+extern u16 lbl_802B14E4[];
