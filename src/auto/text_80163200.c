@@ -640,6 +640,10 @@ void fn_801793B4(void) {
     fn_8000A248();
 }
 
+void *fn_801795C0(void) {
+    return (char *)&lbl_80278080 + 0x69A;
+}
+
 void fn_8017A3E0(void *arg0, s32 arg1, u8 arg2) {
     memset(M2C_FIELD(arg0, s32 *, 4), arg2, arg1);
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + arg1);
