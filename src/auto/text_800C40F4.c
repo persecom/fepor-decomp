@@ -398,8 +398,8 @@ void fn_800C908C(void *arg0, String *arg1, s32 *arg2) {
     char *fn_80234450(char *, const char *);
     void fn_800C802C(void *, s32);
     s32 *dst;
-    s32 b;
     s32 a;
+    s32 b;
 
     fn_80234450((char *)arg0 + 0x28, (char *)fn_800C93EC(arg1));
     dst = (s32 *)((char *)arg0 + 0x40);
@@ -1245,13 +1245,22 @@ void fn_800DEEFC(void) {
 
 }
 
-void fn_800DEF00(void *arg0, void *arg1) {
-    f32 *src = (f32 *) arg1;
-    f32 *dst = (f32 *) arg0;
+void fn_800DEF00(void *arg0) {
+    struct Tree {
+        s32 count;
+        void *root;
+        void *unk8;
+        void **first;
+    };
+    void fn_800DEA50(struct Tree *, void *);
+    struct Tree *tree = arg0;
 
-    dst[0] = src[0];
-    dst[1] = src[1];
-    dst[2] = src[2];
+    if (tree->root != NULL) {
+        fn_800DEA50(tree, tree->root);
+        tree->count = 0;
+        tree->root = NULL;
+        tree->first = &tree->root;
+    }
 }
 
 void fn_800DF298(void *arg0, s32 arg1, f32 arg2) {
