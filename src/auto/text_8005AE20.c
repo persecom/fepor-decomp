@@ -516,6 +516,18 @@ u32 fn_8006049C(void *arg0) {
     return 0U;
 }
 
+u32 fn_800604C8(void *arg0) {
+    void *current = arg0;
+    while (current != NULL) {
+        u32 value = M2C_FIELD(current, u32 *, 0x70);
+        if (value != 0U) {
+            return value;
+        }
+        current = M2C_FIELD(current, void **, 4);
+    }
+    return 0U;
+}
+
 s32 fn_80060664(void *arg0) {
     void **var_r3;
     u32 temp_r0;
