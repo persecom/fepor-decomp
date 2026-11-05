@@ -1,6 +1,6 @@
 #include "common.h"
 extern u32 lbl_802EF4C8[];
-extern u32 lbl_80278080[];
+extern u16 lbl_80278080[];
 
 
 extern void (*lbl_802B14E4)(void **);
@@ -349,6 +349,16 @@ void *fn_8016AE6C(void) {
     return &lbl_80277BC0[0x101];
 }
 
+void *fn_8016AFF0(void) {
+    extern u16 lbl_80277BC0[];
+    return &lbl_80277BC0[0x438];
+}
+
+void *fn_8016B338(void) {
+    extern u16 lbl_80277BC0[];
+    return &lbl_80277BC0[0x8E8];
+}
+
 void fn_8016B5E8(void) {
     M2C_UNK fn_8004327C();
     fn_80040844();
@@ -477,6 +487,10 @@ void fn_8016FE5C(void) {
 void fn_80170034(void *arg0) {
     M2C_UNK fn_8000A430(s32);
     fn_8000A430(M2C_FIELD(arg0, s32 *, 0x5C));
+}
+
+void fn_80170E08(void *arg0) {
+    *(u8*)((char*)arg0 + 0x54) = 1;
 }
 
 void fn_80172C44(void *arg0) {
