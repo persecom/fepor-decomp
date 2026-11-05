@@ -3,6 +3,24 @@
 
 extern M2C_UNK lbl_802EF4C8;
 
+void fn_8002887C(void) {
+    s32 fn_8003A398(void *);
+    M2C_UNK fn_8003B69C(void *);
+    M2C_UNK fn_800AA4F8();
+    M2C_UNK fn_800F0C30(u8, u8, s32);
+    void *fn_800AA794();
+    u8 temp_r31;
+    u8 temp_r30;
+    void *temp_r29;
+
+    temp_r29 = fn_800AA794();
+    fn_800AA4F8();
+    temp_r31 = M2C_FIELD(temp_r29, u8 *, 0x19F);
+    temp_r30 = M2C_FIELD(temp_r29, u8 *, 0x19E);
+    fn_800F0C30(temp_r30, temp_r31, fn_8003A398(temp_r29));
+    fn_8003B69C(temp_r29);
+}
+
 void fn_80029784(void) {
     u8 fn_800AA188();
     M2C_UNK fn_800F214C();
