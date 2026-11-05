@@ -323,6 +323,7 @@ void fn_8016746C(void *arg0, s32 arg1, s32 arg2, f32 farg0, f32 farg1) {
     fn_80166DD0(arg0, arg2, farg0, farg1);
 }
 
+#pragma opt_common_subs off
 void fn_80168D68(s32 arg0) {
     u32 fn_8005C6A0(void *);
     void fn_8006EEFC(void *, void *);
@@ -341,7 +342,7 @@ void fn_80168D68(s32 arg0) {
         fn_8000C188(arg0);
     }
 }
-
+#pragma opt_common_subs reset
 void fn_80168ED4(void *arg0) {
     M2C_UNK fn_8003F670(s32);
     M2C_UNK fn_80161F7C(void *);
