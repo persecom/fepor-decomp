@@ -749,6 +749,22 @@ s32 fn_8005F9B8(void *arg0, u16 arg1) {
     return 0;
 }
 
+s32 fn_8005FA14(void *arg0, s32 arg1) {
+    M2C_UNK fn_8005FA94(void *, s32);
+    extern char lbl_8026B590[];
+
+    if (arg0 == NULL) {
+        fn_8006DA64(lbl_8026B590 + 0x28, 0x2D8, lbl_8026B590 + 0x5D);
+    }
+    if (M2C_FIELD(arg0, void **, 0x74) == NULL) {
+        return 0;
+    }
+    fn_8005FA94(M2C_FIELD(arg0, void **, 0x74), arg1);
+    M2C_FIELD(arg0, void **, 0x74) = NULL;
+    M2C_FIELD(arg0, f32 *, 0x78) = 1.0f;
+    return 1;
+}
+
 s32 fn_80060440(void *arg0) {
     s32 var_r4;
     void *var_r3;
