@@ -356,6 +356,33 @@ void fn_8005EBCC(s32 arg0, s32 arg1) {
     }
 }
 
+s32 fn_8005F3B8(void *arg0) {
+    void *var_r4;
+    void *temp_r0;
+    void *temp_r5;
+    unsigned int var_r5;
+
+    var_r4 = arg0;
+loop_1:
+    temp_r5 = M2C_FIELD(var_r4, void **, 4);
+    if ((temp_r5 != NULL) && (M2C_FIELD(temp_r5, u32 *, 0x8C) != 0U)) {
+        var_r4 = temp_r5;
+        goto loop_1;
+    }
+    var_r5 = 0;
+loop_5:
+    if (var_r4 == arg0) {
+        return var_r5;
+    }
+    temp_r0 = M2C_FIELD(var_r4, void **, 0x8C);
+    if (temp_r0 != NULL) {
+        var_r4 = temp_r0;
+        var_r5 += 1;
+        goto loop_5;
+    }
+    return 0;
+}
+
 void fn_8005F780(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 0x84) = arg1;
 }
