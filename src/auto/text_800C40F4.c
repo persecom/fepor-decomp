@@ -2052,6 +2052,39 @@ s32 fn_800E8BC4(void *arg0) {
     return 0;
 }
 
+#pragma cplusplus on
+#pragma dont_inline on
+extern "C" M2C_UNK *fn_800C93EC(void *);
+extern "C" s32 fn_800E8F00(void *arg0) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual s32 v2(M2C_UNK *, M2C_UNK *) = 0;
+    };
+    struct Self {
+        Obj *obj;
+        u8 pad[0xAC];
+        String name;
+        String strs[3];
+        s32 index;
+    };
+    Self *self = (Self *)arg0;
+    String tmp;
+    s32 result;
+
+    tmp.cap = 0;
+    tmp.size = 0;
+    tmp.data = 0;
+    tmp.cap = 0;
+    fn_800C9758(&tmp, &self->strs[self->index], 0, -1);
+    result = self->obj->v2(fn_800C93EC(&self->name), fn_800C93EC(&tmp));
+    fn_800C9A60(&tmp, -1);
+    return result;
+}
+#pragma dont_inline reset
+#pragma cplusplus reset
+
 void fn_800E8FAC(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0xE0) = arg1;
 }
