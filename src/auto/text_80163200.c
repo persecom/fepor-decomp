@@ -628,6 +628,13 @@ void fn_80174204(void) {
     return;
 }
 
+u8 fn_80175924(s32 **arg0, s32 arg1) {
+    s32 *temp_r5;
+
+    temp_r5 = *arg0;
+    return fn_80093DA8(arg1, *temp_r5, temp_r5);
+}
+
 void fn_80176E78(void) {
     extern u16 lbl_80278080[];
     fn_8000E0E4(&lbl_80278080[0x431 * 0x2]);
