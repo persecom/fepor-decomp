@@ -359,8 +359,8 @@ void fn_80136FDC(void *arg0) {
 
 extern f32 lbl_8036A620;
 extern f32 lbl_8036A628;
-extern f32 lbl_8036A630;
-extern s32 lbl_802767E0;
+extern f64 lbl_8036A630;
+extern u8 lbl_802767E0[192];
 extern void fn_8000A258(void);
 extern s32 fn_8000A174(s32, u16);
 extern void fn_8000A248(void);
@@ -638,11 +638,11 @@ s16 fn_8013B6A4(void *arg0) {
 void fn_8013BA08(void ***arg0, s32 *arg1, void ***arg2, void ***arg3) {
     void fn_800616A0();
     void fn_800C428C(void **);
-    void **temp_r0;
+    void **temp_r5;
     void **temp_r3;
     void **temp_r3_2;
     void **temp_r3_4;
-    void **temp_r5;
+    void **temp_r0;
     void *temp_r3_3;
     void *temp_r4;
 
@@ -653,14 +653,14 @@ void fn_8013BA08(void ***arg0, s32 *arg1, void ***arg2, void ***arg3) {
         return;
     }
     temp_r4 = *temp_r3;
-    M2C_FIELD(*temp_r5, void ***, 4) = (void **) M2C_FIELD(temp_r4, void ***, 4);
-    *M2C_FIELD(temp_r4, void ***, 4) = *temp_r5;
+    *M2C_FIELD(temp_r5, void ***, 4) = (void **) M2C_FIELD(temp_r4, void ***, 4);
+    *M2C_FIELD(temp_r4, void ***, 4) = temp_r5;
 loop_7:
     temp_r3_2 = *arg2;
     temp_r0 = *arg3;
     if (temp_r3_2 != temp_r0) {
         temp_r3_3 = temp_r3_2 + 8;
-        if ((temp_r3_3 != NULL) && ((u32) M2C_FIELD(temp_r3_3, u32 *, 4) != 0U)) {
+        if ((temp_r3_3 != NULL) && ((u32) M2C_FIELD(temp_r3_3, u32 *, 4)) != 0U) {
             fn_800616A0();
         }
         temp_r3_4 = *arg2;
