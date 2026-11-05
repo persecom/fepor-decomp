@@ -2776,16 +2776,16 @@ void fn_801007A0(void *arg0) {
             cur = *item;
             if (fn_80019E04(lbl_80273304.iidSilence) == cur) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x400;
-            } else {
-                cur = *item;
-                if (fn_80019E04(lbl_80273304.iidSleep) == cur) {
-                    M2C_FIELD(arg0, u32 *, 0x254) |= 0x800;
-                } else {
-                    cur = *item;
-                    if (fn_80019E04(lbl_80273304.iidBerserk) == cur) {
-                        M2C_FIELD(arg0, u32 *, 0x254) |= 0x1000;
-                    }
-                }
+                continue;
+            }
+            cur = *item;
+            if (fn_80019E04(lbl_80273304.iidSleep) == cur) {
+                M2C_FIELD(arg0, u32 *, 0x254) |= 0x800;
+                continue;
+            }
+            cur = *item;
+            if (fn_80019E04(lbl_80273304.iidBerserk) == cur) {
+                M2C_FIELD(arg0, u32 *, 0x254) |= 0x1000;
             }
         }
     }
