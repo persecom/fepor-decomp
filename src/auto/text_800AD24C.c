@@ -212,6 +212,23 @@ s32 fn_800B2D94(void) {
     return 1;
 }
 
+s32 fn_800B2DE4(s32 arg0, s32 arg1) {
+    s32 fn_8020C6D4(char *, void *);
+    s32 fn_8020CC28(void *, s32, s32, s32, s32);
+    s32 fn_8020C79C(void *);
+    extern u8 lbl_80317338[];
+    u8 sp8[0x3C];
+
+    if (fn_8020C6D4((char *)lbl_80317338 + 0x342, sp8) == 0) {
+        return 0;
+    }
+    if (fn_8020CC28(sp8, M2C_FIELD(lbl_80317338, s32 *, 0x448), arg1, arg0, 2) <= 0) {
+        return 0;
+    }
+    fn_8020C79C(sp8);
+    return M2C_FIELD(lbl_80317338, s32 *, 0x448);
+}
+
 void fn_800B3490(void) {
     extern u16 lbl_80317338[];
     u32 index = 0x222;
