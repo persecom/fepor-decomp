@@ -841,6 +841,26 @@ void fn_802511F8(void *arg0, u32 *arg1) {
     fn_80250B58(arg0, arg1);
 }
 
+void fn_8026146C(s32 *);
+
+static inline void Voice_StartRamp(Voice *v, u32 *data, u32 *time, s32 *base, s32 *target, s32 *step) {
+    u32 t;
+    s32 delta;
+
+    t = data[0] >> 16;
+    *time = t;
+    fn_8026146C((s32 *)time);
+    delta = (s8)data[1] << 16;
+    *base = (data[0] << 8) & 0xFF0000;
+    *target = *base + delta;
+    if (*time != 0) {
+        *step = delta / (s32)t;
+    } else {
+        *step = delta;
+    }
+    v->flags |= 0x2000;
+}
+
 void fn_80251DEC(Voice *arg0, u32 *arg1) {
     void fn_8026146C(s32 *);
     u32 time;
