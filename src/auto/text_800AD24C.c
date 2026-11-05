@@ -152,6 +152,25 @@ s32 fn_800B1DEC(s32 arg0, s32 arg1) {
     return 0;
 }
 
+void fn_800B24D8(s32 arg0, u8 arg1) {
+    u8 fn_8024B370(s32);
+    void fn_8024B4B0(u8, s32, s32, s32);
+    extern u8 lbl_80317338[];
+    s32 *entry;
+
+    entry = (s32 *)(M2C_FIELD(lbl_80317338, u8 **, 0xF0) + arg0 * 16);
+    if (fn_8024B370(entry[0])) {
+        if (arg1 > 0x7F) {
+            arg1 = 0x7F;
+        }
+        entry[1] = arg1;
+        fn_8024B4B0(entry[1], 0, entry[0], 0);
+        if (M2C_FIELD(lbl_80317338, u16 *, 0x12C) != 0) {
+            fn_8024B4B0(0, 0, entry[0], 0);
+        }
+    }
+}
+
 s16 fn_800B25EC(s32 arg0) {
     extern u16 lbl_80317338[];
     s16 val = lbl_80317338[arg0];
