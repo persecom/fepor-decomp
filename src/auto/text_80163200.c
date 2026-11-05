@@ -33,6 +33,15 @@ void fn_80168F54(s32 arg0) {
     }
 }
 
+void fn_80169AF4(void *arg0) {
+    M2C_UNK fn_8000A408(s32);
+    M2C_UNK fn_8013FED0(void *);
+    M2C_UNK fn_801BE748(void *);
+    fn_8000A408(M2C_FIELD(arg0, s32 *, 0x4C));
+    fn_8013FED0(arg0);
+    fn_801BE748(arg0);
+}
+
 void fn_80169B34(void *arg0) {
     M2C_UNK fn_8000A3F8(s32);
     M2C_UNK fn_8013FEC0(void *);
