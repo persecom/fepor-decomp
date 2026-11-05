@@ -398,6 +398,11 @@ loop_1:
     goto loop_1;
 }
 
+extern u8 lbl_80289B00[16];
+void fn_80095678(void) {
+    fn_8000BF00(&lbl_80289B00);
+}
+
 void fn_80095850(void *arg0) {
     void *fn_80018ADC();
     M2C_UNK fn_80018AE4();
