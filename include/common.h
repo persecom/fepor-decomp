@@ -49,6 +49,24 @@ struct unit {
     s32 unk_0x8;
     s32 unk_0xC;
 };
+
+struct Actor {
+    s32 field_0x0;
+    s32 field_0x4;
+    s32 field_0x8;
+    s32 field_0xC;
+    s32 field_0x10;
+    s32 field_0x14;
+    s32 field_0x18;
+    s32 field_0x1C;
+    s32 field_0x20;
+    s32 field_0x24;
+    s32 field_0x28;
+    s32 field_0x2C;
+    s32 field_0x30;
+    s32 field_0x34;
+    s32 field_0x38;
+};
 #endif
 
 #endif
