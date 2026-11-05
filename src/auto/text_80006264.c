@@ -945,3 +945,4 @@ extern u16 lbl_80367124;
 extern u16 lbl_8036712C;
 extern u16 lbl_80367150[4];
 extern u16 lbl_802A66D8[];
+extern u16 lbl_802A66D8[];
