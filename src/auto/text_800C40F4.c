@@ -24,6 +24,11 @@ static inline BOOL IsItemNamed(void *item, char *name) {
     return fn_80019E04(name) == item;
 }
 
+static inline BOOL IsSlotItemNamed(void **slot, char *name) {
+    void *item = *slot;
+    return fn_80019E04(name) == item;
+}
+
 void **fn_80037BBC(void *, s32);
 u8 fn_8009326C(void *, void *);
 extern struct {
@@ -2721,6 +2726,7 @@ void fn_801007A0(void *arg0) {
     u64 *fn_8001CB64(void **);
     s32 i;
     void **item;
+    void *cur;
 
     M2C_FIELD(arg0, u32 *, 0x254) &= 0xFEFF80EB;
     fn_8010C504(arg0);
@@ -2767,12 +2773,19 @@ void fn_801007A0(void *arg0) {
         }
         if (fn_8009326C(arg0, *item)) {
             M2C_FIELD(arg0, u32 *, 0x254) |= 0x200;
-            if (ItemIs(lbl_80273304.iidSilence, *item)) {
+            cur = *item;
+            if (fn_80019E04(lbl_80273304.iidSilence) == cur) {
                 M2C_FIELD(arg0, u32 *, 0x254) |= 0x400;
-            } else if (ItemIs(lbl_80273304.iidSleep, *item)) {
-                M2C_FIELD(arg0, u32 *, 0x254) |= 0x800;
-            } else if (ItemIs(lbl_80273304.iidBerserk, *item)) {
-                M2C_FIELD(arg0, u32 *, 0x254) |= 0x1000;
+            } else {
+                cur = *item;
+                if (fn_80019E04(lbl_80273304.iidSleep) == cur) {
+                    M2C_FIELD(arg0, u32 *, 0x254) |= 0x800;
+                } else {
+                    cur = *item;
+                    if (fn_80019E04(lbl_80273304.iidBerserk) == cur) {
+                        M2C_FIELD(arg0, u32 *, 0x254) |= 0x1000;
+                    }
+                }
             }
         }
     }
