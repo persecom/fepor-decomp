@@ -181,6 +181,10 @@ void fn_80165B1C(void) {
     fn_800472D4();
 }
 
+s32 fn_801660A8(void) {
+    return (M2C_FIELD(&lbl_80330708, u8 *, 0x10) * 7) + 0x39A81;
+}
+
 u32 fn_8016614C(s32 arg0, s32 arg1) {
     extern u8 lbl_80330708[];
     s32 var_r4;
