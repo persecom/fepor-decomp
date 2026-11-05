@@ -9,6 +9,11 @@ s32 fn_800067B4(void) {
     return lbl_80367118;
 }
 
+void fn_80007884(void *arg0, u32 arg1) {
+    *(void**)0x80367140 = arg0;
+    *(u16*)(0x80367140 + 0x28) = (u16)arg1;
+}
+
 void fn_80009B80(s8 arg0) {
     extern void *lbl_80367140;
     M2C_FIELD(lbl_80367140, s8 *, 0x24) = arg0;
@@ -26,6 +31,11 @@ void fn_80009BF4(f32 farg0) {
 
 f32 fn_80009C00(void) {
     return *(f32*)((char*)&lbl_80367140 + 0x28);
+}
+
+void fn_80009C0C(f32 farg0) {
+    f32 *ptr = (f32 *)lbl_80367140;
+    *ptr = *ptr + farg0;
 }
 
 void fn_8000A248(void) {
@@ -321,5 +331,6 @@ void fn_80011910(void) {
     fn_80223F2C(0, 0, 1, 4);
 }
 #include "common.h"
+extern u16 lbl_80367140;
 extern u16 lbl_80367140;
 extern u16 lbl_80367140;
