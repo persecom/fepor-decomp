@@ -406,6 +406,16 @@ void fn_8003C5EC(void *arg0, s32 arg1) {
     }
 }
 
+void fn_8003C634(void *arg0, s32 arg1) {
+    void *temp_r3;
+
+    temp_r3 = fn_8000D354(arg1);
+    if (temp_r3 != NULL) {
+        *(s32*)((char*)arg0 + 0x238) = *(s32*)((char*)temp_r3 + 0x14);
+        *(u8*)((char*)arg0 + 0x250) = 0;
+    }
+}
+
 void fn_8003C67C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x238) = 0;
     M2C_FIELD(arg0, s32 *, 0x23C) = 0;
