@@ -2480,6 +2480,7 @@ extern "C" void fn_80180ED4(void *arg0) {
     }
     ((Obj *)arg0)->v0(-1);
 }
+#pragma cplusplus reset
 
 void fn_801812A0(void) {
     void fn_8005C8B4(void *);
@@ -2498,8 +2499,6 @@ void fn_801812CC(void *arg0) {
         fn_8000C188(arg0);
     }
 }
-
-#pragma cplusplus reset
 
 s32 fn_8018256C(void) {
     return 1;
