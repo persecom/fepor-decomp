@@ -1,6 +1,27 @@
 /* Functions from 0x801E4540 to 0x801EA8C0, found by decomp-toolkit. */
 #include "common.h"
 
+struct UnkStruct_80299FE0 {
+    u8 pad[0x30];
+    u8 unk_30;
+    u8 unk_31;
+    u8 unk_32;
+    u8 unk_33;
+    u8 unk_34;
+    u16 unk_36;
+    u16 unk_38;
+    u16 unk_3A;
+    u16 unk_3C;
+    u16 unk_3E;
+    u32 unk_40;
+    u32 unk_44;
+    u32 unk_48;
+    u32 unk_4C;
+    u32 unk_50;
+    u32 unk_54;
+    u32 unk_58[7];
+};
+
 s32 fn_801E45FC(void) {
     extern char lbl_80299FA8[];
     return *(s32*)((u8*)lbl_80299FA8 + 4);
@@ -31,6 +52,60 @@ void fn_801E551C(void) {
     fn_80225058(0x20, 0x5A, 0x220, 0x136);
 }
 
+s32 fn_801E8734(void *arg0) {
+    s8 fn_801E4A60();
+    s16 temp_r5;
+    s32 temp_r7;
+    s8 var_r3;
+    s8 var_r8;
+    u32 temp_r0;
+    u32 temp_r3;
+    u8 var_r3_2;
+
+    var_r8 = fn_801E4A60();
+    if (var_r8 > 0) {
+        var_r8 -= 1;
+    }
+    temp_r5 = M2C_FIELD(arg0, s16 *, 0x36);
+    temp_r3 = (u32) temp_r5 >> 0x1FU;
+    temp_r0 = (temp_r5 << 0x1B) - temp_r3;
+    temp_r7 = temp_r5 / 32;
+    var_r3 = (s8) temp_r7 + 8;
+    if ((((temp_r0 << 5) | (temp_r0 >> 0x1BU)) + temp_r3) != 0) {
+        var_r3 = (s8) temp_r7 + 9;
+    }
+    var_r3_2 = 0;
+    if (((s8) temp_r7 <= var_r8) && (var_r8 <= var_r3)) {
+        var_r3_2 = 1;
+    }
+    if (var_r3_2 == 0) {
+        M2C_FIELD(arg0, s16 *, 0x38) = (s16) (temp_r5 - ((s8) ((s8) temp_r7 - var_r8) << 5));
+        return 1;
+    }
+    return 0;
+}
+
+void fn_801E97D4(void *arg0) {
+    s16 r31;
+    s16 r30;
+
+    r31 = *(s16*)((char*)arg0 + 0x36);
+    r30 = *(s16*)((char*)arg0 + 0x38);
+    if (r31 == r30) {
+        fn_8000C188(arg0);
+        return;
+    }
+    if (r31 < r30) {
+        *(s16*)((char*)arg0 + 0x36) = (s16)(*(s16*)((char*)arg0 + 0x3A) + r31);
+    } else {
+        *(s16*)((char*)arg0 + 0x36) = (s16)(r31 - *(s16*)((char*)arg0 + 0x3A));
+    }
+    fn_80057860(*(s32*)((char*)arg0 + 0x5C), r31);
+    if (r31 == r30) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_801E9958(void) {
     M2C_UNK fn_801E9978();
     fn_801E9978();
@@ -44,6 +119,22 @@ void fn_801E9C24(void) {
     fn_8005C8B4((void*)&lbl_80299FA8[2]);
     fn_8005C8B4((void*)&lbl_80299FC4[2]);
     fn_8005C8B4((void*)&lbl_8027EB78[0x22F]);
+}
+
+void fn_801E9C70(void *arg0) {
+    s32 r31;
+    s32 temp_r3;
+    
+    if (arg0 == NULL) {
+        return;
+    }
+    
+    r31 = *(s32*)((char*)arg0 + 0x14);
+    temp_r3 = *(s32*)((char*)arg0 + 0x28);
+    
+    if (r31 < temp_r3) {
+        *(s32*)((char*)arg0 + 0x14) = temp_r3;
+    }
 }
 
 void fn_801E9D0C(void) {
