@@ -25,6 +25,53 @@ s32 fn_80103818(void) {
     return 0;
 }
 
+s32 fn_80103820(void) {
+    s32 fn_8000BCA4(void *);
+    M2C_UNK fn_8000C070(s32, M2C_UNK);
+    M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
+    M2C_UNK fn_800A8400();
+    extern M2C_UNK lbl_802734D0;
+    extern M2C_UNK lbl_802845E8;
+    extern M2C_UNK lbl_8028EAD8;
+    extern M2C_UNK lbl_8028ED04;
+    extern M2C_UNK lbl_8028ED80;
+    extern M2C_UNK lbl_8028EDD4;
+    extern M2C_UNK lbl_8028EE28;
+    extern u8 lbl_80367964;
+    extern M2C_UNK *lbl_80367968;
+    extern u8 lbl_8036796C;
+    extern M2C_UNK *lbl_80367970;
+    extern u8 lbl_80367974;
+    extern M2C_UNK *lbl_80367978;
+    extern u8 lbl_8036797C;
+    extern M2C_UNK lbl_80367980;
+    s32 temp_r31;
+
+    temp_r31 = fn_8000BCA4(&lbl_802734D0 + 0xC4);
+    fn_800A8400();
+    fn_8000C070(temp_r31, 0);
+    if ((s8) lbl_80367964 == 0) {
+        lbl_80367964 = 1;
+        lbl_80367968 = &lbl_8028EE28;
+    }
+    if ((s8) lbl_8036796C == 0) {
+        lbl_8036796C = 1;
+        lbl_80367970 = &lbl_8028EDD4;
+    }
+    if ((s8) lbl_80367974 == 0) {
+        lbl_80367974 = 1;
+        lbl_80367978 = &lbl_8028ED80;
+    }
+    if ((s8) lbl_8036797C == 0) {
+        M2C_FIELD(&lbl_80367980, M2C_UNK **, 4) = &lbl_802845E8;
+        M2C_FIELD(&lbl_80367980, M2C_UNK **, 0) = &lbl_8028EAD8;
+        M2C_FIELD(&lbl_80367980, M2C_UNK **, 4) = &lbl_8028ED04;
+        lbl_8036797C = 1;
+    }
+    fn_80024398(&lbl_80367980, temp_r31, 0);
+    return 6;
+}
+
 s32 fn_80103918(void) {
     return 0x20;
 }
@@ -72,12 +119,28 @@ s32 fn_80103980(void) {
     return 0;
 }
 
+void *fn_80103988(void) {
+    extern u16 lbl_802734D0[];
+    return &lbl_802734D0[0x270];
+}
+
 s32 fn_80103998(void) {
     return 0;
 }
 
+void *fn_80103A5C(void) {
+    extern u16 lbl_802734D0[];
+    return &lbl_802734D0[0x284];
+}
+
 s32 fn_80103A6C(void) {
     return 0;
+}
+
+void *fn_80103B20(void) {
+    extern u16 lbl_802734D0;
+    u16 *p = &lbl_802734D0;
+    return (void*)(p + 0x161);
 }
 
 s32 fn_80103B30(void) {
@@ -211,4 +274,4 @@ void fn_801053CC(void *arg0) {
     M2C_FIELD(arg0, s32 *, 8) = 0;
     M2C_FIELD(arg0, s32 *, 0xC) = 0;
 }
-
+extern u16 lbl_802734D0;
