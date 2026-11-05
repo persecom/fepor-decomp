@@ -31,6 +31,17 @@ static inline u8 *FindEntryByName(char *name) {
     return NULL;
 }
 
+static inline void *FindUnk48(void *p) {
+    while (p != NULL) {
+        void *v = M2C_FIELD(p, void **, 0x48);
+        if (v != NULL) {
+            return v;
+        }
+        p = M2C_FIELD(p, void **, 4);
+    }
+    return NULL;
+}
+
 void *fn_8005AE20(void) {
     extern void *lbl_8026AE88;
     return (void *)(((u32)&lbl_8026AE88) + 0x9);
