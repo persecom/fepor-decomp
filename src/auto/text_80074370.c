@@ -512,6 +512,11 @@ s32 fn_800789B4(void) {
     return 5;
 }
 
+s32 fn_80078DE0(void) {
+    *(u8 *)((u32)&D_802EF4C8 + 8) = 1;
+    return 5;
+}
+
 s32 fn_80078E24(void *arg0) {
     fn_80006220((s16) ((u32) *M2C_FIELD(arg0, u32 **, 4) >> 0x10U));
     M2C_FIELD(arg0, u32 **, 4) = (u32 *) (M2C_FIELD(arg0, u32 **, 4) + 4);
