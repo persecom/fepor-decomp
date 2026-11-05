@@ -1301,6 +1301,18 @@ s32 fn_80140B04(s32 arg0) {
     return arg0 + 4;
 }
 
+Vec2s fn_80142018(void *arg0) {
+    Vec2s v;
+    v.x = M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA);
+    v.y = M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC);
+    return v;
+}
+
+void fn_8014203C(void *arg0, Vec2s size) {
+    M2C_FIELD(arg0, s16 *, 0xE) = M2C_FIELD(arg0, s16 *, 0xA) + size.x;
+    M2C_FIELD(arg0, s16 *, 0x10) = M2C_FIELD(arg0, s16 *, 0xC) + size.y;
+}
+
 void fn_801426B4(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x40) = 0;
 }
@@ -1340,6 +1352,11 @@ void fn_801427D4(void *arg0, s16 arg1, s16 arg2, s32 *arg4, s32 arg5) {
 void fn_80142814(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 *arg4, s32 arg5) {
     M2C_UNK fn_8008D000(s32, s32, s32, s32);
     fn_8008D000(*arg4, arg5, arg1, arg2);
+}
+
+void fn_801434E4(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 *arg4, s32 arg5) {
+    M2C_UNK fn_8008D510(s32, s32, s32, s32);
+    fn_8008D510(*arg4, arg5, arg1, arg2);
 }
 
 s32 fn_8014351C(void *arg0, s32 arg1) {
