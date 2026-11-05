@@ -1216,7 +1216,7 @@ void fn_800E9A94(void) {
     s32 fn_8021CDC4(s32, void *, void *);
 
     extern s32 lbl_802725D8;
-extern u16 lbl_80320C20;
+extern s32 lbl_80320C20;
 
       fn_800EBF58();
     M2C_FIELD(&lbl_80320C20, s32 *, 0xA004) = fn_8021CDC4(M2C_FIELD(&lbl_80320C20, s32 *, 0xA000), &lbl_802725D8 + 0x70, &lbl_80320C20 + 0x10000);
