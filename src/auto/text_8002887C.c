@@ -142,6 +142,30 @@ void fn_8002E510(void) {
     }
 }
 
+void fn_8002E5B4(s32 arg0) {
+    u8 fn_8001F4CC(void *, s8, s8);
+    void fn_8000C070(s32, M2C_UNK);
+    extern struct {
+        void *head;
+        s32 unk4;
+        s32 unk8;
+    } lbl_802CA264[];
+    extern u8 lbl_80330708[];
+    extern u8 lbl_802CA518[];
+    void *p;
+    void *next;
+
+    p = lbl_802CA264[lbl_80330708[0x11]].head;
+    while (p != NULL) {
+        next = M2C_FIELD(p, void **, 0x184);
+        if (fn_8001F4CC(lbl_802CA518, M2C_FIELD(p, s8 *, 0x19E), M2C_FIELD(p, s8 *, 0x19F))) {
+            return;
+        }
+        p = next;
+    }
+    fn_8000C070(arg0, 5);
+}
+
 void fn_8002E648(void) {
     M2C_UNK fn_8014D3B4(void *);
     extern u8 lbl_80330708[];
