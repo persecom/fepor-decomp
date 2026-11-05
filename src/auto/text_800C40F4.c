@@ -538,7 +538,7 @@ void fn_800D5D04(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3) {
     n = MinU32(&arg3, &rem);
     fn_800D6898(arg0, arg1, arg2, *n, &alloc);
 }
-#pragma cplusplus reset
+
 void fn_800D67E4(void) {
 
 }
