@@ -1266,6 +1266,11 @@ void fn_800EB568(void) {
     lbl_80367110 |= 0x100;
 }
 
+s32 fn_800EB774(void) {
+    extern u32 lbl_80320C20[];
+    return *(u32*)((u8*)lbl_80320C20 + 0xA004);
+}
+
 s32 fn_800EC2B8(void) {
     extern s32 lbl_803678C0;
     fn_800D758C(lbl_803678C0);
