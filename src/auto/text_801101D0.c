@@ -919,3 +919,4 @@ extern struct SomeStruct* lbl_80320C20; // example struct
 #include "unit.h"
 
 extern u16 lbl_8028F6C8[];
+extern u16 lbl_80296128[];
