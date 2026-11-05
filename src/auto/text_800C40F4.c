@@ -1,7 +1,6 @@
 /* Functions from 0x800C40F4 to 0x801035C8, found by decomp-toolkit. */
 #include "common.h"
 #include "structs.h"
-#include "structs.h"
 
 extern s32 lbl_8028D788;
 extern void (*lbl_802B14E4)(void **);
@@ -402,6 +401,10 @@ void fn_800DAA60(s32 arg0, s32 arg1) {
     fn_800DAA94(lbl_803678B8, arg1);
 }
 
+void fn_800DAB24(void *arg1, s32 arg2) {
+    fn_800C9B6C(M2C_FIELD(arg1, s32 *, 0x3C) + (arg2 * 0xC));
+}
+
 void fn_800DB520(void) {
 
 }
@@ -630,6 +633,13 @@ void *fn_800DDC90(void *arg0) {
         fn_8006140C(temp_r3);
     }
     return temp_r3;
+}
+
+void fn_800DE9FC(void *arg0) {
+    void **ptr = (void **) arg0;
+    if (ptr != 0) {
+        ptr[1] = ptr[0];
+    }
 }
 
 void fn_800DEE90(void) {
