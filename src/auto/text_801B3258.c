@@ -577,33 +577,20 @@ void fn_801DDAC8(void *arg0) {
 }
 
 extern void *lbl_801D3B14;
-void fn_801DDBA8(void *arg0, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
+#pragma use_lmw_stmw on
+void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     void *memset(void *, s32, u32);
     void *memcpy(void *, const void *, u32);
     char *fn_8000E0E4(s32);
     s32 fn_80010B78(char *, s32, f32);
     M2C_UNK fn_801DC588();
-    typedef struct {
-        s16 flags;
-        s16 state;
-        s16 type;
-        u8 pad6[4];
-        s16 width;
-        s16 height;
-        u8 padE[0x10];
-        s16 timer;
-        char lines[7][0x41];
-        s8 numLines;
-        u8 pad1E8[2];
-    } Window;
-    Window *w = arg0;
+    s32 n;
     char *s;
     char *start;
     s32 len;
-    s32 n;
     f32 width;
 
-    memset(w, 0, sizeof(Window));
+    memset(w, 0, sizeof(MsgBox));
     w->state = 0;
     w->flags = 0;
     w->timer = 0;
@@ -645,7 +632,7 @@ void fn_801DDBA8(void *arg0, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     }
     w->numLines = n;
     w->width += 0x18;
-    w->height = w->numLines * 20 + (arg2 ? 20 : 0) + ((w->flags & 4) ? 40 : 0) + 32;
+    w->height = 32 + w->numLines * 20 + (arg2 ? 20 : 0) + ((w->flags & 4) ? 40 : 0);
     if (w->type == 1 || w->type == 2) {
         w->height += 0x88;
     }
@@ -657,7 +644,7 @@ void fn_801DDBA8(void *arg0, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     }
     fn_801DC588(w);
 }
-
+#pragma use_lmw_stmw reset
 void fn_801DE2FC(s32 arg0) {
     u8 fn_8005BB2C();
     if (fn_8005BB2C() != 0) {
@@ -714,7 +701,7 @@ void fn_801E00EC(void) {
 }
 
 void fn_801E0114(s32 arg0) {
-    M2C_UNK fn_800EB788(void);
+    u8 fn_800EB788(void);
     void fn_801E0154(void *, s32);
     extern u32 lbl_803682F0;
 
