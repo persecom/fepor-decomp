@@ -1830,6 +1830,42 @@ void fn_800E76D8(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 0x3C) = arg1;
 }
 
+#pragma cplusplus on
+#pragma dont_inline on
+extern "C" void fn_800E76E0(void *arg0, f32 farg0) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual s32 v10(void *, char *, s32) = 0;
+    };
+    extern char lbl_80272230[];
+    u8 list[0x18];
+    s32 count;
+    s32 i;
+
+    fn_800E01C8(list);
+    if (M2C_FIELD(arg0, u8 *, 0x3C) == 0) {
+        fn_800E0140(list, -1);
+        return;
+    }
+    count = ((Obj *)arg0)->v10(list, lbl_80272230 + 0x16, 0);
+    for (i = 0; i < count; i++) {
+        fn_800E8A88((void *)fn_800DFFF4(list, i), farg0);
+    }
+    fn_800E0140(list, -1);
+}
+#pragma dont_inline reset
+#pragma cplusplus reset
+
 void fn_800E788C(s32 arg1) {
     s32 temp = arg1 + 0x30;
     fn_800C9B6C(temp);
