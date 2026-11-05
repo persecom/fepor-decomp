@@ -2341,6 +2341,7 @@ void fn_800ED83C(void) {
     *(u16**)0x803678C8 = (u16*)0x803678C8;
 }
 
+#pragma dont_inline on
 s32 fn_800ED8C0(void) {
     void *p = M2C_FIELD(lbl_803678C8, void **, 0x440);
     if (p != NULL) {
@@ -2348,7 +2349,7 @@ s32 fn_800ED8C0(void) {
     }
     return 0;
 }
-
+#pragma dont_inline reset
 void fn_800EDF18(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0xB4) = (s32) ((s32) (M2C_FIELD(arg0, s32 *, 0xB0) * (arg1 - M2C_FIELD(arg0, s32 *, 0x48))) / (s32) M2C_FIELD(arg0, s32 *, 0x60));
 }
