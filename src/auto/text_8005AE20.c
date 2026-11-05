@@ -1290,4 +1290,4 @@ extern struct Unit {
 } Unit; 
 #include "common.h"
 #include "global.h"
-extern u16 lbl_8026B980[];
+extern u16 lbl_8026B980[8];
