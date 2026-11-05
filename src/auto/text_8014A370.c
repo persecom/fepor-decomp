@@ -379,11 +379,11 @@ void fn_8014CA68(s32 arg0, s32 arg1) {
 }
 
 void fn_8014CA98(s32 arg0, s32 arg1, u32 arg2) {
-    M2C_UNK fn_80234450(s32, u32);
-    if (arg2 != 0U) {
-        fn_80234450(arg0 + ((arg1 * 0xC) + 0x20), arg2);
-    }
-}
+      extern void fn_80234450(s32, u32);
+      if (arg2 != 0U) {
+          fn_80234450(arg0 + ((arg1 * 0xC) + 0x20), arg2);
+      }
+  }
 
 void fn_8014CAD4(void *arg0, f32 farg0, f32 farg1) {
     f32 fn_80023068(M2C_UNK *);
