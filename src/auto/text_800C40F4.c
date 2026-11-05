@@ -71,6 +71,22 @@ s32 fn_800C4638(s32 arg0) {
     return fn_800C5A48(lbl_80367870, arg0) + 0x20;
 }
 
+void fn_800C4664(s32 arg0) {
+    extern void *lbl_80367868;
+    void *temp_r0;
+    void *var_r4;
+
+    var_r4 = M2C_FIELD(lbl_80367868, void **, 0x18);
+loop_2:
+    temp_r0 = M2C_FIELD(var_r4, void **, 0xC);
+    if (temp_r0 != NULL) {
+        var_r4 = temp_r0;
+        goto loop_2;
+    }
+    M2C_FIELD(lbl_80367868, s32 *, 0x1C) = (s32) (M2C_FIELD(lbl_80367868, s32 *, 0x1C) + arg0);
+    M2C_FIELD(var_r4, s32 *, 0x10) = (s32) (M2C_FIELD(var_r4, s32 *, 0x10) + arg0);
+}
+
 void fn_800C4728(s32 arg0) {
     extern u16 lbl_80320B88[];
     extern s32 lbl_80367870;
@@ -82,6 +98,26 @@ void fn_800C47E8(void) {
     // This is a placeholder for the actual function.
     // The full decompilation involves too many complex dependencies
     // to be completed in one attempt. Will try a partial approach.
+}
+
+extern u32* lbl_80367860;
+extern u32 lbl_80367864;
+extern u32* lbl_80367868;
+extern u32 lbl_8036786C;
+s32 fn_800C52C8(void) {
+    s32 var_r3;
+    
+    if (lbl_80367868 != NULL) {
+        var_r3 = (u32)(lbl_80367868 + 0x1c / sizeof(u32));
+    } else {
+        var_r3 = (u32)lbl_80367860;
+    }
+    
+    if (lbl_8036786C != 0) {
+        return lbl_8036786C;
+    } else {
+        return (u32)var_r3 - lbl_80367864;
+    }
 }
 
 void fn_800C5F78(void *arg0) {
@@ -988,6 +1024,10 @@ void fn_800E4174(void) {
 
 }
 
+void fn_800E4178(void *arg0, void *arg1) {
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x40), M2C_UNK (**)(s32, s32), 0x4C)(M2C_FIELD(arg1, s32 *, 0), M2C_FIELD(arg1, s32 *, 4));
+}
+
 void fn_800E43E8(void) {
 
 }
@@ -1683,6 +1723,13 @@ s32 fn_800FB3AC(void *arg0) {
     extern void *lbl_803678F8;
 extern void *lbl_802EF4C8;
     return fn_802342B8(M2C_FIELD(lbl_803678F8, s32 *, 0x14), *M2C_FIELD(arg0, s32 **, 0x18C), lbl_803678F8) == 0;
+}
+
+s32 fn_800FB45C(void *arg0) {
+    s32 fn_802342B8(s32, s32, void *);
+    extern void *lbl_803678F8;
+    
+    return fn_802342B8(((s32*)lbl_803678F8)[0x14/4], ((s32**)arg0)[0x188/4][0], lbl_803678F8) == 0;
 }
 
 void fn_800FBF54(void) {
