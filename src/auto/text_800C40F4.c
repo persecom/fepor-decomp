@@ -184,6 +184,11 @@ s32 fn_800C8EFC(void *arg0) {
     return var_r6;
 }
 
+void fn_800C8F48(void *arg0) {
+    fn_800C802C(M2C_FIELD(arg0, s32 *, 0x20) + 1);
+    M2C_UNK fn_800C802C(s32);
+}
+
 M2C_UNK *fn_800C93EC(void *arg0) {
     extern M2C_UNK lbl_80369DC0;
     M2C_UNK *temp_r3;

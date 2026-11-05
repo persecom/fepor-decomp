@@ -94,10 +94,8 @@ void fn_80074E4C(void **arg0, void *arg2) {
 
 void fn_80074EDC(void *arg1) {
     extern s32 lbl_802EF4C8[];
-    void *temp_r3;
     
-    temp_r3 = (char*)lbl_802EF4C8 + 4;
-    fn_80037BD0(*(s32*)temp_r3, *(u8*)((char*)arg1 + 0x3A));
+    fn_80037BD0(lbl_802EF4C8[1], *(u8*)((char*)arg1 + 0x3A));
 }
 
 void fn_80074F0C(void *arg0) {
@@ -502,16 +500,16 @@ void fn_8007AD30(void *arg0, s32 arg1) {
 }
 
 void fn_8007AD6C(void *arg0) {
-    M2C_UNK fn_8000C60C();
-    extern M2C_UNK lbl_80312040;
-    s32 temp_r30;
+    extern u16 lbl_80312040[];
+    void fn_8000C60C(void);
 
     if (arg0 != NULL) {
-        temp_r30 = M2C_FIELD(arg0, u8 *, 0x40) * 4;
-        if ((u32) *(&lbl_80312040 + temp_r30) != 0U) {
+        s32 index = *(u8 *)((u8 *)arg0 + 0x40);
+        u16 *ptr = &lbl_80312040[index * 2];
+        if (*ptr != 0) {
             fn_8000C60C();
         }
-        *(&lbl_80312040 + temp_r30) = 0;
+        *ptr = 0;
     }
 }
 

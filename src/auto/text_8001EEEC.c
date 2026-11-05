@@ -176,6 +176,36 @@ void fn_80024D18(void *arg1) {
     }
 }
 
+extern u32 lbl_80367240;
+void fn_80024D74(void *arg0) {
+    u32 r0;
+    u32 r3;
+    u32 r5;
+    
+    // Load global pointer and data from arg0 + 0x4
+    r3 = *(u32*)((char*)arg0 + 0x4);
+    
+    // Perform AND operation with 0x300, check if result is zero
+    r0 = r3 & 0x300;
+    if (r0 == 0) {
+        return;
+    }
+    
+    // Load byte from arg0 + 0x62, extend sign and add to arg0
+    r0 = *(u8*)((char*)arg0 + 0x62);
+    r0 = (s8)r0;
+    r3 = (u32)((char*)arg0 + r0);
+    
+    // Call function with result
+    fn_8000B908(r3);
+    
+    // Load arg0 + 0x34
+    r5 = *(u32*)((char*)arg0 + 0x34);
+    
+    // Call virtual function via pointer (ptr at r5 + 0x38)  
+    ((void (*)(void))*(u32*)(*(u32*)r5 + 0x38))();
+}
+
 s32 fn_80025440(void) {
     u8 fn_80166D8C(M2C_UNK *);
     extern M2C_UNK lbl_80330D68;
@@ -688,6 +718,18 @@ void fn_80026E2C(s32 arg0) {
     extern M2C_UNK lbl_802EF4C8;
     fn_8012AA90((s8) M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 4), u8 *, 0x19E), (s8) M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 4), u8 *, 0x19F), arg0);
     M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 4), u8 *, 0x1A5) = (u8) ((M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 4), u8 *, 0x1A5) & ~7) | 1);
+}
+
+void fn_80026E88(s32 arg0) {
+    M2C_UNK fn_8003EA24(void *, u8, u8);
+    M2C_UNK fn_80183D7C(void *, s32, s8, s8, s32);
+    extern M2C_UNK lbl_802EF4C8;
+    s32 temp_r30;
+
+    temp_r30 = M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 0), s32 *, 0x194);
+    M2C_FIELD(&lbl_802EF4C8, s32 *, 4) = temp_r30;
+    fn_8003EA24(M2C_FIELD(&lbl_802EF4C8, void **, 0), M2C_FIELD(&lbl_802EF4C8, u8 *, 0xF), M2C_FIELD(&lbl_802EF4C8, u8 *, 0x10));
+    fn_80183D7C(M2C_FIELD(&lbl_802EF4C8, void **, 0), temp_r30, (s8) M2C_FIELD(&lbl_802EF4C8, u8 *, 0xF), (s8) M2C_FIELD(&lbl_802EF4C8, u8 *, 0x10), arg0);
 }
 
 void fn_80026F08(void) {

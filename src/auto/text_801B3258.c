@@ -690,6 +690,22 @@ u8 fn_801DE3D0(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x10);
 }
 
+void fn_801DF4A4(void *arg0, s32 arg1) {
+    struct Color {
+        u8 r, g, b, a;
+    };
+    void fn_80161AA8(s32, s32, s16, s32, s32, struct Color *);
+    s16 h;
+    struct Color col;
+
+    h = M2C_FIELD(arg0, s16 *, 0x16) - M2C_FIELD(arg0, s16 *, 0x12);
+    col.r = 0x80;
+    col.g = 0x78;
+    col.b = 0x50;
+    col.a = 0xE6;
+    fn_80161AA8(0x10, arg1, h - 0x10, arg1, 0x10, &col);
+}
+
 extern u8 lbl_80299F4C[16];
 void fn_801DF5D8(void) {
     fn_8000CAA0(&lbl_80299F4C);

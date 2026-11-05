@@ -74,6 +74,34 @@ void fn_80128268(s32 arg1, s32 arg2) {
     }
 }
 
+void fn_801282E8(s32 arg1, s32 arg2) {
+    void *fn_8000CAF0(void *, u32, void *);
+    u32 fn_801090C0(void);
+    extern u16 lbl_80290598;
+    
+    u32 temp_r3 = fn_801090C0();
+    if (temp_r3 != 0U) {
+        void *temp_r3_2 = fn_8000CAF0(&lbl_80290598, temp_r3, &lbl_80290598);
+        *(s32*)((char*)temp_r3_2 + 0x38) = arg1;
+        *(f32*)((char*)temp_r3_2 + 0x3C) = (f32)arg2;
+    }
+}
+
+void fn_8012835C(s32 arg1, s32 arg2) {
+    void *fn_8000CAF0(M2C_UNK *, u32, M2C_UNK *);
+    u32 fn_801090C0();
+    extern M2C_UNK lbl_80290598;
+    u32 temp_r3;
+    void *temp_r3_2;
+
+    temp_r3 = fn_801090C0();
+    if (temp_r3 != 0U) {
+        temp_r3_2 = fn_8000CAF0(&lbl_80290598, temp_r3, &lbl_80290598);
+        M2C_FIELD(temp_r3_2, s32 *, 0x38) = arg1;
+        M2C_FIELD(temp_r3_2, f32 *, 0x3C) = (f32) -arg2;
+    }
+}
+
 void fn_801285C4(void *arg0) {
     f32 fn_801099A0(s32, M2C_UNK);
     s32 temp_r31;
@@ -325,11 +353,45 @@ void fn_8012B394(void) {
     fn_800558D8((u16*)addr);
 }
 
+void fn_8012B3C0(s32 arg0, s32 arg1, s32 arg2) {
+    M2C_UNK fn_80040844();
+    u32 fn_8004721C(s32, s32, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_800498A4(s32, M2C_UNK);
+    fn_80040844();
+    if (fn_8004721C(arg0, arg1, 0x4200, 0) != 0U) {
+        fn_800498A4(arg2, 0);
+    }
+}
+
 void fn_8012B458(void *arg0) {
     M2C_UNK fn_8000C60C(s32);
     extern s32 lbl_80367110;
     if (lbl_80367110 & 1) {
         fn_8000C60C(M2C_FIELD(arg0, s32 *, 0x18));
     }
+}
+
+void fn_8012C2CC(void *arg0) {
+    s32 temp_r0;
+    
+    temp_r0 = *(s32*)((u8*)arg0 + 0x30);
+    fn_80109020(*(s32**)((u8*)arg0 + 0x3C) + (temp_r0 << 2));
+    lbl_80367A88 = 0;
+    temp_r0 = *(s32*)((u8*)arg0 + 0x34);
+    if (temp_r0 == 0x270F) {
+        fn_8000C070(arg0, 0x63);
+        return;
+    }
+    *(s32*)((u8*)arg0 + 0x30) = temp_r0;
+}
+
+void fn_8012C330(void *arg0) {
+    s32 temp;
+    s32 *ptr;
+    
+    temp = *(u32 *)((u8 *)arg0 + 0x30);
+    ptr = (s32 *)((u8 *)arg0 + 0x3c);
+    temp = ptr[temp];
+    lbl_80367A88 = fn_80109180(temp, 0);
 }
 

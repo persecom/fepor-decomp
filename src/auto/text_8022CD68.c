@@ -179,7 +179,7 @@ s32 fn_8024A4AC(s32 arg1, s32 arg2) {
     s32 var_r28;
     u8 var_r3;
     char *temp_r7;
-
+    
     var_r28 = 0;
     var_r3 = fn_80255FB0();
 loop_7:
@@ -189,11 +189,9 @@ loop_7:
     temp_r29 = var_r3 * 0x458;
     temp_r7 = (char*) lbl_803689A8 + temp_r29;
     if (var_r3 == *(s32*)(temp_r7 + 0xF4)) {
-        s32 unk114 = *(s32*)(temp_r7 + 0x114);   // Load word
-        s32 unk118 = *(s32*)(temp_r7 + 0x118);
-        s32 temp_r3 = unk118 & 2;
-        s32 temp_r4 = unk114 & 0;
-        if (temp_r3 | temp_r4) {
+        s32 temp_r0 = *(s32*)(temp_r7 + 0x114);
+        s32 temp_r1 = *(s32*)(temp_r7 + 0x118);
+        if ((temp_r1 & 2) != 0 || (temp_r0 & 0) != 0) {
             fn_8025F534(arg1, *(u8*)(temp_r7 + 0x217), arg2);
         } else {
             fn_8025F534(arg1, *(u8*)(temp_r7 + 0x122), arg2);

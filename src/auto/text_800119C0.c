@@ -14,6 +14,24 @@ s32 fn_800119D8(void) {
     return 0x18;
 }
 
+extern u16 lbl_80283948;
+extern u16 lbl_80283EFC;
+void *fn_800119E0(void *arg0, s16 arg1) {
+    if (arg0 != NULL) {
+        *(u16**)arg0 = &lbl_80283EFC;
+        if (arg0 != NULL) {
+            *(u16**)arg0 = &lbl_80283948;
+            if (*(u32*)((char*)arg0 + 4) != 0) {
+                fn_8006EDA0((char*)arg0 + 4);
+            }
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_80013864(void) {
     extern void *lbl_803671A4;
     M2C_FIELD(lbl_803671A4, s8 *, 0x1C) = 1;
@@ -48,6 +66,34 @@ void fn_80013A6C(s32 arg0) {
     M2C_FIELD(lbl_80367180, s32 **, 0x18) = (s32 *) (temp_r4 + 4);
     *temp_r4 = arg0;
     lbl_80367188 += 1;
+}
+
+u32 fn_80013B60(void *arg0) {
+    extern void *lbl_80367190;
+    u32 temp_r3;
+    void *temp_r4;
+    void *var_r3;
+
+    if (arg0 == NULL) {
+        return *M2C_FIELD(lbl_80367190, u32 **, 0x28);
+    }
+    temp_r4 = M2C_FIELD(arg0, void **, 8);
+    temp_r3 = M2C_FIELD((M2C_FIELD(temp_r4, s32 *, 0x28) + (M2C_FIELD(arg0, s16 *, 0x10) * 4)), u32 *, 4);
+    if (temp_r3 == 0U) {
+        var_r3 = M2C_FIELD(temp_r4, void **, 0x1C);
+loop_6:
+        if (var_r3 != NULL) {
+            if ((s32) M2C_FIELD(var_r3, u8 *, 3) == 0x53) {
+                var_r3 = M2C_FIELD(var_r3, void **, 0x1C);
+                goto loop_6;
+            }
+        }
+        if (var_r3 == NULL) {
+            return 0U;
+        }
+        return *M2C_FIELD(var_r3, u32 **, 0x28);
+    }
+    return temp_r3;
 }
 
 void fn_80013F48(void *arg0) {
@@ -114,6 +160,20 @@ s32 fn_80014398(void *arg0) {
 
     temp_r3 = *(void **)((u8 *)arg0 + 4);
     temp_r31 = *(s32 *)((u8 *)temp_r3 + 4);
+    *(void **)((u8 *)arg0 + 4) = (void *) ((u8 *)temp_r3 + 8);
+    if (fn_8000D354(temp_r31) == 0U) {
+        return 1;
+    }
+    fn_800C08AC(temp_r31, arg0);
+    return 0;
+}
+
+s32 fn_80014400(void *arg0) {
+    s32 temp_r31;
+    void *temp_r3;
+
+    temp_r3 = *(void **)((u8 *)arg0 + 4);
+    temp_r31 = *(u16 *)((u8 *)temp_r3 + 0); // Load the 16-bit value directly
     *(void **)((u8 *)arg0 + 4) = (void *) ((u8 *)temp_r3 + 8);
     if (fn_8000D354(temp_r31) == 0U) {
         return 1;
@@ -514,4 +574,35 @@ s32 fn_80016A9C(s32 arg0) {
     }
     return 0;
 }
+
+void *fn_80016BDC(void) {
+    u32 fn_8000D354();
+    extern u16 lbl_802B14E4[];
+    u16 *var_r4;
+    s32 var_ctr;
+    s32 var_r5;
+    u32 temp_r0;
+    u32 temp_r3;
+
+    temp_r3 = fn_8000D354();
+    if (temp_r3 == 0U) {
+        return NULL;
+    }
+    var_r4 = lbl_802B14E4;
+    var_r5 = 0;
+    var_ctr = 0x9F;
+loop_3:
+    temp_r0 = *(u32 *)(var_r4 + 0x188 / sizeof(u16));
+    if ((temp_r0 != 0U) && (temp_r0 == temp_r3)) {
+        return lbl_802B14E4 + (var_r5 * 0x280);
+    }
+    var_r4 += 0x280;
+    var_r5 += 1;
+    var_ctr -= 1;
+    if (var_ctr == 0) {
+        return NULL;
+    }
+    goto loop_3;
+}
+
 #include "common.h"
