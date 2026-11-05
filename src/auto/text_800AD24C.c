@@ -930,6 +930,17 @@ s32 fn_800B8AFC(s32 arg0) {
     return 1;
 }
 
+#pragma use_lmw_stmw on
+s32 fn_800B8BA8(s32 arg0, s32 arg1, s32 arg2, u32 arg3, s32 arg4, s32 arg5, s32 arg6) {
+    M2C_UNK fn_801C1AC8(s16, s16, s16, u32, s32, s32, s32, s32);
+    if ((arg3 < 0x80000000U) || (arg3 >= 0x81800000U)) {
+        return 0;
+    }
+    fn_801C1AC8(arg0, arg1, arg2, arg3, arg4, arg5, arg6, fn_800C0658());
+    return 1;
+}
+#pragma use_lmw_stmw reset
+
 s32 fn_800B8C34(s8 arg0, s16 arg1, s16 arg2, u32 arg3, s32 arg4) {
     M2C_UNK fn_801C1BC0(s8, s16, s16, u32, s32, s32);
     if ((arg3 < 0x80000000U) || (arg3 >= 0x81800000U)) {
