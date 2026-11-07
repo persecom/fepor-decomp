@@ -78,6 +78,7 @@ void fn_80112DFC(void *arg0, u8 arg1) {
 typedef struct Vec3f {
     f32 x, y, z;
     Vec3f() {}
+    ~Vec3f() {}
     Vec3f(f32 _x, f32 _y, f32 _z) {
         x = _x;
         y = _y;
@@ -103,6 +104,10 @@ extern "C" void fn_80112E30(void *arg0) {
         virtual void v11() = 0;
         virtual Vec3f GetPos(s32) = 0;
     };
+    Vec3f a;
+    Vec3f b;
+    Vec3f pa;
+    Vec3f pb;
     Actor *target;
     Actor *self;
     f32 dist;
@@ -112,10 +117,8 @@ extern "C" void fn_80112E30(void *arg0) {
     if (target == NULL) {
         dist = lbl_8036A184;
     } else {
-        Vec3f a(lbl_8036A184, lbl_8036A184, lbl_8036A184);
-        Vec3f b(lbl_8036A184, lbl_8036A184, lbl_8036A184);
-        Vec3f pa;
-        Vec3f pb;
+        a.x = a.y = a.z = lbl_8036A184;
+        b.x = b.y = b.z = lbl_8036A184;
         pa = a = self->GetPos(0);
         pb = b = target->GetPos(0);
         dist = fn_802032CC(pa, pb);
@@ -954,6 +957,76 @@ block_14:
         var_r3 = arg0;
     }
     M2C_FIELD(arg0, void **, 0xC) = var_r3;
+    return var_r29 != NULL;
+}
+
+s32 fn_8011C404(void *arg0) {
+    void *fn_8002F658(s32 *, s32);
+    extern u16 lbl_802EF4E0[1004];
+    s16 temp_r4;
+    s16 var_r30;
+    s32 var_r0;
+    s32 var_r28;
+    s32 var_r5;
+    u8 temp_r0;
+    u8 temp_r0_2;
+    u8 temp_r6;
+    u8 temp_r7;
+    u8 temp_r8;
+    u8 var_r0_2;
+    void *temp_r3;
+    void *var_r29;
+    void *var_r3;
+
+    var_r30 = 0x7FFF;
+    var_r29 = NULL;
+    var_r28 = 0;
+loop_16:
+    if (var_r28 < (s32) lbl_802EF4E0[0]) {
+        temp_r3 = fn_8002F658((s32 *)lbl_802EF4E0, var_r28);
+        if (arg0 != temp_r3) {
+            temp_r7 = M2C_FIELD(temp_r3, u8 *, 0);
+            temp_r8 = M2C_FIELD(arg0, u8 *, 0);
+            if ((s8) temp_r8 > (s8) temp_r7) {
+                temp_r6 = M2C_FIELD(temp_r3, u8 *, 1);
+                temp_r0 = M2C_FIELD(arg0, u8 *, 1);
+                var_r5 = (s8) temp_r0 - (s8) temp_r6;
+                if (((s8) temp_r0 - (s8) temp_r6) < 0) {
+                    var_r5 = -var_r5;
+                }
+                var_r0 = (s8) temp_r8 - (s8) temp_r7;
+                if (var_r0 < 0) {
+                    var_r0 = -var_r0;
+                }
+                temp_r4 = var_r0 + var_r5;
+                if (var_r30 >= temp_r4) {
+                    if ((var_r29 != NULL) && (var_r30 == temp_r4)) {
+                        temp_r0_2 = M2C_FIELD(var_r29, u8 *, 0);
+                        if ((s8) temp_r0_2 == (s8) temp_r7) {
+                            var_r0_2 = (s8) temp_r6 < (s8) M2C_FIELD(var_r29, u8 *, 1);
+                        } else {
+                            var_r0_2 = (s8) temp_r0_2 < (s8) temp_r7;
+                        }
+                        if (var_r0_2 != 0) {
+                            goto block_14;
+                        }
+                    } else {
+block_14:
+                        var_r30 = temp_r4;
+                        var_r29 = temp_r3;
+                    }
+                }
+            }
+        }
+        var_r28 += 1;
+        goto loop_16;
+    }
+    if (var_r29 != NULL) {
+        var_r3 = var_r29;
+    } else {
+        var_r3 = arg0;
+    }
+    M2C_FIELD(arg0, void **, 4) = var_r3;
     return var_r29 != NULL;
 }
 
