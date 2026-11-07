@@ -1077,10 +1077,11 @@ M2C_UNK fn_80063954(char *arg0) {
     }
     return temp_r31;
 }
-#pragma inline_depth(reset)
+
 s32 fn_800639B4(void) {
     return 0;
 }
+#pragma inline_depth(reset)
 
 u16 fn_80065484(void ***a,s32 b,u16 c){s32 best=-1;void*p;u16 count,off,n,v;s32 i,j;u8*q;if(a==0)return 0xffff;if(*a==0)return 0xffff;p=**a;if(p==0)return 0xffff;count=*(u16*)p;for(i=0;i<count;i++){off=*(u16*)((u8*)p+*(u32*)((u8*)p+4)+i*2);q=(u8*)p+off;n=*(u16*)(q+2);for(j=0;j<n;j++){if(*(u16*)(q+4)==c){v=*(u16*)q;if(v>b&&(best<0||v<=best))best=v;}q+=2;}}return (u16)best;}
 
