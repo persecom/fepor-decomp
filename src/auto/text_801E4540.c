@@ -196,4 +196,4 @@ extern f32 lbl_8036B6E8;
 #include "global.h"
 #include "ef.h"
 
-extern u16 lbl_80332020[];
+extern u16* lbl_80332020;
