@@ -134,17 +134,18 @@ block_15:
 }
 
 s32 fn_801B6164(u32 arg0) {
-    M2C_UNK fn_8000CAA0(M2C_UNK *, u32, M2C_UNK *);
-    M2C_UNK fn_8000CAF0(M2C_UNK *, M2C_UNK);
-    extern M2C_UNK lbl_80297AC8;
-    extern M2C_UNK lbl_80330EAC;
-    if (!(M2C_FIELD(&lbl_80330EAC, s32 *, 0xCAC) & 0x400)) {
+    void *fn_8000CAA0(void *, u32);
+    void *fn_8000CAF0(void *, s32);
+    extern u8 lbl_80297AC8[];
+    extern u8 lbl_80330EAC[];
+
+    if (!(M2C_FIELD(lbl_80330EAC, s32 *, 0xCAC) & 0x400)) {
         return 0;
     }
-    if (arg0 == 0U) {
-        fn_8000CAF0(&lbl_80297AC8, 3);
+    if (arg0 == 0) {
+        fn_8000CAF0(lbl_80297AC8, 3);
     } else {
-        fn_8000CAA0(&lbl_80297AC8, arg0, &lbl_80297AC8);
+        fn_8000CAA0(lbl_80297AC8, arg0);
     }
     return 1;
 }
