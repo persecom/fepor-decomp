@@ -96,6 +96,17 @@ void fn_801B3D30(void *arg0) {
     *(s32 *)((char *)temp_r31 + 0x18) = 0;
 }
 
+void fn_801B3D68(void *arg0) {
+    void *temp_r31;
+
+    temp_r31 = M2C_FIELD(arg0, void **, 0x30);
+    fn_8014876C(&lbl_8032FF08 + (M2C_FIELD(temp_r31, u8 *, 0x10C) * 0x30), 0x64, 0x3E8);
+    if ((u32) M2C_FIELD(temp_r31, u32 *, 0x18) != 0U) {
+        fn_8005C7E8();
+    }
+    fn_800C4588(temp_r31);
+}
+
 void fn_801B4810(void) {
     extern u16 lbl_8027C128[];
     u16 *ptr1 = &lbl_8027C128[0xB1];
@@ -487,6 +498,16 @@ void fn_801C0FDC(s32 arg0) {
     *(s32 *)((char *)var_r4 + 0x34) |= 0x10;
     fn_801400F4(arg0);
 }
+
+#pragma cplusplus on
+extern "C" void fn_801C1044(void *arg0) {
+    struct Obj {
+        u8 pad[0x40];
+        virtual void m08(s32) = 0;
+    };
+    ((Obj *) arg0)->m08(-1);
+}
+#pragma cplusplus reset
 
 s32 fn_801C13F0(void) {
     u8 fn_800BE800(s32);
