@@ -61,7 +61,10 @@ void fn_801FCC68(s32 arg0) {
 
 extern s32 lbl_803679F0;
 void fn_801FDA40(void) {
-    lbl_803679F0 = 0;
+    void fn_8006EEFC(void *, void *);
+    extern u32 lbl_80368418;
+    extern char lbl_80281EC8[];
+    fn_8006EEFC(&lbl_80368418, lbl_80281EC8 + 0x13);
 }
 
 void fn_801FDE64(void) {
