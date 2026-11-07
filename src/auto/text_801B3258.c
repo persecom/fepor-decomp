@@ -182,6 +182,7 @@ void fn_801B77F0(s32 arg0, s32 arg1) {
     fn_8000E0E4(arg0 + (arg1 << 6));
 }
 
+#pragma opt_loop_invariants off
 void fn_801B84C0(void) {
     char *fn_8000E0E4(u32);
     u32 fn_800A8A88(u32);
@@ -199,14 +200,12 @@ void fn_801B84C0(void) {
         u8 unk8;
         s8 unk9;
     } *p;
-    char *s;
 
     for (p = (void *)lbl_80367214; p->unk0 != 0; p++) {
-        s = fn_8000E0E4(fn_800A8A88(p->unk4));
-        fn_800056CC(lbl_8027C5C8 + 8, fn_8000E0E4(fn_800A8A88(p->unk0)), s, p->unk8, p->unk9);
+        fn_800056CC(lbl_8027C5C8 + 8, fn_8000E0E4(fn_800A8A88(p->unk0)), fn_8000E0E4(fn_800A8A88(p->unk4)), p->unk8, p->unk9);
     }
 }
-
+#pragma opt_loop_invariants reset
 void fn_801B8798(void) {
     u32 fn_80019E8C(u32);
     extern struct {
