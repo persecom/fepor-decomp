@@ -2217,6 +2217,11 @@ void fn_802622F4(void) {
 
 }
 
+void fn_80262354(void *arg0, void *arg1) {
+    void fn_802627EC(void *);
+    fn_802627EC(arg1);
+}
+
 void fn_80262378(void **arg0, s32 *arg1) {
     s32 fn_80262B74(s32, s32);
     u32 temp_r3;
