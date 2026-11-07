@@ -982,8 +982,8 @@ void fn_800D67E8(void) {
 
 }
 
-void fn_800D67EC(s32 arg1) {
-    extern void fn_800C428C(s32);
+void fn_800D67EC(void *arg0, void *arg1) {
+    void fn_800C428C(void *);
     fn_800C428C(arg1);
 }
 
