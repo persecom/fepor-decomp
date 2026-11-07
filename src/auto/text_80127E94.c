@@ -153,6 +153,16 @@ s32 fn_801287B8(void) {
     return 0;
 }
 
+void fn_80129374(void) {
+    u32 fn_80019E04(u32);
+    extern u32 lbl_802909F8[48];
+    u32 *p;
+
+    for (p = lbl_802909F8; p[0] != 0; p += 3) {
+        p[1] = fn_80019E04(p[0]);
+    }
+}
+
 void fn_8012955C(void) {
     M2C_UNK fn_800558D8(void *);
     extern M2C_UNK lbl_80275740;
