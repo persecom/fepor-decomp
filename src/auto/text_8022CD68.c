@@ -893,6 +893,23 @@ s32 fn_8024B7DC(s32 arg0) {
     return var_r31;
 }
 
+#pragma inline_depth(0)
+void fn_8024B828(s32 arg0, s32 arg1, s32 arg2) {
+    if (arg1 == 1) {
+        fn_8026372C();
+        fn_8024A590(arg0, 0x1F, (s32)(16383.0f * (1.0f - (f32)(u32)(arg2 - 0x50) / 15920.0f)));
+        fn_802636F4();
+        fn_8026372C();
+        fn_8024A4AC(arg0, 0x4F, 0x7F);
+        fn_802636F4();
+    } else {
+        fn_8026372C();
+        fn_8024A4AC(arg0, 0x4F, 0);
+        fn_802636F4();
+    }
+}
+#pragma inline_depth(reset)
+
 void fn_8024B8EC(s32 arg0, s32 arg1, s32 arg2) {
     M2C_UNK fn_8024A780(s32, s32, s32, M2C_UNK, M2C_UNK);
     fn_8026372C();
