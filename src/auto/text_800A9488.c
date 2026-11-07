@@ -346,7 +346,7 @@ s32 fn_800AA304(s8 arg0, s8 arg1) {
 void fn_800AA3C0(void) {
     void fn_8004A1F0(void);
     void fn_8004A224(void);
-    void fn_800AACDC(void);
+    void fn_800AACDC(void *);
 
     extern u8 lbl_802B14E4[101760];
     extern u8 lbl_802CA518[151280];
@@ -390,7 +390,7 @@ void fn_800AA3C0(void) {
             if (unit == NULL || *(u8 *)(*(u32 *)((char *)unit + 0x190) + 8) == 0) {
                 fn_8004A1F0();
             } else {
-                fn_800AACDC();
+                fn_800AACDC(unit);
                 fn_8004A224();
             }
         }
@@ -404,7 +404,7 @@ void *fn_800AA5F0(void *arg0) {
     void *var_r4;
     void *var_r5;
 
-    var_r4 = lbl_802CA264;
+    var_r4 = *(void **)lbl_802CA264;
     if (var_r4 == NULL) {
         return NULL;
     }
@@ -418,8 +418,8 @@ void *fn_800AA5F0(void *arg0) {
     }
 
     if (arg0 == NULL) {
+    loop_40:
         var_r3 = var_r4;
-loop_40:
         do {
             s32 *temp_r0 = *(s32 **)((char *)var_r4 + 0x1A0);
             if (*temp_r0 & 5) {
@@ -449,8 +449,8 @@ loop_40:
         if (var_r5 == NULL) {
             var_r5 = var_r4;
         }
+    loop_15:
         var_r3 = var_r5;
-loop_15:
         do {
             s32 *temp_r0 = *(s32 **)((char *)var_r3 + 0x1A0);
             if (*temp_r0 & 5) {
