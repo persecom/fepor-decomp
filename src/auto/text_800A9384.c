@@ -22,6 +22,10 @@ extern u16 lbl_8028CAC8[38];
 extern u16 lbl_8028C9A0[38];
 extern u16 lbl_8028CD58[38];
 extern u16 lbl_802863BC[];
+static inline void SetVtbl(void **obj, s32 off, void *vtbl) {
+    *(void **)((u8 *)obj + off) = vtbl;
+}
+
 extern u16 *lbl_803677C8;
 extern u16 *lbl_803677D0;
 extern u16 *lbl_803677D4;
@@ -36,14 +40,15 @@ extern u16 *lbl_803677F8;
 extern u16 lbl_80366E30;
 
 extern u16 lbl_802863BC[];
+extern void *lbl_803677C8_arr[13] : 0x803677C8;
 #pragma use_lmw_stmw on
 void fn_800A9384(void) {
-    M2C_FIELD(lbl_80312AB0, u16 **, 4) = lbl_802845E8;
+    M2C_FIELD(&lbl_80312AB0, void **, 4) = lbl_802845E8;
     lbl_803677C8 = lbl_8028459C;
-    M2C_FIELD(lbl_80312AB0, u16 **, 4) = lbl_80286664;
+    M2C_FIELD(&lbl_80312AB0, void **, 4) = lbl_80286664;
     lbl_803677C8 = lbl_8028CDA4;
-    M2C_FIELD(lbl_803677EC, u16 **, 4) = lbl_802845E8;
-    M2C_FIELD(lbl_80312AB0, u16 **, 4) = lbl_802863BC;
+    M2C_FIELD(&lbl_803677EC, void **, 4) = lbl_802845E8;
+    M2C_FIELD(&lbl_80312AB0, void **, 4) = lbl_802863BC;
     lbl_803677C8 = lbl_8028CD58;
     lbl_803677D0 = lbl_8028CD0C;
     lbl_803677D4 = lbl_8028CCC0;
@@ -52,11 +57,11 @@ void fn_800A9384(void) {
     lbl_803677E0 = lbl_8028CBDC;
     lbl_803677E4 = lbl_8028CB90;
     lbl_803677E8 = lbl_8028CB44;
-    M2C_FIELD(lbl_803677EC, u16 **, 0) = lbl_8028C850;
-    M2C_FIELD(lbl_803677EC, u16 **, 4) = lbl_8028CAC8;
+    M2C_FIELD(&lbl_803677EC, void **, 0) = lbl_8028C850;
+    M2C_FIELD(&lbl_803677EC, void **, 4) = lbl_8028CAC8;
     lbl_803677F4 = lbl_8028CA74;
     lbl_803677F8 = lbl_8028CA20;
-    M2C_FIELD(lbl_80312AB0, u16 **, 0) = &lbl_80366E30;
-    M2C_FIELD(lbl_80312AB0, u16 **, 4) = lbl_8028C9A0;
+    M2C_FIELD(&lbl_80312AB0, void **, 0) = &lbl_80366E30;
+    M2C_FIELD(&lbl_80312AB0, void **, 4) = lbl_8028C9A0;
 }
 #pragma use_lmw_stmw reset
