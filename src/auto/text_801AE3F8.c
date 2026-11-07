@@ -306,4 +306,6 @@ void **fn_801B31E4(void **arg0) {
     *arg0 = (void**)&lbl_802917D0;
     return arg0;
 }
-
+extern s32 lbl_80367110;
+extern void *lbl_80367240;
+extern u8 lbl_8027BD18[];
