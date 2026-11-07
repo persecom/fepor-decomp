@@ -23,4 +23,4 @@ typedef struct {
     s32 unk4C;
 } struct_802789F0;
 
-extern struct_802789F0 lbl_802789F0;
+extern struct_802789F0 lbl_802789F0[];
