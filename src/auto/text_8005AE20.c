@@ -423,7 +423,7 @@ void fn_8005C808(void) {
     fn_8005D474(2);
 }
 
-M2C_UNK fn_8005C82C(void) {
+M2C_UNK fn_8005C82C() {
     M2C_UNK fn_8005D474();
     return fn_8005D474();
 }
