@@ -36,6 +36,15 @@ s32 fn_801838CC(void) {
     return 1;
 }
 
+s32 fn_801838D4(void) {
+    extern u8 lbl_803681F0;
+    s32 val = lbl_803681F0;
+    if (val < 0x33) {
+        return 0;
+    }
+    return 3;
+}
+
 s32 fn_8018394C(void) {
     return 2;
 }
@@ -396,6 +405,27 @@ void fn_80191374(void *arg0) {
         fn_801658DC(*(s32*)((u8*)temp_r3 + 0x4C));
     }
 }
+
+#pragma cplusplus on
+extern "C" void *fn_801938F8(void *arg0) {
+    struct Obj {
+        virtual void m08() = 0;
+        virtual void m0C() = 0;
+        virtual void m10() = 0;
+        virtual void m14() = 0;
+        virtual void m18() = 0;
+        virtual void m1C() = 0;
+        virtual void m20() = 0;
+        virtual void m24() = 0;
+        virtual void m28() = 0;
+    };
+    fn_80193950(arg0);
+    *(void **)((u8 *)arg0 + 0x0) = (void *)lbl_8029656C;
+    *(s32 *)((u8 *)arg0 + 0x60) = 2;
+    ((Obj *) arg0)->m28();
+    return arg0;
+}
+#pragma cplusplus reset
 
 void *fn_80193AF0(void *arg0, s16 arg1) {
     M2C_UNK fn_80165100(void *, s32);
