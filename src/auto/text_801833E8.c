@@ -1252,6 +1252,18 @@ s32 fn_801A16BC(void) {
     return 1;
 }
 
+s32 fn_801A17A0(void) {
+    s32 arg0 = 0;
+    s32 arg1 = 1;
+    fn_80105F0C(arg0, arg1);
+    return 1;
+}
+
+s32 fn_801A1934(void) {
+    fn_80105F0C(0, 0);
+    return 1;
+}
+
 s32 fn_801A1E6C(s8 arg0, s8 arg1) {
     void *fn_8000C0C0(void *, void *);
     f32 fn_80023430(void *, void *, f32, f32);
