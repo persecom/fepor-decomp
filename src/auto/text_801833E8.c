@@ -1603,11 +1603,10 @@ void fn_801950CC(void *arg0) {
 }
 
 void fn_801950FC(void *arg0) {
-    extern M2C_UNK fn_800C42AC(M2C_UNK, M2C_UNK);
-    extern M2C_UNK fn_8022C414(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
-    extern s32 fn_80196018;
-    fn_800C42AC(0x19290, 0x20000);
-    M2C_FIELD(arg0, s32 *, 0x30) = fn_8022C414((void *)&fn_80196018, 0, 0x3250, 8);
+    void *fn_800C42AC(s32);
+    s32 fn_8022C414(void *, void *, void *, s32, s32);
+    void fn_80196018(void *);
+    M2C_FIELD(arg0, s32 *, 0x30) = fn_8022C414(fn_800C42AC(0x19290), fn_80196018, 0, 0x3250, 8);
 }
 
 void fn_8019514C(void *arg0, void *arg1) {
