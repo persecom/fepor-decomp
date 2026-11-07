@@ -420,6 +420,19 @@ void fn_8018DAD4(void) {
     }
 }
 
+void fn_8018DB4C(void) {
+    void *fn_8000C0C0(M2C_UNK *);
+    extern u16 lbl_80296128[20];
+    void *temp_r3;
+
+    temp_r3 = fn_8000C0C0((M2C_UNK *)lbl_80296128);
+    if (temp_r3 != NULL) {
+        M2C_FIELD(temp_r3, s16 *, 0x32) = 1;
+        M2C_FIELD(temp_r3, s16 *, 0x44) = 0;
+        M2C_FIELD(temp_r3, s16 *, 0x54) = 0;
+    }
+}
+
 void fn_8018DC18(void) {
     void *fn_8000C0C0(M2C_UNK *);
     extern u16 lbl_80296128[30];
