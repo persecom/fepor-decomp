@@ -376,4 +376,8 @@ void fn_800ACCF8(void) {
     M2C_UNK fn_800ACD18();
     fn_800ACD18();
 }
+#include "common.h"
 
+#pragma use_lmw_stmw on
+
+extern u16 lbl_80312ACC;
