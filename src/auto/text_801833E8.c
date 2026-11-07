@@ -23,6 +23,17 @@ s32 fn_801833F8(void) {
     return 0x90;
 }
 
+void fn_80183584(void) {
+    extern u8 lbl_803681F0;
+    extern u8 lbl_80278BB8[];
+
+    if (lbl_803681F0 == 0x32) {
+        fn_8000E0E4(&lbl_80278BB8[0x129]);
+        return;
+    }
+    fn_8000E0E4(&lbl_80278BB8[0x12F]);
+}
+
 s32 fn_8018361C(void) {
     return 4;
 }
