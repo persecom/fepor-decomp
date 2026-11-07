@@ -73,6 +73,13 @@ void fn_801FDE64(void) {
     fn_8006EDA0(&lbl_80368418);
 }
 
+void fn_801FDE88(void) {
+    void fn_8006EEFC(void *, void *);
+    extern u32 lbl_80368418;
+    extern char lbl_80281EC8[];
+    fn_8006EEFC(&lbl_80368418, lbl_80281EC8 + 0x13);
+}
+
 void fn_801FDEB8(void) {
     M2C_UNK fn_801FDED8();
     fn_801FDED8();
@@ -295,6 +302,32 @@ void fn_801FFE8C(void) {
 
 void fn_801FFF08(s32 arg0) {
     fn_801E2F9C(&lbl_803682F0, arg0);
+}
+
+void fn_802001F8(u32 arg0, s32 arg1) {
+    void fn_8006EDA0(void *);
+    s32 i;
+
+    for (i = 0; i < 8; i++) {
+        if (lbl_803392E8.handle[i] >= arg0 && arg0 + arg1 > lbl_803392E8.handle[i]) {
+            fn_8006EDA0(&lbl_803392E8.handle[i]);
+            lbl_803392E8.id[i] = 0;
+        }
+    }
+}
+
+void fn_80200270(void *arg0) {
+    u32 *fn_8000D2BC(void *);
+    u32 *p = fn_8000D2BC(arg0);
+    s32 i;
+
+    for (i = 0; i < 8; i++) {
+        if (*p == lbl_803392E8.id[i]) {
+            lbl_803392E8.timer[i] = 2;
+            lbl_803392E8.count[i]--;
+            return;
+        }
+    }
 }
 
 extern u16 lbl_8029B7FC[10];
