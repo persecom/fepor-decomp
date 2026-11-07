@@ -406,18 +406,14 @@ void fn_802006B8(void *arg0) {
     void fn_8000C188(void *);
     void fn_8006EEFC(void *, void *);
 
-    if (fn_8005BA10(lbl_802820B8 + 0x53)) {
-        if (fn_8005BA10(lbl_802820B8 + 0x68)) {
-            goto load;
-        }
+    if (!fn_8005BA10(lbl_802820B8 + 0x53) || !fn_8005BA10(lbl_802820B8 + 0x68)) {
         return;
-    load:
-        if (lbl_80368448 == 0) {
-            fn_8006EEFC(&lbl_80368448, lbl_802820B8 + 0x53);
-        }
-        M2C_FIELD(arg0, u32 *, 0x44) = fn_8003FCCC(lbl_802820B8 + 0x68);
-        fn_8000C188(arg0);
     }
+    if (lbl_80368448 == 0) {
+        fn_8006EEFC(&lbl_80368448, lbl_802820B8 + 0x53);
+    }
+    M2C_FIELD(arg0, u32 *, 0x44) = fn_8003FCCC(lbl_802820B8 + 0x68);
+    fn_8000C188(arg0);
 }
 #pragma opt_common_subs reset
 void fn_80200750(void *arg0) {
