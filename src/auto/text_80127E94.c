@@ -181,6 +181,20 @@ void fn_801295DC(void *arg0) {
     }
 }
 
+void fn_80129708(s32 arg0, u32 arg1) {
+    void *fn_8000CAA0(void *);
+    void *fn_8000CAF0(void *, s32);
+    extern u8 lbl_80290BA4[];
+    void *var_r3;
+
+    if (arg1 != 0U) {
+        var_r3 = fn_8000CAA0(lbl_80290BA4);
+    } else {
+        var_r3 = fn_8000CAF0(lbl_80290BA4, 3);
+    }
+    *(s32 *)((char *)var_r3 + 0x30) = arg0;
+}
+
 void fn_8012975C(void *arg0) {
     u8 fn_80040824();
     M2C_UNK fn_80049B78(s32, M2C_UNK);
