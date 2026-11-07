@@ -78,7 +78,6 @@ void fn_80112DFC(void *arg0, u8 arg1) {
 typedef struct Vec3f {
     f32 x, y, z;
     Vec3f() {}
-    ~Vec3f() {}
     Vec3f(f32 _x, f32 _y, f32 _z) {
         x = _x;
         y = _y;
@@ -104,10 +103,6 @@ extern "C" void fn_80112E30(void *arg0) {
         virtual void v11() = 0;
         virtual Vec3f GetPos(s32) = 0;
     };
-    Vec3f a;
-    Vec3f b;
-    Vec3f pa;
-    Vec3f pb;
     Actor *target;
     Actor *self;
     f32 dist;
@@ -117,8 +112,10 @@ extern "C" void fn_80112E30(void *arg0) {
     if (target == NULL) {
         dist = lbl_8036A184;
     } else {
-        a.x = a.y = a.z = lbl_8036A184;
-        b.x = b.y = b.z = lbl_8036A184;
+        Vec3f a(lbl_8036A184, lbl_8036A184, lbl_8036A184);
+        Vec3f b(lbl_8036A184, lbl_8036A184, lbl_8036A184);
+        Vec3f pa;
+        Vec3f pb;
         pa = a = self->GetPos(0);
         pb = b = target->GetPos(0);
         dist = fn_802032CC(pa, pb);
