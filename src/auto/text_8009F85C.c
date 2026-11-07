@@ -462,11 +462,11 @@ u8 fn_800A0BC0(void) {
 
 extern s32 lbl_80367670;
 extern void *fn_80024398();
-s32 fn_800A0D08(void *arg2) {
+s32 fn_800A0D08(s32 arg0, s32 arg1, void *arg2) {
     if (*(u8 *)((char *)arg2 + 0x39) != 0) {
         return 0;
     }
-    fn_80024398(&lbl_80367670, 0);
+    fn_80024398(&lbl_80367670, arg1, 0);
     return 0;
 }
 
