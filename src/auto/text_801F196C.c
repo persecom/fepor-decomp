@@ -665,6 +665,91 @@ void fn_801FA874(void *arg0) {
     }
 }
 
+#pragma cplusplus on
+#pragma use_lmw_stmw on
+extern "C" void *fn_800C42D8(u32);
+extern "C" void fn_800C428C(void *);
+extern "C" void fn_800506E0(s32, s32, void *);
+extern "C" void fn_8006140C(void *);
+extern "C" void fn_800616A0(void *);
+extern "C" void *fn_80061870(void);
+extern "C" s32 fn_800639B4(void);
+extern "C" M2C_UNK fn_8022CF78(void);
+extern "C" M2C_UNK fn_80232058(void *, const char *, ...);
+extern "C" void fn_801FB2EC(void **arg0, s32 *arg1, void ***arg2, s32 *arg3) {
+    struct Obj {
+        u32 flags;
+        s32 unk4;
+        u8 pad8[0x3C];
+        s32 unk44;
+    };
+    struct Value {
+        s32 owner;
+        Obj *obj;
+    };
+    struct Node {
+        Node *prev;
+        Node *next;
+        Value value;
+    };
+    struct Holder {
+        void *list;
+        Node *node;
+        Holder(void *l, Node *n) : list(l), node(n) {}
+        ~Holder() {
+            if (node != 0) {
+                fn_800C428C(node);
+            }
+        }
+    };
+    extern char __files[];
+    extern char lbl_80281028[];
+    Value *value;
+    Node *node;
+    s32 owner;
+    void *list;
+    Obj *obj;
+    Node *pos;
+    Node *n;
+
+    list = arg1 + 1;
+    node = (Node *)fn_800C42D8(0x10);
+    if (node == 0) {
+        fn_80232058(__files + 0xA0, lbl_80281028 + 0x3BE);
+        fn_8022CF78();
+    }
+    {
+        Holder h(list, node);
+        value = &h.node->value;
+        if (value != 0) {
+            owner = *arg3;
+            value->owner = owner;
+            value->obj = 0;
+            if (value->obj != 0) {
+                fn_800616A0(value->obj);
+            }
+            value->obj = (Obj *)fn_80061870();
+            value->obj->unk4 = owner + 0x1C;
+            obj = value->obj;
+            obj->flags |= 0x50028400;
+            fn_800506E0(owner, 0, obj);
+            value->obj->unk44 = fn_800639B4();
+            fn_8006140C(value->obj);
+        }
+        pos = (Node *)*arg2;
+        n = h.node;
+        h.node = 0;
+        pos->prev->next = n;
+        n->prev = pos->prev;
+        pos->prev = n;
+        n->next = pos;
+        (*arg1)++;
+        *arg0 = n;
+    }
+}
+#pragma use_lmw_stmw reset
+#pragma cplusplus reset
+
 void fn_801FB548(void *arg0) {
     u32 temp_r4;
     u32 temp_r5;
