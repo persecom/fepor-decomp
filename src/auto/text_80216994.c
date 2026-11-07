@@ -214,6 +214,7 @@ s32 fn_8021D2D4(s32 arg0, s32 index, void *dst) {
     return fn_80217BD0(sp14, ret);
 }
 
+#pragma dont_inline on
 s32 fn_8021D6D8(s32 arg0, s32 arg1, u8 *arg2) {
     u8 entry[0x40];
     s32 result;
