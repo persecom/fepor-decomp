@@ -60,6 +60,27 @@ s32 fn_801A8688(s32 arg0) {
     return 1;
 }
 
+void fn_801A8AF4(void *arg0) {
+    s16 *temp1;
+    s16 *temp2;
+    
+    temp1 = (s16*)((u8*)arg0 + 0x2A2);
+    if (*temp1 > 0x64) {
+        *temp1 = 0x64;
+    }
+    if (*temp1 < 0) {
+        *temp1 = 0;
+    }
+    
+    temp2 = (s16*)((u8*)arg0 + 0x2A8);
+    if (*temp2 > 0x64) {
+        *temp2 = 0x64;
+    }
+    if (*temp2 < 0) {
+        *temp2 = 0;
+    }
+}
+
 void fn_801A8F14(void *arg0, void *arg1) {
     u8 fn_801B8550(s32);
     if (fn_801B8550(M2C_FIELD(arg1, s32 *, 0x280)) != 0) {
