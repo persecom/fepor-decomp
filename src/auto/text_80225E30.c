@@ -149,9 +149,9 @@ s32 fn_80227E44(void) {
 
 s32 fn_80227EF4(void) {
     M2C_UNK fn_80225F64(void *);
-    M2C_UNK fn_8022B078(void *, s32, s32);
+    M2C_UNK fn_8022B078(void *, s32);
     M2C_UNK memset(void *, s32, s32);
-    extern s32 lbl_8033CA40[2];
+    extern s32 lbl_8033CA40[];
     u8 event[0xC];
     struct {
         u32 unk0;
@@ -166,16 +166,16 @@ s32 fn_80227EF4(void) {
     reply.unk4 = 0x80;
     reply.unk0 = 0x40;
     reply.unk8 = 0;
-    fn_8022B078(&reply, 0x40, 0x40);
+    fn_8022B078(&reply, 0x40);
     fn_80225F4C(event, 1);
     fn_80225F64(event);
     return 0;
 }
-
+#pragma dont_inline reset
 s32 fn_80227F6C(void) {
-    M2C_UNK fn_8022B078(void *, s32, s32);
+    M2C_UNK fn_8022B078(void *, s32);
     M2C_UNK memset(void *, s32, s32);
-    extern s32 lbl_8033CA40[2];
+    extern s32 lbl_8033CA40[];
     struct {
         u32 unk0;
         u8 unk4;
@@ -189,7 +189,7 @@ s32 fn_80227F6C(void) {
     reply.unk4 = 0x80;
     reply.unk0 = 0x40;
     reply.unk8 = 0;
-    fn_8022B078(&reply, 0x40, 0x40);
+    fn_8022B078(&reply, 0x40);
     return 0;
 }
 
