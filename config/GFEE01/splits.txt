@@ -294,7 +294,10 @@ auto/text_801FC620.c:
 	.ctors      start:0x80267B20 end:0x80267B24
 
 auto/text_801FC634.c:
-	.text       start:0x801FC634 end:0x80216994
+	.text       start:0x801FC634 end:0x80203778
+
+auto/text_80203778.c:
+	.text       start:0x80203778 end:0x80216994
 
 auto/text_80216994.c:
 	.text       start:0x80216994 end:0x8021D7FC
