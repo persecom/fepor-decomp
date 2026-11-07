@@ -78,6 +78,11 @@ void fn_80112DFC(void *arg0, u8 arg1) {
 typedef struct Vec3f {
     f32 x, y, z;
     Vec3f() {}
+    Vec3f(f32 _x, f32 _y, f32 _z) {
+        x = _x;
+        y = _y;
+        z = _z;
+    }
     Vec3f(const Vec3f &o) {
         x = o.x;
         y = o.y;
@@ -114,9 +119,15 @@ extern "C" void fn_80112E30(void *arg0) {
     } else {
         Vec3f a;
         Vec3f b;
+        Vec3f pa;
+        Vec3f pb;
         a.x = a.y = a.z = lbl_8036A184;
         b.x = b.y = b.z = lbl_8036A184;
-        dist = fn_802032CC(a = self->GetPos(0), b = target->GetPos(0));
+        a = self->GetPos(0);
+        pa = a;
+        b = target->GetPos(0);
+        pb = b;
+        dist = fn_802032CC(pa, pb);
     }
     if (dist >= lbl_8036A1A8 + M2C_FIELD(arg0, f32 *, 0x128)) {
         M2C_FIELD(arg0, u8 *, 0x1A4) = 0;
