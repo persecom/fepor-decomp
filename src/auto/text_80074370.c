@@ -1224,6 +1224,15 @@ void fn_8007849C(void) {
     *((u8*)&lbl_802EF4C8 + 8) = 0x15;
 }
 
+s32 fn_800785E4(void) {
+    M2C_UNK fn_8004A224();
+    M2C_UNK fn_800AAB3C(s32);
+    extern s32 lbl_802EF4C8[];
+    fn_800AAB3C(lbl_802EF4C8[0]);
+    fn_8004A224();
+    return 0;
+}
+
 s32 fn_80078618(void) {
     M2C_UNK fn_8004A1F0();
     fn_8004A1F0();
