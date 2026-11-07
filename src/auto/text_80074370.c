@@ -1628,16 +1628,15 @@ void fn_8007AD30(void *arg0, s32 arg1) {
 }
 
 void fn_8007AD6C(void *arg0) {
-    extern u16 lbl_80312040[];
-    void fn_8000C60C(void);
+    extern void *lbl_80312040[];
+    void fn_8000C60C(void *);
 
     if (arg0 != NULL) {
         s32 index = *(u8 *)((u8 *)arg0 + 0x40);
-        u16 *ptr = &lbl_80312040[index * 2];
-        if (*ptr != 0) {
-            fn_8000C60C();
+        if (lbl_80312040[index] != NULL) {
+            fn_8000C60C(lbl_80312040[index]);
         }
-        *ptr = 0;
+        lbl_80312040[index] = NULL;
     }
 }
 
