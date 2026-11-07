@@ -1,6 +1,8 @@
 /* Functions from 0x801833E8 to 0x801A2AB4, found by decomp-toolkit. */
 #include "common.h"
 
+extern u8 lbl_8036728B;
+
 #pragma cplusplus on
 extern "C" void fn_8017A000(void *);
 extern "C" void fn_80193950(void *);
@@ -415,6 +417,11 @@ void fn_80190F14(void) {
     fn_8013FE0C();
 }
 
+void fn_8019129C(void *arg0) {
+    u8 val = M2C_FIELD(arg0, u8 *, 0x5D);
+    fn_8000C070(val);
+}
+
 void fn_80191374(void *arg0) {
     void *temp_r3;
     
@@ -486,6 +493,24 @@ extern "C" void *fn_80193B60(void *arg0) {
     ((Obj *) arg0)->m28();
     return arg0;
 }
+
+void *fn_80193BB8(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    void fn_80179BC8(void *);
+    extern u8 lbl_80292358[];
+    extern f32 lbl_8036AE20;
+    f32 f;
+
+    fn_80179BC8(arg0);
+    f = lbl_8036AE20;
+    *(u8 **)((u8 *)arg0 + 0x0) = lbl_80292358;
+    *(f32 *)((u8 *)arg0 + 0x128) = f;
+    *(s16 *)((u8 *)arg0 + 0x88) = 0xC;
+    *(s16 *)((u8 *)arg0 + 0x8A) = 0;
+    *(s16 *)((u8 *)arg0 + 0x80) = (arg4 - (M2C_FIELD(arg0, s16 *, 0x8A) + 0xC)) / 32;
+    *(s32 *)(*(u8 **)((u8 *)arg0 + 0x48) + 0x48) = 2;
+    return arg0;
+}
+
 #pragma cplusplus reset
 
 void fn_80193C3C(void ***arg0, s32 *arg1, void ***arg2, void ***arg3) {
@@ -582,6 +607,16 @@ void fn_801950CC(void *arg0) {
     }
 }
 
+void fn_8019514C(void *arg0, void *arg1) {
+    u8 *dst = (u8 *)arg0;
+    u8 *src = (u8 *)arg1;
+    
+    dst[0] = src[0];
+    dst[1] = src[1];
+    dst[2] = src[2];
+    dst[3] = src[3];
+}
+
 void fn_80195170(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 4) = arg1;
 }
@@ -661,6 +696,11 @@ s32 fn_801992F8(void *arg0) {
 
 s32 fn_80199310(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x124);
+}
+
+void fn_80199318(s32 arg0) {
+    s32 temp_r3 = arg0 + 0x118;
+    fn_800C9B6C(temp_r3);
 }
 
 void fn_80199484(void *arg0) {
