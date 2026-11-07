@@ -1177,21 +1177,8 @@ void fn_80011910(void) {
     fn_80223F2C(0, 0, 1, 4);
 }
 #include "common.h"
-extern u16 lbl_80367140;
-extern u16 lbl_80367140;
-extern u16 lbl_80367140;
-extern u16 lbl_80367120;
-extern u16 lbl_80367128;
-extern u16 lbl_80367124;
-extern u16 lbl_8036712C;
-extern u16 lbl_80367150[4];
-extern u16 lbl_802A66D8[];
-extern u16 lbl_802A66D8[];
-extern u16 lbl_802A66D8[0x7000];
 #include "global.h"
-extern u16 lbl_802A66D8[0x7000];
 typedef struct NodeD1D0 { struct NodeD1D0 *next; u32 hash; u8 pad[0x4]; struct NodeD1D0 *bucketNext; } NodeD1D0;
 typedef struct BucketD1D0 { u8 pad[8]; NodeD1D0 *head; u8 tail[0x7f4]; s32 count; } BucketD1D0;
 extern BucketD1D0 lbl_802ADB20[255];
 extern u16 lbl_802A66D8[0x7000];
-extern u16 lbl_802A66D8[];
