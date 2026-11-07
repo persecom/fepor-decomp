@@ -665,6 +665,75 @@ void fn_801FA874(void *arg0) {
     }
 }
 
+void fn_801FB048(void *arg0, u32 arg1) {
+    typedef struct {
+        s32 unk0;
+        s32 unk4;
+    } Elem;
+    typedef struct {
+        u32 cap;
+        s32 size;
+        Elem *data;
+    } Vec;
+    void fn_800C428C(void *);
+    void *fn_800C42D8(u32);
+    void fn_801FB548(Vec *);
+    M2C_UNK fn_8022CF78(void);
+    M2C_UNK fn_80232058(void *, const char *, ...);
+    extern char __files[];
+    extern char lbl_80281028[];
+    Vec *vec = arg0;
+    Vec tmp;
+    Elem *p;
+    Elem *src;
+    Elem *dst;
+    Elem *end;
+    u32 t;
+    Elem *tp;
+    s32 ts;
+
+    if (arg1 > vec->cap) {
+        if (arg1 > 0x1FFFFFFF) {
+            fn_80232058(__files + 0xA0, lbl_80281028 + 0x3D8);
+            fn_8022CF78();
+        }
+        tmp.cap = 0;
+        tmp.size = 0;
+        tmp.data = NULL;
+        p = fn_800C42D8(arg1 * 8);
+        if (p == NULL) {
+            fn_80232058(__files + 0xA0, lbl_80281028 + 0x3BE);
+            fn_8022CF78();
+        }
+        tmp.data = p;
+        dst = p;
+        tmp.cap = arg1;
+        src = vec->data;
+        end = src + vec->size;
+        for (; src < end; src++, dst++) {
+            if (dst != NULL) {
+                *dst = *src;
+            }
+            tmp.size++;
+        }
+        if (&tmp != vec) {
+            t = tmp.cap;
+            tmp.cap = vec->cap;
+            vec->cap = t;
+            tp = tmp.data;
+            tmp.data = vec->data;
+            vec->data = tp;
+            ts = tmp.size;
+            tmp.size = vec->size;
+            vec->size = ts;
+        }
+        fn_801FB548(&tmp);
+        if (tmp.data != NULL) {
+            fn_800C428C(tmp.data);
+        }
+    }
+}
+
 #pragma cplusplus on
 #pragma use_lmw_stmw on
 extern "C" void *fn_800C42D8(u32);
