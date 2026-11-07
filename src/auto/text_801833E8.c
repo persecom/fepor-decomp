@@ -553,6 +553,24 @@ void fn_80199B88(void *arg0, s32 arg1) {
     fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 0xB));
 }
 
+void fn_80199C2C(void) {
+    M2C_UNK fn_8000BF00(void *);
+    extern M2C_UNK lbl_802968E8;
+    fn_8000BF00(&lbl_802968E8 + 0x50);
+    fn_8000BF00(&lbl_802968E8 + 0x88);
+    fn_8000BF00(&lbl_802968E8 + 0xFC);
+    fn_8000BF00(&lbl_802968E8 + 0x138);
+    fn_8000BF00(&lbl_802968E8 + 0x198);
+    fn_8000BF00(&lbl_802968E8 + 0x238);
+    fn_8000BF00(&lbl_802968E8 + 0x2B0);
+    fn_8000BF00(&lbl_802968E8 + 0x318);
+    fn_8000BF00(&lbl_802968E8 + 0x3C4);
+    fn_8000BF00(&lbl_802968E8 + 0x410);
+    fn_8000BF00(&lbl_802968E8 + 0x474);
+    fn_8000BF00(&lbl_802968E8 + 0x508);
+    fn_8000BF00(&lbl_802968E8 + 0x5EC);
+}
+
 void fn_80199CC0(s32 arg0) {
     extern s32 lbl_80296ED4;
     fn_8000CAA0(&lbl_80296ED4, arg0, &lbl_80296ED4);
@@ -1007,3 +1025,5 @@ void fn_801A2764(void *arg0) {
 
 extern s32 lbl_8036AF6C;
 extern u8 lbl_80367298[];
+#include "common.h"
+extern u16 lbl_80291AC8[];
