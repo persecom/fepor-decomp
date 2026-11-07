@@ -164,6 +164,45 @@ void fn_800750D8(s32 arg0, void *arg1) {
     fn_80037BD0(lbl_802EF4C8[1], *(u8*)((char*)arg1 + 0x3A));
 }
 
+s32 fn_80075178(void *arg1, void *arg2) {
+    s32 fn_8000E0E4(void *);
+    s32 fn_80037BD0(s32, u8);
+    u8 fn_8003DBA8(s32, s32, M2C_UNK *);
+    M2C_UNK fn_80166AE8(s32, s16, s32, void *);
+    extern M2C_UNK lbl_8026C0B8;
+    extern M2C_UNK lbl_802EF4C8;
+    s16 temp_r28;
+    s16 temp_r29;
+    s32 temp_r30;
+    u8 temp_r3;
+    void *temp_r27;
+    void *var_r27;
+
+    if ((u8) M2C_FIELD(arg2, u8 *, 0x39) != 0) {
+        var_r27 = NULL;
+        temp_r3 = fn_8003DBA8(M2C_FIELD(&lbl_802EF4C8, s32 *, 0), fn_80037BD0(M2C_FIELD(&lbl_802EF4C8, s32 *, 4), M2C_FIELD(arg2, u8 *, 0x3A)), &lbl_802EF4C8);
+        switch ((s32) temp_r3) {                    /* irregular */
+        case 1:
+            var_r27 = &lbl_8026C0B8 + 0x1B3;
+            break;
+        case 2:
+            var_r27 = &lbl_8026C0B8 + 0x1BA;
+            break;
+        case 3:
+            var_r27 = &lbl_8026C0B8 + 0x1C1;
+            break;
+        }
+        temp_r29 = M2C_FIELD(arg2, s16 *, 0x32);
+        temp_r28 = M2C_FIELD(arg2, s16 *, 0x30);
+        temp_r27 = M2C_FIELD(arg1, void **, 0x3C);
+        temp_r30 = fn_8000E0E4(var_r27);
+        fn_80166AE8(M2C_FIELD(M2C_FIELD(temp_r27, void **, 4), s16 (**)(void *), 0x5C)(temp_r27) + temp_r28, temp_r29, temp_r30, arg1);
+        return 0;
+    }
+    M2C_FIELD(&lbl_802EF4C8, u8 *, 0xA) = (u8) M2C_FIELD(arg2, u8 *, 0x3A);
+    return 5;
+}
+
 #pragma cplusplus on
 extern "C" void fn_80075290(void *arg0, s32 arg1, void *arg2) {
     struct Obj {
@@ -1667,6 +1706,54 @@ void fn_8007A2A0(void *arg0) {
 
 void fn_8007A2AC(void*p){void fn_8000C070(s32);void fn_8007A524(void*,s32,s32);s32 v=0;s16 x=*(s16*)((u8*)p+0x38);if(x==9){}else if(x<9){if(x<3){if(x>=0)v=1;}else if(x<6)v=2;else v=1;}else if(x<11)fn_8000C070(1);fn_8007A524(p,v,7);fn_8007A524(p,v,10);(*(s16*)((u8*)p+0x38))++;}
 
+void fn_8007A368(void *arg0) {
+    M2C_UNK fn_8000C070(void *, u8);
+    M2C_UNK fn_8000CD60();
+    M2C_UNK fn_8007A524(void *, M2C_UNK, s32);
+
+    s32 temp_r6;
+    s16 temp_r0;
+    s16 temp_r0_2;
+    u32 temp_r3;
+
+    temp_r6 = *(s32 *)((u8 *)arg0 + 0x3C);
+    *(s32 *)((u8 *)arg0 + 0x3C) = temp_r6 - 1;
+    fn_8007A524(NULL, 7, (s32) temp_r6);
+    fn_8007A524(arg0, 0, 0xA);
+    temp_r0 = *(s16 *)((u8 *)arg0 + 0x36);
+    if (temp_r0 != 1) {
+        fn_8000C070(arg0, (u8) temp_r0);
+        return;
+    }
+    if (*(s32 *)((u8 *)arg0 + 0x3C) < 0) {
+        temp_r0_2 = *(s16 *)((u8 *)arg0 + 0x34);
+        temp_r3 = fn_8000CD60() >> 0x10U;
+        switch (temp_r0_2) {                        /* irregular */
+        case 3:
+            temp_r3 = ((s32) temp_r3 >> 7) + 0x12C;
+            break;
+        case 1:
+            temp_r3 = ((s32) temp_r3 >> 7) + 0x1E;
+            break;
+        case 2:
+            temp_r3 = ((s32) temp_r3 >> 0xA) + 1;
+            break;
+        case 4:
+            temp_r3 = 1;
+            break;
+        case 5:
+            temp_r3 = 0x7FFFFFFF;
+            break;
+        default:
+            temp_r3 = 1;
+            break;
+        }
+        *(s32 *)((u8 *)arg0 + 0x3C) = temp_r3;
+        *(s16 *)((u8 *)arg0 + 0x38) = 0;
+        fn_8000C070(arg0, 2U);
+    }
+}
+
 void fn_8007A46C(void*p){u32 fn_8000CD60(s32);s32 t; s32 v;*(s32*)((u8*)p+0x30)=*(s32*)((u8*)p+0x18);*(s16*)((u8*)p+0x34)=1;t=fn_8000CD60(*(s32*)((u8*)p+0x30))>>16;switch(*(s16*)((u8*)p+0x34)){case 3:v=(t>>7)+300;break;case 1:v=(t>>7)+30;break;case 2:v=(t>>10)+1;break;case 4:v=1;break;case 5:v=0x7fffffff;break;default:v=1;}*(s32*)((u8*)p+0x3c)=v;*(s16*)((u8*)p+0x36)=1;}
 
 void fn_8007ACCC(void *arg0) {
@@ -1881,9 +1968,8 @@ void fn_8007C4D4(void *arg0, s32 arg1) {
 #include "common.h"
 #include "structs.h"
 
-extern u8 lbl_802EF4C8[0x40];
-extern u16 lbl_8026C0B8[];
-extern u8 lbl_802EF4C8[];
+extern u16 lbl_802EF4C8[12];
+extern s32 lbl_802EF4E0[];
 extern void *fn_8001CB64(void);
 extern void *fn_800285C0(void *);
 extern u16 lbl_8026C0B8[];
