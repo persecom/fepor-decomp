@@ -77,17 +77,6 @@ void fn_80112DFC(void *arg0, u8 arg1) {
 #pragma cplusplus on
 typedef struct Vec3f {
     f32 x, y, z;
-    Vec3f() {}
-    Vec3f(f32 _x, f32 _y, f32 _z) {
-        x = _x;
-        y = _y;
-        z = _z;
-    }
-    Vec3f(const Vec3f &o) {
-        x = o.x;
-        y = o.y;
-        z = o.z;
-    }
 } Vec3f;
 extern "C" f32 fn_802032CC(const Vec3f &, const Vec3f &);
 extern "C" void fn_80112E30(void *arg0) {
@@ -117,12 +106,16 @@ extern "C" void fn_80112E30(void *arg0) {
     if (target == NULL) {
         dist = lbl_8036A184;
     } else {
-        Vec3f a(lbl_8036A184, lbl_8036A184, lbl_8036A184);
-        Vec3f b(lbl_8036A184, lbl_8036A184, lbl_8036A184);
+        Vec3f pb;
+        Vec3f pa;
+        Vec3f b;
+        Vec3f a;
+        a.x = a.y = a.z = lbl_8036A184;
+        b.x = b.y = b.z = lbl_8036A184;
         a = self->GetPos(0);
-        Vec3f pa(a);
+        pa = a;
         b = target->GetPos(0);
-        Vec3f pb(b);
+        pb = b;
         dist = fn_802032CC(pa, pb);
     }
     if (dist >= lbl_8036A1A8 + M2C_FIELD(arg0, f32 *, 0x128)) {
