@@ -1,6 +1,8 @@
 /* Functions from 0x8010554C to 0x80110128, found by decomp-toolkit. */
 #include "common.h"
 
+extern u16 lbl_802737A0[];
+
 void fn_8010554C(void) {
     extern u16 lbl_802737A0[];
     extern u16 lbl_8028F2D0[];
@@ -341,6 +343,17 @@ void fn_801086CC(void *arg0) {
     fn_800C9A60(&sp8, -1);
 }
 
+void fn_80108718(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    M2C_UNK fn_800D7254();
+    void *temp_r3;
+    void **vt;
+
+    fn_800D7254();
+    temp_r3 = M2C_FIELD(arg0, void **, 0x424);
+    vt = M2C_FIELD(temp_r3, void **, 0x40);
+    ((M2C_UNK (*)(void *, s32, s32, s32)) vt[22])(temp_r3, arg1, arg2, arg3);
+}
+
 s32 fn_80108948(void) {
     M2C_UNK fn_800D758C(s32);
     extern s32 lbl_803679D0;
@@ -434,6 +447,54 @@ void fn_8010913C(void *arg0) {
     extern void *lbl_803679DC;
     if (fn_802342B8(*M2C_FIELD(arg0, s32 **, 0x30), lbl_803679D8) == 0) {
         lbl_803679DC = arg0;
+    }
+}
+
+void fn_80109890(s32 arg0, s32 arg1) {
+    void *fn_800B2754(void);
+    M2C_UNK fn_800336A0(M2C_UNK *, M2C_UNK *, s32);
+
+    s32 temp_r5;
+    s32 *var_r4;
+    s32 var_r6;
+    s32 var_r7;
+    
+    void* temp_r3 = fn_800B2754();
+    if (arg1 < 0) {
+        arg1 = -arg1;
+        arg0 = -arg0;
+    }
+    var_r6 = arg0;
+    var_r7 = arg1;
+    temp_r5 = *(s32*)((uintptr_t)temp_r3 + 0x1C) >> 2;
+    
+    if (var_r6 >= 0) { }
+    
+    if (var_r7 < temp_r5) {
+        if (var_r7 >= 0) {
+            var_r4 = (s32*)((uintptr_t)temp_r3 + 0x48);
+            if (arg0 - arg1 > 0) {
+                *(var_r4) = -(*(var_r4));
+                *(var_r4 + 0x14) = -(*(var_r4 + 0x14));
+                *(var_r4 + 0x1C) = *var_r4;
+                *(var_r4 + 0x28) = *(var_r4 + 0x14);
+                *(var_r4 + 0x30) = -(*var_r4 + *(var_r4 + 0x14));
+                *(var_r4 + 0x34) = *var_r4;
+                *(var_r4 + 0x38) = *(var_r4 + 0x14);
+            } else if (arg0 - arg1 < 0) {
+                *(var_r4 + 0x1C) = *var_r4;
+                *(var_r4 + 0x28) = *(var_r4 + 0x14);
+                *(var_r4 + 0x30) = (*var_r4 + *(var_r4 + 0x14));
+                *(var_r4 + 0x34) = *var_r4;
+                *(var_r4 + 0x38) = *(var_r4 + 0x14);
+            }
+        }
+    } else {
+        var_r4 = (s32*)((uintptr_t)temp_r3 + 0x48);
+        if (arg0 < 0) {
+            var_r4 = (s32*)((uintptr_t)temp_r3 + 0x4C);
+        }
+        fn_800336A0(var_r4, var_r4 + 0xA, var_r7 - temp_r5);
     }
 }
 
