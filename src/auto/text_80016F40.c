@@ -272,13 +272,14 @@ s32 fn_800188A4(u8 arg0) {
             M2C_FIELD(p, f32 *, 0x50) = M2C_FIELD(lbl_80330708, f32 *, 0x530);
             M2C_FIELD(p, f32 *, 0x54) = M2C_FIELD(lbl_80330708, f32 *, 0x53C);
         }
+        p = (void *) lbl_803671C4;
         var_f2 = lbl_80368C8C;
         if (arg0 != 0) {
             var_f2 = lbl_80368CAC;
         }
-        if ((f32) __fabs((f64) (M2C_FIELD(lbl_803671C4, f32 *, 0x4C) - M2C_FIELD(lbl_803671C4, f32 *, 0x40))) > var_f2) {
+        if ((f32) __fabs((f64) (M2C_FIELD(p, f32 *, 0x4C) - M2C_FIELD(p, f32 *, 0x40))) > var_f2) {
             r = 1;
-        } else if ((f32) __fabs((f64) (M2C_FIELD(lbl_803671C4, f32 *, 0x50) - M2C_FIELD(lbl_803671C4, f32 *, 0x44))) > var_f2) {
+        } else if ((f32) __fabs((f64) (M2C_FIELD(p, f32 *, 0x50) - M2C_FIELD(p, f32 *, 0x44))) > var_f2) {
             r = 1;
         } else {
             r = 0;
@@ -305,11 +306,12 @@ s32 fn_800188A4(u8 arg0) {
             r = 0;
         }
     }
-    if (r == 1) {
-        return 1;
-    } else {
-        return 0;
+    if (r != 1) {
+        goto zero;
     }
+    return 1;
+zero:
+    return 0;
 }
 
 s32 fn_80018A08(u8 arg0) {
