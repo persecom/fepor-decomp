@@ -1983,3 +1983,7 @@ extern u16 lbl_80288CAC;
 #include "common.h"
 #include "structs.h"
 extern u16 lbl_80312040[8];
+#include <common.h>
+
+extern u16 lbl_802EF4C8[12];
+extern s32 lbl_802EF4E0[502];
