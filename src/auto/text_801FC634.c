@@ -313,6 +313,36 @@ void fn_802001F8(u32 arg0, s32 arg1) {
         }
     }
 }
+
+void fn_80200270(void *arg0) {
+    u32 *fn_8000D2BC(void *);
+    u32 *p = fn_8000D2BC(arg0);
+    s32 i;
+
+    for (i = 0; i < 8; i++) {
+        if (*p == lbl_80339308[i]) {
+            lbl_80339328[i] = 2;
+            lbl_80339338[i]--;
+            return;
+        }
+    }
+}
+
+void fn_802003FC(void) {
+    void fn_8006EDA0(void *);
+    s32 i;
+
+    for (i = 0; i < 8; i++) {
+        if (lbl_803392E8[i] != 0 && lbl_80339338[i] == 0) {
+            if (--lbl_80339328[i] == 0) {
+                fn_8006EDA0(&lbl_803392E8[i]);
+                lbl_80339308[i] = 0;
+            }
+        }
+    }
+}
+#pragma use_lmw_stmw reset
+
 #pragma use_lmw_stmw reset
 
 extern u16 lbl_8029B7FC[10];
