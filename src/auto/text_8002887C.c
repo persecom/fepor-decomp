@@ -213,6 +213,7 @@ void fn_8002CCF0(void *arg0, void *arg1) {
 }
 
 void fn_8002CD70(void* arg1) {
+    extern M2C_UNK lbl_802EF4C8;
     void** temp_r3;
     
     temp_r3 = (void**)&lbl_802EF4C8;
