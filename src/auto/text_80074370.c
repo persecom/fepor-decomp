@@ -638,8 +638,8 @@ void fn_80076910(void *arg2) {
 s32 fn_8007693C(void) {
     M2C_UNK fn_8004A224();
     M2C_UNK fn_800AA80C(s32);
-    extern s32 lbl_802EF4C8;
-    fn_800AA80C(lbl_802EF4C8);
+    extern s32 lbl_802EF4C8[];
+    fn_800AA80C(lbl_802EF4C8[0]);
     fn_8004A224();
     return 0;
 }
