@@ -1104,6 +1104,17 @@ s32 fn_8019E640(s32 arg0) {
     return 1;
 }
 
+s32 fn_8019E668(s32 arg0) {
+    u8 var_r0;
+    
+    var_r0 = lbl_8036728B & 0xFFFFFFFB;
+    if (arg0 != 0) {
+        var_r0 = lbl_8036728B | 0x4;
+    }
+    lbl_8036728B = var_r0;
+    return 1;
+}
+
 s32 fn_8019E690(s32 arg0) {
     extern u8 lbl_8036728B;
     u8 var_r0;
