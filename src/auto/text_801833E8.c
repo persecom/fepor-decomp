@@ -3,6 +3,11 @@
 #pragma optimization_level 4
 #pragma inline auto
 
+extern u16 lbl_8036719C;
+extern u16 lbl_8036719E;
+extern u32 lbl_803671A0;
+extern u32 lbl_803671A8;
+
 typedef struct {
     void *unk0;
     void *unk4;
@@ -2572,6 +2577,47 @@ s32 fn_801A01D8(s8 arg0) {
     fn_80040844();
     fn_80040DA4();
     fn_80013864();
+    return 1;
+}
+
+s32 fn_801A0298(s32 arg0) {
+    void *fn_8000C0C0(void *);
+    void *fn_8000CAF0(void *, s32);
+    s32 fn_800C0658();
+    extern u16 lbl_80296F90[];
+    extern u8 lbl_80330708[];
+    extern s32 lbl_80367110;
+
+    void *p;
+    void *v;
+
+    p = fn_8000C0C0(lbl_80296F90);
+    if (p != NULL) {
+        v = p;
+    } else {
+        p = fn_8000CAF0(lbl_80296F90, fn_800C0658());
+        ((u8 *)p)[0x30] = 1;
+        ((u8 *)p)[0x31] = 0;
+        ((u8 *)p)[0x32] = 0;
+        ((u16 *)p)[0x1A] = 0;
+        ((u8 *)p)[0x33] = lbl_80330708[0xA0];
+        ((u8 *)p)[0x36] = 1;
+        ((u32 *)p)[0xF] = 1;
+        ((u8 *)p)[0x37] = 0;
+        ((u8 *)p)[0x38] = 0;
+        v = p;
+    }
+    if (arg0 != 0) {
+        ((u8 *)v)[0x36] = 1;
+        lbl_80367110 &= 0xFFFFEFFF;
+        fn_80040844();
+        fn_8004496C(1);
+    } else {
+        ((u8 *)v)[0x36] = 0;
+        lbl_80367110 |= 0x1000;
+        fn_80040844();
+        fn_8004496C(0);
+    }
     return 1;
 }
 
