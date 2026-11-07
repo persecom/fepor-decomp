@@ -1498,5 +1498,5 @@ s32 func_80025338(struct Unit* unit)
 #include "global.h"
 #include "ef.h"
 
-extern u8 lbl_80330EAC[];
+extern u8 lbl_80330EAC[0x1000];
 extern u8 lbl_80268E40[];
