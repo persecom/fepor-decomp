@@ -426,9 +426,8 @@ s32 fn_8000ACD8(void) {
 
 s32 fn_8000ADA0(void *arg0) {
     s32 fn_8000BF00(s32);
-    s32 *ptr = (s32 *) *(s32 **)((s32 *)arg0 + 1) + 1;
-    fn_8000BF00(*ptr);
-    *(s32 **)((s32 *)arg0 + 1) = ptr + 2;
+    fn_8000BF00(((s32 **) arg0)[1][1]);
+    ((s32 **) arg0)[1] = ((s32 **) arg0)[1] + 2;
     return 1;
 }
 
@@ -1022,7 +1021,28 @@ loop_9:
     goto loop_9;
 }
 
-s32 fn_8000D354(u8 *arg0) { extern u8 lbl_802ADB20[]; s32 h=0;u32 h2=0;u8*p=arg0;u8 c;u32*n;if(!p)return 0;while((s8)(c=*p++)){h=(s8)c+h*37;h2=(s8)c+h2*31;}n=(u32*)(lbl_802ADB20+((h%509)*4)+8);while(*n){u32*q=(u32*)*n;if(h2==q[1])return q[3];n=q;}return 0;}
+s32 fn_8000D354(s8 *str) {
+    extern u8 lbl_802ADB20[];
+    struct {
+        u32 h1;
+        u32 h2;
+    } h;
+    u32 *node;
+
+    if (str == NULL) {
+        return 0;
+    }
+    for (h.h2 = 0, h.h1 = 0; *str != 0; str++) {
+        h.h1 = *str + h.h1 * 37;
+        h.h2 = *str + h.h2 * 31;
+    }
+    for (node = ((u32 **)(lbl_802ADB20 + 8))[h.h1 % 509]; node != NULL; node = (u32 *)node[0]) {
+        if (h.h2 == node[1]) {
+            return node[3];
+        }
+    }
+    return 0;
+}
 
 s32 fn_8000D598(u8 *arg0) {
     s32 var_r5;
