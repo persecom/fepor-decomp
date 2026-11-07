@@ -67,6 +67,16 @@ void fn_801EAC14(void *arg0) {
     fn_8000C070(arg0, M2C_FIELD(arg0, u8 *, 0x54));
 }
 
+void fn_801EAC4C(s32 arg0) {
+    extern s32 lbl_802EF4C8[];
+    
+    void fn_8013FED0(void);
+    void fn_8007D064(s32, s32, s32);
+
+    fn_8013FED0();
+    fn_8007D064(lbl_802EF4C8[0], arg0, 0);
+}
+
 void fn_801EAE68(void *arg0) {
     M2C_UNK fn_8012C788(M2C_UNK *, void *);
     s32 fn_8013FF94(void *, M2C_UNK, M2C_UNK);
