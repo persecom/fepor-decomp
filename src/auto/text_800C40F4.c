@@ -802,6 +802,23 @@ extern "C" s32 fn_800CD53C(void *arg0) {
     }
     return 0;
 }
+
+extern "C" s32 fn_801517C0(void);
+extern "C" s32 fn_800CD590(void *arg0) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0();
+        virtual void v1();
+        virtual void v2();
+        virtual void *v3(const char *, const char *);
+    };
+
+    if (((Obj *)M2C_FIELD(arg0, void **, 4))->v3((char *)lbl_802704F8 + 0x3D0, (char *)lbl_802704F8 + 0x3D7) != NULL) {
+        return fn_801517C0();
+    }
+    return 0;
+}
+
 #pragma cplusplus reset
 void fn_800CF27C(s32 arg2) {
     extern s32 lbl_80367884;
