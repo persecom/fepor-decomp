@@ -1687,6 +1687,11 @@ void fn_800DEE94(void) {
 
 }
 
+void fn_800DEE98(void *arg0, void *arg1) {
+    void fn_800C428C(void *);
+    fn_800C428C(arg1);
+}
+
 s32 fn_800DEEBC(s32 arg0) {
     return arg0 + 4;
 }
