@@ -1124,6 +1124,29 @@ s32 fn_800D77B0(void) {
     return 0;
 }
 
+s32 fn_800D77D4(void) {
+    void fn_800D758C(void *);
+    void fn_800D75C4(void *);
+    void fn_800DA2CC(void *);
+    extern void *lbl_80367898;
+    extern void *lbl_803678A8;
+    extern u16 *lbl_803678C8;
+    extern void *lbl_803679C8;
+    extern void *lbl_803679D0;
+    extern void *lbl_80367A50;
+    extern void *lbl_803678C0;
+
+    fn_800D758C(lbl_80367898);
+    fn_800D758C(lbl_803678A8);
+    fn_800D758C(lbl_803678C8);
+    fn_800D758C(lbl_803679C8);
+    fn_800D758C(lbl_803679D0);
+    fn_800D758C(lbl_80367A50);
+    fn_800D75C4(lbl_803678C0);
+    fn_800DA2CC(lbl_803678C0);
+    return 0;
+}
+
 s32 fn_800D7834(void) {
     M2C_UNK fn_800D75C4(s32);
     M2C_UNK fn_800DA2CC(s32);
@@ -4466,12 +4489,12 @@ void fn_801001B8(s32 arg1, s32 arg2, s32 arg3) {
 }
 
 #pragma opt_loop_invariants off
-void fn_801007A0(void *arg0) { struct UnitBits {u16 f0:3;u16 f1:3;u16 f2:3;u16 f3:4;u16 f4:3;}; void fn_8010C504(void *); u8 fn_8009339C(void *,void *); u64 *fn_8001CB64(void **); void *cur; void **item; s32 i; M2C_FIELD(arg0,u32*,0x254)&=0xFEFF80EB; fn_8010C504(arg0);
-for(i=0;i<4;i++){item=fn_80037BBC(arg0,i);if(!*item)break;if(fn_8009326C(arg0,*item)){if(GetItemKind(*item)==0x81||GetItemKind(*item)==0x82)M2C_FIELD(arg0,u32*,0x254)|=4;}}
-for(i=0;i<4;i++){item=fn_80037BBC(arg0,i);if(!*item)break;if(fn_8009326C(arg0,*item)){if(GetItemKind(*item)==0x86)M2C_FIELD(arg0,u32*,0x254)|=0x10;}}
-for(i=0;i<4;i++){item=fn_80037BBC(arg0,i);if(!*item)break;if(fn_8009339C(arg0,*item)&&(*fn_8001CB64(item)&2)){M2C_FIELD(arg0,u32*,0x254)|=0x100;break;}}
-for(i=0;i<4;i++){item=fn_80037BBC(arg0,i);if(!*item)break;if(fn_8009326C(arg0,*item)){M2C_FIELD(arg0,u32*,0x254)|=0x200;cur=*item;if(fn_80019E04(lbl_80273304.iidSilence)==cur)M2C_FIELD(arg0,u32*,0x254)|=0x400;else{cur=*item;if(fn_80019E04(lbl_80273304.iidSleep)==cur)M2C_FIELD(arg0,u32*,0x254)|=0x800;else{cur=*item;if(fn_80019E04(lbl_80273304.iidBerserk)==cur)M2C_FIELD(arg0,u32*,0x254)|=0x1000;}}}}
-for(i=0;i<4;i++){item=fn_80037BBC(arg0,i);if(!*item)break;if(fn_8009339C(arg0,*item)){if(GetItemUnk1D(*item)==1)M2C_FIELD(arg0,u32*,0x254)|=0x4000;if(GetItemDD54(*item,arg0)>1)M2C_FIELD(arg0,u32*,0x254)|=0x2000;}}
+void fn_801007A0(void *arg0) { struct UnitBits {u16 f0:3;u16 f1:3;u16 f2:3;u16 f3:4;u16 f4:3;}; void fn_8010C504(void *); u8 fn_8009339C(void *,void *); u64 *fn_8001CB64(void **); s32 i; void **item; void *cur; M2C_FIELD(arg0,u32*,0x254)&=0xFEFF80EB; fn_8010C504(arg0);
+i=0;do{item=fn_80037BBC(arg0,i);if(!*item)break;if(fn_8009326C(arg0,*item)){if(GetItemKind(*item)==0x81||GetItemKind(*item)==0x82)M2C_FIELD(arg0,u32*,0x254)|=4;}i++;}while(i<4);
+i=0;do{item=fn_80037BBC(arg0,i);if(!*item)break;if(fn_8009326C(arg0,*item)){if(GetItemKind(*item)==0x86)M2C_FIELD(arg0,u32*,0x254)|=0x10;}i++;}while(i<4);
+i=0;do{item=fn_80037BBC(arg0,i);if(!*item)break;if(fn_8009339C(arg0,*item)&&(*fn_8001CB64(item)&2)){M2C_FIELD(arg0,u32*,0x254)|=0x100;break;}i++;}while(i<4);
+i=0;do{item=fn_80037BBC(arg0,i);if(!*item)break;if(fn_8009326C(arg0,*item)){M2C_FIELD(arg0,u32*,0x254)|=0x200;cur=*item;if(fn_80019E04(lbl_80273304.iidSilence)==cur)M2C_FIELD(arg0,u32*,0x254)|=0x400;else{cur=*item;if(fn_80019E04(lbl_80273304.iidSleep)==cur)M2C_FIELD(arg0,u32*,0x254)|=0x800;else{cur=*item;if(fn_80019E04(lbl_80273304.iidBerserk)==cur)M2C_FIELD(arg0,u32*,0x254)|=0x1000;}}}i++;}while(i<4);
+i=0;do{item=fn_80037BBC(arg0,i);if(!*item)break;if(fn_8009339C(arg0,*item)){if(GetItemUnk1D(*item)==1)M2C_FIELD(arg0,u32*,0x254)|=0x4000;if(GetItemDD54(*item,arg0)>1)M2C_FIELD(arg0,u32*,0x254)|=0x2000;}i++;}while(i<4);
 if((M2C_FIELD(arg0,struct UnitBits*,0x1A4).f2 != 0)||(M2C_FIELD(arg0,struct UnitBits*,0x1A4).f1 != 0)||(M2C_FIELD(arg0,struct UnitBits*,0x1A4).f4 != 0))M2C_FIELD(arg0,u32*,0x254)|=0x01000000;}
 #pragma opt_loop_invariants reset
 s32 fn_80100CC8(void) {
