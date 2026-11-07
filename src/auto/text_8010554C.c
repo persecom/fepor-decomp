@@ -647,6 +647,23 @@ void fn_80109CE8(void *arg0) {
     }
 }
 
+void fn_80109DC0(void) {
+    u32 i;
+    s32 j;
+
+    for (i = 0; i < 0x60; i++) {
+        j = i;
+        if ((u32)j >= 0x20) {
+            if (lbl_802737A0[i] & 0x1000) {
+                if (i != 0x5F) {
+                    j = i + 1;
+                    lbl_802737A0[j] |= 0x2000;
+                }
+            }
+        }
+    }
+}
+
 extern u16 lbl_80312060[32];
 void fn_8010A4D4(void *arg0) {
     void *r8;
@@ -695,6 +712,32 @@ void fn_8010AC50(void) {
 
 void fn_8010AC54(void) {
 
+}
+
+s32 fn_8010AC58(s32 arg0, s32 arg1) {
+    extern u32 lbl_802F757C;
+    extern u32 lbl_80330EAC[];
+    extern u32 lbl_80330E64[];
+    
+    // Function signature appears to be: s32 fn_8010AC58(s32 arg0, s32 arg1)
+    if (arg0 < 0) {
+        return 0;
+    }
+    
+    if ((s32) lbl_802F757C != 0) {
+        return 0;
+    }
+    
+    if ((s32) lbl_80330EAC[arg1] == 0) {
+        return 0;
+    }
+    
+    if ((s32) lbl_80330E64[arg1] == 0) {
+        return 0;
+    }
+    
+    // Return 1 if all conditions are satisfied
+    return 1;
 }
 
 s32 fn_8010B60C(void *arg1) {
@@ -761,6 +804,11 @@ void fn_8010EF34(void) {
 void fn_8010EF54(void) {
     M2C_UNK fn_8010EF74();
     fn_8010EF74();
+}
+
+void fn_8010F52C(void* arg0, int arg1)
+{
+    *(u32*)arg0 = arg1;
 }
 
 void fn_8010F970(void) {
@@ -1068,3 +1116,10 @@ s32 fn_80110094(void) {
 
 #include "global.h"
 extern u16 lbl_8028F3AC;
+#include "common.h"
+extern u8 D_801A39D4;
+extern u8 D_8017C3CC;
+
+void fn_8010F670(void) {
+    D_8017C3CC = (D_801A39D4 & 0x20) ? 1 : 0;
+}
