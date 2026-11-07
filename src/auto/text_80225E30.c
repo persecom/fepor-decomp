@@ -194,7 +194,7 @@ s32 fn_80227F6C(void) {
 }
 
 void fn_80227FD0(s32 arg0) {
-    extern s32 lbl_8033CA40[2];
+    extern s32 lbl_8033CA40[];
     lbl_8033CA40[0] = arg0;
 }
 
