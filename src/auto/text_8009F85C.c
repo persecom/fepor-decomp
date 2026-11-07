@@ -205,6 +205,13 @@ void *fn_8009FFE0(void) {
     return (char*)&lbl_8026D8D8 + 0x370;
 }
 
+extern s32 lbl_8036773C;
+s32 fn_8009FFF0(s32 arg0, s32 arg1) {
+    M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
+    fn_80024398(&lbl_8036773C, arg1, 0);
+    return 0;
+}
+
 void *fn_800A0058(void) {
     extern u16 lbl_8026D8D8;
     void* temp = (u8 *)&lbl_8026D8D8 + 0x386;
