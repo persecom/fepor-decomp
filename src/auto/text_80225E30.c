@@ -147,6 +147,27 @@ s32 fn_80227E44(void) {
     return 0;
 }
 
+s32 fn_80227E9C(void) {
+    M2C_UNK fn_800053E0(void);
+    M2C_UNK fn_8022B078(void *, s32);
+    M2C_UNK memset(void *, s32, s32);
+    struct {
+        u32 unk0;
+        u8 unk4;
+        u8 pad5[3];
+        u8 unk8;
+        u8 pad9[0x37];
+    } reply;
+
+    memset(&reply, 0, sizeof(reply));
+    reply.unk4 = 0x80;
+    reply.unk0 = 0x40;
+    reply.unk8 = 0;
+    fn_8022B078(&reply, 0x40);
+    fn_800053E0();
+    return 0;
+}
+
 s32 fn_80227EF4(void) {
     M2C_UNK fn_80225F64(void *);
     M2C_UNK fn_8022B078(void *, s32);
