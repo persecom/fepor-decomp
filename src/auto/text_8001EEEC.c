@@ -945,6 +945,20 @@ void fn_800267A0(s32 arg0) {
     fn_8001C7F0(lbl_802EF4C8.unk0, *fn_80037BD0(lbl_802EF4C8.unk0, lbl_802EF4C8.unkA), arg0);
 }
 
+void fn_800267F8(s32 arg0) {
+    void fn_8001C7F0(s32, s32, s32);
+    s32 *fn_80037BD0(s32, s32);
+    extern struct {
+        s32 unk0;
+        s32 unk4;
+        u8 unk8;
+        u8 unk9;
+        s8 unkA;
+        u8 pad[0x18 - 0xB];
+    } lbl_802EF4C8;
+    fn_8001C7F0(lbl_802EF4C8.unk0, *fn_80037BD0(lbl_802EF4C8.unk0, lbl_802EF4C8.unkA), arg0);
+}
+
 void fn_80026850(s32 arg0) {
     M2C_UNK fn_80037BD0(s32, s8);
     M2C_UNK fn_800913D4(s32, s32);
