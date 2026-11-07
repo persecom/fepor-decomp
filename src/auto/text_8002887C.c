@@ -36,6 +36,47 @@ void fn_800288E4(void) {
     }
 }
 
+void fn_800289D0(void *arg0) {
+    extern u8 lbl_802EF4C8[];
+    
+    u8* ptr = &lbl_802EF4C8[0];
+    u8 val = *(u8 *)(ptr + 8);
+
+    if (val < 0x1B) {
+        switch (val) {
+            case 0:
+                if ((u8) *(ptr + 0x16) == 0) {
+                    s32 temp_r31 = *(s32*)ptr;
+                    fn_8002807C(ptr);
+                    fn_800AA4F8(temp_r31);
+                    fn_8000C60C(0x1C); // arg0, not 0
+                    return;
+                }
+                break;
+            case 7:
+                *(u8 *)(ptr + 0x16) = (u8) (*(u8 *)(ptr + 0x16) | 1);
+                break;
+            default:
+                break;
+        }
+    } else {
+        switch (val) {
+            case 35:
+                fn_8000C070(0x09, 0); // arg0, not 6
+                return;
+            case 40:
+            case 6:
+                *(u8 *)(ptr + 0x16) = (u8) (*(u8 *)(ptr + 0x16) | 2);
+                break;
+            default:
+                *(u8 *)(ptr + 0x16) = (u8) (*(u8 *)(ptr + 0x16) | 4);
+                break;
+        }
+    }
+
+    fn_800271C8(ptr, 0x1C); // arg0, not 'arg0'
+}
+
 void fn_80028B4C(s32 arg0) {
     extern M2C_UNK lbl_802EF4C8;
     if (*(u8 *)((u8 *)&lbl_802EF4C8 + 8) == 0x35) {
@@ -130,8 +171,46 @@ extern "C" {
 void fn_80029858(s8 x, s8 y) {
     void fn_8002F6E8(void *, s8, s8, u8, s32);
     void fn_8002F728(void *);
-    fn_8002F728(0);
-    fn_8002F6E8(0, x, y, 0, 1);
+    extern u8 lbl_80284E10[];
+    extern u8 lbl_80284E20[];
+    extern u8 lbl_802EF4E0[];
+    extern u8 lbl_802CA518[];
+    struct Visitor {
+        virtual void v0(s8, s8) = 0;
+        virtual void visit(s8, s8) = 0;
+    };
+    struct Map {
+        static BOOL IsUnit(u8 id) {
+            if (id != 0) {
+                return TRUE;
+            }
+            return FALSE;
+        }
+    };
+    struct {
+        void *vtbl;
+    } obj;
+    u8 id;
+
+    obj.vtbl = lbl_80284E20;
+    obj.vtbl = lbl_80284E10;
+    fn_8002F728(lbl_802EF4E0);
+    id = lbl_802CA518[x + (y << 6) + 0xD];
+    if (Map::IsUnit(id)) {
+        fn_8002F6E8(lbl_802EF4E0, x, y, id, 1);
+    }
+    if (y - 1 >= 0) {
+        ((Visitor *)&obj)->visit(x, y - 1);
+    }
+    if (x + 1 < *(s32 *)lbl_802CA518) {
+        ((Visitor *)&obj)->visit(x + 1, y);
+    }
+    if (y + 1 < *(s32 *)(lbl_802CA518 + 4)) {
+        ((Visitor *)&obj)->visit(x, y + 1);
+    }
+    if (x - 1 >= 0) {
+        ((Visitor *)&obj)->visit(x - 1, y);
+    }
 }
 }
 #pragma cplusplus reset
@@ -842,9 +921,9 @@ void *fn_8002F680(s32 *arg0, s8 arg1, s8 arg2) {
 }
 
 void fn_8002F728(void *arg0) {
-    M2C_FIELD(arg0, s32 *, 0) = 0;
-    M2C_FIELD(arg0, s32 *, 4) = 0;
-    M2C_FIELD(arg0, s8 *, 8) = -1;
+    *(s32*)((char*)arg0 + 0x0) = 0;
+    *(s32*)((char*)arg0 + 0x4) = 0;
+    *(s8*)((char*)arg0 + 0x8) = -1;
 }
 
 void fn_8002F76C(void) {
