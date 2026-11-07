@@ -615,6 +615,17 @@ void fn_8019B29C(void *arg0) {
     }
 }
 
+void fn_8019B2FC(void *arg0) {
+    M2C_UNK fn_80049D30(s32);
+    M2C_UNK fn_800498A4(s32, M2C_UNK, M2C_UNK);
+    void fn_8014CBD8(void *, f32, f32);
+    extern u8 lbl_80330708[];
+
+    fn_80049D30(M2C_FIELD(arg0, s32 *, 0x5C));
+    fn_800498A4(M2C_FIELD(arg0, s32 *, 0x5C), 0, 0);
+    fn_8014CBD8(lbl_80330708, M2C_FIELD(arg0, s8 *, 0x66), M2C_FIELD(arg0, s8 *, 0x67));
+}
+
 void fn_8019B704(s32 arg0, s32 arg1) {
     void *fn_8000CAA0(M2C_UNK *, s32, M2C_UNK *);
     M2C_UNK fn_8019D51C(s32, void *);
