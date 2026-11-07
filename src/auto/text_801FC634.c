@@ -259,6 +259,10 @@ void fn_801FF480(void *arg0) {
     fn_801FE84C(0, 0, M2C_FIELD(M2C_FIELD(arg0, void **, 4), s32 (**)(void *), 0x50)(arg0), temp_r31, &sp8);
 }
 
+s32 fn_801FFD00(const char *fmt, ...) {
+    return 0;
+}
+
 s32 fn_801FFD54(void) {
     return 0;
 }
