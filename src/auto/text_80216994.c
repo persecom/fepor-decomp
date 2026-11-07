@@ -91,11 +91,12 @@ s32 fn_8021965C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x84);
 }
 
+#pragma dont_inline on
 void fn_8021BA54(s32 arg0, s32 arg1) {
     s32 fn_8021B3FC(s32, u16, s32);
     fn_8021B3FC(arg0, fn_80217AD8(), arg1);
 }
-
+#pragma dont_inline reset
 s32 fn_8021BA9C(void *arg0, char *name) {
     char *p = (char *)arg0 + 8;
     s32 n = 0x20;
