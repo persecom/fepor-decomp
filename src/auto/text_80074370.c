@@ -17,14 +17,14 @@ s32 fn_8007437C(void) {
     return fn_80166D8C(lbl_80330D68) ? 0x40 : 0x10;
 }
 
-s32 fn_80074758(void *arg2) {
-    extern u8 lbl_802EF4C8;
-    extern s32 lbl_80311FF4;
-    if ((u8) *((u8 *) arg2 + 0x39) != 0) {
+s32 fn_80074758(s32 arg0, s32 arg1, void *arg2) {
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_80311FF4[];
+    if (*((u8 *) arg2 + 0x39) != 0) {
         return 0x10;
     }
-    *((u8 *) &lbl_802EF4C8 + 0xa) = (u8) *((u8 *) arg2 + 0x3A);
-    fn_80024398(&lbl_80311FF4, 0);
+    lbl_802EF4C8[0xA] = *((u8 *) arg2 + 0x3A);
+    fn_80024398(lbl_80311FF4, arg1, 0);
     return 4;
 }
 
