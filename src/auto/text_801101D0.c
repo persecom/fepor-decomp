@@ -77,6 +77,12 @@ void fn_80112DFC(void *arg0, u8 arg1) {
 #pragma cplusplus on
 typedef struct Vec3f {
     f32 x, y, z;
+    Vec3f() {}
+    Vec3f(const Vec3f &o) {
+        x = o.x;
+        y = o.y;
+        z = o.z;
+    }
 } Vec3f;
 extern "C" f32 fn_802032CC(Vec3f, Vec3f);
 extern "C" void fn_80112E30(void *arg0) {
