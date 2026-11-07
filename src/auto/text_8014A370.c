@@ -144,6 +144,16 @@ s32 fn_8014ACE8(u8 arg2) {
     return 0;
 }
 
+char *fn_8014AD34(void) {
+    extern char lbl_80276F00[];
+    extern char lbl_803306E8[];
+    extern u8 lbl_80367B0D;
+    extern u8 lbl_80367B0E;
+    s32 fn_80231D94(char *dest, const char *fmt, ...);
+    fn_80231D94(lbl_803306E8, &lbl_80276F00[0xF0], (s8)lbl_80367B0D + 1, (s8)lbl_80367B0E);
+    return lbl_803306E8;
+}
+
 s32 fn_8014AD88(void) {
     return 0;
 }
@@ -588,6 +598,65 @@ void fn_8014DBE0(s32 arg0, s32 arg1, u8 *arg2, u16 *arg3, s32 *arg4) {
     *arg4 = *(s32 *)((u8 *)temp_r3 + 0x4);
 }
 
+s32 fn_8014DC04(void *arg0) {
+    s32 var_r4;
+    s32 var_ctr;
+    void *var_r3;
+
+    var_r3 = arg0;
+    var_r4 = 0;
+    var_ctr = 4;
+
+loop_1:
+    if (((u16*)var_r3)[1] == 0) {
+        return var_r4;
+    }
+    var_r4 += 1;
+    if (((u16*)var_r3)[5] == 0) {
+        return var_r4;
+    }
+    var_r4 += 1;
+    if (((u16*)var_r3)[9] == 0) {
+        return var_r4;
+    }
+    var_r4 += 1;
+    if (((u16*)var_r3)[13] == 0) {
+        return var_r4;
+    }
+    var_r4 += 1;
+    if (((u16*)var_r3)[17] == 0) {
+        return var_r4;
+    }
+    var_r4 += 1;
+    if (((u16*)var_r3)[21] == 0) {
+        return var_r4;
+    }
+    var_r4 += 1;
+    if (((u16*)var_r3)[25] == 0) {
+        return var_r4;
+    }
+    var_r4 += 1;
+    if (((u16*)var_r3)[29] == 0) {
+        return var_r4;
+    }
+    var_r4 += 1;
+    if (((u16*)var_r3)[33] == 0) {
+        return var_r4;
+    }
+    var_r4 += 1;
+    if (((u16*)var_r3)[37] == 0) {
+        return var_r4;
+    }
+    var_r4 += 1;
+    var_r3 = (char*)var_r3 + 0x50;
+    var_r4 += 1;
+    var_ctr -= 1;
+    if (var_ctr == 0) {
+        return -1;
+    }
+    goto loop_1;
+}
+
 void fn_8014DE70(s32 arg0) {
     extern u8 lbl_802937EC[];
     extern s8 lbl_80367700;
@@ -619,3 +688,9 @@ extern void* fn_80019F04();
 extern u16 lbl_802CA264[50];
 extern u16 lbl_802B14E4[];
 #include "common.h"
+#include "ef.h"
+#include "global.h"
+
+extern u8 lbl_80330708[];
+extern u8 lbl_80277060[];
+extern u8 lbl_8032BB58[];
