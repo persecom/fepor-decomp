@@ -482,6 +482,13 @@ void *fn_800A0B34(void) {
     return (u16*)(lbl_8026D8D8 + 0x54A);
 }
 
+extern s32 lbl_803676A4;
+s32 fn_800A0B44(s32 arg0, s32 arg1) {
+    M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
+    fn_80024398(&lbl_803676A4, arg1, 0);
+    return 0;
+}
+
 u8 fn_800A0BC0(void) {
     s32 fn_800C3E54(u16 *ptr);
     extern u16 lbl_803200AC;
