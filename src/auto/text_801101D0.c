@@ -102,9 +102,6 @@ extern "C" void fn_80112E30(void *arg0) {
         virtual void v10() = 0;
         virtual void v11() = 0;
         virtual Vec3f GetPos(s32) = 0;
-        Vec3f GetPosition() {
-            return GetPos(0);
-        }
     };
     Actor *target;
     Actor *self;
@@ -117,9 +114,11 @@ extern "C" void fn_80112E30(void *arg0) {
     } else {
         Vec3f a(lbl_8036A184, lbl_8036A184, lbl_8036A184);
         Vec3f b(lbl_8036A184, lbl_8036A184, lbl_8036A184);
-        a = self->GetPosition();
-        b = target->GetPosition();
-        dist = fn_802032CC(a, b);
+        Vec3f pa;
+        Vec3f pb;
+        pa = a = self->GetPos(0);
+        pb = b = target->GetPos(0);
+        dist = fn_802032CC(pa, pb);
     }
     if (dist >= lbl_8036A1A8 + M2C_FIELD(arg0, f32 *, 0x128)) {
         M2C_FIELD(arg0, u8 *, 0x1A4) = 0;
