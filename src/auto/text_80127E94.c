@@ -157,6 +157,58 @@ s32 fn_801287B8(void) {
     return 0;
 }
 
+u8 fn_801287C0(void) {
+    return 0;
+}
+
+u8 fn_80129104(void *arg0) {
+    typedef struct {
+        char *name;
+        u32 key;
+        u8 (*fn)(void *, s32);
+    } Tbl;
+    extern Tbl lbl_802909F8[];
+    extern u8 lbl_8032B3C0[];
+    s32 fn_801001F0();
+    s32 fn_80092198();
+    u8 fn_80093218(void *, u32);
+    Tbl *e;
+    u32 k;
+    s32 t;
+    s32 i;
+    u8 *p;
+
+    if ((lbl_8032B3C0[1] & 2) || (M2C_FIELD(arg0, u32 *, 0x254) & 0x03000000)) {
+        return 0;
+    }
+    if (fn_801287C0() == 0) {
+        for (i = 0, p = (u8 *) arg0; i < 4; i++, p += 8) {
+            if (M2C_FIELD(p, u32 *, 0x1ec) == 0) {
+                break;
+            }
+            t = fn_801001F0(M2C_FIELD(p, u32 *, 0x1ec));
+            if ((u8) t != 0 && i == fn_80092198(arg0, t)) {
+                k = M2C_FIELD(p, u32 *, 0x1ec);
+                if (fn_80093218(arg0, k) != 0) {
+                    e = lbl_802909F8;
+                    while (e->key != 0 && (e->key != k || e->fn == NULL)) {
+                        e++;
+                    }
+                    if (e->key == 0) {
+                        e = NULL;
+                    }
+                } else {
+                    e = NULL;
+                }
+                if (e != NULL && e->fn(arg0, i) != 0) {
+                    break;
+                }
+            }
+        }
+    }
+    return lbl_8032B3C0[0x21c];
+}
+
 void fn_80129374(void) {
     u32 fn_80019E04(u32);
     extern u32 lbl_802909F8[48];
@@ -176,13 +228,13 @@ void fn_8012955C(void) {
 void fn_80129588(s32 arg0, u32 arg1) {
     void *fn_8000CAA0(void *);
     void *fn_8000CAF0(void *, s32);
-    extern u8 lbl_80290BD0[];
+    extern u8 lbl_80290BA4[];
     void *var_r3;
 
     if (arg1 != 0U) {
-        var_r3 = fn_8000CAA0(lbl_80290BD0);
+        var_r3 = fn_8000CAA0(lbl_80290BA4);
     } else {
-        var_r3 = fn_8000CAF0(lbl_80290BD0, 3);
+        var_r3 = fn_8000CAF0(lbl_80290BA4, 3);
     }
     *(s32 *)((char *)var_r3 + 0x30) = arg0;
 }
