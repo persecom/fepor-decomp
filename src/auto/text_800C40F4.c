@@ -2109,11 +2109,22 @@ void fn_800E2218(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x64) = arg1;
 }
 
-s32 fn_800E26CC(s32 arg0) {
-    s32 fn_800C5A48(s32, s32);
-    extern s32 lbl_80367870;
+void *fn_800E26CC(void *arg0, s16 arg1) {
+    void fn_800DF724(void *, s32);
+    void fn_800C428C(void *);
+    extern u8 lbl_8028E058[];
 
-    return fn_800C5A48(lbl_80367870, arg0) + 0x20;
+    if (arg0 != NULL) {
+        M2C_FIELD(arg0, void **, 0x40) = lbl_8028E058;
+        if (arg0 != NULL) {
+            M2C_FIELD(arg0, void **, 0x40) = lbl_8028E090;
+            fn_800DF724(arg0, 0);
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
 }
 
 void fn_800E29B8(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
