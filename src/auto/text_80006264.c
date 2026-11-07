@@ -949,6 +949,21 @@ void fn_8000CF4C(s32 arg0) {
     }
 }
 
+typedef struct HashKey {
+    u32 h1;
+    u32 h2;
+} HashKey;
+
+static inline void HashKey_Make(HashKey *key, const s8 *str) {
+    key->h1 = 0;
+    key->h2 = 0;
+    while (*str != 0) {
+        key->h1 = *str + key->h1 * 37;
+        key->h2 = *str + key->h2 * 31;
+        str++;
+    }
+}
+
 s32 fn_8000D1D0(u8 *arg0) {
     extern u8 lbl_802ADB20[];
     struct Node { struct Node *next; u32 hash; s32 unk8; };
@@ -985,40 +1000,30 @@ s32 fn_8000D1D0(u8 *arg0) {
     return 0;
 }
 
-s32 fn_8000D2BC(u8 *arg0) {
-    extern u16 lbl_802ADB20[];
-    s32 temp_r6;
-    u32 temp_r5;
-    u8 temp_r7;
-    void *temp_r3;
-    s32 var_r4;
+s32 fn_8000D2BC(s8 *str) {
+    extern u8 lbl_802ADB20[];
+    struct {
+        u32 h1;
+        u32 h2;
+    } h;
+    u32 *node;
 
-    if (arg0 == NULL) {
+    if (str == NULL) {
         return 0;
     }
-    
-    temp_r6 = 0;
-    temp_r5 = 0;
-    
-loop_4:
-    temp_r7 = *arg0;
-    if ((s8) temp_r7 != 0) {
-        arg0 += 1;
-        temp_r6 = (s8) temp_r7 + (temp_r6 * 0x25);
-        temp_r5 = (s8) temp_r7 + (temp_r5 * 0x1F);
-        goto loop_4; 
+    h.h1 = 0;
+    h.h2 = h.h1;
+    while (*str != 0) {
+        h.h2 = *str + h.h2 * 31;
+        h.h1 = *str + h.h1 * 37;
+        str++;
     }
-    
-    temp_r3 = (void *) ((s32 *) lbl_802ADB20 + ((temp_r6 % 509) * 4));
-loop_9:
-    if (temp_r3 == NULL) {
-        return 0;
+    for (node = ((u32 **)(lbl_802ADB20 + 8))[h.h1 % 509]; node != NULL; node = (u32 *)node[0]) {
+        if (h.h2 == node[1]) {
+            return node[3];
+        }
     }
-    if (temp_r5 == (u32) M2C_FIELD(temp_r3, u32 *, 4)) {
-        return M2C_FIELD(temp_r3, s32 *, 0xC);
-    }
-    temp_r3 = M2C_FIELD(temp_r3, void **, 0);
-    goto loop_9;
+    return 0;
 }
 
 s32 fn_8000D354(s8 *str) {
@@ -1032,9 +1037,12 @@ s32 fn_8000D354(s8 *str) {
     if (str == NULL) {
         return 0;
     }
-    for (h.h2 = 0, h.h1 = 0; *str != 0; str++) {
+    h.h2 = 0;
+    h.h1 = h.h2;
+    while (*str != 0) {
         h.h1 = *str + h.h1 * 37;
         h.h2 = *str + h.h2 * 31;
+        str++;
     }
     for (node = ((u32 **)(lbl_802ADB20 + 8))[h.h1 % 509]; node != NULL; node = (u32 *)node[0]) {
         if (h.h2 == node[1]) {
