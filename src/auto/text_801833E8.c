@@ -226,7 +226,7 @@ s32 fn_80183974(void) {
     return fn_8000C0C0(&lbl_80295A00 + 0x3F0) != 0U;
 }
 
-extern u16 lbl_80295A78[];
+extern u16 lbl_80295A78[0x100];
 s32 fn_80183A5C(void) {
     return fn_8000C0C0(&lbl_80295A78) != 0;
 }
