@@ -83,12 +83,6 @@ typedef struct Vec3f {
         y = o.y;
         z = o.z;
     }
-    Vec3f &operator=(const Vec3f &o) {
-        x = o.x;
-        y = o.y;
-        z = o.z;
-        return *this;
-    }
 } Vec3f;
 extern "C" f32 fn_802032CC(Vec3f, Vec3f);
 extern "C" void fn_80112E30(void *arg0) {
