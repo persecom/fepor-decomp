@@ -754,24 +754,9 @@ void fn_8005F84C(void *arg0) {
 }
 
 void fn_8005F894(void *arg0, s32 arg1) {
-    M2C_UNK fn_80065484(u32, M2C_UNK, s32);
-    u32 var_r0;
-    void *var_r3;
+    void fn_80065484(u32, s32, s32);
 
-    var_r3 = arg0;
-loop_4:
-    if (var_r3 == NULL) {
-        var_r0 = 0U;
-    } else {
-        var_r0 = M2C_FIELD(var_r3, u32 *, 0x44);
-        if (var_r0 != 0U) {
-
-        } else {
-            var_r3 = M2C_FIELD(var_r3, void **, 4);
-            goto loop_4;
-        }
-    }
-    fn_80065484(var_r0, -1, arg1);
+    fn_80065484(GetListField44(arg0), -1, arg1);
 }
 
 void fn_8005F8E4(void *arg0) {
