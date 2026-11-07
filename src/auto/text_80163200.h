@@ -1,5 +1,6 @@
 #include "global.h"
 #include "functions.h"
+#include "functions.h"
 
 typedef struct {
     s32 unk0;
