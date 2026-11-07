@@ -2931,6 +2931,23 @@ void fn_800E8154(void *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x10), M2C_UNK (**)(void *), 8)(arg0);
 }
 
+void *fn_800E86A4(void *arg0, s16 arg1) {
+    M2C_UNK fn_800C9A60(void *, s32);
+    void fn_800E45EC(void *, s32);
+    void fn_800C428C(void *);
+    extern void *lbl_8028E250[];
+
+    if (arg0 != NULL) {
+        M2C_FIELD(arg0, void ***, 0x40) = lbl_8028E250;
+        fn_800C9A60((s8 *)arg0 + 0xAC, -1);
+        fn_800E45EC(arg0, 0);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_800E8888(void) {
     M2C_UNK fn_800E43EC();
     fn_800E43EC();
