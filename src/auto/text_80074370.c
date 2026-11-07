@@ -132,7 +132,7 @@ void fn_80074E4C(void **arg0, void *arg2) {
     fn_8008D510(M2C_FIELD(arg2, u8 *, 0x39) == 0, M2C_FIELD(arg2, s16 *, 0x30), M2C_FIELD(arg2, s16 *, 0x32));
 }
 
-void fn_80074EDC(void *arg1) {
+void fn_80074EDC(s32 arg0, void *arg1) {
     extern s32 lbl_802EF4C8[];
     
     fn_80037BD0(lbl_802EF4C8[1], *(u8*)((char*)arg1 + 0x3A));
