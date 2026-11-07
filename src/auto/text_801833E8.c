@@ -574,16 +574,16 @@ void fn_8019A088(void *arg0) {
 }
 
 extern s32 lbl_8036AEF8;
-void fn_8019A7A8(void *arg0) {
-    void *temp_r5;
-    u32 temp_r0;
+s32 fn_8019A7A8(void *arg0) {
+    u8 color[4] = {0x80, 0x80, 0x80, 0x40};
+    u8 *dst;
 
-    temp_r0 = lbl_8036AEF8;
-    temp_r5 = *(void **)((char *)arg0 + 0x30);
-    *(u8 *)((char *)temp_r5 + 0x88) = (u8) temp_r0;
-    *(u8 *)((char *)temp_r5 + 0x89) = *(u8 *)((char *)arg0 + 0x09);
-    *(u8 *)((char *)temp_r5 + 0x8A) = *(u8 *)((char *)arg0 + 0x0A);
-    *(u8 *)((char *)temp_r5 + 0x8B) = *(u8 *)((char *)arg0 + 0x0B);
+    dst = M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), u8 **, 0x5C);
+    dst[0x88] = color[0];
+    dst[0x89] = color[1];
+    dst[0x8A] = color[2];
+    dst[0x8B] = color[3];
+    return 1;
 }
 
 void fn_8019A7E8(s32 arg0) {
