@@ -2220,6 +2220,35 @@ void fn_8019D360(void *arg0) {
     }
 }
 
+void fn_8019D388(void *arg0) {
+    void **var_r3;
+    s32 var_r31;
+    u32 var_r0;
+
+    var_r3 = (void**)arg0 + 0xC;
+    var_r31 = (s32)(*var_r3) + 0x1C;
+
+    if (*((u8*)arg0 + 0x34) == 0) {
+        if (fn_8005F9B8(var_r31, 2) != 0) {
+            *(u32 *)*var_r3 |= 0x80;
+            *((u8*)arg0 + 0x34) = 1;
+        }
+
+        if (fn_8004BF80(*var_r3) != 0) {
+            fn_800056A0(0);
+            *((u8*)arg0 + 0x34) = 1;
+        }
+    } else {
+        if (fn_8004BF80(*var_r3) != 0) {
+            fn_8000C188(arg0);
+        }
+    }
+
+    if (*((u8*)arg0 + 0x34) == 1 && fn_8005F9B8(var_r31, 8) != 0) {
+        *(u32 *)*var_r3 |= 0x40;
+    }
+}
+
 void fn_8019D458(void *arg0) {
     M2C_UNK fn_80184618(s32, void *);
     M2C_UNK fn_80184BE8(s32, M2C_UNK, M2C_UNK, M2C_UNK);
