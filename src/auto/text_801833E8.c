@@ -2999,3 +2999,8 @@ extern u16 lbl_80296F90[];
 
 extern u16 __files[160]; // 320 bytes, 160 elements
 extern u8 lbl_80279DF0[29]; // 29 bytes
+
+void *fn_800C42D8(s32);
+void fn_80232058(void*, void*, void*);
+void fn_8022CF78(void);
+void fn_8001C690(void*, s32);
