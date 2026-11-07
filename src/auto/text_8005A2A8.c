@@ -101,6 +101,47 @@ void fn_8005AC5C(u32 *arg0) {
     }
 }
 
+extern s32 D_800F1340;
+extern s32 D_800F1344;
+extern s32 D_800F1348;
+extern s32 D_800F134C;
+extern s32 D_800F1350;
+extern s32 D_800F1354;
+extern s32 D_800F1358;
+extern s32 D_800F135C;
+extern s32 D_803B9610;
+s32 fn_8005AC88(s32 arg0, s32 arg1) {
+    s32 temp1;
+    s32 temp2;
+
+    if (arg0 <= 0) {
+        D_800F1340 = 0;
+        D_800F1344 = 0;
+        D_800F1348 = 0;
+        D_800F134C = 0;
+        D_800F1350 = 0;
+        D_800F1354 = 0;
+        D_800F1358 = 0;
+        D_800F135C = 0;
+        return 0;
+    }
+
+    temp1 = arg1 < 0 ? -arg1 : arg1;
+    temp2 = arg0 * arg0;
+
+    // First part
+    D_800F1340 = (temp1 + temp2 - 1) / temp2;
+    D_800F1344 = 0;
+    D_800F1348 = 0;
+    D_800F134C = 0;
+    D_800F1350 = 0;
+    D_800F1354 = 0;
+    D_800F1358 = 0;
+    D_800F135C = 0;
+
+    return D_800F1340;
+}
+
 #pragma cplusplus on
 extern "C" void fn_8005C8B4(s32);
 extern "C" void fn_8005ADB4(void *arg0) {
@@ -119,3 +160,10 @@ extern "C" void fn_8005ADB4(void *arg0) {
     fn_8005C8B4(((Obj *)arg0)->v8());
 }
 #pragma cplusplus reset
+#include "global.h"
+
+extern s32 lbl_80369180;
+extern f32 lbl_80369188;
+extern f32 lbl_80369198;
+extern f32 lbl_8036919C;
+extern f32 lbl_803691A0;
