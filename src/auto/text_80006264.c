@@ -954,19 +954,6 @@ typedef struct HashKey {
     u32 h2;
 } HashKey;
 
-static inline HashKey HashKey_Make(const s8 *str) {
-    HashKey key;
-
-    key.h1 = 0;
-    key.h2 = 0;
-    while (*str != 0) {
-        key.h1 = *str + key.h1 * 37;
-        key.h2 = *str + key.h2 * 31;
-        str++;
-    }
-    return key;
-}
-
 s32 fn_8000D1D0(u8 *arg0) {
     extern u8 lbl_802ADB20[];
     struct Node { struct Node *next; u32 hash; s32 unk8; };
