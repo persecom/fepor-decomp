@@ -2,6 +2,14 @@
 #include "common.h"
 
 extern u16 lbl_80367218;
+void *fn_801A7F5C(void *arg0) {
+    fn_801A7FA4(arg0);
+    fn_801A7FA4((char *)arg0 + 0x2E0);
+    fn_801A7FA4((char *)arg0 + 0x5C0);
+    *(s32 *)((char *)arg0 + 0xCAC) = 0;
+    return arg0;
+}
+
 u16 *fn_801A7FF4(void *arg0) {
     s8 temp = ((s8 *)arg0)[0x2C8 / sizeof(s8)];
     if (temp <= 0) {
@@ -98,10 +106,21 @@ s32 fn_801AA034(void) {
     return 0;
 }
 
+void fn_801AA03C(s32 arg1) {
+    fn_800F5504(arg1, 0x15);
+}
+
 void fn_801AA14C(void *arg0) {
     M2C_UNK fn_800A7EC4();
     M2C_FIELD(arg0, u8 *, 0x30) = (u8) (M2C_FIELD(arg0, u8 *, 0x30) & 0xFE);
     fn_800A7EC4();
+}
+
+void fn_801AAD74(void *arg0) {
+    s16 var = M2C_FIELD(arg0, s16 *, 0x32);
+    if (var != 0) {
+        fn_801AA228();
+    }
 }
 
 void fn_801AE2D0(void) {
