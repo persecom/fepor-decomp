@@ -134,6 +134,15 @@ void DBPrintf(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 ar
     // This function only does a stack frame setup and returns
 }
 
+u32 fn_80203AAC(void) {
+    extern void *BootInfo_80368458;
+
+    if (BootInfo_80368458 == NULL || M2C_FIELD(BootInfo_80368458, u32 *, 0x2C) == 0) {
+        return 0x10000002;
+    }
+    return M2C_FIELD(BootInfo_80368458, u32 *, 0x2C);
+}
+
 void fn_80204294(void) {
     M2C_ERROR(/* unknown instruction: bla 0x60 */);
 }
@@ -374,12 +383,6 @@ s32 fn_8020FFC4(s32 arg0) {
 }
 
 void fn_8021004C(s32 arg0) {
-    switch(arg0) {
-        case 0 ... 31:
-            return;
-        default:
-            return;
-    }
 }
 
 s32 fn_80211690(void) {
