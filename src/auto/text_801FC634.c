@@ -373,6 +373,12 @@ void *fn_80200590(void) {
     return temp;
 }
 
+void fn_80200674(void) {
+    void fn_8005C870(void *, s32);
+    fn_8005C870(lbl_802820B8 + 0x53, 0);
+    fn_8005C870(lbl_802820B8 + 0x68, 0);
+}
+
 void fn_80200750(void *arg0) {
     extern f32 lbl_8036BBD8;
     s16 temp_r3;
