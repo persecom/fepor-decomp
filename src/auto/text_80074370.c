@@ -143,6 +143,12 @@ void fn_80074F0C(void *arg0) {
     *(s32 *)((u8 *)arg0 + 0xC) = lbl_802EF4C8[1];
 }
 
+void fn_800750D8(s32 arg0, void *arg1) {
+    extern s32 lbl_802EF4C8[];
+    
+    fn_80037BD0(lbl_802EF4C8[1], *(u8*)((char*)arg1 + 0x3A));
+}
+
 void fn_800752F4(void) {
     extern u8 lbl_8026C0B8;
     fn_8000E0E4((u8 *)&lbl_8026C0B8 + 0x1C8);
