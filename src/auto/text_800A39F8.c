@@ -7,6 +7,13 @@ extern void fn_80234450(void *, void *, void *);
 extern u8 lbl_80312A80[0x30];
 
 
+extern s32 lbl_803677A4;
+s32 fn_800A3A04(s32 arg0, s32 arg1) {
+    M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
+    fn_80024398(&lbl_803677A4, arg1, 0);
+    return 0;
+}
+
 void *fn_800A3A30(void) {
     extern u8 lbl_8026E168[];
     return &lbl_8026E168[0x2E];
