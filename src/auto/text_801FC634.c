@@ -455,6 +455,39 @@ s32 fn_8020119C(void) {
     return fn_8000C0C0(&lbl_8029B7A4) != 0;
 }
 
+void fn_80201228(void *arg0) {
+    void fn_8003F670(u32);
+    extern u32 lbl_80368448;
+    if (lbl_80368448 != 0) {
+        fn_8006EDA0(&lbl_80368448);
+    }
+    if (M2C_FIELD(arg0, u32 *, 0x30) != 0) {
+        fn_8003F670(M2C_FIELD(arg0, u32 *, 0x30));
+        M2C_FIELD(arg0, u32 *, 0x30) = 0;
+    }
+}
+
+void fn_80201328(void *arg0) {
+    u8 fn_8005BA10(void *);
+    u32 fn_8003FCCC(void *);
+    void fn_8000C188(void *);
+    void fn_8006EEFC(void *, void *);
+    u8 ok;
+
+    ok = fn_8005BA10(lbl_802820B8 + 0x53);
+    if (ok) {
+        ok = fn_8005BA10(lbl_802820B8 + 0x68);
+        if (ok) {
+            if (lbl_80368448 == 0) {
+                fn_8006EEFC(&lbl_80368448, lbl_802820B8 + 0x53);
+            }
+            M2C_FIELD(arg0, u32 *, 0x30) = fn_8003FCCC(lbl_802820B8 + 0x68);
+            fn_8000C188(arg0);
+        }
+    }
+}
+#pragma opt_common_subs reset
+
 void fn_802015A0(void) {
 
 }
