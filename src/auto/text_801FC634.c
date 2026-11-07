@@ -118,24 +118,25 @@ void fn_801FE444(void) {
     fn_8005C870((char *)&lbl_80281F00 + 0x64, 0);
 }
 
+#pragma opt_common_subs off
 void fn_801FE488(void *arg0) {
-    extern void *lbl_80281F00;
+    u8 fn_8005BA10(void *);
+    u32 fn_8003FCCC(void *);
+    void fn_8000C188(void *);
+    void fn_8006EEFC(void *, void *);
+    extern u8 lbl_80281F00[];
     extern u32 lbl_80368438;
 
-    s32 temp_r3 = fn_8005BA10((char *)&lbl_80281F00 + 0x4D, &lbl_80281F00);
-    if (temp_r3 != 0) {
-        temp_r3 = fn_8005BA10((char *)&lbl_80281F00 + 0x64, NULL);
-        if (temp_r3 == 0) {
-            return;
-        }
-        if (lbl_80368438 != 0) {
-            fn_8006EEFC(&lbl_80368438, (char *)&lbl_80281F00 + 0x4D);
-        }
-        M2C_FIELD(arg0, u32 *, 0x44) = fn_8003FCCC((char *)&lbl_80281F00 + 0x64);
-        fn_8000C188(arg0);
+    if (!fn_8005BA10(lbl_80281F00 + 0x4D) || !fn_8005BA10(lbl_80281F00 + 0x64)) {
+        return;
     }
+    if (lbl_80368438 == 0) {
+        fn_8006EEFC(&lbl_80368438, lbl_80281F00 + 0x4D);
+    }
+    M2C_FIELD(arg0, u32 *, 0x44) = fn_8003FCCC(lbl_80281F00 + 0x64);
+    fn_8000C188(arg0);
 }
-
+#pragma opt_common_subs reset
 void fn_801FE520(void *arg0) {
     M2C_UNK fn_8000E0E4(s32);
     s16 fn_800102BC(M2C_UNK, f32);
