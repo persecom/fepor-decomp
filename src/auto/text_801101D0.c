@@ -117,16 +117,12 @@ extern "C" void fn_80112E30(void *arg0) {
     if (target == NULL) {
         dist = lbl_8036A184;
     } else {
-        Vec3f a;
-        Vec3f b;
-        Vec3f pa;
-        Vec3f pb;
-        a.x = a.y = a.z = lbl_8036A184;
-        b.x = b.y = b.z = lbl_8036A184;
+        Vec3f a(lbl_8036A184, lbl_8036A184, lbl_8036A184);
+        Vec3f b(lbl_8036A184, lbl_8036A184, lbl_8036A184);
         a = self->GetPos(0);
-        pa = a;
+        Vec3f pa(a);
         b = target->GetPos(0);
-        pb = b;
+        Vec3f pb(b);
         dist = fn_802032CC(pa, pb);
     }
     if (dist >= lbl_8036A1A8 + M2C_FIELD(arg0, f32 *, 0x128)) {
@@ -1182,3 +1178,4 @@ extern struct SomeStruct* lbl_80320C20; // example struct
 
 extern u16 lbl_8028F6C8[];
 extern u16 lbl_80296128[];
+extern void *lbl_802CA264;
