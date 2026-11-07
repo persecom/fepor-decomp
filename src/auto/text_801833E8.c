@@ -34,6 +34,17 @@ void fn_80183584(void) {
     fn_8000E0E4(&lbl_80278BB8[0x12F]);
 }
 
+void fn_801835D0(void) {
+    extern u8 lbl_803681F0;
+    extern u8 lbl_80278BB8[];
+
+    if (lbl_803681F0 == 0x32) {
+        fn_8000E0E4(&lbl_80278BB8[0x135]);
+        return;
+    }
+    fn_8000E0E4(&lbl_80278BB8[0x13B]);
+}
+
 s32 fn_8018361C(void) {
     return 4;
 }
