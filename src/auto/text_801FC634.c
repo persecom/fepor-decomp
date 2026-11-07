@@ -373,10 +373,40 @@ void *fn_80200590(void) {
     return temp;
 }
 
+void fn_8020060C(void *arg0) {
+    void fn_8003F670(u32);
+    extern u32 lbl_80368448;
+    if (lbl_80368448 != 0) {
+        fn_8006EDA0(&lbl_80368448);
+    }
+    if (M2C_FIELD(arg0, u32 *, 0x44) != 0) {
+        fn_8003F670(M2C_FIELD(arg0, u32 *, 0x44));
+        M2C_FIELD(arg0, u32 *, 0x44) = 0;
+    }
+}
+
 void fn_80200674(void) {
     void fn_8005C870(void *, s32);
     fn_8005C870(lbl_802820B8 + 0x53, 0);
     fn_8005C870(lbl_802820B8 + 0x68, 0);
+}
+
+void fn_802006B8(void *arg0) {
+    u8 fn_8005BA10(void *);
+    u32 fn_8003FCCC(void *);
+    void fn_8000C188(void *);
+    void fn_8006EEFC(void *, void *);
+
+    if (fn_8005BA10(lbl_802820B8 + 0x53)) {
+        if (!fn_8005BA10(lbl_802820B8 + 0x68)) {
+            return;
+        }
+        if (lbl_80368448 == 0) {
+            fn_8006EEFC(&lbl_80368448, lbl_802820B8 + 0x53);
+        }
+        M2C_FIELD(arg0, u32 *, 0x44) = fn_8003FCCC(lbl_802820B8 + 0x68);
+        fn_8000C188(arg0);
+    }
 }
 
 void fn_80200750(void *arg0) {
