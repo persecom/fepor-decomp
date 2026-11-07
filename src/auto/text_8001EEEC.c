@@ -301,6 +301,15 @@ void fn_80022FD8(s32 arg0, s32 arg1, s32 arg2) {
     *temp_r4 = arg2;
 }
 
+void fn_80023068(u16 *a0, u16 *a1, f32 a2, f32 a3) {
+    extern f32 lbl_8036A7F0;
+    
+    *(f32*)((u8*)a0 + 0x534) = a2;
+    *(f32*)((u8*)a0 + 0x538) = a3;
+    *(f32*)((u8*)a1 + 0x534) = a2;
+    *(f32*)((u8*)a1 + 0x538) = a3;
+}
+
 f32 fn_800233D0(void *arg0, s8 arg1, s8 arg2, u8 arg3) {
     f32 var_f1;
     f32 var_f2;
@@ -1240,3 +1249,10 @@ s32 fn_80028854(void) {
     return lbl_802EF4C8;
 }
 extern u8 lbl_802EF438[];
+#include "common.h"
+#include "unit.h"
+
+s32 func_80025338(struct Unit* unit)
+{
+    return 0;
+}
