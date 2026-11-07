@@ -160,6 +160,19 @@ s32 fn_8021C84C(s32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
     return fn_80217C64(*arg0);
 }
 
+s32 fn_8021CBC8(s32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 fn_80217C64(s32);
+    s32 fn_8021CAB4(s32 *, s32, s32, s32, void *);
+    void fn_80216998(s32, s32);
+    s32 result;
+
+    result = fn_8021CAB4(arg0, arg1, arg2, arg3, fn_80216998);
+    if (result < 0) {
+        return result;
+    }
+    return fn_80217C64(*arg0);
+}
+
 void fn_8021CDC4(void) {
     s32 temp_r3;
     
@@ -201,11 +214,14 @@ s32 fn_8021D2D4(s32 arg0, s32 index, void *dst) {
     return fn_80217BD0(sp14, ret);
 }
 
-void fn_8021D6D8(s32 arg0, s32 arg1, u8 *arg2) {
+s32 fn_8021D6D8(s32 arg0, s32 arg1, u8 *arg2) {
     u8 entry[0x40];
+    s32 result;
 
-    if (fn_8021D2D4(arg0, arg1, entry) == 0) {
+    result = fn_8021D2D4(arg0, arg1, entry);
+    if (result == 0) {
         *arg2 = entry[0x34];
     }
+    return result;
 }
-
+#pragma dont_inline reset
