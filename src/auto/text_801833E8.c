@@ -75,6 +75,17 @@ s32 fn_801837CC(void) {
     return 3;
 }
 
+void fn_801837D4(void) {
+    extern u8 lbl_803681F0;
+    extern u8 lbl_80278BB8[];
+
+    if (lbl_803681F0 == 0x32) {
+        fn_8000E0E4(&lbl_80278BB8[0x16D]);
+        return;
+    }
+    fn_8000E0E4(&lbl_80278BB8[0x173]);
+}
+
 s32 fn_8018386C(void) {
     return 0;
 }
