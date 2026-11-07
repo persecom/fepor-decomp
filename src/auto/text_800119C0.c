@@ -57,6 +57,13 @@ s32 fn_800138BC(void *arg0) {
     return *temp_r3;
 }
 
+u32 fn_800138F4(u32 arg0, u32 arg1) {
+    if (arg0 < 0x10000000)
+        return (arg0 * 0x10000000) + (arg1 * 0x1000000);
+    else
+        return 0;
+}
+
 void fn_80013A6C(s32 arg0) {
     extern void *lbl_80367180;
     extern s32 lbl_80367188;
@@ -321,6 +328,68 @@ void fn_80014F94(void *arg0, s32 arg1) {
     fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 1));
     fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 2));
     fn_8017A5EC(arg1, M2C_FIELD(arg0, u8 *, 3));
+}
+
+void *fn_80014FF8(void *arg0) {
+    void *fn_8000E0E4(void *);
+    extern u8 lbl_80268018[];
+    u8 temp_r0;
+    u8 temp_r0_2;
+    u8 var_r4;
+    void *var_r3;
+
+    temp_r0 = *(u8 *)((u8 *)arg0 + 1);
+    switch ((s32) temp_r0) {                        /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        var_r4 = 1;
+block_7:
+        temp_r0_2 = *(u8 *)arg0;
+        switch ((s32) temp_r0_2) {                  /* switch 2; irregular */
+        case 0:                                     /* switch 2 */
+            if (var_r4 != 0) {
+                var_r3 = &lbl_80268018[0x1D];
+            } else {
+                var_r3 = &lbl_80268018[0x22];
+            }
+            return fn_8000E0E4(var_r3);
+        case 1:                                     /* switch 2 */
+            if (var_r4 != 0) {
+                var_r3 = &lbl_80268018[0x28];
+            } else {
+                var_r3 = &lbl_80268018[0x2E];
+            }
+            return fn_8000E0E4(var_r3);
+        case 2:                                     /* switch 2 */
+            if (var_r4 != 0) {
+                var_r3 = &lbl_80268018[0x34];
+            } else {
+                var_r3 = &lbl_80268018[0x3A];
+            }
+            return fn_8000E0E4(var_r3);
+        case 3:                                     /* switch 2 */
+            if (var_r4 != 0) {
+                var_r3 = &lbl_80268018[0x40];
+            } else {
+                var_r3 = &lbl_80268018[0x46];
+            }
+            return fn_8000E0E4(var_r3);
+        case 4:                                     /* switch 2 */
+            if (var_r4 != 0) {
+                var_r3 = &lbl_80268018[0x4C];
+            } else {
+                var_r3 = &lbl_80268018[0x52];
+            }
+            return fn_8000E0E4(var_r3);
+        default:                                    /* switch 2 */
+            return &lbl_80268018[0x1D];
+        }
+        break;
+    case 3:                                         /* switch 1 */
+        var_r4 = 0;
+        goto block_7;
+    default:                                        /* switch 1 */
+        return &lbl_80268018[0x1D];
+    }
 }
 
 s32 fn_8001512C(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
@@ -617,6 +686,18 @@ void fn_80015ED4(void) {
     }
 }
 
+void fn_80015FA4(void* arg0, void* arg1)
+{
+    char* ptr0 = (char*)arg0;
+    char* ptr1 = (char*)arg1;
+    
+    int i;
+    for (i = 0; i < 8; i++)
+    {
+        *ptr0++ = *ptr1++;
+    }
+}
+
 void fn_800160D4(void) {
     M2C_UNK fn_80015320(M2C_UNK, M2C_UNK *);
     M2C_UNK fn_8004E040();
@@ -821,6 +902,34 @@ loop_3:
     goto loop_3;
 }
 
+void fn_80016DE0(void) {
+    M2C_UNK fn_80015718(M2C_UNK *, M2C_UNK *);
+    M2C_UNK fn_8003B6F0(M2C_UNK *, s32);
+    extern M2C_UNK lbl_802B14E4;
+    extern M2C_UNK lbl_802CA264;
+    M2C_UNK *temp_r30;
+    M2C_UNK *var_r31;
+    s32 var_r29;
+
+    fn_8001594C(&lbl_802CA264, 0);
+    fn_8001594C(&lbl_802CA264 + 0xC, 1);
+    fn_8001594C(&lbl_802CA264 + 0x18, 2);
+    fn_8001594C(&lbl_802CA264 + 0x24, 3);
+    temp_r30 = &lbl_802CA264 + 0x30;
+    fn_8001594C(temp_r30, 4);
+    fn_8001594C(&lbl_802CA264 + 0x3C, 5);
+    fn_8001594C(&lbl_802CA264 + 0x48, 6);
+    fn_8001594C(&lbl_802CA264 + 0x54, 7);
+    var_r29 = 0;
+    var_r31 = &lbl_802B14E4;
+    do {
+        fn_8003B6F0(var_r31, var_r29 + 1);
+        fn_80015718(temp_r30, var_r31);
+        var_r29 += 1;
+        var_r31 += 0x280;
+    } while (var_r29 < 0x9F);
+}
+
 #include "common.h"
 #include "common.h"
 
@@ -831,3 +940,9 @@ extern s32 lbl_803671A8;
 extern u32 lbl_802CA264[];
 extern u32 lbl_80330708[];
 #include "global.h"
+#include "common.h"
+extern s32 lbl_80367184;
+extern s32 lbl_8036718C;
+extern s32 lbl_80367180;
+extern s32 lbl_803671A4;
+extern s32 lbl_80367198;
