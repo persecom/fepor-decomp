@@ -907,6 +907,24 @@ void fn_801985F0(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x148) = arg1;
 }
 
+void fn_801985F8(void *arg0, s32 arg1) {
+    s32 temp_r0;
+
+    if (arg1 == 1) {
+        temp_r0 = M2C_FIELD(arg0, s32 *, 0x124);
+        if (temp_r0 == 6) {
+            M2C_FIELD(arg0, s32 *, 0x124) = 1;
+            return;
+        } else if (temp_r0 == 7) {
+            M2C_FIELD(arg0, s32 *, 0x124) = 2;
+            return;
+        } else if (temp_r0 == 8) {
+            M2C_FIELD(arg0, s32 *, 0x124) = 0;
+            return;
+        }
+    }
+}
+
 s32 fn_8019906C(void *arg0) {
     s32 fn_801518D0(s32);
     if (M2C_FIELD(arg0, u32 *, 0x144) != 0) {
