@@ -772,6 +772,46 @@ void fn_801FC4F8(s32 arg0, s32 arg1, s32 arg2) {
     *(u32*)(arg0 + 0x8) = (u32)temp_arg2;
 }
 
+#pragma use_lmw_stmw on
+void *fn_801FC518(void *arg0, void *arg1, u8 arg2, u8 arg3, u16 *arg4) {
+    void *fn_800C42D8(u32);
+    void fn_800D6C1C(void *, void *);
+    M2C_UNK fn_8022CF78(void);
+    M2C_UNK fn_80232058(void *, const char *, ...);
+    extern char __files[];
+    extern char lbl_80281420[];
+    void *node;
+    u16 *value;
+
+    if (M2C_FIELD(arg0, u32 *, 0) > (u32)-2) {
+        fn_80232058(__files + 0xA0, lbl_80281420 + 0xA6E);
+        fn_8022CF78();
+    }
+    node = fn_800C42D8(0x10);
+    if (node == NULL) {
+        fn_80232058(__files + 0xA0, lbl_80281420 + 0xA89);
+        fn_8022CF78();
+    }
+    value = (u16 *)((char *)node + 0xC);
+    if (value != NULL) {
+        *value = *arg4;
+    }
+    M2C_FIELD(node, void **, 4) = NULL;
+    M2C_FIELD(node, void **, 0) = NULL;
+    M2C_FIELD(node, u32 *, 8) = (u32)arg1 | (M2C_FIELD(node, u32 *, 8) & 1);
+    if (arg2) {
+        M2C_FIELD(arg1, void **, 0) = node;
+    } else {
+        M2C_FIELD(arg1, void **, 4) = node;
+    }
+    M2C_FIELD(arg0, u32 *, 0)++;
+    fn_800D6C1C(node, M2C_FIELD(arg0, void **, 4));
+    if (arg3) {
+        M2C_FIELD(arg0, void **, 8) = node;
+    }
+    return node;
+}
+#pragma use_lmw_stmw reset
 extern u16 lbl_80280B58[18];
 extern u16* lbl_8027F730;
 extern u16* lbl_8029A910;
