@@ -725,6 +725,8 @@ void fn_801FC438(void) {
 
 }
 
+void *fn_801FC518(void *arg0, void *arg1, u8 arg2, u8 arg3, u16 *arg4);
+
 void fn_801FC43C(void *arg0, void *arg1, u16 *arg2) {
     u16 var_r5;
     u16 var_r6;
