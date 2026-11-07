@@ -313,6 +313,7 @@ void fn_802001F8(u32 arg0, s32 arg1) {
         }
     }
 }
+#pragma use_lmw_stmw reset
 
 void fn_80200270(void *arg0) {
     u32 *fn_8000D2BC(void *);
@@ -328,6 +329,7 @@ void fn_80200270(void *arg0) {
     }
 }
 
+#pragma use_lmw_stmw on
 void fn_802003FC(void) {
     void fn_8006EDA0(void *);
     s32 i;
