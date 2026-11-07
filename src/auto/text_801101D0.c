@@ -77,9 +77,58 @@ void fn_80112DFC(void *arg0, u8 arg1) {
 #pragma cplusplus on
 typedef struct Vec3f {
     f32 x, y, z;
+    Vec3f() {}
+    Vec3f(const Vec3f &o) {
+        x = o.x;
+        y = o.y;
+        z = o.z;
+    }
+    Vec3f &operator=(const Vec3f &o) {
+        x = o.x;
+        y = o.y;
+        z = o.z;
+        return *this;
+    }
 } Vec3f;
 extern "C" f32 fn_802032CC(Vec3f, Vec3f);
 extern "C" void fn_80112E30(void *arg0) {
+    extern f32 lbl_8036A1A8;
+    struct Actor {
+        u8 pad0[0x40];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual Vec3f GetPos(s32) = 0;
+    };
+    Actor *target;
+    Actor *self;
+    f32 dist;
+
+    self = (Actor *)arg0;
+    target = M2C_FIELD(arg0, Actor **, 0x118);
+    if (target == NULL) {
+        dist = lbl_8036A184;
+    } else {
+        Vec3f a;
+        Vec3f b;
+        a.x = a.y = a.z = lbl_8036A184;
+        b.x = b.y = b.z = lbl_8036A184;
+        a = self->GetPos(0);
+        b = target->GetPos(0);
+        dist = fn_802032CC(a, b);
+    }
+    if (dist >= lbl_8036A1A8 + M2C_FIELD(arg0, f32 *, 0x128)) {
+        M2C_FIELD(arg0, u8 *, 0x1A4) = 0;
+    }
 }
 #pragma cplusplus reset
 
@@ -1049,6 +1098,55 @@ block_5:
     M2C_FIELD(arg0, s8 *, 0x64) = 2;
 }
 
+extern u32 lbl_80367A5C;
+void fn_8011DDCC(void* arg0) {
+    int i;
+    
+    // First loop: iterate through 4 units, check and process
+    for (i = 0; i < 4; i++) {
+        if (*(void**)((char*)arg0 + i * 4) != NULL) {
+            fn_80122C84();
+            *(void**)((char*)arg0 + i * 4) = NULL;
+        }
+    }
+    
+    // Second loop: iterate through 4 units, check and process
+    for (i = 0; i < 4; i++) {
+        if (*(void**)((char*)arg0 + 0x10 + i * 4) != NULL) {
+            fn_8007AD6C();
+            *(void**)((char*)arg0 + 0x10 + i * 4) = NULL;
+        }
+    }
+    
+    // Clear unk30 - this is likely at offset 0x20
+    *(s32*)((char*)arg0 + 0x20) = 0;
+    
+    // Check and process lbl_80367A5C
+    if (lbl_80367A5C != 0) {
+        fn_80109020();
+        lbl_80367A5C = 0;
+    }
+    
+    // Check and process unk58 - at offset 0x58 
+    if (*(s32*)((char*)arg0 + 0x58) != 0) {
+        fn_8000C60C();
+        *(s32*)((char*)arg0 + 0x58) = 0;
+    }
+    
+    // Call fn_80120F0C
+    fn_80120F0C();
+    
+    // Check bit 7 of lbl_80367A58 and process if set
+    if (lbl_80367A58 & 0x80) {
+        fn_800AA208();
+        lbl_80367A58 &= 0xFFFFFF7F;
+    }
+    
+    // Clear lbl_80367A58 and update lbl_80367110
+    lbl_80367A58 = 0;
+    lbl_80367110 &= 0xFFFFFFFD;
+}
+
 void fn_8012075C(void *arg0) {
     s32 i;
     void **ptr_array;
@@ -1077,6 +1175,7 @@ void fn_801207BC(void) {
 extern struct SomeStruct* lbl_80320C20; // example struct
 #include "common.h"
 #include "unit.h"
+#include "global.h"
 
 extern u16 lbl_8028F6C8[];
 extern u16 lbl_80296128[];
