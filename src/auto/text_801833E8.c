@@ -398,6 +398,27 @@ void fn_801857F0(void *arg0) {
     }
 }
 
+void fn_80185A64(void *arg0) {
+    M2C_UNK fn_8004F5EC(void *, M2C_UNK);
+    u8 fn_800504FC(void *, M2C_UNK);
+    M2C_UNK fn_800558D8(void *);
+    extern M2C_UNK lbl_80278E24;
+    void *temp_r3;
+    void *temp_r3_2;
+
+    if ((u8) M2C_FIELD(arg0, u8 *, 0x3C) != 0) {
+        fn_800558D8(&lbl_80278E24 + 0x1C1);
+        if (fn_800504FC(M2C_FIELD(arg0, void **, 0x30), 0xA) != 0) {
+            fn_8004FC70(M2C_FIELD(arg0, void **, 0x30), 0xA);
+        }
+    }
+    temp_r3 = M2C_FIELD(arg0, void **, 0x30);
+    M2C_FIELD(temp_r3, u8 *, 3) = (u8) (M2C_FIELD(temp_r3, u8 *, 3) | 4);
+    fn_8004F5EC(M2C_FIELD(arg0, void **, 0x30), 0);
+    temp_r3_2 = M2C_FIELD(arg0, void **, 0x30);
+    M2C_FIELD(temp_r3_2, u8 *, 3) = (u8) (M2C_FIELD(temp_r3_2, u8 *, 3) & 0xFFFFFFFB);
+}
+
 void fn_80185AF4(void *arg0) {
     extern void *lbl_80367240;
     s32 temp_r0;
@@ -493,6 +514,38 @@ void fn_8018B2FC(void *arg0) {
     M2C_FIELD(temp_r4, f32 *, 4) = M2C_FIELD(arg0, f32 *, 0x34);
     M2C_FIELD(temp_r4, f32 *, 8) = M2C_FIELD(arg0, f32 *, 0x38);
     M2C_FIELD(temp_r4, f32 *, 0xC) = M2C_FIELD(arg0, f32 *, 0x3C);
+}
+
+void fn_8018B31C(void *arg0) {
+    extern f32 lbl_8036ACEC;
+    extern f32 lbl_8036ACF8;
+    extern f32 lbl_8036AD40;
+    f32 temp_f1;
+    f32 temp_f2;
+    f32 temp_f3;
+    f32 temp_f4;
+    f32 var_f1;
+
+    M2C_FIELD(arg0, f32 *, 0x48) = (f32) (M2C_FIELD(arg0, f32 *, 0x48) + lbl_8036ACF8);
+    temp_f3 = M2C_FIELD(arg0, f32 *, 0x48);
+    temp_f4 = M2C_FIELD(arg0, f32 *, 0x40);
+    temp_f1 = M2C_FIELD(arg0, f32 *, 0x44) * temp_f3;
+    
+    {
+        void *temp_r4 = M2C_FIELD(arg0, void **, 0x30);
+        f32 temp_f2 = M2C_FIELD(temp_r4, f32 *, 0xC);
+        var_f1 = temp_f2 - (temp_f4 - (temp_f1 * temp_f3));
+    }
+    
+    if (var_f1 > M2C_FIELD(arg0, f32 *, 0x3C)) {
+        M2C_FIELD(arg0, f32 *, 0x40) = (f32) (temp_f4 * M2C_FIELD(arg0, f32 *, 0x4C));
+        M2C_FIELD(arg0, f32 *, 0x48) = (f32) lbl_8036ACEC;
+        var_f1 = M2C_FIELD(arg0, f32 *, 0x3C);
+    }
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), f32 *, 0xC) = var_f1;
+    if (M2C_FIELD(arg0, f32 *, 0x40) < lbl_8036AD40) {
+        fn_8000C188();
+    }
 }
 
 void fn_8018B3AC(void *arg0) {
@@ -2577,3 +2630,4 @@ extern u16 lbl_80295D1C[];
 #include "m2c.h"
 
 extern u16 lbl_802923E0[];
+extern u16 lbl_80296018[];
