@@ -147,14 +147,17 @@ s32 fn_8021C080(void) {
     return 0;
 }
 
-void fn_8021C84C(s32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
-    M2C_UNK fn_80217C64(s32);
+s32 fn_8021C84C(s32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 fn_80217C64(s32);
     s32 fn_8021C708(s32 *, s32, s32, s32, void *);
     void fn_80216998(s32, s32);
-    if (fn_8021C708(arg0, arg1, arg2, arg3, fn_80216998) < 0) {
-        return;
+    s32 result;
+
+    result = fn_8021C708(arg0, arg1, arg2, arg3, fn_80216998);
+    if (result < 0) {
+        return result;
     }
-    fn_80217C64(*arg0);
+    return fn_80217C64(*arg0);
 }
 
 void fn_8021CDC4(void) {
