@@ -894,13 +894,13 @@ void *fn_800A31C0(void) {
     return &lbl_8026D8D8[0xE96];
 }
 
-s32 fn_800A31D0(void) {
+s32 fn_800A31D0(s32 arg0, s32 arg1) {
     extern s8 lbl_80367558;
     extern s8 lbl_80367559;
     extern M2C_UNK lbl_80367564;
     lbl_80367558 = 0;
     lbl_80367559 = 5;
-    fn_80024398(&lbl_80367564, 0);
+    fn_80024398(&lbl_80367564, arg1, 0);
     return 0;
 }
 
