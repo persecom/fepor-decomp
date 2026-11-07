@@ -22,11 +22,6 @@ extern u16 lbl_8028CAC8[38];
 extern u16 lbl_8028C9A0[38];
 extern u16 lbl_8028CD58[38];
 extern u16 lbl_802863BC[];
-extern struct {
-    void *unk0;
-    void *unk4;
-    u8 unk8[8];
-} lbl_80312AB0_obj;
 extern u16 *lbl_803677C8;
 extern u16 *lbl_803677D0;
 extern u16 *lbl_803677D4;
