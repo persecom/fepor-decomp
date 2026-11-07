@@ -4425,21 +4425,23 @@ void fn_800FFA78(void *arg0) {
 }
 
 void fn_800FFC00(s32 arg0, s32 arg1) {
-    M2C_UNK fn_8002C47C(M2C_UNK **, M2C_UNK);
-    M2C_UNK fn_8002F728(M2C_UNK *, M2C_UNK *, M2C_UNK *);
-    extern M2C_UNK lbl_80284E20;
-    extern M2C_UNK lbl_8028EAA8;
-    extern M2C_UNK lbl_802EF4E0;
-    s32 sp10;
-    s32 spC;
-    M2C_UNK *sp8;
+    void fn_8002C47C(void *, s32);
+    void fn_8002F728(void *);
+    extern u8 lbl_80284E20[];
+    extern u8 lbl_8028EAA8[];
+    extern u8 lbl_802EF4E0[];
+    struct {
+        void *vtbl;
+        s32 unk4;
+        s32 unk8;
+    } obj;
 
-    sp8 = &lbl_80284E20;
-    spC = arg0;
-    sp8 = &lbl_8028EAA8;
-    sp10 = arg1;
-    fn_8002F728(&lbl_802EF4E0, &lbl_802EF4E0, &lbl_8028EAA8);
-    fn_8002C47C(&sp8, 0);
+    obj.vtbl = lbl_80284E20;
+    obj.unk4 = arg0;
+    obj.vtbl = lbl_8028EAA8;
+    obj.unk8 = arg1;
+    fn_8002F728(lbl_802EF4E0);
+    fn_8002C47C(&obj, 0);
 }
 
 void fn_80100104(s32 arg2, s32 arg3) {
