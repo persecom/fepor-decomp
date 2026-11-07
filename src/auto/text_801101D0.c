@@ -74,6 +74,15 @@ void fn_80112DFC(void *arg0, u8 arg1) {
     }
 }
 
+#pragma cplusplus on
+typedef struct Vec3f {
+    f32 x, y, z;
+} Vec3f;
+extern "C" f32 fn_802032CC(Vec3f, Vec3f);
+extern "C" void fn_80112E30(void *arg0) {
+}
+#pragma cplusplus reset
+
 u8 fn_80112F3C(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x1A4);
 }
