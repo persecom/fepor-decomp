@@ -668,7 +668,7 @@ void fn_80016180(void) {
 
 void fn_8001621C(void) {
     M2C_UNK fn_8004EA60(M2C_UNK);
-    extern M2C_UNK lbl_802CA264;
+    extern u16 lbl_802CA264[];
     void *temp_r31;
     void *temp_r31_2;
     void *temp_r31_3;
