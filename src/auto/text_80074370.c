@@ -118,15 +118,35 @@ s32 fn_80074DEC(u8 arg2) {
     return 2 & -((fn_8001C0C8() == 0) & 1);
 }
 
-void fn_80074E4C(void **arg0, void *arg2) {
-    M2C_UNK fn_80037BD0(s32, u8);
-    M2C_UNK fn_8008D510(s32, s16, s16);
-    extern M2C_UNK lbl_802EF4C8;
-    M2C_FIELD(*arg0, M2C_UNK (**)(), 0x4C)();
-    fn_80037BD0(M2C_FIELD(&lbl_802EF4C8, s32 *, 4), M2C_FIELD(arg2, u8 *, 0x3A));
-    fn_8008D510(M2C_FIELD(arg2, u8 *, 0x39) == 0, M2C_FIELD(arg2, s16 *, 0x30), M2C_FIELD(arg2, s16 *, 0x32));
+#pragma cplusplus on
+extern "C" void fn_80074E4C(void *arg0, s32 arg1, void *arg2) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+    };
+    s32 fn_80037BD0(s32, u8);
+    void fn_8008D510(s32, bool, s16, s16);
+    extern s32 lbl_802EF4C8[];
+    ((Obj *)arg0)->v17();
+    fn_8008D510(fn_80037BD0(lbl_802EF4C8[1], *(u8 *)((u8 *)arg2 + 0x3A)), *(u8 *)((u8 *)arg2 + 0x39) == 0, *(s16 *)((u8 *)arg2 + 0x30), *(s16 *)((u8 *)arg2 + 0x32));
 }
-
+#pragma cplusplus reset
 void fn_80074EDC(s32 arg0, void *arg1) {
     extern s32 lbl_802EF4C8[];
     
