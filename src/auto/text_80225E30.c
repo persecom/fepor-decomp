@@ -168,6 +168,7 @@ s32 fn_80227E9C(void) {
     return 0;
 }
 
+#pragma dont_inline on
 s32 fn_80227EF4(void) {
     M2C_UNK fn_80225F64(void *);
     M2C_UNK fn_8022B078(void *, s32);
