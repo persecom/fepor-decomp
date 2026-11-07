@@ -301,6 +301,20 @@ void fn_801FFF08(s32 arg0) {
     fn_801E2F9C(&lbl_803682F0, arg0);
 }
 
+#pragma use_lmw_stmw on
+void fn_802001F8(u32 arg0, s32 arg1) {
+    void fn_8006EDA0(void *);
+    s32 i;
+
+    for (i = 0; i < 8; i++) {
+        if (lbl_803392E8[i] >= arg0 && arg0 + arg1 > lbl_803392E8[i]) {
+            fn_8006EDA0(&lbl_803392E8[i]);
+            lbl_80339308[i] = 0;
+        }
+    }
+}
+#pragma use_lmw_stmw reset
+
 extern u16 lbl_8029B7FC[10];
 s32 fn_8020055C(void) {
     return fn_8000C0C0(&lbl_8029B7FC) != 0;
