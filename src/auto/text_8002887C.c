@@ -57,6 +57,50 @@ void fn_80028B94(void* arg0) {
     }
 }
 
+void fn_80028DBC(s32 arg0) {
+    void fn_800271C8(void *, s32);
+    void fn_8002807C(void *);
+    s32 fn_800AA4F8(s32);
+
+    extern u8 lbl_802EF4C8[];
+    u8 *ptr = &lbl_802EF4C8[0];
+    u8 val = ptr[8];
+    
+    if (val < 0x1B) {
+        switch (val) {
+            case 0:
+                if ((u8) ptr[0x16] == 0) {
+                    s32 temp_r31 = *(s32*)ptr;
+                    fn_8002807C(ptr);
+                    fn_800AA4F8(temp_r31);
+                    fn_8000C070(arg0, 3);
+                    return;
+                }
+                break;
+            case 7:
+                ptr[0x16] = (u8) (ptr[0x16] | 1);
+                break;
+            default:
+                break;
+        }
+    } else {
+        switch (val) {
+            case 35:
+                fn_8000C070(6);
+                return;
+            case 40:
+            case 6:
+                ptr[0x16] = (u8) (ptr[0x16] | 2);
+                break;
+            default:
+                ptr[0x16] = (u8) (ptr[0x16] | 4);
+                break;
+        }
+    }
+
+    fn_800271C8(ptr, arg0);
+}
+
 void fn_80028EC8(s32 arg0) {
     extern u8 lbl_80269070[206];
     extern M2C_UNK lbl_802EF4C8;
@@ -1033,6 +1077,37 @@ void fn_80032488(void *arg0, void *arg1) {
     }
 }
 
+#pragma cplusplus on
+extern "C" void fn_80090C50(s32);
+extern "C" void fn_8003284C(void *arg0, void *arg1) {
+    extern f32 lbl_80368E24;
+    extern f32 lbl_80368E28;
+    extern u8 lbl_802EF4C8[];
+    struct Obj {
+        u8 pad[4];
+        virtual void v0(s32 *, s32 *, s32 *) = 0;
+    };
+    s32 x;
+    s32 y;
+    s32 alpha;
+
+    if (M2C_FIELD(arg1, u32 *, 0x40) != 0) {
+        ((Obj *)arg0)->v0(&x, &y, &alpha);
+        fn_8000A258();
+        fn_80009D74((f32)(x + 0x20), (f32)(y + 0xB0), lbl_80368E24, lbl_80368E28);
+        fn_80009B8C((u8)alpha);
+        fn_8000A248();
+        fn_80090C50(fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40)));
+        fn_8000A258();
+        fn_80009D74((f32)(x + 0x20), (f32)(y + 0x30), lbl_80368E24, lbl_80368E28);
+        fn_8000A248();
+        fn_80090C50(M2C_FIELD(lbl_802EF4C8, s32 *, 0));
+        fn_8000A258();
+        fn_80009B8C(0xFF);
+        fn_8000A248();
+    }
+}
+#pragma cplusplus reset
 void *fn_80032B4C(void) {
     extern void *lbl_802695F0;
     return (void *)((u32)&lbl_802695F0 + 0x14F);
