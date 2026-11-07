@@ -180,6 +180,7 @@ extern "C" void fn_8002B758(void *arg0) {
         ((Visitor *)&obj)->visit(x - 1, y);
     }
 }
+#pragma use_lmw_stmw reset
 #pragma cplusplus reset
 
 void fn_8002C47C(void)
