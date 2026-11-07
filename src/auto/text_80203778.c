@@ -224,8 +224,8 @@ void fn_8020A060(void *arg0) {
     void *temp_r5;
     void *temp_r6;
 
-    temp_r4 = M2C_FIELD(arg0, void **, 0x2E0);
     temp_r5 = M2C_FIELD(arg0, void **, 0x2DC);
+    temp_r4 = M2C_FIELD(arg0, void **, 0x2E0);
     temp_r6 = M2C_FIELD(arg0, void **, 0x2E4);
     if (temp_r4 == NULL) {
         M2C_FIELD(temp_r5, void **, 4) = temp_r6;
