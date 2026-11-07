@@ -3848,6 +3848,27 @@ void fn_800F9B58(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
     *(u32*)r29 = (arg2 * 16) + arg3;
 }
 
+void fn_800F9DAC(void *arg0) {
+    u8 fn_8010207C(s32, s16 *, s16 *);
+    void fn_801014BC(void *, s16, s16, s32, u16, s32, s32, s32);
+    extern u8 lbl_8032B3C0[544];
+    extern s32 lbl_803678F4;
+    extern void *lbl_803678F8;
+    void *work = lbl_803678F8;
+    s16 x;
+    s16 y;
+
+    if (!(lbl_8032B3C0[1] & 2) && !(M2C_FIELD(arg0, u32 *, 0x254) & 0x03000000) &&
+        fn_8010207C(M2C_FIELD(work, s32 *, 0x14), &x, &y) != 0) {
+        fn_801014BC(arg0, x, y, 1, M2C_FIELD(lbl_8032B3C0, u16 *, 4), 1, 0, -1);
+    }
+    if (lbl_803678F4 == 0) {
+        M2C_FIELD(arg0, u8 *, 0x250) = (u8) (M2C_FIELD(arg0, u8 *, 0x250) + 1);
+        return;
+    }
+    M2C_FIELD(arg0, u8 *, 0x251) = (u8) (M2C_FIELD(arg0, u8 *, 0x251) + 1);
+}
+
 void fn_800F9E64(void *arg0) {
     extern s32 lbl_803678F4;
     if ((s32) lbl_803678F4 == 0) {
