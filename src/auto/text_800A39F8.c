@@ -1,7 +1,7 @@
 /* Functions from 0x800A39F8 to 0x800A9384, found by decomp-toolkit. */
 #include "common.h"
 extern u8 lbl_8028C750[16];
-extern u16 lbl_8026E408[];
+extern u16 lbl_8026E408[1024];
 extern void fn_802343E0(void *, s32);
 extern void fn_80234450(void *, void *, void *);
 extern u8 lbl_80312A80[0x30];
@@ -17,6 +17,58 @@ s32 fn_800A3A04(s32 arg0, s32 arg1) {
 void *fn_800A3A30(void) {
     extern u8 lbl_8026E168[];
     return &lbl_8026E168[0x2E];
+}
+
+s32 fn_800A3A68(s32 arg0, s32 arg1) {
+    extern u8 lbl_803123A0[];
+    extern f64 lbl_80369A18;
+    
+    s32 r31 = arg0;
+    s32 r30 = arg1;
+    s32 r29 = arg0;
+    f32 temp_f1;
+    f32 temp_f2;
+    f32 temp_f3;
+    u32 temp_r0;
+    s32 temp_r4;
+    
+    if (*((s32*) (lbl_803123A0 + 0xA0)) != 0 && *(lbl_803123A0 + 0xA7) != 0) {
+        if (fn_802139F4() == 0U) {
+            r31 = 0x20;
+        } else {
+            r31 = 0x30;
+        }
+        
+        if (r29 > 0x7F) {
+            r29 = 0x7F;
+        }
+        if (r29 < 0) {
+            r29 = 0;
+        }
+        if (r30 > 0xEA60) {
+            r30 = 0xEA60;
+        }
+        if (r30 < 0) {
+            r30 = 0;
+        }
+        
+        OSDisableInterrupts();
+        temp_f1 = (f32) r29;
+        *(f32*) (lbl_803123A0 + 0xC8) = temp_f1;
+        if (r30 != 0) {
+            temp_r4 = r31 * r30;
+            *(s32*) (lbl_803123A0 + 0xD0) = temp_r4;
+            temp_f2 = *(f32*) (lbl_803123A0 + 0xC4);
+            temp_f3 = (temp_f1 - temp_f2) / (f32) temp_r4;
+            *(f32*) (lbl_803123A0 + 0xCC) = temp_f3;
+        } else {
+            *(f32*) (lbl_803123A0 + 0xC4) = temp_f1;
+            *(s32*) (lbl_803123A0 + 0xD0) = 0;
+        }
+        OSRestoreInterrupts();
+        return 1;
+    }
+    return 0;
 }
 
 s32 fn_800A3D08(void) {
