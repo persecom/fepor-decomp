@@ -1,6 +1,10 @@
 /* Functions from 0x80127E94 to 0x8012C368, found by decomp-toolkit. */
 #include "common.h"
 
+extern u8 lbl_80290AA0[0x40];
+extern u8 lbl_8032BB58[0x200];
+extern u8 lbl_80330708[0x578];
+
 extern s32 lbl_80367A88;
 
 extern f32 lbl_8036A3C0;
@@ -419,6 +423,50 @@ void fn_8012AC88(void *arg0) {
 void fn_8012AD80(void) {
     extern u16 lbl_80275740[];
     fn_800558D8(&lbl_80275740[0x164 / sizeof(u16)]);
+}
+
+void fn_8012ADAC(s32 arg0, s32 arg1, u32 arg2) {
+    extern u8 lbl_80290A58[72];
+    extern u8 lbl_80330708[1400];
+    extern f64 lbl_8036A418;
+
+    void *fn_800056A0(void *);
+    void *fn_8000CAA0(void *, u32);
+    void *fn_8000CAF0(void *, s32);
+    void fn_80040844(void);
+    void *fn_80046F14(s32, s32, u32, u32);
+    s32 fn_8004721C(s8, s8, u32, u32);
+    void fn_8014CBD8(void *, f32, f32);
+
+    void *temp_r3;
+    s32 temp_r3_2;
+    s8 temp_r29;
+    s8 temp_r28;
+
+    fn_80040844();
+    temp_r3 = fn_80046F14(arg0, arg1, 0xA00, 0);
+    if (temp_r3 == NULL) {
+        fn_800056A0(0);
+        return;
+    }
+    temp_r29 = *(u8 *)temp_r3;
+    temp_r28 = *((u8 *)temp_r3 + 1);
+    fn_80040844();
+    temp_r3_2 = fn_8004721C(temp_r29, temp_r28, 0x20000, 0);
+    if (temp_r3_2 == 0) {
+        fn_800056A0(0);
+        return;
+    }
+    if (arg2 != 0) {
+        temp_r3 = fn_8000CAA0(&lbl_80290A58, arg2);
+    } else {
+        temp_r3 = fn_8000CAF0(&lbl_80290A58, 3);
+    }
+    *(void **)((u8 *)temp_r3 + 0x38) = temp_r3;
+    *(s32 *)((u8 *)temp_r3 + 0x3c) = temp_r3_2;
+    *(s32 *)((u8 *)temp_r3 + 0x30) = (s32) temp_r29;
+    *(s32 *)((u8 *)temp_r3 + 0x34) = (s32) temp_r28;
+    fn_8014CBD8(&lbl_80330708, (f32) temp_r29, (f32) temp_r28);
 }
 
 void fn_8012AEC4(void *arg0) {
