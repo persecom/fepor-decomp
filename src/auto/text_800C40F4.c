@@ -4574,13 +4574,104 @@ void fn_801001B8(s32 arg1, s32 arg2, s32 arg3) {
 }
 
 #pragma opt_loop_invariants off
-void fn_801007A0(void *arg0) { struct UnitBits {u16 f0:3;u16 f1:3;u16 f2:3;u16 f3:4;u16 f4:3;}; void fn_8010C504(void *); u8 fn_8009339C(void *,void *); u64 *fn_8001CB64(void **); s32 i; void **item; void *cur; M2C_FIELD(arg0,u32*,0x254)&=0xFEFF80EB; fn_8010C504(arg0);
-i=0;do{item=fn_80037BBC(arg0,i);if(!*item)break;if(fn_8009326C(arg0,*item)){if(GetItemKind(*item)==0x81||GetItemKind(*item)==0x82)M2C_FIELD(arg0,u32*,0x254)|=4;}i++;}while(i<4);
-i=0;do{item=fn_80037BBC(arg0,i);if(!*item)break;if(fn_8009326C(arg0,*item)){if(GetItemKind(*item)==0x86)M2C_FIELD(arg0,u32*,0x254)|=0x10;}i++;}while(i<4);
-i=0;do{item=fn_80037BBC(arg0,i);if(!*item)break;if(fn_8009339C(arg0,*item)&&(*fn_8001CB64(item)&2)){M2C_FIELD(arg0,u32*,0x254)|=0x100;break;}i++;}while(i<4);
-i=0;do{item=fn_80037BBC(arg0,i);if(!*item)break;if(fn_8009326C(arg0,*item)){M2C_FIELD(arg0,u32*,0x254)|=0x200;cur=*item;if(fn_80019E04(lbl_80273304.iidSilence)==cur)M2C_FIELD(arg0,u32*,0x254)|=0x400;else{cur=*item;if(fn_80019E04(lbl_80273304.iidSleep)==cur)M2C_FIELD(arg0,u32*,0x254)|=0x800;else{cur=*item;if(fn_80019E04(lbl_80273304.iidBerserk)==cur)M2C_FIELD(arg0,u32*,0x254)|=0x1000;}}}i++;}while(i<4);
-i=0;do{item=fn_80037BBC(arg0,i);if(!*item)break;if(fn_8009339C(arg0,*item)){if(GetItemUnk1D(*item)==1)M2C_FIELD(arg0,u32*,0x254)|=0x4000;if(GetItemDD54(*item,arg0)>1)M2C_FIELD(arg0,u32*,0x254)|=0x2000;}i++;}while(i<4);
-if((M2C_FIELD(arg0,struct UnitBits*,0x1A4).f2 != 0)||(M2C_FIELD(arg0,struct UnitBits*,0x1A4).f1 != 0)||(M2C_FIELD(arg0,struct UnitBits*,0x1A4).f4 != 0))M2C_FIELD(arg0,u32*,0x254)|=0x01000000;}
+void fn_801007A0(void *arg0) {
+    struct UnitBits {
+        u16 f0 : 3;
+        u16 f1 : 3;
+        u16 f2 : 3;
+        u16 f3 : 4;
+        u16 f4 : 3;
+    };
+    void fn_8010C504(void *);
+    u8 fn_8009339C(void *, void *);
+    u64 *fn_8001CB64(void **);
+    s32 i;
+    void **item;
+
+    M2C_FIELD(arg0, u32 *, 0x254) &= 0xFEFF80EB;
+    fn_8010C504(arg0);
+
+    for (i = 0; i < 4; i++) {
+        item = fn_80037BBC(arg0, i);
+        if (*item == NULL) {
+            break;
+        }
+        if (fn_8009326C(arg0, *item)) {
+            if (GetItemKind(*item) == 0x81 || GetItemKind(*item) == 0x82) {
+                M2C_FIELD(arg0, u32 *, 0x254) |= 0x4;
+            }
+        }
+    }
+
+    for (i = 0; i < 4; i++) {
+        item = fn_80037BBC(arg0, i);
+        if (*item == NULL) {
+            break;
+        }
+        if (fn_8009326C(arg0, *item)) {
+            if (GetItemKind(*item) == 0x86) {
+                M2C_FIELD(arg0, u32 *, 0x254) |= 0x10;
+            }
+        }
+    }
+
+    for (i = 0; i < 4; i++) {
+        item = fn_80037BBC(arg0, i);
+        if (*item == NULL) {
+            break;
+        }
+        if (fn_8009339C(arg0, *item) && (*fn_8001CB64(item) & 2)) {
+            M2C_FIELD(arg0, u32 *, 0x254) |= 0x100;
+            break;
+        }
+    }
+
+    for (i = 0; i < 4; i++) {
+        void *cur;
+
+        item = fn_80037BBC(arg0, i);
+        if (*item == NULL) {
+            break;
+        }
+        if (fn_8009326C(arg0, *item)) {
+            M2C_FIELD(arg0, u32 *, 0x254) |= 0x200;
+            cur = *item;
+            if (fn_80019E04(lbl_80273304.iidSilence) == cur) {
+                M2C_FIELD(arg0, u32 *, 0x254) |= 0x400;
+            } else {
+                cur = *item;
+                if (fn_80019E04(lbl_80273304.iidSleep) == cur) {
+                    M2C_FIELD(arg0, u32 *, 0x254) |= 0x800;
+                } else {
+                    cur = *item;
+                    if (fn_80019E04(lbl_80273304.iidBerserk) == cur) {
+                        M2C_FIELD(arg0, u32 *, 0x254) |= 0x1000;
+                    }
+                }
+            }
+        }
+    }
+
+    for (i = 0; i < 4; i++) {
+        item = fn_80037BBC(arg0, i);
+        if (*item == NULL) {
+            break;
+        }
+        if (fn_8009339C(arg0, *item)) {
+            if (GetItemUnk1D(*item) == 1) {
+                M2C_FIELD(arg0, u32 *, 0x254) |= 0x4000;
+            }
+            if (GetItemDD54(*item, arg0) > 1) {
+                M2C_FIELD(arg0, u32 *, 0x254) |= 0x2000;
+            }
+        }
+    }
+
+    if (M2C_FIELD(arg0, struct UnitBits *, 0x1A4).f2 || M2C_FIELD(arg0, struct UnitBits *, 0x1A4).f1 ||
+        M2C_FIELD(arg0, struct UnitBits *, 0x1A4).f4) {
+        M2C_FIELD(arg0, u32 *, 0x254) |= 0x01000000;
+    }
+}
 #pragma opt_loop_invariants reset
 s32 fn_80100CC8(void) {
     void *fn_80016BDC();
@@ -4788,6 +4879,18 @@ void fn_80103200(void *arg0, s8 arg1, s8 arg2) {
     temp_r8 = arg2 << 6;
     if (((s8) M2C_FIELD((&lbl_802CA518 + 0x10000 + arg1 + temp_r8), u8 *, -0x1E72) == 0) && (!(M2C_FIELD(M2C_FIELD(arg0, void **, 4), s32 *, 0x254) & 0x20000) || !(M2C_FIELD((&lbl_802CA518 + arg1 + temp_r8), u8 *, 0x300D) & 2)) && ((M2C_FIELD(arg0, s8 *, 0xC) = arg1, M2C_FIELD(arg0, s8 *, 0xD) = arg2, temp_r7 = M2C_FIELD((&lbl_802CA518 + arg1 + temp_r8), u8 *, 0xD), ((temp_r7 == 0) != 0)) || (temp_r7 == (u8) M2C_FIELD(M2C_FIELD(arg0, void **, 4), u8 *, 0x198)))) {
         fn_8002C6F4();
+    }
+}
+
+void fn_8010329C(void *arg0, void *arg1) {
+    u8 fn_800BF1E8(void *);
+    void fn_8002F6E8(void *, u8, u8, u8, u8);
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_802EF4E0[];
+
+    *(void **)(lbl_802EF4C8 + 4) = arg1;
+    if (fn_800BF1E8(lbl_802EF4C8) != 0) {
+        fn_8002F6E8(lbl_802EF4E0, *(u8 *)((u8 *)arg1 + 0x19E), *(u8 *)((u8 *)arg1 + 0x19F), *(u8 *)((u8 *)arg1 + 0x198), 0);
     }
 }
 
