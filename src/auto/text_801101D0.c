@@ -89,7 +89,7 @@ typedef struct Vec3f {
         z = o.z;
     }
 } Vec3f;
-extern "C" f32 fn_802032CC(Vec3f, Vec3f);
+extern "C" f32 fn_802032CC(const Vec3f &, const Vec3f &);
 extern "C" void fn_80112E30(void *arg0) {
     extern f32 lbl_8036A1A8;
     struct Actor {
