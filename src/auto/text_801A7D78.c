@@ -200,20 +200,21 @@ void fn_801AAD74(void *arg0) {
     }
 }
 
+#pragma opt_common_subs off
 void fn_801AADA4(void *arg0) {
-    s32 fn_80059208(M2C_UNK *, void *);
+    s32 fn_80059208(void *, void *);
     u16 fn_8005C6A0(char *);
     void fn_8006EEFC(void *, void *);
     void fn_8000C188(void *);
+    void fn_801ADA50(void *);
     extern u8 lbl_8027B838[];
-    extern M2C_UNK fn_801ADA50;
     if (fn_8005C6A0((char *)lbl_8027B838 + 0x320) & 0x2000) {
         fn_8006EEFC((char *)arg0 + 0x50, (char *)lbl_8027B838 + 0x320);
-        *(s32 *)((char *)arg0 + 0x6C) = fn_80059208(&fn_801ADA50, arg0);
+        *(s32 *)((char *)arg0 + 0x6C) = fn_80059208(fn_801ADA50, arg0);
         fn_8000C188(arg0);
     }
 }
-
+#pragma opt_common_subs reset
 void fn_801AE154(void **arg0) {
     M2C_UNK fn_80152548(M2C_UNK, M2C_UNK, M2C_UNK);
     M2C_UNK fn_8015267C(M2C_UNK, M2C_UNK, M2C_UNK);
@@ -222,6 +223,32 @@ void fn_801AE154(void **arg0) {
     fn_80152548(0x16, 0x10, 0x10);
     fn_801527B0(0x1C, 0x40, 0x10);
     fn_8015267C(0x88, 0x40, 0x10);
+}
+
+void fn_801AE1B0(s32 *arg0, void *arg1) {
+    s32 *fn_8013F748(void *, void *, s16 *);
+    s16 spC;
+    s16 sp8[2];
+    s16 a;
+    s16 b;
+
+    switch (*(s16 *)((u8 *)arg1 + 0x3E)) {
+    case 0:
+        a = *(s16 *)((u8 *)arg1 + 0x40) * 0x1A + 0x28;
+        b = 0x18;
+        break;
+    case 1:
+        a = 0x24;
+        b = 0x50;
+        break;
+    case 2:
+        a = 0x90;
+        b = 0x50;
+        break;
+    }
+    sp8[0] = a;
+    sp8[1] = b;
+    *arg0 = *(s32 *)fn_8013F748(arg1, &spC, sp8);
 }
 
 void fn_801AE2D0(void) {
