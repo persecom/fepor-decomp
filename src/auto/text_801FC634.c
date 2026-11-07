@@ -355,6 +355,24 @@ s32 fn_8020055C(void) {
     return fn_8000C0C0(&lbl_8029B7FC) != 0;
 }
 
+void *fn_80200590(void) {
+    void *fn_8000CAF0(void *, s32);
+    extern s32 lbl_803682A4;
+    void *temp;
+
+    if (lbl_803682A4 & 0x20) {
+        return NULL;
+    }
+    if (lbl_803682A4 & 0x100) {
+        temp = fn_8000CAF0(lbl_8029B7FC, 3);
+        M2C_FIELD(temp, u8 **, 0x34) = lbl_802820B8 + 0x2B;
+        return temp;
+    }
+    temp = fn_8000CAF0(lbl_8029B7FC, 3);
+    M2C_FIELD(temp, u8 **, 0x34) = lbl_802820B8 + 0x3F;
+    return temp;
+}
+
 void fn_80200750(void *arg0) {
     extern f32 lbl_8036BBD8;
     s16 temp_r3;
