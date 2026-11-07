@@ -479,6 +479,27 @@ loop_4:
     *arg0 = temp_r0;
 }
 
+void *fn_80193DD8(u32 arg0) {
+    void *fn_8000CAA0(void *, u32);
+    void *fn_8000CAF0(void *, u32);
+    void fn_801403F0(void *);
+    extern u8 lbl_802965C0[];
+    extern u8 lbl_80296674[];
+    void *var_r31;
+
+    if (arg0 != 0U) {
+        var_r31 = fn_8000CAA0(lbl_802965C0, arg0);
+    } else {
+        var_r31 = fn_8000CAF0(lbl_802965C0, arg0);
+    }
+    if (var_r31 != NULL) {
+        fn_801403F0(var_r31);
+        *(s32 *)((u8 *)var_r31 + 0x40) = 0;
+        *(u8 **)((u8 *)var_r31 + 0x44) = lbl_80296674;
+    }
+    return var_r31;
+}
+
 void fn_80193E58(void) {
 
 }
