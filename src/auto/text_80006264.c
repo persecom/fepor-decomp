@@ -954,14 +954,17 @@ typedef struct HashKey {
     u32 h2;
 } HashKey;
 
-static inline void HashKey_Make(HashKey *key, const s8 *str) {
-    key->h1 = 0;
-    key->h2 = 0;
+static inline HashKey HashKey_Make(const s8 *str) {
+    HashKey key;
+
+    key.h1 = 0;
+    key.h2 = 0;
     while (*str != 0) {
-        key->h1 = *str + key->h1 * 37;
-        key->h2 = *str + key->h2 * 31;
+        key.h1 = *str + key.h1 * 37;
+        key.h2 = *str + key.h2 * 31;
         str++;
     }
+    return key;
 }
 
 s32 fn_8000D1D0(u8 *arg0) {
@@ -1002,24 +1005,21 @@ s32 fn_8000D1D0(u8 *arg0) {
 
 s32 fn_8000D2BC(s8 *str) {
     extern u8 lbl_802ADB20[];
-    struct {
-        u32 h1;
-        u32 h2;
-    } h;
+    HashKey key;
     u32 *node;
 
     if (str == NULL) {
         return 0;
     }
-    h.h1 = 0;
-    h.h2 = h.h1;
+    key.h2 = 0;
+    key.h1 = key.h2;
     while (*str != 0) {
-        h.h2 = *str + h.h2 * 31;
-        h.h1 = *str + h.h1 * 37;
+        key.h1 = *str + key.h1 * 37;
+        key.h2 = *str + key.h2 * 31;
         str++;
     }
-    for (node = ((u32 **)(lbl_802ADB20 + 8))[h.h1 % 509]; node != NULL; node = (u32 *)node[0]) {
-        if (h.h2 == node[1]) {
+    for (node = ((u32 **)(lbl_802ADB20 + 8))[key.h1 % 509]; node != NULL; node = (u32 *)node[0]) {
+        if (key.h2 == node[1]) {
             return node[3];
         }
     }
