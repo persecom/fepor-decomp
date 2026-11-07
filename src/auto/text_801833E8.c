@@ -1636,23 +1636,22 @@ void fn_8019588C(void *arg0, s32 arg1) {
 }
 
 void fn_80196018(void *arg0) {
-    extern f32 lbl_8036AE50;
-    extern u16 lbl_8036AE4C;
-    
     M2C_FIELD(arg0, u8 *, 0x8) = 0;
     M2C_FIELD(arg0, u16 *, 0xa) = 0;
-    M2C_FIELD(arg0, f32 *, 0xc) = lbl_8036AE50; 
-    M2C_FIELD(arg0, f32 *, 0x10) = lbl_8036AE50;
-    M2C_FIELD(arg0, f32 *, 0x14) = lbl_8036AE50;
-    M2C_FIELD(arg0, f32 *, 0x18) = lbl_8036AE50;
-    M2C_FIELD(arg0, f32 *, 0x1c) = lbl_8036AE50;
+    M2C_FIELD(arg0, f32 *, 0xc) = 0.0f;
+    M2C_FIELD(arg0, f32 *, 0x10) = 0.0f;
+    M2C_FIELD(arg0, f32 *, 0x14) = 0.0f;
+    M2C_FIELD(arg0, f32 *, 0x18) = 0.0f;
+    M2C_FIELD(arg0, f32 *, 0x1c) = 0.0f;
     M2C_FIELD(arg0, u8 *, 0x4) = 0;
     M2C_FIELD(arg0, u16 *, 0x6) = 0;
-    
-    M2C_FIELD(arg0, u8 *, 0x0) = lbl_8036AE4C;
-    M2C_FIELD(arg0, u8 *, 0x1) = lbl_8036AE4C >> 8;
-    M2C_FIELD(arg0, u8 *, 0x2) = lbl_8036AE4C >> 16;
-    M2C_FIELD(arg0, u8 *, 0x3) = lbl_8036AE4C >> 24;
+    {
+        u8 color[4] = {0x00, 0x40, 0x80, 0xFF};
+        M2C_FIELD(arg0, u8 *, 0x0) = color[0];
+        M2C_FIELD(arg0, u8 *, 0x1) = color[1];
+        M2C_FIELD(arg0, u8 *, 0x2) = color[2];
+        M2C_FIELD(arg0, u8 *, 0x3) = color[3];
+    }
 }
 
 s32 fn_80196420(s32 arg0, void *arg1) {
