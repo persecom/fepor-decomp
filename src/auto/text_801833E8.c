@@ -1521,10 +1521,11 @@ s32 fn_801A2254(s32 arg0) {
     s32 fn_800C0658();
     extern u16 lbl_80296F90[];
     void *p;
+    void *v;
 
     p = fn_8000C0C0(lbl_80296F90);
     if (p != NULL) {
-        p = p;
+        v = p;
     } else {
         p = fn_8000CAF0(lbl_80296F90, fn_800C0658());
         M2C_FIELD(p, s8 *, 0x30) = 1;
@@ -1536,11 +1537,12 @@ s32 fn_801A2254(s32 arg0) {
         M2C_FIELD(p, s32 *, 0x3C) = 1;
         M2C_FIELD(p, s8 *, 0x37) = 0;
         M2C_FIELD(p, s8 *, 0x38) = 0;
+        v = p;
     }
     if (arg0 != 0) {
-        M2C_FIELD(p, s8 *, 0x31) = 1;
+        M2C_FIELD(v, s8 *, 0x31) = 1;
     } else {
-        M2C_FIELD(p, s8 *, 0x31) = 0;
+        M2C_FIELD(v, s8 *, 0x31) = 0;
     }
     return 1;
 }
