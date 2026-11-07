@@ -67,6 +67,103 @@ void fn_801A372C(void) {
     fn_80104480((u16*)(((u8*)temp_r31) + 0x560) + 0x1A4); // Equivalent to the original instruction pattern
 }
 
+s32 fn_801A3E24(s32 arg0)
+{
+    s32 temp_r3;
+    s32 result = 0;
+
+    if (arg0 < 0 || arg0 > 16)
+        return 0;
+
+    switch (arg0)
+    {
+        case 0:
+            return 0x00000000;
+        case 1:
+            temp_r3 = fn_80019E04(0x00000000);
+            if (temp_r3 == arg0)
+                result = 0x00000001;
+            break;
+        case 2:
+            temp_r3 = fn_80019E04(0x00000008);
+            if (temp_r3 == arg0)
+                result = 0x00000001;
+            break;
+        case 3:
+            temp_r3 = fn_80019E04(0x00000010);
+            if (temp_r3 == arg0)
+                result = 0x00000001;
+            break;
+        case 4:
+            temp_r3 = fn_80019E04(0x00000018);
+            if (temp_r3 == arg0)
+                result = 0x00000001;
+            break;
+        case 5:
+            temp_r3 = fn_80019E04(0x00000020);
+            if (temp_r3 == arg0)
+                result = 0x00000001;
+            break;
+        case 6:
+            temp_r3 = fn_80019E04(0x00000028);
+            if (temp_r3 == arg0)
+                result = 0x00000001;
+            break;
+        case 7:
+            temp_r3 = fn_80019E04(0x00000030);
+            if (temp_r3 == arg0)
+                result = 0x00000001;
+            break;
+        case 8:
+            temp_r3 = fn_80019E04(0x00000038);
+            if (temp_r3 == arg0)
+                result = 0x00000001;
+            break;
+        case 9:
+            temp_r3 = fn_80019E04(0x00000040);
+            if (temp_r3 == arg0)
+                result = 0x00000001;
+            break;
+        case 10:
+            temp_r3 = fn_80019E04(0x00000048);
+            if (temp_r3 == arg0)
+                result = 0x00000001;
+            break;
+        case 11:
+            temp_r3 = fn_80019E04(0x00000050);
+            if (temp_r3 == arg0)
+                result = 0x00000001;
+            break;
+        case 12:
+            temp_r3 = fn_80019E04(0x00000058);
+            if (temp_r3 == arg0)
+                result = 0x00000001;
+            break;
+        case 13:
+            temp_r3 = fn_80019E04(0x00000060);
+            if (temp_r3 == arg0)
+                result = 0x00000001;
+            break;
+        case 14:
+            temp_r3 = fn_80019E04(0x00000068);
+            if (temp_r3 == arg0)
+                result = 0x00000001;
+            break;
+        case 15:
+            temp_r3 = fn_80019E04(0x00000070);
+            if (temp_r3 == arg0)
+                result = 0x00000001;
+            break;
+        case 16:
+            temp_r3 = fn_80019E04(0x00000078);
+            if (temp_r3 == arg0)
+                result = 0x00000001;
+            break;
+    }
+
+    return result;
+}
+
 void fn_801A442C(void) {
     s32 var_r3;
     u8 *var_r5;
@@ -87,6 +184,26 @@ void *fn_801A46BC(void *arg0, void *arg1) {
     return sp8;
 }
 
+void fn_801A48A4(s32 arg0) {
+    M2C_UNK fn_80034068(s32, M2C_UNK, s8);
+    M2C_UNK fn_800351FC(s32, u8, M2C_UNK, s32);
+    s8 fn_800386B0(s32);
+    u8 fn_8003D094();
+    u8 fn_8003D13C(s32);
+    u8 var_r31;
+
+    var_r31 = fn_8003D094();
+    if (var_r31 > fn_8003D13C(arg0)) {
+        var_r31 = fn_8003D13C(arg0);
+    }
+    if (var_r31 != 0) {
+        fn_80034068(arg0 + 0x8A0, 0x25, 0);
+        fn_80034068(arg0 + 0x8A0, 0x27, fn_800386B0(arg0));
+        fn_80034068(arg0 + 0x8A0, 0x28, (s8) var_r31);
+        fn_800351FC(arg0, var_r31, 0, arg0 + 0x8A0);
+    }
+}
+
 void fn_801A4958(void *arg0) {
     s32 *field_cac = (s32 *)((u8 *)arg0 + 0xCAC);
     *field_cac = *field_cac | 4;
@@ -104,6 +221,15 @@ void fn_801A4A24(s32 arg0, u8 arg1) {
         var_r0 = 0x50;
     }
     fn_80034068(arg0 + 0x8A0, var_r0, 0);
+}
+
+s32 fn_801A4A88(struct unit *arg0) {
+    s32 r31 = 0;
+    if (M2C_FIELD(arg0, s32*, 0x8) == 0) {
+        return 0;
+    }
+    r31 = M2C_FIELD(arg0, s32*, 0xC);
+    return r31;
 }
 
 void fn_801A7CDC(void *arg0)
