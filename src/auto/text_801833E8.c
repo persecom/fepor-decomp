@@ -2993,3 +2993,4 @@ extern struct UnkStruct_802EF4C8 lbl_802EF4C8;
 extern u16 lbl_80330EAC[];
 extern u16 lbl_80367110;
 extern u16 lbl_80330E90[4];
+extern u16 lbl_80296F90[];
