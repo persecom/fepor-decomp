@@ -45,10 +45,33 @@ typedef s32 M2C_UNK32;
 #define M2C_OVERFLOW(a) (0)
 
 struct unit {
-    u8 pad_0x0[0x8];
-    s32 unk_0x8;
-    s32 unk_0xC;
-};
-#endif
+      u8 pad_0x0[0x8];
+      s32 unk_0x8;
+      s32 unk_0xC;
+  };
 
-#endif
+struct efUnit {
+    struct Unit* unit;
+    s32 field_0x4;
+    s32 field_0x8;
+    s32 field_0xC;
+    s32 field_0x10;
+    s32 field_0x14;
+    struct efUnit* field_0x18;
+    struct efUnit* field_0x1C;
+    struct efUnit* field_0x20;
+    struct efUnit* field_0x24;
+    s32 field_0x28;
+    s32 field_0x2C;  
+    s32 field_0x30;
+    s32 field_0x34;
+    s32 field_0x38;
+    s32 field_0x3C;
+    s32 field_0x40;
+    s32 field_0x44;
+    s32 field_0x48;
+};
+
+  #endif
+  
+  #endif
