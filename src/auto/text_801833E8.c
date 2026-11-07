@@ -715,15 +715,16 @@ void fn_8019B83C(s32 arg0, s32 arg1) {
     M2C_FIELD(temp_r31, s8 *, 0x5C) = 3;
 }
 
-s32 fn_8019B8A0(s32 arg0, s32 arg1) {
-    s32 temp_r3;
-    
-    if (arg0 < 0) {
-        temp_r3 = -arg0;
-    } else {
-        temp_r3 = arg0;
-    }
-    return temp_r3 + arg1;
+void fn_8019B8A0(s32 arg0, s32 arg1) {
+    void *fn_8000CAA0(void *, s32);
+    void fn_8019D51C(void *, s32, void *);
+    extern u8 lbl_80296D5C[];
+    extern u8 lbl_8027AA38[];
+    void *temp_r31;
+
+    temp_r31 = fn_8000CAA0(lbl_80296D5C, arg0);
+    fn_8019D51C(temp_r31, arg1, lbl_8027AA38 + 0x1A4);
+    M2C_FIELD(temp_r31, u8 *, 0x5C) = 2;
 }
 
 void fn_8019BD8C(s32 arg0, s32 arg1) {
