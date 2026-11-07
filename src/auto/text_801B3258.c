@@ -588,6 +588,14 @@ void fn_801C8490(void) {
     fn_8005C8B4(*(s32*)((char*)&lbl_802983A4 + 4));
 }
 
+void fn_801C84BC(s32 arg0) {
+    u8 fn_8005BA10(s32);
+    extern s32 lbl_802983A4[];
+    if (fn_8005BA10(lbl_802983A4[1])) {
+        fn_8000C188(arg0);
+    }
+}
+
 s32 fn_801C9704(void) {
     extern s32 lbl_803682AC;
     return lbl_803682AC;
