@@ -404,6 +404,39 @@ void *fn_80193AF0(void *arg0, s16 arg1) {
     return arg0;
 }
 
+void fn_80193C3C(void ***arg0, s32 *arg1, void ***arg2, void ***arg3) {
+    M2C_UNK fn_8001C5F8(void *, M2C_UNK);
+    M2C_UNK fn_800C428C(void **);
+    void **temp_r0;
+    void **temp_r3;
+    void **temp_r3_2;
+    void **temp_r3_3;
+    void **temp_r5;
+    void *temp_r4;
+
+    temp_r5 = *arg2;
+    temp_r3 = *arg3;
+    if (temp_r5 == temp_r3) {
+        *arg0 = temp_r3;
+        return;
+    }
+    temp_r4 = *temp_r3;
+    M2C_FIELD(*temp_r5, void ***, 4) = (void **) M2C_FIELD(temp_r4, void ***, 4);
+    *M2C_FIELD(temp_r4, void ***, 4) = *temp_r5;
+loop_4:
+    temp_r3_2 = *arg2;
+    temp_r0 = *arg3;
+    if (temp_r3_2 != temp_r0) {
+        fn_8001C5F8(temp_r3_2 + 8, -1);
+        temp_r3_3 = *arg2;
+        *arg2 = M2C_FIELD(temp_r3_3, void ***, 4);
+        fn_800C428C(temp_r3_3);
+        *arg1 -= 1;
+        goto loop_4;
+    }
+    *arg0 = temp_r0;
+}
+
 void fn_80193E58(void) {
 
 }
@@ -1035,11 +1068,14 @@ void fn_801A0CA8(void *arg0) {
 s32 fn_801A1E6C(s8 arg0, s8 arg1) {
     void *fn_8000C0C0(void *, void *);
     f32 fn_80023430(void *, void *, f32, f32);
-    extern s32 lbl_80296F90;
-    extern s32 lbl_802CA518;
+    extern u16 lbl_80296F90[];
+    extern u8 lbl_802CA518[];
     extern f64 lbl_8036AF78;
-    s32 var_r31;
+    
     void *temp_r3;
+    s32 var_r31;
+    s32 temp_r4;
+    s32 temp_r0;
 
     temp_r3 = fn_8000C0C0(&lbl_80296F90, &lbl_80296F90);
     if (temp_r3 != NULL) {
@@ -1047,7 +1083,11 @@ s32 fn_801A1E6C(s8 arg0, s8 arg1) {
     } else {
         var_r31 = 1;
     }
-    return (s32) (fn_80023430(&lbl_802CA518, &lbl_802CA518, (f32) arg0, (f32) arg1) * (f32) var_r31);
+    
+    temp_r4 = (s32)arg0;
+    temp_r0 = (s32)arg1;
+    
+    return (s32)(fn_80023430(&lbl_802CA518, &lbl_802CA518, (f32)temp_r4, (f32)temp_r0) * (f32)var_r31);
 }
 
 void fn_801A25C4(void) {
@@ -1075,3 +1115,24 @@ extern s32 lbl_8036AF6C;
 extern u8 lbl_80367298[];
 #include "common.h"
 extern u16 lbl_80291AC8[];
+#include "global.h"
+
+extern u32 lbl_80295A00[];
+extern u32 lbl_80295A20[];
+extern f32 lbl_8036ACE0;
+extern f32 lbl_8036ACEC;
+extern f32 lbl_8036AD04;
+extern f32 lbl_8036ACF0;
+
+void *fn_8000A388(u32*, u32*, void*);
+void *fn_8000CA64(u32*, s32);
+u8 fn_8004C0F0(s32);
+void *fn_8004FE90(s32, u8);
+void *fn_8004FE98(s32, s32);
+void *fn_800506E0(s32, s32, void*);
+void *fn_800508C4(s32);
+f32 fn_80059F64(f32, f32, f32, f32);
+void *fn_8005FC74(void*, void*, s32);
+void *fn_8005FEE8(void*, f32);
+s32 fn_80060440(s32);
+void *fn_800639B4();
