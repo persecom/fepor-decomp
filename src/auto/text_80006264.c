@@ -817,6 +817,22 @@ int fn_8000C60C(void *arg0) {
     return 0;
 }
 
+void fn_8000CA64(u32 arg1) {
+    M2C_UNK fn_8000CAA0();
+    M2C_UNK fn_8000CAF0();
+    u32 var_r4;
+
+    var_r4 = arg1;
+    if (var_r4 == 0U) {
+        var_r4 = 3U;
+    }
+    if ((s32) var_r4 < 0) {
+        fn_8000CAA0();
+        return;
+    }
+    fn_8000CAF0();
+}
+
 void *fn_8000CAA0(void *arg0, s32 arg1, void *arg2) {
     void *fn_8000CAF0();
     void *temp_r3;
@@ -999,7 +1015,7 @@ s32 fn_8000D2BC(s8 *str) {
         return 0;
     }
     key.h2 = 0;
-    key.h1 = key.h2;
+    key.h1 = 0;
     while (*str != 0) {
         key.h1 = *str + key.h1 * 37;
         key.h2 = *str + key.h2 * 31;
@@ -1177,3 +1193,4 @@ extern u16 lbl_802A66D8[0x7000];
 typedef struct NodeD1D0 { struct NodeD1D0 *next; u32 hash; u8 pad[0x4]; struct NodeD1D0 *bucketNext; } NodeD1D0;
 typedef struct BucketD1D0 { u8 pad[8]; NodeD1D0 *head; u8 tail[0x7f4]; s32 count; } BucketD1D0;
 extern BucketD1D0 lbl_802ADB20[255];
+extern u16 lbl_802A66D8[0x7000];
