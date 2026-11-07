@@ -210,6 +210,7 @@ void fn_801B7A34(void *arg0) {
     fn_800C4588(temp_r31);
 }
 
+#pragma opt_common_subs off
 void fn_801B8334(void *arg0) {
     s32 fn_8005C6A0(void *);
     void fn_8006EEFC(void *, void *);
@@ -219,10 +220,10 @@ void fn_801B8334(void *arg0) {
     temp_r31 = M2C_FIELD(arg0, u8 **, 0x30);
     if (fn_8005C6A0(lbl_8027C5A8 + 0xA) & 0x2000) {
         fn_8006EEFC(temp_r31 + 8, lbl_8027C5A8 + 0xA);
+        fn_8000C188(arg0);
     }
-    fn_8000C188(arg0);
 }
-
+#pragma opt_common_subs reset
 #pragma opt_loop_invariants off
 void fn_801B84C0(void) {
     char *fn_8000E0E4(u32);
