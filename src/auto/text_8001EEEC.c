@@ -1495,3 +1495,8 @@ s32 func_80025338(struct Unit* unit)
 {
     return 0;
 }
+#include "global.h"
+#include "ef.h"
+
+extern u8 lbl_80330EAC[];
+extern u8 lbl_80268E40[];
