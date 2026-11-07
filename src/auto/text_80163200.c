@@ -428,6 +428,28 @@ void fn_80168F54(s32 arg0) {
     }
 }
 
+#pragma cplusplus on
+extern "C" void fn_8016915C(void *);
+extern "C" u8 lbl_80291AC8[];
+extern "C" void *fn_80169104(void *arg0) {
+    struct Obj {
+        virtual void m08() = 0;
+        virtual void m0C() = 0;
+        virtual void m10() = 0;
+        virtual void m14() = 0;
+        virtual void m18() = 0;
+        virtual void m1C() = 0;
+        virtual void m20() = 0;
+        virtual void m24() = 0;
+        virtual void m28() = 0;
+    };
+    fn_8016915C(arg0);
+    M2C_FIELD(arg0, void **, 0) = lbl_80291AC8;
+    M2C_FIELD(arg0, s16 *, 0xD4) = 1;
+    ((Obj *) arg0)->m28();
+    return arg0;
+}
+#pragma cplusplus reset
 void fn_80169498(void) {
     M2C_FIELD(&lbl_80330708, s8 *, 0x55) = 1;
 }
