@@ -1177,6 +1177,29 @@ s32 fn_800D78C4(void) {
     return 0;
 }
 
+s32 fn_800D78F4(void) {
+    void fn_800D758C(void *);
+    void fn_800D75C4(void *);
+    void fn_800DA2CC(void *);
+    extern void *lbl_80367898;
+    extern void *lbl_803678A8;
+    extern u16 *lbl_803678C8;
+    extern void *lbl_803679C8;
+    extern void *lbl_803679D0;
+    extern void *lbl_80367A50;
+    extern void *lbl_803678C0;
+
+    fn_800D75C4(lbl_80367898);
+    fn_800D758C(lbl_803678A8);
+    fn_800D758C(lbl_803678C8);
+    fn_800D758C(lbl_803678C0);
+    fn_800D758C(lbl_803679C8);
+    fn_800D758C(lbl_803679D0);
+    fn_800D758C(lbl_80367A50);
+    fn_800DA2CC(lbl_80367898);
+    return 0;
+}
+
 s32 fn_800D7C5C(void) {
     M2C_UNK fn_800D758C(s32);
     extern s32 lbl_803678A8;
