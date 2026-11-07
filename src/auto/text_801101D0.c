@@ -318,13 +318,13 @@ void fn_80117F1C(void *arg0) {
 }
 
 void fn_80117F54(s32 arg0) {
-    extern u16 lbl_802EF4C8[];
+    extern s32 lbl_802EF4C8[];
     
     void fn_8013FED0(void);
     void fn_8007D064(s32, s32, s32);
 
     fn_8013FED0();
-    fn_8007D064((s32)lbl_802EF4C8[0], arg0, 0);
+    fn_8007D064(lbl_802EF4C8[0], arg0, 0);
 }
 
 void fn_80118170(void *arg0) {
