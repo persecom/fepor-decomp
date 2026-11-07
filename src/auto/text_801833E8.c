@@ -1,5 +1,7 @@
 /* Functions from 0x801833E8 to 0x801A2AB4, found by decomp-toolkit. */
 #include "common.h"
+#pragma optimization_level 4
+#pragma inline auto
 
 extern u8 lbl_8036728B;
 extern u16 lbl_80295C60[];
@@ -295,18 +297,18 @@ void fn_80184688(s32 arg0, s32 arg1, s32 arg2, u32 arg3) {
     void fn_8000A388(void *, void *, void *);
     void *fn_8000CAF0(void *, u32);
     void fn_80185078(void *, void *);
-    extern u8 lbl_80295A20[];
+    extern u8 lbl_80295AC0[];
     u8 sp8[0x34];
     u32 var_r31;
     void *temp_r3;
 
     var_r31 = arg3;
     M2C_FIELD(sp8, void **, 0x30) = (void *)arg0;
-    fn_8000A388(lbl_80295A20, fn_80185078, sp8);
+    fn_8000A388(lbl_80295AC0, fn_80185078, sp8);
     if (var_r31 == 0U) {
         var_r31 = 3U;
     }
-    temp_r3 = fn_8000CAF0(lbl_80295A20, var_r31);
+    temp_r3 = fn_8000CAF0(lbl_80295AC0, var_r31);
     M2C_FIELD(temp_r3, s32 *, 0x30) = arg0;
     M2C_FIELD(temp_r3, s32 *, 0x38) = arg1;
     M2C_FIELD(temp_r3, s32 *, 0x3C) = arg2;
@@ -981,6 +983,31 @@ void fn_8018DDA8(void *arg0) {
 void fn_8018E98C(void **arg0, s32 arg1) {
     M2C_FIELD(*arg0, M2C_UNK (**)(), 0x3C)();
     M2C_FIELD(*arg0, M2C_UNK (**)(void **, s32), 0x40)(arg0, arg1);
+}
+
+void fn_8018EBC0(void *arg0, s16 arg1) {
+    void *fn_8001C76C(void *);
+    s32 fn_8001D2C8(void *);
+    void fn_8001D818(void *, s32);
+    void fn_8001C5F8(void *, s32);
+    void fn_8001019C(s16, s16, s32, void *, s32);
+    void fn_8008CFB4(void *, s16, s16);
+    extern u16 lbl_80279C40[];
+    extern f32 lbl_8036ADF0;
+    
+    void *sp8;
+    s16 temp_r31;
+    s16 temp_r29;
+    s16 temp_r31_2;
+
+    fn_8001C76C(&sp8);
+    fn_8001D818(&sp8, *(s32*)((char*)arg0 + 0x40));
+    temp_r31 = *(s16*)((char*)arg0 + 0x44);
+    temp_r29 = (s16) ((s32) (0x1C - fn_800102BC(-1, lbl_8036ADF0)) >> 1);
+    temp_r31_2 = arg1 + temp_r29;
+    fn_8001019C((s16) (temp_r31 + 0x18), temp_r31_2, 2, &lbl_80279C40[0x50/2], fn_8001D2C8(&sp8));
+    fn_8008CFB4(&sp8, temp_r31, temp_r31_2);
+    fn_8001C5F8(&sp8, -1);
 }
 
 void fn_8018EFE0(void *arg0, s32 arg1) {
@@ -2644,6 +2671,17 @@ s32 fn_801A1960(s32 arg0) {
     }
     fn_80105F0C(arg0, var_r4, 0);
     return 1;
+}
+
+extern s32 lbl_801B1C80;
+extern s32 lbl_801B1C84;
+extern s32 lbl_801B1C88;
+extern s32 lbl_801B1C8C;
+void fn_801A1A90(void) {
+    lbl_801B1C80 = 0x34;
+    lbl_801B1C84 = 0xFFFFFFFF;
+    lbl_801B1C88 = 0xB66D;
+    lbl_801B1C8C = 0xA491;
 }
 
 s32 fn_801A1E6C(s8 arg0, s8 arg1) {
