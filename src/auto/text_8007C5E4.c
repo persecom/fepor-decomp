@@ -382,10 +382,11 @@ u16 fn_80089640(void) {
     return lbl_803674E4[0x19];
 }
 
-u16 fn_80089650(void) {
-    extern u16 *lbl_803674E4;
-    u16 ret = lbl_803674E4[0x2C/2];
-    return ret;
+void fn_80089650(s32 arg0, s32 arg1) {
+    void fn_8008A32C(void *, s32, s32);
+    extern void *lbl_803674E4;
+
+    fn_8008A32C(lbl_803674E4, arg0, arg1);
 }
 
 void fn_800898E4(void *arg0) {
