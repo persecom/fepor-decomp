@@ -1727,20 +1727,21 @@ void fn_8013FC64(void) {
 
 }
 
-void fn_8013FC68(void ***arg0, s32 *arg1, void ***arg2) {
-    void **temp_r0;
-    void **temp_r3;
-    void **temp_r4;
+void fn_8013FC68(ListIter *ret, List *list, ListIter *it) {
+    ListNode *node = it->node;
+    ListNode *next = node->next;
+    ListNode *prev = node->prev;
+    s32 size;
 
-    temp_r3 = *arg2;
-    temp_r0 = M2C_FIELD(temp_r3, void ***, 4);
-    *arg2 = temp_r0;
-    M2C_FIELD(M2C_FIELD(temp_r3, void **, 0), void ***, 4) = temp_r0;
-    temp_r4 = M2C_FIELD(temp_r3, void ***, 4);
-    *temp_r4 = M2C_FIELD(temp_r3, void **, 0);
-    fn_800C428C(temp_r3, temp_r4);
-    *arg1 -= 1;
-    *arg0 = *arg2;
+    it->node = next;
+    prev->next = next;
+    node->next->prev = node->prev;
+    fn_800C428C(node);
+    size = list->size;
+    next = it->node;
+    size--;
+    list->size = size;
+    ret->node = next;
 }
 
 void fn_8013FDA0(void *arg0) {
@@ -2240,6 +2241,25 @@ void fn_8014571C(void) {
     M2C_FIELD(temp_r3, f32 *, 0x30) = (f32) lbl_8036A778;
     M2C_FIELD(temp_r3, f32 *, 0x34) = (f32) lbl_8036A77C;
     M2C_FIELD(temp_r3, f32 *, 0x38) = (f32) lbl_80367AEE;
+}
+
+void fn_8014589C(void *arg0) {
+    f32 fn_800067BC(s32, f32, f32, f32, f32);
+    void fn_8000C188(void *);
+    extern s32 lbl_80367110;
+    extern u8 lbl_80367AEE;
+    u8 alpha = M2C_FIELD(arg0, f32 *, 0x38);
+
+    if (lbl_80367110 & 3) {
+        lbl_80367AEE = 100;
+        fn_8000C188(arg0);
+        return;
+    }
+    M2C_FIELD(arg0, f32 *, 0x30) += 1.0f;
+    lbl_80367AEE = fn_800067BC(0, alpha, 100.0f, M2C_FIELD(arg0, f32 *, 0x30), M2C_FIELD(arg0, f32 *, 0x34));
+    if (M2C_FIELD(arg0, f32 *, 0x30) >= M2C_FIELD(arg0, f32 *, 0x34)) {
+        fn_8000C188(arg0);
+    }
 }
 
 void fn_8014595C(void *arg0) {
