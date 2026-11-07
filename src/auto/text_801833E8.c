@@ -41,6 +41,7 @@ typedef struct {
     s32 unk54;
     s32 unk58;
     s32 unk5C;
+    u8 unk64;
 } StructEF0C;
 
 
