@@ -292,6 +292,36 @@ void fn_801F6164(s32 arg1) {
     M2C_FIELD(lbl_803683F4, s32 *, 0x3C) = arg1;
 }
 
+void fn_801F6170(void *arg0) {
+    extern s32 lbl_80280B48[4];
+    
+    s32 i;
+    s32 temp_r5;
+    s32 *ptr;
+
+    M2C_FIELD(arg0, u8 *, 0x4C) = 1;
+    
+    for (i = 0; i < 4; i++) {
+        ptr = &M2C_FIELD(arg0, s32 *, 0x18 + (i << 2));
+        
+        M2C_FIELD(arg0, s32 *, 0x18) = lbl_80280B48[0];
+        M2C_FIELD(arg0, s32 *, 0x1C) = lbl_80280B48[1];
+        M2C_FIELD(arg0, s32 *, 0x20) = lbl_80280B48[2];
+        M2C_FIELD(arg0, s32 *, 0x24) = lbl_80280B48[3];
+        
+        if (fn_8023C410(*ptr, lbl_80280B48[1], lbl_80280B48[0]) == 4) {
+            temp_r5 = lbl_80280B48[i];
+            
+            M2C_FIELD(arg0, s32 *, 0x38) = temp_r5;
+            M2C_FIELD(arg0, s32 *, 0x3C) = 2;
+            M2C_FIELD(arg0, s16 *, 0x48) = 0;
+            
+            fn_8000C188(arg0, 2, temp_r5, i << 2, lbl_80280B48[3], lbl_80280B48[2], lbl_80280B48[1], lbl_80280B48[0]);
+            return;
+        }
+    }
+}
+
 void fn_801F64C8(void) {
     extern s32 lbl_80280CF0;
     fn_80109020(&lbl_80280CF0 + 0x20);
@@ -596,6 +626,46 @@ u32 fn_801FB9CC(void *arg0, u16 arg1) {
     return (u32) (M2C_FIELD(arg0, u16 *, 0x120) - arg1) >> 0x1FU;
 }
 
+s32 fn_801FB9E0(u8 *arg0) {
+    u16 fn_802072A0();
+    s32 var_r31;
+    u8 *var_r30;
+    u8 temp_r0;
+    u8 temp_r0_2;
+    u8 temp_r3;
+    u8 var_r0;
+
+    if ((s8) *arg0 == 0) {
+        return 0;
+    }
+    var_r30 = arg0;
+    var_r31 = 0x18;
+loop_20:
+    temp_r3 = M2C_FIELD(var_r30, u8 *, 0);
+    if ((s8) temp_r3 != 0) {
+        if ((s8) temp_r3 == 0xA) {
+            var_r31 += 0x18;
+            var_r30 += 1;
+        } else if (fn_802072A0() != 1) {
+            var_r30 += 1;
+        } else {
+            temp_r0 = M2C_FIELD(var_r30, u8 *, 0);
+            if ((((temp_r0 >= 0x81U) && (temp_r0 <= 0x9FU)) || ((temp_r0 >= 0xE0U) && (temp_r0 <= 0xFCU))) && (((temp_r0_2 = M2C_FIELD(var_r30, u8 *, 1), ((temp_r0_2 < 0x40U) == 0)) && (temp_r0_2 <= 0x7EU)) || ((temp_r0_2 >= 0x80U) && (temp_r0_2 <= 0xFCU)))) {
+                var_r0 = 1;
+            } else {
+                var_r0 = 0;
+            }
+            if (var_r0 == 0) {
+                var_r30 += 1;
+            } else {
+                var_r30 += 2;
+            }
+        }
+        goto loop_20;
+    }
+    return var_r31;
+}
+
 extern u16 lbl_8029B520[];
 s32 fn_801FBC30(s32 arg0) {
     s32 temp = arg0 * 2;
@@ -684,7 +754,7 @@ loop_4:
     }
     
     if ((var_r8 == NULL) || (*(u16 *)((u8 *)var_r8 + 0xC) < *arg2)) {
-        *(void **)arg0 = (void *)fn_801FC518(arg1, var_r9, var_r5, var_r6);
+        *(void **)arg0 = (void *)fn_801FC518(arg1, var_r9, var_r5, var_r6, arg2);
         *(u8 *)((u8 *)arg0 + 4) = 0x0;
         return;
     }
