@@ -605,6 +605,18 @@ void fn_8019ABBC(void *arg0) {
     }
 }
 
+s32 fn_8019B25C(void *arg0) {
+    u8 color[4] = {0x80, 0x80, 0x80, 0x40};
+    u8 *dst;
+
+    dst = M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), u8 **, 0x5C);
+    dst[0x88] = color[0];
+    dst[0x89] = color[1];
+    dst[0x8A] = color[2];
+    dst[0x8B] = color[3];
+    return 1;
+}
+
 void fn_8019B29C(void *arg0) {
     u8 fn_8005F9B8(void *, s32);
     u32 *flags;
