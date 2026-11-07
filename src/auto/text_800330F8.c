@@ -2383,3 +2383,4 @@ extern u16 *lbl_803672AC;
 extern u16 lbl_8026A660;
 extern u8 lbl_802CA518[];
 extern u32* lbl_803672CC;
+#include "global.h"
