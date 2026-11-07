@@ -182,6 +182,31 @@ void fn_801B77F0(s32 arg0, s32 arg1) {
     fn_8000E0E4(arg0 + (arg1 << 6));
 }
 
+void fn_801B84C0(void) {
+    char *fn_8000E0E4(u32);
+    u32 fn_800A8A88(u32);
+    void fn_800056CC(const char *, ...);
+    extern char lbl_8027C5C8[];
+    extern struct {
+        u32 unk0;
+        u32 unk4;
+        u8 unk8;
+        s8 unk9;
+    } *lbl_80367214;
+    struct {
+        u32 unk0;
+        u32 unk4;
+        u8 unk8;
+        s8 unk9;
+    } *p;
+    char *s;
+
+    for (p = (void *)lbl_80367214; p->unk0 != 0; p++) {
+        s = fn_8000E0E4(fn_800A8A88(p->unk4));
+        fn_800056CC(lbl_8027C5C8 + 8, fn_8000E0E4(fn_800A8A88(p->unk0)), s, p->unk8, p->unk9);
+    }
+}
+
 void fn_801B8798(void) {
     u32 fn_80019E8C(u32);
     extern struct {
@@ -203,14 +228,18 @@ void fn_801B88D4(void *arg0) {
     void fn_8000C60C(void *);
     void fn_8006EDA0(void *);
     void fn_800C4588(void *);
-    void *work = M2C_FIELD(arg0, void **, 0x30);
+    struct {
+        u8 pad[8];
+        void *unk8;
+        s32 unkC;
+    } *work = M2C_FIELD(arg0, void **, 0x30);
 
-    fn_800C428C(M2C_FIELD(work, s32 *, 0xC));
+    fn_800C428C(work->unkC);
     if (M2C_FIELD(arg0, void **, 0x34) != NULL) {
         fn_8000C60C(M2C_FIELD(arg0, void **, 0x34));
     }
-    if (M2C_FIELD(work, void **, 8) != NULL) {
-        fn_8006EDA0((u8 *)work + 8);
+    if (work->unk8 != NULL) {
+        fn_8006EDA0(&work->unk8);
     }
     fn_800C4588(work);
 }
