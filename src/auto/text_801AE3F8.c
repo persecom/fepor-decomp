@@ -1,5 +1,6 @@
 /* Functions from 0x801AE3F8 to 0x801B3220, found by decomp-toolkit. */
 #include "common.h"
+extern u16 lbl_802917D0;
 
 void fn_801AE498(void) {
     M2C_UNK fn_8013FE0C();
@@ -69,6 +70,11 @@ void fn_801AE878(void *arg0) {
     fn_8013AD70(temp_r31, M2C_FIELD(&lbl_80330708, s32 *, 0xB0));
     M2C_FIELD(*temp_r30, M2C_UNK (**)(void **, s32), 0x34)(temp_r30, fn_8013AC54(temp_r31));
     fn_8000C070(arg0, M2C_FIELD(arg0, u8 *, 0x68));
+}
+
+void fn_801AE980(void *arg0) {
+    int val = *(u8*)((char*)arg0 + 0x68);
+    fn_8000C070(val);
 }
 
 void fn_801AF148(void *arg0) {
