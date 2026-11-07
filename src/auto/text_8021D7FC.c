@@ -121,8 +121,7 @@ u16 fn_80220970(void) {
 
 void fn_80221A2C(s32 arg0) {
     extern void *__GXData;
-    void *gx = __GXData;
-    M2C_FIELD(gx, u32 *, 0x1EC) = (M2C_FIELD(gx, u32 *, 0x1EC) & ~0x180) | ((arg0 << 7) & 0x180);
+    M2C_FIELD(__GXData, u32 *, 0x1EC) = (M2C_FIELD(__GXData, u32 *, 0x1EC) & ~0x180) | ((arg0 & 3) << 7);
 }
 
 void fn_80221D6C(void *arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 farg4, f32 farg5) {
