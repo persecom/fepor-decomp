@@ -772,12 +772,58 @@ void fn_8020D1A0(void) {
     fn_8020BF58(&fn_8020D27C);
 }
 
+void fn_8020D4E0(u32 arg0) {
+    void DVDReset(void);
+    void __DVDStoreErrorCode(u32);
+    void cbForStateError(u32);
+    void fn_8020BF58(void *);
+    void fn_8020D5BC(void);
+    void fn_8020D53C(void);
+
+    if (arg0 == 0x10) {
+        __DVDStoreErrorCode(0x01234568);
+        DVDReset();
+        cbForStateError(0);
+        return;
+    }
+    if (arg0 & 1) {
+        fn_8020D5BC();
+        return;
+    }
+    fn_8020BF58(fn_8020D53C);
+}
+
 extern void *IDShouldBe_8036859C;
 extern void *fn_8020DAE0;
 extern void fn_8020C1A4(u8, u32, void *);
 void fn_8020D804(void) {
-    u8 var_r3 = *(u8 *)((char *)IDShouldBe_8036859C + 0x8);
-    fn_8020C1A4(var_r3, 0xA, &fn_8020DAE0);
+    void fn_8020C1A4(u8, s32, void *);
+    void fn_8020DAE0(void);
+    extern void *IDShouldBe_8036859C;
+
+    fn_8020C1A4(M2C_FIELD(IDShouldBe_8036859C, u8 *, 8), 0xA, fn_8020DAE0);
+}
+
+void AlarmHandler(void *alarm, void *context) {
+    void DVDReset(void);
+    void DCInvalidateRange(void *, u32);
+    void fn_8020DCE8(void *);
+    extern u8 lbl_80339F60[];
+    extern void *executing_80368598;
+    extern void (*lbl_803685E0)(void *);
+
+    DVDReset();
+    DCInvalidateRange(lbl_80339F60, 0x20);
+    lbl_803685E0 = fn_8020DCE8;
+    fn_8020DCE8(executing_80368598);
+}
+
+void fn_8020DCE8(void *block) {
+    void fn_8020BE28(void *, void *);
+    void fn_8020DD18(void);
+    extern u8 lbl_80339F60[];
+
+    fn_8020BE28(lbl_80339F60, fn_8020DD18);
 }
 
 s32 fn_8020F058(s32 arg0) {
@@ -930,6 +976,40 @@ s32 fn_8021965C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x84);
 }
 
+s32 fn_8021BA9C(void *arg0, char *name) {
+    char *p = (char *)arg0 + 8;
+    s32 n = 0x20;
+
+    while (n-- > 0) {
+        char a = *p++;
+        char b = *name++;
+        if (a != b) {
+            return 0;
+        }
+        if (b == 0) {
+            return 1;
+        }
+    }
+    if (*name == 0) {
+        return 1;
+    }
+    return 0;
+}
+
+s32 fn_8021BB04(void *arg0, u8 *arg1) {
+    s32 fn_80231944(void *, void *, u32);
+    extern u8 lbl_8033A420[];
+    u8 *p = M2C_FIELD(arg0, u8 **, 0x10C);
+
+    if (*arg1 == 0xFF) {
+        return -4;
+    }
+    if (p == lbl_8033A420 || (fn_80231944(arg1, p, 4) == 0 && fn_80231944(arg1 + 4, p + 4, 2) == 0)) {
+        return 0;
+    }
+    return -10;
+}
+
 void fn_8021C02C(s32 *arg0) {
     s32 fn_80217B18(s32, s32 *);
     M2C_UNK fn_80217BD0(s32, M2C_UNK);
@@ -946,15 +1026,14 @@ s32 fn_8021C080(void) {
     return 0;
 }
 
-void fn_8021C84C(s32 arg0) {
-    s32 temp_r3;
-    s32 temp_r4;
-    
-    if (arg0 >= 0) {
-        temp_r3 = fn_80013E50(arg0);
-        temp_r4 = fn_80013E60(temp_r3, arg0);
-        fn_80013E74((void*)temp_r4, arg0);
+void fn_8021C84C(s32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    M2C_UNK fn_80217C64(s32);
+    s32 fn_8021C708(s32 *, s32, s32, s32, M2C_UNK *);
+    extern M2C_UNK fn_80216998;
+    if (fn_8021C708(arg0, arg1, arg2, arg3, &fn_80216998) < 0) {
+        return;
     }
+    fn_80217C64(*arg0);
 }
 
 void fn_8021CDC4(void) {
@@ -972,6 +1051,30 @@ void fn_8021D28C(s32 arg0) {
         return;
     }
     fn_80217C64(arg0);
+}
+
+s32 fn_8021D2D4(s32 arg0, s32 index, void *dst) {
+    s32 fn_80217B18(s32, s32 *);
+    s32 fn_80217BD0(s32, s32);
+    s32 fn_8021BCCC(s32, u8 *);
+    void *memcpy(void *, const void *, u32);
+    s32 sp14;
+    s32 ret;
+    u8 *entry;
+
+    if (index < 0 || index >= 0x7F) {
+        return -0x80;
+    }
+    ret = fn_80217B18(arg0, &sp14);
+    if (ret < 0) {
+        return ret;
+    }
+    entry = (u8 *)fn_8021965C((void *)sp14) + (index << 6);
+    ret = fn_8021BCCC(sp14, entry);
+    if (ret >= 0) {
+        memcpy(dst, entry, 0x40);
+    }
+    return fn_80217BD0(sp14, ret);
 }
 
 void fn_8021ED98(void *arg0, s32 arg1, s32 arg2) {
@@ -1170,6 +1273,13 @@ void EnableMetroTRKInterrupts(void) {
 
 void TRKUARTInterruptHandler(void) {
 
+}
+
+void TRKEXICallBack(s32 arg0, s32 arg1) {
+    M2C_UNK OSEnableScheduler();
+    M2C_UNK TRKLoadContext(s32, M2C_UNK);
+    OSEnableScheduler();
+    TRKLoadContext(arg1, 0x500);
 }
 
 s32 TRKTargetContinue(void) {
