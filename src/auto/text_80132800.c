@@ -2263,27 +2263,20 @@ void fn_8014589C(void *arg0) {
 }
 
 void fn_8014595C(void *arg0) {
+    f32 fn_800067BC(s32, f32, f32, f32, f32);
+    void fn_8000C188(void *);
     extern s32 lbl_80367110;
-    extern s8 lbl_80367AEE;
-    extern f32 lbl_8036A790;
-    extern f32 lbl_8036A798;
-    
+    extern u8 lbl_80367AEE;
+    u8 alpha = M2C_FIELD(arg0, f32 *, 0x38);
+
     if (lbl_80367110 & 3) {
-        lbl_80367AEE = 0x78;
-        fn_8000C188();
+        lbl_80367AEE = 120;
+        fn_8000C188(arg0);
         return;
     }
-    
-    M2C_FIELD(arg0, f32 *, 0x30) = M2C_FIELD(arg0, f32 *, 0x30) + lbl_8036A790;
-    
-    // Simple function call with direct argument passing
-    fn_800067BC(0, M2C_FIELD(arg0, f32 *, 0x38), lbl_8036A798, M2C_FIELD(arg0, f32 *, 0x30), M2C_FIELD(arg0, f32 *, 0x34));
-    
-    // Store result in global variable
-    lbl_80367AEE = (s8)M2C_FIELD(arg0, f32 *, 0x30);
-    
-    // Check condition for call
-    if (M2C_FIELD(arg0, f32 *, 0x30) == M2C_FIELD(arg0, f32 *, 0x34)) {
+    M2C_FIELD(arg0, f32 *, 0x30) += 1.0f;
+    lbl_80367AEE = fn_800067BC(0, alpha, 120.0f, M2C_FIELD(arg0, f32 *, 0x30), M2C_FIELD(arg0, f32 *, 0x34));
+    if (M2C_FIELD(arg0, f32 *, 0x30) >= M2C_FIELD(arg0, f32 *, 0x34)) {
         fn_8000C188(arg0);
     }
 }
