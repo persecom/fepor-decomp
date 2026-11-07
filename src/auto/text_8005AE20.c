@@ -736,22 +736,31 @@ s32 fn_8005F7F0(void *arg0) {
     return 0;
 }
 
+static inline u32 GetListField44(void *p) {
+    while (p != NULL) {
+        u32 v = *(u32 *)((u8 *)p + 0x44);
+        if (v != 0) {
+            return v;
+        }
+        p = *(void **)((u8 *)p + 4);
+    }
+    return 0;
+}
+
 void fn_8005F84C(void *arg0) {
     extern void *fn_80065484(u32);
-    void **current = (void**)arg0;
+    void *p;
     u32 val;
 
-    while (*current != NULL) {
-        val = *(u32*)((char*)*current + 0x44);
-        if (val == 0) {
-            current = (void**)((char*)*current + 0x4);
-        } else {
-            fn_80065484(val);
-            return;
+    for (p = arg0; p != NULL; p = *(void **)((u8 *)p + 4)) {
+        val = *(u32 *)((u8 *)p + 0x44);
+        if (val != 0) {
+            goto found;
         }
     }
-
-    fn_80065484(0);
+    val = 0;
+found:
+    fn_80065484(val);
 }
 
 void fn_8005F894(void *arg0, s32 arg1) {
