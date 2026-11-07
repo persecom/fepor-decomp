@@ -3,6 +3,8 @@
 
 extern u8 lbl_8036728B;
 extern u16 lbl_80295C60[];
+extern f32 lbl_8036AF74;
+extern f64 lbl_8036AF78;
 
 #pragma cplusplus on
 extern "C" void fn_8017A000(void *);
