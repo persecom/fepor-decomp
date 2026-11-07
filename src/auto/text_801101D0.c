@@ -77,6 +77,12 @@ void fn_80112DFC(void *arg0, u8 arg1) {
 #pragma cplusplus on
 typedef struct Vec3f {
     f32 x, y, z;
+    Vec3f() {}
+    Vec3f(f32 _x, f32 _y, f32 _z) {
+        x = _x;
+        y = _y;
+        z = _z;
+    }
 } Vec3f;
 extern "C" f32 fn_802032CC(const Vec3f &, const Vec3f &);
 extern "C" void fn_80112E30(void *arg0) {
@@ -100,16 +106,16 @@ extern "C" void fn_80112E30(void *arg0) {
     Actor *target;
     Actor *self;
     f32 dist;
+    Vec3f pb;
+    Vec3f pa;
+    Vec3f b;
+    Vec3f a;
 
     self = (Actor *)arg0;
     target = M2C_FIELD(arg0, Actor **, 0x118);
     if (target == NULL) {
         dist = lbl_8036A184;
     } else {
-        Vec3f pb;
-        Vec3f pa;
-        Vec3f b;
-        Vec3f a;
         a.x = a.y = a.z = lbl_8036A184;
         b.x = b.y = b.z = lbl_8036A184;
         a = self->GetPos(0);
