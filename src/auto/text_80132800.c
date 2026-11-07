@@ -1530,6 +1530,16 @@ void fn_8013EB6C(void **arg0) {
     fn_801528E4(0, 0, 0x10);
 }
 
+void fn_8013EBA8(void *arg0) {
+    s16 h = M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xc);
+    s16 w = M2C_FIELD(arg0, s16 *, 0xe) - M2C_FIELD(arg0, s16 *, 0xa);
+
+    M2C_FIELD(arg0, s16 *, 0x12) = 0;
+    M2C_FIELD(arg0, s16 *, 0x14) = 0;
+    M2C_FIELD(arg0, s16 *, 0x16) = w;
+    M2C_FIELD(arg0, s16 *, 0x18) = h;
+}
+
 void fn_8013ED84(void *arg0, s16 arg1) {
     s16 temp_r5;
 
