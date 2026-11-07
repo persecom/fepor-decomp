@@ -736,17 +736,17 @@ void fn_8019B8A0(s32 arg0, s32 arg1) {
     M2C_FIELD(temp_r31, u8 *, 0x5C) = 2;
 }
 
-void fn_8019BC50(s8 arg0, s8 arg1, s32 arg2) {
+void fn_8019BC50(s32 arg0, s32 arg1, s32 arg2) {
     void *fn_8000CAA0(void *, s32);
     void fn_8019D51C(void *, s32, void *);
     extern u8 lbl_80296CF8[];
-    void *temp_r31;
+    u8 *temp_r31;
 
     temp_r31 = fn_8000CAA0(lbl_80296CF8, arg2);
     fn_8019D51C(temp_r31, 0, NULL);
-    M2C_FIELD(temp_r31, s8 *, 0x5D) = arg0;
-    M2C_FIELD(temp_r31, s8 *, 0x5E) = arg1;
-    M2C_FIELD(temp_r31, s8 *, 0x5C) = 1;
+    temp_r31[0x5D] = arg0;
+    temp_r31[0x5E] = arg1;
+    temp_r31[0x5C] = 1;
 }
 
 void fn_8019BCC0(s8 arg0, s8 arg1, s32 arg2) {
