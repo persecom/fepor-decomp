@@ -245,10 +245,15 @@ void fn_801B88D4(void *arg0) {
 
 void fn_801B9748(void*a){void*fn_8013FF94(void*,s32,s32);s32 fn_80019DF0(u8,void*);void fn_8017A9F0(void*,s32,void*,void*);extern u8 lbl_802EF4C8[];extern f32 lbl_8036B2DC;void*p;void*q;s32 x;p=fn_8013FF94(a,0x82,0);*(f32*)((char*)p+0x30)=lbl_8036B2DC;p=fn_8013FF94(a,0x108,0);*(f32*)((char*)p+0x30)=lbl_8036B2DC;q=((void**)a)[0x60/4];x=fn_80019DF0(*(u8*)(lbl_802EF4C8+0x14),lbl_802EF4C8);*(u8*)((char*)q+0x3c)=0;fn_8017A9F0(q,x,a,q);}
 
-void fn_801BE1EC(void *arg0) {
-    M2C_FIELD(M2C_FIELD(arg0, void **, 0x40), M2C_UNK (**)(M2C_UNK), 8)(-1);
+#pragma cplusplus on
+extern "C" void fn_801BE1EC(void *arg0) {
+    struct Obj {
+        u8 pad[0x40];
+        virtual void m08(s32) = 0;
+    };
+    ((Obj *) arg0)->m08(-1);
 }
-
+#pragma cplusplus reset
 void *fn_801BE6A8(s32 arg0) {
     M2C_UNK fn_8000C070(void *, M2C_UNK);
     void *fn_8000CAA0(M2C_UNK *, s32, M2C_UNK *, M2C_UNK *);
@@ -1590,8 +1595,7 @@ void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     char *start;
     s32 len;
     f32 width;
-    s32 padA;
-    s32 padB;
+    s32 h;
 
     memset(w, 0, sizeof(MsgBox));
     w->state = 0;
@@ -1635,9 +1639,9 @@ void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     }
     w->numLines = n;
     w->width += 0x18;
-    padA = arg2 ? 20 : 0;
-    padB = (w->flags & 4) ? 40 : 0;
-    w->height = 32 + w->numLines * 20 + padA + padB;
+    h = (arg2 ? 20 : 0) + w->numLines * 20;
+    h += (w->flags & 4) ? 40 : 0;
+    w->height = 32 + h;
     if (w->type == 1 || w->type == 2) {
         w->height += 0x88;
     }
