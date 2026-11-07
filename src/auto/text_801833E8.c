@@ -45,8 +45,18 @@ s32 fn_801838D4(void) {
     return 3;
 }
 
+void fn_80183920(void) {
+    extern u8 lbl_80278BB8[];
+    fn_8000E0E4(&lbl_80278BB8[0x197]);
+}
+
 s32 fn_8018394C(void) {
     return 2;
+}
+
+s32 fn_80183954(void) {
+    extern u8 lbl_803681F0;
+    return 3 & ~((s32) ~((lbl_803681F0 - 0x32) | (0x32 - lbl_803681F0)) >> 0x1F);
 }
 
 extern u16 lbl_80295A78[10];
