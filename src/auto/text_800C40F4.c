@@ -2169,6 +2169,23 @@ u32 fn_800E37CC(u32 arg0, u32 arg1)
     return (arg0 * arg1) >> 8;
 }
 
+void *fn_800E3B68(void *arg0, s16 arg1) {
+    M2C_UNK fn_800C9A60(void *, s32);
+    void fn_800E45EC(void *, s32);
+    void fn_800C428C(void *);
+    extern void *lbl_8028E0E8[];
+
+    if (arg0 != NULL) {
+        M2C_FIELD(arg0, void ***, 0x40) = lbl_8028E0E8;
+        fn_800C9A60((s8 *)arg0 + 0xAC, -1);
+        fn_800E45EC(arg0, 0);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_800E3BD8(void *arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(arg0, s32 *, 0x58) = (s32) (arg1 + (M2C_FIELD(arg0, s32 *, 0x7C) - M2C_FIELD(arg0, s32 *, 0x74)));
     M2C_FIELD(arg0, s32 *, 0x5C) = (s32) (arg2 + (M2C_FIELD(arg0, s32 *, 0x80) - M2C_FIELD(arg0, s32 *, 0x78)));
