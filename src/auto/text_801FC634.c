@@ -501,24 +501,21 @@ void fn_80201290(void *arg0) {
     OSRestoreInterrupts(temp_r31_2);
 }
 
+#pragma opt_common_subs off
 void fn_80201328(void *arg0) {
     u8 fn_8005BA10(void *);
     u32 fn_8003FCCC(void *);
     void fn_8000C188(void *);
     void fn_8006EEFC(void *, void *);
-    u8 ok;
 
-    ok = fn_8005BA10(lbl_802820B8 + 0x53);
-    if (ok) {
-        ok = fn_8005BA10(lbl_802820B8 + 0x68);
-        if (ok) {
-            if (lbl_80368448 == 0) {
-                fn_8006EEFC(&lbl_80368448, lbl_802820B8 + 0x53);
-            }
-            M2C_FIELD(arg0, u32 *, 0x30) = fn_8003FCCC(lbl_802820B8 + 0x68);
-            fn_8000C188(arg0);
-        }
+    if (!fn_8005BA10(lbl_802820B8 + 0x53) || !fn_8005BA10(lbl_802820B8 + 0x68)) {
+        return;
     }
+    if (lbl_80368448 == 0) {
+        fn_8006EEFC(&lbl_80368448, lbl_802820B8 + 0x53);
+    }
+    M2C_FIELD(arg0, u32 *, 0x30) = fn_8003FCCC(lbl_802820B8 + 0x68);
+    fn_8000C188(arg0);
 }
 #pragma opt_common_subs reset
 
