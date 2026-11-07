@@ -2994,3 +2994,8 @@ extern u16 lbl_80330EAC[];
 extern u16 lbl_80367110;
 extern u16 lbl_80330E90[4];
 extern u16 lbl_80296F90[];
+#include "global.h"
+#include "structs.h"
+
+extern u16 __files[160]; // 320 bytes, 160 elements
+extern u8 lbl_80279DF0[29]; // 29 bytes
