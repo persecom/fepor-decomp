@@ -2118,6 +2118,11 @@ void fn_80144B1C(void **arg0, void *arg1) {
     *M2C_FIELD(arg1, void ***, 4) = *arg0;
 }
 
+void fn_80144B38(void *arg0, void *arg1) {
+    void fn_800C428C(void *);
+    fn_800C428C(arg1);
+}
+
 void fn_80144B5C(void) {
 
 }
