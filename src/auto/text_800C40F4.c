@@ -200,7 +200,7 @@ extern s8 lbl_803678BC;
 extern s8 lbl_803678BD;
 extern s8 lbl_803678BF;
 extern s32 lbl_8028D788[];
-extern void (*lbl_802B14E4)(void **);
+extern u8 lbl_802B14E4[]; /* unit table, 0x280 bytes per unit */
 
 extern u16 lbl_8028E090[];
 extern u16 lbl_8028E148[];
