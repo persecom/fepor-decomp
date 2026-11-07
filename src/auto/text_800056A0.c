@@ -13,7 +13,7 @@ void fn_800056AC(void) {
     lbl_80367100[0x18/2] = 0;
 }
 
-s32 fn_800056CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, f64 farg0, f64 farg1, f64 farg2, f64 farg3, f64 farg4, f64 farg5, f64 farg6, f64 farg7) {
+s32 fn_800056CC(const char *fmt, ...) {
     return 0;
 }
 
