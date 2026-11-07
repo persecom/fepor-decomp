@@ -467,6 +467,27 @@ void *fn_80193AF0(void *arg0, s16 arg1) {
     return arg0;
 }
 
+#pragma cplusplus on
+extern "C" void *fn_80193B60(void *arg0) {
+    struct Obj {
+        virtual void m08() = 0;
+        virtual void m0C() = 0;
+        virtual void m10() = 0;
+        virtual void m14() = 0;
+        virtual void m18() = 0;
+        virtual void m1C() = 0;
+        virtual void m20() = 0;
+        virtual void m24() = 0;
+        virtual void m28() = 0;
+    };
+    fn_8017A000(arg0);
+    *(void **)((u8 *)arg0 + 0x0) = (void *)lbl_80291AC8;
+    *(s16 *)((u8 *)arg0 + 0xD4) = 1;
+    ((Obj *) arg0)->m28();
+    return arg0;
+}
+#pragma cplusplus reset
+
 void fn_80193C3C(void ***arg0, s32 *arg1, void ***arg2, void ***arg3) {
     M2C_UNK fn_8001C5F8(void *, M2C_UNK);
     M2C_UNK fn_800C428C(void **);
