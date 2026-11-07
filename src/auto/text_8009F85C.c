@@ -503,7 +503,7 @@ u8 fn_800A0BC0(void) {
 }
 
 extern s32 lbl_80367670;
-extern void *fn_80024398();
+extern void *fn_80024398(void *, s32, s32);
 s32 fn_800A0D08(s32 arg0, s32 arg1, void *arg2) {
     if (*(u8 *)((char *)arg2 + 0x39) != 0) {
         return 0;
