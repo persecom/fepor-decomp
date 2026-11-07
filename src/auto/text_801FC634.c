@@ -304,23 +304,6 @@ void fn_801FFF08(s32 arg0) {
     fn_801E2F9C(&lbl_803682F0, arg0);
 }
 
-extern u32 lbl_80339308[8];
-extern s16 lbl_80339328[8];
-extern s16 lbl_80339338[8];
-void fn_802003FC(void) {
-    void fn_8006EDA0(void *);
-    s32 i;
-
-    for (i = 0; i < 8; i++) {
-        if (lbl_803392E8.handle[i] != 0 && lbl_80339338[i] == 0) {
-            if (--lbl_80339328[i] == 0) {
-                fn_8006EDA0(&lbl_803392E8.handle[i]);
-                lbl_80339308[i] = 0;
-            }
-        }
-    }
-}
-
 extern u16 lbl_8029B7FC[10];
 s32 fn_8020055C(void) {
     return fn_8000C0C0(&lbl_8029B7FC) != 0;
