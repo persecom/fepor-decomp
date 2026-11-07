@@ -14,9 +14,9 @@ void *fn_8009F86C(void) {
     return (void *)((u32)(addr + 0x27E));
 }
 
-s32 fn_8009F87C(void) {
-    M2C_UNK fn_80024398(M2C_UNK *, M2C_UNK);
-    fn_80024398(&lbl_80367788, 0);
+s32 fn_8009F87C(s32 arg0, s32 arg1) {
+    M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
+    fn_80024398(&lbl_80367788, arg1, 0);
     return 0;
 }
 
