@@ -162,13 +162,13 @@ void fn_8012955C(void) {
 void fn_80129588(s32 arg0, u32 arg1) {
     void *fn_8000CAA0(void *);
     void *fn_8000CAF0(void *, s32);
-    extern void *lbl_80290BD0;
+    extern u8 lbl_80290BD0[];
     void *var_r3;
 
     if (arg1 != 0U) {
-        var_r3 = fn_8000CAA0(&lbl_80290BD0);
+        var_r3 = fn_8000CAA0(lbl_80290BD0);
     } else {
-        var_r3 = fn_8000CAF0(&lbl_80290BD0, 3);
+        var_r3 = fn_8000CAF0(lbl_80290BD0, 3);
     }
     *(s32 *)((char *)var_r3 + 0x30) = arg0;
 }
@@ -187,6 +187,12 @@ void fn_8012975C(void *arg0) {
     if (fn_80040824() != 0) {
         fn_80049B78(M2C_FIELD(arg0, s32 *, 0x30), 1);
     }
+}
+
+void fn_8012979C(void) {
+    // Function body is not provided in the original assembly. Based on analysis and context,
+    // we make a best guess. A placeholder implementation for now; this must be filled with 
+    // correct logic that matches assembly.
 }
 
 void fn_80129888(void *arg0) {
@@ -354,6 +360,36 @@ void fn_8012ABAC(void *arg0) {
     } else {
         *(s32*)((u8*)arg0 + 0x30) = 0;
     }
+}
+
+void fn_8012AC88(void *arg0) {
+    f32 fn_80023068(void *, s8, void *, f32, f32, f32);
+    void fn_800536B0(f32, f32, f32);
+    void *fn_80053C30(void *, s32);
+    void fn_80147578(void *, s32, f32, f32, f32);
+    extern u8 lbl_80275740[];
+    extern u8 lbl_802CA518[];
+    extern f64 lbl_8036A418;
+    extern f32 lbl_8036A410;
+
+    void *temp_r6;
+    s8 temp_r5;
+    f32 temp_f30;
+    f32 temp_f31;
+    f32 temp_f29;
+    u32 r4;
+
+    temp_r6 = (void *) M2C_FIELD(arg0, void **, 0x30);
+    temp_r5 = *(u8 *) temp_r6;
+    temp_f30 = lbl_8036A410 + (f32) (s8) temp_r5;
+    temp_f31 = lbl_8036A410 + (f32) (s8) *(u8 *) (((u8 *) temp_r6) + 1);
+    r4 = 0x43300000;
+    *(u32 *) ((u8 *) arg0 + 0x8) = r4;
+    *(u32 *) ((u8 *) arg0 + 0x10) = r4;
+    temp_f29 = fn_80023068(&lbl_802CA518, (s8) temp_r5, temp_r6, temp_f30, temp_f31, lbl_8036A410);
+    fn_80053C30((void *) ((u8 *) lbl_80275740 + 0x165), 0);
+    fn_800536B0(temp_f30, temp_f31, temp_f29);
+    fn_80147578((void *) ((u8 *) lbl_80275740 + 0x196), 0x64, temp_f30, temp_f31, temp_f29);
 }
 
 void fn_8012AD80(void) {
