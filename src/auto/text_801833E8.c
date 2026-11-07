@@ -3004,3 +3004,8 @@ void *fn_800C42D8(s32);
 void fn_80232058(void*, void*, void*);
 void fn_8022CF78(void);
 void fn_8001C690(void*, s32);
+
+typedef struct {
+    void *unk0;
+    void *unk4;
+} unk_struct_80193CFC;
