@@ -1708,6 +1708,48 @@ void fn_8004A264(void *arg0) {
     fn_8006785C(2, &fn_8004A2EC, arg0);
 }
 
+void fn_8004AAA4(void) {
+    M2C_UNK fn_80067FDC();
+    M2C_UNK fn_80202024(M2C_UNK, M2C_UNK *, M2C_UNK *);
+    M2C_UNK fn_80202540(M2C_UNK *, f32, f32, f32);
+    M2C_UNK fn_8021F4E4(M2C_UNK, M2C_UNK);
+    M2C_UNK fn_8021FBB8();
+    M2C_UNK fn_8021FBF0(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_802201A8(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80220428(M2C_UNK);
+    M2C_UNK fn_8022100C(M2C_UNK);
+    M2C_UNK fn_80222334(M2C_UNK);
+    M2C_UNK fn_80222370(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_802239D0(M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80223F2C(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_802240C8(M2C_UNK);
+    M2C_UNK fn_802245D8(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80224D7C(M2C_UNK *, M2C_UNK);
+    M2C_UNK fn_80224E1C(M2C_UNK);
+    extern f32 lbl_80368F84;
+    extern f32 lbl_80368F88;
+    M2C_UNK sp8[14];
+
+    fn_8021FBB8();
+    fn_8021F4E4(9, 1);
+    fn_8021F4E4(0xB, 1);
+    fn_8021FBF0(0, 9, 1, 4, 0);
+    fn_8021FBF0(0, 0xB, 1, 5, 0);
+    fn_80222334(1);
+    fn_80222370(4, 0, 0, 1, 0, 0, 2);
+    fn_802240C8(1);
+    fn_802239D0(0, 4);
+    fn_80223F2C(0, 0xFF, 0xFF, 4);
+    fn_80220428(0);
+    fn_802201A8(0, 1, 4, 0x3C, 0, 0x7D);
+    fn_8022100C(0);
+    fn_80202540(sp8, lbl_80368F84, lbl_80368F84, lbl_80368F88);
+    fn_80202024(fn_80067FDC(), sp8, sp8);
+    fn_80224D7C(sp8, 0);
+    fn_80224E1C(0);
+    fn_802245D8(1, 4, 1, 0);
+}
+
 s32 fn_8004AF30(u16 arg0) {
     u16 temp_r3 = arg0;
     if (temp_r3 == 0xFFFF) {
@@ -2282,6 +2324,24 @@ void fn_80053D84(void *arg0) {
 
     temp_r3 = M2C_FIELD(arg0, void **, 0x30);
     M2C_FIELD(temp_r3, s32 *, 8) = (s32) (M2C_FIELD(temp_r3, s32 *, 8) | 0x80000000);
+}
+
+void fn_80053D98(void* arg0, s32 arg1) {
+    u16* r3;
+    void* temp_r3;
+    s32 var_r7;
+    
+    r3 = (u16*)((u8*)arg0 + 0x60);
+    var_r7 = *(u8*)r3;
+    *r3 += 1;
+    
+    temp_r3 = (u8*)arg0 + 0x20;
+    r3 = (u16*)((u8*)temp_r3 + (var_r7 * 2));
+    *r3 |= 0x8000;
+    
+    temp_r3 = (u8*)arg0 + 0x20;
+    r3 = (u16*)((u8*)temp_r3 + ((var_r7 + arg1) * 2));
+    *r3 |= 0x4000;
 }
 
 void fn_80053F08(void* arg0, s32 arg1) {
