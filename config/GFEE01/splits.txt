@@ -297,7 +297,10 @@ auto/text_801FC634.c:
 	.text       start:0x801FC634 end:0x80216994
 
 auto/text_80216994.c:
-	.text       start:0x80216994 end:0x80225E30
+	.text       start:0x80216994 end:0x8021D7FC
+
+auto/text_8021D7FC.c:
+	.text       start:0x8021D7FC end:0x80225E30
 
 auto/text_80225E30.c:
 	.text       start:0x80225E30 end:0x8022C1E8
