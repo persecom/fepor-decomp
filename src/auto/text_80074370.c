@@ -1704,6 +1704,19 @@ void fn_8007B128(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x3C) = (s32) (temp_r3 + 1);
 }
 
+void fn_8007B990(void *arg0) {
+    extern void *lbl_80312040[];
+    void fn_8000C60C(void *);
+
+    if (arg0 != NULL) {
+        s32 index = *(u8 *)((u8 *)arg0 + 0x40);
+        if (lbl_80312040[index] != NULL) {
+            fn_8000C60C(lbl_80312040[index]);
+        }
+        lbl_80312040[index] = NULL;
+    }
+}
+
 void fn_8007BC3C(s32 a,s32 b,s32 c,s32 d,s32 e){void fn_8007BD30(s8,s32,s32,s32,s32,s32,s32);extern u32 lbl_80312040[];s8 n;if(!lbl_80312040[0])n=0;else if(!lbl_80312040[1])n=1;else if(!lbl_80312040[2])n=2;else if(!lbl_80312040[3])n=3;else if(!lbl_80312040[4])n=4;else if(!lbl_80312040[5])n=5;else if(!lbl_80312040[6])n=6;else if(!lbl_80312040[7])n=7;else n=-1;fn_8007BD30(n,a,b,c,d,0,e);}
 
 void fn_8007C018(void *arg0) {
