@@ -2,6 +2,7 @@
 #include "common.h"
 
 extern u8 lbl_8036728B;
+extern u16 lbl_80295C60[];
 
 #pragma cplusplus on
 extern "C" void fn_8017A000(void *);
@@ -167,6 +168,31 @@ void fn_80183DEC(s32 arg0, s32 arg1, s32 arg2) {
     temp_r3 = fn_8000CA64(&lbl_80295CAC, arg2, &lbl_80295CAC);
     M2C_FIELD(temp_r3, s32 *, 0x30) = arg0;
     M2C_FIELD(temp_r3, s32 *, 0x34) = arg1;
+}
+
+void fn_80183E3C(s32 arg0, s32 arg1, s32 arg2, s8 arg3, s8 arg4, s32 arg5) {
+    void *fn_8000CA64(void *, s32, void *);
+    extern u16 lbl_80295C60[];
+    
+    void *temp_r3;
+    s32 temp_r27, temp_r28, temp_r29, temp_r30, temp_r31;
+    
+    /* Save gprs (r27-r31) */
+    temp_r27 = arg0;
+    temp_r28 = arg1;
+    temp_r29 = arg2;
+    temp_r30 = arg3;
+    temp_r31 = arg4;
+    
+    temp_r3 = fn_8000CA64(lbl_80295C60, arg5, lbl_80295C60);
+    M2C_FIELD(temp_r3, s32 *, 0x30) = temp_r27;
+    M2C_FIELD(temp_r3, s32 *, 0x34) = 0;
+    M2C_FIELD(temp_r3, s8 *, 0x3A) = temp_r30;
+    M2C_FIELD(temp_r3, s8 *, 0x3B) = temp_r31;
+    M2C_FIELD(temp_r3, s32 *, 0x40) = temp_r28;
+    M2C_FIELD(temp_r3, s32 *, 0x44) = temp_r29;
+    M2C_FIELD(temp_r3, s8 *, 0x48) = 0;
+    M2C_FIELD(temp_r3, s8 *, 0x49) = 0;
 }
 
 void fn_80184BE8(s32 arg0, s32 arg1, s32 arg2, u32 arg3) {
