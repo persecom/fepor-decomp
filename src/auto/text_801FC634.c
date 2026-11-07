@@ -91,13 +91,14 @@ s32 fn_801FE32C(void) {
 }
 
 void fn_801FE3DC(void *arg0) {
+    void fn_8003F670(u32);
     extern u32 lbl_80368438;
     if (lbl_80368438 != 0) {
         fn_8006EDA0(&lbl_80368438);
     }
-    if (*(u32 *)((char *)arg0 + 0x44) != 0) {
-        fn_8003F670();
-        *(u32 *)((char *)arg0 + 0x44) = 0;
+    if (M2C_FIELD(arg0, u32 *, 0x44) != 0) {
+        fn_8003F670(M2C_FIELD(arg0, u32 *, 0x44));
+        M2C_FIELD(arg0, u32 *, 0x44) = 0;
     }
 }
 
