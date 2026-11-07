@@ -18,6 +18,17 @@ u16 *fn_801A7FF4(void *arg0) {
     return (u16 *)((u8 *)arg0 + 0x284);
 }
 
+void fn_801A859C(void *arg0) {
+    s8 temp;
+    temp = fn_8003B2D0();
+    M2C_FIELD(arg0, s8 *, 0x2B7) = temp;
+    M2C_FIELD(arg0, u8 *, 0x2B8) = (u8) M2C_FIELD(arg0, u8 *, 0x1A8);
+    M2C_FIELD(arg0, s16 *, 0x2BA) = (s16) M2C_FIELD(arg0, s16 *, 0x298);
+    M2C_FIELD(arg0, s16 *, 0x2BC) = (s16) M2C_FIELD(arg0, s16 *, 0x29A);
+    M2C_FIELD(arg0, s16 *, 0x2BE) = (s16) M2C_FIELD(arg0, s16 *, 0x2A2);
+    M2C_FIELD(arg0, s16 *, 0x2C0) = (s16) M2C_FIELD(arg0, s16 *, 0x2A8);
+}
+
 void fn_801A85F4(s32 arg0) {
     M2C_UNK fn_80105CEC(s32, M2C_UNK);
     fn_80105CEC(arg0 + 0x1BC, 0x4C);
