@@ -451,6 +451,25 @@ void fn_8018CF08(void) {
     }
 }
 
+void fn_8018CF48(s32 arg0) {
+    void *fn_8000C0C0(void *, void *);
+    extern u16 lbl_80296018;
+    s32 var_r31;
+    void *temp_r3;
+
+    temp_r3 = fn_8000C0C0(&lbl_80296018, &lbl_80296018);
+    if (temp_r3 != NULL) {
+        var_r31 = *(s32*)((char*)temp_r3 + 0x34) + arg0;
+        if (var_r31 < 0) {
+            var_r31 = 0;
+        }
+        if (var_r31 > 0x64) {
+            var_r31 = 0x64;
+        }
+        *(s32*)((char*)temp_r3 + 0x40) = var_r31;
+    }
+}
+
 void fn_8018D218(void *arg0) {
     extern u16 lbl_802797C0[6];
     void *temp_r5;
@@ -1994,6 +2013,15 @@ void fn_801A2764(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x30) = 0;
     M2C_FIELD(arg0, s32 *, 0x30) = 0;
 }
+
+void fn_801A27A0(void *arg0) {
+    s32 fn_800C45B8(void *, M2C_UNK);
+    M2C_UNK fn_80222420(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    extern u16 lbl_8027AD98[];
+    fn_80222420(0x260, 0x1C0, 4, 0, 0);
+    M2C_FIELD(arg0, s32 *, 0x30) = fn_800C45B8((void *)&lbl_8027AD98[0x5C5], 0);
+}
+
 #include "common.h"
 
 extern s32 lbl_8036AF6C;
@@ -2030,3 +2058,5 @@ extern f32 lbl_8036AE50;
 #include "common.h"
 
 extern u16 lbl_80296FA8;
+#include "global.h"
+#include "unit.h"
