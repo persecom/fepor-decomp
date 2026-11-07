@@ -5,6 +5,7 @@
 extern "C" void fn_8017A000(void *);
 extern "C" void fn_80193950(void *);
 extern "C" u8 lbl_8029656C[];
+extern "C" u16 lbl_80291AC8[];
 #pragma cplusplus reset
 
 f32 fn_801833E8(void) {
