@@ -749,18 +749,8 @@ static inline u32 GetListField44(void *p) {
 
 void fn_8005F84C(void *arg0) {
     extern void *fn_80065484(u32);
-    void *p;
-    u32 val;
 
-    for (p = arg0; p != NULL; p = *(void **)((u8 *)p + 4)) {
-        val = *(u32 *)((u8 *)p + 0x44);
-        if (val != 0) {
-            goto found;
-        }
-    }
-    val = 0;
-found:
-    fn_80065484(val);
+    fn_80065484(GetListField44(arg0));
 }
 
 void fn_8005F894(void *arg0, s32 arg1) {
