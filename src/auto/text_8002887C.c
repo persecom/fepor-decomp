@@ -61,6 +61,7 @@ void fn_80028B94(void* arg0) {
 
 void fn_80028EC8(s32 arg0) {
     extern u8 lbl_80269070[206];
+    extern M2C_UNK lbl_802EF4C8;
     
     if (((u8*)lbl_802EF4C8)[8] != 0x24 && ((u8*)lbl_802EF4C8)[8] != 0x2D) {
         fn_801475FC(&lbl_80269070[0xF0], 0x64);
