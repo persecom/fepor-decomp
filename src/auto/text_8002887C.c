@@ -138,6 +138,50 @@ void fn_8002AD04(void) {
     // Based on similar functions and the original assembly
 }
 
+#pragma cplusplus on
+#pragma use_lmw_stmw on
+extern "C" void fn_800227F8(void *, s32);
+extern "C" void fn_8002F728(void *);
+extern "C" void fn_8002B758(void *arg0) {
+    extern u8 lbl_80284D10[];
+    extern u8 lbl_80284E20[];
+    extern u8 lbl_802EF4E0[];
+    extern u8 lbl_802CA518[];
+    struct Visitor {
+        virtual void v0(s8, s8) = 0;
+        virtual void visit(s8, s8) = 0;
+    };
+    struct {
+        void *vtbl;
+        void *unit;
+    } obj;
+    u16 *flags;
+    s8 x;
+    s8 y;
+
+    obj.vtbl = lbl_80284E20;
+    obj.unit = arg0;
+    obj.vtbl = lbl_80284D10;
+    fn_8002F728(lbl_802EF4E0);
+    fn_800227F8(lbl_802CA518, M2C_FIELD(M2C_FIELD(obj.unit, void **, 0x194), s32 *, 0x18C));
+    y = M2C_FIELD(obj.unit, s8 *, 0x19F);
+    x = M2C_FIELD(obj.unit, s8 *, 0x19E);
+    flags = (u16 *)(lbl_802CA518 + 0x408E) + (x + (y << 6));
+    if (*flags & 8) {
+        ((Visitor *)&obj)->visit(x, y - 1);
+    }
+    if (*flags & 2) {
+        ((Visitor *)&obj)->visit(x + 1, y);
+    }
+    if (*flags & 4) {
+        ((Visitor *)&obj)->visit(x, y + 1);
+    }
+    if (*flags & 1) {
+        ((Visitor *)&obj)->visit(x - 1, y);
+    }
+}
+#pragma cplusplus reset
+
 void fn_8002C47C(void)
 {
     s32 r3; // r3 
