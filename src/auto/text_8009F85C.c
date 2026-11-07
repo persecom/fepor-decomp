@@ -480,6 +480,15 @@ u8 fn_800A0DB0(void) {
     return var_r0;
 }
 
+extern s32 lbl_80367660;
+s32 fn_800A0DE4(s32 arg0, s32 arg1, void *arg2) {
+    if (*(u8 *)((char *)arg2 + 0x39) != 0) {
+        return 0;
+    }
+    fn_80024398(&lbl_80367660, arg1, 0);
+    return 0;
+}
+
 void *fn_800A101C(void) {
     extern u16 lbl_8026D8D8;
     extern u16 lbl_80312270;
