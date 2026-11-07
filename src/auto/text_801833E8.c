@@ -206,6 +206,26 @@ void fn_8018D25C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x44) = fn_80018ADC();
 }
 
+void fn_8018D7A4(s32 arg0, s32 arg1) {
+    void fn_8002C47C(void *, s32);
+    void fn_8002F728(void *);
+    extern u8 lbl_80284E20[];
+    extern u8 lbl_80296078[];
+    extern u8 lbl_802EF4E0[];
+    struct {
+        void *vtbl;
+        s32 unk4;
+        s32 unk8;
+    } obj;
+
+    obj.vtbl = lbl_80284E20;
+    obj.unk4 = arg0;
+    obj.vtbl = lbl_80296078;
+    obj.unk8 = arg1;
+    fn_8002F728(lbl_802EF4E0);
+    fn_8002C47C(&obj, 0);
+}
+
 extern u8 lbl_80296128[16];
 void fn_8018DC98(void) {
     fn_8000BF00(&lbl_80296128);
