@@ -181,13 +181,19 @@ void fn_801AA1B0(void *arg0) {
     M2C_UNK fn_801AB004(void *);
     M2C_UNK fn_8000C60C(s32);
     M2C_UNK fn_8006EDA0(void *);
+    struct Obj {
+        u8 pad[0x50];
+        u32 field50;
+    };
+    struct Obj *obj = arg0;
+
     if (*(u8 *)((u8 *)arg0 + 0x69) == 0) {
         fn_80057A10(*(s32 *)((u8 *)arg0 + 0x54), 1);
         fn_80057A10(*(s32 *)((u8 *)arg0 + 0x58), 1);
         fn_801AB004(arg0);
         fn_8000C60C(*(s32 *)((u8 *)arg0 + 0x6C));
-        if (*(u32 *)((u8 *)arg0 + 0x50) != 0) {
-            fn_8006EDA0((char *)arg0 + 0x50);
+        if (obj->field50 != 0) {
+            fn_8006EDA0(&obj->field50);
         }
         *(u8 *)((u8 *)arg0 + 0x69) = 1;
     }
