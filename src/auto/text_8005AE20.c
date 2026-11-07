@@ -1078,10 +1078,22 @@ M2C_UNK fn_80063954(char *arg0) {
     return temp_r31;
 }
 
-s32 fn_800639B4(void) {
-    return 0;
-}
 #pragma inline_depth(reset)
+#pragma dont_inline on
+M2C_UNK fn_800639B4(char *arg0) {
+    M2C_UNK fn_80063A14(M2C_UNK);
+    M2C_UNK fn_8005C82C(char *, s32);
+    M2C_UNK temp_r31;
+
+    temp_r31 = fn_8005C82C(arg0, 0);
+    if (!(fn_8005C6A0(arg0) & 0x4000)) {
+        fn_80063A14(temp_r31);
+        fn_8005C5A8(arg0);
+    }
+    return temp_r31;
+}
+#pragma dont_inline reset
+#pragma inline_depth(0)
 
 u16 fn_80065484(void ***a,s32 b,u16 c){s32 best=-1;void*p;u16 count,off,n,v;s32 i,j;u8*q;if(a==0)return 0xffff;if(*a==0)return 0xffff;p=**a;if(p==0)return 0xffff;count=*(u16*)p;for(i=0;i<count;i++){off=*(u16*)((u8*)p+*(u32*)((u8*)p+4)+i*2);q=(u8*)p+off;n=*(u16*)(q+2);for(j=0;j<n;j++){if(*(u16*)(q+4)==c){v=*(u16*)q;if(v>b&&(best<0||v<=best))best=v;}q+=2;}}return (u16)best;}
 
@@ -1720,23 +1732,22 @@ void fn_8006F514(void *arg0) {
 }
 
 void fn_8006F6A4(s32 arg0, u32 arg1, u32 arg2, u32 arg3) {
-    extern s32 lbl_80367468;
-    extern s32 lbl_80311CE0;
+    extern u32 lbl_80311CE0[];
     extern s8 lbl_80366DE8;
-    extern s32 lbl_80367350;
-    extern s32 lbl_80367358;
+    extern u32 lbl_80367350[2];
+    extern u32 lbl_80367358[2];
 
     lbl_80366DE8 = -1;
     if (arg1 != 0U) {
-        *(u32 *)(lbl_80311CE0 + 0xC) = arg1;
+        lbl_80311CE0[3] = arg1;
     }
     if (arg2 != 0U) {
-        *(u32 *)(lbl_80367350 + 0x4) = arg2;
+        lbl_80367350[1] = arg2;
     }
     if (arg3 != 0U) {
-        *(u32 *)(lbl_80367358 + 0x4) = arg3;
+        lbl_80367358[1] = arg3;
     }
-    fn_80024398(&lbl_80311CE0, arg0, 0);
+    fn_80024398(lbl_80311CE0, arg0, 0);
 }
 
 extern u8 lbl_80366DE9;
