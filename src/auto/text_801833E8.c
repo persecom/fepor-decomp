@@ -122,15 +122,14 @@ void fn_801850A8(void *arg0) {
     s32 fn_80052B30(s32);
     void fn_80185078(void *, void *);
     extern u8 lbl_80295AE8[];
-    void *sp3C;
-    M2C_UNK spC;
+    u8 spC[0x34];
     u32 sp8;
     void *temp_r30;
     void *temp_r3;
 
     temp_r30 = M2C_FIELD(arg0, void **, 0x30);
-    sp3C = temp_r30;
-    fn_8000A388(lbl_80295AE8, fn_80185078, &spC);
+    M2C_FIELD(spC, void **, 0x30) = temp_r30;
+    fn_8000A388(lbl_80295AE8, fn_80185078, spC);
     temp_r3 = fn_8000CA64(lbl_80295AE8, arg0);
     M2C_FIELD(temp_r3, void **, 0x30) = temp_r30;
     M2C_FIELD(temp_r3, s32 *, 0x3C) = 0x10;
