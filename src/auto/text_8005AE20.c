@@ -774,6 +774,12 @@ loop_4:
     fn_80065484(var_r0, -1, arg1);
 }
 
+void fn_8005F8E4(void *arg0) {
+    extern void *fn_800653C8(u32);
+
+    fn_800653C8(GetListField44(arg0));
+}
+
 u16 fn_8005F92C(void *arg0, u16 *arg1) {
     s32 var_ctr;
     u16 *var_r7;
