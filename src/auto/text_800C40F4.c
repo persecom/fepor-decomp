@@ -1249,6 +1249,10 @@ String fn_800DAA60(s32 arg1) {
     return fn_800DAA94(lbl_803678B8, arg1);
 }
 
+void fn_800DAAC0(s32 arg0, s32 arg1) {
+    fn_800D9458(lbl_803678B8, arg0, arg1);
+}
+
 String fn_800DAAF0(s32 arg1) {
     String fn_800DAB24(s32, s32);
     return fn_800DAB24(lbl_803678B8, arg1);
