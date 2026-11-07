@@ -343,8 +343,6 @@ void fn_802003FC(void) {
 }
 #pragma use_lmw_stmw reset
 
-#pragma use_lmw_stmw reset
-
 extern u16 lbl_8029B7FC[10];
 s32 fn_8020055C(void) {
     return fn_8000C0C0(&lbl_8029B7FC) != 0;
