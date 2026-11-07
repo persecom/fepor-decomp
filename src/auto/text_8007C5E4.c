@@ -2604,5 +2604,4 @@ extern u16 lbl_80289F28[13];
 extern u16 lbl_80289F5C[11];
 extern u16 lbl_80312100[100];
 extern u16 lbl_803121C8[84];
-extern s32 lbl_80367500;
-extern s32 lbl_80367504;
+
