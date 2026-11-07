@@ -3,6 +3,24 @@
 #pragma optimization_level 4
 #pragma inline auto
 
+typedef struct {
+    void *unk0;
+    void *unk4;
+    void *unk8;
+    void *unkC;
+    void *unk10;
+    void *unk14;
+    void *unk18;
+    u32 unk1C;
+    void *unk20;
+    void *unk24;
+    void *unk28;
+    void *unk2C;
+    void *unk30;
+    u8 unk34;
+} SomeStruct;
+
+
 extern u8 lbl_8036728B;
 extern u16 lbl_80295C60[];
 extern f32 lbl_8036AF74;
@@ -996,17 +1014,21 @@ void fn_8018EBC0(void *arg0, s16 arg1) {
     extern f32 lbl_8036ADF0;
     
     void *sp8;
+    void *temp_r29;
     s16 temp_r31;
-    s16 temp_r29;
-    s16 temp_r31_2;
+    s16 temp_r30;
+    s16 temp_r28;
+    s16 temp_r0;
 
+    temp_r29 = arg0;
     fn_8001C76C(&sp8);
-    fn_8001D818(&sp8, *(s32*)((char*)arg0 + 0x40));
-    temp_r31 = *(s16*)((char*)arg0 + 0x44);
-    temp_r29 = (s16) ((s32) (0x1C - fn_800102BC(-1, lbl_8036ADF0)) >> 1);
-    temp_r31_2 = arg1 + temp_r29;
-    fn_8001019C((s16) (temp_r31 + 0x18), temp_r31_2, 2, &lbl_80279C40[0x50/2], fn_8001D2C8(&sp8));
-    fn_8008CFB4(&sp8, temp_r31, temp_r31_2);
+    fn_8001D818(&sp8, *(s32*)((char*)temp_r29 + 0x40));
+    temp_r31 = *(s16*)((char*)temp_r29 + 0x44);
+    temp_r0 = (s16) ((s32) (0x1C - fn_800102BC(-1, lbl_8036ADF0)) >> 1);
+    temp_r30 = temp_r0;
+    temp_r28 = arg1 + temp_r30;
+    fn_8001019C((s16) (temp_r31 + 0x18), temp_r28, 2, &lbl_80279C40[0x50/2], fn_8001D2C8(&sp8));
+    fn_8008CFB4(&sp8, temp_r31, temp_r28);
     fn_8001C5F8(&sp8, -1);
 }
 
