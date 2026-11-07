@@ -223,11 +223,15 @@ void fn_801B6784(void *arg0) {
 s32 fn_801B7094(void) {
     extern u16 lbl_802CA264[50];
     s32 count;
+    s32 flags;
     void *p;
 
     count = 0;
-    for (p = M2C_FIELD(lbl_802CA264, void **, 0x48); p != NULL; p = M2C_FIELD(p, void **, 0x184)) {
-        if (M2C_FIELD(p, s32 *, 0x1A0) & 0x8000) {
+    p = M2C_FIELD(lbl_802CA264, void **, 0x48);
+    while (p != NULL) {
+        flags = M2C_FIELD(p, s32 *, 0x1A0);
+        p = M2C_FIELD(p, void **, 0x184);
+        if (flags & 0x8000) {
             count++;
         }
     }
