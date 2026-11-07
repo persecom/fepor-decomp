@@ -148,6 +148,18 @@ s32 fn_80183A5C(void) {
     return fn_8000C0C0(&lbl_80295A78) != 0;
 }
 
+void fn_80183DEC(s32 arg0, s32 arg1, s32 arg2) {
+    void *fn_8000CA64(void *, s32, void *);
+    extern u16 lbl_80295CAC[28]; // 56 bytes = 28 * 2-byte words
+
+    void *temp_r3;
+
+    // Use explicit register assignments to match the original
+    temp_r3 = fn_8000CA64(&lbl_80295CAC, arg2, &lbl_80295CAC);
+    M2C_FIELD(temp_r3, s32 *, 0x30) = arg0;
+    M2C_FIELD(temp_r3, s32 *, 0x34) = arg1;
+}
+
 void fn_80184BE8(s32 arg0, s32 arg1, s32 arg2, u32 arg3) {
     void fn_8000A388(void *, void *, void *);
     void *fn_8000CAF0(void *, u32);
@@ -688,6 +700,15 @@ s32 fn_801909E4(void *arg0, s32 *arg1) {
     return 1;
 }
 
+void fn_80190B00(void *arg0) {
+    M2C_FIELD(arg0, s16 *, 0x46) = 0;
+    M2C_FIELD(arg0, s16 *, 0x48) = 0;
+    M2C_FIELD(arg0, s16 *, 0x12) = 2;
+    M2C_FIELD(arg0, s16 *, 0x14) = 8;
+    M2C_FIELD(arg0, s16 *, 0x16) = (s16) ((s16) (M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA)) - 2);
+    M2C_FIELD(arg0, s16 *, 0x18) = (s16) ((s16) (M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC)) - 8);
+}
+
 void fn_80190F14(void) {
     M2C_UNK fn_8013FE0C();
     fn_8013FE0C();
@@ -880,6 +901,14 @@ void fn_801950CC(void *arg0) {
     if (temp_r3 != 0U) {
         fn_800C426C(temp_r3 - 0x10);
     }
+}
+
+void fn_801950FC(void *arg0) {
+    extern M2C_UNK fn_800C42AC(M2C_UNK, M2C_UNK);
+    extern M2C_UNK fn_8022C414(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
+    extern s32 fn_80196018;
+    fn_800C42AC(0x19290, 0x20000);
+    M2C_FIELD(arg0, s32 *, 0x30) = fn_8022C414((void *)&fn_80196018, 0, 0x3250, 8);
 }
 
 void fn_8019514C(void *arg0, void *arg1) {
@@ -1443,6 +1472,18 @@ s32 fn_8019E528(void) {
     return 0;
 }
 
+s32 fn_8019E564(s32 arg0) {
+    M2C_UNK fn_8000BF00(M2C_UNK *);
+    M2C_UNK fn_8000CAF0(M2C_UNK *, s32, M2C_UNK *);
+    extern M2C_UNK lbl_80297070;
+    if (arg0 != 0) {
+        fn_8000CAF0(&lbl_80297070, fn_800C0658(), &lbl_80297070);
+    } else {
+        fn_8000BF00(&lbl_80297070);
+    }
+    return 1;
+}
+
 void fn_8019E5B0(void) {
     M2C_UNK fn_8000A274(M2C_UNK);
     fn_8000A274(0);
@@ -1888,3 +1929,5 @@ extern u16 lbl_803120A0[];
 extern s32 lbl_803674F8;
 extern u16 lbl_802968E8;
 extern u16 lbl_802797C0[6];
+extern u16 lbl_8036AE4C;
+extern f32 lbl_8036AE50;
