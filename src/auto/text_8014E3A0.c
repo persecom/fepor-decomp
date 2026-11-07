@@ -144,6 +144,25 @@ s32 fn_801519C0(void *arg0) {
     return M2C_FIELD(r4, s32 *, 0x18);
 }
 
+extern u16 lbl_8028DED0[];
+void *fn_80151CE0(void *arg0, s16 arg1) {
+    void fn_800DF724(void *, s32);
+    void fn_800C428C(void *);
+    extern u8 lbl_80293A88[];
+
+    if (arg0 != NULL) {
+        M2C_FIELD(arg0, void **, 0x40) = lbl_80293A88;
+        if (arg0 != NULL) {
+            M2C_FIELD(arg0, void **, 0x40) = lbl_8028DED0;
+            fn_800DF724(arg0, 0);
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 extern s32 lbl_803680C8;
 extern void *lbl_80330D18;
 extern void *lbl_80367BE8;
