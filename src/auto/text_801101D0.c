@@ -676,6 +676,13 @@ s32 fn_8011B74C(void) {
     return 0x40;
 }
 
+extern u8 lbl_80330D68[];
+s32 fn_8011B754(void) {
+    u8 fn_80166D8C(void *);
+
+    return fn_80166D8C(lbl_80330D68) ? 0x40 : 0x10;
+}
+
 void fn_8011B978(void) {
     extern u32 lbl_80274508;
     fn_8000E0E4(&lbl_80274508 + 0x357);
