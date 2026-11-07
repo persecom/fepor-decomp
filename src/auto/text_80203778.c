@@ -190,7 +190,7 @@ s32 fn_802059EC(void) {
 }
 
 void *fn_80205B50(void) {
-    return (void *)__builtin_return_address(0);
+    return 0; /* OSGetStackPointer: asm (mr r3, r1) */
 }
 
 void fn_80206888(void) {
