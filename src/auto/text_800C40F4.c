@@ -4463,6 +4463,7 @@ void fn_80101448(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32
     fn_80101530(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 }
 
+#pragma use_lmw_stmw on
 s32 fn_8010207C(s32 arg0, s16 *outX, s16 *outY) {
     void fn_800FE398(s32, s32, s32);
     u32 fn_80019E48(s32);
@@ -4477,10 +4478,11 @@ s32 fn_8010207C(s32 arg0, s16 *outX, s16 *outY) {
         u8 pad0C;
         u8 unitMap[8][64][64];
         u8 pad800D[0x181];
-        s16 costMap[3][64][64];
+        s16 costMap[3][64 * 64];
         s8 fogMap[64][64];
     } lbl_802CA518;
     extern s32 lbl_802EF4C8[];
+    s16 *cost;
     s16 best;
     u32 team;
     s32 y;
@@ -4493,7 +4495,8 @@ s32 fn_8010207C(s32 arg0, s16 *outX, s16 *outY) {
     team = fn_80019E48(arg0);
     for (y = lbl_802CA518.yMin; y <= lbl_802CA518.yMax - 1; y++) {
         for (x = lbl_802CA518.xMin; x <= lbl_802CA518.xMax - 1; x++) {
-            if (lbl_802CA518.costMap[0][(s8)y][(s8)x] < 0) {
+            cost = &lbl_802CA518.costMap[0][(s8)x + ((s8)y << 6)];
+            if (*cost < 0) {
                 continue;
             }
             if (lbl_802CA518.fogMap[(s8)y][(s8)x] != 0) {
@@ -4507,7 +4510,7 @@ s32 fn_8010207C(s32 arg0, s16 *outX, s16 *outY) {
                 continue;
             }
             if (id != 0) {
-                unit = (u8 *)&lbl_802B14E4 + (id - 1) * 0x280;
+                unit = lbl_802B14E4 + (id - 1) * 0x280;
             } else {
                 unit = NULL;
             }
@@ -4517,16 +4520,16 @@ s32 fn_8010207C(s32 arg0, s16 *outX, s16 *outY) {
             if (team != M2C_FIELD(unit, u32 *, 0x18C)) {
                 continue;
             }
-            if (best >= lbl_802CA518.costMap[0][(s8)y][(s8)x]) {
+            if (best >= *cost) {
+                best = *cost;
                 *outX = x;
                 *outY = y;
-                best = lbl_802CA518.costMap[0][(s8)y][(s8)x];
             }
         }
     }
     return best != 0x7FFF;
 }
-
+#pragma use_lmw_stmw reset
 void fn_80102334(s32 arg2, s32 arg3) {
     M2C_UNK fn_80102810(M2C_UNK, s32, s32);
     fn_80102810(0x2C, arg2, arg3);
