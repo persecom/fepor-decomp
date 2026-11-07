@@ -1194,3 +1194,4 @@ typedef struct NodeD1D0 { struct NodeD1D0 *next; u32 hash; u8 pad[0x4]; struct N
 typedef struct BucketD1D0 { u8 pad[8]; NodeD1D0 *head; u8 tail[0x7f4]; s32 count; } BucketD1D0;
 extern BucketD1D0 lbl_802ADB20[255];
 extern u16 lbl_802A66D8[0x7000];
+extern u16 lbl_802A66D8[];
