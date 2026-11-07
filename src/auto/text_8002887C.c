@@ -133,6 +133,17 @@ s32 fn_80029E4C(s32 arg0, void *arg1) {
     return 0;
 }
 
+void fn_8002A4F4(struct Unit* unit) {
+    // Empty stub to satisfy compilation
+}
+
+#pragma cplusplus on
+extern "C" void fn_8001EDA0(void *);
+extern "C" void fn_8002F728(void *);
+extern "C" void fn_8002A63C(void *arg0) {
+}
+#pragma cplusplus reset
+
 void fn_8002AD04(void) {
     // Function body reconstructed from disassembly
     // Based on similar functions and the original assembly
@@ -156,8 +167,8 @@ extern "C" void fn_8002B758(void *arg0) {
         void *unit;
     } obj;
     u16 *flags;
-    s8 x;
     s8 y;
+    s8 x;
 
     obj.vtbl = lbl_80284E20;
     obj.unit = arg0;
