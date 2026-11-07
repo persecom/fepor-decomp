@@ -28,13 +28,10 @@ extern void* lbl_80368654;
 
 u8 ErrorCode2Num(s32);
 
-typedef struct UnkWork803392E8 {
-    u32 handle[8]; /* 0x00 */
-    u32 id[8];     /* 0x20 */
-    s16 timer[8];  /* 0x40 */
-    s16 count[8];  /* 0x50 */
-} UnkWork803392E8;
-extern UnkWork803392E8 lbl_803392E8;
+static u32 lbl_803392E8[8];
+static u32 lbl_80339308[8];
+static s16 lbl_80339328[8];
+static s16 lbl_80339338[8];
 
 void fn_801FC95C(void) {
     M2C_UNK fn_8006EDA0(M2C_UNK *);
