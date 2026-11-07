@@ -102,27 +102,24 @@ extern "C" void fn_80112E30(void *arg0) {
         virtual void v10() = 0;
         virtual void v11() = 0;
         virtual Vec3f GetPos(s32) = 0;
+        Vec3f GetPosition() {
+            return GetPos(0);
+        }
     };
     Actor *target;
     Actor *self;
     f32 dist;
-    Vec3f pb;
-    Vec3f pa;
-    Vec3f b;
-    Vec3f a;
 
     self = (Actor *)arg0;
     target = M2C_FIELD(arg0, Actor **, 0x118);
     if (target == NULL) {
         dist = lbl_8036A184;
     } else {
-        a.x = a.y = a.z = lbl_8036A184;
-        b.x = b.y = b.z = lbl_8036A184;
-        a = self->GetPos(0);
-        pa = a;
-        b = target->GetPos(0);
-        pb = b;
-        dist = fn_802032CC(pa, pb);
+        Vec3f a(lbl_8036A184, lbl_8036A184, lbl_8036A184);
+        Vec3f b(lbl_8036A184, lbl_8036A184, lbl_8036A184);
+        a = self->GetPosition();
+        b = target->GetPosition();
+        dist = fn_802032CC(a, b);
     }
     if (dist >= lbl_8036A1A8 + M2C_FIELD(arg0, f32 *, 0x128)) {
         M2C_FIELD(arg0, u8 *, 0x1A4) = 0;
@@ -891,6 +888,76 @@ s32 fn_8011C000(void) {
     return 5;
 }
 
+s32 fn_8011C2B8(void *arg0) {
+    void *fn_8002F658(s32 *, s32);
+    extern s32 lbl_802EF4E0;
+    s16 temp_r4_2;
+    s16 var_r30;
+    s32 var_r0;
+    s32 var_r28;
+    s32 var_r8;
+    u8 temp_r0;
+    u8 temp_r0_2;
+    u8 temp_r4;
+    u8 temp_r6;
+    u8 temp_r7;
+    u8 var_r0_2;
+    void *temp_r3;
+    void *var_r29;
+    void *var_r3;
+
+    var_r30 = 0x7FFF;
+    var_r29 = NULL;
+    var_r28 = 0;
+loop_16:
+    if (var_r28 < (s32) lbl_802EF4E0) {
+        temp_r3 = fn_8002F658(&lbl_802EF4E0, var_r28);
+        if (arg0 != temp_r3) {
+            temp_r6 = M2C_FIELD(temp_r3, u8 *, 1);
+            temp_r4 = M2C_FIELD(arg0, u8 *, 1);
+            if ((s8) temp_r4 > (s8) temp_r6) {
+                var_r8 = (s8) temp_r4 - (s8) temp_r6;
+                if (var_r8 < 0) {
+                    var_r8 = -var_r8;
+                }
+                temp_r7 = M2C_FIELD(temp_r3, u8 *, 0);
+                temp_r0 = M2C_FIELD(arg0, u8 *, 0);
+                var_r0 = (s8) temp_r0 - (s8) temp_r7;
+                if (((s8) temp_r0 - (s8) temp_r7) < 0) {
+                    var_r0 = -var_r0;
+                }
+                temp_r4_2 = var_r0 + var_r8;
+                if (var_r30 >= temp_r4_2) {
+                    if ((var_r29 != NULL) && (var_r30 == temp_r4_2)) {
+                        temp_r0_2 = M2C_FIELD(var_r29, u8 *, 1);
+                        if ((s8) temp_r0_2 == (s8) temp_r6) {
+                            var_r0_2 = (s8) M2C_FIELD(var_r29, u8 *, 0) < (s8) temp_r7;
+                        } else {
+                            var_r0_2 = (s8) temp_r0_2 < (s8) temp_r6;
+                        }
+                        if (var_r0_2 != 0) {
+                            goto block_14;
+                        }
+                    } else {
+block_14:
+                        var_r30 = temp_r4_2;
+                        var_r29 = temp_r3;
+                    }
+                }
+            }
+        }
+        var_r28 += 1;
+        goto loop_16;
+    }
+    if (var_r29 != NULL) {
+        var_r3 = var_r29;
+    } else {
+        var_r3 = arg0;
+    }
+    M2C_FIELD(arg0, void **, 0xC) = var_r3;
+    return var_r29 != NULL;
+}
+
 s32 fn_8011C5B4(void) {
     M2C_UNK fn_800D758C(s32);
     extern s32 lbl_80367A50;
@@ -1178,3 +1245,4 @@ extern struct SomeStruct* lbl_80320C20; // example struct
 extern u16 lbl_8028F6C8[];
 extern u16 lbl_80296128[];
 extern void *lbl_802CA264;
+extern u16 lbl_802EF4E0[];
