@@ -76,6 +76,22 @@ s32 fn_801E960C(s32 arg0, s32 arg1)
     return temp * arg1;
 }
 
+void fn_801E96D0(void *arg0, void *arg1) {
+    s32 temp_r3;
+    s32 r31;
+    
+    if (arg0 == NULL) {
+        return;
+    }
+
+    temp_r3 = *(s32*)((char*)arg0 + 0x58);
+    r31 = *(s32*)((char*)arg0 + 0x4);
+    
+    if (r31 < temp_r3) {
+        *(s32*)((char*)arg0 + 0x4) = temp_r3;
+    }
+}
+
 void fn_801E97D4(void *arg0) {
     s16 r31;
     s16 r30;
@@ -177,3 +193,7 @@ void fn_801EA430(void) {
 #include "global.h"
 
 extern f32 lbl_8036B6E8;
+#include "global.h"
+#include "ef.h"
+
+extern u16 lbl_80332020[];
