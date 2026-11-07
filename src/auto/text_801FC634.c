@@ -28,6 +28,14 @@ extern void* lbl_80368654;
 
 u8 ErrorCode2Num(s32);
 
+typedef struct UnkWork803392E8 {
+    u32 handle[8]; /* 0x00 */
+    u32 id[8];     /* 0x20 */
+    s16 timer[8];  /* 0x40 */
+    s16 count[8];  /* 0x50 */
+} UnkWork803392E8;
+extern UnkWork803392E8 lbl_803392E8;
+
 void fn_801FC95C(void) {
     M2C_UNK fn_8006EDA0(M2C_UNK *);
     extern M2C_UNK lbl_80368418;
@@ -255,6 +263,25 @@ void fn_801FFD7C(s32 arg0) {
     extern u16 lbl_8029B748;
     s32* ptr = (s32*)&lbl_8029B748;
     fn_8000CAA0(ptr, arg0, ptr);
+}
+
+void fn_801FFDA8(void)
+{
+    fn_8000A258();
+    fn_80009D74(0.0f, 0.0f, 0.0f, 1.0f);
+    fn_8000A174(0, 0x10);
+    fn_8000A248();
+    fn_8000A258();
+    fn_80007898(1);
+    fn_800077D8(0.0f, 0.0f, 0.0f, 0.0f);
+    fn_800076AC(0, 0, 0, 0xc0);
+    fn_80007884();
+    fn_8000A258();
+    fn_80009D74(0.0f, 0.0f, 0.0f, 1.0f);
+    fn_8000A174(0, 0x13);
+    fn_8000A248();
+    fn_8001019C(0x40, 0x40, 0x33, 0x1, 0x0);
+    fn_8001019C(0x40, 0x60, 0x58, 0x1, 0x0);
 }
 
 void fn_801FFE8C(void) {
