@@ -729,6 +729,13 @@ void *fn_800A1BB0(void) {
     return (void *)(((u32)&lbl_8026D8D8) + 0x68C);
 }
 
+extern s32 lbl_803675EC;
+s32 fn_800A1BC0(s32 arg0, s32 arg1) {
+    M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
+    fn_80024398(&lbl_803675EC, arg1, 0);
+    return 0;
+}
+
 void *fn_800A1BEC(void) {
     extern u16 lbl_8026D8D8;
     return (char *)&lbl_8026D8D8 + 0x693;
