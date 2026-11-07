@@ -479,6 +479,28 @@ void fn_80201228(void *arg0) {
     }
 }
 
+void fn_80201290(void *arg0) {
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    s32 OSDisableScheduler(void);
+    s32 OSEnableScheduler(void);
+    void fn_8005BA08(s8);
+    void fn_8005C870(void *, s32);
+    s32 temp_r31;
+    s32 temp_r31_2;
+
+    temp_r31 = OSDisableInterrupts();
+    OSDisableScheduler();
+    OSRestoreInterrupts(temp_r31);
+    fn_8005BA08((s8) M2C_FIELD(arg0, s32 *, 0x38));
+    fn_8005C870(lbl_802820B8 + 0x53, 0);
+    fn_8005C870(lbl_802820B8 + 0x68, 0);
+    fn_8005BA08((s8) M2C_FIELD(arg0, s32 *, 0x34));
+    temp_r31_2 = OSDisableInterrupts();
+    OSEnableScheduler();
+    OSRestoreInterrupts(temp_r31_2);
+}
+
 void fn_80201328(void *arg0) {
     u8 fn_8005BA10(void *);
     u32 fn_8003FCCC(void *);
