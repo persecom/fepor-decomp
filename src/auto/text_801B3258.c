@@ -84,6 +84,7 @@ void fn_801B3D30(void *arg0) {
     *(s32 *)((char *)temp_r31 + 0x18) = 0;
 }
 
+#pragma opt_common_subs off
 void fn_801B5DB0(void *arg0) {
     s32 fn_8005C6A0(void *);
     void fn_8006EEFC(void *, void *);
