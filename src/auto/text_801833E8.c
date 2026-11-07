@@ -477,7 +477,7 @@ void fn_8018D7A4(s32 arg0, s32 arg1) {
 
 void fn_8018DAD4(void) {
     void *fn_8000C0C0(M2C_UNK *);
-    extern u16 lbl_80296128;
+    extern u16 lbl_80296128[];
     void *temp_r3;
 
     temp_r3 = fn_8000C0C0((M2C_UNK *) &lbl_80296128);
