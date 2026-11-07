@@ -1,6 +1,15 @@
 /* Functions from 0x801A7D78 to 0x801AE2D4, found by decomp-toolkit. */
 #include "common.h"
 
+extern u16 lbl_80367218;
+u16 *fn_801A7FF4(void *arg0) {
+    s8 temp = ((s8 *)arg0)[0x2C8 / sizeof(s8)];
+    if (temp <= 0) {
+        return &lbl_80367218;
+    }
+    return (u16 *)((u8 *)arg0 + 0x284);
+}
+
 void fn_801A85F4(s32 arg0) {
     M2C_UNK fn_80105CEC(s32, M2C_UNK);
     fn_80105CEC(arg0 + 0x1BC, 0x4C);
@@ -70,6 +79,11 @@ s32 fn_801A9FC8(void) {
 
 s32 fn_801A9FD0(void) {
     return 0;
+}
+
+s32 fn_801A9FD8(void *arg0) {
+    u32 temp = M2C_FIELD(arg0, u32 *, 0x1A0);
+    return -((temp >> 0xC) & 1) & ~((temp >> 0xC) & 1);
 }
 
 s32 fn_801A9FF0(void) {
