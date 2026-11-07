@@ -67,6 +67,18 @@ void fn_801A372C(void) {
     fn_80104480((u16*)(((u8*)temp_r31) + 0x560) + 0x1A4); // Equivalent to the original instruction pattern
 }
 
+void fn_801A442C(void) {
+    s32 var_r3;
+    u8 *var_r5;
+
+    for (var_r3 = 0; var_r3 < 0x11F; var_r3++) {
+        if (*(u8 *)((char *)0x801A7DFC + var_r3) != 0) {
+            var_r5 = (u8 *)((char *)0xA29058C4 + var_r3);
+            *var_r5 = *var_r5 + 1;
+        }
+    }
+}
+
 void *fn_801A46BC(void *arg0, void *arg1) {
     M2C_UNK fn_80029E58(void *, void *);
     void *sp8;
@@ -80,6 +92,18 @@ void fn_801A4958(void *arg0) {
     *field_cac = *field_cac | 4;
     fn_801A601C(arg0, (u8 *)arg0 + 0x2E0, 0);
     fn_80034068((u8 *)arg0 + 0x8A0, 0x54, 0);
+}
+
+void fn_801A4A24(s32 arg0, u8 arg1) {
+    M2C_UNK fn_80034068(s32, u8, M2C_UNK);
+    u8 var_r0;
+
+    fn_80034068(arg0 + 0x8A0, 0x20U, 0);
+    var_r0 = 0x52;
+    if (arg1 != 0) {
+        var_r0 = 0x50;
+    }
+    fn_80034068(arg0 + 0x8A0, var_r0, 0);
 }
 
 void fn_801A7CDC(void *arg0)
@@ -99,3 +123,4 @@ void fn_801A7CDC(void *arg0)
 #include "global.h"
 extern u16 lbl_802EF4C8;
 extern s32 lbl_802EF4E0;
+#include "global.h"
