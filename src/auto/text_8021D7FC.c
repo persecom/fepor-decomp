@@ -160,7 +160,7 @@ s32 fn_80222AA0(void *arg0) {
 }
 
 u8 fn_80222AA8(void *arg0) {
-    return (u8) (((M2C_FIELD(arg0, u8 *, 0x1F) & 1) - 1) == 0);
+    return (M2C_FIELD(arg0, u8 *, 0x1F) & 1) == 1;
 }
 
 s32 fn_80222CDC(void *arg0) {
