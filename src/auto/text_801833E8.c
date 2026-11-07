@@ -605,6 +605,16 @@ void fn_8019ABBC(void *arg0) {
     }
 }
 
+void fn_8019B29C(void *arg0) {
+    u8 fn_8005F9B8(void *, s32);
+    u32 *flags;
+
+    flags = (u32 *) (M2C_FIELD(arg0, u8 **, 0x5C) + 0x14);
+    if (fn_8005F9B8(flags, 0x12) || (*flags & 0x10)) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_8019B704(s32 arg0, s32 arg1) {
     void *fn_8000CAA0(M2C_UNK *, s32, M2C_UNK *);
     M2C_UNK fn_8019D51C(s32, void *);
