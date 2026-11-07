@@ -9,14 +9,13 @@ void fn_80074370(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0xC) = (s32) lbl_80367468;
 }
 
-extern s32 lbl_80330D68;
+extern u8 lbl_80330D68[];
 s32 fn_8007437C(void) {
-    u8 fn_80166D8C(M2C_UNK *);
-    extern M2C_UNK lbl_80330D68;
+    u8 fn_80166D8C(void *);
     s32 var_r3;
 
     var_r3 = 0x10;
-    if (fn_80166D8C(&lbl_80330D68) != 0) {
+    if (fn_80166D8C(lbl_80330D68) != 0) {
         var_r3 = 0x40;
     }
     return var_r3;
