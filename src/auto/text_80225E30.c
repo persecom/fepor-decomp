@@ -394,6 +394,26 @@ u16 fn_80227FDC(void) {
     return lbl_8033CA40;
 }
 
+void fn_802283A8(void) {
+    u32 var_r30;
+    s32 var_r29;
+    s32 i = 0;
+
+    if (osIsDebugMonitor() == 1) {
+        while (i <= 3) {
+            var_r30 = 0;
+            var_r29 = *(s32*)(0x80461170 + (i * 0xC));
+            do {
+                if ((var_r29 & (1 << var_r30)) != 0) {
+                    *(u32*)(0x80461330 + (i * 0xC) + var_r30*4) = 1;
+                }
+                var_r30++;
+            } while (var_r30 != 0x10);
+            i++;
+        }
+    }
+}
+
 s32 fn_802287A8(void) {
     return 0;
 }
@@ -498,7 +518,7 @@ typedef struct TRKStepStatus {
 } TRKStepStatus;
 
 extern TRKStepStatus lbl_8029E584;
-extern u8 gTRKCPUState[];
+extern u8 gTRKCPUState[1072];
 void MWTRACE(u8 level, char *fmt, ...);
 
 static inline s32 TRKTargetDoStep(void) {
