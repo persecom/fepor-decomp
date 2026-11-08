@@ -214,23 +214,23 @@ loop_9:
     goto loop_9;
 }
 
-void EXIClearInterrupts(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    s32 temp_r0;
-    s32 var_r0;
+BOOL EXIClearInterrupts(s32 chan, BOOL exi, BOOL tc, BOOL ext) {
+    u32 cpr;
+    u32 prev;
 
-    temp_r0 = arg0 * 0x14;
-    var_r0 = *(volatile u32*)(0xCC006800 + temp_r0);
-    var_r0 = var_r0 & 0x7F5;
-    if (arg1 != 0) {
-        var_r0 |= 2;
+    prev = cpr = __EXIRegs[chan * 5];
+    cpr &= 0x7F5;
+    if (exi) {
+        cpr |= 2;
     }
-    if (arg2 != 0) {
-        var_r0 |= 8;
+    if (tc) {
+        cpr |= 8;
     }
-    if (arg3 != 0) {
-        var_r0 |= 0x800;
+    if (ext) {
+        cpr |= 0x800;
     }
-    *(volatile u32*)(0xCC006800 + temp_r0) = var_r0;
+    __EXIRegs[chan * 5] = cpr;
+    return prev;
 }
 
 BOOL OSDisableInterrupts(void);
