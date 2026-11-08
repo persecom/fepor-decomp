@@ -788,7 +788,7 @@ int fn_80206FB8(u16 encode, u16 code) {
         } else if (0x889E < code && code <= 0x9872) {
             i = ((code >> 8) - 0x88) * 188;
             j = code & 0xFF;
-            if (!((0x40 <= (u8)j && (u8)j <= 0xFC) && (u8)j != 0x7F)) {
+            if (!IsSjisTrailByte(j)) {
                 return 0;
             }
             j -= 0x40;
@@ -799,7 +799,7 @@ int fn_80206FB8(u16 encode, u16 code) {
         } else if (0x8140 <= code && code < 0x879E) {
             i = ((code >> 8) - 0x81) * 188;
             j = code & 0xFF;
-            if (!((0x40 <= (u8)j && (u8)j <= 0xFC) && (u8)j != 0x7F)) {
+            if (!IsSjisTrailByte(j)) {
                 return 0;
             }
             j -= 0x40;
