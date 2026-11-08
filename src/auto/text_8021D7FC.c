@@ -354,6 +354,40 @@ void fn_80221068(void) {
     *(u32*)0xCC008000 = *(u32*)((u8*)__GXData + 0x204);
 }
 
+void fn_8022108C(GXRenderModeObj *rmin, GXRenderModeObj *rmout, u16 hor, u16 ver) {
+    s32 hor2;
+    s32 ver2;
+    u32 verf;
+    u32 mode;
+
+    hor2 = (u16)(hor * 2);
+    ver2 = (u16)(ver * 2);
+
+    if (rmin != rmout) {
+        *rmout = *rmin;
+    }
+
+    mode = rmin->viTVmode & 3;
+    rmout->fbWidth = (u16)(rmin->fbWidth - hor2);
+    verf = (ver2 * rmin->efbHeight) / (u32)rmin->xfbHeight;
+    rmout->efbHeight = (u16)(rmin->efbHeight - verf);
+    if (rmin->xFBmode == 0 && mode == 0) {
+        rmout->xfbHeight = (u16)(rmin->xfbHeight - ver2 / 2);
+    } else {
+        rmout->xfbHeight = (u16)(rmin->xfbHeight - ver2);
+    }
+
+    rmout->viWidth = (u16)(rmin->viWidth - hor2);
+    if (mode == 1) {
+        rmout->viHeight = (u16)(rmin->viHeight - ver2 * 2);
+    } else {
+        rmout->viHeight = (u16)(rmin->viHeight - ver2);
+    }
+
+    rmout->viXOrigin = (u16)(rmin->viXOrigin + hor);
+    rmout->viYOrigin = (u16)(rmin->viYOrigin + ver);
+}
+
 void fn_802212C8(s32 arg0) {
     extern u16 *__GXData;
     
@@ -379,7 +413,7 @@ s32 fn_802216E0(s32 arg0) {
 
 void fn_80221A2C(s32 arg0) {
     extern void *__GXData;
-    M2C_FIELD(__GXData, u32 *, 0x1EC) = (M2C_FIELD(__GXData, u32 *, 0x1EC) & ~0x180) | ((arg0 & 3) << 7);
+    M2C_FIELD(__GXData, u32 *, 0x1EC) = (M2C_FIELD(__GXData, u32 *, 0x1EC) & ~0x180) | ((arg0 << 7) & 0x180);
 }
 
 void fn_80221D6C(void *arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 farg4, f32 farg5) {
@@ -702,6 +736,17 @@ void fn_80223494(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32
                          ((arg_spC & 1) << 22) | ((arg4 & 0x1F) << 19) | ((arg5 & 0xF) << 16) |
                          ((arg6 & 7) << 13) | ((arg7 & 3) << 11) | ((arg_sp8 & 1) << 10);
     *(u16 *)__GXData = 0;
+}
+
+void fn_80223678(void *arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 farg4, f32 farg5) {
+    if (arg0 != NULL) {
+        M2C_FIELD(arg0, f32 *, 0x10) = farg0;
+        M2C_FIELD(arg0, f32 *, 0x14) = farg1;
+        M2C_FIELD(arg0, f32 *, 0x18) = farg2;
+        M2C_FIELD(arg0, f32 *, 0x1c) = farg3;
+        M2C_FIELD(arg0, f32 *, 0x20) = farg4;
+        M2C_FIELD(arg0, f32 *, 0x24) = farg5;
+    }
 }
 
 void fn_802237BC(s32 arg0, s32 arg1, s32 arg2) {
