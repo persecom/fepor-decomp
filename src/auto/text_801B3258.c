@@ -2889,8 +2889,8 @@ s32 fn_801E434C(void *arg0) {
 extern u16 lbl_80299E10;
 extern u8 lbl_80331FB8[];
 #include "global.h"
-extern u16 lbl_802842A4[];
-extern u16 lbl_802842B8[];
+extern u16 lbl_802842A4[5];
+extern u16 lbl_802842B8[6];
 extern s16 *lbl_8027C698;
 
 extern void *lbl_803682B8;
