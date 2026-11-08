@@ -411,7 +411,7 @@ s32 fn_802216E0(s32 arg0) {
 }
 
 void fn_80221A2C(s32 arg0) {
-    extern void *__GXData;
+    extern u16 *__GXData;
     M2C_FIELD(__GXData, u32 *, 0x1EC) = (M2C_FIELD(__GXData, u32 *, 0x1EC) & ~0x180) | ((arg0 << 7) & 0x180);
 }
 
