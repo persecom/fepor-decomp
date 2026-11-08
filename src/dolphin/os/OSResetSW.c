@@ -124,6 +124,38 @@ s32 __OSSyncSram(void) {
     return (s32)Scb_80339420[0x4C / sizeof(u16)];
 }
 
+s32 fn_802098F8(void) {
+    u16 *scb;
+    
+    scb = Scb_80339420;
+    OSDisableInterrupts();
+    if (scb[0x48 / 2] != 0) {
+        OSRestoreInterrupts();
+        return 0;
+    } else {
+        scb[0x44 / 2] = 0;
+        scb[0x48 / 2] = 1;
+    }
+    
+    return (scb[0x13 / 2] >> 7) & 1;
+}
+
+s32 fn_80209A78(void) {
+    u16 *scb_ptr;
+    u16 temp_r0;
+
+    scb_ptr = Scb_80339420;
+    OSDisableInterrupts();
+    temp_r0 = scb_ptr[0x24];
+    if (temp_r0 != 0) {
+        OSRestoreInterrupts();
+        return 0;
+    } else {
+        scb_ptr[0x24] = 1;
+    }
+    return (scb_ptr[0x8] >> 6) & 1;
+}
+
 extern void* __OSSystemCallVectorStart;
 extern void* __OSSystemCallVectorEnd;
 void __OSInitSystemCall(void) {
@@ -486,6 +518,17 @@ s32 fn_802116D4(void) {
     return (((r5 - 1) * 2) + ((r3 - 1) / r4)) < lbl_80368648[14] ? 1 : 0;
 }
 
+u32 VIGetTvFormat(void) {
+    u32 mode;
+    
+    mode = *(u32*)0x8036864C;
+    if (mode > 7) {
+        return 0;
+    }
+    
+    return ((u16*)0x8029D68C)[mode];
+}
+
 s32 fn_802118D8(void) {
     s32 temp_r31;
     u16 reg_val;
@@ -643,6 +686,12 @@ void fn_80215C5C(void) {
 
 }
 
+void fn_80215D2C(void) {
+    char* text = "%s\n";
+    OSRegisterVersion(0x43);
+    OSReport(text, "ResetSW");
+}
+
 void fn_80215EF8(void) {
     extern s32 lbl_803686F8;
     extern s32 lbl_803686FC;
@@ -713,3 +762,4 @@ extern u16 Scb_80339420[];
 #include "global.h"
 extern u32 CurrTvMode_8036864C;
 extern u16 lbl_8029D68C[];
+extern u16 lbl_803686D8;
