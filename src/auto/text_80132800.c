@@ -3065,14 +3065,3 @@ extern f32 lbl_8036A674;
 extern u8 lbl_802768A0[];
 extern f32 lbl_8036A6B0;
 extern f32 lbl_8036A6B4;
-typedef struct {
-    s32 field_0x0;
-    s32 field_0x4;
-    s32 field_0x8;
-    s32 field_0xC;
-    s32 field_0x10;
-    s32 field_0x14;
-    s32 field_0x18;
-    s32 field_0x1C;
-    s32 field_0x20;
-} Struct_8013D6E0;
