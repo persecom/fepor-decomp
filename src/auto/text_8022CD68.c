@@ -3,6 +3,7 @@
 
 extern u8 lbl_8034C110[];
 extern f64 lbl_8036C368;
+extern u16 *D_80256B30;
 extern s32 lbl_803687F8;
 extern f32 lbl_8036C374;
 extern s32 lbl_80368A28;
@@ -399,6 +400,17 @@ void fn_8023C7B0(void) {
     M2C_FIELD(&lbl_8033E578, s32 *, 0xC) = (s32) (temp_r6 + 0x180);
     M2C_FIELD(&lbl_8033E578, s32 *, 0x10) = (s32) (temp_r6 + 0x200);
     M2C_FIELD(&lbl_8033E578, s32 *, 0x14) = (s32) (temp_r6 + 0x280);
+}
+
+void fn_8023D2FC(void) {
+    extern u16 *lbl_80368950;
+    
+    u16* ptr = lbl_80368950;
+    u16 temp_r3 = ptr[0x1A6];
+    ptr[0x1A6] = temp_r3 + 2;
+    ptr[0x1A7] = (u16)((ptr[temp_r3+1] & 0xFF) << 8 | (ptr[temp_r3] & 0xFF00));
+    ptr[0x1A6] = temp_r3 + 2;
+    ptr[0x1A9] = ptr[0x1A7];
 }
 
 s32 fn_80243E84(void *arg0) {
@@ -1800,23 +1812,20 @@ void fn_80258100(void) {
 
 void fn_80258A98(s32 arg0, s32 arg1) {
     extern s32 lbl_8035B220[];
-    extern s32 lbl_80368A58;
-    extern s32 *lbl_80368A5C;
     extern s32 *lbl_80368A60;
+    extern s32 *lbl_80368A5C;
+    extern s32 *lbl_80368A58;
     
-    s32 var_r3 = 0;
-    s32 var_r4 = -2;
-    s32 var_r5 = arg0;
-    s32 var_r6 = arg0 + arg1;
-    lbl_80368A60 = NULL;
-    lbl_8035B220[1] = var_r4;
-    lbl_8035B220[2] = var_r3;
-    lbl_8035B220[0x183] = var_r5;
-    lbl_8035B220[0x185] = var_r5;
-    lbl_8035B220[0x184] = var_r6;
-    lbl_8035B220[0] = var_r3;
+    s32 var_r5 = arg0 + arg1;
+    lbl_80368A60 = (s32 *)0x0;
+    lbl_8035B220[0x1] = -2;
+    lbl_8035B220[0x2] = 0;
+    lbl_8035B220[0x183] = arg0;
+    lbl_8035B220[0x185] = arg0;
+    lbl_8035B220[0x184] = var_r5;
+    lbl_8035B220[0] = 0;
     lbl_80368A60 = &lbl_8035B220[0];
-    lbl_80368A58 = var_r3;
+    lbl_80368A58 = (s32 *)0x0;
     lbl_80368A5C = &lbl_8035B220[0];
 }
 
