@@ -2113,6 +2113,40 @@ void fn_8007B990(void *arg0) {
     }
 }
 
+s32 fn_8007BA4C(s32 arg0) {
+    s32 sp30;
+    s32 *var_r29;
+    u32 r28;
+    s32 r31;
+
+    sp30 = 0x0;
+    if (arg0 == 0x0) {
+        r31 = 0x15;
+    } else if (arg0 == 0x1) {
+        r31 = 0xE;
+    } else if (arg0 == 0x2) {
+        r31 = 0xD;
+    } else if (arg0 == 0x3) {
+        r31 = 0xB;
+    } else if (arg0 == 0x4) {
+        r31 = 0xC;
+    } else {
+        r31 = 0x8;
+    }
+    
+    var_r29 = &sp30;
+    r28 = r31 * 0x8;
+    if (r31 < 0x20) {
+        while (1) {
+            *(var_r29 + r28) = 0x0;
+            r28 -= 0x1;
+            if ((s32)(r28 + 0x1) <= 0x0) break;
+        }
+    }
+    
+    return sp30;
+}
+
 void fn_8007BC3C(s32 a,s32 b,s32 c,s32 d,s32 e){void fn_8007BD30(s8,s32,s32,s32,s32,s32,s32);extern u32 lbl_80312040[];s8 n;if(!lbl_80312040[0])n=0;else if(!lbl_80312040[1])n=1;else if(!lbl_80312040[2])n=2;else if(!lbl_80312040[3])n=3;else if(!lbl_80312040[4])n=4;else if(!lbl_80312040[5])n=5;else if(!lbl_80312040[6])n=6;else if(!lbl_80312040[7])n=7;else n=-1;fn_8007BD30(n,a,b,c,d,0,e);}
 
 void fn_8007C018(void *arg0) {
@@ -2211,3 +2245,4 @@ extern u16 lbl_80312040[8];
 
 extern u16 lbl_802EF4C8[12];
 extern s32 lbl_802EF4E0[502];
+#include "global.h"
