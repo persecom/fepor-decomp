@@ -208,13 +208,13 @@ s32 fn_8023ABF4(s32 arg0) {
 
 s32 fn_8023B270(s32 arg0) {
     M2C_UNK OSRestoreInterrupts(s32);
-    extern M2C_UNK Packet_8033E248;
+    extern SIPacket Packet_8033E248[];
     s32 temp_r5;
     s32 temp_r5_2;
     s32 var_r30;
     s32 var_r5;
 
-    OSDisableInterrupts(&Packet_8033E248);
+    OSDisableInterrupts(Packet_8033E248);
     temp_r5 = *(s32 *)0xCC006434;
     if (temp_r5 & 0x08000000) {
         var_r30 = 1;
