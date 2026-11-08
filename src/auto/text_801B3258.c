@@ -1315,8 +1315,16 @@ s32 fn_801C98EC(void) {
     M2C_UNK fn_8011C984(s32, s32);
     s32 fn_8011C9E4(s32);
     M2C_UNK fn_801CAF94(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
-    extern void *lbl_803682B8;
-    void *temp_r31;
+    extern void* lbl_803682B8;
+extern s32 fn_800DC3B0(s32, void *);
+extern s32 fn_8011C9E4(s32);
+extern s32 fn_8011C984(s32, s32);
+extern void* fn_801CAF2C(s32);
+extern s32 fn_801CAF8C(s32);
+extern void fn_800E8FCC(f32*, s32);
+extern void fn_800DBB74(f32*, s32);
+extern f32 fn_800E9018(s32);
+void *temp_r31;
 
     temp_r31 = lbl_803682B8;
     fn_8011C984(M2C_FIELD(temp_r31, s32 *, 0x430), fn_8011C9E4(M2C_FIELD(temp_r31, s32 *, 0x430)));
