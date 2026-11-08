@@ -159,28 +159,29 @@ void GXSetGPFifo(void *fifo) {
     extern void* lbl_80368770;
     extern void* lbl_80368774;
     extern u8 lbl_8036877C;
+    __GXFifoObj* realFifo = (__GXFifoObj*)fifo;
     s32 enabled;
     u32 reg;
 
     enabled = OSDisableInterrupts();
     fn_8021F314();
     fn_8021F36C(0, 0);
-    lbl_80368774 = fifo;
+    lbl_80368774 = realFifo;
 
-    __cpReg[16] = M2C_FIELD(fifo, u32 *, 0x0);
-    __cpReg[18] = M2C_FIELD(fifo, u32 *, 0x4);
-    __cpReg[24] = M2C_FIELD(fifo, s32 *, 0x1C);
-    __cpReg[26] = M2C_FIELD(fifo, u32 *, 0x18);
-    __cpReg[28] = M2C_FIELD(fifo, u32 *, 0x14);
-    __cpReg[20] = M2C_FIELD(fifo, u32 *, 0xC);
-    __cpReg[22] = M2C_FIELD(fifo, u32 *, 0x10);
-    __cpReg[17] = (M2C_FIELD(fifo, u32 *, 0x0) & 0x3FFFFFFF) >> 16;
-    __cpReg[19] = (M2C_FIELD(fifo, u32 *, 0x4) & 0x3FFFFFFF) >> 16;
-    __cpReg[25] = M2C_FIELD(fifo, s32 *, 0x1C) >> 16;
-    __cpReg[27] = (M2C_FIELD(fifo, u32 *, 0x18) & 0x3FFFFFFF) >> 16;
-    __cpReg[29] = (M2C_FIELD(fifo, u32 *, 0x14) & 0x3FFFFFFF) >> 16;
-    __cpReg[21] = M2C_FIELD(fifo, u32 *, 0xC) >> 16;
-    __cpReg[23] = M2C_FIELD(fifo, u32 *, 0x10) >> 16;
+    __cpReg[16] = (u32)realFifo->base;
+    __cpReg[18] = (u32)realFifo->top;
+    __cpReg[24] = realFifo->count;
+    __cpReg[26] = (u32)realFifo->wrPtr;
+    __cpReg[28] = (u32)realFifo->rdPtr;
+    __cpReg[20] = realFifo->hiWatermark;
+    __cpReg[22] = realFifo->loWatermark;
+    __cpReg[17] = ((u32)realFifo->base & 0x3FFFFFFF) >> 16;
+    __cpReg[19] = ((u32)realFifo->top & 0x3FFFFFFF) >> 16;
+    __cpReg[25] = realFifo->count >> 16;
+    __cpReg[27] = ((u32)realFifo->wrPtr & 0x3FFFFFFF) >> 16;
+    __cpReg[29] = ((u32)realFifo->rdPtr & 0x3FFFFFFF) >> 16;
+    __cpReg[21] = realFifo->hiWatermark >> 16;
+    __cpReg[23] = realFifo->loWatermark >> 16;
 
     fn_802037B0();
 
