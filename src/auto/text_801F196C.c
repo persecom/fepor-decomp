@@ -8,6 +8,22 @@ extern struct {
     u32 padC;
 } lbl_8029B068;
 extern void* fn_800C08AC(void *, s32, void *);
+
+extern f32 lbl_8036B910;
+extern f32 lbl_8036B914;
+extern f32 lbl_8036B918;
+extern f32 lbl_8036B91C;
+extern f32 lbl_8036B920;
+extern f32 lbl_8036B924;
+extern f32 lbl_8036B928;
+extern f32 lbl_8036B92C;
+extern f32 lbl_8036B930;
+extern f32 lbl_8036B934;
+extern f32 lbl_8036B938;
+extern f32 lbl_8036B93C;
+extern f32 lbl_8036B940;
+extern f32 lbl_8036B944;
+extern f32 lbl_8036B948;
 extern void* lbl_8029A8C8[];
 extern void fn_80050E80(void);
 extern void fn_8005C7C8(void*);
