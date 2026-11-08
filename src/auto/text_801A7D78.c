@@ -542,6 +542,63 @@ void *fn_801A9CF4(void *dst, void *src) {
     return dst;
 }
 
+void fn_801A9EB8(void *arg0) {
+    void fn_8003B6F0(void *, s32);
+    void fn_8001D580(void *);
+
+    fn_8003B6F0(arg0, 0);
+    *(u32*)(((char*)arg0) + 0x280) = 0;
+    fn_8001D580(((char*)arg0) + 0x284);
+    fn_8001D580(((char*)arg0) + 0x28C);
+    *(s8*)(((char*)arg0) + 0x294) = -1;
+    *(u8*)(((char*)arg0) + 0x295) = 0;
+    *(u8*)(((char*)arg0) + 0x296) = 0;
+    *(s16*)(((char*)arg0) + 0x298) = 0;
+    *(s16*)(((char*)arg0) + 0x29A) = 0;
+    *(s16*)(((char*)arg0) + 0x29C) = 0;
+    *(s16*)(((char*)arg0) + 0x29E) = 0;
+    *(s16*)(((char*)arg0) + 0x2A0) = 0;
+    *(s16*)(((char*)arg0) + 0x2A2) = 0;
+    *(s16*)(((char*)arg0) + 0x2A4) = 0;
+    *(s16*)(((char*)arg0) + 0x2A6) = 0;
+    *(s16*)(((char*)arg0) + 0x2A8) = 0;
+    *(s16*)(((char*)arg0) + 0x2AA) = 0;
+    *(s16*)(((char*)arg0) + 0x2AC) = 0;
+    *(u16*)(((char*)arg0) + 0x2AE) = 0;
+    *(u32*)(((char*)arg0) + 0x2B0) = 0;
+    *(u8*)(((char*)arg0) + 0x2B4) = 0;
+    *(u8*)(((char*)arg0) + 0x2B5) = 0;
+    *(u8*)(((char*)arg0) + 0x2B6) = 0;
+    *(s16*)(((char*)arg0) + 0x2C2) = 0;
+    *(s16*)(((char*)arg0) + 0x2C4) = 0;
+    *(u8*)(((char*)arg0) + 0x2C6) = 0;
+    *(u8*)(((char*)arg0) + 0x2C7) = 0;
+    *(u8*)(((char*)arg0) + 0x2C8) = 0;
+    *(u8*)(((char*)arg0) + 0x2C9) = 0;
+    *(u8*)(((char*)arg0) + 0x2CA) = 0;
+    *(u8*)(((char*)arg0) + 0x2CB) = 0;
+    *(u8*)(((char*)arg0) + 0x2CC) = 0;
+    *(s16*)(((char*)arg0) + 0x2CE) = 0;
+    *(u32*)(((char*)arg0) + 0x2D0) = 0;
+    *(u8*)(((char*)arg0) + 0x2D4) = 0;
+    *(u8*)(((char*)arg0) + 0x2D5) = 0;
+    *(u8*)(((char*)arg0) + 0x2D6) = 0;
+    *(u8*)(((char*)arg0) + 0x2DE) = 0;
+    *(u8*)(((char*)arg0) + 0x2DD) = 0;
+    *(u8*)(((char*)arg0) + 0x2DC) = 0;
+    *(u8*)(((char*)arg0) + 0x2DB) = 0;
+    *(u8*)(((char*)arg0) + 0x2DA) = 0;
+    *(u8*)(((char*)arg0) + 0x2D9) = 0;
+    *(u8*)(((char*)arg0) + 0x2D8) = 0;
+    *(u8*)(((char*)arg0) + 0x2D7) = 0;
+    *(u8*)(((char*)arg0) + 0x2B7) = 0xFF;
+    *(u8*)(((char*)arg0) + 0x2B8) = 0xFF;
+    *(s16*)(((char*)arg0) + 0x2BA) = -1;
+    *(s16*)(((char*)arg0) + 0x2BC) = -1;
+    *(s16*)(((char*)arg0) + 0x2BE) = -1;
+    *(s16*)(((char*)arg0) + 0x2C0) = -1;
+}
+
 s32 fn_801A9FC8(void) {
     return 0;
 }
