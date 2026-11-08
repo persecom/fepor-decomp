@@ -375,9 +375,47 @@ void fn_802291A4(void *b) {
     fn_80226698(b, &msg, sizeof(msg));
 }
 
+s32 fn_8022A098(void) {
+    s32 fn_8022A0E4(u32 *, M2C_UNK, M2C_UNK);
+    u32 sp8;
+    s32 var_r3;
+
+    sp8 = 4U;
+    var_r3 = fn_8022A0E4(&sp8, 0, 1);
+    if ((var_r3 == 0) && (sp8 != 4U)) {
+        var_r3 = 0x700;
+    }
+    return var_r3;
+}
+
+s32 TRKInitializeTarget(void) {
+    extern u8 gTRKState[];
+    extern u16 lbl_8033CFC8[];
+    
+    M2C_FIELD(gTRKState, s32 *, 0x98) = 1;
+    M2C_FIELD(gTRKState, s32 *, 0x8C) = fn_80228948(gTRKState);
+    lbl_8033CFC8[0] = 0xE000;
+    
+    return 0;
+}
+
 void EnableMetroTRKInterrupts(void) {
     M2C_UNK fn_8022B120();
     fn_8022B120();
+}
+
+void TRK_main(void) {
+    // Empty implementation for now - this appears to be related to debugging/tracing
+    return;
+}
+
+void TRKInitializeIntDrivenUART(void);
+void TRKLoadContext(void);
+void TRK_main(void);
+u32 fn_8022AE34(u32 arg0);
+void TRKLoadContext(void) {
+    // Empty implementation for now - this appears to be related to debugging/tracing
+    return;
 }
 
 void TRKUARTInterruptHandler(void) {
@@ -656,3 +694,5 @@ void fn_8022C1B8(u8 *arg0, u8 *arg1, u32 arg2) {
 extern u16 lbl_802822A8[19];
 extern u8 TRK_Use_BBA;
 extern u32 gDBCommTable[10];
+extern u32 lbl_8033CFC8;
+extern u8 gTRKCPUState[1072];
