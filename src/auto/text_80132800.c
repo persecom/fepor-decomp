@@ -3,6 +3,8 @@
 #include "dolphin/os.h"
 
 extern u16 lbl_80331FB8[36]; // 72 bytes 
+extern f32 lbl_8036A6D0;
+extern f32 lbl_8036A6C4;
 
 extern u16 lbl_80331FB8[36]; // 72 bytes = 36 * 2-byte entries
 extern f32 lbl_8036A5A8;
