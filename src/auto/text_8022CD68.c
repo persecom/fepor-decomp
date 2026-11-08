@@ -32,6 +32,9 @@ extern u16 lbl_8035BF18[];
 extern u32 lbl_8035C918[];
 
 u32 fn_8026367C(void);
+u16 fn_8025FC64(u8 arg0, u8 arg1, u8 arg2);
+s32 fn_8022C568(f32 arg0);
+void fn_80261934(u8 arg0, void *arg1, s32 arg2);
 
 typedef struct Voice {
     u8 pad0[0x110];
@@ -874,6 +877,52 @@ s32 fn_80239508(s32 arg0) {
     return -1;
 }
 
+s32 EXILock(s32 arg0, u32 arg1, u32 arg2) {
+    s32 temp_r29;
+    s32 temp_r4;
+    s32 temp_r4_2;
+    s32 var_ctr;
+    void *temp_r30;
+    void *var_r3;
+
+    temp_r4 = arg0 << 6;
+    temp_r30 = &Ecb_8033E188[temp_r4];
+    temp_r29 = OSDisableInterrupts();
+    if (*(u32*)((uintptr_t)temp_r30 + 0xC) & 0x10) {
+        if (arg2 != 0U) {
+            var_r3 = temp_r30;
+            temp_r4_2 = *(u32*)((uintptr_t)temp_r30 + 0x24);
+            var_ctr = temp_r4_2;
+            if (temp_r4_2 > 0) {
+loop_3:
+                if (*(u32*)((uintptr_t)var_r3 + 0x28) == arg1) {
+                    OSRestoreInterrupts(temp_r29);
+                    return 0;
+                }
+                var_r3 = (char*)var_r3 + 8;
+                var_ctr -= 1;
+                if (var_ctr == 0) {
+                    goto block_6;
+                }
+                goto loop_3;
+            }
+block_6:
+            *(u32*)((uintptr_t)temp_r30 + 0x2C) = arg2;
+            *(u32*)((uintptr_t)temp_r30 + (temp_r4_2 * 8) + 0x28) = arg1;
+            *(u32*)((uintptr_t)temp_r30 + 0x24) = (s32) (*(u32*)((uintptr_t)temp_r30 + 0x24) + 1);
+            goto block_7;
+        }
+block_7:
+        OSRestoreInterrupts(temp_r29);
+        return 0;
+    }
+    *(u32*)((uintptr_t)temp_r30 + 0xC) = (s32) (*(u32*)((uintptr_t)temp_r30 + 0xC) | 0x10);
+    *(u32*)((uintptr_t)temp_r30 + 0x18) = arg1;
+    SetExiInterruptMask(arg0, temp_r30);
+    OSRestoreInterrupts(temp_r29);
+    return 1;
+}
+
 s32 EXIUnlock(s32 arg0) {
     return 1;
 }
@@ -938,6 +987,54 @@ s32 fn_8023B270(s32 arg0) {
     M2C_FIELD((s32 *)0xCC000000, s32 *, 0x6434) = temp_r5_2;
     OSRestoreInterrupts(temp_r5_2);
     return var_r30;
+}
+
+s32 fn_8023B3D4(u32 arg0) {
+    M2C_UNK OSRestoreInterrupts(s32);
+    M2C_UNK fn_8023B270(M2C_UNK);
+    extern u32 lbl_8033E3E8;
+    s32 temp_r31;
+    s32 var_ctr;
+    s32 var_r4;
+    s32 var_r4_2;
+    u32 *temp_r3;
+    u32 *var_r3;
+
+    var_ctr = 4;
+    temp_r31 = OSDisableInterrupts();
+    var_r3 = &lbl_8033E3E8;
+    var_r4 = 0;
+loop_1:
+    if ((u32) *var_r3 == arg0) {
+        (&lbl_8033E3E8)[var_r4] = 0U;
+        var_r4_2 = 0;
+        if ((u32) M2C_FIELD(&lbl_8033E3E8, u32 *, 0) == 0U) {
+            temp_r3 = &lbl_8033E3E8 + 4;
+            var_r4_2 = 1;
+            if ((u32) M2C_FIELD(&lbl_8033E3E8, u32 *, 4) == 0U) {
+                var_r4_2 = 2;
+                if ((u32) M2C_FIELD(temp_r3, u32 *, 4) == 0U) {
+                    var_r4_2 = 3;
+                    if ((u32) M2C_FIELD((temp_r3 + 4), u32 *, 4) == 0U) {
+                        var_r4_2 = 4;
+                    }
+                }
+            }
+        }
+        if (var_r4_2 == 4) {
+            fn_8023B270(0);
+        }
+        OSRestoreInterrupts(temp_r31);
+        return 1;
+    }
+    var_r3 += 4;
+    var_r4 += 1;
+    var_ctr -= 1;
+    if (var_ctr == 0) {
+        OSRestoreInterrupts(temp_r31);
+        return 0;
+    }
+    goto loop_1;
 }
 
 void SIInit(void) {
