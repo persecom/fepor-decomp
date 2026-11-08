@@ -220,41 +220,8 @@ BOOL fn_8020C920(s32 entrynum, char *path, u32 maxlen) {
     return TRUE;
 }
 
-s32 fn_8020CA74(s32 arg0, u32 arg1) {
-    s32 r31;
-    s32 result;
-    
-    // Set up the stack frame properly like target
-    r31 = lbl_80368588;
-    
-    // Call fn_8020C7C0(r31, arg0, arg1) (r3 = arg1, r4 = arg0)
-    result = fn_8020C7C0(r31, (char *)arg0, arg1);
-    
-    if (result == arg1) {
-        // Directly return 0
-        *(char*)(arg0 + arg1 - 1) = 0;
-        return 0;
-    } else {
-        // Load the value from FstStart_8036857C + (r31 * 0xC)
-        s32 r4_val = *(u32*)(FstStart_8036857C + (r31 * 0xC));
-        
-        if ((r4_val & 0xFF000000) != 0) {
-            // Upper byte non-zero case
-            if (result == (arg1 - 1)) {
-                *(char*)(arg0 + result) = 0;
-                return 0;
-            } else {
-                *(char*)(arg0 + result) = 0x2F;
-                result += 1;
-                *(char*)(arg0 + result) = 0;
-                return 1;
-            }
-        } else {
-            // Upper byte zero case
-            *(char*)(arg0 + result) = 0;
-            return 1;
-        }
-    }
+BOOL fn_8020CA74(char *path, u32 maxlen) {
+    return fn_8020C920((s32)lbl_80368588, path, maxlen);
 }
 
 s32 fn_8020CB38(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
