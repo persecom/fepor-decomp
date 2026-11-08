@@ -187,6 +187,16 @@ typedef struct SIAlarm {
     u8 pad[0x28];
 } SIAlarm;
 
+static SIPacket Packet_8033E248[4];
+static SIAlarm lbl_8033E2C8[4];
+static s64 TypeTime[4];
+static s64 XferTime[4];
+static void *TypeCallback[4][4];
+static u32 lbl_8033E3E8[4];
+static BOOL InputBufferValid[4];
+static u32 InputBuffer[4][2];
+static volatile u32 InputBufferVcount[4];
+
 s32 fn_8023ABD4(void) {
     extern u16 Si_8029EFAC[];
 if ((s32) Si_8029EFAC != -1) {
