@@ -360,7 +360,7 @@ void fn_80206888(void) {
     lbl_803684B0 = 1;
 }
 
-extern u16 InterruptHandlerTable_803684C8[];
+extern u16* InterruptHandlerTable_803684C8;
 s32 fn_80207BAC(s16 arg0) {
     return InterruptHandlerTable_803684C8[arg0];
 }
