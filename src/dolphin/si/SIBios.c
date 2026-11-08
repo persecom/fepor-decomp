@@ -361,18 +361,6 @@ void fn_8023B99C(void)
 }
 
 void fn_8023BB34(void *alarm, void *context) {
-    typedef struct SIAlarm {
-        u8 pad[0x28];
-    } SIAlarm;
-    typedef struct SIPacket {
-        s32 chan;
-        void *output;
-        u32 outputBytes;
-        void *input;
-        u32 inputBytes;
-        void *callback;
-        s64 fire;
-    } SIPacket;
     extern SIAlarm lbl_8033E2C8[];
     extern SIPacket Packet_8033E248[];
     s32 fn_8023B57C(s32, void *, u32, void *, u32, void *);
