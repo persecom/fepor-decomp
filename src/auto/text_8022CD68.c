@@ -1110,8 +1110,8 @@ void fn_8023B818(void) {
     *(s32 *)0xCC006438 = 0x80000000;
 }
 
-extern u16 Si_8029EFAC[10];
 s32 fn_8023B930(u32 arg0) {
+    extern u16 Si_8029EFAC[10];
     s32 r31;
     
     if (arg0 == 0) {
