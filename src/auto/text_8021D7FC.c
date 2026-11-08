@@ -73,7 +73,7 @@ extern void fn_8020C1A4(u8, u32, void *);
 extern u8 lbl_80289EB8[16];
 
 void *fn_8021D8F8(u32 arg0) {
-    extern u32 *__GXData;
+    extern u16 *__GXData;
     void *ret;
 
     if (arg0 >= 0x14) {
@@ -118,6 +118,16 @@ s32 fn_8021F4D4(void) {
 s32 fn_8021F4DC(void) {
     extern s32 lbl_80368788;
     return lbl_80368788;
+}
+
+void fn_8021FBB8(void) {
+    u32* temp_r4 = (u32*)0x803B81A0;
+    temp_r4[0x14/4] = 0;
+    temp_r4[0x14/4] = (temp_r4[0x14/4] & ~0x600) | 0x200;
+    temp_r4[0x18/4] = 0;
+    ((u8*)0x803B81A0)[0x4D4] = 0;
+    ((u8*)0x803B81A0)[0x4D5] = 0;
+    temp_r4[0x5AC/4] |= 0x8;
 }
 
 void fn_80220198(void) {
@@ -252,6 +262,19 @@ void fn_802220DC(void *arg0, s32 *arg1) {
     M2C_FIELD(arg0, s32 *, 0xC) = (s32) *arg1;
 }
 
+void fn_80222A3C(s32 *arg0, s32 arg1, s32 arg2) {
+    extern u16 lbl_80367048;
+    s32 var_r5;
+
+    if (arg2 == 1) {
+        var_r5 = 1;
+    } else {
+        var_r5 = 0;
+    }
+    *arg0 = (*arg0 & ~0x10) | ((var_r5 << 4) & 0x10);
+    *arg0 = (*arg0 & ~0xE0) | ((*(&lbl_80367048 + arg1) << 5) & 0xE0);
+}
+
 s32 fn_80222A74(void *arg0) {
     return (M2C_FIELD(arg0, s32 *, 0xC) << 5) & 0x03FFFFE0;
 }
@@ -283,6 +306,17 @@ s32 fn_80222CDC(void *arg0) {
 
 u16 fn_80222CE8(void *arg0) {
     return M2C_FIELD(arg0, u16 *, 8);
+}
+
+void GXInitTlutRegion(s32 *arg0, s32 arg1, s32 arg2) {
+    s32 temp_r4;
+    s32 temp_r5;
+    *arg0 = 0;
+    temp_r4 = (arg1 + 0xFFF80000);
+    temp_r5 = temp_r4 >> 9;
+    *arg0 = (*arg0 & ~0x3FF) | (temp_r5 & 0x3FF);
+    *arg0 = (*arg0 & ~0x1FFC00) | ((arg2 << 0xA) & 0x1FFC00);
+    *arg0 = (*arg0 & ~0xFF000000) | 0x65000000;
 }
 
 extern u16* __GXData;
@@ -399,6 +433,17 @@ void fn_802247C0(s32 arg0) {
     *(u16*)0xCC008000 = temp_r6;
     __GXData[0x1D0/2] = temp_r6;
     __GXData[0x2/2] = 0;
+}
+
+void fn_80224828(s32 arg0, u8 arg1) {
+    u32 temp_r5;
+    
+    temp_r5 = (u32)arg1 & 0x1;
+    temp_r5 |= ((u32)arg0 << 1) & 0x2;
+    temp_r5 |= 0x44000000;
+    *(u8*)0xCC008000 = 0x61;
+    *(u32*)(0xCC008000) = temp_r5;
+    *(u16*)(__GXData + 1) = 0;
 }
 
 void fn_80224E1C(void *arg0, s32 arg1) {
