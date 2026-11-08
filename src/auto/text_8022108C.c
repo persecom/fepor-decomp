@@ -113,7 +113,7 @@ typedef union {
     f32 f32;
 } PPCWGPipe;
 
-volatile PPCWGPipe GXWGFifo : 0xCC008000;
+PPCWGPipe GXWGFifo : 0xCC008000;
 
 static inline u32 __GXReadPECounterU32(u32 lo, u32 hi) {
     u32 ctrH0;
@@ -201,8 +201,8 @@ void fn_80221A40(void)
 
 void fn_80221BA8(void *dest, u8 clear) {
     u32 reg;
-    u32 tempPeCtrl;
     u8 changePeCtrl;
+    u32 tempPeCtrl;
 
     if (clear) {
         reg = M2C_FIELD(__GXData, u32 *, 0x1D8);
@@ -275,33 +275,27 @@ void fn_80221D6C(void *arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 far
 }
 
 void fn_80221D88(s32 arg0, f32* arg1) {
-    if (arg1[0] >= 0.0f) {
-        if (arg1[0] <= 1.0f)
-            return;
+    // Simple control flow to get closer to actual function structure
+    if (arg1[0] >= 0.0f && arg1[0] <= 1.0f) {
+        return;
     }
-    
+
     switch (arg0) {
         case 0:
-            // Placeholder for now - will be filled with actual logic
-            break;
+            // Simple logic - we'll expand
+            return;
         case 1:
-            // Placeholder for now - will be filled with actual logic
-            break;
+            return;
         case 2:
-            // Placeholder for now - will be filled with actual logic
-            break;
+            return;
         case 3:
-            // Placeholder for now - will be filled with actual logic
-            break;
+            return;
         case 4:
-            // Placeholder for now - will be filled with actual logic
-            break;
+            return;
         case 5:
-            // Placeholder for now - will be filled with actual logic
-            break;
+            return;
         case 6:
-            // Placeholder for now - will be filled with actual logic
-            break;
+            return;
     }
 }
 
