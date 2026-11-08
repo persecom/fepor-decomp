@@ -908,7 +908,7 @@ void fn_8024B828(s32 arg0, s32 arg1, s32 arg2) {
         fn_802636F4();
     }
 }
-#pragma inline_depth(reset)
+#pragma dont_inline reset
 
 void fn_8024B8EC(s32 arg0, s32 arg1, s32 arg2) {
     M2C_UNK fn_8024A780(s32, s32, s32, M2C_UNK, M2C_UNK);
