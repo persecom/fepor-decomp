@@ -327,6 +327,10 @@ void fn_801229F8(void *arg0) {
     }
 }
 
+void fn_80122AA8(void* arg0) {
+    // Placeholder - just want to get it to compile
+}
+
 void fn_80122C84(void *arg0) {
     s32* var_r30;
     s32 var_r29;
@@ -1121,3 +1125,7 @@ extern f32 lbl_8036A35C;
 extern f32 lbl_8036A3B8;
 extern void *lbl_80274F74;
 extern void *lbl_80367A68;
+#include "global.h"
+#include "unit.h"
+
+extern u32* gUnitStructs; // lbl_80367240
