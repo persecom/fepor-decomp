@@ -38,7 +38,11 @@ typedef struct SynthVoice {
     u8 id;                   /* 0x009 */
     u16 unkA;                /* 0x00A */
     u32 vid;                 /* 0x00C */
-    u8 pad10[0x11C - 0x10];
+    u8 pad10[0xF4 - 0x10];
+    u32 unkF4;               /* 0x0F4 */
+    struct VidList *unkF8;   /* 0x0F8 */
+    struct VidList *unkFC;   /* 0x0FC */
+    u8 pad100[0x11C - 0x100];
     s32 unk11C;              /* 0x11C */
     s32 unk120;              /* 0x120 */
     u8 pad124[0xEF0 - 0x124];
