@@ -2,7 +2,8 @@
 #include "common.h"
 #include <dolphin/os.h>
 #include "global.h"
-extern s32 lbl_803682F0;
+extern u32 lbl_803682F0;
+extern void (*lbl_803685E8)(void);;
 extern u16 lbl_8029BBB0[20];
 extern void DMAErrorHandler(void);
 u32 OSGetTick(void);;;
@@ -602,6 +603,30 @@ void __OSCacheInit(void) {
     if (0x8020DAE0 != 0) {
         ((void (*)(void))0x8020DAE0)();
     }
+}
+
+f64 __OSLoadFPUContext(void *arg1, f64 farg0) {
+    f64 var_f1;
+
+    var_f1 = farg0;
+    if (M2C_FIELD(arg1, u16 *, 0x1A2) & 1) {
+        M2C_ERROR(/* unknown instruction: mtfsf 0xff, $f0 */);
+        if (((u32) M2C_ERROR(/* unknown instruction: mfspr $r5, HID2 */) >> 0x1DU) & 1) {
+
+        }
+        var_f1 = M2C_FIELD(arg1, f64 *, 0x98);
+    }
+    return var_f1;
+}
+
+void __OSSaveFPUContext(void* context) {
+    // This function can't be fully implemented in C due to:
+    // - Use of mffs instruction to read FPSCR
+    // - Specific register usage not possible with standard C
+    // - Need for inline assembly to properly implement
+    
+    // Placeholder implementation that matches expected structure only
+    *(u16*)context = (*(u16*)context | 1);
 }
 
 void OSSaveFPUContext(void *arg0) {
