@@ -130,6 +130,24 @@ void fn_8021FBB8(void) {
     temp_r4[0x5AC/4] |= 0x8;
 }
 
+void fn_80220154(s32 arg0, s32 arg1, u8 arg2) {
+    s32 temp_r3;
+    s32 var_r3;
+
+    var_r3 = arg0;
+    if (var_r3 == 0x19) {
+        var_r3 = 0xA;
+    }
+    temp_r3 = var_r3 - 9;
+
+    *(u8 *)0xCC008000 = 8;
+    *(u8 *)0xCC008000 = temp_r3 | 0xA0;
+    *(u32 *)0xCC008000 = arg1 & 0x3FFFFFFF;
+    *(u8 *)0xCC008000 = 8;
+    *(u8 *)0xCC008000 = temp_r3 | 0xB0;
+    *(u32 *)0xCC008000 = arg2;
+}
+
 void fn_80220198(void) {
     *(s8 *)0xCC008000 = 0x48;
 }
@@ -383,6 +401,24 @@ void __GXFlushTextureState(void) {
     *(u16 *)__GXData = 0;
 }
 
+void fn_80223A5C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    u32 *temp_r8;
+    u32 temp_r10;
+    u32 temp_r9;
+    u32 temp_r4;
+    
+    temp_r8 = (u32 *)((u8 *)__GXData + (arg0 << 2));
+    *(u8 *)0xCC008000 = 0x61;
+    temp_r10 = *temp_r8;
+    temp_r9 = temp_r10 & 0xFFFF0000;
+    temp_r4 = ((arg1 & 0xF) << 12) | ((arg2 & 0xF) << 8) | ((arg3 & 0xF) << 4) | (arg4 & 0xF);
+    // This order seems to match the target more closely - might need to be careful with bit positions
+    temp_r10 = temp_r9 | temp_r4;
+    *(u8 *)0xCC008000 = temp_r10;
+    *temp_r8 = temp_r10; 
+    *(u16 *)__GXData = 0;
+}
+
 void fn_802240C8(u8 arg0) {
     u32 temp = (u32)arg0;
     __GXData[0x81] = (__GXData[0x81] & ~0x3C00) | (((temp - 1) << 0xA) & 0x3C00);
@@ -470,6 +506,14 @@ void fn_80225034(u32 arg0, u32 *dst) {
     dst[2] = src[arg0 + 2];
 }
 
+void fn_80225118(void)
+{
+    u16* ptr = &__GXData[0x4E];
+    *ptr = 0;
+    ptr++;
+    *ptr = 0;
+}
+
 void fn_80225158(void)
 {
     u16 *temp_r4 = __GXData;
@@ -487,6 +531,7 @@ void fn_80225D3C(void) {
     M2C_FIELD(__cpReg, s16 *, 2) = 0x4;
 }
 
+extern u16 *__GXData;
 extern u16 *__GXData;
 extern u16 *__GXData;
 extern u16 *__GXData;
