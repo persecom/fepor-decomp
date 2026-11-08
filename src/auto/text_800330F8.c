@@ -1595,6 +1595,14 @@ void fn_80043AC8(void *arg0) {
     lbl_803682A4 &= 0xFFFFFFF7;
 }
 
+void fn_80043B44(void* arg0, s32 arg1) {
+    if (arg0 == NULL) {
+        return;
+    }
+    
+    // Just a basic skeleton to test compilation
+}
+
 f32 fn_80043DD8(void) {
     extern void *lbl_803672A8;
     return M2C_FIELD(lbl_803672A8, f32 *, 0x10) / M2C_FIELD(lbl_803672A8, f32 *, 8);

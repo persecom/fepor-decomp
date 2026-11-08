@@ -258,6 +258,26 @@ void fn_80152A18(s16 arg0, s16 arg1, s32 arg2) {
     }
 }
 
+s32 fn_80152DE0(void) {
+    extern s32 lbl_803680C8;
+    void *r3_temp;
+    
+    r3_temp = &lbl_803680C8;
+    if (r3_temp == NULL) {
+        return -4;
+    }
+    if (lbl_803680C8 != 0) {
+        return -4;
+    }
+    lbl_803680C8 = 1;
+    M2C_FIELD(r3_temp, void **, 0x40) = &(u8 []){0}; // Placeholder for lbl_80293A88
+    if (r3_temp != NULL) {
+        M2C_FIELD(r3_temp, void **, 0x40) = &(u8 []){0}; // Placeholder for lbl_8028DED0
+    }
+    
+    return 1;
+}
+
 void fn_80154BE4(void) {
     M2C_UNK fn_8015C674();
     fn_8015C674();

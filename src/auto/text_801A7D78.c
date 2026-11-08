@@ -2,6 +2,49 @@
 #include "common.h"
 
 extern u16 lbl_80367218;
+u32 fn_801A7D78(u32 arg0, s16 arg1) {
+    M2C_UNK fn_8001C5F8(s32, M2C_UNK);
+    M2C_UNK fn_800C428C(u32);
+    M2C_UNK fn_801A9EB8(u32);
+    M2C_UNK fn_8022C1E8(s32, M2C_UNK (*)(s32, M2C_UNK), M2C_UNK, M2C_UNK);
+    s32 temp_cr0_eq;
+
+    if (arg0 != 0U) {
+        if ((arg0 + 0x5C0) != 0) {
+            fn_801A9EB8(arg0 + 0x5C0);
+            fn_8001C5F8(arg0 + 0x84C, -1);
+            fn_8001C5F8(arg0 + 0x844, -1);
+            if (((arg0 + 0x5C0) != 0) && ((arg0 + 0x5C0) != 0) && ((arg0 + 0x5C0) != 0) && ((arg0 + 0x5C0) != 0) && ((arg0 + 0x5C0) != 0) && ((arg0 + 0x5C0) != 0) && ((arg0 + 0x5C0) != 0)) {
+                fn_8022C1E8(arg0 + 0x7AC, fn_8001C5F8, 8, 4);
+                fn_8022C1E8(arg0 + 0x78C, fn_8001C5F8, 8, 4);
+            }
+        }
+        if ((arg0 + 0x2E0) != 0) {
+            fn_801A9EB8(arg0 + 0x2E0);
+            fn_8001C5F8(arg0 + 0x56C, -1);
+            fn_8001C5F8(arg0 + 0x564, -1);
+            if (((arg0 + 0x2E0) != 0) && ((arg0 + 0x2E0) != 0) && ((arg0 + 0x2E0) != 0) && ((arg0 + 0x2E0) != 0) && ((arg0 + 0x2E0) != 0) && ((arg0 + 0x2E0) != 0) && ((arg0 + 0x2E0) != 0)) {
+                fn_8022C1E8(arg0 + 0x4CC, fn_8001C5F8, 8, 4);
+                fn_8022C1E8(arg0 + 0x4AC, fn_8001C5F8, 8, 4);
+            }
+        }
+        if (arg0 != 0U) {
+            fn_801A9EB8(arg0);
+            fn_8001C5F8(arg0 + 0x28C, -1);
+            fn_8001C5F8(arg0 + 0x284, -1);
+            temp_cr0_eq = arg0 == 0U;
+            if ((temp_cr0_eq == 0) && (temp_cr0_eq == 0) && (temp_cr0_eq == 0) && (temp_cr0_eq == 0) && (temp_cr0_eq == 0) && (temp_cr0_eq == 0) && (temp_cr0_eq == 0)) {
+                fn_8022C1E8(arg0 + 0x1EC, fn_8001C5F8, 8, 4);
+                fn_8022C1E8(arg0 + 0x1CC, fn_8001C5F8, 8, 4);
+            }
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void *fn_801A7F5C(void *arg0) {
     fn_801A7FA4(arg0);
     fn_801A7FA4((char *)arg0 + 0x2E0);

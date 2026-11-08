@@ -1251,15 +1251,14 @@ M2C_UNK fn_80063954(char *arg0) {
 #pragma dont_inline on
 M2C_UNK fn_800639B4(char *arg0) {
     M2C_UNK fn_80063A14(M2C_UNK);
-    void *fn_8005C82C(char *, s32);
-    void *temp_r31;
+    M2C_UNK temp_r31;
 
     temp_r31 = fn_8005C82C(arg0, 0);
     if (!(fn_8005C6A0(arg0) & 0x4000)) {
-        fn_80063A14((M2C_UNK)temp_r31);
+        fn_80063A14(temp_r31);
         fn_8005C5A8(arg0);
     }
-    return (M2C_UNK)temp_r31;
+    return temp_r31;
 }
 #pragma dont_inline reset
 #pragma inline_depth(0)
@@ -1340,6 +1339,16 @@ s32 fn_80066124(s32 arg0, s32 arg1) {
         return -arg1;
     }
     return arg1;
+}
+
+s32 fn_80067058(s32 arg0) {
+    s32 temp_r3;
+    
+    temp_r3 = arg0 & 0x1F;
+    if (temp_r3 < 0x10) {
+        return (temp_r3 * 3) + 0x20;
+    }
+    return ((temp_r3 - 0x10) * 3) + 0x50;
 }
 
 void fn_800673E4(void *arg0, void *arg1) {
@@ -1697,6 +1706,18 @@ void fn_8006CA8C(void) {
     fn_8006C2A4(0x1);
 }
 
+int fn_8006CAD4(void *arg0, int arg1, int arg2) {
+    s32 fn_8005B010(void *, s32, void *, ...);
+    extern u16 lbl_8026B980[8];
+    int r30;
+    r30 = 0;
+    do {
+        fn_8005B010(arg0, arg1, lbl_8026B980, arg2);
+        r30++;
+    } while (r30 < 1);
+    return 0;
+}
+
 void fn_8006CC6C(s32 arg0) {
     M2C_UNK fn_8003F670(s32);
     M2C_UNK fn_8003FCF0();
@@ -1781,6 +1802,41 @@ void fn_8006D54C(s32 arg1, s32 arg2, s32 arg3) {
         M2C_ERROR(/* unknown instruction: psq_stu $f9, 0x4($r5), 0x1, qr6 */);
         M2C_ERROR(/* unknown instruction: psq_stu $f10, 0x2($r5), 0x0, qr6 */);
         M2C_ERROR(/* unknown instruction: psq_stu $f11, 0x4($r5), 0x1, qr6 */);
+    }
+}
+
+void fn_8006D66C(s32 arg1, s32 arg2, s32 arg3) {
+    if (arg3 != 0) {
+        s32 count = (arg3 >> 1) - 1;
+        if (count != 0) {
+            do {
+                // Process 4 elements
+                f32 a = *(f32*)(arg1);
+                f32 b = *(f32*)(arg1 + 4);
+                f32 c = *(f32*)(arg1 + 8);
+                f32 d = *(f32*)(arg1 + 12);
+                
+                *(f32*)(arg2) = a;
+                *(f32*)(arg2 + 4) = b;
+                *(f32*)(arg2 + 8) = c;
+                *(f32*)(arg2 + 12) = d;
+                
+                arg1 += 16;
+                arg2 += 16;
+                count--;
+            } while (count != 0);
+        } else {
+            // Process one element
+            f32 a = *(f32*)(arg1);
+            f32 b = *(f32*)(arg1 + 4);
+            f32 c = *(f32*)(arg1 + 8);
+            f32 d = *(f32*)(arg1 + 12);
+            
+            *(f32*)(arg2) = a;
+            *(f32*)(arg2 + 4) = b;
+            *(f32*)(arg2 + 8) = c;
+            *(f32*)(arg2 + 12) = d;
+        }
     }
 }
 
@@ -2106,6 +2162,11 @@ u8 fn_800701E0(u8 arg2) {
     u8 temp = lbl_80366DE9;
     u8 result = (u8)(arg2 == temp);
     return result;
+}
+
+void fn_800701FC(u32 arg0, u32 arg1, s32 arg2, u32 arg3, u32 arg4, u32 arg5)
+{
+    // Function body to be filled in
 }
 
 s32 fn_800703D4(void) {

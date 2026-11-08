@@ -231,6 +231,17 @@ void fn_80073A3C(void) {
     fn_8001D580(&lbl_8036746C);
 }
 
+void fn_80073A60(void) {
+    M2C_UNK fn_80107190(s32);
+    M2C_UNK fn_80105650(void);
+    extern s32 lbl_80312000;
+    
+    if (lbl_80312000 & 0x400000) {
+        fn_80107190(2);
+        fn_80105650();
+    }
+}
+
 extern s32 lbl_80311FD8;
 extern s32 lbl_80367468;
 extern s32 lbl_8036746C;

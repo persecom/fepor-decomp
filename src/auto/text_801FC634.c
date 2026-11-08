@@ -534,6 +534,10 @@ s32 fn_802016E4(void) {
     return 0x9C;
 }
 
+f32 fn_80201FF0(void) {
+    return M2C_ERROR(/* psq_l unimplemented */);
+}
+
 void fn_80202300(s32 arg0, s32 arg1, f32 farg0) {
     f32 fn_80238A30(f32);
     f32 fn_80238A54(f32);

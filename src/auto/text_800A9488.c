@@ -576,6 +576,12 @@ void fn_800AB73C(void) {
     fn_800AB75C();
 }
 
+void fn_800AC400(void) {
+    M2C_UNK func_8000BF00(void*);
+    extern u16 lbl_8028CDF0[];
+    func_8000BF00(lbl_8028CDF0);
+}
+
 void fn_800ACCF8(void) {
     M2C_UNK fn_800ACD18();
     fn_800ACD18();

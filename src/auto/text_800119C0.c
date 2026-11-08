@@ -60,8 +60,7 @@ s32 fn_800138BC(void *arg0) {
 u32 fn_800138F4(u32 arg0, u32 arg1) {
     if (arg0 < 0x10000000)
         return (arg0 * 0x10000000) + (arg1 * 0x1000000);
-    else
-        return 0;
+    return 0;
 }
 
 void fn_80013A6C(s32 arg0) {

@@ -115,6 +115,90 @@ void fn_8001753C(s16 *arg0) {
     *arg0 = fn_8000CEE4(0xE4C);
 }
 
+void fn_80017570(s32 arg0)
+{
+    if (arg0 >= 0x17) {
+        return;
+    }
+    
+    switch(arg0) {
+        case 0:
+            // Load lbl_80268128 + 0xE8
+            break;
+        case 1:
+            // Load lbl_80268128 + 0xEE
+            break;
+        case 2:
+            // Load lbl_80268128 + 0xF5
+            break;
+        case 3:
+            // Load lbl_80268128 + 0xFD
+            break;
+        case 4:
+            // Load lbl_80268128 + 0x105
+            break;
+        case 5:
+            // Load lbl_80268128 + 0x10E
+            break;
+        case 6:
+            // Load lbl_80268128 + 0x116
+            break;
+        case 7:
+            // Load lbl_80268128 + 0x11D
+            break;
+        case 8:
+            // Load lbl_80268128 + 0x125
+            break;
+        case 9:
+            // Load lbl_80268128 + 0x12E
+            break;
+        case 10:
+            // Load lbl_80268128 + 0x135
+            break;
+        case 11:
+            // Load lbl_80268128 + 0x13B
+            break;
+        case 12:
+            // Load lbl_80268128 + 0x141
+            break;
+        case 13:
+            // Load lbl_80268128 + 0x148
+            break;
+        case 14:
+            // Load lbl_80268128 + 0x14F
+            break;
+        case 15:
+            // Load lbl_80268128 + 0x158
+            break;
+        case 16:
+            // Load lbl_80268128 + 0x15F
+            break;
+        case 17:
+            // Load lbl_80268128 + 0x166
+            break;
+        case 18:
+            // Load lbl_80268128 + 0x16D
+            break;
+        case 19:
+            // Load lbl_80268128 + 0x175
+            break;
+        case 20:
+            // Load lbl_80268128 + 0x17D
+            break;
+        case 21:
+            // Load lbl_80268128 + 0x186
+            break;
+        case 22:
+            // Load lbl_80268128 + 0x18D
+            break;
+        case 23:
+            // Load lbl_80268128 + 0x195
+            break;
+    }
+    
+    fn_8000E0E4();
+}
+
 s32 fn_8001772C(void) {
     void *fn_8000C0C0(void *);
     void *p;

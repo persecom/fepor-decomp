@@ -4769,6 +4769,86 @@ void fn_800FEFD4(s32 *arg0, s32 *arg1, s32 *arg2, u8 (*arg3)(s32, s32)) {
     }
 }
 
+void fn_800FF178(void) {
+    extern u8 lbl_802EF4C8[24];
+    extern u8 lbl_8032B3C0[544];
+    
+    void **fn_80037BBC(void *, s8);
+    u8 fn_8001D500(void **);
+    u8 fn_8001DD54(void *);
+    u8 fn_8009339C(void *);
+    void fn_800951D0(void *, s8);
+    
+    s8 var_r28;
+    s8 var_r29;
+    s8 var_r30;
+    u8 var_r0;
+    u8 var_r0_2;
+    u8 var_r0_3;
+    void **temp_r3;
+    void *temp_r31;
+    void *temp_r3_2;
+    
+    temp_r31 = (void **)lbl_802EF4C8;
+    
+    if ((s8) lbl_802EF4C8[0x12] != 0) {
+        var_r0 = 0;
+    } else if (lbl_8032B3C0[1] & 4) {
+        var_r0 = 0;
+    } else if (((s32 *)lbl_802EF4C8)[0x1A0 >> 2] & 0x18) {
+        var_r0 = 0;
+    } else {
+        u8 *unit = &lbl_802EF4C8[8];
+        if ((s32)*unit < 0x15) {
+            if ((s32)*unit != 0xF) {
+                goto block_11;
+            }
+            goto block_10;
+        }
+        if ((s32)*unit < 0x17) {
+block_10:
+            var_r0 = 0;
+        } else {
+block_11:
+            var_r0 = 1;
+        }
+    }
+    
+    if (var_r0 != 0) {
+        var_r30 = -1;
+        var_r29 = -0x80;
+        var_r28 = 0;
+loop_27:
+        if (var_r28 < 4) {
+            temp_r3 = fn_80037BBC(temp_r31, var_r28);
+            if ((void *) *temp_r3 != NULL) {
+                if (fn_8009339C(temp_r31) != 0) {
+                    temp_r3_2 = *temp_r3;
+                    if (temp_r3_2 != NULL) {
+                        var_r0_2 = *(u8 *)((u8 *)temp_r3_2 + 0x1D);
+                    } else {
+                        var_r0_2 = 0;
+                    }
+                    if (var_r0_2 <= 1U) {
+                        if (temp_r3_2 != NULL) {
+                            var_r0_3 = fn_8001DD54(temp_r31);
+                        } else {
+                            var_r0_3 = 0;
+                        }
+                        if ((var_r0_3 > 1U) && (var_r29 < (s32) fn_8001D500(temp_r3))) {
+                            var_r29 = fn_8001D500(temp_r3);
+                            var_r30 = var_r28;
+                        }
+                    }
+                }
+                var_r28 += 1;
+                goto loop_27;
+            }
+        }
+        fn_800951D0(temp_r31, var_r30);
+    }
+}
+
 void fn_800FF2EC(void) {
     extern u32 lbl_802EF4C8[12];
     

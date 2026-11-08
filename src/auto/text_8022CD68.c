@@ -1303,6 +1303,15 @@ void fn_802511F8(void *arg0, u32 *arg1) {
     fn_80250B58(arg0, arg1);
 }
 
+void fn_802514D0(void *arg0, s32 arg1) {
+    if (M2C_FIELD(arg0, s32 *, 0x9C) > 0) {
+        M2C_FIELD(arg0, s32 *, 0x9C) = M2C_FIELD(arg0, s32 *, 0x9C) - 1;
+        if (M2C_FIELD(arg0, s32 *, 0x9C) <= 0) {
+            M2C_FIELD(arg0, s32 *, 0x9C) = 0;
+        }
+    }
+}
+
 u16 fn_8025FC64(u8 arg0, u8 arg1, u8 arg2);
 s32 fn_8022C568(f32 arg0);
 void fn_80261934(u8 arg0, void *arg1, s32 arg2);

@@ -1543,6 +1543,29 @@ void fn_801CB280(s32 arg1) {
     fn_800C9B6C(arg1);
 }
 
+void fn_801CB2A4(struct Unit *arg0) {
+    if (arg0->unk2E == 0) {
+        return;
+    }
+
+    if (*(s32*)((char*)arg0 + 0x50) != 0) {
+        arg0->unk2E = -1;
+        *(s32*)((char*)arg0 + 0x6C) = 0;
+        *(s32*)((char*)arg0 + 0x70) = 0;
+        return;
+    }
+
+    if (*(s32*)((char*)arg0 + 0x6C) != 1) {
+        arg0->unk2E = -1;
+        return;
+    }
+    
+    *(s32*)((char*)arg0 + 0x74) += 1;
+    if (*(s32*)((char*)arg0 + 0x74) > *(s32*)((char*)arg0 + 0x70)) {
+        arg0->unk2E = -1;
+    }
+}
+
 void fn_801CC030(void *arg0) {
     u32 temp_r4;
     u32 temp_r5;

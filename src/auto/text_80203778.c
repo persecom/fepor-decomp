@@ -147,6 +147,22 @@ void fn_80204294(void) {
     M2C_ERROR(/* unknown instruction: bla 0x60 */);
 }
 
+void *__OSSetExceptionHandler(u8 exception, void *handler) {
+    extern void **OSExceptionTable_8036847C;
+    void **entry;
+    void *oldHandler;
+
+    entry = &OSExceptionTable_8036847C[exception];
+    oldHandler = *entry;
+    *entry = handler;
+    return oldHandler;
+}
+
+void *__OSGetExceptionHandler(u8 exception) {
+    extern void **OSExceptionTable_8036847C;
+    return OSExceptionTable_8036847C[exception];
+}
+
 void OSCreateAlarm(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;

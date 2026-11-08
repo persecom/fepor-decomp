@@ -1,10 +1,59 @@
-# FIRE EMBLEM GC US (GFEE01) decompilation
+# Fire Emblem: Path of Radiance
 
-Started from scratch with [decomp.wtf](https://decomp.wtf) on [dtk-template](https://github.com/encounter/dtk-template),
-the layout GameCube and Wii decomps use. Every build rebuilds `main.dol` and checks it against your copy, byte for byte.
+A work-in-progress matching decompilation of **Fire Emblem: Path of Radiance** (GFEE01) for the Nintendo GameCube.
 
-1. Put your own copy of the game in `orig/GFEE01/` (never commit it).
-2. `python configure.py` (downloads the tools it needs), then `ninja`.
-3. Decompiled code goes in `src/`; `objdiff` (objdiff.json) shows each function's progress.
+This repository does not contain any game assets or the original disc image. An existing copy of the game is required.
 
-Compiler: CodeWarrior GC/1.3.2 (change `config.linker_version` in configure.py if the game used another).
+**Supported versions:**
+
+- `GFEE01`: USA — Target DOL SHA-1: `9d00d7d407750b82cb1cfccc56f8aa8a89cc8851`
+
+## Progress
+
+Decompilation progress is ongoing. This project uses [decompdecomp](https://github.com/decompals/decompdecomp) to assist with matching the original game's code.
+
+Progress statistics will be added as the project develops.
+
+## Dependencies
+
+### Linux
+
+The project is currently being developed on CachyOS.
+
+- Python 3
+- [Ninja](https://ninja-build.org/)
+- [DTK](https://github.com/encounter/dtk)
+- A compatible GameCube development toolchain, as required by the project configuration
+
+Other Linux distributions should work with the appropriate dependencies installed.
+
+## Building
+
+1. Clone the repository:
+
+   ```sh
+   git clone https://github.com/persecom/fepor-decomp.git
+   cd fepor-decomp
+   ```
+
+2. Place your game disc image in `orig/GFEE01/`.
+
+   Supported input formats depend on the installed DTK version. RVZ is the format currently used for development.
+
+3. Build the project:
+
+   ```sh
+   ninja
+   ```
+
+## Diffing
+
+This project uses [objdiff](https://github.com/encounter/objdiff) to compare reconstructed code against the original game.
+
+Once the project has been built and its objdiff configuration generated, open the project in objdiff to inspect individual functions and track matching progress.
+
+## Decompdecomp Integration
+
+This project is being developed with [decompdecomp](https://github.com/decompals/decompdecomp), alongside local development tools and AI-assisted code analysis.
+
+The goal is to progressively reconstruct the original game's code while preserving matching behavior and output.
