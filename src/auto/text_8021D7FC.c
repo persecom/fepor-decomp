@@ -534,6 +534,129 @@ void fn_80222334(void)
         var_r3 += 0x10000;
 }
 
+extern s32 jumptable_8029E0B8[];
+s32 fn_80222420(u16 arg0, u16 arg1, u16 arg2, u16 arg3)
+{
+    u16 var_r3;
+    u16 var_r4;
+    u16 var_r5;
+    s32 var_r6;
+    s32 var_r7;
+    s32 var_r8;
+    s32 var_r9;
+    u32 var_r10;
+    s32 var_r11;
+    s32 var_r12;
+    s32 var_r31;
+
+    if (arg0 >= 0x3C)
+        return 0x3;
+
+    var_r3 = arg0;
+    var_r4 = arg1;
+    var_r5 = arg2;
+    var_r6 = arg3;
+    var_r7 = 0;
+    var_r8 = 0;
+    var_r9 = 0;
+    var_r10 = 0;
+    var_r11 = 0;
+    var_r12 = 0;
+    var_r31 = 0;
+
+    switch (arg0)
+    {
+    case 0:
+        return 0x3;
+    case 1:
+        return 0x2;
+    case 2:
+        return 0x2;
+    case 0x6:
+        arg0 = 0x40;
+        goto case_0x16;
+    case 0x16:
+    case_0x16:
+        arg0 = 0x20;
+        var_r31 = 0;
+        break;
+    default:
+        return 0x1;
+    }
+
+    if ((var_r6 & 0xFF) == 0x1)
+    {
+        var_r9 = (var_r4 & 0xFF);
+        var_r8 = 0x1;
+        if (var_r8 != 0)
+        {
+            var_r7 = var_r8 * arg2;
+            var_r6 = var_r8 * arg3;
+            var_r10 = var_r6 - 1;
+            var_r7 = var_r7 - 1;
+            var_r31 = 0;
+
+            if (var_r9 > 0)
+            {
+                do
+                {
+                    var_r11 = var_r3 & 0xFFFF;
+                    var_r12 = var_r4 & 0xFFFF;
+
+                    var_r11 = (var_r11 + var_r10) & 0xFFFF;
+                    var_r12 = (var_r12 + var_r7) & 0xFFFF;
+
+                    var_r6 = (var_r12 >> arg3) & 0xFFFF;
+                    var_r7 = (var_r11 >> arg2) & 0xFFFF;
+
+                    var_r6 = var_r7 * var_r6;
+                    var_r6 = arg0 * var_r6;
+
+                    var_r31 += var_r6;
+                } while (--var_r9 != 0);
+            }
+
+            if ((var_r4 & 0xFF) == 0x1)
+                goto end;
+
+            var_r3 = (var_r3 & 0xFFFF) >> 0x10;
+            var_r5 = (var_r4 & 0xFFFF) >> 0x10;
+
+            if (var_r3 > 0)
+            {
+                var_r6 = var_r3 >> 0x1;
+            }
+            else
+            {
+                var_r6 = 0x1;
+            }
+
+            var_r3 = (var_r4 & 0xFFFF) >> 0x10;
+
+            if ((var_r3 & 0xFFFF) > 0)
+            {
+                var_r4 = var_r4 >> 0x1;
+            }
+            else
+            {
+                var_r4 = 0x1;
+            }
+
+            var_r3 = (var_r3 << arg2) - 1;
+            var_r7 = (var_r4 << arg3) - 1;
+
+            var_r6 = (var_r3 + (var_r4 & 0xFFFF)) >> arg3;
+            var_r6 = (var_r4 >> arg2) * var_r6;
+            var_r6 = arg0 * var_r6;
+
+            var_r31 = var_r6;
+        }
+    }
+
+end:
+    return var_r31;
+}
+
 void fn_8022257C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u16* arg5, u16* arg6, u16* arg7)
 {
     if (arg0 >= 0x3c) {
@@ -1315,7 +1438,7 @@ void fn_80225180(s32 arg0) {
 }
 
 void fn_80225BF4(void) {
-    extern void *__cpReg;
+    extern u16 *__cpReg;
     M2C_FIELD(__cpReg, s16 *, 4) = 4;
 }
 
