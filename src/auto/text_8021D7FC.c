@@ -262,6 +262,17 @@ void fn_802220DC(void *arg0, s32 *arg1) {
     M2C_FIELD(arg0, s32 *, 0xC) = (s32) *arg1;
 }
 
+void fn_80222334(void)
+{
+    u32 temp_r3;
+    u32 var_r3;
+    
+    temp_r3 = OSGetTime();
+    var_r3 = (temp_r3 & 0xFFFF) + 0x41F;
+    if (var_r3 < 0)
+        var_r3 += 0x10000;
+}
+
 void fn_80222A3C(s32 *arg0, s32 arg1, s32 arg2) {
     extern u16 lbl_80367048;
     s32 var_r5;
@@ -476,5 +487,6 @@ void fn_80225D3C(void) {
     M2C_FIELD(__cpReg, s16 *, 2) = 0x4;
 }
 
+extern u16 *__GXData;
 extern u16 *__GXData;
 extern u16 *__GXData;
