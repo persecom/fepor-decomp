@@ -602,3 +602,8 @@ extern u16 Reschedule_80368520;
 #include <dolphin/os.h>
 #include "global.h"
 extern void (**_ctors)(void);
+#include "common.h"
+#include <dolphin/os.h>
+#include "global.h"
+extern u16* lbl_80368604;
+extern u16 lbl_8036860C[4];
