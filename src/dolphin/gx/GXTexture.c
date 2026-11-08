@@ -953,8 +953,8 @@ void fn_80224AD8(f32 x, f32 y, f32 z, f32 mtx[3][4], f32 *pm, f32 *vp, f32 *sx, 
         zc = pm[6] + (peye_z * pm[5]);
         wc = 1.0f;
     }
-    *sx = (vp[2] * 0.5f) + (vp[0] + (wc * (xc * vp[2] * 0.5f)));
-    *sy = (vp[3] * 0.5f) + (vp[1] + (wc * (-yc * vp[3] * 0.5f)));
+    *sx = (vp[2] / 2.0f) + (vp[0] + (wc * (xc * vp[2] / 2.0f)));
+    *sy = (vp[3] / 2.0f) + (vp[1] + (wc * (-yc * vp[3] / 2.0f)));
     *sz = vp[5] + (wc * (zc * (vp[5] - vp[4])));
 }
 
