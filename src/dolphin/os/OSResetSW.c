@@ -123,6 +123,15 @@ s32 __OSSyncSram(void) {
     return (s32)Scb_80339420[0x4C / sizeof(u16)];
 }
 
+extern void* __OSSystemCallVectorStart;
+extern void* __OSSystemCallVectorEnd;
+void __OSInitSystemCall(void) {
+    memcpy(0x80000C00, &__OSSystemCallVectorStart, &__OSSystemCallVectorEnd - &__OSSystemCallVectorStart);
+    DCFlushRangeNoSync(0x80000C00, 0x100);
+    sync();
+    ICInvalidateRange(0x80000C00, 0x100);
+}
+
 void fn_80209E68(void) {
 
 }
@@ -195,6 +204,16 @@ s32 OSGetTick(void) {
 
 void __init_user(void) {
     __init_cpp();
+}
+
+void __DVDInitWA(void) {
+    extern u16 CommandList_80339E70[15];
+    extern s32 NextCommandNumber_80368574;
+    
+    NextCommandNumber_80368574 = 0;
+    CommandList_80339E70[0] = -1;
+    __DVDLowSetWAType(0, 0);
+    OSInitAlarm();
 }
 
 s32 DVDLowWaitCoverClose(s32 arg0) {
@@ -314,6 +333,29 @@ void fn_8020DCE8(void *block) {
     extern u8 lbl_80339F60[];
 
     fn_8020BE28(lbl_80339F60, fn_8020DD18);
+}
+
+void DVDReset(void) {
+    DVDLowReset();
+    *(volatile u32 *)0xCC006000 = 0x2A;
+    *(volatile u32 *)0xCC006004 = *(volatile u32 *)0xCC006000;
+    *(volatile u32 *)0xCC006000 = 0;
+    *(volatile u32 *)0xCC006004 = 0;
+}
+
+s32 fn_8020EF60(void *arg0) {
+    s32 temp_r0;
+    s32 var_r31;
+
+    OSDisableInterrupts();
+    temp_r0 = *(s32 *)((char *)arg0 + 0xC);
+    if (temp_r0 == 3) {
+        var_r31 = 1;
+    } else {
+        var_r31 = temp_r0;
+    }
+    OSRestoreInterrupts();
+    return var_r31;
 }
 
 s32 fn_8020F058(s32 arg0) {
@@ -553,5 +595,6 @@ extern u16 AlarmForTimeout_80339ED8[20];
 
 extern u16 lbl_80339FB0[20]; // 40 bytes = 20 * 2-byte entries
 #include <dolphin/os.h>
+#include "dolphin/os.h"
 
 extern u16 Reschedule_80368520;
