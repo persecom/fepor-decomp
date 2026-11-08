@@ -210,6 +210,71 @@ void *fn_80151CE0(void *arg0, s16 arg1) {
     return arg0;
 }
 
+#pragma cplusplus on
+#pragma use_lmw_stmw on
+#pragma readonly_strings on
+extern "C" M2C_UNK fn_800C9ABC(M2C_UNK *, const char *, M2C_UNK *);
+extern "C" M2C_UNK fn_800C9A60(M2C_UNK *, M2C_UNK);
+extern "C" void fn_800DBE34(void *, s32, M2C_UNK *, s32, M2C_UNK *);
+extern "C" char *fn_800C93EC(void *);
+extern "C" void *fn_80053C30(char *, s32);
+extern "C" void fn_80053658(void *, s32, void *);
+extern "C" s32 fn_8015160C(void *);
+extern "C" s32 fn_801515F4(void *);
+extern "C" s32 fn_801515B8(void *);
+extern "C" void *fn_80151D50(void *arg0, s32 arg1, s32 arg2, void *arg3, f32 *arg4, f32 *arg5) {
+    extern u8 lbl_80293A88[];
+    extern s32 lbl_80367BA8;
+    struct Effect {
+        u8 pad0[0x40];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void SetPos(f32, f32, f32) = 0;
+        virtual void v8() = 0;
+        virtual void SetRot(f32, f32, f32) = 0;
+    };
+    M2C_UNK name[3];
+    M2C_UNK kind[3];
+    M2C_UNK alloc1;
+    M2C_UNK alloc2;
+    void *task;
+    s32 id;
+
+    fn_800C9ABC(name, "Effect", &alloc1);
+    fn_800C9ABC(kind, "effect", &alloc2);
+    fn_800DBE34(arg0, arg1, name, arg2, kind);
+    fn_800C9A60(kind, -1);
+    fn_800C9A60(name, -1);
+    M2C_FIELD(arg0, void **, 0x40) = lbl_80293A88;
+    M2C_FIELD(arg0, f32 *, 0xBC) = 0.0f;
+    M2C_FIELD(arg0, f32 *, 0xB8) = 0.0f;
+    M2C_FIELD(arg0, f32 *, 0xB4) = 0.0f;
+    M2C_FIELD(arg0, u8 *, 0xC4) = 0;
+    task = fn_80053C30(fn_800C93EC(arg3), 4);
+    if (task != NULL) {
+        id = ++lbl_80367BA8;
+        M2C_FIELD(arg0, s32 *, 0xAC) = id;
+        M2C_FIELD(M2C_FIELD(task, void **, 0x30), void **, 0x40) = (void *)fn_8015160C;
+        M2C_FIELD(M2C_FIELD(task, void **, 0x30), void **, 0x3C) = (void *)fn_801515F4;
+        M2C_FIELD(M2C_FIELD(task, void **, 0x30), void **, 0x44) = (void *)fn_801515B8;
+        fn_80053658(task, 0, arg0);
+        M2C_FIELD(M2C_FIELD(task, void **, 0x30), s16 *, 0) = M2C_FIELD(arg0, s32 *, 0xAC);
+    } else {
+        M2C_FIELD(arg0, s32 *, 0xAC) = -1;
+    }
+    M2C_FIELD(arg0, void **, 0xB0) = task;
+    M2C_FIELD(arg0, s32 *, 0xC0) = 0;
+    ((Effect *)arg0)->SetPos(arg4[0], arg4[1], arg4[2]);
+    ((Effect *)arg0)->SetRot(arg5[0], arg5[1], arg5[2]);
+    return arg0;
+}
+#pragma cplusplus reset
+
 s32 fn_80152414(void* arg0) {
     if (arg0 == NULL) {
         return 0;
