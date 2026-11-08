@@ -199,8 +199,7 @@ void __OSUnlockSram(void) {
 }
 
 s32 __OSSyncSram(void) {
-    extern u16 Scb_80339420[];
-    return (s32)Scb_80339420[0x4C / sizeof(u16)];
+    return M2C_FIELD(&Scb_80339420, s32 *, 0x4C);
 }
 
 s32 fn_802098F8(void) {
