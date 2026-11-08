@@ -994,6 +994,36 @@ s32 fn_801275BC(s32 arg0) {
     return 1;
 }
 
+void fn_80127700(void* arg0, s32 arg1) {
+    SomeStruct* temp_r30;
+    s32 temp_r3;
+    s32 temp_r4;
+    s32 temp_r5;
+    s32 temp_r6;
+
+    temp_r30 = (SomeStruct*)arg0;
+    temp_r3 = arg1;
+    if (temp_r3 < 0) {
+        temp_r3 = 0;
+    }
+    if (temp_r3 >= 0x100) {
+        temp_r3 = 0xFF;
+    }
+
+    temp_r4 = temp_r3 * 0x20;
+    temp_r5 = temp_r4 >> 8;
+    temp_r6 = temp_r5 + 0x40;
+    
+    if (temp_r6 < 0) {
+        temp_r6 = 0;
+    }
+    if (temp_r6 >= 0xFF) {
+        temp_r6 = 0xFF;
+    }
+
+    temp_r30->field_0x84 = temp_r6;
+}
+
 void fn_80127918(u8 *arg0) {
     s32 r3;
     s32 var_r3 = 0;
@@ -1071,10 +1101,6 @@ void fn_80127C74(void) {
 }
 
 void fn_80127C78(void *arg0) {
-    M2C_UNK fn_8000C188(void *);
-    M2C_UNK fn_80013778(s32, s32);
-    M2C_UNK fn_800138BC(s32);
-    s32 fn_800142B8();
     if ((u8) M2C_FIELD(arg0, u8 *, 0x58) != 0) {
         M2C_FIELD(arg0, u8 *, 0x58) = 0U;
         fn_80013778(M2C_FIELD(arg0, s32 *, 0x54), M2C_FIELD(arg0, s32 *, 0x50));
