@@ -1125,6 +1125,35 @@ void fn_802511F8(void *arg0, u32 *arg1) {
     fn_80250B58(arg0, arg1);
 }
 
+u16 fn_8025FC64(u8 arg0, u8 arg1, u8 arg2);
+s32 fn_8022C568(f32 arg0);
+void fn_80261934(u8 arg0, void *arg1, s32 arg2);
+void fn_80251A44(SynthVoice *sv, u32 *arg1) {
+    extern f32 lbl_8029FF7C[];
+    extern s32 lbl_8029F1CC[];
+    extern u8 lbl_8029FB7C[];
+    extern f32 lbl_8036C260;
+    struct {
+        s32 unk0;
+        s32 unk4;
+        s16 unk8;
+        s16 unkA;
+        s32 unkC;
+        s32 unk10;
+    } params;
+    f32 vol;
+
+    vol = lbl_8029FF7C[fn_8025FC64(arg1[0] >> 24, M2C_FIELD(sv, u8 *, 0x121), M2C_FIELD(sv, u8 *, 0x122)) >> 7];
+    params.unk0 = lbl_8029F1CC[fn_8025FC64(arg1[0] >> 8, M2C_FIELD(sv, u8 *, 0x121), M2C_FIELD(sv, u8 *, 0x122)) >> 7];
+    params.unk4 = lbl_8029F1CC[fn_8025FC64(arg1[0] >> 16, M2C_FIELD(sv, u8 *, 0x121), M2C_FIELD(sv, u8 *, 0x122)) >> 7];
+    params.unk8 = 0xC1 - lbl_8029FB7C[fn_8022C568(lbl_8036C260 * vol)];
+    params.unkA = lbl_8029F1CC[fn_8025FC64(arg1[1], M2C_FIELD(sv, u8 *, 0x121), M2C_FIELD(sv, u8 *, 0x122)) >> 7];
+    params.unkC = 0x80000000;
+    params.unk10 = 0x80000000;
+    fn_80261934(sv->unkF4, &params, 2);
+    M2C_FIELD(sv, u32 *, 0x118) |= 0x100;
+}
+
 void fn_8026146C(s32 *);
 void fn_8025FFC8(void *arg0, u8 arg1, s32 arg2, u8 arg3, u8 arg4, u8 arg5);
 
@@ -1670,6 +1699,49 @@ void fn_80258D74(void) {
     fn_80262410();
 }
 
+s32 fn_80259584(u16 gid, u16 sid, s32 arg2, s32 arg3, s32 arg4) {
+    extern GroupNode *lbl_80368A60;
+    s32 fn_80243FB8(void *, void *, GroupItem *, s32, s32, s32, u16);
+    s32 ret;
+    GroupNode *node;
+    s32 i;
+    GroupData *data;
+    u32 base;
+    GroupItem *item;
+    void *b;
+    void *a;
+
+    node = lbl_80368A60;
+    while (node != NULL) {
+        for (i = 0; i < node->count; i++) {
+            if (node->entries[i].data->id == gid) {
+                data = node->entries[i].data;
+                if (data->type == 0) {
+                    base = node->entries[i].base;
+                    a = (void *)(base + data->unk1C);
+                    b = (void *)(base + data->unk20);
+                    for (item = (GroupItem *)(base + data->unk24); item->id != 0xFFFF; item++) {
+                        if (item->id == sid) {
+                            fn_8026372C();
+                            ret = fn_80243FB8(a, b, item, arg2, arg3, arg4, gid);
+                            fn_802636F4();
+                            goto done;
+                        }
+                    }
+                    ret = -1;
+                } else {
+                    ret = -1;
+                }
+                goto done;
+            }
+        }
+        node = node->next;
+    }
+    ret = -1;
+done:
+    return ret;
+}
+
 void fn_80259A5C(void) {
     M2C_UNK DCFlushRangeNoSync(s32, M2C_UNK);
     M2C_UNK memset(s32, M2C_UNK, M2C_UNK);
@@ -1975,8 +2047,8 @@ void fn_80260060(u8 arg0, void *arg1, void *arg2) {
     void *temp_r8_2;
     void *temp_r8_3;
 
-    temp_r4 = ((u32 *)arg1)[0x3D];
-    temp_r0 = ((u32 *)arg2)[0x3D];
+    temp_r4 = *(u32*)((u8*)arg1 + 0xF4);
+    temp_r0 = *(u32*)((u8*)arg2 + 0xF4);
     if (arg0 < 0x40U) {
         temp_r6 = (u8) temp_r0 * 0x86;
         temp_r5 = arg0 & 0x1F;
