@@ -1526,6 +1526,19 @@ void fn_8013DD1C(s32 arg0, void *arg1) {
     fn_8000A248();
 }
 
+void fn_8013DD90(void* arg0, void* arg1) {
+    if (arg0 == NULL) {
+        return;
+    }
+    
+    *(u16*)arg0 = 0x2000;
+    
+    if (arg1 != NULL) {
+        ((u16*)arg1)[5] = 0;
+        ((u16*)arg1)[0] = 0;
+    }
+}
+
 #pragma cplusplus on
 extern "C" void fn_8015AD7C(s32, s32, s32, s16, s32, s32);
 s32 fn_80009B80(u8);
@@ -3420,3 +3433,9 @@ extern u32 lbl_802920E0;
 extern f32 lbl_8036A6B8;
 
 void* fn_800C42D8(int);
+#include "common.h"
+#include "dolphin/os.h"
+
+extern f32 lbl_8036A6C0;
+extern f32 lbl_8036A6C4;
+extern f32 lbl_8036A6C8;
