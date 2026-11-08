@@ -330,6 +330,20 @@ void fn_80220BAC(void *arg0, void *arg1, s32 arg2, u32 arg3) {
     }
 }
 
+s32 fn_80220C34(s32 arg0) {
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    extern s32 lbl_80368794;
+    s32 old;
+    s32 enabled;
+
+    old = lbl_80368794;
+    enabled = OSDisableInterrupts();
+    lbl_80368794 = arg0;
+    OSRestoreInterrupts(enabled);
+    return old;
+}
+
 void fn_80220C78(void* arg0, void* arg1) {
     if (arg0 != NULL) {
         if (arg1 != NULL) {
