@@ -260,6 +260,11 @@ s32 TRKTargetContinue(void) {
     return 0;
 }
 
+void fn_8022B4A0(s8 arg0) {
+    extern u16 lbl_8033CFE0;
+    lbl_8033CFE0 = (u16)arg0;
+}
+
 s32 fn_8022B5EC(s32 arg1, s32 *arg2) {
     s32 sp8;
     s32 temp_cr0_eq;
@@ -369,8 +374,7 @@ s32 ddh_cc_pre_continue(void) {
 }
 
 void ddh_cc_write(s32 arg0, s32 arg1, u32 arg2) {
-    void *ptr = (char *)arg1 + arg0;
-    *(u32 *)ptr = arg2;
+    *(u32 *)(arg1 + arg0) = arg2;
 }
 
 s32 ddh_cc_close(void) {
