@@ -3235,3 +3235,4 @@ extern s32 lbl_8036722C;
 #include "unit.h"
 
 extern u16* gSomeBssVar; // lbl_802EF4C8
+extern u16 gSomeBssVar_802EF4C8[];  // Added declaration for the actual array
