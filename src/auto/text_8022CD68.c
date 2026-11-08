@@ -4198,3 +4198,12 @@ extern s32 fn_8023567C(s32, s32, void *, s32 *, s32 *, s32 *, s32 *);
 #include "global.h"
 extern s32 lbl_803687F0;
 extern s32 lbl_80383168;
+extern f64 lbl_8036C010;
+extern f64 lbl_8036C018;
+extern f64 lbl_8036C020;
+extern f64 lbl_8036C028;
+extern f64 lbl_8036C030;
+extern f64 lbl_8036C038;
+extern f64 lbl_8036C040;
+extern f64 lbl_8036C048;
+extern f64 lbl_8036C050;
