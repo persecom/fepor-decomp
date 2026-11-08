@@ -188,7 +188,6 @@ void PPCMtwpar(void) {
 
 void fn_802038C0(void) {
     M2C_UNK OSDumpContext(s32);
-    M2C_UNK OSReport(M2C_UNK *, s32);
     M2C_UNK PPCHalt();
     extern M2C_UNK lbl_8029B910;
     s32 temp_r4;
