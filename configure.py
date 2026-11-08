@@ -337,6 +337,7 @@ config.libs = [
             Object(NonMatching, "auto/text_80203778.c"),
             Object(NonMatching, "dolphin/os/OSReboot.c"),
             Object(NonMatching, "dolphin/os/OSReset.c"),
+            Object(NonMatching, "dolphin/os/OSResetSW.c"),
             Object(NonMatching, "auto/text_80216994.c", mw_version="GC/1.2.5n"),
             Object(NonMatching, "auto/text_8021D7FC.c"),
             Object(NonMatching, "auto/text_80225E30.c"),
