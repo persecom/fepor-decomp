@@ -330,6 +330,18 @@ BOOL fn_80204B0C(BOOL final) {
 }
 #pragma peephole reset
 
+static Cell *DLExtract(Cell *list, Cell *cell) {
+    if (cell->next) {
+        cell->next->prev = cell->prev;
+    }
+    if (cell->prev == NULL) {
+        list = cell->next;
+    } else {
+        cell->prev->next = cell->next;
+    }
+    return list;
+}
+
 Cell *fn_80204BAC(Cell *list, Cell *cell) {
     Cell *prev;
     Cell *next;
