@@ -274,6 +274,7 @@ extern "C" void *fn_80151D50(void *arg0, s32 arg1, s32 arg2, void *arg3, f32 *ar
     ((Effect *)arg0)->SetRot(arg5[0], arg5[1], arg5[2]);
     return arg0;
 }
+#pragma pool_strings reset
 #pragma readonly_strings reset
 #pragma use_lmw_stmw reset
 #pragma cplusplus reset
