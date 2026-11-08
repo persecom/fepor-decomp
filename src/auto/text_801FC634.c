@@ -580,6 +580,24 @@ void fn_802025C0(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
     *(f32*)((u8*)arg0 + 0x2C) = lbl_8036BC3C;
 }
 
+f32 fn_802032CC(void) {
+    extern f32 lbl_8036BC70;
+    extern f32 lbl_8036BC74;
+    f32 temp_f0;
+    f32 var_f1;
+
+    M2C_ERROR(/* unknown instruction: ps_sub $f2, $f0, $f1 */);
+    M2C_ERROR(/* unknown instruction: ps_mul $f2, $f2, $f2 */);
+    M2C_ERROR(/* unknown instruction: ps_sub $f0, $f0, $f1 */);
+    M2C_ERROR(/* unknown instruction: ps_madd $f1, $f0, $f0, $f2 */);
+    var_f1 = M2C_ERROR(/* unknown instruction: ps_sum0 $f1, $f1, $f2, $f2 */);
+    if ((lbl_8036BC70 - lbl_8036BC70) != var_f1) {
+        temp_f0 = __frsqrte(var_f1);
+        var_f1 *= -((temp_f0 * temp_f0 * var_f1) - lbl_8036BC74) * (temp_f0 * lbl_8036BC70);
+    }
+    return var_f1;
+}
+
 extern void *IDShouldBe_8036859C;
 extern void *fn_8020DAE0;
 extern void fn_8020C1A4(u8, u32, void *);
