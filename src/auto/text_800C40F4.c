@@ -665,15 +665,15 @@ M2C_UNK *fn_800C93EC(void *arg0) {
     return temp_r3;
 }
 
-void *fn_800C96F8(void *arg0, s32 arg1, s32 arg2) {
-    M2C_UNK fn_800CA7F4(s32, M2C_UNK);
-    M2C_UNK memcpy(s32, s32, s32);
-    fn_800CA7F4(arg2, 0);
-    memcpy(M2C_FIELD(arg0, s32 *, 8), arg1, arg2);
+#pragma auto_inline off
+String *fn_800C96F8(String *arg0, const char *arg1, u32 arg2) {
+    void fn_800CA7F4(String *, u32, s32);
+    void *memcpy(void *, const void *, u32);
+    fn_800CA7F4(arg0, arg2, 0);
+    memcpy(arg0->data, arg1, arg2);
     return arg0;
 }
 
-#pragma auto_inline off
 String *fn_800C9758(String *arg0, const String *arg1, u32 pos, u32 n) {
     String *fn_800C984C(String *, u32, u32);
     void fn_800CA7F4(String *, u32, s32);
