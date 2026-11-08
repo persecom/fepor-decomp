@@ -3113,7 +3113,6 @@ void fn_8025EE34(f32 *arg0) {
     arg0[2] = arg0[2] / var_f1;
 }
 
-extern u16 lbl_8035D118[256];
 void fn_8025EEE8(s32 arg0, s32 arg1, s32 arg2) {
     s32 temp_r3;
     void *temp_r4;
