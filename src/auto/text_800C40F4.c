@@ -2042,7 +2042,7 @@ void fn_800DF700(s32 arg1) {
 }
 
 #pragma cplusplus on
-#pragma auto_inline off
+#pragma dont_inline on
 extern "C" void *fn_800DFAE0(void *arg0, void *arg1, const String *arg2, const String *arg3, const String *arg4) {
     struct Obj {
         u8 pad[0x10];
