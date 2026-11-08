@@ -285,6 +285,19 @@ s32 fn_80229040(u32 rangeStart, u32 rangeEnd, s32 stepOver) {
     return error;
 }
 
+s32 fn_802290F8(u32 count, s32 stepOver) {
+    s32 error = 0;
+
+    if (stepOver) {
+        error = 0x703;
+    } else {
+        lbl_8029E584.type = 0;
+        lbl_8029E584.count = count;
+        error = TRKTargetDoStep();
+    }
+    return error;
+}
+
 void EnableMetroTRKInterrupts(void) {
     M2C_UNK fn_8022B120();
     fn_8022B120();
