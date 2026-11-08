@@ -99,7 +99,7 @@ extern u32 lbl_80368770;
 
 extern s32 jumptable_8029E0B8[];
 
-extern u16* const __GXData;
+extern u16* __GXData;
 
 extern f32 lbl_8036BDC0;
 
