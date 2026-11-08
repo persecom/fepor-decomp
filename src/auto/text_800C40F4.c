@@ -661,6 +661,23 @@ void fn_800C908C(void *arg0, String *arg1, s32 *arg2) {
     fn_800C802C(arg0, 0);
 }
 
+void fn_800C91EC(void* arg0, void* arg1) {
+    // This function is performing complex data initialization and copying
+    if (arg0 != NULL && arg1 != NULL) {
+        *(u32*)arg0 = 0;
+        *(u32*)((char*)arg0 + 4) = 0;
+        *(u32*)((char*)arg0 + 8) = 0;
+        *(u32*)((char*)arg0 + 12) = 0;
+        *(u32*)((char*)arg0 + 16) = 0;
+        *(u32*)((char*)arg0 + 20) = 0;
+        *(u32*)((char*)arg0 + 24) = 0;
+        *(u32*)((char*)arg0 + 76) = 0;
+        *(u32*)((char*)arg0 + 72) = 0;
+        *(u32*)((char*)arg0 + 68) = 0;
+        *(u32*)((char*)arg0 + 64) = 0;
+    }
+}
+
 M2C_UNK *fn_800C93EC(void *arg0) {
     extern M2C_UNK lbl_80369DC0;
     M2C_UNK *temp_r3;
@@ -1181,6 +1198,46 @@ void fn_800D6A84(u32 arg1, s32 arg2) {
     }
 }
 
+void fn_800D6C1C(void *arg0, void *arg1)
+{
+    // If arg0 is NULL, return
+    if (arg0 == NULL) {
+        return;
+    }
+
+    // Set bit 0 of arg0->unk8 to 1
+    *(u32*)((char*)arg0 + 8) |= 1;
+
+    // Main processing loop
+    while(1) {
+        void *current = (void*)(*(u32*)((char*)arg0 + 8) & ~1); // Clear LSB
+        
+        if (current == arg1) {
+            break;
+        }
+        
+        // Check bit 0 of current->unk8 
+        if (*(u32*)((char*)current + 8) & 1) {
+            void *next_node = *(void**)((char*)current + 0);
+            
+            if (next_node == *(void**)((char*)arg0 + 8)) {
+                // Call fn_800D6E8C 
+                ((void(*)(void*))0x800D6E8C)(*(void**)((char*)arg0 + 8));
+            }
+            
+            // Clear and set bit 0 of current and next_node
+            *(u32*)((char*)current + 8) &= ~1;
+            *(u32*)((char*)current + 8) |= 1;
+        }
+        
+        // Continue to next node in chain by incrementing arg0 pointer
+        arg0 = (void**)((char*)arg0 + 4);
+    }
+
+    // Clear bit 0 of arg1->unk8 
+    *(u32*)((char*)arg1 + 8) &= ~1;
+}
+
 s32 fn_800D6F0C(void) {
     M2C_UNK fn_800D758C(s32);
     extern s32 lbl_80367898;
@@ -1205,6 +1262,21 @@ void fn_800D6FF0(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
     fn_800D7254();
     temp_r3 = M2C_FIELD(arg0, void **, 0x424);
     M2C_FIELD(M2C_FIELD(temp_r3, void **, 0x40), M2C_UNK (**)(void *, s32, s32, s32), 0x58)(temp_r3, arg1, arg2, arg3);
+}
+
+void *fn_800D7060(void *arg0, s16 arg1) {
+    void fn_800C428C(void *);
+    
+    if (arg0 != NULL) {
+        void **vtable = (void **)M2C_FIELD(arg0, void **, 0x8);
+        if (vtable != NULL && *vtable != NULL) {
+            fn_800C428C(*vtable);
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
 }
 
 void fn_800D74FC(void *arg0) {
@@ -3467,28 +3539,21 @@ extern "C" s32 fn_800E7EA0(void *arg0) {
 #pragma dont_inline reset
 #pragma cplusplus reset
 
-void fn_800E7FB4(void* arg0, u32 arg1, void* arg2) {
-    void** temp_r31 = (void**)arg0;
-    void** temp_r12;
-    void** temp_arg0 = temp_r31;
-    
-    // Store the return address
-    // Save r31 since it's modified
-    *(temp_r31 - 1) = arg2;   // This should match the stw of r31 to 0xc(r1)
-    
-    temp_r12 = (void**)*((char*)temp_arg0 + 4); // Load field_0x4
-    
-    if (temp_r12 != 0) {
-        // Call function via pointer at offset 0x10
-        void* func_ptr = *(void**)((char*)temp_r12 + 0x10);
-        if (func_ptr != 0) {
-            // Call the function with specific arguments
-            void (*func)(void*, void*, void*) = (void (*)(void*, void*, void*))func_ptr;
-            func(arg0, arg2, temp_arg0);
-        }
-    }
-}
+#pragma cplusplus on
+#pragma dont_inline on
+extern "C" void fn_800E7FB4(void *arg0, String *arg1) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2(char *, M2C_UNK *) = 0;
+    };
+    extern char lbl_80272230[];
 
+    ((Obj *)arg0)->v2(lbl_80272230 + 0x34, fn_800C93EC(arg1));
+}
+#pragma dont_inline reset
+#pragma cplusplus reset
 void fn_800E805C(s32 arg0, void *arg1) {
     M2C_UNK fn_800E7F94(void *, s32);
     
@@ -5444,6 +5509,46 @@ void fn_800FF36C(void *arg0) {
     }
     if (var_r3 == 1) {
         fn_8000C188(arg0);
+    }
+}
+
+void fn_800FF564(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 arg10) {
+    extern f32 lbl_80369F20;
+    extern f32 lbl_80369F24;
+    extern f64 lbl_80369F28;
+    
+    s32 w;
+    s32 h;
+    s32 x2;
+    s32 y2;
+    s32 cols;
+    s32 v1;
+    s32 u1;
+    s32 v0;
+    s32 u0;
+
+    w = *(s32*)((char*)arg0 + 0x54);
+    h = *(s32*)((char*)arg0 + 0x58);
+    x2 = arg3 + w;
+    y2 = arg4 + h;
+    if (arg2 >= *(s32*)((char*)arg0 + 0x60)) {
+        arg2 = *(s32*)((char*)arg0 + 0x60) - 1;
+    }
+    cols = *(s32*)((char*)arg0 + 0x5C);
+    u0 = *(s32*)((char*)arg0 + 0x64) + w * (arg2 % cols);
+    v0 = *(s32*)((char*)arg0 + 0x68) + h * (arg2 / cols);
+    u1 = u0 + w;
+    v1 = v0 + h;
+    if (*(u32*)((char*)arg0 + 0x48) != 0) {
+        fn_8000A258();
+        fn_80009D74(lbl_80369F20, lbl_80369F20, (f32)arg5, lbl_80369F24);
+        fn_80009F90(*(u32*)((char*)arg0 + 0x48), arg10, (u16)*(s32*)((char*)arg0 + 0x6C));
+        fn_8000A248();
+        fn_80007898(1);
+        fn_800077D8((f32)arg3, (f32)arg4, (f32)(x2 - arg3), (f32)(y2 - arg4));
+        fn_80007770((f32)u0, (f32)v0, (f32)u1, (f32)v1);
+        fn_800076AC((u8)arg6, (u8)arg7, (u8)arg8, (u8)arg9);
+        fn_80007884();
     }
 }
 
