@@ -1079,6 +1079,19 @@ void fn_800D6940(void *arg0) {
     M2C_FIELD(arg0, s32 *, 4) = 0;
 }
 
+void fn_800D697C(u8 *arg0, u32 arg1, s32 arg2) {
+    if (arg2 <= 0) {
+        return;
+    }
+    
+    while (arg2 > 0) {
+        *(u8 *)arg0 = (u8)arg1;
+        arg0++;
+        arg1 >>= 8;
+        arg2--;
+    }
+}
+
 void fn_800D6A84(u32 arg1, s32 arg2) {
     if (arg1 != 0U) {
         fn_800D6AB4(arg1, arg2);
@@ -4930,9 +4943,10 @@ extern s32 lbl_80320C20;
 extern u16 lbl_803678F4;
 extern u8 lbl_8032B3C0[];
 extern u8 lbl_8032B3C0[544];
+extern u16 *lbl_803678A8;
 extern u16 *lbl_803678C8;
-extern u16 lbl_80320B88[];    // array of u16, size 32
-extern s32 lbl_80367870;      // 4 bytes
+extern u16 *lbl_80367918;
+extern u16 lbl_80273420[];
 #include "global.h"
 #include "structs.h"
 
