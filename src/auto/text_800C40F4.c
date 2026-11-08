@@ -15,6 +15,8 @@ extern char __files[];
 extern char lbl_80271860[];
 extern u8 lbl_80366E58;
 
+void *fn_800C9A60(void *arg0, s16 arg1);
+
 typedef struct {
     s32 unk0;
     void *unk4;
