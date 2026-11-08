@@ -1421,6 +1421,7 @@ extern "C" s32 fn_800D0C5C(void *arg0) {
     self = arg0;
     fn_800D3590(lbl_80367240);
     state = *(u32 *)((u8 *)self + 0xC);
+    r27 = 0;
     r28 = 0;
     r30 = 0;
     if (state <= 0x39U) {
