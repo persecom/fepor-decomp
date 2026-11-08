@@ -170,6 +170,23 @@ typedef struct {
 
 extern s32 D_8022EF64;
 
+typedef struct EXIControl {
+    void (*exiCallback)(s32 chan, void *context);
+    void (*tcCallback)(s32 chan, void *context);
+    void (*extCallback)(s32 chan, void *context);
+    volatile u32 state;
+    int immLen;
+    u8 *immBuf;
+    u32 dev;
+    u32 id;
+    s32 idTime;
+    int items;
+    struct {
+        u32 dev;
+        void (*callback)(s32 chan, void *context);
+    } queue[3];
+} EXIControl;
+
 volatile u32 __EXIRegs[16] : 0xCC006800;
 s32 __EXIProbeStartTime[2] : 0x800030C0;
 
