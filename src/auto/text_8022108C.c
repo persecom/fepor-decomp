@@ -167,8 +167,6 @@ void fn_8022108C(const GXRenderModeObj *rmin, GXRenderModeObj *rmout, u16 hor, u
 }
 
 void fn_802212C8(s32 arg0) {
-    extern u16 *__GXData;
-    
     __GXData[0x1E8/2] = 0;
     __GXData[0x1E8/2] = (__GXData[0x1E8/2] & ~0x3FF) | ((arg0 >> 5) & 0x3FF);
     __GXData[0x1E8/2] = (__GXData[0x1E8/2] & ~0xFF000000) | 0x4D000000;
