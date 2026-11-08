@@ -2425,7 +2425,6 @@ void fn_802551F0(void *arg0, u32 arg1) {
     ((u32*)arg0)[0x45] = ((u32*)arg0)[0x45] & ~0x500;
 }
 
-extern u8 lbl_8034C110[];
 void fn_802559D8(void) {
     u8* ptr;
     u32 count;
