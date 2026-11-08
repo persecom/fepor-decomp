@@ -156,12 +156,14 @@ s32 fn_802037B0(void) {
     return 0;
 }
 
+#pragma dont_inline on
 void PPCHalt(void) {
     sync();
     while (1) {
         ;
     }
 }
+#pragma dont_inline reset
 
 void PPCMtwpar(void) {
     M2C_ERROR(/* unknown instruction: mtspr WPAR, $r3 */);
@@ -748,92 +750,108 @@ extern void OSDisableScheduler(void);
 extern void OSEnableScheduler(void);
 extern void __OSReschedule(void);
 extern void OSLoadContext(void *);
+#pragma use_lmw_stmw on
 void __OSUnhandledException(u8 exception, OSContext *context, u32 dsisr, u32 dar) {
+    u32 enableBits;
+    s32 msr;
+    u8 exc;
+    OSContext *ctx;
+    u32 dsisr_s;
+    u32 dar_s;
+    u32 timeLo;
+    u32 timeHi;
+    OSErrorHandler *table;
+    char *msgs;
     s64 now;
     u32 srr1;
-    s32 msr;
-    u32 fpscr;
-    u32 enableBits;
     OSErrorHandler handler;
     void *fpuContext;
 
+    table = __OSErrorTable;
+    msgs = lbl_8029BFB8;
+    exc = exception;
+    ctx = context;
+    dsisr_s = dsisr;
+    dar_s = dar;
+
     now = OSGetTime();
-    srr1 = M2C_FIELD(context, u32 *, 0x19C);
+    timeLo = (u32)now;
+    timeHi = (u32)(now >> 32);
+    srr1 = M2C_FIELD(ctx, u32 *, 0x19C);
 
     if (!(srr1 & 2)) {
-        OSReport(&lbl_8029BFB8[0x5C], exception);
+        OSReport(msgs + 0x5C, exc);
         goto dump;
     }
 
-    if (exception == 6 && (srr1 & 0x100000) && __OSErrorTable[16] != 0) {
-        exception = 16;
+    if (exc == 6 && (srr1 & 0x100000) && table[16] != 0) {
+        exc = 16;
         msr = PPCMfmsr();
         PPCMtmsr(msr | 0x2000);
         fpuContext = *(void **)0x800000D8;
         if (fpuContext != 0) {
             OSSaveFPUContext(fpuContext);
         }
-        fpscr = PPCMffpscr();
-        enableBits = 0x6005F8FF;
-        PPCMtfpscr(fpscr & enableBits);
+        enableBits = 0x60060000 - 0x701;
+        PPCMtfpscr(PPCMffpscr() & enableBits);
         PPCMtmsr(msr);
 
-        if (*(void **)0x800000D8 == context) {
+        if (*(void **)0x800000D8 == ctx) {
             OSDisableScheduler();
-            __OSErrorTable[16](16, context, dsisr, dar);
-            M2C_FIELD(context, u32 *, 0x19C) &= ~0x2000u;
+            table[16](16, ctx, dsisr_s, dar_s);
+            M2C_FIELD(ctx, u32 *, 0x19C) &= ~0x2000u;
             *(void **)0x800000D8 = 0;
-            M2C_FIELD(context, u32 *, 0x194) &= enableBits;
+            M2C_FIELD(ctx, u32 *, 0x194) &= enableBits;
             OSEnableScheduler();
             __OSReschedule();
         } else {
-            M2C_FIELD(context, u32 *, 0x19C) &= ~0x2000u;
+            M2C_FIELD(ctx, u32 *, 0x19C) &= ~0x2000u;
             *(void **)0x800000D8 = 0;
-            OSLoadContext(context);
+            OSLoadContext(ctx);
         }
     }
 
-    handler = __OSErrorTable[exception];
+    handler = table[exc];
     if (handler != 0) {
         OSDisableScheduler();
-        handler(exception, context, dsisr, dar);
+        handler(exc, ctx, dsisr_s, dar_s);
         OSEnableScheduler();
         __OSReschedule();
-        OSLoadContext(context);
+        OSLoadContext(ctx);
     }
 
-    if (exception == 8) {
-        OSLoadContext(context);
+    if (exc == 8) {
+        OSLoadContext(ctx);
     }
 
-    OSReport(&lbl_8029BFB8[0x7C], exception);
+    OSReport(msgs + 0x7C, exc);
 
 dump:
     OSReport(lbl_80366F3C);
-    OSDumpContext(context);
-    OSReport(&lbl_8029BFB8[0x94], dsisr, dar);
-    OSReport(&lbl_8029BFB8[0xC8], (u32)(now >> 32), (u32)now);
+    OSDumpContext(ctx);
+    OSReport(msgs + 0x94, dsisr_s, dar_s);
+    OSReport(msgs + 0xC8, timeHi, timeLo);
 
-    switch (exception) {
+    switch (exc) {
     case 2:
-        OSReport(&lbl_8029BFB8[0xD8], M2C_FIELD(context, u32 *, 0x198), dar);
+        OSReport(msgs + 0xD8, M2C_FIELD(ctx, u32 *, 0x198), dar_s);
         break;
     case 3:
-        OSReport(&lbl_8029BFB8[0x138], M2C_FIELD(context, u32 *, 0x198));
+        OSReport(msgs + 0x138, M2C_FIELD(ctx, u32 *, 0x198));
         break;
     case 5:
-        OSReport(&lbl_8029BFB8[0x184], M2C_FIELD(context, u32 *, 0x198), dar);
+        OSReport(msgs + 0x184, M2C_FIELD(ctx, u32 *, 0x198), dar_s);
         break;
     case 6:
-        OSReport(&lbl_8029BFB8[0x1E8], M2C_FIELD(context, u32 *, 0x198), dar);
+        OSReport(msgs + 0x1E8, M2C_FIELD(ctx, u32 *, 0x198), dar_s);
         break;
     case 15: {
         u16 *mem = (u16 *)0xCC005000;
         OSReport(lbl_80366F3C);
-        OSReport(&lbl_8029BFB8[0x248], *(u16 *)0xCC005030, *(u16 *)0xCC005032);
-        OSReport(&lbl_8029BFB8[0x268], mem[0x10], mem[0x11]);
-        OSReport(&lbl_8029BFB8[0x288], *(u32 *)0xCC006014);
-        OSReport(&lbl_8029BFB8[0x2A4], __OSLastInterrupt, __OSLastInterruptSrr0,
+        OSReport(msgs + 0x248, *(u16 *)0xCC005030, *(u16 *)0xCC005032);
+        OSReport(msgs + 0x268, mem[0x10], mem[0x11]);
+        OSReport(msgs + 0x288, *(u32 *)0xCC006014);
+        OSReport(msgs + 0x2A4, __OSLastInterrupt, __OSLastInterruptSrr0,
                  (u32)(__OSLastInterruptTime >> 32), (u32)__OSLastInterruptTime);
         break;
     }
@@ -843,7 +861,6 @@ dump:
 
     PPCHalt();
 }
-
 void fn_80206658(void) {
     // This is a function that seems to process some string data
     // Based on the assembly, it appears to be doing some kind of memory initialization/processing
