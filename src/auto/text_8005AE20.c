@@ -7,6 +7,7 @@ extern f32 lbl_803692E0;
 extern f32 lbl_80369300;
 extern f32 lbl_8036930C;
 extern u16 lbl_80285D18[];
+extern char lbl_8026B590[];
 
 static inline u8 *FindEntryByName(char *name) {
     extern u8 lbl_802F04E0[];
