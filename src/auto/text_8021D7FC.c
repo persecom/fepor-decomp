@@ -51,6 +51,19 @@ typedef struct GXRenderModeObj {
     u8 vfilter[7];
 } GXRenderModeObj;
 
+typedef struct __GXFifoObj {
+    u8* base;
+    u8* top;
+    u32 size;
+    u32 hiWatermark;
+    u32 loWatermark;
+    void* rdPtr;
+    void* wrPtr;
+    s32 count;
+    u8 bind_cpu;
+    u8 bind_gp;
+} __GXFifoObj;
+
 static u32 lbl_803392E8[8];
 static u32 lbl_80339308[8];
 static s16 lbl_80339328[8];
@@ -130,6 +143,66 @@ void fn_8021ED28(void *arg0, s32 arg1, s32 arg2) {
 void fn_8021ED98(void *arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(arg0, s32 *, 0xC) = arg1;
     M2C_FIELD(arg0, s32 *, 0x10) = arg2;
+}
+
+void GXSetGPFifo(void *fifo) {
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    void fn_8021F314(void);
+    void fn_8021F36C(u8, u8);
+    void fn_8021F338(u8);
+    void fn_8021F39C(u8, u8);
+    void fn_8021F2F0(void);
+    void fn_802037B0(void);
+    extern u16* const __GXData;
+    extern u16* __cpReg;
+    extern void* lbl_80368770;
+    extern void* lbl_80368774;
+    extern u8 lbl_8036877C;
+    s32 enabled;
+    u32 reg;
+
+    enabled = OSDisableInterrupts();
+    fn_8021F314();
+    fn_8021F36C(0, 0);
+    lbl_80368774 = fifo;
+
+    __cpReg[16] = M2C_FIELD(fifo, u32 *, 0x0);
+    __cpReg[18] = M2C_FIELD(fifo, u32 *, 0x4);
+    __cpReg[24] = M2C_FIELD(fifo, s32 *, 0x1C);
+    __cpReg[26] = M2C_FIELD(fifo, u32 *, 0x18);
+    __cpReg[28] = M2C_FIELD(fifo, u32 *, 0x14);
+    __cpReg[20] = M2C_FIELD(fifo, u32 *, 0xC);
+    __cpReg[22] = M2C_FIELD(fifo, u32 *, 0x10);
+    __cpReg[17] = (M2C_FIELD(fifo, u32 *, 0x0) & 0x3FFFFFFF) >> 16;
+    __cpReg[19] = (M2C_FIELD(fifo, u32 *, 0x4) & 0x3FFFFFFF) >> 16;
+    __cpReg[25] = M2C_FIELD(fifo, s32 *, 0x1C) >> 16;
+    __cpReg[27] = (M2C_FIELD(fifo, u32 *, 0x18) & 0x3FFFFFFF) >> 16;
+    __cpReg[29] = (M2C_FIELD(fifo, u32 *, 0x14) & 0x3FFFFFFF) >> 16;
+    __cpReg[21] = M2C_FIELD(fifo, u32 *, 0xC) >> 16;
+    __cpReg[23] = M2C_FIELD(fifo, u32 *, 0x10) >> 16;
+
+    fn_802037B0();
+
+    if (lbl_80368770 == lbl_80368774) {
+        lbl_8036877C = 1;
+        fn_8021F36C(1, 0);
+        fn_8021F338(1);
+    } else {
+        lbl_8036877C = 0;
+        fn_8021F36C(0, 0);
+        fn_8021F338(0);
+    }
+
+    reg = M2C_FIELD(__GXData, u32 *, 0x8);
+    reg = __rlwimi(reg, 0, 1, 30, 30);
+    reg = __rlwimi(reg, 0, 5, 26, 26);
+    __cpReg[1] = reg;
+    __cpReg[1] = M2C_FIELD(__GXData, u32 *, 0x8);
+
+    fn_8021F39C(1, 1);
+    fn_8021F2F0();
+    OSRestoreInterrupts(enabled);
 }
 
 void fn_8021F06C(s32 arg0) {
