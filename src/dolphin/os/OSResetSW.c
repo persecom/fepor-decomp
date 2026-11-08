@@ -249,6 +249,29 @@ void __DVDInitWA(void) {
     OSInitAlarm();
 }
 
+void fn_8020B84C(void) {
+    extern u16 Scb_80339420[];
+    extern s32 NextCommandNumber_80368574;
+    
+    s32 cmd_idx = NextCommandNumber_80368574 * 0x14;
+    s32 cmd = Scb_80339420[cmd_idx];
+    
+    switch (cmd) {
+        case 1:
+            NextCommandNumber_80368574++;
+            fn_8020B940(Scb_80339420[cmd_idx + 1], 
+                       Scb_80339420[cmd_idx + 2], 
+                       Scb_80339420[cmd_idx + 3], 
+                       Scb_80339420[cmd_idx + 4]);
+            return;
+        case 2:
+            NextCommandNumber_80368574++;
+            fn_8020BD68(Scb_80339420[cmd_idx + 3], 
+                       Scb_80339420[cmd_idx + 4]);
+            return;
+    }
+}
+
 void fn_8020BA50(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     M2C_UNK fn_8020BD68(s32, s32, M2C_UNK, M2C_UNK);
     extern M2C_UNK CommandList_80339E70;
@@ -287,6 +310,12 @@ s32 DVDLowWaitCoverClose(s32 arg0) {
     *(u32 *)0xCC006004 = 2;
     
     return 1;
+}
+
+void DVDLowStopMotor(void) {
+    OSDisableInterrupts();
+    lbl_803685E8 = 0;
+    OSRestoreInterrupts();
 }
 
 s32 fn_8020C310(void) {
@@ -643,6 +672,23 @@ s32 __PADDisableRecalibration(s32 arg0) {
     return r31;
 }
 
+void fn_80213760(u16 arg0, u32 arg1) {
+    u16 temp_r4;
+    void *temp_r5;
+    void *temp_r6;
+    void *temp_r7;
+
+    OSDisableInterrupts();
+    temp_r5 = (u16 *)0xCC000000 + 0x5000;
+    temp_r6 = (u16 *)0xCC000000 + 0x5000;
+    temp_r7 = (u16 *)0xCC000000 + 0x5000;
+    M2C_FIELD(temp_r5, u16 *, 0x30) = (arg0 >> 16) | (*(u16 *)0xCC005030 & 0xFC00);
+    M2C_FIELD(temp_r6, u16 *, 0x32) = (M2C_FIELD(temp_r6, u16 *, 0x32) & 0x001F) | arg0;
+    temp_r4 = M2C_FIELD(temp_r7, u16 *, 0x36) & 0x8000;
+    M2C_FIELD(temp_r7, u16 *, 0x36) = temp_r4 | (arg1 >> 5);
+    OSRestoreInterrupts();
+}
+
 void fn_802137E8(void) {
     u16 *ptr = (u16 *)0xCC005000;
     u16 val = ptr[0x1B];
@@ -831,3 +877,10 @@ extern u16 Scb_80339420[42];
 #include <dolphin/os.h>
 
 extern u16 Scb_80339420[42]; // 84 bytes, 2-byte entries
+#include "common.h"
+#include <dolphin/os.h>
+#include "global.h"
+extern u16 Scb_80339420[5];
+extern u16 Callback_80368538;
+extern u16 StopAtNextInt_80368530;
+extern u16 AlarmForTimeout_80339ED8[20];
