@@ -236,7 +236,7 @@ s32 fn_80239508(s32 arg0) {
     u16 *ptr;
 
     temp_r4 = arg0 << 6;
-    var_r3 = __EXIProbe(arg0, temp_r4);
+    var_r3 = __EXIProbe(arg0);
     if (var_r3 != 0) {
         ptr = &Ecb_8033E188[temp_r4];
         if (ptr[0x20 / sizeof(u16)] == 0) {
