@@ -1129,3 +1129,4 @@ extern void *lbl_80367A68;
 #include "unit.h"
 
 extern u32* gUnitStructs; // lbl_80367240
+extern u8* gSomeGlobal;
