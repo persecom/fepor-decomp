@@ -7,6 +7,8 @@ extern s32 lbl_803682F0;;
 extern s32 fn_80013E50(s32);
 extern s32 fn_80013E60(s32, s32);
 extern s32 fn_80013E74(void*, s32);
+extern s32 lbl_80366F60;
+extern s32 lbl_8029CFE8;
 
 
 extern s32 lbl_80368614;
@@ -154,6 +156,30 @@ s32 fn_80209A78(void) {
         scb_ptr[0x24] = 1;
     }
     return (scb_ptr[0x8] >> 6) & 1;
+}
+
+void fn_80209C10(void) {
+    u16 *scb = Scb_80339420;
+    OSDisableInterrupts();
+    if (scb[0x24] != 0) {
+        OSRestoreInterrupts();
+        return;
+    } else {
+        scb[0x24] = 1;
+    }
+    lbl_80368614 = *(u32 *)0x800000E0;
+    lbl_80368618 = *(void **)0x800000E4;
+    lbl_8036861C = *(void **)0x800000E8;
+    lbl_80368620 = *(void **)0x800000EC;
+    lbl_80368624 = *(void **)0x800000F0;
+    lbl_80368628 = *(void **)0x800000F4;
+    lbl_8036862C = *(void **)0x800000F8;
+    lbl_80368630 = *(void **)0x800000FC;
+    lbl_80368634 = *(void **)0x80000100;
+    lbl_80368638 = *(void **)0x80000104;
+    lbl_8036863C = *(void **)0x80000108;
+    lbl_80368640 = *(void **)0x8000010C;
+    lbl_80368644 = *(void **)0x80000110;
 }
 
 extern void* __OSSystemCallVectorStart;
@@ -318,6 +344,64 @@ void DVDLowStopMotor(void) {
     OSRestoreInterrupts();
 }
 
+void fn_8020C080(void) {
+    s32 var_r3;
+    var_r3 = 0;
+    if (lbl_80368614 == 0) {
+        lbl_80368618 = NULL;
+        lbl_8036861C = NULL;
+        lbl_80368620 = NULL;
+        lbl_80368624 = NULL;
+        lbl_80368628 = NULL;
+        lbl_8036862C = NULL;
+        lbl_80368630 = NULL;
+        lbl_80368634 = NULL;
+        lbl_80368638 = NULL;
+        lbl_8036863C = NULL;
+        lbl_80368640 = NULL;
+        lbl_80368644 = NULL;
+        lbl_80368648 = NULL;
+        lbl_8036864C = NULL;
+        lbl_80368650 = NULL;
+        lbl_80368654 = NULL;
+        if (lbl_803682F0 == 0x1A83) {
+            var_r3 = 1;
+        }
+    } else {
+        var_r3 = 0;
+    }
+    lbl_803685E8 = (void (*)(void))fn_80013E50(var_r3);
+}
+
+void DVDLowReset(void) {
+    u32 temp_r30;
+    u32 temp_r4;
+    u32 temp_r26;
+    u32 temp_r28;
+    u64 temp_r27;
+    u64 temp_ret;
+    
+    *(u32 *)0xCC006004 = 2;
+    temp_r30 = *(u32 *)0xCC003024;
+    *(u32 *)0xCC003024 = (temp_r30 & 0xFFFFFFFB) | 1;
+    temp_ret = __OSGetSystemTime();
+    temp_r26 = (u32) temp_ret;
+    temp_r27 = temp_ret;
+    
+    // Calculate delay based on system time
+    temp_r28 = ((*(u32 *)0x800000F8 / 500000) * 0xC) >> 3U;
+    
+    do {
+        temp_r4 = ((__OSGetSystemTime() - temp_r27) ^ 0x80000000);
+    } while (-((temp_r4 - temp_r4) ^ 0x80000000) != 0);
+    
+    *(u32 *)0xCC003024 = temp_r30 | 5;
+    *(s32 *)0x80368548 = 1;
+    temp_ret = __OSGetSystemTime();
+    *(u32 *)0x80368540 = (u32) temp_ret;
+    *(u32 *)0x80368544 = (u32) temp_ret;
+}
+
 s32 fn_8020C310(void) {
     extern s32 Callback_80368538;
     extern s32 WaitingCoverClose_8036854C;
@@ -373,10 +457,9 @@ void fn_8020CFAC(void)
     s32 i;
     for (i = 0; i < 0x200; i++)
     {
-        u16* addr = (u16*)(0x803685A0 + i * 2);
-        if ((*addr & 0x10) != 0)
+        if ((*(u16*)(0x803685A0 + i * 2) & 0x10) != 0)
         {
-            *addr = 0;
+            *(u16*)(0x803685A0 + i * 2) = 0;
         }
     }
 }
@@ -385,6 +468,36 @@ void fn_8020D1A0(void) {
     M2C_UNK fn_8020BF58(M2C_UNK *);
     extern M2C_UNK fn_8020D27C;
     fn_8020BF58(&fn_8020D27C);
+}
+
+s32 fn_8020D1C8(u32 arg0) {
+    extern void *executing_80368598;
+    extern u32 lbl_803685C8;
+    extern s32 lbl_803685CC;
+    u32 temp_r4;
+
+    if ((u32) (arg0 + 0xFFFE0000) == 0x400U) {
+        lbl_803685C8 = arg0;
+        return 1;
+    }
+    temp_r4 = arg0 & 0xFFFFFF;
+    if (((u32) (temp_r4 + 0xFFFA0000) == 0x2800U) || ((u32) (temp_r4 + 0xFFFE0000) == 0x3A00U) || ((u32) (temp_r4 + 0xFFF50000) == 0x5A01U)) {
+        return 0;
+    }
+    lbl_803685CC += 1;
+    if ((s32) lbl_803685CC == 2) {
+        if (temp_r4 == (u32) lbl_803685C8) {
+            lbl_803685C8 = temp_r4;
+            return 1;
+        }
+        lbl_803685C8 = temp_r4;
+        return 2;
+    }
+    lbl_803685C8 = temp_r4;
+    if (((u32) (temp_r4 + 0xFFFD0000) == 0x1100U) || (M2C_FIELD(executing_80368598, u32 *, 8) == 5U)) {
+        return 2;
+    }
+    return 3;
 }
 
 void fn_8020D4E0(u32 arg0) {
@@ -436,6 +549,12 @@ void fn_8020DCE8(void *block) {
     extern u8 lbl_80339F60[];
 
     fn_8020BE28(lbl_80339F60, fn_8020DD18);
+}
+
+u32 __OSGetResetSWState(void);
+u32 fn_8020ED90(void)
+{
+    return __OSGetResetSWState();
 }
 
 void DVDReset(void) {
@@ -588,6 +707,31 @@ s32 fn_802116D4(void) {
     return (((r5 - 1) * 2) + ((r3 - 1) / r4)) < lbl_80368648[14] ? 1 : 0;
 }
 
+u32 fn_802117D8(void) {
+    u16 temp_r0;
+    u32 r5;
+    u32 r6;
+    u32 r30;
+    void *r31;
+
+    r31 = lbl_80368648;
+    OSDisableInterrupts();
+    r6 = M2C_FIELD((void *)0xCC002000, u16 *, 0x2C) & 0x7FF;
+    do {
+        r6 = M2C_FIELD((void *)0xCC002000, u16 *, 0x2C) & 0x7FF;
+    } while (r6 != r30);
+    r5 = (M2C_FIELD((void *)0xCC002000, u16 *, 0x2E) & 0x7FF) - 1;
+    r6 = r30 - 1;
+    r6 *= 2;
+    r30 = (r6 + (r5 / M2C_FIELD(r31, u16 *, 0x1A))) & 0xFFFF;
+    OSRestoreInterrupts();
+    temp_r0 = M2C_FIELD(r31, u16 *, 0x18);
+    if (r30 >= temp_r0) {
+        r30 -= temp_r0;
+    }
+    return r30 >> 1U;
+}
+
 u32 VIGetTvFormat(void) {
     u32 mode;
     
@@ -647,6 +791,39 @@ void fn_80212D78(s32 arg0) {
         break;
     }
     lbl_80366FB0 = arg0;
+}
+
+s32 fn_80213530(s32 arg0) {
+    s32 fn_8021275C(M2C_UNK);
+    M2C_UNK fn_8021364C(M2C_UNK);
+    s32 fn_8023ABD4();
+    extern s32 lbl_80366FA4;
+    extern u32 lbl_80368670;
+    extern u32 lbl_80368688;
+    extern s32 lbl_8036868C;
+    s32 var_r31;
+    s32 var_r3;
+
+    if ((u32) lbl_80368688 != 0U) {
+        fn_8021364C(0);
+    }
+    if (arg0 == 0) {
+        var_r31 = 0;
+        var_r3 = 0;
+        if (((u32) lbl_80368670 == 0U) && ((s32) lbl_80366FA4 == 0x20)) {
+            var_r3 = 1;
+        }
+        if ((var_r3 != 0) && (fn_8023ABD4() == 0)) {
+            var_r31 = 1;
+        }
+        if (((s32) lbl_8036868C == 0) && (var_r31 != 0)) {
+            lbl_8036868C = fn_8021275C(0xF0000000);
+            return 0;
+        }
+        return var_r31;
+    }
+    lbl_8036868C = 0;
+    return 1;
 }
 
 u32 fn_8021364C(u32 arg0) {
@@ -854,6 +1031,78 @@ void fn_80215F78(u16 arg0) {
 
 void fn_80216050(void) {
     OSDisableInterrupts();
+}
+
+void fn_80216860(void *arg0) {
+    extern void *lbl_80368734;
+    extern void *lbl_80368738;
+    extern void *lbl_8036873C;
+    void *temp_r4;
+    void *var_r5;
+
+    if ((void *) lbl_80368738 == NULL) {
+        lbl_8036873C = arg0;
+        lbl_80368734 = arg0;
+        lbl_80368738 = arg0;
+        M2C_FIELD(arg0, void **, 0x3C) = NULL;
+        M2C_FIELD(arg0, void **, 0x38) = NULL;
+        return;
+    }
+    var_r5 = lbl_80368738;
+loop_8:
+    if (var_r5 != NULL) {
+        if ((u32) M2C_FIELD(arg0, u32 *, 4) < (u32) M2C_FIELD(var_r5, u32 *, 4)) {
+            M2C_FIELD(arg0, void **, 0x3C) = (void *) M2C_FIELD(var_r5, void **, 0x3C);
+            M2C_FIELD(var_r5, void **, 0x3C) = arg0;
+            M2C_FIELD(arg0, void **, 0x38) = var_r5;
+            temp_r4 = M2C_FIELD(arg0, void **, 0x3C);
+            if (temp_r4 == NULL) {
+                lbl_80368738 = arg0;
+            } else {
+                M2C_FIELD(temp_r4, void **, 0x38) = arg0;
+            }
+        } else {
+            var_r5 = M2C_FIELD(var_r5, void **, 0x38);
+            goto loop_8;
+        }
+    }
+    if (var_r5 == NULL) {
+        M2C_FIELD(lbl_80368734, void **, 0x38) = arg0;
+        M2C_FIELD(arg0, void **, 0x38) = NULL;
+        M2C_FIELD(arg0, void **, 0x3C) = (void *) lbl_80368734;
+        lbl_80368734 = arg0;
+    }
+}
+
+void fn_80216900(void *arg0) {
+    extern void *lbl_80368738;
+    extern void *lbl_80368734;
+    void *temp_r0;
+    extern void *lbl_8036873C;
+
+    M2C_FIELD((unsigned short)arg0, s32 *, 8) = 0;
+    M2C_FIELD(arg0, s32 *, 0) = 3;
+    if ((void *) lbl_80368738 == arg0) {
+        temp_r0 = M2C_FIELD(arg0, void **, 0x38);
+        if (temp_r0 != NULL) {
+            lbl_80368738 = temp_r0;
+            M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 0x3C) = NULL;
+            return;
+        }
+        lbl_8036873C = NULL;
+        lbl_80368734 = NULL;
+        lbl_80368738 = NULL;
+        return;
+    }
+    if ((void *) lbl_80368734 == arg0) {
+        lbl_80368734 = M2C_FIELD(arg0, void **, 0x3C);
+        M2C_FIELD(M2C_FIELD(arg0, void **, 0x3C), void **, 0x38) = NULL;
+        lbl_8036873C = lbl_80368738;
+        return;
+    }
+    lbl_8036873C = M2C_FIELD(arg0, void **, 0x38);
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x3C), void **, 0x38) = (void *) M2C_FIELD(arg0, void **, 0x38);
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 0x3C) = (void *) M2C_FIELD(arg0, void **, 0x3C);
 }
 
 extern s32 RunQueueHint_8036851C;
