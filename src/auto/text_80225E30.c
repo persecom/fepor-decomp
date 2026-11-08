@@ -232,6 +232,41 @@ s32 fn_802287B8(void) {
     return 0;
 }
 
+typedef struct TRKStepStatus {
+    s32 active;
+    s32 type;
+    u32 count;
+    u32 rangeStart;
+    u32 rangeEnd;
+} TRKStepStatus;
+
+extern TRKStepStatus lbl_8029E584;
+extern u8 gTRKCPUState[];
+void MWTRACE(u8 level, char *fmt, ...);
+
+static inline s32 TRKTargetDoStep(void) {
+    extern u16 gTRKState[];
+
+    lbl_8029E584.active = 1;
+    MWTRACE(1, "TargetDoStep()\n");
+    *(u32 *)(gTRKCPUState + 0x1F8) |= 0x400;
+    if (lbl_8029E584.type == 0 || lbl_8029E584.type == 0x10) {
+        lbl_8029E584.count--;
+    }
+    *(s32 *)((u8 *)gTRKState + 0x98) = 0;
+    return 0;
+}
+
+void TRKTargetSetStopped(s32 arg0) {
+    extern u16 gTRKState[0xA4];
+    *(u16*)((u8*)gTRKState + 0x98) = (u16)arg0;
+}
+
+u16 TRKTargetStopped(void) {
+    extern u16 gTRKState[];
+    return (u16)gTRKState[0x98 / sizeof(u16)];
+}
+
 void EnableMetroTRKInterrupts(void) {
     M2C_UNK fn_8022B120();
     fn_8022B120();
@@ -258,6 +293,11 @@ s32 TRKTargetContinue(void) {
     TRKSwapAndGo();
     ReserveEXI2Port();
     return 0;
+}
+
+u8 fn_8022B490(void) {
+    extern u16 lbl_8033CFE0;
+    return (u8)(*(u16*)((char*)&lbl_8033CFE0));
 }
 
 void fn_8022B4A0(s8 arg0) {
