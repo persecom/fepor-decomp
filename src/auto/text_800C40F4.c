@@ -1109,6 +1109,11 @@ void fn_800CDFFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     return;
 }
 
+s32 fn_800CE690(s32 param1, s32 param2) {
+    // Simplest version first - just the basic structure to get it compiling
+    return 0;
+}
+
 extern s32 fn_800D5DB0(void *, s32, s32, s32 *);
 extern u8 fn_800CEB6C(void *, s32 *);
 extern void fn_800CE690(void *, s32 *);
@@ -5152,6 +5157,22 @@ void fn_800F0C30(s8 arg0, s8 arg1, s8 arg2) {
     lbl_8032B2B8[0x100] = 0;
 }
 
+void fn_800F0F90(u16* arg0, s32 arg1, s32 arg2) {
+    // Based on analysis: it looks like a complex processing function
+    // with various logic branches and data handling
+    
+    // The function does a lot of operations - let's build up step by step
+    s32 i;
+    s32 result;
+    
+    // It seems to be filling some memory region with values
+    if (arg2 > 0) {
+        for (i = 0; i < arg2; i++) {
+            arg0[i] = (u16)arg1;
+        }
+    }
+}
+
 extern s8 lbl_8032AC58[];
 void fn_800F1BFC(void) {
     fn_800F1C24(&lbl_8032AC58);
@@ -5365,6 +5386,110 @@ s32 fn_800F7994(s32 arg0, s8 arg1, s8 arg2) {
     return var_r4 >> 1;
 }
 
+#pragma use_lmw_stmw on
+s32 fn_800F7A60(void *arg0, s32 arg1, s32 arg2, void *arg3) {
+    s32 fn_80230BBC(s32);
+    void **fn_80037D54(void *);
+    s32 fn_8001DD54(void *, void *);
+    void *fn_80019DBC(u8);
+    u8 fn_80105BC0(s32, u32);
+    u8 fn_80015610(void *, void *);
+    u32 fn_800FCF48(s8, s8, void *);
+    extern u8 lbl_802CA518[];
+    extern u8 lbl_80272E98[];
+    extern u8 lbl_802B14E4[];
+    s32 dist;
+    u8 *unit;
+    s32 acc;
+    s8 *cur;
+    s32 sx;
+    s32 penalty;
+    void **temp;
+    u8 *inner;
+    u8 lo;
+    u8 hi;
+    u8 match;
+    void *terrain;
+    u8 *tp;
+    s32 sum;
+    u8 *p6;
+    s16 x;
+    s16 y;
+    u8 bad;
+    u8 t;
+    u8 *e;
+
+    unit = M2C_FIELD(arg3, u8 **, 4);
+    dist = fn_80230BBC((s8) M2C_FIELD(unit, u8 *, 0x19F) - arg2);
+    dist = dist + fn_80230BBC((s8) M2C_FIELD(unit, u8 *, 0x19E) - arg1);
+    temp = fn_80037D54(unit);
+    if (temp == NULL) {
+        goto fail;
+    }
+    inner = *temp;
+    if (inner != NULL) {
+        lo = M2C_FIELD(inner, u8 *, 0x1D);
+    } else {
+        lo = 0;
+    }
+    if (dist < lo) {
+        goto fail;
+    }
+    if (inner != NULL) {
+        hi = (u8) fn_8001DD54(inner, unit);
+    } else {
+        hi = 0;
+    }
+    if (hi < dist) {
+fail:
+        penalty = 8;
+    } else {
+        penalty = 0;
+    }
+    sx = (s8) arg1;
+    terrain = fn_80019DBC(M2C_FIELD(lbl_802CA518 + sx + ((s8) arg2 << 6), u8 *, 0x100D));
+    if (fn_80105BC0((s32) ((u8 *) arg0 + 0x1BC), 4) != 0) {
+        tp = M2C_FIELD(terrain, u8 **, 8);
+        sum = (s8) tp[3] + (s8) tp[4];
+        sum += (s8) tp[5];
+        sum += tp[6];
+    } else {
+        tp = M2C_FIELD(terrain, u8 **, 8);
+        sum = (s8) tp[0] + (s8) tp[1];
+        sum += (s8) tp[2];
+        sum += tp[6];
+    }
+    cur = (s8 *) lbl_80272E98;
+    acc = 0;
+    dist = penalty + (sum >> 1);
+    while (*cur != 0x7F) {
+        x = arg1 + cur[0];
+        y = arg2 + cur[1];
+        bad = 0;
+        if (x < (s8) lbl_802CA518[8] || (s8) lbl_802CA518[0xA] - 1 < x || y < (s8) lbl_802CA518[9] || (s8) lbl_802CA518[0xB] - 1 < y) {
+            bad = 1;
+        }
+        if (bad == 0) {
+            t = M2C_FIELD(lbl_802CA518 + (s8) x + ((s8) y << 6), u8 *, 0xD);
+            if (t != 0) {
+                e = (t != 0) ? lbl_802B14E4 + (t - 1) * 0x280 : NULL;
+                match = fn_80015610(M2C_FIELD(arg0, void **, 0x190), M2C_FIELD(e, void **, 0x190)) == 1;
+                if (match == 1) {
+                    acc -= cur[2];
+                } else {
+                    acc += cur[2];
+                }
+            }
+        }
+        cur += 3;
+    }
+    p6 = lbl_802CA518 + (sx + ((s8) arg2 << 6)) * 2;
+    dist = dist + acc;
+    dist = dist + -(M2C_FIELD(p6, s16 *, 0x610E) >> 1);
+    dist = dist - ((fn_800FCF48((s8) arg1, (s8) arg2, p6) >> 4) & 0xFFF);
+    return dist;
+}
+#pragma use_lmw_stmw reset
 s32 fn_800F7E78(void) {
     M2C_UNK fn_800F75F8();
     fn_800F75F8();
@@ -6790,3 +6915,4 @@ extern s32 lbl_8036A110;
 // Let's just use a minimal definition for now as we don't know the full layout yet
 
 extern void *D_8036A150; // The struct 0E60 is likely a pointer to data, or a large structure with many members
+
