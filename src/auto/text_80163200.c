@@ -1474,6 +1474,55 @@ void fn_80170E08(void *arg0) {
     *(u8*)((char*)arg0 + 0x54) = 1;
 }
 
+void fn_80171218(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
+    extern u16 lbl_8028FDB0[4];
+    extern u16 lbl_80292230[10];
+    extern u16 lbl_8029518C[11];
+    extern u16 lbl_802951B8[11];
+    extern f32 lbl_8036AB6C;
+
+    *(u16**)arg0 = lbl_8028FDB0;
+    *((s32*)arg0 + 1) = 0;
+    *((u16**)arg0 + 1) = lbl_80292230;
+    *((s16*)arg0 + 4) = -1;
+    *((s16*)arg0 + 5) = arg1;
+    *((s16*)arg0 + 6) = arg2;
+    *((s16*)arg0 + 7) = arg1 + arg3;
+    *((s16*)arg0 + 8) = arg2 + 0x2C;
+    *((s16*)arg0 + 9) = 0;
+    *((s16*)arg0 + 10) = 0;
+    *((s16*)arg0 + 11) = arg3;
+    *((s16*)arg0 + 12) = 0x2C;
+    *((s16*)arg0 + 13) = 0;
+    *((s16*)arg0 + 14) = 0;
+    *((s8*)arg0 + 30) = 0xFF;
+    *((s8*)arg0 + 31) = 0xFF;
+    *((s8*)arg0 + 32) = 0xFF;
+    *((s8*)arg0 + 33) = 0xFF;
+    *((s16*)arg0 + 17) = arg4;
+    *((s16*)arg0 + 18) = 0;
+    *((f32*)arg0 + 10) = lbl_8036AB6C;
+    *((f32*)arg0 + 11) = lbl_8036AB6C;
+    *((f32*)arg0 + 12) = lbl_8036AB6C;
+    *((s32*)arg0 + 14) = 0;
+    *((s32*)arg0 + 15) = 0;
+    *(u16**)arg0 = lbl_802951B8;
+    *((s16*)arg0 + 30) = 0;
+    *((s16*)arg0 + 31) = 0;
+    *((s16*)arg0 + 15) = 2;
+    *((s16*)arg0 + 16) = 8;
+    *((s16*)arg0 + 17) = (arg1 + arg3) - arg1 - 2;
+    *((s16*)arg0 + 18) = (arg2 + 0x2C) - arg2 - 8;
+    *(u16**)arg0 = lbl_8029518C;
+    *((s16*)arg0 + 30) = 0;
+    *((s16*)arg0 + 31) = 0;
+    *((s16*)arg0 + 15) = 0;
+    *((s16*)arg0 + 16) = 0;
+    *((s16*)arg0 + 17) = (arg1 + arg3) - arg1;
+    *((s16*)arg0 + 18) = (arg2 + 0x2C) - arg2;
+    *((s32*)arg0 + 14) = (*((s32*)arg0 + 14) | 0x10);
+}
+
 void fn_80171B18(s32 arg0, s32 arg1, s32 arg2)
 {
     *(u32*)(*(u32*)(*(u32*)(arg0 + 0x10) + 0x4) + 0x50) = arg2;
@@ -2187,7 +2236,7 @@ void fn_8017AA48(s32 arg0, s32 arg1, s32 arg2) {
 
 s32 fn_80105A5C();
 #pragma cplusplus on
-extern "C" void fn_801547E4(s32, s32, s16, s16, u8, s32, s32, s16, f32);
+extern "C" void fn_801547E4(s16, s16, s16, s16, u8, s32, s32, f32);
 extern "C" void fn_8017B4A8(void *arg0, s32 arg1) {
     struct Obj {
         virtual void v0() = 0;
@@ -2200,7 +2249,6 @@ extern "C" void fn_8017B4A8(void *arg0, s32 arg1) {
     s32 num;
     f32 target;
     f32 cur;
-    u8 color;
 
     unit = M2C_FIELD(arg0, u8 **, 0x4C);
     num = fn_80105A5C(unit + 0x1BC);
@@ -2220,11 +2268,10 @@ extern "C" void fn_8017B4A8(void *arg0, s32 arg1) {
         fn_801475FC(lbl_80278780 + 0x9E, 0x64);
     }
     ((Obj *)arg0)->v2(arg1);
-    color = M2C_FIELD(M2C_FIELD(unit, u8 **, 0x18C), u8 *, 0x40);
     fn_801547E4(0, 0, M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA),
                 M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC),
-                color, 0xCC, 0x10,
-                M2C_FIELD(arg0, s16 *, 0xA), M2C_FIELD(arg0, f32 *, 0x50));
+                M2C_FIELD(M2C_FIELD(unit, u8 **, 0x18C), u8 *, 0x40), 0xCC, 0x10,
+                M2C_FIELD(arg0, f32 *, 0x50));
 }
 #pragma cplusplus reset
 
