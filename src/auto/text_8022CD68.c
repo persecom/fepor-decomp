@@ -2392,7 +2392,6 @@ void fn_80253E10(void *arg0, u32 *arg1) {
     }
 }
 
-extern void func_80013934(s32 arg0);
 void fn_80253E90(void) {
     _savegpr_26();
     // Function body not fully understood by decompiler yet.
