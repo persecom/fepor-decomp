@@ -201,6 +201,15 @@ s32 fn_8020C310(void) {
     return temp_r3;
 }
 
+void __DVDFSInit(void) {
+    *(u32 *)0x80368578 = 0x80000000;
+    *(void **)0x8036857C = *(void **)0x80000038;
+    if (*(void **)0x8036857C != NULL) {
+        *(s32 *)0x80368584 = *(s32 *)((u8 *)*(void **)0x8036857C + 0x8);
+        *(void **)0x80368580 = (void *)((u8 *)*(void **)0x8036857C + *(s32 *)0x80368584 * 0xC);
+    }
+}
+
 s32 fn_8020C79C(void) {
     M2C_UNK fn_8020F334();
     fn_8020F334();
@@ -455,3 +464,6 @@ void fn_80215F78(u16 arg0) {
 extern s32 RunQueueHint_8036851C;
 extern u16 lbl_80339F00[32];
 extern u16 AlarmForTimeout_80339ED8[20];
+#include <dolphin/os.h>
+
+extern u16 lbl_80339FB0[20]; // 40 bytes = 20 * 2-byte entries
