@@ -635,3 +635,4 @@ extern u16 lbl_8036860C[4];
 #include <dolphin/os.h>
 
 extern u16 Scb_80339420[42];
+extern u16 Scb_80339420[];
