@@ -83,6 +83,19 @@ u16 fn_80217AD8(void) {
     return lbl_80368740;
 }
 
+s32 fn_80217BD0(void *arg0, s32 arg1) {
+    M2C_UNK OSRestoreInterrupts();
+    M2C_UNK OSDisableInterrupts();
+    OSDisableInterrupts();
+    if (M2C_FIELD(arg0, s32 *, 0) != 0) {
+        M2C_FIELD(arg0, s32 *, 4) = arg1;
+    } else if (M2C_FIELD(arg0, s32 *, 4) == -1) {
+        M2C_FIELD((u32)arg0, s32 *, 4) = arg1;
+    }
+    OSRestoreInterrupts();
+    return arg1;
+}
+
 s32 fn_80219258(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x88);
 }
