@@ -1466,7 +1466,7 @@ void fn_80225C04(u32 *top_pixels_in, u32 *top_pixels_out, u32 *bot_pixels_in, u3
 }
 
 void fn_80225D3C(void) {
-    extern void *__cpReg;
+    extern u16 *__cpReg;
     M2C_FIELD(__cpReg, s16 *, 2) = 0x4;
 }
 
