@@ -83,6 +83,28 @@ u16 fn_80217AD8(void) {
     return lbl_80368740;
 }
 
+void fn_80217AE0(void *arg0) {
+    extern u16 lbl_8033A200[];
+    void **var_r4;
+    void *var_r0;
+    void *var_r3;
+
+    var_r3 = arg0;
+    var_r4 = (void**)&lbl_8033A200;
+    if (var_r3 != NULL) {
+        var_r0 = var_r3;
+    } else {
+        var_r0 = &lbl_8033A200[0x220 / sizeof(u16)];
+    }
+    M2C_FIELD(var_r4, void **, 0x10C) = var_r0;
+    if (var_r3 != NULL) {
+
+    } else {
+        var_r3 = &lbl_8033A200[0x220 / sizeof(u16)];
+    }
+    M2C_FIELD(var_r4, void **, 0x21C) = var_r3;
+}
+
 s32 fn_80217BD0(void *arg0, s32 arg1) {
     M2C_UNK OSRestoreInterrupts();
     M2C_UNK OSDisableInterrupts();
@@ -94,6 +116,22 @@ s32 fn_80217BD0(void *arg0, s32 arg1) {
     }
     OSRestoreInterrupts();
     return arg1;
+}
+
+extern u16 lbl_8033A200[];
+s32 fn_80217C34(s32 arg0) {
+    if (arg0 < 0 || arg0 >= 2) {
+        return -0x80;
+    }
+    return ((u16*)(&lbl_8033A200[arg0 * 0x110]))[0];
+}
+
+s32 fn_80217CFC(s32 arg0) {
+    s32 fn_8021B20C(M2C_UNK);
+    if ((arg0 == 0) && ((fn_8021B20C(0) == -1) || (fn_8021B20C(1) == -1))) {
+        return 0;
+    }
+    return 1;
 }
 
 s32 fn_80217D4C(void) {
@@ -110,6 +148,13 @@ s32 fn_80219258(void *arg0) {
 
 s32 fn_8021965C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x84);
+}
+
+void fn_8021A7D4(s32 arg1) {
+    void *fn_8021A244(void *, s32);
+    char sp10[0x10];
+
+    fn_8021A244(sp10, arg1);
 }
 
 #pragma dont_inline on
