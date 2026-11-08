@@ -2153,6 +2153,46 @@ s32 fn_80095BB0(s32 arg0) {
     return 0;
 }
 
+s32 fn_80096264(u8 arg0) {
+    u32 r31;
+    s32 r0;
+
+    if (arg0 >= 0xFB) {
+        r31 = 0xFB;
+    } else if (arg0 >= 0xB5) {
+        r31 = 0xB5;
+    } else if (arg0 >= 0x79) {
+        r31 = 0x79;
+    } else if (arg0 >= 0x47) {
+        r31 = 0x47;
+    } else if (arg0 >= 0x1F) {
+        r31 = 0x1F;
+    } else if (arg0 >= 1) {
+        r31 = 1;
+    } else {
+        return 0;
+    }
+    
+    switch (r31) {                         /* irregular */
+    case 0x0:
+        return 0;
+    case 0xFB:
+        return 0xFB;
+    case 0x1:
+        return 0x1F;
+    case 0x1F:
+        return 0x47;
+    case 0x47:
+        return 0x79;
+    case 0x79:
+        return 0xB5;
+    case 0xB5:
+        return 0xFB;
+    default:
+        return 0;
+    }
+}
+
 s32 fn_80096B80(void){extern u8 lbl_80330EAC[];void fn_800340E4(void*);s16 *idx=(s16*)(lbl_80330EAC+0x8a0);s16 saved=*idx;s32 result=0;fn_800340E4(idx);for(;;){u8 c=((u8*)idx)[4+*idx*4];if(c==0)break;if(c==0x52){result=1;break;}if(c>0x52)break;*idx=*idx+1;}*idx=saved;return result;}
 
 u8 fn_800970C8(s16 arg0){extern u8 lbl_80330EAC[];s16 saved;u8 result=0xff,c;s16 *idx=(s16*)(lbl_80330EAC+0x8a0);saved=*idx;*idx=arg0;*idx=arg0+1;for(;;){s16 n=*idx;c=lbl_80330EAC[0x8a4+n*4];if(c==0x23)break;if(c<0x23){if(c==0)break;if(c<0x20)break;}else if(c<0x50){if(c>=0x25)break;}else if(c<0x53){result=c;break;}else break;*idx=n+1;}*idx=saved;return result;}
@@ -2983,3 +3023,25 @@ extern s32 lbl_8036C460;
 extern s32 lbl_8036C464;
 extern s32 lbl_8036C468;
 extern s32 lbl_8036C46C;
+#include "common.h"
+#include "global.h"
+extern s32 lbl_80367110;
+extern f32 lbl_803698FC;
+extern f32 lbl_80369900;
+extern f32 lbl_8036992C;
+extern f32 lbl_80369930;
+extern f32 lbl_80369934;
+extern f32 lbl_80369938;
+extern f32 lbl_8036993C;
+extern f32 lbl_80369940;
+extern f32 lbl_80369944;
+extern f32 lbl_80369948;
+extern f32 lbl_8036994C;
+extern f32 lbl_80369950;
+extern f32 lbl_80369954;
+extern f32 lbl_80369958;
+extern f32 lbl_8036995C;
+extern f32 lbl_80369960;
+extern f32 lbl_80369964;
+extern f32 lbl_80369968;
+extern void* lbl_8026D568;
