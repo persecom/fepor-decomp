@@ -1842,6 +1842,48 @@ void *fn_801780A8(void) {
     return (char *)&lbl_80278080 + 0x55B;
 }
 
+s32 fn_801781DC(void *arg0, void *arg1, void *arg2) {
+    void fn_8000C070(void *, u8);
+    void *fn_8000C0C0(void *);
+    void fn_8000C5B8(void *);
+    void *fn_8000CAA0(void *, void *);
+    extern u8 lbl_80294580[];
+    void *proc;
+    f32 x;
+    f32 y;
+
+    if (M2C_FIELD(arg2, u8 *, 0x39) == 2) {
+        x = M2C_FIELD(arg1, s16 *, 0x30) + M2C_FIELD(arg2, s16 *, 0x30);
+        y = M2C_FIELD(arg1, s16 *, 0x32) + M2C_FIELD(arg2, s16 *, 0x32);
+        switch (M2C_FIELD(arg0, s8 *, 4)) {
+        case 0:
+            proc = fn_8000CAA0(lbl_80294580, arg1);
+            M2C_FIELD(proc, f32 *, 0x30) = x;
+            M2C_FIELD(proc, f32 *, 0x34) = y;
+            M2C_FIELD(proc, void **, 0x54) = (u8 *)lbl_80278080 + 0x569;
+            break;
+        case 1:
+            proc = fn_8000CAA0(lbl_80294580, arg1);
+            M2C_FIELD(proc, f32 *, 0x30) = x;
+            M2C_FIELD(proc, f32 *, 0x34) = y;
+            M2C_FIELD(proc, void **, 0x54) = (u8 *)lbl_80278080 + 0x57B;
+            break;
+        case 2:
+            proc = fn_8000CAA0(lbl_80294580, arg1);
+            M2C_FIELD(proc, f32 *, 0x30) = x;
+            M2C_FIELD(proc, f32 *, 0x34) = y;
+            M2C_FIELD(proc, void **, 0x54) = (u8 *)lbl_80278080 + 0x224;
+            break;
+        }
+        return 0;
+    }
+    proc = fn_8000C0C0(lbl_80294604);
+    ((u8 *)lbl_802EF4C8)[8] = 0x83;
+    fn_8000C070(proc, 0x28);
+    fn_8000C5B8(M2C_FIELD(proc, void **, 0x5C));
+    return 4;
+}
+
 void fn_80178350(void) {
     extern u16 lbl_80278080[];
     fn_8000E0E4(&lbl_80278080[0x1634]);
@@ -2242,6 +2284,11 @@ extern "C" void fn_8017B4A8(void *arg0, s32 arg1) {
         virtual void v0() = 0;
         virtual void v1() = 0;
         virtual void v2(s32) = 0;
+        u8 pad4[6];
+        s16 x0;
+        s16 y0;
+        s16 x1;
+        s16 y1;
     };
     extern u8 lbl_80278780[];
     extern f32 lbl_8036ABA8;
@@ -2249,8 +2296,6 @@ extern "C" void fn_8017B4A8(void *arg0, s32 arg1) {
     s32 num;
     f32 target;
     f32 cur;
-    s16 w;
-    s16 h;
 
     unit = M2C_FIELD(arg0, u8 **, 0x4C);
     num = fn_80105A5C(unit + 0x1BC);
@@ -2270,9 +2315,8 @@ extern "C" void fn_8017B4A8(void *arg0, s32 arg1) {
         fn_801475FC(lbl_80278780 + 0x9E, 0x64);
     }
     ((Obj *)arg0)->v2(arg1);
-    w = M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA);
-    h = M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC);
-    fn_801547E4(0, 0, w, h, M2C_FIELD(M2C_FIELD(unit, u8 **, 0x18C), u8 *, 0x40), 0xCC, 0x10,
+    fn_801547E4(0, 0, ((Obj *)arg0)->x1 - ((Obj *)arg0)->x0, ((Obj *)arg0)->y1 - ((Obj *)arg0)->y0,
+                M2C_FIELD(M2C_FIELD(unit, u8 **, 0x18C), u8 *, 0x40), 0xCC, 0x10,
                 M2C_FIELD(arg0, f32 *, 0x50));
 }
 #pragma cplusplus reset
@@ -3196,6 +3240,37 @@ s32 fn_80182574(s32 arg0) {
         goto block_15;
     }
 block_15:
+    return 1;
+}
+
+s32 fn_80182704(void *arg0) {
+    s8 fn_80017290(u8 *);
+    s8 fn_800172D4(u8 *);
+    u8 fn_800BE968(u8, u8, u8);
+    void fn_801014BC(void *, s16, s16, s32, u16, s32, s32, s32);
+    void fn_80101448(void *, s16, s16, s32, u16, s32, s32, s32);
+    extern u8 lbl_8032B3C0[];
+    s8 temp_r30;
+    s8 temp_r3;
+
+    temp_r30 = fn_80017290((u8 *)arg0 + 0x236);
+    temp_r3 = fn_800172D4((u8 *)arg0 + 0x236);
+    if ((lbl_8032B3C0[1] & 2) || (M2C_FIELD(arg0, u32 *, 0x254) & 0x03000000)) {
+        return 0;
+    }
+    fn_801014BC(arg0, temp_r3, temp_r30, 1, 0xFFFF, 1, 0, -1);
+    if (lbl_8032B3C0[0x21C] == 0) {
+        fn_80101448(arg0, temp_r3, temp_r30, 1, 0xFFFF, 1, 0, -1);
+    }
+    if (lbl_8032B3C0[0x21C] != 0) {
+        if ((s8)fn_800172D4((u8 *)arg0 + 0x236) == (s8)((u8 *)lbl_802EF4C8)[0xD]) {
+            if ((s8)fn_80017290((u8 *)arg0 + 0x236) == (s8)((u8 *)lbl_802EF4C8)[0xE]) {
+                if (fn_800BE968(0xE, ((u8 *)lbl_802EF4C8)[0xD], ((u8 *)lbl_802EF4C8)[0xE]) != 0) {
+                    ((u8 *)lbl_802EF4C8)[0x8] = 0xE;
+                }
+            }
+        }
+    }
     return 1;
 }
 
