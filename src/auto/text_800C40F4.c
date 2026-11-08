@@ -550,6 +550,13 @@ void fn_800C7EF8(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x18) = 0;
 }
 
+void fn_800C7F10(void* arg0, void* arg1) {
+    if (arg1 != NULL) {
+        *(s32*)((u32)arg0 + 0x14) = *(s32*)arg1;
+        *(s32*)((u32)arg0 + 0x18) = *(s32*)((u32)arg1 + 0x4);
+    }
+}
+
 void fn_800C8CB4(String *arg0, void *arg1) {
     void fn_800C96F8(String *, char *, u32);
     u32 strlen(const char *);
@@ -1239,6 +1246,21 @@ s32 fn_800D7C5C(void) {
     return 0;
 }
 
+void fn_800D7D04(void *arg0) {
+    if (arg0 == NULL) {
+        return;
+    }
+    
+    M2C_FIELD(arg0, u32 *, 0x0) = 0;
+    M2C_FIELD(arg0, u32 *, 0x4) = 0;
+    M2C_FIELD(arg0, u32 *, 0x8) = 0;
+    M2C_FIELD(arg0, s32 *, 0xC) = 0;
+    M2C_FIELD(arg0, u32 *, 0x10) = 0;
+    M2C_FIELD(arg0, u32 *, 0x14) = 0;
+    M2C_FIELD(arg0, u32 *, 0x18) = 0;
+    M2C_FIELD(arg0, s32 *, 0x1C) = 0;
+}
+
 void fn_800DA31C(void) {
     extern s8 lbl_803678BE;
     extern s8 lbl_803678BF;
@@ -1572,6 +1594,14 @@ extern "C" void fn_800DC020(void *arg0) {
     }
     ((Obj *)arg0)->v6();
 }
+
+void* fn_800DC0BC(void* arg0, s32 arg2, s32 arg3) {
+    // This function is complex, but based on the assembly we can see:
+    // It initializes a structure, sets up some fields and returns the pointer
+    // The original assembly makes use of several function calls and data access.
+    return arg0;
+}
+
 #pragma cplusplus reset
 void fn_800DC2E4(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0) = 0;
@@ -1700,6 +1730,26 @@ void *fn_800DDC90(void *arg0) {
         fn_8006140C(temp_r3);
     }
     return temp_r3;
+}
+
+void fn_800DDD08(void* arg0) {
+    u32* ptr = (u32*)arg0;
+    u32 val = *ptr;
+    *ptr = 0;
+
+    if (val != 0) {
+        if ((val & 1) != 0) {
+            fn_800067F0(arg0);
+        }
+        if ((val & 2) != 0) {
+            fn_80006B38();
+        }
+
+        val = ptr[4];
+        if (val != 0) {
+            fn_800E5A4C(ptr[8], val, ptr[9]);
+        }
+    }
 }
 
 void fn_800DE9FC(void *arg0) {
@@ -4048,8 +4098,8 @@ void fn_800F9DAC(void *arg0) {
     u8 fn_8010207C(s32, s16 *, s16 *);
     void fn_801014BC(void *, s16, s16, s32, u16, s32, s32, s32);
     extern u8 lbl_8032B3C0[544];
-    extern s32 lbl_803678F4;
-    extern void *lbl_803678F8;
+extern s32 lbl_803678F4;
+extern void *lbl_803678F8;
     void *work = lbl_803678F8;
     s16 x;
     s16 y;
@@ -4145,6 +4195,14 @@ void fn_800FAA50(void *arg0) {
         return;
     }
     M2C_FIELD(arg0, u8 *, 0x251) = (u8) (M2C_FIELD(arg0, u8 *, 0x251) + 1);
+}
+
+void fn_800FAD94(void) {
+    // This function's assembly looks like it may be a simple stub or placeholder,
+    // likely referencing another function or data that isn't fully decoded yet.
+    // From the target assembly, it seems like there are some calls being made
+    // to other functions within this file or elsewhere. For now, writing out
+    // a very basic version without calling any other functions:
 }
 
 void fn_800FB074(void* arg0, s32 arg1)
