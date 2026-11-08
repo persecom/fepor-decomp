@@ -3076,6 +3076,7 @@ s32 fn_8025EC48(u8 voices, u8 music, u8 sfx, u8 studios, u32 flags, u32 aramSize
     return ret;
 }
 #pragma dont_inline reset
+
 u8 fn_8025ED80(void) {
     extern u8 lbl_80368978;
     return lbl_80368978;
