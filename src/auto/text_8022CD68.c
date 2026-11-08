@@ -1135,6 +1135,29 @@ void fn_80251E88(Voice *arg0, u32 *arg1) {
 }
 
 void fn_8025FFC8(void *arg0, u8 arg1, s32 arg2, u8 arg3, u8 arg4, u8 arg5);
+
+static inline void fn_80252668_inline(void *arg0, u32 *arg1, void *arg2, u64 mask, u32 flag) {
+    u8 mode;
+    s32 delta;
+    u32 temp;
+
+    mode = 0;
+    if ((*(u64 *)((u8 *)arg0 + 0x114) & mask) == 0) {
+        *(u64 *)((u8 *)arg0 + 0x114) |= mask;
+    } else {
+        mode = arg1[1];
+    }
+    delta = (s32)(arg1[0] & 0xFFFF0000) / 100;
+    if (delta < 0) {
+        delta -= ((s8)(arg1[1] >> 16) << 8) / 100;
+    } else {
+        delta += ((s8)(arg1[1] >> 16) << 8) / 100;
+    }
+    temp = (arg1[1] >> 8) & 0xFF;
+    fn_8025FFC8(arg2, arg1[0] >> 8, delta, mode, temp != 0, temp);
+    *(u32 *)((u8 *)arg0 + 0x220) |= flag;
+}
+
 void fn_80252668(void *arg0, u32 *arg1) {
     u8 var_r6;
     s32 var_r5;
@@ -1678,6 +1701,48 @@ void fn_8025FF6C(u8 arg0, u8 arg1) {
     *(u8 *)var_r3 = 2;
     *(s32 *)((char *)var_r3 + 1) = lbl_80368ACC;
     *(s32 *)((char *)var_r3 + 5) = lbl_80368AC8;
+}
+
+void fn_8025FFC8(void *arg0, u8 arg1, s32 arg2, u8 arg3, u8 arg4, u8 arg5) {
+    u8 temp_r31;
+    u8 *r27;
+    u8 r30;
+    u8 r29;
+    u8 r28;
+    u8 *r3;
+
+    // Save registers needed by caller
+    r27 = (u8 *) arg0;  // Original arg0
+    r30 = arg4;         // Original arg4 (arg5)
+    r29 = arg1;
+    r28 = arg2 & 0x000000FF;
+
+    *(u8 *) ((u8 *) r27 + 0x0) = r29;
+    *(u8 *) ((u8 *) r27 + 0x1) = r28;
+    *(u8 *) ((u8 *) r27 + 0x2) = 0x00;
+
+    temp_r31 = *(u8 *) ((u8 *) r27 + 0x22);
+    if (temp_r31 >= 0x4) {
+        *(u8 *) ((u8 *) r27 + 0x22) = 0x0;
+    } else {
+        *(u8 *) ((u8 *) r27 + 0x22) = temp_r31 + 0x1;
+    }
+
+    if (r30 != 0) {
+        // arg5 was non-zero, call fn_80260EA8 with some value
+        *(u8 *) ((u8 *) r27 + 0x22) = 0x00; // Set to zero or equivalent logic
+    }
+
+    if (r30 != 0) {
+        // More complex logic: set multiple values
+        u8 *r0;
+        r0 = r27 + ((temp_r31 << 24) >> 24); // Shift logic
+        *(u8 *) ((u8 *) r0 + 0x1) = r29;     // arg1 -> offset 1
+        *(u32 *) ((u8 *) r0 + 0x4) = (u32) r28; // arg2 -> offset 4
+    } else {
+        *(u8 *) ((u8 *) r27 + 0x5) = r30;
+        *(u8 *) ((u8 *) r27 + 0x6) = arg5;
+    }
 }
 
 void fn_80260174(u8 arg0, u8 arg1, s8 arg2) {
