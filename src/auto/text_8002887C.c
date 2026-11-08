@@ -897,7 +897,7 @@ void *fn_8002F658(s32 *arg0, s32 arg1) {
     if (arg1 >= (s32)*arg0) {
         return NULL;
     }
-    return (void *)(((char *)arg0) + ((arg1 * 0x14) << 2) + 0x8);
+    return (void *)((char *)arg0 + arg1 * 0x14 + 0x8);
 }
 
 void *fn_8002F680(s32 *arg0, s8 arg1, s8 arg2) {
