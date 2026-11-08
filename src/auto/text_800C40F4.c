@@ -6,6 +6,17 @@ extern u16* g_someArray;  // lbl_80320C20
 extern u8* g_otherArray;  // lbl_8032B3C0
 extern u8 g_byteVar;      // lbl_80330708
 
+extern char __files[];
+extern char lbl_80271860[];
+extern u8 lbl_80366E58;
+
+typedef struct {
+    s32 unk0;
+    void *unk4;
+    void *unk8;
+    void *unkC;
+} Struct_800DEF6C_Arg0;
+
 typedef struct {
     u32 field_0x0;
     u8 unk250; // from the target assembly
@@ -2778,6 +2789,25 @@ void fn_800E5CF8(void *arg0) {
     }
 }
 
+void fn_800E5DEC(void) {
+    s32 var_r3;
+    s32 var_r4;
+    s32 var_r5;
+    
+    var_r3 = 0;
+    var_r4 = 0;
+    var_r5 = 0;
+    
+    while (var_r3 < 0x180) {
+        if (var_r4 == 0) {
+            var_r5 = 0;
+        }
+        var_r4++;
+        var_r5++;
+        var_r3 += 0x4;
+    }
+}
+
 void fn_800E6DC8(void *arg0) {
     int i;
     u32 *ptr = (u32*)arg0;
@@ -3443,6 +3473,15 @@ void fn_800E9B80(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     M2C_FIELD(&lbl_80320C20, s32 *, 0xA010) = arg2;
     M2C_FIELD(&lbl_80320C20, s32 *, 0xA014) = arg3;
     fn_8000CAA0(&lbl_8028E420, arg4, &lbl_8028E420, &lbl_80320C20 + 0x10000);
+}
+
+void fn_800EA27C(void) {
+    extern u16 lbl_80320C20[];
+    s32 fn_80217C34(s32 arg);
+    
+    u32 tmp = fn_80217C34(*(u32*)(lbl_80320C20 + 0xA000));
+    *(u32*)(lbl_80320C20 + 0xA004) = tmp;
+    *(u8*)(lbl_80320C20 + 0xA01A) = 0;
 }
 
 void fn_800EA540(s32 arg0, s32 arg1) {
@@ -4217,6 +4256,36 @@ void fn_800F8364(void *arg0) {
         return;
     }
     M2C_FIELD(arg0, u8 *, 0x251) = (u8) (M2C_FIELD(arg0, u8 *, 0x251) + 1);
+}
+
+void fn_800F8E5C(void* arg0, void* arg1, s32 arg2) {
+    s32 temp_r4;
+    s32* temp_r30;
+    s32* temp_r31;
+
+    if (arg0 == NULL) {
+        return;
+    }
+    
+    temp_r30 = (s32*)arg0;
+    temp_r31 = (s32*)arg1;
+    
+    temp_r4 = *(temp_r30 + 0x6D);
+    
+    if (temp_r4 == 0) {
+        return;
+    }
+    
+    if (arg2 >= (temp_r4 - 1)) {
+        arg2 = temp_r4 - 1;
+    } else if (arg2 < 0) {
+        arg2 = 0;
+    }
+    
+    *(temp_r31 + 0x17) = *(temp_r30 + 0x6E);
+    *(temp_r31 + 0x2D) = *(temp_r30 + 0x15C);
+    *(temp_r31 + 0x1A) = ((s32)(*(temp_r30 + 0x168)) & (s32)(*(temp_r30 + 0x169))) - arg2;
+    *(temp_r31 + 0x1B) = *(temp_r30 + 0x16A);
 }
 
 void fn_800F8FF4(void *arg0) {
