@@ -350,7 +350,10 @@ auto/text_8022C518.c:
 	.text       start:0x8022C518 end:0x8022CCF8
 
 auto/text_8022CD68.c:
-	.text       start:0x8022CD68 end:0x8026649C
+	.text       start:0x8022CD68 end:0x8023C53C
+
+auto/text_8023C53C.c:
+	.text       start:0x8023C53C end:0x8026649C
 
 auto/text_8026649C.c:
 	.text       start:0x8026649C end:0x80267A7C
