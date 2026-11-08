@@ -1097,6 +1097,29 @@ void fn_802511F8(void *arg0, u32 *arg1) {
 }
 
 void fn_8026146C(s32 *);
+void fn_8025FFC8(void *arg0, u8 arg1, s32 arg2, u8 arg3, u8 arg4, u8 arg5);
+
+static void SelectSource(void *svoice, void *dest, u32 *cstep, u64 tstflag, u32 dirtyflag) {
+    u8 comb;
+    s32 scale;
+    u32 inv;
+
+    if ((*(u64 *)((u8 *)svoice + 0x114) & tstflag) == 0) {
+        *(u64 *)((u8 *)svoice + 0x114) |= tstflag;
+        comb = 0;
+    } else {
+        comb = cstep[1];
+    }
+    scale = (s32)(cstep[0] & 0xFFFF0000) / 100;
+    if (scale < 0) {
+        scale -= ((s8)(cstep[1] >> 16) << 8) / 100;
+    } else {
+        scale += ((s8)(cstep[1] >> 16) << 8) / 100;
+    }
+    inv = (cstep[1] >> 8) & 0xFF;
+    fn_8025FFC8(dest, cstep[0] >> 8, scale, comb, inv != 0, inv);
+    *(u32 *)((u8 *)svoice + 0x220) |= dirtyflag;
+}
 
 void fn_80251DEC(Voice *arg0, u32 *arg1) {
     u32 time;
@@ -1132,30 +1155,6 @@ void fn_80251E88(Voice *arg0, u32 *arg1) {
         arg0->unk180 = delta;
     }
     arg0->flags |= 0x2000;
-}
-
-void fn_8025FFC8(void *arg0, u8 arg1, s32 arg2, u8 arg3, u8 arg4, u8 arg5);
-
-static void SelectSource(void *svoice, void *dest, u32 *cstep, u64 tstflag, u32 dirtyflag) {
-    u8 comb;
-    s32 scale;
-    u32 inv;
-
-    if ((*(u64 *)((u8 *)svoice + 0x114) & tstflag) == 0) {
-        *(u64 *)((u8 *)svoice + 0x114) |= tstflag;
-        comb = 0;
-    } else {
-        comb = cstep[1];
-    }
-    scale = (s32)(cstep[0] & 0xFFFF0000) / 100;
-    if (scale < 0) {
-        scale -= ((s8)(cstep[1] >> 16) << 8) / 100;
-    } else {
-        scale += ((s8)(cstep[1] >> 16) << 8) / 100;
-    }
-    inv = (cstep[1] >> 8) & 0xFF;
-    fn_8025FFC8(dest, cstep[0] >> 8, scale, comb, inv != 0, inv);
-    *(u32 *)((u8 *)svoice + 0x220) |= dirtyflag;
 }
 
 void fn_80252668(void *arg0, u32 *arg1) {
@@ -1239,6 +1238,49 @@ void fn_80252F8C(void *arg0, void *arg1) {
 
 void fn_80253090(void *arg0, u32 *arg1) {
     SelectSource(arg0, (u8 *)arg0 + 0x3D4, arg1, 0x10000000, 0x1000);
+}
+
+void fn_80253194(void *arg0, void *arg1) {
+    u32 temp_r7;
+    u32 temp_r5;
+    s32 temp_r3;
+    u8 temp_r8;
+    u32 temp_r0;
+    s32 var_r5;
+    u32 temp_r4;
+    u32 r31_2;
+
+    temp_r7 = *(u32 *)((u8 *)arg0 + 0x118);
+    temp_r5 = *(u32 *)((u8 *)arg0 + 0x114);
+    
+    if ((temp_r7 & 0x40) == 0 || (temp_r5 & 0) == 0) {
+        *(u32 *)((u8 *)arg0 + 0x118) = temp_r7 | 0x40;
+        *(u32 *)((u8 *)arg0 + 0x114) = temp_r5;
+    } else {
+        temp_r0 = *(u32 *)((u8 *)arg1 + 0x4);
+        temp_r8 = (u8)(temp_r0 >> 8U);
+        r31_2 = 0x51EC7AE1;
+        temp_r3 = ((s32)r31_2 * (s32)((temp_r0 & 0xFFFF0000) >> 16)) >> 19;
+        if (temp_r3 < 0) {
+            s32 r4_val = (s32)(((u32)(temp_r0 >> 16)) << 8);
+            r4_val = r4_val * (s32)r31_2;
+            r4_val >>= 19;
+            var_r5 = temp_r3 - r4_val;
+        } else {
+            s32 r4_val = (s32)(((u32)(temp_r0 >> 16)) << 8);
+            r4_val = r4_val * (s32)r31_2;
+            r4_val >>= 19;
+            var_r5 = temp_r3 + r4_val;
+        }
+        
+        fn_8025FFC8((u8 *)arg0 + 0x3F8, 
+                    (u8)(temp_r0 >> 8U), 
+                    var_r5,
+                    temp_r8 != 0,
+                    temp_r8,
+                    0);
+    }
+    *(u32 *)((u8 *)arg0 + 0x220) |= 0x2000;
 }
 
 s16 fn_802537F8(s32 arg0, u32 arg1, s32 arg2) {
