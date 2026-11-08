@@ -819,6 +819,22 @@ extern "C" s32 fn_800CD590(void *arg0) {
     return 0;
 }
 
+void fn_800CDAA0(void *arg0, void *arg1) {
+    s32 tmp;
+    if (arg1 == NULL) {
+        return;
+    }
+    tmp = *(s32 *)((s8 *)arg1 + 0);
+    if (tmp < 0) {
+        return;
+    }
+    if (arg0 != NULL) {
+        *(s32 *)((s8 *)arg0 + 0x0) = tmp;
+        *(s32 *)((s8 *)arg0 + 0x4) = *(s32 *)((s8 *)arg1 + 0x8);
+        *(s32 *)((s8 *)arg0 + 0x8) = *(s32 *)((s8 *)arg1 + 0xC);
+    }
+}
+
 #pragma cplusplus reset
 void fn_800CF27C(s32 arg2) {
     extern s32 lbl_80367884;
