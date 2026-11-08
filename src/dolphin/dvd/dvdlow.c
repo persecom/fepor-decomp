@@ -129,6 +129,16 @@ u32 __OSGetResetSWState(void);
 extern void OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(void);
 
+extern u16 AlarmForTimeout_80339ED8[20];
+extern void AlarmHandlerForTimeout(void *, void *);
+extern void OSCreateAlarm(void *);
+extern void OSSetAlarm(void *, s64, void *);
+
+static void SetTimeoutAlarm(s64 timeout) {
+    OSCreateAlarm(AlarmForTimeout_80339ED8);
+    OSSetAlarm(AlarmForTimeout_80339ED8, timeout, AlarmHandlerForTimeout);
+}
+
 void __DVDInitWA(void) {
     extern u16 CommandList_80339E70[15];
     extern s32 NextCommandNumber_80368574;
