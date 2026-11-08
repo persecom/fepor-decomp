@@ -384,29 +384,24 @@ u32 fn_80243F50(u32 arg0) {
     return -1;
 }
 
-void fn_80244A84(void *arg0) {
-    extern void *lbl_80368970;
-    extern void *lbl_80368974;
-    void **temp_r4;
-    void *temp_r4_2;
+void fn_80244A84(SynthVoice *sv) {
+    extern SynthVoice *lbl_80368970;
+    extern SynthVoice *lbl_80368974;
 
-    temp_r4 = M2C_FIELD(arg0, void ***, 4);
-    if (temp_r4 != NULL) {
-        *temp_r4 = M2C_FIELD(arg0, void **, 0);
+    if (sv->prev != NULL) {
+        sv->prev->next = sv->next;
     } else {
-        lbl_80368974 = M2C_FIELD(arg0, void **, 0);
+        lbl_80368974 = sv->next;
     }
-    temp_r4_2 = M2C_FIELD(arg0, void **, 0);
-    if (temp_r4_2 != NULL) {
-        M2C_FIELD(temp_r4_2, void ***, 4) = (void **) M2C_FIELD(arg0, void ***, 4);
+    if (sv->next != NULL) {
+        sv->next->prev = sv->prev;
     }
-    M2C_FIELD(arg0, void **, 0) = (void *) lbl_80368970;
-    if ((void *) lbl_80368970 != NULL) {
-        M2C_FIELD(lbl_80368970, void **, 4) = arg0;
+    if ((sv->next = lbl_80368970) != NULL) {
+        lbl_80368970->prev = sv;
     }
-    M2C_FIELD(arg0, void ***, 4) = NULL;
-    lbl_80368970 = arg0;
-    M2C_FIELD(arg0, s8 *, 8) = 2;
+    sv->prev = NULL;
+    lbl_80368970 = sv;
+    sv->state = 2;
 }
 
 void fn_80245014(u16 arg0) {
