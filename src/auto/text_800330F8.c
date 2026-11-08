@@ -1860,6 +1860,106 @@ u8 fn_80040B1C(void *arg0, s32 arg1, s32 arg2) {
     return (u8) ((M2C_FIELD(arg0, s16 *, 2) - temp_r6) <= arg2);
 }
 
+void fn_80040F90(void *arg0) {
+    extern u8 lbl_80330708[];
+    extern s8 lbl_80367289;
+    extern s8 lbl_8036728A;
+
+    s32 temp_r4;
+    s32 temp_r3;
+    s8 var_r5;
+    s8 var_r5_2;
+    s8 var_r5_3;
+
+    temp_r4 = *(s32*)((char*)arg0 + 0x64) & 0xC0000;
+    switch (temp_r4) {                              /* switch 1; irregular */
+    case 0x80000:                                   /* switch 1 */
+        var_r5 = 1;
+        if (*(u8*)((char*)lbl_80330708 + 0xA6) != 1) {
+            var_r5 = 0;
+        }
+        lbl_80367289 = var_r5;
+        break;
+    case 0xC0000:                                   /* switch 1 */
+        var_r5_2 = 2;
+        if (*(u8*)((char*)lbl_80330708 + 0xA6) != 1) {
+            var_r5_2 = 0;
+        }
+        lbl_80367289 = var_r5_2;
+        break;
+    case 0x40000:                                   /* switch 1 */
+        var_r5_3 = 3;
+        if (*(u8*)((char*)lbl_80330708 + 0xA6) != 1) {
+            var_r5_3 = 0;
+        }
+        lbl_80367289 = var_r5_3;
+        break;
+    default:                                        /* switch 1 */
+        lbl_80367289 = 0;
+        break;
+    }
+    temp_r3 = *(s32*)((char*)arg0 + 0x64) & 0x01F00000;
+    switch (temp_r3) {                              /* switch 2; irregular */
+    case 0x0:                                       /* switch 2 */
+        lbl_8036728A = 0;
+        return;
+    case 0x100000:                                  /* switch 2 */
+        lbl_8036728A = 1;
+        return;
+    case 0x200000:                                  /* switch 2 */
+        lbl_8036728A = 2;
+        return;
+    case 0x300000:                                  /* switch 2 */
+        lbl_8036728A = 3;
+        return;
+    case 0x400000:                                  /* switch 2 */
+        lbl_8036728A = 4;
+        return;
+    case 0x500000:                                  /* switch 2 */
+        lbl_8036728A = 5;
+        return;
+    case 0x600000:                                  /* switch 2 */
+        lbl_8036728A = 6;
+        return;
+    case 0x700000:                                  /* switch 2 */
+        lbl_8036728A = 7;
+        return;
+    case 0x800000:                                  /* switch 2 */
+        lbl_8036728A = 8;
+        return;
+    case 0x900000:                                  /* switch 2 */
+        lbl_8036728A = 9;
+        return;
+    case 0xA00000:                                  /* switch 2 */
+        lbl_8036728A = 0xA;
+        return;
+    case 0xB00000:                                  /* switch 2 */
+        lbl_8036728A = 0xB;
+        return;
+    case 0xC00000:                                  /* switch 2 */
+        lbl_8036728A = 0xC;
+        return;
+    case 0xD00000:                                  /* switch 2 */
+        lbl_8036728A = 0xD;
+        return;
+    case 0xE00000:                                  /* switch 2 */
+        lbl_8036728A = 0xE;
+        return;
+    case 0xF00000:                                  /* switch 2 */
+        lbl_8036728A = 0xF;
+        return;
+    case 0x1000000:                                 /* switch 2 */
+        lbl_8036728A = 0x10;
+        return;
+    case 0x1100000:                                 /* switch 2 */
+        lbl_8036728A = 0x11;
+        return;
+    default:                                        /* switch 2 */
+        lbl_8036728A = 0;
+        return;
+    }
+}
+
 s32 fn_800431E4(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x1C);
 }
@@ -3641,3 +3741,53 @@ extern s32* lbl_803672B0;
 extern f32 lbl_80368FCC;
 extern f32 lbl_80368FF0;
 extern u16* lbl_802B14E4;
+#include "common.h"
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    char pad[0x30 - 0x18];
+    s32 unk30;
+    s32 unk34;
+    s32 unk38;
+} Struct_800330F8;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    char pad[0x20 - 0x18];
+    s32 unk20;
+    s32 unk24;
+    s32 unk28;
+    s32 unk2C;
+    s32 unk30;
+    s32 unk34;
+    s32 unk38;
+    s32 unk3C;
+} Struct_800330F8_A;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    char pad[0xBC - 0x18];
+    s32 unkBC;
+} Struct_800330F8_B;
+
+void fn_8004781C(void *arg0) {
+    // body of function will go here
+}
