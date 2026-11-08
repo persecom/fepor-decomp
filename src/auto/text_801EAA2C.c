@@ -735,3 +735,7 @@ extern void* lbl_80292230;
 extern void* lbl_80293C84;
 extern void* lbl_80293C58;
 extern void* lbl_8027EE08;
+/* Functions from 0x801EAA2C to 0x801F18D4, found by decomp-toolkit. */
+#include "common.h"
+
+s32 lbl_80367110;
