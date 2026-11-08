@@ -133,30 +133,7 @@ static inline u32 __GXReadPECounterU32(u32 lo, u32 hi) {
 
 extern u16* __cpReg;
 
-extern u16 *__GXData;
-extern u16 *__GXData;
-extern u16 *__GXData;
-extern u16 *__GXData;
-#include "common.h"
-#include <dolphin/os.h>
-#include "global.h"
-#include "structs.h"
-
-extern u16 *__GXData;
-#include "common.h"
-#include <dolphin/os.h>
-#include "global.h"
-#include "structs.h"
-
-extern u16 *__GXData;
-#include "common.h"
-#include <dolphin/os.h>
-#include "global.h"
-#include "structs.h"
-
 extern u16* lbl_80368790;
-extern u16* __peReg;
-extern u16 *__GXData;
 
 void fn_8022108C(const GXRenderModeObj *rmin, GXRenderModeObj *rmout, u16 hor, u16 ver) {
     u16 hor2 = (u16)(hor * 2);
@@ -236,14 +213,14 @@ void fn_80221BA8(void *dest, u8 clear) {
         reg = M2C_FIELD(__GXData, u32 *, 0x1D8);
         reg = __rlwimi(reg, 1, 0, 31, 31);
         reg = __rlwimi(reg, 7, 1, 28, 30);
-        *(u8 *)0xCC008000 = 0x61;
-        *(u32 *)0xCC008000 = reg;
+        GXWGFifo.u8 = 0x61;
+        GXWGFifo.u32 = reg;
 
         reg = M2C_FIELD(__GXData, u32 *, 0x1D0);
         reg = __rlwimi(reg, 0, 0, 31, 31);
         reg = __rlwimi(reg, 0, 1, 30, 30);
-        *(u8 *)0xCC008000 = 0x61;
-        *(u32 *)0xCC008000 = reg;
+        GXWGFifo.u8 = 0x61;
+        GXWGFifo.u32 = reg;
     }
 
     changePeCtrl = 0;
@@ -257,38 +234,38 @@ void fn_80221BA8(void *dest, u8 clear) {
         changePeCtrl = 1;
     }
     if (changePeCtrl) {
-        *(u8 *)0xCC008000 = 0x61;
-        *(u32 *)0xCC008000 = tempPeCtrl;
+        GXWGFifo.u8 = 0x61;
+        GXWGFifo.u32 = tempPeCtrl;
     }
 
-    *(u8 *)0xCC008000 = 0x61;
-    *(u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1F0);
-    *(u8 *)0xCC008000 = 0x61;
-    *(u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1F4);
-    *(u8 *)0xCC008000 = 0x61;
-    *(u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1F8);
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1F0);
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1F4);
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1F8);
 
     reg = 0;
     reg = __rlwimi(reg, (u32)dest, 27, 11, 31);
     reg = __rlwimi(reg, 0x4B, 24, 0, 7);
-    *(u8 *)0xCC008000 = 0x61;
-    *(u32 *)0xCC008000 = reg;
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = reg;
 
     M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC), clear, 11, 20, 20);
     M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC), 0, 14, 17, 17);
     M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC), 0x52, 24, 0, 7);
-    *(u8 *)0xCC008000 = 0x61;
-    *(u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1FC);
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1FC);
 
     if (clear) {
-        *(u8 *)0xCC008000 = 0x61;
-        *(u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1D8);
-        *(u8 *)0xCC008000 = 0x61;
-        *(u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1D0);
+        GXWGFifo.u8 = 0x61;
+        GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1D8);
+        GXWGFifo.u8 = 0x61;
+        GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1D0);
     }
     if (changePeCtrl) {
-        *(u8 *)0xCC008000 = 0x61;
-        *(u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1DC);
+        GXWGFifo.u8 = 0x61;
+        GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1DC);
     }
     M2C_FIELD(__GXData, u16 *, 0x2) = 0;
 }
