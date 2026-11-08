@@ -556,4 +556,4 @@ extern u8 lbl_8027BD18[];
 #include "global.h"
 #include "unit.h"
 
-extern struct Unit *lbl_802EF4C8;
+extern struct SomeStruct lbl_802EF4C8;
