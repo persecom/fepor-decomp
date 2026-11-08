@@ -4,7 +4,7 @@
 #include "global.h"
 #include "structs.h"
 
-extern u16 lbl_80368784;
+extern void* lbl_80368784;
 extern s32 lbl_803682F0;
 extern s32 fn_80013E50(s32);
 extern s32 fn_80013E60(s32, s32);
