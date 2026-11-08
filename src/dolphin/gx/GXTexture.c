@@ -128,11 +128,11 @@ static inline u32 __GXReadCPCounterU32(u32 lo, u32 hi) {
     u32 ctrH1;
     u32 ctrL;
 
-    ctrH0 = *((volatile u16 *)__cpReg + hi);
+    ctrH0 = __cpReg[hi];
     do {
         ctrH1 = ctrH0;
-        ctrL = *((volatile u16 *)__cpReg + lo);
-        ctrH0 = *((volatile u16 *)__cpReg + hi);
+        ctrL = __cpReg[lo];
+        ctrH0 = __cpReg[hi];
     } while (ctrH0 != ctrH1);
     return (ctrH0 << 16) | ctrL;
 }
@@ -982,6 +982,68 @@ void fn_802240C8(u8 arg0) {
     __GXData[0x16B] = __GXData[0x16B] | 4;
 }
 
+void fn_80224304(s16 *arg0, u16 arg1, void *arg2) {
+    extern f32 lbl_8036BD58;
+    extern f32 lbl_8036BD5C;
+    extern f32 lbl_8036BD70;
+    extern f64 lbl_8036BD78;
+    extern f64 lbl_8036BD90;
+    extern f32 lbl_8036BD98;
+    extern f64 lbl_8036BDA0;
+    extern f32 lbl_8036BDA8;
+    f32 temp_f0;
+    f32 temp_f1;
+    f32 temp_f2;
+    f32 temp_f23;
+    f32 temp_f25;
+    f32 temp_f28;
+    f32 temp_f29;
+    f32 var_f0;
+    f32 var_f24;
+    f32 var_f2;
+    f64 temp_f30;
+    f64 temp_f31;
+    s16 *var_r30;
+    u32 var_r29;
+
+    if (lbl_8036BD90 == *(f32*) ((u8*)arg2 + 0x3C)) {
+        temp_f1 = *(f32*) ((u8*)arg2 + 0x2C) / (*(f32*) ((u8*)arg2 + 0x28) - lbl_8036BD5C);
+        var_f24 = temp_f1 / *(f32*) ((u8*)arg2 + 0x0);
+        var_f0 = temp_f1;
+    } else {
+        temp_f1 = lbl_8036BD5C / *(f32*) ((u8*)arg2 + 0x0);
+        var_f24 = temp_f1;
+        var_f0 = lbl_8036BD98 * temp_f1;
+    }
+    temp_f28 = lbl_8036BD5C;
+    var_r30 = arg0;
+    temp_f29 = lbl_8036BD58;
+    var_r29 = 0U;
+    temp_f30 = lbl_8036BD78;
+    temp_f31 = lbl_8036BDA0;
+    temp_f23 = lbl_8036BDA8;
+    temp_f25 = lbl_8036BD70 / (f32) arg1;
+    do {
+        temp_f0 = (f32) ((var_r29 + 1) << 5) * temp_f25 * var_f24;
+        var_f2 = temp_f28 + ((temp_f0 * temp_f0) / (var_f0 * var_f0));
+        if (var_f2 > temp_f29) {
+            f32 sp14;
+            f64 temp_f1_3;
+            f64 temp_f1_4;
+            f64 temp_f1_5;
+            
+            temp_f1_3 = __frsqrte(var_f2);
+            temp_f1_4 = temp_f30 * temp_f1_3 * (temp_f31 - ((f64) var_f2 * (temp_f1_3 * temp_f1_3)));
+            temp_f1_5 = temp_f30 * temp_f1_4 * (temp_f31 - ((f64) var_f2 * (temp_f1_4 * temp_f1_4)));
+            sp14 = (f32) ((f64) var_f2 * (temp_f30 * temp_f1_5 * (temp_f31 - ((f64) var_f2 * (temp_f1_5 * temp_f1_5)))));
+            var_f2 = sp14;
+        }
+        var_r29 += 1;
+        *var_r30 = (s16) fn_8022C568(temp_f23 * var_f2);
+        var_r30 += 2;
+    } while (var_r29 < 0xAU);
+}
+
 void fn_802245D8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     *(u8 *)0xCC008000 = 0x61;
     *(u16*)((char*)__GXData + 0x1d0) = *(u16*)((char*)__GXData + 0x1d0) & ~0x800 | ((0x1F - CLZ(3 - arg0)) & 1) << 6 | (arg0 & 1) & 1 | ((0x1F - CLZ(2 - arg0)) << 4) & 2 | (arg3 << 0xC) & 0xF000 | (arg1 << 8) & 0x700 | (arg2 << 5) & 0xE0;
@@ -1265,6 +1327,68 @@ void fn_80225180(s32 arg0) {
         *(u8*)0xCC008000 = temp_r4_2;
     }
     *(u16*)((char*)__GXData + 0x2) = 1;
+}
+
+void fn_80225A4C(u32 *cnt0, u32 *cnt1) {
+    u32 ctr0;
+    u32 ctr1;
+    u32 ctr2;
+    u32 ctr3;
+
+    ctr0 = __GXReadCPCounterU32(0x20, 0x21);
+    ctr1 = __GXReadCPCounterU32(0x22, 0x23);
+    ctr2 = __GXReadCPCounterU32(0x24, 0x25);
+    ctr3 = __GXReadCPCounterU32(0x26, 0x27);
+
+    switch (M2C_FIELD(__GXData, s32 *, 0x59C)) {
+    case 10:
+        *cnt0 = ctr1 * 1000 / ctr0;
+        break;
+    case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9:
+    case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: case 19: case 20:
+    case 21: case 22: case 23: case 24: case 25: case 26: case 27: case 28: case 29: case 30:
+    case 31: case 32: case 33: case 34:
+        *cnt0 = ctr0;
+        break;
+    case 35:
+        *cnt0 = 0;
+        break;
+    default:
+        *cnt0 = 0;
+        break;
+    }
+
+    switch (M2C_FIELD(__GXData, s32 *, 0x5A0)) {
+    case 0:
+        *cnt1 = ctr3 * 4;
+        break;
+    case 4:
+        *cnt1 = ctr2 + ctr3 * 2;
+        break;
+    case 5:
+        *cnt1 = ctr2 * 3 + ctr3 * 4;
+        break;
+    case 6:
+        *cnt1 = ctr2 * 5 + ctr3 * 6;
+        break;
+    case 7:
+        *cnt1 = ctr2 * 7 + ctr3 * 8;
+        break;
+    case 1: case 2: case 3:
+    case 8: case 9: case 10: case 11: case 12: case 13: case 14: case 15: case 16:
+    case 21:
+        *cnt1 = ctr3;
+        break;
+    case 17: case 18: case 19: case 20:
+        *cnt1 = ctr2;
+        break;
+    case 22:
+        *cnt1 = 0;
+        break;
+    default:
+        *cnt1 = 0;
+        break;
+    }
 }
 
 void fn_80225BF4(void) {
