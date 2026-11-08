@@ -1374,6 +1374,8 @@ extern u16 lbl_80284E20[8];
 extern u32 lbl_802EF4E0[502];
 extern u8 lbl_802CA518[151280];
 extern u8 lbl_802B14E4[101760];
+extern u32 lbl_8032BB58; // size: 0x204
+
 #include "common.h"
 
 extern u16* lbl_80269210;
