@@ -2412,6 +2412,25 @@ s32 fn_8019D7A8(void) {
     return 1;
 }
 
+s32 fn_8019D850(s32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4) {
+    void *fn_80194F54(s32);
+    void fn_8019514C(void *, void *);
+    extern s32 lbl_8036C500;
+    void *obj;
+    s32 spC;
+    s32 sp8;
+
+    obj = fn_80194F54(arg0);
+    sp8 = lbl_8036C500;
+    ((u8 *)&sp8)[0] = arg1;
+    ((u8 *)&sp8)[1] = arg2;
+    ((u8 *)&sp8)[2] = arg3;
+    ((u8 *)&sp8)[3] = arg4;
+    spC = sp8;
+    fn_8019514C(obj, &spC);
+    return 1;
+}
+
 extern void fn_80194F54(void);
 extern void fn_80195170(void *arg0, s8 arg1);
 s32 fn_8019D8CC(s32 arg1) {
