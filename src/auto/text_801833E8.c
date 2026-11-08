@@ -2465,6 +2465,19 @@ s32 fn_8019D930(void) {
     return 1;
 }
 
+s32 fn_8019D958(s32 arg0, s32 arg1) {
+    void *fn_80194F54(s32);
+    void fn_8019588C(void *, s32);
+    extern f32 lbl_8036AF48;
+    f32 temp_f1;
+    void *obj;
+
+    obj = fn_80194F54(arg0);
+    temp_f1 = (f32) arg1;
+    fn_8019588C(obj, (s32) (temp_f1 / lbl_8036AF48));
+    return 1;
+}
+
 void fn_8019DB28(void) {
     void fn_8000BF00(void *);
     void fn_800A84A0(void);
