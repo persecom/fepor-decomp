@@ -159,6 +159,14 @@ BOOL __OSCallResetFunctions(BOOL final) {
 }
 
 #pragma peephole off
+
+void fn_802089A4(u32 resetCode) {
+    OSDisableInterrupts();
+    __VIRegs[1] = 0;
+    ICFlashInvalidate();
+    Reset(resetCode * 8);
+}
+
 u32 OSGetResetCode(void) {
     extern s32 lbl_803393B0[8];
 
