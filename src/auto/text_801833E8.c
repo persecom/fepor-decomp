@@ -3591,5 +3591,4 @@ extern f32 lbl_8036ACE8;
 
 extern u16 lbl_802EF4E0;
 extern f32 lbl_8036AF00;
-extern f32 lbl_8036AF08;
 extern f32 lbl_8036AF20;
