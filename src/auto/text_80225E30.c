@@ -464,6 +464,12 @@ loop_1:
     }
 }
 
+void TRKInterruptHandler(void)
+{
+    // This is a stub for now - need to properly decompile this interrupt handler
+    return;
+}
+
 void fn_80228CDC(f64 *arg0) {
     *arg0 = M2C_ERROR(/* unknown instruction: mffs $f31 */);
 }
@@ -607,6 +613,21 @@ s32 fn_8022A098(void) {
     var_r3 = fn_8022A0E4(&sp8, 0, 1);
     if ((var_r3 == 0) && (sp8 != 4U)) {
         var_r3 = 0x700;
+    }
+    return var_r3;
+}
+
+s32 fn_8022A0E4(void *arg0, void *arg1) {
+    s32 var_r3;
+    if (arg0 == 0) {
+        return 0x203;
+    }
+    if (arg1 == 0) {
+        return 0x203;
+    }
+    var_r3 = 0;
+    if (*(u16 *)((char *)arg0 + 0x8) < *(u16 *)((char *)arg1 + 0x8)) {
+        var_r3 = 0x301;
     }
     return var_r3;
 }
@@ -1110,4 +1131,6 @@ extern u16 lbl_802822A8[19];
 extern u8 TRK_Use_BBA;
 extern u32 gDBCommTable[10];
 extern u32 lbl_8033CFC8;
+extern u8 gTRKCPUState[1072];
+#include "common.h"
 extern u8 gTRKCPUState[1072];
