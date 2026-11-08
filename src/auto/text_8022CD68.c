@@ -1159,27 +1159,7 @@ static void SelectSource(void *svoice, void *dest, u32 *cstep, u64 tstflag, u32 
 }
 
 void fn_80252668(void *arg0, u32 *arg1) {
-    u8 var_r6;
-    s32 var_r5;
-    u32 temp;
-    u64 flags;
-
-    flags = *(u64 *)((u8 *)arg0 + 0x114);
-    if ((flags & 0x200000) == 0) {
-        *(u64 *)((u8 *)arg0 + 0x114) = flags | 0x200000;
-        var_r6 = 0;
-    } else {
-        var_r6 = arg1[1];
-    }
-    var_r5 = (s32)(arg1[0] & 0xFFFF0000) / 100;
-    if (var_r5 < 0) {
-        var_r5 -= ((s8)(arg1[1] >> 16) << 8) / 100;
-    } else {
-        var_r5 += ((s8)(arg1[1] >> 16) << 8) / 100;
-    }
-    temp = (arg1[1] >> 8) & 0xFF;
-    fn_8025FFC8((u8 *)arg0 + 0x290, arg1[0] >> 8, var_r5, var_r6, temp != 0, temp);
-    *(u32 *)((u8 *)arg0 + 0x220) |= 8;
+    SelectSource(arg0, (u8 *)arg0 + 0x290, arg1, 0x200000, 8);
 }
 
 void fn_80252B7C(void *arg0, void *arg1) {
