@@ -1424,7 +1424,7 @@ void fn_80091858(void) {
 }
 
 void fn_8009197C(void) {
-    extern u16 lbl_803120A0[];
+    extern u32 lbl_803120A0[];
     extern s32 lbl_803674F8;
     
     while (lbl_803674F8 != 0) {
