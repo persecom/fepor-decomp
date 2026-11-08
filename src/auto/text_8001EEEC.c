@@ -268,6 +268,98 @@ void fn_800227D0(s32 arg0, s32 arg1, s8 arg2) {
     }
 }
 
+void fn_800227F8(void* arg0, s32 arg1)
+{
+    s32 r30;
+    s32 r31;
+    s32 r4;
+    s32 r5;
+    s32 r6;
+    s32 r7;
+    s32 r0;
+    
+    r30 = arg1;
+    r31 = (s32)arg0;
+    
+    // Call to fn_80019DBC
+    fn_80019DBC();
+    
+    if (r30 != 0) {
+        return;
+    }
+    
+    // Set a bunch of values at fixed offsets from r31 
+    r4 = 1;
+    r5 = r31 + 0x2;
+    r6 = 1;
+    r7 = r31;
+    
+    // Loop to set some values
+    r0 = 0x3;
+    r5 = r31 + 0x2;
+    r6 = 1;
+    
+    // Set several values starting at offset 0x4214 in memory
+    *(u16*)(r5 + 0x4214) = r4;
+    *(u16*)(r5 + 0x4216) = r4;
+    *(u16*)(r5 + 0x4218) = r4;
+    *(u16*)(r5 + 0x421a) = r4;
+    *(u16*)(r5 + 0x421c) = r4;
+    *(u16*)(r5 + 0x421e) = r4;
+    *(u16*)(r5 + 0x4220) = r4;
+    *(u16*)(r5 + 0x4222) = r4;
+    
+    // Add some more memory operations with incrementing addresses
+    
+    // Set another batch of values
+    *(u16*)(r5 + 0x8214) = r4;  // This address seems to be r5 = offset of r31 + 0x4000 + 0x14 (0x4214)
+    *(u16*)(r5 + 0x8216) = r4;
+    *(u16*)(r5 + 0x8218) = r4;
+    *(u16*)(r5 + 0x821a) = r4;
+    *(u16*)(r5 + 0x821c) = r4;
+    *(u16*)(r5 + 0x821e) = r4;
+    *(u16*)(r5 + 0x8220) = r4;
+    *(u16*)(r5 + 0x8222) = r4;
+    
+    // Add more memory operations with different offsets
+    *(u16*)(r5 + 0xc214) = r4;
+    *(u16*)(r5 + 0xc216) = r4;
+    *(u16*)(r5 + 0xc218) = r4;
+    *(u16*)(r5 + 0xc21a) = r4;
+    *(u16*)(r5 + 0xc21c) = r4;
+    *(u16*)(r5 + 0xc21e) = r4;
+    *(u16*)(r5 + 0xc220) = r4;
+    *(u16*)(r5 + 0xc222) = r4;
+    
+    // Another loop with similar operations, but more complex control flow
+    
+    // Final operations
+    *(u16*)(r31 + 0x4214) = 0x7fff;  // Set to maximum value 
+    *(u8*)(r31 + 0x4eea) = 1;
+    
+    // Conditionally set value based on input parameter
+    if (arg1 != 0) {
+        r4 = *(u8*)(arg1 + 0x42);
+        r5 = *(s32*)(arg1 + 0x8);
+        r0 = r4 + 0x8;
+        r4 = *(s32*)(r5 + r0);
+        
+        if (r4 < 0) {
+            r6 = (unsigned char)r4; // sign extend
+            *(u16*)(r7 + 0x4214) = r6;
+            
+            // Set some more values
+            r4 = 0x4;
+            fn_80105BC0(arg1, r4);
+            
+            // Set a value in the end
+            *(u8*)(r31 + 0x4eea) = (u8)((0 - *(u8*)(arg1 + 0x1c)) & 0xFF);
+        }
+    }
+    
+    return;
+}
+
 s32 fn_80022FB0(u16 arg0) {
     return arg0 + (arg0 << 0x10);
 }
@@ -1500,3 +1592,9 @@ s32 func_80025338(struct Unit* unit)
 
 extern u8 lbl_80330EAC[0x1000];
 extern u8 lbl_80268E40[];
+extern u16 lbl_80368DA0;
+extern u16 lbl_80368DA4;
+extern u16 lbl_80368DAC;
+extern u16 lbl_80368DA8;
+extern u32 lbl_8036C410;
+extern u32 lbl_8036C414;
