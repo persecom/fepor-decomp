@@ -3754,7 +3754,6 @@ s32 fn_80261C40(s32 arg0, s32 arg1) {
     return (lbl_803670C0 >> 0x10);
 }
 
-extern u32 lbl_803670C8;
 s32 fn_80261C6C(s32 arg0) {
     return *(u32*)((char*)lbl_803670C8 + (arg0 * 4)) & 0xFFFFFF;
 }
