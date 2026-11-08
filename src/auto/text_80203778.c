@@ -333,6 +333,11 @@ void fn_80206888(void) {
     lbl_803684B0 = 1;
 }
 
+extern u16 InterruptHandlerTable_803684C8[];
+s32 fn_80207BAC(s16 arg0) {
+    return InterruptHandlerTable_803684C8[arg0];
+}
+
 void fn_80208780(s32 arg0, s32 arg1) {
     extern s32 lbl_803684E0;
     extern s32 lbl_803684E4;
@@ -592,3 +597,5 @@ s32 fn_80215F40(void) {
 s32 fn_80215F50(void) {
     return ((u16) *(u16 *)0xCC005004 >> 0xFU) & 1;
 }
+extern u16 StopAtNextInt_80368530;
+extern u16 lbl_80368550;
