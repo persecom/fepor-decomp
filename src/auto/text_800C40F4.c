@@ -4061,6 +4061,22 @@ void fn_800F9020(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x251) = (u8) (M2C_FIELD(arg0, u8 *, 0x251) + 1);
 }
 
+void fn_800F904C(void* arg0, s32 arg1) {
+    s32 temp;
+    
+    if (arg0 == NULL) {
+        return;
+    }
+    
+    *(u32*)arg0 = 0x15;
+    ((s16*)arg0)[0x5] = 0x15;
+    
+    temp = *(u32*)((u8*)arg0 + 0x14);
+    if (temp != 0) {
+        fn_801021F0(temp, arg1);
+    }
+}
+
 void fn_800F9924(void *arg0) {
     extern s32 lbl_803678F4;
     if ((s32) lbl_803678F4 == 0) {
