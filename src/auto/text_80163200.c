@@ -134,13 +134,14 @@ void fn_80164A24(void *arg0) {
 }
 
 s32 fn_80164BB0(void *arg0) {
-    s16 temp_r0;
+    u32 *fn_80037BD0(s32, s32);
+    s16 slot = M2C_FIELD(arg0, s16 *, 0x4C);
+    s32 idx = slot;
 
-    temp_r0 = M2C_FIELD(arg0, s16 *, 0x4C);
-    if ((temp_r0 < 0) || (temp_r0 > 7)) {
+    if ((slot < 0) || (slot > 7)) {
         return 0;
     }
-    return fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58));
+    return (s32) fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58), idx);
 }
 
 s16 fn_80164FBC(void *arg0, s16 arg1) {
@@ -3744,6 +3745,28 @@ s32 fn_80182704(void *arg0) {
     return 1;
 }
 
+s32 fn_8018286C(s32 arg0, s32 arg1) {
+    if (arg0 < 0 || arg1 < 0) {
+        return -1;
+    }
+    
+    if (arg0 == 0) {
+        if (arg1 == 0) return 0x12C;
+        if (arg1 == 1) return 0x1F4;
+        if (arg1 == 2) return 0x258;
+    } else if (arg0 == 1) {
+        if (arg1 == 0) return 0x12C;
+        if (arg1 == 1) return 0x1F4;
+        if (arg1 == 2) return 0x258;
+    } else if (arg0 == 2) {
+        if (arg1 == 0) return 0x12C;
+        if (arg1 == 1) return 0x1F4;
+        if (arg1 == 2) return 0x258;
+    }
+    
+    return -1;
+}
+
 s32 fn_80182A0C(s32 arg0) {
     extern u8 fn_80182C84[];
     
@@ -3795,6 +3818,27 @@ void fn_80182C84(void *arg0)
     if (ptr != 0)
     {
         M2C_FIELD(arg0, void **, 0x62) = 0;
+    }
+}
+
+s32 fn_80182CE4(s32 arg0, s32 arg1) {
+    if (arg0 < 0 || arg0 >= 0x190) {
+        return -1;
+    }
+
+    switch(arg1) {
+        case 0:
+            return lbl_802EF4C8[arg0];
+        case 1:
+            return lbl_80278080[arg0];
+        case 2:
+            return lbl_80294604[arg0];
+        case 3:
+            return lbl_803680E8[arg0] & 0xFF;
+        case 4:
+            return lbl_80330708[arg0];
+        default:
+            return -1;
     }
 }
 
