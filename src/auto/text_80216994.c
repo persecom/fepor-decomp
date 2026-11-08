@@ -142,6 +142,26 @@ s32 fn_80217D4C(void) {
     return 0;
 }
 
+s32 fn_802191F0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    extern u16 lbl_8033A200[];
+    extern void *fn_80219108;
+    s32 r5;
+    u16 r7;
+    void *r8;
+
+    r8 = &lbl_8033A200[arg0 * 0x110 / sizeof(u16)];
+    if ((s32) M2C_FIELD(r8, s32 *, 0) == 0) {
+        return -3;
+    }
+    M2C_FIELD(r8, s32 *, 0xD4) = arg4;
+    r7 = M2C_FIELD(r8, u16 *, 0xA);
+    r5 = arg2 / (s32) r7;
+    M2C_FIELD(r8, s32 *, 0xAC) = r5;
+    M2C_FIELD(r8, s32 *, 0xB0) = arg1;
+    M2C_FIELD(r8, s32 *, 0xB4) = arg3;
+    return fn_802177E0(&fn_80219108, r5, r7);
+}
+
 s32 fn_80219258(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x88);
 }
@@ -297,3 +317,4 @@ extern void EXIDeselect(s32);
 extern void EXIUnlock(s32);
 extern u16 lbl_8033A200[];
 extern void *fn_80219108;
+extern u16 lbl_8033A200[];
