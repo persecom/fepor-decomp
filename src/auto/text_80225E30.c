@@ -653,4 +653,4 @@ void fn_8022C1B8(u8 *arg0, u8 *arg1, u32 arg2) {
     }
 }
 #include "global.h"
-extern u16 lbl_802822A8[];
+extern u16 lbl_802822A8[19];
