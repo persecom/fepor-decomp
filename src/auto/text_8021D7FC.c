@@ -3,6 +3,8 @@
 #include <dolphin/os.h>
 #include "global.h"
 #include "structs.h"
+
+extern u16 lbl_80368784;
 extern s32 lbl_803682F0;
 extern s32 fn_80013E50(s32);
 extern s32 fn_80013E60(s32, s32);
@@ -354,14 +356,11 @@ void fn_80221068(void) {
     *(u32*)0xCC008000 = *(u32*)((u8*)__GXData + 0x204);
 }
 
-void fn_8022108C(GXRenderModeObj *rmin, GXRenderModeObj *rmout, u16 hor, u16 ver) {
-    s32 hor2;
-    s32 ver2;
+void fn_8022108C(const GXRenderModeObj *rmin, GXRenderModeObj *rmout, u16 hor, u16 ver) {
+    u16 hor2 = (u16)(hor * 2);
+    u16 ver2 = (u16)(ver * 2);
     u32 verf;
     u32 mode;
-
-    hor2 = (u16)(hor * 2);
-    ver2 = (u16)(ver * 2);
 
     if (rmin != rmout) {
         *rmout = *rmin;
