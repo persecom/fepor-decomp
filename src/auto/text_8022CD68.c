@@ -2527,7 +2527,6 @@ restart:
     return isMaster ? vid : sv->unkF4;
 }
 
-extern u16 lbl_8035A510[];
 s32 fn_80256738(s32 *arg4) {
     s32 temp_r3;
     
