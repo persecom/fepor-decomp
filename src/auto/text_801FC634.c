@@ -36,6 +36,17 @@ static u32 lbl_80339308[8];
 static s16 lbl_80339328[8];
 static s16 lbl_80339338[8];
 
+void fn_801FC790(void *arg0) {
+    u8 fn_8005BA10(void *);
+    void fn_8000C188(void *);
+    
+    if (!fn_8005BA10(lbl_802820B8 + 0x53)) {
+        return;
+    }
+    M2C_FIELD(arg0, u32 *, 0x30) = 0;
+    fn_8000C188(arg0);
+}
+
 void fn_801FC95C(void) {
     M2C_UNK fn_8006EDA0(M2C_UNK *);
     extern M2C_UNK lbl_80368418;
@@ -865,3 +876,14 @@ extern u8 lbl_80289EB8[16];
 #include <dolphin/os.h>
 extern s32 lbl_803682F0;
 extern s32 fn_80015A14(void);
+#include "common.h"
+#include <dolphin/os.h>
+extern s32 lbl_8036841C;
+extern s32 lbl_80368420;
+extern s32 lbl_80368424;
+extern s32 lbl_80368428;
+extern s32 lbl_8036842C;
+extern u8 lbl_80368430;
+extern u8 lbl_80368431;
+extern f32 lbl_8036BADC;
+extern f32 lbl_8036BAE0;
