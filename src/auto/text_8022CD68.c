@@ -1,7 +1,7 @@
 /* Functions from 0x8022CD68 to 0x80267A7C, found by decomp-toolkit. */
 #include "common.h"
 
-extern u16 lbl_80366F28;
+extern s32 lbl_80366F28;
 extern char lbl_80282AE8[];
 extern char lbl_80282B20[];
 extern u8 lbl_8034C110[];
@@ -401,6 +401,98 @@ s32 fn_80231F48(char *s, const char *fmt, va_list args) {
     return n;
 }
 
+void fn_80233174(void *arg0, s32 arg1) {
+    s32 var_r4;
+    u8 *var_r5;
+    u8 *var_r8;
+    u8 temp_r0;
+    u8 temp_r7;
+    s32 temp_r0_2;
+    s32 temp_r0_3;
+    s32 temp_r0_4;
+    s32 temp_r0_5;
+    s32 temp_r6;
+    s32 temp_r7_2;
+    s32 temp_r7_3;
+    u8 *temp_r6_2;
+    u8 *temp_r8;
+    
+    var_r4 = arg1;
+    if (var_r4 < 0) {
+        *(u16*)arg0 = 0;
+        ((u8*)arg0)[2] = 1;
+        ((u8*)arg0)[3] = 0x30;
+        return;
+    }
+    temp_r7 = ((u8*)arg0)[2];
+    if (var_r4 >= (s32)temp_r7) {
+        goto block_3;
+    }
+    temp_r6_2 = (u8*)arg0 + var_r4;
+    var_r8 = temp_r6_2 + 5;
+    temp_r0 = *(temp_r6_2 + 5);
+    temp_r0_2 = temp_r0 - 0x30;
+    temp_r7_2 = temp_r0_2;
+    if (temp_r7_2 == 5) {
+        var_r5 = (u8*)arg0 + temp_r7 + 5;
+        goto block_9;
+    } else {
+        if (temp_r7_2 <= 5) {
+            temp_r0_3 = 0;
+            goto block_15;
+        }
+        temp_r0_3 = 1;
+        goto block_15;
+    }
+    
+block_9:
+    var_r5 -= 1;
+    if (var_r5 > var_r8) {
+        temp_r0 = *var_r5;
+        if (temp_r0 == 0x30) {
+            temp_r6 = (u32)temp_r0;
+            goto block_9;
+        } else {
+            temp_r0_3 = 1;
+        }
+    } else {
+        temp_r0_3 = 1;
+    }
+    
+block_15: 
+    if (var_r4 != 0) {
+        temp_r8 = var_r8 - 1;
+        temp_r0 = *temp_r8;
+        temp_r0_5 = temp_r0 + temp_r0_3 - 0x30;
+        temp_r7_3 = temp_r0_5;
+        temp_r0_4 = (temp_r7_3 ^ 9) >> 1;
+        temp_r6 = (u32)(temp_r0_4 - (temp_r0_4 & temp_r7_3));
+        temp_r0_2 = temp_r6 >> 0x1F;
+        
+        if ((temp_r0_2 != 0) || (temp_r7_3 == 0)) {
+            var_r4 -= 1;
+            goto block_15;
+        }
+        *var_r8 = temp_r7_3 + 0x30;
+    }
+    
+    if (temp_r0_3 != 0) {
+        *(u16*)arg0 = (*(u16*)arg0) + 1;
+        ((u8*)arg0)[2] = 1;
+        ((u8*)arg0)[3] = 0x31;
+        return;
+    }
+    
+block_3:
+    if (var_r4 != 0) {
+        ((u8*)arg0)[2] = var_r4;
+        return;
+    }
+    *(u16*)arg0 = 0;
+    ((u8*)arg0)[2] = 1;
+    ((u8*)arg0)[3] = 0x30;
+}
+
 s32 fn_802340D8(s32 arg0) {
     extern void (*lbl_8033E170[])(s32);
     extern s32 __begin_critical_region(s32);
@@ -768,6 +860,80 @@ void fn_802380D0(void* arg0, s32 arg1, s32 arg2) {
     }
 }
 
+extern f64 lbl_8036C138;
+extern f64 lbl_8036C140;
+f64 fn_802381A4(f64 farg0) {
+    f64 var_f1;
+    s32 temp_r7;
+    u32 temp_r4;
+    u32 temp_r0;
+    u32 temp_r4_2;
+    u32 var_r5;
+    u32 var_r6;
+
+    var_f1 = farg0;
+    var_r5 = *(u32*)&var_f1;
+    var_r6 = *(u32*)((char*)&var_f1 + 4);
+    temp_r7 = ((var_r5 >> 0x14U) & 0x7FF) - 0x3FF;
+    if (temp_r7 < 0x14) {
+        if (temp_r7 >= 0) {
+            if ((f32) (lbl_8036C138 + var_f1) > (f32) lbl_8036C140) {
+                if ((s32) var_r5 >= 0) {
+                    var_r6 = 0;
+                    var_r5 = 0;
+                } else {
+                    if (((var_r5 & 0x7FFFFFFF) | var_r6) != 0) {
+                        var_r5 = 0xBFF00000;
+                        var_r6 = 0;
+                    }
+                }
+            }
+            goto block_26;
+        }
+        temp_r4 = 0xFFFFF >> temp_r7;
+        if ((var_r6 | (var_r5 & temp_r4)) == 0) {
+            return var_f1;
+        }
+        if ((f32) (lbl_8036C138 + var_f1) > (f32) lbl_8036C140) {
+            if ((s32) var_r5 < 0) {
+                var_r5 += 0x100000 >> temp_r7;
+            }
+            var_r5 &= ~temp_r4;
+            var_r6 = 0;
+        }
+        goto block_26;
+    }
+    if (temp_r7 > 0x33) {
+        if (temp_r7 == 0x400) {
+            return 2.0 * var_f1;
+        }
+        /* Duplicate return node #27. Try simplifying control flow for better match */
+        return var_f1;
+    }
+block_26:
+    temp_r4_2 = -1U >> (temp_r7 - 0x14);
+    if (!(var_r6 & temp_r4_2)) {
+        return var_f1;
+    }
+    if ((f32) (lbl_8036C138 + var_f1) > (f32) lbl_8036C140) {
+        if ((s32) var_r5 < 0) {
+            if (temp_r7 == 0x14) {
+                var_r5 += 1;
+            } else {
+                temp_r0 = var_r6 + (1 << (0x34 - temp_r7));
+                if (temp_r0 < var_r6) {
+                    var_r5 += 1;
+                }
+                var_r6 = temp_r0;
+            }
+        }
+        var_r6 &= ~temp_r4_2;
+    }
+    *(u32*)((char*)&var_f1 + 4) = var_r6;
+    *(u32*)&var_f1 = var_r5;
+    return var_f1;
+}
+
 extern f64 lbl_8036C148;
 f64 fn_802382EC(s32 *arg0, f64 farg0) {
     f64 sp8;
@@ -1092,4 +1258,84 @@ void UnlockedHandler(void) {
 
     EXIGetID(0, &sp10);
 }
+
+void fn_8023A504(s32 *arg2) {
+    s32 EXIGetID(s32 *);
+    s32 sp14;
+    s32 temp_r0;
+    s32 temp_r4;
+    s32 temp_r5;
+
+    if (EXIGetID(&sp14) == 0) {
+        return;
+    }
+    temp_r5 = sp14 & 0xFFFFFF00;
+    if (temp_r5 != 0x04020300) {
+        if (temp_r5 < 0x04020300) {
+            if (temp_r5 != 0x04020200) {
+                if (temp_r5 < 0x04020200) {
+                    if (temp_r5 != 0x04020100) {
+                        goto block_11;
+                    }
+                    goto block_10;
+                }
+                goto block_11;
+            }
+            goto block_10;
+        }
+        if (temp_r5 != 0x04060000) {
+block_11:
+            temp_r4 = sp14 & 0xFFFF0000;
+            switch (temp_r4) {                      /* irregular */
+            case 0x0:
+                if (!(sp14 & 0x3803)) {
+                    temp_r0 = sp14 & 0xFC;
+                    if (temp_r0 != 0x20) {
+                        if (temp_r0 < 0x20) {
+                            if (temp_r0 != 8) {
+                                if (temp_r0 < 8) {
+                                    if (temp_r0 != 4) {
+                                        goto block_30;
+                                    }
+                                    goto block_28;
+                                }
+                                if (temp_r0 != 0x10) {
+                                    goto block_30;
+                                }
+                                goto block_28;
+                            }
+                            goto block_28;
+                        }
+                        if (temp_r0 != 0x80) {
+                            if (temp_r0 < 0x80) {
+                                if (temp_r0 != 0x40) {
+                                    goto block_30;
+                                }
+                                goto block_28;
+                            }
+                            goto block_30;
+                        }
+                        goto block_28;
+                    }
+block_28:
+                    *arg2 = temp_r0;
+                    return;
+                }
+            default:
+block_30:
+                *arg2 = sp14;
+                return;
+            case 0x5070000:
+                *arg2 = 0x05070000;
+                return;
+            }
+        } else {
+            goto block_10;
+        }
+    } else {
+block_10:
+        *arg2 = temp_r5;
+    }
+}
+
 extern u16 Ecb_8033E188[192];
