@@ -166,7 +166,6 @@ void __OSReschedule(void) {
     if (RunQueueHint_8036851C != 0) {
         SelectThread(0);
     }
-    return;
 }
 
 s32 OSGetTick(void) {
@@ -454,3 +453,5 @@ void fn_80215F78(u16 arg0) {
     *(u16 *)0xCC005002 = arg0;
 }
 extern s32 RunQueueHint_8036851C;
+extern u16 lbl_80339F00[32];
+extern u16 AlarmForTimeout_80339ED8[20];
