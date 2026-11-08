@@ -2620,7 +2620,6 @@ u32 fn_800E37CC(u32 arg0, u32 arg1)
 }
 
 void *fn_800E3B68(void *arg0, s16 arg1) {
-    M2C_UNK fn_800C9A60(void *, s32);
     void fn_800E45EC(void *, s32);
     void fn_800C428C(void *);
     extern void *lbl_8028E0E8[];
