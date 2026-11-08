@@ -634,6 +634,7 @@ void OSSaveFPUContext(void *arg0) {
 }
 
 s32 fn_802059EC(void) {
+    // Returns the value at address 0x800000D4 (likely a global variable)
     return *(s32 *)0x800000D4;
 }
 
@@ -700,6 +701,26 @@ void fn_80205B7C(void *arg0, s32 arg1, s32 arg2) {
     *(s32 *) ((u8 *) arg0 + 0x1BC) = 0;
     *(s32 *) ((u8 *) arg0 + 0x1C0) = 0;
     return;
+}
+
+void fn_8020602C(void) {
+    s32 obj;
+    s32 temp_r5;
+    s32 *ptr_obj = (s32 *)0x803679F0;
+    
+    obj = *ptr_obj;
+    if (obj == 0) return;
+    
+    *(u16 *)((u8 *)obj + 0x108) = 0;
+
+    temp_r5 = *(s32 *)0x803682F0;
+    if (temp_r5 != 0 && *(u16 *)(temp_r5 + 0x1C) == 0) {
+        *(u16 *)((u8 *)obj + 0x10E) = 0x4A;
+    }
+
+    if (*(s32 *)((u8 *)obj + 0x100) != 0) {
+        lbl_803685E8();
+    }
 }
 
 void fn_802067E0(s32 arg0) {
