@@ -172,6 +172,16 @@ s32 fn_8021F258(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 8);
 }
 
+void* fn_8021F260(void* arg0) {
+    void* temp_r31;
+
+    temp_r31 = lbl_80368784;
+    OSDisableInterrupts();
+    lbl_80368784 = arg0;
+    OSRestoreInterrupts();
+    return temp_r31;
+}
+
 void fn_8021F338(u8 en) {
     extern u16 *__GXData;
     extern u16 *__cpReg;
