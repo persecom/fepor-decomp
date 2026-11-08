@@ -1254,6 +1254,10 @@ void fn_80252D84(void *arg0, void *arg1) {
     *(s32 *)((u8 *)arg0 + 0x220) = (s32) (*(s32 *)((u8 *)arg0 + 0x220) | 0x800);
 }
 
+void fn_80252E88(void *arg0, u32 *arg1) {
+    SelectSource(arg0, (u8 *)arg0 + 0x26C, arg1, 0x4000000, 4);
+}
+
 s16 fn_802537F8(s32 arg0, u32 arg1, s32 arg2) {
     u16 fn_80260F18(s32);
     extern u16 lbl_8034CB74[];
