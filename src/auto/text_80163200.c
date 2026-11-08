@@ -2250,19 +2250,16 @@ u8 fn_8017A9DC(void *arg0) {
     return *temp_r4;
 }
 
-void fn_8017A9F0(s32 arg0, s32 arg1, s32 arg2) {
-    void *fn_8000CAA0(void *, s32, void *);
-    void fn_8000C070(s32);
-    extern u16 lbl_80295370;
+void fn_8017A9F0(s32 arg0, s32 arg1, void *arg2) {
+    void *fn_8000CAA0(void *, void *);
+    void fn_8000C070(void *, u8);
+    extern u8 lbl_80295370[];
+    void *proc;
 
-    void *temp_r3;
-    s32 temp_r30;
-    s32 temp_r4;
-    
-    temp_r3 = fn_8000CAA0(&lbl_80295370, arg2, &lbl_80295370);
-    *(s32 *)((char *)temp_r3 + 0x30) = arg0;
-    *(s32 *)((char *)temp_r3 + 0x38) = arg1;
-    fn_8000C070(3);
+    proc = fn_8000CAA0(lbl_80295370, arg2);
+    M2C_FIELD(proc, s32 *, 0x30) = arg0;
+    M2C_FIELD(proc, s32 *, 0x38) = arg1;
+    fn_8000C070(proc, 3);
 }
 
 void fn_8017AA48(s32 arg0, s32 arg1, s32 arg2) {
