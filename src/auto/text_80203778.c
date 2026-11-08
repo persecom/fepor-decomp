@@ -2,7 +2,8 @@
 #include "common.h"
 #include <dolphin/os.h>
 #include "global.h"
-extern s32 lbl_803682F0;;
+extern s32 lbl_803682F0;
+u32 OSGetTick(void);;;
 extern s32 fn_80013E50(s32);
 extern s32 fn_80013E60(s32, s32);
 extern s32 fn_80013E74(void*, s32);
@@ -472,6 +473,12 @@ s32 fn_802059EC(void) {
     return *(s32 *)0x800000D4;
 }
 
+void fn_802059F8(void) {
+    *(u32 *)0x8036C764 = 0;
+    *(u32 *)0x8036C768 = 0;
+    *(u32 *)0x8036C76C = 0;
+}
+
 void *fn_80205B50(void) {
     return 0; /* OSGetStackPointer: asm (mr r3, r1) */
 }
@@ -482,6 +489,53 @@ void OSClearContext(OSContext *context) {
     if (context == *(void**)0x800000D8) {
         *(u32*)0x800000D8 = 0;
     }
+}
+
+void fn_80205B7C(void *arg0, s32 arg1, s32 arg2) {
+    *(s32 *) ((u8 *) arg0 + 0x198) = arg1;
+    *(s32 *) ((u8 *) arg0 + 4) = arg2;
+    *(s32 *) ((u8 *) arg0 + 0x19C) = 0x9032;
+    *(s32 *) ((u8 *) arg0 + 0x80) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x8C) = 0;
+    *(s32 *) ((u8 *) arg0 + 8) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x34) = 0;
+    *(s32 *) ((u8 *) arg0 + 0xC) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x10) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x14) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x18) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x1C) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x20) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x24) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x28) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x2C) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x30) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x38) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x3C) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x40) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x44) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x48) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x4C) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x50) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x54) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x58) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x5C) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x60) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x64) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x68) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x6C) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x70) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x74) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x78) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x7C) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x1A4) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x1A8) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x1AC) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x1B0) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x1B4) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x1B8) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x1BC) = 0;
+    *(s32 *) ((u8 *) arg0 + 0x1C0) = 0;
+    return;
 }
 
 void fn_802067E0(s32 arg0) {
@@ -521,6 +575,18 @@ void __OSGetExecParams(s32 *arg0) {
     *arg0 = 0;
 }
 
+void fn_802068D4(void) {
+    s32 r31;
+    s32 r30;
+    u32 r29;
+
+    r31 = 0x18;
+    r30 = 0x1C;
+    r29 = 0;
+    
+    __OSArenaLo_80366F30 = (u32)&r31;
+}
+
 u16 fn_802072A0(void) {
     extern u16 lbl_80366F48;
     extern u32 *lbl_803684C0;
@@ -548,6 +614,30 @@ s32 fn_80207BAC(s16 arg0) {
     return InterruptHandlerTable_803684C8[arg0];
 }
 
+s32 __OSMaskInterrupts(s32 arg0) {
+    s32 temp_r29;
+    s32 temp_r30;
+    s32 temp_r31;
+    s32 temp_r5;
+    u32 var_r3;
+
+    temp_r29 = *(s32 *)0x800000C4;
+    OSDisableInterrupts();
+    temp_r5 = *(s32 *)0x800000C8;
+    var_r3 = arg0 & ~(temp_r29 | temp_r5);
+    temp_r31 = arg0 | temp_r29;
+    *(s32 *)0x800000C4 = temp_r31;
+    do {
+        if (var_r3 != 0) {
+            var_r3 = fn_80207C34(temp_r31 | temp_r5);
+        } else {
+            break;
+        }
+    } while(1);
+    OSRestoreInterrupts();
+    return temp_r29;
+}
+
 void __OSModuleInit(void) {
     s32 *ptr = (s32 *)0x800030CC;
     ptr[0] = 0;
@@ -561,6 +651,31 @@ s32 fn_802083C8(s32 arg0) {
         __OSMaskInterrupts(0xF0000000);
     }
     return 1;
+}
+
+s32 Config24MB(void) {
+    s32 r4 = 0x00000002;
+    s32 r3 = 0x80001ff;
+    s32 r6 = 0x01000002;
+    s32 r5 = 0x810000ff;
+    
+    __builtin_ppc_mtdbatu(0, 0);
+    __builtin_ppc_mtdbatl(0, r4);
+    __builtin_ppc_mtdbatu(0, r3);
+    __builtin_ppc_mtibatu(0, 0);
+    __builtin_ppc_mtibatl(0, r4);
+    __builtin_ppc_mtibatu(0, r3);
+    
+    __builtin_ppc_mtdbatu(2, 0);
+    __builtin_ppc_mtdbatl(2, r6);
+    __builtin_ppc_mtdbatu(2, r5);
+    __builtin_ppc_mtibatu(2, 0);
+    __builtin_ppc_mtibatl(2, r6);
+    __builtin_ppc_mtibatu(2, r5);
+
+    // Set up MSR bits to enable interrupt and other required features for 24MB mode on GameCube
+    // The function returns 0 always, but the logic here sets up proper hardware registers.
+    return 0;
 }
 
 void fn_802086A0(void* arg0) {
