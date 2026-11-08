@@ -300,6 +300,30 @@ void DecrementerExceptionHandler(void *arg1) {
     DecrementerExceptionCallback();
 }
 
+#pragma peephole off
+BOOL fn_80204B0C(BOOL final) {
+    extern void fn_80204770(void *);
+    extern BOOL fn_8020F620(void *);
+    extern void *AlarmQueue_80368490;
+    void *alarm;
+    void *next;
+
+    if (final != FALSE) {
+        alarm = AlarmQueue_80368490;
+        next = (alarm) ? M2C_FIELD(alarm, void **, 0x14) : NULL;
+
+        while (alarm != NULL) {
+            if (fn_8020F620(alarm) == FALSE) {
+                fn_80204770(alarm);
+            }
+            alarm = next;
+            next = (alarm) ? M2C_FIELD(alarm, void **, 0x14) : NULL;
+        }
+    }
+    return TRUE;
+}
+#pragma peephole reset
+#pragma scheduling reset
 s32 fn_80204CD4(s32 arg0) {
     extern s32 lbl_80366F28;
     s32 temp_r0;
