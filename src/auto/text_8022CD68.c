@@ -38,6 +38,17 @@ typedef struct VidList {
     u32 root;             /* 0xC */
 } VidList;
 
+extern u32 lbl_80368A48;
+
+static u32 GetNewVid(void) {
+    u32 vid;
+
+    do {
+        vid = lbl_80368A48++;
+    } while (vid == 0xFFFFFFFF);
+    return vid;
+}
+
 typedef struct SynthVoice {
     struct SynthVoice *next; /* 0x000 */
     struct SynthVoice *prev; /* 0x004 */
@@ -1407,6 +1418,59 @@ void* fn_80255A40(void)
 s32 fn_80255E88(void *arg0) {
     M2C_FIELD(arg0, void **, 0xFC) = (void *) M2C_FIELD(arg0, void **, 0xF8);
     return M2C_FIELD(M2C_FIELD(arg0, void **, 0xF8), s32 *, 8);
+}
+
+u32 fn_80255E9C(SynthVoice *sv, u32 isMaster) {
+    extern u32 lbl_80368A48;
+    extern VidList *lbl_80368A44;
+    extern VidList *lbl_80368A40;
+    u32 vid;
+    VidList *nvl;
+    VidList *lvl;
+    VidList *vl;
+
+    do {
+        vid = lbl_80368A48++;
+    } while (vid == 0xFFFFFFFF);
+restart:
+    lvl = NULL;
+    for (vl = lbl_80368A44; vl != NULL; vl = vl->next) {
+        if (vl->vid > vid) {
+            break;
+        }
+        if (vl->vid == vid) {
+            do {
+                vid = lbl_80368A48++;
+            } while (vid == 0xFFFFFFFF);
+            if (vid < vl->vid) {
+                goto restart;
+            }
+        }
+        lvl = vl;
+    }
+    nvl = lbl_80368A40;
+    if (nvl == NULL) {
+        return -1;
+    }
+    lbl_80368A40 = nvl->next;
+    if (lbl_80368A40 != NULL) {
+        lbl_80368A40->prev = NULL;
+    }
+    if (lvl == NULL) {
+        lbl_80368A44 = nvl;
+    } else {
+        lvl->next = nvl;
+    }
+    nvl->prev = lvl;
+    nvl->next = vl;
+    if (vl != NULL) {
+        vl->prev = nvl;
+    }
+    nvl->vid = vid;
+    nvl->root = sv->unkF4;
+    sv->unkFC = isMaster ? nvl : NULL;
+    sv->unkF8 = nvl;
+    return isMaster ? vid : sv->unkF4;
 }
 
 extern u16 lbl_8035A510[];
