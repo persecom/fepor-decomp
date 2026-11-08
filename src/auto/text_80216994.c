@@ -96,6 +96,14 @@ s32 fn_80217BD0(void *arg0, s32 arg1) {
     return arg1;
 }
 
+s32 fn_80217D4C(void) {
+    extern u16 lbl_80368742;
+    if (lbl_80368742 != 0) {
+        return 1;
+    }
+    return 0;
+}
+
 s32 fn_80219258(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x88);
 }
