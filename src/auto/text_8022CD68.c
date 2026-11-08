@@ -49,6 +49,34 @@ static u32 GetNewVid(void) {
     return vid;
 }
 
+typedef struct GroupData {
+    u8 pad0[4];
+    u16 id;     /* 0x04 */
+    u16 type;   /* 0x06 */
+    u8 pad8[0x1C - 0x8];
+    u32 unk1C;  /* 0x1C */
+    u32 unk20;  /* 0x20 */
+    u32 unk24;  /* 0x24 */
+} GroupData;
+
+typedef struct GroupEntry {
+    GroupData *data; /* 0x0 */
+    u32 unk4;        /* 0x4 */
+    u32 base;        /* 0x8 */
+} GroupEntry;
+
+typedef struct GroupNode {
+    struct GroupNode *next; /* 0x0 */
+    u32 unk4;               /* 0x4 */
+    s16 count;              /* 0x8 */
+    GroupEntry entries[1];  /* 0xC */
+} GroupNode;
+
+typedef struct GroupItem {
+    u16 id;
+    u8 pad2[0x52];
+} GroupItem;
+
 typedef struct SynthVoice {
     struct SynthVoice *next; /* 0x000 */
     struct SynthVoice *prev; /* 0x004 */
@@ -1927,6 +1955,59 @@ void fn_8025FFC8(void *arg0, u8 arg1, s32 arg2, u8 arg3, u8 arg4, u8 arg5) {
     } else {
         *(u8 *) ((u8 *) r27 + 0x5) = r30;
         *(u8 *) ((u8 *) r27 + 0x6) = arg5;
+    }
+}
+
+extern u16 lbl_80361A98[4288];
+void fn_80260060(u8 arg0, void *arg1, void *arg2) {
+    s32 temp_r0;
+    s32 temp_r4;
+    s32 temp_r5;
+    s32 temp_r5_2;
+    s32 temp_r5_3;
+    s32 temp_r6;
+    s32 temp_r6_2;
+    s32 temp_r6_3;
+    s32 temp_r7;
+    s32 temp_r7_2;
+    s32 temp_r7_3;
+    void *temp_r8;
+    void *temp_r8_2;
+    void *temp_r8_3;
+
+    temp_r4 = ((u32 *)arg1)[0x3D];
+    temp_r0 = ((u32 *)arg2)[0x3D];
+    if (arg0 < 0x40U) {
+        temp_r6 = (u8) temp_r0 * 0x86;
+        temp_r5 = arg0 & 0x1F;
+        temp_r7 = (u8) temp_r4 * 0x86;
+        temp_r8 = &lbl_80361A98 + 0x20;
+        *(u16*)((u8*)(&lbl_80361A98) + temp_r7 + temp_r5) = *(u16*)((u8*)(&lbl_80361A98) + temp_r6 + temp_r5);
+        *(u16*)((u8*)temp_r8 + (temp_r7 + temp_r5)) = *(u16*)((u8*)temp_r8 + (temp_r6 + temp_r5));
+        return;
+    }
+    switch (arg0) {                                 /* irregular */
+    case 0x80:
+    case 0x81:
+        temp_r6_2 = (u8) temp_r0 * 0x86;
+        temp_r5_2 = arg0 & 0xFE;
+        temp_r7_2 = (u8) temp_r4 * 0x86;
+        temp_r8_2 = &lbl_80361A98 + 1;
+        *(u16*)((u8*)(&lbl_80361A98) + temp_r7_2 + temp_r5_2) = *(u16*)((u8*)(&lbl_80361A98) + temp_r6_2 + temp_r5_2);
+        *(u16*)((u8*)temp_r8_2 + (temp_r7_2 + temp_r5_2)) = *(u16*)((u8*)temp_r8_2 + (temp_r6_2 + temp_r5_2));
+        return;
+    case 0x84:
+    case 0x85:
+        temp_r6_3 = (u8) temp_r0 * 0x86;
+        temp_r5_3 = arg0 & 0xFE;
+        temp_r7_3 = (u8) temp_r4 * 0x86;
+        temp_r8_3 = &lbl_80361A98 + 1;
+        *(u16*)((u8*)(&lbl_80361A98) + temp_r7_3 + temp_r5_3) = *(u16*)((u8*)(&lbl_80361A98) + temp_r6_3 + temp_r5_3);
+        *(u16*)((u8*)temp_r8_3 + (temp_r7_3 + temp_r5_3)) = *(u16*)((u8*)temp_r8_3 + (temp_r6_3 + temp_r5_3));
+        return;
+    default:
+        *(u16*)((u8*)(&lbl_80361A98) + ((u8) temp_r4 * 0x86) + arg0) = *(u16*)((u8*)(&lbl_80361A98) + ((u8) temp_r0 * 0x86) + arg0);
+        return;
     }
 }
 
