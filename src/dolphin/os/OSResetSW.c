@@ -470,6 +470,22 @@ void fn_80211698(s32 *arg0, u32 *arg1) {
     *arg1 = var_r9;
 }
 
+s32 fn_802116D4(void) {
+    extern u16* lbl_80368648;
+    u16 r5, r6, r3, r4;
+    
+    r5 = *(u16*)0xCC00202C;
+    do {
+        r6 = r5;
+        r5 = *(u16*)0xCC00202C;
+    } while (r6 != r5);
+    
+    r3 = *(u16*)0xCC00202E;
+    r4 = *lbl_80368648;
+    
+    return (((r5 - 1) * 2) + ((r3 - 1) / r4)) < lbl_80368648[14] ? 1 : 0;
+}
+
 s32 fn_802118D8(void) {
     s32 temp_r31;
     u16 reg_val;
@@ -692,3 +708,8 @@ extern u16 lbl_8036860C[4];
 
 extern u16 Scb_80339420[42];
 extern u16 Scb_80339420[];
+#include "common.h"
+#include <dolphin/os.h>
+#include "global.h"
+extern u32 CurrTvMode_8036864C;
+extern u16 lbl_8029D68C[];
