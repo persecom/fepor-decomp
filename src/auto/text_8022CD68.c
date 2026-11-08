@@ -1298,6 +1298,40 @@ void fn_80251E88(Voice *arg0, u32 *arg1) {
     arg0->flags |= 0x2000;
 }
 
+s32 fn_80252058(s32 arg0) {
+    s32 var_r3;
+    s32 var_r4;
+    s32 var_r5;
+    u32 temp_r6;
+    s32 temp_r7;
+    s32 temp_r10;
+    
+    var_r3 = 0x8034C110;
+    if (arg0 < 0) {
+        return 0;
+    } else if (arg0 > 0xFF) {
+        return 0;
+    }
+    
+    var_r5 = 0;
+    do {
+        temp_r7 = (u32)*((u8*)var_r3);
+        var_r4 = (temp_r7 & 0xF) + ((temp_r7 >> 4) & 0xF);
+        if (var_r4 > 0xF) {
+            var_r5 += 0x10;
+        }
+        var_r5 += var_r4;
+        var_r3 += 1;
+    } while (var_r5 < arg0);
+    
+    temp_r6 = var_r5 - arg0;
+    temp_r10 = (temp_r6 & 0xF) + ((temp_r6 >> 4) & 0xF);
+    if (temp_r10 > 0xF) {
+        return 0x8034C120 + (var_r5 >> 4);
+    }
+    return 0x8034C120 + (var_r5 >> 4) + temp_r10;
+}
+
 void fn_80252460(void *arg0, u32 *arg1) {
     SelectSource(arg0, (u8 *)arg0 + 0x224, arg1, 0x80000, 1);
 }
@@ -3337,3 +3371,15 @@ typedef struct {
 extern struct Entry lbl_803542B8[];
 extern u16 lbl_80368A18;
 extern u32 lbl_80368A14;
+#include "global.h"
+#include "structs.h"
+
+extern s32 lbl_8035B220[];
+extern s32 lbl_80368A58;
+extern s32 *lbl_80368A5C;
+extern s32 *lbl_80368A60;
+extern void *lbl_80368950;
+extern u8 *lbl_803688E8;
+extern s32 lbl_803688EC;
+extern s32 lbl_8036894C;
+extern s32 lbl_8033E578[];
