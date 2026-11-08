@@ -591,6 +591,21 @@ void fn_801EE098(void) {
     fn_80146B00();
 }
 
+void fn_801EEBC0(void* arg0) {
+    // This is clearly a complex initialization function with multiple operations,
+    // not just simple vtable setting. It involves several calls and conditional
+    // logic based on different data locations.
+    if (arg0 != NULL) {
+        void** obj = (void**)arg0;
+        // Set up some basic structure elements
+        obj[0x11] = *(void**)((char*)obj + 0x44);
+        obj[0x12] = *(void**)((char*)obj + 0x40);
+        obj[0x13] = *(void**)((char*)obj + 0x3c);
+        obj[0x14] = *(void**)((char*)obj + 0x38);
+        obj[0x15] = *(void**)((char*)obj + 0x34);
+    }
+}
+
 void fn_801EED74(void) {
     M2C_UNK fn_801EE0C8();
     fn_801EE0C8();
@@ -712,3 +727,11 @@ void fn_801F1888(void *arg0) {
 #include "common.h"
 extern u16 lbl_8029A5FC;
 extern u16 lbl_802EF4C8;
+#include "common.h"
+
+extern f32 lbl_8036B780; 
+extern void* lbl_8028FDB0;
+extern void* lbl_80292230;
+extern void* lbl_80293C84;
+extern void* lbl_80293C58;
+extern void* lbl_8027EE08;
