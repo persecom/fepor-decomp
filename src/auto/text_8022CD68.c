@@ -611,20 +611,19 @@ void fn_80234524(s32 arg0) {
     }
 }
 
-s32 fn_802355BC(s32 arg0) {
+s32 fn_802355BC(char *str) {
     extern s32 lbl_803687F0;
     extern s32 fn_80234048();
-    extern u32 fn_8023567C(s32, s32, s32 (*)(), s32 *, s32 *, s32 *, s32 *);
+    extern u32 fn_8023567C(s32, s32, s32 (*)(), void *, s32 *, s32 *, s32 *);
     u32 value;
-    s32 count;
-    s32 negative;
     s32 overflow;
-    s32 sp14;
-    s32 sp18;
+    s32 negative;
+    s32 count;
+    __InStrCtrl isc;
 
-    sp14 = arg0;
-    sp18 = 0;
-    value = fn_8023567C(10, 0x7FFFFFFF, fn_80234048, &sp14, &count, &negative, &overflow);
+    isc.NextChar = str;
+    isc.NullCharDetected = 0;
+    value = fn_8023567C(10, 0x7FFFFFFF, fn_80234048, &isc, &count, &negative, &overflow);
     if (overflow || (!negative && value > 0x7FFFFFFF) || (negative && value > 0x80000000)) {
         value = negative ? 0x80000000 : 0x7FFFFFFF;
         lbl_803687F0 = 0x22;
