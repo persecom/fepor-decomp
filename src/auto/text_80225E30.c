@@ -358,6 +358,11 @@ void UnreserveEXI2Port(void) {
     ((void (*)(u8 *))*(u32 **)(gDBCommTable + 0x20))(gDBCommTable);
 }
 
+void ReserveEXI2Port(void) {
+    extern u8 gDBCommTable[40];
+    ((void (*)(u8 *))*(u32 **)(gDBCommTable + 0x24))(gDBCommTable);
+}
+
 void TRKEXICallBack(s32 arg0, s32 arg1) {
     M2C_UNK OSEnableScheduler();
     M2C_UNK TRKLoadContext(s32, M2C_UNK);
