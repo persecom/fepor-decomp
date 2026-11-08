@@ -345,6 +345,18 @@ s32 __PADDisableRecalibration(s32 arg0) {
     return r31;
 }
 
+extern s32 lbl_8036869C;
+s32 fn_8021371C(s32 arg0) {
+    extern s32 lbl_8036869C;
+    s32 temp_r31;
+
+    temp_r31 = lbl_8036869C;
+    OSDisableInterrupts();
+    lbl_8036869C = arg0;
+    OSRestoreInterrupts();
+    return temp_r31;
+}
+
 void fn_80213760(u16 arg0, u32 arg1) {
     u16 temp_r4;
     void *temp_r5;
