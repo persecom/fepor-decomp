@@ -679,12 +679,6 @@ String *fn_800C96F8(String *arg0, const char *arg1, u32 arg2) {
     return arg0;
 }
 
-/* assign(const char *) */
-static inline String *StrAssignC(String *s, const char *c) {
-    u32 strlen(const char *);
-    return fn_800C96F8(s, c, strlen(c));
-}
-
 String *fn_800C9758(String *arg0, const String *arg1, u32 pos, u32 n) {
     String *fn_800C984C(String *, u32, u32);
     void fn_800CA7F4(String *, u32, s32);
