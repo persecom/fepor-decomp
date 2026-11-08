@@ -1895,8 +1895,6 @@ s32 fn_8024FD80(u16 id, s32 arg1) {
     return 0;
 }
 
-extern u16 lbl_803548B8;
-extern u16 lbl_80368A08;
 s32 fn_8024FE1C(u16 arg0, void *arg1, u16 arg2) {
     s32 i;
     u16 *entry;
