@@ -382,8 +382,7 @@ void fn_80118170(void *arg0) {
     M2C_UNK fn_8012C7C8(M2C_UNK *, void *);
     s32 fn_8013FF94(void *, M2C_UNK, M2C_UNK);
     M2C_UNK fn_8014004C(void *);
-    extern M2C_UNK fn_80117D80;
-    fn_8012C7C8(&fn_80117D80, arg0);
+    
     fn_8000A430(M2C_FIELD(arg0, s32 *, 0x44));
     if (fn_8013FF94(arg0, -0x1000, 0) != 0) {
         fn_8014004C(arg0);
