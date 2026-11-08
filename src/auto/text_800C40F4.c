@@ -5931,6 +5931,7 @@ extern u8 lbl_802723E8[136]; // Size determined from assembly
 #include "structs.h"
 extern u32 lbl_803678DC;
 extern u32 lbl_803678E0;
+extern f64 lbl_80369FB0;
 extern f32 lbl_80369F90;
 extern f64 lbl_80369F98;
 extern f32 lbl_80369FA0;
