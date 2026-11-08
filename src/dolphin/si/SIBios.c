@@ -208,7 +208,7 @@ s32 fn_8023ABF4(s32 arg0) {
 
 s32 fn_8023B270(s32 arg0) {
     M2C_UNK OSRestoreInterrupts(s32);
-    extern SIPacket Packet_8033E248[];
+    extern SIPacket Packet_8033E248[4];
     s32 temp_r5;
     s32 temp_r5_2;
     s32 var_r30;
