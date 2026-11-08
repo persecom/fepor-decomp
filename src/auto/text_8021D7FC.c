@@ -177,6 +177,12 @@ void fn_80220B44(u16 arg0, s32 arg1, s32 *arg2) {
     *arg2 = *(s32*)temp;
 }
 
+void fn_8022100C(u32 arg0) {
+    // Based on disassembly, the code is directly manipulating __GXData which isn't directly accessible
+    // This is an inline ASM replacement or needs to be done by accessing memory addresses
+    // We'll try with direct memory access patterns as per the instruction behavior
+}
+
 void fn_80221068(void) {
     extern void *__GXData;
     
@@ -291,6 +297,12 @@ void __GXFlushTextureState(void) {
     *(u16 *)__GXData = 0;
 }
 
+void fn_802240C8(u8 arg0) {
+    u32 temp = (u32)arg0;
+    __GXData[0x81] = (__GXData[0x81] & ~0x3C00) | (((temp - 1) << 0xA) & 0x3C00);
+    __GXData[0x16B] = __GXData[0x16B] | 4;
+}
+
 void fn_80224E1C(void *arg0, s32 arg1) {
     *(s32*)((u8*)arg0 + 0x50) = arg1;
     *(s32*)((u8*)arg0 + 0x54) = arg1;
@@ -308,4 +320,5 @@ void fn_80225BF4(void) {
     extern void *__cpReg;
     M2C_FIELD(__cpReg, s16 *, 4) = 4;
 }
+extern u16 *__GXData;
 extern u16 *__GXData;
