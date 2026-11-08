@@ -185,6 +185,30 @@ void fn_800ADDBC(s32 arg0) {
     }
 }
 
+s32 fn_800ADEB0(s32 arg0, s32 arg1, s32 arg2)
+{
+    if (arg0 < 0) {
+        return -1;
+    }
+    if (arg0 >= 0x100) {
+        return -2;
+    }
+    if (arg1 < 0) {
+        return -3;
+    }
+    if (arg1 >= 0x100) {
+        return -4;
+    }
+    if (arg2 < 0) {
+        return -5;
+    }
+    if (arg2 >= 0x100) {
+        return -6;
+    }
+
+    return arg0 + ((arg1 & 0xFF) << 8) + ((arg2 & 0xFF) << 16);
+}
+
 extern void fn_8003BE50(void);
 void fn_800AE1FC(void) {
     fn_8002F62C(&lbl_802EF4E0);
@@ -3627,6 +3651,12 @@ s32 fn_800BF9D8(void)
     return 1;
 }
 
+extern u16* const lbl_8036A0D0;
+void fn_800BFCA8(void) {
+    lbl_80368230 = 0x22;
+    lbl_8036A0D0[4] = 0;
+}
+
 extern s32 lbl_80367FCC;
 s32 fn_800C0190(s32 arg0) {
     if (arg0 < 0) {
@@ -3790,6 +3820,61 @@ void fn_800C0C54(void)
 void fn_800C0CA4(void *arg0) {
     fn_800C4588(M2C_FIELD(arg0, s32 *, 0x50));
     M2C_FIELD(arg0, s32 *, 0x50) = 0;
+}
+
+void fn_800C0CDC(void *arg0) {
+    f32 spC8;
+    f32 sp98;
+    f32 sp68;
+    f32 sp38;
+    f32 sp8;
+
+    fn_8022097C();
+    fn_8022124C(0, 0, 0x260, 0x1E0);
+    fn_802212FC(0x260, 0x1E0, 4, 0);
+    fn_80221BA8(((s32*)arg0)[0x14], 1);
+    fn_802209FC();
+    fn_80222EB4();
+    fn_80067EDC(0);
+    fn_8021FBB8();
+    fn_8021F4E4(9, 1);
+    fn_8021F4E4(0xD, 1);
+    fn_8021FBF0(0, 9, 1, 4, 0);
+    fn_8021FBF0(0, 0xD, 1, 4, 0);
+    fn_80220428(1);
+    fn_802201A8(0, 1, 4, 0x3C, 0, 0x7D);
+    fn_80222334(0);
+    fn_802240C8(1);
+    fn_80223F2C(0, 0, 0, 0xFF);
+    fn_802239D0(0, 3);
+    fn_80202540(&sp98, -0.5f, -0.5f, 0.0f);
+    fn_80202540(&sp68, 0.0f, 0.0f, 0.0f);
+    fn_80202300(&spC8, 0x5A, 0.0f);
+    fn_802025C0(&sp38, 0.0f, 0.0f, 0.0f);
+    fn_80202024(&sp38, &sp98, &sp8);
+    fn_80202024(&spC8, &sp8, &sp8);
+    fn_80202024(&sp68, &sp8, &sp8);
+    fn_80224D7C(&sp8, 0);
+    fn_80222C50((u8*)arg0 + 0x30, 0);
+    fn_80220DEC(0x98, 0, 4);
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
+    *(f32 *)0xCC008000 = 0.0f;
 }
 
 void fn_800C0EEC(s32 arg0, s32 arg1) {
