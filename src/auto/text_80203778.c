@@ -1,7 +1,8 @@
 /* Functions from 0x801FC634 to 0x8022C1E8, found by decomp-toolkit. */
 #include "common.h"
 #include <dolphin/os.h>
-extern s32 lbl_803682F0;
+#include "global.h"
+extern s32 lbl_803682F0;;
 extern s32 fn_80013E50(s32);
 extern s32 fn_80013E60(s32, s32);
 extern s32 fn_80013E74(void*, s32);
@@ -163,9 +164,89 @@ void *__OSGetExceptionHandler(u8 exception) {
     return OSExceptionTable_8036847C[exception];
 }
 
+s32 __OSPSInit(void) {
+    M2C_UNK ICFlashInvalidate();
+    s32 PPCMfhid2();
+    M2C_UNK PPCMthid2(s32);
+    PPCMthid2(PPCMfhid2() | 0xA0000000);
+    ICFlashInvalidate();
+    M2C_SYNC();
+    M2C_ERROR(/* unknown instruction: mtspr GQR0, $r3 */);
+    M2C_ERROR(/* unknown instruction: mtspr GQR1, $r3 */);
+    M2C_ERROR(/* unknown instruction: mtspr GQR2, $r3 */);
+    M2C_ERROR(/* unknown instruction: mtspr GQR3, $r3 */);
+    M2C_ERROR(/* unknown instruction: mtspr GQR4, $r3 */);
+    M2C_ERROR(/* unknown instruction: mtspr GQR5, $r3 */);
+    M2C_ERROR(/* unknown instruction: mtspr GQR6, $r3 */);
+    M2C_ERROR(/* unknown instruction: mtspr GQR7, $r3 */);
+    return 0;
+}
+
+u8 fn_80204410(void) {
+    return (u8) M2C_FIELD((void *)0xCC006000, s32 *, 0x24);
+}
+
+void OSRegisterVersion(s32 arg0) {
+    extern u32 lbl_80366F24;
+    OSReport(&lbl_80366F24, (u32)arg0);
+}
+
+void OSInitAlarm(void) {
+    extern void *AlarmQueue_80368490;
+    extern void *DecrementerExceptionHandler;
+    extern void *ResetFunctionInfo_8029BB20;
+    extern void *__OSGetExceptionHandler(s32);
+    extern void __OSSetExceptionHandler(s32, void *);
+    
+    if (__OSGetExceptionHandler(8) != &DecrementerExceptionHandler) {
+        *(s32 *)AlarmQueue_80368490 = 0;
+        *((s32 *)AlarmQueue_80368490 + 1) = 0;
+        __OSSetExceptionHandler(8, &DecrementerExceptionHandler);
+        OSRegisterResetFunction(&ResetFunctionInfo_8029BB20);
+    }
+}
+
 void OSCreateAlarm(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
+}
+
+extern void DecrementerExceptionCallback(void);
+void DecrementerExceptionHandler(void *arg1) {
+    s32 *regs = (s32 *) arg1;
+    regs[0] = 0; // r0
+    regs[1] = (s32) regs + 4; // r1
+    regs[2] = 0;
+    regs[3] = 0;
+    regs[4] = 0;
+    regs[5] = 0;
+    regs[6] = 0; // r6
+    regs[7] = 0; // r7
+    regs[8] = 0; // r8
+    regs[9] = 0; // r9
+    regs[10] = 0; // r10
+    regs[11] = 0; // r11
+    regs[12] = 0; // r12
+    regs[13] = 0; // r13
+    regs[14] = 0; // r14
+    regs[15] = 0; // r15
+    regs[16] = 0; // r16
+    regs[17] = 0; // r17
+    regs[18] = 0; // r18
+    regs[19] = 0; // r19
+    regs[20] = 0; // r20
+    regs[21] = 0; // r21
+    regs[22] = 0; // r22
+    regs[23] = 0; // r23
+    regs[24] = 0; // r24
+    regs[25] = 0; // r25
+    regs[26] = 0; // r26
+    regs[27] = 0; // r27
+    regs[28] = 0; // r28
+    regs[29] = 0; // r29
+    regs[30] = 0; // r30
+    regs[31] = 0; // r31
+    DecrementerExceptionCallback();
 }
 
 s32 fn_80204CD4(s32 arg0) {
@@ -197,6 +278,40 @@ void OSSetArenaLo(s32 arg0) {
     __OSArenaLo_80366F30 = arg0;
 }
 
+void fn_80205198(void *addr, u32 nBytes) {
+    if (nBytes <= 0) {
+        return;
+    }
+    nBytes = (nBytes + ((u32) addr & 31) + 31) >> 5;
+    do {
+        __dcbz(addr, 0);
+        addr = (u8 *) addr + 32;
+    } while (--nBytes);
+}
+
+void ICInvalidateRange(void *addr, u32 nBytes) {
+    if (nBytes <= 0) {
+        return;
+    }
+    nBytes = (nBytes + ((u32) addr & 31) + 31) >> 5;
+    do {
+        __icbi(addr, 0);
+        addr = (u8 *) addr + 32;
+    } while (--nBytes);
+    __sync();
+    __isync();
+}
+
+extern u32 __SPR_392;
+s32 fn_8020543C(s32 arg0)
+{
+    s32 r4 = __SPR_392;
+    r4 = (r4 >> 4) & 0xF;
+    if (r4 > arg0)
+        return 1;
+    return 0;
+}
+
 void OSSaveFPUContext(void *arg0) {
     __OSSaveFPUContext(arg0);
 }
@@ -209,6 +324,10 @@ void *fn_80205B50(void) {
     return 0; /* OSGetStackPointer: asm (mr r3, r1) */
 }
 
+void fn_80206808(void) {
+    return;
+}
+
 void fn_80206888(void) {
     extern s32 lbl_803684B0;
     lbl_803684B0 = 1;
@@ -219,6 +338,11 @@ void fn_80208780(s32 arg0, s32 arg1) {
     extern s32 lbl_803684E4;
     lbl_803684E0 = arg0;
     lbl_803684E4 = arg1;
+}
+
+s32 __OSSyncSram(void) {
+    extern u16 Scb_80339420[];
+    return (s32)Scb_80339420[0x4C / sizeof(u16)];
 }
 
 void fn_80209E68(void) {
@@ -257,6 +381,10 @@ void fn_8020A060(void *arg0) {
         RunQueueBits_80368518 &= ~(1 << (0x1F - M2C_FIELD(arg0, s32 *, 0x2D0)));
     }
     M2C_FIELD(arg0, void **, 0x2DC) = NULL;
+}
+
+s32 OSGetTick(void) {
+    return M2C_ERROR(/* unknown instruction: mftb $r3, 0x10c */);
 }
 
 void __init_user(void) {
