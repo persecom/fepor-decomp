@@ -218,40 +218,17 @@ s32 fn_80105BC0(void *arg0, u8 arg1) {
 
 s32 fn_80105C5C(s32 *arg0, u8 arg1) {
     s32 fn_80019DF0(u8);
-    s32 temp_r0;
-    u32 temp_r5;
-    u32 var_ctr;
-    u32 var_ctr_2;
-    u32 var_r6;
+    u32 *p = (u32 *)arg0;
+    s32 n = arg1;
 
-    if (arg1 < 0) {
+    if (n < 0) {
         return 0;
     }
-    var_r6 = arg1 >> 5U;
-    if ((s32) arg1 >= 0x20) {
-        temp_r5 = var_r6 >> 3U;
-        temp_r0 = -(var_r6 << 5);
-        var_ctr = temp_r5;
-        if (temp_r5 != 0) {
-            do {
-                arg0 += 0x20;
-                var_ctr -= 1;
-            } while (var_ctr != 0);
-            var_r6 &= 7;
-            if (var_r6 != 0) {
-                goto block_6;
-            }
-        } else {
-block_6:
-            var_ctr_2 = var_r6;
-            do {
-                arg0 += 4;
-                var_ctr_2 -= 1;
-            } while (var_ctr_2 != 0);
-        }
-        arg1 += temp_r0;
+    while (n >= 32) {
+        p++;
+        n -= 32;
     }
-    if (*arg0 & (1 << arg1)) {
+    if (*p & (1 << n)) {
         return fn_80019DF0(arg1);
     }
     return 0;
