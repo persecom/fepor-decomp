@@ -2134,9 +2134,6 @@ void fn_80251A44(SynthVoice *sv, u32 *arg1) {
     M2C_FIELD(sv, u32 *, 0x118) |= 0x100;
 }
 
-void fn_8026146C(s32 *);
-void fn_8025FFC8(void *arg0, u8 arg1, s32 arg2, u8 arg3, u8 arg4, u8 arg5);
-
 static void SelectSource(void *svoice, void *dest, u32 *cstep, u64 tstflag, u32 dirtyflag) {
     u8 comb;
     s32 scale;
