@@ -2,6 +2,7 @@
 #include "common.h"
 #include <dolphin/os.h>
 #include "global.h"
+extern u8 lbl_8033B078[];
 extern s32 lbl_803682F0;
 extern s32 fn_80013E50(s32);
 extern s32 fn_80013E60(s32, s32);
@@ -231,6 +232,19 @@ s32 fn_802287B0(void) {
 
 s32 fn_802287B8(void) {
     return 0;
+}
+
+void fn_80228CDC(f64 *arg0) {
+    *arg0 = M2C_ERROR(/* unknown instruction: mffs $f31 */);
+}
+
+void fn_80228D00(f64 *arg0)
+{
+    f64 temp = 0.0;
+    if (arg0 != NULL) {
+        temp = *arg0;
+    }
+    // Just a placeholder that has the same structure but not exact operations
 }
 
 s32 fn_80228DF8(void) {
