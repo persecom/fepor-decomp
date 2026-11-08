@@ -216,34 +216,27 @@ s32 fn_8023ABF4(s32 arg0) {
     return var_r5;
 }
 
-s32 fn_8023B270(s32 arg0) {
-    M2C_UNK OSRestoreInterrupts(s32);
-    extern SIPacket Packet_8033E248[4];
-    s32 temp_r5;
-    s32 temp_r5_2;
-    s32 var_r30;
-    s32 var_r5;
+BOOL fn_8023B270(BOOL enable) {
+    BOOL enabled;
+    BOOL rc;
+    u32 reg;
+    int i;
 
-    OSDisableInterrupts(Packet_8033E248);
-    temp_r5 = *(s32 *)0xCC006434;
-    if (temp_r5 & 0x08000000) {
-        var_r30 = 1;
+    enabled = OSDisableInterrupts();
+    reg = __SIRegs[13];
+    rc = (reg & 0x08000000) ? TRUE : FALSE;
+    if (enable) {
+        reg |= 0x08000000;
+        for (i = 0; i < 4; i++) {
+            InputBufferVcount[i] = 0;
+        }
     } else {
-        var_r30 = 0;
+        reg &= ~0x08000000;
     }
-    if (arg0 != 0) {
-        M2C_FIELD(&Packet_8033E248, s32 *, 0x1E0) = 0;
-        var_r5 = temp_r5 | 0x08000000;
-        M2C_FIELD(&Packet_8033E248, s32 *, 0x1E4) = 0;
-        M2C_FIELD(&Packet_8033E248, s32 *, 0x1E8) = 0;
-        M2C_FIELD(&Packet_8033E248, s32 *, 0x1EC) = 0;
-    } else {
-        var_r5 = temp_r5 & 0xF7FFFFFF;
-    }
-    temp_r5_2 = var_r5 & 0x7FFFFFFE;
-    M2C_FIELD((s32 *)0xCC000000, s32 *, 0x6434) = temp_r5_2;
-    OSRestoreInterrupts(temp_r5_2);
-    return var_r30;
+    reg &= ~(0x80000000 | 0x00000001);
+    __SIRegs[13] = reg;
+    OSRestoreInterrupts(enabled);
+    return rc;
 }
 
 s32 fn_8023B3D4(u32 arg0) {
