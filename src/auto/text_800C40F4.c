@@ -1683,60 +1683,207 @@ extern "C" s32 fn_800D0C5C(void *arg0) {
             (*(u32 *)((u8 *)self + 0xC))++;
             fn_800CAD4C(self, 1, 0);
             break;
-        case 17: *(u32 *)((u8 *)self + 0xC) = 17; break;
-        case 18: *(u32 *)((u8 *)self + 0xC) = 18; break;
-        case 19: *(u32 *)((u8 *)self + 0xC) = 19; break;
-        case 20: *(u32 *)((u8 *)self + 0xC) = 20; break;
-        case 21: *(u32 *)((u8 *)self + 0xC) = 21; break;
-        case 22: *(u32 *)((u8 *)self + 0xC) = 22; break;
-        case 23: *(u32 *)((u8 *)self + 0xC) = 23; break;
-        case 24: *(u32 *)((u8 *)self + 0xC) = 24; break;
-        case 25: *(u32 *)((u8 *)self + 0xC) = 25; break;
-        case 26: *(u32 *)((u8 *)self + 0xC) = 26; break;
-        case 27: *(u32 *)((u8 *)self + 0xC) = 27; break;
-        case 28: *(u32 *)((u8 *)self + 0xC) = 28; break;
-        case 29: *(u32 *)((u8 *)self + 0xC) = 29; break;
-        case 30: *(u32 *)((u8 *)self + 0xC) = 30; break;
-        case 31: *(u32 *)((u8 *)self + 0xC) = 31; break;
-        case 32: *(u32 *)((u8 *)self + 0xC) = 32; break;
-        case 33: *(u32 *)((u8 *)self + 0xC) = 33; break;
-        case 34: *(u32 *)((u8 *)self + 0xC) = 34; break;
-        case 35: *(u32 *)((u8 *)self + 0xC) = 35; break;
-        case 36: *(u32 *)((u8 *)self + 0xC) = 36; break;
-        case 37: *(u32 *)((u8 *)self + 0xC) = 37; break;
-        case 38: *(u32 *)((u8 *)self + 0xC) = 38; break;
-        case 39: *(u32 *)((u8 *)self + 0xC) = 39; break;
-        case 40: *(u32 *)((u8 *)self + 0xC) = 40; break;
-        case 41: *(u32 *)((u8 *)self + 0xC) = 41; break;
-        case 42: *(u32 *)((u8 *)self + 0xC) = 42; break;
-        case 43: *(u32 *)((u8 *)self + 0xC) = 43; break;
-        case 44: *(u32 *)((u8 *)self + 0xC) = 44; break;
-        case 45: *(u32 *)((u8 *)self + 0xC) = 45; break;
-        case 46: break;
-        case 47: *(u32 *)((u8 *)self + 0xC) = 47; break;
-        case 48:
-            *(u32 *)((u8 *)self + 0x10) = *(u32 *)((u8 *)lbl_80368278 + 0x5C);
-            *(u32 *)((u8 *)self + 0xC) = 0x38;
-            break;
-        case 49: *(u32 *)((u8 *)self + 0xC) = 49; break;
-        case 50: *(u32 *)((u8 *)self + 0xC) = 50; break;
-        case 51: *(u32 *)((u8 *)self + 0xC) = 51; break;
-        case 52: *(u32 *)((u8 *)self + 0xC) = 52; break;
-        case 53: *(u32 *)((u8 *)self + 0xC) = 53; break;
-        case 54:
-            (*(u32 *)((u8 *)self + 0xC)) = state + 1;
-            break;
-        case 55:
-            *(u32 *)((u8 *)self + 0xC) = 0x38;
-            break;
-        case 56:
-            if (--(*(s32 *)((u8 *)self + 0x10)) <= 0)
-                (*(u32 *)((u8 *)self + 0xC))++;
-            break;
-        case 57:
-            if (--(*(s32 *)((u8 *)self + 0x10)) <= 0)
-                (*(u32 *)((u8 *)self + 0xC))++;
-            break;
+                  case 17:
+              if ((u8)fn_800E5248(*(void **)((u8 *)self + 0x9C), 0)) {
+                  fn_800CAC7C(self);
+                  if (*(s32 *)((u8 *)self + 0x224) < 0) {
+                      fn_80114AF0(*(void **)((u8 *)self + 0xA0), 1, 0, (*(s32 *)((u8 *)self + 0x21C) == 3));
+                      fn_801968FC(*(void **)((u8 *)self + 0xAC), *(s32 *)((u8 *)self + 0x224), 1, (u8 *)self + 0x1F0);
+                      fn_800E77A0(*(void **)((u8 *)self + 4), 0, 0x3C, *(f32 *)((u8 *)lbl_80368278 + 0x84));
+                  } else if (*(s32 *)((u8 *)self + 0x224) > 0) {
+                      fn_801968CC(*(void **)((u8 *)self + 0xAC));
+                  } else {
+                      fn_801968FC(*(void **)((u8 *)self + 0xAC), 0, 0, (u8 *)self + 0x1F0);
+                      fn_80114840(*(void **)((u8 *)self + 0xA0));
+                  }
+                  if (*(s32 *)((u8 *)self + 0x220) < 0)
+                      fn_801968FC(*(void **)((u8 *)self + 0xB0), *(s32 *)((u8 *)self + 0x220), 0, (u8 *)self + 0x1F0);
+                  else if (*(s32 *)((u8 *)self + 0x220) > 0)
+                      fn_801968CC(*(void **)((u8 *)self + 0xB0));
+                  fn_800CAD4C(self, 2, 0);
+              }
+              if (!((u8)fn_800E56C4(*(void **)((u8 *)self + 0x9C)) != 0
+                    && (u8)fn_80112F44(*(void **)((u8 *)self + 0x9C)) == 0)) {
+                  if (--(*(s32 *)((u8 *)self + 0x10)) <= 0)
+                      *(u32 *)((u8 *)self + 0xC) = (*(s32 *)((u8 *)self + 0x21C) == 3) ? 0x28 : 4;
+              }
+              break;
+          case 18:
+              if ((u8)fn_80115C0C(*(void **)((u8 *)self + 0x9C), 3))
+                  (*(u32 *)((u8 *)self + 0xC))++;
+              else
+                  fn_800CF500(self, (u8 *)self + 0xC4, *(void **)((u8 *)self + 0x9C));
+              break;
+          case 19:
+              obj = *(H **)((u8 *)self + 0x9C);
+              if (!(u8)((s32 (*)(H *))M2C_FIELD(obj, void **, 0x48))(obj)) {
+                  *(u32 *)((u8 *)self + 0x10) = *(u32 *)((u8 *)lbl_80368278 + 0x4C);
+                  (*(u32 *)((u8 *)self + 0xC))++;
+              }
+              break;
+          case 20:
+              fn_80115264(*(void **)((u8 *)self + 0x9C), 3, 0);
+              fn_800CF500(self, (u8 *)self + 0xD0, *(void **)((u8 *)self + 0x9C));
+              *(u32 *)((u8 *)self + 0x18) = 0;
+              (*(u32 *)((u8 *)self + 0xC))++;
+              fn_800CAD4C(self, 1, 0);
+              break;
+          case 21: *(u32 *)((u8 *)self + 0xC) = 21; break;
+          case 22:
+              r28 = (*(u32 *)((u8 *)self + 0x210) == 1) ? 1 : 0;
+              if (r28 == 1 && *(s32 *)((u8 *)self + 0x21C) == 3)
+                  r28 = 2;
+              if (*(u32 *)((u8 *)self + 0x210) == 8)
+                  r28 = 3;
+              fn_80115264(*(void **)((u8 *)self + 0x9C), r28, *(s32 *)((u8 *)self + 0x218));
+              fn_800CF500(self, (u8 *)self + 0x100, *(void **)((u8 *)self + 0x9C));
+              (*(u32 *)((u8 *)self + 0xC))++;
+              fn_800CAD4C(self, 1, 0);
+              break;
+          case 23: *(u32 *)((u8 *)self + 0xC) = 23; break;
+          case 24: *(u32 *)((u8 *)self + 0xC) = 24; break;
+          case 25: *(u32 *)((u8 *)self + 0xC) = 25; break;
+          case 26: *(u32 *)((u8 *)self + 0xC) = 26; break;
+          case 27:
+              r27 = (*(u32 *)((u8 *)self + 0x210) == 4) ? 3 : ((*(u32 *)((u8 *)self + 0x210) == 3) ? 1 : 0);
+              *(u32 *)((u8 *)self + 0x10) = *(u32 *)((u8 *)lbl_80368278 + 0x50);
+              (*(u32 *)((u8 *)self + 0xC))++;
+              fn_800CAD4C(self, 2, 0);
+              break;
+          case 28: *(u32 *)((u8 *)self + 0xC) = 28; break;
+          case 29: *(u32 *)((u8 *)self + 0xC) = 29; break;
+          case 30: *(u32 *)((u8 *)self + 0xC) = 30; break;
+          case 31: *(u32 *)((u8 *)self + 0xC) = 31; break;
+          case 32:
+              if (--(*(s32 *)((u8 *)self + 0x10)) <= 0)
+                  *(u32 *)((u8 *)self + 0xC) = (*(s32 *)((u8 *)self + 0x21C) == 3) ? 0x28 : 4;
+              break;
+          case 33:
+              r28 = (*(u32 *)((u8 *)self + 0x210) == 0xA) ? 1 : 0;
+              fn_80115264(*(void **)((u8 *)self + 0x9C), r28, *(s32 *)((u8 *)self + 0x218));
+              fn_800CF500(self, (u8 *)self + 0x100, *(void **)((u8 *)self + 0x9C));
+              (*(u32 *)((u8 *)self + 0xC))++;
+              fn_800CAD4C(self, 1, 0);
+              break;
+          case 34: *(u32 *)((u8 *)self + 0xC) = 34; break;
+          case 35: *(u32 *)((u8 *)self + 0xC) = 35; break;
+          case 36:
+              if (--(*(s32 *)((u8 *)self + 0x10)) <= 0)
+                  *(u32 *)((u8 *)self + 0xC) = (*(s32 *)((u8 *)self + 0x21C) == 3) ? 0x28 : 4;
+              break;
+          case 37:
+              *(u32 *)((u8 *)self + 0xC) = state + 1;
+              fn_800CAD4C(self, 1, 0);
+              break;
+          case 38: *(u32 *)((u8 *)self + 0xC) = 38; break;
+          case 39:
+              *(u32 *)((u8 *)self + 0xC) = (*(s32 *)((u8 *)self + 0x21C) == 3) ? 0x28 : 4;
+              break;
+          case 40:
+              if ((u8)fn_80115AF0(*(void **)((u8 *)self + 0x9C)) == 0) {
+                  fn_800CF500(self, (u8 *)self + 0xDC, NULL);
+                  if (lbl_80367878 == 0) {
+                      fn_800C9ABC(str5, lbl_802704F8 + 0x563, &sc5);
+                      fn_800E7C94(*(void **)((u8 *)self + 4), str5, 4, *(f32 *)((u8 *)lbl_80368278 + 0x68));
+                      fn_800C9A60(str5, -1);
+                      fn_800C9ABC(str6, lbl_802704F8 + 0x56A, &sc6);
+                      fn_800E7C94(*(void **)((u8 *)self + 4), str6, 4, *(f32 *)((u8 *)lbl_80368278 + 0x68));
+                      fn_800C9A60(str6, -1);
+                  }
+                  r30 = 1;
+                  (*(u32 *)((u8 *)self + 0xC))++;
+              }
+              break;
+          case 41:
+              fn_800C9ABC(str7, lbl_802704F8 + 0x563, &sc7);
+              fn_800E7C94(*(void **)((u8 *)self + 4), str7, 1, *(f32 *)((u8 *)lbl_80368278 + 0x6C));
+              fn_800C9A60(str7, -1);
+              fn_800C9ABC(str8, lbl_802704F8 + 0x56A, &sc8);
+              fn_800E7C94(*(void **)((u8 *)self + 4), str8, 1, *(f32 *)((u8 *)lbl_80368278 + 0x6C));
+              fn_800C9A60(str8, -1);
+              (*(u32 *)((u8 *)self + 0xC))++;
+              break;
+          case 42: *(u32 *)((u8 *)self + 0xC) = 42; break;
+          case 43: *(u32 *)((u8 *)self + 0xC) = 43; break;
+          case 44:
+              if (--(*(s32 *)((u8 *)self + 0x10)) <= 0) {
+                  *(s32 *)((u8 *)self + 0x10) = r28;
+                  if (*(s32 *)((u8 *)self + 0x230) != 0)
+                      (*(u32 *)((u8 *)self + 0xC))++;
+                  else
+                      *(u32 *)((u8 *)self + 0xC) = 0x38;
+              }
+              break;
+          case 45: *(u32 *)((u8 *)self + 0xC) = 45; break;
+          case 46: break;
+          case 47: *(u32 *)((u8 *)self + 0xC) = 47; break;
+          case 48:
+              fn_800C9ABC(str9, lbl_802704F8 + 0x563, &sc9);
+              fn_800E7C94(*(void **)((u8 *)self + 4), str9, 1, *(f32 *)((u8 *)lbl_80368278 + 0x74));
+              fn_800C9A60(str9, -1);
+              fn_800C9ABC(strA, lbl_802704F8 + 0x56A, &scA);
+              fn_800E7C94(*(void **)((u8 *)self + 4), strA, 1, *(f32 *)((u8 *)lbl_80368278 + 0x74));
+              fn_800C9A60(strA, -1);
+              *(u32 *)((u8 *)self + 0x10) = *(u32 *)((u8 *)lbl_80368278 + 0x5C);
+              *(u32 *)((u8 *)self + 0xC) = 0x38;
+              break;
+          case 49:
+              fn_800C9ABC(strB, lbl_802704F8 + 0x5BE, &scB);
+              fn_800C9ABC(strC, lbl_802704F8 + 0x5BE, &scC);
+              fn_800C9ABC(strD, lbl_802704F8 + 0x5BE, &scD);
+              fn_800C9ABC(strE, lbl_802704F8 + 0x5BE, &scE);
+              fn_800C9ABC(strF, lbl_802704F8 + 0x5BE, &scF);
+              fn_800C9ABC(strG, lbl_802704F8 + 0x5BE, &scG);
+              fn_800C9ABC(strH, lbl_802704F8 + 0x5BE, &scH);
+              fn_800C9ABC(strI, lbl_802704F8 + 0x5BE, &scI);
+              fn_800C9A60(strB, -1); fn_800C9A60(strC, -1);
+              fn_800C9A60(strD, -1); fn_800C9A60(strE, -1);
+              fn_800C9A60(strF, -1); fn_800C9A60(strG, -1);
+              fn_800C9A60(strH, -1); fn_800C9A60(strI, -1);
+              (*(u32 *)((u8 *)self + 0xC))++;
+              break;
+          case 50:
+              fn_800C9ABC(strJ, lbl_802704F8 + 0x64B, &scJ);
+              fn_800CF500(self, strJ, NULL);
+              *(u32 *)((u8 *)self + 0x10) = *(u32 *)((u8 *)lbl_80368278 + 0x168);
+              (*(u32 *)((u8 *)self + 0xC))++;
+              break;
+          case 51:
+              if (--(*(s32 *)((u8 *)self + 0x10)) <= 0) {
+                  *(s32 *)((u8 *)self + 0x10) = 0x258;
+                  (*(u32 *)((u8 *)self + 0xC))++;
+              }
+              break;
+          case 52:
+              if (--(*(s32 *)((u8 *)self + 0x10)) <= 0) {
+                  fn_800C9ABC(strK, lbl_802704F8 + 0x5BE, &sc0);
+                  fn_800C9ABC(strL, lbl_802704F8 + 0x5BE, &sc1);
+                  fn_800C9ABC(strM, lbl_802704F8 + 0x5BE, &sc2);
+                  fn_800C9ABC(strN, lbl_802704F8 + 0x5BE, &sc3);
+                  fn_800C9A60(strK, -1); fn_800C9A60(strL, -1);
+                  fn_800C9A60(strM, -1); fn_800C9A60(strN, -1);
+                  (*(u32 *)((u8 *)self + 0xC))++;
+              }
+              break;
+          case 53:
+              (*(u32 *)((u8 *)self + 0xC))++;
+              break;
+          case 54:
+              *(u32 *)((u8 *)self + 0xC) = state + 1;
+              break;
+          case 55:
+              *(u32 *)((u8 *)self + 0xC) = 0x38;
+              break;
+          case 56:
+              if (--(*(s32 *)((u8 *)self + 0x10)) <= 0) {
+                  r30 = 1;
+                  (*(u32 *)((u8 *)self + 0xC))++;
+              }
+              break;
+          case 57:
+              if (--(*(s32 *)((u8 *)self + 0x10)) <= 0)
+                  (*(u32 *)((u8 *)self + 0xC))++;
+              break;
         }
     }
 
