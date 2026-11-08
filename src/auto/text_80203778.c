@@ -364,9 +364,6 @@ void fn_80208780(s32 arg0, s32 arg1) {
     lbl_803684E4 = arg1;
 }
 
-void OSClearContext(OSContext *context);
-void OSSetCurrentContext(OSContext *context);
-void fn_80206E1C(u32 bootDol, u32 resetCode, char **argv);
 void fn_8020878C(s32 *arg0, s32 *arg1) {
     extern s32 lbl_803684E0;
     extern s32 lbl_803684E4;
