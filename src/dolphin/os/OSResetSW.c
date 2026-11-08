@@ -598,3 +598,7 @@ extern u16 lbl_80339FB0[20]; // 40 bytes = 20 * 2-byte entries
 #include "dolphin/os.h"
 
 extern u16 Reschedule_80368520;
+#include "common.h"
+#include <dolphin/os.h>
+#include "global.h"
+extern void (**_ctors)(void);
