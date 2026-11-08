@@ -4358,15 +4358,14 @@ s32 fn_800F7E78(void) {
     return 1;
 }
 
-s32 fn_800F7E9C(s8 arg1, s8 arg2, void *arg3) {
+s32 fn_800F7E9C(s32 arg0, s8 arg1, s8 arg2, void *arg3) {
     extern u16 lbl_802CA518[];
-    void* ptr = (u8*)lbl_802CA518 + 0x10000 + ((arg1 + (arg2 << 6)) << 1);
-    if (*(u16*)ptr == 0) {
+    if (lbl_802CA518[0x60C7 + (arg1 + (arg2 << 6))] == 0) {
         return 0;
     }
     *(u8*)arg3 = arg1;
     *((u8*)arg3 + 1) = arg2;
-    return fn_800F773C(arg3);
+    return fn_800F773C(arg0, arg3);
 }
 
 u8 fn_800F8308(void *arg0) {
@@ -5106,6 +5105,35 @@ void fn_800FF36C(void *arg0) {
     }
     if (var_r3 == 1) {
         fn_8000C188(arg0);
+    }
+}
+
+void fn_800FF75C(void *arg0) {
+    M2C_UNK fn_8014CBD8(M2C_UNK *, u8, f32, f32);
+    extern M2C_UNK lbl_802CA518;
+    extern M2C_UNK lbl_802EF4C8;
+    extern M2C_UNK lbl_80330708;
+    extern u8 lbl_80367289;
+    u8 temp_r0;
+    u8 var_r7;
+
+    var_r7 = 1;
+    M2C_FIELD(arg0, s8 *, 0x34) = 1;
+    temp_r0 = lbl_80367289 - 1;
+    if (((u32) ((1 | ~temp_r0) - ((u32) (1 - temp_r0) >> 1U)) >> 0x1FU) == 0) {
+        var_r7 = 0;
+    }
+    if ((var_r7 != 0) && ((u8) M2C_FIELD(&lbl_80330708, u8 *, 0x11) == 1)) {
+        if (((u8) M2C_FIELD((&lbl_802CA518 + (s8) M2C_FIELD(&lbl_802EF4C8, u8 *, 0xB) + ((s8) M2C_FIELD(&lbl_802EF4C8, u8 *, 0xC) << 6)), u8 *, 0x200D) != 0) || ((u8) M2C_FIELD((&lbl_802CA518 + (s8) M2C_FIELD(&lbl_802EF4C8, u8 *, 0xD) + ((s8) M2C_FIELD(&lbl_802EF4C8, u8 *, 0xE) << 6)), u8 *, 0x200D) != 0)) {
+            fn_8014CBD8(&lbl_80330708, (u8) &lbl_80330708, (f32) (s8) M2C_FIELD(&lbl_802EF4C8, u8 *, 0xB), (f32) (s8) M2C_FIELD(&lbl_802EF4C8, u8 *, 0xC));
+            return;
+        }
+        M2C_FIELD(arg0, s8 *, 0x34) = 0;
+        if ((u8) M2C_FIELD(&lbl_802EF4C8, u8 *, 8) == 0x25) {
+            fn_8014CBD8(&lbl_80330708, M2C_FIELD(&lbl_802EF4C8, u8 *, 0xB), (f32) (s8) M2C_FIELD(&lbl_802EF4C8, u8 *, 0xB), (f32) (s8) M2C_FIELD(&lbl_802EF4C8, u8 *, 0xC));
+        }
+    } else {
+        fn_8014CBD8(&lbl_80330708, (u8) &lbl_80330708, (f32) (s8) M2C_FIELD(&lbl_802EF4C8, u8 *, 0xB), (f32) (s8) M2C_FIELD(&lbl_802EF4C8, u8 *, 0xC));
     }
 }
 
