@@ -1261,6 +1261,18 @@ loop_4:
     goto loop_4;
 }
 
+void fn_8006140C(void *arg0) {
+    if (arg0 != NULL) {
+        s32 *ptr = (s32*)arg0;
+        s32 val = ptr[-3];
+        
+        if (val < 0) {
+            void *arg1 = (void*)((char*)arg0 - 0x20);
+            fn_800C53B0(val, arg1);
+        }
+    }
+}
+
 s32 fn_80061824(s32 arg0) {
     extern char lbl_8026B590[];
     if (arg0 == 0) {
@@ -2914,3 +2926,9 @@ extern void fn_80225D6C(s32* a, s32* b, s32* c, s32* d);
 extern void fn_8021F168(void* a, void* b, u8* c, u8* d, void* e, s32 f, s32 g, s32 h);
 extern void OSReport(const char* fmt, ...);
 extern u8 lbl_8026B990[];
+#include "common.h"
+#include "global.h"
+
+extern f32 lbl_803691E0;
+extern f32 lbl_80369200;
+extern f32 lbl_80369208;
