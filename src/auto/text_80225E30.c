@@ -259,7 +259,7 @@ static inline s32 TRKTargetDoStep(void) {
 
 void TRKTargetSetStopped(s32 arg0) {
     extern u16 gTRKState[0xA4];
-    *(u16*)((u8*)gTRKState + 0x98) = (u16)arg0;
+    *(s32 *)((u8 *)gTRKState + 0x98) = arg0;
 }
 
 u16 TRKTargetStopped(void) {
