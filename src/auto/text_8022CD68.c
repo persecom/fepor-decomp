@@ -39,6 +39,7 @@ void fn_8026146C(s32 *);
 void fn_8025FFC8(void *arg0, u8 arg1, s32 arg2, u8 arg3, u8 arg4, u8 arg5);
 s32 fn_80255FB0(void);
 extern void func_80013934(s32 arg0);
+extern s32 lbl_803689A8;
 
 typedef struct Voice {
     u8 pad0[0x110];
