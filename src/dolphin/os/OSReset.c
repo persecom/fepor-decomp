@@ -158,7 +158,26 @@ BOOL __OSCallResetFunctions(BOOL final) {
     return TRUE;
 }
 
+void fn_8020A824(void *thread);
+
 #pragma peephole off
+
+static void KillThreads(void) {
+    void *thread;
+    void *next;
+
+    for (thread = *(void **)0x800000DC; thread; thread = next) {
+        next = M2C_FIELD(thread, void **, 0x2FC);
+        switch (M2C_FIELD(thread, u16 *, 0x2C8)) {
+        case 1:
+        case 4:
+            fn_8020A824(thread);
+            break;
+        default:
+            break;
+        }
+    }
+}
 
 void fn_802089A4(u32 resetCode) {
     OSDisableInterrupts();
