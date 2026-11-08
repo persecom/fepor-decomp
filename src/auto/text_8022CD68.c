@@ -1759,6 +1759,7 @@ s32 fn_8024B7DC(s32 arg0) {
 }
 
 #pragma dont_inline on
+
 void fn_8024B828(s32 arg0, s32 arg1, s32 arg2) {
     if (arg1 == 1) {
         fn_8026372C();
