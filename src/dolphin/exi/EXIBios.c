@@ -170,6 +170,9 @@ typedef struct {
 
 extern s32 D_8022EF64;
 
+volatile u32 __EXIRegs[16] : 0xCC006800;
+s32 __EXIProbeStartTime[2] : 0x800030C0;
+
 extern s32 fn_802314D8(s32, s32, s32);
 
 #pragma use_lmw_stmw on
@@ -228,6 +231,53 @@ void EXIClearInterrupts(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         var_r0 |= 0x800;
     }
     *(volatile u32*)(0xCC006800 + temp_r0) = var_r0;
+}
+
+BOOL OSDisableInterrupts(void);
+BOOL OSRestoreInterrupts(BOOL level);
+s64 OSGetTime(void);
+BOOL __EXIProbe(s32 chan) {
+    u8 *exi = (u8 *)Ecb_8033E188 + chan * 0x40;
+    BOOL enabled;
+    BOOL rc;
+    u32 cpr;
+    s32 t;
+
+    if (chan == 2) {
+        return TRUE;
+    }
+
+    rc = TRUE;
+    enabled = OSDisableInterrupts();
+    cpr = *(volatile u32 *)(0xCC006800 + chan * 0x14);
+    if (!(*(u32 *)(exi + 0xC) & 8)) {
+        if (cpr & 0x800) {
+            EXIClearInterrupts(chan, FALSE, FALSE, TRUE);
+            *(u32 *)(exi + 0x20) = 0;
+            ((s32 *)0x800030C0)[chan] = 0;
+        }
+
+        if (cpr & 0x1000) {
+            t = (s32)(OSGetTime() / ((*(u32 *)0x800000F8 / 4) / 1000) / 100) + 1;
+            if (((s32 *)0x800030C0)[chan] == 0) {
+                ((s32 *)0x800030C0)[chan] = t;
+            }
+            if (t - ((s32 *)0x800030C0)[chan] < 3) {
+                rc = FALSE;
+            }
+        } else {
+            *(u32 *)(exi + 0x20) = 0;
+            ((s32 *)0x800030C0)[chan] = 0;
+            rc = FALSE;
+        }
+    } else if (!(cpr & 0x1000) || (cpr & 0x800)) {
+        *(u32 *)(exi + 0x20) = 0;
+        ((s32 *)0x800030C0)[chan] = 0;
+        rc = FALSE;
+    }
+    OSRestoreInterrupts(enabled);
+
+    return rc;
 }
 
 s32 fn_80239508(s32 arg0) {
