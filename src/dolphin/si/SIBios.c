@@ -171,6 +171,22 @@ extern s32 fn_802314D8(s32, s32, s32);
 
 extern f64 lbl_8036C148;
 
+volatile u32 __SIRegs[64] : 0xCC006400;
+
+typedef struct SIPacket {
+    s32 chan;
+    void *output;
+    u32 outputBytes;
+    void *input;
+    u32 inputBytes;
+    void *callback;
+    s64 fire;
+} SIPacket;
+
+typedef struct SIAlarm {
+    u8 pad[0x28];
+} SIAlarm;
+
 s32 fn_8023ABD4(void) {
     extern u16 Si_8029EFAC[];
 if ((s32) Si_8029EFAC != -1) {
