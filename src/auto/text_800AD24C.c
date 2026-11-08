@@ -3931,10 +3931,6 @@ s32 fn_800C1F1C(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
     return var_r3 + 0x800000;
 }
 
-static inline s16 ScriptReadS16(u8 *p) {
-    return ((p[0] & 0xFF) << 8) + p[1];
-}
-
 char *fn_800C2048(s8 arg0, s8 arg1) {
     void *fn_80013B60(void *);
     u8 fn_800BDD08(void *, char *);
@@ -3944,6 +3940,7 @@ char *fn_800C2048(s8 arg0, s8 arg1) {
     s32 value;
     void *node;
     char *base;
+    s16 hw;
 
     for (node = fn_80013B60(NULL); node != NULL; node = fn_80013B60(node)) {
         if ((s32) M2C_FIELD(node, u8 *, 0xC) == 5 && arg0 == M2C_FIELD(node, s16 *, 0x14) && arg1 == M2C_FIELD(node, s16 *, 0x16)) {
@@ -3971,8 +3968,9 @@ char *fn_800C2048(s8 arg0, s8 arg1) {
                         value = *p++;
                         break;
                     case 29:
-                        value = (s16) (((p[0] & 0xFF) << 8) + p[1]);
+                        hw = ((p[0] & 0xFF) << 8) + p[1];
                         p += 2;
+                        value = hw;
                         break;
                     case 30:
                         value = p[0] << 24;
