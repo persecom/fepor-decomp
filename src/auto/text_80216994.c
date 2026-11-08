@@ -295,3 +295,5 @@ s32 fn_8021D6D8(s32 arg0, s32 arg1, u8 *arg2) {
 extern s32 EXIDma(s32, s32, s32, s32, void *);
 extern void EXIDeselect(s32);
 extern void EXIUnlock(s32);
+extern u16 lbl_8033A200[];
+extern void *fn_80219108;
