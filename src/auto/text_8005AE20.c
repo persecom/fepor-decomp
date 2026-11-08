@@ -20,6 +20,13 @@ typedef struct {
     s32 unk34;
 } SomeStruct;
 
+struct UnkStruct {
+    u32 unk0;
+    u32 unk4;
+    u32 unk8;
+    u32 unkC;
+};
+
 extern u16 lbl_80330708[1400];
 extern f32 lbl_803692E0;
 extern f32 lbl_80369300;
@@ -1042,6 +1049,20 @@ s32 fn_8005FA14(void *arg0, s32 arg1) {
     return 1;
 }
 
+s32 fn_8005FC74(void *arg0, s32 arg1) {
+    if (arg0 == NULL) {
+        extern char lbl_8026B590[];
+        fn_8006DA64(&lbl_8026B590[0x28], 0x2D8, &lbl_8026B590[0x5D]);
+    }
+    if (*(void **)((u8 *)arg0 + 0x74) == NULL) {
+        return 0;
+    }
+    fn_8005FA94(*(void **)((u8 *)arg0 + 0x74), arg1);
+    *(void **)((u8 *)arg0 + 0x74) = NULL;
+    *(f32 *)((u8 *)arg0 + 0x78) = 1.0f;
+    return 1;
+}
+
 s32 fn_80060440(void *arg0) {
     s32 var_r4;
     void *var_r3;
@@ -1602,6 +1623,131 @@ s32 fn_8006A374(void) {
 s32 fn_8006A37C(void) {
     extern s32 lbl_80367308;
     return lbl_80367308;
+}
+
+void fn_8006A6C8(s32 arg0, s8 arg1, s8 arg2, s8 arg3, u8 arg4) {
+    s32 *var_r31;
+    s32 *var_r30;
+    s32 spE0;
+    s32 spE4;
+    s32 spE8;
+    s32 spEC;
+    s32 spC;
+    s32 sp8;
+    
+    var_r31 = &sp8;
+    var_r30 = &spE0;
+    
+    if (arg0 & 1) {
+        sp8 = 0;
+        var_r31 += 2;
+        spC = 1;
+    }
+    
+    if (arg0 & 0x200) {
+        *var_r31 = 9;
+        var_r30 += 4;
+        *(var_r31 + 1) = 3;
+        var_r31 += 2;
+        *(var_r30 - 4) = 9;
+        *(var_r30 - 3) = 1;
+        *(var_r30 - 2) = 3;
+        *(var_r30 - 1) = arg1;
+    }
+    
+    if (arg0 & 0x400) {
+        *var_r31 = 0xA;
+        *(var_r30 - 4) = 0xA;
+        *(var_r31 + 1) = 3;
+        *(var_r30 - 3) = 0;
+        if (arg4 != 0) {
+            *(var_r30 - 2) = 3;
+            *(s8*)(var_r30 - 1) = arg1;
+        } else {
+            *(var_r30 - 2) = 1;
+            *(s8*)(var_r30 - 1) = arg2;
+        }
+        var_r30 += 4;
+        var_r31 += 2;
+    }
+    
+    if (arg0 & 0x800) {
+        *var_r31 = 0x19;
+        *(var_r30 - 4) = 0x19;
+        *(var_r31 + 1) = 3;
+        *(var_r30 - 3) = 1;
+        if (arg4 != 0) {
+            *(var_r30 - 2) = 3;
+            *(s8*)(var_r30 - 1) = arg1;
+        } else {
+            *(var_r30 - 2) = 1;
+            *(s8*)(var_r30 - 1) = arg2;
+        }
+        var_r30 += 4;
+        var_r31 += 2;
+    }
+    
+    if (arg0 & 0x1000) {
+        *(var_r30 - 4) = 0xB;
+        *(var_r30 - 3) = 1;
+        *var_r31 = 0xB;
+        *(var_r30 - 2) = 5;
+        *(var_r31 + 1) = 3;
+        var_r31 += 2;
+        *(s8*)(var_r30 - 1) = 0;
+        var_r30 += 4;
+        fn_80222334(1, 5, 3, 0xB);
+    }
+    
+    if (arg0 & 0x4000) {
+        *(var_r30 - 4) = 0xD;
+        *(var_r30 - 3) = 1;
+        *var_r31 = 0xD;
+        *(var_r30 - 2) = 3;
+        *(var_r31 + 1) = 3;
+        var_r31 += 2;
+        *(s8*)(var_r30 - 1) = arg3;
+        var_r30 += 4;
+    }
+    
+    if (arg0 & 0x8000) {
+        *(var_r30 - 4) = 0xE;
+        *(var_r30 - 3) = 1;
+        *var_r31 = 0xE;
+        *(var_r30 - 2) = 3;
+        *(var_r31 + 1) = 3;
+        var_r31 += 2;
+        *(s8*)(var_r30 - 1) = arg3;
+        var_r30 += 4;
+    }
+    
+    if (arg0 & 0x10000) {
+        *(var_r30 - 4) = 0xF;
+        *(var_r30 - 3) = 1;
+        *var_r31 = 0xF;
+        *(var_r30 - 2) = 3;
+        *(var_r31 + 1) = 3;
+        var_r31 += 2;
+        *(s8*)(var_r30 - 1) = arg3;
+        var_r30 += 4;
+    }
+    
+    if (arg0 & 0x20000) {
+        *(var_r30 - 4) = 0x10;
+        *(var_r30 - 3) = 1;
+        *var_r31 = 0x10;
+        *(var_r30 - 2) = 3;
+        *(var_r31 + 1) = 3;
+        var_r31 += 2;
+        *(s8*)(var_r30 - 1) = arg3;
+        var_r30 += 4;
+    }
+    
+    *var_r31 = 0xFF;
+    *var_r30 = 0xFF;
+    fn_8021FBB8();
+    fn_8021F750(&sp8);
+    fn_8021FE4C(0, &spE0);
 }
 
 void fn_8006C6F8(void *arg0) {
