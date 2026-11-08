@@ -67,4 +67,6 @@ struct Unit {
     u16 unk9A;
     u16 unk9C;
     u16 unk9E;
+    s32 field_0x24C; // added
+    u32 field_0x250; // added
 };
