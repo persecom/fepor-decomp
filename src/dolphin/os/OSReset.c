@@ -192,7 +192,19 @@ void fn_802089A4(s32 resetCode) {
 
 void OSDisableScheduler(void);
 void OSEnableScheduler(void);
-u8 *__OSLockSram(void);
+typedef struct OSSram {
+    u16 checkSum;
+    u16 checkSumInv;
+    u32 ead0;
+    u32 ead1;
+    u32 counterBias;
+    s8 displayOffsetH;
+    u8 ntd;
+    u8 language;
+    u8 flags;
+} OSSram;
+
+OSSram *__OSLockSram(void);
 BOOL __OSUnlockSram(BOOL commit);
 void __OSStopAudioSystem(void);
 BOOL __PADDisableRecalibration(BOOL disable);
@@ -203,21 +215,20 @@ extern u32 bootThisDol_803684F0;
 void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu) {
     BOOL rc;
     BOOL disableRecalibration;
-    u8 *sram;
+    OSSram *sram;
 
     OSDisableScheduler();
     if (reset == 1 && forceMenu) {
         sram = __OSLockSram();
-        sram[0x13] |= 0x40;
+        sram->flags |= 0x40;
         __OSUnlockSram(TRUE);
         resetCode = 0;
     }
     if (reset == 2 || (reset == 0 && (bootThisDol_803684F0 || resetCode + 0x3FFF0000 == 0))) {
         __OSStopAudioSystem();
         disableRecalibration = __PADDisableRecalibration(TRUE);
-        do {
-            rc = __OSCallResetFunctions(FALSE);
-        } while (!rc);
+        while (!__OSCallResetFunctions(FALSE))
+            ;
         while (!__OSSyncSram())
             ;
         OSDisableInterrupts();
