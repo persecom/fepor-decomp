@@ -1196,34 +1196,8 @@ void fn_80252C80(void *arg0, u32 *arg1) {
     SelectSource(arg0, (u8 *)arg0 + 0x38C, arg1, 0x40000000, 0x400);
 }
 
-void fn_80252D84(void *arg0, void *arg1) {
-    s32 temp_r7;
-    s32 temp_r8;
-    s32 var_r5;
-    u32 temp_r0;
-    u32 temp_r5;
-    u8 temp_r8_2;
-    u8 var_r6;
-
-    var_r6 = 0;
-    temp_r7 = *(s32 *)((u8 *)arg0 + 0x114);
-    temp_r8 = *(s32 *)((u8 *)arg0 + 0x118);
-    if ((((temp_r8 & 0x80000000) ^ 0) | ((temp_r7 & 0) ^ 0)) == 0) {
-        *(s32 *)((u8 *)arg0 + 0x118) = (s32) (temp_r8 | 0x80000000);
-        *(s32 *)((u8 *)arg0 + 0x114) = temp_r7;
-    } else {
-        var_r6 = *(u8 *)((u8 *)arg1 + 0x4);
-    }
-    temp_r0 = *(u32 *)((u8 *)arg1 + 0x0);
-    temp_r5 = (temp_r0 & 0xFFFF0000) / 100;
-    if (temp_r5 < 0) {
-        var_r5 = temp_r5 - (((s8) ((u32) *(u8 *)((u8 *)arg1 + 0x4) >> 0x10U) << 8) / 100);
-    } else {
-        var_r5 = temp_r5 + (((s8) ((u32) *(u8 *)((u8 *)arg1 + 0x4) >> 0x10U) << 8) / 100);
-    }
-    temp_r8_2 = (u8) ((u32) *(u8 *)((u8 *)arg1 + 0x4) >> 8U);
-    fn_8025FFC8((u8 *)arg0 + 0x3B0, (u8) (temp_r0 >> 8U), var_r5, var_r6, temp_r8_2 != 0, temp_r8_2);
-    *(s32 *)((u8 *)arg0 + 0x220) = (s32) (*(s32 *)((u8 *)arg0 + 0x220) | 0x800);
+void fn_80252D84(void *arg0, u32 *arg1) {
+    SelectSource(arg0, (u8 *)arg0 + 0x3B0, arg1, 0x80000000, 0x800);
 }
 
 void fn_80252E88(void *arg0, u32 *arg1) {
