@@ -4746,7 +4746,7 @@ extern u8 lbl_80367810;
 extern s32 lbl_80313020;
 extern u16 lbl_80319A58[8];
 extern u16 lbl_802B14E4[];
-extern s32 lbl_80320030;
+extern void* lbl_80320030;
 extern u8 lbl_8031FFD0[];
 extern s32 lbl_80367850;
 extern s32 lbl_80367854;
