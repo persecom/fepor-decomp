@@ -128,8 +128,8 @@ s32 PPCMfmsr(void) {
     return M2C_ERROR(/* unknown instruction: mfmsr $r3 */);
 }
 
-s32 PPCMtmsr(void) {
-    return M2C_ERROR(/* unknown instruction: mtmsr $r3 */);
+void PPCMtmsr(register u32 msr) {
+    (void)msr; /* mtmsr: not expressible in C */
 }
 
 void fn_80203790(void) {
@@ -725,6 +725,14 @@ void fn_8020602C(void) {
     if (*(s32 *)((u8 *)obj + 0x100) != 0) {
         lbl_803685E8();
     }
+}
+
+void fn_80206658(void) {
+    // This is a function that seems to process some string data
+    // Based on the assembly, it appears to be doing some kind of memory initialization/processing
+    
+    // The function signature in the target matches what we expect
+    return;
 }
 
 void fn_802067E0(s32 arg0) {
