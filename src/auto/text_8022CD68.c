@@ -3747,7 +3747,6 @@ void fn_80261B50(s32 arg0, s8 arg1) {
     M2C_FIELD((lbl_80368AA0 + (arg0 * 0xF8)), s8 *, 0xA0) = arg1;
 }
 
-extern u16 lbl_803670C0;
 s32 fn_80261C40(s32 arg0, s32 arg1) {
     if (arg1 == 0) {
         return (lbl_803670C0 & 0xFFFF);
