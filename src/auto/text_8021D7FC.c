@@ -1249,11 +1249,11 @@ static inline u32 __GXReadPECounterU32(u32 lo, u32 hi) {
     u32 ctrH1;
     u32 ctrL;
 
-    ctrH0 = *(volatile u16 *)((u32)__peReg + hi * 2);
+    ctrH0 = *((volatile u16 *)__peReg + hi);
     do {
         ctrH1 = ctrH0;
-        ctrL = *(volatile u16 *)((u32)__peReg + lo * 2);
-        ctrH0 = *(volatile u16 *)((u32)__peReg + hi * 2);
+        ctrL = *((volatile u16 *)__peReg + lo);
+        ctrH0 = *((volatile u16 *)__peReg + hi);
     } while (ctrH0 != ctrH1);
     return (ctrH0 << 16) | ctrL;
 }
@@ -1273,12 +1273,12 @@ static inline u32 __GXReadPECounterReg(volatile u16 *lo, volatile u16 *hi) {
 }
 
 void fn_80225C04(u32 *top_pixels_in, u32 *top_pixels_out, u32 *bot_pixels_in, u32 *bot_pixels_out, u32 *clear_pixels_in, u32 *copy_clks) {
-    *top_pixels_in = __GXReadPECounterReg(&__peReg[0xC], &__peReg[0xD]) * 4;
-    *top_pixels_out = __GXReadPECounterReg(&__peReg[0xE], &__peReg[0xF]) * 4;
-    *bot_pixels_in = __GXReadPECounterReg(&__peReg[0x10], &__peReg[0x11]) * 4;
-    *bot_pixels_out = __GXReadPECounterReg(&__peReg[0x12], &__peReg[0x13]) * 4;
-    *clear_pixels_in = __GXReadPECounterReg(&__peReg[0x14], &__peReg[0x15]) * 4;
-    *copy_clks = __GXReadPECounterReg(&__peReg[0x16], &__peReg[0x17]);
+    *top_pixels_in = __GXReadPECounterU32(0xC, 0xD) * 4;
+    *top_pixels_out = __GXReadPECounterU32(0xE, 0xF) * 4;
+    *bot_pixels_in = __GXReadPECounterU32(0x10, 0x11) * 4;
+    *bot_pixels_out = __GXReadPECounterU32(0x12, 0x13) * 4;
+    *clear_pixels_in = __GXReadPECounterU32(0x14, 0x15) * 4;
+    *copy_clks = __GXReadPECounterU32(0x16, 0x17);
 }
 
 void fn_80225D3C(void) {
