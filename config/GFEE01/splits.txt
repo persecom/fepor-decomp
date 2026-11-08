@@ -303,7 +303,10 @@ auto/text_80203778.c:
 	.text       start:0x80203778 end:0x80208710
 
 dolphin/os/OSReboot.c:
-	.text       start:0x80208710 end:0x80216994
+	.text       start:0x80208710 end:0x802087A0
+
+dolphin/os/OSReset.c:
+	.text       start:0x802087A0 end:0x80216994
 
 auto/text_80216994.c:
 	.text       start:0x80216994 end:0x8021D7FC
