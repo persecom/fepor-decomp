@@ -1744,7 +1744,7 @@ extern "C" void fn_80176A3C(void *arg0, s32 arg1) {
         virtual s16 v17() = 0;
         virtual s32 v18() = 0;
         virtual s16 v19() = 0;
-        virtual s32 v20() = 0;
+        virtual s16 v20() = 0;
         virtual void v21() = 0;
         virtual void v22() = 0;
         virtual void v23() = 0;
@@ -1757,7 +1757,7 @@ extern "C" void fn_80176A3C(void *arg0, s32 arg1) {
         virtual void v30() = 0;
         virtual void v31() = 0;
         virtual void v32() = 0;
-        virtual s32 v33(s32) = 0;
+        virtual s16 v33(s32) = 0;
     };
     struct Color {
         u8 r, g, b, a;
