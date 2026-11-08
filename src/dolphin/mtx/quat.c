@@ -45,6 +45,47 @@ void fn_80203320(f32 *arg0, void *arg1, f32 farg0) {
     arg0[3] = c;
 }
 
+void fn_802033AC(Quaternion *r, Mtx m) {
+    f32 tr;
+    f32 s;
+    s32 i;
+    s32 j;
+    s32 k;
+    s32 nxt[3] = { 1, 2, 0 };
+    f32 q[3];
+
+    tr = m[0][0] + m[1][1] + m[2][2];
+    if (tr > 0.0f) {
+        s = (f32) sqrtf(tr + 1.0f);
+        r->w = s * 0.5f;
+        s = 0.5f / s;
+        r->x = (m[2][1] - m[1][2]) * s;
+        r->y = (m[0][2] - m[2][0]) * s;
+        r->z = (m[1][0] - m[0][1]) * s;
+    } else {
+        i = 0;
+        if (m[1][1] > m[0][0]) {
+            i = 1;
+        }
+        if (m[2][2] > m[i][i]) {
+            i = 2;
+        }
+        j = nxt[i];
+        k = nxt[j];
+        s = (f32) sqrtf((m[i][i] - (m[j][j] + m[k][k])) + 1.0f);
+        q[i] = s * 0.5f;
+        if (s != 0.0f) {
+            s = 0.5f / s;
+        }
+        r->w = (m[k][j] - m[j][k]) * s;
+        q[j] = (m[i][j] + m[j][i]) * s;
+        q[k] = (m[i][k] + m[k][i]) * s;
+        r->x = q[0];
+        r->y = q[1];
+        r->z = q[2];
+    }
+}
+
 void fn_80203604(Quaternion *p, Quaternion *q, Quaternion *r, f32 t) {
     f32 fn_80238A30(f32);
     f32 fn_80238A78(f32);
