@@ -2195,32 +2195,35 @@ extern "C" void fn_8017B4A8(void *arg0, s32 arg1) {
         virtual void v2(s32) = 0;
     };
     extern u8 lbl_80278780[];
+    extern f32 lbl_8036ABA8;
     u8 *unit;
     s32 num;
     f32 target;
     f32 cur;
+    u8 color;
 
     unit = M2C_FIELD(arg0, u8 **, 0x4C);
     num = fn_80105A5C(unit + 0x1BC);
     target = num - fn_80105A5C(M2C_FIELD(unit, u8 **, 0x18C) + 0x1C);
     cur = M2C_FIELD(arg0, f32 *, 0x50);
     if (target < cur) {
-        M2C_FIELD(arg0, f32 *, 0x50) = cur - 0.2f;
+        M2C_FIELD(arg0, f32 *, 0x50) = cur - lbl_8036ABA8;
         if (M2C_FIELD(arg0, f32 *, 0x50) < target) {
             M2C_FIELD(arg0, f32 *, 0x50) = target;
         }
         fn_801475FC(lbl_80278780 + 0x87, 0x64);
     } else if (target > cur) {
-        M2C_FIELD(arg0, f32 *, 0x50) = cur + 0.2f;
+        M2C_FIELD(arg0, f32 *, 0x50) = cur + lbl_8036ABA8;
         if (M2C_FIELD(arg0, f32 *, 0x50) > target) {
             M2C_FIELD(arg0, f32 *, 0x50) = target;
         }
         fn_801475FC(lbl_80278780 + 0x9E, 0x64);
     }
     ((Obj *)arg0)->v2(arg1);
+    color = M2C_FIELD(M2C_FIELD(unit, u8 **, 0x18C), u8 *, 0x40);
     fn_801547E4(0, 0, M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA),
                 M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC),
-                M2C_FIELD(M2C_FIELD(unit, u8 **, 0x18C), u8 *, 0x40), 0xCC, 0x10,
+                color, 0xCC, 0x10,
                 M2C_FIELD(arg0, s16 *, 0xA), M2C_FIELD(arg0, f32 *, 0x50));
 }
 #pragma cplusplus reset
@@ -3235,4 +3238,3 @@ extern s32 lbl_8036722C;
 #include "unit.h"
 
 extern u16* gSomeBssVar; // lbl_802EF4C8
-extern u16 gSomeBssVar_802EF4C8[];  // Added declaration for the actual array
