@@ -335,11 +335,11 @@ static Cell *DLExtract(Cell *list, Cell *cell) {
         cell->next->prev = cell->prev;
     }
     if (cell->prev == NULL) {
-        list = cell->next;
+        return cell->next;
     } else {
         cell->prev->next = cell->next;
+        return list;
     }
-    return list;
 }
 
 Cell *fn_80204BAC(Cell *list, Cell *cell) {
@@ -377,6 +377,16 @@ Cell *fn_80204BAC(Cell *list, Cell *cell) {
     } else {
         return cell;
     }
+}
+
+void fn_80204C58(s32 heap, void *ptr) {
+    HeapDesc *hd;
+    Cell *cell;
+
+    cell = (Cell *)((char *)ptr - 0x20);
+    hd = &lbl_80368498[heap];
+    hd->allocated = DLExtract(hd->allocated, cell);
+    hd->free = fn_80204BAC(hd->free, cell);
 }
 
 s32 fn_80204CD4(s32 arg0) {
