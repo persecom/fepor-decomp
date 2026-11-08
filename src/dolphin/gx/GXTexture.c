@@ -331,46 +331,39 @@ void fn_80222890(void *arg0, s32 arg_sp8) {
 
 void fn_802228D8(u32 *t, s32 min_filt, s32 mag_filt, f32 min_lod, f32 max_lod, f32 lod_bias, u8 bias_clamp, u8 do_edge_lod, s32 max_aniso) {
     extern u8 lbl_80367048[8];
-    extern f32 lbl_8036BD28;
-    extern f32 lbl_8036BD38;
-    extern f32 lbl_8036BD3C;
-    extern f32 lbl_8036BD40;
-    extern f32 lbl_8036BD44;
-    extern f32 lbl_8036BD48;
-    extern f32 lbl_8036BD4C;
     u8 lbias;
     u8 lmin;
     u8 lmax;
 
-    if (lod_bias < lbl_8036BD38) {
-        lod_bias = lbl_8036BD38;
-    } else if (lod_bias >= lbl_8036BD3C) {
-        lod_bias = lbl_8036BD40;
+    if (lod_bias < -4.0f) {
+        lod_bias = -4.0f;
+    } else if (lod_bias >= 4.0f) {
+        lod_bias = 3.99f;
     }
-    lbias = (u8)(lbl_8036BD44 * lod_bias);
-    t[0] = (t[0] & ~0x1FE00) | ((lbias << 9) & 0x1FE00);
-    t[0] = (t[0] & ~0x10) | (((mag_filt == 1 ? 1 : 0) << 4) & 0x10);
-    t[0] = (t[0] & ~0xE0) | ((lbl_80367048[min_filt] << 5) & 0xE0);
-    t[0] = (t[0] & ~0x100) | (((do_edge_lod ? 0 : 1) << 8) & 0x100);
-    t[0] = (t[0] & ~0x20000) | ((0 << 17) & 0x20000);
-    t[0] = (t[0] & ~0x40000) | ((0 << 18) & 0x40000);
-    t[0] = (t[0] & ~0x180000) | ((max_aniso << 19) & 0x180000);
-    t[0] = (t[0] & ~0x200000) | ((bias_clamp << 21) & 0x200000);
+    lbias = (u8)(32.0f * lod_bias);
+    t[0] = __rlwimi(t[0], lbias, 9, 15, 22);
+    t[0] = __rlwimi(t[0], (mag_filt == 1) ? 1 : 0, 4, 27, 27);
+    t[0] = __rlwimi(t[0], lbl_80367048[min_filt], 5, 24, 26);
+    t[0] = __rlwimi(t[0], do_edge_lod ? 0 : 1, 8, 23, 23);
+    t[0] = __rlwimi(t[0], 0, 17, 14, 14);
+    t[0] = __rlwimi(t[0], 0, 18, 13, 13);
+    t[0] = __rlwimi(t[0], max_aniso, 19, 11, 12);
+    t[0] = __rlwimi(t[0], bias_clamp, 21, 10, 10);
 
-    if (min_lod < lbl_8036BD48) {
-        min_lod = lbl_8036BD48;
-    } else if (min_lod > lbl_8036BD4C) {
-        min_lod = lbl_8036BD4C;
+    if (min_lod < 0.0f) {
+        min_lod = 0.0f;
+    } else if (min_lod > 10.0f) {
+        min_lod = 10.0f;
     }
-    lmin = (u8)(lbl_8036BD28 * min_lod);
-    if (max_lod < lbl_8036BD48) {
-        max_lod = lbl_8036BD48;
-    } else if (max_lod > lbl_8036BD4C) {
-        max_lod = lbl_8036BD4C;
+    lmin = (u8)(16.0f * min_lod);
+    if (max_lod < 0.0f) {
+        max_lod = 0.0f;
+    } else if (max_lod > 10.0f) {
+        max_lod = 10.0f;
     }
-    lmax = (u8)(lbl_8036BD28 * max_lod);
-    t[1] = (t[1] & ~0xFF) | ((lmin << 0) & 0xFF);
-    t[1] = (t[1] & ~0xFF00) | ((lmax << 8) & 0xFF00);
+    lmax = (u8)(16.0f * max_lod);
+    t[1] = __rlwimi(t[1], lmin, 0, 24, 31);
+    t[1] = __rlwimi(t[1], lmax, 8, 16, 23);
 }
 
 void fn_80222A3C(u32 *t, s32 min_filt, s32 mag_filt) {
