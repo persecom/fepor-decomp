@@ -367,7 +367,6 @@ Cell *fn_80204BAC(Cell *list, Cell *cell) {
     }
 }
 
-#pragma peephole reset
 s32 fn_80204CD4(s32 arg0) {
     extern s32 lbl_80366F28;
     s32 temp_r0;
