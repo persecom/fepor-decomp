@@ -93,6 +93,66 @@ s32 TRKTerminateNub(void) {
     return 0;
 }
 
+s32 fn_80226698(void *arg0, u8 *arg1, s32 arg2) {
+    s32 var_r0;
+    s32 var_r7;
+    s32 var_r9;
+    u32 temp_r7;
+    u8 *var_r4;
+
+    var_r4 = arg1;
+    var_r9 = 0;
+    var_r0 = 0;
+loop_5:
+    if ((var_r0 == 0) && (var_r9 < arg2)) {
+        temp_r7 = *(u32 *)((char *)arg0 + 0xC);
+        if (temp_r7 >= 0x880U) {
+            var_r7 = 0x301;
+        } else {
+            if (temp_r7 >= 0x880U) {
+                var_r7 = 0x301;
+            } else {
+                *(u32 *)((char *)arg0 + 0xC) = temp_r7 + 1;
+                var_r7 = 0;
+                *(u8 *)((char *)arg0 + (temp_r7 + 0x10)) = *var_r4;
+                *(u32 *)((char *)arg0 + 0x8) = *(u32 *)((char *)arg0 + 0x8) + 1;
+            }
+        }
+        var_r0 = var_r7;
+        var_r9 += 1;
+        var_r4 += 1;
+        goto loop_5;
+    }
+    return var_r0;
+}
+
+s32 fn_80226888(void *arg0, u8 *arg1, u32 arg2) {
+    s32 temp_r3;
+    s32 var_r31;
+    u32 temp_r0;
+    u32 var_r30;
+
+    var_r31 = 0;
+    var_r30 = arg2;
+    if (var_r30 == 0U) {
+        return 0;
+    }
+    temp_r3 = ((s32*)arg0)[2];
+    temp_r0 = 0x880 - temp_r3;
+    if (temp_r0 < var_r30) {
+        var_r31 = 0x301;
+        var_r30 = temp_r0;
+    }
+    if (var_r30 == 1U) {
+        ((u8*)arg0)[temp_r3 + 0x10] = *arg1;
+    } else {
+        fn_80003488(arg0, arg1, var_r30);
+    }
+    ((s32*)arg0)[2] = (s32) (((s32*)arg0)[2] + var_r30);
+    ((s32*)arg0)[1] = (s32) ((s32*)arg0)[2];
+    return var_r31;
+}
+
 s32 fn_8022692C(void *arg0, u32 arg1) {
     s32 var_r5;
 
@@ -110,6 +170,27 @@ s32 fn_8022692C(void *arg0, u32 arg1) {
 
 s32 fn_80226B68(void) {
     return 0;
+}
+
+void TRKGetInput(void) {
+    void* fn_80226CE4(void);
+    void TRKGetBuffer(void);
+    void fn_80225F4C(void*, s32);
+    void fn_80225F64(void*, void*);
+    extern u16 lbl_8033CA28[12]; // 24 bytes = 12 * 2-byte words
+
+    void* temp_r3;
+    s32 sp10;
+    s32 sp8;
+
+    temp_r3 = fn_80226CE4();
+    if (temp_r3 != (void*)-1) {
+        TRKGetBuffer();
+        fn_80225F4C(&sp8, 2);
+        sp10 = (s32)temp_r3;
+        lbl_8033CA28[0] = -1;
+        fn_80225F64(&sp8, &lbl_8033CA28[0]);
+    }
 }
 
 void usr_put_initialize(void) {
@@ -501,6 +582,23 @@ u8 fn_8022B490(void) {
 void fn_8022B4A0(s8 arg0) {
     extern u16 lbl_8033CFE0;
     lbl_8033CFE0 = (u16)arg0;
+}
+
+s32 fn_8022B4AC(s32 arg0) {
+    s32 fn_80227FDC(void);
+    u8 fn_8022A4F0(u8, s32);
+
+    if (fn_80227FDC() == 0) {
+        return 1;
+    }
+    switch ((s32) fn_8022A4F0(0xD3, arg0)) {
+    case 0:
+        return 0;
+    case 2:
+        return 2;
+    default:
+        return 1;
+    }
 }
 
 s32 fn_8022B5EC(s32 arg1, s32 *arg2) {
