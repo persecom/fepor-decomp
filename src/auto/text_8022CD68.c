@@ -4265,39 +4265,4 @@ extern u8 *lbl_803688E8;
 extern u16 lbl_803688EC[10];
 extern s32 lbl_8036894C;
 extern s32 lbl_8033E578[];
-/* Functions from 0x8022CD68 to 0x80267A7C, found by decomp-toolkit. */
-#include "common.h"
 
-typedef struct {
-    u32 unk4;     /* 0x4 */
-    u8 unkC;      /* 0xC */
-    u8 unk74;     /* 0x74 */
-} unk_struct_8034D4B8;
-
-extern unk_struct_8034D4B8 lbl_8034D4B8[];
-extern u32 fragmentinfo_8033DD28[];
-#include "common.h"
-extern u16 lbl_8033E170[];
-extern void (*__atexit_funcs[])(void);
-extern s32 __atexit_curr_func;
-extern void (*__console_exit)(void);
-extern s32 __aborting;
-#include "common.h"
-
-extern u16 __files[];
-extern s32 lbl_803687F0;
-extern void *fn_80234048;
-extern s32 fn_8023567C(s32, s32, void *, s32 *, s32 *, s32 *, s32 *);
-#include "common.h"
-#include "global.h"
-extern s32 lbl_803687F0;
-extern s32 lbl_80383168;
-extern f64 lbl_8036C010;
-extern f64 lbl_8036C018;
-extern f64 lbl_8036C020;
-extern f64 lbl_8036C028;
-extern f64 lbl_8036C030;
-extern f64 lbl_8036C038;
-extern f64 lbl_8036C040;
-extern f64 lbl_8036C048;
-extern f64 lbl_8036C050;
