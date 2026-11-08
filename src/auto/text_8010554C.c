@@ -249,43 +249,17 @@ void fn_80105CEC(s32 *arg0, u8 arg1) {
 }
 
 void fn_80105D4C(s32 *arg0, u8 arg1) {
-    s32 *var_r3;
-    s32 temp_r0;
-    u32 temp_r4;
-    u32 var_ctr;
-    u32 var_ctr_2;
-    u32 var_r5;
-    u8 var_r6;
+    u32 *p = (u32 *)arg0;
+    s32 n = arg1;
 
-    var_r3 = arg0;
-    var_r6 = arg1;
-    if (var_r6 >= 0) {
-        var_r5 = var_r6 >> 5U;
-        if ((s32) var_r6 >= 0x20) {
-            temp_r4 = var_r5 >> 3U;
-            temp_r0 = -(var_r5 << 5);
-            var_ctr = temp_r4;
-            if (temp_r4 != 0) {
-                do {
-                    var_r3 += 0x20;
-                    var_ctr -= 1;
-                } while (var_ctr != 0);
-                var_r5 &= 7;
-                if (var_r5 != 0) {
-                    goto block_5;
-                }
-            } else {
-block_5:
-                var_ctr_2 = var_r5;
-                do {
-                    var_r3 += 4;
-                    var_ctr_2 -= 1;
-                } while (var_ctr_2 != 0);
-            }
-            var_r6 += temp_r0;
-        }
-        *var_r3 |= 1 << var_r6;
+    if (n < 0) {
+        return;
     }
+    while (n >= 32) {
+        p++;
+        n -= 32;
+    }
+    *p |= 1 << n;
 }
 
 void fn_80105DAC(s32 *arg0, s32 arg1) {
