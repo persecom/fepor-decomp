@@ -4,6 +4,11 @@
 #include "global.h"
 #include "structs.h"
 
+// GXTexObj structure (from headers or similar functions)
+typedef struct {
+    u32 dummy[4];
+} GXTexObj;
+
 #pragma fp_contract off
 
 extern u16 lbl_80368784;
