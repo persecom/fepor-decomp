@@ -731,3 +731,4 @@ extern u16 lbl_802B14E4[];
 extern u8 lbl_80330708[];
 extern u8 lbl_80277060[];
 extern u8 lbl_8032BB58[];
+#include "global.h"
