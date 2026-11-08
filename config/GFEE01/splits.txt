@@ -24,7 +24,10 @@ auto/text_80006264.c:
 	.text       start:0x80006264 end:0x8000D354
 
 auto/text_8000D354.c:
-	.text       start:0x8000D354 end:0x80011968
+	.text       start:0x8000D354 end:0x8000D598
+
+auto/text_8000D598.c:
+	.text       start:0x8000D598 end:0x80011968
 
 auto/text_80011968.c:
 	.text       start:0x80011968 end:0x800119C0
