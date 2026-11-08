@@ -145,6 +145,31 @@ extern u16 lbl_80282268[8];
 #include "global.h"
 extern u16 lbl_8029D210[];
 
+static void PADDisable(s32 chan) {
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    void fn_80209C10(s32 chan, u16 id);
+    u32 fn_8023B930(u32 poll);
+    extern u32 lbl_8036866C;
+    extern u32 lbl_80368678;
+    extern u32 lbl_8036867C;
+    extern u32 lbl_80368680;
+    extern u32 lbl_80368684;
+    s32 enabled;
+    u32 chanBit;
+
+    enabled = OSDisableInterrupts();
+    chanBit = 0x80000000 >> chan;
+    fn_8023B930(chanBit);
+    lbl_8036866C &= ~chanBit;
+    lbl_80368678 &= ~chanBit;
+    lbl_8036867C &= ~chanBit;
+    lbl_80368680 &= ~chanBit;
+    lbl_80368684 &= ~chanBit;
+    fn_80209C10(chan, 0);
+    OSRestoreInterrupts(enabled);
+}
+
 void fn_80211F78(s32 arg1) {
     extern s32 lbl_80366FA4;
     extern s32 lbl_80366FAC;
