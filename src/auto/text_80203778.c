@@ -2,6 +2,9 @@
 #include "common.h"
 #include <dolphin/os.h>
 #include "global.h"
+
+int OSReport(void *msg, ...);
+
 extern u32 lbl_803682F0;
 extern void (*lbl_803685E8)(void);;
 extern u16 lbl_8029BBB0[20];
@@ -781,7 +784,7 @@ void __OSUnhandledException(u8 exception, OSContext *context, u32 dsisr, u32 dar
     msgs = lbl_8029BFB8;
 
     now = OSGetTime();
-    srr1 = *(u32 *)((u8 *)context + 0x19C);
+    srr1 = context->srr1;
 
     if (!(srr1 & 2)) {
         OSReport(msgs + 0x5C, exception);
@@ -801,17 +804,17 @@ void __OSUnhandledException(u8 exception, OSContext *context, u32 dsisr, u32 dar
         PPCMtfpscr(fpscr & enableBits);
         PPCMtmsr((u32)msr);
 
-        if (*(void **)0x800000D8 == context) {
+        if (*(OSContext **)0x800000D8 == context) {
             OSDisableScheduler();
             table[16](16, context, dsisr, dar);
-            *(u32 *)((u8 *)context + 0x19C) &= ~0x2000u;
-            *(void **)0x800000D8 = 0;
-            *(u32 *)((u8 *)context + 0x194) &= enableBits;
+            context->srr1 &= ~0x2000;
+            *(OSContext **)0x800000D8 = 0;
+            context->fpscr &= enableBits;
             OSEnableScheduler();
             __OSReschedule();
         } else {
-            *(u32 *)((u8 *)context + 0x19C) &= ~0x2000u;
-            *(void **)0x800000D8 = 0;
+            context->srr1 &= ~0x2000;
+            *(OSContext **)0x800000D8 = 0;
             OSLoadContext(context);
         }
     }
@@ -839,16 +842,16 @@ dump:
 
     switch (exception) {
     case 2:
-        OSReport(msgs + 0xD8, *(u32 *)((u8 *)context + 0x198), dar);
+        OSReport(msgs + 0xD8, context->srr0, dar);
         break;
     case 3:
-        OSReport(msgs + 0x138, *(u32 *)((u8 *)context + 0x198));
+        OSReport(msgs + 0x138, context->srr0);
         break;
     case 5:
-        OSReport(msgs + 0x184, *(u32 *)((u8 *)context + 0x198), dar);
+        OSReport(msgs + 0x184, context->srr0, dar);
         break;
     case 6:
-        OSReport(msgs + 0x1E8, *(u32 *)((u8 *)context + 0x198), dar);
+        OSReport(msgs + 0x1E8, context->srr0, dar);
         break;
     case 15: {
         u16 *memRegs;
