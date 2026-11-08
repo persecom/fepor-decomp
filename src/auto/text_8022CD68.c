@@ -665,6 +665,36 @@ void EXIClearInterrupts(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     *(volatile u32*)(0xCC006800 + temp_r0) = var_r0;
 }
 
+extern u16 Ecb_8033E188[];
+s32 fn_80239508(s32 arg0) {
+    s32 temp_r4;
+    s32 var_r3;
+    u16 *ptr;
+
+    temp_r4 = arg0 << 6;
+    var_r3 = __EXIProbe(arg0, temp_r4);
+    if (var_r3 != 0) {
+        ptr = &Ecb_8033E188[temp_r4];
+        if (ptr[0x20 / sizeof(u16)] == 0) {
+            if (EXIGetID(arg0, 0, &arg0) != 0) {
+                var_r3 = 1;
+            } else {
+                var_r3 = 0;
+            }
+        }
+    }
+
+    if (var_r3 != 0) {
+        return 1;
+    }
+    
+    if ((*(u32 *)(0x800030C0 + (arg0 * 4))) != 0) {
+        return 0;
+    }
+    
+    return -1;
+}
+
 s32 fn_8023A114(s32 arg0) {
     s32 r4 = arg0 << 6;
     u16* base = (u16*)Ecb_8033E188;
