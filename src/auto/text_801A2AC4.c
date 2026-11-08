@@ -5,22 +5,95 @@ void fn_801A2AC4(void) {
     extern u16 lbl_8027B368[];
     extern u16 lbl_80297118[];
     
-    fn_8000D3EC(&lbl_8027B368[0xE1], &lbl_80297118[0x58]);
-    fn_8000D3EC(&lbl_8027B368[0xEE], &lbl_80297118[0x58]);
-    fn_8000D3EC(&lbl_8027B368[0xFD], &lbl_80297118[0x58]);
-    fn_8000D3EC(&lbl_8027B368[0x10C], &lbl_80297118[0x58]);
-    fn_8000D3EC(&lbl_8027B368[0x11C], &lbl_80297118[0x68]);
-    fn_8000D3EC(&lbl_8027B368[0x12C], &lbl_80297118[0x78]);
-    fn_8000D3EC(&lbl_8027B368[0x139], &lbl_80297118[0x88]);
-    fn_8000D3EC(&lbl_8027B368[0x149], &lbl_80297118[0x98]);
-    fn_8000D3EC(&lbl_8027B368[0x157], &lbl_80297118[0xA8]);
-    fn_8000D3EC(&lbl_8027B368[0x167], &lbl_80297118[0xB8]);
-    fn_8000D3EC(&lbl_8027B368[0x177], &lbl_80297118[0xC8]);
-    fn_8000D3EC(&lbl_8027B368[0x184], &lbl_80297118[0xD8]);
-    fn_8000D3EC(&lbl_8027B368[0x193], &lbl_80297118[0xE8]);
-    fn_8000D3EC(&lbl_8027B368[0x1A2], &lbl_80297118[0xF8]);
-    fn_8000D3EC(&lbl_8027B368[0x1B3], &lbl_80297118[0x108]);
-    fn_8000D3EC(&lbl_8027B368[0x1C1], &lbl_80297118[0x118]);
+    register u32 r31_reg asm("r31");
+    register u32 r4_reg asm("r4");
+    register u32 r3_reg asm("r3");
+    
+    // Load base addresses once
+    u16* base1 = &lbl_8027B368[0];
+    u16* base2 = &lbl_80297118[0];
+    
+    r31_reg = (u32)base2;
+    
+    // First call with offset 0xE1 and base2 offset 0x58
+    r3_reg = (u32)&lbl_8027B368[0xE1];
+    r4_reg = r31_reg + 0x58;
+    fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
+    
+    // Second call with offset 0xEE and base2 offset 0x58
+    r3_reg = (u32)&lbl_8027B368[0xEE];
+    r4_reg = r31_reg + 0x58;
+    fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
+    
+    // Third call with offset 0xFD and base2 offset 0x58
+    r3_reg = (u32)&lbl_8027B368[0xFD];
+    r4_reg = r31_reg + 0x58;
+    fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
+    
+    // Fourth call with offset 0x10C and base2 offset 0x58
+    r3_reg = (u32)&lbl_8027B368[0x10C];
+    r4_reg = r31_reg + 0x58;
+    fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
+    
+    // Fifth call with offset 0x11C and base2 offset 0x68
+    r3_reg = (u32)&lbl_8027B368[0x11C];
+    r4_reg = r31_reg + 0x68;
+    fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
+    
+    // Sixth call with offset 0x12C and base2 offset 0x78
+    r3_reg = (u32)&lbl_8027B368[0x12C];
+    r4_reg = r31_reg + 0x78;
+    fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
+    
+    // Seventh call with offset 0x139 and base2 offset 0x88
+    r3_reg = (u32)&lbl_8027B368[0x139];
+    r4_reg = r31_reg + 0x88;
+    fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
+    
+    // Eighth call with offset 0x149 and base2 offset 0x98
+    r3_reg = (u32)&lbl_8027B368[0x149];
+    r4_reg = r31_reg + 0x98;
+    fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
+    
+    // Ninth call with offset 0x157 and base2 offset 0xA8
+    r3_reg = (u32)&lbl_8027B368[0x157];
+    r4_reg = r31_reg + 0xA8;
+    fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
+    
+    // Tenth call with offset 0x167 and base2 offset 0xB8
+    r3_reg = (u32)&lbl_8027B368[0x167];
+    r4_reg = r31_reg + 0xB8;
+    fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
+    
+    // Eleventh call with offset 0x177 and base2 offset 0xC8
+    r3_reg = (u32)&lbl_8027B368[0x177];
+    r4_reg = r31_reg + 0xC8;
+    fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
+    
+    // Twelfth call with offset 0x184 and base2 offset 0xD8
+    r3_reg = (u32)&lbl_8027B368[0x184];
+    r4_reg = r31_reg + 0xD8;
+    fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
+    
+    // Thirteenth call with offset 0x193 and base2 offset 0xE8
+    r3_reg = (u32)&lbl_8027B368[0x193];
+    r4_reg = r31_reg + 0xE8;
+    fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
+    
+    // Fourteenth call with offset 0x1A2 and base2 offset 0xF8
+    r3_reg = (u32)&lbl_8027B368[0x1A2];
+    r4_reg = r31_reg + 0xF8;
+    fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
+    
+    // Fifteenth call with offset 0x1B3 and base2 offset 0x108
+    r3_reg = (u32)&lbl_8027B368[0x1B3];
+    r4_reg = r31_reg + 0x108;
+    fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
+    
+    // Sixteenth call with offset 0x1C1 and base2 offset 0x118
+    r3_reg = (u32)&lbl_8027B368[0x1C1];
+    r4_reg = r31_reg + 0x118;
+    fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
 }
 
 s32 fn_801A2D2C(void) {
@@ -305,6 +378,4 @@ void fn_801A7CDC(void *arg0)
 }
 
 #include "global.h"
-extern u16 lbl_802EF4C8;
-extern s32 lbl_802EF4E0;
-#include "global.h"
+
