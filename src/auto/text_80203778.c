@@ -739,10 +739,10 @@ void fn_8020602C(void) {
 typedef void (*OSErrorHandler)(u8, void *, u32, u32);
 extern OSErrorHandler __OSErrorTable[];
 extern char lbl_8029BFB8[];
-extern char lbl_80366F3C[];
+extern char lbl_80366F3C;
 extern s16 __OSLastInterrupt;
 extern u32 __OSLastInterruptSrr0;
-extern s64 __OSLastInterruptTime;
+extern u32 __OSLastInterruptTime[];
 extern s64 OSGetTime(void);
 extern u32 PPCMffpscr(void);
 extern void PPCMtfpscr(u32);
@@ -750,109 +750,103 @@ extern void OSDisableScheduler(void);
 extern void OSEnableScheduler(void);
 extern void __OSReschedule(void);
 extern void OSLoadContext(void *);
+
 #pragma use_lmw_stmw on
 void __OSUnhandledException(u8 exception, OSContext *context, u32 dsisr, u32 dar) {
     u32 enableBits;
     s32 msr;
-    u8 exc;
-    OSContext *ctx;
-    u32 dsisr_s;
-    u32 dar_s;
     u32 timeLo;
     u32 timeHi;
     OSErrorHandler *table;
     char *msgs;
-    s64 now;
     u32 srr1;
     OSErrorHandler handler;
     void *fpuContext;
+    u32 nowParts[2];
 
     table = __OSErrorTable;
     msgs = lbl_8029BFB8;
-    exc = exception;
-    ctx = context;
-    dsisr_s = dsisr;
-    dar_s = dar;
 
-    now = OSGetTime();
-    timeLo = (u32)now;
-    timeHi = (u32)(now >> 32);
-    srr1 = M2C_FIELD(ctx, u32 *, 0x19C);
+    *(s64 *)nowParts = OSGetTime();
+    timeHi = nowParts[0];
+    timeLo = nowParts[1];
+    srr1 = *(u32 *)((u8 *)context + 0x19C);
 
     if (!(srr1 & 2)) {
-        OSReport(msgs + 0x5C, exc);
+        OSReport(msgs + 0x5C, exception);
         goto dump;
     }
 
-    if (exc == 6 && (srr1 & 0x100000) && table[16] != 0) {
-        exc = 16;
+    if (exception == 6 && (srr1 & 0x100000) && table[16] != 0) {
+        exception = 16;
         msr = PPCMfmsr();
-        PPCMtmsr(msr | 0x2000);
+        PPCMtmsr((u32)msr | 0x2000);
         fpuContext = *(void **)0x800000D8;
         if (fpuContext != 0) {
             OSSaveFPUContext(fpuContext);
         }
         enableBits = 0x60060000 - 0x701;
         PPCMtfpscr(PPCMffpscr() & enableBits);
-        PPCMtmsr(msr);
+        PPCMtmsr((u32)msr);
 
-        if (*(void **)0x800000D8 == ctx) {
+        if (*(void **)0x800000D8 == context) {
             OSDisableScheduler();
-            table[16](16, ctx, dsisr_s, dar_s);
-            M2C_FIELD(ctx, u32 *, 0x19C) &= ~0x2000u;
+            table[16](16, context, dsisr, dar);
+            *(u32 *)((u8 *)context + 0x19C) &= ~0x2000u;
             *(void **)0x800000D8 = 0;
-            M2C_FIELD(ctx, u32 *, 0x194) &= enableBits;
+            *(u32 *)((u8 *)context + 0x194) &= enableBits;
             OSEnableScheduler();
             __OSReschedule();
         } else {
-            M2C_FIELD(ctx, u32 *, 0x19C) &= ~0x2000u;
+            *(u32 *)((u8 *)context + 0x19C) &= ~0x2000u;
             *(void **)0x800000D8 = 0;
-            OSLoadContext(ctx);
+            OSLoadContext(context);
         }
     }
 
-    handler = table[exc];
+    handler = table[exception];
     if (handler != 0) {
         OSDisableScheduler();
-        handler(exc, ctx, dsisr_s, dar_s);
+        handler(exception, context, dsisr, dar);
         OSEnableScheduler();
         __OSReschedule();
-        OSLoadContext(ctx);
+        OSLoadContext(context);
     }
 
-    if (exc == 8) {
-        OSLoadContext(ctx);
+    if (exception == 8) {
+        OSLoadContext(context);
     }
 
-    OSReport(msgs + 0x7C, exc);
+    OSReport(msgs + 0x7C, exception);
 
 dump:
-    OSReport(lbl_80366F3C);
-    OSDumpContext(ctx);
-    OSReport(msgs + 0x94, dsisr_s, dar_s);
+    OSReport(&lbl_80366F3C);
+    OSDumpContext(context);
+    OSReport(msgs + 0x94, dsisr, dar);
     OSReport(msgs + 0xC8, timeHi, timeLo);
 
-    switch (exc) {
+    switch (exception) {
     case 2:
-        OSReport(msgs + 0xD8, M2C_FIELD(ctx, u32 *, 0x198), dar_s);
+        OSReport(msgs + 0xD8, *(u32 *)((u8 *)context + 0x198), dar);
         break;
     case 3:
-        OSReport(msgs + 0x138, M2C_FIELD(ctx, u32 *, 0x198));
+        OSReport(msgs + 0x138, *(u32 *)((u8 *)context + 0x198));
         break;
     case 5:
-        OSReport(msgs + 0x184, M2C_FIELD(ctx, u32 *, 0x198), dar_s);
+        OSReport(msgs + 0x184, *(u32 *)((u8 *)context + 0x198), dar);
         break;
     case 6:
-        OSReport(msgs + 0x1E8, M2C_FIELD(ctx, u32 *, 0x198), dar_s);
+        OSReport(msgs + 0x1E8, *(u32 *)((u8 *)context + 0x198), dar);
         break;
     case 15: {
-        u16 *mem = (u16 *)0xCC005000;
-        OSReport(lbl_80366F3C);
+        u16 *memRegs;
+        OSReport(&lbl_80366F3C);
+        memRegs = (u16 *)0xCC005000;
         OSReport(msgs + 0x248, *(u16 *)0xCC005030, *(u16 *)0xCC005032);
-        OSReport(msgs + 0x268, mem[0x10], mem[0x11]);
+        OSReport(msgs + 0x268, memRegs[0x10], memRegs[0x11]);
         OSReport(msgs + 0x288, *(u32 *)0xCC006014);
         OSReport(msgs + 0x2A4, __OSLastInterrupt, __OSLastInterruptSrr0,
-                 (u32)(__OSLastInterruptTime >> 32), (u32)__OSLastInterruptTime);
+                 __OSLastInterruptTime[0], __OSLastInterruptTime[1]);
         break;
     }
     default:
