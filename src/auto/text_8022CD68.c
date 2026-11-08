@@ -494,52 +494,51 @@ loop_9:
 }
 
 void fn_80245188(s32 arg0) {
-    extern void *lbl_80368970;
-    extern void *lbl_80368974;
-    extern u8 lbl_8033F990[];
+    extern SynthVoice *lbl_80368970;
+    extern SynthVoice *lbl_80368974;
+    extern SynthVoice lbl_8033F990[];
     u32 id;
     u32 vid;
-    void *p;
-    u8 *sv;
+    SynthVoice *p;
+    SynthVoice *sv;
 
     vid = arg0 & 0x7FFFFFFF;
-    for (p = lbl_80368974; p != NULL; p = M2C_FIELD(p, void **, 0)) {
-        if (M2C_FIELD(p, u32 *, 0xC) == vid) {
-            id = M2C_FIELD(p, u8 *, 9) | (arg0 & 0x80000000);
+    for (p = lbl_80368974; p != NULL; p = p->next) {
+        if (p->vid == vid) {
+            id = p->id | (arg0 & 0x80000000);
             goto found;
         }
     }
-    for (p = lbl_80368970; p != NULL; p = M2C_FIELD(p, void **, 0)) {
-        if (M2C_FIELD(p, u32 *, 0xC) == vid) {
-            id = M2C_FIELD(p, u8 *, 9) | (arg0 & 0x80000000);
+    for (p = lbl_80368970; p != NULL; p = p->next) {
+        if (p->vid == vid) {
+            id = p->id | (arg0 & 0x80000000);
             goto found;
         }
     }
     id = -1;
 found:
     if (!(id & 0x80000000)) {
-        sv = &lbl_8033F990[id * 0x1888];
-        if (sv[8] == 2) {
-            if (M2C_FIELD(sv, void **, 4) != NULL) {
-                *M2C_FIELD(sv, void ***, 4) = M2C_FIELD(sv, void **, 0);
+        sv = &lbl_8033F990[id];
+        if (sv->state == 2) {
+            if (sv->prev != NULL) {
+                sv->prev->next = sv->next;
             } else {
-                lbl_80368970 = M2C_FIELD(sv, void **, 0);
+                lbl_80368970 = sv->next;
             }
-            if (M2C_FIELD(sv, void **, 0) != NULL) {
-                M2C_FIELD(M2C_FIELD(sv, void **, 0), void **, 4) = M2C_FIELD(sv, void **, 4);
+            if (sv->next != NULL) {
+                sv->next->prev = sv->prev;
             }
-            M2C_FIELD(sv, void **, 0) = lbl_80368974;
+            sv->next = lbl_80368974;
             if (lbl_80368974 != NULL) {
-                M2C_FIELD(lbl_80368974, void **, 4) = sv;
+                lbl_80368974->prev = sv;
             }
-            M2C_FIELD(sv, void **, 4) = NULL;
+            sv->prev = NULL;
             lbl_80368974 = sv;
-            sv[8] = 1;
+            sv->state = 1;
         }
         return;
     }
-    sv = &lbl_8033F990[(id & 0x7FFFFFFF) * 0x1888];
-    sv[0xEFA] &= ~8;
+    lbl_8033F990[id & 0x7FFFFFFF].unkEFA &= ~8;
 }
 
 void fn_80245290(s32 arg0, s32 arg1, s32 arg2) {
