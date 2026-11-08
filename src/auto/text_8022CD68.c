@@ -3373,6 +3373,10 @@ extern u8 lbl_802A4DE8[48];   // 48 bytes
 s32 OSGetTick(void);                                    /* extern */
 s32 fn_80265544(s32, s32, void *);                     /* extern */
 void fn_8026649C(); // ? - needs investigation to verify function signature
+
+extern u16 lbl_803669A0[256];
+extern u8 lbl_802A4DE8[48];
+
 extern u8 lbl_8035A610[];
 extern u8 lbl_8035A650[];
 extern s32 lbl_8035B838[];
