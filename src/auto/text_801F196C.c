@@ -1139,3 +1139,7 @@ extern u8 lbl_80330708[];
 
 extern s32 lbl_802343E0(void *, void *);
 extern s32 lbl_80234450(void *, void *, s32, s32);
+#include "global.h"
+#include "structs.h"
+
+extern u16 lbl_80280D38[40];
