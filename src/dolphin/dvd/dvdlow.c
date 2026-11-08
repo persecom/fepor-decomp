@@ -203,20 +203,13 @@ void fn_8020BA50(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 BOOL fn_8020BD68(u32 offset, void *callback) {
     extern void *Callback_80368538;
-    extern u16 AlarmForTimeout_80339ED8[20];
-    extern void AlarmHandlerForTimeout(void *, void *);
-    extern void OSCreateAlarm(void *);
-    extern void OSSetAlarm(void *, s64, void *);
-    s64 timeout;
 
     Callback_80368538 = callback;
     StopAtNextInt_80368530 = 0;
-    ((volatile u32 *)0xCC006000)[2] = 0xAB000000;
-    ((volatile u32 *)0xCC006000)[3] = offset >> 2;
-    ((volatile u32 *)0xCC006000)[7] = 1;
-    timeout = (*(u32 *)0x800000F8 / 4) * 10;
-    OSCreateAlarm(AlarmForTimeout_80339ED8);
-    OSSetAlarm(AlarmForTimeout_80339ED8, timeout, AlarmHandlerForTimeout);
+    __DIRegs[2] = 0xAB000000;
+    __DIRegs[3] = offset >> 2;
+    __DIRegs[7] = 1;
+    SetTimeoutAlarm((*(u32 *)0x800000F8 / 4) * 10);
     return TRUE;
 }
 
