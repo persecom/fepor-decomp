@@ -3,6 +3,23 @@
 
 extern u16 lbl_802737A0[];
 
+static inline void *GetUnitIfBitSet(u32 *bits, u8 id) {
+    void *fn_80019DF0(u8);
+    s32 n = id;
+
+    if (n < 0) {
+        return NULL;
+    }
+    while (n >= 32) {
+        bits++;
+        n -= 32;
+    }
+    if (*bits & (1 << n)) {
+        return fn_80019DF0(id);
+    }
+    return NULL;
+}
+
 void fn_8010554C(void) {
     extern u16 lbl_802737A0[];
     extern u16 lbl_8028F2D0[];
