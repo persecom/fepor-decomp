@@ -735,6 +735,22 @@ String *fn_800C9874(String *arg0, u32 arg1, char arg2) {
     return arg0;
 }
 
+#pragma auto_inline off
+void *fn_800C9A60(void *arg0, s16 arg1) {
+    void fn_800C428C(void *);
+
+    if (arg0 != NULL) {
+        if (M2C_FIELD(arg0, void **, 8) != NULL) {
+            fn_800C428C(M2C_FIELD(arg0, void **, 8));
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+#pragma auto_inline reset
+
 void fn_800CA5FC(void) {
     M2C_UNK fn_800CA61C();
     fn_800CA61C();
