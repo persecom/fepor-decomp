@@ -752,7 +752,7 @@ void fn_8020602C(void) {
 }
 
 #pragma use_lmw_stmw on
-typedef void (*OSErrorHandler)(u8, void *, u32, u32);
+typedef void (*OSErrorHandler)(u8, void *, ...);
 extern OSErrorHandler __OSErrorTable[];
 extern char lbl_8029BFB8[];
 extern char lbl_80366F3C;
@@ -777,16 +777,12 @@ void __OSUnhandledException(u8 exception, OSContext *context, u32 dsisr, u32 dar
     OSErrorHandler *entry;
     void *fpuContext;
     u32 fpscr;
-    u32 timeHi;
-    u32 timeLo;
     s64 now;
 
     table = __OSErrorTable;
     msgs = lbl_8029BFB8;
 
     now = OSGetTime();
-    timeHi = ((u32 *)&now)[0];
-    timeLo = ((u32 *)&now)[1];
     srr1 = context->srr1;
 
     if (!(srr1 & 2)) {
@@ -841,7 +837,7 @@ dump:
     OSReport(&lbl_80366F3C);
     OSDumpContext(context);
     OSReport(msgs + 0x94, dsisr, dar);
-    OSReport(msgs + 0xC8, timeHi, timeLo);
+    OSReport(msgs + 0xC8, now);
 
     switch (exception) {
     case 2:
@@ -864,7 +860,7 @@ dump:
         OSReport(msgs + 0x268, *(u16 *)((u8 *)hw + 0x20), *(u16 *)((u8 *)hw + 0x22));
         OSReport(msgs + 0x288, *(u32 *)0xCC006014);
         OSReport(msgs + 0x2A4, __OSLastInterrupt, __OSLastInterruptSrr0,
-                 ((u32 *)&__OSLastInterruptTime)[0], ((u32 *)&__OSLastInterruptTime)[1]);
+                 __OSLastInterruptTime);
         break;
     }
     default:
