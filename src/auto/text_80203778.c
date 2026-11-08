@@ -637,9 +637,11 @@ void __OSSaveFPUContext(void* context) {
     *(u16*)context = (*(u16*)context | 1);
 }
 
+#pragma dont_inline on
 void OSSaveFPUContext(void *arg0) {
     __OSSaveFPUContext(arg0);
 }
+#pragma dont_inline reset
 
 s32 fn_802059EC(void) {
     // Returns the value at address 0x800000D4 (likely a global variable)
