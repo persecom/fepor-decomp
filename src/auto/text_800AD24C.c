@@ -3931,6 +3931,73 @@ s32 fn_800C1F1C(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
     return var_r3 + 0x800000;
 }
 
+static inline s16 ScriptReadS16(u8 *p) {
+    return ((p[0] & 0xFF) << 8) + p[1];
+}
+
+char *fn_800C2048(s8 arg0, s8 arg1) {
+    void *fn_80013B60(void *);
+    u8 fn_800BDD08(void *, char *);
+    s32 fn_802342B8(char *, char *);
+    u8 cont;
+    u8 *p;
+    s32 value;
+    void *node;
+    char *base;
+
+    for (node = fn_80013B60(NULL); node != NULL; node = fn_80013B60(node)) {
+        if ((s32) M2C_FIELD(node, u8 *, 0xC) == 5 && arg0 == M2C_FIELD(node, s16 *, 0x14) && arg1 == M2C_FIELD(node, s16 *, 0x16)) {
+            if (fn_800BDD08((u8 *) lbl_80330708 + 0xB4, M2C_FIELD(M2C_FIELD(node, void **, 8), char **, 0x24) + (u16) M2C_FIELD(node, s16 *, 0x1A)) == 0) {
+                p = M2C_FIELD(node, u8 **, 4);
+                value = 0;
+                cont = 1;
+                while (cont) {
+                    switch (*p++) {
+                    case 0:
+                        cont = 0;
+                        break;
+                    case 1: case 3: case 5: case 7: case 9: case 11: case 13: case 15: case 17: case 19: case 21: case 23: case 25:
+                    case 55: case 65:
+                        p += 1;
+                        break;
+                    case 2: case 4: case 6: case 8: case 10: case 12: case 14: case 16: case 18: case 20: case 22: case 24: case 26:
+                    case 58: case 59: case 60: case 61: case 62:
+                        p += 2;
+                        break;
+                    case 27: case 64:
+                        p += 4;
+                        break;
+                    case 28:
+                        value = *p++;
+                        break;
+                    case 29:
+                        value = (s16) (((p[0] & 0xFF) << 8) + p[1]);
+                        p += 2;
+                        break;
+                    case 30:
+                        value = p[0] << 24;
+                        value += (p[1] & 0xFF) << 16;
+                        value += (p[2] & 0xFF) << 8;
+                        value += p[3];
+                        p += 4;
+                        break;
+                    case 56:
+                        base = M2C_FIELD(M2C_FIELD(node, void **, 8), char **, 0x24);
+                        base += (s16) (((p[0] & 0xFF) << 8) + p[1]);
+                        p += 3;
+                        if (fn_802342B8("MindGetItem", base) == 0) {
+                            return M2C_FIELD(M2C_FIELD(node, void **, 8), char **, 0x24) + value;
+                        }
+                        break;
+                    }
+                }
+                return NULL;
+            }
+        }
+    }
+    return NULL;
+}
+
 s32 fn_800C273C(void *arg0, u16 arg1) {
     return M2C_FIELD(M2C_FIELD(arg0, void **, 8), s32 *, 0x24) + arg1;
 }
