@@ -3,7 +3,7 @@
 
 extern u8 lbl_8034C110[];
 extern f64 lbl_8036C368;
-extern u16 *D_80256B30;
+extern u16 Ecb_8033E188[192];u16 *D_80256B30;
 extern s32 lbl_803687F8;
 extern f32 lbl_8036C374;
 extern s32 lbl_80368A28;
@@ -359,6 +359,16 @@ void fn_80238ABC(void) {
 
 s32 Hu_IsStub(void) {
     return 0;
+}
+
+void fn_8023B804(s32 arg0, s32 arg1) {
+    s32 r3 = 0xCC006400;
+    s32 offset = (arg0 * 0xC);
+    *(s32*)(r3 + offset) = arg1;
+}
+
+void fn_8023B818(void) {
+    *(s32 *)0xCC006438 = 0x80000000;
 }
 
 void fn_8023BB34(void *alarm, void *context) {
