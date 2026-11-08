@@ -4324,6 +4324,42 @@ void fn_800F74C0(Unit* unit)
     }
 }
 
+#pragma auto_inline off
+s32 fn_800F773C(s32 arg0, void *arg1) {
+    typedef struct Param {
+        void *p;
+        u8 b4;
+        u8 b5;
+        u8 b6;
+        u8 b7;
+        s32 x8;
+        u8 bC;
+    } Param;
+    u8 fn_80037E00(void *);
+    void fn_801A7A68(void *, Param *, Param *);
+    void fn_801A6F34(void *, u8);
+    void fn_800F6550(s32, void *);
+    extern u8 lbl_802EF4C8[];
+    Param a = {0, 0, 0, 0, 1, 0, 1};
+
+    a.p = M2C_FIELD(arg1, void **, 4);
+    a.b4 = M2C_FIELD(a.p, u8 *, 0x19E);
+    a.b5 = M2C_FIELD(a.p, u8 *, 0x19F);
+    a.b6 = fn_80037E00(a.p);
+    {
+        Param b = {0, 0, 0, 0, 1, 0, 1};
+        b.p = (void *)arg0;
+        b.b4 = M2C_FIELD(arg1, u8 *, 0);
+        b.b5 = M2C_FIELD(arg1, u8 *, 1);
+        b.b6 = M2C_FIELD(arg1, u16 *, 2);
+        fn_801A7A68(lbl_80330EAC, &b, &a);
+    }
+    fn_801A6F34(lbl_80330EAC, lbl_802EF4C8[8]);
+    fn_800F6550(arg0, arg1);
+    return 1;
+}
+#pragma auto_inline reset
+
 s32 fn_800F7994(s32 arg0, s8 arg1, s8 arg2) {
     extern u16 lbl_802CA518;
     void *fn_80019DBC(u8, void *, void *, void *);
@@ -5589,6 +5625,9 @@ extern u16 *lbl_803678C8;
 extern u16 *lbl_80367918;
 extern u16 lbl_80273420[];
 #include "global.h"
+
+extern f32 lbl_80369E70;
+extern f32 lbl_80369E74;
 #include "structs.h"
 #include "unit.h"
 
