@@ -387,6 +387,20 @@ s32 AMC_IsStub(void) {
     return 1;
 }
 
+void fn_8023C7B0(void) {
+    extern M2C_UNK lbl_8033E578;
+    extern s32 lbl_8036894C;
+    s32 temp_r6;
+
+    temp_r6 = (lbl_8036894C + 0x1F) & 0xFFFFFFE0;
+    M2C_FIELD(&lbl_8033E578, s32 *, 0) = temp_r6;
+    M2C_FIELD(&lbl_8033E578, s32 *, 4) = (s32) (temp_r6 + 0x80);
+    M2C_FIELD(&lbl_8033E578, s32 *, 8) = (s32) (temp_r6 + 0x100);
+    M2C_FIELD(&lbl_8033E578, s32 *, 0xC) = (s32) (temp_r6 + 0x180);
+    M2C_FIELD(&lbl_8033E578, s32 *, 0x10) = (s32) (temp_r6 + 0x200);
+    M2C_FIELD(&lbl_8033E578, s32 *, 0x14) = (s32) (temp_r6 + 0x280);
+}
+
 s32 fn_80243E84(void *arg0) {
     register u8 *temp_r5;
     s32 var_r5;
@@ -3380,6 +3394,6 @@ extern s32 *lbl_80368A5C;
 extern s32 *lbl_80368A60;
 extern void *lbl_80368950;
 extern u8 *lbl_803688E8;
-extern s32 lbl_803688EC;
+extern u16 lbl_803688EC[10];
 extern s32 lbl_8036894C;
 extern s32 lbl_8033E578[];
