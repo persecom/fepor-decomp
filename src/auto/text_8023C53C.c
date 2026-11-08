@@ -219,6 +219,14 @@ void fn_8023C7B0(void) {
     M2C_FIELD(&lbl_8033E578, s32 *, 0x14) = (s32) (temp_r6 + 0x280);
 }
 
+s32 fn_8023C7F4(void) {
+    return 0;
+}
+
+s32 fn_8023C930(void) {
+    return 0;
+}
+
 void fn_8023D2FC(void) {
     extern u16 *lbl_80368950;
     
@@ -228,6 +236,55 @@ void fn_8023D2FC(void) {
     ptr[0x1A7] = (u16)((ptr[temp_r3+1] & 0xFF) << 8 | (ptr[temp_r3] & 0xFF00));
     ptr[0x1A6] = temp_r3 + 2;
     ptr[0x1A9] = ptr[0x1A7];
+}
+
+void fn_8023D59C(s32 arg0, s32 arg1, s32 arg2) {
+    M2C_UNK fn_8023D350(M2C_UNK, s32, void *);
+    M2C_UNK fn_8023D6A8();
+    M2C_UNK fn_8023F130();
+    M2C_UNK fn_80240BBC();
+    extern s32 lbl_80368944;
+    extern s32 lbl_80368948;
+    extern void *lbl_80368950;
+    s32 temp_r4;
+    u16 temp_r30;
+    u16 var_r31;
+
+    M2C_FIELD(lbl_80368950, s32 *, 0x6B0) = arg0;
+    M2C_FIELD(lbl_80368950, s32 *, 0x6B4) = arg1;
+    M2C_FIELD(lbl_80368950, s32 *, 0x6B8) = arg2;
+    var_r31 = M2C_FIELD(lbl_80368950, u16 *, 0x698);
+    temp_r30 = M2C_FIELD(lbl_80368950, u16 *, 0x694);
+    temp_r4 = M2C_ERROR(/* unknown instruction: mfspr $r4, GQR5 */);
+    lbl_80368944 = temp_r4;
+    lbl_80368948 = M2C_ERROR(/* unknown instruction: mfspr $r0, GQR6 */);
+    M2C_ERROR(/* unknown instruction: mtspr GQR5, $r3 */);
+    M2C_ERROR(/* unknown instruction: mtspr GQR6, $r3 */);
+    fn_8023D350(0x3D043D04, temp_r4, lbl_80368950);
+    if (((u16) M2C_FIELD(lbl_80368950, u16 *, 0x692) == 0x200) && (temp_r30 == 0x1C0)) {
+loop_4:
+        if (var_r31 < temp_r30) {
+            fn_8023D6A8();
+            var_r31 += 0x10;
+            goto loop_4;
+        }
+    } else if (((u16) M2C_FIELD(lbl_80368950, u16 *, 0x692) == 0x280) && (temp_r30 == 0x1E0)) {
+loop_10:
+        if (var_r31 < temp_r30) {
+            fn_8023F130();
+            var_r31 += 0x10;
+            goto loop_10;
+        }
+    } else {
+loop_14:
+        if (var_r31 < temp_r30) {
+            fn_80240BBC();
+            var_r31 += 0x10;
+            goto loop_14;
+        }
+    }
+    M2C_ERROR(/* unknown instruction: mtspr GQR5, $r4 */);
+    M2C_ERROR(/* unknown instruction: mtspr GQR6, $r0 */);
 }
 
 s32 fn_80243E84(void *arg0) {
@@ -3354,6 +3411,25 @@ loop_1:
     return M2C_ERROR(/* unknown instruction: stfiwx $f1, $zero, $r9 */);
 }
 
+extern s32 lbl_803631FC;
+extern s32 lbl_80363200;
+s32 fn_80265230(s32 arg0)
+{
+    if (arg0 == 0) {
+        return 0;
+    }
+
+    if (arg0 < 0) {
+        return lbl_803631FC;
+    }
+    
+    if (arg0 >= lbl_80363200) {
+        return lbl_80363200 - 1;
+    }
+    
+    return arg0;
+}
+
 void fn_80265430(s32 arg0) {
     extern u16 lbl_803669A0[1024];
     u8 *temp_r3;
@@ -3428,3 +3504,6 @@ extern u16 lbl_80368A0C;
 extern u16 lbl_80368AFC;
 extern u16 lbl_8034F6B8[];
 extern u16 lbl_803596F0[16];
+extern u32* lbl_80368950;
+extern u8* lbl_803688E4;
+extern u16* lbl_803688EC;
