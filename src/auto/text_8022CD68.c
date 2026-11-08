@@ -51,6 +51,8 @@ extern u16 lbl_803670C0;
 extern u32 lbl_803670C8;
 extern u32 lbl_800000F8;
 
+#include "musyx/select_source.h"
+
 typedef struct Voice {
     u8 pad0[0x110];
     u64 flags;
