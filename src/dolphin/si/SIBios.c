@@ -196,11 +196,11 @@ if ((s32) Si_8029EFAC != -1) {
 }
 
 s32 fn_8023ABF4(s32 arg0) {
-    extern u16 Packet_8033E248[128];
+    extern SIPacket Packet_8033E248[];
     extern s32 Si_8029EFAC;
 
     s32 var_r5 = 1;
-    if (((s32) *(Packet_8033E248 + (arg0 << 5)) == -1) && ((s32) Si_8029EFAC != arg0)) {
+    if ((Packet_8033E248[arg0].chan == -1) && ((s32) Si_8029EFAC != arg0)) {
         var_r5 = 0;
     }
     return var_r5;
