@@ -167,3 +167,10 @@ extern f32 lbl_80369188;
 extern f32 lbl_80369198;
 extern f32 lbl_8036919C;
 extern f32 lbl_803691A0;
+#include "global.h"
+#include "unit.h"
+
+extern f32 lbl_80369184;
+extern f64 lbl_80369190;
+extern f32 lbl_80369188;
+extern void* lbl_80367140;
