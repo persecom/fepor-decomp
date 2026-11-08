@@ -1963,18 +1963,17 @@ void fn_80258A98(s32 arg0, s32 arg1) {
     extern s32 *lbl_80368A60;
     extern s32 *lbl_80368A5C;
     extern s32 *lbl_80368A58;
-    
-    s32 var_r5 = arg0 + arg1;
-    lbl_80368A60 = (s32 *)0x0;
-    lbl_8035B220[0x1] = -2;
-    lbl_8035B220[0x2] = 0;
+
+    lbl_80368A60 = NULL;
+    lbl_8035B220[1] = -2;
+    M2C_FIELD(lbl_8035B220, u16 *, 8) = 0;
     lbl_8035B220[0x183] = arg0;
     lbl_8035B220[0x185] = arg0;
-    lbl_8035B220[0x184] = var_r5;
+    lbl_8035B220[0x184] = arg0 + arg1;
     lbl_8035B220[0] = 0;
-    lbl_80368A60 = &lbl_8035B220[0];
-    lbl_80368A58 = (s32 *)0x0;
-    lbl_80368A5C = &lbl_8035B220[0];
+    lbl_80368A60 = lbl_8035B220;
+    lbl_80368A58 = NULL;
+    lbl_80368A5C = lbl_8035B220;
 }
 
 void *fn_80258AD8(void) {
