@@ -2692,9 +2692,23 @@ extern struct Unit {
 } Unit; 
 #include "common.h"
 #include "global.h"
+
 extern u16 lbl_8026B980[8];
 #include "common.h"
 #include "global.h"
+extern f32 lbl_803692E0;
+extern f32 lbl_80369310;
+extern f32 lbl_80369314;
+extern f32 lbl_80369318;
+extern f32 lbl_8036931C;
+extern f32 lbl_80369320;
+extern f32 lbl_80369324;
+extern f32 lbl_80369328;
+extern f32 lbl_8036932C;
+extern f32 lbl_80369330;
+extern f32 lbl_80369334;
+extern f32 lbl_80369338;
+extern u8 lbl_80330EAC[];
 
 extern u8 lbl_8030F4E0[];
 extern u8 lbl_803672EB;
