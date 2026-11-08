@@ -315,31 +315,28 @@ s32 fn_80231F48(char *s, const char *fmt, va_list args) {
 }
 
 s32 fn_802340D8(s32 arg0) {
-    extern u16 *lbl_8033E170;
+    extern void (*lbl_8033E170[])(s32);
     extern s32 __begin_critical_region(s32);
     extern s32 __end_critical_region(s32);
     extern void exit(s32);
-
-    s32 temp_r31;
-    s32 temp_r3;
+    void (*func)(s32);
 
     if ((arg0 < 1) || (arg0 > 6)) {
         return -1;
     }
     __begin_critical_region(4);
-    temp_r3 = (s32) &lbl_8033E170[arg0];
-    temp_r31 = *(s32*)temp_r3;
-    if (temp_r31 != 1) {
-        *(u32*)(temp_r3 - 4) = 0;
+    func = lbl_8033E170[arg0 - 1];
+    if (func != (void (*)(s32))1) {
+        lbl_8033E170[arg0 - 1] = 0;
     }
     __end_critical_region(4);
-    if ((temp_r31 == 1) || ((temp_r31 == 0) && (arg0 == 1))) {
+    if ((func == (void (*)(s32))1) || ((func == 0) && (arg0 == 1))) {
         return 0;
     }
-    if (temp_r31 == 0) {
+    if (func == 0) {
         exit(0);
     }
-    (*(void (*)(s32))temp_r31)(arg0);
+    func(arg0);
     return 0;
 }
 
