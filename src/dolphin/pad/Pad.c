@@ -226,22 +226,15 @@ void fn_80212108(s32 arg1) {
 }
 
 void fn_8021250C(s32 chan, u32 type) {
-    s32 OSDisableInterrupts(void);
-    void OSRestoreInterrupts(s32);
     s32 SITransfer(s32 chan, void *output, u32 outputBytes, void *input, u32 inputBytes, void *callback, s64 delay);
-    void fn_80209C10(s32 chan, u16 id);
-    u32 fn_8023B930(u32 poll);
     extern void fn_8021203C(void);
     extern u8 lbl_8033A1C0[];
     extern u32 lbl_80366FB8;
     extern u32 lbl_8036866C;
     extern u32 lbl_80368678;
     extern u32 lbl_8036867C;
-    extern u32 lbl_80368680;
-    extern u32 lbl_80368684;
-    s32 enabled;
-    u32 chanBit;
     u32 error;
+    u32 chanBit;
 
     chanBit = 0x80000000 >> chan;
     if (!(lbl_8036866C & chanBit)) {
@@ -258,15 +251,7 @@ void fn_8021250C(s32 chan, u32 type) {
         !(type & 0x04000000) && !(type & 0x00080000) && !(type & 0x00040000)) {
         SITransfer(chan, &lbl_80366FB8, 1, &lbl_8033A1C0[chan * 0xC], 10, fn_8021203C, 0);
     } else {
-        enabled = OSDisableInterrupts();
-        fn_8023B930(chanBit);
-        lbl_8036866C &= ~chanBit;
-        lbl_80368678 &= ~chanBit;
-        lbl_8036867C &= ~chanBit;
-        lbl_80368680 &= ~chanBit;
-        lbl_80368684 &= ~chanBit;
-        fn_80209C10(chan, 0);
-        OSRestoreInterrupts(enabled);
+        PADDisable(chan);
     }
 }
 
