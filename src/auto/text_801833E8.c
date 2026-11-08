@@ -3478,3 +3478,8 @@ typedef struct {
     void *unk4;
 } unk_struct_80193CFC;
 extern u8 lbl_80295AE8[0x80];
+#include "global.h"
+extern u16 lbl_80295A78[36];
+extern f32 lbl_8036ACE0;
+extern f32 lbl_8036ACD8;
+extern f32 lbl_8036ACE8;
