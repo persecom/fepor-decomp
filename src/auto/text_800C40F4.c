@@ -2096,7 +2096,7 @@ extern "C" void *fn_800DFAE0(void *arg0, void *arg1, const String *arg2, const S
     }
     return arg0;
 }
-#pragma auto_inline reset
+#pragma dont_inline reset
 #pragma cplusplus reset
 
 void fn_800DFC2C(void *arg0) {
