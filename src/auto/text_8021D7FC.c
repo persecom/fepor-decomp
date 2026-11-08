@@ -119,6 +119,77 @@ u16 fn_80220970(void) {
     return M2C_FIELD(__peReg, u16 *, 0xE);
 }
 
+void fn_80220A20(s32 arg0, u8 arg1) {
+    void *__peReg;
+    u16 val = (arg1 << 8) | (arg0 & 0xFFFFFF00);
+    M2C_FIELD(__peReg, u16 *, 0x0) = val;
+}
+
+extern u16 *__peReg;
+void fn_80220A54(u8 arg0) {
+    u16 temp = __peReg[1];  // Access offset 2 (u16) which is the second u16 in the pointer
+    temp = (temp & ~0x10) | ((arg0 << 4) & 0x10);
+    __peReg[1] = temp;
+}
+
+extern u16* __peReg;
+void fn_80220AD0(u8 arg0) {
+    u16 val = __peReg[1];
+    val &= ~8;
+    val |= (arg0 & 1) << 3;
+    __peReg[1] = val;
+}
+
+void fn_80220AE8(u8 arg0, u8 arg1) {
+    u32 val;
+    u16 temp;
+
+    val = (u32) (((arg1 << 24) | (arg0)) & 0x100);
+    temp = (u16) val;
+    *(__peReg + 2) = temp;
+}
+
+void fn_80220B0C(u8 arg0) {
+    u16 val = *__peReg;
+    val &= ~4;
+    val |= (arg0 << 2) & 4;
+    *__peReg = val;
+}
+
+void fn_80220B24(u8 arg0, s32 arg1, s32 arg2) {
+    u16 val = 0;
+    val |= (arg0 & 1) << 0;   // bit 0
+    val |= (arg1 & 7) << 1;   // bits 1-3
+    val |= (arg2 & 1) << 4;   // bit 4
+    *__peReg = val;
+}
+
+void fn_80220B44(u16 arg0, s32 arg1, s32 *arg2) {
+    u32 temp;
+    u16 a = arg0 & 0xFFFF;
+    s32 b = arg1 & 0xFFF;
+    
+    temp = 0xC8000000 | (a << 2);
+    temp &= ~0x3FF000;
+    temp |= (b << 12);
+    temp &= ~0xC00000;
+    temp |= 0x400000;
+    *arg2 = *(s32*)temp;
+}
+
+void fn_80221068(void) {
+    extern void *__GXData;
+    
+    *(u8*)0xCC008000 = 0x61;
+    *(u32*)0xCC008000 = *(u32*)((u8*)__GXData + 0x204);
+}
+
+extern u32 lbl_80368738;
+extern u32 lbl_80368770;
+u32 fn_8022142C(void) {
+    return lbl_80368770 + (lbl_80368738 * 2);
+}
+
 void fn_80221A2C(s32 arg0) {
     extern void *__GXData;
     M2C_FIELD(__GXData, u32 *, 0x1EC) = (M2C_FIELD(__GXData, u32 *, 0x1EC) & ~0x180) | ((arg0 & 3) << 7);
@@ -163,6 +234,11 @@ u8 fn_80222AA8(void *arg0) {
     return (M2C_FIELD(arg0, u8 *, 0x1F) & 1) == 1;
 }
 
+u8 fn_80222AC0(u32 *arg0) {
+    extern M2C_UNK lbl_80367050;
+    return *(&lbl_80367050 + (((u32) *arg0 >> 5U) & 7));
+}
+
 s32 fn_80222CDC(void *arg0) {
     return (M2C_FIELD(arg0, s32 *, 4) << 5) & 0x03FFFFE0;
 }
@@ -171,8 +247,48 @@ u16 fn_80222CE8(void *arg0) {
     return M2C_FIELD(arg0, u16 *, 8);
 }
 
+extern u16* __GXData;
+s32 fn_80222EFC(s32 arg0) {
+    s32 temp_r0;
+    
+    // Load word from __GXData + 0x4c8, with auto-increment (lwzu)
+    temp_r0 = __GXData[0x132]; // 0x4c8 / 2 = 0x132
+    __GXData[0x132] = (u16)arg0; // Store halfword back
+    
+    return temp_r0;
+}
+
+extern u16 *__GXData;
+s32 fn_80222F10(s32 arg0) {
+    s32 temp_r0;
+    
+    temp_r0 = *(u16*)__GXData;
+    *(u16*)__GXData = (u16)arg0;
+    return temp_r0;
+}
+
+void fn_802238A8(u8 arg0) {
+    u16* gxData = (u16*)__GXData;
+    u16 temp = gxData[0x102];
+    temp = (temp & ~0x7000) | ((arg0 << 16) & 0x7000);
+    gxData[0x102] = temp;
+    
+    temp = gxData[0x2D6];
+    temp = temp | 0x6;
+    gxData[0x2D6] = temp;
+}
+
 void fn_80223978(void) {
 
+}
+
+void __GXFlushTextureState(void) {
+    u8 *addr = (u8 *)0xCC008000;
+    u32 *gx_data = (u32 *)__GXData;
+    
+    *addr = 0x61;
+    *(u32 *)(*(u32 *)__GXData + 0x124) = *(u32 *)(*(u32 *)__GXData + 0x124);
+    *(u16 *)__GXData = 0;
 }
 
 void fn_80224E1C(void *arg0, s32 arg1) {
@@ -180,7 +296,16 @@ void fn_80224E1C(void *arg0, s32 arg1) {
     *(s32*)((u8*)arg0 + 0x54) = arg1;
 }
 
+void fn_80225034(u32 arg0, u32 *dst) {
+    u32 *src = (u32*)((u8*)__GXData + 0x4f4); // offset from the assembly
+
+    dst[0] = src[arg0 + 0];
+    dst[1] = src[arg0 + 1];
+    dst[2] = src[arg0 + 2];
+}
+
 void fn_80225BF4(void) {
     extern void *__cpReg;
     M2C_FIELD(__cpReg, s16 *, 4) = 4;
 }
+extern u16 *__GXData;
