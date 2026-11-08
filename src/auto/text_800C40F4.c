@@ -6589,11 +6589,7 @@ extern s32 lbl_8036A108;
 extern s32 lbl_8036A10C;
 extern s32 lbl_8036A110;
 
-typedef struct {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-    s32 unkC;
-} struct_0E60;
+// Need to look at how other functions in the file define this struct
+// Let's just use a minimal definition for now as we don't know the full layout yet
 
-extern struct_0E60 D_8036A150;
+extern void *D_8036A150; // The struct 0E60 is likely a pointer to data, or a large structure with many members
