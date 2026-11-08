@@ -131,6 +131,14 @@ extern void OSRestoreInterrupts(void);
 
 volatile u32 __DIRegs[16] : 0xCC006000;
 
+typedef struct DVDCommand {
+    s32 command;
+    void *addr;
+    u32 length;
+    u32 offset;
+    void *callback;
+} DVDCommand;
+
 extern u16 AlarmForTimeout_80339ED8[20];
 extern void AlarmHandlerForTimeout(void *, void *);
 extern void OSCreateAlarm(void *);
