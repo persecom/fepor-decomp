@@ -1,6 +1,12 @@
 /* Dolphin SDK MTX library, quat.c: 0x80203320-0x80203778 (C_QUATRotAxisRad, C_QUATMtx, C_QUATSlerp). */
 #include "common.h"
 
+typedef struct {
+    f32 x, y, z, w;
+} Quaternion;
+
+typedef f32 Mtx[3][4];
+
 void fn_80203320(f32 *arg0, void *arg1, f32 farg0) {
     void fn_802031E8(void *, f32 *);
     f32 fn_80238A30(f32);
