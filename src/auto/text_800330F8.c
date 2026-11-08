@@ -3611,6 +3611,47 @@ void fn_80054808(void *arg0) {
     }
 }
 
+extern void* jumptable_80285A50;
+void fn_80054C14(void* arg0)
+{
+    void* r27;
+    int r3, r28;
+    int r0;
+    
+    r27 = (void*)arg0;
+    r3 = *(u32*)((char*)arg0 + 0x30);
+    r28 = *(u32*)((char*)r3 + 0x5c);
+    r3 = r28;
+    fn_8005F7F0(r3);
+    r0 = (r3 & 0xFFFFFF00) >> 24;
+    if (r0 == 0)
+        return;
+
+    /* Loading data from lbl_8026ABF0 */
+    r3 = *(u32*)((char*)r28 + 0x5c);
+    
+    // Direct copy of the memory
+    *(u32*)((char*)r27 + 0x50) = *(u32*)((char*)r3 + 0x0);
+    *(u32*)((char*)r27 + 0x54) = *(u32*)((char*)r3 + 0x4);
+    *(u32*)((char*)r27 + 0x58) = *(u32*)((char*)r3 + 0x8);
+    *(u32*)((char*)r27 + 0x5C) = *(u32*)((char*)r3 + 0xC);
+    *(u32*)((char*)r27 + 0x60) = *(u32*)((char*)r3 + 0x10);
+    *(u32*)((char*)r27 + 0x64) = *(u32*)((char*)r3 + 0x14);
+    *(u32*)((char*)r27 + 0x68) = *(u32*)((char*)r3 + 0x18);
+
+    fn_8005F92C(r3);
+
+    r0 = (r3 & 0xFFFF0000) >> 16;
+    r0 -= 0x9;
+    if ((r0 > 0x1E))
+        return;
+
+    // Jump table handling
+    r3 = *(u32*)((char*)jumptable_80285A50 + (r0 << 2));
+    
+    __builtin_unreachable();
+}
+
 extern u32 lbl_80369058;
 extern u32 lbl_8036905C;
 extern u32 lbl_80369060;
