@@ -2,6 +2,7 @@
 #include "common.h"
 extern s32 lbl_8032FF08;
 extern u16 lbl_80331D00[];
+extern f32 lbl_8036B4A8;
 
 struct Unit {
     u16 unk0;
@@ -298,6 +299,24 @@ void fn_801B6784(void *arg0) {
 
     M2C_FIELD(arg0, s32 *, 0x40) = fn_8006D948(lbl_8027C248 + 0x114);
     fn_80059208(fn_801B69FC, arg0);
+}
+
+void fn_801B6F44(void) {
+    extern void fn_80013AE8(void *, void *, int, void *);
+    extern u8 lbl_8027C370[];
+    
+    // Explicitly call the functions with proper addresses to see if that changes anything
+    fn_80013AE8(&lbl_8027C370[0xCE], (void*)0x801B7818, 2, &lbl_8027C370);
+    fn_80013AE8(&lbl_8027C370[0xD9], (void*)0x801B7638, 0, &lbl_8027C370);
+    fn_80013AE8(&lbl_8027C370[0xE9], (void*)0x801B75F4, 0, &lbl_8027C370);
+    fn_80013AE8(&lbl_8027C370[0xF8], (void*)0x801B7564, 1, &lbl_8027C370);
+    fn_80013AE8(&lbl_8027C370[0x10C], (void*)0x801B7488, 0, &lbl_8027C370);
+    fn_80013AE8(&lbl_8027C370[0x11B], (void*)0x801B73DC, 0, &lbl_8027C370);
+    fn_80013AE8(&lbl_8027C370[0x131], (void*)0x801B7330, 0, &lbl_8027C370);
+    fn_80013AE8(&lbl_8027C370[0x141], (void*)0x801B7260, 0, &lbl_8027C370);
+    fn_80013AE8(&lbl_8027C370[0x153], (void*)0x801B7188, 0, &lbl_8027C370);
+    fn_80013AE8(&lbl_8027C370[0x165], (void*)0x801B70C8, 0, &lbl_8027C370);
+    fn_80013AE8(&lbl_8027C370[0x178], (void*)0x801B7094, 0, &lbl_8027C370);
 }
 
 s32 fn_801B7094(void) {
@@ -746,7 +765,49 @@ void fn_801B88D4(void *arg0) {
     fn_800C4588(work);
 }
 
+void fn_801B9500(struct Unit *unit, s32 arg1) {
+    struct0 *temp_r3;
+    struct0 *temp_r31;
+
+    temp_r3 = (struct0 *) ((char *) unit + 0x34);
+    temp_r31 = (struct0 *) ((char *) unit + 0x198);
+    
+    // Initial assignments
+    M2C_FIELD(temp_r3, s32 *, 0x1C) = arg1;
+    M2C_FIELD(temp_r3, s32 *, 0x20) = 0;
+    M2C_FIELD(temp_r31, s32 *, 0x1C) = arg1;
+    M2C_FIELD(temp_r31, s32 *, 0x20) = 0;
+    
+    // Set up the structure by calling another function with a global value
+    fn_8014004C((void *) unit);
+}
+
 void fn_801B9748(void*a){void*fn_8013FF94(void*,s32,s32);s32 fn_80019DF0(u8,void*);void fn_8017A9F0(void*,s32,void*,void*);extern u8 lbl_802EF4C8[];extern f32 lbl_8036B2DC;void*p;void*q;s32 x;p=fn_8013FF94(a,0x82,0);*(f32*)((char*)p+0x30)=lbl_8036B2DC;p=fn_8013FF94(a,0x108,0);*(f32*)((char*)p+0x30)=lbl_8036B2DC;q=((void**)a)[0x60/4];x=fn_80019DF0(*(u8*)(lbl_802EF4C8+0x14),lbl_802EF4C8);*(u8*)((char*)q+0x3c)=0;fn_8017A9F0(q,x,a,q);}
+
+s32 fn_801BAC40(struct efUnit* arg0, s32 arg1)
+{
+    struct efUnit* temp_r3;
+    s32 temp_r5;
+    s32 temp_r6;
+    
+    if (arg0 == NULL) {
+        return 0;
+    }
+
+    temp_r3 = arg0;
+    temp_r5 = 0;
+    temp_r6 = 0;
+
+    while ((temp_r6 < 9) && (temp_r3 != NULL)) {
+        if (temp_r3->field_0x4 >= 0) {
+            temp_r5 += 1;
+        }
+        temp_r3++;
+        temp_r6 += 1;
+    }
+
+    return temp_r5;
+}
 
 void fn_801BCD8C(void *arg0) {
     extern u8 lbl_802EF4C8[24];
@@ -1088,6 +1149,49 @@ void fn_801C6044(void *arg0) {
 }
 
 void fn_801C60C8(void) { int pad; void fn_801C6234(void); fn_801C6234(); }
+
+void fn_801C60E8(struct Unit *arg0, s32 arg1, s32 arg2) {
+    struct Unit *temp_r31;
+    s32 temp_r3;
+    void *temp_r29;
+    s32 *temp_r4;
+    u32 *temp_r5;
+    
+    if (arg1 == 0) {
+        return;
+    }
+    
+    temp_r31 = arg0;
+    
+    // Read from base offset to get data pointer
+    temp_r29 = M2C_FIELD(arg0, void **, 0x4);
+    temp_r3 = *(s32 *)((char *)temp_r29 + 8);
+    
+    if (arg1 < 0) {
+        // Negative value handling
+        temp_r3 = *(s32 *)((char *)temp_r29 + 0xC);
+        arg1 = -arg1;
+        // Set some values to zero for negative case
+        *(u32 *)((char *)temp_r31 + 0x6) = 0;
+        M2C_FIELD(temp_r31, void **, 0x54) = NULL;
+    } else {
+        // Positive value handling
+        temp_r3 = *(s32 *)((char *)temp_r29 + 4);
+    }
+    
+    if (arg1 >= temp_r3) {
+        temp_r3 = arg1 / temp_r3;
+        arg1 %= temp_r3;
+    }
+    
+    temp_r4 = (s32 *)((char *)temp_r31 + 0x58); // Initialize local var from struct
+    *temp_r4 = *(s32 *)((char *)temp_r31 + 0x58) + arg2;
+
+    if (arg1 != 0) {
+        temp_r5 = (u32 *)((char *)temp_r31 + 0x6); 
+        *temp_r5 = *(u32 *)((char *)temp_r31 + 0x6) + arg1;
+    }    
+}
 
 void fn_801C68D0(u32 arg0) {
  extern u8 lbl_802981D0[]; void *fn_8000C0C0(void *); void fn_8005FA14(s32);
@@ -2829,6 +2933,40 @@ u8 fn_801E3308(s32 arg0) {
 
 s32 fn_801E33F4(void *arg0) {
     return M2C_FIELD(arg0, u16 *, 0x10) & 1;
+}
+
+void fn_801E3400(void *arg0, u8 arg1) {
+    u8 *ptr;
+    s32 i;
+    u16 *status_ptr;
+
+    status_ptr = (u16 *)(((u8 *)arg0) + 0xa6);
+    
+    switch (*status_ptr) {
+        case 2:
+            break;
+        case 1:
+            *(u16*)(((u8 *)arg0) + 0x10) |= 4;
+            /* fallthrough */
+        case 0:
+            *(u16*)(((u8 *)arg0) + 0x10) |= 2;
+            /* fallthrough */
+        case 3:
+            *(u16*)(((u8 *)arg0) + 0x10) |= 1;
+            break;
+    }
+
+    ptr = (u8 *)arg0 + 0x12;
+    for (i = 0; i < 5; i++) {
+        if (*ptr != arg1 && *ptr != 0) {
+            ptr++;
+            continue;
+        }
+        if (*ptr == 0) {
+            *ptr = arg1;
+        }
+        return;
+    }
 }
 
 void fn_801E3560(void *arg0, s8 arg1, s8 arg2, s8 arg3) {
