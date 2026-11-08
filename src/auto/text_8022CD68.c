@@ -2146,8 +2146,6 @@ void fn_80251A44(SynthVoice *sv, u32 *arg1) {
     M2C_FIELD(sv, u32 *, 0x118) |= 0x100;
 }
 
-#include "musyx/select_source.h"
-
 void fn_80251DEC(Voice *arg0, u32 *arg1) {
     u32 time;
     s32 delta;
