@@ -290,7 +290,7 @@ void SIInit(void) {
     M2C_UNK SISetSamplingRate(M2C_UNK, M2C_UNK *, M2C_UNK);
     M2C_UNK __OSSetInterruptHandler(M2C_UNK, M2C_UNK *);
     M2C_UNK __OSUnmaskInterrupts(M2C_UNK);
-    extern SIPacket Packet_8033E248[];
+    extern SIPacket Packet_8033E248[4];
     extern M2C_UNK SIInterruptHandler;
     extern M2C_UNK Si_8029EFAC;
     extern s32 __SIVersion;
