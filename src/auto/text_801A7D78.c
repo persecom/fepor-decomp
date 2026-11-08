@@ -7,7 +7,6 @@ u32 fn_801A7D78(u32 arg0, s16 arg1) {
     M2C_UNK fn_800C428C(u32);
     M2C_UNK fn_801A9EB8(u32);
     M2C_UNK fn_8022C1E8(s32, M2C_UNK (*)(s32, M2C_UNK), M2C_UNK, M2C_UNK);
-    s32 temp_cr0_eq;
 
     if (arg0 != 0U) {
         if ((arg0 + 0x5C0) != 0) {
@@ -32,8 +31,7 @@ u32 fn_801A7D78(u32 arg0, s16 arg1) {
             fn_801A9EB8(arg0);
             fn_8001C5F8(arg0 + 0x28C, -1);
             fn_8001C5F8(arg0 + 0x284, -1);
-            temp_cr0_eq = arg0 == 0U;
-            if ((temp_cr0_eq == 0) && (temp_cr0_eq == 0) && (temp_cr0_eq == 0) && (temp_cr0_eq == 0) && (temp_cr0_eq == 0) && (temp_cr0_eq == 0) && (temp_cr0_eq == 0)) {
+            if ((arg0 != 0U) && (arg0 != 0U) && (arg0 != 0U) && (arg0 != 0U) && (arg0 != 0U) && (arg0 != 0U) && (arg0 != 0U)) {
                 fn_8022C1E8(arg0 + 0x1EC, fn_8001C5F8, 8, 4);
                 fn_8022C1E8(arg0 + 0x1CC, fn_8001C5F8, 8, 4);
             }
