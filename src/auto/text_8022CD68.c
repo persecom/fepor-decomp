@@ -1760,9 +1760,8 @@ s32 fn_8024B7DC(s32 arg0) {
     return var_r31;
 }
 
-#pragma dont_inline on
-
 void fn_8024B828(s32 arg0, s32 arg1, s32 arg2) {
+#pragma dont_inline on
     if (arg1 == 1) {
         fn_8026372C();
         fn_8024A590(arg0, 0x1F, (s32)(16383.0f * (1.0f - (f32)(u32)(arg2 - 0x50) / 15920.0f)));
