@@ -161,6 +161,27 @@ void fn_8020A060(void *arg0) {
     M2C_FIELD(arg0, void **, 0x2DC) = NULL;
 }
 
+s32 fn_8020A0C8(void *arg0) {
+    s32 var_r4;
+    void *var_r5;
+
+    var_r4 = M2C_FIELD(arg0, s32 *, 0x2D4);
+    var_r5 = M2C_FIELD(arg0, void **, 0x2F4);
+loop_5:
+    if (var_r5 != NULL) {
+        void *temp_r3 = M2C_FIELD(var_r5, void **, 0);
+        if (temp_r3 != NULL) {
+            s32 temp_r0 = M2C_FIELD(temp_r3, s32 *, 0x2D0);
+            if (temp_r0 < var_r4) {
+                var_r4 = temp_r0;
+            }
+        }
+        var_r5 = M2C_FIELD(var_r5, void **, 0x10);
+        goto loop_5;
+    }
+    return var_r4;
+}
+
 void __OSReschedule(void) {
     extern s32 RunQueueHint_8036851C;
     if (RunQueueHint_8036851C != 0) {
@@ -308,6 +329,22 @@ s32 fn_8020F404(void) {
     return 0x80000000;
 }
 
+void __DVDClearWaitingQueue(void) {
+    extern u16 WaitingQueue_80339FD8[16];
+    u32 *base;
+    
+    base = (u32 *)&WaitingQueue_80339FD8[0];
+    
+    base[0] = (u32)(base);
+    base[1] = (u32)(base);
+    base[2] = (u32)(base + 4);
+    base[3] = (u32)(base + 4);
+    base[4] = (u32)(base + 8);
+    base[5] = (u32)(base + 8);
+    base[6] = (u32)(base);
+    base[7] = (u32)(base);
+}
+
 void __DVDStoreErrorCode(u32 arg0) {
     u8 ErrorCode2Num(s32);
     void *__OSLockSramEx();
@@ -359,6 +396,31 @@ s32 fn_80211690(void) {
     return lbl_80368604;
 }
 
+void fn_80211698(s32 *arg0, u32 *arg1) {
+    u16 *addr = (u16 *)0xCC002000;
+    u32 temp_r8;
+    u32 var_r9;
+
+    do {
+        var_r9 = addr[0x17] & 0x7FF;
+        temp_r8 = var_r9;
+        var_r9 = addr[0x17] & 0x7FF;
+    } while (temp_r8 != var_r9);
+    *arg0 = addr[0x17] & 0x7FF;
+    *arg1 = var_r9;
+}
+
+s32 fn_802118D8(void) {
+    s32 temp_r31;
+    u16 reg_val;
+
+    OSDisableInterrupts();
+    reg_val = *(u16 *)0xCC00206E;
+    temp_r31 = reg_val & 3;
+    OSRestoreInterrupts();
+    return temp_r31 & 1;
+}
+
 void fn_802137E8(void) {
     u16 *ptr = (u16 *)0xCC005000;
     u16 val = ptr[0x1B];
@@ -407,6 +469,16 @@ u8 fn_80213B34(void) {
     return (u8) ((u32) *(u32 *)0xCC006C04 >> 8U);
 }
 
+s32 fn_80214058(void) {
+    u16 reg_val;
+    
+    OSDisableInterrupts();
+    reg_val = *(u16 *)0xCC00500A;
+    reg_val = (reg_val & 0x200) >> 9;  // Extract bit 9 (0x200 = bit 9)
+    OSRestoreInterrupts();
+    return (reg_val & 1);
+}
+
 s32 fn_802142B0(void) {
     return 0x4000;
 }
@@ -430,6 +502,19 @@ s32 fn_80214358(void) {
 
 void fn_80215C5C(void) {
 
+}
+
+void fn_80215EF8(void) {
+    extern s32 lbl_803686F8;
+    extern s32 lbl_803686FC;
+    extern s32 lbl_80368700;
+    extern s32 lbl_80368704;
+    OSDisableInterrupts();
+    lbl_803686F8 = 0;
+    lbl_803686FC = 0;
+    lbl_80368700 = 0;
+    lbl_80368704 = 0;
+    OSRestoreInterrupts();
 }
 
 s32 fn_80215F30(void) {
@@ -467,3 +552,6 @@ extern u16 AlarmForTimeout_80339ED8[20];
 #include <dolphin/os.h>
 
 extern u16 lbl_80339FB0[20]; // 40 bytes = 20 * 2-byte entries
+#include <dolphin/os.h>
+
+extern u16 Reschedule_80368520;
