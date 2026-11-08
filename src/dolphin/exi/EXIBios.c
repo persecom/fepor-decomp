@@ -266,11 +266,13 @@ void EXIDeselect(void)
     s32 channel;
     u32 status;
 
+    BOOL enabled;
+
     ecb = (u32 *)Ecb_8033E188;
     channel = 0;
 
     // Disable interrupts
-    OSDisableInterrupts();
+    enabled = OSDisableInterrupts();
     
     while (channel < 3) {
         // Get mask for this channel
