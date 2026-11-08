@@ -495,49 +495,19 @@ found:
     lbl_8033F990[id & 0x7FFFFFFF].unkEFA &= ~8;
 }
 
-void fn_80245290(s32 arg0, s32 arg1, s32 arg2) {
-    extern void *lbl_80368970;
-    extern void *lbl_80368974;
-    extern char lbl_8033F990[];
-    
-    s32 temp_r7 = arg0 & 0x7FFFFFFF;
-    s32 var_r6_3;
-    void *var_r6;
-    void *var_r6_2;
-    s32 r6_val;
-    
-    var_r6 = lbl_80368974;
-loop_4:
-    if (var_r6 == NULL) {
-        var_r6_2 = lbl_80368970;
-loop_9:
-        if (var_r6_2 == NULL) {
-            var_r6_3 = -1;
-        } else if (*(u32*)((char*)var_r6_2 + 0xC) == temp_r7) {
-            var_r6_3 = *(u8*)((char*)var_r6_2 + 9) | (arg0 & 0x80000000);
+void fn_80245290(u32 arg0, s32 arg1, s32 arg2) {
+    extern SynthVoice lbl_8033F990[];
+    u32 id;
+
+    id = fn_80243F50(arg0);
+    if (id != 0xFFFFFFFF) {
+        if (!(id & 0x80000000)) {
+            lbl_8033F990[id].unk11C = arg1;
+            lbl_8033F990[id].unk120 = arg2;
         } else {
-            var_r6_2 = *(void**)((char*)var_r6_2 + 0);
-            goto loop_9;
-        }
-    } else if (*(u32*)((char*)var_r6 + 0xC) == temp_r7) {
-        var_r6_3 = *(u8*)((char*)var_r6 + 9) | (arg0 & 0x80000000);
-    } else {
-        var_r6 = *(void**)((char*)var_r6 + 0);
-        goto loop_4;
-    }
-    
-    if ((u32) (var_r6_3 + 0x10000) != -1U) {
-        if (!(var_r6_3 & 0x80000000)) {
-            s32 r6_val = var_r6_3 * 0x1888;
-            char *temp_r3 = (char*)&lbl_8033F990 + r6_val;
-            *(s32*)((char*)temp_r3 + 0x11C) = arg1;
-            *(s32*)((char*)temp_r3 + 0x120) = arg2;
-        } else {
-            s32 r6_val = (var_r6_3 & 0x7FFFFFFF) * 0x1888;
-            char *temp_r3_2 = (char*)&lbl_8033F990 + r6_val;
-            *(u8*)((char*)temp_r3_2 + 0xEFA) = *(u8*)((char*)temp_r3_2 + 0xEFA) | 0x10;
-            *(s32*)((char*)temp_r3_2 + 0xEF0) = arg1;
-            *(s32*)((char*)temp_r3_2 + 0xEF4) = arg2;
+            lbl_8033F990[id & 0x7FFFFFFF].unkEFA |= 0x10;
+            lbl_8033F990[id & 0x7FFFFFFF].unkEF0 = arg1;
+            lbl_8033F990[id & 0x7FFFFFFF].unkEF4 = arg2;
         }
     }
 }
