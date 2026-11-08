@@ -1082,6 +1082,70 @@ s32 fn_8024FD80(u16 id, s32 arg1) {
     return 0;
 }
 
+extern u16 lbl_803548B8;
+extern u16 lbl_80368A08;
+s32 fn_8024FE1C(u16 arg0, void *arg1, u16 arg2) {
+    s32 i;
+    u16 *entry;
+    u16 temp;
+    
+    for (i = 0; i < lbl_80368A08; i++) {
+        entry = &lbl_803548B8 + (i * 0xC);
+        if (arg0 == *entry) {
+            entry[2] = entry[2] + 1;
+            return 0;
+        }
+    }
+    
+    if (lbl_80368A08 >= 0x80) {
+        return 0;
+    }
+    
+    fn_8026372C();
+    
+    temp = lbl_80368A08;
+    lbl_80368A08 = temp + 1;
+    
+    entry = &lbl_803548B8 + (temp * 0xC);
+    entry[0] = arg0;
+    entry[1] = arg2;
+    entry[4] = (u32)arg1;
+    entry[2] = 1;
+    
+    if (arg2 > 0) {
+        u32 count = arg2 >> 3;
+        if (count != 0) {
+            u8 *ptr = (u8 *)arg1;
+            do {
+                ptr[0x9] = 0x1F;
+                ptr[0x13] = 0x1F;
+                ptr[0x1D] = 0x1F;
+                ptr[0x27] = 0x1F;
+                ptr[0x31] = 0x1F;
+                ptr[0x3B] = 0x1F;
+                ptr[0x45] = 0x1F;
+                ptr[0x4F] = 0x1F;
+                ptr += 0x50;
+                count--;
+            } while (count != 0);
+            
+            arg2 &= 7;
+        }
+        
+        if (arg2 != 0) {
+            u8 *ptr = (u8 *)arg1;
+            do {
+                ptr[0x9] = 0x1F;
+                ptr += 0xA;
+                arg2--;
+            } while (arg2 != 0);
+        }
+    }
+    
+    fn_802636F4(temp);
+    return 1;
+}
+
 s32 fn_80250698(void *arg0, void *arg1) {
     return M2C_FIELD(arg0, u16 *, 4) - M2C_FIELD(arg1, u16 *, 4);
 }
@@ -1739,6 +1803,29 @@ void fn_80257614(void *arg0) {
     }
 }
 
+void fn_802576DC(void) {
+    u8 *ptr;
+    int i, j;
+    
+    // First loop: fill 128 bytes (16 bytes at a time, 8 times)
+    ptr = (u8 *)0x8035A650;
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 16; j++) {
+            ptr[j] = 0xFF;
+        }
+        ptr += 16;
+    }
+    
+    // Second loop: fill 64 bytes (16 bytes at a time, 4 times)
+    ptr = (u8 *)0x8035A610;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 16; j++) {
+            ptr[j] = 0xFF;
+        }
+        ptr += 16;
+    }
+}
+
 s32 fn_80257820(u16 arg0) {
     extern f32 lbl_8036C268;
     return (s32) (lbl_8036C268 * (f32) arg0);
@@ -1748,6 +1835,48 @@ void fn_80257C04(void *arg0) {
     M2C_UNK fn_80257998();
     M2C_FIELD(arg0, s8 *, 1) = 0;
     fn_80257998();
+}
+
+s32 fn_80257C2C(void *arg0, u32 arg1) {
+    u32 fn_8022C568(f32, f32, f32);
+    extern M2C_UNK lbl_8029FB7C;
+    extern f32 lbl_8036C298;
+    f32 temp_f2;
+    u32 temp_r3;
+    u8 temp_r0;
+
+    temp_r0 = M2C_FIELD(arg0, u8 *, 0);
+    switch ((s32) temp_r0) {                        /* irregular */
+    case 0:
+        M2C_FIELD(arg0, u8 *, 1) = 4U;
+        M2C_FIELD(arg0, u32 *, 4) = arg1;
+        if (arg1 == 0) {
+            M2C_FIELD(arg0, u32 *, 4) = 1U;
+            M2C_FIELD(arg0, s32 *, 0x10) = 0;
+            return 1;
+        }
+        M2C_FIELD(arg0, s32 *, 0x10) = (s32) -(s32) ((u32) M2C_FIELD(arg0, u32 *, 8) / arg1);
+block_13:
+    default:
+        return 0;
+    case 1:
+        if (((u8) M2C_FIELD(arg0, u8 *, 0x26) == 0) && ((u8) M2C_FIELD(arg0, u8 *, 1) == 1)) {
+            M2C_FIELD(arg0, s32 *, 0xC) = (s32) ((0xC1 - *(&lbl_8029FB7C + ((s32) M2C_FIELD(arg0, u32 *, 8) >> 0x15))) << 0x10);
+        }
+        temp_f2 = lbl_8036C298 * (f32) M2C_FIELD(arg0, s32 *, 0xC);
+        M2C_FIELD(arg0, u32 *, 4) = (u32) (fn_8022C568(temp_f2 * (f32) arg1, temp_f2, lbl_8036C298) >> 0xCU);
+        M2C_FIELD(arg0, u8 *, 1) = 4U;
+        temp_r3 = M2C_FIELD(arg0, u32 *, 4);
+        if (temp_r3 == 0) {
+            M2C_FIELD(arg0, u32 *, 4) = 1U;
+            M2C_FIELD(arg0, u32 *, 8) = 0U;
+            M2C_FIELD(arg0, s32 *, 0xC) = 0;
+            M2C_FIELD(arg0, s32 *, 0x10) = 0;
+            return 1;
+        }
+        M2C_FIELD(arg0, s32 *, 0x10) = (s32) -(s32) ((u32) M2C_FIELD(arg0, s32 *, 0xC) / temp_r3);
+        goto block_13;
+    }
 }
 
 s32 fn_8025807C(s32 arg0, s32 arg1, s32 arg2) {
@@ -3118,6 +3247,12 @@ void fn_80265430(s32 arg0) {
     }
 }
 
+void fn_802658B0(void)
+{
+    lbl_8034C110[0] = 0;
+    lbl_8034C110[1] = 0;
+}
+
 s32 fn_802659EC(s32 arg0) {
     if (arg0 < 0) {
         return -1;
@@ -3368,6 +3503,7 @@ extern u16 lbl_80368AFC;
 extern s32 lbl_80368AF8;
 extern u8 lbl_8035A610[];
 extern u8 lbl_8035A650[];
+extern s32 lbl_8035B838[];
 typedef struct {
     u32 field_0x0;
     u32 field_0x4;
