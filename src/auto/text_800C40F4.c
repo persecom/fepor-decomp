@@ -673,7 +673,7 @@ void *fn_800C96F8(void *arg0, s32 arg1, s32 arg2) {
     return arg0;
 }
 
-#pragma dont_inline on
+#pragma auto_inline off
 String *fn_800C9758(String *arg0, String *arg1, u32 pos, u32 n) {
     String *fn_800C984C(String *, u32, u32);
     void fn_800CA7F4(String *, u32, s32);
