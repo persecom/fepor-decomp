@@ -239,7 +239,7 @@ s32 fn_8023B270(s32 arg0) {
 s32 fn_8023B3D4(u32 arg0) {
     M2C_UNK OSRestoreInterrupts(s32);
     M2C_UNK fn_8023B270(M2C_UNK);
-    extern u32 lbl_8033E3E8[];
+    extern u32 lbl_8033E3E8[4];
     s32 temp_r31;
     s32 var_ctr;
     s32 var_r4;
