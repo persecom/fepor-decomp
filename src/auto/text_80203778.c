@@ -295,6 +295,17 @@ s32 fn_80204CD4(s32 arg0) {
     return temp_r0;
 }
 
+void fn_80204D54(void) {
+    extern u32 lbl_8036B044;
+    extern u32 lbl_803660F4;
+    extern void fn_802017E0(u32);
+    
+    if (lbl_8036B044 & 0x20) {
+        lbl_803660F4 = 0;
+        fn_802017E0(0x9);
+    }
+}
+
 s32 OSGetArenaHi(void) {
     extern s32 __OSArenaHi_803684A8;
     return __OSArenaHi_803684A8;
@@ -483,6 +494,19 @@ void fn_80206808(void) {
     return;
 }
 
+void fn_8020681C(s32 arg0, s32 arg1, s32 arg2) {
+    s32 sp14;
+    
+    fn_8020EB10(&sp14, arg0, arg1, arg2, 0, 0);
+loop_5:
+    if (fn_8020EF60(&sp14) != 0) {
+        if (fn_8020F40C() == 0) {
+            fn_802089A4(0);
+        }
+        goto loop_5;
+    }
+}
+
 void fn_80206888(void) {
     extern s32 lbl_803684B0;
     lbl_803684B0 = 1;
@@ -495,6 +519,28 @@ void __OSGetExecParams(s32 *arg0) {
         return;
     }
     *arg0 = 0;
+}
+
+u16 fn_802072A0(void) {
+    extern u16 lbl_80366F48;
+    extern u32 *lbl_803684C0;
+
+    if ((u16) lbl_80366F48 == -1U) {
+        s32 temp_r0 = *(s32 *)0x800000CC;
+        if (temp_r0 != 0) {
+            lbl_80366F48 = 0;
+        } else {
+            u16 var_r0 = *(u16 *)0xCC00206E;
+            if (var_r0 & 2) {
+                lbl_80366F48 = 1;
+            } else {
+                lbl_80366F48 = 0;
+            }
+        }
+        lbl_803684C0 = (u32 *)&fn_80207768;
+        return lbl_80366F48;
+    }
+    return lbl_80366F48;
 }
 
 extern u16 InterruptHandlerTable_803684C8[32];
@@ -515,6 +561,28 @@ s32 fn_802083C8(s32 arg0) {
         __OSMaskInterrupts(0xF0000000);
     }
     return 1;
+}
+
+void fn_802086A0(void* arg0) {
+    void* temp_r4;
+    void* temp_r5;
+    s32 r31 = 0;
+
+    loop_5:
+        temp_r4 = M2C_FIELD(arg0, void**, 0x2F4);
+        if (temp_r4 != NULL) {
+            temp_r5 = M2C_FIELD(temp_r4, void**, 0x10);
+            if (temp_r5 == NULL) {
+                M2C_FIELD(arg0, s32*, 0x2F8) = r31;
+            } else {
+                M2C_FIELD(temp_r5, s32*, 0x14) = r31;
+            }
+            M2C_FIELD(arg0, void**, 0x2F4) = temp_r5;
+            M2C_FIELD(temp_r4, s32*, 0xC) = r31;
+            M2C_FIELD(temp_r4, s32*, 0x8) = r31;
+            fn_8020AEC4(temp_r4);
+            goto loop_5;
+        }
 }
 
 extern u16 StopAtNextInt_80368530;
