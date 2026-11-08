@@ -215,6 +215,44 @@ s32 fn_80217488(s32 chan, void *txCallback, void *exiCallback) {
     return result;
 }
 
+s32 fn_802176AC(s32 chan, void *callback) {
+    extern u16 lbl_8033A200[];
+    extern s32 EXIDma(s32, s32, s32, s32, void *);
+    extern void EXIDeselect(s32);
+    extern void EXIUnlock(s32);
+    s32 fn_80238E78(s32, void *, s32, s32);
+    void fn_80216BBC(s32 arg0);
+    u8 *card;
+    s32 result;
+
+    card = (u8 *)lbl_8033A200 + chan * 0x110;
+    card[0x94] = 0x52;
+    card[0x95] = (u8)((*(u32 *)(card + 0xB0) >> 17) & 0x7F);
+    card[0x96] = (u8)(*(u32 *)(card + 0xB0) >> 9);
+    card[0x97] = (u8)((*(u32 *)(card + 0xB0) >> 7) & 3);
+    card[0x98] = (u8)(*(u32 *)(card + 0xB0) & 0x7F);
+    *(s32 *)(card + 0xA0) = 5;
+    *(s32 *)(card + 0xA4) = 0;
+    *(s32 *)(card + 0xA8) = 0;
+
+    result = fn_80217488(chan, callback, 0);
+    if (result == -1) {
+        result = 0;
+    } else if (result >= 0) {
+        if (!fn_80238E78(chan, card + 0x94, *(s32 *)(card + 0xA0), 1) ||
+            !fn_80238E78(chan, *(u8 **)(card + 0x80) + 0x200, *(s32 *)(card + 0x14), 1) ||
+            !EXIDma(chan, *(s32 *)(card + 0xB4), 0x200, *(s32 *)(card + 0xA4), fn_80216BBC)) {
+            *(void **)(card + 0xC8) = 0;
+            EXIDeselect(chan);
+            EXIUnlock(chan);
+            result = -3;
+        } else {
+            result = 0;
+        }
+    }
+    return result;
+}
+
 u16 fn_80217AD8(void) {
     extern u16 lbl_80368740;
     return lbl_80368740;
