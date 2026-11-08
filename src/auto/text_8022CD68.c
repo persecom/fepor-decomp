@@ -4111,7 +4111,6 @@ void fn_80264B7C(void *arg0) {
     fn_802649AC();
 }
 
-extern u32 lbl_800000F8;
 s32 fn_80264BA4(void) {
     s32 OSGetTick();
     s32 temp_r31;
