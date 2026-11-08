@@ -668,10 +668,9 @@ void *fn_800C96F8(void *arg0, s32 arg1, s32 arg2) {
     return arg0;
 }
 
-void fn_800C984C(void) {
-    s32 r6 = 0;
-    s32 r7 = 0;
-    fn_800C94F8(r6, r7);
+String *fn_800C984C(String *arg0, u32 arg1, u32 arg2) {
+    String *fn_800C94F8(String *, u32, u32, u32, u32);
+    return fn_800C94F8(arg0, arg1, arg2, 0, 0);
 }
 
 String *fn_800C9874(String *arg0, u32 arg1, char arg2) {
