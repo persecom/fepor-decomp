@@ -40,6 +40,16 @@ void fn_8025FFC8(void *arg0, u8 arg1, s32 arg2, u8 arg3, u8 arg4, u8 arg5);
 s32 fn_80255FB0(void);
 extern void func_80013934(s32 arg0);
 extern s32 lbl_803689A8;
+extern u16 lbl_803548B8;
+extern u16 lbl_80368A08;
+extern u16 lbl_8035A510[];
+extern u16 lbl_8035D118[256];
+extern u16 lbl_80361A98[4288];
+extern f32 lbl_802831BC[];
+extern f64 lbl_8036C348;
+extern u16 lbl_803670C0;
+extern u32 lbl_803670C8;
+extern u32 lbl_800000F8;
 
 typedef struct Voice {
     u8 pad0[0x110];
