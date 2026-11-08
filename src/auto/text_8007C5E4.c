@@ -227,6 +227,110 @@ void fn_8007DAB4(void *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s16 *, 6) = 7;
 }
 
+void fn_8007DD78(void *arg0) {
+    s32 i;
+    s32 j;
+    s32 k;
+    void **ptr_array1;
+    void **ptr_array2;
+    void **ptr_array3;
+    void **ptr_array4;
+    void **ptr_array5;
+    void **temp_r3;
+    void *temp_r30;
+    void *temp_r31;
+    
+    // Clear initial fields
+    *(u32*)((uintptr_t)arg0 + 0x38) = 0;
+    *(u32*)((uintptr_t)arg0 + 0x3C) = 0;
+    *(u32*)((uintptr_t)arg0 + 0x40) = 0;
+    *(u32*)((uintptr_t)arg0 + 0x44) = 0;
+    *(u32*)((uintptr_t)arg0 + 0x48) = 0;
+    *(u32*)((uintptr_t)arg0 + 0x4C) = 0;
+    *(u32*)((uintptr_t)arg0 + 0x50) = 0;
+    *(u32*)((uintptr_t)arg0 + 0x54) = 0;
+    
+    // First loop
+    for (i = 0; i < 0x62; i++) {
+        temp_r3 = (void**)fn_80105C5C(*(u32*)((uintptr_t)arg0 + 0x58) + 0x18C, i);
+        if ((temp_r3 != NULL) && (*(u8*)((uintptr_t)temp_r3 + 0x19) != 0)) {
+            *(u32*)((uintptr_t)arg0 + 0x38) = (u32)temp_r3;
+            arg0 = (void*)((uintptr_t)arg0 + 4);
+        }
+    }
+    
+    // Second loop
+    ptr_array1 = (void**)arg0;
+    i = 0;
+    j = 0;
+    while (j < 0x62) {
+        temp_r3 = (void**)fn_80105C5C(*(u32*)((uintptr_t)arg0 + 0x58) + 0x1BC, j);
+        if ((temp_r3 != NULL) && (*(u8*)((uintptr_t)temp_r3 + 0x19) != 0)) {
+            k = 0;
+loop_1:
+            temp_r30 = (void**)fn_80105C5C(*(u32*)((uintptr_t)arg0 + 0x58) + 0x18C, k);
+            if (temp_r30 != NULL) {
+                // Check for equality between the elements
+                if (*(u32*)((uintptr_t)temp_r3 + 0x0) != *(u32*)((uintptr_t)temp_r30 + 0x0)) {
+                    i = 0;
+                    if ((*(u8*)((uintptr_t)temp_r3 + 0x19) != 0) && (*(u8*)((uintptr_t)temp_r3 + 0x1A) == 0)) {
+                        i = 1;
+                    }
+                    if (i != 0) {
+                        goto block_2;
+                    }
+                }
+            } else {
+block_2:
+                k++;
+                if (k < 0x62) {
+                    goto loop_1;
+                }
+            }
+            if (k == 0x62) {
+                *ptr_array1 = temp_r3;
+                ptr_array1 += 1;
+                i++;
+            }
+        }
+        j++;
+    }
+    
+    // Third loop
+    j = 0;
+    ptr_array2 = (void**)((uintptr_t)arg0 + (i << 2));
+    while (j < 0x62) {
+        temp_r3 = (void**)fn_80105C5C(*(u32*)((uintptr_t)arg0 + 0x58) + 0x1BC, j);
+        if ((temp_r3 != NULL) && (*(u8*)((uintptr_t)temp_r3 + 0x19) != 0)) {
+            k = 0;
+loop_3:
+            temp_r30 = (void**)fn_80105C5C(*(u32*)((uintptr_t)arg0 + 0x58) + 0x18C, k);
+            if (temp_r30 != NULL) {
+                if (*(u32*)((uintptr_t)temp_r3 + 0x0) != *(u32*)((uintptr_t)temp_r30 + 0x0)) {
+                    i = 0;
+                    if ((*(u8*)((uintptr_t)temp_r3 + 0x19) != 0) && (*(u8*)((uintptr_t)temp_r3 + 0x1A) == 0)) {
+                        i = 1;
+                    }
+                    if (i == 0) {
+                        goto block_4;
+                    }
+                }
+            } else {
+block_4:
+                k++;
+                if (k < 0x62) {
+                    goto loop_3;
+                }
+            }
+            if (k == 0x62) {
+                *ptr_array2 = temp_r3;
+                ptr_array2 += 1;
+            }
+        }
+        j++;
+    }
+}
+
 extern u8 lbl_80330708[1400];
 void fn_8007DF6C(void *arg0) {
     void *temp_r31;
