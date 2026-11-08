@@ -128,8 +128,30 @@ extern void (*lbl_803684F8)();
 extern void* __OSSystemCallVectorStart;
 extern void* __OSSystemCallVectorEnd;
 
-extern s32* FstStart_8036857C;
+typedef struct FSTEntry {
+    u32 isDirAndStringOff;
+    u32 parentOrPosition;
+    u32 nextEntryOrLength;
+} FSTEntry;
+
+extern FSTEntry *FstStart_8036857C;
+extern char *FstStringStart_80368580;
 extern s32 lbl_80368588;
+
+#define entryIsDir(i) (((FstStart_8036857C[i].isDirAndStringOff & 0xFF000000) == 0) ? FALSE : TRUE)
+#define stringOff(i) (FstStart_8036857C[i].isDirAndStringOff & ~0xFF000000)
+#define parentDir(i) (FstStart_8036857C[i].parentOrPosition)
+
+static u32 myStrncpy(char *dest, char *src, u32 maxlen) {
+    u32 i = maxlen;
+
+    while ((i > 0) && (*src != 0)) {
+        *dest++ = *src++;
+        i--;
+    }
+
+    return maxlen - i;
+}
 
 extern u16 Scb_803394;
 
