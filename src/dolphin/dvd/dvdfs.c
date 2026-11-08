@@ -535,6 +535,10 @@ void fn_8020FAE0(void) {
     }
 }
 
+void __fstLoad(void) {
+    // A simple placeholder to test the compilation process
+}
+
 s32 fn_8020FFC4(s32 arg0) {
     extern s32 lbl_80368614;
     s32 temp_r31;
@@ -542,6 +546,16 @@ s32 fn_8020FFC4(s32 arg0) {
     temp_r31 = lbl_80368614;
     OSDisableInterrupts();
     lbl_80368614 = arg0;
+    OSRestoreInterrupts();
+    return temp_r31;
+}
+
+void* fn_80210008(void* arg0) {
+    void* temp_r31;
+
+    temp_r31 = lbl_80368618;
+    OSDisableInterrupts();
+    lbl_80368618 = arg0;
     OSRestoreInterrupts();
     return temp_r31;
 }
