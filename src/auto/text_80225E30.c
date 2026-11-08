@@ -2,6 +2,9 @@
 #include "common.h"
 #include <dolphin/os.h>
 #include "global.h"
+
+extern u16 lbl_802822F0[200]; // 400 bytes = 200 u16 values
+
 extern struct {
     u8 unk0;
     u8 unk4;
@@ -608,9 +611,94 @@ s32 fn_8022A098(void) {
     return var_r3;
 }
 
+u8 fn_8022A4E0(s32 command, s32 file_handle, s32 *length_ptr, s32 buffer_ptr) {
+    __builtin_trap();
+}
+
 void InitMetroTRK_BBA(void) {
     // Function appears to be part of the Target Resident Kernel debugging subsystem initialization
     return;
+}
+
+void fn_8022AB88(s32 arg0, u32 arg1, s32 *arg2) {
+    u32 fn_80214058();
+    M2C_UNK fn_80214094(M2C_UNK, s32, s32, u32);
+    M2C_UNK fn_80214338();
+    u16 fn_80214358();
+    s32 temp_r4;
+    s32 temp_r4_2;
+    s32 temp_r4_3;
+    s32 temp_r4_4;
+    s32 temp_r4_5;
+    s32 temp_r4_6;
+    s32 temp_r4_7;
+    s32 temp_r5;
+    s32 var_r4;
+    u16 temp_r31;
+    u32 temp_r0;
+    u32 temp_r29;
+    u32 var_ctr;
+    u32 var_ctr_2;
+    u32 var_r3;
+
+    if (arg1 >= 0x4000U) {
+        temp_r5 = *arg2;
+        if ((u32) (arg1 + temp_r5) > 0x08000000U) {
+            return;
+        }
+        var_r4 = 0;
+        temp_r29 = (temp_r5 + (arg1 & 0x1F) + 0x1F) & 0xFFFFFFE0;
+        var_r3 = (u32) (temp_r29 + 0x1F) >> 5U;
+        if (temp_r29 > 0U) {
+            temp_r0 = var_r3 >> 3U;
+            var_ctr = temp_r0;
+            if (temp_r0 != 0) {
+                do {
+                    M2C_DCACHE_INVALIDATE(var_r4 + arg0);
+                    temp_r4 = var_r4 + 0x20;
+                    M2C_DCACHE_INVALIDATE(temp_r4 + arg0);
+                    temp_r4_2 = temp_r4 + 0x20;
+                    M2C_DCACHE_INVALIDATE(temp_r4_2 + arg0);
+                    temp_r4_3 = temp_r4_2 + 0x20;
+                    M2C_DCACHE_INVALIDATE(temp_r4_3 + arg0);
+                    temp_r4_4 = temp_r4_3 + 0x20;
+                    M2C_DCACHE_INVALIDATE(temp_r4_4 + arg0);
+                    temp_r4_5 = temp_r4_4 + 0x20;
+                    M2C_DCACHE_INVALIDATE(temp_r4_5 + arg0);
+                    temp_r4_6 = temp_r4_5 + 0x20;
+                    M2C_DCACHE_INVALIDATE(temp_r4_6 + arg0);
+                    temp_r4_7 = temp_r4_6 + 0x20;
+                    M2C_DCACHE_INVALIDATE(temp_r4_7 + arg0);
+                    var_r4 = temp_r4_7 + 0x20;
+                    var_ctr -= 1;
+                } while (var_ctr != 0);
+                var_r3 &= 7;
+                if (var_r3 != 0) {
+                    goto block_7;
+                }
+            } else {
+block_7:
+                var_ctr_2 = var_r3;
+                do {
+                    M2C_DCACHE_INVALIDATE(var_r4 + arg0);
+                    var_r4 += 0x20;
+                    var_ctr_2 -= 1;
+                } while (var_ctr_2 != 0);
+            }
+        }
+        do {
+
+        } while (fn_80214058() != 0U);
+        temp_r31 = fn_80214358();
+        fn_80214338();
+        fn_80214094(1, arg0, arg1 & 0xFFFFFFE0, temp_r29);
+        do {
+
+        } while (fn_80214358() == 0);
+        if (temp_r31 == 0) {
+            fn_80214338();
+        }
+    }
 }
 
 s32 TRKInitializeTarget(void) {
@@ -871,6 +959,19 @@ s32 ddh_cc_shutdown(void) {
 
 void ddh_cc_initialize(void) {
     return;
+}
+
+void fn_8022BA34(void* arg0)
+{
+    if (arg0 != NULL) {
+        s32 temp = *(s32*)((u8*)arg0 + 8);
+        if (temp < 0x400) {
+            s32 arg1 = *(s32*)((u8*)arg0 + 0x10);
+            fn_8022C0B4(arg0, ((temp * 0xA) + (arg1 * 0x1E4)), 0, 0);
+        } else {
+            *(s32*)((u8*)arg0 + 0x8) = 0;
+        }
+    }
 }
 
 s32 fn_8022BC94(void *arg0) {
