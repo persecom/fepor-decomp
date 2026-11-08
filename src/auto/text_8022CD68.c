@@ -431,63 +431,20 @@ void fn_80245014(u16 arg0) {
     }
 }
 
-void fn_802450A4(s32 arg0, s16 arg1) {
-    extern u32 *lbl_80368974;
-    extern u32 *lbl_80368970;
-    extern u16 lbl_8033F990[];
-    
-    u32 temp_r6;
-    s32 var_r5_3;
-    u16 *temp_r3;
-    u32 *var_r5;
-    u32 *var_r5_2;
-    
-    temp_r6 = arg0 & 0x7FFFFFFF;
-    var_r5 = lbl_80368974;
-    
-loop_4:
-    if (var_r5 == NULL) {
-        var_r5_2 = lbl_80368970;
-loop_9:
-        if (var_r5_2 == NULL) {
-            var_r5_3 = -1;
-        } else if ((s32) *(var_r5_2 + 3) == temp_r6) { // 0xC offset
-            var_r5_3 = (*(var_r5_2 + 2) & ~0x80000000) | (arg0 & 0x80000000); // 0x9 offset and bit manipulation
-        } else {
-            var_r5_2 = (u32 *)*(var_r5_2 + 0); // Corrected this line to cast to pointer type
-            goto loop_9;
+void fn_802450A4(u32 arg0, u16 arg1) {
+    extern SynthVoice lbl_8033F990[];
+    u32 id;
+    u32 i;
+
+    id = fn_80243F50(arg0);
+    if (!(id & 0x80000000)) {
+        for (i = 0; i < 16; i++) {
+            lbl_8033F990[id].unk1508[i].unk32 = arg1;
         }
-    } else if ((s32) *(var_r5 + 3) == temp_r6) { // 0xC offset
-        var_r5_3 = (*(var_r5 + 2) & ~0x80000000) | (arg0 & 0x80000000); // 0x9 offset and bit manipulation
-    } else {
-        var_r5 = (u32 *)*(var_r5 + 0); // Corrected this line as well
-        goto loop_4;
-    }
-    
-    if (!(var_r5_3 & 0x80000000)) {
-        temp_r3 = &(lbl_8033F990[0x153A * var_r5_3]);
-        *(temp_r3 + 0x12A/2) = arg1; // 0x153A offset
-        *(temp_r3 + 0x1572/2) = arg1; // 0x1572 offset  
-        *(temp_r3 + 0x15AA/2) = arg1; // 0x15AA offset
-        *(temp_r3 + 0x15E2/2) = arg1; // 0x15E2 offset
-        *(temp_r3 + 0x161A/2) = arg1; // 0x161A offset
-        *(temp_r3 + 0x1652/2) = arg1; // 0x1652 offset
-        *(temp_r3 + 0x168A/2) = arg1; // 0x168A offset
-        *(temp_r3 + 0x16C2/2) = arg1; // 0x16C2 offset
-        *(temp_r3 + 0x16FA/2) = arg1; // 0x16FA offset
-        *(temp_r3 + 0x1732/2) = arg1; // 0x1732 offset
-        *(temp_r3 + 0x176A/2) = arg1; // 0x176A offset
-        *(temp_r3 + 0x17A2/2) = arg1; // 0x17A2 offset
-        *(temp_r3 + 0x17DA/2) = arg1; // 0x17DA offset
-        *(temp_r3 + 0x1812/2) = arg1; // 0x1812 offset
-        *(temp_r3 + 0x184A/2) = arg1; // 0x184A offset
-        *(temp_r3 + 0x1882/2) = arg1; // 0x1882 offset
         return;
     }
-    
-    temp_r3 = &(lbl_8033F990[0xEF8 * (var_r5_3 & 0x7FFFFFFF)]);
-    *(temp_r3 + 0xEFA/2) = (*(temp_r3 + 0xEFA/2) | 0x20);
-    *(temp_r3 + 0xEF8/2) = arg1;
+    lbl_8033F990[id & 0x7FFFFFFF].unkEFA |= 0x20;
+    lbl_8033F990[id & 0x7FFFFFFF].unkEF8 = arg1;
 }
 
 void fn_80245188(s32 arg0) {
