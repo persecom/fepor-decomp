@@ -124,9 +124,11 @@ void OSSetCurrentContext(OSContext *context);
 void fn_80206E1C(u32 bootDol, u32 resetCode, char **argv);
 s32 __OSSyncSram(void);
 
+#pragma dont_inline on
 s32 PPCMfmsr(void) {
-    return M2C_ERROR(/* unknown instruction: mfmsr $r3 */);
+    return 0; /* mfmsr: not expressible in C */
 }
+#pragma dont_inline reset
 
 void PPCMtmsr(register u32 msr) {
     (void)msr; /* mtmsr: not expressible in C */
@@ -725,6 +727,117 @@ void fn_8020602C(void) {
     if (*(s32 *)((u8 *)obj + 0x100) != 0) {
         lbl_803685E8();
     }
+}
+
+#pragma use_lmw_stmw on
+typedef void (*OSErrorHandler)(u8, void *, u32, u32);
+extern OSErrorHandler __OSErrorTable[];
+extern char lbl_8029BFB8[];
+extern char lbl_80366F3C[];
+extern s16 __OSLastInterrupt;
+extern u32 __OSLastInterruptSrr0;
+extern s64 __OSLastInterruptTime;
+extern s64 OSGetTime(void);
+extern u32 PPCMffpscr(void);
+extern void PPCMtfpscr(u32);
+extern void OSDisableScheduler(void);
+extern void OSEnableScheduler(void);
+extern void __OSReschedule(void);
+extern void OSLoadContext(void *);
+void __OSUnhandledException(u8 exception, OSContext *context, u32 dsisr, u32 dar) {
+    s64 now;
+    u32 srr1;
+    s32 msr;
+    u32 fpscr;
+    u32 enableBits;
+    OSErrorHandler handler;
+    void *fpuContext;
+
+    now = OSGetTime();
+    srr1 = M2C_FIELD(context, u32 *, 0x19C);
+
+    if (!(srr1 & 2)) {
+        OSReport(&lbl_8029BFB8[0x5C], exception);
+        goto dump;
+    }
+
+    if (exception == 6 && (srr1 & 0x100000) && __OSErrorTable[16] != 0) {
+        exception = 16;
+        msr = PPCMfmsr();
+        PPCMtmsr(msr | 0x2000);
+        fpuContext = *(void **)0x800000D8;
+        if (fpuContext != 0) {
+            OSSaveFPUContext(fpuContext);
+        }
+        fpscr = PPCMffpscr();
+        enableBits = 0x6005F8FF;
+        PPCMtfpscr(fpscr & enableBits);
+        PPCMtmsr(msr);
+
+        if (*(void **)0x800000D8 == context) {
+            OSDisableScheduler();
+            __OSErrorTable[16](16, context, dsisr, dar);
+            M2C_FIELD(context, u32 *, 0x19C) &= ~0x2000u;
+            *(void **)0x800000D8 = 0;
+            M2C_FIELD(context, u32 *, 0x194) &= enableBits;
+            OSEnableScheduler();
+            __OSReschedule();
+        } else {
+            M2C_FIELD(context, u32 *, 0x19C) &= ~0x2000u;
+            *(void **)0x800000D8 = 0;
+            OSLoadContext(context);
+        }
+    }
+
+    handler = __OSErrorTable[exception];
+    if (handler != 0) {
+        OSDisableScheduler();
+        handler(exception, context, dsisr, dar);
+        OSEnableScheduler();
+        __OSReschedule();
+        OSLoadContext(context);
+    }
+
+    if (exception == 8) {
+        OSLoadContext(context);
+    }
+
+    OSReport(&lbl_8029BFB8[0x7C], exception);
+
+dump:
+    OSReport(lbl_80366F3C);
+    OSDumpContext(context);
+    OSReport(&lbl_8029BFB8[0x94], dsisr, dar);
+    OSReport(&lbl_8029BFB8[0xC8], (u32)(now >> 32), (u32)now);
+
+    switch (exception) {
+    case 2:
+        OSReport(&lbl_8029BFB8[0xD8], M2C_FIELD(context, u32 *, 0x198), dar);
+        break;
+    case 3:
+        OSReport(&lbl_8029BFB8[0x138], M2C_FIELD(context, u32 *, 0x198));
+        break;
+    case 5:
+        OSReport(&lbl_8029BFB8[0x184], M2C_FIELD(context, u32 *, 0x198), dar);
+        break;
+    case 6:
+        OSReport(&lbl_8029BFB8[0x1E8], M2C_FIELD(context, u32 *, 0x198), dar);
+        break;
+    case 15: {
+        u16 *mem = (u16 *)0xCC005000;
+        OSReport(lbl_80366F3C);
+        OSReport(&lbl_8029BFB8[0x248], *(u16 *)0xCC005030, *(u16 *)0xCC005032);
+        OSReport(&lbl_8029BFB8[0x268], mem[0x10], mem[0x11]);
+        OSReport(&lbl_8029BFB8[0x288], *(u32 *)0xCC006014);
+        OSReport(&lbl_8029BFB8[0x2A4], __OSLastInterrupt, __OSLastInterruptSrr0,
+                 (u32)(__OSLastInterruptTime >> 32), (u32)__OSLastInterruptTime);
+        break;
+    }
+    default:
+        break;
+    }
+
+    PPCHalt();
 }
 
 void fn_80206658(void) {
