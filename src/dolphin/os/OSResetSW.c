@@ -429,6 +429,45 @@ s32 fn_8020C79C(void) {
     return 1;
 }
 
+extern s32* FstStart_8036857C;
+extern s32 lbl_80368588;
+s32 fn_8020CA74(s32 arg0, u32 arg1) {
+    s32 r31;
+    s32 result;
+    
+    // Set up the stack frame properly like target
+    r31 = lbl_80368588;
+    
+    // Call fn_8020C7C0(r31, arg0, arg1) (r3 = arg1, r4 = arg0)
+    result = fn_8020C7C0(r31, arg0, arg1);
+    
+    if (result == arg1) {
+        // Directly return 0
+        *(char*)(arg0 + arg1 - 1) = 0;
+        return 0;
+    } else {
+        // Load the value from FstStart_8036857C + (r31 * 0xC)
+        s32 r4_val = *(u32*)(FstStart_8036857C + (r31 * 0xC));
+        
+        if ((r4_val & 0xFF000000) != 0) {
+            // Upper byte non-zero case
+            if (result == (arg1 - 1)) {
+                *(char*)(arg0 + result) = 0;
+                return 0;
+            } else {
+                *(char*)(arg0 + result) = 0x2F;
+                result += 1;
+                *(char*)(arg0 + result) = 0;
+                return 1;
+            }
+        } else {
+            // Upper byte zero case
+            *(char*)(arg0 + result) = 0;
+            return 1;
+        }
+    }
+}
+
 s32 fn_8020CB38(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     M2C_UNK fn_8020602C(M2C_UNK *, M2C_UNK, M2C_UNK *);
     M2C_UNK fn_8020EB10(void *, s32, s32, s32, M2C_UNK *, s32);
@@ -789,6 +828,29 @@ void fn_80211B30(s32 arg0, s32 arg1) {
     
     // Call fn_80211914 with masked value and arguments
     fn_80211914(*(u16*)0xCC00202E & 0x7FF, var_r8, arg0, arg1);
+}
+
+void fn_80211F78(s32 arg1) {
+    extern s32 lbl_80366FA4;
+    extern s32 lbl_80366FAC;
+    extern s32 lbl_8036866C;
+    extern s32 lbl_80368670;
+    extern char lbl_8033A1C0[64];
+    extern void *fn_802121E0;
+    
+    if (!(arg1 & 0xF)) {
+        fn_80211DD4(lbl_80366FA4);
+        lbl_8036866C |= 0x80000000U >> lbl_80366FA4;
+        fn_8023BA70(lbl_80366FA4, &lbl_80366FA4);
+        fn_8023B804(lbl_80366FA4, lbl_80366FAC | 0x400000);
+        fn_8023B894(lbl_8036866C);
+    }
+    lbl_80366FA4 = __cntlzw(lbl_80368670);
+    if (lbl_80366FA4 != 0x20) {
+        lbl_80368670 &= ~(0x80000000U >> lbl_80366FA4);
+        memset(&lbl_8033A1C0 + (lbl_80366FA4 * 0xC), 0, 0xC);
+        fn_8023C188(lbl_80366FA4, &fn_802121E0);
+    }
 }
 
 void fn_80212D78(s32 arg0) {
