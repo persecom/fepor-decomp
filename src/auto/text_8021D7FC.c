@@ -1258,20 +1258,6 @@ static u32 __GXReadPECounterU32(u32 lo, u32 hi) {
     return (ctrH0 << 16) | ctrL;
 }
 
-static inline u32 __GXReadPECounterReg(volatile u16 *lo, volatile u16 *hi) {
-    u32 ctrH0;
-    u32 ctrH1;
-    u32 ctrL;
-
-    ctrH0 = *hi;
-    do {
-        ctrH1 = ctrH0;
-        ctrL = *lo;
-        ctrH0 = *hi;
-    } while (ctrH0 != ctrH1);
-    return (ctrH0 << 16) | ctrL;
-}
-
 void fn_80225C04(u32 *top_pixels_in, u32 *top_pixels_out, u32 *bot_pixels_in, u32 *bot_pixels_out, u32 *clear_pixels_in, u32 *copy_clks) {
     *top_pixels_in = __GXReadPECounterU32(0xC, 0xD) * 4;
     *top_pixels_out = __GXReadPECounterU32(0xE, 0xF) * 4;
