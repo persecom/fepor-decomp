@@ -23,7 +23,7 @@ extern void* lbl_80368638;
 extern void* lbl_8036863C;
 extern void* lbl_80368640;
 extern void* lbl_80368644;
-extern void* lbl_80368648;
+extern u16* lbl_80368648;
 extern void* lbl_8036864C;
 extern void* lbl_80368650;
 extern void* lbl_80368654;
@@ -388,6 +388,23 @@ void __DVDClearWaitingQueue(void) {
     base[7] = (u32)(base);
 }
 
+s32 fn_8020F7F0(void *arg0) {
+    void **r4;
+    void *r5;
+
+    OSDisableInterrupts();
+    r4 = *(void ***)((char*)arg0 + 4);
+    r5 = *(void ***)arg0;
+    if ((r4 == NULL) || (r5 == NULL)) {
+        OSRestoreInterrupts();
+        return 0;
+    }
+    *r4 = r5;
+    *(void ***)((char*)r5 + 4) = r4;
+    OSRestoreInterrupts();
+    return 1;
+}
+
 void __DVDStoreErrorCode(u32 arg0) {
     u8 ErrorCode2Num(s32);
     void *__OSLockSramEx();
@@ -462,6 +479,45 @@ s32 fn_802118D8(void) {
     temp_r31 = reg_val & 3;
     OSRestoreInterrupts();
     return temp_r31 & 1;
+}
+
+void fn_80211B30(s32 arg0, s32 arg1) {
+    u32 temp_r7;
+    u32 var_r8;
+    
+    // Load the value from 0xCC00202C and mask to get the lower 11 bits
+    var_r8 = *(u16*)0xCC00202C & 0x7FF;
+    
+    // Loop until the value stops changing
+    do {
+        temp_r7 = var_r8;
+        var_r8 = *(u16*)0xCC00202C & 0x7FF;
+    } while (temp_r7 != var_r8);
+    
+    // Call fn_80211914 with masked value and arguments
+    fn_80211914(*(u16*)0xCC00202E & 0x7FF, var_r8, arg0, arg1);
+}
+
+void fn_80212D78(s32 arg0) {
+    extern s32 __PADSpec;
+    extern M2C_UNK fn_80212DD8;
+    extern M2C_UNK fn_80212F4C;
+    extern M2C_UNK fn_802130C0;
+    extern s32 lbl_80366FB0;
+    extern M2C_UNK *lbl_80366FB4;
+    __PADSpec = 0;
+    switch (arg0) {                                 /* irregular */
+    case 0:
+        lbl_80366FB4 = &fn_80212DD8;
+        break;
+    case 1:
+        lbl_80366FB4 = &fn_80212F4C;
+        break;
+    default:
+        lbl_80366FB4 = &fn_802130C0;
+        break;
+    }
+    lbl_80366FB0 = arg0;
 }
 
 u32 fn_8021364C(u32 arg0) {
