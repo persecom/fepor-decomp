@@ -3020,20 +3020,15 @@ void fn_8019EAC8(void *arg0) {
 }
 
 s32 fn_8019EC0C(s32 arg0, s32 arg1, u8 arg2) {
-    void *fn_8004721C(s32, s32, s32, s32);
-    void fn_80040844(void);
-    void fn_80044450(s32);
+    void *fn_8004721C(void *, s32, s32, s32, s32);
+    s32 fn_80040844(void);
+    void fn_80044450(s32, s32);
     void fn_80016180(void);
     void fn_800056A0(s32);
     
     u8 *temp_r3;
-    s32 temp_r4;
-    s32 temp_r5;
 
-    fn_80040844();
-    temp_r5 = arg0;
-    temp_r4 = arg1;
-    temp_r3 = fn_8004721C(temp_r5, temp_r4, 0x800, 0x10);
+    temp_r3 = fn_8004721C((void *) fn_80040844(), arg0, arg1, 0x800, 0x10);
     if (temp_r3 == NULL) {
         fn_800056A0(0);
         return 0;
@@ -3045,8 +3040,7 @@ s32 fn_8019EC0C(s32 arg0, s32 arg1, u8 arg2) {
         temp_r3[2] = (u8)(temp_r3[2] | 2);
     }
     
-    fn_80040844();
-    fn_80044450(1);
+    fn_80044450(fn_80040844(), 1);
     fn_80016180();
     return 1;
 }
