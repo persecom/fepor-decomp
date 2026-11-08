@@ -2918,3 +2918,20 @@ extern u8 lbl_8032FF08[];
 extern u32 lbl_802922F0;
 #include "include/structs.h"
 extern s32 gUnknown_0x8013C030;
+#include "global.h"
+#include "unit.h"
+
+extern s32 fn_800B503C(void);
+extern s32 fn_800B412C(void);
+extern void fn_80210008(void *arg0);
+extern s32 fn_800C44F4(s32 arg0);
+extern void fn_800B36D8(void *arg0, void *arg1);
+extern void fn_800C4664(s32 arg0);
+extern void fn_800B34B0(s32 arg0);
+extern void fn_800B3490(void);
+extern void fn_800B2928(void *arg0);
+extern void* fn_8003FCCC(void *arg0);
+extern s32 fn_8000D3EC(s32 arg0, void *arg1);
+extern s32 fn_802097D4(s32 arg0);
+extern s32 fn_800B28FC(s32 arg0);
+extern void fn_800B4060(void);
