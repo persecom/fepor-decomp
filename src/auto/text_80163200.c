@@ -2185,6 +2185,46 @@ void fn_8017AA48(s32 arg0, s32 arg1, s32 arg2) {
     fn_8000C070(0);
 }
 
+s32 fn_80105A5C();
+#pragma cplusplus on
+extern "C" void fn_801547E4(s32, s32, s16, s16, u8, s32, s32, s16, f32);
+extern "C" void fn_8017B4A8(void *arg0, s32 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2(s32) = 0;
+    };
+    extern u8 lbl_80278780[];
+    u8 *unit;
+    s32 num;
+    f32 target;
+    f32 cur;
+
+    unit = M2C_FIELD(arg0, u8 **, 0x4C);
+    num = fn_80105A5C(unit + 0x1BC);
+    target = num - fn_80105A5C(M2C_FIELD(unit, u8 **, 0x18C) + 0x1C);
+    cur = M2C_FIELD(arg0, f32 *, 0x50);
+    if (target < cur) {
+        M2C_FIELD(arg0, f32 *, 0x50) = cur - 0.2f;
+        if (M2C_FIELD(arg0, f32 *, 0x50) < target) {
+            M2C_FIELD(arg0, f32 *, 0x50) = target;
+        }
+        fn_801475FC(lbl_80278780 + 0x87, 0x64);
+    } else if (target > cur) {
+        M2C_FIELD(arg0, f32 *, 0x50) = cur + 0.2f;
+        if (M2C_FIELD(arg0, f32 *, 0x50) > target) {
+            M2C_FIELD(arg0, f32 *, 0x50) = target;
+        }
+        fn_801475FC(lbl_80278780 + 0x9E, 0x64);
+    }
+    ((Obj *)arg0)->v2(arg1);
+    fn_801547E4(0, 0, M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA),
+                M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC),
+                M2C_FIELD(M2C_FIELD(unit, u8 **, 0x18C), u8 *, 0x40), 0xCC, 0x10,
+                M2C_FIELD(arg0, s16 *, 0xA), M2C_FIELD(arg0, f32 *, 0x50));
+}
+#pragma cplusplus reset
+
 #pragma use_lmw_stmw on
 void fn_8017B5F4(void *arg0, s16 arg1, s16 arg2, u8 arg3, void *arg4, s32 arg5, u8 arg6) {
     M2C_UNK fn_80006B18(s32, s32, M2C_UNK, M2C_UNK, u8);
@@ -3191,3 +3231,7 @@ extern u8 lbl_80367220;
 extern s32 lbl_80367228;
 extern s32 lbl_8036722C;
 #include <common.h>
+#include "global.h"
+#include "unit.h"
+
+extern u16* gSomeBssVar; // lbl_802EF4C8
