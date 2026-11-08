@@ -182,7 +182,7 @@ static void KillThreads(void) {
 }
 
 #pragma auto_inline on
-void fn_802089A4(u32 resetCode) {
+void fn_802089A4(s32 resetCode) {
     OSDisableInterrupts();
     __VIRegs[1] = 0;
     ICFlashInvalidate();
@@ -201,12 +201,12 @@ void OSReport(const char *msg, ...);
 void *memset(void *dst, int val, u32 n);
 extern u32 bootThisDol_803684F0;
 void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu) {
+    BOOL rc;
     BOOL disableRecalibration;
+    u8 *sram;
 
     OSDisableScheduler();
     if (reset == 1 && forceMenu) {
-        u8 *sram;
-
         sram = __OSLockSram();
         sram[0x13] |= 0x40;
         __OSUnlockSram(TRUE);
@@ -215,12 +215,13 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu) {
     if (reset == 2 || (reset == 0 && (bootThisDol_803684F0 || resetCode + 0x3FFF0000 == 0))) {
         __OSStopAudioSystem();
         disableRecalibration = __PADDisableRecalibration(TRUE);
-        while (!__OSCallResetFunctions(FALSE))
-            ;
+        do {
+            rc = __OSCallResetFunctions(FALSE);
+        } while (!rc);
         while (!__OSSyncSram())
             ;
         OSDisableInterrupts();
-        __OSCallResetFunctions(TRUE);
+        rc = __OSCallResetFunctions(TRUE);
         LCDisable();
         __PADDisableRecalibration(disableRecalibration);
         KillThreads();
@@ -231,15 +232,12 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu) {
         while (!__OSSyncSram())
             ;
         OSDisableInterrupts();
-        __OSCallResetFunctions(TRUE);
+        rc = __OSCallResetFunctions(TRUE);
         LCDisable();
         KillThreads();
     }
     if (reset == 1) {
-        OSDisableInterrupts();
-        __VIRegs[1] = 0;
-        ICFlashInvalidate();
-        Reset(resetCode * 8);
+        fn_802089A4(resetCode);
     } else if (reset == 0) {
         if (forceMenu == TRUE) {
             OSReport("OSResetSystem(): You can't specify TRUE to forceMenu if you restart. Ignored\n");
