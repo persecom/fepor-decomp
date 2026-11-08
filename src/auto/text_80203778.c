@@ -524,3 +524,4 @@ extern u16 lbl_80368550;
 #include "global.h"
 
 extern void OSSwitchFPUContext(void);
+extern void **OSExceptionTable_8036847C;
