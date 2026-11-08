@@ -994,3 +994,7 @@ void fn_80216900(void *arg0) {
 }
 extern u16 Scb_80339420[4];
 extern u16 lbl_80282268[8];
+#include "common.h"
+#include <dolphin/os.h>
+#include "global.h"
+extern u16 lbl_8029D210[18];
