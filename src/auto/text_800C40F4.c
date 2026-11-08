@@ -705,7 +705,7 @@ String *fn_800C9758(String *arg0, String *arg1, u32 pos, u32 n) {
     }
     return arg0;
 }
-#pragma dont_inline reset
+#pragma auto_inline reset
 
 String *fn_800C984C(String *arg0, u32 arg1, u32 arg2) {
     String *fn_800C94F8(String *, u32, u32, u32, u32);
