@@ -215,6 +215,10 @@ void fn_80220B44(u16 arg0, s32 arg1, s32 *arg2) {
     *arg2 = *(s32*)temp;
 }
 
+s32 fn_80220FC4(s32 arg0, s32 arg1) {
+    return (arg0 - arg1) * 0x1400 >> 0x10;
+}
+
 void fn_8022100C(u32 arg0) {
     // Based on disassembly, the code is directly manipulating __GXData which isn't directly accessible
     // This is an inline ASM replacement or needs to be done by accessing memory addresses
@@ -291,6 +295,12 @@ void fn_80222334(void)
         var_r3 += 0x10000;
 }
 
+void fn_80222890(void *arg0, s32 arg_sp8) {
+    fn_80222644(arg0);
+    *(u8*)((char*)arg0 + 0x1F) = (*(u8*)((char*)arg0 + 0x1F) & 0xFFFFFFFD);
+    *(s32*)((char*)arg0 + 0x18) = arg_sp8;
+}
+
 void fn_80222A3C(s32 *arg0, s32 arg1, s32 arg2) {
     extern u16 lbl_80367048;
     s32 var_r5;
@@ -348,6 +358,13 @@ void GXInitTlutRegion(s32 *arg0, s32 arg1, s32 arg2) {
     *arg0 = (*arg0 & ~0xFF000000) | 0x65000000;
 }
 
+void fn_80222EB4(void) {
+    *(u8 *)0xCC008000 = 0x61;
+    *(u32 *)0xCC008000 = 0x66001000;
+    *(u8 *)0xCC008000 = 0x61;
+    *(u32 *)0xCC008000 = 0x66001100;
+}
+
 extern u16* __GXData;
 s32 fn_80222EFC(s32 arg0) {
     s32 temp_r0;
@@ -377,6 +394,18 @@ void fn_802238A8(u8 arg0) {
     temp = gxData[0x2D6];
     temp = temp | 0x6;
     gxData[0x2D6] = temp;
+}
+
+void fn_80223914(s32 arg0, s32 arg1) {
+    if (arg0 == 0) {
+        if (arg1 <= 0) {
+            return;
+        }
+        OSReport("Error: Invalid texture ID %d\n", arg1);
+        return;
+    }
+    // Function continues with no further body, so just return
+    return;
 }
 
 void fn_80223978(void) {
@@ -416,6 +445,41 @@ void fn_80223A5C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     temp_r10 = temp_r9 | temp_r4;
     *(u8 *)0xCC008000 = temp_r10;
     *temp_r8 = temp_r10; 
+    *(u16 *)__GXData = 0;
+}
+
+u16 fn_80223AA0(u16 arg0) {
+    return __GXData[0x388 + arg0 * 0x10];
+}
+
+void fn_80223E5C(s32 arg0, u8 arg1, s32 arg2, s32 arg3, u8 arg4) {
+    u32 temp;
+    u32 r7_val;
+
+    *(u8 *)0xCC008000 = 0x61;
+    temp = (arg1 & 0xFF);
+    r7_val = 0xF3000000 | temp;
+    temp = ((arg4 << 8) & 0xFF00);
+    r7_val |= temp;
+    temp = ((arg0 << 0x10) & 0x70000);
+    r7_val |= temp;
+    temp = ((arg3 << 0x13) & 0x380000);
+    r7_val |= temp;
+    temp = ((arg2 << 0x16) & 0xC00000);
+    r7_val |= temp;
+    // The following lines are not necessary as they overwrite previous assignments with the same value
+    temp = ((arg4 << 0x14) & 0x30000);
+    r7_val |= temp;
+    temp = ((arg4 << 0x16) & 0xC0000);
+    r7_val |= temp;
+    temp = ((arg4 << 0x18) & 0x300000);
+    r7_val |= temp;
+    temp = ((arg4 << 0x19) & 0x3FC000);
+    r7_val |= temp;
+    temp = ((arg4 << 0x1A) & 0xC00000);
+    r7_val |= temp;
+    
+    *(u32 *)0xCC008000 = r7_val;
     *(u16 *)__GXData = 0;
 }
 
@@ -534,4 +598,10 @@ void fn_80225D3C(void) {
 extern u16 *__GXData;
 extern u16 *__GXData;
 extern u16 *__GXData;
+extern u16 *__GXData;
+#include "common.h"
+#include <dolphin/os.h>
+#include "global.h"
+#include "structs.h"
+
 extern u16 *__GXData;
