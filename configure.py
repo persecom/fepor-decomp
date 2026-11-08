@@ -345,6 +345,7 @@ config.libs = [
             Object(NonMatching, "auto/text_80225E30.c"),
             Object(NonMatching, "auto/text_8022C518.c"),
             Object(NonMatching, "auto/text_8022CD68.c"),
+            Object(NonMatching, "dolphin/si/SIBios.c"),
             Object(NonMatching, "auto/text_8023C53C.c"),
             Object(NonMatching, "auto/text_8026649C.c"),
             Object(NonMatching, "auto/text_80006258.c"),
