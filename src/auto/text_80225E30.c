@@ -271,6 +271,20 @@ u32 fn_80229030(void) {
     return *(u32 *)(gTRKCPUState + 0x80);
 }
 
+s32 fn_80229040(u32 rangeStart, u32 rangeEnd, s32 stepOver) {
+    s32 error = 0;
+
+    if (stepOver) {
+        error = 0x703;
+    } else {
+        lbl_8029E584.type = 1;
+        lbl_8029E584.rangeStart = rangeStart;
+        lbl_8029E584.rangeEnd = rangeEnd;
+        error = TRKTargetDoStep();
+    }
+    return error;
+}
+
 void EnableMetroTRKInterrupts(void) {
     M2C_UNK fn_8022B120();
     fn_8022B120();
