@@ -457,6 +457,11 @@ void fn_80245290(u32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
+s32 fn_80246288(s32 arg0, s32 arg1)
+{
+    return (arg0 + 1) * (arg1 + 1);
+}
+
 void fn_80247F1C(s32 arg0, u8 arg1, s32 arg2) {
     extern u16 lbl_8034BED0[];
     u8 var_r3;
@@ -3507,3 +3512,22 @@ extern u16 lbl_803596F0[16];
 extern u32* lbl_80368950;
 extern u8* lbl_803688E4;
 extern u16* lbl_803688EC;
+#include "common.h"
+
+typedef struct {
+    s32 field_0x0;
+    s32 field_0x4;
+    s32 field_0x8;
+    s16 field_0xC;
+    s16 field_0xE;
+    s32 field_0x10;
+    s32 field_0x14;
+    s32 field_0x18;
+    s32 field_0x1C;
+} Struct_80246288;
+
+extern u16 lbl_80366F28;
+extern char lbl_80282AE8[];
+extern s32 lbl_80368960;
+extern s32 lbl_80368964;
+extern s32 lbl_80368968;
