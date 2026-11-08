@@ -109,6 +109,8 @@ extern u16 InterruptHandlerTable_803684C8[];
 extern u16 StopAtNextInt_80368530;
 extern u16 lbl_80368550;
 
+#pragma auto_inline off
+
 void OSRegisterResetFunction(OSResetFunctionInfo *info) {
     OSResetFunctionInfo *tmp;
     OSResetFunctionInfo *iter;
@@ -184,6 +186,68 @@ void fn_802089A4(u32 resetCode) {
     __VIRegs[1] = 0;
     ICFlashInvalidate();
     Reset(resetCode * 8);
+}
+
+void OSDisableScheduler(void);
+void OSEnableScheduler(void);
+u8 *__OSLockSram(void);
+BOOL __OSUnlockSram(BOOL commit);
+void __OSStopAudioSystem(void);
+BOOL __PADDisableRecalibration(BOOL disable);
+void LCDisable(void);
+void OSReport(const char *msg, ...);
+void *memset(void *dst, int val, u32 n);
+extern u32 bootThisDol_803684F0;
+void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu) {
+    BOOL disableRecalibration;
+
+    OSDisableScheduler();
+    if (reset == 1 && forceMenu) {
+        u8 *sram;
+
+        sram = __OSLockSram();
+        sram[0x13] |= 0x40;
+        __OSUnlockSram(TRUE);
+        resetCode = 0;
+    }
+    if (reset == 2 || (reset == 0 && (bootThisDol_803684F0 || resetCode + 0x3FFF0000 == 0))) {
+        __OSStopAudioSystem();
+        disableRecalibration = __PADDisableRecalibration(TRUE);
+        while (!__OSCallResetFunctions(FALSE))
+            ;
+        while (!__OSSyncSram())
+            ;
+        OSDisableInterrupts();
+        __OSCallResetFunctions(TRUE);
+        LCDisable();
+        __PADDisableRecalibration(disableRecalibration);
+        KillThreads();
+    } else {
+        __OSStopAudioSystem();
+        while (!__OSCallResetFunctions(FALSE))
+            ;
+        while (!__OSSyncSram())
+            ;
+        OSDisableInterrupts();
+        __OSCallResetFunctions(TRUE);
+        LCDisable();
+        KillThreads();
+    }
+    if (reset == 1) {
+        fn_802089A4(resetCode);
+    } else if (reset == 0) {
+        if (forceMenu == TRUE) {
+            OSReport("OSResetSystem(): You can't specify TRUE to forceMenu if you restart. Ignored\n");
+        }
+        OSEnableScheduler();
+        __OSReboot(resetCode, bootThisDol_803684F0);
+    }
+    memset((void *)0x80000040, 0, 0xCC - 0x40);
+    memset((void *)0x800000D4, 0, 0xE8 - 0xD4);
+    memset((void *)0x800000F4, 0, 0xF8 - 0xF4);
+    memset((void *)0x80003000, 0, 0xC0);
+    memset((void *)0x800030C8, 0, 0xD4 - 0xC8);
+    memset((void *)0x800030E2, 0, 1);
 }
 
 u32 OSGetResetCode(void) {
