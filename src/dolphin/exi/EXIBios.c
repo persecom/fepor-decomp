@@ -6,7 +6,25 @@ extern char lbl_80282AE8[];
 extern char lbl_80282B20[];
 extern u8 lbl_8034C110[];
 extern f64 lbl_8036C368;
-extern u16 Ecb_8033E188[192];u16 *D_80256B30;
+typedef struct EXIControl {
+    void (*exiCallback)(s32 chan, void *context);
+    void (*tcCallback)(s32 chan, void *context);
+    void (*extCallback)(s32 chan, void *context);
+    volatile u32 state;
+    int immLen;
+    u8 *immBuf;
+    u32 dev;
+    u32 id;
+    s32 idTime;
+    int items;
+    struct {
+        u32 dev;
+        void (*callback)(s32 chan, void *context);
+    } queue[3];
+} EXIControl;
+
+extern EXIControl Ecb_8033E188[3];
+u16 *D_80256B30;
 extern s32 lbl_803687F8;
 extern f32 lbl_8036C374;
 extern s32 lbl_80368A28;
