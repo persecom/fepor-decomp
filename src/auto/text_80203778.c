@@ -113,7 +113,21 @@ typedef struct OSResetFunctionQueue {
 extern OSResetFunctionQueue ResetFunctionQueue_803684E8;
 
 typedef struct OSContext {
-    u8 data[0x2C8];
+    u32 gpr[32];
+    u32 cr;
+    u32 lr;
+    u32 ctr;
+    u32 xer;
+    f64 fpr[32];
+    u32 fpscr_pad;
+    u32 fpscr;
+    u32 srr0;
+    u32 srr1;
+    u16 mode;
+    u16 state;
+    u32 gqr[8];
+    u32 psf_pad;
+    f64 psf[32];
 } OSContext;
 
 void OSRegisterResetFunction(OSResetFunctionInfo *info);
@@ -755,21 +769,18 @@ extern void OSLoadContext(void *);
 void __OSUnhandledException(u8 exception, OSContext *context, u32 dsisr, u32 dar) {
     u32 enableBits;
     s32 msr;
-    u32 timeLo;
-    u32 timeHi;
     OSErrorHandler *table;
     char *msgs;
     u32 srr1;
     OSErrorHandler handler;
     void *fpuContext;
-    u32 nowParts[2];
+    u32 fpscr;
+    s64 now;
 
     table = __OSErrorTable;
     msgs = lbl_8029BFB8;
 
-    *(s64 *)nowParts = OSGetTime();
-    timeHi = nowParts[0];
-    timeLo = nowParts[1];
+    now = OSGetTime();
     srr1 = *(u32 *)((u8 *)context + 0x19C);
 
     if (!(srr1 & 2)) {
@@ -785,8 +796,9 @@ void __OSUnhandledException(u8 exception, OSContext *context, u32 dsisr, u32 dar
         if (fpuContext != 0) {
             OSSaveFPUContext(fpuContext);
         }
+        fpscr = PPCMffpscr();
         enableBits = 0x60060000 - 0x701;
-        PPCMtfpscr(PPCMffpscr() & enableBits);
+        PPCMtfpscr(fpscr & enableBits);
         PPCMtmsr((u32)msr);
 
         if (*(void **)0x800000D8 == context) {
@@ -823,7 +835,7 @@ dump:
     OSReport(&lbl_80366F3C);
     OSDumpContext(context);
     OSReport(msgs + 0x94, dsisr, dar);
-    OSReport(msgs + 0xC8, timeHi, timeLo);
+    OSReport(msgs + 0xC8, (u32)(now >> 32), (u32)now);
 
     switch (exception) {
     case 2:
