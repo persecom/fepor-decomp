@@ -2104,9 +2104,6 @@ void fn_802514D0(void *arg0, s32 arg1) {
     }
 }
 
-u16 fn_8025FC64(u8 arg0, u8 arg1, u8 arg2);
-s32 fn_8022C568(f32 arg0);
-void fn_80261934(u8 arg0, void *arg1, s32 arg2);
 void fn_80251A44(SynthVoice *sv, u32 *arg1) {
     extern f32 lbl_8029FF7C[];
     extern s32 lbl_8029F1CC[];
