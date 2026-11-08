@@ -2236,7 +2236,7 @@ void fn_8017AA48(s32 arg0, s32 arg1, s32 arg2) {
 
 s32 fn_80105A5C();
 #pragma cplusplus on
-extern "C" void fn_801547E4(s16, s16, s32, s32, u8, s32, s32, f32);
+extern "C" void fn_801547E4(s16, s16, s16, s16, u8, s32, s32, f32);
 extern "C" void fn_8017B4A8(void *arg0, s32 arg1) {
     struct Obj {
         virtual void v0() = 0;
