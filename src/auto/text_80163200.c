@@ -2971,3 +2971,4 @@ extern void *lbl_8028D9A4[];
 extern u8 lbl_80367220;
 extern s32 lbl_80367228;
 extern s32 lbl_8036722C;
+#include <common.h>
