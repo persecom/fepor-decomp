@@ -257,9 +257,8 @@ void* fn_8021F260(void* arg0) {
 }
 
 void fn_8021F338(u8 en) {
-    extern u16 *__GXData;
-    extern u16 *__cpReg;
-    u16 *gx = __GXData;
+    extern u16* const __GXData;
+    extern u16* __cpReg;
     u32 b;
 
     if (en != 0) {
@@ -267,8 +266,8 @@ void fn_8021F338(u8 en) {
     } else {
         b = 0;
     }
-    M2C_FIELD(gx, u32 *, 0x8) = (M2C_FIELD(gx, u32 *, 0x8) & ~0x10) | ((b << 4) & 0x10);
-    __cpReg[1] = (u16)M2C_FIELD(gx, u32 *, 0x8);
+    M2C_FIELD(__GXData, u32 *, 0x8) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x8), b, 4, 27, 27);
+    __cpReg[1] = (u16) M2C_FIELD(__GXData, u32 *, 0x8);
 }
 
 s32 fn_8021F4CC(void) {
@@ -316,6 +315,10 @@ void fn_80220154(s32 arg0, s32 arg1, u8 arg2) {
 
 void fn_80220198(void) {
     *(s8 *)0xCC008000 = 0x48;
+}
+
+void fn_802206F4(void) {
+    OSGetTime();
 }
 
 u16 fn_80220970(void) {
