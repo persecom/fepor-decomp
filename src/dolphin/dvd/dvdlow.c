@@ -35,10 +35,6 @@ u8 ErrorCode2Num(s32);
 extern u8 lbl_802820B8[];
 extern u32 lbl_80368448;
 
-static u32 lbl_803392E8[8];
-static u32 lbl_80339308[8];
-static s16 lbl_80339328[8];
-static s16 lbl_80339338[8];
 
 extern s32 lbl_803679F0;
 
@@ -184,7 +180,6 @@ void fn_8020B84C(void) {
 }
 
 void fn_8020BA50(void *addr, u32 length, u32 offset, void *callback) {
-    extern DVDCommand CommandList_80339E70[3];
     extern s32 NextCommandNumber_80368574;
     extern u32 WorkAroundSeekLocation_80368558;
     u32 offsetToSeek;
