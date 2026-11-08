@@ -175,6 +175,28 @@ s32 fn_8020C79C(void) {
     return 1;
 }
 
+BOOL fn_8020C920(s32 entrynum, char *path, u32 maxlen) {
+    u32 loc;
+
+    loc = fn_8020C7C0((u32)entrynum, path, maxlen);
+
+    if (loc == maxlen) {
+        path[maxlen - 1] = '\0';
+        return FALSE;
+    }
+
+    if (entryIsDir(entrynum)) {
+        if (loc == maxlen - 1) {
+            path[loc] = '\0';
+            return FALSE;
+        }
+        path[loc++] = '/';
+    }
+
+    path[loc] = '\0';
+    return TRUE;
+}
+
 s32 fn_8020CA74(s32 arg0, u32 arg1) {
     s32 r31;
     s32 result;
@@ -183,7 +205,7 @@ s32 fn_8020CA74(s32 arg0, u32 arg1) {
     r31 = lbl_80368588;
     
     // Call fn_8020C7C0(r31, arg0, arg1) (r3 = arg1, r4 = arg0)
-    result = fn_8020C7C0(r31, arg0, arg1);
+    result = fn_8020C7C0(r31, (char *)arg0, arg1);
     
     if (result == arg1) {
         // Directly return 0
