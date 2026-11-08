@@ -239,6 +239,29 @@ BOOL fn_8023B270(BOOL enable) {
     return rc;
 }
 
+BOOL fn_8023B308(void *handler) {
+    BOOL enabled;
+    int i;
+
+    enabled = OSDisableInterrupts();
+    for (i = 0; i < 4; i++) {
+        if ((void *)lbl_8033E3E8[i] == handler) {
+            OSRestoreInterrupts(enabled);
+            return TRUE;
+        }
+    }
+    for (i = 0; i < 4; i++) {
+        if (lbl_8033E3E8[i] == 0) {
+            lbl_8033E3E8[i] = (u32)handler;
+            fn_8023B270(TRUE);
+            OSRestoreInterrupts(enabled);
+            return TRUE;
+        }
+    }
+    OSRestoreInterrupts(enabled);
+    return FALSE;
+}
+
 s32 fn_8023B3D4(u32 arg0) {
     M2C_UNK OSRestoreInterrupts(s32);
     M2C_UNK fn_8023B270(M2C_UNK);
