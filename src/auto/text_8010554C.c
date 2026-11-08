@@ -14,10 +14,10 @@ static inline void *GetUnitIfBitSet(u32 *bits, u8 id) {
         bits++;
         n -= 32;
     }
-    if (*bits & (1 << n)) {
-        return fn_80019DF0(id);
+    if (!(*bits & (1 << n))) {
+        return NULL;
     }
-    return NULL;
+    return fn_80019DF0(id);
 }
 
 void fn_8010554C(void) {
@@ -108,107 +108,15 @@ void fn_80105A30(s32 arg0, s32 arg1) {
 }
 
 s32 fn_80105A5C(s32 *arg0) {
-    void *fn_80019DF0(u8);
-    s32 *var_r5;
-    s32 *var_r5_2;
-    s32 temp_r0;
-    s32 temp_r0_2;
-    s32 var_r30;
-    u32 temp_r3;
-    u32 temp_r3_2;
-    u32 var_ctr;
-    u32 var_ctr_2;
-    u32 var_ctr_3;
-    u32 var_ctr_4;
-    u32 var_r4;
-    u32 var_r4_2;
-    u8 var_r29;
-    u8 var_r31;
-    u8 var_r6;
-    void *var_r3;
-    void *var_r3_2;
+    s32 total = 0;
+    u8 i;
 
-    var_r30 = 0;
-    var_r29 = 0;
-loop_28:
-    if (var_r29 < 0x62U) {
-        var_r31 = var_r29;
-        var_r6 = var_r31;
-        if (var_r31 < 0) {
-            var_r3 = NULL;
-        } else {
-            var_r5 = arg0;
-            var_r4 = var_r31 >> 5U;
-            if ((s32) var_r31 >= 0x20) {
-                temp_r3 = var_r4 >> 3U;
-                temp_r0 = -(var_r4 << 5);
-                var_ctr = temp_r3;
-                if (temp_r3 != 0) {
-                    do {
-                        var_r5 += 0x20;
-                        var_ctr -= 1;
-                    } while (var_ctr != 0);
-                    var_r4 &= 7;
-                    if (var_r4 != 0) {
-                        goto block_7;
-                    }
-                } else {
-block_7:
-                    var_ctr_2 = var_r4;
-                    do {
-                        var_r5 += 4;
-                        var_ctr_2 -= 1;
-                    } while (var_ctr_2 != 0);
-                }
-                var_r6 += temp_r0;
-            }
-            if (!(*var_r5 & (1 << var_r6))) {
-                var_r3 = NULL;
-            } else {
-                var_r3 = fn_80019DF0(var_r29);
-            }
+    for (i = 0; i < 0x62; i++) {
+        if (GetUnitIfBitSet((u32 *)arg0, i) != NULL) {
+            total += M2C_FIELD(GetUnitIfBitSet((u32 *)arg0, i), u8 *, 0x1A);
         }
-        if (var_r3 != NULL) {
-            if ((s32) var_r31 < 0) {
-                var_r3_2 = NULL;
-            } else {
-                var_r5_2 = arg0;
-                var_r4_2 = var_r31 >> 5U;
-                if ((s32) var_r31 >= 0x20) {
-                    temp_r3_2 = var_r4_2 >> 3U;
-                    temp_r0_2 = -(var_r4_2 << 5);
-                    var_ctr_3 = temp_r3_2;
-                    if (temp_r3_2 != 0) {
-                        do {
-                            var_r5_2 += 0x20;
-                            var_ctr_3 -= 1;
-                        } while (var_ctr_3 != 0);
-                        var_r4_2 &= 7;
-                        if (var_r4_2 != 0) {
-                            goto block_20;
-                        }
-                    } else {
-block_20:
-                        var_ctr_4 = var_r4_2;
-                        do {
-                            var_r5_2 += 4;
-                            var_ctr_4 -= 1;
-                        } while (var_ctr_4 != 0);
-                    }
-                    var_r31 += temp_r0_2;
-                }
-                if (!(*var_r5_2 & (1 << var_r31))) {
-                    var_r3_2 = NULL;
-                } else {
-                    var_r3_2 = fn_80019DF0(var_r29);
-                }
-            }
-            var_r30 += M2C_FIELD(var_r3_2, u8 *, 0x1A);
-        }
-        var_r29 += 1;
-        goto loop_28;
     }
-    return var_r30;
+    return total;
 }
 
 s32 fn_80105BC0(void *arg0, u8 arg1) {
