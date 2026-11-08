@@ -2133,27 +2133,7 @@ void fn_80251A44(SynthVoice *sv, u32 *arg1) {
     M2C_FIELD(sv, u32 *, 0x118) |= 0x100;
 }
 
-static void SelectSource(void *svoice, void *dest, u32 *cstep, u64 tstflag, u32 dirtyflag) {
-    u8 comb;
-    s32 scale;
-    u32 inv;
-
-    if ((*(u64 *)((u8 *)svoice + 0x114) & tstflag) == 0) {
-        *(u64 *)((u8 *)svoice + 0x114) |= tstflag;
-        comb = 0;
-    } else {
-        comb = cstep[1];
-    }
-    scale = (s32)(cstep[0] & 0xFFFF0000) / 100;
-    if (scale < 0) {
-        scale -= ((s8)(cstep[1] >> 16) << 8) / 100;
-    } else {
-        scale += ((s8)(cstep[1] >> 16) << 8) / 100;
-    }
-    inv = (cstep[1] >> 8) & 0xFF;
-    fn_8025FFC8(dest, cstep[0] >> 8, scale, comb, inv != 0, inv);
-    *(u32 *)((u8 *)svoice + 0x220) |= dirtyflag;
-}
+#include "musyx/select_source.h"
 
 void fn_80251DEC(Voice *arg0, u32 *arg1) {
     u32 time;
