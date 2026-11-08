@@ -3311,3 +3311,4 @@ extern u32* lbl_803672CC;
 
 extern u32 jumptable_8028561C[];
 extern u32 jumptable_802855E4[];
+#include "global.h"
