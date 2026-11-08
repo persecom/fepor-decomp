@@ -254,8 +254,9 @@ BOOL EXIClearInterrupts(s32 chan, BOOL exi, BOOL tc, BOOL ext) {
 BOOL OSDisableInterrupts(void);
 BOOL OSRestoreInterrupts(BOOL level);
 s64 OSGetTime(void);
+#pragma scheduling off
 BOOL __EXIProbe(s32 chan) {
-    u8 *exi = (u8 *)Ecb_8033E188 + chan * 0x40;
+    EXIControl *exi = &Ecb_8033E188[chan];
     BOOL enabled;
     BOOL rc;
     u32 cpr;
@@ -267,37 +268,37 @@ BOOL __EXIProbe(s32 chan) {
 
     rc = TRUE;
     enabled = OSDisableInterrupts();
-    cpr = *(volatile u32 *)(0xCC006800 + chan * 0x14);
-    if (!(*(u32 *)(exi + 0xC) & 8)) {
+    cpr = __EXIRegs[chan * 5];
+    if (!(exi->state & 8)) {
         if (cpr & 0x800) {
             EXIClearInterrupts(chan, FALSE, FALSE, TRUE);
-            *(u32 *)(exi + 0x20) = 0;
-            ((s32 *)0x800030C0)[chan] = 0;
+            exi->idTime = 0;
+            __EXIProbeStartTime[chan] = 0;
         }
 
         if (cpr & 0x1000) {
             t = (s32)(OSGetTime() / ((*(u32 *)0x800000F8 / 4) / 1000) / 100) + 1;
-            if (((s32 *)0x800030C0)[chan] == 0) {
-                ((s32 *)0x800030C0)[chan] = t;
+            if (__EXIProbeStartTime[chan] == 0) {
+                __EXIProbeStartTime[chan] = t;
             }
-            if (t - ((s32 *)0x800030C0)[chan] < 3) {
+            if (t - __EXIProbeStartTime[chan] < 3) {
                 rc = FALSE;
             }
         } else {
-            *(u32 *)(exi + 0x20) = 0;
-            ((s32 *)0x800030C0)[chan] = 0;
+            exi->idTime = 0;
+            __EXIProbeStartTime[chan] = 0;
             rc = FALSE;
         }
     } else if (!(cpr & 0x1000) || (cpr & 0x800)) {
-        *(u32 *)(exi + 0x20) = 0;
-        ((s32 *)0x800030C0)[chan] = 0;
+        exi->idTime = 0;
+        __EXIProbeStartTime[chan] = 0;
         rc = FALSE;
     }
     OSRestoreInterrupts(enabled);
 
     return rc;
 }
-
+#pragma scheduling reset
 s32 fn_80239508(s32 arg0) {
     s32 temp_r4;
     s32 var_r3;
