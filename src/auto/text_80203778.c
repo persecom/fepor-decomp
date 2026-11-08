@@ -12,6 +12,10 @@ extern s32 fn_80013E60(s32, s32);
 extern s32 fn_80013E74(void*, s32);
 extern u32 *fn_80207768(void);
 
+static inline BOOL IsSjisTrailByte(u8 c) {
+    return (0x40 <= c && c <= 0xFC) && c != 0x7F;
+}
+
 
 extern s32 lbl_80368614;
 extern void (*lbl_803685E8)(void);
@@ -770,6 +774,44 @@ void fn_802068D4(void) {
     r29 = 0;
     
     __OSArenaLo_80366F30 = (u32)&r31;
+}
+
+int fn_80206FB8(u16 encode, u16 code) {
+    extern u16 lbl_8029C2E8[];
+    extern u16 lbl_8029C468[];
+    int i;
+    int j;
+
+    if (encode == 1) {
+        if (0x20 <= code && code <= 0xDF) {
+            return lbl_8029C2E8[code - 0x20];
+        } else if (0x889E < code && code <= 0x9872) {
+            i = ((code >> 8) - 0x88) * 188;
+            j = code & 0xFF;
+            if (!((0x40 <= (u8)j && (u8)j <= 0xFC) && (u8)j != 0x7F)) {
+                return 0;
+            }
+            j -= 0x40;
+            if (0x40 <= j) {
+                j--;
+            }
+            return i + j + 0x2BE;
+        } else if (0x8140 <= code && code < 0x879E) {
+            i = ((code >> 8) - 0x81) * 188;
+            j = code & 0xFF;
+            if (!((0x40 <= (u8)j && (u8)j <= 0xFC) && (u8)j != 0x7F)) {
+                return 0;
+            }
+            j -= 0x40;
+            if (0x40 <= j) {
+                j--;
+            }
+            return lbl_8029C468[i + j];
+        }
+    } else if (0x20 < code && code <= 0xFF) {
+        return code - 0x20;
+    }
+    return 0;
 }
 
 u16 fn_802072A0(void) {
