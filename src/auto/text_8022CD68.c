@@ -355,36 +355,22 @@ void fn_80243F14(void *arg0, u8 *arg1) {
     M2C_FIELD(arg0, u8 **, 0) = (u8 *) (M2C_FIELD(arg0, u8 **, 0) + 1);
 }
 
-s32 fn_80243F50(s32 arg0) {
-    extern u32 *lbl_80368974;
-    extern u32 *lbl_80368970;
+u32 fn_80243F50(u32 arg0) {
+    extern SynthVoice *lbl_80368970;
+    extern SynthVoice *lbl_80368974;
+    SynthVoice *p;
 
-    s32 temp_r3;
-    u32 *var_r4;
-
-    temp_r3 = arg0 & 0x7FFFFFFF;
-    var_r4 = lbl_80368974;
-
-    while (1) {
-        if (var_r4 == NULL) {
-            var_r4 = lbl_80368970;
-            while (1) {
-                if (var_r4 == NULL) {
-                    return -1;
-                }
-                if ((u32) *(var_r4 + 0x0C/4) == temp_r3) {
-                    u32 temp = *(var_r4 + 0x09/4);
-                    return (temp & ~0x80000000) | (arg0 & 0x80000000);
-                }
-                var_r4 = *(u32**) (var_r4 + 0x00/4);
-            }
+    for (p = lbl_80368974; p != NULL; p = p->next) {
+        if (p->vid == (arg0 & 0x7FFFFFFF)) {
+            return p->id | (arg0 & 0x80000000);
         }
-        if ((u32) *(var_r4 + 0x0C/4) == temp_r3) {
-            u32 temp = *(var_r4 + 0x09/4);
-            return (temp & ~0x80000000) | (arg0 & 0x80000000);
-        }
-        var_r4 = *(u32**) (var_r4 + 0x00/4);
     }
+    for (p = lbl_80368970; p != NULL; p = p->next) {
+        if (p->vid == (arg0 & 0x7FFFFFFF)) {
+            return p->id | (arg0 & 0x80000000);
+        }
+    }
+    return -1;
 }
 
 void fn_80244A84(void *arg0) {
