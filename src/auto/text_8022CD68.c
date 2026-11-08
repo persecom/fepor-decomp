@@ -1157,6 +1157,10 @@ void fn_80251E88(Voice *arg0, u32 *arg1) {
     arg0->flags |= 0x2000;
 }
 
+void fn_80252460(void *arg0, u32 *arg1) {
+    SelectSource(arg0, (u8 *)arg0 + 0x224, arg1, 0x80000, 1);
+}
+
 void fn_80252668(void *arg0, u32 *arg1) {
     SelectSource(arg0, (u8 *)arg0 + 0x290, arg1, 0x200000, 8);
 }
