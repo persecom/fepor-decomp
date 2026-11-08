@@ -340,6 +340,7 @@ config.libs = [
             Object(NonMatching, "dolphin/os/OSResetSW.c"),
             Object(NonMatching, "dolphin/dvd/dvdlow.c", mw_version="GC/1.2.5n"),
             Object(NonMatching, "dolphin/dvd/dvdfs.c"),
+            Object(NonMatching, "dolphin/pad/Pad.c"),
             Object(NonMatching, "auto/text_80216994.c", mw_version="GC/1.2.5n"),
             Object(NonMatching, "auto/text_8021D7FC.c"),
             Object(NonMatching, "auto/text_80225E30.c"),

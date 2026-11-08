@@ -315,7 +315,10 @@ dolphin/dvd/dvdlow.c:
 	.text       start:0x8020B52C end:0x8020C3A8
 
 dolphin/dvd/dvdfs.c:
-	.text       start:0x8020C3A8 end:0x80216994
+	.text       start:0x8020C3A8 end:0x80211DD4
+
+dolphin/pad/Pad.c:
+	.text       start:0x80211DD4 end:0x80216994
 
 auto/text_80216994.c:
 	.text       start:0x80216994 end:0x8021D7FC
