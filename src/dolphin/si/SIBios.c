@@ -361,8 +361,8 @@ void fn_8023B99C(void)
 }
 
 void fn_8023BB34(void *alarm, void *context) {
-    extern SIAlarm lbl_8033E2C8[];
-    extern SIPacket Packet_8033E248[];
+    extern SIAlarm lbl_8033E2C8[4];
+    extern SIPacket Packet_8033E248[4];
     s32 fn_8023B57C(s32, void *, u32, void *, u32, void *);
     s32 chan;
     SIPacket *packet;
