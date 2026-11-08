@@ -71,6 +71,50 @@ s32 fn_801833F8(void) {
     return 0x90;
 }
 
+void fn_80183434(void *arg0, void *arg1) {
+    M2C_UNK fn_80009C0C(f32);
+    M2C_UNK fn_8000A248();
+    M2C_UNK fn_8000A258();
+    u32 fn_800102BC(M2C_UNK, f32, f32);
+    M2C_UNK fn_8008AB7C(s32, s32, s32, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_8008C1D8(M2C_UNK, M2C_UNK, M2C_UNK, s32, M2C_UNK);
+    extern f32 lbl_8036ACC4;
+    extern f32 lbl_8036ACC8;
+    extern f32 lbl_8036ACCC;
+    extern f32 lbl_8036ACD0;
+    M2C_UNK var_r28;
+    f32 temp_f2;
+    s16 temp_r31;
+    s16 temp_r3_2;
+    s32 temp_r29;
+    s32 temp_r30;
+    s8 temp_r28;
+    u32 temp_r3;
+
+    temp_r28 = (s8) M2C_FIELD(arg1, u8 *, 0x60);
+    M2C_FIELD(M2C_FIELD(arg0, void **, 4), M2C_UNK (**)(), 0x7C)();
+    fn_8008C1D8(0, 0, 0x90, (temp_r28 << 5) + 0x20, 3);
+    if ((s16) M2C_FIELD(arg1, s16 *, 0x3A) >= 5) {
+        fn_8000A258();
+        fn_80009C0C(lbl_8036ACC4);
+        fn_8000A248();
+        var_r28 = 0;
+        if (((u8) M2C_FIELD(arg1, u8 *, 0x2D) == 0) && ((u8) M2C_FIELD(arg1, u8 *, 0x2E) == 0)) {
+            var_r28 = 1;
+        }
+        temp_f2 = (f32) M2C_FIELD(M2C_FIELD(arg0, void **, 4), s16 (**)(void *), 0x50)(arg0);
+        temp_r29 = (s32) (lbl_8036ACCC * temp_f2);
+        temp_r3 = fn_800102BC(-1, lbl_8036ACC8, temp_f2);
+        temp_r31 = M2C_FIELD(arg1, s16 *, 0x3A);
+        temp_r30 = (s32) ((temp_r3 >> 0x1FU) + temp_r3) >> 1;
+        temp_r3_2 = M2C_FIELD(M2C_FIELD(arg0, void **, 4), s16 (**)(void *), 0x50)(arg0);
+        fn_8008AB7C((s32) (((u32) temp_r3_2 >> 0x1FU) + temp_r3_2) >> 1, temp_r31 + temp_r30, temp_r29, 0x18, 0x19, 0x4B, var_r28);
+        fn_8000A258();
+        fn_80009C0C(lbl_8036ACD0);
+        fn_8000A248();
+    }
+}
+
 void fn_80183584(void) {
     extern u8 lbl_803681F0;
     extern u8 lbl_80278BB8[];
@@ -1435,6 +1479,10 @@ void fn_80192EE8(void *arg0) {
     }
 }
 
+void fn_80193540(void* unit) {
+    // Implementation to be written
+}
+
 #pragma cplusplus on
 extern "C" void *fn_801938F8(void *arg0) {
     struct Obj {
@@ -1677,6 +1725,59 @@ void fn_8019588C(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, f32 *, 0x14) = (f32) M2C_FIELD(arg0, f32 *, 0x10);
     M2C_FIELD(arg0, f32 *, 0x18) = (f32) arg1;
     M2C_FIELD(arg0, f32 *, 0x1C) = (f32) lbl_8036AE50;
+}
+
+#pragma dont_inline on
+void fn_801958C8(void *arg0, s32 arg1, void *arg2) {
+    f32 temp_f0, temp_f1, temp_f2;
+    s32 temp_r3;
+    s32 var_r6;
+    s32 var_r7;
+    u8 temp_r0;
+    void *temp_r10;
+    void *temp_r5;
+    void *var_r8;
+    void *var_r9;
+
+    var_r7 = 0;
+    temp_r5 = (void*)((u8*)arg0 + ((*(u8*)((u8*)arg0 + 0x8) * 0xC) + 0xA0));
+    *(f32*)((u8*)temp_r5 + 0x0) = *(f32*)((u8*)arg2 + 0x0);
+    *(f32*)((u8*)temp_r5 + 0x4) = *(f32*)((u8*)arg2 + 0x4);
+    *(f32*)((u8*)temp_r5 + 0x8) = *(f32*)((u8*)arg2 + 0x8);
+    *(s32*)((u8*)arg0 + (*(u8*)((u8*)arg0 + 0x8) * 4) + 0x20) = arg1;
+    *(u8*)((u8*)arg0 + 0x8) = *(u8*)((u8*)arg0 + 0x8) + 1;
+loop_7:
+    temp_r0 = *(u8*)((u8*)arg0 + 0x8);
+    if (var_r7 < (s32)temp_r0) {
+        var_r8 = arg0;
+        var_r9 = arg0;
+        var_r6 = 0;
+loop_5:
+        if (var_r6 < (s32)((*(u8*)((u8*)arg0 + 0x8) - var_r7) - 1)) {
+            temp_r3 = *(s32*)((u8*)var_r8 + 0x20);
+            if (temp_r3 > *(s32*)((u8*)var_r8 + 0x24)) {
+                *(s32*)((u8*)var_r8 + 0x20) = *(s32*)((u8*)var_r8 + 0x24);
+                *(s32*)((u8*)var_r8 + 0x24) = temp_r3;
+                temp_r10 = (void*)((u8*)arg0 + (((var_r6 + 1) * 0xC) + 0xA0));
+                temp_f0 = *(f32*)((u8*)var_r9 + 0xA0);
+                *(f32*)((u8*)var_r9 + 0xA0) = *(f32*)((u8*)temp_r10 + 0x0);
+                temp_f1 = *(f32*)((u8*)var_r9 + 0xA4);
+                *(f32*)((u8*)var_r9 + 0xA4) = *(f32*)((u8*)temp_r10 + 0x4);
+                temp_f2 = *(f32*)((u8*)var_r9 + 0xA8);
+                *(f32*)((u8*)var_r9 + 0xA8) = *(f32*)((u8*)temp_r10 + 0x8);
+                *(f32*)((u8*)temp_r10 + 0x0) = temp_f0;
+                *(f32*)((u8*)temp_r10 + 0x4) = temp_f1;
+                *(f32*)((u8*)temp_r10 + 0x8) = temp_f2;
+            }
+            var_r8 = (void*)((u8*)var_r8 + 0x4);
+            var_r9 = (void*)((u8*)var_r9 + 0xC);
+            var_r6 += 1;
+            goto loop_5;
+        }
+        var_r7 += 1;
+        goto loop_7;
+    }
+    *(f32*)((u8*)arg0 + 0x18) = *(f32*)((u8*)arg0 + (*(u8*)((u8*)arg0 + 0x8) * 4) + 0x1C);
 }
 
 void fn_80196018(void *arg0) {
@@ -3483,3 +3584,12 @@ extern u16 lbl_80295A78[36];
 extern f32 lbl_8036ACE0;
 extern f32 lbl_8036ACD8;
 extern f32 lbl_8036ACE8;
+#include "common.h"
+#include "global.h"
+#pragma optimization_level 4
+#pragma inline auto
+
+extern u16 lbl_802EF4E0;
+extern f32 lbl_8036AF00;
+extern f32 lbl_8036AF08;
+extern f32 lbl_8036AF20;
