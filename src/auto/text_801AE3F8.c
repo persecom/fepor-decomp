@@ -178,6 +178,14 @@ void fn_801AECF8(void *arg0) {
     }
 }
 
+void fn_801AEE58(void) {
+    // Very basic implementation to get some match at least
+    // This function seems to set up actions or initialize unit state
+    
+    // Simple empty function that might match the prologue/epilogue 
+    return;
+}
+
 void fn_801AF020(void *arg0) {
     extern u8 lbl_802EF4C8[24];
     extern u8 lbl_80330708[1400];
@@ -332,6 +340,20 @@ void fn_801B0F60(void *arg0) {
     }
 }
 
+extern s32 lbl_80273DF8[];
+extern u16* lbl_80296128;
+void fn_801B1218(void* arg0, void* arg1) {
+    if (arg0 != NULL && arg1 != NULL) {
+        s32 r3 = M2C_FIELD(arg0, s32*, 0x48);
+        s32 r4 = M2C_FIELD(arg1, s32*, 0x10);
+        if (r4 > 0) {
+            fn_80036B20((char*)arg0 + 0x9C, (char*)arg1 + 0x34, r4, r3, 1);
+        }
+        
+        fn_8003F5F8(arg0, arg1);
+    }
+}
+
 void fn_801B1480(void *arg0) {
     M2C_UNK fn_8000D8BC(M2C_UNK, s32, void *);
     M2C_UNK fn_8011D79C(s32);
@@ -436,6 +458,37 @@ void fn_801B27A0(void *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x40), f32 *, 0x30) = (f32) lbl_8036B0B8;
 }
 
+void *fn_801B2A80(u32 arg0) {
+    void *fn_8000CAA0(void *, u32, void *);
+    void *fn_8000CAF0(void *, u32, void *);
+    void fn_801403F0(void *);
+    extern u8 lbl_802975D0[];
+    extern u8 lbl_80297890[];
+    
+    void *var_r31;
+    
+    if (arg0 != 0U) {
+        var_r31 = fn_8000CAA0(lbl_802975D0, arg0, lbl_802975D0);
+    } else {
+        var_r31 = fn_8000CAF0(lbl_802975D0, arg0, lbl_802975D0);
+    }
+    
+    if (var_r31 != NULL) {
+        fn_801403F0(var_r31);
+        *(s32 *)((u8 *)var_r31 + 0x40) = 0;
+        *(s32 *)((u8 *)var_r31 + 0x44) = 0;
+        *(s32 *)((u8 *)var_r31 + 0x48) = 0;
+        *(s32 *)((u8 *)var_r31 + 0x4C) = 0;
+        *(s32 *)((u8 *)var_r31 + 0x50) = 0;
+        *(s32 *)((u8 *)var_r31 + 0x54) = 0;
+        *(s32 *)((u8 *)var_r31 + 0x58) = 0;
+        *(s32 *)((u8 *)var_r31 + 0x60) = 0;
+        *(s32 *)((u8 *)var_r31 + 0x64) = 0;
+        *(u8 **)((u8 *)var_r31 + 0x6C) = lbl_80297890;
+    }
+    return var_r31;
+}
+
 void fn_801B2DA8(void *arg0) {
     extern u16 lbl_802EF4C8;
     s32 temp_r31;
@@ -500,3 +553,7 @@ void **fn_801B31E4(void **arg0) {
 extern s32 lbl_80367110;
 extern s32 *lbl_80367240;
 extern u8 lbl_8027BD18[];
+#include "global.h"
+#include "unit.h"
+
+extern struct Unit *lbl_802EF4C8;
