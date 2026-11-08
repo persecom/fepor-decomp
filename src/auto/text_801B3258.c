@@ -104,6 +104,10 @@ typedef struct MsgBox {
     /* 0x1E8 */ u8 unk1E8[2];
 } MsgBox;
 
+static inline s32 MsgBoxPadHeight(s32 h, s32 pad) {
+    return h + pad;
+}
+
 void fn_801B3258(s32 arg0) {
     void *fn_8000CAA0(void *, void *);
     void *fn_800C4638(s32, void *, s32);
@@ -819,6 +823,10 @@ void fn_801B9500(struct Unit *unit, s32 arg1) {
 }
 
 void fn_801B9748(void*a){void*fn_8013FF94(void*,s32,s32);s32 fn_80019DF0(u8,void*);void fn_8017A9F0(void*,s32,void*,void*);extern u8 lbl_802EF4C8[];extern f32 lbl_8036B2DC;void*p;void*q;s32 x;p=fn_8013FF94(a,0x82,0);*(f32*)((char*)p+0x30)=lbl_8036B2DC;p=fn_8013FF94(a,0x108,0);*(f32*)((char*)p+0x30)=lbl_8036B2DC;q=((void**)a)[0x60/4];x=fn_80019DF0(*(u8*)(lbl_802EF4C8+0x14),lbl_802EF4C8);*(u8*)((char*)q+0x3c)=0;fn_8017A9F0(q,x,a,q);}
+
+void fn_801BA200(void *arg0) {
+    return;
+}
 
 s32 fn_801BAC40(struct efUnit* arg0, s32 arg1)
 {
@@ -2673,6 +2681,141 @@ void fn_801D8E18(void *arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
     M2C_FIELD(arg0, s16 *, 0xA) = arg2;
 }
 
+static s32 fn_801DB5B4(s32 arg0, s32 arg1) {
+    u16* unit = (u16*)arg0;
+    s32 r0, r3, r4, r5;
+    
+    switch (unit[1]) {
+        case 0x64: // 100
+            unit[0] = (u16)(unit[0] | 0x1);
+            unit[1] = (s16)0x6E;
+            r4 = unit[2];
+            r0 = unit[4];
+            r4 = (s16)(r4 + 1);
+            r0 = r0 << 6;
+            r0 += 0x5E;
+            unit[6] = (s16)r0;
+            unit[7] = (s16)0x2E;
+            
+            if (unit[2] >= unit[3]) {
+                return 0;
+            }
+            unit[1] = (s16)0x6E;
+            break;
+
+        case 0xCD: // 205
+            unit[0] = (u16)(unit[0] | 0x1);
+            unit[1] = (s16)0xD2;
+            r4 = unit[4];
+            r0 = unit[6]; 
+            r4 = (s16)(r4 + 1);
+            r0 = r0 << 6;
+            r0 += 0x5E;
+            unit[6] = (s16)r0;
+            unit[7] = (s16)0x2E;
+            
+            if (unit[4] >= unit[3]) {
+                return 0;
+            }
+            unit[1] = (s16)0xD2;
+            break;
+
+        case 0x69: // 105
+            unit[0] = (u16)(unit[0] | 0x1);
+            unit[1] = (s16)0x69;
+            unit[0x1E] = (s16)0xFF;
+            r4 = unit[4];
+            r0 = unit[6];
+            r4 = (s16)(r4 + 1);
+            r0 = r0 << 6;
+            r0 += 0x5E;
+            unit[6] = (s16)r0;
+            
+            if (unit[4] >= unit[3]) {
+                return 0;
+            }
+            unit[1] = (s16)0x6E;
+            break;
+
+        case 0xC8: // 200
+            unit[0] = (u16)(unit[0] | 0x1);
+            unit[1] = (s16)0xCD;
+            unit[0x1E] = (s16)0xFF;
+            r0 = unit[4];
+            r0 = r0 << 6;
+            r0 += 0x5E;
+            unit[6] = (s16)r0;
+            unit[7] = (s16)0x2E;
+            
+            if (unit[4] >= unit[3]) {
+                return 0;
+            }
+            unit[1] = (s16)0xD2;
+            break;
+
+        case 0x0: // 0
+        case 0x6E:
+        case 0xD2:
+        case 0x12C:
+            unit[0] = (u16)(unit[0] | 0x1);
+            unit[1] = (s16)0x00;
+            unit[0x1E] = (s16)0xFF;
+            
+            if (unit[4] < unit[3]) {
+                return 0;
+            }
+            unit[1] = (s16)0xD2;
+            break;
+
+        case 0x131: // 305
+            unit[0] = (u16)(unit[0] | 0x1);
+            unit[1] = (s16)0x46;
+            unit[5] = (s16)0xFF;
+            unit[6] = (s16)0x3E8;
+            
+            r4 = unit[1];
+            r0 = unit[2];
+            r5 = unit[3];
+            
+            // Absolute value calculation: ((r5 ^ (r5 >> 31)) - (r5 >> 31))
+            r5 = (r5 >> 31); 
+            r5 = ((r5 ^ r5) - r5);
+            r5 >>= 1;
+            
+            if (r4 < r5) {
+                // Branch A
+                r0 = unit[1];
+                if (r0 & 0x4000) {
+                    unit[0] = (u16)(unit[0] | 0x20);
+                } else {
+                    unit[0] = (u16)(unit[0] & ~0x20);
+                }
+            } else if (r4 == r5) {
+                // Branch B
+                r0 = unit[1];
+                if (r0 & 0x2000) {
+                    unit[0] = (u16)(unit[0] | 0x40);
+                } else {
+                    unit[0] = (u16)(unit[0] & ~0x40);
+                }
+            } else {
+                // Branch C
+                r0 = -r5 + r4;
+                if (r0 & 0x8000) {
+                    unit[0] = (u16)(unit[0] | 0x20);
+                } else {
+                    unit[0] = (u16)(unit[0] & ~0x20);
+                }
+            }
+            break;
+
+        default:
+            return 0;
+    }
+
+    return 0;
+}
+
 void fn_801DBD84(struct efUnit* arg0)
 {
     volatile struct efUnit* temp = arg0;  // Force usage pattern
@@ -2789,6 +2932,7 @@ void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     s32 len;
     f32 width;
     s32 h;
+    s32 t;
 
     memset(w, 0, sizeof(MsgBox));
     w->state = 0;
@@ -2832,9 +2976,11 @@ void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     }
     w->numLines = n;
     w->width += 0x18;
-    h = (arg2 ? 20 : 0) + w->numLines * 20;
+    t = arg2 ? 20 : 0;
+    h = w->numLines * 20;
+    h = h + t;
     h += (w->flags & 4) ? 40 : 0;
-    w->height = 32 + h;
+    w->height = h + 32;
     if (w->type == 1 || w->type == 2) {
         w->height += 0x88;
     }
