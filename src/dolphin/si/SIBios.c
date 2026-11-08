@@ -239,7 +239,7 @@ s32 fn_8023B270(s32 arg0) {
 s32 fn_8023B3D4(u32 arg0) {
     M2C_UNK OSRestoreInterrupts(s32);
     M2C_UNK fn_8023B270(M2C_UNK);
-    extern u32 lbl_8033E3E8;
+    extern u32 lbl_8033E3E8[];
     s32 temp_r31;
     s32 var_ctr;
     s32 var_r4;
@@ -249,16 +249,16 @@ s32 fn_8023B3D4(u32 arg0) {
 
     var_ctr = 4;
     temp_r31 = OSDisableInterrupts();
-    var_r3 = &lbl_8033E3E8;
+    var_r3 = lbl_8033E3E8;
     var_r4 = 0;
 loop_1:
     if ((u32) *var_r3 == arg0) {
-        (&lbl_8033E3E8)[var_r4] = 0U;
+        lbl_8033E3E8[var_r4] = 0U;
         var_r4_2 = 0;
-        if ((u32) M2C_FIELD(&lbl_8033E3E8, u32 *, 0) == 0U) {
-            temp_r3 = &lbl_8033E3E8 + 4;
+        if ((u32) M2C_FIELD(lbl_8033E3E8, u32 *, 0) == 0U) {
+            temp_r3 = lbl_8033E3E8 + 4;
             var_r4_2 = 1;
-            if ((u32) M2C_FIELD(&lbl_8033E3E8, u32 *, 4) == 0U) {
+            if ((u32) M2C_FIELD(lbl_8033E3E8, u32 *, 4) == 0U) {
                 var_r4_2 = 2;
                 if ((u32) M2C_FIELD(temp_r3, u32 *, 4) == 0U) {
                     var_r4_2 = 3;
