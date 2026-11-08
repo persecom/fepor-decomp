@@ -359,7 +359,10 @@ auto/text_8022C518.c:
 	.text       start:0x8022C518 end:0x8022CCF8
 
 auto/text_8022CD68.c:
-	.text       start:0x8022CD68 end:0x8023ABD4
+	.text       start:0x8022CD68 end:0x80238B28
+
+dolphin/exi/EXIBios.c:
+	.text       start:0x80238B28 end:0x8023ABD4
 
 dolphin/si/SIBios.c:
 	.text       start:0x8023ABD4 end:0x8023C53C
