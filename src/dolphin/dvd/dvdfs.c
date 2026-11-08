@@ -175,6 +175,29 @@ s32 fn_8020C79C(void) {
     return 1;
 }
 
+u32 fn_8020C7C0(u32 entry, char *path, u32 maxlen) {
+    char *name;
+    u32 loc;
+
+    if (entry == 0) {
+        return 0;
+    }
+
+    name = FstStringStart_80368580 + stringOff(entry);
+
+    loc = fn_8020C7C0(parentDir(entry), path, maxlen);
+
+    if (loc == maxlen) {
+        return loc;
+    }
+
+    *(path + loc++) = '/';
+
+    loc += myStrncpy(path + loc, name, maxlen - loc);
+
+    return loc;
+}
+
 BOOL fn_8020C920(s32 entrynum, char *path, u32 maxlen) {
     u32 loc;
 
