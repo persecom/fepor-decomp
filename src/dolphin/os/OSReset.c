@@ -83,6 +83,10 @@ typedef struct OSResetFunctionQueue {
 extern OSResetFunctionQueue ResetFunctionQueue_803684E8;
 
 volatile u32 __PIRegs[12] : 0xCC003000;
+volatile u16 __VIRegs[59] : 0xCC002000;
+
+void ICFlashInvalidate(void);
+void Reset(u32 resetCode);
 
 typedef struct OSContext {
     u8 data[0x2C8];
