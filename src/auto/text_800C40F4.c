@@ -4977,13 +4977,8 @@ extern u16 lbl_80273420[];
 #include "structs.h"
 #include "unit.h"
 
-typedef struct Vec3f {
-    f32 x, y, z;
-} Vec3f;
-
 extern f32 fn_802031A8(f32*, f32*, f32*);
 extern f32 fn_802031CC(f32*, f32*, f32);
 extern f32 fn_802031E8(f32*, f32*);
-extern f32 fn_802032CC(const Vec3f *, const Vec3f *);
 
 extern u16 lbl_802CA518;
