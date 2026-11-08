@@ -2391,6 +2391,77 @@ void fn_80141040(void)
     return;
 }
 
+void fn_80141970(void *arg0, s32 arg1) {
+    f32 fn_800067BC(s32, s32, f32, f32, f32, f32);
+    extern f32 lbl_8036A730;
+    extern f32 lbl_8036A738;
+    extern f32 lbl_8036A740;
+    s32 temp_r0;
+    s32 temp_r4;
+    s32 temp_r5;
+    f32 temp_f0;
+    f32 temp_f1;
+    f32 temp_f2;
+    f32 var_f31;
+    void *var_r3;
+    void *var_r3_2;
+    void *var_r3_3;
+    void *var_r3_4;
+
+    var_f31 = lbl_8036A730;
+    temp_r0 = *(s32 *)((char *)arg0 + 0x40);
+    temp_r5 = *(s16 *)((char *)arg0 + 0x28) + 1;
+    switch (temp_r0) {
+    case 0:
+        if (*(u32 *)((char *)arg0 + 0x34) != 0) {
+            var_r3 = *(void **)((char *)arg0 + 0x38);
+            var_r3 = *(void **)((char *)var_r3 + 0x8);
+        } else {
+            var_r3 = NULL;
+        }
+        temp_r4 = *(s16 *)((char *)var_r3 + 0x24) + 1;
+        temp_f0 = (f32)(temp_r4 - temp_r5);
+        temp_f1 = (f32)temp_r4;
+        temp_f2 = lbl_8036A738;
+        var_f31 = (lbl_8036A730 / temp_f1) * temp_f0;
+        break;
+    case 1:
+        if (*(u32 *)((char *)arg0 + 0x34) != 0) {
+            var_r3_2 = *(void **)((char *)arg0 + 0x38);
+            var_r3_2 = *(void **)((char *)var_r3_2 + 0x8);
+        } else {
+            var_r3_2 = NULL;
+        }
+        temp_r4 = *(s16 *)((char *)var_r3_2 + 0x24) + 1;
+        temp_r4 ^= 0x80000000;
+        temp_f0 = (f32)temp_r5;
+        temp_f1 = (f32)temp_r4;
+        temp_f2 = lbl_8036A738;
+        var_f31 = (var_f31 / temp_f1) * temp_f0;
+        break;
+    }
+    temp_f1 = fn_800067BC(5, temp_r4, lbl_8036A740, lbl_8036A730, var_f31, lbl_8036A730);
+    if (*(u8 *)((char *)arg0 + 0x44) != 0) {
+        ;
+    } else {
+        var_f31 = lbl_8036A730;
+    }
+    if (*(u32 *)((char *)arg0 + 0x34) != 0) {
+        var_r3_3 = *(void **)((char *)arg0 + 0x38);
+        var_r3_3 = *(void **)((char *)var_r3_3 + 0x8);
+    } else {
+        var_r3_3 = NULL;
+    }
+    *(f32 *)((char *)var_r3_3 + 0x2c) = var_f31;
+    if (*(u32 *)((char *)arg0 + 0x34) != 0) {
+        var_r3_4 = *(void **)((char *)arg0 + 0x38);
+        var_r3_4 = *(void **)((char *)var_r3_4 + 0x8);
+    } else {
+        var_r3_4 = NULL;
+    }
+    *(f32 *)((char *)var_r3_4 + 0x28) = temp_f1;
+}
+
 void fn_80142018(Vec2s *out, void *arg0) {
     s16 w = M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA);
     s16 h = M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC);
@@ -2631,6 +2702,81 @@ void fn_8014402C(void *arg0) {
         }
     }
 }
+
+#pragma cplusplus on
+extern "C" void fn_801441A4(void *arg0) {
+    extern f32 lbl_8036A75C;
+    typedef struct {
+        u8 r, g, b, a;
+    } Color;
+    struct Drawer {
+        u8 pad0[0x44];
+        virtual void v0();
+        virtual void v1();
+        virtual void v2();
+        virtual void v3();
+        virtual void v4();
+        virtual void v5();
+        virtual void v6();
+        virtual void v7();
+        virtual void v8();
+        virtual void v9();
+        virtual void v10();
+        virtual void v11();
+        virtual void v12();
+        virtual void v13();
+        virtual void v14();
+        virtual void v15();
+        virtual void v16();
+        virtual void Draw(s32, s32, s32, Color *, s32, s32);
+    };
+    struct Menu {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void Update() = 0;
+        u8 pad4[4];
+        s16 left;
+        s16 top;
+        s16 right;
+        s16 bottom;
+        u8 pad10[0x24];
+        s32 unk34;
+        s32 unk38;
+        s32 cursor;
+        Drawer drawer;
+    };
+    Menu *self = (Menu *)arg0;
+    Color white;
+    Color grey;
+    f32 x;
+    f32 alpha;
+    f32 step;
+    s32 i;
+
+    self->Update();
+    alpha = 1.0f;
+    x = lbl_8036A75C;
+    step = (f32)(s16)(self->bottom - self->top) / 11.0f;
+    white.r = 0xFF;
+    white.g = 0xFF;
+    white.b = 0xFF;
+    white.a = 0xFF;
+    grey.r = 0x30;
+    grey.g = 0x30;
+    grey.b = 0x30;
+    grey.a = 0xFF;
+    for (i = 0; i < 11; i++) {
+        if (i == self->cursor) {
+            self->drawer.Draw(x, lbl_8036A75C, 0, &white, self->unk34, i);
+        } else {
+            self->drawer.Draw(x, lbl_8036A75C, alpha, &grey, self->unk34, i);
+        }
+        x += step;
+        alpha += 1.0f;
+    }
+}
+#pragma cplusplus reset
 
 void fn_80144584(void *arg0, s16 arg1) {
     void fn_8013F2A4(void *, s32);
