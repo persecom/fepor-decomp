@@ -3070,6 +3070,42 @@ void fn_80263CF0(void *arg0) {
     fn_80263D30(M2C_FIELD(arg0, f32 *, 0x1C8), M2C_FIELD(arg0, f32 *, 0x1D0), M2C_FIELD(arg0, f32 *, 0x1CC), M2C_FIELD(arg0, f32 *, 0x1D4), M2C_FIELD(arg0, f32 *, 0x1D8), M2C_FIELD(arg0, f32 *, 0x1DC));
 }
 
+void *fn_8026423C(void *arg0, void *arg1) {
+    double temp_f0;
+    s32 var_ctr;
+    float f5, f6, f7, f8;
+    float temp_f8_1;
+    float temp_f8_2;
+    float temp_f9_1;
+    float temp_f9_2;
+    
+    temp_f0 = *(double*)0x8036C3D8;
+    var_ctr = 0x4F;
+    do {
+        f5 = ((float*)arg0)[2] - (float)temp_f0;
+        f6 = ((float*)arg0)[3] - (float)temp_f0;
+        f7 = ((float*)arg1)[2] - (float)temp_f0;
+        f8 = ((float*)arg1)[3] - (float)temp_f0;
+        
+        temp_f8_1 = f5 * ((float*)arg0)[0];
+        temp_f8_2 = f6 * ((float*)arg0)[1];
+        temp_f9_1 = f7 * ((float*)arg1)[0];
+        temp_f9_2 = f8 * ((float*)arg1)[1];
+        
+        temp_f8_1 += temp_f8_2;
+        temp_f9_1 += temp_f9_2;
+        
+        *((s32*)((char*)arg0 + 0xC)) = (s32)temp_f8_1;
+        *((s32*)((char*)arg0 + 0x14)) = (s32)temp_f9_1;
+        
+        arg0 = (char*)arg0 + 8;
+        arg1 = (char*)arg1 + 8;
+        var_ctr -= 1;
+    } while (var_ctr != 0);
+    
+    return arg0;
+}
+
 void fn_802648CC(s32 arg0, s32 arg1, s32 arg2, void *arg3, M2C_UNK arg_sp0) {
     M2C_UNK fn_8026423C(s32, s32, f32, f32);
     M2C_UNK fn_802643C0(s32, void *, M2C_UNK);
@@ -3175,3 +3211,5 @@ s32 fn_80265C34(s32 arg0, s32 arg1) {
     }
     return temp_r3;
 }
+#include "common.h"
+extern f32 lbl_8036C3F0;
