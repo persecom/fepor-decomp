@@ -1,6 +1,39 @@
 /* Functions from 0x800330F8 to 0x80055C70, found by decomp-toolkit. */
 #include "common.h"
 
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1C;
+    s32 unk20;
+    s32 unk24;
+    u8 unk28;
+    u8 unk29;
+    u8 unk2A;
+    u8 unk2B;
+    u8 unk2C;
+    u8 unk2D;
+    u8 unk2E;
+    u8 unk2F;
+    s32 unk30;
+    u8 unk34;
+    u8 unk35;
+    u8 unk36;
+    u8 unk37;
+    f32 unk38;
+    s32 unk3C;
+    s32 unk40;
+    s32 unk41;
+    s32 unk42;
+    s32 unk43;
+} UnitStruct;
+
+
 extern void* lbl_803672A8;
 extern f64 lbl_80368EF8;
 extern f32 lbl_80368FC0;
@@ -2002,6 +2035,40 @@ void fn_80046400(void) {
     fn_80046424(0);
 }
 
+s32 fn_80046F14(void *arg0, s32 arg1) {
+    void **temp_r7;
+    s32 var_r9;
+    void *temp_r5;
+    s32 *temp_r3;
+
+    temp_r7 = (void **)((char *)arg0 + 0x188);
+    if (*(void **)temp_r7 == NULL) {
+        return 0;
+    }
+    temp_r5 = (char *)temp_r7 + 0x50;
+    if (*(void **)temp_r5 == NULL) {
+        return 0;
+    }
+
+    temp_r3 = (s32 *)((char *)arg0 + 0x210);
+    var_r9 = *(s32 *)((char *)temp_r5 + arg1 * 8);
+    if (var_r9 >= 0) {
+        if ((u32)(var_r9 - *(s32 *)temp_r3) > 0U) {
+            return 0;
+        }
+    } else {
+        s32 temp = *(s32 *)((char *)arg0 + arg1 * 8 + 0x24C);
+        if (temp >= 0) {
+            if ((u32)(temp - *(s32 *)temp_r3) > 0U) {
+                return 0;
+            }
+        } else {
+            return 0;
+        }
+    }
+    return 1;
+}
+
 s32 fn_8004721C(void *arg0, s32 arg1, s32 arg2, u32 arg3, s32 arg4) {
     s32 temp_r11;
     s32 temp_r8;
@@ -2335,6 +2402,18 @@ void fn_8004A264(void *arg0) {
         M2C_FIELD(arg0, f32 *, 0x34) = fn_800067BC(6, lbl_80368F84, lbl_80368F8C, (f32) temp_r0, lbl_80368F98);
     }
     fn_8006785C(2, &fn_8004A2EC, arg0);
+}
+
+void fn_8004A864(void* arg0, s32 arg1) {
+    u8* ptr = (u8*)arg0 + 0x60;
+    s32 temp_r3 = *ptr;
+    s32 count = temp_r3 + arg1;
+
+    if (count < 0) {
+        return;
+    }
+
+    *ptr = (u8)count;
 }
 
 void fn_8004AAA4(void) {
