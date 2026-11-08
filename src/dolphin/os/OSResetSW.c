@@ -596,6 +596,26 @@ u32 fn_8021364C(u32 arg0) {
     return temp_r31;
 }
 
+extern void OSDisableInterrupts(void);
+extern void OSRestoreInterrupts(void);
+s32 __PADDisableRecalibration(s32 arg0) {
+    s32 r31;
+    u8* addr = (u8*)0x800030E3;
+    
+    OSDisableInterrupts();
+    if (*addr & 0x40) {
+        r31 = 1;
+    } else {
+        r31 = 0;
+    }
+    *addr = (*addr & 0xBF);
+    if (arg0 != 0) {
+        *addr = (*addr | 0x40);
+    }
+    OSRestoreInterrupts();
+    return r31;
+}
+
 void fn_802137E8(void) {
     u16 *ptr = (u16 *)0xCC005000;
     u16 val = ptr[0x1B];
@@ -644,6 +664,11 @@ u8 fn_80213B34(void) {
     return (u8) ((u32) *(u32 *)0xCC006C04 >> 8U);
 }
 
+void fn_80213CB0(s32 arg0)
+{
+    lbl_80368698(arg0);
+}
+
 void fn_80213DD8(void) {
     void (*funcPtr)(void) = (void (*)(void))lbl_803685E8;
     if (funcPtr != NULL) {
@@ -668,6 +693,11 @@ s32 fn_802142B0(void) {
 s32 fn_802142B8(void) {
     extern s32 lbl_803686DC;
     return lbl_803686DC;
+}
+
+BOOL fn_802142C0(void)
+{
+    return OSGetResetButtonState() != 0;
 }
 
 void fn_80214338(void) {
@@ -734,6 +764,11 @@ void fn_80215F78(u16 arg0) {
     *(u16 *)0xCC005000 = (u16)(arg0 >> 16);
     *(u16 *)0xCC005002 = arg0;
 }
+
+void fn_80216050(void) {
+    OSDisableInterrupts();
+}
+
 extern s32 RunQueueHint_8036851C;
 extern u16 lbl_80339F00[32];
 extern u16 AlarmForTimeout_80339ED8[20];
@@ -763,3 +798,6 @@ extern u16 Scb_80339420[];
 extern u32 CurrTvMode_8036864C;
 extern u16 lbl_8029D68C[];
 extern u16 lbl_803686D8;
+#include <dolphin/os.h>
+
+extern u16 Scb_80339420[42];
