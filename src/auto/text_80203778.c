@@ -3,6 +3,8 @@
 #include <dolphin/os.h>
 #include "global.h"
 extern s32 lbl_803682F0;
+extern u16 lbl_8029BBB0[20];
+extern void DMAErrorHandler(void);
 u32 OSGetTick(void);;;
 extern s32 fn_80013E50(s32);
 extern s32 fn_80013E60(s32, s32);
