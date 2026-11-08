@@ -3404,3 +3404,13 @@ extern u8 *lbl_803688E8;
 extern u16 lbl_803688EC[10];
 extern s32 lbl_8036894C;
 extern s32 lbl_8033E578[];
+/* Functions from 0x8022CD68 to 0x80267A7C, found by decomp-toolkit. */
+#include "common.h"
+
+typedef struct {
+    u32 unk4;     /* 0x4 */
+    u8 unkC;      /* 0xC */
+    u8 unk74;     /* 0x74 */
+} unk_struct_8034D4B8;
+
+extern unk_struct_8034D4B8 lbl_8034D4B8[];
