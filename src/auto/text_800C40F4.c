@@ -2,6 +2,8 @@
 #include "common.h"
 #include "structs.h"
 
+extern u16* g_someArray;  // lbl_80320C20
+
 typedef struct {
     u32 field_0x0;
     u8 unk250; // from the target assembly
