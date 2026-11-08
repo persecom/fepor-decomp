@@ -3537,6 +3537,10 @@ extern u8 lbl_803301A8[];
 extern u8 lbl_8032FF08[];
 #include "common.h"
 extern u32 lbl_802922F0;
+
+extern u8 lbl_80292298[];
+extern f32 lbl_8036A730;
+extern f32 lbl_8036A738;
 #include "include/structs.h"
 extern s32 gUnknown_0x8013C030;
 #include "global.h"
