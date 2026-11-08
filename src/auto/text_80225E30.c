@@ -2,6 +2,13 @@
 #include "common.h"
 #include <dolphin/os.h>
 #include "global.h"
+extern struct {
+    u8 unk0;
+    u8 unk4;
+    u8 pad5[3];
+    u8 unk8;
+    u8 pad9[0x37];
+} lbl_8033B048;
 extern u8 lbl_8033B078[];
 extern s32 lbl_803682F0;
 extern s32 fn_80013E50(s32);
@@ -91,6 +98,34 @@ s32 TRKTerminateNub(void) {
     M2C_UNK fn_80226B68();
     fn_80226B68();
     return 0;
+}
+
+void fn_8022641C(void *arg0, s32 arg1, s32 arg2) {
+    s32 var_r29;
+    u32 temp_r0;
+    u32 var_r30;
+    s32 var_r31;
+    
+    var_r29 = 0;
+    if (arg0 != NULL) {
+        for (;;) {
+            u32 temp_r3 = *(u32 *)((char *)arg0 + 0xC);
+            if (temp_r3 == 0)
+                break;
+            var_r30 = 1;
+            var_r31 = 0;
+            temp_r0 = *(u32 *)((char *)arg0 + 0x8) - temp_r3;
+            if (temp_r0 < 1) {
+                var_r31 = 0x302;
+                var_r30 = temp_r0;
+            }
+            fn_80003488(arg1 + var_r29, (char *)arg0 + temp_r3 + 0x10, var_r30);
+            var_r29 += 1;
+            if (var_r29 >= arg2)
+                break;
+            *(u32 *)((char *)arg0 + 0xC) = temp_r3 + var_r30;
+        }
+    }
 }
 
 s32 fn_80226698(void *arg0, u8 *arg1, s32 arg2) {
@@ -313,6 +348,33 @@ s32 fn_802287B0(void) {
 
 s32 fn_802287B8(void) {
     return 0;
+}
+
+s32 fn_802287C0(s32 arg0) {
+    s32 fn_80226A2C(s32 *, s32 *);
+    s32 fn_802283A8(s32, s32 *, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_802291A4(s32);
+    M2C_UNK fn_80229228(s32);
+    s32 sp10;
+    s32 spC;
+    s32 sp8;
+    s32 temp_cr0_eq;
+    s32 var_r31;
+
+    var_r31 = fn_80226A2C(&spC, &sp8);
+    if (var_r31 == 0) {
+        if (arg0 == 0x90) {
+            fn_80229228(sp8);
+        } else {
+            fn_802291A4(sp8);
+        }
+        var_r31 = fn_802283A8(sp8, &sp10, 2, 3, 1);
+        if (var_r31 == 0) {
+            fn_8022699C(sp10);
+        }
+        fn_8022699C(spC);
+    }
+    return var_r31;
 }
 
 void fn_80228858(s32 arg0, s32 arg1) {
