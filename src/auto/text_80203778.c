@@ -130,9 +130,11 @@ s32 PPCMfmsr(void) {
 }
 #pragma dont_inline reset
 
+#pragma dont_inline on
 void PPCMtmsr(register u32 msr) {
     (void)msr; /* mtmsr: not expressible in C */
 }
+#pragma dont_inline reset
 
 void fn_80203790(void) {
     M2C_ERROR(/* unknown instruction: mtspr HID0, $r3 */);
