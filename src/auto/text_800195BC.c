@@ -913,3 +913,14 @@ extern s32 lbl_80367208;
 #include "common.h"
 extern void *lbl_80367204;
 extern s32 lbl_80367208;
+#include "common.h"
+extern void *lbl_80367240;
+extern f64 lbl_80368C98;
+extern f64 lbl_80368D18;
+extern f32 lbl_80368C88;
+extern f32 lbl_80368C8C;
+extern f32 lbl_80368CA4;
+extern f32 lbl_80368CE4;
+extern f32 lbl_80368D08;
+extern f32 lbl_80368D0C;
+extern f32 lbl_80368D10;
