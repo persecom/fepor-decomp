@@ -267,6 +267,10 @@ u16 TRKTargetStopped(void) {
     return (u16)gTRKState[0x98 / sizeof(u16)];
 }
 
+u32 fn_80229030(void) {
+    return *(u32 *)(gTRKCPUState + 0x80);
+}
+
 void EnableMetroTRKInterrupts(void) {
     M2C_UNK fn_8022B120();
     fn_8022B120();
