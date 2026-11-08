@@ -814,6 +814,57 @@ int fn_80206FB8(u16 encode, u16 code) {
     return 0;
 }
 
+void fn_8020712C(u8 *s, u8 *d) {
+    int j;
+    int k;
+    int p;
+    int q;
+    int r7;
+    int r25;
+    int cnt;
+    int os;
+    u32 flag;
+    u32 code;
+
+    os = *(int *)(s + 0x4);
+    r7 = *(int *)(s + 0x8);
+    r25 = *(int *)(s + 0xC);
+    q = 0;
+    flag = 0;
+    p = 16;
+
+    do {
+        if (flag == 0) {
+            code = *(u32 *)(s + p);
+            p += 4;
+            flag = 32;
+        }
+
+        if (code & 0x80000000) {
+            d[q++] = s[r25++];
+        } else {
+            j = (s[r7] << 8) | s[r7 + 1];
+            r7 += 2;
+
+            k = q - (j & 0xFFF);
+            cnt = j >> 12;
+            if (cnt == 0) {
+                cnt = s[r25++] + 0x12;
+            } else {
+                cnt += 2;
+            }
+
+            for (; cnt > 0; cnt--) {
+                d[q] = d[k - 1];
+                q++;
+                k++;
+            }
+        }
+        code <<= 1;
+        flag--;
+    } while (q < os);
+}
+
 u16 fn_802072A0(void) {
     extern u16 lbl_80366F48;
     extern u32 *lbl_803684C0;
