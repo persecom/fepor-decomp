@@ -2,6 +2,24 @@
 #include "common.h"
 #include "global.h"
 
+// Structure definition for the argument passed to fn_80063A14
+typedef struct {
+    void* unk0;
+    void* unk4;
+    void* unk8;
+    void* unkC;
+    void* unk10;
+    void* unk14;
+    void* unk18;
+    void* unk1C;
+    void* unk20;
+    void* unk24;
+    void* unk28;
+    void* unk2C;
+    void* unk30;
+    s32 unk34;
+} SomeStruct;
+
 extern u16 lbl_80330708[1400];
 extern f32 lbl_803692E0;
 extern f32 lbl_80369300;
@@ -2118,6 +2136,25 @@ void fn_8006F6A4(s32 arg0, u32 arg1, u32 arg2, u32 arg3) {
         lbl_80367358[1] = arg3;
     }
     fn_80024398(lbl_80311CE0, arg0, 0);
+}
+
+s32 fn_8006F7F0(s32 arg0) {
+    s32 var_r3;
+    s32 i;
+    
+    if (arg0 < 0 || arg0 >= 0x100) {
+        return -1;
+    }
+    
+    for (i = 0; i < 0x100; i++) {
+        if (lbl_80330708[i] == 0) {
+            lbl_80330708[i] = arg0;
+            var_r3 = i;
+            break;
+        }
+    }
+    
+    return var_r3;
 }
 
 void fn_8006FBE4(s32 arg0, u32 arg1, u32 arg2, u32 arg3) {
