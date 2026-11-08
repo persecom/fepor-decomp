@@ -1850,6 +1850,11 @@ s32 fn_8013FA10(void) {
     return (s32) (lbl_8036A728 * fn_80138AC0());
 }
 
+void fn_8013FA44(void *arg0, void *arg1, void *arg2) {
+    *(s16 *)((char *)arg1 + 0) = *(s16 *)((char *)arg2 + 0);
+    *(s16 *)((char *)arg1 + 2) = *(s16 *)((char *)arg2 + 2);
+}
+
 s32 fn_8013FBC0(s32 arg0) {
     return arg0 + 0x12;
 }
@@ -1888,8 +1893,7 @@ void fn_8013FC68(ListIter *ret, List *list, ListIter *it) {
     fn_800C428C(node);
     size = list->size;
     next = it->node;
-    size--;
-    list->size = size;
+    list->size = --size;
     ret->node = next;
 }
 
@@ -1929,6 +1933,10 @@ void fn_8013FEE0(void) {
 
 void fn_8013FEF0(void) {
     lbl_803671C0 += 1;
+}
+
+M2C_UNK fn_8014004C(void *arg0) {
+    return fn_8000CAA0(arg0, 0x0);
 }
 
 void fn_801400F4(void *arg0, void *arg1) {
@@ -2009,6 +2017,28 @@ void *fn_801403F0(void *arg0) {
     *(u8 *)((uintptr_t)arg0 + 0x30) = 0;
     fn_80142060((char *)arg0 + 0x34);
     return arg0;
+}
+
+void fn_801406B0(s32 arg0, s32 arg1, s32 arg2)
+{
+    s32 temp_r3;
+    s32 var_r3;
+    
+    if (arg2 < 0) {
+        var_r3 = 0;
+    } else {
+        var_r3 = arg2;
+    }
+    
+    if (arg1 <= 0) {
+        arg1 = 1;
+    }
+    
+    temp_r3 = ((var_r3 * arg1) + 0x8000) >> 0xF;
+    if (temp_r3 < 0) {
+        temp_r3 = 0;
+    }
+    *(s32 *)M2C_FIELD(arg0, void **, 0x8) = temp_r3;
 }
 
 s32 fn_80140B04(s32 arg0) {
