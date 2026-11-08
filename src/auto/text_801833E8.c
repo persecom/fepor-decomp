@@ -2434,6 +2434,23 @@ s32 fn_8019D930(void) {
     return 1;
 }
 
+void fn_8019DB28(void) {
+    void fn_8000BF00(void *);
+    void fn_800A84A0(void);
+    void fn_800C0818(s32);
+    void fn_801293C0(void);
+    void fn_80199C2C(void);
+    void fn_8005376C(void);
+    extern u8 lbl_80296FA8[];
+
+    fn_800C0818(0);
+    fn_801293C0();
+    fn_8000BF00(lbl_80296FA8);
+    fn_80199C2C();
+    fn_800A84A0();
+    fn_8005376C();
+}
+
 s32 fn_8019E4EC(void) {
     u8 fn_800A69D8(M2C_UNK *, s32 *);
     M2C_UNK spC;
