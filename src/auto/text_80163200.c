@@ -14,23 +14,26 @@ extern f32 lbl_8036A9C0;
 
 extern void (*lbl_802B14E4)(void **);
 
-static inline u8 IsSlotAvailable(void *obj, s16 slot) {
+static inline u8 IsSlotFilled(void *obj, s32 slot) {
     u32 *fn_80037BD0(s32, s32);
-    u32 *item;
+    u32 *item = fn_80037BD0(M2C_FIELD(obj, s32 *, 0x58), slot);
 
-    if (slot >= 0 && slot <= 3 && !(M2C_FIELD(obj, s32 *, 0x60) & 1)) {
-        return 0;
-    }
-    if (slot >= 4 && slot <= 7 && !(M2C_FIELD(obj, s32 *, 0x60) & 2)) {
-        return 0;
-    }
-    item = fn_80037BD0(M2C_FIELD(obj, s32 *, 0x58), slot);
     if (M2C_FIELD(obj, s32 *, 0x5C) == 1 && *item == 0) {
         if (slot == 0 || slot == 4 || *fn_80037BD0(M2C_FIELD(obj, s32 *, 0x58), slot - 1) != 0) {
             return 1;
         }
     }
     return *item != 0;
+}
+
+static inline u8 IsSlotAvailable(void *obj, s16 slot) {
+    if (slot >= 0 && slot <= 3 && !(M2C_FIELD(obj, s32 *, 0x60) & 1)) {
+        return 0;
+    }
+    if (slot >= 4 && slot <= 7 && !(M2C_FIELD(obj, s32 *, 0x60) & 2)) {
+        return 0;
+    }
+    return IsSlotFilled(obj, slot);
 }
 
 void fn_80163200(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
