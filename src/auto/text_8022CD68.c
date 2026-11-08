@@ -31,6 +31,13 @@ typedef struct Voice {
     u32 unk190;
 } Voice;
 
+typedef struct VidList {
+    struct VidList *next; /* 0x0 */
+    struct VidList *prev; /* 0x4 */
+    u32 vid;              /* 0x8 */
+    u32 root;             /* 0xC */
+} VidList;
+
 typedef struct SynthVoice {
     struct SynthVoice *next; /* 0x000 */
     struct SynthVoice *prev; /* 0x004 */
