@@ -1134,6 +1134,29 @@ void fn_80251E88(Voice *arg0, u32 *arg1) {
     arg0->flags |= 0x2000;
 }
 
+void fn_8025FFC8(void *arg0, u8 arg1, s32 arg2, u8 arg3, u8 arg4, u8 arg5);
+void fn_80252668(void *arg0, u32 *arg1) {
+    u8 var_r6;
+    s32 var_r5;
+    u32 temp;
+
+    if ((*(u64 *)((u8 *)arg0 + 0x114) & 0x200000) == 0) {
+        *(u64 *)((u8 *)arg0 + 0x114) |= 0x200000;
+        var_r6 = 0;
+    } else {
+        var_r6 = arg1[1];
+    }
+    var_r5 = (s32)(arg1[0] & 0xFFFF0000) / 100;
+    if (var_r5 < 0) {
+        var_r5 -= ((s8)(arg1[1] >> 16) << 8) / 100;
+    } else {
+        var_r5 += ((s8)(arg1[1] >> 16) << 8) / 100;
+    }
+    temp = (arg1[1] >> 8) & 0xFF;
+    fn_8025FFC8((u8 *)arg0 + 0x290, arg1[0] >> 8, var_r5, var_r6, temp != 0, temp);
+    *(u32 *)((u8 *)arg0 + 0x220) |= 8;
+}
+
 s16 fn_802537F8(s32 arg0, u32 arg1, s32 arg2) {
     u16 fn_80260F18(s32);
     extern u16 lbl_8034CB74[];
