@@ -674,7 +674,7 @@ void *fn_800C96F8(void *arg0, s32 arg1, s32 arg2) {
 }
 
 #pragma auto_inline off
-String *fn_800C9758(String *arg0, String *arg1, u32 pos, u32 n) {
+String *fn_800C9758(String *arg0, const String *arg1, u32 pos, u32 n) {
     String *fn_800C984C(String *, u32, u32);
     void fn_800CA7F4(String *, u32, s32);
     M2C_UNK fn_8022CF78(void);
@@ -682,20 +682,15 @@ String *fn_800C9758(String *arg0, String *arg1, u32 pos, u32 n) {
     void *memcpy(void *, const void *, u32);
     extern char __files[];
     extern char lbl_80270350[];
-    u32 len;
-    u32 *p;
     u32 rest;
+    u32 len;
 
     if (pos > arg1->size) {
         fn_80232058(__files + 0xA0, lbl_80270350 + 0x96);
         fn_8022CF78();
     }
     rest = arg1->size - pos;
-    p = &n;
-    if (rest < *p) {
-        p = &rest;
-    }
-    len = *p;
+    len = *StrMin(&n, &rest);
     if (arg0 == arg1) {
         fn_800C984C(arg0, 0, pos);
         fn_800CA7F4(arg0, len, 1);
