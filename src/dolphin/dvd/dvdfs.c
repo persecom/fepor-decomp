@@ -484,6 +484,11 @@ s32 fn_8020F058(s32 arg0) {
     return temp_r0;
 }
 
+void fn_8020F3E0(void) {
+    extern void* __DVDThreadQueue;
+    fn_8020AEC4(&__DVDThreadQueue);
+}
+
 s32 fn_8020F404(void) {
     return 0x80000000;
 }
