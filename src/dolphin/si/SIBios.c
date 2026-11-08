@@ -290,15 +290,15 @@ void SIInit(void) {
     M2C_UNK SISetSamplingRate(M2C_UNK, M2C_UNK *, M2C_UNK);
     M2C_UNK __OSSetInterruptHandler(M2C_UNK, M2C_UNK *);
     M2C_UNK __OSUnmaskInterrupts(M2C_UNK);
-    extern M2C_UNK Packet_8033E248;
+    extern SIPacket Packet_8033E248[];
     extern M2C_UNK SIInterruptHandler;
     extern M2C_UNK Si_8029EFAC;
     extern s32 __SIVersion;
-    OSRegisterVersion(__SIVersion, &Packet_8033E248);
-    M2C_FIELD(&Packet_8033E248, s32 *, 0x60) = -1;
-    M2C_FIELD(&Packet_8033E248, s32 *, 0x40) = -1;
-    M2C_FIELD(&Packet_8033E248, s32 *, 0x20) = -1;
-    M2C_FIELD(&Packet_8033E248, s32 *, 0) = -1;
+    OSRegisterVersion(__SIVersion, (M2C_UNK *)Packet_8033E248);
+    Packet_8033E248[3].chan = -1;
+    Packet_8033E248[2].chan = -1;
+    Packet_8033E248[1].chan = -1;
+    Packet_8033E248[0].chan = -1;
     M2C_FIELD(&Si_8029EFAC, s32 *, 4) = 0;
     SISetSamplingRate(0, &Si_8029EFAC, -1);
     do {
