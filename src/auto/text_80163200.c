@@ -15,7 +15,7 @@ extern f32 lbl_8036A9C0;
 extern void (*lbl_802B14E4)(void **);
 
 static inline u8 IsSlotAvailable(void *obj, s16 slot) {
-    u32 *fn_80037BD0(s32, s16);
+    u32 *fn_80037BD0(s32, s32);
     u32 *item;
 
     if (slot >= 0 && slot <= 3 && !(M2C_FIELD(obj, s32 *, 0x60) & 1)) {
@@ -127,6 +127,15 @@ s32 fn_801649C8(void *arg0, s32 *arg1) {
 
 void fn_80164A24(void *arg0) {
     fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58));
+}
+
+s16 fn_80164FBC(void *arg0, s16 arg1) {
+    for (; arg1 >= 0; arg1--) {
+        if (IsSlotAvailable(arg0, arg1)) {
+            break;
+        }
+    }
+    return arg1;
 }
 
 void fn_801650DC(void *arg0) {
