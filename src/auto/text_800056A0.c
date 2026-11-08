@@ -40,6 +40,20 @@ void fn_800059FC(void) {
     fn_80199818(temp_r31);
 }
 
+void fn_80005A84(void* arg0, void* arg1)
+{
+    if (arg0 != 0)
+    {
+        char *temp = (char *)arg0;
+        temp[0x28] = 0;
+        temp[0x29] = 0;
+        temp[0x30] = 0;
+        temp[0x31] = 0;
+        temp[0x38] = 0;
+        temp[0x39] = 0;
+    }
+}
+
 void fn_80005C18(void) {
     M2C_UNK fn_800111FC();
     extern s32 lbl_80367108;
@@ -161,4 +175,9 @@ void fn_80006220(s32 arg0) {
     extern M2C_UNK lbl_802832FC;
     M2C_FIELD(fn_8000C0C0(&lbl_802832FC, &lbl_802832FC), s32 *, 0x60) = arg0;
 }
-
+#include <common.h>
+extern u8 lbl_803682F0[8];
+extern u32 jumptable_80283748[];
+extern u8 lbl_80330708[1400];
+extern u8 lbl_802832FC[1100];
+extern f64 lbl_80368B60;
