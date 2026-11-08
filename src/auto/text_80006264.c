@@ -231,7 +231,7 @@ void fn_80007884(void *arg0, u32 arg1) {
 void fn_80008B94(void){extern void fn_80201FC4(void*,void*);u8 *p=*(u8**)0x80367140;*(u32*)(p+8)=*(u32*)p+0xac;*(u32*)(p+0xc)=0;*(u16*)(p+0x92)=0;*(u16*)(p+0x90)=0;fn_80201FC4(p+0x60,p);*(u32*)(p+0x2c)=0;*(u32*)(p+0x30)=0;p[0x23]=255;p[0x24]=128;*(u16*)(p+0x20)=0;p[0xa8]=0;}
 
 void fn_80009B28(void) {
-    extern u32 lbl_80367140[];
+    extern u32 *lbl_80367140;
     
     *(lbl_80367140 + 0x0) = 1;
     *(lbl_80367140 + 0x23) = 0xFF;
