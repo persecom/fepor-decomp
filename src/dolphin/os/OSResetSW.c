@@ -107,6 +107,17 @@ extern u16 InterruptHandlerTable_803684C8[];
 extern u16 StopAtNextInt_80368530;
 extern u16 lbl_80368550;
 
+void fn_8020931C(u32 param_1) {
+    if (param_1 < 0x14) {
+        return;
+    }
+}
+
+void __OSUnlockSram(void) {
+    fn_8020931C(0);
+    return;
+}
+
 s32 __OSSyncSram(void) {
     extern u16 Scb_80339420[];
     return (s32)Scb_80339420[0x4C / sizeof(u16)];
@@ -150,12 +161,51 @@ void fn_8020A060(void *arg0) {
     M2C_FIELD(arg0, void **, 0x2DC) = NULL;
 }
 
+void __OSReschedule(void) {
+    extern s32 RunQueueHint_8036851C;
+    if (RunQueueHint_8036851C != 0) {
+        SelectThread(0);
+    }
+    return;
+}
+
 s32 OSGetTick(void) {
     return M2C_ERROR(/* unknown instruction: mftb $r3, 0x10c */);
 }
 
 void __init_user(void) {
     __init_cpp();
+}
+
+s32 DVDLowWaitCoverClose(s32 arg0) {
+    extern s32 Callback_80368538;
+    extern s32 WaitingCoverClose_8036854C;
+    extern u16 StopAtNextInt_80368530;
+    
+    Callback_80368538 = arg0;
+    WaitingCoverClose_8036854C = 1;
+    StopAtNextInt_80368530 = 0;
+    *(u32 *)0xCC006004 = 2;
+    
+    return 1;
+}
+
+s32 fn_8020C310(void) {
+    extern s32 Callback_80368538;
+    extern s32 WaitingCoverClose_8036854C;
+    s32 temp_r3;
+
+    *(s32 *)0xCC006004 = 0;
+    temp_r3 = Callback_80368538;
+    WaitingCoverClose_8036854C = 0;
+    Callback_80368538 = 0;
+    return temp_r3;
+}
+
+s32 fn_8020C79C(void) {
+    M2C_UNK fn_8020F334();
+    fn_8020F334();
+    return 1;
 }
 
 void fn_8020CBF8(void *arg1) {
@@ -307,6 +357,13 @@ void fn_802137E8(void) {
     ptr[0x1B] = val | 0x8000;
 }
 
+s32 fn_80213800(void) {
+    u16* addr = (u16*)0xCC005000;
+    u16 low = *(addr + 0x30/2);
+    u16 high = *(addr + 0x32/2);
+    return (high & 0xFFE0) | ((low << 16) & 0x03FF0000);
+}
+
 s32 fn_8021381C(void) {
     return (*(u16 *)0xCC005036 << 5) & 0xFFFE0;
 }
@@ -323,8 +380,19 @@ s32 fn_80213ADC(void) {
     return ((u32) *(u32 *)0xCC006C00 >> 1U) & 1;
 }
 
+void fn_80213AEC(s32 arg0) {
+    u32 *ptr = (u32 *)0xCC006C00;
+    u32 temp = ptr[1];
+    temp = (temp & 0xFFFFFF00) | ((u32)arg0 & 0xFF);
+    ptr[1] = temp;
+}
+
 u8 fn_80213B08(void) {
     return (u8) *(s32 *)0xCC006C04;
+}
+
+void fn_80213B18(s32 arg0) {
+    M2C_FIELD((void *)0xCC006C00, s32 *, 4) = (s32) ((M2C_FIELD((void *)0xCC006C00, s32 *, 4) & 0xFFFF00FF & ~0xFF00) | ((arg0 << 8) & 0xFF00));
 }
 
 u8 fn_80213B34(void) {
@@ -338,6 +406,14 @@ s32 fn_802142B0(void) {
 s32 fn_802142B8(void) {
     extern s32 lbl_803686DC;
     return lbl_803686DC;
+}
+
+void fn_80214338(void) {
+    u16* addr = (u16*)0xCC005000;
+    u16 val = addr[0x5];  // offset 0xA / 2 = 0x5
+    val &= ~0x88;
+    val |= 0x20;
+    addr[0x5] = val;
 }
 
 s32 fn_80214358(void) {
@@ -366,7 +442,15 @@ s32 fn_80215F50(void) {
     return ((u16) *(u16 *)0xCC005004 >> 0xFU) & 1;
 }
 
+s32 fn_80215F60(void) {
+    u16 *ptr = (u16 *)0xCC005000;
+    u16 r0 = ptr[1];
+    u16 r3 = ptr[2];
+    return (r3 & ~0xFFFF0000) | (r0 << 0x10);
+}
+
 void fn_80215F78(u16 arg0) {
     *(u16 *)0xCC005000 = (u16)(arg0 >> 16);
     *(u16 *)0xCC005002 = arg0;
 }
+extern s32 RunQueueHint_8036851C;
