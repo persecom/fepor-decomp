@@ -674,6 +674,12 @@ String *fn_800C96F8(String *arg0, const char *arg1, u32 arg2) {
     return arg0;
 }
 
+/* assign(const char *) */
+static inline String *StrAssignC(String *s, const char *c) {
+    u32 strlen(const char *);
+    return fn_800C96F8(s, c, strlen(c));
+}
+
 String *fn_800C9758(String *arg0, const String *arg1, u32 pos, u32 n) {
     String *fn_800C984C(String *, u32, u32);
     void fn_800CA7F4(String *, u32, s32);
@@ -2035,11 +2041,63 @@ void fn_800DF700(s32 arg1) {
     fn_800C9B6C(temp);
 }
 
-void fn_800DFAE0(void)
-{
-    // Simple implementation - we'll fix it step by step 
-}
+#pragma cplusplus on
+#pragma dont_inline on
+extern "C" void *fn_800DFAE0(void *arg0, void *arg1, const String *arg2, const String *arg3, const String *arg4) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void *v2(const char *, M2C_UNK *) = 0;
+    };
+    struct Self {
+        Obj *obj;
+        String s0;
+        String s1;
+        String s2;
+        s32 unk28;
+        u8 unk2C;
+        u8 pad2D[0xB];
+        void *unk38;
+        u8 unk3C;
+        u8 pad3D[3];
+        void **vtbl;
+    };
+    extern void *lbl_8028DFC8[];
+    extern char lbl_80271A30[];
+    Self *self = (Self *)arg0;
 
+    self->vtbl = lbl_8028DFC8;
+    self->s0.size = 0;
+    self->s0.cap = 0;
+    self->s0.data = 0;
+    self->s0.cap = 0;
+    self->s1.size = 0;
+    self->s1.cap = 0;
+    self->s1.data = 0;
+    self->s1.cap = 0;
+    self->s2.size = 0;
+    self->s2.cap = 0;
+    self->s2.data = 0;
+    self->s2.cap = 0;
+    self->obj = (Obj *)arg1;
+    fn_800C9758(&self->s0, arg2, 0, -1);
+    fn_800C9758(&self->s1, arg3, 0, -1);
+    fn_800C9758(&self->s2, arg4, 0, -1);
+    self->unk28 = 0;
+    self->unk2C = 1;
+    self->unk3C = 1;
+    self->unk38 = self->obj->v2(lbl_80271A30 + 0x1F, fn_800C93EC(&self->s2));
+    if (self->unk38 != NULL) {
+        self->unk28 = fn_800DC018(self->unk38);
+    } else {
+        fn_800C96F8(&self->s2, lbl_80271A30, strlen(lbl_80271A30));
+        self->unk28 = 0;
+    }
+    return arg0;
+}
+#pragma dont_inline reset
+#pragma cplusplus reset
 void fn_800DFC2C(void *arg0) {
     u8 temp_r0;
     s32 temp_r3;
