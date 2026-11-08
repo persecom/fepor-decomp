@@ -2,6 +2,8 @@
 #include "common.h"
 #include "dolphin/os.h"
 
+extern u16 lbl_80331FB8[36]; // 72 bytes 
+
 extern u16 lbl_80331FB8[36]; // 72 bytes = 36 * 2-byte entries
 extern f32 lbl_8036A5A8;
 extern f32 lbl_8036A5AC;
@@ -979,6 +981,62 @@ void *fn_80138DCC(void *arg0, s16 arg1) {
     }
     return arg0;
 }
+
+#pragma cplusplus on
+extern "C" void fn_80009C0C(f32);
+extern "C" void fn_8001019C(s16, s16, u8, char *, ...);
+extern "C" s32 fn_800102BC(s32, f32);
+extern "C" s32 fn_800C3D48(void *);
+extern "C" u8 fn_8014D8DC(void *);
+extern "C" void fn_80155F20(s32, s32, s16, s16, s32, s32);
+extern "C" void fn_80161AA8(s16, s16, s16, s16, s32, u8 *);
+extern "C" void fn_80139884(void *arg0, s32 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3(s32) = 0;
+        s16 GetLineHeight() { return M2C_FIELD(this, s16 *, 0x5A); }
+    };
+    extern u8 lbl_802768A0[];
+    extern u8 lbl_803200AC[];
+    extern u8 lbl_80330708[];
+    extern f32 lbl_8036A674;
+    extern f32 lbl_8036A6A0;
+    u8 color[4];
+    s16 width;
+    s16 margin;
+    s16 height;
+    bool flag;
+    s16 y;
+    s32 shadow;
+
+    ((Obj *)arg0)->v2();
+    fn_80155F20(0, 0, (s16) (M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA)), (s16) (M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC)), 0xFF, 0x10);
+    ((Obj *)arg0)->v3(arg1);
+    width = M2C_FIELD(arg0, s16 *, 0x16) - M2C_FIELD(arg0, s16 *, 0x12);
+    margin = M2C_FIELD(arg0, s16 *, 0x62);
+    height = M2C_FIELD(arg0, s16 *, 0x18) - M2C_FIELD(arg0, s16 *, 0x14);
+    color[0] = 0xFF;
+    color[1] = 0xFF;
+    color[2] = 0xFF;
+    color[3] = 0x33;
+    fn_80161AA8(margin, height, margin + (s16) (width - margin * 2), height, 0x10, color);
+    fn_8000A258();
+    fn_8000A174(0, M2C_FIELD(arg0, s32 *, 0x34) | 0x13);
+    fn_8000A248();
+    fn_8000A258();
+    fn_80009C0C(lbl_8036A6A0);
+    fn_8000A248();
+    y = (((Obj *)arg0)->GetLineHeight() - fn_800102BC(-1, lbl_8036A674)) >> 1;
+    flag = !fn_8014D8DC(lbl_80330708) || fn_800C3D48(lbl_803200AC) < 0;
+    shadow = 6;
+    if (flag) {
+        shadow = 0;
+    }
+    fn_8001019C(margin, height + y, shadow, (char *) lbl_802768A0 + 0x39, fn_8000E0E4((s32) lbl_802768A0 + 0x3E));
+}
+#pragma cplusplus reset
 
 void *fn_80139A50(void) {
     extern u16 lbl_80276008[];
