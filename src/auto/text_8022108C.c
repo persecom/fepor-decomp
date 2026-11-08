@@ -105,6 +105,18 @@ extern u16 *__GXData;
 
 extern f32 lbl_8036BDC0;
 
+typedef union {
+    u8 u8;
+    u16 u16;
+    u32 u32;
+    s8 s8;
+    s16 s16;
+    s32 s32;
+    f32 f32;
+} PPCWGPipe;
+
+volatile PPCWGPipe GXWGFifo : 0xCC008000;
+
 static inline u32 __GXReadPECounterU32(u32 lo, u32 hi) {
     u32 ctrH0;
     u32 ctrH1;
@@ -213,6 +225,72 @@ void fn_80221A40(void)
     {
         return;
     }
+}
+
+void fn_80221BA8(void *dest, u8 clear) {
+    u32 reg;
+    u32 tempPeCtrl;
+    u8 changePeCtrl;
+
+    if (clear) {
+        reg = M2C_FIELD(__GXData, u32 *, 0x1D8);
+        reg = __rlwimi(reg, 1, 0, 31, 31);
+        reg = __rlwimi(reg, 7, 1, 28, 30);
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = reg;
+
+        reg = M2C_FIELD(__GXData, u32 *, 0x1D0);
+        reg = __rlwimi(reg, 0, 0, 31, 31);
+        reg = __rlwimi(reg, 0, 1, 30, 30);
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = reg;
+    }
+
+    changePeCtrl = 0;
+    tempPeCtrl = M2C_FIELD(__GXData, u32 *, 0x1DC);
+    if (M2C_FIELD(__GXData, u8 *, 0x200) && (tempPeCtrl & 7) != 3) {
+        tempPeCtrl = __rlwimi(tempPeCtrl, 3, 0, 29, 31);
+        changePeCtrl = 1;
+    }
+    if ((clear || (tempPeCtrl & 7) == 3) && ((tempPeCtrl >> 6) & 1) == 1) {
+        tempPeCtrl = __rlwimi(tempPeCtrl, 0, 6, 25, 25);
+        changePeCtrl = 1;
+    }
+    if (changePeCtrl) {
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = tempPeCtrl;
+    }
+
+    *(u8 *)0xCC008000 = 0x61;
+    *(u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1F0);
+    *(u8 *)0xCC008000 = 0x61;
+    *(u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1F4);
+    *(u8 *)0xCC008000 = 0x61;
+    *(u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1F8);
+
+    reg = 0;
+    reg = __rlwimi(reg, (u32)dest, 27, 11, 31);
+    reg = __rlwimi(reg, 0x4B, 24, 0, 7);
+    *(u8 *)0xCC008000 = 0x61;
+    *(u32 *)0xCC008000 = reg;
+
+    M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC), clear, 11, 20, 20);
+    M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC), 0, 14, 17, 17);
+    M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC), 0x52, 24, 0, 7);
+    *(u8 *)0xCC008000 = 0x61;
+    *(u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1FC);
+
+    if (clear) {
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1D8);
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1D0);
+    }
+    if (changePeCtrl) {
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1DC);
+    }
+    M2C_FIELD(__GXData, u16 *, 0x2) = 0;
 }
 
 void fn_80221D6C(void *arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 farg4, f32 farg5) {
