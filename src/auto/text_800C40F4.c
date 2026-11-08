@@ -240,6 +240,11 @@ typedef struct String {
     char *data;
 } String;
 
+/* std::min on string lengths (returns a reference) */
+static inline const u32 *StrMin(const u32 *a, const u32 *b) {
+    return (*b < *a) ? b : a;
+}
+
 /* list object helpers (construct, destroy, get item) */
 void fn_800E01C8(void *);
 void fn_800E0140(void *, s32);
@@ -667,6 +672,40 @@ void *fn_800C96F8(void *arg0, s32 arg1, s32 arg2) {
     memcpy(M2C_FIELD(arg0, s32 *, 8), arg1, arg2);
     return arg0;
 }
+
+#pragma dont_inline on
+String *fn_800C9758(String *arg0, String *arg1, u32 pos, u32 n) {
+    String *fn_800C984C(String *, u32, u32);
+    void fn_800CA7F4(String *, u32, s32);
+    M2C_UNK fn_8022CF78(void);
+    M2C_UNK fn_80232058(void *, const char *, ...);
+    void *memcpy(void *, const void *, u32);
+    extern char __files[];
+    extern char lbl_80270350[];
+    u32 len;
+    u32 *p;
+    u32 rest;
+
+    if (pos > arg1->size) {
+        fn_80232058(__files + 0xA0, lbl_80270350 + 0x96);
+        fn_8022CF78();
+    }
+    rest = arg1->size - pos;
+    p = &n;
+    if (rest < *p) {
+        p = &rest;
+    }
+    len = *p;
+    if (arg0 == arg1) {
+        fn_800C984C(arg0, 0, pos);
+        fn_800CA7F4(arg0, len, 1);
+    } else {
+        fn_800CA7F4(arg0, len, 0);
+        memcpy(arg0->data, arg1->data + pos, len);
+    }
+    return arg0;
+}
+#pragma dont_inline reset
 
 String *fn_800C984C(String *arg0, u32 arg1, u32 arg2) {
     String *fn_800C94F8(String *, u32, u32, u32, u32);
@@ -3878,6 +3917,66 @@ s32 fn_800EE490(void) {
     result = fn_8000CAF0(lbl_8028E558, 4);
     fn_800EE124();
     return result;
+}
+
+s32 fn_800EF1C0(void) {
+    M2C_UNK fn_8004D5D4(M2C_UNK *);
+    s32 fn_80068548();
+    s32 fn_80069D58();
+    s32 fn_80069DBC();
+    s32 fn_80069E18();
+    s32 fn_80069EA8();
+    M2C_UNK fn_8006A384(M2C_UNK *);
+    M2C_UNK fn_80202024(M2C_UNK *, M2C_UNK *, M2C_UNK *);
+    M2C_UNK fn_802026E4(M2C_UNK *, s32, s32, s32);
+    M2C_UNK fn_80202870(M2C_UNK *, f32, f32, f32, f32, f32, f32);
+    M2C_UNK fn_802201A8(s32, M2C_UNK, M2C_UNK, s32, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80222C50(M2C_UNK *, s32);
+    M2C_UNK fn_80223A5C(s32, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80223AA0(s32, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80223AE4(s32, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80223B4C(s32, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80223D38(s32, M2C_UNK);
+    M2C_UNK fn_80223E5C(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80223F2C(s32, s32, s32, M2C_UNK);
+    M2C_UNK fn_80224E50(M2C_UNK *, s32, M2C_UNK);
+    extern f32 lbl_80369FC8;
+    extern f32 lbl_80369FCC;
+    extern f32 lbl_80369FD0;
+    extern f32 lbl_80369FE0;
+    M2C_UNK spB8;
+    M2C_UNK sp88;
+    M2C_UNK sp58;
+    M2C_UNK sp28;
+    M2C_UNK sp8;
+    s32 temp_r28;
+    s32 temp_r29;
+    s32 temp_r30;
+    s32 temp_r31;
+    s32 temp_r3;
+
+    temp_r30 = fn_80069DBC();
+    temp_r31 = fn_80069EA8();
+    temp_r29 = fn_80069E18();
+    temp_r28 = fn_80069D58();
+    temp_r3 = fn_80068548();
+    fn_802026E4(&sp58, temp_r3 + 0xD4, temp_r3 + 0xEC, temp_r3 + 0xE0);
+    fn_80202870(&sp88, lbl_80369FCC, lbl_80369FD0, lbl_80369FC8, lbl_80369FE0, lbl_80369FC8, lbl_80369FC8);
+    fn_8006A384(&sp28);
+    fn_80202024(&sp58, &sp28, &spB8);
+    fn_80202024(&sp88, &spB8, &spB8);
+    fn_8004D5D4(&sp8);
+    fn_80222C50(&sp8, temp_r29);
+    fn_80224E50(&spB8, temp_r28, 0);
+    fn_802201A8(temp_r30, 0, 0, temp_r28, 0, 0x7D);
+    fn_80223F2C(temp_r31, temp_r30, temp_r29, 4);
+    fn_80223A5C(temp_r31, 0xF, 0xF, 0xF, 0);
+    fn_80223AE4(temp_r31, 1, 0, 0, 1, 0);
+    fn_80223D38(temp_r31, 2);
+    fn_80223AA0(temp_r31, 7, 6, 4, 0);
+    fn_80223B4C(temp_r31, 1, 0, 0, 1, 0);
+    fn_80223E5C(4, 0, 1, 0, 0);
+    return 1;
 }
 
 void fn_800F0774(void) {
