@@ -26,7 +26,7 @@ static inline u8 IsSlotAvailable(void *obj, s16 slot) {
     }
     item = fn_80037BD0(M2C_FIELD(obj, s32 *, 0x58), slot);
     if (M2C_FIELD(obj, s32 *, 0x5C) == 1 && *item == 0) {
-        if (slot != 0 && slot != 4 && *fn_80037BD0(M2C_FIELD(obj, s32 *, 0x58), slot - 1) == 0) {
+        if (slot == 0 || slot == 4 || *fn_80037BD0(M2C_FIELD(obj, s32 *, 0x58), slot - 1) != 0) {
             return 1;
         }
     }
