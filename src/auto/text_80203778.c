@@ -309,6 +309,33 @@ s32 fn_80204CD4(s32 arg0) {
     return temp_r0;
 }
 
+void *fn_80204CE4(void *arenaStart, void *arenaEnd, s32 maxHeaps) {
+    extern s32 lbl_80366F28;
+    u32 arraySize;
+    s32 i;
+    HeapDesc *hd;
+
+    arraySize = sizeof(HeapDesc) * maxHeaps;
+    lbl_80368498 = arenaStart;
+    lbl_8036849C = maxHeaps;
+
+    for (i = 0; i < lbl_8036849C; i++) {
+        hd = &lbl_80368498[i];
+        hd->size = -1;
+        hd->free = hd->allocated = NULL;
+    }
+
+    lbl_80366F28 = -1;
+
+    arenaStart = (void *)((u32)lbl_80368498 + arraySize);
+    arenaStart = (void *)(((u32)arenaStart + 31) & ~31);
+
+    lbl_803684A0 = arenaStart;
+    lbl_803684A4 = (void *)((u32)arenaEnd & ~31);
+
+    return arenaStart;
+}
+
 void fn_80204D54(void) {
     extern u32 lbl_8036B044;
     extern u32 lbl_803660F4;
