@@ -3191,7 +3191,6 @@ void fn_8025FFC8(void *arg0, u8 arg1, s32 arg2, u8 arg3, u8 arg4, u8 arg5) {
     }
 }
 
-extern u16 lbl_80361A98[4288];
 void fn_80260060(u8 arg0, void *arg1, void *arg2) {
     s32 temp_r0;
     s32 temp_r4;
