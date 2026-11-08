@@ -184,7 +184,7 @@ s32 fn_802216E0(s32 arg0) {
 }
 
 void fn_80221A2C(s32 arg0) {
-    M2C_FIELD(__GXData, u32 *, 0x1EC) = (M2C_FIELD(__GXData, u32 *, 0x1EC) & ~0x180) | ((arg0 << 7) & 0x180);
+    M2C_FIELD(__GXData, u32 *, 0x1EC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1EC), arg0, 7, 23, 24);
 }
 
 void fn_80221A40(void)
@@ -202,65 +202,64 @@ void fn_80221A40(void)
 void fn_80221BA8(void *dest, u8 clear) {
     u32 reg;
     u8 changePeCtrl;
-    u32 tempPeCtrl;
 
     if (clear) {
         reg = M2C_FIELD(__GXData, u32 *, 0x1D8);
         reg = __rlwimi(reg, 1, 0, 31, 31);
         reg = __rlwimi(reg, 7, 1, 28, 30);
-        GXWGFifo.u8 = 0x61;
-        GXWGFifo.u32 = reg;
+        *(volatile u8 *)0xCC008000 = 0x61;
+        *(volatile u32 *)0xCC008000 = reg;
 
         reg = M2C_FIELD(__GXData, u32 *, 0x1D0);
         reg = __rlwimi(reg, 0, 0, 31, 31);
         reg = __rlwimi(reg, 0, 1, 30, 30);
-        GXWGFifo.u8 = 0x61;
-        GXWGFifo.u32 = reg;
+        *(volatile u8 *)0xCC008000 = 0x61;
+        *(volatile u32 *)0xCC008000 = reg;
     }
 
     changePeCtrl = 0;
-    tempPeCtrl = M2C_FIELD(__GXData, u32 *, 0x1DC);
-    if (M2C_FIELD(__GXData, u8 *, 0x200) && (tempPeCtrl & 7) != 3) {
-        tempPeCtrl = __rlwimi(tempPeCtrl, 3, 0, 29, 31);
+    reg = M2C_FIELD(__GXData, u32 *, 0x1DC);
+    if (M2C_FIELD(__GXData, u8 *, 0x200) && (reg & 7) != 3) {
+        reg = __rlwimi(reg, 3, 0, 29, 31);
         changePeCtrl = 1;
     }
-    if ((clear || (tempPeCtrl & 7) == 3) && ((tempPeCtrl >> 6) & 1) == 1) {
-        tempPeCtrl = __rlwimi(tempPeCtrl, 0, 6, 25, 25);
+    if ((clear || (reg & 7) == 3) && ((reg >> 6) & 1) == 1) {
+        reg = __rlwimi(reg, 0, 6, 25, 25);
         changePeCtrl = 1;
     }
     if (changePeCtrl) {
-        GXWGFifo.u8 = 0x61;
-        GXWGFifo.u32 = tempPeCtrl;
+        *(volatile u8 *)0xCC008000 = 0x61;
+        *(volatile u32 *)0xCC008000 = reg;
     }
 
-    GXWGFifo.u8 = 0x61;
-    GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1F0);
-    GXWGFifo.u8 = 0x61;
-    GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1F4);
-    GXWGFifo.u8 = 0x61;
-    GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1F8);
+    *(volatile u8 *)0xCC008000 = 0x61;
+    *(volatile u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1F0);
+    *(volatile u8 *)0xCC008000 = 0x61;
+    *(volatile u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1F4);
+    *(volatile u8 *)0xCC008000 = 0x61;
+    *(volatile u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1F8);
 
     reg = 0;
     reg = __rlwimi(reg, (u32)dest, 27, 11, 31);
     reg = __rlwimi(reg, 0x4B, 24, 0, 7);
-    GXWGFifo.u8 = 0x61;
-    GXWGFifo.u32 = reg;
+    *(volatile u8 *)0xCC008000 = 0x61;
+    *(volatile u32 *)0xCC008000 = reg;
 
     M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC), clear, 11, 20, 20);
     M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC), 0, 14, 17, 17);
     M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC), 0x52, 24, 0, 7);
-    GXWGFifo.u8 = 0x61;
-    GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1FC);
+    *(volatile u8 *)0xCC008000 = 0x61;
+    *(volatile u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1FC);
 
     if (clear) {
-        GXWGFifo.u8 = 0x61;
-        GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1D8);
-        GXWGFifo.u8 = 0x61;
-        GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1D0);
+        *(volatile u8 *)0xCC008000 = 0x61;
+        *(volatile u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1D8);
+        *(volatile u8 *)0xCC008000 = 0x61;
+        *(volatile u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1D0);
     }
     if (changePeCtrl) {
-        GXWGFifo.u8 = 0x61;
-        GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1DC);
+        *(volatile u8 *)0xCC008000 = 0x61;
+        *(volatile u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1DC);
     }
     M2C_FIELD(__GXData, u16 *, 0x2) = 0;
 }
