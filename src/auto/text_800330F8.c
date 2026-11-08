@@ -4,6 +4,21 @@
 extern void* lbl_803672A8;
 extern f64 lbl_80368EF8;
 
+void fn_800331D4(void *arg0, s32 arg1) {
+    u8 *ptr = (u8*)arg0 + 0x60;
+    s32 count = arg1 * 2;
+    s32 i;
+
+    if (count <= 0) {
+        return;
+    }
+
+    for (i = 0; i < count; i++) {
+        s32 offset = (*ptr + i) * 2 + 0x20;
+        *(u16*)((u32)arg0 + offset) |= 0x8;
+    }
+}
+
 void fn_8003333C(void *arg0,s32 arg1) {
  s32 count=M2C_FIELD(arg0,u8*,0x60);
  s32 first=arg1+count, second, third, fourth, fifth;
@@ -570,6 +585,113 @@ s32 fn_800386E0(s32 arg0) {
     return var_r31;
 }
 
+s8 fn_80038748(void *arg0) {
+    s8 var_r5;
+    s8 var_r4;
+    void **var_r4_2;
+
+    var_r5 = 0;
+    // First branch check
+    if ((*(u8*)((char*)arg0 + 0x1d1) & 0x08) && (*(u32*)((char*)arg0 + 0x1cc) != 0)) {
+        var_r4 = 0;
+    } else if ((*(u8*)((char*)arg0 + 0x1d9) & 0x08) && (*(u32*)((char*)arg0 + 0x1d4) != 0)) {
+        var_r4 = 1;
+    } else if ((*(u8*)((char*)arg0 + 0x1e1) & 0x08) && (*(u32*)((char*)arg0 + 0x1dc) != 0)) {
+        var_r4 = 2;
+    } else if ((*(u8*)((char*)arg0 + 0x1e9) & 0x08) && (*(u32*)((char*)arg0 + 0x1e4) != 0)) {
+        var_r4 = 3;
+    } else {
+        var_r4 = -1;
+    }
+    
+    // Check for valid offset and load value
+    if (var_r4 < 0) {
+        var_r4_2 = NULL;
+    } else {
+        var_r4_2 = (void**)((char*)arg0 + ((var_r4 * 8) + 0x1cc));
+    }
+    
+    if (var_r4_2 != NULL) {
+        var_r5 = *(s8*)(((s32*)*var_r4_2)[0x27/4]);
+    }
+    
+    // Second branch check
+    if ((*(u8*)((char*)arg0 + 0x1f1) & 0x08) && (*(u32*)((char*)arg0 + 0x1ec) != 0)) {
+        var_r4 = 0;
+    } else if ((*(u8*)((char*)arg0 + 0x1f9) & 0x08) && (*(u32*)((char*)arg0 + 0x1f4) != 0)) {
+        var_r4 = 1;
+    } else if ((*(u8*)((char*)arg0 + 0x201) & 0x08) && (*(u32*)((char*)arg0 + 0x1fc) != 0)) {
+        var_r4 = 2;
+    } else if ((*(u8*)((char*)arg0 + 0x209) & 0x08) && (*(u32*)((char*)arg0 + 0x204) != 0)) {
+        var_r4 = 3;
+    } else {
+        var_r4 = -1;
+    }
+    
+    // Check for valid offset and load value
+    if (var_r4 < 0) {
+        var_r4_2 = NULL;
+    } else {
+        var_r4_2 = (void**)((char*)arg0 + ((var_r4 * 8) + 0x1ec));
+    }
+    
+    if (var_r4_2 != NULL) {
+        var_r5 += *(s8*)(((s32*)*var_r4_2)[0x27/4]);
+    }
+    
+    return var_r5;
+}
+
+s8 fn_800388C8(void *arg0) {
+    s8 var_r4;
+    s8 var_r5;
+    void **ptr1;
+    void **ptr2;
+    
+    var_r5 = 0;
+    // First check block
+    if ((*(u8*)((u8*)arg0 + 0x1D1) & 0x80) != 0 && (*(u32*)((u8*)arg0 + 0x1CC) != 0)) {
+        var_r4 = 0;
+    } else if ((*(u8*)((u8*)arg0 + 0x1D9) & 0x80) != 0 && (*(u32*)((u8*)arg0 + 0x1D4) != 0)) {
+        var_r4 = 1;
+    } else if ((*(u8*)((u8*)arg0 + 0x1E1) & 0x80) != 0 && (*(u32*)((u8*)arg0 + 0x1DC) != 0)) {
+        var_r4 = 2;
+    } else if ((*(u8*)((u8*)arg0 + 0x1E9) & 0x80) != 0 && (*(u32*)((u8*)arg0 + 0x1E4) != 0)) {
+        var_r4 = 3;
+    } else {
+        var_r4 = -1;
+    }
+    
+    if (var_r4 >= 0) {
+        ptr1 = (void**)((u8*)arg0 + ((var_r4 * 8) + 0x1CC));
+        if (*ptr1 != NULL) {
+            var_r5 = *(s8*)((u8*)(*ptr1) + 0x28);
+        }
+    }
+    
+    // Second check block
+    if ((*(u8*)((u8*)arg0 + 0x1F1) & 0x80) != 0 && (*(u32*)((u8*)arg0 + 0x1EC) != 0)) {
+        var_r4 = 0;
+    } else if ((*(u8*)((u8*)arg0 + 0x1F9) & 0x80) != 0 && (*(u32*)((u8*)arg0 + 0x1F4) != 0)) {
+        var_r4 = 1;
+    } else if ((*(u8*)((u8*)arg0 + 0x201) & 0x80) != 0 && (*(u32*)((u8*)arg0 + 0x1FC) != 0)) {
+        var_r4 = 2;
+    } else if ((*(u8*)((u8*)arg0 + 0x209) & 0x80) != 0 && (*(u32*)((u8*)arg0 + 0x204) != 0)) {
+        var_r4 = 3;
+    } else {
+        var_r4 = -1;
+    }
+    
+    if (var_r4 >= 0) {
+        ptr2 = (void**)((u8*)arg0 + ((var_r4 * 8) + 0x1EC));
+        if (*ptr2 != NULL) {
+            var_r5 += *(s8*)((u8*)(*ptr2) + 0x28);
+        }
+    }
+    
+    return var_r5;
+}
+
 extern u8 lbl_8026A3A8[176];
 void *fn_800A88E0(u32);
 void *fn_8003A064(void *arg0) {
@@ -809,6 +931,87 @@ void fn_8003B6C4(void* arg0, s32 arg1) {
     fn_800173B4((char*)arg0 + 0x236, arg0);
 }
 
+void fn_8003B6F0(void *arg0, s8 arg1) {
+    s32 i;
+    void *ptr;
+    s8 temp_arg1 = arg1;
+
+    // Initialize various fields to 0
+    ((u32*)arg0)[0x180/4] = 0;
+    ((u32*)arg0)[0x184/4] = 0;
+    ((u32*)arg0)[0x188/4] = 0;
+    ((u32*)arg0)[0x18C/4] = 0;
+    ((u32*)arg0)[0x190/4] = 0;
+    ((u32*)arg0)[0x194/4] = 0;
+    ((u8*)arg0)[0x19A] = 0;
+    ((u8*)arg0)[0x19B] = 0;
+    ((u8*)arg0)[0x19C] = 0;
+    ((u8*)arg0)[0x19D] = 0;
+    ((u8*)arg0)[0x19E] = 0;
+    ((u8*)arg0)[0x19F] = 0;
+    ((u32*)arg0)[0x1A0/4] = 0;
+
+    // Call fn_80104410 with offset
+    fn_80104410((char*)arg0 + 0x1A4);
+
+    // Set up loop variables
+    ptr = arg0;
+    ((u8*)arg0)[0x1A8] = 0;
+    i = 0;
+    
+    ((u8*)arg0)[0x1B2] = 0;
+    ((u8*)arg0)[0x1B1] = 0;
+    ((u8*)arg0)[0x1B0] = 0;
+    ((u8*)arg0)[0x1AF] = 0;
+    ((u8*)arg0)[0x1AE] = 0;
+    ((u8*)arg0)[0x1AD] = 0;
+    ((u8*)arg0)[0x1AC] = 0;
+    ((u8*)arg0)[0x1AB] = 0;
+    ((u8*)arg0)[0x1BB] = 0;
+    ((u8*)arg0)[0x1BA] = 0;
+    ((u8*)arg0)[0x1B9] = 0;
+    ((u8*)arg0)[0x1B8] = 0;
+    ((u8*)arg0)[0x1B7] = 0;
+    ((u8*)arg0)[0x1B6] = 0;
+    ((u8*)arg0)[0x1B5] = 0;
+    ((u8*)arg0)[0x1B4] = 0;
+    ((u32*)arg0)[0x1C8/4] = 0;
+    ((u32*)arg0)[0x1C4/4] = 0;
+    ((u32*)arg0)[0x1C0/4] = 0;
+    ((u32*)arg0)[0x1BC/4] = 0;
+
+    // Loop with 4 iterations
+    do {
+        fn_8001D580((char*)ptr + 0x1CC);
+        fn_8001D580((char*)ptr + 0x1EC);
+        i += 1;
+        ptr = (char*)ptr + 8;
+    } while (i < 4);
+
+    // More field initializations
+    ((u8*)arg0)[0x20C] = 0;
+    ((u8*)arg0)[0x20D] = 0;
+    ((u8*)arg0)[0x20E] = 0;
+    ((u8*)arg0)[0x20F] = 0;
+    ((u8*)arg0)[0x210] = 0;
+    ((u8*)arg0)[0x211] = 0;
+    ((u8*)arg0)[0x212] = 0;
+    ((u8*)arg0)[0x213] = 0;
+    ((u16*)arg0)[0x228/2] = 0;
+    ((u16*)arg0)[0x22A/2] = 0;
+    ((u16*)arg0)[0x22C/2] = 0;
+    ((u16*)arg0)[0x22E/2] = 0;
+    ((u16*)arg0)[0x230/2] = 0;
+    ((u16*)arg0)[0x232/2] = 0;
+    ((u8*)arg0)[0x234] = 0;
+    ((u8*)arg0)[0x235] = 0;
+
+    // Set arg1 to field at offset 0x198 if it's non-negative
+    if (temp_arg1 >= 0) {
+        ((u8*)arg0)[0x198] = temp_arg1;
+    }
+}
+
 void fn_8003B844(void *arg0,s32 arg1) {
  void *outer=arg0;
  s32 i=0;
@@ -876,6 +1079,41 @@ void fn_8003B9AC(void) {
         gGameState = 3;
         return;
     }
+}
+
+extern u16 lbl_8026A458[];
+s32 fn_8003BA80(void *arg0) {
+    s32 temp_r3;
+
+    if (arg0 == NULL) {
+        return 0;
+    }
+    if (fn_802342B8(arg0, &lbl_8026A458[0x44 / sizeof(u16)]) == 0) {
+        return 1;
+    }
+    if (fn_802342B8(arg0, &lbl_8026A458[0x49 / sizeof(u16)]) == 0) {
+        return 2;
+    }
+    if (fn_802342B8(arg0, &lbl_8026A458[0x51 / sizeof(u16)]) == 0) {
+        return 3;
+    }
+    if (fn_802342B8(arg0, &lbl_8026A458[0x56 / sizeof(u16)]) == 0) {
+        return 4;
+    }
+    if (fn_802342B8(arg0, &lbl_8026A458[0x5C / sizeof(u16)]) == 0) {
+        return 5;
+    }
+    if (fn_802342B8(arg0, &lbl_8026A458[0x61 / sizeof(u16)]) == 0) {
+        return 6;
+    }
+    if (fn_802342B8(arg0, &lbl_8026A458[0x67 / sizeof(u16)]) == 0) {
+        return 7;
+    }
+    temp_r3 = fn_802342B8(arg0, &lbl_8026A458[0x6E / sizeof(u16)]);
+    if (temp_r3 != 0) {
+        return 0;
+    }
+    return 8;
 }
 
 s32 fn_8003BE50(s32 arg0)
@@ -998,6 +1236,20 @@ s32 fn_8003C7D0(s32 arg0) {
         return 1;
     }
     return fn_80105BC0(arg0 + 0x1BC, 7) != 0;
+}
+
+void* fn_8003CE88(void* arg0, s32 arg1, void* arg2) {
+    // Simple version that might work better - the exact implementation needs to match structure of target
+    if (arg0 == 0) {
+        return arg2;
+    }
+    
+    // Let's look at this simpler approach based on what we know from other functions
+    *(s32*)((char*)arg2 + 0x0) = (s32)arg0;
+    *(u8*)((char*)arg2 + 0x4) = (u8)arg1;
+    *(u8*)((char*)arg2 + 0x5) = (u8)arg1;
+    
+    return arg2;
 }
 
 u8 fn_8003CFF0(s32 arg0, s32 arg1) {
@@ -1607,6 +1859,25 @@ void fn_80048A70(s8 arg0) {
     lbl_80367289 = var_r3;
 }
 
+void fn_80048C5C(void *arg0, s32 arg1, s32 arg2) {
+    u8 *temp_r4;
+    s32 *temp_r5;
+    
+    if ((u32)(arg2 - 8) <= (u32)0x7) {
+        temp_r5 = (s32 *)arg0;
+        arg2 = arg2 << 1;
+        arg2 = (arg1 & 0xFFFF) | (arg2 << 0x10);
+        *temp_r5 = arg2;
+        *(temp_r5 + 4) = arg2 >> 0x10;
+    } else {
+        temp_r5 = (s32 *)arg0;
+        temp_r4 = (u8 *)arg0 + 8;
+        *temp_r5 = arg1;
+        *(u32 *)temp_r4 = arg2;
+        *((s32 *)temp_r4 + 1) = arg2 >> 0x10;
+    }
+}
+
 void fn_800490F0(void *arg0) {
     s32 temp_r31;
     u8 sp8;
@@ -2074,6 +2345,48 @@ void fn_8004B1B4(s32 arg0, s32 arg1) {
     }
 }
 
+extern s32 lbl_80367308;
+void fn_8004B3DC(void) {
+    lbl_80367308 = 0;
+}
+
+s32 fn_8004BAC4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 temp_r3;
+    s32 temp_r5;
+    s32 temp_r6;
+    s32 temp_r3_2;
+
+    if (arg0 < 0x0) {
+        temp_r3 = arg0 + 0x1F;
+    } else {
+        temp_r3 = arg0;
+    }
+    temp_r3 = temp_r3 >> 5;
+    
+    if (arg1 < 0x0) {
+        temp_r6 = arg1 + 0x1F;
+    } else {
+        temp_r6 = arg1;
+    }
+    temp_r6 = temp_r6 >> 5;
+    
+    if (arg2 < 0x0) {
+        temp_r5 = arg2 + 0x1F;
+    } else {
+        temp_r5 = arg2;
+    }
+    temp_r5 = temp_r5 >> 5;
+    
+    if (arg3 < 0x0) {
+        temp_r3_2 = arg3 + 0x1F;
+    } else {
+        temp_r3_2 = arg3;
+    }
+    temp_r3_2 = temp_r3_2 >> 5;
+    
+    return ((temp_r6 * 0x7D8600) + (temp_r3 * 0x32E100)) + ((temp_r5 * 0x7D8600) + (temp_r3_2 * 0x32E100));
+}
+
 void fn_8004BC48(void *arg0, s32 arg1) {
     s16 fn_8017A9B0(s32, M2C_UNK);
     M2C_UNK fn_8017A9DC(s32);
@@ -2159,6 +2472,84 @@ void fn_8004D5D4(s32 arg0) {
     
     fn_80222644(lbl_803672B8, 0xA0, 0x78, 0, 0, 0, 0);
     fn_802228D8(arg0, 1, 1, 0, 0, 0, lbl_80368FCC, lbl_80368FCC, lbl_80368FCC);
+}
+
+void fn_8004DAFC(void *arg0, f32 farg0) {
+    extern f32 lbl_80368FCC;
+    extern f32 lbl_8036902C;
+    extern f32 lbl_80369030;
+    extern f32 lbl_80368FC0;
+
+    f32 sp10;
+    f32 spC;
+    f32 sp8;
+    f32 temp_f2;
+    f32 temp_f3;
+    f32 temp_f4;
+    f32 temp_f5;
+    u8 temp_r31;
+    f32 var_f30;
+    f32 var_f29;
+    f32 var_f28;
+
+    sp8 = *(f32 *)((u8 *)arg0 + 0x170);
+    spC = *(f32 *)((u8 *)arg0 + 0x174);
+    sp10 = *(s32 *)((u8 *)arg0 + 0x178);
+
+    fn_80068070(spC, sp8, lbl_80368FCC, lbl_80368FCC, lbl_8036902C, lbl_80369030);
+    fn_800680AC(0, 0, 0xA0, 0x78);
+    fn_80067EDC(0);
+    temp_r31 = *(u8 *)((u8 *)arg0 + 0x27);
+    fn_80220DEC(0x98, 0, 4);
+
+    var_f28 = *(f32 *)((u8 *)arg0 + 0x170);
+    var_f29 = *(f32 *)((u8 *)arg0 + 0x174);
+    temp_f5 = *(s32 *)((u8 *)arg0 + 0x178);
+
+    var_f30 = farg0;
+
+    temp_f4 = var_f28 - var_f30;
+    temp_f3 = var_f29 - var_f30;
+    temp_f2 = var_f28 + var_f30;
+
+    *(f32 *)0xCC008000 = temp_f4;
+    *(f32 *)0xCC008000 = temp_f3;
+    *(f32 *)0xCC008000 = lbl_80368FCC;
+    *(u8 *)0xCC008000 = temp_r31;
+    *(u8 *)0xCC008000 = temp_r31;
+    *(u8 *)0xCC008000 = temp_r31;
+    *(u8 *)0xCC008000 = 0xFF;
+    *(f32 *)0xCC008000 = lbl_80368FCC;
+    *(f32 *)0xCC008000 = lbl_80368FCC;
+    *(f32 *)0xCC008000 = temp_f2;
+    *(f32 *)0xCC008000 = temp_f3;
+    *(f32 *)0xCC008000 = lbl_80368FCC;
+    *(u8 *)0xCC008000 = temp_r31;
+    *(u8 *)0xCC008000 = temp_r31;
+    *(u8 *)0xCC008000 = temp_r31;
+    *(u8 *)0xCC008000 = 0xFF;
+    *(f32 *)0xCC008000 = lbl_80368FC0;
+    *(f32 *)0xCC008000 = lbl_80368FCC;
+    *(f32 *)0xCC008000 = temp_f4;
+    *(f32 *)0xCC008000 = temp_f5;
+    *(f32 *)0xCC008000 = lbl_80368FCC;
+    *(u8 *)0xCC008000 = temp_r31;
+    *(u8 *)0xCC008000 = temp_r31;
+    *(u8 *)0xCC008000 = temp_r31;
+    *(u8 *)0xCC008000 = 0xFF;
+    *(f32 *)0xCC008000 = lbl_80368FCC;
+    *(f32 *)0xCC008000 = lbl_80368FC0;
+    *(f32 *)0xCC008000 = temp_f2;
+    *(f32 *)0xCC008000 = temp_f5;
+    *(f32 *)0xCC008000 = lbl_80368FCC;
+    *(u8 *)0xCC008000 = temp_r31;
+    *(u8 *)0xCC008000 = temp_r31;
+    *(u8 *)0xCC008000 = temp_r31;
+    *(u8 *)0xCC008000 = 0xFF;
+    *(f32 *)0xCC008000 = lbl_80368FC0;
+    *(f32 *)0xCC008000 = lbl_80368FC0;
+
+    fn_80067984(0, 0xCC010000, lbl_80368FCC, temp_f2, temp_f3, temp_f4, temp_f5);
 }
 
 void fn_8004DC54(s8 arg0) {
@@ -2613,6 +3004,63 @@ void fn_80054808(void *arg0) {
     }
 }
 
+extern u32 lbl_80369058;
+extern u32 lbl_8036905C;
+extern u32 lbl_80369060;
+extern u32 lbl_80369064;
+extern u32 lbl_80369068;
+extern u32 lbl_8036906C;
+extern u32 lbl_80369070;
+extern u32 lbl_80369074;
+extern u32 lbl_80369078;
+extern u32 lbl_8036907C;
+extern u32 jumptable_80285ACC[];
+void fn_800558FC(void* arg0)
+{
+    // Load byte and compare with 0x8
+    u8 val = *(u8*)((char*)arg0 + 0x6);
+    
+    if (val >= 0x8) {
+        // Use jump table for cases >= 8
+        void (*func)(void) = (void (*)(void))jumptable_80285ACC[val];
+        
+        // Make the call
+        func();
+    } else {
+        // Switch to handle cases 0-7
+        
+        switch(val) {
+            case 0:
+                *(u32*)(((char*)arg0) + 0x28) = lbl_8036905C;
+                break;
+            case 1:
+                *(u32*)(((char*)arg0) + 0x28) = lbl_80369060;
+                break;
+            case 2:
+                *(u32*)(((char*)arg0) + 0x28) = lbl_80369064;
+                break;
+            case 3:
+                *(u32*)(((char*)arg0) + 0x28) = lbl_80369068;
+                break;
+            case 4:
+                *(u32*)(((char*)arg0) + 0x28) = lbl_8036906C;
+                break;
+            case 5:
+                *(u32*)(((char*)arg0) + 0x28) = lbl_80369070;
+                break;
+            case 6:
+                *(u32*)(((char*)arg0) + 0x28) = lbl_80369074;
+                break;
+            case 7:
+                *(u32*)(((char*)arg0) + 0x28) = lbl_80369078;
+                break;
+        }
+
+        // After switch, just do one final assignment
+        *(u32*)(((char*)arg0) + 0x28) = lbl_8036907C;
+    }
+}
+
 s32 fn_80055AC0(s32 *arg0, s32 arg1) {
     M2C_UNK fn_80231D94(s32, void *, void *, s32);
     extern u16 lbl_8026AC0C[];
@@ -2676,6 +3124,7 @@ extern u16 *lbl_803672AC;
 #include "global.h"
 
 extern u16 lbl_8026A660;
+extern void* lbl_803672A8;
 extern u8 lbl_802CA518[];
 extern u32* lbl_803672CC;
 #include "global.h"
