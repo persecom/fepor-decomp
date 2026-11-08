@@ -2,6 +2,7 @@
 #include "common.h"
 #include <dolphin/os.h>
 #include "global.h"
+extern u16 Scb_80339420[];
 extern s32 lbl_803682F0;;
 extern s32 fn_80013E50(s32);
 extern s32 fn_80013E60(s32, s32);
@@ -463,6 +464,23 @@ s32 fn_802118D8(void) {
     return temp_r31 & 1;
 }
 
+u32 fn_8021364C(u32 arg0) {
+    M2C_UNK fn_8023B308(M2C_UNK *);
+    M2C_UNK fn_8023B3D4(M2C_UNK *);
+    extern M2C_UNK fn_802135EC;
+    extern u32 lbl_80368688;
+    u32 temp_r31;
+
+    temp_r31 = lbl_80368688;
+    lbl_80368688 = arg0;
+    if (arg0 != 0U) {
+        fn_8023B308(&fn_802135EC);
+    } else {
+        fn_8023B3D4(&fn_802135EC);
+    }
+    return temp_r31;
+}
+
 void fn_802137E8(void) {
     u16 *ptr = (u16 *)0xCC005000;
     u16 val = ptr[0x1B];
@@ -509,6 +527,13 @@ void fn_80213B18(s32 arg0) {
 
 u8 fn_80213B34(void) {
     return (u8) ((u32) *(u32 *)0xCC006C04 >> 8U);
+}
+
+void fn_80213DD8(void) {
+    void (*funcPtr)(void) = (void (*)(void))lbl_803685E8;
+    if (funcPtr != NULL) {
+        funcPtr();
+    }
 }
 
 s32 fn_80214058(void) {
