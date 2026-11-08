@@ -903,6 +903,49 @@ void fn_800CA644(void) {
     fn_800CA664();
 }
 
+void fn_800CA990(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 arg10) {
+    s32 x;
+    s32 y;
+    s32 w;
+    s32 h;
+    s32 x2;
+    s32 y2;
+    s32 cols;
+    s32 u0;
+    s32 v0;
+    s32 u1;
+    s32 v1;
+    
+    w = M2C_FIELD(arg0, s32 *, 0x54);
+    h = M2C_FIELD(arg0, s32 *, 0x58);
+    x = arg3;
+    y = arg4;
+    x2 = arg3 + w;
+    y2 = arg4 + h;
+    
+    if (arg2 >= M2C_FIELD(arg0, s32 *, 0x60)) {
+        arg2 = M2C_FIELD(arg0, s32 *, 0x60) - 1;
+    }
+    
+    cols = M2C_FIELD(arg0, s32 *, 0x5C);
+    u0 = M2C_FIELD(arg0, s32 *, 0x64) + w * (arg2 % cols);
+    v0 = M2C_FIELD(arg0, s32 *, 0x68) + h * (arg2 / cols);
+    u1 = u0 + w;
+    v1 = v0 + h;
+    
+    if (M2C_FIELD(arg0, u32 *, 0x48) != 0) {
+        fn_8000A258();
+        fn_80009D74(0.0f, 0.0f, (f32) arg5, 1.0f);
+        fn_80009F90(M2C_FIELD(arg0, u32 *, 0x48), arg10, (u16) M2C_FIELD(arg0, s32 *, 0x6C));
+        fn_8000A248();
+        fn_80007898(1);
+        fn_800077D8((f32) arg3, (f32) arg4, (f32) (x2 - arg3), (f32) (y2 - arg4));
+        fn_80007770((f32) u0, (f32) v0, (f32) u1, (f32) v1);
+        fn_800076AC((u8) arg6, (u8) arg7, (u8) arg8, (u8) arg9);
+        fn_80007884();
+    }
+}
+
 void fn_800CAC7C(Unit* unit, u32 arg1) {
     s32 temp_r30;
     s32 var_r29;
@@ -1064,6 +1107,160 @@ void fn_800CDAA0(void *arg0, void *arg1) {
 void fn_800CDFFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     // Simplest possible version for initial attempt
     return;
+}
+
+extern s32 fn_800D5DB0(void *, s32, s32, s32 *);
+extern u8 fn_800CEB6C(void *, s32 *);
+extern void fn_800CE690(void *, s32 *);
+extern void fn_800CE214(void *, s32 *);
+extern void fn_800CDFFC(void *);
+extern u8 fn_800CED88(void *);
+void fn_800CF000(void *arg0)
+{
+    void* self = arg0;
+    
+    s32 sp5C;
+    s32 sp58;
+    s32 sp54;
+    s32 sp50;
+    s32 sp4C;
+    s32 sp48;
+    s32 sp44;
+    s32 sp40;
+    s32 sp3C;
+    s32 sp38;
+    s32 sp34;
+    s32 sp30;
+    s32 sp2C;
+    s32 sp28;
+    s32 sp24;
+    s32 sp20;
+    s8 sp1C;
+    s32 sp18;
+    s32 sp14;
+    s32 sp10;
+    s32 spC;
+    s32 sp8;
+    
+    // Initialize stack variables - this is a guess based on the disassembly
+    sp8 = *(s32*)((u8*)self + 0x84);
+    spC = *(s32*)((u8*)self + 0x88);
+    sp10 = *(s32*)((u8*)self + 0xA8);
+    sp14 = *(s32*)((u8*)self + 0xA4);
+    
+    sp18 = 0;
+    sp1C = 0;
+    sp20 = 0xD;
+    sp24 = 0;
+    sp28 = 0;
+    sp2C = 0;
+    sp30 = 0;
+    sp34 = 0;
+    sp44 = -1;
+    sp40 = -1;
+    sp3C = -1;
+    sp38 = -1;
+    sp54 = -1;
+    sp50 = -1;
+    sp4C = -1;
+    sp48 = -1;
+    sp58 = 0;
+    sp5C = 0;
+    
+loop_12:
+    if (sp24 == 0)
+    {
+        s16* temp_r5 = *(s16**)((u8*)self + 0x1FC);
+        s16 temp_r4 = *temp_r5;
+        s32 temp_r3 = temp_r4 * 4;
+        u8 temp_r0 = *(temp_r5 + (temp_r3 + 4));
+        
+        switch ((s32) temp_r0)
+        {
+        case 0x55:
+            {
+                s16 temp_r3_2 = *(temp_r5 + (temp_r3 + 6));
+                *temp_r5 = temp_r4 + 1;
+                
+                if ((s8) temp_r3_2 != 0)
+                {
+                    s16* temp_r4_2 = *(s16**)((u8*)self + 0x1FC);
+                    *temp_r4_2 += (s8) temp_r3_2;
+                }
+            }
+            break;
+        case 0x56:
+            fn_800CE690(arg0, &sp8);
+            break;
+        case 0x57:
+            fn_800CE214(arg0, &sp8);
+            break;
+        default:
+            sp24 = 1;
+            break;
+        }
+        goto loop_12;
+    }
+    
+    fn_800D5DB0(
+        (u8*)arg0 + 0x200,
+        *(s32*)((u8*)self + 0x208) + (*(s32*)((u8*)self + 0x204) * 0x58),
+        1,
+        &sp8
+    );
+    
+    s16* temp_r30 = *(s16**)((u8*)self + 0x1FC);
+    u8 var_r3 = *(temp_r30 + ((s16)*temp_r30 * 4 + 4));
+    s8 var_r4 = *(temp_r30 + ((s16)*temp_r30 * 4 + 6));
+    
+loop_17:
+    if ((s32) var_r3 != 0x54)
+    {
+        *temp_r30 += 1;
+        
+        if (var_r4 != 0)
+        {
+            *temp_r30 += var_r4;
+        }
+        
+        s16* temp_r3_4 = temp_r30 + (*temp_r30 * 4);
+        var_r3 = *(temp_r3_4 + 1);
+        var_r4 = *(temp_r3_4 + 2);
+        goto loop_17;
+    }
+    
+    *temp_r30 += 1;
+    u8 temp_r0_2 = *(temp_r30 + ((s16)*temp_r30 * 4 + 4));
+    
+    if (((s32) temp_r0_2 == 0x20) || ((s32) temp_r0_2 == 0x22))
+    {
+        *(s32*)((u8*)self + 0x270) = 0;
+        
+        if (*(s32*)((u8*)self + 0x274) == 0)
+            *(s32*)((u8*)self + 0x270) = 0;
+        else 
+            *(s32*)((u8*)self + 0x270) = 1;
+    }
+    else if (*(s32*)((u8*)self + 0x274) == 0)
+    {
+        *(s32*)((u8*)self + 0x270) = 1;
+    }
+    else
+    {
+        *(s32*)((u8*)self + 0x270) = 0;
+    }
+    
+    s32 var_r29 = 0;
+    
+loop_27:
+    if (var_r29 == 0)
+    {
+        var_r29 = fn_800CED88(arg0);
+        goto loop_27;
+    }
+    
+    fn_800CDFFC(arg0);
+    *(s32*)((u8*)self + 0x20C) = 0;
 }
 
 #pragma cplusplus reset
@@ -4751,6 +4948,13 @@ s32 fn_800EE490(void) {
     return result;
 }
 
+void fn_800EEEF0(s32 arg0, s32 arg1, s32 arg2, s32* arg3)
+{
+    *arg3 = arg0;
+    *(arg3 + 1) = arg1;
+    *(arg3 + 2) = arg2;
+}
+
 s32 fn_800EF1C0(void) {
     M2C_UNK fn_8004D5D4(M2C_UNK *);
     s32 fn_80068548();
@@ -5104,6 +5308,13 @@ extern "C" u8 fn_80037E00(void *);
 extern "C" void fn_801A7A68(void *, void *, void *);
 extern "C" void fn_801A6F34(void *, u8);
 extern "C" void fn_800F6550(s32, void *);
+typedef struct Param {
+    void *p;
+    u8 b4[4];
+    s32 x8;
+    u8 bC;
+} Param;
+static const Param sTarget = {0, {0, 0, 0, 1}, 0, 1};
 s32 fn_800F773C(s32 arg0, void *arg1) {
     typedef struct Param {
         void *p;
