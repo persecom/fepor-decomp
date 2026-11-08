@@ -990,6 +990,27 @@ void fn_8024C7F8(void *arg0, s8 arg1, s8 arg2, s8 arg3) {
     M2C_FIELD(arg0, s8 *, 0x5D) = arg3;
 }
 
+void fn_8024C84C(u32 arg0) {
+    extern u16 *lbl_8034D4B8;
+    s32 i;
+    u16 *entry;
+    
+    entry = lbl_8034D4B8;
+    for (i = 0x14; i != 0; i--) {
+        if ((entry[0] == 1) || (entry[0] == 2)) {
+            if (entry[0x26] == arg0) {
+                if (entry[0] == 2) {
+                    fn_80256DD8(entry[0x26]);
+                }
+                entry[0] = 3;
+                ((void (*)(u32, u32, u32, u32, s32))entry[0x8])(0, 0, 0, 0, entry[0x28]);
+                return;
+            }
+        }
+        entry += 0x34;
+    }
+}
+
 s32 fn_8024CE1C(s32 arg0, s32 arg1) {
     s32 temp_r3;
 
@@ -1041,6 +1062,68 @@ s32 fn_80250698(void *arg0, void *arg1) {
 
 s32 fn_80250734(u16 *arg0, u16 *arg1) {
     return *arg0 - *arg1;
+}
+
+s32 fn_80250744(u16 id, void *arg1) {
+    struct Header {
+        u32 unk0;
+        u32 unk4;
+        u32 unk8;
+        u32 unkC;
+    };
+    struct Entry {
+        u16 id;
+        u16 ref;
+        u32 unk4;
+        u32 unk8;
+        struct Header header;
+        u32 unk1C;
+    };
+    struct Group {
+        struct Entry *entries;
+        u32 unk4;
+        u16 count;
+        u16 pad;
+    };
+    struct Info {
+        u32 unk0;
+        u32 unk4;
+        u32 unk8;
+        u32 unkC;
+        u32 unk10;
+        u32 unk14;
+        u32 unk18;
+        u8 unk1C;
+    };
+    void *fn_802612A0(void *, void *, u16, s32, s32 (*)(u16 *, u16 *));
+    extern struct Entry lbl_803596B8;
+    extern struct Group lbl_803542B8[];
+    extern u16 lbl_80368A18;
+    extern struct Entry *lbl_803689F0;
+    extern struct Header *lbl_803689EC;
+    struct Info *info = arg1;
+    s32 i;
+
+    lbl_803596B8.id = id;
+    for (i = 0; i < lbl_80368A18; i++) {
+        if ((lbl_803689F0 = fn_802612A0(&lbl_803596B8, lbl_803542B8[i].entries, lbl_803542B8[i].count, 0x20, fn_80250734)) != NULL && lbl_803689F0->ref != 0) {
+            lbl_803689EC = &lbl_803689F0->header;
+            info->unk0 = lbl_803689EC->unk0;
+            info->unk4 = lbl_803689F0->unk8;
+            info->unkC = 0;
+            info->unk14 = lbl_803689EC->unk8;
+            info->unk10 = lbl_803689EC->unk4 & 0xFFFFFF;
+            info->unk18 = lbl_803689EC->unkC;
+            info->unk1C = lbl_803689EC->unk4 >> 24;
+            if (lbl_803689F0->unk1C != 0) {
+                info->unk8 = lbl_803689F0->unk1C + (u32)lbl_803542B8[i].entries;
+            } else {
+                info->unk8 = 0;
+            }
+            return 0;
+        }
+    }
+    return -1;
 }
 
 s32 fn_80250874(void *arg0, void *arg1) {
