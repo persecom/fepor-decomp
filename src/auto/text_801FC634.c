@@ -6,6 +6,19 @@ extern s32 fn_80013E50(s32);
 extern s32 fn_80013E60(s32, s32);
 extern s32 fn_80013E74(void*, s32);
 
+// From Dolphin SDK's vec.c, handwritten PSVECCrossProduct function
+static void PSVECCrossProduct(f32 *a, f32 *b, f32 *out) {
+    f32 temp[4];
+    temp[0] = a[1] * b[2] - a[2] * b[1];
+    temp[1] = a[2] * b[0] - a[0] * b[2];
+    temp[2] = a[0] * b[1] - a[1] * b[0];
+    temp[3] = 0.0f;
+    out[0] = temp[0];
+    out[1] = temp[1];
+    out[2] = temp[2];
+    out[3] = temp[3];
+}
+
 
 extern s32 lbl_80368614;
 extern void (*lbl_803685E8)(void);
@@ -813,6 +826,42 @@ void fn_80202BD4(f32* src, f32* dst) {
     *(u64*)&dst[2] = *(u64*)&src[2];
     *(u64*)&dst[4] = *(u64*)&src[4];
     *(u64*)&dst[6] = *(u64*)&src[6];
+}
+
+f32 fn_80202C18(void) {
+    M2C_ERROR(/* unknown instruction: ps_muls0 $f6, $f2, $f0 */);
+    M2C_ERROR(/* unknown instruction: ps_madds1 $f6, $f3, $f0, $f6 */);
+    M2C_ERROR(/* unknown instruction: ps_madds0 $f6, $f4, $f1, $f6 */);
+    M2C_ERROR(/* unknown instruction: ps_madds1 $f6, $f5, $f1, $f6 */);
+    M2C_ERROR(/* unknown instruction: ps_muls0 $f8, $f2, $f0 */);
+    M2C_ERROR(/* unknown instruction: ps_madds1 $f8, $f3, $f0, $f8 */);
+    M2C_ERROR(/* unknown instruction: ps_madds0 $f8, $f4, $f1, $f8 */);
+    M2C_ERROR(/* unknown instruction: ps_madds1 $f8, $f5, $f1, $f8 */);
+    M2C_ERROR(/* unknown instruction: ps_muls0 $f10, $f2, $f0 */);
+    M2C_ERROR(/* unknown instruction: ps_madds1 $f10, $f3, $f0, $f10 */);
+    M2C_ERROR(/* unknown instruction: ps_madds0 $f10, $f4, $f1, $f10 */);
+    M2C_ERROR(/* unknown instruction: ps_madds1 $f10, $f5, $f1, $f10 */);
+    M2C_ERROR(/* unknown instruction: ps_muls0 $f12, $f2, $f0 */);
+    M2C_ERROR(/* unknown instruction: ps_madds1 $f12, $f3, $f0, $f12 */);
+    M2C_ERROR(/* unknown instruction: ps_madds0 $f12, $f4, $f1, $f12 */);
+    M2C_ERROR(/* unknown instruction: ps_madds1 $f12, $f5, $f1, $f12 */);
+    M2C_ERROR(/* unknown instruction: ps_muls0 $f7, $f2, $f0 */);
+    M2C_ERROR(/* unknown instruction: ps_madds1 $f7, $f3, $f0, $f7 */);
+    M2C_ERROR(/* unknown instruction: ps_madds0 $f7, $f4, $f1, $f7 */);
+    M2C_ERROR(/* unknown instruction: ps_madds1 $f7, $f5, $f1, $f7 */);
+    M2C_ERROR(/* unknown instruction: ps_muls0 $f9, $f2, $f0 */);
+    M2C_ERROR(/* unknown instruction: ps_madds1 $f9, $f3, $f0, $f9 */);
+    M2C_ERROR(/* unknown instruction: ps_madds0 $f9, $f4, $f1, $f9 */);
+    M2C_ERROR(/* unknown instruction: ps_madds1 $f9, $f5, $f1, $f9 */);
+    M2C_ERROR(/* unknown instruction: ps_muls0 $f11, $f2, $f0 */);
+    M2C_ERROR(/* unknown instruction: ps_madds1 $f11, $f3, $f0, $f11 */);
+    M2C_ERROR(/* unknown instruction: ps_madds0 $f11, $f4, $f1, $f11 */);
+    M2C_ERROR(/* unknown instruction: ps_madds1 $f11, $f5, $f1, $f11 */);
+    M2C_ERROR(/* unknown instruction: ps_muls0 $f13, $f2, $f0 */);
+    M2C_ERROR(/* unknown instruction: ps_madds1 $f13, $f3, $f0, $f13 */);
+    M2C_ERROR(/* unknown instruction: ps_madds0 $f13, $f4, $f1, $f13 */);
+    M2C_ERROR(/* unknown instruction: ps_madds1 $f13, $f5, $f1, $f13 */);
+    return M2C_ERROR(/* psq_l unimplemented */);
 }
 
 void fn_80203184(void) {
