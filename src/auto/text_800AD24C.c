@@ -1,5 +1,6 @@
 /* Functions from 0x800AD24C to 0x800C3F18, found by decomp-toolkit. */
 #include "common.h"
+extern s32 fn_80010710(u8* arg0);
 extern s32 lbl_80368230;
 extern s32 lbl_8028D544[];
 extern u16 lbl_80319A68[32];
