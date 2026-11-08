@@ -329,6 +329,38 @@ void ICInvalidateRange(void *addr, u32 nBytes) {
     __isync();
 }
 
+void fn_80205348(s32 arg0, s32 arg1, u32 arg2) {
+    M2C_ERROR(/* unknown instruction: mtspr DMA_U, $r6 */);
+    M2C_ERROR(/* unknown instruction: mtspr DMA_L, $r6 */);
+}
+
+u32 fn_80205390(s32 arg0, s32 arg1, s32 arg2) {
+    M2C_UNK fn_8020536C(s32, s32, u32);
+    s32 var_r28;
+    s32 var_r29;
+    u32 temp_r3;
+    u32 var_r31;
+
+    var_r28 = arg0;
+    var_r29 = arg1;
+    temp_r3 = (u32) (arg2 + 0x1F) >> 5U;
+    var_r31 = temp_r3;
+loop_6:
+    if (var_r31 != 0) {
+        if (var_r31 < 0x80U) {
+            fn_8020536C(var_r28, var_r29, var_r31);
+            var_r31 = 0;
+        } else {
+            fn_8020536C(var_r28, var_r29, 0U);
+            var_r31 -= 0x80;
+            var_r28 += 0x1000;
+            var_r29 += 0x1000;
+        }
+        goto loop_6;
+    }
+    return (u32) (temp_r3 + 0x7F) >> 7U;
+}
+
 extern u32 __SPR_392;
 s32 fn_8020543C(s32 arg0)
 {
@@ -349,6 +381,14 @@ s32 fn_802059EC(void) {
 
 void *fn_80205B50(void) {
     return 0; /* OSGetStackPointer: asm (mr r3, r1) */
+}
+
+void OSClearContext(OSContext *context) {
+    *(u16*)(((u8*)context) + 0x1A0) = 0;
+    *(u16*)(((u8*)context) + 0x1A2) = 0;
+    if (context == *(void**)0x800000D8) {
+        *(u32*)0x800000D8 = 0;
+    }
 }
 
 void fn_80206808(void) {
