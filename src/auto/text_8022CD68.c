@@ -361,6 +361,46 @@ s32 Hu_IsStub(void) {
     return 0;
 }
 
+void fn_8023BB34(void *alarm, void *context) {
+    typedef struct SIAlarm {
+        u8 pad[0x28];
+    } SIAlarm;
+    typedef struct SIPacket {
+        s32 chan;
+        void *output;
+        u32 outputBytes;
+        void *input;
+        u32 inputBytes;
+        void *callback;
+        s64 fire;
+    } SIPacket;
+    extern SIAlarm lbl_8033E2C8[];
+    extern SIPacket Packet_8033E248[];
+    s32 fn_8023B57C(s32, void *, u32, void *, u32, void *);
+    s32 chan;
+    SIPacket *packet;
+
+    chan = (SIAlarm *)alarm - lbl_8033E2C8;
+    packet = &Packet_8033E248[chan];
+    if (packet->chan != -1) {
+        if (fn_8023B57C(packet->chan, packet->output, packet->outputBytes, packet->input, packet->inputBytes, packet->callback)) {
+            packet->chan = -1;
+        }
+    }
+}
+
+u32 fn_8023C410(s32 chan) {
+    u32 SIGetType(s32);
+    u32 fn_8023C2C4(u32);
+    return fn_8023C2C4(SIGetType(chan));
+}
+
+void fn_8023C518(void) {
+    void SISetSamplingRate(u32);
+    extern u32 SamplingRate_80368828;
+    SISetSamplingRate(SamplingRate_80368828);
+}
+
 void fn_8023C53C(void) {
 
 }
@@ -2246,6 +2286,56 @@ void fn_8025EC10(u32 arg0) {
     lbl_80368AAF = (arg0 >> 2U) & 1;
 }
 
+#pragma dont_inline on
+s32 fn_8025EC48(u8 voices, u8 music, u8 sfx, u8 studios, u32 flags, u32 aramSize) {
+    s32 fn_80261620(u32 *, u8, u8, u32);
+    s32 fn_80262AF0(void);
+    s32 fn_80262B14(u32);
+    void fn_80258A98(s32, s32);
+    void fn_80250A74(s32, u32);
+    void fn_80247D74(void);
+    void fn_8024ADFC(u32, u8);
+    void fn_8024BB90(void);
+    void fn_80258100(void);
+    extern u8 lbl_80368978;
+    extern u8 lbl_803689B0;
+    u32 rate;
+    s32 ret;
+    u8 num;
+    s32 base;
+
+    lbl_80368978 = 0;
+    if (voices <= 64) {
+        lbl_8034C110[0x210] = voices;
+    } else {
+        lbl_8034C110[0x210] = 64;
+    }
+    if (studios <= 8) {
+        lbl_8034C110[0x213] = studios;
+    } else {
+        lbl_8034C110[0x213] = 8;
+    }
+    rate = 32000;
+    lbl_8034C110[0x211] = music;
+    lbl_8034C110[0x212] = sfx;
+    ret = fn_80261620(&rate, lbl_8034C110[0x210], lbl_8034C110[0x213], flags);
+    if (ret == 0) {
+        base = fn_80262AF0();
+        num = lbl_8034C110[0x210];
+        fn_80258A98(base, fn_80262B14(aramSize));
+        fn_80250A74(0, aramSize);
+        fn_80247D74();
+        lbl_803689B0 = 0;
+        fn_8024ADFC(32000, num);
+        fn_8024BB90();
+        fn_80258100();
+        fn_8025EC10(flags);
+        ret = 0;
+        lbl_80368978 = 1;
+    }
+    return ret;
+}
+#pragma dont_inline reset
 u8 fn_8025ED80(void) {
     extern u8 lbl_80368978;
     return lbl_80368978;
