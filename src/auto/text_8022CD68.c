@@ -4188,3 +4188,5 @@ extern s32 lbl_803687F0;
 extern void *fn_80234048;
 extern s32 fn_8023567C(s32, s32, void *, s32 *, s32 *, s32 *, s32 *);
 #include "common.h"
+#include "global.h"
+extern s32 lbl_803687F0;
