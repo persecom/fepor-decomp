@@ -2936,3 +2936,7 @@ extern s32 fn_802097D4(s32 arg0);
 extern s32 fn_800B28FC(s32 arg0);
 extern void fn_800B4060(void);
 extern u8* gUnknown_802C9248;
+extern f32 lbl_8036A674;
+extern u8 lbl_802768A0[];
+extern f32 lbl_8036A6B0;
+extern f32 lbl_8036A6B4;
