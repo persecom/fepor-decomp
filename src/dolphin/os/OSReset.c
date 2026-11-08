@@ -181,12 +181,14 @@ static void KillThreads(void) {
     }
 }
 
+#pragma auto_inline on
 void fn_802089A4(u32 resetCode) {
     OSDisableInterrupts();
     __VIRegs[1] = 0;
     ICFlashInvalidate();
     Reset(resetCode * 8);
 }
+#pragma auto_inline off
 
 void OSDisableScheduler(void);
 void OSEnableScheduler(void);
@@ -234,7 +236,10 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu) {
         KillThreads();
     }
     if (reset == 1) {
-        fn_802089A4(resetCode);
+        OSDisableInterrupts();
+        __VIRegs[1] = 0;
+        ICFlashInvalidate();
+        Reset(resetCode * 8);
     } else if (reset == 0) {
         if (forceMenu == TRUE) {
             OSReport("OSResetSystem(): You can't specify TRUE to forceMenu if you restart. Ignored\n");
