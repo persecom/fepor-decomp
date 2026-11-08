@@ -214,6 +214,9 @@ void *fn_80151CE0(void *arg0, s16 arg1) {
 #pragma use_lmw_stmw on
 #pragma readonly_strings on
 #pragma pool_strings on
+typedef struct Vec {
+    f32 x, y, z;
+} Vec;
 extern "C" M2C_UNK fn_800C9ABC(M2C_UNK *, const char *, M2C_UNK *);
 extern "C" M2C_UNK fn_800C9A60(M2C_UNK *, M2C_UNK);
 extern "C" void fn_800DBE34(void *, s32, M2C_UNK *, s32, M2C_UNK *);
