@@ -518,6 +518,25 @@ void fn_80201328(void *arg0) {
     M2C_FIELD(arg0, u32 *, 0x30) = fn_8003FCCC(lbl_802820B8 + 0x68);
     fn_8000C188(arg0);
 }
+
+void fn_80201534(void) {
+    extern u8 lbl_802EF4C8[];
+    extern s32 lbl_803682A4;
+    extern void fn_80209AE8(s32);
+    
+    u8 temp_r0 = lbl_802EF4C8[8];
+    switch ((s32)temp_r0) {
+        case 0x81:
+            lbl_803682A4 |= 0x100;
+            fn_80209AE8(1);
+            return;
+        case 0x80:
+            lbl_803682A4 &= 0xFFFFFEFF;
+            fn_80209AE8(0);
+            return;
+    }
+}
+
 #pragma opt_common_subs reset
 
 void fn_802015A0(void) {
@@ -578,6 +597,60 @@ void fn_802025C0(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
     *(f32*)((u8*)arg0 + 0x20) = lbl_8036BC3C;
     *(f32*)((u8*)arg0 + 0x28) = farg2;
     *(f32*)((u8*)arg0 + 0x2C) = lbl_8036BC3C;
+}
+
+f32 fn_80202A18(void) {
+    M2C_ERROR(/* unknown instruction: ps_mul $f8, $f0, $f6 */);
+    M2C_ERROR(/* unknown instruction: ps_mul $f10, $f2, $f6 */);
+    M2C_ERROR(/* unknown instruction: ps_mul $f12, $f4, $f6 */);
+    M2C_ERROR(/* unknown instruction: ps_sum0 $f8, $f8, $f8, $f8 */);
+    M2C_ERROR(/* unknown instruction: ps_sum0 $f10, $f10, $f10, $f10 */);
+    M2C_ERROR(/* unknown instruction: ps_sum0 $f12, $f12, $f12, $f12 */);
+    M2C_ERROR(/* unknown instruction: ps_madd $f9, $f1, $f7, $f8 */);
+    M2C_ERROR(/* unknown instruction: ps_madd $f11, $f3, $f7, $f10 */);
+    M2C_ERROR(/* unknown instruction: ps_madd $f13, $f5, $f7, $f12 */);
+    return M2C_ERROR(/* psq_l unimplemented */);
+}
+
+void fn_80202BD4(f32* src, f32* dst) {
+    *(u64*)&dst[0] = *(u64*)&src[0];
+    *(u64*)&dst[2] = *(u64*)&src[2];
+    *(u64*)&dst[4] = *(u64*)&src[4];
+    *(u64*)&dst[6] = *(u64*)&src[6];
+}
+
+void fn_80203184(void) {
+    M2C_ERROR(/* unknown instruction: ps_add $f6, $f2, $f4 */);
+    M2C_ERROR(/* unknown instruction: ps_add $f7, $f3, $f5 */);
+}
+
+void fn_802031A8(float *arg0, float *arg1, float *arg2) {
+    arg2[0] = arg0[0] - arg1[0];
+    arg2[1] = arg0[1] - arg1[1];
+}
+
+void fn_802031CC(void *arg0, void *arg1) {
+    f64* a = (f64*)arg0;
+    f64* b = (f64*)arg1;
+    b[0] = a[0] * 0.5;
+    b[1] = a[1] * 0.5;
+    return;
+}
+
+f32 fn_8020322C(void *arg0) {
+    extern f32 lbl_8036BC70;
+    extern f32 lbl_8036BC74;
+    f32 temp_f0;
+    f32 var_f1;
+
+    M2C_ERROR(/* unknown instruction: ps_mul $f0, $f0, $f0 */);
+    M2C_ERROR(/* unknown instruction: ps_madd $f1, $f1, $f1, $f0 */);
+    var_f1 = M2C_ERROR(/* unknown instruction: ps_sum0 $f1, $f1, $f0, $f0 */);
+    if (var_f1 != (lbl_8036BC70 - lbl_8036BC70)) {
+        temp_f0 = __frsqrte(var_f1);
+        var_f1 *= -((temp_f0 * temp_f0 * var_f1) - lbl_8036BC74) * (temp_f0 * lbl_8036BC70);
+    }
+    return var_f1;
 }
 
 f32 fn_802032CC(void) {
