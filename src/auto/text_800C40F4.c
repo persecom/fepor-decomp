@@ -1413,7 +1413,6 @@ void fn_800DAB24(void *arg1, s32 arg2) {
 }
 
 void *fn_800DB18C(void *arg0, s16 arg1) {
-    M2C_UNK fn_800C9A60(void *, s32);
     void fn_800E45EC(void *, s32);
     void fn_800C428C(void *);
     extern void *lbl_8028DE70[];
