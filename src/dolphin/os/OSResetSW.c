@@ -401,7 +401,6 @@ void fn_8020BA50(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 s32 DVDLowWaitCoverClose(s32 arg0) {
     extern s32 Callback_80368538;
     extern s32 WaitingCoverClose_8036854C;
-    extern u16 StopAtNextInt_80368530;
     
     Callback_80368538 = arg0;
     WaitingCoverClose_8036854C = 1;
