@@ -3393,3 +3393,4 @@ typedef struct {
     void *unk0;
     void *unk4;
 } unk_struct_80193CFC;
+extern u8 lbl_80295AE8[0x80];
