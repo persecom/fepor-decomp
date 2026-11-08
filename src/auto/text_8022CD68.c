@@ -1421,17 +1421,14 @@ s32 fn_80255E88(void *arg0) {
 }
 
 u32 fn_80255E9C(SynthVoice *sv, u32 isMaster) {
-    extern u32 lbl_80368A48;
     extern VidList *lbl_80368A44;
     extern VidList *lbl_80368A40;
     u32 vid;
     VidList *nvl;
-    VidList *lvl;
     VidList *vl;
+    VidList *lvl;
 
-    do {
-        vid = lbl_80368A48++;
-    } while (vid == 0xFFFFFFFF);
+    vid = GetNewVid();
 restart:
     lvl = NULL;
     for (vl = lbl_80368A44; vl != NULL; vl = vl->next) {
@@ -1439,9 +1436,7 @@ restart:
             break;
         }
         if (vl->vid == vid) {
-            do {
-                vid = lbl_80368A48++;
-            } while (vid == 0xFFFFFFFF);
+            vid = GetNewVid();
             if (vid < vl->vid) {
                 goto restart;
             }
