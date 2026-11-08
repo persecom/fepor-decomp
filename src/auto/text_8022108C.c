@@ -115,6 +115,11 @@ typedef union {
 
 volatile PPCWGPipe GXWGFifo : 0xCC008000;
 
+static inline void GXWriteRasReg(u32 reg) {
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = reg;
+}
+
 static inline u32 __GXReadPECounterU32(u32 lo, u32 hi) {
     u32 ctrH0;
     u32 ctrH1;
