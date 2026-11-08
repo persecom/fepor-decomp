@@ -151,6 +151,27 @@ void fn_8022641C(void *arg0, s32 arg1, s32 arg2) {
     }
 }
 
+void fn_802264B4(void* arg0, void** arg1)
+{
+    if (arg0 != NULL) {
+        u32 temp = *(u32*)arg0;
+        if ((*(u16*)&temp == 0x0)) {
+            *(u32*)arg1 = temp;
+            *(u32*)((u8*)arg0 + 0xC) += 8;
+        } else {
+            *(u32*)arg1 = 0x302;
+            if (arg1 != NULL && *(u32*)arg1 == 0) {
+                u8* dest = *(u8**)arg1;
+                u8* src = (u8*)arg0 + 0x10;
+                int i;
+                for (i = 0; i < 8; i++) {
+                    dest[i] = src[i];
+                }
+            }
+        }
+    }
+}
+
 s32 fn_80226698(void *arg0, u8 *arg1, s32 arg2) {
     s32 var_r0;
     s32 var_r7;
@@ -548,6 +569,30 @@ void fn_802291A4(void *b) {
     msg.instruction = instruction;
     msg.exceptionID = *(u16 *)(gTRKExceptionStatus_8029E574 + 8);
     fn_80226698(b, &msg, sizeof(msg));
+}
+
+s32 fn_80229FA4(s32 arg0, u32 arg1, s32 arg2, s32 *arg3, s32 arg4) {
+    extern u16 gTRKExceptionStatus_8029E574[4];
+    extern u16 gTRKBigEndian;
+    s32 temp_r12;
+    s32 var_r3;
+
+    if (arg1 > 0x24U) {
+        return 0x701;
+    }
+    temp_r12 = (arg1 - arg0) + 1;
+    gTRKExceptionStatus_8029E574[0xD/2] = 0U;
+    *arg3 = temp_r12 * 4;
+    if (arg4 != 0) {
+        var_r3 = fn_8022659C(arg2, temp_r12);
+    } else {
+        var_r3 = fn_8022632C(arg2, temp_r12);
+    }
+    if ((u8) gTRKExceptionStatus_8029E574[0xD/2] != 0) {
+        var_r3 = 0x702;
+        *arg3 = 0;
+    }
+    return var_r3;
 }
 
 s32 fn_8022A098(void) {
