@@ -3213,3 +3213,4 @@ s32 fn_80265C34(s32 arg0, s32 arg1) {
 }
 #include "common.h"
 extern f32 lbl_8036C3F0;
+extern u8 lbl_802A4590[];
