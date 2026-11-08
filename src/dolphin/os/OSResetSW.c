@@ -610,6 +610,17 @@ void fn_8020DCE8(void *block) {
     fn_8020BE28(lbl_80339F60, fn_8020DD18);
 }
 
+void fn_8020EBEC(void* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+{
+    *(u32*)((char*)arg0 + 0x8) = 4;
+    *(u32*)((char*)arg0 + 0x10) = arg3;
+    *(u32*)((char*)arg0 + 0x14) = arg2;
+    *(u32*)((char*)arg0 + 0x18) = arg1;
+    *(u32*)((char*)arg0 + 0x20) = 0;
+    *(u32*)((char*)arg0 + 0x28) = arg4;
+    // No additional functions calls or logic
+}
+
 u32 __OSGetResetSWState(void);
 u32 fn_8020ED90(void)
 {
@@ -1060,6 +1071,13 @@ s32 fn_80214358(void) {
 
 void fn_80215C5C(void) {
 
+}
+
+void fn_80215C60(void) {
+    if (Scb_803394 & 0x2000) {
+        Scb_803394 = 0;
+        OSResetSystem(1, 0, 0);
+    }
 }
 
 void fn_80215D2C(void) {
