@@ -290,6 +290,38 @@ void fn_80212D78(s32 arg0) {
     lbl_80366FB0 = arg0;
 }
 
+void fn_80212DD8(s32 chan, PADStatus *status, u32 *data) {
+    status->button = 0;
+    status->button |= ((data[0] >> 16) & 0x0008) ? 0x0100 : 0;
+    status->button |= ((data[0] >> 16) & 0x0020) ? 0x0200 : 0;
+    status->button |= ((data[0] >> 16) & 0x0100) ? 0x0400 : 0;
+    status->button |= ((data[0] >> 16) & 0x0001) ? 0x0800 : 0;
+    status->button |= ((data[0] >> 16) & 0x0010) ? 0x1000 : 0;
+
+    status->stickX = (s8)(data[1] >> 16);
+    status->stickY = (s8)(data[1] >> 24);
+    status->substickX = (s8)(data[1]);
+    status->substickY = (s8)(data[1] >> 8);
+
+    status->triggerLeft = (u8)(data[0] >> 8) & 0xFF;
+    status->triggerRight = (u8)data[0] & 0xFF;
+
+    status->analogA = 0;
+    status->analogB = 0;
+
+    if (170 <= status->triggerLeft) {
+        status->button |= 0x0040;
+    }
+    if (170 <= status->triggerRight) {
+        status->button |= 0x0020;
+    }
+
+    status->stickX -= 128;
+    status->stickY -= 128;
+    status->substickX -= 128;
+    status->substickY -= 128;
+}
+
 s32 fn_80213530(s32 arg0) {
     s32 fn_8021275C(M2C_UNK);
     M2C_UNK fn_8021364C(M2C_UNK);
