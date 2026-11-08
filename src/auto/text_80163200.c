@@ -133,15 +133,17 @@ void fn_80164A24(void *arg0) {
     fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58));
 }
 
-s32 fn_80164BB0(void *arg0) {
+static inline s32 GetSlotItem(void *obj, s16 slot) {
     u32 *fn_80037BD0(s32, s32);
-    s16 slot = M2C_FIELD(arg0, s16 *, 0x4C);
-    s32 idx = slot;
 
-    if ((slot < 0) || (slot > 7)) {
+    if (slot < 0 || slot > 7) {
         return 0;
     }
-    return (s32) fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58), idx);
+    return (s32) fn_80037BD0(M2C_FIELD(obj, s32 *, 0x58), slot);
+}
+
+s32 fn_80164BB0(void *arg0) {
+    return GetSlotItem(arg0, M2C_FIELD(arg0, s16 *, 0x4C));
 }
 
 s16 fn_80164FBC(void *arg0, s16 arg1) {
