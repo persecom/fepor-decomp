@@ -113,7 +113,7 @@ typedef union {
     f32 f32;
 } PPCWGPipe;
 
-PPCWGPipe GXWGFifo : 0xCC008000;
+volatile PPCWGPipe GXWGFifo : 0xCC008000;
 
 static inline u32 __GXReadPECounterU32(u32 lo, u32 hi) {
     u32 ctrH0;
