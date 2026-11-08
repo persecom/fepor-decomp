@@ -3263,5 +3263,7 @@ extern s32 lbl_80368AA0;
 extern u8 lbl_80368AD0;
 #include "global.h"
 
+extern s32 lbl_80368AF8;
 extern u16 lbl_80368A0C;
+extern u16 lbl_80368AFC;
 extern u16 lbl_8034F6B8[];
