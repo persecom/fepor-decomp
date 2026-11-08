@@ -2990,8 +2990,8 @@ void fn_800E788C(s32 arg1) {
     fn_800C9B6C(temp);
 }
 
-void fn_800E78B0(s32 arg0) {
-    fn_800C9758(arg0 + 0x30, 0, -1);
+void fn_800E78B0(void *arg0, String *arg1) {
+    fn_800C9758((String *)((char *)arg0 + 0x30), arg1, 0, -1);
 }
 
 void fn_800E78DC(void) {
