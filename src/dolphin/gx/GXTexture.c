@@ -373,17 +373,11 @@ void fn_802228D8(u32 *t, s32 min_filt, s32 mag_filt, f32 min_lod, f32 max_lod, f
     t[1] = (t[1] & ~0xFF00) | ((lmax << 8) & 0xFF00);
 }
 
-void fn_80222A3C(s32 *arg0, s32 arg1, s32 arg2) {
-    extern u16 lbl_80367048;
-    s32 var_r5;
+void fn_80222A3C(u32 *t, s32 min_filt, s32 mag_filt) {
+    extern u8 lbl_80367048[8];
 
-    if (arg2 == 1) {
-        var_r5 = 1;
-    } else {
-        var_r5 = 0;
-    }
-    *arg0 = (*arg0 & ~0x10) | ((var_r5 << 4) & 0x10);
-    *arg0 = (*arg0 & ~0xE0) | ((*(&lbl_80367048 + arg1) << 5) & 0xE0);
+    t[0] = __rlwimi(t[0], (mag_filt == 1) ? 1 : 0, 4, 27, 27);
+    t[0] = __rlwimi(t[0], lbl_80367048[min_filt], 5, 24, 26);
 }
 
 s32 fn_80222A74(void *arg0) {
