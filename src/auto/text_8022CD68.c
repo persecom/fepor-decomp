@@ -3628,8 +3628,6 @@ f64 fn_80261344(f32 farg0) {
     return (f64)farg0;
 }
 
-extern f32 lbl_802831BC[];
-extern f64 lbl_8036C348;
 f32* fn_80261398(void) {
     f32 f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12;
     s32 r5;
