@@ -40,6 +40,39 @@ void fn_8014E7F8(void *arg0) {
     }
 }
 
+void fn_8014EFB8(void) {
+    s32 temp_r3;
+    s32 temp_r4;
+    u16* var_r5;
+    u16* var_r6;
+    u16* var_r7;
+    s16 r29;
+    
+    extern s32 lbl_801B9100;
+    extern u16 lbl_8028DED0[];
+    
+    lbl_801B9100 = 0x2000;
+    
+    for (temp_r3 = 0; temp_r3 < 0x18; temp_r3++) {
+        var_r5 = &lbl_8028DED0[temp_r3 * 0x14];
+        r29 = var_r5[1];
+        
+        if (r29 > 0) {
+            // Check for valid character id
+            var_r6 = &lbl_8028DED0[(s16)(temp_r3 + 0x18) * 0x14];
+            
+            if (var_r6[1] == 0) {
+                var_r7 = var_r5;
+                
+                // Copy character data
+                for (temp_r4 = 0; temp_r4 < 0x14; temp_r4++) {
+                    var_r7[temp_r4] = var_r6[temp_r4];
+                }
+            }
+        }
+    }
+}
+
 void fn_801505A8(s32 arg0, s32 arg1, s32 arg2) {
     // Analyzing the assembly:
     // It seems to be working with pointers in r3,r4,r5
@@ -87,6 +120,10 @@ void fn_801505A8(s32 arg0, s32 arg1, s32 arg2) {
     return;
 }
 
+s32 fn_801506AC(void* arg0) {
+    return 0;
+}
+
 s32 fn_801512D8(void) {
     M2C_UNK fn_800D758C(s32);
     extern s32 lbl_80367BA0;
@@ -103,6 +140,11 @@ void fn_801513A0(void *arg0) {
     fn_800C9B6C(&sp8);
     fn_800DC518(M2C_FIELD(arg0, s32 *, 0x424), &sp8, 0);
     fn_800C9A60(&sp8, -1);
+}
+
+extern u16 lbl_80367BA0;
+s32 fn_801513EC(void) {
+    return fn_800D758C(lbl_80367BA0);
 }
 
 void fn_801515AC(void) {
