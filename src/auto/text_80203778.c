@@ -43,6 +43,12 @@ static s16 lbl_80339338[8];
 
 extern s32 lbl_803679F0;
 
+typedef struct Cell {
+    struct Cell *prev;
+    struct Cell *next;
+    s32 size;
+} Cell;
+
 typedef struct HeapDesc {
     s32 size;
     void *free;
