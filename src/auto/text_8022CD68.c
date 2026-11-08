@@ -16,6 +16,11 @@ extern f32 lbl_8034C324[];
 extern s32 D_80368AD0;
 extern s32 lbl_80368B0C;
 extern s16 lbl_802A1E90[];
+extern u8 lbl_80368AAE;
+extern u8 lbl_80368AAD;
+extern u16 lbl_8035BF18[];
+extern u32 lbl_8035C918[];
+
 u32 fn_8026367C(void);
 
 typedef struct Voice {
@@ -1966,6 +1971,54 @@ void *fn_80258AD8(void) {
 void fn_80258D74(void) {
     M2C_UNK fn_80262410();
     fn_80262410();
+}
+
+s32 fn_80259430(s32 arg0, s32 arg1) {
+    s32 temp_r3;
+    s32 temp_r4;
+    s32 temp_r5;
+    s32 temp_r6;
+    s32 temp_r7;
+    u32 var_r3;
+    u32 var_r4;
+    
+    if (arg0 < 0) {
+        arg0 = -arg0;
+    }
+    if (arg1 < 0) {
+        arg1 = -arg1;
+    }
+    
+    if (arg0 > arg1) {
+        temp_r3 = arg0;
+        temp_r4 = arg1;
+    } else {
+        temp_r3 = arg1;
+        temp_r4 = arg0;
+    }
+    
+    temp_r5 = temp_r3 >> 1;
+    temp_r6 = temp_r4 >> 1;
+    
+    temp_r7 = 0;
+    
+    while (temp_r3 != 0) {
+        if ((temp_r3 & 1) != 0) {
+            temp_r7 += temp_r4;
+        }
+        
+        temp_r3 >>= 1;
+        temp_r4 <<= 1;
+        
+        if (temp_r3 == 0) {
+            break;
+        }
+    }
+    
+    var_r3 = temp_r7;
+    var_r4 = temp_r6;
+    
+    return temp_r5 + temp_r6 + var_r3 + var_r4;
 }
 
 s32 fn_80259584(u16 gid, u16 sid, s32 arg2, s32 arg3, s32 arg4) {
