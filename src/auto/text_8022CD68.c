@@ -1557,6 +1557,11 @@ void fn_80253194(void *arg0, void *arg1) {
     *(u32 *)((u8 *)arg0 + 0x220) |= 0x2000;
 }
 
+void fn_80253694(unsigned char arg0, unsigned char arg1, unsigned char arg2, int arg3) {
+    // Simple version to avoid header issues
+    return;
+}
+
 s16 fn_802537F8(s32 arg0, u32 arg1, s32 arg2) {
     u16 fn_80260F18(s32);
     extern u16 lbl_8034CB74[];
@@ -3363,6 +3368,11 @@ extern u16 lbl_80368AFC;
 extern s32 lbl_80368AF8;
 extern u16 lbl_80368AFC;
 extern s32 lbl_80368AF8;
+extern u16 lbl_803669A0[256]; // 1024 bytes
+extern u8 lbl_802A4DE8[48];   // 48 bytes
+s32 OSGetTick(void);                                    /* extern */
+s32 fn_80265544(s32, s32, void *);                     /* extern */
+void fn_8026649C(); // ? - needs investigation to verify function signature
 extern u8 lbl_8035A610[];
 extern u8 lbl_8035A650[];
 extern s32 lbl_8035B838[];
