@@ -344,7 +344,7 @@ config.libs = [
             Object(NonMatching, "auto/text_80216994.c", mw_version="GC/1.2.5n"),
             Object(NonMatching, "auto/text_8021D7FC.c", mw_version="GC/1.2.5n"),
             Object(NonMatching, "auto/text_8022108C.c"),
-            Object(NonMatching, "dolphin/gx/GXTexture.c"),
+            Object(NonMatching, "dolphin/gx/GXTexture.c", mw_version="GC/1.2.5n"),
             Object(NonMatching, "auto/text_80225E30.c"),
             Object(NonMatching, "auto/text_8022C518.c"),
             Object(NonMatching, "auto/text_8022CD68.c"),
