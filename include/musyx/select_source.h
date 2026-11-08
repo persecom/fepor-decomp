@@ -1,6 +1,8 @@
 #ifndef MUSYX_SELECT_SOURCE_H
 #define MUSYX_SELECT_SOURCE_H
 
+void fn_8025FFC8(void *arg0, u8 arg1, s32 arg2, u8 arg3, u8 arg4, u8 arg5);
+
 /* MusyX macro helper, inlined into the source-selection macro commands. */
 static void SelectSource(void *svoice, void *dest, u32 *cstep, u64 tstflag, u32 dirtyflag) {
     u8 comb;
