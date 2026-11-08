@@ -171,6 +171,15 @@ u32 fn_80203AAC(void) {
     return M2C_FIELD(BootInfo_80368458, u32 *, 0x2C);
 }
 
+void InquiryCallback(void *arg1) {
+    u32 val = *(u32 *)((u8 *)arg1 + 0xC);
+    if (val == 0) {
+        *(u16 *)0x800030E6 = (*(u16 *)((u8 *)arg1 + 0x2) | 0x8000);
+    } else {
+        *(u16 *)0x800030E6 = 1;
+    }
+}
+
 void fn_80204294(void) {
     M2C_ERROR(/* unknown instruction: bla 0x60 */);
 }
@@ -478,6 +487,15 @@ void fn_80206888(void) {
     lbl_803684B0 = 1;
 }
 
+void __OSGetExecParams(s32 *arg0) {
+    M2C_UNK memcpy(M2C_UNK);
+    if ((u32) *(u32 *)0x800030F0 >= 0x80000000U) {
+        memcpy(0x1C);
+        return;
+    }
+    *arg0 = 0;
+}
+
 extern u16 InterruptHandlerTable_803684C8[32];
 s32 fn_80207BAC(s16 arg0) {
     return InterruptHandlerTable_803684C8[arg0];
@@ -490,6 +508,19 @@ void __OSModuleInit(void) {
     ptr[1] = 0;
 }
 
+s32 fn_802083C8(s32 arg0) {
+    if (arg0 != 0) {
+        *(s16 *)0xCC004010 = 0xFF;
+        __OSMaskInterrupts(0xF0000000);
+    }
+    return 1;
+}
+
 extern u16 StopAtNextInt_80368530;
 extern u16 lbl_80368550;
 #include "global.h"
+#include "common.h"
+#include <dolphin/os.h>
+#include "global.h"
+
+extern void OSSwitchFPUContext(void);
