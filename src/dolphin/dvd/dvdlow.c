@@ -129,6 +129,8 @@ u32 __OSGetResetSWState(void);
 extern void OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(void);
 
+volatile u32 __DIRegs[16] : 0xCC006000;
+
 extern u16 AlarmForTimeout_80339ED8[20];
 extern void AlarmHandlerForTimeout(void *, void *);
 extern void OSCreateAlarm(void *);
