@@ -980,6 +980,56 @@ s32 fn_80239508(s32 arg0) {
     return -1;
 }
 
+void EXIDeselect(void)
+{
+    u32 *ecb;
+    u32 mask;
+    s32 channel;
+    u32 status;
+
+    ecb = (u32 *)Ecb_8033E188;
+    channel = 0;
+
+    // Disable interrupts
+    OSDisableInterrupts();
+    
+    while (channel < 3) {
+        // Get mask for this channel
+        mask = 1 << (channel + 0x1A);
+        
+        // Check if the channel is busy
+        status = ecb[channel * 8 + 3];  // offset 0xc, 3rd word of channel structure
+        
+        if ((status & 0x20000000) != 0) {  // bit 29
+            goto restore_interrupts;
+        }
+        
+        // Clear the EXI channel
+        ecb[channel * 8 + 3] = status & ~0x20000000;  // clear bit 29
+        
+        // Get device ID if available
+        if (channel != 0) {
+            // Set up the EXI transaction
+            ecb[channel * 8 + 3] = (status & ~0x10000000) | 0x40000000;
+            
+            status = ecb[channel * 8 + 3];
+            if ((status & 0x10000000) == 0) {  // bit 28
+                goto restore_interrupts;
+            }
+        }
+        
+        // Perform EXI probe
+        if (channel <= 1) {
+            __EXIProbe(channel);
+        }
+        
+        channel++;
+    }
+
+restore_interrupts:
+    OSRestoreInterrupts();
+}
+
 s32 EXILock(s32 arg0, u32 arg1, u32 arg2) {
     s32 temp_r29;
     s32 temp_r4;
