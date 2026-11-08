@@ -2935,6 +2935,9 @@ s32 fn_8004C0F0(void *arg0) {
     return (M2C_FIELD(arg0, u8 *, 3) & 2) != 0;
 }
 
+void fn_8004C148(void) {
+}
+
 void fn_8004D370(void) {
     M2C_UNK fn_80067708(M2C_UNK, M2C_UNK, M2C_UNK *, M2C_UNK);
     extern M2C_UNK fn_8004C80C;
@@ -3791,3 +3794,7 @@ typedef struct {
 void fn_8004781C(void *arg0) {
     // body of function will go here
 }
+#include "common.h"
+extern f32 lbl_80368FD8;
+extern u16 lbl_8026AB18;
+extern f32 lbl_80368FC4;
