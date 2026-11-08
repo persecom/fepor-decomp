@@ -71,6 +71,25 @@ extern void fn_8020C1A4(u8, u32, void *);
 
 extern u8 lbl_80289EB8[16];
 
+typedef struct OSResetFunctionInfo OSResetFunctionInfo;
+struct OSResetFunctionInfo {
+    BOOL (*func)(BOOL final);
+    u32 priority;
+    OSResetFunctionInfo *next;
+    OSResetFunctionInfo *prev;
+};
+
+typedef struct OSResetFunctionQueue {
+    OSResetFunctionInfo *head;
+    OSResetFunctionInfo *tail;
+} OSResetFunctionQueue;
+
+extern OSResetFunctionQueue ResetFunctionQueue_803684E8;
+
+typedef struct OSContext {
+    u8 data[0x2C8];
+} OSContext;
+
 s32 PPCMfmsr(void) {
     return M2C_ERROR(/* unknown instruction: mfmsr $r3 */);
 }
