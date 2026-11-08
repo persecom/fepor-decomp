@@ -235,41 +235,17 @@ s32 fn_80105C5C(s32 *arg0, u8 arg1) {
 }
 
 void fn_80105CEC(s32 *arg0, u8 arg1) {
-    s32 *r3;
-    s32 r4;
-    s32 r5;
-    s32 r6;
-    s32 temp_r0;
+    u32 *p = (u32 *)arg0;
+    s32 n = arg1;
 
-    r3 = arg0;
-    r4 = (s32)arg1;
-    if (r4 >= 0) {
-        r5 = r4 >> 5U;
-        if (r4 >= 0x20) {
-            r6 = r5 >> 3;
-            temp_r0 = r5 << 5;
-            temp_r0 = -temp_r0;
-            if (r6 != 0) {
-                do {
-                    r3 += 0x20;
-                    r6 -= 1;
-                } while (r6 != 0);
-                r5 &= 7;
-                if (r5 == 0) {
-                    goto end;
-                }
-            }
-            // Process partial words
-            r6 = r5;
-            do {
-                r3 += 4;
-                r6 -= 1;
-            } while (r6 != 0);
-end:
-            r4 += temp_r0;
-        }
-        *r3 &= ~(1U << r4);
+    if (n < 0) {
+        return;
     }
+    while (n >= 32) {
+        p++;
+        n -= 32;
+    }
+    *p &= ~(1 << n);
 }
 
 void fn_80105D4C(s32 *arg0, u8 arg1) {
