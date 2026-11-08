@@ -298,6 +298,31 @@ s32 fn_802290F8(u32 count, s32 stepOver) {
     return error;
 }
 
+void fn_802291A4(void *b) {
+    void *memset(void *, int, u32);
+    s32 fn_8022A098(u32 *, u32);
+    s32 fn_80226698(void *, void *, u32);
+    extern u8 gTRKExceptionStatus_8029E574[];
+    struct {
+        u32 size;
+        u8 command;
+        u32 exceptionPC;
+        u32 instruction;
+        u32 exceptionID;
+        u8 pad[0x2C];
+    } msg;
+    u32 instruction;
+
+    memset(&msg, 0, sizeof(msg));
+    msg.size = sizeof(msg);
+    msg.command = 0x91;
+    msg.exceptionPC = *(u32 *)gTRKExceptionStatus_8029E574;
+    fn_8022A098(&instruction, *(u32 *)gTRKExceptionStatus_8029E574);
+    msg.instruction = instruction;
+    msg.exceptionID = *(u16 *)(gTRKExceptionStatus_8029E574 + 8);
+    fn_80226698(b, &msg, sizeof(msg));
+}
+
 void EnableMetroTRKInterrupts(void) {
     M2C_UNK fn_8022B120();
     fn_8022B120();
