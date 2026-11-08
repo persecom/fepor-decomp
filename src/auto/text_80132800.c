@@ -2462,6 +2462,17 @@ void fn_80141970(void *arg0, s32 arg1) {
     *(f32 *)((char *)var_r3_4 + 0x28) = temp_f1;
 }
 
+s32 fn_80141B00(s32 arg0, s32 arg1)
+{
+    if (arg0 < 0)
+        return -1;
+    
+    if (arg1 < arg0)
+        return -1;
+        
+    return 0;
+}
+
 void fn_80142018(Vec2s *out, void *arg0) {
     s16 w = M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA);
     s16 h = M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC);
