@@ -8,7 +8,8 @@ extern s32 fn_80013E50(s32);
 extern s32 fn_80013E60(s32, s32);
 extern s32 fn_80013E74(void*, s32);
 
-
+extern u8 lbl_8033A420[];
+extern u8 lbl_80366FF2;
 extern s32 lbl_80368614;
 extern void (*lbl_803685E8)(void);
 extern void* lbl_80368618;
@@ -646,6 +647,37 @@ void fn_8021CDC4(void) {
     fn_80013E74((void*)temp_r3, 0);
 }
 
+s32 fn_8021D004(s32 arg0, s32 arg1, s32 arg2) {
+    s32 stack[0x14]; // 0x14 = 20 bytes
+    
+    if (arg2 == 0) {
+        return 0;
+    }
+    
+    if (arg1 == 0) {
+        return 0;
+    }
+    
+    if (arg1 > 0x7F) {
+        return -0x80;
+    }
+    
+    // This function appears to be setting up stack and calling
+    // fn_80217B18 with r1+0x14, then doing various memcpy operations
+    
+    fn_80217B18(arg0, arg1, (u8 *)stack);
+    
+    if (stack[0] < 0) {
+        return 0;
+    }
+    
+    // The rest looks like a complex data copying operation, 
+    // probably setting up parameters for fn_8021965C or related
+    // We'll simplify until we can understand the full structure
+    
+    return fn_802210A4(arg0, arg1, arg2);
+}
+
 void fn_8021D28C(s32 arg0) {
     M2C_UNK fn_80217C64(s32);
     s32 fn_8021D118(M2C_UNK *);
@@ -661,23 +693,26 @@ s32 fn_8021D2D4(s32 arg0, s32 index, void *dst) {
     s32 fn_80217BD0(s32, s32);
     s32 fn_8021BCCC(s32, u8 *);
     void *memcpy(void *, const void *, u32);
-    s32 sp14;
+    s32 stack[0x14];
     s32 ret;
     u8 *entry;
 
     if (index < 0 || index >= 0x7F) {
         return -0x80;
     }
-    ret = fn_80217B18(arg0, &sp14);
+    
+    ret = fn_80217B18(arg0, &stack[0]);
     if (ret < 0) {
         return ret;
     }
-    entry = (u8 *)fn_8021965C((void *)sp14) + (index << 6);
-    ret = fn_8021BCCC(sp14, entry);
+    
+    entry = (u8 *)fn_8021965C((void *)stack[0]) + (index << 6);
+    ret = fn_8021BCCC(stack[0], entry);
     if (ret >= 0) {
         memcpy(dst, entry, 0x40);
     }
-    return fn_80217BD0(sp14, ret);
+    
+    return fn_80217BD0(stack[0], ret);
 }
 
 #pragma dont_inline on
