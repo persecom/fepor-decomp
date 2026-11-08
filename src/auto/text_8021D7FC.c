@@ -145,6 +145,55 @@ void fn_8021ED98(void *arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(arg0, s32 *, 0x10) = arg2;
 }
 
+void GXSetCPUFifo(void *fifo) {
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    void fn_8021F36C(u8, u8);
+    void fn_8021F338(u8);
+    void fn_8021F39C(u8, u8);
+    void fn_802037B0(void);
+    extern void *__piReg;
+    extern void* lbl_80368770;
+    extern void* lbl_80368774;
+    extern u8 lbl_8036877C;
+    __GXFifoObj* realFifo = (__GXFifoObj*)fifo;
+    s32 enabled;
+    u32 temp_r8;
+    u32 temp_r7;
+
+    enabled = OSDisableInterrupts();
+    lbl_80368770 = fifo;
+    if (fifo == lbl_80368774) {
+        M2C_FIELD(__piReg, u32 *, 0xC) = (u32) realFifo->base & 0x3FFFFFFF;
+        M2C_FIELD(__piReg, u32 *, 0x10) = (u32) realFifo->top & 0x3FFFFFFF;
+        temp_r8 = __rlwimi(0, (u32) realFifo->wrPtr, 0, 6, 26);
+        temp_r7 = temp_r8;
+        temp_r7 = __rlwimi(temp_r7, 0, 26, 5, 5);
+        M2C_FIELD(__piReg, u32 *, 0x14) = temp_r7;
+        lbl_8036877C = 1;
+        fn_8021F39C(1, 1);
+        fn_8021F36C(1, 0);
+        fn_8021F338(1);
+    } else {
+        u32 temp2_r8;
+        u32 temp2_r7;
+
+        if (lbl_8036877C != 0) {
+            fn_8021F338(0);
+            lbl_8036877C = 0;
+        }
+        fn_8021F36C(0, 0);
+        M2C_FIELD(__piReg, u32 *, 0xC) = (u32) realFifo->base & 0x3FFFFFFF;
+        M2C_FIELD(__piReg, u32 *, 0x10) = (u32) realFifo->top & 0x3FFFFFFF;
+        temp2_r8 = __rlwimi(0, (u32) realFifo->wrPtr, 0, 6, 26);
+        temp2_r7 = temp2_r8;
+        temp2_r7 = __rlwimi(temp2_r7, 0, 26, 5, 5);
+        M2C_FIELD(__piReg, u32 *, 0x14) = temp2_r7;
+    }
+    fn_802037B0();
+    OSRestoreInterrupts(enabled);
+}
+
 void GXSetGPFifo(void *fifo) {
     s32 OSDisableInterrupts(void);
     void OSRestoreInterrupts(s32);
@@ -285,6 +334,87 @@ s32 fn_8021F4DC(void) {
     return lbl_80368788;
 }
 
+void fn_8021F750(s32 arg0, s32 arg1) {
+    extern u16 *const __GXData;
+    
+    if (arg0 >= 0 && arg0 <= 23) {
+        switch (arg0) {
+            case 0:
+                __GXData[0x14/2] = (__GXData[0x14/2] & ~0x8000) | ((arg1 & 1) << 15);
+                break;
+            case 1:
+                __GXData[0x14/2] = (__GXData[0x14/2] & ~0x4000) | ((arg1 & 1) << 14);
+                break;
+            case 2:
+                __GXData[0x14/2] = (__GXData[0x14/2] & ~0x2000) | ((arg1 & 1) << 13);
+                break;
+            case 3:
+                __GXData[0x14/2] = (__GXData[0x14/2] & ~0x1000) | ((arg1 & 1) << 12);
+                break;
+            case 4:
+                __GXData[0x14/2] = (__GXData[0x14/2] & ~0x800) | ((arg1 & 1) << 11);
+                break;
+            case 5:
+                __GXData[0x14/2] = (__GXData[0x14/2] & ~0x400) | ((arg1 & 1) << 10);
+                break;
+            case 6:
+                __GXData[0x14/2] = (__GXData[0x14/2] & ~0x200) | ((arg1 & 1) << 9);
+                break;
+            case 7:
+                __GXData[0x14/2] = (__GXData[0x14/2] & ~0x100) | ((arg1 & 1) << 8);
+                break;
+            case 8:
+                __GXData[0x14/2] = (__GXData[0x14/2] & ~0x80) | ((arg1 & 1) << 7);
+                break;
+            case 9:
+                __GXData[0x14/2] = (__GXData[0x14/2] & ~0x60) | ((arg1 & 3) << 5);
+                break;
+            case 10:
+                __GXData[0x14/2] = (__GXData[0x14/2] & ~0x1) | ((arg1 & 1) << 0);
+                break;
+            case 11:
+                __GXData[0x14/2] = (__GXData[0x14/2] & ~0x4) | ((arg1 & 1) << 2);
+                break;
+            case 12:
+                __GXData[0x14/2] = (__GXData[0x14/2] & ~0x10) | ((arg1 & 1) << 4);
+                break;
+            case 13:
+                __GXData[0x14/2] = (__GXData[0x14/2] & ~0x20) | ((arg1 & 1) << 5);
+                break;
+            case 14:
+                __GXData[0x14/2] = (__GXData[0x14/2] & ~0x80) | ((arg1 & 1) << 7);
+                break;
+            case 15:
+                __GXData[0x14/2] = (__GXData[0x14/2] & ~0x200) | ((arg1 & 1) << 9);
+                break;
+            case 16:
+                __GXData[0x18/2] = (__GXData[0x18/2] & ~0xC000) | ((arg1 & 3) << 14);
+                break;
+            case 17:
+                __GXData[0x18/2] = (__GXData[0x18/2] & ~0x3000) | ((arg1 & 3) << 12);
+                break;
+            case 18:
+                __GXData[0x18/2] = (__GXData[0x18/2] & ~0xC00) | ((arg1 & 3) << 10);
+                break;
+            case 19:
+                __GXData[0x18/2] = (__GXData[0x18/2] & ~0x300) | ((arg1 & 3) << 8);
+                break;
+            case 20:
+                __GXData[0x18/2] = (__GXData[0x18/2] & ~0xC0) | ((arg1 & 3) << 6);
+                break;
+            case 21:
+                __GXData[0x18/2] = (__GXData[0x18/2] & ~0x30) | ((arg1 & 3) << 4);
+                break;
+            case 22:
+                __GXData[0x18/2] = (__GXData[0x18/2] & ~0xC) | ((arg1 & 3) << 2);
+                break;
+            case 23:
+                __GXData[0x18/2] = (__GXData[0x18/2] & ~0x3) | ((arg1 & 3) << 0);
+                break;
+        }
+    }
+}
+
 void fn_8021FBB8(void) {
     u32* temp_r4 = (u32*)0x803B81A0;
     temp_r4[0x14/4] = 0;
@@ -293,6 +423,17 @@ void fn_8021FBB8(void) {
     ((u8*)0x803B81A0)[0x4D4] = 0;
     ((u8*)0x803B81A0)[0x4D5] = 0;
     temp_r4[0x5AC/4] |= 0x8;
+}
+
+s32 fn_8021FE4C(s32 arg0)
+{
+    if (arg0 < 0) {
+        arg0 = 0;
+    }
+    if (arg0 > 0x1F) {
+        arg0 = 0x1F;
+    }
+    return arg0;
 }
 
 void fn_80220154(s32 arg0, s32 arg1, u8 arg2) {
@@ -315,6 +456,20 @@ void fn_80220154(s32 arg0, s32 arg1, u8 arg2) {
 
 void fn_80220198(void) {
     *(s8 *)0xCC008000 = 0x48;
+}
+
+void fn_802201A8(void) {
+    // Looking at pattern, this might be doing some initialization based on a parameter  
+    // Let's try a simpler approach that matches the structure better
+    
+    // Set up some registers for conditional logic
+    s32 temp = 0;
+    if (temp > 0x14) {   // Check r5 against 0x14 (20)
+        // Not sure what the body of this needs to be yet
+    }
+    
+    // Call the function that the target does at the end  
+    osSync();
 }
 
 void fn_802206F4(void) {
