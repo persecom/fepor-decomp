@@ -43,6 +43,17 @@ static s16 lbl_80339338[8];
 
 extern s32 lbl_803679F0;
 
+typedef struct HeapDesc {
+    s32 size;
+    void *free;
+    void *allocated;
+} HeapDesc;
+
+extern HeapDesc *lbl_80368498;
+extern s32 lbl_8036849C;
+extern void *lbl_803684A0;
+extern void *lbl_803684A4;
+
 extern u16 lbl_8029B634[10];
 
 #pragma opt_common_subs off
@@ -464,6 +475,16 @@ s32 fn_8020543C(s32 arg0)
 void L2GlobalInvalidate(void* addr, u32 len) {
     if (len != 0) {
         osL2GlobalInvalidate(addr, len);
+    }
+}
+
+void __OSCacheInit(void) {
+    lbl_8029BBB0[0] = 0x1;
+    lbl_8029BBB0[1] = 0x0;
+    lbl_8029BBB0[2] = 0x0;
+
+    if (0x8020DAE0 != 0) {
+        ((void (*)(void))0x8020DAE0)();
     }
 }
 
