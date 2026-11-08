@@ -1244,7 +1244,7 @@ void fn_80225BF4(void) {
     M2C_FIELD(__cpReg, s16 *, 4) = 4;
 }
 
-static inline u32 __GXReadPECounterU32(u32 lo, u32 hi) {
+static u32 __GXReadPECounterU32(u32 lo, u32 hi) {
     u32 ctrH0;
     u32 ctrH1;
     u32 ctrL;
