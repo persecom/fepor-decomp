@@ -429,6 +429,26 @@ s32 fn_8020C79C(void) {
     return 1;
 }
 
+s32 fn_8020CB38(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    M2C_UNK fn_8020602C(M2C_UNK *, M2C_UNK, M2C_UNK *);
+    M2C_UNK fn_8020EB10(void *, s32, s32, s32, M2C_UNK *, s32);
+    extern M2C_UNK fn_8020CBF8;
+    extern M2C_UNK lbl_8029CFE8;
+    extern M2C_UNK lbl_80366F60;
+    s32 temp_r4;
+
+    if ((arg3 < 0) || ((u32) arg3 > (u32) M2C_FIELD(arg0, u32 *, 0x34))) {
+        fn_8020602C(&lbl_80366F60, 0x2EE, &lbl_8029CFE8);
+    }
+    temp_r4 = arg3 + arg2;
+    if ((temp_r4 < 0) || ((u32) temp_r4 >= (u32) (M2C_FIELD(arg0, u32 *, 0x34) + 0x20))) {
+        fn_8020602C(&lbl_80366F60, 0x2F4, &lbl_8029CFE8);
+    }
+    M2C_FIELD(arg0, s32 *, 0x38) = arg4;
+    fn_8020EB10(arg0, arg1, arg2, M2C_FIELD(arg0, s32 *, 0x30) + arg3, &fn_8020CBF8, arg5);
+    return 1;
+}
+
 void fn_8020CBF8(void *arg1) {
     void (*temp_r12)(void);
 
@@ -1112,7 +1132,6 @@ extern u16 AlarmForTimeout_80339ED8[20];
 
 extern u16 lbl_80339FB0[20]; // 40 bytes = 20 * 2-byte entries
 #include <dolphin/os.h>
-#include "dolphin/os.h"
 
 extern u16 Reschedule_80368520;
 #include "common.h"
