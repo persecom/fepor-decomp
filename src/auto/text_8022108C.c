@@ -201,65 +201,68 @@ void fn_80221A40(void)
 
 void fn_80221BA8(void *dest, u8 clear) {
     u32 reg;
+    u32 tempPeCtrl;
+    u32 phyAddr;
     u8 changePeCtrl;
 
     if (clear) {
         reg = M2C_FIELD(__GXData, u32 *, 0x1D8);
         reg = __rlwimi(reg, 1, 0, 31, 31);
         reg = __rlwimi(reg, 7, 1, 28, 30);
-        *(volatile u8 *)0xCC008000 = 0x61;
-        *(volatile u32 *)0xCC008000 = reg;
+        GXWGFifo.u8 = 0x61;
+        GXWGFifo.u32 = reg;
 
         reg = M2C_FIELD(__GXData, u32 *, 0x1D0);
         reg = __rlwimi(reg, 0, 0, 31, 31);
         reg = __rlwimi(reg, 0, 1, 30, 30);
-        *(volatile u8 *)0xCC008000 = 0x61;
-        *(volatile u32 *)0xCC008000 = reg;
+        GXWGFifo.u8 = 0x61;
+        GXWGFifo.u32 = reg;
     }
 
     changePeCtrl = 0;
-    reg = M2C_FIELD(__GXData, u32 *, 0x1DC);
-    if (M2C_FIELD(__GXData, u8 *, 0x200) && (reg & 7) != 3) {
-        reg = __rlwimi(reg, 3, 0, 29, 31);
+    tempPeCtrl = M2C_FIELD(__GXData, u32 *, 0x1DC);
+    if (M2C_FIELD(__GXData, u8 *, 0x200) && (tempPeCtrl & 7) != 3) {
         changePeCtrl = 1;
+        tempPeCtrl = __rlwimi(tempPeCtrl, 3, 0, 29, 31);
     }
-    if ((clear || (reg & 7) == 3) && ((reg >> 6) & 1) == 1) {
-        reg = __rlwimi(reg, 0, 6, 25, 25);
+    if ((clear || (tempPeCtrl & 7) == 3) && ((tempPeCtrl >> 6) & 1) == 1) {
         changePeCtrl = 1;
+        tempPeCtrl = __rlwimi(tempPeCtrl, 0, 6, 25, 25);
     }
     if (changePeCtrl) {
-        *(volatile u8 *)0xCC008000 = 0x61;
-        *(volatile u32 *)0xCC008000 = reg;
+        GXWGFifo.u8 = 0x61;
+        GXWGFifo.u32 = tempPeCtrl;
     }
 
-    *(volatile u8 *)0xCC008000 = 0x61;
-    *(volatile u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1F0);
-    *(volatile u8 *)0xCC008000 = 0x61;
-    *(volatile u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1F4);
-    *(volatile u8 *)0xCC008000 = 0x61;
-    *(volatile u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1F8);
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1F0);
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1F4);
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1F8);
 
+    phyAddr = (u32)dest & 0x3FFFFFFF;
     reg = 0;
-    reg = __rlwimi(reg, (u32)dest, 27, 11, 31);
+    reg = __rlwimi(reg, phyAddr >> 5, 0, 11, 31);
     reg = __rlwimi(reg, 0x4B, 24, 0, 7);
-    *(volatile u8 *)0xCC008000 = 0x61;
-    *(volatile u32 *)0xCC008000 = reg;
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = reg;
 
     M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC), clear, 11, 20, 20);
     M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC), 0, 14, 17, 17);
     M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC), 0x52, 24, 0, 7);
-    *(volatile u8 *)0xCC008000 = 0x61;
-    *(volatile u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1FC);
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1FC);
 
     if (clear) {
-        *(volatile u8 *)0xCC008000 = 0x61;
-        *(volatile u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1D8);
-        *(volatile u8 *)0xCC008000 = 0x61;
-        *(volatile u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1D0);
+        GXWGFifo.u8 = 0x61;
+        GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1D8);
+        GXWGFifo.u8 = 0x61;
+        GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1D0);
     }
     if (changePeCtrl) {
-        *(volatile u8 *)0xCC008000 = 0x61;
-        *(volatile u32 *)0xCC008000 = M2C_FIELD(__GXData, u32 *, 0x1DC);
+        GXWGFifo.u8 = 0x61;
+        GXWGFifo.u32 = M2C_FIELD(__GXData, u32 *, 0x1DC);
     }
     M2C_FIELD(__GXData, u16 *, 0x2) = 0;
 }
