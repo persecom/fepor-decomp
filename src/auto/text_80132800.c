@@ -2935,3 +2935,4 @@ extern s32 fn_8000D3EC(s32 arg0, void *arg1);
 extern s32 fn_802097D4(s32 arg0);
 extern s32 fn_800B28FC(s32 arg0);
 extern void fn_800B4060(void);
+extern u8* gUnknown_802C9248;
