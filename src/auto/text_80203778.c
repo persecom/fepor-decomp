@@ -329,6 +329,45 @@ BOOL fn_80204B0C(BOOL final) {
     return TRUE;
 }
 #pragma peephole reset
+
+Cell *fn_80204BAC(Cell *list, Cell *cell) {
+    Cell *prev;
+    Cell *next;
+
+    for (next = list, prev = NULL; next; prev = next, next = next->next) {
+        if (cell <= next) {
+            break;
+        }
+    }
+
+    cell->next = next;
+    cell->prev = prev;
+    if (next) {
+        next->prev = cell;
+        if ((char *)cell + cell->size == (char *)next) {
+            cell->size += next->size;
+            cell->next = next = next->next;
+            if (next) {
+                next->prev = cell;
+            }
+        }
+    }
+    if (prev) {
+        prev->next = cell;
+        if ((char *)prev + prev->size == (char *)cell) {
+            prev->size += cell->size;
+            prev->next = next;
+            if (next) {
+                next->prev = prev;
+            }
+        }
+        return list;
+    } else {
+        return cell;
+    }
+}
+
+#pragma peephole reset
 s32 fn_80204CD4(s32 arg0) {
     extern s32 lbl_80366F28;
     s32 temp_r0;
