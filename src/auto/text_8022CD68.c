@@ -207,6 +207,27 @@ s32 fn_80231F48(char *s, const char *fmt, va_list args) {
     return n;
 }
 
+void *strchr(void *arg0, u8 arg1) {
+    u8 temp_r4;
+    void *var_r3;
+
+    var_r3 = arg0;
+loop_2:
+    temp_r4 = *(u8*)var_r3;
+    if (temp_r4 == 0) {
+        if (arg1 != 0) {
+            return NULL;
+        }
+        /* Duplicate return node #6. Try simplifying control flow for better match */
+        return var_r3;
+    }
+    if (temp_r4 != arg1) {
+        var_r3 = (u8*)var_r3 + 1;
+        goto loop_2;
+    }
+    return var_r3;
+}
+
 s32 fn_802342B8(u8 *arg0, u8 *arg1) {
     register u8 *left = arg0;
     register u8 *right = arg1;
@@ -282,6 +303,35 @@ bytecopy:
     return 0;
 }
 
+void fn_802343E0(u8 *arg0, u8 *arg1) {
+    u8 temp_r0;
+    
+    arg1 -= 1;
+    arg0 -= 1;
+    
+    do {
+        temp_r0 = *(arg0 + 1);
+        arg0 += 1;
+    } while (temp_r0 != 0);
+    
+    arg1 -= 1;
+    
+    do {
+        temp_r0 = *(arg1 + 1);
+        arg1 += 1;
+        *(arg0 + 1) = temp_r0;
+        arg0 += 1;
+    } while (temp_r0 != 0);
+}
+
+s32 strlen(const char* str) {
+    const char* s = str - 1;
+    do {
+        s++;
+    } while (*s != '\0');
+    return (s - str);
+}
+
 s32 fn_80235A7C(s32 arg0, s32 arg1, s32 *arg2, s32 arg3) {
     s32 fn_80203AAC();
     M2C_UNK fn_8022B530(s32, s32, s32 *, s32);
@@ -310,6 +360,16 @@ s32 fn_80235A7C(s32 arg0, s32 arg1, s32 *arg2, s32 arg3) {
 block_8:
     fn_8022B530(arg0, arg1, arg2, arg3);
     return 0;
+}
+
+f64 fn_802380A8(f64 farg0, f64 farg1) {
+    f64 sp10;
+    f64 sp8;                                        /* compiler-managed */
+
+    sp8 = farg0;
+    sp10 = farg1;
+    sp8 = (M2C_BITWISE(s32, sp10) & ~0x7FFFFFFF) | (M2C_BITWISE(s32, sp8) & 0x7FFFFFFF);
+    return M2C_BITWISE(f64, sp8);
 }
 
 void fn_80238788(void) {
@@ -358,6 +418,27 @@ void fn_80238ABC(void) {
 }
 
 s32 Hu_IsStub(void) {
+    return 0;
+}
+
+s32 fn_8023A114(s32 arg0) {
+    s32 r4 = arg0 << 6;
+    u16* base = (u16*)Ecb_8033E188;
+    return *(s32*)((u8*)base + r4 + 0xC);
+}
+
+void UnlockedHandler(void) {
+    M2C_UNK EXIGetID(M2C_UNK, M2C_UNK *);
+    M2C_UNK sp10;
+
+    EXIGetID(0, &sp10);
+}
+
+s32 fn_8023ABD4(void) {
+    extern s32 Si_8029EFAC;
+    if ((s32) Si_8029EFAC != -1) {
+        return 1;
+    }
     return 0;
 }
 
@@ -3536,3 +3617,4 @@ typedef struct {
 } unk_struct_8034D4B8;
 
 extern unk_struct_8034D4B8 lbl_8034D4B8[];
+extern u32 fragmentinfo_8033DD28[];
