@@ -128,11 +128,11 @@ static inline u32 __GXReadCPCounterU32(u32 lo, u32 hi) {
     u32 ctrH1;
     u32 ctrL;
 
-    ctrH0 = __cpReg[hi];
+    ctrH0 = ((volatile u16 *)__cpReg)[hi];
     do {
         ctrH1 = ctrH0;
-        ctrL = __cpReg[lo];
-        ctrH0 = __cpReg[hi];
+        ctrL = ((volatile u16 *)__cpReg)[lo];
+        ctrH0 = ((volatile u16 *)__cpReg)[hi];
     } while (ctrH0 != ctrH1);
     return (ctrH0 << 16) | ctrL;
 }
