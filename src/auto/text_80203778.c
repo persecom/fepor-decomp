@@ -213,7 +213,7 @@ void OSRegisterVersion(s32 arg0) {
 void OSInitAlarm(void) {
     extern void *AlarmQueue_80368490;
     extern void *DecrementerExceptionHandler;
-    extern void *ResetFunctionInfo_8029BB20;
+    extern OSResetFunctionInfo ResetFunctionInfo_8029BB20;
     extern void *__OSGetExceptionHandler(s32);
     extern void __OSSetExceptionHandler(s32, void *);
     
