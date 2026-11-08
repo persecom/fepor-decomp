@@ -134,6 +134,25 @@ typedef struct {
 } SStructType;
 
 
+void fn_8022D084(void *arg1) {
+    u32 temp_r5;
+    u32 var_r4;
+
+    if (arg1 != NULL) {
+        temp_r5 = M2C_FIELD(arg1, u32 *, -4);
+        if (!(temp_r5 & 1)) {
+            var_r4 = M2C_FIELD(temp_r5, u32 *, 8);
+        } else {
+            var_r4 = (M2C_FIELD(arg1, u32 *, -8) & 0xFFFFFFF8) - 8;
+        }
+        if (var_r4 <= 0x44U) {
+            fn_8022D0DC();
+            return;
+        }
+        fn_8022D234();
+    }
+}
+
 s32 fn_80230BBC(s32 arg0) {
     s32 temp_r4;
 
@@ -165,6 +184,11 @@ void __begin_critical_region(void) {
 
 void __kill_critical_regions(void) {
 
+}
+
+extern s32 fn_802314D8(s32, s32, s32);
+s32 fseek(s32 arg0, s32 arg1, s32 arg2) {
+    return fn_802314D8(arg0, arg1, arg2);
 }
 
 #pragma use_lmw_stmw on
@@ -207,6 +231,44 @@ s32 fn_80231F48(char *s, const char *fmt, va_list args) {
     return n;
 }
 
+void *fn_80234198(void *arg0, u8 *arg1) {
+    u8 temp_r4;
+    void *var_r3;
+    void *var_r5;
+
+    var_r5 = (void*)((uintptr_t)arg0 - 1);
+    var_r3 = NULL;
+loop_3:
+    temp_r4 = *(u8*)var_r5;
+    var_r5 = (void*)((uintptr_t)var_r5 + 1);
+    if (temp_r4 != 0) {
+        if (temp_r4 == *arg1) {
+            var_r3 = var_r5;
+        }
+        goto loop_3;
+    }
+    return var_r3 == NULL ? (*arg1 != 0 ? NULL : var_r5) : var_r3;
+}
+
+void *fn_80234200(s32 arg0, u8 arg1) {
+    u8 temp_r4;
+    void *var_r3;
+    void *var_r5;
+
+    var_r5 = (void*)(arg0 - 1);
+    var_r3 = NULL;
+loop_3:
+    temp_r4 = *(u8*)var_r5;
+    var_r5 = (void*)((uintptr_t)var_r5 + 1);
+    if (temp_r4 != 0) {
+        if (temp_r4 == arg1) {
+            var_r3 = var_r5;
+        }
+        goto loop_3;
+    }
+    return var_r3 == NULL ? (arg1 != 0 ? NULL : var_r5) : var_r3;
+}
+
 void *strchr(void *arg0, u8 arg1) {
     u8 temp_r4;
     void *var_r3;
@@ -226,6 +288,34 @@ loop_2:
         goto loop_2;
     }
     return var_r3;
+}
+
+s32 fn_80234278(s32 arg0, s32 arg1, s32 arg2) {
+    s32 var_r6;
+    u8 temp_r0;
+    u8 temp_r5;
+    void *var_r3;
+    void *var_r4;
+
+    var_r3 = (void *)(arg0 - 1);
+    var_r4 = (void *)(arg1 - 1);
+    var_r6 = arg2 + 1;
+loop_4:
+    var_r6 -= 1;
+    if (var_r6 == 0) {
+        return 0;
+    }
+    temp_r0 = *(u8*)var_r3;
+    var_r3 = (void*)((s32)var_r3 + 1);
+    temp_r5 = *(u8*)var_r4;
+    var_r4 = (void*)((s32)var_r4 + 1);
+    if (temp_r0 != temp_r5) {
+        return temp_r0 - temp_r5;
+    }
+    if (temp_r0 != 0) {
+        goto loop_4;
+    }
+    return 0;
 }
 
 s32 fn_802342B8(u8 *arg0, u8 *arg1) {
@@ -417,8 +507,43 @@ void fn_80238ABC(void) {
     fn_8023108C();
 }
 
+void fn_80238ADC(u8 *arg0) {
+    extern u16 lbl_8029E9A8[256];
+    u8 temp_r5;
+    u8 var_r0;
+
+    while ((s8) (temp_r5 = *arg0) != 0) {
+        if ((s8) temp_r5 == -1) {
+            var_r0 = -1U;
+        } else {
+            var_r0 = lbl_8029E9A8[(u8) (s8) temp_r5];
+        }
+        *arg0 = var_r0;
+        arg0 += 1;
+    }
+}
+
 s32 Hu_IsStub(void) {
     return 0;
+}
+
+void EXIClearInterrupts(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 temp_r0;
+    s32 var_r0;
+
+    temp_r0 = arg0 * 0x14;
+    var_r0 = *(volatile u32*)(0xCC006800 + temp_r0);
+    var_r0 = var_r0 & 0x7F5;
+    if (arg1 != 0) {
+        var_r0 |= 2;
+    }
+    if (arg2 != 0) {
+        var_r0 |= 8;
+    }
+    if (arg3 != 0) {
+        var_r0 |= 0x800;
+    }
+    *(volatile u32*)(0xCC006800 + temp_r0) = var_r0;
 }
 
 s32 fn_8023A114(s32 arg0) {
@@ -435,11 +560,22 @@ void UnlockedHandler(void) {
 }
 
 s32 fn_8023ABD4(void) {
-    extern s32 Si_8029EFAC;
-    if ((s32) Si_8029EFAC != -1) {
+    extern u16 Si_8029EFAC[];
+if ((s32) Si_8029EFAC != -1) {
         return 1;
     }
     return 0;
+}
+
+s32 fn_8023ABF4(s32 arg0) {
+    extern u16 Packet_8033E248[128];
+    extern s32 Si_8029EFAC;
+
+    s32 var_r5 = 1;
+    if (((s32) *(Packet_8033E248 + (arg0 << 5)) == -1) && ((s32) Si_8029EFAC != arg0)) {
+        var_r5 = 0;
+    }
+    return var_r5;
 }
 
 void fn_8023B804(s32 arg0, s32 arg1) {
