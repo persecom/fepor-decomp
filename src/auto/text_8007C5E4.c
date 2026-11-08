@@ -422,8 +422,8 @@ void fn_8007F410(void *arg0) {
     fn_800076AC(0, 0, 0, 0xFF);
     fn_80007884();
     tex = *fn_8006EDD8(lbl_803674F4, 0x1D);
-    sh = (f32)tex[0] * lbl_80369430;
-    sw = (f32)tex[1] * lbl_80369430;
+    sh = tex[0] * lbl_80369430;
+    sw = tex[1] * lbl_80369430;
     color = *fn_8018D900(1);
     id = lbl_803674F4;
     tex = *fn_8006EDD8(id, 0x1D);
@@ -740,12 +740,12 @@ s32 fn_80089ED8(void) {
     return 0;
 }
 
+extern u16 *lbl_803674E0;
+
 u16 fn_8008A56C(void) {
-    extern void *lbl_803674E0;
-    return M2C_FIELD(lbl_803674E0, u16 *, 0x32);
+    return lbl_803674E0[0x19];
 }
 
-extern u16* lbl_803674E0;
 s32 fn_8008A578(void) {
     u16 temp_r4;
 
