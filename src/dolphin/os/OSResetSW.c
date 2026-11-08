@@ -367,6 +367,20 @@ void fn_8020CED0(void) {
 
 }
 
+extern u16 Scb_803394;
+void fn_8020CFAC(void)
+{
+    s32 i;
+    for (i = 0; i < 0x200; i++)
+    {
+        u16* addr = (u16*)(0x803685A0 + i * 2);
+        if ((*addr & 0x10) != 0)
+        {
+            *addr = 0;
+        }
+    }
+}
+
 void fn_8020D1A0(void) {
     M2C_UNK fn_8020BF58(M2C_UNK *);
     extern M2C_UNK fn_8020D27C;
@@ -884,3 +898,12 @@ extern u16 Scb_80339420[5];
 extern u16 Callback_80368538;
 extern u16 StopAtNextInt_80368530;
 extern u16 AlarmForTimeout_80339ED8[20];
+#include "common.h"
+#include <dolphin/os.h>
+#include "global.h"
+
+extern u16 Scb_803394;
+extern u16 bootInfo_803685A0[];
+extern u16 BB2_80339F40[];
+extern u16 lbl_8029D0DC[];
+extern u16 lbl_80366F74[];
