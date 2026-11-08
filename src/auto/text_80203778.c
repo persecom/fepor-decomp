@@ -323,7 +323,6 @@ BOOL fn_80204B0C(BOOL final) {
     return TRUE;
 }
 #pragma peephole reset
-#pragma scheduling reset
 s32 fn_80204CD4(s32 arg0) {
     extern s32 lbl_80366F28;
     s32 temp_r0;
