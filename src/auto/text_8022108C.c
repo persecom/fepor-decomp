@@ -186,7 +186,6 @@ s32 fn_802216E0(s32 arg0) {
 }
 
 void fn_80221A2C(s32 arg0) {
-    extern u16 *__GXData;
     M2C_FIELD(__GXData, u32 *, 0x1EC) = (M2C_FIELD(__GXData, u32 *, 0x1EC) & ~0x180) | ((arg0 << 7) & 0x180);
 }
 
@@ -275,6 +274,37 @@ void fn_80221D6C(void *arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 far
     M2C_FIELD(arg0, f32 *, 0x1C) = farg3;
     M2C_FIELD(arg0, f32 *, 0x20) = farg4;
     M2C_FIELD(arg0, f32 *, 0x24) = farg5;
+}
+
+void fn_80221D88(s32 arg0, f32* arg1) {
+    if (arg1[0] >= 0.0f) {
+        if (arg1[0] <= 1.0f)
+            return;
+    }
+    
+    switch (arg0) {
+        case 0:
+            // Placeholder for now - will be filled with actual logic
+            break;
+        case 1:
+            // Placeholder for now - will be filled with actual logic
+            break;
+        case 2:
+            // Placeholder for now - will be filled with actual logic
+            break;
+        case 3:
+            // Placeholder for now - will be filled with actual logic
+            break;
+        case 4:
+            // Placeholder for now - will be filled with actual logic
+            break;
+        case 5:
+            // Placeholder for now - will be filled with actual logic
+            break;
+        case 6:
+            // Placeholder for now - will be filled with actual logic
+            break;
+    }
 }
 
 void fn_80221F18(void *arg0, s32 arg1, f32 farg0, f32 farg1) {
