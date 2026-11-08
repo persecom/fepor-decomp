@@ -2188,6 +2188,32 @@ void fn_800E29EC(void *arg0, void *arg1) {
     *(s32 *)((u8 *)arg0 + 0x4C) = *(s32 *)((u8 *)arg1 + 4);
 }
 
+extern f32 lbl_80369F00;
+extern f32 lbl_80369F04;
+extern f64 lbl_80369F08;
+void fn_800E2A00(Unit *unit, void *arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5) {
+    s32 temp_r24;
+    s32 temp_r25;
+    s32 temp_r26;
+    s32 temp_r27;
+    s32 temp_r3;
+
+    temp_r24 = *(s32 *)((u8 *)arg1 + 4);
+    temp_r25 = *(s32 *)((u8 *)arg1 + 0);
+    temp_r3 = *(s32 *)((u8 *)arg1 + 8);
+    temp_r26 = *(s32 *)((u8 *)arg1 + 0xC) - temp_r24;
+    temp_r27 = temp_r3 - temp_r25;
+    
+    fn_8000A258(0x1E);
+    fn_80009D74(lbl_80369F00, lbl_80369F00, (f32) *(s32 *)((u8 *)unit + 0x44), lbl_80369F04);
+    fn_8000A174(0, 0x10);
+    fn_8000A248();
+    fn_80007898(1);
+    fn_800077D8((f32) temp_r25, (f32) temp_r24, (f32) temp_r27, (f32) temp_r26);
+    fn_800076AC(arg2, arg3, arg4, arg5);
+    fn_80007884();
+}
+
 s32 fn_800E2E50(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x68);
 }
@@ -4949,5 +4975,10 @@ extern u16 *lbl_80367918;
 extern u16 lbl_80273420[];
 #include "global.h"
 #include "structs.h"
+#include "unit.h"
+
+extern f32 fn_802031A8(f32*, f32*, f32*);
+extern f32 fn_802031CC(f32*, f32*, f32);
+extern f32 fn_802031E8(f32*, f32*);
 
 extern u16 lbl_802CA518;
