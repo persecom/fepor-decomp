@@ -625,12 +625,197 @@ s32 fn_80215F60(void) {
 }
 
 void fn_80215F78(u16 arg0) {
-    *(u16 *)0xCC005000 = (u16)(arg0 >> 16);
+    *(u16 *)0xCC005000 = (arg0 >> 16);
     *(u16 *)0xCC005002 = arg0;
 }
 
 void fn_80216050(void) {
     OSDisableInterrupts();
+}
+
+void fn_80216534(void *arg0, void *arg1) {
+    M2C_UNK fn_80215F78(s32);
+    if (arg0 != NULL) {
+        fn_80215F78(M2C_FIELD(arg0, s32 *, 0x18));
+        do {
+
+        } while (fn_80215F40() != 0U);
+        fn_80215F78(M2C_FIELD(arg0, s32 *, 0x1C));
+        do {
+
+        } while (fn_80215F40() != 0U);
+        fn_80215F78(M2C_FIELD(arg0, s32 *, 0x20));
+        do {
+
+        } while (fn_80215F40() != 0U);
+    } else {
+        fn_80215F78(0);
+        do {
+
+        } while (fn_80215F40() != 0U);
+        fn_80215F78(0);
+        do {
+
+        } while (fn_80215F40() != 0U);
+        fn_80215F78(0);
+        do {
+
+        } while (fn_80215F40() != 0U);
+    }
+    fn_80215F78(M2C_FIELD(arg1, s32 *, 0xC));
+    do {
+
+    } while (fn_80215F40() != 0U);
+    fn_80215F78(M2C_FIELD(arg1, s32 *, 0x10));
+    do {
+
+    } while (fn_80215F40() != 0U);
+    fn_80215F78(M2C_FIELD(arg1, s32 *, 0x14));
+    do {
+
+    } while (fn_80215F40() != 0U);
+    if ((u32) M2C_FIELD(arg1, u32 *, 0) == 0U) {
+        fn_80215F78((s32) M2C_FIELD(arg1, u16 *, 0x24));
+        do {
+
+        } while (fn_80215F40() != 0U);
+        fn_80215F78(0);
+        do {
+
+        } while (fn_80215F40() != 0U);
+        fn_80215F78(0);
+        do {
+
+        } while (fn_80215F40() != 0U);
+        fn_80215F78(0);
+        do {
+
+        } while (fn_80215F40() != 0U);
+        return;
+    }
+    fn_80215F78((s32) M2C_FIELD(arg1, u16 *, 0x26));
+    do {
+
+    } while (fn_80215F40() != 0U);
+    fn_80215F78(M2C_FIELD(arg1, s32 *, 0x18));
+    do {
+
+    } while (fn_80215F40() != 0U);
+    fn_80215F78(M2C_FIELD(arg1, s32 *, 0x1C));
+    do {
+
+    } while (fn_80215F40() != 0U);
+    fn_80215F78(M2C_FIELD(arg1, s32 *, 0x20));
+    do {
+
+    } while (fn_80215F40() != 0U);
+}
+
+void fn_802166D4(void *arg0) {
+    s32 fn_80215F50();
+    void fn_80215F60();
+    void fn_80215F78(void *);
+    s32 fn_80215F40();
+    void fn_802160C0(void *, void *);
+    extern u16 lbl_8029D860[160];
+
+    // First loop with fn_80215F50
+    do {
+        if (fn_80215F50() == 0) {
+            break;
+        }
+    } while (1);
+    
+    fn_80215F60();
+    
+    // Process various fields through calls to fn_80215F78 with hard-coded values 
+    fn_80215F78((void *)0x80F3A001);
+    
+    do {
+        if (fn_80215F40() == 0) {
+            break;
+        }
+    } while (1);
+    
+    fn_80215F78(M2C_FIELD(arg0, void **, 0xC));
+    
+    do {
+        if (fn_80215F40() == 0) {
+            break;
+        }
+    } while (1);
+    
+    fn_80215F78((void *)0x80F3C002);
+    
+    do {
+        if (fn_80215F40() == 0) {
+            break;
+        }
+    } while (1);
+    
+    fn_80215F78((void *)((u16)M2C_FIELD(arg0, s32 *, 0x14)));
+    
+    do {
+        if (fn_80215F40() == 0) {
+            break;
+        }
+    } while (1);
+    
+    fn_80215F78((void *)0x80F3A002);
+    
+    do {
+        if (fn_80215F40() == 0) {
+            break;
+        }
+    } while (1);
+    
+    fn_80215F78(M2C_FIELD(arg0, void **, 0x10));
+    
+    do {
+        if (fn_80215F40() == 0) {
+            break;
+        }
+    } while (1);
+    
+    fn_80215F78((void *)0x80F3B002);
+    
+    do {
+        if (fn_80215F40() == 0) {
+            break;
+        }
+    } while (1);
+    
+    fn_80215F78(NULL);
+    
+    do {
+        if (fn_80215F40() == 0) {
+            break;
+        }
+    } while (1);
+    
+    fn_80215F78((void *)0x80F3D001);
+    
+    do {
+        if (fn_80215F40() == 0) {
+            break;
+        }
+    } while (1);
+    
+    fn_80215F78((void *)M2C_FIELD(arg0, u16 *, 0x24));
+    
+    do {
+        if (fn_80215F40() == 0) {
+            break;
+        }
+    } while (1);
+    
+    // Final calls to fn_802160C0
+    fn_802160C0(&lbl_8029D860, arg0);
+    fn_802160C0(&lbl_8029D860 + 0x20, M2C_FIELD(arg0, void **, 0xC));
+    fn_802160C0(&lbl_8029D860 + 0x50, (void *)M2C_FIELD(arg0, s32 *, 0x14));
+    fn_802160C0(&lbl_8029D860 + 0x80, M2C_FIELD(arg0, void **, 0x10));
+    fn_802160C0(&lbl_8029D860 + 0xB0, M2C_FIELD(arg0, void **, 0x1C));
+    fn_802160C0(&lbl_8029D860 + 0xE0, (void *)M2C_FIELD(arg0, u16 *, 0x24));
 }
 
 void fn_80216860(void *arg0) {
@@ -704,3 +889,5 @@ void fn_80216900(void *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x3C), void **, 0x38) = (void *) M2C_FIELD(arg0, void **, 0x38);
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 0x3C) = (void *) M2C_FIELD(arg0, void **, 0x3C);
 }
+#include "common.h"
+#include <dolphin/os.h>
