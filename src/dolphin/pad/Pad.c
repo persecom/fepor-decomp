@@ -19,6 +19,19 @@ extern s32 fn_80013E74(void*, s32);
 extern s32 lbl_80366F60;
 extern s32 lbl_8029CFE8;
 
+typedef struct PADStatus {
+    u16 button;
+    s8 stickX;
+    s8 stickY;
+    s8 substickX;
+    s8 substickY;
+    u8 triggerLeft;
+    u8 triggerRight;
+    u8 analogA;
+    u8 analogB;
+    s8 err;
+} PADStatus;
+
 
 extern s32 lbl_80368614;
 extern void (*lbl_803685E8)(void);
@@ -497,6 +510,16 @@ void fn_80215D2C(void) {
     char* text = "%s\n";
     OSRegisterVersion(0x43);
     OSReport(text, "ResetSW");
+}
+
+void fn_80215D9C(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5, s32 arg6, void *arg7) {
+    u32 r31;
+    u32 r30;
+    u32 r29;
+    
+    if (arg0 != NULL) {
+        *(u32*)((char*)arg0 + 0x1c) = 0;
+    }
 }
 
 void fn_80215EF8(void) {
