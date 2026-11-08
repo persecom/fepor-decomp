@@ -983,3 +983,5 @@ void fn_80216900(void *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x3C), void **, 0x38) = (void *) M2C_FIELD(arg0, void **, 0x38);
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 0x3C) = (void *) M2C_FIELD(arg0, void **, 0x3C);
 }
+extern u16 Scb_80339420[4];
+extern u16 lbl_80282268[8];
