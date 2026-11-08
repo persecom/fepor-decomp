@@ -613,6 +613,36 @@ s32 Hu_IsStub(void) {
     return 0;
 }
 
+s32 fn_80238E78(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 EXIImm(s32, s32, s32, s32, s32);
+    s32 EXISync(s32);
+    
+    s32 var_r31 = arg0;
+    s32 var_r28 = arg1;
+    s32 var_r29 = arg2;
+    s32 var_r30 = arg3;
+    s32 var_r27;
+
+loop_9:
+    if (var_r29 == 0) {
+        return 1;
+    }
+    if (var_r29 < 4) {
+        var_r27 = var_r29;
+    } else {
+        var_r27 = 4;
+    }
+    if (EXIImm(var_r31, var_r28, var_r27, var_r30, 0) == 0) {
+        return 0;
+    }
+    if (EXISync(var_r31) == 0) {
+        return 0;
+    }
+    var_r28 += var_r27;
+    var_r29 -= var_r27;
+    goto loop_9;
+}
+
 void EXIClearInterrupts(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 temp_r0;
     s32 var_r0;
@@ -3908,3 +3938,6 @@ extern void (*__atexit_funcs[])(void);
 extern s32 __atexit_curr_func;
 extern void (*__console_exit)(void);
 extern s32 __aborting;
+#include "common.h"
+
+extern u16 __files[];
