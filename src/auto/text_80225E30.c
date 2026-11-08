@@ -90,6 +90,29 @@ void fn_80225F4C(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 8) = -1;
 }
 
+s32 TRKGetNextEvent(void) {
+    void *fn_802287B0(void *, void *);
+    void fn_802287A8(void *);
+    s32 var_r3;
+    
+    var_r3 = 0;
+
+    fn_802287B0(&lbl_8033B048, &lbl_8033B048);
+    if (lbl_8033B048.unk4 > 0) {
+        u32 arg1 = lbl_8033B048.unk8 * 0xC;
+        fn_80003488(0, &lbl_8033B048 + arg1 + 0xC, 0xC);
+        lbl_8033B048.unk8 += 1;
+        lbl_8033B048.unk4 -= 1;
+        if (lbl_8033B048.unk8 == 2) {
+            lbl_8033B048.unk8 = 0;
+        }
+        var_r3 = 1;
+    }
+
+    fn_802287A8(&lbl_8033B048);
+    return var_r3;
+}
+
 void TRKNubWelcome(void) {
     TRK_board_display(&lbl_80289EB8);
 }
@@ -201,6 +224,10 @@ s32 fn_8022692C(void *arg0, u32 arg1) {
         }
     }
     return var_r5;
+}
+
+s32 fn_80226A2C(void) {
+    return 0;
 }
 
 s32 fn_80226B68(void) {
@@ -336,6 +363,11 @@ s32 fn_80227F6C(void) {
 void fn_80227FD0(s32 arg0) {
     extern s32 lbl_8033CA40[];
     lbl_8033CA40[0] = arg0;
+}
+
+extern u16 lbl_8033CA40;
+u16 fn_80227FDC(void) {
+    return lbl_8033CA40;
 }
 
 s32 fn_802287A8(void) {
@@ -847,6 +879,66 @@ void fn_8022C05C(s32 *arg0) {
 
 void fn_8022C08C(void) {
 
+}
+
+s32 __va_arg(u8 *arg0, s32 arg1) {
+    s32 temp_r0;
+    s32 temp_r7;
+    s32 var_r0;
+    s32 var_r10;
+    s32 var_r11;
+    s32 var_r5;
+    s32 var_r6;
+    s32 var_r8;
+    s32 var_r9;
+    s8 var_r7;
+
+    var_r7 = *arg0;
+    var_r0 = 8;
+    var_r8 = 4;
+    var_r9 = 1;
+    var_r5 = 0;
+    var_r10 = 0;
+    var_r11 = 4;
+    
+    if (arg1 == 3) {
+        var_r7 = *(arg0 + 1);
+        arg0++;
+        var_r8 = 8;
+        var_r10 = 0x20;
+        var_r7 = *(arg0 + 1);
+        var_r11 = 8;
+    }
+    
+    if (arg1 == 2) {
+        var_r8 = 8;
+        var_r0 = 7;
+        if (var_r7 & 1) {
+            var_r5 = 1;
+        }
+        var_r9 = 2;
+    }
+
+    if (var_r7 < var_r0) {
+        temp_r7 = var_r7 + var_r5;
+        temp_r0 = temp_r7 + var_r9;
+        *arg0 = temp_r0;
+        
+        var_r6 = *(arg0 + 8);
+        var_r6 = var_r10 + (temp_r7 * var_r11);
+        var_r6 = var_r6 + var_r6;
+    } else {
+        temp_r0 = var_r8 - 1;
+        *arg0 = 8;
+        var_r6 = ~temp_r0 & ((var_r8 + *(arg0 + 4)) - 1);
+        *(arg0 + 4) = (s32) (var_r6 + var_r8);
+    }
+    
+    if (arg1 == 0) {
+        var_r6 = *(u8*)*(arg0 + 0);
+    }
+    
+    return var_r6;
 }
 
 void __register_global_object(s32 arg0, s32 arg1, void *arg2) {
