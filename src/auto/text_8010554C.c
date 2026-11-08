@@ -9,15 +9,18 @@ static inline void *GetUnitIfBitSet(u32 *bits, u8 id) {
 
     if (n < 0) {
         return NULL;
+    } else {
+        u32 *p = bits;
+
+        while (n >= 32) {
+            p++;
+            n -= 32;
+        }
+        if (!(*p & (1 << n))) {
+            return NULL;
+        }
+        return fn_80019DF0(id);
     }
-    while (n >= 32) {
-        bits++;
-        n -= 32;
-    }
-    if (!(*bits & (1 << n))) {
-        return NULL;
-    }
-    return fn_80019DF0(id);
 }
 
 void fn_8010554C(void) {
