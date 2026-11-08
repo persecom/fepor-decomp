@@ -249,6 +249,33 @@ void __DVDInitWA(void) {
     OSInitAlarm();
 }
 
+void fn_8020BA50(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    M2C_UNK fn_8020BD68(s32, s32, M2C_UNK, M2C_UNK);
+    extern M2C_UNK CommandList_80339E70;
+    extern s32 NextCommandNumber_80368574;
+    extern s32 WorkAroundSeekLocation_80368558;
+    s32 temp_r8;
+    s32 var_r10;
+
+    temp_r8 = arg2 & 0xFFFF8000;
+    if (temp_r8 == 0) {
+        var_r10 = 0;
+    } else {
+        var_r10 = temp_r8 + WorkAroundSeekLocation_80368558;
+    }
+    M2C_FIELD(&CommandList_80339E70, s32 *, 0) = 2;
+    M2C_FIELD(&CommandList_80339E70, s32 *, 0xC) = var_r10;
+    M2C_FIELD(&CommandList_80339E70, s32 *, 0x10) = arg3;
+    M2C_FIELD(&CommandList_80339E70, s32 *, 0x14) = 1;
+    M2C_FIELD(&CommandList_80339E70, s32 *, 0x18) = arg0;
+    M2C_FIELD(&CommandList_80339E70, s32 *, 0x1C) = arg1;
+    M2C_FIELD(&CommandList_80339E70, s32 *, 0x20) = arg2;
+    M2C_FIELD(&CommandList_80339E70, s32 *, 0x24) = arg3;
+    M2C_FIELD(&CommandList_80339E70, s32 *, 0x28) = -1;
+    NextCommandNumber_80368574 = 0;
+    fn_8020BD68(var_r10, arg3, -1, 1);
+}
+
 s32 DVDLowWaitCoverClose(s32 arg0) {
     extern s32 Callback_80368538;
     extern s32 WaitingCoverClose_8036854C;
@@ -801,3 +828,6 @@ extern u16 lbl_803686D8;
 #include <dolphin/os.h>
 
 extern u16 Scb_80339420[42];
+#include <dolphin/os.h>
+
+extern u16 Scb_80339420[42]; // 84 bytes, 2-byte entries
