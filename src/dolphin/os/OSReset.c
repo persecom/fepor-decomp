@@ -154,13 +154,12 @@ BOOL __OSCallResetFunctions(BOOL final) {
     return TRUE;
 }
 
+#pragma peephole off
 u32 OSGetResetCode(void) {
-    extern u32 lbl_803393B0[8];
-    volatile u32 *piRegs = (volatile u32 *)0xCC003000;
+    extern s32 lbl_803393B0[8];
 
-    if (lbl_803393B0[0] != 0) {
+    if (lbl_803393B0[0]) {
         return 0x80000000 | lbl_803393B0[1];
     }
-    return (piRegs[9] & ~7) >> 3;
+    return (__PIRegs[9] & ~7) >> 3;
 }
-
