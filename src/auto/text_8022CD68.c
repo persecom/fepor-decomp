@@ -208,6 +208,93 @@ loop_5:
     return var_r31;
 }
 
+extern s32 D_8022EF64;
+void fn_8022F0B4(void) {
+    u8* temp_r3;
+    s32 r5, r7, r6, r9, r8;
+    
+    temp_r3 = (u8*)0x8022CD68 + 0x5;
+    r5 = *temp_r3;
+    
+    if (r5 != 0) {
+        temp_r3 = (u8*)0x8022F0B4 + 0x5;
+        r5 = *temp_r3;
+        r5 = __cntlzw(r5);
+        r5 = r5 >> 5;
+        return;
+    }
+    
+    temp_r3 = (u8*)0x8022F0B4 + 0x5;  
+    r5 = *temp_r3;
+    
+    if (r5 != 0) {
+        r5 = __cntlzw(r5);
+        r5 = r5 >> 5;
+        return;
+    } 
+    
+    // Continue with the other checks...
+    r7 = *(u8*)(0x4 + (s8*)0x8022CD68);
+    r6 = *(u8*)(0x4 + (s8*)0x8022F0B4);  
+
+    if (r7 <= r6) {
+        r9 = r7;
+    } else {
+        r9 = r6; 
+    }
+
+    r8 = 0;
+
+    while (r8 < r9) {
+        u8* addr1 = (u8*)0x8022CD68 + 0x5 + (r8 * 1);
+        u8* addr2 = (u8*)0x8022F0B4 + 0x5 + (r8 * 1);
+        
+        if (*addr1 != *addr2) {
+            return;
+        }
+        r8 += 1;
+    }
+
+    // Handle return cases
+    if (r9 == r7) {
+        r8 = r8 - r6;
+        if (r8 >= r6) {
+            u8* addr = (u8*)0x8022F0B4 + 0x5 + r8;
+            if (*addr == 0) {
+                return;
+            }
+            r8++;
+            while (r8 != 0) {
+                addr = (u8*)0x8022F0B4 + 0x5 + r8;
+                if (*addr == 0) {
+                    return;
+                }
+                r8++; 
+            }
+        } else {
+            return;
+        }
+    } else {
+        r8 = r8 - r7;
+        if (r8 >= r7) {
+            u8* addr = (u8*)0x8022CD68 + 0x5 + r8;
+            if (*addr == 0) {
+                return;
+            }
+            r8++;
+            while (r8 != 0) {
+                addr = (u8*)0x8022CD68 + 0x5 + r8; 
+                if (*addr == 0) {
+                    return;
+                }
+                r8++; 
+            }
+        } else {
+            // Default case - we're not handling this yet, just return 1
+        }
+    }
+}
+
 s32 fn_80230BBC(s32 arg0) {
     s32 temp_r4;
 
@@ -955,4 +1042,4 @@ void UnlockedHandler(void) {
 
     EXIGetID(0, &sp10);
 }
-
+extern u16 Ecb_8033E188[192];
