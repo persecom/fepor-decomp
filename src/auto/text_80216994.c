@@ -348,6 +348,22 @@ loop_4:
     return var_r3;
 }
 
+s32 fn_802190A4(s32 chan, u32 addr, u32 length, void *dst, void *callback) {
+    extern u16 lbl_8033A200[];
+    void fn_80218FC8();
+    u8 *card;
+
+    card = (u8 *)lbl_8033A200 + chan * 0x110;
+    if (*(s32 *)card == 0) {
+        return -3;
+    }
+    *(void **)(card + 0xD4) = callback;
+    *(u32 *)(card + 0xAC) = length / 0x200;
+    *(u32 *)(card + 0xB0) = addr;
+    *(void **)(card + 0xB4) = dst;
+    return fn_802176AC(chan, fn_80218FC8);
+}
+
 s32 fn_802191F0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     extern u16 lbl_8033A200[];
     extern void *fn_80219108;
