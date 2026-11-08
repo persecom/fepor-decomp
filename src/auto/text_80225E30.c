@@ -1,6 +1,7 @@
 /* Functions from 0x801FC634 to 0x8022C1E8, found by decomp-toolkit. */
 #include "common.h"
 #include <dolphin/os.h>
+#include "global.h"
 extern s32 lbl_803682F0;
 extern s32 fn_80013E50(s32);
 extern s32 fn_80013E60(s32, s32);
@@ -229,6 +230,12 @@ s32 fn_802287B0(void) {
 }
 
 s32 fn_802287B8(void) {
+    return 0;
+}
+
+s32 fn_80228DF8(void) {
+    extern u16 gTRKState[];
+    *(u16 *)((u8 *)&gTRKState + 0x98) = 1;
     return 0;
 }
 
