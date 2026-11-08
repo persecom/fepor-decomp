@@ -292,3 +292,6 @@ s32 fn_8021D6D8(s32 arg0, s32 arg1, u8 *arg2) {
     return result;
 }
 #pragma dont_inline reset
+extern s32 EXIDma(s32, s32, s32, s32, void *);
+extern void EXIDeselect(s32);
+extern void EXIUnlock(s32);
