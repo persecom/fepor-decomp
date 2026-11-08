@@ -305,6 +305,72 @@ void OSSetArenaLo(s32 arg0) {
     __OSArenaLo_80366F30 = arg0;
 }
 
+extern u32 __OSArenaLo_80366F30;
+u32 fn_80204DE0(u32 arg0, u32 arg1) {
+    u32 temp_r0;
+    u32 temp_r4;
+    u32 temp_r5;
+    u32 temp_r6;
+
+    temp_r4 = arg1 - 1;
+    temp_r5 = ~temp_r4;
+    temp_r0 = __OSArenaLo_80366F30 + temp_r4;
+    temp_r6 = temp_r5 & temp_r0;
+    temp_r0 = temp_r6 + arg0;
+    temp_r0 = temp_r0 + temp_r4;
+    temp_r0 = temp_r5 & temp_r0;
+    __OSArenaLo_80366F30 = temp_r0;
+    return temp_r6;
+}
+
+void DCInvalidateRange(s32 arg0, u32 arg1) {
+    s32 var_r3;
+    u32 var_ctr;
+
+    if (arg1 > 0U) {
+        // Adjusted loop based on instruction sequence from target
+        var_r3 = arg0 & 0x1F;
+        var_ctr = (arg1 + var_r3 + 0x1F) >> 5U;
+        do {
+            M2C_DCACHE_INVALIDATE(arg0);
+            arg0 += 0x20;
+            var_ctr -= 1;
+        } while (var_ctr != 0);
+    }
+}
+
+void DCFlushRange(void* addr, u32 len) {
+    if (len != 0) {
+        osDCFlushRange(addr, len);
+    }
+}
+
+void fn_80205110(void* addr, u32 len) {
+    if (len != 0) {
+        osL2GlobalInvalidate(addr, len);
+    }
+}
+
+void DCFlushRangeNoSync(s32 arg0, u32 arg1) {
+    if (arg1 > 0) {
+        s32 temp_r5 = (arg1 + (arg0 & 0x1F) + 0x1F) >> 5;
+        s32 r3 = arg0;
+        u32 ctr = temp_r5;
+        
+        do {
+            M2C_DCACHE_CLEAN_INVALIDATE(r3);
+            r3 += 0x20;
+            ctr--;
+        } while (ctr != 0);
+    }
+}
+
+void fn_8020516C(void* addr, u32 len) {
+    if (len != 0) {
+        DCFlushRange(addr, len);
+    }
+}
+
 void fn_80205198(void *addr, u32 nBytes) {
     if (nBytes <= 0) {
         return;
@@ -371,6 +437,12 @@ s32 fn_8020543C(s32 arg0)
     return 0;
 }
 
+void L2GlobalInvalidate(void* addr, u32 len) {
+    if (len != 0) {
+        osL2GlobalInvalidate(addr, len);
+    }
+}
+
 void OSSaveFPUContext(void *arg0) {
     __OSSaveFPUContext(arg0);
 }
@@ -389,6 +461,12 @@ void OSClearContext(OSContext *context) {
     if (context == *(void**)0x800000D8) {
         *(u32*)0x800000D8 = 0;
     }
+}
+
+void fn_802067E0(s32 arg0) {
+    ICFlashInvalidate();
+    sync();
+    isync();
 }
 
 void fn_80206808(void) {
@@ -414,3 +492,4 @@ void __OSModuleInit(void) {
 
 extern u16 StopAtNextInt_80368530;
 extern u16 lbl_80368550;
+#include "global.h"
