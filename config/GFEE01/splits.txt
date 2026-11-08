@@ -327,7 +327,10 @@ auto/text_8021D7FC.c:
 	.text       start:0x8021D7FC end:0x8022108C
 
 auto/text_8022108C.c:
-	.text       start:0x8022108C end:0x80225E30
+	.text       start:0x8022108C end:0x80222420
+
+dolphin/gx/GXTexture.c:
+	.text       start:0x80222420 end:0x80225E30
 
 auto/text_80225E30.c:
 	.text       start:0x80225E30 end:0x8022C1E8
