@@ -31,6 +31,18 @@ typedef struct Voice {
     u32 unk190;
 } Voice;
 
+typedef struct SynthVoice {
+    struct SynthVoice *next; /* 0x000 */
+    struct SynthVoice *prev; /* 0x004 */
+    u8 state;                /* 0x008 */
+    u8 id;                   /* 0x009 */
+    u16 unkA;                /* 0x00A */
+    u32 vid;                 /* 0x00C */
+    u8 pad10[0xEFA - 0x10];
+    u8 unkEFA;               /* 0xEFA */
+    u8 padEFB[0x1888 - 0xEFB];
+} SynthVoice;
+
 typedef struct {
     char gpr;
     char fpr;
@@ -479,6 +491,55 @@ loop_9:
     temp_r3 = &(lbl_8033F990[0xEF8 * (var_r5_3 & 0x7FFFFFFF)]);
     *(temp_r3 + 0xEFA/2) = (*(temp_r3 + 0xEFA/2) | 0x20);
     *(temp_r3 + 0xEF8/2) = arg1;
+}
+
+void fn_80245188(s32 arg0) {
+    extern void *lbl_80368970;
+    extern void *lbl_80368974;
+    extern u8 lbl_8033F990[];
+    u32 id;
+    u32 vid;
+    void *p;
+    u8 *sv;
+
+    vid = arg0 & 0x7FFFFFFF;
+    for (p = lbl_80368974; p != NULL; p = M2C_FIELD(p, void **, 0)) {
+        if (M2C_FIELD(p, u32 *, 0xC) == vid) {
+            id = M2C_FIELD(p, u8 *, 9) | (arg0 & 0x80000000);
+            goto found;
+        }
+    }
+    for (p = lbl_80368970; p != NULL; p = M2C_FIELD(p, void **, 0)) {
+        if (M2C_FIELD(p, u32 *, 0xC) == vid) {
+            id = M2C_FIELD(p, u8 *, 9) | (arg0 & 0x80000000);
+            goto found;
+        }
+    }
+    id = -1;
+found:
+    if (!(id & 0x80000000)) {
+        sv = &lbl_8033F990[id * 0x1888];
+        if (sv[8] == 2) {
+            if (M2C_FIELD(sv, void **, 4) != NULL) {
+                *M2C_FIELD(sv, void ***, 4) = M2C_FIELD(sv, void **, 0);
+            } else {
+                lbl_80368970 = M2C_FIELD(sv, void **, 0);
+            }
+            if (M2C_FIELD(sv, void **, 0) != NULL) {
+                M2C_FIELD(M2C_FIELD(sv, void **, 0), void **, 4) = M2C_FIELD(sv, void **, 4);
+            }
+            M2C_FIELD(sv, void **, 0) = lbl_80368974;
+            if (lbl_80368974 != NULL) {
+                M2C_FIELD(lbl_80368974, void **, 4) = sv;
+            }
+            M2C_FIELD(sv, void **, 4) = NULL;
+            lbl_80368974 = sv;
+            sv[8] = 1;
+        }
+        return;
+    }
+    sv = &lbl_8033F990[(id & 0x7FFFFFFF) * 0x1888];
+    sv[0xEFA] &= ~8;
 }
 
 void fn_80245290(s32 arg0, s32 arg1, s32 arg2) {
@@ -1333,6 +1394,35 @@ s32 fn_80255100(s32 arg0, s32 arg1) {
         return 0;
     }
     return (((arg0 >> 0x10) * ((arg1 & 0xFFFF) + 1)) + ((arg0 & 0xFFFF) * (arg1 >> 0x10))) & 0xFFFF;
+}
+
+void fn_802551F0(void *arg0, u32 arg1) {
+    if (arg1 != 0) {
+        ((u32*)arg0)[0x45] = ((u32*)arg0)[0x45] | 0x100;
+        return;
+    }
+    
+    if (((u32*)arg0)[0xD] != 0) {
+        u32 temp_r4 = ((u32*)arg0)[0x45];
+        u32 temp_r6 = ((u32*)arg0)[0x46];
+        
+        if ((temp_r4 & 0x400) || (temp_r6 & 0)) {
+            if (((u8*)arg0)[0x68] != 0 && ((u32*)arg0)[0x14] != 0) {
+                ((u32*)arg0)[0xE] = ((u32*)arg0)[0x17];
+                ((u32*)arg0)[0xD] = ((u32*)arg0)[0x14];
+                ((u32*)arg0)[0x14] = 0;
+                fn_8025539C(arg0);
+                return;
+            }
+        } else {
+            if (((u32*)arg0)[0x46] & 4) {
+                fn_8025539C(arg0);
+            }
+        }
+    }
+    
+    ((u32*)arg0)[0x46] = ((u32*)arg0)[0x46] & ~0;
+    ((u32*)arg0)[0x45] = ((u32*)arg0)[0x45] & ~0x500;
 }
 
 extern u8 lbl_8034C110[];
