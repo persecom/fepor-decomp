@@ -90,6 +90,14 @@ typedef struct OSContext {
     u8 data[0x2C8];
 } OSContext;
 
+void OSRegisterResetFunction(OSResetFunctionInfo *info);
+BOOL __OSCallResetFunctions(BOOL final);
+void __OSReboot(u32 resetCode, u32 bootDol);
+void OSClearContext(OSContext *context);
+void OSSetCurrentContext(OSContext *context);
+void fn_80206E1C(u32 bootDol, u32 resetCode, char **argv);
+s32 __OSSyncSram(void);
+
 s32 PPCMfmsr(void) {
     return M2C_ERROR(/* unknown instruction: mfmsr $r3 */);
 }
