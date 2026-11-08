@@ -469,6 +469,31 @@ void fn_80134E48(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5) {
     M2C_FIELD(arg0, s16 *, 0x18) = (s16) ((s16) (M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC)) - 8);
 }
 
+void *fn_80134F74(void *arg0, s16 arg1) {
+    M2C_UNK fn_800C428C(void *);
+    extern u16 lbl_8028FDB0[];
+    extern u16 lbl_80292230[];
+    extern u8 lbl_80291794[];
+    extern u8 lbl_8029180C[];
+
+    if (arg0 != NULL) {
+        M2C_FIELD(arg0, void **, 0) = lbl_80291794;
+        if (arg0 != NULL) {
+            M2C_FIELD(arg0, void **, 0) = lbl_8029180C;
+            if (arg0 != NULL) {
+                M2C_FIELD(arg0, void **, 0) = lbl_80292230;
+                if (arg0 != NULL) {
+                    M2C_FIELD(arg0, void **, 0) = lbl_8028FDB0;
+                }
+            }
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 s32 fn_80134FF0(void) {
     return 0;
 }
