@@ -269,6 +269,18 @@ void fn_80220B44(u16 arg0, s32 arg1, s32 *arg2) {
     *arg2 = *(s32*)temp;
 }
 
+void fn_80220BAC(void *arg0, void *arg1, s32 arg2, u32 arg3) {
+    s32 temp_r4;
+    u32* r6;
+
+    if ((temp_r4 = (s32)((u64)arg1 / 8)) >= 0 && (temp_r4 & 0x7F) == 0) {
+        r6 = (u32*)((u64)arg0 + temp_r4 * 0x30);
+        if (arg2 >= 0) {
+            r6[temp_r4] = arg3;
+        }
+    }
+}
+
 void fn_80220C78(void* arg0, void* arg1) {
     if (arg0 != NULL) {
         if (arg1 != NULL) {
@@ -658,6 +670,15 @@ void fn_80223D94(s32 arg0, s32 arg1, s32 arg2) {
     *(u16 *)__GXData = 0;
 }
 
+void fn_80223DDC(void *arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 farg4, f32 farg5) {
+    M2C_FIELD(arg0, f32 *, 0x10) = farg0;
+    M2C_FIELD(arg0, f32 *, 0x14) = farg1;
+    M2C_FIELD(arg0, f32 *, 0x18) = farg2;
+    M2C_FIELD(arg0, f32 *, 0x1C) = farg3;
+    M2C_FIELD(arg0, f32 *, 0x20) = farg4;
+    M2C_FIELD(arg0, f32 *, 0x24) = farg5;
+}
+
 void fn_80223E5C(s32 arg0, u8 arg1, s32 arg2, s32 arg3, u8 arg4) {
     u32 temp;
     u32 r7_val;
@@ -972,3 +993,10 @@ extern u16 *__GXData;
 #include "structs.h"
 
 extern u16 *__GXData;
+#include "common.h"
+#include <dolphin/os.h>
+#include "global.h"
+#include "structs.h"
+
+extern u16* lbl_80368790;
+extern u16* __peReg;
