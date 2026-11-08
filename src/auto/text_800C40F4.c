@@ -3506,7 +3506,6 @@ void fn_800E8888(void) {
 
 void *fn_800E89EC(void *arg0, s16 arg1) {
     void fn_8022C1E8(void *, void *, s32, s32);
-    M2C_UNK fn_800C9A60(void *, s32);
     void fn_800DF724(void *, s32);
     void fn_800C428C(void *);
     extern void *lbl_8028E2B0[];
