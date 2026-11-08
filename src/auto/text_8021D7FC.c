@@ -449,6 +449,16 @@ void fn_802220DC(void *arg0, s32 *arg1) {
     M2C_FIELD(arg0, s32 *, 0xC) = (s32) *arg1;
 }
 
+void fn_8022224C(s32 arg0, void *arg1) {
+    switch (arg0) {
+        case 0:
+            *(u32 *)0xCC008000 = (*(u8 *)arg1 & 0xFF) | 0x10000000;
+            break;
+        default:
+            break;
+    }
+}
+
 void fn_80222334(void)
 {
     u32 temp_r3;
@@ -575,6 +585,48 @@ u16 fn_80222CE8(void *arg0) {
     return M2C_FIELD(arg0, u16 *, 8);
 }
 
+void GXInitTexCacheRegion(void *arg0, s8 arg1, u32 arg2, s32 arg3, u32 arg4, s32 arg5, s32 arg6) {
+    s32 var_r9;
+
+    var_r9 = arg6;
+    switch (arg3) {                                 /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        var_r9 = 3;
+        break;
+    case 1:                                         /* switch 1 */
+        var_r9 = 4;
+        break;
+    case 2:                                         /* switch 1 */
+        var_r9 = 5;
+        break;
+    }
+    M2C_FIELD(arg0, s32 *, 0) = 0;
+    M2C_FIELD(arg0, s32 *, 0) = (s32) ((M2C_FIELD(arg0, s32 *, 0) & ~0x7FFF) | ((arg2 >> 5U) & 0x7FFF));
+    M2C_FIELD(arg0, s32 *, 0) = (s32) ((M2C_FIELD(arg0, s32 *, 0) & ~0x38000) | ((var_r9 << 0xF) & 0x38000));
+    M2C_FIELD(arg0, s32 *, 0) = (s32) ((M2C_FIELD(arg0, s32 *, 0) & ~0x1C0000) | ((var_r9 << 0x12) & 0x1C0000));
+    M2C_FIELD(arg0, s32 *, 0) = (s32) (M2C_FIELD(arg0, s32 *, 0) & ~0x200000);
+    switch (arg5) {                                 /* switch 2; irregular */
+    case 0:                                         /* switch 2 */
+        var_r9 = 3;
+        break;
+    case 1:                                         /* switch 2 */
+        var_r9 = 4;
+        break;
+    case 2:                                         /* switch 2 */
+        var_r9 = 5;
+        break;
+    case 3:                                         /* switch 2 */
+        var_r9 = 0;
+        break;
+    }
+    M2C_FIELD(arg0, s32 *, 4) = 0;
+    M2C_FIELD(arg0, s32 *, 4) = (s32) ((M2C_FIELD(arg0, s32 *, 4) & ~0x7FFF) | ((arg4 >> 5U) & 0x7FFF));
+    M2C_FIELD(arg0, s32 *, 4) = (s32) ((M2C_FIELD(arg0, s32 *, 4) & ~0x38000) | ((var_r9 << 0xF) & 0x38000));
+    M2C_FIELD(arg0, s32 *, 4) = (s32) ((M2C_FIELD(arg0, s32 *, 4) & ~0x1C0000) | ((var_r9 << 0x12) & 0x1C0000));
+    M2C_FIELD(arg0, s8 *, 0xC) = arg1;
+    M2C_FIELD(arg0, s8 *, 0xD) = 1;
+}
+
 void GXInitTlutRegion(s32 *arg0, s32 arg1, s32 arg2) {
     s32 temp_r4;
     s32 temp_r5;
@@ -619,6 +671,42 @@ void fn_80223494(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32
                          ((arg_spC & 1) << 22) | ((arg4 & 0x1F) << 19) | ((arg5 & 0xF) << 16) |
                          ((arg6 & 7) << 13) | ((arg7 & 3) << 11) | ((arg_sp8 & 1) << 10);
     *(u16 *)__GXData = 0;
+}
+
+void fn_802237BC(s32 arg0, s32 arg1, s32 arg2) {
+    s32 var_r4;
+    s32 var_r5;
+
+    var_r4 = arg1;
+    var_r5 = arg2;
+    if (var_r5 == 0xFF) {
+        var_r5 = 0;
+    }
+    if (var_r4 == 0xFF) {
+        var_r4 = 0;
+    }
+    switch (arg0) {                                 /* irregular */
+    case 0:
+        __GXData[0x120/sizeof(u16)] = (u16) ((__GXData[0x120/sizeof(u16)] & ~7) | (var_r5 & 7));
+        __GXData[0x120/sizeof(u16)] = (u16) ((__GXData[0x120/sizeof(u16)] & ~0x38) | ((var_r4 << 3) & 0x38));
+        break;
+    case 1:
+        __GXData[0x120/sizeof(u16)] = (u16) ((__GXData[0x120/sizeof(u16)] & ~0x1C0) | ((var_r5 << 6) & 0x1C0));
+        __GXData[0x120/sizeof(u16)] = (u16) ((__GXData[0x120/sizeof(u16)] & ~0xE00) | ((var_r4 << 9) & 0xE00));
+        break;
+    case 2:
+        __GXData[0x120/sizeof(u16)] = (u16) ((__GXData[0x120/sizeof(u16)] & ~0x7000) | ((var_r5 << 0xC) & 0x7000));
+        __GXData[0x120/sizeof(u16)] = (u16) ((__GXData[0x120/sizeof(u16)] & ~0x38000) | ((var_r4 << 0xF) & 0x38000));
+        break;
+    case 3:
+        __GXData[0x120/sizeof(u16)] = (u16) ((__GXData[0x120/sizeof(u16)] & ~0x1C0000) | ((var_r5 << 0x12) & 0x1C0000));
+        __GXData[0x120/sizeof(u16)] = (u16) ((__GXData[0x120/sizeof(u16)] & ~0xE00000) | ((var_r4 << 0x15) & 0xE00000));
+        break;
+    }
+    *(u8 *)0xCC008000 = 0x61;
+    *(u8 *)0xCC008000 = (u16) __GXData[0x120/sizeof(u16)];
+    __GXData[0x5AC/sizeof(u16)] = (u16) (__GXData[0x5AC/sizeof(u16)] | 3);
+    __GXData[0x2/sizeof(u16)] = 0;
 }
 
 void fn_802238A8(u8 arg0) {
@@ -1154,6 +1242,88 @@ void fn_80225180(s32 arg0) {
 void fn_80225BF4(void) {
     extern void *__cpReg;
     M2C_FIELD(__cpReg, s16 *, 4) = 4;
+}
+
+static inline u32 __GXReadPECounterU32(u32 lo, u32 hi) {
+    u32 ctrH0;
+    u32 ctrH1;
+    u32 ctrL;
+
+    ctrH0 = __peReg[hi];
+    do {
+        ctrH1 = ctrH0;
+        ctrL = __peReg[lo];
+        ctrH0 = __peReg[hi];
+    } while (ctrH0 != ctrH1);
+    return (ctrH0 << 16) | ctrL;
+}
+
+void fn_80225C04(u32 *top_pixels_in, u32 *top_pixels_out, u32 *bot_pixels_in, u32 *bot_pixels_out, u32 *clear_pixels_in, u32 *copy_clks) {
+    volatile u16 *hi;
+    volatile u16 *lo;
+    u32 ctrH0;
+    u32 ctrH1;
+    u32 ctrL;
+
+    hi = &__peReg[0xD];
+    lo = &__peReg[0xC];
+    ctrH0 = *hi;
+    do {
+        ctrH1 = ctrH0;
+        ctrL = *lo;
+        ctrH0 = *hi;
+    } while (ctrH0 != ctrH1);
+    *top_pixels_in = ((ctrH0 << 16) | ctrL) * 4;
+
+    hi = &__peReg[0xF];
+    lo = &__peReg[0xE];
+    ctrH0 = *hi;
+    do {
+        ctrH1 = ctrH0;
+        ctrL = *lo;
+        ctrH0 = *hi;
+    } while (ctrH0 != ctrH1);
+    *top_pixels_out = ((ctrH0 << 16) | ctrL) * 4;
+
+    hi = &__peReg[0x11];
+    lo = &__peReg[0x10];
+    ctrH0 = *hi;
+    do {
+        ctrH1 = ctrH0;
+        ctrL = *lo;
+        ctrH0 = *hi;
+    } while (ctrH0 != ctrH1);
+    *bot_pixels_in = ((ctrH0 << 16) | ctrL) * 4;
+
+    hi = &__peReg[0x13];
+    lo = &__peReg[0x12];
+    ctrH0 = *hi;
+    do {
+        ctrH1 = ctrH0;
+        ctrL = *lo;
+        ctrH0 = *hi;
+    } while (ctrH0 != ctrH1);
+    *bot_pixels_out = ((ctrH0 << 16) | ctrL) * 4;
+
+    hi = &__peReg[0x15];
+    lo = &__peReg[0x14];
+    ctrH0 = *hi;
+    do {
+        ctrH1 = ctrH0;
+        ctrL = *lo;
+        ctrH0 = *hi;
+    } while (ctrH0 != ctrH1);
+    *clear_pixels_in = ((ctrH0 << 16) | ctrL) * 4;
+
+    hi = &__peReg[0x17];
+    lo = &__peReg[0x16];
+    ctrH0 = *hi;
+    do {
+        ctrH1 = ctrH0;
+        ctrL = *lo;
+        ctrH0 = *hi;
+    } while (ctrH0 != ctrH1);
+    *copy_clks = (ctrH0 << 16) | ctrL;
 }
 
 void fn_80225D3C(void) {
