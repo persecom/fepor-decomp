@@ -1318,7 +1318,7 @@ void fn_8013DD1C(s32 arg0, void *arg1) {
 
 #pragma cplusplus on
 extern "C" void fn_8015AD7C(s32, s32, s32, s16, s32, s32);
-extern "C" s32 fn_80009B80(u8);
+s32 fn_80009B80(u8);
 extern "C" void fn_8013DF7C(void *arg0, s32 arg1) {
     struct Obj {
         u8 pad[4];
