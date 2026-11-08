@@ -258,6 +258,19 @@ void fn_80113F88(void *arg0) {
     fn_80050C90(M2C_FIELD(arg0, s32 *, 0x30));
 }
 
+s32 fn_80114AF0(void *arg0) {
+    s32 *temp_r3;
+    
+    temp_r3 = M2C_FIELD(arg0, s32 **, 0x1B0);
+    if (temp_r3 != NULL) {
+        if ((u32)*temp_r3 >= 0x28U) {
+            return 0;
+        }
+        return 1;
+    }
+    return 0;
+}
+
 s32 fn_8011654C(void *arg0) {
     void **ptr = (void **)((char *)arg0 + 0x11C);
     if (*ptr != 0) {
@@ -360,6 +373,28 @@ s32 fn_80117CC0(void *arg0, s32 arg1) {
     return M2C_FIELD(arg0, s32 *, 8) + arg1;
 }
 
+BOOL fn_80117D80(s32 arg0, s32 arg1)
+{
+    s32 temp_r3;
+    s32 r4_temp;
+    u8 *r31;
+
+    temp_r3 = (s32)(u8)arg1;
+    if (temp_r3 >= 0) {
+        r4_temp = arg0;
+        if (r4_temp >= 0) {
+            r31 = (u8 *)lbl_80273DF8 + (arg0 >> 2);
+            if (r31 != NULL) {
+                if (temp_r3 < 8) {
+                    return (*(u8 *)r31 & (1 << temp_r3)) != 0;
+                }
+                return 0;
+            }
+        }
+    }
+    return 0;
+}
+
 void fn_80117F1C(void *arg0) {
     M2C_UNK fn_8000C070(void *, u8);
     M2C_UNK fn_8013FEC0();
@@ -375,6 +410,18 @@ void fn_80117F54(s32 arg0) {
 
     fn_8013FED0();
     fn_8007D064(lbl_802EF4C8[0], arg0, 0);
+}
+
+s32 fn_80117F98(void *arg0) {
+    if (M2C_FIELD(arg0, u8 *, 0x18) != 0) {
+        return 0;
+    }
+    
+    // Call fn_8000A420
+    fn_8000A420(arg0);
+    
+    // If we've reached here, the check is passed and we return M2C_FIELD(arg0, u32 *, 0x18)
+    return M2C_FIELD(arg0, u32 *, 0x18);
 }
 
 void fn_80118170(void *arg0) {
@@ -465,6 +512,37 @@ void fn_801184A8(s32 arg0) {
     M2C_UNK fn_8016B730(s32);
     fn_8013FED0();
     fn_8016B730(arg0);
+}
+
+void fn_801184DC(void *arg0) {
+    void fn_800E43EC(void *);
+    extern void *lbl_80367240;
+    u32 buttons;
+
+    fn_800E43EC(arg0);
+    if (*(u8*)((u8*)arg0 + 0xF0) != 0) {
+        buttons = *(u32*)((u8*)lbl_80367240 + 0xC);
+        if (buttons & 8) {
+            *(s32*)((u8*)arg0 + 0xEC) -= 1;
+        } else if (buttons & 4) {
+            *(s32*)((u8*)arg0 + 0xEC) += 1;
+        } else if (buttons & 1) {
+            *(s32*)((u8*)arg0 + 0xEC) -= 10;
+        } else if (buttons & 2) {
+            *(s32*)((u8*)arg0 + 0xEC) += 10;
+        }
+        if (*(s32*)((u8*)arg0 + 0xEC) < 0) {
+            *(s32*)((u8*)arg0 + 0xEC) = 0;
+        }
+        if (*(s32*)((u8*)arg0 + 0xEC) >= *(s32*)((u8*)arg0 + 0xB0)) {
+            *(s32*)((u8*)arg0 + 0xEC) = *(s32*)((u8*)arg0 + 0xB0) - 1;
+        }
+        if (*(s32*)((u8*)arg0 + 0xEC) >= *(s32*)((u8*)arg0 + 0xF4) + *(s32*)((u8*)arg0 + 0xF8)) {
+            *(s32*)((u8*)arg0 + 0xF4) = *(s32*)((u8*)arg0 + 0xEC) - *(s32*)((u8*)arg0 + 0xF8) + 1;
+        } else if (*(s32*)((u8*)arg0 + 0xEC) < *(s32*)((u8*)arg0 + 0xF4)) {
+            *(s32*)((u8*)arg0 + 0xF4) = *(s32*)((u8*)arg0 + 0xEC);
+        }
+    }
 }
 
 void fn_80119738(s32 arg0) {
@@ -619,6 +697,91 @@ void fn_8011A470(s32 arg0) {
     if (fn_8013FF94(arg0, -0x1000, 0) != 0U) {
         fn_801658DC(&lbl_80274508 + 0x2F5);
     }
+}
+
+void fn_8011A4E4(s32 arg0) {
+    M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
+    extern M2C_UNK lbl_802845E8;
+    extern M2C_UNK lbl_80286590;
+    extern M2C_UNK lbl_80286664;
+    extern M2C_UNK lbl_8028F7EC;
+    extern M2C_UNK lbl_8028FA3C;
+    extern M2C_UNK lbl_8028FABC;
+    extern M2C_UNK lbl_8028FB10;
+    extern M2C_UNK lbl_8028FB64;
+    extern M2C_UNK lbl_8028FBB8;
+    extern M2C_UNK lbl_8028FC0C;
+    extern M2C_UNK lbl_8028FC60;
+    extern M2C_UNK lbl_8028FCB4;
+    extern M2C_UNK lbl_8028FD08;
+    extern M2C_UNK lbl_8028FD5C;
+    extern M2C_UNK lbl_802EF4C8;
+    extern u8 lbl_803679F5;
+    extern M2C_UNK *lbl_803679F8;
+    extern u8 lbl_803679FC;
+    extern M2C_UNK *lbl_80367A00;
+    extern u8 lbl_80367A04;
+    extern M2C_UNK *lbl_80367A08;
+    extern u8 lbl_80367A0C;
+    extern M2C_UNK *lbl_80367A10;
+    extern u8 lbl_80367A14;
+    extern M2C_UNK *lbl_80367A18;
+    extern u8 lbl_80367A1C;
+    extern M2C_UNK *lbl_80367A20;
+    extern u8 lbl_80367A24;
+    extern M2C_UNK *lbl_80367A28;
+    extern u8 lbl_80367A2C;
+    extern M2C_UNK *lbl_80367A30;
+    extern u8 lbl_80367A34;
+    extern M2C_UNK *lbl_80367A38;
+    extern u8 lbl_80367A3C;
+    extern M2C_UNK lbl_80367A40;
+    if ((s8) lbl_803679F5 == 0) {
+        lbl_803679F5 = 1;
+        lbl_803679F8 = &lbl_8028FD5C;
+    }
+    if ((s8) lbl_803679FC == 0) {
+        lbl_803679FC = 1;
+        lbl_80367A00 = &lbl_8028FD08;
+    }
+    if ((s8) lbl_80367A04 == 0) {
+        lbl_80367A04 = 1;
+        lbl_80367A08 = &lbl_8028FCB4;
+    }
+    if ((s8) lbl_80367A0C == 0) {
+        lbl_80367A0C = 1;
+        lbl_80367A10 = &lbl_8028FC60;
+    }
+    if ((s8) lbl_80367A14 == 0) {
+        lbl_80367A14 = 1;
+        lbl_80367A18 = &lbl_8028FC0C;
+    }
+    if ((s8) lbl_80367A1C == 0) {
+        lbl_80367A1C = 1;
+        lbl_80367A20 = &lbl_8028FBB8;
+    }
+    if ((s8) lbl_80367A24 == 0) {
+        lbl_80367A24 = 1;
+        lbl_80367A28 = &lbl_8028FB64;
+    }
+    if ((s8) lbl_80367A2C == 0) {
+        lbl_80367A2C = 1;
+        lbl_80367A30 = &lbl_8028FB10;
+    }
+    if ((s8) lbl_80367A34 == 0) {
+        lbl_80367A34 = 1;
+        lbl_80367A38 = &lbl_8028FABC;
+    }
+    if ((s8) lbl_80367A3C == 0) {
+        M2C_FIELD(&lbl_80367A40, M2C_UNK **, 4) = &lbl_802845E8;
+        M2C_FIELD(&lbl_80367A40, M2C_UNK **, 4) = &lbl_80286664;
+        M2C_FIELD(&lbl_80367A40, M2C_UNK **, 4) = &lbl_80286590;
+        M2C_FIELD(&lbl_80367A40, M2C_UNK **, 0) = &lbl_8028F7EC;
+        M2C_FIELD(&lbl_80367A40, M2C_UNK **, 4) = &lbl_8028FA3C;
+        lbl_80367A3C = 1;
+    }
+    M2C_FIELD(&lbl_802EF4C8, s8 *, 8) = 0;
+    fn_80024398(&lbl_80367A40, arg0, 0);
 }
 
 void fn_8011AB38(void *arg0) {
@@ -785,6 +948,76 @@ s32 fn_8011B754(void) {
     return fn_80166D8C(lbl_80330D68) ? 0x40 : 0x10;
 }
 
+#pragma cplusplus on
+extern "C" void *fn_8000B908(u8);
+extern "C" u8 fn_80166D8C(void *);
+extern "C" s32 fn_8011B78C(void *arg0, void *arg1) {
+    extern void *lbl_80367240;
+    extern u8 lbl_802EF4C8[];
+    struct Handler {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual s32 OnA(void *, void *) = 0;
+        virtual s32 OnL(void *, void *) = 0;
+        virtual s32 OnZ(void *, void *) = 0;
+        virtual void v12() = 0;
+        virtual s32 OnDefault(void *, void *) = 0;
+    };
+    struct Menu {
+        u8 pad0[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual s32 OnB(void *, void *) = 0;
+        virtual s32 OnR(void *, void *) = 0;
+    };
+    u32 buttons;
+    void *unit;
+    u8 flag;
+
+    unit = fn_8000B908(M2C_FIELD(arg1, u8 *, (s8) M2C_FIELD(arg1, u8 *, 0x62) + 0x40));
+    flag = 0;
+    if ((lbl_80367110 & 0x10) && !(lbl_80367110 & 0x20)) {
+        flag = 1;
+    }
+    if (flag) {
+        return M2C_FIELD(unit, Handler **, 0x34)->OnDefault(arg1, unit);
+    }
+    buttons = M2C_FIELD(lbl_80367240, u32 *, 4) & (M2C_FIELD(lbl_80367240, u32 *, 8) ^ M2C_FIELD(lbl_80367240, u32 *, 4));
+    lbl_80367A48 = M2C_FIELD(unit, u8 *, 0x3A) + 0x80;
+    if ((buttons & 0x100) && !fn_80166D8C(lbl_80330D68)) {
+        return M2C_FIELD(unit, Handler **, 0x34)->OnA(arg1, unit);
+    }
+    if (buttons & 0x200) {
+        return M2C_FIELD(arg1, Menu **, 0x3C)->OnB(arg1, unit);
+    }
+    if (buttons & 0x400) {
+        return M2C_FIELD(unit, Handler **, 0x34)->OnL(arg1, unit);
+    }
+    if (buttons & 0x800) {
+        return M2C_FIELD(arg1, Menu **, 0x3C)->OnR(arg1, unit);
+    }
+    if (buttons & 0x10) {
+        return M2C_FIELD(unit, Handler **, 0x34)->OnZ(arg1, unit);
+    }
+    if ((buttons & 0x1000) && !fn_80166D8C(lbl_80330D68)) {
+        M2C_FIELD(M2C_FIELD(arg1, void **, 0x18), u8 *, 0x48) = 1;
+        lbl_802EF4C8[8] = 0x88;
+        return 5;
+    }
+    return M2C_FIELD(unit, Handler **, 0x34)->OnDefault(arg1, unit);
+}
+#pragma cplusplus reset
 void fn_8011B978(void) {
     extern u32 lbl_80274508;
     fn_8000E0E4(&lbl_80274508 + 0x357);
@@ -1232,7 +1465,7 @@ void fn_8011D014(void *arg0) {
     u32 buttons;
 
     fn_800E43EC(arg0);
-    obj = M2C_FIELD(arg0, void **, 0);
+    obj = M2C_FIELD(arg0, void **, 0x0);
     buttons = M2C_FIELD(lbl_80367240, u32 *, 0xC);
     if (M2C_FIELD(arg0, u8 *, 0xF0) != 0) {
         if (buttons & 8) {
@@ -1304,17 +1537,19 @@ u32 fn_8011D484(void) {
 }
 
 extern u16 lbl_80274BB0[];
+extern u16 lbl_8032FE04[];
+extern u16 lbl_8028FE50[];
 void fn_8011D79C(s32 arg0) {
     if (arg0 != 0) {
-        u16 *var_r4 = &lbl_80274BB0[arg0];
-        s32 temp_r3 = var_r4[0];
-        s32 temp_r5 = var_r4[1];
-        u16 *var_r8 = &lbl_80296128[temp_r3];
-        s32 temp_r7 = var_r8[1];
+        u16 *temp_r5 = &lbl_80274BB0[arg0];
+        s32 temp_r6 = *temp_r5;
+        s32 temp_r7 = *(temp_r5 + 1);
+        u16 *temp_r8 = &lbl_80296128[temp_r6];
+        s32 temp_r9 = *(temp_r8 + 1);
         
-        if (temp_r7 != 0) {
-            if (temp_r5 == temp_r7) {
-                var_r4[2] = var_r8[2];
+        if (temp_r9 != 0) {
+            if (temp_r7 == temp_r9) {
+                *(temp_r5 + 2) = *(temp_r8 + 2);
             }
         }
     }
@@ -1476,6 +1711,47 @@ void fn_801207BC(void) {
     lbl_80367A58 &= 0xFFFFFFFB;
     lbl_80367110 |= 2;
 }
+
+extern s32 fn_80010710(u8* arg0);
+extern s32 lbl_803671C4;
+s32 fn_801208BC(struct Unit* unit) {
+    s32 result;
+    u8* temp_r5;
+    u8* r6_ptr = (u8*)unit;
+    
+    // Check if we have a valid unit pointer  
+    if (r6_ptr == NULL)
+        return 0;
+        
+    // Check if this is an invalid unit
+    if (M2C_FIELD(unit, u16*, 0x0) == 0)
+        return 0;
+
+    temp_r5 = r6_ptr + 0x64;
+    
+    // This part is complex - looks like a jump table or conditional logic
+    result = *(s32*)(r6_ptr + 0x1A4);  // Direct access to what seems like an enum/flag field
+    if (result < 0 || result > 9) {
+        // Invalid state, return default value 
+        return 0;
+    }
+    
+    // Call function that likely depends on unit state
+    result = fn_80010710(&temp_r5[0]);  
+    
+    // More processing based on the state and unit properties
+    if (result != 0) {
+        // Continue with some processing logic  
+        s32 temp = *(s32*)(r6_ptr + 0xB0);
+        if (temp > 0) {
+            return temp;
+        }
+    }
+    
+    // Return the result from this processing
+    return result;
+}
+
 #include "common.h"
 extern struct SomeStruct* lbl_80320C20; // example struct
 #include "common.h"
