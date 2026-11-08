@@ -1,6 +1,8 @@
 /* Functions from 0x801FC634 to 0x8022C1E8, found by decomp-toolkit. */
 #include "common.h"
 #include <dolphin/os.h>
+#include "global.h"
+#include "structs.h"
 extern s32 lbl_803682F0;
 extern s32 fn_80013E50(s32);
 extern s32 fn_80013E60(s32, s32);
@@ -71,7 +73,7 @@ extern void fn_8020C1A4(u8, u32, void *);
 extern u8 lbl_80289EB8[16];
 
 void *fn_8021D8F8(u32 arg0) {
-    extern u8 *__GXData;
+    extern u32 *__GXData;
     void *ret;
 
     if (arg0 >= 0x14) {
@@ -85,6 +87,14 @@ void *fn_8021D8F8(u32 arg0) {
 void fn_8021ED98(void *arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(arg0, s32 *, 0xC) = arg1;
     M2C_FIELD(arg0, s32 *, 0x10) = arg2;
+}
+
+void fn_8021F06C(s32 arg0) {
+    s32 sp14;
+    
+    sp14 = arg0;
+    fn_802204F8();
+    fn_8021F0A0(sp14);
 }
 
 s32 fn_8021F250(s32 *arg0) {
@@ -183,11 +193,33 @@ void fn_8022100C(u32 arg0) {
     // We'll try with direct memory access patterns as per the instruction behavior
 }
 
+void fn_80221034(s32 arg0) {
+    u32 temp_r5;
+    u32 *temp_r6;
+
+    temp_r6 = (u32 *)0x803B81A0;
+    temp_r5 = *temp_r6;
+    temp_r5 = (temp_r5 & ~0x80000) | ((arg0 << 0x13) & 0x80000);
+    *temp_r6 = temp_r5;
+
+    *(u8 *)0xCC008000 = 0x61;
+    *(u32 *)0xCC008000 = 0xFE080000;
+    *(u8 *)0xCC008000 = 0x61;
+    *(u32 *)0xCC008000 = temp_r5;
+}
+
 void fn_80221068(void) {
     extern void *__GXData;
     
     *(u8*)0xCC008000 = 0x61;
     *(u32*)0xCC008000 = *(u32*)((u8*)__GXData + 0x204);
+}
+
+void fn_802212C8(s32 arg0) {
+    extern u16 *__GXData;
+    __GXData[0x1E8/2] = 0;
+    __GXData[0x1E8/2] = (__GXData[0x1E8/2] & ~0x3FF) | ((arg0 >> 5) & 0x3FF);
+    __GXData[0x1E8/2] = (__GXData[0x1E8/2] & ~0xFF000000) | 0x4D000000;
 }
 
 extern u32 lbl_80368738;
@@ -288,6 +320,15 @@ void fn_80223978(void) {
 
 }
 
+void __GXSetIndirectMask(s32 arg0) {
+    u32 temp = __GXData[0x124/2];
+    temp = (temp & ~0xFF) | (arg0 & 0xFF);
+    __GXData[0x124/2] = temp;
+    *(u8*)0xCC008000 = 0x61;
+    *(u8*)0xCC008000 = (u8)(__GXData[0x124/2] & 0xFF);
+    __GXData[0x2/2] = 0;
+}
+
 void __GXFlushTextureState(void) {
     u8 *addr = (u8 *)0xCC008000;
     u32 *gx_data = (u32 *)__GXData;
@@ -303,6 +344,63 @@ void fn_802240C8(u8 arg0) {
     __GXData[0x16B] = __GXData[0x16B] | 4;
 }
 
+void fn_8022462C(s32 arg0) {
+    u16 *reg_ptr;
+    
+    reg_ptr = (u16*)((char*)__GXData + 0x1D0);
+    *reg_ptr = (*reg_ptr & ~0x8) | ((arg0 << 3) & 0x8);
+    *(u8*)0xCC008000 = 0x61;
+    *(u8*)0xCC008000 = *reg_ptr & 0xFF;
+    *(u16*)((char*)__GXData + 0x2) = 0;
+}
+
+void fn_80224658(s32 arg0) {
+    u16 temp_r6;
+    
+    temp_r6 = (__GXData[0x1D0/2] & ~0x10) | ((arg0 << 4) & 0x10);
+    *(u8 *)0xCC008000 = 0x61;
+    *(u8 *)0xCC008000 = (u8)temp_r6;
+    __GXData[0x1D0/2] = temp_r6;
+    __GXData[1] = 0;
+}
+
+void fn_80224684(s32 arg0, s32 arg1, s32 arg2) {
+    u16 *temp_r6;
+    u16 temp_r7;
+
+    temp_r6 = (u16*)__GXData;
+    *(u8*)0xCC008000 = 0x61;
+    temp_r7 = ((((*temp_r6 & ~1) | (arg0 & 1)) & ~0xE) | ((arg1 << 1) & 0xE)) | ((arg2 << 4) & 0x10);
+    *(u8*)0xCC008000 = temp_r7;
+    *temp_r6 = temp_r7;
+    *(u16*)(temp_r6 + 1) = 0;
+}
+
+void fn_802246B8(u8 arg0) {
+    u16 *temp_r6;
+    u16 temp_r5;
+    u16 temp_r4;
+
+    temp_r6 = (u16*)__GXData;
+    temp_r5 = *(temp_r6 + 0x1DC/sizeof(u16));
+    temp_r4 = arg0;
+    temp_r5 = (temp_r5 & ~0x40) | ((temp_r4 << 6) & 0x40);
+    *(temp_r6 + 0x1DC/sizeof(u16)) = temp_r5;
+    *(u8*)0xCC008000 = 0x61;
+    *(u16*)0xCC008000 = temp_r5;
+    *(u16*)(temp_r6 + 1) = 0;
+}
+
+void fn_802247C0(s32 arg0) {
+    u16 temp_r6;
+    
+    temp_r6 = (__GXData[0x1D0/2] & ~0x4) | ((arg0 << 2) & 0x4);
+    *(u8*)0xCC008000 = 0x61;
+    *(u16*)0xCC008000 = temp_r6;
+    __GXData[0x1D0/2] = temp_r6;
+    __GXData[0x2/2] = 0;
+}
+
 void fn_80224E1C(void *arg0, s32 arg1) {
     *(s32*)((u8*)arg0 + 0x50) = arg1;
     *(s32*)((u8*)arg0 + 0x54) = arg1;
@@ -316,9 +414,22 @@ void fn_80225034(u32 arg0, u32 *dst) {
     dst[2] = src[arg0 + 2];
 }
 
+void fn_80225158(void)
+{
+    u16 *temp_r4 = __GXData;
+    temp_r4[0x40] = 0x1005;
+    temp_r4[0x41] = 1;
+}
+
 void fn_80225BF4(void) {
     extern void *__cpReg;
     M2C_FIELD(__cpReg, s16 *, 4) = 4;
 }
+
+void fn_80225D3C(void) {
+    extern void *__cpReg;
+    M2C_FIELD(__cpReg, s16 *, 2) = 0x4;
+}
+
 extern u16 *__GXData;
 extern u16 *__GXData;
