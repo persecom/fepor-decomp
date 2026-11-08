@@ -234,6 +234,37 @@ s32 fn_802287B8(void) {
     return 0;
 }
 
+void fn_80228858(s32 arg0, s32 arg1) {
+    s32 var_r3;
+    s32 var_r4;
+
+    var_r3 = 0xFFFFFFF1 & arg0;
+    var_r4 = arg1 + (arg0 - var_r3);
+    do {
+        M2C_DCACHE_CLEAN(var_r3);
+        M2C_DCACHE_CLEAN_INVALIDATE(var_r3);
+        M2C_SYNC();
+        M2C_ICACHE_INVALIDATE(var_r3);
+        var_r3 += 8;
+        var_r4 -= 8;
+    } while (var_r4 >= 0);
+    M2C_SYNC();
+}
+
+void fn_80228958(s32 arg0, s32 arg1, s32 arg2) {
+    s32 var_r6;
+    u8 temp_r0;
+
+    var_r6 = 0;
+loop_1:
+    if (var_r6 != arg2) {
+        temp_r0 = *(u8*)(arg1 + var_r6);
+        *(u8*)(arg0 + var_r6) = temp_r0;
+        var_r6 += 1;
+        goto loop_1;
+    }
+}
+
 void fn_80228CDC(f64 *arg0) {
     *arg0 = M2C_ERROR(/* unknown instruction: mffs $f31 */);
 }
@@ -361,6 +392,31 @@ void UnreserveEXI2Port(void) {
 void ReserveEXI2Port(void) {
     extern u8 gDBCommTable[40];
     ((void (*)(u8 *))*(u32 **)(gDBCommTable + 0x24))(gDBCommTable);
+}
+
+s32 fn_8022B078(void) {
+    extern u16 gDBCommTable[20];
+    u16 *tbl;
+    s32 temp_r3;
+
+    tbl = &gDBCommTable[0x14/2];
+    temp_r3 = ((u32 (*)(u16 *))(tbl[0]))(gDBCommTable);
+    return (s32) (-temp_r3 | temp_r3) >> 0x1F;
+}
+
+s32 fn_8022B0B4(void) {
+    extern u16 gDBCommTable[20];
+    s32 (*func_ptr)(u16 *) = (s32 (*)(u16 *))(u32)gDBCommTable[0x10 / sizeof(u16)];
+    s32 temp_r3;
+
+    temp_r3 = func_ptr((u16 *) gDBCommTable);
+    return (s32) (-temp_r3 | temp_r3) >> 0x1F;
+}
+
+void fn_8022B0F0(void) {
+    extern u16 gDBCommTable[20];
+    void (*func)(u16 *) = (void (*)(u16 *))(gDBCommTable + 0xC);
+    func(gDBCommTable);
 }
 
 void TRKEXICallBack(s32 arg0, s32 arg1) {
@@ -585,3 +641,16 @@ void __register_global_object(s32 arg0, s32 arg1, void *arg2) {
     M2C_FIELD(arg2, s32 *, 8) = arg0;
     __global_destructor_chain = arg2;
 }
+
+void fn_8022C1B8(u8 *arg0, u8 *arg1, u32 arg2) {
+    if (arg0 != NULL && arg2 != 0) {
+        do {
+            *arg0 = *arg1;
+            arg1++;
+            arg0++;
+            arg2--;
+        } while (arg2 != 0);
+    }
+}
+#include "global.h"
+extern u16 lbl_802822A8[];
