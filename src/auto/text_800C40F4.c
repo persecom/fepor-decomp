@@ -1171,7 +1171,6 @@ s32 fn_800D6F0C(void) {
 }
 
 void fn_800D6FA4(void *arg0) {
-    M2C_UNK fn_800C9A60(M2C_UNK *, s32); // Corrected signature from the prototype
     M2C_UNK fn_800C9B6C(M2C_UNK *);
     M2C_UNK fn_800DC518(s32, M2C_UNK *, M2C_UNK);
     M2C_UNK sp8;
