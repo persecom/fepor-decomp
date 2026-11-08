@@ -2425,6 +2425,22 @@ void fn_80144D80(void) {
 
 }
 
+void fn_80144E34(ListIter *ret, List *list, ListIter *it) {
+    ListNode *node = it->node;
+    ListNode *next = node->next;
+    ListNode *prev = node->prev;
+    s32 size;
+
+    it->node = next;
+    prev->next = next;
+    node->next->prev = node->prev;
+    fn_800C428C(node);
+    size = list->size;
+    next = it->node;
+    list->size = --size;
+    ret->node = next;
+}
+
 void fn_80145124(void) {
     void *r3;
     void *r4;
