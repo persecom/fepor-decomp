@@ -2236,7 +2236,7 @@ void fn_8017AA48(s32 arg0, s32 arg1, s32 arg2) {
 
 s32 fn_80105A5C();
 #pragma cplusplus on
-extern "C" void fn_801547E4(s16, s16, s16, s16, u8, s32, s32, f32);
+extern "C" void fn_801547E4(s16, s16, s32, s32, u8, s32, s32, f32);
 extern "C" void fn_8017B4A8(void *arg0, s32 arg1) {
     struct Obj {
         virtual void v0() = 0;
@@ -2268,8 +2268,8 @@ extern "C" void fn_8017B4A8(void *arg0, s32 arg1) {
         fn_801475FC(lbl_80278780 + 0x9E, 0x64);
     }
     ((Obj *)arg0)->v2(arg1);
-    fn_801547E4(0, 0, M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA),
-                M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC),
+    fn_801547E4(0, 0, (s16)(M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA)),
+                (s16)(M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC)),
                 M2C_FIELD(M2C_FIELD(unit, u8 **, 0x18C), u8 *, 0x40), 0xCC, 0x10,
                 M2C_FIELD(arg0, f32 *, 0x50));
 }
