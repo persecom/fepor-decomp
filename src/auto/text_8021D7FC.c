@@ -33,6 +33,22 @@ u8 ErrorCode2Num(s32);
 extern u8 lbl_802820B8[];
 extern u32 lbl_80368448;
 
+typedef struct GXRenderModeObj {
+    u32 viTVmode;
+    u16 fbWidth;
+    u16 efbHeight;
+    u16 xfbHeight;
+    u16 viXOrigin;
+    u16 viYOrigin;
+    u16 viWidth;
+    u16 viHeight;
+    u32 xFBmode;
+    u8 field_rendering;
+    u8 aa;
+    u8 sample_pattern[12][2];
+    u8 vfilter[7];
+} GXRenderModeObj;
+
 static u32 lbl_803392E8[8];
 static u32 lbl_80339308[8];
 static s16 lbl_80339328[8];
@@ -152,6 +168,21 @@ s32 fn_8021F250(s32 *arg0) {
 
 s32 fn_8021F258(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 8);
+}
+
+void fn_8021F338(u8 en) {
+    extern u16 *__GXData;
+    extern u16 *__cpReg;
+    u16 *gx = __GXData;
+    u32 b;
+
+    if (en != 0) {
+        b = 1;
+    } else {
+        b = 0;
+    }
+    M2C_FIELD(gx, u32 *, 0x8) = (M2C_FIELD(gx, u32 *, 0x8) & ~0x10) | ((b << 4) & 0x10);
+    __cpReg[1] = (u16)M2C_FIELD(gx, u32 *, 0x8);
 }
 
 s32 fn_8021F4CC(void) {
