@@ -5314,7 +5314,7 @@ typedef struct Param {
     s32 x8;
     u8 bC[4];
 } Param;
-static const Param sTarget = {0, {0, 0, 0, 1}, 0, {1}};
+static const Param lbl_80272EE4 = {0, {0, 0, 0, 1}, 0, {1}};
 extern "C" s32 fn_800F773C(s32 arg0, void *arg1) {
     extern u8 lbl_802EF4C8[];
     Param b;
@@ -5324,7 +5324,7 @@ extern "C" s32 fn_800F773C(s32 arg0, void *arg1) {
     a.b4[0] = M2C_FIELD(a.p, u8 *, 0x19E);
     a.b4[1] = M2C_FIELD(a.p, u8 *, 0x19F);
     a.b4[2] = fn_80037E00(a.p);
-    b = sTarget;
+    b = lbl_80272EE4;
     b.p = (void *)arg0;
     b.b4[0] = M2C_FIELD(arg1, u8 *, 0);
     b.b4[1] = M2C_FIELD(arg1, u8 *, 1);
