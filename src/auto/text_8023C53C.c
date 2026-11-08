@@ -2632,6 +2632,28 @@ s32 fn_80260F18(s32 arg0, s32 arg1, s32 *arg2, s32 *arg3) {
     return 0;
 }
 
+s32 fn_80261014(u32 *arg0, u8 arg1, u8 arg2, u32 arg3) {
+    if (arg1 > 64) {
+        arg1 = 64;
+    }
+    lbl_8034C110[0x210] = arg1;
+    
+    if (arg2 > 8) {
+        arg2 = 8;
+    }
+    lbl_8034C110[0x213] = arg2;
+
+    lbl_8034C110[0x211] = arg3;
+    lbl_8034C110[0x212] = arg3;
+    
+    *arg0 = 0x7D00; // 32000
+    
+    lbl_80368978 = 0;
+    lbl_803689B0 = 0; 
+    
+    return 1;
+}
+
 u16 fn_802611F8(void) {
     extern u32 lbl_803670B8;
     u32 temp_r0;
@@ -3281,6 +3303,57 @@ loop_1:
     return M2C_ERROR(/* unknown instruction: stfiwx $f1, $zero, $r9 */);
 }
 
+f32 fn_80264D88(void *arg0) {
+    s32 temp_r10;
+    s32 temp_r11;
+    s32 temp_r7;
+    s32 temp_r8;
+    s32 var_ctr;
+    s32 var_r5;
+    u32 var_r4;
+
+    var_r4 = M2C_FIELD(arg0, u32 *, 0xC);
+    var_r5 = M2C_FIELD(arg0, s32 *, 0x10);
+    temp_r8 = M2C_FIELD(arg0, s32 *, 0x1C);
+    temp_r7 = M2C_FIELD(arg0, s32 *, 0x20);
+    var_ctr = 0xA0;
+loop_1:
+    temp_r10 = ((var_r4 << 7) & 0x780) | ((var_r4 >> 0x19U) & 0x70);
+    var_r4 += M2C_FIELD(arg0, s32 *, 0x14);
+    M2C_ERROR(/* unknown instruction: mcrxr $cr0 */);
+    var_r5 += 1;
+    if (M2C_ERROR(/* Read from unset register $cr0_eq */)) {
+        if (var_r5 == temp_r8) {
+            var_r5 = temp_r7;
+        }
+        var_ctr -= 1;
+        if (var_ctr != 0) {
+            M2C_ERROR(/* unknown instruction: stfiwx $f10, $r26, $r30 */);
+            goto loop_1;
+        }
+    } else {
+        if (var_r5 == temp_r8) {
+            var_r5 = temp_r7;
+        }
+        temp_r11 = var_r5 * 4;
+        var_r5 += 1;
+        if (var_r5 == temp_r8) {
+            var_r5 = temp_r7;
+        }
+        var_ctr -= 1;
+        if (var_ctr != 0) {
+            M2C_ERROR(/* unknown instruction: stfiwx $f10, $r26, $r30 */);
+            goto loop_1;
+        }
+    }
+    M2C_ERROR(/* unknown instruction: stfiwx $f10, $r26, $r30 */);
+    M2C_ERROR(/* unknown instruction: stfiwx $f2, $zero, $r10 */);
+    M2C_ERROR(/* unknown instruction: stfiwx $f3, $zero, $r10 */);
+    M2C_FIELD(arg0, u32 *, 0xC) = var_r4;
+    M2C_FIELD(arg0, s32 *, 0x10) = var_r5;
+    return M2C_ERROR(/* unknown instruction: stfiwx $f1, $zero, $r9 */);
+}
+
 void fn_80265430(s32 arg0) {
     extern u16 lbl_803669A0[1024];
     u8 *temp_r3;
@@ -3354,3 +3427,4 @@ extern s32 lbl_80368AF8;
 extern u16 lbl_80368A0C;
 extern u16 lbl_80368AFC;
 extern u16 lbl_8034F6B8[];
+extern u16 lbl_803596F0[16];
