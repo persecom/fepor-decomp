@@ -123,6 +123,20 @@ static inline u32 __GXReadPECounterU32(u32 lo, u32 hi) {
 
 extern u16* __cpReg;
 
+static inline u32 __GXReadCPCounterU32(u32 lo, u32 hi) {
+    u32 ctrH0;
+    u32 ctrH1;
+    u32 ctrL;
+
+    ctrH0 = *((volatile u16 *)__cpReg + hi);
+    do {
+        ctrH1 = ctrH0;
+        ctrL = *((volatile u16 *)__cpReg + lo);
+        ctrH0 = *((volatile u16 *)__cpReg + hi);
+    } while (ctrH0 != ctrH1);
+    return (ctrH0 << 16) | ctrL;
+}
+
 extern u16 *__GXData;
 extern u16 *__GXData;
 extern u16 *__GXData;
@@ -400,6 +414,16 @@ u8 fn_80222AC0(u32 *arg0) {
     return *(&lbl_80367050 + (((u32) *arg0 >> 5U) & 7));
 }
 
+void fn_80222AD4(void* obj, void* obj2, s32 arg2)
+{
+    *(u32*)((char*)obj + 0x0) = (*(u32*)((char*)obj + 0x0) & ~0xFF000000) | ((*(u8*)((char*)obj2 + arg2 * 1) << 24));
+    *(u32*)((char*)obj + 0x4) = (*(u32*)((char*)obj + 0x4) & ~0xFF000000) | ((*(u8*)((char*)obj2 + 0x8 + arg2 * 1) << 24));
+    *(u32*)((char*)obj + 0x8) = (*(u32*)((char*)obj + 0x8) & ~0xFF000000) | ((*(u8*)((char*)obj2 + 0x10 + arg2 * 1) << 24));
+    *(u32*)((char*)obj2 + 0x0) = (*(u32*)((char*)obj2 + 0x0) & ~0xFF000000) | ((*(u8*)((char*)obj2 + 0x18 + arg2 * 1) << 24));
+    *(u32*)((char*)obj2 + 0x4) = (*(u32*)((char*)obj2 + 0x4) & ~0xFF000000) | ((*(u8*)((char*)obj2 + 0x20 + arg2 * 1) << 24));
+    *(u32*)((char*)obj + 0xC) = (*(u32*)((char*)obj + 0xC) & ~0xFF000000) | ((*(u8*)((char*)obj2 + 0x28 + arg2 * 1) << 24));
+}
+
 void fn_80222C50(s32 arg0, s32 arg1) {
     s32 fn_80222AD4(s32, s32, s32);                       /* extern */
     void *__GXData;
@@ -492,6 +516,80 @@ s32 fn_80222F10(s32 arg0) {
     temp_r0 = *(u16*)__GXData;
     *(u16*)__GXData = (u16)arg0;
     return temp_r0;
+}
+
+void fn_80222FC4(void) {
+    u32* gxData;
+    u32 temp_r0;
+    s32 var_r27;
+    s32 var_r28;
+    s32 var_r29;
+    s32 var_r30;
+    s32 var_r31;
+    u32 temp_r4;
+    u32* temp_r5;
+
+    gxData = (u32*)__GXData;
+    
+    if (gxData[0x594/4] != 0xFF) {
+        temp_r0 = gxData[0x204/4];
+        var_r31 = 0;
+        var_r30 = ((temp_r0 >> 0xA) & 0xF) + 1;
+        var_r27 = (temp_r0 >> 0x10) & 7;
+        
+    loop_16:
+        if (var_r31 < var_r27) {
+            switch (var_r31) {
+                case 0:
+                    temp_r0 = gxData[0x120/4];
+                    var_r29 = temp_r0 & 7;
+                    var_r28 = (temp_r0 >> 3) & 7;
+                    break;
+                case 1:
+                    temp_r0 = gxData[0x120/4];
+                    var_r29 = (temp_r0 >> 6) & 7;
+                    var_r28 = (temp_r0 >> 9) & 7;
+                    break;
+                case 2:
+                    temp_r0 = gxData[0x120/4];
+                    var_r29 = (temp_r0 >> 0xC) & 7;
+                    var_r28 = (temp_r0 >> 0xF) & 7;
+                    break;
+                case 3:
+                    temp_r0 = gxData[0x120/4];
+                    var_r29 = (temp_r0 >> 0x12) & 7;
+                    var_r28 = (temp_r0 >> 0x15) & 7;
+                    break;
+            }
+            if (!(gxData[0x594/4] & (1 << var_r28))) {
+                fn_80222F24(var_r29, var_r28);
+            }
+            var_r31 += 1;
+            goto loop_16;
+        }
+        
+        var_r31 = 0;
+        var_r27 = 0;
+        
+    loop_26:
+        if (var_r31 < var_r30) {
+            temp_r5 = &gxData[(0x100/4) + (var_r31 * 2)];
+            temp_r4 = gxData[0x554/4 + var_r27/4];
+            var_r29 = temp_r4 & 0xFFFFFEFF;
+            
+            if (var_r31 & 1) {
+                var_r28 = (temp_r5[0] >> 0xF) & 7;
+            } else {
+                var_r28 = (temp_r5[0] >> 3) & 7;
+            }
+            if ((var_r29 != 0xFF) && !(gxData[0x594/4] & (1 << var_r28)) && (gxData[0x598/4] & (1 << var_r31))) {
+                fn_80222F24(var_r29, var_r28);
+            }
+            var_r27 += 4;
+            var_r31 += 1;
+            goto loop_26;
+        }
+    }
 }
 
 void fn_80223494(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, u8 arg_sp8, s32 arg_spC) {
@@ -813,6 +911,69 @@ void fn_80223EA0(s32 arg0, s32 arg1, s32 arg2) {
     *(u32 *)0xCC008000 = r7;
 
     *(u16 *)__GXData = 0x0;
+}
+
+void fn_80223F2C(u32 *t, s32 min_filt, s32 mag_filt, f32 min_lod, f32 max_lod, f32 lod_bias, u8 bias_clamp, u8 do_edge_lod, s32 max_aniso) {
+    extern f32 lbl_8036BD38;
+    extern f32 lbl_8036BD3C;
+    extern f32 lbl_8036BD40;
+    extern f32 lbl_8036BD44;
+    extern u8 lbl_80367048[8];
+    extern f32 lbl_8036BD48;
+    extern f32 lbl_8036BD4C;
+    extern f32 lbl_8036BD28;
+
+    u16 lbias_s, lmin_s, lmax_s;
+
+    // lod_bias processing with clamping
+    if (lod_bias < lbl_8036BD38) {
+        lod_bias = lbl_8036BD38;
+    } else if (lod_bias > lbl_8036BD40) {
+        lod_bias = lbl_8036BD44;
+    }
+    lbias_s = (u16)(lbl_8036BD40 * lod_bias);
+    
+    // Set bias value in the low bits of t[0]
+    t[0] = __rlwimi(t[0], lbias_s >> 3, 9, 15, 22);
+    
+    // Set mag filter
+    t[0] = __rlwimi(t[0], (mag_filt == 1) ? 1 : 0, 4, 27, 27);
+    
+    // Set min filter  
+    t[0] = __rlwimi(t[0], lbl_80367048[min_filt], 5, 24, 26);
+    
+    // Set edge LOD bit
+    t[0] = __rlwimi(t[0], do_edge_lod ? 0 : 1, 8, 23, 23);
+    
+    // Clear some bits (set to 0)
+    t[0] = __rlwimi(t[0], 0, 17, 14, 14);
+    t[0] = __rlwimi(t[0], 0, 18, 13, 13);
+    
+    // Set max aniso
+    t[0] = __rlwimi(t[0], max_aniso, 19, 11, 12);
+    
+    // Set bias clamp bit
+    t[0] = __rlwimi(t[0], bias_clamp, 21, 10, 10);
+
+    // Process min LOD - clamping and conversion
+    if (min_lod < lbl_8036BD48) {
+        min_lod = lbl_8036BD48;
+    } else if (min_lod > lbl_8036BD4C) {
+        min_lod = lbl_8036BD4C;
+    }
+    lmin_s = (u16)(lbl_8036BD28 * min_lod);
+    
+    // Process max LOD - clamping and conversion
+    if (max_lod < lbl_8036BD48) {
+        max_lod = lbl_8036BD48;
+    } else if (max_lod > lbl_8036BD4C) {
+        max_lod = lbl_8036BD4C;
+    }
+    lmax_s = (u16)(lbl_8036BD28 * max_lod);
+    
+    // Set min and max LODs in t[1]
+    t[1] = __rlwimi(t[1], lmin_s >> 3, 0, 24, 31);
+    t[1] = __rlwimi(t[1], lmax_s >> 3, 8, 16, 23);
 }
 
 void fn_802240C8(u8 arg0) {
