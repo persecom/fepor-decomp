@@ -9,6 +9,22 @@ typedef struct {
 
 typedef f32 Mtx[3][4];
 
+static inline float sqrtf(float x) {
+    static const double _half = .5;
+    static const double _three = 3.0;
+    volatile float y;
+
+    if (x > 0.0f) {
+        double guess = __frsqrte((double) x);
+        guess = _half * guess * (_three - guess * guess * x);
+        guess = _half * guess * (_three - guess * guess * x);
+        guess = _half * guess * (_three - guess * guess * x);
+        y = (float) (x * guess);
+        return y;
+    }
+    return x;
+}
+
 void fn_80203320(f32 *arg0, void *arg1, f32 farg0) {
     void fn_802031E8(void *, f32 *);
     f32 fn_80238A30(f32);
