@@ -302,6 +302,20 @@ void fn_80220B44(u16 arg0, s32 arg1, s32 *arg2) {
     *arg2 = *(s32*)temp;
 }
 
+s32 fn_80220B68(s32 arg0) {
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    extern s32 lbl_80368790;
+    s32 old;
+    s32 enabled;
+
+    old = lbl_80368790;
+    enabled = OSDisableInterrupts();
+    lbl_80368790 = arg0;
+    OSRestoreInterrupts(enabled);
+    return old;
+}
+
 void fn_80220BAC(void *arg0, void *arg1, s32 arg2, u32 arg3) {
     s32 temp_r4;
     void* r6;
