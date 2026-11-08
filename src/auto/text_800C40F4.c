@@ -3124,9 +3124,8 @@ extern "C" s32 fn_800E7EA0(void *arg0) {
 #pragma cplusplus reset
 
 void fn_800E7FB4(void* arg0, u32 arg1, void* arg2) {
-    void** v0 = (void**)arg0;
-    *v0 = arg2;
-    *(v0 + 0x9) = arg0;
+    *(void**)arg0 = arg2;
+    ((void**)arg0)[9] = arg0;
 }
 
 void fn_800E805C(s32 arg0, void *arg1) {
@@ -5265,3 +5264,4 @@ extern f32 fn_802031CC(f32*, f32*, f32);
 extern f32 fn_802031E8(f32*, f32*);
 
 extern u16 lbl_802CA518;
+extern u8 lbl_802723E8[136]; // Size determined from assembly
