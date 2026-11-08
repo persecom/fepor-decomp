@@ -2,7 +2,11 @@
 #include "common.h"
 #include "dolphin/os.h"
 
-extern u8 lbl_80276BC8[29];
+extern u16 lbl_80331FB8[36]; // 72 bytes = 36 * 2-byte entries
+extern f32 lbl_8036A5A8;
+extern f32 lbl_8036A5AC;
+extern f32 lbl_8036A5B8;
+
 extern u8 lbl_803301A8[1344];
 
 typedef struct Vec2s {
