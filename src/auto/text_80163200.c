@@ -19,7 +19,12 @@ static inline u8 IsSlotFilled(void *obj, s32 slot) {
     u32 *item = fn_80037BD0(M2C_FIELD(obj, s32 *, 0x58), slot);
 
     if (M2C_FIELD(obj, s32 *, 0x5C) == 1 && *item == 0) {
-        if (slot == 0 || slot == 4 || *fn_80037BD0(M2C_FIELD(obj, s32 *, 0x58), slot - 1) != 0) {
+        switch (slot) {
+        case 0:
+        case 4:
+            return 1;
+        }
+        if (*fn_80037BD0(M2C_FIELD(obj, s32 *, 0x58), slot - 1) != 0) {
             return 1;
         }
     }
