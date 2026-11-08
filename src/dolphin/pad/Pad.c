@@ -434,6 +434,18 @@ void fn_80213DD8(void) {
     }
 }
 
+extern s32 lbl_803686D8;
+s32 fn_80214014(s32 arg0) {
+    extern s32 lbl_803686D8;
+    s32 temp_r31;
+
+    temp_r31 = lbl_803686D8;
+    OSDisableInterrupts();
+    lbl_803686D8 = arg0;
+    OSRestoreInterrupts();
+    return temp_r31;
+}
+
 s32 fn_80214058(void) {
     u16 reg_val;
     
