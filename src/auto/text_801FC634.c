@@ -599,6 +599,44 @@ void fn_802025C0(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
     *(f32*)((u8*)arg0 + 0x2C) = lbl_8036BC3C;
 }
 
+void fn_8020293C(void *arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 farg4, f32 farg5, f32 farg6, f32 farg7) {
+    extern f32 lbl_8036BC38;
+    extern f32 lbl_8036BC48;
+    extern f32 lbl_8036BC3C;
+
+    f32 temp_f10;
+    f32 temp_f12;
+    f32 temp_f0;
+    f32 temp_f1;
+    f32 temp_f2;
+    f32 temp_f3;
+    f32 temp_f4;
+    f32 temp_f5;
+
+    temp_f12 = lbl_8036BC38 / (farg3 - farg2);
+    temp_f10 = lbl_8036BC38 / (farg0 - farg1);
+
+    temp_f0 = farg4 * temp_f12;
+    temp_f1 = temp_f12 * -(farg3 + farg2);
+    temp_f2 = farg5 * temp_f10;
+    temp_f3 = temp_f10 * -(farg0 + farg1);
+    temp_f4 = lbl_8036BC48 * temp_f12;
+    temp_f5 = lbl_8036BC48 * temp_f10;
+
+    M2C_FIELD(arg0, f32 *, 0) = temp_f4 * farg4;
+    M2C_FIELD(arg0, f32 *, 4) = lbl_8036BC3C;
+    M2C_FIELD(arg0, f32 *, 8) = lbl_8036BC3C;
+    M2C_FIELD(arg0, f32 *, 0xC) = farg6 + (temp_f0 * temp_f1);
+    M2C_FIELD(arg0, f32 *, 0x10) = lbl_8036BC3C;
+    M2C_FIELD(arg0, f32 *, 0x14) = temp_f5 * farg5;
+    M2C_FIELD(arg0, f32 *, 0x18) = lbl_8036BC3C;
+    M2C_FIELD(arg0, f32 *, 0x1C) = farg7 + (temp_f2 * temp_f3);
+    M2C_FIELD(arg0, f32 *, 0x20) = lbl_8036BC3C;
+    M2C_FIELD(arg0, f32 *, 0x24) = lbl_8036BC3C;
+    M2C_FIELD(arg0, f32 *, 0x28) = lbl_8036BC3C;
+    M2C_FIELD(arg0, f32 *, 0x2C) = lbl_8036BC38;
+}
+
 f32 fn_80202A18(void) {
     M2C_ERROR(/* unknown instruction: ps_mul $f8, $f0, $f6 */);
     M2C_ERROR(/* unknown instruction: ps_mul $f10, $f2, $f6 */);
@@ -610,6 +648,36 @@ f32 fn_80202A18(void) {
     M2C_ERROR(/* unknown instruction: ps_madd $f11, $f3, $f7, $f10 */);
     M2C_ERROR(/* unknown instruction: ps_madd $f13, $f5, $f7, $f12 */);
     return M2C_ERROR(/* psq_l unimplemented */);
+}
+
+void fn_80202B3C(void *arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 farg4, f32 farg5) {
+    extern f32 lbl_8036BC58;
+    extern f32 lbl_8036BC5C;
+    extern f32 lbl_8036BC60;
+    extern f32 lbl_8036BC64;
+    f32 temp_f10;
+    f32 temp_f4;
+    f32 temp_f8;
+
+    temp_f10 = lbl_8036BC58 / (farg3 - farg2);
+    temp_f8 = lbl_8036BC58 / (farg0 - farg1);
+    M2C_FIELD(arg0, f32 *, 0) = (f32) (lbl_8036BC5C * temp_f10);
+    M2C_FIELD(arg0, f32 *, 4) = (f32) lbl_8036BC60;
+    temp_f4 = lbl_8036BC58 / (farg5 - farg4);
+    M2C_FIELD(arg0, f32 *, 8) = (f32) lbl_8036BC60;
+    M2C_FIELD(arg0, f32 *, 0xC) = (f32) (temp_f10 * -(farg3 + farg2));
+    M2C_FIELD(arg0, f32 *, 0x10) = (f32) lbl_8036BC60;
+    M2C_FIELD(arg0, f32 *, 0x14) = (f32) (lbl_8036BC5C * temp_f8);
+    M2C_FIELD(arg0, f32 *, 0x18) = (f32) lbl_8036BC60;
+    M2C_FIELD(arg0, f32 *, 0x1C) = (f32) (temp_f8 * -(farg0 + farg1));
+    M2C_FIELD(arg0, f32 *, 0x20) = (f32) lbl_8036BC60;
+    M2C_FIELD(arg0, f32 *, 0x24) = (f32) lbl_8036BC60;
+    M2C_FIELD(arg0, f32 *, 0x28) = (f32) (lbl_8036BC64 * temp_f4);
+    M2C_FIELD(arg0, f32 *, 0x2C) = (f32) (-farg5 * temp_f4);
+    M2C_FIELD(arg0, f32 *, 0x30) = (f32) lbl_8036BC60;
+    M2C_FIELD(arg0, f32 *, 0x34) = (f32) lbl_8036BC60;
+    M2C_FIELD(arg0, f32 *, 0x38) = (f32) lbl_8036BC60;
+    M2C_FIELD(arg0, f32 *, 0x3C) = (f32) lbl_8036BC58;
 }
 
 void fn_80202BD4(f32* src, f32* dst) {
@@ -676,4 +744,7 @@ extern void *fn_8020DAE0;
 extern void fn_8020C1A4(u8, u32, void *);
 
 extern u8 lbl_80289EB8[16];
-
+#include "common.h"
+#include <dolphin/os.h>
+extern s32 lbl_803682F0;
+extern s32 fn_80015A14(void);
