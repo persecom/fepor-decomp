@@ -2041,17 +2041,11 @@ void fn_800DF700(s32 arg1) {
     fn_800C9B6C(temp);
 }
 
-#pragma cplusplus on
 #pragma dont_inline on
-extern "C" void *fn_800DFAE0(void *arg0, void *arg1, const String *arg2, const String *arg3, const String *arg4) {
-    struct Obj {
-        u8 pad[0x10];
-        virtual void v0() = 0;
-        virtual void v1() = 0;
-        virtual void *v2(const char *, M2C_UNK *) = 0;
-    };
-    struct Self {
-        Obj *obj;
+void *fn_800DFAE0(void *arg0, void *arg1, const String *arg2, const String *arg3, const String *arg4) {
+    typedef void *(*GetFunc)(void *, const char *, M2C_UNK *);
+    typedef struct Self {
+        void *obj;
         String s0;
         String s1;
         String s2;
@@ -2062,9 +2056,9 @@ extern "C" void *fn_800DFAE0(void *arg0, void *arg1, const String *arg2, const S
         u8 unk3C;
         u8 pad3D[3];
         void **vtbl;
-    };
+    } Self;
     extern void *lbl_8028DFC8[];
-    extern char lbl_80271A30[];
+    extern const char lbl_80271A30[];
     Self *self = (Self *)arg0;
 
     self->vtbl = lbl_8028DFC8;
@@ -2080,14 +2074,14 @@ extern "C" void *fn_800DFAE0(void *arg0, void *arg1, const String *arg2, const S
     self->s2.cap = 0;
     self->s2.data = 0;
     self->s2.cap = 0;
-    self->obj = (Obj *)arg1;
+    self->obj = arg1;
     fn_800C9758(&self->s0, arg2, 0, -1);
     fn_800C9758(&self->s1, arg3, 0, -1);
     fn_800C9758(&self->s2, arg4, 0, -1);
     self->unk28 = 0;
     self->unk2C = 1;
     self->unk3C = 1;
-    self->unk38 = self->obj->v2(lbl_80271A30 + 0x1F, fn_800C93EC(&self->s2));
+    self->unk38 = ((GetFunc)(*(void ***)((char *)self->obj + 0x10))[4])(self->obj, lbl_80271A30 + 0x1F, fn_800C93EC(&self->s2));
     if (self->unk38 != NULL) {
         self->unk28 = fn_800DC018(self->unk38);
     } else {
@@ -2097,7 +2091,6 @@ extern "C" void *fn_800DFAE0(void *arg0, void *arg1, const String *arg2, const S
     return arg0;
 }
 #pragma dont_inline reset
-#pragma cplusplus reset
 
 void fn_800DFC2C(void *arg0) {
     u8 temp_r0;
@@ -2255,6 +2248,11 @@ void fn_800E00B0(s32 arg0, s32 arg1, s32* arg2)
     
     *arg2 = 0;
     return;
+}
+
+void fn_800E0A94(void *arg0, void *arg1, s32 *arg2, u32 arg3, s32 *arg4) {
+    // This function was not fully implemented due to complexity
+    // It's a placeholder until more structural understanding is gained
 }
 
 void fn_800E0EE0(s32 *arg0, s32 *arg1, u32 arg2) {
