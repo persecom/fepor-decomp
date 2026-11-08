@@ -758,7 +758,7 @@ extern char lbl_8029BFB8[];
 extern char lbl_80366F3C;
 extern s16 __OSLastInterrupt;
 extern u32 __OSLastInterruptSrr0;
-extern u32 __OSLastInterruptTime[];
+extern s64 __OSLastInterruptTime;
 extern s64 OSGetTime(void);
 extern u32 PPCMffpscr(void);
 extern void PPCMtfpscr(u32);
@@ -774,15 +774,19 @@ void __OSUnhandledException(u8 exception, OSContext *context, u32 dsisr, u32 dar
     OSErrorHandler *table;
     char *msgs;
     u32 srr1;
-    OSErrorHandler handler;
+    OSErrorHandler *entry;
     void *fpuContext;
     u32 fpscr;
+    u32 timeHi;
+    u32 timeLo;
     s64 now;
 
     table = __OSErrorTable;
     msgs = lbl_8029BFB8;
 
     now = OSGetTime();
+    timeHi = ((u32 *)&now)[0];
+    timeLo = ((u32 *)&now)[1];
     srr1 = context->srr1;
 
     if (!(srr1 & 2)) {
@@ -818,10 +822,10 @@ void __OSUnhandledException(u8 exception, OSContext *context, u32 dsisr, u32 dar
         }
     }
 
-    handler = table[exception];
-    if (handler != 0) {
+    entry = &table[exception];
+    if (*entry != 0) {
         OSDisableScheduler();
-        handler(exception, context, dsisr, dar);
+        (*entry)(exception, context, dsisr, dar);
         OSEnableScheduler();
         __OSReschedule();
         OSLoadContext(context);
@@ -837,7 +841,7 @@ dump:
     OSReport(&lbl_80366F3C);
     OSDumpContext(context);
     OSReport(msgs + 0x94, dsisr, dar);
-    OSReport(msgs + 0xC8, (u32)(now >> 32), (u32)now);
+    OSReport(msgs + 0xC8, timeHi, timeLo);
 
     switch (exception) {
     case 2:
@@ -853,14 +857,14 @@ dump:
         OSReport(msgs + 0x1E8, context->srr0, dar);
         break;
     case 15: {
-        u16 *memRegs;
+        u32 *hw;
         OSReport(&lbl_80366F3C);
-        memRegs = (u16 *)0xCC005000;
-        OSReport(msgs + 0x248, *(u16 *)0xCC005030, *(u16 *)0xCC005032);
-        OSReport(msgs + 0x268, memRegs[0x10], memRegs[0x11]);
+        hw = (u32 *)0xCC005000;
+        OSReport(msgs + 0x248, *(u16 *)((u8 *)hw + 0x30), *(u16 *)((u8 *)hw + 0x32));
+        OSReport(msgs + 0x268, *(u16 *)((u8 *)hw + 0x20), *(u16 *)((u8 *)hw + 0x22));
         OSReport(msgs + 0x288, *(u32 *)0xCC006014);
         OSReport(msgs + 0x2A4, __OSLastInterrupt, __OSLastInterruptSrr0,
-                 __OSLastInterruptTime[0], __OSLastInterruptTime[1]);
+                 ((u32 *)&__OSLastInterruptTime)[0], ((u32 *)&__OSLastInterruptTime)[1]);
         break;
     }
     default:
