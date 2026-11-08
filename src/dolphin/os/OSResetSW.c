@@ -156,6 +156,37 @@ loop_1:
     *(u32*)0xCC003000 = 2;
 }
 
+s32 fn_80209010(s32 arg0, s32 arg1, s32 arg2) {
+    s32 EXIDeselect(M2C_UNK);
+    s32 EXIImm(M2C_UNK, s32 *, M2C_UNK, M2C_UNK, M2C_UNK);
+    s32 EXILock(M2C_UNK, M2C_UNK, M2C_UNK *, M2C_UNK *);
+    s32 EXISelect(M2C_UNK, M2C_UNK, M2C_UNK);
+    s32 EXISync(M2C_UNK);
+    M2C_UNK EXIUnlock(M2C_UNK);
+    s32 fn_80238E78(M2C_UNK, s32, s32, M2C_UNK);
+    extern M2C_UNK fn_80208FB0;
+    s32 sp14;
+    s32 temp_r31;
+    s32 temp_r31_2;
+    s32 temp_r31_3;
+    s32 temp_r31_4;
+
+    if (EXILock(0, 1, &fn_80208FB0, &fn_80208FB0) == 0) {
+        return 0;
+    }
+    if (EXISelect(0, 1, 3) == 0) {
+        EXIUnlock(0);
+        return 0;
+    }
+    sp14 = ((arg1 << 6) + 0x100) | 0xA0000000;
+    temp_r31_2 = EXIImm(0, &sp14, 4, 1, 0) == 0;
+    temp_r31_3 = temp_r31_2 | (EXISync(0) == 0);
+    temp_r31_4 = temp_r31_3 | (fn_80238E78(0, arg0, arg2, 1) == 0);
+    temp_r31 = temp_r31_4 | (EXIDeselect(0) == 0);
+    EXIUnlock(0);
+    return temp_r31 == 0;
+}
+
 void fn_8020931C(u32 param_1) {
     if (param_1 < 0x14) {
         return;
@@ -334,6 +365,76 @@ s32 OSGetTick(void) {
     return M2C_ERROR(/* unknown instruction: mftb $r3, 0x10c */);
 }
 
+void fn_8020B0F8(s32 arg0, void *arg1) {
+    extern u16 lbl_8029CEB8[];
+    extern u16 lbl_8029CE88[];
+    
+    s32 r5, r0, r11;
+    s32 temp_r0, temp_r0_2;
+    s32 r3, r7, r7_2, r8;
+    u32 r6;
+    
+    // Initial setup from assembly
+    r5 = arg0 / 365;
+    r11 = r5 * 0x16D;
+    
+loop_4:
+    if (r5 < 1) {
+        r0 = 0;
+    } else {
+        // More complex calculation
+        s32 temp1 = (r5 - 1) / 400;  // mulhw with appropriate constants
+        s32 temp2 = (r5 + 3) / 4;    // Need to handle this carefully
+        s32 temp3 = (r5 - 1) / 100;  // Division with the right constants
+        
+        // The actual implementation based on how the assembly looks
+        r0 = ((r5 - 1) / 400) + (((r5 + 3) / 4) - ((r5 - 1) / 100));
+    }
+    
+    temp_r0 = r11 + r0;
+    if (arg0 < temp_r0) {
+        r11 -= 0x16D;
+        r5 -= 1;
+        goto loop_4;
+    }
+    
+    M2C_FIELD(arg1, u32 *, 0x14) = r5; // Store year
+    
+    temp_r0_2 = arg0 - temp_r0;
+    M2C_FIELD(arg1, s32 *, 0x1C) = temp_r0_2; // Store day of year
+    
+    // Leap year calculation
+    r7 = 1;
+    r8 = 0;
+    
+    if ((r5 % 4) == 0) {
+        r8 = 1;
+    }
+    
+    if ((r8 == 0) && ((r5 % 100) != 0)) {
+        r7 = 0;
+    }
+
+    // Select correct table
+    if (r7 != 0) {
+        r6 = (u32) lbl_8029CEB8;
+    } else {
+        r6 = (u32) lbl_8029CE88;
+    }
+    
+    // Month and day calculation loop  
+    r3 = 0x30;
+    r7_2 = 0xC;
+    
+    do {
+        r3 -= 4;
+        r7_2 -= 1;
+    } while (temp_r0_2 < (s32) *(u16 *) (r6 + r3));
+    
+    M2C_FIELD(arg1, s32 *, 0x10) = r7_2; // Store month
+    M2C_FIELD(arg1, s32 *, 0xC) = (s32) ((temp_r0_2 - *(u16 *) (r6 + r3)) + 1); // Store day
+}
+
 void __init_user(void) {
     __init_cpp();
 }
@@ -347,4 +448,6 @@ u32 __OSGetResetSWState(void);
 
 extern void OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(void);
-
+extern void* RunQueue_80339478[];
+extern s32 RunQueueBits_80368518;
+extern s32 RunQueueHint_8036851C;
