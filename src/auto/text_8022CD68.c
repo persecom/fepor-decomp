@@ -1482,7 +1482,6 @@ s32 fn_8024A430(u16 arg0) {
     return 0;
 }
 
-extern s32 lbl_803689A8;
 s32 fn_8024A4AC(s32 arg0, s32 arg1, s32 arg2) {
     s32 temp_r29;
     s32 ret;
