@@ -2412,6 +2412,18 @@ s32 fn_8019D7A8(void) {
     return 1;
 }
 
+void fn_8019D800(s32 arg0) {
+    void fn_8000C188(s32);
+    u8 fn_80194E38();
+    extern s32 lbl_80367110;
+
+    if (lbl_80367110 & 1) {
+        fn_8000C188(arg0);
+    } else if (fn_80194E38() == 0) {
+        fn_8000C188(arg0);
+    }
+}
+
 s32 fn_8019D850(s32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4) {
     void *fn_80194F54(s32);
     void fn_8019514C(void *, void *);
