@@ -794,6 +794,60 @@ u16 fn_802072A0(void) {
     return lbl_80366F48;
 }
 
+s32 fn_80207628(s32 arg0, s32 arg1) {
+    s32 fn_80207304(s32, M2C_UNK, s32);
+    extern u16 lbl_80366F48;
+    extern s32 lbl_803684B8;
+    extern s32 lbl_803684BC;
+    extern void *lbl_803684C0;
+    s32 temp_r0;
+    s32 var_r31;
+
+    if ((u16) lbl_80366F48 != -1U) {
+        goto block_12;
+    } else {
+        temp_r0 = *(s32 *)0x800000CC;
+        if (temp_r0 != 0) {
+            if (temp_r0 >= 0) {
+                goto block_12;
+            }
+            lbl_80366F48 = 0;
+        } else {
+            if (*(u16 *)0xCC00206E & 2) {
+                lbl_80366F48 = 1;
+            } else {
+                lbl_80366F48 = 0;
+            }
+        }
+        lbl_803684C0 = (void *)fn_80207768;
+    }
+
+block_12:
+    if ((s32) (u16) lbl_80366F48 != 2) {
+        switch ((s32) (u16) lbl_80366F48) {         /* irregular */
+        case 0:
+            lbl_803684B8 = arg0;
+            var_r31 = fn_80207304(arg1, 0, lbl_803684B8);
+            break;
+        case 1:
+            lbl_803684BC = arg0;
+            var_r31 = fn_80207304(arg1, 1, lbl_803684BC);
+            break;
+        default:
+            lbl_803684B8 = arg0;
+            var_r31 = fn_80207304(arg1, 0, lbl_803684B8);
+            if (var_r31 != 0) {
+                lbl_803684BC = lbl_803684B8 + var_r31;
+                var_r31 += fn_80207304(arg1, 1, lbl_803684BC);
+            }
+            break;
+        }
+    } else {
+        var_r31 = 0;
+    }
+    return var_r31;
+}
+
 extern u16 InterruptHandlerTable_803684C8[32];
 s32 fn_80207BAC(s16 arg0) {
     return InterruptHandlerTable_803684C8[arg0];
@@ -894,3 +948,7 @@ extern u16 lbl_80368550;
 
 extern void OSSwitchFPUContext(void);
 extern void **OSExceptionTable_8036847C;
+#include "common.h"
+#include <dolphin/os.h>
+
+extern u16 lbl_8029BBB0[20];
