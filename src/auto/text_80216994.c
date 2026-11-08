@@ -155,6 +155,55 @@ s32 fn_80216F88(s32 arg0) {
     return 0;
 }
 
+void fn_80217378(s32 arg0, s32 arg1) {
+    s32 EXILock(s32, M2C_UNK, M2C_UNK *);
+    s32 fn_802170D8(s32);
+    extern M2C_UNK fn_80216C64;
+    extern M2C_UNK lbl_8033A200;
+    M2C_UNK (*temp_r0_2)(s32);
+    M2C_UNK (*temp_r12)(s32);
+    s32 var_r4;
+    u8 temp_r0;
+    void *temp_r30;
+
+    var_r4 = arg1;
+    temp_r30 = &lbl_8033A200 + (arg0 * 0x110);
+    if (var_r4 >= 0) {
+        M2C_FIELD(temp_r30, void (**)(s32, s32), 0xDC) = fn_80217378;
+        if (EXILock(arg0, 0, &fn_80216C64) == 0) {
+            var_r4 = 0;
+        } else {
+            M2C_FIELD(temp_r30, void (**)(s32, s32), 0xDC) = NULL;
+            var_r4 = fn_802170D8(arg0);
+        }
+    }
+    if ((var_r4 < 0) && (temp_r0 = M2C_FIELD(temp_r30, u8 *, 0x94), (((s32) temp_r0 == 0xF3) == 0))) {
+        if ((s32) temp_r0 < 0xF3) {
+            if ((s32) temp_r0 != 0x52) {
+                if ((s32) temp_r0 >= 0x52) {
+                    if ((s32) temp_r0 < 0xF1) {
+                        return;
+                    }
+                    goto block_15;
+                }
+            } else {
+                temp_r0_2 = M2C_FIELD(temp_r30, M2C_UNK (**)(s32), 0xC8);
+                if (temp_r0_2 != NULL) {
+                    M2C_FIELD(temp_r30, M2C_UNK (**)(s32), 0xC8) = NULL;
+                    temp_r0_2(arg0);
+                }
+            }
+        } else if ((s32) temp_r0 < 0xF5) {
+block_15:
+            temp_r12 = M2C_FIELD(temp_r30, M2C_UNK (**)(s32), 0xCC);
+            if (temp_r12 != NULL) {
+                M2C_FIELD(temp_r30, M2C_UNK (**)(s32), 0xCC) = NULL;
+                temp_r12(arg0);
+            }
+        }
+    }
+}
+
 s32 fn_80217488(s32 chan, void *txCallback, void *exiCallback) {
     extern u16 lbl_8033A200[];
     s32 OSDisableInterrupts(void);
