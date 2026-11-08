@@ -139,6 +139,8 @@ typedef struct DVDCommand {
     void *callback;
 } DVDCommand;
 
+static DVDCommand CommandList_80339E70[3];
+
 extern u16 AlarmForTimeout_80339ED8[20];
 extern void AlarmHandlerForTimeout(void *, void *);
 extern void OSCreateAlarm(void *);
@@ -150,11 +152,10 @@ static void SetTimeoutAlarm(s64 timeout) {
 }
 
 void __DVDInitWA(void) {
-    extern u16 CommandList_80339E70[15];
     extern s32 NextCommandNumber_80368574;
     
     NextCommandNumber_80368574 = 0;
-    CommandList_80339E70[0] = -1;
+    CommandList_80339E70[0].command = -1;
     __DVDLowSetWAType(0, 0);
     OSInitAlarm();
 }
@@ -182,31 +183,29 @@ void fn_8020B84C(void) {
     }
 }
 
-void fn_8020BA50(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    M2C_UNK fn_8020BD68(s32, s32, M2C_UNK, M2C_UNK);
-    extern M2C_UNK CommandList_80339E70;
+void fn_8020BA50(void *addr, u32 length, u32 offset, void *callback) {
+    extern DVDCommand CommandList_80339E70[3];
     extern s32 NextCommandNumber_80368574;
-    extern s32 WorkAroundSeekLocation_80368558;
-    s32 temp_r8;
-    s32 var_r10;
+    extern u32 WorkAroundSeekLocation_80368558;
+    u32 offsetToSeek;
 
-    temp_r8 = arg2 & 0xFFFF8000;
-    if (temp_r8 == 0) {
-        var_r10 = 0;
+    if ((offset & ~0x7FFF) == 0) {
+        offsetToSeek = 0;
     } else {
-        var_r10 = temp_r8 + WorkAroundSeekLocation_80368558;
+        offsetToSeek = (offset & ~0x7FFF) + WorkAroundSeekLocation_80368558;
     }
-    M2C_FIELD(&CommandList_80339E70, s32 *, 0) = 2;
-    M2C_FIELD(&CommandList_80339E70, s32 *, 0xC) = var_r10;
-    M2C_FIELD(&CommandList_80339E70, s32 *, 0x10) = arg3;
-    M2C_FIELD(&CommandList_80339E70, s32 *, 0x14) = 1;
-    M2C_FIELD(&CommandList_80339E70, s32 *, 0x18) = arg0;
-    M2C_FIELD(&CommandList_80339E70, s32 *, 0x1C) = arg1;
-    M2C_FIELD(&CommandList_80339E70, s32 *, 0x20) = arg2;
-    M2C_FIELD(&CommandList_80339E70, s32 *, 0x24) = arg3;
-    M2C_FIELD(&CommandList_80339E70, s32 *, 0x28) = -1;
+
+    CommandList_80339E70[0].command = 2;
+    CommandList_80339E70[0].offset = offsetToSeek;
+    CommandList_80339E70[0].callback = callback;
+    CommandList_80339E70[1].command = 1;
+    CommandList_80339E70[1].addr = addr;
+    CommandList_80339E70[1].length = length;
+    CommandList_80339E70[1].offset = offset;
+    CommandList_80339E70[1].callback = callback;
+    CommandList_80339E70[2].command = -1;
     NextCommandNumber_80368574 = 0;
-    fn_8020BD68(var_r10, arg3, -1, 1);
+    fn_8020BD68(offsetToSeek, callback);
 }
 
 BOOL fn_8020BD68(u32 offset, void *callback) {
