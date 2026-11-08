@@ -1717,6 +1717,74 @@ void *fn_801769C0(void *arg0, s16 arg1) {
     return arg0;
 }
 
+#pragma cplusplus on
+extern "C" void fn_8015AD7C(s32, s32, s32, s16, s32, s32);
+extern "C" void fn_80161AA8(s32, s32, s16, s32, s32, void *);
+extern "C" s32 fn_80009B80(u8);
+extern "C" void fn_80176A3C(void *arg0, s32 arg1) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual s16 v17() = 0;
+        virtual s32 v18() = 0;
+        virtual s16 v19() = 0;
+        virtual s32 v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual void v25() = 0;
+        virtual void v26() = 0;
+        virtual void v27() = 0;
+        virtual void v28() = 0;
+        virtual void v29() = 0;
+        virtual void v30() = 0;
+        virtual void v31() = 0;
+        virtual void v32() = 0;
+        virtual s32 v33(s32) = 0;
+    };
+    struct Color {
+        u8 r, g, b, a;
+    };
+    s16 y;
+    s16 h;
+    struct Color col;
+
+    ((Obj *)arg0)->v30();
+    y = ((Obj *)arg0)->v19();
+    if (y == 0) {
+        y = ((Obj *)arg0)->v20() * ((Obj *)arg0)->v33(arg1) + ((Obj *)arg0)->v17() * 2;
+    }
+    fn_8015AD7C(0, 0, ((Obj *)arg0)->v18(), y, 0xE6, 0x10);
+    fn_8000A258();
+    fn_80009B80(0x80);
+    fn_8000A248();
+    y = y - ((Obj *)arg0)->v20() - 8;
+    h = ((Obj *)arg0)->v18() - 0x10;
+    col.r = 0xFF;
+    col.g = 0xFF;
+    col.b = 0xFF;
+    col.a = 0x33;
+    fn_80161AA8(8, y, h + 8, y, 0x10, &col);
+}
+#pragma cplusplus reset
+
 void fn_80176E24(s32 arg0, void *arg1) {
     extern u16 lbl_80294604[];
     void *fn_8000C0C0(u16 *, u16 *);
@@ -3369,3 +3437,10 @@ extern s32 lbl_8036722C;
 #include "unit.h"
 
 extern u16* gSomeBssVar; // lbl_802EF4C8
+#include "common.h"
+extern u16 lbl_80292230[];
+extern u16 lbl_8028FDB0[];
+extern u16 lbl_80292208[];
+extern u16 lbl_80292488[];
+extern f32 lbl_8036AB6C;
+extern f32 lbl_8036AB70;
