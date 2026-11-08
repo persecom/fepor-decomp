@@ -364,6 +364,16 @@ void fn_80208780(s32 arg0, s32 arg1) {
     lbl_803684E4 = arg1;
 }
 
+void OSClearContext(OSContext *context);
+void OSSetCurrentContext(OSContext *context);
+void fn_80206E1C(u32 bootDol, u32 resetCode, char **argv);
+void fn_8020878C(s32 *arg0, s32 *arg1) {
+    extern s32 lbl_803684E0;
+    extern s32 lbl_803684E4;
+    *arg0 = lbl_803684E0;
+    *arg1 = lbl_803684E4;
+}
+
 s32 __OSSyncSram(void) {
     extern u16 Scb_80339420[];
     return (s32)Scb_80339420[0x4C / sizeof(u16)];
@@ -616,5 +626,11 @@ s32 fn_80215F40(void) {
 s32 fn_80215F50(void) {
     return ((u16) *(u16 *)0xCC005004 >> 0xFU) & 1;
 }
+
+void fn_80215F78(u16 arg0) {
+    *(u16 *)0xCC005000 = (u16)(arg0 >> 16);
+    *(u16 *)0xCC005002 = arg0;
+}
+
 extern u16 StopAtNextInt_80368530;
 extern u16 lbl_80368550;
