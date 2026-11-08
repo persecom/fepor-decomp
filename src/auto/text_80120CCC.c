@@ -557,6 +557,74 @@ void fn_80123CFC(void) {
     fn_801246FC();
 }
 
+void fn_80125624(void *arg0) {
+    typedef struct {
+        f32 x, y, z;
+    } Vec;
+    typedef struct {
+        u8 pad0[0xE0];
+        Vec pos;
+    } Cam;
+    typedef struct {
+        u8 pad0[0x38];
+        f32 speedX;
+        f32 speedY;
+        u8 pad40[0xD];
+        u8 unk4D;
+        u8 pad4E[2];
+        f32 scrollX[2];
+        f32 scrollY[2];
+        Vec pos;
+        s32 unk6C;
+    } Obj;
+    u8 fn_800AA188(void);
+    Cam *fn_80068548(void);
+    void fn_8005A1E8(s32, Vec *, Vec *);
+    void fn_80009D74(f32, f32, f32, f32);
+    void fn_80009F90(s32, s32, s32);
+    void fn_801258E4(void *);
+    void fn_80007340(void (*)(void *), void *);
+    void fn_80007884(void);
+    void fn_80007898(s32);
+    void fn_8000A248(void);
+    void fn_8000A258(void);
+    Obj *obj = arg0;
+    Vec delta = {0.0f, 0.0f, 0.0f};
+    Vec pos = {0.0f, 0.0f, 0.0f};
+    Cam *cam;
+    f32 scale;
+    s32 i;
+
+    if (obj->unk4D == 0) {
+        if (fn_800AA188() == 0) {
+            return;
+        }
+        cam = fn_80068548();
+        fn_8005A1E8(0, &cam->pos, &delta);
+        fn_8005A1E8(0, &obj->pos, &pos);
+        delta.x -= pos.x;
+        delta.y -= pos.y;
+        obj->pos.x = cam->pos.x;
+        obj->pos.y = cam->pos.y;
+        obj->pos.z = cam->pos.z;
+    }
+    scale = 1.0f;
+    for (i = 0; i < 2; i++) {
+        obj->scrollX[i] += obj->speedX * scale - delta.x;
+        obj->scrollY[i] += obj->speedY * scale - delta.y;
+        obj->scrollX[i] -= (f32)((s32)(obj->scrollX[i] * 0.0078125f) << 7);
+        obj->scrollY[i] -= (f32)((s32)(obj->scrollY[i] * 0.0078125f) << 7);
+        scale *= 1.5f;
+    }
+    fn_8000A258();
+    fn_80009D74(0.0f, 0.0f, 800.0f, 1.0f);
+    fn_80009F90(obj->unk6C, 6, 0x411);
+    fn_8000A248();
+    fn_80007898(0xB);
+    fn_80007340(fn_801258E4, obj);
+    fn_80007884();
+}
+
 void fn_80125818(void *arg0) {
     void *fn_80040844();
     s32 fn_8006D948(void *, M2C_UNK *);
@@ -588,6 +656,29 @@ void fn_80125818(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x4D) = 0;
     M2C_FIELD(arg0, f32 *, 0x38) = (f32) lbl_8036A38C;
     M2C_FIELD(arg0, f32 *, 0x3C) = (f32) lbl_8036A308;
+}
+
+void fn_801258E4(void* arg0, void* arg1, void* arg2) {
+    void* temp_r5;
+    
+    if (arg0 == NULL) {
+        return;
+    }
+    
+    temp_r5 = arg0;
+    if (M2C_FIELD(arg0, u32*, 0x10) != 0) {
+        while (1) {
+            s32 temp_r4 = M2C_FIELD(temp_r5, u32*, 0x8);
+            if (temp_r4 == 0) {
+                break;
+            }
+            temp_r5 = (void*)((u8*)temp_r5 + temp_r4);
+            if (arg1 != NULL) {
+                fn_80126E18(temp_r5, arg1);  
+            }
+        }
+    }
+    fn_80125924(arg0, arg1);
 }
 
 void fn_80125AE0(void *arg0) {
@@ -995,8 +1086,8 @@ s32 fn_801275BC(s32 arg0) {
 }
 
 void fn_80127700(void* arg0, s32 arg1) {
-    SomeStruct* temp_r30;
     s32 temp_r3;
+    SomeStruct* temp_r30;
     s32 temp_r4;
     s32 temp_r5;
     s32 temp_r6;
@@ -1009,7 +1100,6 @@ void fn_80127700(void* arg0, s32 arg1) {
     if (temp_r3 >= 0x100) {
         temp_r3 = 0xFF;
     }
-
     temp_r4 = temp_r3 * 0x20;
     temp_r5 = temp_r4 >> 8;
     temp_r6 = temp_r5 + 0x40;
@@ -1149,6 +1239,11 @@ void fn_80121D30(void);
 extern f32 lbl_8036A30C;
 extern f32 lbl_8036A35C;
 extern f32 lbl_8036A3B8;
+extern s32 lbl_80274F68[2];
+extern u8 lbl_8036728A;
+extern void* jumptable_80290434[];
+extern f32 lbl_8036A308;
+extern f32 lbl_8036A30C;
 extern void *lbl_80274F74;
 extern void *lbl_80367A68;
 #include "global.h"
