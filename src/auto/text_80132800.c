@@ -1272,18 +1272,51 @@ void fn_8013DD1C(s32 arg0, void *arg1) {
 extern "C" void fn_8015AD7C(s32, s32, s32, s16, s32, s32);
 extern "C" s32 fn_80009B80(u8);
 extern "C" void fn_8013DF7C(void *arg0, s32 arg1) {
-    s16 var_r31;
-    s32 temp_r31;
-    s32 temp_r31_2;
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual s16 v17() = 0;
+        virtual s32 v18() = 0;
+        virtual s16 v19() = 0;
+        virtual s16 v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual void v25() = 0;
+        virtual void v26() = 0;
+        virtual void v27() = 0;
+        virtual void v28() = 0;
+        virtual void v29() = 0;
+        virtual void v30() = 0;
+        virtual void v31() = 0;
+        virtual void v32() = 0;
+        virtual s16 v33(s32) = 0;
+    };
+    s16 y;
 
-    M2C_FIELD(M2C_FIELD(arg0, void **, 4), M2C_UNK (**)(), 0x80)();
-    var_r31 = M2C_FIELD(M2C_FIELD(arg0, void **, 4), s16 (**)(void *), 0x54)(arg0);
-    if (var_r31 == 0) {
-        temp_r31 = M2C_FIELD(M2C_FIELD(arg0, void **, 4), s32 (**)(void *, s32), 0x8C)(arg0, arg1);
-        temp_r31_2 = M2C_FIELD(M2C_FIELD(arg0, void **, 4), s32 (**)(void *), 0x58)(arg0) * temp_r31;
-        var_r31 = (M2C_FIELD(M2C_FIELD(arg0, void **, 4), s16 (**)(void *), 0x4C)(arg0) * 2) + temp_r31_2;
+    ((Obj *)arg0)->v30();
+    y = ((Obj *)arg0)->v19();
+    if (y == 0) {
+        y = ((Obj *)arg0)->v20() * ((Obj *)arg0)->v33(arg1) + ((Obj *)arg0)->v17() * 2;
     }
-    fn_8015AD7C(0, 0, M2C_FIELD(M2C_FIELD(arg0, void **, 4), s32 (**)(void *), 0x50)(arg0), var_r31, 0xE6, 0x10);
+    fn_8015AD7C(0, 0, ((Obj *)arg0)->v18(), y, 0xE6, 0x10);
     fn_8000A258();
     fn_80009B80(0x80);
     fn_8000A248();
