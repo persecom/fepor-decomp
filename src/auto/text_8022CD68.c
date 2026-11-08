@@ -31,6 +31,11 @@ extern u8 lbl_80368AAD;
 extern u16 lbl_8035BF18[];
 extern u32 lbl_8035C918[];
 
+typedef struct __InStrCtrl {
+    char *NextChar;
+    s32 NullCharDetected;
+} __InStrCtrl;
+
 u32 fn_8026367C(void);
 u16 fn_8025FC64(u8 arg0, u8 arg1, u8 arg2);
 s32 fn_8022C568(f32 arg0);
@@ -608,27 +613,25 @@ void fn_80234524(s32 arg0) {
 
 s32 fn_802355BC(s32 arg0) {
     extern s32 lbl_803687F0;
-    extern void *fn_80234048;
-    extern s32 fn_8023567C(s32, s32, void *, s32 *, s32 *, s32 *, s32 *);
-
-    s32 sp18;
+    extern s32 fn_80234048();
+    extern u32 fn_8023567C(s32, s32, s32 (*)(), s32 *, s32 *, s32 *, s32 *);
+    u32 value;
+    s32 count;
+    s32 negative;
+    s32 overflow;
     s32 sp14;
-    s32 sp10;
-    s32 spC;
-    s32 sp8;
-    u32 var_r3;
+    s32 sp18;
 
     sp14 = arg0;
     sp18 = 0;
-    var_r3 = fn_8023567C(0xA, 0x7FFFFFFF, &fn_80234048, &sp14, &sp8, &spC, &sp10);
-    if ((sp10 != 0) || ((spC == 0) && (var_r3 > 0x7FFFFFFFU)) || ((spC != 0) && (var_r3 > 0x80000000U))) {
+    value = fn_8023567C(10, 0x7FFFFFFF, fn_80234048, &sp14, &count, &negative, &overflow);
+    if (overflow || (!negative && value > 0x7FFFFFFF) || (negative && value > 0x80000000)) {
+        value = negative ? 0x80000000 : 0x7FFFFFFF;
         lbl_803687F0 = 0x22;
-        return (spC != 0) + 0x7FFFFFFF;
+    } else if (negative) {
+        value = -value;
     }
-    if (spC != 0) {
-        var_r3 = (u32) -(s32) var_r3;
-    }
-    return (s32) var_r3;
+    return value;
 }
 
 s32 fn_80235A7C(s32 arg0, s32 arg1, s32 *arg2, s32 arg3) {
