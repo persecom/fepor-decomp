@@ -2213,6 +2213,31 @@ s32 fn_80179D40(s32 arg0) {
     return arg0;
 }
 
+void *fn_80179D70(void *arg0, s16 arg1) {
+    M2C_UNK fn_800C428C(void *);
+    extern u16 lbl_8028FDB0[];
+    extern u16 lbl_80292230[];
+    extern u8 lbl_8029518C[];
+    extern u8 lbl_802951B8[];
+
+    if (arg0 != NULL) {
+        M2C_FIELD(arg0, void **, 0) = lbl_8029518C;
+        if (arg0 != NULL) {
+            M2C_FIELD(arg0, void **, 0) = lbl_802951B8;
+            if (arg0 != NULL) {
+                M2C_FIELD(arg0, void **, 0) = lbl_80292230;
+                if (arg0 != NULL) {
+                    M2C_FIELD(arg0, void **, 0) = lbl_8028FDB0;
+                }
+            }
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void *fn_80179F8C(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
     M2C_UNK fn_8017A000(s16 *, s16 *, s32);
     extern u16 lbl_80291B1C;
