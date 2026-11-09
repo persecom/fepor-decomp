@@ -1253,6 +1253,16 @@ void fn_800A84C8(s32 arg0) {
     fn_8018DCC0(arg0);
 }
 
+u32 fn_800A8504(void *arg0, u32 arg1) {
+    u8 *ptr;
+    u32 temp;
+
+    ptr = *(u8 **)((u8 *)arg0 + 0x34);
+    temp = __cntlzw(0x2A - (s32)*(s8 *)(ptr + (arg1 & 0xFF)));
+
+    return temp >> 5;
+}
+
 void fn_800A8524(void *arg0, void *arg1)
 {
     u8 temp_r3;
