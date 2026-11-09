@@ -1954,16 +1954,18 @@ void fn_8016F5DC(void *arg0) {
 }
 
 void fn_8016F628(void *arg0) {
+    s16 fn_80164E78(void *, s32);
     void *temp_r31;
-    s32 temp_r0;
+    s32 zero;
 
-    temp_r31 = M2C_FIELD(arg0, void **, 0x4C);
-    M2C_FIELD(temp_r31, s8 *, 0x48) = 0;
-    M2C_FIELD(temp_r31, s32 *, 0x60) = 3;
-    M2C_FIELD(temp_r31, s8 *, 0x4B) = 0;
-    M2C_FIELD(temp_r31, s32 *, 0x70) = 0;
-    M2C_FIELD(temp_r31, s32 *, 0x74) = 0;
-    M2C_FIELD(temp_r31, s16 *, 0x4C) = fn_80164E78(temp_r31);
+    zero = 0;
+    temp_r31 = *(void **)((u8 *)arg0 + 0x4C);
+    *(u8 *)((u8 *)temp_r31 + 0x48) = zero;
+    *(s32 *)((u8 *)temp_r31 + 0x60) = 3;
+    *(u8 *)((u8 *)temp_r31 + 0x4B) = zero;
+    *(s32 *)((u8 *)temp_r31 + 0x70) = zero;
+    *(s32 *)((u8 *)temp_r31 + 0x74) = zero;
+    *(s16 *)((u8 *)temp_r31 + 0x4C) = fn_80164E78(temp_r31, 0);
     fn_8013FF00(arg0, temp_r31);
 }
 
