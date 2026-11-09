@@ -1844,6 +1844,17 @@ extern "C" void fn_8018F94C(void *arg0) {
     fn_80154004(0, 0, 0x10);
 }
 
+extern "C" void fn_8018FC1C(void *arg0) {
+    void fn_80154004(s32, s32, s32);
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    ((Obj *)arg0)->v2();
+    fn_80154004(0, 0, 0x10);
+}
+
 #pragma cplusplus reset
 
 void *fn_8018FFB4(void *arg0, s16 arg1) {
