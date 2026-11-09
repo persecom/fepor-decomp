@@ -1878,8 +1878,8 @@ void fn_8016EE14(void *arg0) {
 }
 
 void fn_8016EE7C(void) {
-    void *ptr = lbl_802EF4C8;
-    fn_8003BE50(ptr);
+    void fn_8003BE50(void *);
+    fn_8003BE50(*(void **)lbl_802EF4C8);
 }
 
 void fn_8016EEA8(s32 arg0) {
