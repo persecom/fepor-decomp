@@ -5484,9 +5484,9 @@ void fn_801E2084(s32 arg0) {
 }
 
 void fn_801E218C(void) {
-    fn_800EB788();
-    if (0) {
-        // Dummy to add the clrlwi. r0, r3, 24 instruction
+    u8 fn_800EB788(void);
+    if (fn_800EB788() != 0) {
+        return;
     }
 }
 
