@@ -911,14 +911,14 @@ void fn_800590CC(void *arg0) {
 }
 
 void fn_800590D8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    void *fn_8000CAA0(void *, s32, void *);
-    extern u16 lbl_80285B08[16];
+    void *fn_8000CAA0(void *, s32);
+    extern u8 lbl_80285B08[];
     void *temp_r3;
 
-    temp_r3 = fn_8000CAA0(&lbl_80285B08, arg3, &lbl_80285B08);
-    *(s32 *)((char *)temp_r3 + 0x30) = arg0;
-    *(s32 *)((char *)temp_r3 + 0x34) = arg1;
-    *(s32 *)((char *)temp_r3 + 0x38) = arg2;
+    temp_r3 = fn_8000CAA0(lbl_80285B08, arg3);
+    *(s32 *)((u8 *)temp_r3 + 0x30) = arg0;
+    *(s32 *)((u8 *)temp_r3 + 0x34) = arg1;
+    *(s32 *)((u8 *)temp_r3 + 0x38) = arg2;
 }
 
 void fn_80059138(s32 arg0, s32 arg1, s32 arg2, u32 arg3) {
@@ -1006,19 +1006,19 @@ f32 fn_80059440(f32 farg0, f32 farg1, f32 farg2, f32 farg3) {
     return -((lbl_8036917C * (f32) (s32) (var_f1 / lbl_8036917C)) - var_f1);
 }
 
-f32 fn_80059500(f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 farg4) {
-    extern f32 lbl_80369104;
-    extern f32 lbl_8036912C;
-    extern f32 lbl_8036915C;
-    extern f64 lbl_80369160;
-    f32 temp_f10;
-    f32 temp_f12;
-    f32 temp_f6;
-
-    temp_f12 = lbl_80369104 * farg4;
-    temp_f10 = farg4 - lbl_8036912C;
-    temp_f6 = lbl_8036912C - farg4;
-    return (f32) (((f64) (farg4 * (temp_f10 * farg4)) * (lbl_80369160 * (f64) (farg3 - farg1))) + (((f64) (farg4 * (temp_f6 * temp_f6)) * (lbl_80369160 * (f64) (farg2 - farg0))) + (f64) (((lbl_8036912C + temp_f12) * (temp_f10 * temp_f10) * farg1) + ((lbl_8036915C - temp_f12) * (farg4 * farg4) * farg2))));
+f32 fn_80059500(f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 farg4)
+{
+  extern f32 lbl_80369104;
+  extern f32 lbl_8036912C;
+  extern f32 lbl_8036915C;
+  extern f64 lbl_80369160;
+  f32 temp_f10;
+  f32 temp_f12;
+  f32 temp_f6;
+  temp_f12 = lbl_80369104 * farg4;
+  temp_f10 = farg4 - lbl_8036912C;
+  temp_f6 = lbl_8036912C - farg4;
+  return (f32) ((((f64) (farg4 * (temp_f10 * farg4))) * (lbl_80369160 * ((f64) (farg3 - farg1)))) + ((((f64) (farg4 * (temp_f6 * temp_f6))) * (lbl_80369160 * ((f64) (farg2 - farg0)))) + ((f64) ((((lbl_8036912C + temp_f12) * (temp_f10 * temp_f10)) * farg1) + (((lbl_8036915C - (lbl_80369104 * farg4)) * (farg4 * farg4)) * farg2)))));
 }
 
 void fn_800599D0(u16 arg0, u16 arg1, u16 arg2, u16 arg3, s32 arg4) {
