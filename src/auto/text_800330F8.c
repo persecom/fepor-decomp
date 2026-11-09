@@ -170,22 +170,24 @@ u8 fn_80034A8C(s32 arg0, u8 arg1) {
 }
 
 void fn_80034F40(void *arg0) {
- void fn_8003868C(void*,u8); u8 fn_800386B0(void*); void fn_8003708C(void*,void*);
  void *obj=M2C_FIELD(arg0,void**,0x280);
+ void fn_8003868C(void*,u8); u8 fn_800386B0(void*); void fn_8003708C(void*,void*);
  u8 status=M2C_FIELD(M2C_FIELD(obj,void**,0x190),u8*,8);
- if (status!=0 && status==5) {
-  M2C_FIELD(obj,u8*,0x19A)=M2C_FIELD(arg0,u8*,0x19A);
-  fn_8003868C(M2C_FIELD(arg0,void**,0x280),(u8)fn_800386B0(arg0));
+ if (status==0) goto copy;
+ if (status==5) {
+   M2C_FIELD((short)obj,u8*,0x19A)=M2C_FIELD(arg0,u8*,0x19A);
+   fn_8003868C(M2C_FIELD(arg0,void**,0x280),(u8)fn_800386B0(arg0));
  }
+ copy:
  fn_8003708C(M2C_FIELD(arg0,void**,0x280),(u8*)arg0+0x2D7);
  obj=M2C_FIELD(arg0,void**,0x280);
  M2C_FIELD(obj,u8*,0x1B4)=M2C_FIELD(arg0,u8*,0x1B4);
  M2C_FIELD(obj,u8*,0x1B5)=M2C_FIELD(arg0,u8*,0x1B5);
- M2C_FIELD(obj,u8*,0x1B6)=M2C_FIELD(arg0,u8*,0x1B6);
+ M2C_FIELD(obj,u8*,0x1B6)=M2C_FIELD((u32)arg0,u8*,0x1B6);
  M2C_FIELD(obj,u8*,0x1B7)=M2C_FIELD(arg0,u8*,0x1B7);
  M2C_FIELD(obj,u8*,0x1B8)=M2C_FIELD(arg0,u8*,0x1B8);
  M2C_FIELD(obj,u8*,0x1B9)=M2C_FIELD(arg0,u8*,0x1B9);
- M2C_FIELD(obj,u8*,0x1BA)=M2C_FIELD(arg0,u8*,0x1BA);
+ M2C_FIELD((s32)obj,u8*,0x1BA)=M2C_FIELD(arg0,u8*,0x1BA);
  M2C_FIELD(obj,u8*,0x1BB)=M2C_FIELD(arg0,u8*,0x1BB);
 }
 
@@ -4421,10 +4423,11 @@ void fn_80055BE0(s32 arg0) {
 }
 
 void fn_80055C34(void *arg0) {
-    M2C_UNK fn_8000C070(M2C_UNK);
-    M2C_FIELD(arg0, s32 *, 0x60) = (s32) (M2C_FIELD(arg0, s32 *, 0x60) - 1);
-    if ((s32) M2C_FIELD(arg0, s32 *, 0x60) >= 0) {
-        fn_8000C070(0);
+    void fn_8000C070(void *, s32);
+
+    *(s32 *)((u8 *)arg0 + 0x60) = *(s32 *)((u8 *)arg0 + 0x60) - 1;
+    if (*(s32 *)((u8 *)arg0 + 0x60) >= 0) {
+        fn_8000C070(arg0, 0);
     }
 }
 
