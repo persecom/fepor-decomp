@@ -1099,17 +1099,22 @@ void fn_80169E74(void *arg0) {
 }
 
 void fn_80169F30(void *arg0) {
-    M2C_UNK fn_8000C070(M2C_UNK);
-    M2C_UNK fn_801658DC(void *);
-    extern M2C_UNK lbl_80277BC0;
-    switch ((s32) M2C_FIELD(&lbl_802EF4C8, u8 *, 8)) { /* irregular */
+    M2C_UNK fn_8000C070(void *, s32);
+    M2C_UNK fn_8000A420(void *);
+    M2C_UNK fn_8013FF94(void *, s32, s32);
+    M2C_UNK fn_801658DC(u32, void *);
+    M2C_UNK fn_8000C188(void *);
+    extern u8 lbl_80277BC0[];
+    u32 temp;
+    switch ((s32)((u8 *)lbl_802EF4C8)[8]) {
     case 0x81:
-        fn_8000C070(0x11);
+        fn_8000C070(arg0, 0x11);
         return;
     case 0x80:
-        fn_8000A420(M2C_FIELD(arg0, s32 *, 0x4C));
-        if (fn_8013FF94(arg0, -0x1000, 0) != 0U) {
-            fn_801658DC(&lbl_80277BC0 + 0xF0);
+        fn_8000A420((void *)M2C_FIELD(arg0, s32 *, 0x4C));
+        temp = fn_8013FF94(arg0, -0x1000, 0);
+        if (temp != 0) {
+            fn_801658DC(temp, lbl_80277BC0 + 0xF0);
         }
         fn_8000C188(arg0);
         return;
