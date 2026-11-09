@@ -4088,18 +4088,19 @@ s32 fn_800E5070(void *arg0, s32 arg1) {
     return M2C_FIELD(arg0, s32 *, 0xFC) + (arg1 * 0x1C);
 }
 
-void fn_800E51A8(void *arg1) {
-    M2C_UNK fn_800C9ABC(void *, M2C_UNK *);
-    extern M2C_UNK lbl_802720E0;
-    M2C_UNK sp8;
+void fn_800E51A8(void *arg0, void *arg1) {
+    void fn_800C9B6C(void *, void *);
+    void fn_800C9ABC(void *, void *, void *);
+    extern u8 lbl_802720E0[];
+    u8 sp8[8];
     void *temp_r6;
 
     temp_r6 = M2C_FIELD(arg1, void **, 0x100);
-    if ((temp_r6 != NULL) && ((s32) M2C_FIELD(temp_r6, s32 *, 0x18) == (s32) M2C_FIELD(arg1, s32 *, 0xCC))) {
-        fn_800C9B6C(temp_r6);
+    if ((temp_r6 != NULL) && (M2C_FIELD(temp_r6, s32 *, 0x18) == M2C_FIELD(arg1, s32 *, 0xCC))) {
+        fn_800C9B6C(arg0, temp_r6);
         return;
     }
-    fn_800C9ABC(&lbl_802720E0 + 5, &sp8);
+    fn_800C9ABC(arg0, lbl_802720E0 + 5, sp8);
 }
 
 void fn_800E5200(void *arg0, u16 arg1, s32 arg2) {
