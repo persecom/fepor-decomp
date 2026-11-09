@@ -1452,17 +1452,17 @@ extern "C" s32 fn_800D0C5C(void *arg0) {
     u8 strK[12], strL[12], strM[12], strN[12], strO[12];
     u8 strP[12], strQ[12], strR[12], strS[12], strT[12];
     u8 strU[12], strV[12], strW[12], strX[12], strY[12];
-    u8 strZ[12];
+    u8 strZ[12], strPad[12];
     s32 sc0, sc1, sc2, sc3, sc4, sc5, sc6, sc7, sc8, sc9;
     s32 scA, scB, scC, scD, scE, scF, scG, scH, scI, scJ;
-    s32 scK, scL, scM, scN, scO, scW, scX, scY, scZ;
+    s32 scK, scL, scM, scN, scO, scW, scX, scY, scZ, scPad;
     H *obj;
     f32 f1;
-    u32 sub;
+    s32 sub;
     s32 r27;
     s32 r28;
-    s32 state;
     s32 r30;
+    s32 state;
     void *self = arg0;
 
     fn_800D3590(lbl_80367240);
