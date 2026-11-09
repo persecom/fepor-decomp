@@ -471,6 +471,22 @@ void fn_801181F8(s32 arg0) {
     }
 }
 
+void fn_8011829C(void *arg0) {
+    void fn_80018AE4(void);
+    void fn_8000C070(void *, s32);
+    extern u8 lbl_802EF4C8[];
+
+    fn_80018AE4();
+    switch ((s32)lbl_802EF4C8[8]) {
+    case 0x81:
+        fn_8000C070(arg0, 0x13);
+        return;
+    case 0x80:
+        fn_8000C070(arg0, *(u8 *)((u8 *)arg0 + 0x48));
+        return;
+    }
+}
+
 void fn_80118308(s32 arg0) {
     M2C_UNK fn_8000E0E4(void *);
     M2C_UNK fn_80018AF4();
