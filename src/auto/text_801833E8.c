@@ -458,6 +458,36 @@ s32 fn_80184750(s32 arg0, s32 arg1, struct Unit* unit, s32 arg3, s32 arg4, s32 a
     return 0;
 }
 
+void *fn_80184A00(void *arg0, u32 arg1, s32 arg2, s32 arg3) {
+    void fn_8000A388(void *, void *, void *);
+    void *fn_8000CA64(void *, s32);
+    f32 fn_8004BE18(void);
+    void fn_80185078(void *, void *);
+    extern u16 lbl_80295A78[36];
+    u8 sp8[0x34];
+    f32 temp_f31;
+    void *temp_r3;
+
+    if (arg1 == 0U) {
+        return NULL;
+    }
+    temp_f31 = fn_8004BE18();
+    M2C_FIELD(sp8, void **, 0x30) = arg0;
+    fn_8000A388(&lbl_80295A78, fn_80185078, sp8);
+    if (temp_f31 == ((f32)M2C_FIELD(arg0, s16 *, 0x15C) / 50.0f)) {
+        return NULL;
+    }
+    if (arg2 <= 0) {
+        M2C_FIELD(arg0, s16 *, 0x15C) = (s16)(50.0f * temp_f31);
+        return NULL;
+    }
+    temp_r3 = fn_8000CA64(&lbl_80295A78, arg3);
+    M2C_FIELD(temp_r3, void **, 0x30) = arg0;
+    M2C_FIELD(temp_r3, f32 *, 0x34) = temp_f31;
+    M2C_FIELD(temp_r3, s32 *, 0x38) = arg2;
+    return temp_r3;
+}
+
 void fn_80184BE8(s32 arg0, s32 arg1, s32 arg2, u32 arg3) {
     void fn_8000A388(void *, void *, void *);
     void *fn_8000CAF0(void *, u32);
