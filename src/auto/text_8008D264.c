@@ -128,13 +128,6 @@ void fn_8008D264(void *arg0, u8 arg1, s32 arg2, s16 arg3, f32 farg0) {
         }
         fn_8005AC24(lbl_802F0308, arg2, arg3, var_r0 + 0x61);
     }
-    if ((s32)arg0 == -2) {
-        fn_8000A248();
-        fn_8000A248();
-        fn_8000A248();
-        fn_8000A248();
-        fn_8000A248();
-    }
 }
 
 void fn_8008D6D8(void *arg0) {
