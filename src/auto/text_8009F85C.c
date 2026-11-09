@@ -443,15 +443,15 @@ s32 fn_800A0170(void *arg2) {
     return 0;
 }
 
-u8 fn_800A0198(void) {
+u32 fn_800A0198(void) {
     extern u8 lbl_80367708;
-    u8 var_r3;
+    u32 var_r3;
 
     var_r3 = 2;
-    if ((u8) lbl_80367708 != 0) {
+    if (lbl_80367708 != 0) {
         var_r3 = 0;
     }
-    return var_r3;
+    return (u8)var_r3;
 }
 
 void fn_800A01B4(void) {
