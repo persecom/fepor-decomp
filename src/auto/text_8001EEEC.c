@@ -930,11 +930,15 @@ void *fn_800254DC(void) {
     return ptr + 0x1A;
 }
 
-void fn_800254EC(void **arg0) {
-    void (**vtable)(void) = (void (**)(void)) *arg0;
-    vtable[3]();
+#pragma cplusplus on
+extern "C" void fn_800254EC(void *arg0) {
+    struct Obj {
+        virtual void v0();
+        virtual void v1();
+    };
+    ((Obj *)arg0)->v1();
 }
-
+#pragma cplusplus reset
 void *fn_80025518(void) {
     extern u16 lbl_80268D90;
     return (u8*)&lbl_80268D90 + 0x1E;
