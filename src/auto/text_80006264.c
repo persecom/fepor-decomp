@@ -527,6 +527,20 @@ void fn_80007790(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
     *(f32 *)(ptr + 0x24) = arg3;
 }
 
+void fn_800077B0(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
+    extern void *lbl_80367140;
+    u8 *ptr;
+
+    ptr = (u8 *)lbl_80367140;
+    ptr = *(u8 **)(ptr + 0xC);
+    ptr = *(u8 **)(ptr + 0x4);
+
+    *(f32 *)(ptr + 0x18) = arg0;
+    *(f32 *)(ptr + 0x1C) = arg1;
+    *(f32 *)(ptr + 0x28) = arg0 + arg2;
+    *(f32 *)(ptr + 0x2C) = arg1 + arg3;
+}
+
 void fn_80007818(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
     extern void *lbl_80367140;
     u8 *ptr;
