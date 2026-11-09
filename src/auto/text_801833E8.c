@@ -4844,6 +4844,27 @@ void fn_8019F2D0(void* arg0) {
     }
 }
 
+s32 fn_8019F914(s32 arg0, s32 arg1) {
+    s32 fn_80040844(void);
+    void *fn_8004721C(s32, s32, s32, s32, s32);
+    void fn_8010FEEC(void *, s32, s32, s32, s32);
+    void fn_80049C8C(void *, s32);
+    void fn_80044450(s32, s32);
+    void fn_80016180(void);
+    extern u8 lbl_8032BB58[];
+    void *temp;
+
+    temp = fn_8004721C(fn_80040844(), arg0, arg1, 0x80000, 0x10);
+    if (temp == NULL) {
+        return 0;
+    }
+    fn_8010FEEC(lbl_8032BB58, (s8)arg0, (s8)arg1, 0x29, 0);
+    fn_80049C8C(temp, 0);
+    fn_80044450(fn_80040844(), 1);
+    fn_80016180();
+    return 1;
+}
+
 void fn_8019FC4C(s32 arg0) {
     M2C_UNK fn_8000C188(s32);
     u8 fn_8001772C();
