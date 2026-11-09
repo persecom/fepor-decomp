@@ -736,6 +736,7 @@ u8 fn_800386B0(void *arg0) {
 }
 
 s32 fn_800386E0(s32 arg0) {
+    u8 fn_80105BC0(s32, s32);
     s32 var_r31;
 
     var_r31 = 0;
