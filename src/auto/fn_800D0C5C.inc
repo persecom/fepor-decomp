@@ -133,6 +133,10 @@ extern "C" s32 fn_800D0C5C(void *arg0) {
     r30 = 0;
     if (state <= 0x39U) {
         switch (state) {
-        /*CHUNK*/
+                  default: break;
+        }
+    }
+    return 0;
 }
 #pragma cplusplus reset
+
