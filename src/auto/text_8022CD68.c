@@ -360,25 +360,41 @@ s32 fn_80230BCC(s32 arg0) {
 }
 
 s32 __flush_buffer(void *arg0, s32 *arg1) {
-    s32 temp_r0;
-    s32 temp_r3;
+    typedef struct {
+        void *handle;       /* 0x00 */
+        u8 pad0[0x14];
+        u32 pos;            /* 0x18 */
+        u32 buffer;         /* 0x1C */
+        u32 buf_end;        /* 0x20 */
+        u32 buf_ptr;        /* 0x24 */
+        u32 position;       /* 0x28 */
+        u32 mode;           /* 0x2C */
+        u8 pad1[4];
+        u32 ungetc;         /* 0x34 */
+        u8 pad2[8];
+        s32 (*write_proc)(void *, u32, u32 *, u32);  /* 0x40 */
+        u8 pad3[4];
+        u32 field_48;       /* 0x48 */
+    } File;
+    File *file = (File *)arg0;
+    u32 n = file->buf_ptr - file->buffer;
+    s32 result;
 
-    temp_r0 = *(u32*)((char*)arg0 + 0x24) - *(u32*)((char*)arg0 + 0x1C);
-    if (temp_r0 != 0) {
-        *(u32*)((char*)arg0 + 0x28) = temp_r0;
-        temp_r3 = (*(s32(**)(void*, u32, void*, u32))(void*)((char*)arg0 + 0x40))(*(void**)((char*)arg0 + 0x0), *(u32*)((char*)arg0 + 0x1C), (char*)arg0 + 0x28, *(u32*)((char*)arg0 + 0x48));
+    if (n != 0) {
+        file->position = n;
+        result = file->write_proc(file->handle, file->buffer, &file->position, file->field_48);
         if (arg1 != NULL) {
-            *arg1 = *(u32*)((char*)arg0 + 0x28);
+            *arg1 = file->position;
         }
-        if (temp_r3 != 0) {
-            return temp_r3;
+        if (result != 0) {
+            return result;
         }
-        *(u32*)((char*)arg0 + 0x18) = *(u32*)((char*)arg0 + 0x18) + *(u32*)((char*)arg0 + 0x28);
+        file->pos += file->position;
     }
-    *(u32*)((char*)arg0 + 0x24) = *(u32*)((char*)arg0 + 0x1C);
-    *(u32*)((char*)arg0 + 0x28) = *(u32*)((char*)arg0 + 0x20);
-    *(u32*)((char*)arg0 + 0x28) = *(u32*)((char*)arg0 + 0x28) - (*(u32*)((char*)arg0 + 0x18) & *(u32*)((char*)arg0 + 0x2C));
-    *(u32*)((char*)arg0 + 0x34) = *(u32*)((char*)arg0 + 0x18);
+    file->buf_ptr = file->buffer;
+    file->position = file->buf_end;
+    file->position = file->position - (file->pos & file->mode);
+    file->ungetc = file->pos;
     return 0;
 }
 
