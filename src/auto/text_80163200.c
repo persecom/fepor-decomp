@@ -3310,6 +3310,30 @@ void *fn_8017C40C(void *arg0, s16 arg1) {
     return arg0;
 }
 
+void fn_8017C478(void *arg0) {
+    s16 var_r5;
+    s16 var_r4;
+    s16 var_r6;
+    s16 var_r7;
+    s16 var_r8;
+
+    var_r8 = *(s16 *)((char *)arg0 + 0xC);
+    var_r7 = *(s16 *)((char *)arg0 + 0x10);
+    var_r6 = *(s16 *)((char *)arg0 + 0xA);
+    var_r5 = *(s16 *)((char *)arg0 + 0xE);
+
+    var_r7 = var_r8 - var_r7;
+    var_r7 = (s16)var_r7;
+    *(s16 *)((char *)arg0 + 0x12) = 3;
+    var_r4 = var_r6 - var_r5;
+    var_r4 = (s16)var_r4;
+    var_r5 = var_r7 - 5;
+    *(s16 *)((char *)arg0 + 0x14) = 5;
+    var_r4 = var_r4 - 3;
+    *(s16 *)((char *)arg0 + 0x16) = var_r4;
+    *(s16 *)((char *)arg0 + 0x18) = var_r5;
+}
+
 void fn_8017D4B8(s32 *arg0, void *arg1) {
     s32 *fn_8013F748(void *, M2C_UNK *, s16 *, s16, s32, s16, void *);
     M2C_UNK spC;
@@ -3829,15 +3853,15 @@ void fn_8017F86C(void *arg0) {
 
 void fn_8017F890(void *arg0)
 {
-    extern s32 fn_8006D948(void *);
-    extern s32 fn_80059208(void *, void *);
-    extern u16 lbl_802788B8[];
-    extern void fn_8017F8EC;
-    
-    *(s32*)((char*)arg0 + 0x3C) = 0;
-    *(s32*)((char*)arg0 + 0x40) = 0xFF;
-    *(s32*)((char*)arg0 + 0x34) = fn_8006D948(&lbl_802788B8[0x122]);
-    fn_80059208(&fn_8017F8EC, arg0);
+    s32 fn_8006D948(void *);
+    void fn_80059208(void *, void *);
+    void fn_8017F8EC(void);
+    extern u8 lbl_802788B8[];
+
+    *(s32 *)((char *)arg0 + 0x3C) = 0;
+    *(s32 *)((char *)arg0 + 0x40) = 0xFF;
+    *(s32 *)((char *)arg0 + 0x34) = fn_8006D948(lbl_802788B8 + 0x122);
+    fn_80059208(fn_8017F8EC, arg0);
 }
 
 void fn_8017F8EC(void *arg0) {
@@ -4160,6 +4184,27 @@ ListOwner *fn_80181CA4(ListOwner *arg0, s16 arg1) {
         }
     }
     return arg0;
+}
+
+void fn_80181D44(void *arg0) {
+    s16 var_r5;
+    s16 var_r4;
+    s16 var_r6;
+    s16 var_r7;
+    
+    var_r6 = *(s16 *)((char *)arg0 + 0xA);
+    var_r7 = *(s16 *)((char *)arg0 + 0xC);
+    var_r5 = *(s16 *)((char *)arg0 + 0xE);
+    var_r4 = *(s16 *)((char *)arg0 + 0x10);
+    
+    *(s16 *)((char *)arg0 + 0x12) = 3;
+    *(s16 *)((char *)arg0 + 0x14) = 5;
+    
+    var_r7 = var_r7 - var_r4;
+    *(s16 *)((char *)arg0 + 0x18) = var_r7 - 5;
+    
+    var_r4 = var_r6 - var_r5;
+    *(s16 *)((char *)arg0 + 0x16) = var_r4 - 3;
 }
 
 s32 fn_80181DD8(void *arg0) {
