@@ -604,11 +604,8 @@ s32 fn_802197FC(s32 arg0, s32 arg1) {
 }
 
 s32 fn_8021A1B8(s32 arg0) {
-    s32 fn_80219A70();
-    s32 fn_80219CF4(s32, M2C_UNK);
-    s32 fn_80219F34(s32, M2C_UNK);
-    s32 temp_r0;
     s32 temp_r31;
+    s32 temp_r0;
     s32 temp_r3;
 
     temp_r3 = fn_80219A70();
@@ -617,11 +614,11 @@ s32 fn_8021A1B8(s32 arg0) {
     }
     temp_r31 = fn_80219CF4(arg0, 0);
     temp_r0 = temp_r31 + fn_80219F34(arg0, 0);
-    switch (temp_r0) {                              /* irregular */
-    case 1:
-        return -6;
+    switch (temp_r0) {
     case 0:
         return 0;
+    case 1:
+        return -6;
     default:
         return -6;
     }
@@ -802,6 +799,123 @@ void fn_8021CDC4(void) {
     
     temp_r3 = fn_80013E50(0);
     fn_80013E74((void*)temp_r3, 0);
+}
+
+void fn_8021CE0C(void *arg0, void *arg1) {
+    s32 var_r8;
+    s32 temp_r5;
+    s32 temp_r6;
+    s32 var_r9;
+    s32 var_ctr;
+    void *var_r7;
+
+    var_r8 = ((s32*)arg0)[0x2C/4];
+    if ((u32) (var_r8 + 0x10000) == -1U) {
+        ((s16*)arg1)[0x2E/2] = 0;
+        var_r8 = 0;
+        ((s16*)arg1)[0x34/2] = 0;
+        ((s16*)arg1)[0x36/2] = 0;
+    }
+    var_r9 = 0;
+    temp_r5 = ((u8*)arg0)[0x7] & 3;
+    switch (temp_r5) {                              /* switch 1; irregular */
+    case 1:                                         /* switch 1 */
+        ((s32*)arg1)[0x3C/4] = var_r8;
+        temp_r6 = var_r8 + 0xC00;
+        var_r8 += 0xE00;
+        ((s32*)arg1)[0x40/4] = temp_r6;
+        break;
+    case 2:                                         /* switch 1 */
+        ((s32*)arg1)[0x3C/4] = var_r8;
+        var_r8 += 0x1800;
+        ((s32*)arg1)[0x40/4] = -1;
+        break;
+    default:                                        /* switch 1 */
+        ((s32*)arg1)[0x3C/4] = -1;
+        ((s32*)arg1)[0x40/4] = -1;
+        break;
+    }
+    var_ctr = 2;
+    var_r7 = arg1;
+    temp_r6 = 0;
+    do {
+        temp_r5 = ((u32)((s32*)((char*)arg0 + 0x30)) >> temp_r6) & 3;
+        switch (temp_r5) {                          /* switch 2; irregular */
+        case 1:                                     /* switch 2 */
+            ((s32*)var_r7)[0x44/4] = var_r8;
+            var_r9 = 1;
+            var_r8 += 0x400;
+            break;
+        case 2:                                     /* switch 2 */
+            ((s32*)var_r7)[0x44/4] = var_r8;
+            var_r8 += 0x800;
+            break;
+        default:                                    /* switch 2 */
+            ((s32*)var_r7)[0x44/4] = -1;
+            break;
+        }
+        temp_r6 += 2;
+        var_r7 = (char*)var_r7 + 4;
+        temp_r5 = ((u32) ((s32*)((char*)arg0 + 0x30)) >> temp_r6) & 3;
+        switch (temp_r5) {                        /* switch 3; irregular */
+        case 1:                                     /* switch 3 */
+            ((s32*)var_r7)[0x44/4] = var_r8;
+            var_r9 = 1;
+            var_r8 += 0x400;
+            break;
+        case 2:                                     /* switch 3 */
+            ((s32*)var_r7)[0x44/4] = var_r8;
+            var_r8 += 0x800;
+            break;
+        default:                                    /* switch 3 */
+            ((s32*)var_r7)[0x44/4] = -1;
+            break;
+        }
+        temp_r6 += 2;
+        var_r7 = (char*)var_r7 + 4;
+        temp_r5 = ((u32) ((s32*)((char*)arg0 + 0x30)) >> temp_r6) & 3;
+        switch (temp_r5) {                        /* switch 4; irregular */
+        case 1:                                     /* switch 4 */
+            ((s32*)var_r7)[0x44/4] = var_r8;
+            var_r9 = 1;
+            var_r8 += 0x400;
+            break;
+        case 2:                                     /* switch 4 */
+            ((s32*)var_r7)[0x44/4] = var_r8;
+            var_r8 += 0x800;
+            break;
+        default:                                    /* switch 4 */
+            ((s32*)var_r7)[0x44/4] = -1;
+            break;
+        }
+        temp_r6 += 2;
+        var_r7 = (char*)var_r7 + 4;
+        temp_r5 = ((u32) ((s32*)((char*)arg0 + 0x30)) >> temp_r6) & 3;
+        switch (temp_r5) {                        /* switch 5; irregular */
+        case 1:                                     /* switch 5 */
+            ((s32*)var_r7)[0x44/4] = var_r8;
+            var_r9 = 1;
+            var_r8 += 0x400;
+            break;
+        case 2:                                     /* switch 5 */
+            ((s32*)var_r7)[0x44/4] = var_r8;
+            var_r8 += 0x800;
+            break;
+        default:                                    /* switch 5 */
+            ((s32*)var_r7)[0x44/4] = -1;
+            break;
+        }
+        temp_r6 += 2;
+        var_r7 = (char*)var_r7 + 4;
+        var_ctr -= 1;
+    } while (var_ctr != 0);
+    if (var_r9 != 0) {
+        ((s32*)arg1)[0x64/4] = var_r8;
+        var_r8 += 0x200;
+    } else {
+        ((s32*)arg1)[0x64/4] = -1;
+    }
+    ((s32*)arg1)[0x68/4] = var_r8;
 }
 
 s32 fn_8021D004(s32 arg0, s32 arg1, s32 arg2) {
