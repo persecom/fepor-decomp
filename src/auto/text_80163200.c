@@ -780,6 +780,13 @@ extern "C" void *fn_80169104(void *arg0) {
     ((Obj *) arg0)->m28();
     return arg0;
 }
+
+u32 fn_8016947C(void) {
+    extern u8 lbl_80330708[];
+
+    return lbl_80330708[0x55] != 0;
+}
+
 #pragma cplusplus reset
 void fn_80169498(void) {
     M2C_FIELD(&lbl_80330708, s8 *, 0x55) = 1;
@@ -3974,6 +3981,41 @@ void fn_8017A480(void *arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + arg1);
 }
 
+void fn_8017A4CC(void *arg0, s32 arg1, u8 arg2, u8 arg3) {
+    u8 *temp_r4;
+    u8 *temp_r4_2;
+    u8 *temp_r4_3;
+    u8 *temp_r4_4;
+    u8 *temp_r4_5;
+    u8 *temp_r4_6;
+    u8 *temp_r4_7;
+    u8 *temp_r4_8;
+    temp_r4 = M2C_FIELD(arg0, u8 **, 4);
+    M2C_FIELD(arg0, u8 **, 4) = (u8 *)(temp_r4 + 1);
+    *temp_r4 = (u8)(arg2 >> 0x18U);
+    temp_r4_2 = M2C_FIELD(arg0, u8 **, 4);
+    M2C_FIELD(arg0, u8 **, 4) = (u8 *)(temp_r4_2 + 1);
+    *temp_r4_2 = (u8)(arg2 >> 0x10U);
+    temp_r4_3 = M2C_FIELD(arg0, u8 **, 4);
+    M2C_FIELD(arg0, u8 **, 4) = (u8 *)(temp_r4_3 + 1);
+    *temp_r4_3 = (u8)(arg2 >> 8U);
+    temp_r4_4 = M2C_FIELD(arg0, u8 **, 4);
+    M2C_FIELD(arg0, u8 **, 4) = (u8 *)(temp_r4_4 + 1);
+    *temp_r4_4 = arg2;
+    temp_r4_5 = M2C_FIELD(arg0, u8 **, 4);
+    M2C_FIELD(arg0, u8 **, 4) = (u8 *)(temp_r4_5 + 1);
+    *temp_r4_5 = (((arg3 << 8) | (arg3 >> 0x18U)) & ~0xFFFFFF00) | (arg2 << 8);
+    temp_r4_6 = M2C_FIELD(arg0, u8 **, 4);
+    M2C_FIELD(arg0, u8 **, 4) = (u8 *)(temp_r4_6 + 1);
+    *temp_r4_6 = (((arg3 << 0x10) | (arg3 >> 0x10U)) & ~0xFFFF0000) | (arg2 << 0x10);
+    temp_r4_7 = M2C_FIELD(arg0, u8 **, 4);
+    M2C_FIELD(arg0, u8 **, 4) = (u8 *)(temp_r4_7 + 1);
+    *temp_r4_7 = (((arg3 << 0x18) | (arg3 >> 8U)) & ~0xFF000000) | (arg2 << 0x18);
+    temp_r4_8 = M2C_FIELD(arg0, u8 **, 4);
+    M2C_FIELD(arg0, u8 **, 4) = (u8 *)(temp_r4_8 + 1);
+    *temp_r4_8 = arg3;
+}
+
 void fn_8017A574(u8 **arg0, u32 arg1) {
     u8 *p;
     u8 b0;
@@ -4709,12 +4751,14 @@ s32 fn_8017E328(void) {
 }
 
 void fn_8017E35C(void) {
-    u32 fn_8000C0C0(u16 *param);
-    void fn_8000C070(s32 param);
-    extern u16 lbl_80295550;
-    
-    if (fn_8000C0C0(&lbl_80295550) != 0) {
-        fn_8000C070(0);
+    u32 fn_8000C0C0(void *);
+    void fn_8000C070(u32, s32);
+    extern u8 lbl_80295550[];
+    u32 temp;
+
+    temp = fn_8000C0C0(lbl_80295550);
+    if (temp != 0) {
+        fn_8000C070(temp, 0);
     }
 }
 
