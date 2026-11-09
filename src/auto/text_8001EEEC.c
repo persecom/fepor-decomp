@@ -1755,6 +1755,22 @@ void fn_80028724(void) {
     }
 }
 
+void fn_80028794(void) {
+    void *fn_80145FE8(void);
+    void fn_80146B00(void);
+    s8 fn_80146C94(void *);
+    void fn_801478D0(s16);
+    void fn_80147FA8(s32);
+    void fn_801481CC(void *, s32);
+
+    fn_80147FA8(0x3E8);
+    fn_801478D0(0x3E8);
+    if (fn_80146C94(fn_80145FE8()) != -1) {
+        fn_801481CC(fn_80145FE8(), 0);
+    }
+    fn_80146B00();
+}
+
 void fn_800287E4(void) {
     extern u8 lbl_80330708[];
     
