@@ -58,6 +58,27 @@ void fn_80098D30(void *arg0) {
     fn_8018CA68(temp_r30);
 }
 
+void fn_80098DA4(void) {
+    void fn_8009799C(void);
+    void fn_800980D4(s32);
+    s32 fn_800980E8(s32);
+    u8 fn_80098568(void);
+    void fn_80184C7C(s32, s32, s32, s32);
+    s32 i;
+    s32 temp;
+
+    fn_8009799C();
+    for (i = 0; i < 3; i++) {
+        temp = fn_800980E8(i);
+        if (temp != 0) {
+            fn_800980D4(i);
+            if (fn_80098568() == 0) {
+                fn_80184C7C(temp, 0, 0x18, 0);
+            }
+        }
+    }
+}
+
 void fn_80098E1C(s32 arg0) {
     s32 fn_800980E8(s32);
     void fn_80050BF4(s32, s32);
