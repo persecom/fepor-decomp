@@ -221,6 +221,73 @@ s32 fn_800A9B0C(void) {
     return 5;
 }
 
+#pragma cplusplus on
+extern "C" void fn_800A9B38(void *arg0, void *arg1, void *arg2) {
+    void fn_8000A258(void);
+    void fn_80009D74(f32, f32, f32, f32);
+    void fn_8000A174(s32, s32);
+    void fn_8000A248(void);
+    void fn_80007898(s32);
+    void fn_80007858(f32, f32);
+    void fn_800076AC(s32, s32, s32, s32);
+    void fn_80007124(void);
+    void fn_8000727C(f32);
+    void fn_80007884(void);
+    struct Model {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual void v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual f32 v25() = 0;
+    };
+    struct Drawer {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4(void *) = 0;
+    };
+    extern f32 lbl_80369BB0;
+    extern f32 lbl_80369C20;
+    extern f32 lbl_80369C24;
+
+    fn_8000A258();
+    fn_80009D74((f32) M2C_FIELD(arg1, s16 *, 0x30), (f32) M2C_FIELD(arg1, s16 *, 0x32),
+        M2C_FIELD(arg1, Model **, 0x3C)->v25() - lbl_80369C20, lbl_80369BB0);
+    fn_8000A174(0, 0x13);
+    fn_8000A248();
+    fn_80007898(5);
+    fn_80007858((f32) M2C_FIELD(arg2, s16 *, 0x30), (f32) M2C_FIELD(arg2, s16 *, 0x32));
+    fn_800076AC(0, 0, 0, 0xFF);
+    M2C_FIELD(arg2, Drawer **, 0x34)->v4(arg2);
+    fn_80007124();
+    fn_8000727C(lbl_80369C24);
+    fn_80007884();
+}
+#pragma cplusplus reset
+
 void *fn_800A9C5C(void) {
     extern u16 lbl_8026E470[];
     return (u8 *)lbl_8026E470 + 0x1b1;
@@ -302,27 +369,24 @@ void *fn_800A9E00(void) {
 }
 
 s32 fn_800AA078(void *arg0) {
-    struct unk3C_s {
-        u8 pad[0x3C];
-        u8 unk3C;
-    };
     s32 fn_8000CEE4(M2C_UNK);
     void fn_80016DE0(void);
-    struct unk3C_s *fn_80019ED0(s32);
+    void *fn_80019ED0(s32);
     void fn_8014D2B0(void *, u8);
     void fn_8014D698(void *, u8, M2C_UNK, M2C_UNK, M2C_UNK);
-    extern struct {
-        u8 pad[0xA6];
-        u8 unkA6;
-    } lbl_80330708;
+    extern u8 lbl_80330708[];
     extern u64 lbl_80331FB8[];
     u8 saved;
 
-    saved = lbl_80330708.unkA6;
+    saved = lbl_80330708[0xA6];
     fn_80016DE0();
-    fn_8014D698(&lbl_80330708, (u8)(fn_8000CEE4(0x1E) + 1), 0, 0, 1);
-    lbl_80330708.unkA6 = saved;
-    fn_8014D2B0(&lbl_80330708, fn_80019ED0(((s8 *)arg0)[4])->unk3C);
+    fn_8014D698(lbl_80330708, (u8)(fn_8000CEE4(0x1E) + 1), 0, 0, 1);
+    lbl_80330708[0xA6] = saved;
+    {
+        void *tmp = fn_80019ED0(((s8 *)arg0)[4]);
+        u8 val = *(u8 *)((u8 *)tmp + 0x3C);
+        fn_8014D2B0(lbl_80330708, val);
+    }
     lbl_80331FB8[1] = 0x0123456789ABCDEFULL;
     fn_80006220(0xA);
     return 5;
@@ -699,19 +763,22 @@ void fn_800ABE74(void *arg0) {
     extern u8 lbl_8026E858[];
     extern u32 lbl_80368DC4;
     u32 var_r31;
-    void *var_r30 = arg0;
+    void *var_r30;
     s32 var_r29;
-    u8 *entry;
-    s32 str;
+    register s32 str;
+    register u8 *entry;
+    u32 a;
 
+    var_r30 = arg0;
     fn_800AC0C0();
-    var_r31 = ((u32 *)lbl_80367240)[1] & (((u32 *)lbl_80367240)[2] ^ ((u32 *)lbl_80367240)[1]);
+    a = ((u32 *)lbl_80367240)[1];
+    var_r31 = a & (((u32 *)lbl_80367240)[2] ^ a);
     if (fn_80166D8C(lbl_80330D68) != 0) {
         if (var_r31 & 0xA00) {
             fn_801673D0(lbl_80330D68);
         }
     } else if (var_r31 & 0x100) {
-        var_r31 = 0;
+        register var_r31 = 0;
         entry = lbl_80312ACC + (((s8)*(u8 *)((u8 *)var_r30 + 0x3C)) << 7)
                               + (((s8)*(u8 *)((u8 *)var_r30 + 0x3D)) << 4);
         if (*(u32 *)(entry + 4) != 0) {
@@ -724,8 +791,8 @@ void fn_800ABE74(void *arg0) {
             var_r29 = ((s8)*(u8 *)((u8 *)var_r30 + 0x3C)) << 7;
             str = fn_8000E0E4(lbl_8026E858 + 0xE7);
             entry = lbl_80312ACC + var_r29;
-            fn_80166AE8(*(s16 *)(entry + var_r31),
-                        *(s16 *)(entry + var_r31 + 2) + 0x28,
+            fn_80166AE8(*(s16 *)((u8 *)entry + var_r31),
+                        *(s16 *)((u8 *)entry + var_r31 + 2) + 0x28,
                         str, var_r30, entry);
         } else {
             fn_8000C188(var_r30);
