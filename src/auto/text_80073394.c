@@ -199,7 +199,7 @@ void fn_8007376C(void) {
 
 void fn_800737DC(void) {
     extern u16 lbl_8026BE40[];
-    fn_8000E0E4(&lbl_8026BE40[0x25C / sizeof(u16)]);
+    fn_8000E0E4((u8 *)lbl_8026BE40 + 0x25D);
 }
 
 void fn_80073808(void) {
