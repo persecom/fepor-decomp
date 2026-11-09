@@ -11,6 +11,15 @@ void fn_80149FB8(void *arg0) {
     *(void**)((char*)arg0 + 0x18) = &lbl_802925F8;
 }
 
+void fn_80149FE0(void *arg0) {
+    extern u8 lbl_8029275C[];
+    extern u8 lbl_802927CC[];
+    extern u8 lbl_802927F4[];
+    *(void **)((u8 *)arg0 + 0x18) = lbl_802927F4;
+    *(void **)((u8 *)arg0 + 8) = lbl_8029275C;
+    *(void **)((u8 *)arg0 + 0x18) = lbl_802927CC;
+}
+
 void fn_8014A030(s32 arg0) {
     extern void* lbl_802928A8;
     extern s8 lbl_80367B09;
