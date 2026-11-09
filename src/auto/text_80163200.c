@@ -1128,7 +1128,7 @@ void fn_8016ABB0(void) {
 
 void *fn_8016ABDC(void) {
     extern u16 lbl_80277BC0[];
-    return &lbl_80277BC0[0x34A];
+    return (u8 *)lbl_80277BC0 + 0x1b7;
 }
 
 s32 fn_8016ABEC(s32 arg1) {
