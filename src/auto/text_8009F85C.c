@@ -223,8 +223,8 @@ void *fn_8009FD8C(void) {
 }
 
 s32 fn_8009FD9C(void) {
-    M2C_UNK fn_8000CAA0(M2C_UNK *);
-    extern void* lbl_8028A384;
+    void fn_8000CAA0(void *);
+    extern u8 lbl_8028A384[];
     fn_8000CAA0(lbl_8028A384);
     return 0;
 }
