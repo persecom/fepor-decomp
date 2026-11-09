@@ -74,6 +74,22 @@
       extern s32 lbl_803682F0;
       fn_801E2594(&lbl_803682F0);
   }
+
+  void fn_8009EBA0(s32 arg0) {
+      extern s32 lbl_803682F0;
+      s32 fn_800056CC(const char *, ...);
+      s32 fn_800EB774(void);
+      void fn_801E1018(void *, u8, s32, s8);
+      s8 v;
+  
+      if (fn_800EB774() != 0) {
+          fn_800056CC((const char *)(lbl_8026D8D8 + 0x178));
+          return;
+      }
+      v = (s8)(s32)*(f32 *)(lbl_80330708 + 0x524);
+      fn_801E1018(&lbl_803682F0, (u8)(v % 5), arg0, v);
+  }
+
   
   void fn_8009EC38(void) {
       void fn_801E2594(void *);
