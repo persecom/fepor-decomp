@@ -484,6 +484,17 @@ void fn_80134C24(s32 *arg0, void *arg1) {
     *arg0 = *fn_8013F748(arg1, (M2C_UNK *)&sp8, &spA);
 }
 
+void fn_80134CE8(void *arg0) {
+    s16 temp_r30;
+
+    temp_r30 = M2C_FIELD(arg0, s16 *, 0x44);
+    M2C_FIELD(arg0, s16 *, 0x10) = (s16) (M2C_FIELD(arg0, s16 *, 0xC) + (s16) ((M2C_FIELD(arg0, s16 *, 0x4A) * 2) + ((s16) ((s32) ((temp_r30 + M2C_FIELD(M2C_FIELD(arg0, void **, 0), s16 (**)(), 0x30)()) - 1) / temp_r30) * M2C_FIELD(arg0, s16 *, 0x46)) + 0x10));
+    M2C_FIELD(arg0, s16 *, 0x12) = 2;
+    M2C_FIELD(arg0, s16 *, 0x14) = 8;
+    M2C_FIELD(arg0, s16 *, 0x16) = (s16) ((s16) (M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA)) - 2);
+    M2C_FIELD(arg0, s16 *, 0x18) = (s16) ((s16) (M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC)) - 8);
+}
+
 s32 fn_80134E40(void) {
     return 4;
 }
@@ -1966,8 +1977,8 @@ extern "C" void fn_8013E218(void *arg0, void *arg1) {
 #pragma cplusplus reset
 
 void fn_8013E300(void) {
-    extern M2C_UNK lbl_802EF4C8;
-    M2C_FIELD(&lbl_802EF4C8, s8 *, 8) = 0;
+    extern u8 lbl_802EF4C8[24];
+    lbl_802EF4C8[8] = 0;
 }
 
 void *fn_8013E314(void *arg0, s16 arg1) {
@@ -2591,8 +2602,10 @@ s32 fn_8013FBD4(s32 arg0) {
 }
 
 void fn_8013FBDC(void *arg0, void *arg1) {
-    *(s16*)arg0 += *(s16*)arg1;
-    *(s16*)((char*)arg0 + 2) += *(s16*)((char*)arg1 + 2);
+    s16 *a0 = (s16 *)arg0;
+    s16 *a1 = (s16 *)arg1;
+    a0[0] = a0[0] + a1[0];
+    a0[1] = a0[1] + a1[1];
 }
 
 void fn_8013FC00(void *arg0, void *arg1) {
