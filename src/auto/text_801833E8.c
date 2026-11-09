@@ -2148,8 +2148,8 @@ void fn_80191224(void *arg0) {
 }
 
 void fn_8019129C(void *arg0) {
-    u8 val = M2C_FIELD(arg0, u8 *, 0x5D);
-    fn_8000C070(val);
+    M2C_UNK fn_8000C070(void *, u8);
+    fn_8000C070(arg0, *(u8 *)((char *)arg0 + 0x5D));
 }
 
 void fn_80191374(void *arg0) {
