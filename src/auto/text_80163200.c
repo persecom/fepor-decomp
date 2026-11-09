@@ -4614,7 +4614,7 @@ s32 fn_80182CE4(s32 arg0, s32 arg1) {
         case 2:
             return lbl_80294604[arg0];
         case 3:
-            return lbl_803680E8[arg0] & 0xFF;
+            return *((u16 *)&lbl_803680E8 + arg0) & 0xFF;
         case 4:
             return lbl_80330708[arg0];
         default:
