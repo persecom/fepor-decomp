@@ -791,3 +791,4 @@ extern f32 lbl_80369704;
 extern f32 lbl_80369708;
 extern f32 lbl_803696E8;
 extern f32 lbl_803696F0;
+extern u16 lbl_802899C0[];
