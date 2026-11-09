@@ -539,7 +539,7 @@ void fn_80075DAC(void) {
 
 void fn_80075DD8(void) {
     extern u16 lbl_8026C0B8[];
-    fn_8000E0E4(&lbl_8026C0B8[0x52A]);
+    fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x295);
 }
 
 s32 fn_80075E04(void) {
