@@ -1392,6 +1392,13 @@ s32 fn_8016ADE8(s32 arg0, s32 arg1, void *arg2) {
     return 4;
 }
 
+void fn_8016AE40(void) {
+    extern u8 lbl_80277BC0[];
+    extern void fn_8000E0E4(void *);
+
+    fn_8000E0E4(lbl_80277BC0 + 0x1F6);
+}
+
 void *fn_8016AE6C(void) {
     extern u16 lbl_80277BC0[];
     return &lbl_80277BC0[0x101];
@@ -3544,6 +3551,28 @@ void *fn_801784C8(void) {
     return (char *)&lbl_80278080 + 0x5A7;
 }
 
+#pragma scheduling off
+s32 fn_801784D8(void) {
+    u8 fn_801EAA88(void);
+    s32 fn_80015680(void *);
+    u8 fn_8014D8DC(void *);
+    extern u8 lbl_802CA264[];
+    extern u8 lbl_80330708[];
+    s32 r31;
+
+    r31 = 0;
+    if (fn_801EAA88() == 0) {
+        r31 = fn_80015680(lbl_802CA264);
+        r31 += fn_80015680(lbl_802CA264 + 0x3C);
+    }
+    if (r31 <= 1) {
+        if (fn_8014D8DC(lbl_80330708) == 0) {
+            return 2;
+        }
+    }
+    return 0;
+}
+#pragma scheduling reset
 void fn_80178628(void) {
     extern u16 lbl_80278080[];
     fn_8000E0E4(&lbl_80278080[0x5C0 / sizeof(u16)]);
