@@ -3414,6 +3414,10 @@ void fn_80149A9C(void *arg0) {
     fn_800B25EC(*(s8*)((uintptr_t)arg0 + 4));
 }
 
+void fn_80149AC4(void *arg0) {
+    fn_800B2584(*(s8*)((uintptr_t)arg0 + 4));
+}
+
 s32 fn_80149B3C(void) {
     return 0;
 }
