@@ -49,6 +49,38 @@ void *fn_800330F8(void) {
     return (u8 *)lbl_802695F0 + 0x14F;
 }
 
+#pragma cplusplus on
+extern "C" void fn_80009B8C(u8);
+extern "C" void fn_80009D74(f32, f32, f32, f32);
+extern "C" void fn_8000A248(void);
+extern "C" void fn_8000A258(void);
+extern "C" s32 fn_8002F740(u32);
+extern "C" void fn_80090C50(s32);
+extern "C" void fn_80033108(void *arg0, void *arg1) {
+    extern f32 lbl_80368E24;
+    extern f32 lbl_80368E28;
+    struct Obj {
+        u8 pad[4];
+        virtual void v0(s32 *, s32 *, s32 *) = 0;
+    };
+    s32 x;
+    s32 y;
+    s32 alpha;
+
+    if (M2C_FIELD(arg1, u32 *, 0x40) != 0) {
+        ((Obj *)arg0)->v0(&x, &y, &alpha);
+        fn_8000A258();
+        fn_80009D74((f32)(x + 0x20), (f32)(y + 0x30), lbl_80368E24, lbl_80368E28);
+        fn_80009B8C((u8)alpha);
+        fn_8000A248();
+        fn_80090C50(fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40)));
+        fn_8000A258();
+        fn_80009B8C(0xFF);
+        fn_8000A248();
+    }
+}
+#pragma cplusplus reset
+
 void fn_800331D4(void *arg0, s32 arg1) {
     u8 *ptr = (u8*)arg0 + 0x60;
     s32 count = arg1 * 2;
