@@ -178,7 +178,10 @@ auto/text_80092438.c:
 	.text       start:0x80092438 end:0x80095614
 
 auto/text_80095614.c:
-	.text       start:0x80095614 end:0x80098170
+	.text       start:0x80095614 end:0x80095850
+
+auto/text_80095850.c:
+	.text       start:0x80095850 end:0x80098170
 
 auto/text_80098170.c:
 	.text       start:0x80098170 end:0x800981D0
