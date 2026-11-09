@@ -2446,22 +2446,22 @@ s32 fn_800BA230(u32 arg0, s32 arg1) {
     return 1;
 }
 
-s32 fn_800BA438(u32 arg0, int arg1)
+s32 fn_800BA438(u32 arg0, s32 arg1)
 {
-  u32 fn_801090C0();
-  f32 fn_801099A0(u8);
-  if (arg1)
-  {
-  }
+  u32 fn_801090C0(void);
+  f32 fn_801099A0(u32, u8);
+  u32 tmp;
+
   if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U))
   {
     return 0;
   }
-  if (fn_801090C0() == 0U)
+  tmp = fn_801090C0();
+  if (tmp == 0U)
   {
     return 0;
   }
-  return (s32) fn_801099A0(arg1);
+  return (s32)fn_801099A0(tmp, (u8)arg1);
 }
 
 s32 fn_800BA528(u32 arg0) {
