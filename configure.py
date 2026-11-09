@@ -374,7 +374,7 @@ config.libs = [
             Object(NonMatching, "auto/text_801EAA2C.c"),
             Object(NonMatching, "auto/text_801F196C.c"),
             Object(NonMatching, "auto/text_801FC634.c"),
-            Object(NonMatching, "auto/text_80202300.c"),
+            Object(NonMatching, "auto/text_80202300.c", mw_version="GC/1.2.5n"),
             Object(NonMatching, "auto/text_80202540.c"),
             Object(NonMatching, "dolphin/mtx/quat.c", mw_version="GC/1.2.5n"),
             Object(NonMatching, "auto/text_80203778.c", mw_version="GC/1.2.5n"),
