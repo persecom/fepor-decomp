@@ -1049,117 +1049,41 @@ s8 fn_8003B258(void *arg0) {
     return var_r3;
 }
 
-s8 fn_8003B2D0(void *arg0) {
+void *fn_80037D54(void *);
+void *fn_80037C20(void *);
+s8 fn_8003B2D0(void *arg0)
+{
     s8 var_r5;
     s8 var_r6;
-    s8 var_r4;
-    u8 temp_r6_2;
-    void **var_r4_2;
-    
-    void *temp_r6 = ((void**)arg0)[0x18C/4];
-    temp_r6_2 = ((u8*)temp_r6)[0x4C];
-    var_r5 = ((u8*)(((void**)arg0)[0x188/4]))[0x1D] + ((u8*)temp_r6)[0x44] + ((u8*)arg0)[0x1AB];
-    
-    if (var_r5 > (s8) temp_r6_2) {
-        var_r5 = (s8) temp_r6_2;
+    void **slot;
+    void *temp_r6;
+    void *temp_r4;
+
+    temp_r6 = *(void **)((char *)arg0 + 0x18C);
+    temp_r4 = *(void **)((char *)arg0 + 0x188);
+    var_r5 = (s8)(*(u8 *)((char *)temp_r6 + 0x44) + *(u8 *)((char *)arg0 + 0x1AB)
+                 + *(u8 *)((char *)temp_r4 + 0x1D));
+    var_r6 = (s8)*(u8 *)((char *)temp_r6 + 0x4C);
+
+    if (var_r5 > var_r6) {
+        var_r5 = var_r6;
     }
     if (var_r5 < 0) {
         var_r5 = 0;
     }
-    
+
     var_r6 = 0;
-    
-    // Check bit 7 of field 0x1D1
-    if ((((u8*)arg0)[0x1D1] >> 7) & 1) {
-        if (((u32*)arg0)[0x1CC/4] != 0) {
-            var_r4 = 0;
-            goto skip_checks;
-        }
+    slot = fn_80037D54(arg0);
+    if (slot != NULL) {
+        var_r6 = (s8)*(u8 *)((char *)*(void **)slot + 0x1F);
     }
-    
-    // Check bit 7 of field 0x1D9  
-    if ((((u8*)arg0)[0x1D9] >> 7) & 1) {
-        if (((u32*)arg0)[0x1D4/4] != 0) {
-            var_r4 = 1;
-            goto skip_checks;
-        }
+
+    slot = fn_80037C20(arg0);
+    if (slot != NULL) {
+        var_r6 = (s8)(var_r6 + *(u8 *)((char *)*(void **)slot + 0x1F));
     }
-    
-    // Check bit 7 of field 0x1E1
-    if ((((u8*)arg0)[0x1E1] >> 7) & 1) {
-        if (((u32*)arg0)[0x1DC/4] != 0) {
-            var_r4 = 2;
-            goto skip_checks;
-        }
-    }
-    
-    // Check bit 7 of field 0x1E9
-    if ((((u8*)arg0)[0x1E9] >> 7) & 1) {
-        if (((u32*)arg0)[0x1E4/4] != 0) {
-            var_r4 = 3;
-            goto skip_checks;
-        }
-    }
-    
-    var_r4 = -1;
-    
-skip_checks:
-    if (var_r4 < 0) {
-        var_r4_2 = NULL;
-    } else {
-        var_r4_2 = (void**)((u8*)arg0 + (var_r4 * 8) + 0x1CC);
-    }
-    
-    if (var_r4_2 != NULL) {
-        var_r6 = *(s8*)((u8*)var_r4_2 + 0x7C);
-    }
-    
-    // Check bit 7 of field 0x1F1
-    if ((((u8*)arg0)[0x1F1] >> 7) & 1) {
-        if (((u32*)arg0)[0x1EC/4] != 0) {
-            var_r4 = 0;
-            goto skip_checks_2;
-        }
-    }
-    
-    // Check bit 7 of field 0x1F9  
-    if ((((u8*)arg0)[0x1F9] >> 7) & 1) {
-        if (((u32*)arg0)[0x1F4/4] != 0) {
-            var_r4 = 1;
-            goto skip_checks_2;
-        }
-    }
-    
-    // Check bit 7 of field 0x201
-    if ((((u8*)arg0)[0x201] >> 7) & 1) {
-        if (((u32*)arg0)[0x1FC/4] != 0) {
-            var_r4 = 2;
-            goto skip_checks_2;
-        }
-    }
-    
-    // Check bit 7 of field 0x209
-    if ((((u8*)arg0)[0x209] >> 7) & 1) {
-        if (((u32*)arg0)[0x204/4] != 0) {
-            var_r4 = 3;
-            goto skip_checks_2;
-        }
-    }
-    
-    var_r4 = -1;
-    
-skip_checks_2:
-    if (var_r4 < 0) {
-        var_r4_2 = NULL;
-    } else {
-        var_r4_2 = (void**)((u8*)arg0 + (var_r4 * 8) + 0x1EC);
-    }
-    
-    if (var_r4_2 != NULL) {
-        var_r6 = (s8)(var_r6 + *(s8*)((u8*)var_r4_2 + 0x7C));
-    }
-    
-    return (s8) (var_r5 + var_r6);
+
+    return (s8)(var_r5 + var_r6);
 }
 
 s8 fn_8003B490(void *arg0) {
@@ -4633,18 +4557,19 @@ s32 fn_80055AC0(s32 *arg0, s32 arg1) {
     return arg1;
 }
 
-void fn_80055B0C(u8 arg0) {
-    M2C_UNK fn_800056A0(M2C_UNK);
-    M2C_UNK fn_801451BC();
-    M2C_UNK fn_801452A8(u8);
+void fn_80055B0C(s32 arg0) {
+    void fn_800056A0(s32);
+    void fn_801451BC(void);
+    void fn_801452A8(u8);
     u8 fn_801452C8(u8);
-    s32 fn_801452E8();
-    if (fn_801452C8(arg0) == 0) {
+    s32 fn_801452E8(void);
+
+    if (fn_801452C8((u8)arg0) == 0) {
         if (fn_801452E8() >= 0x10) {
             fn_800056A0(0);
             fn_801451BC();
         }
-        fn_801452A8(arg0);
+        fn_801452A8((u8)arg0);
     }
 }
 
