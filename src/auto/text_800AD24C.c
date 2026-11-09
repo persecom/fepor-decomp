@@ -3863,6 +3863,40 @@ u8 fn_800BD470(u8 arg0) {
     return 0U;
 }
 
+u8 fn_800BD4C0(s32 arg0, s32 arg1) {
+    void fn_80015320(s32, void *);
+    extern u16 lbl_802B14E4[];
+    u8 sp8[8];
+    u8 *found;
+    u8 *unit;
+    s32 i;
+
+    found = NULL;
+    fn_80015320(3, sp8);
+    for (i = 1; i <= 0x9F; i++) {
+        if ((u8)i != 0) {
+            unit = (u8 *)lbl_802B14E4 + ((u8)i - 1) * 0x280;
+        } else {
+            unit = NULL;
+        }
+        if (*(u32 *)(unit + 0x188) != 0) {
+            if (sp8[*(u8 *)(*(u8 **)(unit + 0x190) + 8)] != 0) {
+                if (!(*(u32 *)(unit + 0x1A0) & 0x1C)) {
+                    if (arg0 == (s8)*(u8 *)(unit + 0x19E)) {
+                        if (arg1 == (s8)*(u8 *)(unit + 0x19F)) {
+                            found = unit;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if (found == NULL) {
+        return 0;
+    }
+    return found[0x198];
+}
+
 u8 fn_800BD5AC(void) {
     void *fn_80016BDC();
     void *temp_r3;
