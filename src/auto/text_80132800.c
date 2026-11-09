@@ -3365,6 +3365,10 @@ void fn_801497FC(void *arg0) {
     fn_800AF71C(*(s8*)((uintptr_t)arg0 + 4));
 }
 
+void fn_801498C8(void *arg0) {
+    fn_800AFE0C(*(s8*)((uintptr_t)arg0 + 4));
+}
+
 void fn_801498F0(void *arg0) {
     fn_800AFCFC(*(s8*)((uintptr_t)arg0 + 4));
 }
