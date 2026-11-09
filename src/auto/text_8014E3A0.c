@@ -407,16 +407,29 @@ void fn_801515AC(void) {
     lbl_80367BA8 = 0;
 }
 
-s32 fn_801515B8(void *arg0) {
+#pragma cplusplus on
+extern "C" s32 fn_801515B8(void *arg0) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0(void **) = 0;
+        virtual void v1(void **) = 0;
+        virtual void v2(void **) = 0;
+        virtual void v3(void **) = 0;
+        virtual void v4(void **) = 0;
+        virtual void v5(void **) = 0;
+        virtual void v6(void **) = 0;
+        virtual void v7(void **) = 0;
+        virtual void v8(void **) = 0;
+    };
     void **temp_r4;
-    void *temp_r3;
+    Obj *obj;
 
-    temp_r4 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), void ***, 0x4C);
-    temp_r3 = *temp_r4;
-    M2C_FIELD(M2C_FIELD(temp_r3, void **, 0x10), M2C_UNK (**)(void *, void **), 0x28)(temp_r3, temp_r4);
+    temp_r4 = *(void ***)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x4c);
+    obj = (Obj *)*temp_r4;
+    obj->v8(temp_r4);
     return 0;
 }
-
+#pragma cplusplus reset
 s32 fn_801515F4(void *arg0) {
     M2C_FIELD(M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), void **, 0x4C), s8 *, 0xC4) = 1;
     return 0;
