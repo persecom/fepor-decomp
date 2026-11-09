@@ -1105,6 +1105,16 @@ s32 fn_800770CC(void) {
     return (fn_8014D8BC(&lbl_80330708) == 0) ? 3 : 0;
 }
 
+void fn_80077150(void) {
+    extern u32 *fn_8018D900(int);
+    extern void fn_80007668(void *);
+
+    u32 value;
+
+    value = *fn_8018D900(7);
+    fn_80007668(&value);
+}
+
 void fn_800771BC(void) {
     extern u16 lbl_8026C0B8[];
     M2C_UNK fn_8000E0E4(void *);
