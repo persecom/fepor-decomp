@@ -874,23 +874,62 @@ void fn_801B94DC(void *arg0) {
     fn_8000C070(val);
 }
 
-void fn_801B9500(struct Unit *unit, s32 arg1) {
-    struct0 *temp_r3;
-    struct0 *temp_r31;
+#pragma cplusplus on
+extern "C" void fn_801B9500(void *arg0) {
+    void fn_8014004C(void *, void *);
+    struct Obj {
+        virtual void destroy(s32) = 0;
+        s32 refcount;
+    };
+    Obj *temp;
+    s32 refs;
 
-    temp_r3 = (struct0 *) ((char *) unit + 0x34);
-    temp_r31 = (struct0 *) ((char *) unit + 0x198);
-    
-    // Initial assignments
-    M2C_FIELD(temp_r3, s32 *, 0x1C) = arg1;
-    M2C_FIELD(temp_r3, s32 *, 0x20) = 0;
-    M2C_FIELD(temp_r31, s32 *, 0x1C) = arg1;
-    M2C_FIELD(temp_r31, s32 *, 0x20) = 0;
-    
-    // Set up the structure by calling another function with a global value
-    fn_8014004C((void *) unit);
+    fn_8014004C(arg0, M2C_FIELD(arg0, void **, 0x48));
+    fn_8014004C(arg0, M2C_FIELD(arg0, void **, 0x64));
+    fn_8014004C(arg0, M2C_FIELD(arg0, void **, 0x50));
+    fn_8014004C(arg0, M2C_FIELD(arg0, void **, 0x60));
+
+    temp = M2C_FIELD(arg0, Obj **, 0x48);
+    if (temp != NULL) {
+        refs = temp->refcount - 1;
+        temp->refcount = refs;
+        if (refs == 0 && temp != NULL) {
+            temp->destroy(1);
+        }
+        M2C_FIELD(arg0, void **, 0x48) = NULL;
+    }
+
+    temp = M2C_FIELD(arg0, Obj **, 0x64);
+    if (temp != NULL) {
+        refs = temp->refcount - 1;
+        temp->refcount = refs;
+        if (refs == 0 && temp != NULL) {
+            temp->destroy(1);
+        }
+        M2C_FIELD(arg0, void **, 0x64) = NULL;
+    }
+
+    temp = M2C_FIELD(arg0, Obj **, 0x50);
+    if (temp != NULL) {
+        refs = temp->refcount - 1;
+        temp->refcount = refs;
+        if (refs == 0 && temp != NULL) {
+            temp->destroy(1);
+        }
+        M2C_FIELD(arg0, void **, 0x50) = NULL;
+    }
+
+    temp = M2C_FIELD(arg0, Obj **, 0x60);
+    if (temp != NULL) {
+        refs = temp->refcount - 1;
+        temp->refcount = refs;
+        if (refs == 0 && temp != NULL) {
+            temp->destroy(1);
+        }
+        M2C_FIELD(arg0, void **, 0x60) = NULL;
+    }
 }
-
+#pragma cplusplus reset
 void fn_801B9748(void *a) {
     void *fn_8013FF94(void *, s32, s32);
     s32 fn_80019DF0(u8, void *);
