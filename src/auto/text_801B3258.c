@@ -1,5 +1,20 @@
 /* Functions from 0x801B3258 to 0x801E4380, found by decomp-toolkit. */
 #include "common.h"
+
+typedef struct ListNode {
+    struct ListNode *prev;
+    struct ListNode *next;
+    void *val;
+} ListNode;
+
+typedef struct ListIter {
+    ListNode *node;
+} ListIter;
+
+typedef struct List {
+    s32 size;
+} List;
+
 void fn_801E00EC(void *arg0, void *arg1);
 extern s32 lbl_8032FF08;
 extern u16 lbl_80331D00[];
@@ -1126,6 +1141,36 @@ loop_5:
     }
     var_r30 += 1;
     goto loop_5;
+}
+
+void fn_800C428C(void *);
+void *fn_801D2E40(void *, s16);
+void fn_801C1824(void **ret, s32 *list, void **start, void **end) {
+    void **first;
+    void **last;
+    void **a;
+    void **b;
+    void **node;
+
+    first = (void **)*start;
+    last = (void **)*end;
+    if (first == last) {
+        *ret = last;
+        return;
+    }
+    a = (void **)*last;
+    b = (void **)*first;
+    b[1] = a[1];
+    *(void **)a[1] = b;
+    while (*start != *end) {
+        first = (void **)*start;
+        fn_801D2E40((u8 *)first + 8, -1);
+        node = (void **)*start;
+        *start = node[1];
+        fn_800C428C(node);
+        *list -= 1;
+    }
+    *ret = *end;
 }
 
 void fn_801C18FC(s32 arg0) {
