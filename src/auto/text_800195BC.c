@@ -41,8 +41,8 @@ f32 fn_800197B4(s32 arg1) {
 }
 
 void *fn_800197F4(void) {
-    extern M2C_UNK lbl_80268330;
-    return &lbl_80268330 + 0x1C1;
+    extern u8 lbl_80268330[];
+    return (u8 *)lbl_80268330 + 0x1C1;
 }
 
 f32 fn_80019804(void) {
