@@ -530,17 +530,18 @@ s32 fn_8014C6E0(void) {
     return 1;
 }
 
-void fn_8014C718(u32 arg1) {
-    M2C_UNK fn_8000CA64(M2C_UNK *, u32);
-    extern M2C_UNK lbl_80293760;
+void fn_8014C718(void *arg0, u32 arg1) {
+    u8 fn_80040824(void);
+    void *fn_8000CA64(void *, u32);
+    extern u8 lbl_80293760[];
     if (fn_80040824() != 0) {
-        if (arg1 == 0U) {
+        if (arg1 == 0) {
             fn_800AA134();
             fn_80040844();
             fn_80040854();
-            return;
+        } else {
+            fn_8000CA64(lbl_80293760, arg1);
         }
-        fn_8000CA64(&lbl_80293760, arg1);
     }
 }
 
@@ -755,8 +756,8 @@ void fn_8014D8FC(void *arg0) {
 }
 
 s32 fn_8014DA68(void) {
-    extern M2C_UNK lbl_80330708;
-    return (((u8) M2C_FIELD(&lbl_80330708, u8 *, 0x9F) >> 7U) & 1) != 0;
+    extern u8 lbl_80330708[];
+    return (lbl_80330708[0x9F] >> 7) & 1;
 }
 
 void fn_8014DBE0(s32 arg0, s32 arg1, u8 *arg2, u16 *arg3, s32 *arg4) {
