@@ -576,7 +576,8 @@ void fn_80249D6C(void *arg0)
 }
 
 void fn_80249DD0(s32 arg0) {
-    fn_80249C1C(0, 0);
+    void fn_80249C1C(s32, s32, s32);
+    fn_80249C1C(arg0, 0, 0);
     fn_80249C1C(arg0, 1, 0);
 }
 
