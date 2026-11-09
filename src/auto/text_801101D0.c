@@ -1602,16 +1602,16 @@ void fn_8011D428(void *arg0) {
 }
 
 u32 fn_8011D484(void) {
-    void *fn_8000C0C0(M2C_UNK *);
-    extern u32* lbl_8028FE50;
-    u32 temp_r3;
-    void *temp_r3_2;
+    void *fn_8000C0C0(void *);
+    extern u8 lbl_8028FE50[];
+    void *p;
+    u32 v;
 
-    temp_r3_2 = fn_8000C0C0((M2C_UNK *)&lbl_8028FE50);
-    if (temp_r3_2 != NULL) {
-        temp_r3 = *(u32 *)((char *)temp_r3_2 + 0x58);
-        if (temp_r3 != 0U) {
-            return temp_r3;
+    p = fn_8000C0C0(lbl_8028FE50);
+    if (p != NULL) {
+        v = *(u32 *)((u8 *)p + 0x58);
+        if (v != 0U) {
+            return v;
         }
     }
     return 0U;
