@@ -1772,6 +1772,21 @@ void fn_801CC030(void *arg0) {
 }
 
 #pragma cplusplus on
+extern "C" void fn_801CC068(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+    };
+    ((Obj *)arg0)->v6();
+}
+#pragma cplusplus reset
+
+#pragma cplusplus on
 extern "C" void fn_801CCE7C(void *arg0) {
     struct Obj {
         virtual void v0() = 0;
