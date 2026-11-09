@@ -899,29 +899,29 @@ void fn_80131854(s32 unused, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg
   }
 }
 
-u16 fn_80131AA8(void *arg1, s32 arg2) {
+s32 fn_80131AA8(s32 arg0, void *arg1, s32 arg2) {
     void *temp_r3;
     u16 temp_r0;
-
-    switch (arg2) {                                 /* irregular */
+    temp_r3 = M2C_FIELD(arg1, void **, 0);
+    switch (arg2) {
     case 0:
-        temp_r3 = M2C_FIELD(M2C_FIELD(arg1, void **, 0), void **, 0x188);
+        temp_r3 = M2C_FIELD(temp_r3, void **, 0x188);
         temp_r0 = M2C_FIELD(temp_r3, u16 *, 0x5A);
-        return (u16) -(s32) temp_r0;
+        return -temp_r0;
     case 1:
         temp_r3 = M2C_FIELD(arg1, void **, 8);
         if (temp_r3 == NULL) {
-            return 0U;
+            return 0;
         }
         return M2C_FIELD(temp_r3, u16 *, 0xE);
     case 2:
-        return (u16) M2C_FIELD(arg1, u8 *, 0x1C);
+        return M2C_FIELD(arg1, u8 *, 0x1C);
     case 3:
-        return (u16) M2C_FIELD(arg1, u8 *, 0x1D);
+        return M2C_FIELD(arg1, u8 *, 0x1D);
     case 4:
-        return (u16) M2C_FIELD(arg1, u8 *, 0x1E);
+        return M2C_FIELD(arg1, u8 *, 0x1E);
     default:
-        return 0U;
+        return 0;
     }
 }
 
