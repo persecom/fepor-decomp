@@ -42,9 +42,9 @@ extern void fn_8017E394(void* arg0, void* arg1, void* arg2, s32 arg3);
 typedef struct {
     u32 unk0;
     u8 unk4;
-    u8 unk5:6;
-    u8 unk5_bit6:1;
     u8 unk5_bit7:1;
+    u8 unk5_bit6:1;
+    u8 unk5:6;
 } Unk80037BD0;
 
 extern u8 lbl_80289EB8[16];
@@ -483,17 +483,14 @@ s32 fn_80094614(void* arg0, void* arg1) {
 }
 
 void fn_800946F0(s32 arg0) {
-    s32 r31;
     s32 r30;
-    void *temp_r3;
+    Unk80037BD0 *temp_r3;
 
-    r31 = 0;
     r30 = 0;
     do {
-        temp_r3 = (void *)fn_80037BD0(arg0, r30);
-        if ((temp_r3 != NULL) && (*(u32 *)temp_r3 != 0U)) {
-            *(u8 *)((u8 *)temp_r3 + 5) =
-                (*(u8 *)((u8 *)temp_r3 + 5) & ~0x40U) | ((r31 << 6) & 0x40U);
+        temp_r3 = (Unk80037BD0 *)fn_80037BD0(arg0, r30);
+        if ((temp_r3 != NULL) && (temp_r3->unk0 != 0U)) {
+            temp_r3->unk5_bit6 = 0;
         }
         r30 += 1;
     } while (r30 < 8);
