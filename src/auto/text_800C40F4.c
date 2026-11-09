@@ -7152,8 +7152,7 @@ void fn_800FF75C(void *arg0) {
 
 void fn_800FF918(s32 arg0) {
     extern u16 lbl_8028E888[66];
-    s32 temp_r5 = (s32)lbl_8028E888;
-    fn_8000CAA0((u16*)temp_r5, arg0, lbl_8028E888);
+    fn_8000CAA0(lbl_8028E888, arg0);
     fn_800288E4();
 }
 
