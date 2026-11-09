@@ -2562,6 +2562,65 @@ void fn_8006F6A4(s32 arg0, u32 arg1, u32 arg2, u32 arg3) {
     fn_80024398(lbl_80311CE0, arg0, 0);
 }
 
+#pragma cplusplus on
+extern "C" void fn_8006F710(void *arg0, void *arg1) {
+    void fn_8000A258(void);
+    void fn_8000A248(void);
+    void fn_80009D74(f32, f32, f32, f32);
+    f32 fn_80023EE0(void *);
+    void fn_80009B8C(s32);
+    void fn_80009B80(u8);
+    struct Model {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual void v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual f32 v25() = 0;
+    };
+    extern f32 lbl_803692E0;
+    extern f32 lbl_803692F8;
+    s32 flag;
+    s32 val;
+
+    fn_8000A258();
+    fn_80009D74((f32)M2C_FIELD(arg1, s16 *, 0x30), (f32)M2C_FIELD(arg1, s16 *, 0x32),
+                M2C_FIELD(arg1, Model **, 0x3C)->v25(), lbl_803692E0);
+    fn_80009B8C((s32)(lbl_803692F8 * fn_80023EE0(arg1)));
+    flag = 0;
+    if ((u8)M2C_FIELD(arg1, u8 *, 0x2D) == 0 && (u8)M2C_FIELD(arg1, u8 *, 0x2E) == 0) {
+        flag = 1;
+    }
+    val = 0x58;
+    if ((u8)flag != 0) {
+        val = 0x80;
+    }
+    fn_80009B80((u8)val);
+    fn_8000A248();
+}
+#pragma cplusplus reset
+
 s32 fn_8006F7F0(s32 arg0) {
     s32 var_r3;
     s32 i;
