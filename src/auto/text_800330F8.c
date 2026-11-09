@@ -1289,84 +1289,79 @@ void fn_8003B6C4(void* arg0, s32 arg1) {
     fn_800173B4((char*)arg0 + 0x236, arg0);
 }
 
-void fn_8003B6F0(void *arg0, s8 arg1) {
+void fn_8003B6F0(u8 *arg0, s32 arg1) {
+    void fn_80104410(void *);
+    void fn_8001D580(void *);
+    u8 *ptr;
     s32 i;
-    void *ptr;
-    s8 temp_arg1 = arg1;
 
-    // Initialize various fields to 0
-    ((u32*)arg0)[0x180/4] = 0;
-    ((u32*)arg0)[0x184/4] = 0;
-    ((u32*)arg0)[0x188/4] = 0;
-    ((u32*)arg0)[0x18C/4] = 0;
-    ((u32*)arg0)[0x190/4] = 0;
-    ((u32*)arg0)[0x194/4] = 0;
-    ((u8*)arg0)[0x19A] = 0;
-    ((u8*)arg0)[0x19B] = 0;
-    ((u8*)arg0)[0x19C] = 0;
-    ((u8*)arg0)[0x19D] = 0;
-    ((u8*)arg0)[0x19E] = 0;
-    ((u8*)arg0)[0x19F] = 0;
-    ((u32*)arg0)[0x1A0/4] = 0;
+    *(u32 *)(arg0 + 0x180) = 0;
+    *(u32 *)(arg0 + 0x184) = 0;
+    *(u32 *)(arg0 + 0x188) = 0;
+    *(u32 *)(arg0 + 0x18C) = 0;
+    *(u32 *)(arg0 + 0x190) = 0;
+    *(u32 *)(arg0 + 0x194) = 0;
+    arg0[0x19A] = 0;
+    arg0[0x19B] = 0;
+    arg0[0x19C] = 0;
+    arg0[0x19D] = 0;
+    arg0[0x19E] = 0;
+    arg0[0x19F] = 0;
+    *(u32 *)(arg0 + 0x1A0) = 0;
 
-    // Call fn_80104410 with offset
-    fn_80104410((char*)arg0 + 0x1A4);
+    fn_80104410(arg0 + 0x1A4);
 
-    // Set up loop variables
     ptr = arg0;
-    ((u8*)arg0)[0x1A8] = 0;
+    arg0[0x1A8] = 0;
     i = 0;
-    
-    ((u8*)arg0)[0x1B2] = 0;
-    ((u8*)arg0)[0x1B1] = 0;
-    ((u8*)arg0)[0x1B0] = 0;
-    ((u8*)arg0)[0x1AF] = 0;
-    ((u8*)arg0)[0x1AE] = 0;
-    ((u8*)arg0)[0x1AD] = 0;
-    ((u8*)arg0)[0x1AC] = 0;
-    ((u8*)arg0)[0x1AB] = 0;
-    ((u8*)arg0)[0x1BB] = 0;
-    ((u8*)arg0)[0x1BA] = 0;
-    ((u8*)arg0)[0x1B9] = 0;
-    ((u8*)arg0)[0x1B8] = 0;
-    ((u8*)arg0)[0x1B7] = 0;
-    ((u8*)arg0)[0x1B6] = 0;
-    ((u8*)arg0)[0x1B5] = 0;
-    ((u8*)arg0)[0x1B4] = 0;
-    ((u32*)arg0)[0x1C8/4] = 0;
-    ((u32*)arg0)[0x1C4/4] = 0;
-    ((u32*)arg0)[0x1C0/4] = 0;
-    ((u32*)arg0)[0x1BC/4] = 0;
 
-    // Loop with 4 iterations
+    arg0[0x1B2] = 0;
+    arg0[0x1B1] = 0;
+    arg0[0x1B0] = 0;
+    arg0[0x1AF] = 0;
+    arg0[0x1AE] = 0;
+    arg0[0x1AD] = 0;
+    arg0[0x1AC] = 0;
+    arg0[0x1AB] = 0;
+    arg0[0x1BB] = 0;
+    arg0[0x1BA] = 0;
+    arg0[0x1B9] = 0;
+    arg0[0x1B8] = 0;
+    arg0[0x1B7] = 0;
+    arg0[0x1B6] = 0;
+    arg0[0x1B5] = 0;
+    arg0[0x1B4] = 0;
+    *(u32 *)(arg0 + 0x1C8) = 0;
+    *(u32 *)(arg0 + 0x1C4) = 0;
+    *(u32 *)(arg0 + 0x1C0) = 0;
+    *(u32 *)(arg0 + 0x1BC) = 0;
+
     do {
-        fn_8001D580((char*)ptr + 0x1CC);
-        fn_8001D580((char*)ptr + 0x1EC);
+        fn_8001D580(ptr + 0x1CC);
+        fn_8001D580(ptr + 0x1EC);
         i += 1;
-        ptr = (char*)ptr + 8;
+        ptr += 8;
     } while (i < 4);
 
-    // More field initializations
-    ((u8*)arg0)[0x20C] = 0;
-    ((u8*)arg0)[0x20D] = 0;
-    ((u8*)arg0)[0x20E] = 0;
-    ((u8*)arg0)[0x20F] = 0;
-    ((u8*)arg0)[0x210] = 0;
-    ((u8*)arg0)[0x211] = 0;
-    ((u8*)arg0)[0x212] = 0;
-    ((u8*)arg0)[0x213] = 0;
-    ((u16*)arg0)[0x228/2] = 0;
-    ((u16*)arg0)[0x22A/2] = 0;
-    ((u16*)arg0)[0x22C/2] = 0;
-    ((u16*)arg0)[0x22E/2] = 0;
-    ((u16*)arg0)[0x230/2] = 0;
-    ((u16*)arg0)[0x232/2] = 0;
-    ((u8*)arg0)[0x234] = 0;
-    ((u8*)arg0)[0x235] = 0;
+    arg0[0x20C] = 0;
+    arg0[0x20D] = 0;
+    arg0[0x20E] = 0;
+    arg0[0x20F] = 0;
+    arg0[0x210] = 0;
+    arg0[0x211] = 0;
+    arg0[0x212] = 0;
+    arg0[0x213] = 0;
+    *(u16 *)(arg0 + 0x228) = 0;
+    *(u16 *)(arg0 + 0x22A) = 0;
+    *(u16 *)(arg0 + 0x22C) = 0;
+    *(u16 *)(arg0 + 0x22E) = 0;
+    *(u16 *)(arg0 + 0x230) = 0;
+    *(u16 *)(arg0 + 0x232) = 0;
+    arg0[0x234] = 0;
+    arg0[0x235] = 0;
 
-    // Set arg1 to field at offset 0x198 if it's non-negative
-    if (temp_arg1 >= 0) {
-        ((u8*)arg0)[0x198] = temp_arg1;
+    if (arg1 >= 0) {
+        arg0[0x198] = arg1;
     }
 }
 
