@@ -1776,8 +1776,7 @@ extern "C" s32 fn_800D0C5C(void *arg0) {
             break;
         case 21:
             if ((u8)fn_800E5248(*(void **)((u8 *)self + 0x9C), 0)) {
-                s32 t18 = *(s32 *)((u8 *)self + 0x18);
-                if (t18 != 0) {
+                if (*(s32 *)((u8 *)self + 0x18) != 0) {
                     if (*(s32 *)((u8 *)self + 0x21C) != 3 && lbl_80367878 == 0)
                         fn_800CDEB0(self);
                     else
