@@ -855,7 +855,7 @@ void fn_80076B3C(void) {
 
 void fn_80076B68(void) {
     extern u16 lbl_8026C0B8[];
-    fn_8000E0E4(&lbl_8026C0B8[0x612]);
+    fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x309);
 }
 
 s32 fn_80076B94(void){u8 fn_80105BC0(void*,s32);void*fn_80019E04(void*,void*);void fn_8002AD04(s32,void*);extern u8 lbl_802EF4C8[];extern u8 lbl_8026C0B8[];extern s32 lbl_802EF4E0[];s32 obj; if((s8)lbl_802EF4C8[0x12])return 3;obj=*(s32*)lbl_802EF4C8;if(!fn_80105BC0((u8*)obj+0x1bc,0x4a))return 3;fn_8002AD04(obj,fn_80019E04(lbl_8026C0B8+0x30e,lbl_802EF4C8));return lbl_802EF4E0[0]?0:3;}
