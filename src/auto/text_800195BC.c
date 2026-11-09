@@ -138,6 +138,12 @@ void fn_800199F8(void *arg0) {
     fn_8000A274((s32) -((lbl_80368D2C * temp_f1_6) - lbl_80368D28), temp_f1_6, lbl_80368D2C);
 }
 
+f32 fn_80019C80(s32 arg1) {
+    extern f32 lbl_802682F8[4];
+    f32 *ptr = &lbl_802682F8[arg1];
+    return *ptr;
+}
+
 void *fn_80019CC0(void *arg0) {
     void **table = (void**)0x80284258;
     u32 index = *(u32*)arg0;
@@ -527,6 +533,66 @@ void fn_8001C21C(void *arg0, s32 arg1) {
     }
     fn_8017A5C4(arg1, M2C_FIELD(temp_r3, u16 *, 0xE));
     fn_8017A5C4(arg1, M2C_FIELD(arg0, u16 *, 4));
+}
+
+extern f32 lbl_80368D5C;
+extern f32 lbl_80368D60;
+extern f64 lbl_80368D68;
+extern f64 lbl_80368D70;
+s32 fn_8001C284(void *arg0, u8 arg1, s8 arg2, s8 arg3, s8 arg4, s8 arg5) {
+    extern f32 lbl_80368D5C;
+    extern f32 lbl_80368D60;
+    f32 var_f0;
+    s32 temp_r9;
+    
+    var_f0 = lbl_80368D5C;
+    
+    // Check if any of the offsets are 0
+    if ((arg2 | arg3 | arg4 | arg5) == 0) {
+        return 0;
+    }
+    
+    // Process arg2 (offset 0x19)
+    if (arg2 != 0) {
+        u8 temp_u1 = *(u8*)((u8*)arg0 + 0x19);
+        f32 temp_f7 = (f32)temp_u1;
+        f32 temp_f6 = temp_f7 * temp_f7;
+        f32 temp_f2 = temp_f7 + (f32)arg2;
+        var_f0 += (f32)arg1 * ((f32)ABS((temp_f2 * temp_f2) - temp_f6) * 
+                              ((f32)*(u16*)((u8*)arg0 + 0x10) / temp_f6));
+    }
+    
+    // Process arg3 (offset 0x1A)
+    if (arg3 != 0) {
+        u8 temp_u1 = *(u8*)((u8*)arg0 + 0x1A);
+        f32 temp_f7 = (f32)temp_u1;
+        f32 temp_f6 = temp_f7 * temp_f7;
+        f32 temp_f2 = temp_f7 + (f32)(arg3 * 5);
+        var_f0 += (f32)arg1 * ((f32)ABS((temp_f2 * temp_f2) - temp_f6) * 
+                              ((f32)*(u16*)((u8*)arg0 + 0x10) / temp_f6));
+    }
+    
+    // Process arg4 (offset 0x1C)
+    if (arg4 != 0) {
+        u8 temp_u1 = *(u8*)((u8*)arg0 + 0x1C);
+        f32 temp_f7 = (f32)(temp_u1 + 0xA);
+        f32 temp_f6 = temp_f7 * temp_f7;
+        f32 temp_f2 = temp_f7 + (f32)(arg4 * 3);
+        var_f0 += (f32)arg1 * ((f32)ABS((temp_f2 * temp_f2) - temp_f6) * 
+                              ((f32)*(u16*)((u8*)arg0 + 0x10) / temp_f6));
+    }
+    
+    // Process arg5 (offset 0x1B)
+    if (arg5 != 0) {
+        u8 temp_u1 = *(u8*)((u8*)arg0 + 0x1B);
+        f32 temp_f7 = (f32)(0x17 - temp_u1);
+        f32 temp_f6 = temp_f7 * temp_f7;
+        f32 temp_f2 = temp_f7 + (f32)arg5;
+        var_f0 += (f32)arg1 * ((f32)ABS((temp_f2 * temp_f2) - temp_f6) * 
+                              ((f32)*(u16*)((u8*)arg0 + 0x10) / temp_f6));
+    }
+    
+    return (s32)(var_f0 * lbl_80368D60);
 }
 
 void *fn_8001C690(void *arg0, void *arg1) {
@@ -1121,6 +1187,8 @@ extern f32 lbl_80368D0C;
 extern f32 lbl_80368D10;
 #include "common.h"
 #include "global.h"
+extern f32 fabsf(f32 x); // Forward declaration of fabsf
+#include "m2c_macros.h"
 extern u16 lbl_803206EC;
 s32 fn_800C3260(u16 *);
 s32 fn_800C2D74(u16 *, s32, s32);
