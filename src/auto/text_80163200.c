@@ -2725,6 +2725,22 @@ void *fn_80179F8C(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) 
     return arg0;
 }
 
+void *fn_8017A238(void *arg0, s16 arg1) {
+    extern u16 lbl_80294CB8[76];
+    extern u16 lbl_802920E0[76];
+    
+    if (arg0 != NULL) {
+        *(u16**)((char*)arg0 + 4) = lbl_80294CB8;
+        if (arg0 != NULL) {
+            *(u16**)((char*)arg0 + 4) = lbl_802920E0;
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void *fn_8017A294(void *arg0, s16 arg1) {
     M2C_UNK fn_800C428C(void *);
     extern u16 lbl_8028FDB0[];
