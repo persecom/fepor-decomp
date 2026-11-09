@@ -1263,6 +1263,21 @@ void fn_80139D60(void *arg0, void *arg1) {
     *(u8*)(ptr + 0x5C) = 2;
 }
 
+#pragma cplusplus on
+extern "C" void fn_80139E5C(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+    };
+    ((Obj *)arg0)->v6();
+}
+#pragma cplusplus reset
+
 void fn_8013A9F4(void *arg0) {
     M2C_UNK fn_80155F20(M2C_UNK, M2C_UNK, s16, s16, M2C_UNK, M2C_UNK);
     M2C_FIELD(M2C_FIELD(arg0, void **, 0), M2C_UNK (**)(), 0x10)();
