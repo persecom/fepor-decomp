@@ -1163,15 +1163,17 @@ s8 fn_8003B490(void *arg0) {
 }
 
 s8 fn_8003B4D4(void *arg0) {
-    u8 *temp_r4;
+    void *temp_r6;
+    u8 temp_r5;
+    u8 temp_r6_2;
     s8 var_r3;
-    u8 temp_r6;
 
-    temp_r4 = M2C_FIELD(arg0, void **, 0x188);
-    temp_r6 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x18C), u8 *, 0x52);
-    var_r3 = M2C_FIELD(temp_r4, u8 *, 0x23) + (M2C_FIELD(M2C_FIELD(arg0, void **, 0x18C), u8 *, 0x4A) + M2C_FIELD(arg0, u8 *, 0x1B1));
-    if (var_r3 > (s8) temp_r6) {
-        var_r3 = (s8) temp_r6;
+    temp_r6 = M2C_FIELD(arg0, void **, 0x18C);
+    temp_r5 = M2C_FIELD(arg0, u8 *, 0x1B1);
+    temp_r6_2 = M2C_FIELD(temp_r6, u8 *, 0x52);
+    var_r3 = (s8)((M2C_FIELD(M2C_FIELD(arg0, void **, 0x188), u8 *, 0x23) + M2C_FIELD(temp_r6, u8 *, 0x4A)) + temp_r5);
+    if (var_r3 > (s8)temp_r6_2) {
+        var_r3 = (s8)temp_r6_2;
     }
     if (var_r3 < 0) {
         return 0;
@@ -1902,15 +1904,15 @@ label_1:
     return 1;
 }
 
-void fn_8003FF90(s32 arg0, u32 arg1) {
-    s32 var_r4;
+void fn_8003FF90(void *arg0, u32 arg1) {
+    void *fn_8000CAF0(void *, s32);
+    void fn_80040028(void *, void *);
+    extern u8 lbl_802857A0[];
 
-    var_r4 = arg1;
-    if (var_r4 == 0) {
-        var_r4 = 3;
+    if (arg1 == 0) {
+        arg1 = 3;
     }
-    fn_8000CAF0((u16*)0x802857A0, var_r4);
-    fn_80040028(arg0);
+    fn_80040028(fn_8000CAF0(lbl_802857A0, arg1), arg0);
 }
 
 void fn_8003FFD8(void) {
