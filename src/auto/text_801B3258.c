@@ -891,7 +891,28 @@ void fn_801B9500(struct Unit *unit, s32 arg1) {
     fn_8014004C((void *) unit);
 }
 
-void fn_801B9748(void*a){void*fn_8013FF94(void*,s32,s32);s32 fn_80019DF0(u8,void*);void fn_8017A9F0(void*,s32,void*,void*);extern u8 lbl_802EF4C8[];extern f32 lbl_8036B2DC;void*p;void*q;s32 x;p=fn_8013FF94(a,0x82,0);*(f32*)((char*)p+0x30)=lbl_8036B2DC;p=fn_8013FF94(a,0x108,0);*(f32*)((char*)p+0x30)=lbl_8036B2DC;q=((void**)a)[0x60/4];x=fn_80019DF0(*(u8*)(lbl_802EF4C8+0x14),lbl_802EF4C8);*(u8*)((char*)q+0x3c)=0;fn_8017A9F0(q,x,a,q);}
+void fn_801B9748(void *a) {
+    void *fn_8013FF94(void *, s32, s32);
+    s32 fn_80019DF0(u8, void *);
+    void fn_8017A9F0(void *, s32, void *, void *);
+    extern u8 lbl_802EF4C8[];
+    extern f32 lbl_8036B2DC;
+
+    void *p;
+    void *q;
+    s32 x;
+
+    p = fn_8013FF94(a, 0x82, 0);
+    *(f32 *)((char *)p + 0x30) = lbl_8036B2DC;
+
+    p = fn_8013FF94(a, 0x108, 0);
+    *(f32 *)((char *)p + 0x30) = lbl_8036B2DC;
+
+    q = *(void **)((char *)a + 0x60);
+    x = fn_80019DF0(lbl_802EF4C8[0x14], lbl_802EF4C8);
+    *(u8 *)((char *)q + 0x3c) = 0;
+    fn_8017A9F0(q, x, a, q);
+}
 
 void fn_801B97C8(void) {
     extern u8 lbl_802EF4C8[24];
