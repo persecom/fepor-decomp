@@ -417,7 +417,10 @@ auto/text_801FC634.c:
 	.text       start:0x801FC634 end:0x80202300
 
 auto/text_80202300.c:
-	.text       start:0x80202300 end:0x80203320
+	.text       start:0x80202300 end:0x80202540
+
+auto/text_80202540.c:
+	.text       start:0x80202540 end:0x80203320
 
 dolphin/mtx/quat.c:
 	.text       start:0x80203320 end:0x80203778
