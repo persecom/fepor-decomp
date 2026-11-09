@@ -466,11 +466,11 @@ s32 fn_8012F26C(void) {
     return 0;
 }
 
-void fn_8012F5A8(s32 *arg0, s32 *arg1, s32 *arg2, s32 *arg3) {
-    *arg0 = 0;
-    *arg1 = 0x14;
-    *arg2 = 0x30;
-    *arg3 = 0x28;
+void fn_8012F5A8(s32 unused0, s32 unused1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5) {
+    *arg2 = 0;
+    *arg3 = 0x14;
+    *arg4 = 0x30;
+    *arg5 = 0x28;
 }
 
 void fn_801302C0(void) {
