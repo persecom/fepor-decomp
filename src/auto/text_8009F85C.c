@@ -1081,21 +1081,18 @@ void *fn_800A1718(void) {
 }
 
 s32 fn_800A1728(void) {
-    extern f32 lbl_80330708;
+    extern f32 lbl_80330708[];
+    s32 fn_80040844(void *);
+    s32 fn_80047178(s32, s32, s32);
+    s32 fn_80049D84(s32);
     s32 temp_r31;
     s32 temp_r30;
-    s32 temp_r3;
+    u8 temp_r4;
 
-    f32 temp_f1 = M2C_FIELD(&lbl_80330708, f32 *, 0x528);
-    f32 temp_f0 = M2C_FIELD(&lbl_80330708, f32 *, 0x524);
-    temp_r31 = (s32) temp_f1;
-    temp_r30 = (s32) temp_f0;
-    
-    fn_80040844(&lbl_80330708);
-    fn_80047178((s8) temp_r30, (s8) temp_r31);
-    fn_80049D84();
-    temp_r3 = 2 & ~((s32) (-(s32) (temp_r30 | temp_r30) >> 0x1F));
-    return temp_r3;
+    temp_r31 = (s32) lbl_80330708[0x14A];
+    temp_r30 = (s32) lbl_80330708[0x149];
+    temp_r4 = (u8) fn_80049D84(fn_80047178(fn_80040844(lbl_80330708), (s8) temp_r30, (s8) temp_r31));
+    return (temp_r4 != 0) ? 0 : 2;
 }
 
 s32 fn_800A17A8(void) {
