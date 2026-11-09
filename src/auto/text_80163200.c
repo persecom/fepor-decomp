@@ -669,6 +669,39 @@ void fn_80168D68(s32 arg0) {
     }
 }
 
+void fn_80168DE0(void) {
+    extern f32 lbl_80330D68[];
+    extern f32 lbl_8036A95C;
+    extern f32 lbl_8036A964;
+    extern f32 lbl_8036A970;
+    
+    f32 *unitData = (f32 *)&lbl_80330D68;
+    f32 temp_f1, temp_f0;
+    
+    // Call 1
+    temp_f1 = unitData[0x110 / 4];
+    temp_f0 = lbl_8036A964;
+    fn_8022C568(unitData, temp_f1 - temp_f0);
+    
+    // Call 2
+    temp_f1 = unitData[0x10C / 4];
+    temp_f0 = lbl_8036A95C;
+    fn_8022C568(unitData, temp_f1 - temp_f0);
+    
+    // Call 3
+    temp_f1 = unitData[0xF8 / 4];
+    temp_f0 = lbl_8036A970;
+    fn_8022C568(unitData, temp_f1 + temp_f0);
+    
+    // Call 4
+    temp_f1 = unitData[0xF4 / 4];
+    temp_f0 = lbl_8036A970;
+    fn_8022C568(unitData, temp_f1 + temp_f0);
+    
+    // Final call - adjusting order to match the assembly exactly
+    fn_80225058(unitData, unitData, unitData);
+}
+
 s32 fn_80168E90(s32 arg0) {
     s32 fn_8000CAA0(u16 *, s32, u16 *);
     void fn_8016A6A4(void);
@@ -4999,7 +5032,7 @@ s32 fn_8018256C(void) {
 }
 
 s32 fn_80182574(s32 arg0) {
-    M2C_UNK fn_8010AC58(s32);
+    void fn_8010AC58(s32);
     u8 fn_8010B658(s32);
     u8 fn_8010B8E4(s32);
     u8 fn_8010BB74(s32);
@@ -5007,13 +5040,13 @@ s32 fn_80182574(s32 arg0) {
     u8 fn_8010C244(s32);
     u8 fn_8010C4B0(s32);
     u8 fn_8010C504(s32);
-    u8 fn_8010F670(M2C_UNK *);
-    extern M2C_UNK fn_800FB5C8;
-    extern M2C_UNK lbl_8032B3C0;
-    if (M2C_FIELD(&lbl_8032B3C0, u8 *, 1) & 4) {
+    u8 fn_8010F670(s32, void *);
+    s32 fn_800FB5C8(void *);
+    extern u8 lbl_8032B3C0[];
+    if ((*(u8 *)(lbl_8032B3C0 + 1) & 4) != 0) {
         return 1;
     }
-    if ((fn_8010F670(&fn_800FB5C8) == 0) && (fn_8010C4B0(arg0) != 0) && (fn_8010C504(arg0) != 0)) {
+    if ((fn_8010F670(arg0, fn_800FB5C8) == 0) && (fn_8010C4B0(arg0) != 0) && (fn_8010C504(arg0) != 0)) {
         if (fn_8010C244(arg0) != 0) {
             return 1;
         }
