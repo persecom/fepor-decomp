@@ -4667,7 +4667,7 @@ void fn_801DDAC8(void *arg0) {
 }
 
 extern void *lbl_801D3B14;
-#pragma use_lmw_stmw on
+#pragma opt_propagation off
 void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     void *memset(void *, s32, u32);
     void *memcpy(void *, const void *, u32);
@@ -4740,7 +4740,7 @@ void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     }
     fn_801DC588(w);
 }
-
+#pragma opt_propagation reset
 void fn_801DDDE8(s32 arg0, s32 arg1) {
     void *fn_8000CAA0(void *lbl, s32 arg);
     extern u8 lbl_80299C74[];
@@ -5117,11 +5117,11 @@ void *fn_801E09B4(M2C_UNK *arg0) {
 }
 
 void fn_801E0B48(s32 arg1, s32 arg2, s32 arg3) {
-    void *fn_8000CAA0(M2C_UNK *, s32);
-    extern M2C_UNK lbl_80299ED8;
+    void *fn_8000CAA0(void *, s32);
+    extern u8 lbl_80299ED8[];
+    
     void *temp_r3;
-
-    temp_r3 = fn_8000CAA0(&lbl_80299ED8, arg3);
+    temp_r3 = fn_8000CAA0(lbl_80299ED8, arg3);
     *(s32 *) ((u8 *) temp_r3 + 0x60) = arg1;
     *(s32 *) ((u8 *) temp_r3 + 0x64) = arg2;
 }
@@ -5315,9 +5315,9 @@ void fn_801E2594(u32 *arg0) {
 }
 
 void fn_801E25EC(void) {
-    extern u16 lbl_8027E980[];
-    u16* addr = &lbl_8027E980[0x181];
-    fn_800056CC(addr);
+    extern u8 lbl_8027E980[];
+    void fn_800056CC(char *, ...);
+    fn_800056CC((char *)(lbl_8027E980 + 0x181));
     fn_800E9A94();
 }
 
