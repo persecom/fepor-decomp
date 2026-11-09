@@ -1290,6 +1290,13 @@ void fn_8016B700(void) {
     fn_8000CAA0(lbl_80294550, fn_800C0658(), lbl_80294550);
 }
 
+extern u8 lbl_80294460[16];
+void fn_8016B730(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_80294460[16];
+    fn_8000CAA0(lbl_80294460, arg0);
+}
+
 void fn_8016B75C(void) {
     s32 temp_r31;
     
