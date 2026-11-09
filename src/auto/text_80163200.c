@@ -2137,6 +2137,88 @@ void fn_80174204(void) {
     return;
 }
 
+#pragma cplusplus on
+extern "C" void fn_80174B10(void *arg0) {
+    void fn_8013AF08(void *, s16);
+    void fn_8014004C(void *, void *);
+    void fn_80140258(void *, void *, s16 *, s32);
+
+    struct RefObj {
+        virtual void destroy(s32);
+        s32 refCount;
+    };
+
+    struct Inner {
+        u8 pad[0x4D];
+        u8 f4d;
+        u8 pad4e[2];
+        s16 f50;
+        u8 pad52[0x2A];
+        s32 f7c;
+        s32 f80;
+    };
+
+    struct Holder {
+        u8 pad[0x40];
+        Inner *p40;
+        u8 pad44[0xC];
+        RefObj *p50;
+        RefObj *p54;
+        RefObj *p58;
+    };
+
+    Holder *h;
+    Inner *inner;
+    RefObj *p;
+    RefObj *p50;
+    s16 sp8[2];
+    s16 tmp;
+    s32 refs;
+
+    h = (Holder *)arg0;
+    inner = h->p40;
+    fn_8013AF08(inner, inner->f50);
+    inner->f4d = 0;
+    inner->f7c = 0;
+    inner->f80 = 0;
+    p50 = h->p50;
+    tmp = *(s16 *)((u8 *)p50 + 0xC);
+    sp8[0] = 0x260;
+    sp8[1] = tmp;
+    fn_80140258(h, p50, sp8, 1);
+
+    p = h->p50;
+    if (p != NULL) {
+        refs = p->refCount - 1;
+        p->refCount = refs;
+        if (refs == 0 && p != NULL) {
+            p->destroy(1);
+        }
+        h->p50 = (RefObj *)0;
+    }
+    fn_8014004C(h, h->p54);
+    p = h->p54;
+    if (p != NULL) {
+        refs = p->refCount - 1;
+        p->refCount = refs;
+        if (refs == 0 && p != NULL) {
+            p->destroy(1);
+        }
+        h->p54 = (RefObj *)0;
+    }
+    fn_8014004C(h, h->p58);
+    p = h->p58;
+    if (p != NULL) {
+        refs = p->refCount - 1;
+        p->refCount = refs;
+        if (refs == 0 && p != NULL) {
+            p->destroy(1);
+        }
+        h->p58 = (RefObj *)0;
+    }
+}
+#pragma cplusplus reset
+
 void fn_80174E0C(s32 arg0) {
     void fn_800AAE78(s32, s32, s32);
     void fn_8013FED0(s32);
