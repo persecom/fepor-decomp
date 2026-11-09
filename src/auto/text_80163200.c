@@ -552,15 +552,15 @@ void fn_80166CB0(s32 arg0) {
 }
 
 s32 fn_80166D8C(void) {
-    void *fn_8000C0C0(M2C_UNK *);
-    extern u16 lbl_80293D20;
-    void *temp_r3;
+    void *fn_8000C0C0(void *);
+    extern u8 lbl_80293D20[];
+    void *p;
 
-    temp_r3 = fn_8000C0C0((M2C_UNK *)&lbl_80293D20);
-    if (temp_r3 == NULL) {
+    p = fn_8000C0C0(lbl_80293D20);
+    if (p == NULL) {
         return 0;
     }
-    return *(u8 *)((uintptr_t)temp_r3 + 0x2E) == 0;
+    return *(u8 *)((u8 *)p + 0x2E) == 0;
 }
 
 void fn_8016746C(void *arg0, s32 arg1, s32 arg2, f32 farg0, f32 farg1) {
