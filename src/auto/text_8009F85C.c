@@ -1394,11 +1394,12 @@ s32 fn_800A26D0(void *arg0) {
 
 s32 fn_800A2748(void *arg0) {
     s32 fn_80019E68(s16);
-    M2C_UNK fn_8003C6BC(s32, M2C_UNK, s32);
-    s32 temp_r31;
+    s32 fn_8003C6BC(s32, s32, s32);
 
-    temp_r31 = fn_800AA794();
-    fn_8003C6BC(temp_r31, 0, fn_80019E68(M2C_FIELD(arg0, s16 *, 4)));
+    s32 temp_r31 = fn_800AA794();
+    s16 temp_r5 = M2C_FIELD(arg0, s16 *, 4);
+    s32 temp_r3 = fn_80019E68(temp_r5);
+    fn_8003C6BC(temp_r31, 0, temp_r3);
     return 0;
 }
 
