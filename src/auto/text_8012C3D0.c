@@ -91,6 +91,32 @@ void *fn_8012C53C(void) {
     return &(lbl_802758F8[0x14D]);
 }
 
+s32 fn_8012C54C(void) {
+    void fn_80109B18(void *, u8);
+    u8 fn_80109B24(void *);
+    extern void *lbl_80367240;
+    extern void *lbl_80367A88;
+    u32 flags;
+    s32 val;
+
+    val = fn_80109B24(lbl_80367A88);
+    flags = *(u32 *)((u8 *)lbl_80367240 + 0x10);
+    if (flags & 0x01000001) {
+        val -= 1;
+    }
+    if (flags & 0x02000002) {
+        val += 1;
+    }
+    if (val > 0xFF) {
+        val = 0xFF;
+    }
+    if (val < 0) {
+        val = 0;
+    }
+    fn_80109B18(lbl_80367A88, val);
+    return 0;
+}
+
 void *fn_8012C618(void) {
     extern u16 lbl_802758F8[];
     return &lbl_802758F8[0x2ED];
