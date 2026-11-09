@@ -352,14 +352,8 @@ void fn_801A4958(void *arg0) {
 
 void fn_801A4A24(s32 arg0, u8 arg1) {
     M2C_UNK fn_80034068(s32, u8, M2C_UNK);
-    u8 var_r0;
-
     fn_80034068(arg0 + 0x8A0, 0x20U, 0);
-    var_r0 = 0x52;
-    if (arg1 != 0) {
-        var_r0 = 0x50;
-    }
-    fn_80034068(arg0 + 0x8A0, var_r0, 0);
+    fn_80034068(arg0 + 0x8A0, (arg1 != 0) ? 0x50 : 0x52, 0);
 }
 
 s32 fn_801A4A88(struct unit *arg0) {
