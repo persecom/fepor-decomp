@@ -477,6 +477,11 @@ s32 fn_80104338(u8 arg0) {
     return 0;
 }
 
+extern u32 lbl_8028F210[];
+s32 fn_801043FC(s32 arg0) {
+    return lbl_8028F210[arg0];
+}
+
 void fn_80104410(void *arg0) {
     u8 *ptr = (u8 *)arg0;
     u32 temp;
