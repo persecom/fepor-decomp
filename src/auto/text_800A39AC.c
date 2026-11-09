@@ -2,8 +2,8 @@
 #include "common.h"
 
 void *fn_800A39AC(void) {
-    extern void *lbl_8026E108;
-    return (void *)((u8 *)&lbl_8026E108 + 0x2B);
+    extern u16 lbl_8026E108[];
+    return (u8 *)lbl_8026E108 + 0x2B;
 }
 
 s32 fn_800A39BC(void) {
