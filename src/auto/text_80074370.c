@@ -264,8 +264,8 @@ extern "C" void fn_80075290(void *arg0, s32 arg1, void *arg2) {
 #pragma cplusplus reset
 
 void fn_800752F4(void) {
-    extern u8 lbl_8026C0B8;
-    fn_8000E0E4((u8 *)&lbl_8026C0B8 + 0x1C8);
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x1C8);
 }
 
 void fn_80075320(void) {
