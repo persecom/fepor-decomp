@@ -164,6 +164,12 @@ s32 fn_801A30C0(s32 arg0) {
     return 0;
 }
 
+void fn_801A3164(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_80297118[16];
+    fn_8000CAA0(lbl_80297118, arg0);
+}
+
 extern u16 lbl_80330EAC[];
 void fn_801A372C(void) {
     u16* temp_r31;
