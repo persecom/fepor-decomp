@@ -3898,6 +3898,32 @@ void fn_8017E1B8(void *arg0, u32 arg1) {
     }
 }
 
+void fn_8017E1E4(void *arg0) {
+    f32 fn_80059F64(f32, f32, f32, f32);
+    void fn_801475FC(void *, s32);
+    void fn_8000C188(void *);
+    extern u8 lbl_802788B8[];
+    void *temp_r31;
+    s32 temp;
+
+    temp_r31 = arg0;
+    *(s32 *)((u8 *)temp_r31 + 0x34) = *(s32 *)((u8 *)temp_r31 + 0x34) + 1;
+    *(f32 *)((u8 *)*(void **)((u8 *)temp_r31 + 0x30) + 4) = fn_80059F64(
+        *(f32 *)((u8 *)temp_r31 + 0x40),
+        *(f32 *)((u8 *)temp_r31 + 0x44),
+        (f32)*(s32 *)((u8 *)temp_r31 + 0x38),
+        (f32)*(s32 *)((u8 *)temp_r31 + 0x34));
+    if (*(f32 *)((u8 *)temp_r31 + 0x44) > *(f32 *)((u8 *)temp_r31 + 0x40)) {
+        temp = *(s32 *)((u8 *)temp_r31 + 0x34);
+        if (temp & 1) {
+            fn_801475FC(lbl_802788B8 + 0x10E, 0x64);
+        }
+    }
+    if (*(s32 *)((u8 *)temp_r31 + 0x34) >= *(s32 *)((u8 *)temp_r31 + 0x38)) {
+        fn_8000C188(temp_r31);
+    }
+}
+
 void fn_8017E2AC(void *arg0) {
     f32 temp = *(f32*)((u8*)arg0 + 0x44);
     *(f32*)((u8*)*(void**)((u8*)arg0 + 0x30) + 0x4) = temp;
