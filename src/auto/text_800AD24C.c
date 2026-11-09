@@ -4555,6 +4555,13 @@ s32 fn_800C273C(void *arg0, u16 arg1) {
     return M2C_FIELD(M2C_FIELD(arg0, void **, 8), s32 *, 0x24) + arg1;
 }
 
+extern u8 lbl_8028D768[16];
+void fn_800C28A0(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_8028D768[16];
+    fn_8000CAA0(lbl_8028D768, arg0);
+}
+
 void fn_800C28CC(void) {
     M2C_UNK fn_80013880();
     fn_80013880();
