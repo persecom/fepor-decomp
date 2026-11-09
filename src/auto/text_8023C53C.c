@@ -3872,14 +3872,14 @@ void fn_80263784(void) {
     OSEnableInterrupts();
 }
 
-void fn_802637A4(void) {
-    lbl_80363F18(&lbl_80363F18);
+extern u8 lbl_80363F18[16];
+
+void fn_802637A4(s32 arg0) {
+    ((void (*)(s32))*(void **)(lbl_80363F18 + 0))(arg0);
 }
 
-void fn_80263800(void) {
-    u16* ptr = (u16*)lbl_80363F18;
-    u16 (*func)(u16*) = (u16 (*)(u16*))ptr[2];
-    func(ptr);
+void fn_80263800(s32 arg0) {
+    ((void (*)(s32))*(void **)(lbl_80363F18 + 8))(arg0);
 }
 
 void fn_80263830(void *arg0) {
