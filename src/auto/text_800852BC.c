@@ -192,12 +192,11 @@ void fn_80088F34(void) {
 }
 
 void fn_80088F8C(void *arg0) {
-    f32 fn_800067BC(M2C_UNK, s16, f32, f32, f32, f32);
-    extern f32 lbl_80369680;
+    f32 fn_800067BC(s32, s16, f32, f32, f32, f32);
     s16 temp_r4;
-
-    temp_r4 = M2C_FIELD(arg0, s16 *, 0x28);
-    M2C_FIELD(arg0, s16 *, 0x34) = (s16) fn_800067BC(0, temp_r4, M2C_FIELD(arg0, f32 *, 0x38), M2C_FIELD(arg0, f32 *, 0x3C), (f32) (6 - temp_r4), lbl_80369680);
+    f32 f4 = 6.0f;
+    temp_r4 = *(s16 *)((u8 *)arg0 + 0x28);
+    *(s16 *)((u8 *)arg0 + 0x34) = (s16)fn_800067BC(0, temp_r4, *(f32 *)((u8 *)arg0 + 0x38), *(f32 *)((u8 *)arg0 + 0x3C), (f32)(6 - temp_r4), f4);
 }
 
 void fn_80089424(s32 arg0) {
