@@ -401,6 +401,19 @@ void fn_80018B18(void) {
     lbl_80366DB0 = lbl_803671C0;
 }
 
+#pragma cplusplus on
+extern "C" void fn_80019384(void *arg0, s32 arg1) {
+    struct Obj {
+        u8 pad[0x74];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual f32 v2(s32) = 0;
+    };
+    *(s32 *)((char *)arg0 + 0x20) = arg1 & 3;
+    *(f32 *)((char *)arg0 + 0xC) = ((Obj *)arg0)->v2(*(s32 *)((char *)arg0 + 0x20));
+}
+#pragma cplusplus reset
+
 void fn_800193CC(void *arg0, f32 farg0) {
     M2C_FIELD(arg0, f32 *, 0xC) = farg0;
     M2C_FIELD(arg0, f32 *, 0x18) = farg0;
