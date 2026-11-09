@@ -363,50 +363,48 @@ void fn_80104160(s32 arg0, s32 arg1) {
 }
 
 s32 fn_8010418C(void *arg0, s32 arg1) {
-    u8 r0;
-    s32 r5;
-    
-    r5 = 0;
-    r0 = *(u8 *)arg0;
-    if ((r0 >> 5U) & 7) {
-        r5 = 1;
+    s32 count;
+    u8 *p;
+
+    p = (u8 *)arg0;
+    count = 0;
+    if ((p[0] >> 5) & 7) {
+        count = 1;
     }
-    if ((arg1 + 1) == r5) {
+    if (arg1 + 1 == count) {
         return 0x1B;
     }
-    
-    r0 = *(u16 *)arg0;
-    if ((r0 >> 7U) & 7) {
-        r5 += 1;
+
+    if ((*(u16 *)p >> 7) & 7) {
+        count += 1;
     }
-    if ((arg1 + 1) == r5) {
+    if (arg1 + 1 == count) {
         return 0x1C;
     }
-    
-    r0 = *(u8 *)(((u8 *)arg0) + 1);
-    if ((r0 >> 4U) & 7) {
-        r5 += 1;
+
+    if ((p[1] >> 4) & 7) {
+        count += 1;
     }
-    if ((arg1 + 1) == r5) {
+    if (arg1 + 1 == count) {
         return 0x1D;
     }
-    
-    r0 = *(u8 *)arg0;
-    if ((r0 >> 2U) & 7) {
-        r5 += 1;
+
+    p = (u8 *)arg0;
+    if ((p[0] >> 2) & 7) {
+        count += 1;
     }
-    if ((arg1 + 1) == r5) {
+    if (arg1 + 1 == count) {
         return 0x1E;
     }
 
-    r0 = *(u8 *)(((u8 *)arg0) + 1);
-    if (r0 & 7) {
-        r5 += 1;
+    p = (u8 *)arg0;
+    if (p[1] & 7) {
+        count += 1;
     }
-    if ((arg1 + 1) == r5) {
+    if (arg1 + 1 == count) {
         return 0x1F;
     }
-    
+
     return 0;
 }
 
