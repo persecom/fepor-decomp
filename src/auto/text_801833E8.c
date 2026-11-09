@@ -1480,21 +1480,20 @@ void fn_8018CF08(void) {
 }
 
 void fn_8018CF48(s32 arg0) {
-    void *fn_8000C0C0(void *, void *);
-    extern u16 lbl_80296018;
-    s32 var_r31;
+    void *fn_8000C0C0(void *);
+    extern u8 lbl_80296018[];
     void *temp_r3;
 
-    temp_r3 = fn_8000C0C0(&lbl_80296018, &lbl_80296018);
+    temp_r3 = fn_8000C0C0(lbl_80296018);
     if (temp_r3 != NULL) {
-        var_r31 = *(s32*)((char*)temp_r3 + 0x34) + arg0;
-        if (var_r31 < 0) {
-            var_r31 = 0;
+        arg0 = *(s32 *)((u8 *)temp_r3 + 0x34) + arg0;
+        if (arg0 < 0) {
+            arg0 = 0;
         }
-        if (var_r31 > 0x64) {
-            var_r31 = 0x64;
+        if (arg0 > 0x64) {
+            arg0 = 0x64;
         }
-        *(s32*)((char*)temp_r3 + 0x40) = var_r31;
+        *(s32 *)((u8 *)temp_r3 + 0x40) = arg0;
     }
 }
 
