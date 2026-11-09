@@ -1237,9 +1237,8 @@ s32 fn_80077A30(void) {
 }
 
 void fn_80077A38(void) {
-    M2C_UNK fn_8000E0E4(void *);
-    extern M2C_UNK lbl_8026C0B8;
-    fn_8000E0E4(&lbl_8026C0B8 + 0x3F6);
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x3F6);
 }
 
 void fn_80077A64(void) {
