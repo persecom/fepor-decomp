@@ -63,6 +63,18 @@ void fn_800288E4(void) {
     }
 }
 
+void fn_80028950(void) {
+    void fn_8014CBD8(void *, f32, f32);
+    void fn_80183A90(void *);
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_80330708[];
+    void *temp_r31;
+
+    temp_r31 = *(void **)lbl_802EF4C8;
+    fn_80183A90(temp_r31);
+    fn_8014CBD8(lbl_80330708, M2C_FIELD(temp_r31, s8 *, 0x19E), M2C_FIELD(temp_r31, s8 *, 0x19F));
+}
+
 void fn_800289D0(void *arg0) {
     extern u8 lbl_802EF4C8[];
     
@@ -1296,28 +1308,32 @@ void fn_80031550(s32 arg0) {
 }
 
 void fn_80031598(s32 arg0) {
-    M2C_UNK fn_8000CAA0(M2C_UNK *, s32);
-    u8 fn_8001DD04(s32, M2C_UNK *);
-    M2C_UNK fn_8003CE88(s32, u8, M2C_UNK *);
-    extern M2C_UNK lbl_80285088;
-    extern M2C_UNK lbl_802EF4C8;
-    fn_8003CE88(M2C_FIELD(&lbl_802EF4C8, s32 *, 4), fn_8001DD04(M2C_FIELD(&lbl_802EF4C8, s32 *, 0), &lbl_802EF4C8), &lbl_802EF4C8);
+    extern u16 lbl_802EF4C8[];
+    extern u8 lbl_80285088[];
+    
+    s32 val1 = *(s32 *)lbl_802EF4C8;
+    u8 val2 = fn_8001DD04(val1, (u8 *)lbl_802EF4C8);
+    s32 val3 = *(s32 *)(lbl_802EF4C8 + 4);
+    fn_8003CE88(val3, val2, (u8 *)lbl_802EF4C8);
     fn_8004A224();
-    fn_8000CAA0(&lbl_80285088, arg0);
+    fn_8000CAA0(lbl_80285088, arg0);
 }
 
 void fn_800315F8(void) {
-    M2C_UNK fn_8004A1F0(M2C_UNK *, s8);
-    M2C_UNK fn_8014CB14(M2C_UNK *, s32, M2C_UNK *);
-    extern M2C_UNK lbl_802EF4C8;
-    extern M2C_UNK lbl_80330708;
-    s8 temp_r4;
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_80330708[];
+    
+    s32 temp_r4;
+    s32 temp_r0;
 
-    temp_r4 = (s8) M2C_FIELD(&lbl_80330708, f32 *, 0x524);
-    M2C_FIELD(&lbl_802EF4C8, s8 *, 0xF) = temp_r4;
-    M2C_FIELD(&lbl_802EF4C8, s8 *, 0x10) = (s8) M2C_FIELD(&lbl_80330708, f32 *, 0x528);
-    fn_8004A1F0(&lbl_802EF4C8, temp_r4);
-    fn_8014CB14(&lbl_80330708, M2C_FIELD(&lbl_802EF4C8, s32 *, 0), &lbl_80330708);
+    temp_r4 = (s32)*(f32*)(lbl_80330708 + 0x524);
+    temp_r0 = (s32)*(f32*)(lbl_80330708 + 0x528);
+    
+    lbl_802EF4C8[0xF] = (u8)temp_r4;
+    lbl_802EF4C8[0x10] = (u8)temp_r0;
+    
+    fn_8004A1F0(lbl_802EF4C8, (s8)temp_r0);
+    fn_8014CB14(lbl_80330708, *(s32*)(lbl_802EF4C8 + 0x0), lbl_80330708);
 }
 
 void fn_80031668(s32 arg0) {
@@ -1917,6 +1933,7 @@ extern u8 lbl_802B14E4[101760];
 extern u32 lbl_8032BB58; // size: 0x204
 
 #include "common.h"
+#include "global.h"
 
 extern u16* lbl_80269210;
 extern s32* lbl_80330708;
