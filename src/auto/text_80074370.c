@@ -1671,12 +1671,11 @@ void fn_80078C94(void) {
     fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x557);
 }
 
-s32 fn_80078D48(void) {
-    extern u16 lbl_802EF4C8[];
-    extern u16 lbl_80311F8C[];
-    u16* r4 = lbl_802EF4C8;
-    r4[4] = 0xD;
-    fn_80024398(lbl_80311F8C, 0);
+s32 fn_80078D48(s32 arg0, s32 arg1) {
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_80311F8C[];
+    lbl_802EF4C8[8] = 0xD;
+    fn_80024398(lbl_80311F8C, arg1, 0);
     return 4;
 }
 
