@@ -284,6 +284,11 @@ s32 fn_80183A5C(void) {
     return fn_8000C0C0(&lbl_80295A78) != 0;
 }
 
+void fn_80183A90(s32 arg0) {
+    void fn_8004FE98(s32, s32);
+    fn_8004FE98(arg0, 0);
+}
+
 void fn_80183B24(s32 arg0) {
     void *fn_8000CA64(M2C_UNK *, M2C_UNK *);
     extern M2C_UNK lbl_80295DF0;
