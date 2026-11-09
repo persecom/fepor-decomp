@@ -2054,9 +2054,12 @@ void fn_801908B8(void *arg0, s32 arg1) {
 }
 
 s32 fn_801909E4(void *arg0, s32 *arg1) {
-    s32 fn_80093DA8(s32);
-    if ((u32) M2C_FIELD(arg0, u32 *, 0x40) != 0U) {
-        return fn_80093DA8(*arg1);
+    s32 fn_80093DA8(void *, s32);
+    void *v;
+
+    v = *(void **)((u8 *)arg0 + 0x40);
+    if (v != NULL) {
+        return fn_80093DA8(v, *arg1);
     }
     return 1;
 }
