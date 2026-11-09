@@ -95,8 +95,11 @@ void fn_801F1E8C(void *arg0) {
 }
 
 void fn_801F20A8(s32 arg0) {
-    extern M2C_UNK lbl_8027F730;
-    if (fn_8005C6A0(&lbl_8027F730 + 0xE1, &lbl_8027F730) & 0x2000) {
+    extern u8 lbl_8027F730[];
+    s32 fn_8005C6A0(void *);
+    void fn_8000C188(s32);
+
+    if (fn_8005C6A0(lbl_8027F730 + 0xE1) & 0x2000) {
         fn_8000C188(arg0);
     }
 }
