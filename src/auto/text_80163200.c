@@ -2317,7 +2317,8 @@ s32 fn_80177440(s32 arg1) {
 }
 
 void fn_801774A8(void) {
-    fn_8000E0E4(&lbl_80278080[0x94A]);
+    extern u16 lbl_80278080[];
+    fn_8000E0E4((u8 *)lbl_80278080 + 0x4a5);
 }
 
 void *fn_801774D4(void) {
