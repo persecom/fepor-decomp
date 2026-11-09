@@ -2141,8 +2141,9 @@ void fn_8006CA8C(void) {
     fn_8006C2A4(0x1);
 }
 
-void fn_8006CAB0(void) {
-    fn_8006C2A4(0);
+void fn_8006CAB0(s32 arg0) {
+    void fn_8006C2A4(s32, s32);
+    fn_8006C2A4(arg0, 0);
 }
 
 int fn_8006CAD4(void *arg0, int arg1, int arg2) {
