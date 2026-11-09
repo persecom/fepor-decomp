@@ -2021,93 +2021,95 @@ void fn_80040F90(void *arg0) {
     s32 temp_r4;
     s32 temp_r3;
     s8 var_r5;
-    s8 var_r5_2;
-    s8 var_r5_3;
 
-    temp_r4 = *(s32*)((char*)arg0 + 0x64) & 0xC0000;
-    switch (temp_r4) {                              /* switch 1; irregular */
-    case 0x80000:                                   /* switch 1 */
+    temp_r4 = *(s32 *)((char *)arg0 + 0x64) & 0xC0000;
+    switch (temp_r4) {
+    case 0x80000:
         var_r5 = 1;
-        if (*(u8*)((char*)lbl_80330708 + 0xA6) != 1) {
+        if (*(u8 *)((char *)lbl_80330708 + 0xA6) != 1) {
             var_r5 = 0;
         }
         lbl_80367289 = var_r5;
         break;
-    case 0xC0000:                                   /* switch 1 */
-        var_r5_2 = 2;
-        if (*(u8*)((char*)lbl_80330708 + 0xA6) != 1) {
-            var_r5_2 = 0;
+    case 0xC0000:
+        var_r5 = 2;
+        if (*(u8 *)((char *)lbl_80330708 + 0xA6) != 1) {
+            var_r5 = 0;
         }
-        lbl_80367289 = var_r5_2;
+        lbl_80367289 = var_r5;
         break;
-    case 0x40000:                                   /* switch 1 */
-        var_r5_3 = 3;
-        if (*(u8*)((char*)lbl_80330708 + 0xA6) != 1) {
-            var_r5_3 = 0;
+    case 0x40000:
+        var_r5 = 3;
+        if (*(u8 *)((char *)lbl_80330708 + 0xA6) != 1) {
+            var_r5 = 0;
         }
-        lbl_80367289 = var_r5_3;
+        lbl_80367289 = var_r5;
         break;
-    default:                                        /* switch 1 */
-        lbl_80367289 = 0;
+    default:
+        var_r5 = 0;
+        if (*(u8 *)((char *)lbl_80330708 + 0xA6) != 1) {
+            var_r5 = 0;
+        }
+        lbl_80367289 = var_r5;
         break;
     }
-    temp_r3 = *(s32*)((char*)arg0 + 0x64) & 0x01F00000;
-    switch (temp_r3) {                              /* switch 2; irregular */
-    case 0x0:                                       /* switch 2 */
+    temp_r3 = *(s32 *)((char *)arg0 + 0x64) & 0x01F00000;
+    switch (temp_r3) {
+    case 0x0:
         lbl_8036728A = 0;
         return;
-    case 0x100000:                                  /* switch 2 */
+    case 0x100000:
         lbl_8036728A = 1;
         return;
-    case 0x200000:                                  /* switch 2 */
+    case 0x200000:
         lbl_8036728A = 2;
         return;
-    case 0x300000:                                  /* switch 2 */
+    case 0x300000:
         lbl_8036728A = 3;
         return;
-    case 0x400000:                                  /* switch 2 */
+    case 0x400000:
         lbl_8036728A = 4;
         return;
-    case 0x500000:                                  /* switch 2 */
+    case 0x500000:
         lbl_8036728A = 5;
         return;
-    case 0x600000:                                  /* switch 2 */
+    case 0x600000:
         lbl_8036728A = 6;
         return;
-    case 0x700000:                                  /* switch 2 */
+    case 0x700000:
         lbl_8036728A = 7;
         return;
-    case 0x800000:                                  /* switch 2 */
+    case 0x800000:
         lbl_8036728A = 8;
         return;
-    case 0x900000:                                  /* switch 2 */
+    case 0x900000:
         lbl_8036728A = 9;
         return;
-    case 0xA00000:                                  /* switch 2 */
+    case 0xA00000:
         lbl_8036728A = 0xA;
         return;
-    case 0xB00000:                                  /* switch 2 */
+    case 0xB00000:
         lbl_8036728A = 0xB;
         return;
-    case 0xC00000:                                  /* switch 2 */
+    case 0xC00000:
         lbl_8036728A = 0xC;
         return;
-    case 0xD00000:                                  /* switch 2 */
+    case 0xD00000:
         lbl_8036728A = 0xD;
         return;
-    case 0xE00000:                                  /* switch 2 */
+    case 0xE00000:
         lbl_8036728A = 0xE;
         return;
-    case 0xF00000:                                  /* switch 2 */
+    case 0xF00000:
         lbl_8036728A = 0xF;
         return;
-    case 0x1000000:                                 /* switch 2 */
+    case 0x1000000:
         lbl_8036728A = 0x10;
         return;
-    case 0x1100000:                                 /* switch 2 */
+    case 0x1100000:
         lbl_8036728A = 0x11;
         return;
-    default:                                        /* switch 2 */
+    default:
         lbl_8036728A = 0;
         return;
     }
