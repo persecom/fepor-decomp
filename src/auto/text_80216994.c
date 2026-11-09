@@ -111,25 +111,18 @@ void fn_80216BBC(s32 arg0) {
 s32 fn_80216CE8(s32 arg0, s32 arg1) {
     s32 EXIDeselect(s32);
     s32 EXIImm(s32, s32 *, s32, s32, s32);
-    s32 EXISelect(s32, s32);
+    s32 EXISelect(s32, s32, s32);
     s32 EXISync(s32);
     s32 sp10;
     s32 temp_r31;
-    s32 temp_r31_2;
-    s32 var_r0;
-
-    if (EXISelect(0, 4) == 0) {
+    if (EXISelect(arg0, 0, 4) == 0) {
         return -3;
     }
-    if (arg1 != 0) {
-        var_r0 = 0x81010000;
-    } else {
-        var_r0 = 0x81000000;
-    }
-    sp10 = var_r0;
-    temp_r31 = EXIImm(arg0, &sp10, 2, 1, 0) == 0;
-    temp_r31_2 = temp_r31 | (EXISync(arg0) == 0);
-    if ((temp_r31_2 | (EXIDeselect(arg0) == 0)) != 0) {
+    sp10 = (arg1 != 0) ? 0x81010000 : 0x81000000;
+    temp_r31 = !EXIImm(arg0, &sp10, 2, 1, 0);
+    temp_r31 |= !EXISync(arg0);
+    temp_r31 |= !EXIDeselect(arg0);
+    if (temp_r31 != 0) {
         return -3;
     }
     return 0;
@@ -632,6 +625,66 @@ void fn_8021A7D4(void *arg0, s32 arg1) {
     fn_8021A244(arg0, &sp10, arg1);
 }
 
+#pragma use_lmw_stmw on
+s32 fn_8021A8C8(s32 chan, s32 *memSize, s32 *sectorSize) {
+    extern u16 lbl_8033A200[];
+    extern u32 lbl_8029DB60[];
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    s32 EXIGetID(s32, s32, u32 *);
+    s32 fn_8021A7FC(u32);
+    s32 fn_80239508(s32);
+    s32 fn_8023A114(s32);
+    s32 card;
+    s32 enabled;
+    s32 probe;
+    u32 id;
+
+    if (chan < 0 || chan >= 2) {
+        return -0x80;
+    }
+    if (*(u8 *)0x800030E3 & 0x80) {
+        return -3;
+    }
+    card = (s32)((u8 *)lbl_8033A200 + chan * 0x110);
+    enabled = OSDisableInterrupts();
+    probe = fn_80239508(chan);
+    if (probe == -1) {
+        card = (card & 0) - 3;
+    } else if (probe == 0) {
+        card = (card & 0) - 1;
+    } else if (*(s32 *)card != 0) {
+        if (*(s32 *)(card + 0x24) < 1) {
+            card = (card & 0) - 1;
+        } else {
+            if (memSize != NULL) {
+                *memSize = *(u16 *)(card + 8);
+            }
+            if (sectorSize != NULL) {
+                *sectorSize = *(s32 *)(card + 0xC);
+            }
+            card = card & 0;
+        }
+    } else if (fn_8023A114(chan) & 8) {
+        card = (card & 0) - 2;
+    } else if (EXIGetID(chan, 0, &id) == 0) {
+        card = (card & 0) - 1;
+    } else if (fn_8021A7FC(id) != 0) {
+        if (memSize != NULL) {
+            *memSize = (s32)(id & 0xFC);
+        }
+        if (sectorSize != NULL) {
+            *sectorSize = *(s32 *)((u8 *)lbl_8029DB60 + ((id >> 9) & 0x1C));
+        }
+        card = card & 0;
+    } else {
+        card = (card & 0) - 2;
+    }
+    OSRestoreInterrupts(enabled);
+    return card;
+}
+#pragma use_lmw_stmw reset
+
 void fn_8021B170(s32 arg0, s32 arg1) {
     // This is an exact structural match to the original instruction sequence.
     // The function appears to:
@@ -717,6 +770,16 @@ s32 fn_8021C080(void) {
     return 0;
 }
 
+void fn_8021C3D8(s32 arg0) {
+    s32 fn_8021C1B8(void *arg0);
+    void fn_80217C64(s32 arg0);
+    extern void *fn_80216998;
+    
+    if (fn_8021C1B8(&fn_80216998) >= 0) {
+        fn_80217C64(arg0);
+    }
+}
+
 s32 fn_8021C84C(s32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 fn_80217C64(s32);
     s32 fn_8021C708(s32 *, s32, s32, s32, void *);
@@ -799,8 +862,10 @@ s32 fn_8021CBC8(s32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
 void fn_8021CDC4(void) {
     s32 temp_r3;
     
-    temp_r3 = fn_80013E50(0);
-    fn_80013E74((void*)temp_r3, 0);
+    temp_r3 = fn_8021CCB4(0);
+    if (temp_r3 >= 0) {
+        fn_80217C64(temp_r3);
+    }
 }
 
 void fn_8021CE0C(void *arg0, void *arg1) {
@@ -1000,33 +1065,57 @@ s32 fn_8021D6D8(s32 arg0, s32 arg1, u8 *arg2) {
     return result;
 }
 
-s32 fn_8021D718(s32 arg0, s32 arg1, u8 arg2, s32 arg3) {
-    s32 fn_8021D378(s32, s32, M2C_UNK *, s32);
+s32 fn_8021D718(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 fn_8021D2D4(s32, s32, void *);
+    s32 fn_8021D378(s32, s32, void *, s32);
     extern u8 lbl_80366FF2;
-    u8 sp4C;
-    M2C_UNK sp18;
-    s32 temp_r3;
-    u32 temp_r3_2;
-    u32 temp_r4;
-    u32 temp_r5;
+    u8 entry[0x40];
+    s32 result;
+    u32 e;
+    u32 bit20;
+    u32 bit40;
+    u32 a20;
 
-    if (arg2 & ~lbl_80366FF2) {
+    if (((u8)arg2 & ~lbl_80366FF2) != 0) {
         return -0xA;
     }
-    temp_r3 = fn_8021D2D4(arg0, arg1, &sp18);
-    if (temp_r3 < 0) {
-        return temp_r3;
+    result = fn_8021D2D4(arg0, arg1, entry);
+    if (result < 0) {
+        return result;
     }
-    temp_r5 = sp4C & 0x20;
-    if (((temp_r5 != 0) && !(arg2 & 0x20)) || ((temp_r4 = sp4C & 0x40, ((temp_r4 == 0) == 0)) && !(arg2 & 0x40))) {
-        return -0xA;
+    e = entry[0x34];
+    bit20 = e & 0x20;
+    if (bit20 != 0) {
+        if (((u8)arg2 & 0x20) == 0) {
+            goto err;
+        }
     }
-    temp_r3_2 = arg2 & 0x20;
-    if (((temp_r3_2 != 0) && (arg2 & 0x40)) || ((temp_r3_2 != 0) && (temp_r4 != 0)) || ((arg2 & 0x40) && (temp_r5 != 0))) {
-        return -0xA;
+    bit40 = e & 0x40;
+    if (bit40 != 0) {
+        if (((u8)arg2 & 0x40) == 0) {
+        err:
+            return -0xA;
+        }
     }
-    sp4C = arg2;
-    return fn_8021D378(arg0, arg1, &sp18, arg3);
+    a20 = (u8)arg2 & 0x20;
+    if (a20 != 0) {
+        if (((u8)arg2 & 0x40) != 0) {
+            goto ok;
+        }
+    }
+    if (a20 != 0) {
+        if (bit40 != 0) {
+            goto ok;
+        }
+    }
+    if (((u8)arg2 & 0x40) != 0) {
+        if (bit20 != 0) {
+            return -0xA;
+        }
+    }
+ok:
+    entry[0x34] = (u8)arg2;
+    return fn_8021D378(arg0, arg1, entry, arg3);
 }
 
 #pragma dont_inline reset
