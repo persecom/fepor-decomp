@@ -520,6 +520,12 @@ s32 fn_8008A578(void) {
     return 1;
 }
 
+u32 fn_8008A59C(void) {
+    extern u16 *lbl_803674E0;
+
+    return lbl_803674E0[0x19] & 1;
+}
+
 u16 fn_8008AF9C(s32 arg0, s32 arg1) {
     extern s32 lbl_803674F4;
     extern f32 lbl_80369704;
