@@ -798,6 +798,17 @@ void fn_801694E4(void) {
     fn_801475FC((u8 *)&lbl_80277BC0 + 0xAE, 0x64);
 }
 
+void fn_80169514(void) {
+    extern u8 lbl_80277BC0[];
+    u32 fn_8000BCA4(void *);
+    void fn_8000A408(void);
+    void fn_8013FEF0(void);
+    fn_8013FEF0();
+    if (fn_8000BCA4(lbl_80277BC0 + 0xBE) != 0) {
+        fn_8000A408();
+    }
+}
+
 void fn_80169580(void) {
     extern u8 lbl_80277BC0[];
     u32 fn_8000BCA4(void *);
