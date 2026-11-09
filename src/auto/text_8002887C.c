@@ -232,14 +232,6 @@ void fn_80029858(s8 x, s8 y) {
         virtual void v0(s8, s8) = 0;
         virtual void visit(s8, s8) = 0;
     };
-    struct Map {
-        static BOOL IsUnit(u8 id) {
-            if (id != 0) {
-                return TRUE;
-            }
-            return FALSE;
-        }
-    };
     struct {
         void *vtbl;
     } obj;
@@ -249,7 +241,7 @@ void fn_80029858(s8 x, s8 y) {
     obj.vtbl = lbl_80284E10;
     fn_8002F728(lbl_802EF4E0);
     id = lbl_802CA518[x + (y << 6) + 0xD];
-    if (Map::IsUnit(id)) {
+    if (id != 0) {
         fn_8002F6E8(lbl_802EF4E0, x, y, id, 1);
     }
     if (y - 1 >= 0) {
@@ -918,7 +910,7 @@ extern "C" void *fn_8002EB54(void *arg0, u32 arg1) {
     extern u8 lbl_80285028[];
     extern s32 lbl_802EF4E0[];
     extern u8 lbl_80330708[];
-    extern f32 lbl_80368E08;
+    extern f32 lbl_80368E00;
     struct Obj {
         u8 pad[4];
         virtual void v0(void *) = 0;
@@ -930,18 +922,17 @@ extern "C" void *fn_8002EB54(void *arg0, u32 arg1) {
     };
     void *obj;
     s32 *base;
-    s32 i;
+    u32 i;
     s32 *walk;
     s32 n;
-    s32 pm;
-    s32 qm;
+    u32 pm;
+    u32 qm;
     u8 *p;
     u8 *q;
     void *found;
     u32 tmp;
-    u8 temp;
-    u8 t0;
-    u8 t1;
+    u32 temp0;
+    u32 temp1;
     f32 fx;
     f32 fy;
 
@@ -987,19 +978,19 @@ extern "C" void *fn_8002EB54(void *arg0, u32 arg1) {
     if (n <= 0) {
         p = (u8 *)0;
     }
-    t0 = ((u8 *)obj)[0x3E];
-    fx = lbl_80368E08 + (f32)(s8)p[0];
-    t1 = ((u8 *)obj)[0x3F];
-    fy = lbl_80368E08 + (f32)(s8)q[1];
-    ((u8 *)obj)[0x3C] = t0;
-    ((u8 *)obj)[0x3D] = t1;
+    temp0 = ((u8 *)obj)[0x3E];
+    fx = lbl_80368E00 + (f32)(s8)p[0];
+    temp1 = ((u8 *)obj)[0x3F];
+    fy = lbl_80368E00 + (f32)(s8)q[1];
+    ((u8 *)obj)[0x3C] = temp0;
+    ((u8 *)obj)[0x3D] = temp1;
     *(f32 *)((u8 *)obj + 0x34) = fx;
     *(f32 *)((u8 *)obj + 0x38) = fy;
     ((u8 *)obj)[0x3E] = (u8)(s32)*(f32 *)((u8 *)obj + 0x34);
     ((u8 *)obj)[0x3F] = (u8)(s32)*(f32 *)((u8 *)obj + 0x38);
-    temp = ((u8 *)obj)[0x3E];
-    if ((s8)((u8 *)obj)[0x3C] != (s8)temp || (s8)((u8 *)obj)[0x3D] != (s8)((u8 *)obj)[0x3F]) {
-        found = map_find_xy(base, (s8)temp, (s8)((u8 *)obj)[0x3F]);
+    temp0 = ((u8 *)obj)[0x3E];
+    if ((s8)((u8 *)obj)[0x3C] != (s8)temp0 || (s8)((u8 *)obj)[0x3D] != (s8)((u8 *)obj)[0x3F]) {
+        found = map_find_xy(base, (s8)temp0, (s8)((u8 *)obj)[0x3F]);
         *(void **)((u8 *)obj + 0x40) = found;
         if (found != (void *)0) {
             *(void **)((u8 *)obj + 0x44) = found;
@@ -1753,6 +1744,35 @@ void *fn_80032B4C(void) {
     extern u16 lbl_802695F0[];
     return (u8 *)lbl_802695F0 + 0x14F;
 }
+
+#pragma cplusplus on
+extern "C" void fn_80090688(void *, s32, s32);
+extern "C" void fn_80032B90(void *arg0, void *arg1) {
+    extern f32 lbl_80368E24;
+    extern f32 lbl_80368E28;
+    struct Obj {
+        u8 pad[4];
+        virtual void v0(s32 *, s32 *, s32 *) = 0;
+    };
+    s32 x;
+    s32 y;
+    s32 alpha;
+    void *temp_r31;
+
+    if (M2C_FIELD(arg1, u32 *, 0x40) != 0) {
+        ((Obj *)arg0)->v0(&x, &y, &alpha);
+        fn_8000A258();
+        fn_80009D74((f32)(x + 0x20), (f32)(y + 0x30), lbl_80368E24, lbl_80368E28);
+        fn_80009B8C((u8)alpha);
+        fn_8000A248();
+        temp_r31 = (void *)fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40));
+        fn_80090688((void *)fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40)), 7, 7 - ((*(u8 *)((u8 *)temp_r31 + 0x1A6) >> 5) & 7));
+        fn_8000A258();
+        fn_80009B8C(0xFF);
+        fn_8000A248();
+    }
+}
+#pragma cplusplus reset
 
 void fn_80032C80(void *arg0, void *arg1) {
     extern f64 lbl_80368E80;
