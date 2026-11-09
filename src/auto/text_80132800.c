@@ -3981,3 +3981,4 @@ void* fn_800C42D8(int);
 extern f32 lbl_8036A6C0;
 extern f32 lbl_8036A6C4;
 extern f32 lbl_8036A6C8;
+extern u16 lbl_80291730[];
