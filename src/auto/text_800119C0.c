@@ -175,11 +175,13 @@ void fn_800142C0(s32 *arg0, s16 *arg1) {
 
 s32 fn_800142D4(s32 arg0) {
     extern s32 lbl_803671A4;
-    s32 temp_r0;
 
-    temp_r0 = lbl_803671A4;
+    s32 oldValue;
+
+    oldValue = lbl_803671A4;
     lbl_803671A4 = arg0;
-    return temp_r0;
+
+    return oldValue;
 }
 
 void fn_800142E4(void) {
@@ -1010,12 +1012,12 @@ void fn_80016A3C(s32 arg0) {
     extern void fn_8003CA94(void*, s32);
 
     void* var_r31 = &lbl_802B14E4;
-    s32 i = 0;
+    s32 var_r30 = 0;
     do {
         fn_8003CA94(var_r31, arg0);
-        i += 1;
+        var_r30 += 1;
         var_r31 = (char*)var_r31 + 0x280;
-    } while (i < 0x9F);
+    } while (var_r30 < 0x9F);
 }
 
 s32 fn_80016A9C(s32 arg0) {
