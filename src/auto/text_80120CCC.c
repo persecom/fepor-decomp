@@ -312,6 +312,13 @@ void fn_8012282C(struct efUnit* arg0)
     }
 }
 
+extern u8 lbl_80290288[16];
+void fn_80122998(s32 arg0) {
+    void fn_8000CAF0(void *, s32);
+    extern u8 lbl_80290288[16];
+    fn_8000CAF0(lbl_80290288, arg0);
+}
+
 u8 fn_801229C4(void *arg0) {
     return (u8) ((s8) M2C_FIELD(arg0, u8 *, 0x45) <= ((s8) M2C_FIELD(arg0, u8 *, 0x47) - (s8) M2C_FIELD(arg0, u8 *, 0x46)));
 }
