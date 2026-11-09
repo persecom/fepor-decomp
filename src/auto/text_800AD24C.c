@@ -2315,16 +2315,19 @@ void fn_800B995C(void *arg0) {
     }
 }
 
-s32 fn_800B9A34(u32 arg0, u8 arg1) {
-    u32 fn_801090C0();
-    M2C_UNK fn_80109BB4(u8);
+s32 fn_800B9A34(u32 arg0, s32 arg1) {
+    u32 fn_801090C0(void);
+    void fn_80109BB4(u32, u8);
+    u32 tmp;
+
     if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
         return 0;
     }
-    if (fn_801090C0() == 0U) {
+    tmp = fn_801090C0();
+    if (tmp == 0U) {
         return 0;
     }
-    fn_80109BB4(arg1 & 0xFF);
+    fn_80109BB4(tmp, (u8)arg1);
     return 1;
 }
 
