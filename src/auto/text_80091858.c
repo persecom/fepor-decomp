@@ -46,20 +46,16 @@ extern f32 lbl_803697E4;
 #pragma scheduling reset
 
 void fn_80091858(void) {
+    void fn_8000BF00(void *);
     extern u32 lbl_803120A0[8];
-    extern u32 lbl_80289A38[10];
+    extern u8 lbl_80289A38[];
     extern s32 lbl_803674F8;
-    
+    s32 i;
+
     lbl_803674F8 = 0;
-    lbl_803120A0[0] = 0;
-    lbl_803120A0[1] = 0;
-    lbl_803120A0[2] = 0;
-    lbl_803120A0[3] = 0;
-    lbl_803120A0[4] = 0;
-    lbl_803120A0[5] = 0;
-    lbl_803120A0[6] = 0;
-    lbl_803120A0[7] = 0;
-    
-    fn_8000BF00(lbl_80289A38, lbl_803120A0);
+    for (i = 0; i < 8; i++) {
+        lbl_803120A0[i] = 0;
+    }
+    fn_8000BF00(lbl_80289A38);
 }
 
