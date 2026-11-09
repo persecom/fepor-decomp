@@ -821,12 +821,13 @@ s32 TRKInitializeTarget(void) {
 }
 
 u32 fn_8022AE34(u32 arg0) {
-    extern u32 lbl_8033CFC8;
-    
-    if ((arg0 < lbl_8033CFC8) || (arg0 >= (lbl_8033CFC8 + 0x4000)) || 
-        !( *(s32*)((char*)gTRKCPUState + 0x238) & 3)) {
+    extern u32 lbl_8033CFC8[];
+    extern u8 gTRKCPUState[1072];
+
+    if ((arg0 < lbl_8033CFC8[0]) || (arg0 >= (lbl_8033CFC8[0] + 0x4000)) ||
+        !(*(u32 *)(gTRKCPUState + 0x238) & 3)) {
         if ((arg0 < 0x7E000000U) || (arg0 > 0x80000000U)) {
-            return (arg0 & 0x3FFFFFFF) | 0x80000000;
+            return (arg0 & 0x3FFFFFFFU) | 0x80000000U;
         }
     }
     return arg0;
