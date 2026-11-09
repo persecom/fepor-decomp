@@ -1086,24 +1086,28 @@ u8 fn_8001D3FC(void *arg0) {
 }
 
 u8 fn_8001D47C(void *arg0) {
-    s8 fn_800C2C84(M2C_UNK *);
-    extern M2C_UNK lbl_803206EC;
-    s32 var_r0;
-    s8 var_r0_2;
+    s32 fn_800C2C84(void *, s32);
+    extern u8 lbl_803206EC[];
+    s8 result;
+    s32 mask;
+    s32 var;
+    u8 *inner;
 
-    if ((void *) M2C_FIELD(arg0, void **, 0) == NULL) {
+    if (*(void **)arg0 == NULL) {
         return 0U;
     }
-    if (!(M2C_FIELD(arg0, u8 *, 5) & 0x3F)) {
-        var_r0_2 = 0;
+    mask = *((u8 *)arg0 + 5) & 0x3F;
+    if (mask == 0) {
+        result = 0;
     } else {
-        var_r0_2 = fn_800C2C84(&lbl_803206EC);
+        result = fn_800C2C84(lbl_803206EC, mask);
     }
-    var_r0 = M2C_FIELD(M2C_FIELD(arg0, void **, 0), u8 *, 0x1A) + (var_r0_2 * 5);
-    if (var_r0 < 1) {
-        var_r0 = 1;
+    inner = *(u8 **)arg0;
+    var = inner[0x1A] + result * 5;
+    if (var < 1) {
+        var = 1;
     }
-    return (u8) var_r0;
+    return (u8)var;
 }
 
 u8 fn_8001D500(void *arg0) {
