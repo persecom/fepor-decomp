@@ -1223,9 +1223,9 @@ void fn_801FA4B8(s32 arg0) {
 }
 
 void fn_801FA508(void *arg0) {
-    u32 *ptr = (u32 *) ((char *) arg0 + 0x30);
-    if (*ptr != 0U) {
-        fn_8003F670();
+    void *x = *(void **)((u8 *)arg0 + 0x30);
+    if (x != NULL) {
+        fn_8003F670(x);
     }
 }
 
