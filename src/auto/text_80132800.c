@@ -2963,6 +2963,28 @@ s32 fn_80144850(void *arg0) {
     return M2C_FIELD(M2C_FIELD(arg0, void **, 0x128), s32 *, 0x3C);
 }
 
+void *fn_8014488C(void *arg0, s16 arg1) {
+    void fn_8013F2A4(void *, s32);
+    void fn_8022C1E8(void *, void *, s32, s32);
+    void fn_800C428C(void *);
+    void *fn_80144610(void *, s16);
+    extern void *lbl_80292434[];
+    extern void *lbl_80292488[];
+
+    if (arg0 != NULL) {
+        *(void **)arg0 = lbl_80292434;
+        if (arg0 != NULL) {
+            *(void **)arg0 = lbl_80292488;
+            fn_8022C1E8((u8 *)arg0 + 0x90, (void *)fn_80144610, 0xC, 0xB);
+            fn_8013F2A4(arg0, 0);
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void *fn_80144A0C(void *arg0, s16 arg1) {
     extern u16 lbl_80292504;
     if (arg0 != NULL) {
@@ -2999,6 +3021,30 @@ void fn_80144D7C(void) {
 
 void fn_80144D80(void) {
 
+}
+
+void fn_80144D84(ListIter *ret, List *list, ListIter *start, ListIter *end) {
+    ListNode *first;
+    ListNode *last;
+    ListNode *a;
+    ListNode *node;
+
+    first = start->node;
+    last = end->node;
+    if (first == last) {
+        ret->node = last;
+        return;
+    }
+    a = last->prev;
+    first->prev->next = a->next;
+    a->next->prev = first->prev;
+    while (start->node != end->node) {
+        node = start->node;
+        start->node = node->next;
+        fn_800C428C(node);
+        list->size--;
+    }
+    ret->node = end->node;
 }
 
 void fn_80144E34(ListIter *ret, List *list, ListIter *it) {
