@@ -3027,8 +3027,9 @@ void fn_80196AD0(void *arg0, s32 arg1) {
 }
 
 void fn_801985C4(void *arg0) {
-    if ((u32) M2C_FIELD(arg0, u32 *, 0x144) != 0U) {
-        fn_801517F4();
+    void *x = *(void **)((u8 *)arg0 + 0x144);
+    if (x != NULL) {
+        fn_801517F4(x);
     }
 }
 
