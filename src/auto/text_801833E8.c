@@ -4627,11 +4627,12 @@ s32 fn_8019EA48(void) {
 }
 
 s32 fn_8019EA74(s32 arg0, s32 arg1) {
-    void *fn_8000CAF0(void *, s32, void *);
-    extern u16 lbl_80297024[];
-    
+    void *fn_8000CAF0(void *, s32);
+    s32 fn_800C0658(void);
+    extern u8 lbl_80297024[];
     void *temp_r3;
-    temp_r3 = fn_8000CAF0(lbl_80297024, fn_800C0658(), (void *)lbl_80297024);
+
+    temp_r3 = fn_8000CAF0(lbl_80297024, fn_800C0658());
     M2C_FIELD(temp_r3, s32 *, 0x30) = arg0;
     M2C_FIELD(temp_r3, s32 *, 0x34) = arg1;
     return 1;
