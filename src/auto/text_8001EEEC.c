@@ -1154,7 +1154,7 @@ void fn_800256CC(void *arg0) {
 
 extern u8 lbl_802EF438[144];
 void *fn_8002595C(s32 arg0) {
-    return &lbl_802EF438 + (arg0 * 0x24);
+    return (u8 *)lbl_802EF438 + arg0 * 0x24;
 }
 
 void fn_80025C5C(void *arg0, s32 arg1) {
