@@ -6430,11 +6430,10 @@ loop_4:
 void fn_800FB96C(s8 arg0, s8 arg1, s8 arg2, s32 arg3, s8 arg4, s8 arg5, s8 arg6, s8 arg7, u8 arg_sp8) {
     extern u8 lbl_802EF4C8[24];
     extern u8 lbl_8032B3C0[544];
-    
     lbl_802EF4C8[8] = arg0;
     lbl_802EF4C8[0xD] = arg1;
     lbl_802EF4C8[0xE] = arg2;
-    lbl_802EF4C8[4] = arg3;
+    *(s32 *)&lbl_802EF4C8[4] = arg3;
     lbl_802EF4C8[0xF] = arg4;
     lbl_802EF4C8[0x10] = arg5;
     lbl_802EF4C8[0xA] = arg6;
