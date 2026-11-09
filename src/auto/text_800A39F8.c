@@ -544,12 +544,9 @@ void fn_800A6A74(void) {
 }
 
 void fn_800A6AAC(void) {
-    extern u8 lbl_8028C750[16];
-    u32 fn_8000C0C0(u16 *arg);
-
-    if (fn_8000C0C0((u16 *)&lbl_8028C750) != 0U) {
-        void fn_8000C070(s32 arg);
-        fn_8000C070(5);
+    u32 temp_r3 = fn_8000C0C0(lbl_8028C750);
+    if (temp_r3 != 0) {
+        fn_8000C070(temp_r3, 5);
     }
 }
 
