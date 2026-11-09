@@ -1146,9 +1146,9 @@ s32 fn_8011BDC0(void) {
     return 5;
 }
 
-void fn_8011BDD8(void *arg0) {
-    extern u32 lbl_80274508;
-    fn_8000E0E4((u32*)((s8*)&lbl_80274508 + 0x3E1));
+void fn_8011BDD8(void) {
+    extern u16 lbl_80274508[];
+    fn_8000E0E4((u8 *)lbl_80274508 + 0x3E1);
 }
 
 void *fn_8011BE14(void) {
