@@ -1049,7 +1049,7 @@ void fn_8007749C(void) {
 
 void fn_800774DC(void) {
     extern u16 lbl_8026C0B8[];
-    fn_8000E0E4(&lbl_8026C0B8[0x73A]);
+    fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x39d);
 }
 
 void fn_80077508(void) {
