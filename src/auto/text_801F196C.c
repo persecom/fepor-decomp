@@ -845,14 +845,14 @@ void fn_801F66D4(void *arg0) {
 }
 
 void fn_801F7194(void *arg0) {
-    s32 fn_80059208(M2C_UNK *, void *);
+    s32 fn_80059208(void *, void *);
     s32 fn_80161FB8();
     M2C_UNK fn_80162054();
-    extern M2C_UNK fn_801F676C;
+    void fn_801F676C(void *);
     extern M2C_UNK lbl_80280D38;
     if ((fn_8005C6A0(&lbl_80280D38 + 0x173, &lbl_80280D38) & 0x2000) && (fn_80161FB8() != 0)) {
         fn_80162054();
-        M2C_FIELD(arg0, s32 *, 0x34) = fn_80059208(&fn_801F676C, arg0);
+        M2C_FIELD(arg0, s32 *, 0x34) = fn_80059208((void *)&fn_801F676C, arg0);
         fn_8000C188(arg0);
     }
 }
