@@ -9,9 +9,8 @@ void *fn_8009F85C(void) {
 }
 
 void *fn_8009F86C(void) {
-    extern u16 lbl_8026D8D8;
-    u16 *addr = &lbl_8026D8D8;
-    return (void *)((u32)(addr + 0x27E));
+    extern u16 lbl_8026D8D8[];
+    return (u8 *)lbl_8026D8D8 + 0x27E;
 }
 
 s32 fn_8009F87C(s32 arg0, s32 arg1) {
