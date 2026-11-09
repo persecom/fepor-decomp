@@ -178,7 +178,7 @@ void fn_80099DC4(s32 arg0) {
     s32 temp_r3;
 
     temp_r3 = fn_80096D64();
-    switch (temp_r3) {                              /* irregular */
+    switch (temp_r3) {
     case 0:
         fn_8000C070(arg0, 3);
         return;
