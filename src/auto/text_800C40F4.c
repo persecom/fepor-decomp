@@ -4423,6 +4423,13 @@ void fn_800E99CC(void *arg0) {
     M2C_FIELD(arg0, s32 *, 4) = 0;
 }
 
+extern u8 lbl_8028E4A4[16];
+void fn_800E99E4(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_8028E4A4[16];
+    fn_8000CAA0(lbl_8028E4A4, arg0);
+}
+
 void fn_800E9A10(s32 arg0) {
     struct CardWork {
         u8 workArea[0xA000];
@@ -5902,6 +5909,28 @@ void fn_800FB9F8(void) {
     return;
 }
 
+s32 fn_800FBB68(void) {
+    u8 fn_800FB6FC();
+    M2C_UNK fn_800FB868();
+    extern M2C_UNK lbl_8032B3C0;
+    s32 var_r31;
+
+    if (M2C_FIELD(&lbl_8032B3C0, u8 *, 1) & 4) {
+        return 1;
+    }
+    var_r31 = 0;
+loop_3:
+    if (fn_800FB6FC() != 1) {
+        if (var_r31 > 0xFF) {
+            fn_800FB868();
+        } else {
+            var_r31 += 1;
+            goto loop_3;
+        }
+    }
+    return 1;
+}
+
 void fn_800FBF54(void) {
     extern void *lbl_802EF4C8;
     M2C_FIELD(lbl_802EF4C8, s32 *, 0x1A0) = (s32) (M2C_FIELD(lbl_802EF4C8, s32 *, 0x1A0) | 1);
@@ -6656,6 +6685,20 @@ void fn_80101448(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32
 
     fn_800FE2A0(5, arg7);
     fn_80101530(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+}
+
+void fn_801014BC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
+    s32 temp_r3 = arg0;
+    s32 temp_r4 = arg1;
+    s32 temp_r5 = arg2;
+    s32 temp_r6 = arg3;
+    s32 temp_r7 = arg4;
+    s32 temp_r8 = arg5;
+    s32 temp_r9 = arg6;
+    s32 temp_r10 = arg7;
+
+    fn_800FE2A0(5, temp_r10);
+    fn_80101960(temp_r3, temp_r4, temp_r5, temp_r6, temp_r7, temp_r8, temp_r9, temp_r10);
 }
 
 #pragma use_lmw_stmw on
