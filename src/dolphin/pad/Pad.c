@@ -368,7 +368,8 @@ static void ClampS8(s8* p, s8 o) {
             s = m;
         }
     }
-    *p = s - o;
+    s -= o;
+    *p = s;
 }
 
 static void ClampU8(u8* p, u8 o) {
@@ -376,7 +377,8 @@ static void ClampU8(u8* p, u8 o) {
     if (s < o) {
         s = o;
     }
-    *p = s - o;
+    s -= o;
+    *p = s;
 }
 
 void fn_802130C0(s32 chan, PADStatus* status, u32* data) {
