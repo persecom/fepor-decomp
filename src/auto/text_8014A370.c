@@ -831,7 +831,7 @@ void fn_8014DE70(s32 arg0) {
     extern s8 lbl_80367701;
     lbl_80367701 = 0;
     lbl_80367700 = 0;
-    fn_8000CAA0(lbl_802937EC, arg0, lbl_802937EC);
+    fn_8000CAA0(lbl_802937EC, arg0);
 }
 
 void fn_8014DFE8(s32 arg0) {
