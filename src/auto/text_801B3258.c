@@ -2649,8 +2649,8 @@ void fn_801D3D3C(void *arg0) {
     s32 flags_b;
     void *state;
 
-    flags_a = (s32)fn_800D3590(lbl_80367240);
     state = *(void **)((u8 *)arg0 + 0x30);
+    flags_a = (s32)fn_800D3590(lbl_80367240);
     flags_b = (s32)fn_801DE370(lbl_80367240);
 
     if ((s8)lbl_803682EC == 0) {
