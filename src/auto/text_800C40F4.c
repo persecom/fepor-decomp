@@ -7128,9 +7128,9 @@ s32 fn_8010207C(s32 arg0, s16 *outX, s16 *outY) {
     return best != 0x7FFF;
 }
 #pragma use_lmw_stmw reset
-void fn_80102334(s32 arg2, s32 arg3) {
-    M2C_UNK fn_80102810(M2C_UNK, s32, s32);
-    fn_80102810(0x2C, arg2, arg3);
+void fn_80102334(s32 a0, s32 a1, s32 a2, s32 a3) {
+    extern void fn_80102810(s32, s32, s32, s32, s32);
+    fn_80102810(a0, a1, 0x2C, a2, a3);
 }
 
 s32 fn_80102360(void *arg0, s16 *arg1, s16 *arg2, s32 arg3) {
