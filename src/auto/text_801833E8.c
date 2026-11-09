@@ -2543,8 +2543,9 @@ void fn_80199C2C(void) {
 }
 
 void fn_80199CC0(s32 arg0) {
-    extern s32 lbl_80296ED4;
-    fn_8000CAA0(&lbl_80296ED4, arg0, &lbl_80296ED4);
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_80296ED4[16];
+    fn_8000CAA0(lbl_80296ED4, arg0);
 }
 
 void fn_80199CEC(void *arg0) {
