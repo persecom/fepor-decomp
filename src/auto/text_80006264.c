@@ -1416,6 +1416,15 @@ void *fn_8000B908(u8 arg0) {
     return (u8 *)lbl_802A66D8 + arg0 * 0x70;
 }
 
+u8 fn_8000B920(void *arg0) {
+    extern u8 lbl_802A66D8[];
+
+    s32 offset;
+
+    offset = (s32)arg0 - (s32)lbl_802A66D8;
+    return (u8)(offset / 0x70);
+}
+
 void fn_8000B950(void *arg0, void (*arg1)(void *)) {
     void fn_8000B9A4(void *, void (*)(void *));
     void *tmp;
