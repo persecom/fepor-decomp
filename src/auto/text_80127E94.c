@@ -349,9 +349,8 @@ void fn_8012942C(s32 arg0) {
 }
 
 void fn_8012955C(void) {
-    M2C_UNK fn_800558D8(void *);
-    extern M2C_UNK lbl_80275740;
-    fn_800558D8(&lbl_80275740 + 0x15B);
+    extern u16 lbl_80275740[];
+    fn_800558D8((u8 *)lbl_80275740 + 0x15B);
 }
 
 void fn_80129588(s32 arg0, u32 arg1) {
