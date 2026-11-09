@@ -54,15 +54,9 @@ void fn_800852BC(s32 arg0) {
     fn_80223E5C(7, 0, 1, 7, 0);
 }
 
-void fn_8008532C(void *arg0) {
-    s16 r3, r4, r5, r6;
-    
-    r3 = *(s16 *)((u32)arg0 + 0);
-    r4 = *(s16 *)((u32)arg0 + 2);
-    r5 = *(s16 *)((u32)arg0 + 4);
-    r6 = *(s16 *)((u32)arg0 + 6);
-    
-    fn_80225058(r3, r4, r5, r6);
+void fn_8008532C(s32 unused, s16 *p) {
+    extern void fn_80225058(s16, s16, s16, s16);
+    fn_80225058(p[0], p[1], p[2], p[3]);
 }
 
 void fn_80088CC4(void *arg0) {
