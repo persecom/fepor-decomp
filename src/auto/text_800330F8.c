@@ -3093,19 +3093,19 @@ void fn_800494F0(void *arg0) {
 }
 
 void fn_80049520(s32 arg0, u32 arg1, s32 arg2, f32 farg0) {
-    void *fn_8000CAA0(M2C_UNK *);
-    void *fn_8000CAF0(M2C_UNK *, M2C_UNK);
-    extern M2C_UNK lbl_802856E8;
+    void *fn_8000CAA0(void *);
+    void *fn_8000CAF0(void *, s32);
+    extern u8 lbl_802856E8[];
     void *var_r3;
 
     if (arg1 != 0U) {
-        var_r3 = fn_8000CAA0(&lbl_802856E8);
+        var_r3 = fn_8000CAA0(lbl_802856E8);
     } else {
-        var_r3 = fn_8000CAF0(&lbl_802856E8, 3);
+        var_r3 = fn_8000CAF0(lbl_802856E8, 3);
     }
-    *(f32*)((u32)var_r3 + 0x38) = farg0;
-    *(s32*)((u32)var_r3 + 0x3C) = arg2;
-    *(s32*)((u32)var_r3 + 0x30) = arg0;
+    *(f32 *)((char *)var_r3 + 0x38) = farg0;
+    *(s32 *)((char *)var_r3 + 0x3C) = arg2;
+    *(s32 *)((char *)var_r3 + 0x30) = arg0;
 }
 
 s32 fn_80049594(s32 arg0, s32 arg1, s32 arg2)
