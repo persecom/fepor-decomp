@@ -3874,6 +3874,24 @@ void fn_80147548(void *arg0, void *arg1, s32 arg2) {
     fn_80147578(arg0, arg2, *(f32 *)((u8 *)arg1 + 0), *(f32 *)((u8 *)arg1 + 4), *(f32 *)((u8 *)arg1 + 8));
 }
 
+s32 fn_80147578(void *arg0, s32 arg1, f32 farg0, f32 farg1, f32 farg2) {
+    s32 fn_801475FC(void *, s32);
+    extern u8 lbl_803301A8[1344];
+    s32 temp_r3;
+    u8 *temp_r4;
+
+    temp_r3 = fn_801475FC(arg0, arg1);
+    if ((s8)temp_r3 == -1) {
+        return -1;
+    }
+    temp_r4 = lbl_803301A8 + ((u8)temp_r3 * 0x30);
+    *(f32 *)(temp_r4 + 0x1C) = farg0;
+    *(f32 *)(temp_r4 + 0x20) = farg1;
+    *(f32 *)(temp_r4 + 0x24) = farg2;
+    temp_r4[0xC] |= 2;
+    return temp_r3;
+}
+
 void fn_801478D0(s16 arg0) {
     extern u16 lbl_8032FFC8[240];
     
