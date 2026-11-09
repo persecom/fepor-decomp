@@ -595,6 +595,16 @@ void fn_801ED7D0(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x58) = fn_8005E55C();
 }
 
+void fn_801ED800(void *arg0) {
+    void (*callback)(void *);
+    extern s32 lbl_803683D0;
+
+    callback = *(void (**)(void *))((u8 *)arg0 + 0x20);
+    callback(*(void **)((u8 *)arg0 + 0x24));
+
+    lbl_803683D0 -= 1;
+}
+
 void fn_801ED838(void) {
     extern s32 lbl_803683D0;
     lbl_803683D0 -= 1;
