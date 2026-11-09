@@ -624,11 +624,11 @@ s32 fn_8021A1B8(s32 arg0) {
     }
 }
 
-void fn_8021A7D4(s32 arg1) {
-    void *fn_8021A244(void *, s32);
-    char sp10[0x10];
+void fn_8021A7D4(void *arg0, s32 arg1) {
+    void fn_8021A244(void *, void *, s32);
+    s32 sp10;
 
-    fn_8021A244(sp10, arg1);
+    fn_8021A244(arg0, &sp10, arg1);
 }
 
 void fn_8021B170(s32 arg0, s32 arg1) {
@@ -701,14 +701,15 @@ s32 fn_8021BB04(void *arg0, u8 *arg1) {
 
 void fn_8021C02C(s32 *arg0) {
     s32 fn_80217B18(s32, s32 *);
-    M2C_UNK fn_80217BD0(s32, M2C_UNK);
+    void fn_80217BD0(s32, s32);
     s32 spC;
 
     if (fn_80217B18(*arg0, &spC) < 0) {
+        *arg0 = -1;
+        fn_80217BD0(spC, 0);
         return;
     }
-    *arg0 = -1;
-    fn_80217BD0(spC, 0);
+    return;
 }
 
 s32 fn_8021C080(void) {
