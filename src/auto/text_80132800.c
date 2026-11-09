@@ -3474,6 +3474,16 @@ void fn_80149BD4(void *arg0) {
     }
 }
 
+void fn_80149C04(void *arg0) {
+    void fn_800B1D0C(s32);
+    s32 temp;
+
+    temp = *(u8 *)((u8 *)arg0 + 4);
+    if ((s8)temp >= 0) {
+        fn_800B1D0C((s8)temp);
+    }
+}
+
 s32 fn_80149D4C(void *arg0) {
     s32 fn_800B1B24(s8);
     s8 temp_r3;
