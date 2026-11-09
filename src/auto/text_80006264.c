@@ -253,6 +253,123 @@ void fn_80007884(void *arg0, u32 arg1) {
 
 void fn_80008B94(void){extern void fn_80201FC4(void*,void*);u8 *p=*(u8**)0x80367140;*(u32*)(p+8)=*(u32*)p+0xac;*(u32*)(p+0xc)=0;*(u16*)(p+0x92)=0;*(u16*)(p+0x90)=0;fn_80201FC4(p+0x60,p);*(u32*)(p+0x2c)=0;*(u32*)(p+0x30)=0;p[0x23]=255;p[0x24]=128;*(u16*)(p+0x20)=0;p[0xa8]=0;}
 
+#pragma use_lmw_stmw on
+void fn_80009008(void *list, s32 a, s32 b) {
+    void fn_80220DEC(s32, s32, s32);
+    void fn_80008C24(void *, void *, void *, f32, f32, f32, f32);
+    void fn_8014B388(void *, void *, f32, f32, f32);
+    void fn_8000E684(s16, s16, s32, void *, void *, void *, f32, f32, f32, f32, f32);
+    void fn_8000E50C(s16, s16, s32, void *, void *, void *, f32, f32, f32, f32, f32);
+    void fn_8000E394(s16, s16, s32, void *, void *, void *, f32, f32, f32, f32, f32);
+    void fn_80006E8C(void *, u8, u8, u8, u8);
+
+    u8 *node;
+    s32 bsave;
+    u8 scale;
+    u8 scale1;
+    u8 cr, cg, cb, ca;
+    u8 type;
+    u8 c0[4], c1[4];
+    u32 col;
+    f32 fx, fy, fz;
+    void (*vfn)(s32);
+
+    bsave = b;
+    node = list;
+    scale = (u8)b;
+    scale1 = (u8)a + 1;
+
+    while (node != NULL) {
+        cr = (u8)((node[0xC] * scale) >> 7);
+        cg = (u8)((node[0xD] * scale) >> 7);
+        cb = (u8)((node[0xE] * scale) >> 7);
+        ca = (u8)((node[0xF] * scale1) >> 8);
+        type = node[4];
+        if (type <= 11) {
+            switch (type) {
+            case 1:
+                fn_80220DEC(0x98, 0, 4);
+                fz = *(f32 *)(node + 0x8); fy = *(f32 *)(node + 0x14); fx = *(f32 *)(node + 0x10);
+                *(volatile f32 *)0xCC008000 = fx; *(volatile f32 *)0xCC008000 = fy; *(volatile f32 *)0xCC008000 = fz;
+                *(volatile u8 *)0xCC008000 = cr; *(volatile u8 *)0xCC008000 = cg; *(volatile u8 *)0xCC008000 = cb; *(volatile u8 *)0xCC008000 = ca;
+                *(volatile f32 *)0xCC008000 = *(f32 *)(node + 0x18); *(volatile f32 *)0xCC008000 = *(f32 *)(node + 0x1C);
+                fz = *(f32 *)(node + 0x8); fy = *(f32 *)(node + 0x14); fx = *(f32 *)(node + 0x20);
+                *(volatile f32 *)0xCC008000 = fx; *(volatile f32 *)0xCC008000 = fy; *(volatile f32 *)0xCC008000 = fz;
+                *(volatile u8 *)0xCC008000 = cr; *(volatile u8 *)0xCC008000 = cg; *(volatile u8 *)0xCC008000 = cb; *(volatile u8 *)0xCC008000 = ca;
+                *(volatile f32 *)0xCC008000 = *(f32 *)(node + 0x28); *(volatile f32 *)0xCC008000 = *(f32 *)(node + 0x1C);
+                fz = *(f32 *)(node + 0x8); fy = *(f32 *)(node + 0x24); fx = *(f32 *)(node + 0x10);
+                *(volatile f32 *)0xCC008000 = fx; *(volatile f32 *)0xCC008000 = fy; *(volatile f32 *)0xCC008000 = fz;
+                *(volatile u8 *)0xCC008000 = cr; *(volatile u8 *)0xCC008000 = cg; *(volatile u8 *)0xCC008000 = cb; *(volatile u8 *)0xCC008000 = ca;
+                *(volatile f32 *)0xCC008000 = *(f32 *)(node + 0x18); *(volatile f32 *)0xCC008000 = *(f32 *)(node + 0x2C);
+                fz = *(f32 *)(node + 0x8); fy = *(f32 *)(node + 0x24); fx = *(f32 *)(node + 0x20);
+                *(volatile f32 *)0xCC008000 = fx; *(volatile f32 *)0xCC008000 = fy; *(volatile f32 *)0xCC008000 = fz;
+                *(volatile u8 *)0xCC008000 = cr; *(volatile u8 *)0xCC008000 = cg; *(volatile u8 *)0xCC008000 = cb; *(volatile u8 *)0xCC008000 = ca;
+                *(volatile f32 *)0xCC008000 = *(f32 *)(node + 0x28); *(volatile f32 *)0xCC008000 = *(f32 *)(node + 0x2C);
+                break;
+            case 4:
+                fn_80220DEC(0xA8, 0, 2);
+                fz = *(f32 *)(node + 0x8); fy = *(f32 *)(node + 0x14); fx = *(f32 *)(node + 0x10);
+                *(volatile f32 *)0xCC008000 = fx; *(volatile f32 *)0xCC008000 = fy; *(volatile f32 *)0xCC008000 = fz;
+                *(volatile u8 *)0xCC008000 = cr; *(volatile u8 *)0xCC008000 = cg; *(volatile u8 *)0xCC008000 = cb; *(volatile u8 *)0xCC008000 = ca;
+                *(volatile f32 *)0xCC008000 = *(f32 *)(node + 0x18); *(volatile f32 *)0xCC008000 = *(f32 *)(node + 0x1C);
+                fz = *(f32 *)(node + 0x8); fy = *(f32 *)(node + 0x24); fx = *(f32 *)(node + 0x20);
+                *(volatile f32 *)0xCC008000 = fx; *(volatile f32 *)0xCC008000 = fy; *(volatile f32 *)0xCC008000 = fz;
+                *(volatile u8 *)0xCC008000 = cr; *(volatile u8 *)0xCC008000 = cg; *(volatile u8 *)0xCC008000 = cb; *(volatile u8 *)0xCC008000 = ca;
+                *(volatile f32 *)0xCC008000 = *(f32 *)(node + 0x28); *(volatile f32 *)0xCC008000 = *(f32 *)(node + 0x2C);
+                break;
+            case 5:
+                col = (cr << 24) | (cg << 16) | (cb << 8) | ca;
+                *(u32 *)c1 = col;
+                c0[0] = (u8)((node[0x18] * scale) >> 7);
+                c0[1] = (u8)((node[0x19] * scale) >> 7);
+                c0[2] = (u8)((node[0x1A] * scale) >> 7);
+                c0[3] = (u8)((node[0x1B] * scale1) >> 8);
+                *(u32 *)c1 = col;
+                fn_80008C24(c0, c1, node + 0x28, *(f32 *)(node + 0x10), *(f32 *)(node + 0x14), *(f32 *)(node + 0x8), *(f32 *)(node + 0x1C));
+                break;
+            case 6:
+                col = (cr << 24) | (cg << 16) | (cb << 8) | ca;
+                *(u32 *)c1 = col;
+                c0[0] = node[0x18]; c0[1] = node[0x19]; c0[2] = node[0x1A];
+                c0[3] = (u8)((node[0x1B] * scale1) >> 8);
+                fn_8000E684(*(s16 *)(node + 0x24), *(s16 *)(node + 0x26), bsave, c0, c1, node + 0x28,
+                    *(f32 *)(node + 0x10), *(f32 *)(node + 0x14), *(f32 *)(node + 0x8), *(f32 *)(node + 0x1C), *(f32 *)(node + 0x20));
+                break;
+            case 7:
+                col = (cr << 24) | (cg << 16) | (cb << 8) | ca;
+                *(u32 *)c1 = col;
+                c0[0] = node[0x18]; c0[1] = node[0x19]; c0[2] = node[0x1A];
+                c0[3] = (u8)((node[0x1B] * scale1) >> 8);
+                fn_8000E50C(*(s16 *)(node + 0x24), *(s16 *)(node + 0x26), bsave, c0, c1, node + 0x28,
+                    *(f32 *)(node + 0x10), *(f32 *)(node + 0x14), *(f32 *)(node + 0x8), *(f32 *)(node + 0x1C), *(f32 *)(node + 0x20));
+                break;
+            case 8:
+                col = (cr << 24) | (cg << 16) | (cb << 8) | ca;
+                *(u32 *)c1 = col;
+                c0[0] = node[0x18]; c0[1] = node[0x19]; c0[2] = node[0x1A];
+                c0[3] = (u8)((node[0x1B] * scale1) >> 8);
+                fn_8000E394(*(s16 *)(node + 0x24), *(s16 *)(node + 0x26), bsave, c0, c1, node + 0x28,
+                    *(f32 *)(node + 0x10), *(f32 *)(node + 0x14), *(f32 *)(node + 0x8), *(f32 *)(node + 0x1C), *(f32 *)(node + 0x20));
+                break;
+            case 9:
+                fn_80006E8C(node, cr, cg, cb, ca);
+                break;
+            case 10:
+                col = (cr << 24) | (cg << 16) | (cb << 8) | ca;
+                *(u32 *)c1 = col; *(u32 *)c0 = col;
+                fn_8014B388(c0, node + 0x28, *(f32 *)(node + 0x10), *(f32 *)(node + 0x14), *(f32 *)(node + 0x8));
+                break;
+            case 11:
+                vfn = *(void (**)(s32))(node + 0x10);
+                vfn(*(s32 *)(node + 0x14));
+                break;
+            default:
+                break;
+            }
+        }
+        node = *(u8 **)node;
+    }
+}
 void fn_80009B28(void) {
     extern u32 *lbl_80367140;
     
@@ -274,8 +391,7 @@ void fn_80009B80(s8 arg0) {
 
 extern u16 lbl_80367140;
 void fn_80009B8C(s8 arg0) {
-    s8 temp = arg0;
-    lbl_80367140 = (u16)temp;
+    *(u8 *)(*(u8 **)&lbl_80367140 + 0x23) = (u8)arg0;
 }
 
 void fn_80009B98(void) {
