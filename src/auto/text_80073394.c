@@ -203,9 +203,8 @@ void fn_800737DC(void) {
 }
 
 void fn_80073808(void) {
-    extern s32 lbl_8026BE40;
-    s8 *temp_r3 = (s8 *) &lbl_8026BE40 + 0x267;
-    fn_8000E0E4(temp_r3);
+    extern u16 lbl_8026BE40[];
+    fn_8000E0E4((u8 *)lbl_8026BE40 + 0x267);
 }
 
 s32 fn_80073834(s32 arg1) {
