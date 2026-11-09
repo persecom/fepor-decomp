@@ -72,13 +72,10 @@ void *fn_80132810(void) {
     return (u8 *)lbl_80276008 + 0x59;
 }
 
-s32 fn_80132820(void) {
-    M2C_UNK fn_80024398(M2C_UNK *, M2C_UNK);
-    extern M2C_UNK lbl_80367AC4;
-    
-    s32 var_4 = 0; // explicitly declare local to control register use
-    
-    fn_80024398(&lbl_80367AC4, var_4);
+s32 fn_80132820(s32 arg0, s32 arg1) {
+    void fn_80024398(void *, s32, s32);
+    extern u8 lbl_80367AC4;
+    fn_80024398(&lbl_80367AC4, arg1, 0);
     return 4;
 }
 
@@ -3010,10 +3007,10 @@ extern "C" void fn_80142934(void *arg0, s32 arg1) {
 
     ((Obj *)arg0)->v6();
     sent = (Node *)((u8 *)arg0 + 0x40);
-    p[0].arg = arg1;
     p[0].ptmf = *(PTMF *)lbl_80292314;
-    it = sent->next;
+    p[0].arg = arg1;
     p[1].ptmf = *(PTMF *)lbl_80292314;
+    it = sent->next;
     p[1].arg = arg1;
     while (it != sent) {
         (it->obj->*p[0].ptmf)(p[0].arg);
