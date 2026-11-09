@@ -523,22 +523,24 @@ u32 fn_8021364C(u32 arg0) {
     return temp_r31;
 }
 
-s32 __PADDisableRecalibration(s32 arg0) {
-    s32 r31;
-    u8* addr = (u8*)0x800030E3;
-    
-    OSDisableInterrupts();
-    if (*addr & 0x40) {
-        r31 = 1;
+s32 __PADDisableRecalibration(s32 disable) {
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    s32 enabled;
+    s32 interrupted;
+
+    interrupted = OSDisableInterrupts();
+    if ((*(u8 *)0x800030E3) & 0x40) {
+        enabled = 1;
     } else {
-        r31 = 0;
+        enabled = 0;
     }
-    *addr = (*addr & 0xBF);
-    if (arg0 != 0) {
-        *addr = (*addr | 0x40);
+    *(u8 *)0x800030E3 &= ~0x40;
+    if (disable != 0) {
+        *(u8 *)0x800030E3 |= 0x40;
     }
-    OSRestoreInterrupts();
-    return r31;
+    OSRestoreInterrupts(interrupted);
+    return enabled;
 }
 
 extern s32 lbl_8036869C;
