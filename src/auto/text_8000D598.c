@@ -377,7 +377,7 @@ extern "C" s32 fn_800112C0(void **arg0) {
         virtual s32 v14() = 0;
         virtual s32 v15() = 0;
     };
-    return ((Obj *)arg0)->v11() / ((Obj *)arg0)->v15();
+    return ((Obj *)arg0)->v9() / ((Obj *)arg0)->v14();
 }
 #pragma cplusplus reset
 
