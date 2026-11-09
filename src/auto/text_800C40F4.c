@@ -3443,6 +3443,19 @@ void fn_800E2220(void *arg0) {
     }
 }
 
+void *fn_800E266C(void *arg0, s16 arg1) {
+    void fn_800DF724(void *, s16);
+    void fn_800C428C(void *);
+    if (arg0 != NULL) {
+        *(void **)((char *)arg0 + 0x40) = lbl_8028E090;
+        fn_800DF724(arg0, 0);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void *fn_800E26CC(void *arg0, s16 arg1) {
     void fn_800DF724(void *, s32);
     void fn_800C428C(void *);
