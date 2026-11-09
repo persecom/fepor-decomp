@@ -5547,13 +5547,13 @@ void fn_801E1440(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 void fn_801E204C(void *arg0) {
-    extern M2C_UNK lbl_80330708;
-    void *temp_r5;
+    extern u8 lbl_80330708[];
+    u8 *temp_r5;
 
-    if (((u8) M2C_FIELD(&lbl_80330708, u8 *, 0x54) == 4) && ((u8) M2C_FIELD(&lbl_80330708, u8 *, 0x10) != 0x20)) {
-        temp_r5 = M2C_FIELD(arg0, void **, 0x54);
-        M2C_FIELD(temp_r5, u8 *, 0x64) = (u8) M2C_FIELD(&lbl_80330708, u8 *, 0x51E);
-        M2C_FIELD(temp_r5, s8 *, 0x65) = 9;
+    if (lbl_80330708[0x54] == 4 && lbl_80330708[0x10] != 0x20) {
+        temp_r5 = *(u8 **)((u8 *)arg0 + 0x54);
+        temp_r5[0x64] = lbl_80330708[0x51E];
+        temp_r5[0x65] = 9;
     }
 }
 
