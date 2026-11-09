@@ -4946,13 +4946,15 @@ void fn_800EA7CC(s32 arg0, s32 arg1) {
 }
 
 void fn_800EB210(u32 arg0) {
-    extern u16 lbl_8028E308[40]; // 80 bytes = 40 words
-    
+    void *fn_8000CAF0(void *, s32);
+    void *fn_8000CAA0(void *, u32);
+    extern u8 lbl_8028E308[];
+
     if (arg0 == 0U) {
         fn_8000CAF0(lbl_8028E308, 2);
         return;
     }
-    fn_8000CAA0(lbl_8028E308, arg0, lbl_8028E308);
+    fn_8000CAA0(lbl_8028E308, arg0);
 }
 
 void fn_800EB258(void) {
