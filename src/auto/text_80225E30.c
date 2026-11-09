@@ -873,13 +873,12 @@ s32 fn_8022B078(s32 a, s32 b) {
     return (s32)(-temp_r3 | temp_r3) >> 31;
 }
 
-s32 fn_8022B0B4(void) {
-    extern u16 gDBCommTable[20];
-    s32 (*func_ptr)(u16 *) = (s32 (*)(u16 *))(u32)gDBCommTable[0x10 / sizeof(u16)];
+s32 fn_8022B0B4(s32 a, s32 b) {
+    extern u8 gDBCommTable[40];
     s32 temp_r3;
 
-    temp_r3 = func_ptr((u16 *) gDBCommTable);
-    return (s32) (-temp_r3 | temp_r3) >> 0x1F;
+    temp_r3 = ((s32 (*)(s32, s32))*(u32 *)(gDBCommTable + 0x10))(a, b);
+    return (s32)(-temp_r3 | temp_r3) >> 31;
 }
 
 void fn_8022B0F0(void) {
