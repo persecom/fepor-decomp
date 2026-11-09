@@ -37,8 +37,8 @@ static inline u8 IsSlotAvailable(void *obj, s16 slot) {
     return IsSlotFilled(obj, slot);
 }
 
-static inline s32 PromoteSlot(s16 slot) {
-    return (s32)slot;
+static inline s32 PromoteSlot(s16 *slot) {
+    return *slot;
 }
 
 void fn_80163200(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
