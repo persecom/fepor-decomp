@@ -216,15 +216,13 @@ s32 fn_8012C700(void) {
     return 0;
 }
 
-void fn_8012C788(s32 arg0) {
-    extern u16 lbl_80291084[108];
-    void *fn_8000CAA0(u16 *, u16 *);
+void fn_8012C788(s32 arg0, s32 arg1) {
+    void *fn_8000CAA0(void *, s32);
+    extern u8 lbl_80291084[];
+    void *temp_r3;
 
-    u16 *temp_r3;
-
-    temp_r3 = fn_8000CAA0(&lbl_80291084[0], &lbl_80291084[0]);
-    
-    *(u32 *)((u8 *)temp_r3 + 0x54) = arg0;
+    temp_r3 = fn_8000CAA0(lbl_80291084, arg1);
+    *(s32 *)((u8 *)temp_r3 + 0x54) = arg0;
     *(u8 *)((u8 *)temp_r3 + 0x6C) = 2;
 }
 
