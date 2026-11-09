@@ -741,7 +741,7 @@ s32 fn_801047D0(void) {
 }
 
 u32 fn_80104930(u16 *arg0, u16 arg1) {
-    return ((u32)*arg0 - (u32)arg1) >> 31;
+    return *arg0 < arg1;
 }
 
 s32 fn_80104944(void) {
