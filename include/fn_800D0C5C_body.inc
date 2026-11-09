@@ -1023,3 +1023,4 @@
         return 0;
     *(s32 *)((u8 *)self + 0x1A8) = 0x4B0;
     return 1;
+#endif
