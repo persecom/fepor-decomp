@@ -767,17 +767,16 @@ u8 fn_80038570(s32 arg0) {
 }
 
 u8 fn_800385E4(void *arg0) {
-    s32 r3;
-    u8 r4;
-    s32 r31;
-    
-    r31 = (s32)arg0;
-    r3 = r31 + 0x1BC;
-    if (fn_80105BC0(r3, 2)) {
-        r4 = *(u8*)(r31 + 0x19A);
-        return (u8)(r4 + fn_801F1BD0() + 0x14);
+    s32 byte_val;
+    s32 result;
+
+    if ((u8)fn_80105BC0((u8 *)arg0 + 0x1BC, 2) != 0) {
+        byte_val = *((u8 *)arg0 + 0x19A);
+        result = byte_val + fn_801F1BD0();
+        result = result + 0x14;
+        return (u8)result;
     }
-    return *(u8*)(r31 + 0x19A);
+    return *((u8 *)arg0 + 0x19A);
 }
 
 u8 fn_8003863C(u8 *arg0) {
