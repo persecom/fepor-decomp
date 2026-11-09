@@ -414,6 +414,12 @@ void fn_800A6450(void) {
     fn_80196078();
 }
 
+void fn_800A6578(void) {
+    void fn_8003BE50(void *);
+    extern u8 lbl_802EF4C8[24];
+    fn_8003BE50(*(void **)lbl_802EF4C8);
+}
+
 void fn_800A65A4(s32 arg0) {
     M2C_UNK fn_80183BE4(s32, s32, s32 *);
     extern s32 lbl_802EF4C8;
