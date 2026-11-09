@@ -1345,7 +1345,7 @@ void fn_801C1824(ListIter *ret, List *list, ListIter *start, ListIter *end) {
         fn_801D2E40((u8 *)start->node + 8, -1);
         node = start->node;
         start->node = node->next;
-        fn_800C428C(node);
+        fn_0C428C(node);
         list->size--;
     }
     ret->node = end->node;
@@ -2857,11 +2857,14 @@ void *fn_801D2C20(void) {
 }
 
 void *fn_801D2E40(void *arg0, s16 arg1) {
-    void **ptr;
+    void fn_800616A0(void *);
+    void fn_800C428C(void *);
+    void *temp;
+
     if (arg0 != NULL) {
-        ptr = (void **)((u8 *)arg0 + 4);
-        if ((u32)*ptr != 0U) {
-            fn_800616A0();
+        temp = *(void **)((u8 *)arg0 + 4);
+        if (temp != NULL) {
+            fn_800616A0(temp);
         }
         if (arg1 > 0) {
             fn_800C428C(arg0);
@@ -4883,7 +4886,41 @@ void fn_801E3014(void* arg0) {
     }
 }
 
-void fn_801E3118(s32 *arg0,s32 arg1,u8 arg2) { void fn_800056CC(const char*,const char*); s32 fn_800C4604(s32,s32,const char*,s32); void fn_801E3014(s32*); void *fn_8000CAA0(void*,s32); extern u8 lbl_8027E980[]; extern u8 lbl_80299DE8[]; extern s32 lbl_80367110; s32 value; fn_800056CC((char*)lbl_8027E980+0x16d,(char*)lbl_8027E980); value=fn_800C4604(0,0xfffda000,(char*)lbl_8027E980+0x14e,0); *arg0=value; if(lbl_80367110&0x10) fn_801E3014(arg0); else { void *p=fn_8000CAA0(lbl_80299DE8,arg1); *(s32*)((u8*)p+0x54)=*arg0; *(u32*)((u8*)p+0x60)=arg2; } }
+void fn_801E3118(s32 *arg0,s32 arg1,u8 arg2) {
+    void fn_800056CC(const char*,const char*);
+    s32 fn_800C4604(s32,s32,const char*,s32);
+    void fn_801E3014(s32*);
+    void *fn_8000CAA0(void*,s32);
+    extern u8 lbl_8027E980[];
+    extern u8 lbl_80299DE8[];
+    extern s32 lbl_80367110;
+    
+    s32 value;
+    void *p;
+    
+    // First call: fn_800056CC with string arguments  
+    fn_800056CC((char*)lbl_8027E980+0x16d,(char*)lbl_8027E980);
+    
+    // Second call: fn_800C4604 
+    value = fn_800C4604(0, 0xfffda000, (char*)lbl_8027E980 + 0x14e, 0);
+    
+    // Store return value to arg0
+    *arg0 = value;
+    
+    // Check condition - need to match the exact register usage and control flow
+    if ((lbl_80367110 & 0x10) != 0) {
+        fn_801E3014(arg0);
+    } else {
+        // Call fn_8000CAA0 and get pointer p - match register usage exactly  
+        p = fn_8000CAA0(lbl_80299DE8, arg1);
+        
+        // Store value to (p + 0x54)
+        *(s32*)((u8*)p + 0x54) = *arg0;
+        
+        // Store arg2 to (p + 0x60) - use proper bit extraction
+        *(u32*)((u8*)p + 0x60) = (u32)arg2;
+    }
+}
 
 void fn_801E3214(void *arg0) {
     M2C_UNK fn_800EA540(s32, void *);
