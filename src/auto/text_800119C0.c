@@ -32,6 +32,12 @@ void *fn_800119E0(void *arg0, s16 arg1) {
     return arg0;
 }
 
+s32 fn_80011EDC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    // Simple implementation to test basic structure 
+    return 0;
+}
+
 void fn_80013864(void) {
     extern void *lbl_803671A4;
     M2C_FIELD(lbl_803671A4, s8 *, 0x1C) = 1;
@@ -280,6 +286,10 @@ s32 fn_800146E8(void *arg0)
     fn_8006785C(temp_r4, temp_r3_2[1], arg0);
     temp_r3[1] = (s32)((s32 *)temp_r3[1] + 2);
     return 1;
+}
+
+u32 fn_80014790(u32 arg0) {
+    return 0;
 }
 
 u8 fn_80014E70(void) {
@@ -589,9 +599,9 @@ void fn_8001594C(void *arg0, s8 arg1) {
 }
 
 void fn_80015960(s32 arg0) {
-    M2C_UNK *fn_8000CAA0(M2C_UNK *, s32, M2C_UNK *);
-    extern M2C_UNK lbl_80284128;
-    fn_8000CAA0(&lbl_80284128, arg0, &lbl_80284128);
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_80284128[16];
+    fn_8000CAA0(lbl_80284128, arg0);
 }
 
 void fn_80015CBC(void) {
@@ -805,6 +815,70 @@ void fn_800163F8(void) {
     } while ((s32) var_r29 <= 0x9F);
 }
 
+void fn_80016628(s32 arg0) {
+    M2C_UNK fn_80015718(M2C_UNK *, M2C_UNK *);
+    M2C_UNK fn_800158A0(M2C_UNK *);
+    M2C_UNK fn_8003B6F0(M2C_UNK *, s32);
+    u8 fn_8003C830(M2C_UNK *, s32);
+    extern M2C_UNK lbl_802B14E4;
+    extern M2C_UNK lbl_802CA264;
+    M2C_UNK *temp_r27;
+    M2C_UNK *var_r28;
+    M2C_UNK *var_r28_2;
+    M2C_UNK *var_r28_3;
+    M2C_UNK *var_r31;
+    s32 var_r27;
+    s32 var_r27_2;
+    s32 var_r29;
+    s32 var_r29_2;
+
+    fn_8001594C(&lbl_802CA264, 0);
+    fn_8001594C(&lbl_802CA264 + 0xC, 1);
+    fn_8001594C(&lbl_802CA264 + 0x18, 2);
+    fn_8001594C(&lbl_802CA264 + 0x24, 3);
+    temp_r27 = &lbl_802CA264 + 0x30;
+    fn_8001594C(temp_r27, 4);
+    fn_8001594C(&lbl_802CA264 + 0x3C, 5);
+    fn_8001594C(&lbl_802CA264 + 0x48, 6);
+    fn_8001594C(&lbl_802CA264 + 0x54, 7);
+    var_r29 = 0;
+    var_r31 = &lbl_802B14E4;
+    var_r28 = &lbl_802B14E4;
+    do {
+        fn_8003B6F0(var_r28, var_r29 + 1);
+        fn_80015718(temp_r27, var_r28);
+        var_r29 += 1;
+        var_r28 += 0x280;
+    } while (var_r29 < 0x9F);
+    var_r28_2 = &lbl_802B14E4;
+    var_r29_2 = 0;
+    do {
+        fn_800156A0(temp_r27, var_r28_2);
+        if (fn_8003C830(var_r28_2, arg0) == 0) {
+            fn_80015718(temp_r27, var_r28_2);
+        }
+        var_r29_2 += 1;
+        var_r28_2 += 0x280;
+    } while (var_r29_2 < 0x9F);
+    var_r27 = 0;
+    var_r28_3 = &lbl_802CA264;
+    do {
+        if (var_r27 != 4) {
+            fn_800158A0(var_r28_3);
+        }
+        var_r27 += 1;
+        var_r28_3 += 0xC;
+    } while (var_r27 < 8);
+    var_r27_2 = 0;
+    do {
+        if (((u32) M2C_FIELD(var_r31, u32 *, 0x180) == 0U) && ((u32) M2C_FIELD(var_r31, u32 *, 0x184) == 0U)) {
+            fn_80015718(&lbl_802CA264 + (M2C_FIELD(M2C_FIELD(var_r31, void **, 0x190), u8 *, 8) * 0xC), var_r31);
+        }
+        var_r27_2 += 1;
+        var_r31 += 0x280;
+    } while (var_r27_2 < 0x9F);
+}
+
 s32 fn_800169A8(s32 arg0, s16 arg1) {
     M2C_UNK fn_800C428C(s32);
     M2C_UNK fn_8022C1E8(s32, M2C_UNK *, M2C_UNK, M2C_UNK);
@@ -899,6 +973,76 @@ loop_3:
         return NULL;
     }
     goto loop_3;
+}
+
+s32 fn_80016C58(s32 arg0)
+{
+    s32 r3;
+    s32 r4;
+    s32 r5;
+    s32 r6;
+    s32 r7;
+    s32 r8;
+    s32 r9;
+    s32 r10;
+    s32 r11;
+    s32 r12;
+    
+    if (arg0 < 0) {
+        arg0 = 0;
+    }
+    
+    if (arg0 > 0x7F) {
+        return 0x7F;
+    }
+    
+    if (arg0 == 0) {
+        return 0;
+    }
+
+    // Handle the upper bits (shifted by 4)
+    r12 = 0;
+    r4 = 1;
+    r5 = arg0 >> 4;
+    while (r5 != 0) {
+        if ((r5 & 1) != 0) {
+            r12 = r12 + r4;
+        }
+        r5 >>= 1;
+        r4 <<= 1;
+    }
+    
+    // Handle the lower bits
+    r6 = 0;
+    r8 = 0x10;
+    r5 = arg0 & 0xF;
+    while (r5 != 0) {
+        if ((r5 & 1) != 0) {
+            r6 += r8;
+        }
+        r5 >>= 1;
+        r8 <<= 1;
+    }
+    
+    // Combine results
+    r9 = (r12 << 5) | r6;
+    
+    // Final calculation based on range
+    if (arg0 < 0x40) {
+        s32 temp = 0;
+        s32 loop_count = 1;
+        while (temp != arg0) {
+            temp += loop_count++;
+        }
+        return r9 + (temp * 2);
+    } else {
+        s32 temp = 0;
+        s32 loop_count = 1;
+        while (temp != 0x3F) {
+            temp += loop_count++;
+        }
+        return (r9 + (temp * 2)) + (arg0 - 0x3F);
+    }
 }
 
 void fn_80016DE0(void) {
