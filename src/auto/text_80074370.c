@@ -885,10 +885,8 @@ s32 fn_80076D4C(void) {
 }
 
 void fn_80076D64(void) {
-    M2C_UNK fn_8000E0E4(void *);
     extern u16 lbl_8026C0B8[];
-    
-    fn_8000E0E4((void *) (lbl_8026C0B8 + 0x652));
+    fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x329);
 }
 
 void fn_80076D90(void) {
