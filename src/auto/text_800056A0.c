@@ -160,8 +160,8 @@ void fn_80006198(void) {
 }
 
 void fn_800061CC(void *arg0) {
-    M2C_UNK fn_8000C070(u8);
-    fn_8000C070((u8) M2C_FIELD(arg0, s32 *, 0x60));
+    void fn_8000C070(void *, u8);
+    fn_8000C070(arg0, (u8)*(u32 *)((u8 *)arg0 + 0x60));
 }
 
 s32 fn_800061F4(void) {
