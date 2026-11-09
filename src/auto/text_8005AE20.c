@@ -2673,9 +2673,11 @@ s32 fn_8006EBA4(void *arg0, s32 arg1) {
 }
 
 extern void fn_8005D2CC(void);
-void fn_8006EDA0(void *arg0) {
-    fn_8005C7E8();
-    *(s32 *)arg0 = 0;
+void fn_8006EDA0(s32 *arg0)
+{
+    void fn_8005C7E8();
+    fn_8005C7E8(*arg0);
+    *arg0 = 0;
 }
 
 s32 fn_8006EDD8(void *arg0, s32 arg1) {
