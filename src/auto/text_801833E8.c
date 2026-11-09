@@ -1736,13 +1736,17 @@ void fn_8018EFE0(void *arg0, s32 arg1) {
     fn_8001019C(temp_r30, (s16) (arg1 + (s16) ((s32) (0x1C - fn_800102BC(-1, temp_r4, temp_r3, lbl_8036ADF0)) >> 1)), 2, temp_r31);
 }
 
-void fn_8018F090(void **arg0) {
-    M2C_UNK fn_80152A18(M2C_UNK, M2C_UNK, M2C_UNK);
-    M2C_FIELD(*arg0, M2C_UNK (**)(), 0x10)();
+#pragma cplusplus on
+extern "C" void fn_8018F090(void *arg0) {
+    void fn_80152A18(s32, s32, s32);
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    ((Obj *)arg0)->v2();
     fn_80152A18(0, 0, 0x10);
 }
-
-#pragma cplusplus on
 extern "C" void fn_8018F338(void *arg0) {
     void fn_80154004(s32, s32, s32);
     struct Obj {
