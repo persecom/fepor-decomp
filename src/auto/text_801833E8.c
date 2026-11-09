@@ -12,6 +12,11 @@ extern u16 lbl_8036719E;
 extern u32 lbl_803671A0;
 extern u32 lbl_803671A8;
 
+extern f32 lbl_8036AE88;
+extern f32 lbl_8036AE8C;
+extern f64 lbl_8036AE90;
+extern f64 lbl_8036AE98;
+
 typedef struct {
     void *unk0;
     void *unk4;
@@ -1454,6 +1459,33 @@ void fn_8018D7FC(void *arg0, void *arg1) {
     extern u16 lbl_802EF4E0[2008];
     if (((u8 (**)(void *))arg0)[2](arg1) != 0) {
         fn_8002F6E8(&lbl_802EF4E0, *(u8 *)((u8 *)arg1 + 0xC), *(u8 *)((u8 *)arg1 + 0xD), *(u8 *)((u8 *)arg1 + 0x198), 0);
+    }
+}
+
+void fn_8018D864(void *arg0, s32 arg1, s32 arg2) {
+    void fn_8002C6F4(void *);
+    extern u8 lbl_802CA518[];
+    u8 *base;
+    s8 x;
+    s32 yoff;
+    u8 *row;
+    u8 id;
+
+    base = lbl_802CA518;
+    x = arg1;
+    row = base + 0x10000;
+    yoff = (s8)arg2 << 6;
+    row = row + x;
+    if ((s8)row[yoff - 0x1E72] == 0) {
+        if ((*(u32 *)((u8 *)*(void **)((u8 *)arg0 + 4) + 0x254) & 0x20000) == 0 ||
+            (*(base + x + yoff + 0x300D) & 2) == 0) {
+            *((u8 *)arg0 + 0xC) = arg1;
+            *((u8 *)arg0 + 0xD) = arg2;
+            id = *(base + x + yoff + 0xD);
+            if (id == 0 || id == *((u8 *)*(void **)((u8 *)arg0 + 4) + 0x198)) {
+                fn_8002C6F4(arg0);
+            }
+        }
     }
 }
 
