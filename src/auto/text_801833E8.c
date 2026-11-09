@@ -1025,12 +1025,15 @@ void fn_8018820C(void *arg0) {
 
 void fn_8018A7E4(void *arg0) {
     extern f32 lbl_8036ACEC;
-    void *temp_r3;
+    u8 *ptr;
+    f32 value;
 
-    temp_r3 = M2C_FIELD(arg0, void **, 0x30);
-    *(f32 *)((u8 *)temp_r3 + 0x10) = lbl_8036ACEC;
-    *(f32 *)((u8 *)temp_r3 + 0x14) = lbl_8036ACEC;
-    *(f32 *)((u8 *)temp_r3 + 0x18) = lbl_8036ACEC;
+    ptr = *(u8 **)((u8 *)arg0 + 0x30);
+    value = lbl_8036ACEC;
+
+    *(f32 *)(ptr + 0x10) = value;
+    *(f32 *)(ptr + 0x14) = value;
+    *(f32 *)(ptr + 0x18) = value;
 }
 
 void fn_8018A7FC(void *arg0) {
