@@ -2294,13 +2294,14 @@ s32 fn_801C9CBC(void) {
  fn_801C9D94(a,lbl_803682B8); fn_800C9758(b,a,0,-1); fn_800C9A60(a,-1); fn_801CAF58(t,b); fn_800C9A60(b,-1); return 0;
 }
 
-void fn_801C9D58(void) {
+s32 fn_801C9D58(void) {
     s32 fn_8011C9E4(s32);
     void fn_801C9EE0(void *, s32);
     extern void *lbl_803682B8;
 
     s32 temp_r3 = fn_8011C9E4(*(s32 *)((char *)lbl_803682B8 + 0x430));
     fn_801C9EE0(lbl_803682B8, temp_r3);
+    return 0;
 }
 
 void fn_801CA1B8(s32 arg0) {
