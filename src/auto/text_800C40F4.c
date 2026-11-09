@@ -1461,8 +1461,8 @@ extern "C" s32 fn_800D0C5C(void *arg0) {
     s32 sub;
     s32 r27;
     s32 r28;
-    s32 r30;
     s32 state;
+    s32 r30;
     void *self = arg0;
 
     fn_800D3590(lbl_80367240);
