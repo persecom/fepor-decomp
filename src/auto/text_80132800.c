@@ -2091,12 +2091,11 @@ void *fn_8013E4E4(void *arg0, s16 arg1) {
 }
 
 void *fn_8013E540(void *arg0, s16 arg1) {
-    M2C_UNK fn_800C428C();
-    extern M2C_UNK lbl_802920E0;
+    extern u16 lbl_802920E0[76];
     if (arg0 != NULL) {
-        M2C_FIELD(arg0, M2C_UNK **, 4) = &lbl_802920E0;
+        *(u16**)((char*)arg0 + 4) = lbl_802920E0;
         if (arg1 > 0) {
-            fn_800C428C();
+            fn_800C428C(arg0);
         }
     }
     return arg0;
