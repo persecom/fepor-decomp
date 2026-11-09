@@ -664,12 +664,18 @@ void fn_801AA1B0(void *arg0) {
 }
 
 void fn_801AAD74(void *arg0) {
-    s16 var = M2C_FIELD(arg0, s16 *, 0x32);
-    if (var != 0) {
-        fn_801AA228();
+    void fn_801AA228(void *);
+
+    switch (*(s16 *)((char *)arg0 + 0x32)) {
+    case 0:
+        break;
+    default:
+        fn_801AA228(arg0);
+        break;
     }
 }
 
+#pragma optimization_level reset
 #pragma opt_common_subs off
 void fn_801AADA4(void *arg0) {
     s32 fn_80059208(void *, void *);
