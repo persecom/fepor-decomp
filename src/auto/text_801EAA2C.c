@@ -347,9 +347,9 @@ void fn_801EC370(void) {
     fn_8000E0E4((u8 *)lbl_8027EE08 + 0x26c);
 }
 
-void *fn_801EC39C(void) {
-    extern u16 lbl_8027EE08;
-    return (void*)(((u32)&lbl_8027EE08) + 0x4f2);
+void **fn_801EC39C(void) {
+    extern u32 lbl_8027EE08[];
+    return (void **)((u8 *)lbl_8027EE08 + 0x279);
 }
 
 u8 fn_801EC3AC(void) {
