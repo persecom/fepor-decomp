@@ -372,6 +372,17 @@ s32 fn_801512D8(void) {
     return 0;
 }
 
+int fn_80151300(void) {
+    extern u8 *lbl_80367BA0;
+    extern void fn_800DC3B0(void *);
+    extern void fn_800DA608(void);
+
+    fn_800DC3B0(*(void **)(lbl_80367BA0 + 0x424));
+    fn_800DA608();
+
+    return 0;
+}
+
 #pragma cplusplus on
 extern "C" void fn_80151330(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
     void fn_800D7254(void);
