@@ -564,6 +564,21 @@ s32 fn_800378CC(s32 arg0) {
     return sp8;
 }
 
+void fn_80037904(void *arg0, s32 arg1) {
+    s32 fn_801660A8(void *);
+    void fn_801660C4(s32, u16, u16, u8);
+    extern u8 lbl_80330708[];
+    s32 var_r4;
+    void *temp_r6;
+
+    var_r4 = arg1;
+    if (var_r4 < 0) {
+        var_r4 = fn_801660A8(lbl_80330708 + 0x3C0);
+    }
+    temp_r6 = *(void **)((u8 *)arg0 + 0x188);
+    fn_801660C4(var_r4, *(u16 *)((u8 *)temp_r6 + 0x58), *(u16 *)((u8 *)arg0 + 0x228), *(u8 *)((u8 *)temp_r6 + 0x55));
+}
+
 void fn_80037AB8(void *arg0) {
     void *temp_r6;
     void *temp_r6_2;
