@@ -2780,10 +2780,7 @@ s32 fn_800DEEBC(s32 arg0) {
 }
 
 void fn_800DEEC4(void *arg1) {
-    s32 temp_cr0_eq;
-
-    temp_cr0_eq = arg1 == NULL;
-    if ((temp_cr0_eq == 0) && (temp_cr0_eq == 0) && ((u32) M2C_FIELD(arg1, u32 *, 8) != 0U)) {
+    if (arg1 != NULL && *(u32 *)((u8 *)arg1 + 0x8) != 0) {
         fn_800C428C();
     }
 }
@@ -3085,13 +3082,10 @@ extern "C" void *fn_800DFAE0(void *arg0, void *arg1, const String *arg2, const S
 #pragma dont_inline reset
 #pragma cplusplus reset
 
-void fn_800DFC2C(void *arg0) {
-    u8 temp_r0;
-    s32 temp_r3;
-
-    temp_r0 = *(u8 *)((uintptr_t)arg0 + 0x8);
-    temp_r3 = *(s32 *)((uintptr_t)arg0 + 0x4);
-    fn_800E01EC(temp_r3, (temp_r3 + (temp_r3 << 2)), &temp_r0);
+void fn_800DFC2C(void *arg0, s32 a1, s32 a2, s32 a3, s32 a4, s32 a5, s32 a6, s32 a7, u8 arg8) {
+    u8 spC;
+    spC = arg8;
+    fn_800E01EC(*(s32 *)((u8 *)arg0 + 8), (*(s32 *)((u8 *)arg0 + 8) + (*(s32 *)((u8 *)arg0 + 4) << 2)), &spC);
 }
 
 #pragma cplusplus on
