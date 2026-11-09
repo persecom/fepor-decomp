@@ -804,13 +804,14 @@ void fn_80024734(void *arg0) {
     M2C_FIELD(M2C_FIELD(temp_r3, void **, 4), M2C_UNK (**)(void *, void *), 0x18)(temp_r3, arg0);
 }
 
-void fn_80024D18(void *arg1) {
+void fn_80024D18(s32 unused, void *arg1) {
     extern u32 *lbl_80367240;
     extern u8 lbl_80268D90[];
-    
+    void fn_801475FC(void *, s32);
     u32 temp_r6 = lbl_80367240[1];
+
     if (temp_r6 & (lbl_80367240[2] ^ temp_r6) & 0x0C00000C) {
-        ((u8*)arg1)[0x62] = 0;
+        ((u8 *)arg1)[0x62] = 0;
         fn_801475FC(&lbl_80268D90[0x71], 0x64);
     }
 }
@@ -1495,10 +1496,10 @@ void fn_800266E4(s32 arg0) {
 void fn_80026724(void *arg0) {
     void fn_80091518(void);
     void fn_800915E8(void);
-    extern s32 *lbl_802EF4C8;
+    extern u16 *lbl_802EF4C8;
 
-    s32 var_r5 = lbl_802EF4C8[0];
-    if ((u8) *(u8 *) &((s32 **)var_r5)[0x190][2] != 1) {
+    s32 temp_r3 = *(s32 *)lbl_802EF4C8;
+    if ((u8) *((u8 *) &((s32 **)temp_r3)[0x190][2]) != 1) {
         fn_800915E8();
         return;
     }
@@ -1541,13 +1542,13 @@ void fn_800267F8(s32 arg0) {
 }
 
 void fn_80026850(s32 arg0) {
-    M2C_UNK fn_80037BD0(s32, s8);
-    M2C_UNK fn_800913D4(s32, s32);
-    extern M2C_UNK lbl_802EF4C8;
+    extern u16 lbl_802EF4C8[];
     s32 temp_r31;
+    s8 temp_r4;
 
-    temp_r31 = M2C_FIELD(&lbl_802EF4C8, s32 *, 0);
-    fn_80037BD0(temp_r31, (s8) M2C_FIELD(&lbl_802EF4C8, u8 *, 0xA));
+    temp_r31 = *(s32 *)((u8 *)lbl_802EF4C8 + 0);
+    temp_r4 = *(u8 *)((u8 *)lbl_802EF4C8 + 0xA);
+    fn_80037BD0(temp_r31, temp_r4);
     fn_800913D4(arg0, temp_r31);
 }
 
@@ -1750,14 +1751,19 @@ void fn_800285C0(void *arg0) {
 
 void fn_800285EC(void) {
     extern u8 lbl_80367707;
-    extern s32 lbl_80330EAC[];
-    
+    struct S { u8 pad[0xCAC]; u32 cac; };
+    extern struct S lbl_80330EAC;
+    struct S *base;
+    u32 flags;
+
     if (lbl_80367707 == 0) {
-        if ((*(lbl_80330EAC + 0x32B) & 0x80000000) != 0) {
+        base = &lbl_80330EAC;
+        flags = base->cac;
+        if ((flags & 0x80000000) != 0) {
             fn_80098A9C();
             return;
         }
-        *(lbl_80330EAC + 0x32B) |= 0x10000000;
+        base->cac = flags | 0x10000000;
         fn_800D5818();
     }
 }
