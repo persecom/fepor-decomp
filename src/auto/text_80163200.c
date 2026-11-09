@@ -934,12 +934,14 @@ void fn_80169CF4(void *arg0) {
 }
 
 void fn_80169D58(void *arg0) {
-    void *temp_r3;
-    temp_r3 = *(void**)((u8*)arg0 + 0x4C);
-    fn_8000A3F8(temp_r3);
-    if (*(u32*)((u8*)arg0 + 0x40) != 0) {
-        fn_801090C0();
-        fn_8000A420();
+    void *fn_801090C0(void *);
+    void fn_8000A420(void *);
+    void *temp;
+
+    fn_8000A3F8(M2C_FIELD(arg0, void **, 0x4C));
+    temp = M2C_FIELD(arg0, void **, 0x40);
+    if (temp != NULL) {
+        fn_8000A420(fn_801090C0(temp));
     }
     fn_8013FEC0(arg0);
     fn_8000C188(arg0);
