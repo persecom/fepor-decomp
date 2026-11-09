@@ -1421,43 +1421,45 @@ loop_1:
     return var_r5;
 }
 
+#pragma peephole off
 s32 fn_80110094(void) {
-    extern M2C_UNK lbl_8032BD5C;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 4) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 8) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0xC) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x10) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x14) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x18) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x1C) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x20) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x24) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x28) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x2C) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x30) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x34) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x38) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x3C) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x40) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x44) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x48) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x4C) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x50) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x54) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x58) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x5C) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x60) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x64) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x68) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x6C) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x70) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x74) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x78) = 0;
-    M2C_FIELD(&lbl_8032BD5C, s32 *, 0x7C) = 0;
+    extern u32 lbl_8032BD5C[32];
+
+    lbl_8032BD5C[0] = 0;
+    lbl_8032BD5C[1] = 0;
+    lbl_8032BD5C[2] = 0;
+    lbl_8032BD5C[3] = 0;
+    lbl_8032BD5C[4] = 0;
+    lbl_8032BD5C[5] = 0;
+    lbl_8032BD5C[6] = 0;
+    lbl_8032BD5C[7] = 0;
+    lbl_8032BD5C[8] = 0;
+    lbl_8032BD5C[9] = 0;
+    lbl_8032BD5C[10] = 0;
+    lbl_8032BD5C[11] = 0;
+    lbl_8032BD5C[12] = 0;
+    lbl_8032BD5C[13] = 0;
+    lbl_8032BD5C[14] = 0;
+    lbl_8032BD5C[15] = 0;
+    lbl_8032BD5C[16] = 0;
+    lbl_8032BD5C[17] = 0;
+    lbl_8032BD5C[18] = 0;
+    lbl_8032BD5C[19] = 0;
+    lbl_8032BD5C[20] = 0;
+    lbl_8032BD5C[21] = 0;
+    lbl_8032BD5C[22] = 0;
+    lbl_8032BD5C[23] = 0;
+    lbl_8032BD5C[24] = 0;
+    lbl_8032BD5C[25] = 0;
+    lbl_8032BD5C[26] = 0;
+    lbl_8032BD5C[27] = 0;
+    lbl_8032BD5C[28] = 0;
+    lbl_8032BD5C[29] = 0;
+    lbl_8032BD5C[30] = 0;
+    lbl_8032BD5C[31] = 0;
     return 1;
 }
-
+#pragma peephole reset
 #include "global.h"
 extern u16 lbl_8028F3AC;
 #include "common.h"
