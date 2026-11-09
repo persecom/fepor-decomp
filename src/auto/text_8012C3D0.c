@@ -62,12 +62,12 @@ extern "C" void fn_8012C3E8(void *arg0) {
 M2C_UNK *fn_8012C414(void) {
     u8 fn_80109B0C(s32);
     M2C_UNK fn_80231D94(M2C_UNK *, void *, u8, M2C_UNK *);
-    extern M2C_UNK lbl_802758F8;
-    extern M2C_UNK lbl_8032FE60;
     extern s32 lbl_80367A88;
+    extern u8 lbl_802758F8[];
+    extern M2C_UNK lbl_8032FE60;
 
     u8 temp_r5 = fn_80109B0C(lbl_80367A88);
-    void *temp_r4 = &lbl_802758F8 + 0x10A;
+    void *temp_r4 = &lbl_802758F8[0x10A];
     M2C_UNK *temp_r3 = &lbl_8032FE60;
 
     fn_80231D94(temp_r3, temp_r4, temp_r5, temp_r3);
@@ -75,8 +75,8 @@ M2C_UNK *fn_8012C414(void) {
 }
 
 void *fn_8012C460(void) {
-    extern void *lbl_802758F8;
-    return (u8 *)&lbl_802758F8 + 0x11B;
+    extern u16 lbl_802758F8[];
+    return (u8 *)lbl_802758F8 + 0x11B;
 }
 
 s32 fn_8012C470(void) {
