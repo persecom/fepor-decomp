@@ -184,7 +184,10 @@ auto/text_80095850.c:
 	.text       start:0x80095850 end:0x800958C4
 
 auto/text_800958C4.c:
-	.text       start:0x800958C4 end:0x80098170
+	.text       start:0x800958C4 end:0x80095BB0
+
+auto/text_80095BB0.c:
+	.text       start:0x80095BB0 end:0x80098170
 
 auto/text_80098170.c:
 	.text       start:0x80098170 end:0x800981D0
