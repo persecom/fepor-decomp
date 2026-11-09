@@ -4860,24 +4860,31 @@ ListOwner *fn_80181CA4(ListOwner *arg0, s16 arg1) {
 }
 
 void fn_80181D44(void *arg0) {
+    s16 three;
+    s16 five;
     s16 var_r5;
     s16 var_r4;
     s16 var_r6;
     s16 var_r7;
-    
+    s16 var_r8;
+
+    three = 3;
+    five = 5;
+    var_r8 = *(s16 *)((char *)arg0 + 0xC);
+    var_r7 = *(s16 *)((char *)arg0 + 0x10);
     var_r6 = *(s16 *)((char *)arg0 + 0xA);
-    var_r7 = *(s16 *)((char *)arg0 + 0xC);
     var_r5 = *(s16 *)((char *)arg0 + 0xE);
-    var_r4 = *(s16 *)((char *)arg0 + 0x10);
-    
-    *(s16 *)((char *)arg0 + 0x12) = 3;
-    *(s16 *)((char *)arg0 + 0x14) = 5;
-    
-    var_r7 = var_r7 - var_r4;
-    *(s16 *)((char *)arg0 + 0x18) = var_r7 - 5;
-    
-    var_r4 = var_r6 - var_r5;
-    *(s16 *)((char *)arg0 + 0x16) = var_r4 - 3;
+
+    var_r7 = var_r7 - var_r8;
+    var_r7 = (s16)var_r7;
+    *(s16 *)((char *)arg0 + 0x12) = three;
+    var_r4 = var_r5 - var_r6;
+    var_r4 = (s16)var_r4;
+    var_r5 = var_r7 - 5;
+    *(s16 *)((char *)arg0 + 0x14) = five;
+    var_r4 = var_r4 - 3;
+    *(s16 *)((char *)arg0 + 0x16) = var_r4;
+    *(s16 *)((char *)arg0 + 0x18) = var_r5;
 }
 
 s32 fn_80181DD8(void *arg0) {
@@ -5081,12 +5088,11 @@ s32 fn_80182CE4(s32 arg0, s32 arg1) {
 }
 
 void fn_801832F8(s32 arg0) {
-    extern u32 lbl_802EF4C8[];
     extern u8 lbl_803681F0;
     extern u8 lbl_80278BB8[440];
     extern u8 lbl_80368208[8];
+    u8 val = *((u8 *)lbl_802EF4C8 + 8);
 
-    u8 val = ((u16*)lbl_802EF4C8)[8];
     lbl_803681F0 = val;
     if (val == 0x32) {
         fn_8000E0E4(&lbl_80278BB8[0xF8]);
