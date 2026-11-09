@@ -28,7 +28,7 @@ s32 fn_8014A380(void) {
 
 void *fn_8014A388(void) {
     extern u16 lbl_80276F00[];
-    return &lbl_80276F00[0x132];
+    return (u8 *)lbl_80276F00 + 0x99;
 }
 
 void *fn_8014A398(void) {
