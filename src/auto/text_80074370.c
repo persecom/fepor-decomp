@@ -2118,8 +2118,39 @@ void fn_80079F44(void *arg0) {
 }
 
 void fn_80079F50(void *arg0) {
-    extern s32 lbl_80367468;
-    *(s32*)((uintptr_t)arg0 + 0x3C) = lbl_80367468;
+    void fn_8000C070(void *, s32);
+    u32 fn_8000CD60();
+    void fn_8007A524(void *, s32, s32);
+    s32 var_r0;
+    u32 temp_r3;
+
+    fn_8007A524(arg0, 0, 7);
+    fn_8007A524(arg0, 0, 0xA);
+    if ((s16) M2C_FIELD(arg0, s16 *, 0x36) != 5) {
+        fn_8000C070(arg0, 1);
+        temp_r3 = fn_8000CD60() >> 0x10U;
+        switch ((s16) M2C_FIELD(arg0, s16 *, 0x34)) {
+        case 3:
+            var_r0 = ((s32) temp_r3 >> 7) + 0x12C;
+            break;
+        case 1:
+            var_r0 = ((s32) temp_r3 >> 7) + 0x1E;
+            break;
+        case 2:
+            var_r0 = ((s32) temp_r3 >> 0xA) + 1;
+            break;
+        case 4:
+            var_r0 = 1;
+            break;
+        case 5:
+            var_r0 = 0x7FFFFFFF;
+            break;
+        default:
+            var_r0 = 1;
+            break;
+        }
+        M2C_FIELD(arg0, s32 *, 0x3C) = var_r0;
+    }
 }
 
 void fn_8007A024(void *arg0) {
