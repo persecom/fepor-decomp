@@ -790,14 +790,13 @@ void fn_801F6594(void) {
 }
 
 void fn_801F65C8(s32 arg0) {
-    void *fn_8000CAA0(void *, s32, void *);
+    void *fn_8000CAA0(void *, s32);
     s32 fn_800C4638(s32, void *, s32);
-    extern u16 lbl_8029B27C[];
+    extern u8 lbl_8029B27C[];
     extern u8 lbl_80280D38[];
-
     void *temp_r31;
 
-    temp_r31 = fn_8000CAA0(lbl_8029B27C, arg0, lbl_8029B27C);
+    temp_r31 = fn_8000CAA0(lbl_8029B27C, arg0);
     M2C_FIELD(temp_r31, s32 *, 0x30) = fn_800C4638(0x18, lbl_80280D38 + 0x6A, 0);
 }
 
