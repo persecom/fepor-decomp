@@ -298,15 +298,15 @@ s32 fn_8012C9E8(void *arg1) {
     return 1;
 }
 
-void fn_8012C9FC(s8 arg0) {
-    extern u16 lbl_80290EB0[120];
-    void *fn_8000CAA0(void *, void *);
+void fn_8012C9FC(s32 arg0, s32 arg1) {
+    extern u8 lbl_80290EB0[];
+    void *fn_8000CAA0(void *, s32);
+    void *obj;
 
-    void *temp_r3;
-    temp_r3 = fn_8000CAA0(lbl_80290EB0, lbl_80290EB0);
-    *(u8*)((uintptr_t)temp_r3 + 0x60) = arg0;
-    *(u32*)((uintptr_t)temp_r3 + 0x54) = 0;
-    *(u8*)((uintptr_t)temp_r3 + 0x6C) = 0;
+    obj = fn_8000CAA0(lbl_80290EB0, arg1);
+    *(u8 *)((u8 *)obj + 0x60) = (u8)arg0;
+    *(s32 *)((u8 *)obj + 0x54) = 0;
+    *(u8 *)((u8 *)obj + 0x6C) = 0;
 }
 
 extern u8 lbl_80290E88[16];
