@@ -2,7 +2,7 @@
 #include "common.h"
 #include <dolphin/os.h>
 #include "global.h"
-extern s32 lbl_803682F0;;
+extern s32 lbl_803682F0;;;
 extern s32 fn_80013E50(s32);
 extern s32 fn_80013E60(s32, s32);
 extern s32 fn_80013E74(void*, s32);
@@ -214,17 +214,19 @@ void *memset(void *dst, int val, u32 n);
 extern u32 bootThisDol_803684F0;
 void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu) {
     BOOL rc;
-    BOOL disableRecalibration;
-    OSSram *sram;
 
     OSDisableScheduler();
     if (reset == 1 && forceMenu) {
+        OSSram *sram;
+
         sram = __OSLockSram();
         sram->flags |= 0x40;
         __OSUnlockSram(TRUE);
         resetCode = 0;
     }
     if (reset == 2 || (reset == 0 && (bootThisDol_803684F0 || resetCode + 0x3FFF0000 == 0))) {
+        BOOL disableRecalibration;
+
         __OSStopAudioSystem();
         disableRecalibration = __PADDisableRecalibration(TRUE);
         while (!__OSCallResetFunctions(FALSE))
