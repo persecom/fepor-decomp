@@ -214,7 +214,7 @@ void fn_80099E54(void *arg0) {
 
 void fn_80099ED0(void *arg0) {
     M2C_UNK fn_80096418(s16);
-    fn_80096418(M2C_FIELD(arg0, s16 *, 0x46));
+    fn_80096418(*(s16 *)((char *)arg0 + 0x46));
 }
 
 void fn_80099EF4(void *arg0) {
