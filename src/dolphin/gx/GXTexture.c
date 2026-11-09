@@ -1141,24 +1141,18 @@ void fn_80224860(u8 arg0, u8 arg1) {
 }
 
 void fn_80224A68(s32 arg0, s32 arg1) {
-    void *temp_r5;
-    u32 temp_r0;
+    void fn_80220D6C(void);
+    void fn_80220EBC(void);
 
-    temp_r5 = __GXData;
-    temp_r0 = *(u32*)((char*)temp_r5 + 0x5ac);
-    if (temp_r0 != 0) {
+    if (*(u32 *)((u8 *)__GXData + 0x5ac) != 0) {
         fn_80220D6C();
     }
-    
-    temp_r5 = __GXData;
-    temp_r0 = *(u32*)((char*)temp_r5 + 0x0);
-    if (temp_r0 == 0) {
+    if (*(u32 *)__GXData == 0) {
         fn_80220EBC();
     }
-    
-    *(u8*)0xCC008000 = 0x40;
-    *(s32*)0xCC008010 = arg0;
-    *(s32*)0xCC008014 = arg1;
+    *(volatile u8 *)0xCC008000 = 0x40;
+    *(volatile s32 *)0xCC008000 = arg0;
+    *(volatile s32 *)0xCC008000 = arg1;
 }
 
 void fn_80224AD8(f32 x, f32 y, f32 z, f32 mtx[3][4], f32 *pm, f32 *vp, f32 *sx, f32 *sy, f32 *sz) {
