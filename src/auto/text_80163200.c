@@ -1928,6 +1928,27 @@ u8 fn_80175924(s32 **arg0, s32 arg1) {
     return fn_80093DA8(arg1, *temp_r5, temp_r5);
 }
 
+void *fn_80175C34(void *arg0, s16 arg1) {
+    void fn_800C428C(void *);
+    extern void *lbl_80294BD0[];
+    extern void *lbl_80291FF8[];
+    extern void *lbl_802920E0[];
+
+    if (arg0 != NULL) {
+        *(void **)((u8 *)arg0 + 4) = lbl_80294BD0;
+        if (arg0 != NULL) {
+            *(void **)((u8 *)arg0 + 4) = lbl_80291FF8;
+            if (arg0 != NULL) {
+                *(void **)((u8 *)arg0 + 4) = lbl_802920E0;
+            }
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_80175CA0(void) {
     extern u8 lbl_8036816C;
     extern u32 lbl_80368170;
