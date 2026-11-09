@@ -4891,10 +4891,10 @@ void fn_8017F1D4(void *arg0) {
 }
 
 void fn_8017F474(s32 arg0) {
-    void *fn_8000CAF0(M2C_UNK *);
-    extern M2C_UNK lbl_802954DC;
+    void *fn_8000CAF0(void *);
+    extern u8 lbl_802954DC[];
     if (arg0 != 0) {
-        M2C_FIELD(fn_8000CAF0(&lbl_802954DC), s32 *, 0x30) = arg0;
+        *(s32 *)((u8 *)fn_8000CAF0(lbl_802954DC) + 0x30) = arg0;
     }
 }
 
