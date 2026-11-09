@@ -222,6 +222,13 @@ void fn_8012C9FC(s8 arg0) {
     *(u8*)((uintptr_t)temp_r3 + 0x6C) = 0;
 }
 
+extern u8 lbl_80290E88[16];
+void fn_8012CA40(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_80290E88[16];
+    fn_8000CAA0(lbl_80290E88, arg0);
+}
+
 void fn_8012CE34(void *arg0) {
     s32 fn_8000E0E4(void *);
     void fn_80056AE0(s32, s32);
@@ -893,6 +900,58 @@ void fn_80131B9C(s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5) {
         *arg5 = 0x154;
         return;
     }
+}
+
+s32 fn_80131C78(s32 param_1, s32 param_2, s32 param_3, s32 param_4, s32 param_5) {
+    s32 r30;
+    s32 r31;
+    s32 r4;
+    
+    if (param_5 > 7) {
+        return 0;
+    }
+    
+    r31 = param_1;
+    r30 = *(s32*)((u32)param_4 + 0x18C);
+    r4 = *(s32*)((u32)param_4);
+    
+    // Jump table handling
+    switch (param_5) {
+        case 0:
+            return fn_8003B258(param_4);
+        case 1:
+            // fall through
+            break;
+        case 2:
+            return fn_8003AFA0(param_4);
+        case 3:
+            // fall through  
+            break;
+        case 4:
+            return fn_8003AF28(param_4);
+        case 5:
+            // fall through
+            break;
+        case 6:
+            return fn_8003AEB0(param_4);
+        case 7:
+            // fall through
+            break;
+        case 8:
+            return fn_8003ACF8(param_4);
+        case 9:
+            // fall through
+            break;
+        case 10:
+            return fn_8003AA40(param_4);
+        case 11:
+            // fall through
+            break;
+        case 12:
+            return fn_8003A778(param_4);
+    }
+    
+    return 0;
 }
 
 void fn_80131F70(void)
