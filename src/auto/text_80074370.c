@@ -274,8 +274,7 @@ s32 fn_800753BC(void) {
 
 void fn_800753D4(void) {
     extern u16 lbl_8026C0B8[];
-    u16* temp = &lbl_8026C0B8[0x3C6];
-    fn_8000E0E4(temp);
+    fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x1E3);
 }
 
 void fn_80075400(void) {
