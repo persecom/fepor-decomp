@@ -859,9 +859,10 @@ void fn_8012601C(void *arg0) {
     lbl_80367110 = ((s32*)arg0)[0x1B];
 }
 
-void fn_80126050(void) {
+void fn_80126050(void *arg0) {
+    M2C_UNK fn_8000C070(void *, u8);
     extern u8 lbl_80367A6C;
-    fn_8000C070(lbl_80367A6C);
+    fn_8000C070(arg0, lbl_80367A6C);
 }
 
 void fn_80126074(void *arg0) {
