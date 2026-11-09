@@ -138,11 +138,10 @@ extern "C" void fn_801AE4B8(void *arg0) {
 #pragma cplusplus reset
 
 void fn_801AE73C(s32 arg0) {
-    M2C_UNK fn_8000C188(s32);
-    M2C_UNK fn_801475FC(void *, M2C_UNK);
-    extern M2C_UNK lbl_8027BD18;
-    extern s32 lbl_80367110;
+    extern u32 lbl_80367110;
     extern void *lbl_80367240;
+    extern u8 lbl_8027BD18[];
+    
     s32 temp_r4;
     u8 var_r3;
 
@@ -151,9 +150,9 @@ void fn_801AE73C(s32 arg0) {
         var_r3 = 1;
     }
     if (var_r3 == 0) {
-        temp_r4 = M2C_FIELD(lbl_80367240, s32 *, 4);
-        if (temp_r4 & (M2C_FIELD(lbl_80367240, s32 *, 8) ^ temp_r4) & 0x300) {
-            fn_801475FC(&lbl_8027BD18 + 0x36E, 0x64);
+        temp_r4 = *(s32*)((char*)lbl_80367240 + 4);
+        if (temp_r4 & (*(s32*)((char*)lbl_80367240 + 8) ^ temp_r4) & 0x300) {
+            fn_801475FC(&lbl_8027BD18[0x36E], 0x64);
             fn_8000C188(arg0);
         }
     }
