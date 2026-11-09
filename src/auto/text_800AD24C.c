@@ -1344,9 +1344,9 @@ u8 fn_800B719C(u8 arg0) {
     return fn_800F32A4();
 }
 
-u8 fn_800B7200(void) {
+void *fn_800B7200(void) {
     extern u16 lbl_8031FFC0;
-    return M2C_FIELD(&lbl_8031FFC0, u8 *, 0xA);
+    return (u8 *)&lbl_8031FFC0 + 0x4;
 }
 
 s32 fn_800B7210(void) {
