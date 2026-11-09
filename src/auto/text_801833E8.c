@@ -3053,9 +3053,12 @@ void fn_801985F8(void *arg0, s32 arg1) {
 }
 
 s32 fn_8019906C(void *arg0) {
-    s32 fn_801518D0(s32);
-    if (M2C_FIELD(arg0, u32 *, 0x144) != 0) {
-        return fn_801518D0(0x12);
+    s32 fn_801518D0(void *, s32);
+    void *v;
+
+    v = *(void **)((u8 *)arg0 + 0x144);
+    if (v != NULL) {
+        return fn_801518D0(v, 0x12);
     }
     return 0;
 }
