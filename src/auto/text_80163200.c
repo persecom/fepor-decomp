@@ -4266,9 +4266,8 @@ void *fn_8017FB80(u32 arg0) {
     return var_r31;
 }
 
-void fn_8017FC00(void) {
-    fn_8013FF94(0x81, 0);
-    fn_8013AD70((s32*)*(u32*)((u8*)&lbl_80330708 + 0xB0));
+void fn_8017FC00(void *arg0) {
+    fn_8013AD70(fn_8013FF94(arg0, 0x81, 0), *(s32 *)((u8 *)&lbl_80330708 + 0xB0));
 }
 
 void fn_8017FC70(void *arg0, s32 arg1) {
