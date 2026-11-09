@@ -3223,6 +3223,21 @@ void fn_80143E0C(void *unit, s16 arg1) {
     *(s16 *) ((s32 *) data_ptr + 0x17) = (s16)(var_r31 - 1); // offset 0x4E
 }
 
+#pragma cplusplus on
+extern "C" void fn_80144000(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+    };
+    ((Obj *)arg0)->v6();
+}
+#pragma cplusplus reset
+
 void fn_8014402C(void *arg0) {
     M2C_UNK fn_801475FC(void *, M2C_UNK);
     extern M2C_UNK lbl_80276B3C;
