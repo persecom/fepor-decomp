@@ -1275,8 +1275,8 @@ void fn_8011BFB0(void) {
 }
 
 void *fn_8011BFDC(void) {
-    extern u8 lbl_80274508;
-    return &lbl_80274508 + 0x45C;
+    extern u16 lbl_80274508[];
+    return (u8 *)lbl_80274508 + 0x45C;
 }
 
 u8 fn_8011BFEC(void) {
