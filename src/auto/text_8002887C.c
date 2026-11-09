@@ -2,9 +2,9 @@
 #include "common.h"
 
 static inline void *map_find_xy(s32 *arg0, s8 arg1, s8 arg2) {
-    register s32 *var_r6 asm("r6");
-    register s32 var_r5 asm("r5");
-    register s32 n asm("r7");
+    s32 *var_r6;
+    s32 var_r5;
+    s32 n;
 
     n = *arg0;
     var_r6 = arg0;
