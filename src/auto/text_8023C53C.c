@@ -2131,6 +2131,74 @@ block_13:
     }
 }
 
+s32 fn_80257EE4(u8 *arg0, s16 *arg1, s16 *arg2) {
+    extern u16 lbl_8029F9F8[];
+    s32 fn_80257998(u8 *);
+    s32 ret;
+    s32 old;
+    s32 delta;
+    s32 x;
+    s32 y;
+    s32 ctr;
+    u8 mode;
+
+    ret = 0;
+    switch (arg0[0]) {
+    case 0:
+        if (arg0[1] != 3) {
+            old = *(s32 *)(arg0 + 8);
+            *(s32 *)(arg0 + 8) = old + *(s32 *)(arg0 + 0x10);
+            *arg1 = (s16)(old >> 16);
+            delta = *(s32 *)(arg0 + 0x10);
+            if (delta >= 0) {
+                *arg2 = (s16)(delta >> 21);
+            } else {
+                *arg2 = (s16) -(-delta >> 21);
+            }
+            ctr = *(s32 *)(arg0 + 4) - 1;
+            *(s32 *)(arg0 + 4) = ctr;
+            if (ctr == 0) {
+                ret = fn_80257998(arg0);
+            }
+        } else {
+            *arg1 = (s16)(*(s32 *)(arg0 + 8) >> 16);
+            *arg2 = 0;
+        }
+        break;
+    case 1:
+        mode = arg0[1];
+        if (mode != 3) {
+            old = *(s32 *)(arg0 + 8);
+            if (arg0[0x26] == 0 && mode == 1) {
+                *(s32 *)(arg0 + 8) = old + *(s32 *)(arg0 + 0x10);
+            } else {
+                *(s32 *)(arg0 + 0xC) = *(s32 *)(arg0 + 0xC) + *(s32 *)(arg0 + 0x10);
+                x = (s32)(*(u32 *)(arg0 + 0xC) + 0x8000) >> 16;
+                y = 0xC1 - x;
+                x = y & ~(y >> 31);
+                *(s32 *)(arg0 + 8) = (s32)lbl_8029F9F8[x] << 16;
+            }
+            *arg1 = (s16)(old >> 16);
+            delta = *(s32 *)(arg0 + 8) - old;
+            if (delta >= 0) {
+                *arg2 = (s16)(delta >> 21);
+            } else {
+                *arg2 = (s16) -(-delta >> 21);
+            }
+            ctr = *(s32 *)(arg0 + 4) - 1;
+            *(s32 *)(arg0 + 4) = ctr;
+            if (ctr == 0) {
+                ret = fn_80257998(arg0);
+            }
+        } else {
+            *arg1 = (s16)(*(s32 *)(arg0 + 8) >> 16);
+            *arg2 = 0;
+        }
+        break;
+    }
+    return ret;
+}
+
 s32 fn_8025807C(s32 arg0, s32 arg1, s32 arg2) {
     u32 fn_80257EE4(s32, s32, s32);
     s32 i;
