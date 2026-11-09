@@ -246,6 +246,13 @@ void *fn_8009FE04(void) {
     return (u8 *)&lbl_8026D8D8 + 0x307;
 }
 
+s32 fn_8009FE14(void) {
+    void fn_8000CAA0(void *);
+    extern u8 lbl_8028A31C[];
+    fn_8000CAA0(lbl_8028A31C);
+    return 0;
+}
+
 void *fn_8009FE7C(void) {
     extern u16 lbl_8026D8D8;
     return &lbl_8026D8D8 + 0x325;
