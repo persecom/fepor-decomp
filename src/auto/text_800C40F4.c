@@ -2948,8 +2948,8 @@ void fn_800DF6B8(void *arg0, u8 *arg1) {
     fn_800C9B6C(arg0, arg1 + 0x1C);
 }
 
-void fn_800DF6DC(s32 arg1) {
-    fn_800C9B6C(arg1 + 0x10);
+void fn_800DF6DC(s32 arg0, s32 arg1) {
+    fn_800C9B6C(arg0, arg1 + 0x10);
 }
 
 void fn_800DF700(s32 arg1) {
