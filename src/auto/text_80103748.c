@@ -557,25 +557,25 @@ u32 fn_801044E0(void *arg0) {
     return (u32) ((4 - temp_r4) | (temp_r4 - 4)) >> 0x1FU;
 }
 
-s32 fn_801044FC(void *arg0) {
-    u8 temp_r3;
-    u8 temp_r4;
+s32 fn_801044FC(u8 *arg0) {
+    u8 b0;
+    u8 b1;
 
-    temp_r4 = M2C_FIELD(arg0, u8 *, 0);
-    if ((temp_r4 >> 5U) & 7) {
+    b0 = arg0[0];
+    if ((b0 >> 5) & 7) {
         return 1;
     }
-    if (((u16) M2C_FIELD(arg0, u8 *, 0) >> 7U) & 7) {
+    if ((*(u16 *)arg0 >> 7) & 7) {
         return 1;
     }
-    temp_r3 = M2C_FIELD(arg0, u8 *, 1);
-    if ((temp_r3 >> 4U) & 7) {
+    b1 = arg0[1];
+    if ((b1 >> 4) & 7) {
         return 1;
     }
-    if ((temp_r4 >> 2U) & 7) {
+    if ((b0 >> 2) & 7) {
         return 1;
     }
-    return (temp_r3 & 7) != 0;
+    return (b1 & 7) != 0;
 }
 
 void fn_8010455C(void *arg0, u8 arg1) {
