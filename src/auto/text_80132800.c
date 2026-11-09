@@ -4375,15 +4375,16 @@ void fn_80149D1C(void *arg0) {
     }
 }
 
-s32 fn_80149D4C(void *arg0) {
-    s32 fn_800B1B24(s8);
-    s8 temp_r3;
+s32 fn_80149D4C(void *arg0)
+{
+    s32 fn_800B1B24(s32);
+    s32 temp;
 
-    temp_r3 = M2C_FIELD(arg0, s8 *, 4);
-    if (temp_r3 < 0) {
+    temp = *(u8 *)((u8 *)arg0 + 4);
+    if ((s8)temp < 0) {
         return 0;
     }
-    return fn_800B1B24(temp_r3);
+    return fn_800B1B24((s8)temp);
 }
 
 #pragma cplusplus on
