@@ -1135,70 +1135,73 @@ s32 fn_801BAC40(struct efUnit* arg0, s32 arg1)
     return temp_r5;
 }
 
-void fn_801BC784(void *arg0) {
-    s32 temp_r0;
-    s32 temp_r0_2;
-    s32 temp_r0_3;
-    s32 temp_r0_4;
-    s32 temp_r0_5;
-    void *temp_r3;
-    void *temp_r3_2;
-    void *temp_r3_3;
-    void *temp_r3_4;
-    void *temp_r3_5;
+#pragma cplusplus on
+extern "C" void fn_801BC784(void *arg0) {
+    void fn_8014004C(void *, void *);
+    struct Obj {
+        virtual void destroy(s32) = 0;
+        s32 refcount;
+    };
+    Obj *temp;
+    s32 refs;
 
-    fn_8014004C(M2C_FIELD(arg0, void **, 0x48));
+    fn_8014004C(arg0, M2C_FIELD(arg0, void **, 0x48));
     fn_8014004C(arg0, M2C_FIELD(arg0, void **, 0x4C));
     fn_8014004C(arg0, M2C_FIELD(arg0, void **, 0x50));
     fn_8014004C(arg0, M2C_FIELD(arg0, void **, 0x54));
     fn_8014004C(arg0, M2C_FIELD(arg0, void **, 0x58));
-    temp_r3 = M2C_FIELD(arg0, void **, 0x48);
-    if (temp_r3 != NULL) {
-        temp_r0 = M2C_FIELD(temp_r3, s32 *, 4) - 1;
-        M2C_FIELD(temp_r3, s32 *, 4) = temp_r0;
-        if ((temp_r0 == 0) && (temp_r3 != NULL)) {
-            M2C_FIELD(M2C_FIELD(temp_r3, void **, 0), M2C_UNK (**)(M2C_UNK), 8)(1);
+
+    temp = M2C_FIELD(arg0, Obj **, 0x48);
+    if (temp != NULL) {
+        refs = temp->refcount - 1;
+        temp->refcount = refs;
+        if (refs == 0 && temp != NULL) {
+            temp->destroy(1);
         }
         M2C_FIELD(arg0, void **, 0x48) = NULL;
     }
-    temp_r3_2 = M2C_FIELD(arg0, void **, 0x4C);
-    if (temp_r3_2 != NULL) {
-        temp_r0_2 = M2C_FIELD(temp_r3_2, s32 *, 4) - 1;
-        M2C_FIELD(temp_r3_2, s32 *, 4) = temp_r0_2;
-        if ((temp_r0_2 == 0) && (temp_r3_2 != NULL)) {
-            M2C_FIELD(M2C_FIELD(temp_r3_2, void **, 0), M2C_UNK (**)(M2C_UNK), 8)(1);
+
+    temp = M2C_FIELD(arg0, Obj **, 0x4C);
+    if (temp != NULL) {
+        refs = temp->refcount - 1;
+        temp->refcount = refs;
+        if (refs == 0 && temp != NULL) {
+            temp->destroy(1);
         }
         M2C_FIELD(arg0, void **, 0x4C) = NULL;
     }
-    temp_r3_3 = M2C_FIELD(arg0, void **, 0x50);
-    if (temp_r3_3 != NULL) {
-        temp_r0_3 = M2C_FIELD(temp_r3_3, s32 *, 4) - 1;
-        M2C_FIELD(temp_r3_3, s32 *, 4) = temp_r0_3;
-        if ((temp_r0_3 == 0) && (temp_r3_3 != NULL)) {
-            M2C_FIELD(M2C_FIELD(temp_r3_3, void **, 0), M2C_UNK (**)(M2C_UNK), 8)(1);
+
+    temp = M2C_FIELD(arg0, Obj **, 0x50);
+    if (temp != NULL) {
+        refs = temp->refcount - 1;
+        temp->refcount = refs;
+        if (refs == 0 && temp != NULL) {
+            temp->destroy(1);
         }
         M2C_FIELD(arg0, void **, 0x50) = NULL;
     }
-    temp_r3_4 = M2C_FIELD(arg0, void **, 0x54);
-    if (temp_r3_4 != NULL) {
-        temp_r0_4 = M2C_FIELD(temp_r3_4, s32 *, 4) - 1;
-        M2C_FIELD(temp_r3_4, s32 *, 4) = temp_r0_4;
-        if ((temp_r0_4 == 0) && (temp_r3_4 != NULL)) {
-            M2C_FIELD(M2C_FIELD(temp_r3_4, void **, 0), M2C_UNK (**)(M2C_UNK), 8)(1);
+
+    temp = M2C_FIELD(arg0, Obj **, 0x54);
+    if (temp != NULL) {
+        refs = temp->refcount - 1;
+        temp->refcount = refs;
+        if (refs == 0 && temp != NULL) {
+            temp->destroy(1);
         }
         M2C_FIELD(arg0, void **, 0x54) = NULL;
     }
-    temp_r3_5 = M2C_FIELD(arg0, void **, 0x58);
-    if (temp_r3_5 != NULL) {
-        temp_r0_5 = M2C_FIELD(temp_r3_5, s32 *, 4) - 1;
-        M2C_FIELD(temp_r3_5, s32 *, 4) = temp_r0_5;
-        if ((temp_r0_5 == 0) && (temp_r3_5 != NULL)) {
-            M2C_FIELD(M2C_FIELD(temp_r3_5, void **, 0), M2C_UNK (**)(M2C_UNK), 8)(1);
+
+    temp = M2C_FIELD(arg0, Obj **, 0x58);
+    if (temp != NULL) {
+        refs = temp->refcount - 1;
+        temp->refcount = refs;
+        if (refs == 0 && temp != NULL) {
+            temp->destroy(1);
         }
         M2C_FIELD(arg0, void **, 0x58) = NULL;
     }
 }
-
+#pragma cplusplus reset
 void fn_801BCC60(s32 arg0) {
     extern s32 lbl_802EF4C8;
     extern u16 lbl_80330EAC[];
