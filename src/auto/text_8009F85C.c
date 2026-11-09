@@ -481,15 +481,15 @@ void *fn_800A0250(void) {
     return (char *)lbl_8026D8D8 + 0x3C3;
 }
 
-u8 fn_800A02C8(void) {
+u32 fn_800A02C8(void) {
     extern u8 lbl_80366E24;
-    u8 var_r3;
+    u32 var_r3;
 
     var_r3 = 2;
-    if ((u8) lbl_80366E24 != 0) {
+    if (lbl_80366E24 != 0) {
         var_r3 = 0;
     }
-    return var_r3;
+    return (u8)var_r3;
 }
 
 void *fn_800A02E4(void) {
