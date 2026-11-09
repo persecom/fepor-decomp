@@ -3589,18 +3589,26 @@ void *fn_8014488C(void *arg0, s16 arg1) {
     return arg0;
 }
 
-void *fn_80144A0C(void *arg0, s16 arg1) {
-    extern u16 lbl_80292504;
+#pragma cplusplus on
+extern "C" void *fn_80144A0C(void *arg0, s16 arg1) {
+    struct Obj {
+        u8 pad[0x44];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    extern u8 lbl_80292504[];
+    extern void fn_800C428C(void *);
     if (arg0 != NULL) {
-        *(u16**)((char*)arg0 + 0x44) = &lbl_80292504;
-        (*(void (**)(void*))((char*)*(u32**)((char*)arg0 + 0x44) + 0x10))(&lbl_80292504);
+        *(void **)((u8 *)arg0 + 0x44) = lbl_80292504;
+        ((Obj *)arg0)->v2();
         if (arg1 > 0) {
             fn_800C428C(arg0);
         }
     }
     return arg0;
 }
-
+#pragma cplusplus off
 void fn_80144B1C(void **arg0, void *arg1) {
     M2C_FIELD(*arg0, void ***, 4) = (void **) M2C_FIELD(arg1, void ***, 4);
     *M2C_FIELD(arg1, void ***, 4) = *arg0;
