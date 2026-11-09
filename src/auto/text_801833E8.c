@@ -5637,9 +5637,10 @@ s32 fn_801A0374(void) {
 
 extern u16 lbl_80330708[];
 s32 fn_801A0400(s32 arg0) {
-    void fn_8014C7C0(void *, s32, void *);
-    
-    fn_8014C7C0(lbl_80330708, arg0, lbl_80330708);
+    void fn_8014C7C0(void *, s32);
+    void fn_80013864(void);
+    extern u16 lbl_80330708[];
+    fn_8014C7C0(lbl_80330708, arg0);
     fn_80013864();
     return 1;
 }
