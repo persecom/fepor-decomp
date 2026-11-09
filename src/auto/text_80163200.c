@@ -1844,7 +1844,7 @@ void fn_801734D8(void *arg0) {
     void fn_8013FEC0(void *);
 
     extern u32 lbl_802EF4C8[];
-    extern u8 lbl_80294B10[];
+    extern u8 lbl_80294B10[0xA0];
 
     temp_r3 = (void **)((u32 *)arg0 + 0x4C / sizeof(u32));
     temp_r31 = (void **)((u32 *)arg0 + 0x50 / sizeof(u32));
