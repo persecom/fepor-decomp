@@ -2380,27 +2380,34 @@ s32 fn_800B9A34(u32 arg0, s32 arg1) {
     return 1;
 }
 
-s32 fn_800B9A9C(u32 arg0, u8 arg1) {
+s32 fn_800B9A9C(u32 arg0, s32 arg1) {
     u32 fn_801090C0(u32);
-    M2C_UNK fn_80109C1C(u8);
+    void fn_80109C1C(u32, u8);
     u32 fn_801CF760(u32);
-    M2C_UNK fn_801CFC4C(u8);
-    s32 fn_80234278(void *, M2C_UNK);
-    extern M2C_UNK lbl_8026ECB8;
+    void fn_801CFC4C(u32, s32);
+    s32 fn_80234278(void *, void *, s32);
+    extern u8 lbl_8026ECB8[];
+    u32 temp;
+
     if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
         return 0;
     }
-    if (fn_80234278(&lbl_8026ECB8 + 0xA47, 8) != 0) {
-        if (fn_801090C0(arg0) == 0U) {
+
+    if (fn_80234278((void *)arg0, lbl_8026ECB8 + 0xA47, 8) != 0) {
+        temp = fn_801090C0(arg0);
+        if (temp == 0U) {
             return 0;
         }
-        fn_80109C1C(arg1);
+        fn_80109C1C(temp, arg1);
         return 1;
     }
-    if (fn_801CF760(arg0) == 0U) {
+
+    temp = fn_801CF760(arg0);
+    if (temp == 0U) {
         return 0;
     }
-    fn_801CFC4C(arg1);
+
+    fn_801CFC4C(temp, arg1);
     return 1;
 }
 
