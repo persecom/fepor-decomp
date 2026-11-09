@@ -1759,6 +1759,15 @@ void fn_801C1824(ListIter *ret, List *list, ListIter *start, ListIter *end) {
     ret->node = end->node;
 }
 
+int fn_801C18E4(void *arg0) {
+    u32 *ptr;
+
+    ptr = (u32 *)((u8 *)arg0 + 0x4);
+    *(u32 *)arg0 = 0;
+    ptr[1] = (u32)ptr;
+    ptr[0] = (u32)ptr;
+}
+
 void fn_801C18FC(s32 arg0) {
     M2C_UNK fn_8000A388(M2C_UNK *, M2C_UNK *, M2C_UNK *, M2C_UNK *, f32);
     extern M2C_UNK fn_801C19E4;
