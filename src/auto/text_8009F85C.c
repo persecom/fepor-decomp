@@ -1345,7 +1345,10 @@ void fn_800A2410(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 }
 
 s32 fn_800A2624(void *arg0) {
-    M2C_FIELD(arg0, u16 *, 4) = (u16) M2C_FIELD(M2C_FIELD(fn_800AA794(), void **, 0x18C), u16 *, 0x38);
+    void **temp_r3 = (void **)fn_800AA794();
+    void *temp_r4 = *(void **)((u8 *)temp_r3 + 0x18C);
+    u16 temp_r0 = *(u16 *)((u8 *)temp_r4 + 0x38);
+    *(u16 *)((u8 *)arg0 + 0x4) = temp_r0;
     return 0;
 }
 
@@ -1640,7 +1643,7 @@ s32 fn_800A319C(void) {
 
 void *fn_800A31C0(void) {
     extern u16 lbl_8026D8D8[];
-    return &lbl_8026D8D8[0xE96];
+    return (u8 *)lbl_8026D8D8 + 0x74b;
 }
 
 s32 fn_800A31D0(s32 arg0, s32 arg1) {
