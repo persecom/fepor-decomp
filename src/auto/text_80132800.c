@@ -61,6 +61,7 @@ struct Anim {
     u8 flags;           /* +0x0C */
     u8 unk_d;           /* +0x0D */
     u8 unk_e;           /* +0x0E */
+    u8 pad_f;           /* +0x0F */
     u8 unk_10;          /* +0x10 */
     u8 delay;           /* +0x11 */
     s16 unk_12;         /* +0x12 */
@@ -71,6 +72,7 @@ struct Anim {
     u8 pad1C[0xC];
     u8 start;           /* +0x28 */
     u8 end;             /* +0x29 */
+    u8 pad2A[2];
     u16 frame;          /* +0x2C */
     u16 frames;         /* +0x2E */
 };
@@ -2533,6 +2535,79 @@ void fn_8014203C(void *arg0, Vec2s *size) {
     s16 h = size->y;
     M2C_FIELD(arg0, s16 *, 0xE) = x + w;
     M2C_FIELD(arg0, s16 *, 0x10) = M2C_FIELD(arg0, s16 *, 0xC) + h;
+}
+
+void fn_80142078(void *arg0) {
+    f32 fn_800067BC(M2C_UNK, f32, f32, f32, f32);
+    extern f32 lbl_8036A75C;
+    f32 temp_f1;
+    s16 temp_r28;
+    s16 temp_r31;
+    s16 temp_r4_2;
+    s16 var_r29;
+    s32 temp_r0;
+    u32 temp_r4;
+    void *var_r30;
+    void *var_r3;
+    void *var_r4;
+    void *var_r4_2;
+    void *var_r6;
+
+    temp_r4 = M2C_FIELD(arg0, u32 *, 0x34);
+    if (temp_r4 != 0U) {
+        var_r30 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 8);
+    } else {
+        var_r30 = NULL;
+    }
+    if (temp_r4 != 0U) {
+        var_r3 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 8);
+    } else {
+        var_r3 = NULL;
+    }
+    temp_r0 = M2C_FIELD(arg0, s32 *, 0x48);
+    var_r6 = NULL;
+    temp_r31 = M2C_FIELD(var_r3, s16 *, 0x24);
+    var_r29 = 0;
+    switch (temp_r0) {                              /* irregular */
+    case 0:
+        if (temp_r4 != 0U) {
+            var_r6 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 8);
+        }
+        var_r6 = (void *) (s16) (M2C_FIELD(var_r6, s16 *, 0x16) - M2C_FIELD(var_r6, s16 *, 0x12));
+        break;
+    case 1:
+        if (temp_r4 != 0U) {
+            var_r6 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 8);
+        }
+        var_r6 = (void *) -(s16) (M2C_FIELD(var_r6, s16 *, 0x16) - M2C_FIELD(var_r6, s16 *, 0x12));
+        break;
+    case 2:
+        if (temp_r4 != 0U) {
+            var_r4 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 8);
+        } else {
+            var_r4 = NULL;
+        }
+        var_r29 = M2C_FIELD(var_r4, s16 *, 0x18) - M2C_FIELD(var_r4, s16 *, 0x14);
+        break;
+    case 3:
+        if (temp_r4 != 0U) {
+            var_r4_2 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 8);
+        } else {
+            var_r4_2 = NULL;
+        }
+        var_r29 = -(s16) (M2C_FIELD(var_r4_2, s16 *, 0x18) - M2C_FIELD(var_r4_2, s16 *, 0x14));
+        break;
+    }
+    temp_r4_2 = M2C_FIELD(arg0, s16 *, 0x40);
+    if (temp_r4_2 >= temp_r31) {
+        fn_8000C188(arg0);
+        return;
+    }
+    M2C_FIELD(arg0, s16 *, 0x40) = (s16) (temp_r4_2 + 1);
+    temp_r28 = (s16) fn_800067BC(5, (f32) (s16) var_r6, lbl_8036A75C, (f32) M2C_FIELD(arg0, s16 *, 0x40), (f32) temp_r31);
+    temp_f1 = fn_800067BC(5, (f32) var_r29, lbl_8036A75C, (f32) M2C_FIELD(arg0, s16 *, 0x40), (f32) temp_r31);
+    M2C_FIELD(var_r30, s16 *, 0x8C) = temp_r28;
+    M2C_FIELD(var_r30, s16 *, 0x8E) = (s16) temp_f1;
 }
 
 void fn_801426B4(void *arg0) {
