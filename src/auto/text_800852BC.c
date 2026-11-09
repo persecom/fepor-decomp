@@ -207,11 +207,11 @@ void fn_80089424(s32 arg0) {
     }
 }
 
+void fn_8000BFEC(void (*arg0)(void *));
+u16 fn_80089490(void);
 void fn_80089460(void *arg0) {
-    M2C_UNK fn_8000BFEC(M2C_UNK *, M2C_UNK *);
-    extern M2C_UNK fn_80089490;
-    M2C_FIELD(arg0, s16 *, 0x36) = 0;
-    fn_8000BFEC(&fn_80089490, &fn_80089490);
+    *(u16 *)((char *)arg0 + 0x36) = 0;
+    fn_8000BFEC((void (*)(void *))fn_80089490);
 }
 
 u16 fn_80089490(void) {
