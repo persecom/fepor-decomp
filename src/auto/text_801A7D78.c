@@ -675,7 +675,7 @@ void fn_801AAD74(void *arg0) {
     }
 }
 
-#pragma optimization_level reset
+#pragma optimization_level 4
 #pragma opt_common_subs off
 void fn_801AADA4(void *arg0) {
     s32 fn_80059208(void *, void *);
