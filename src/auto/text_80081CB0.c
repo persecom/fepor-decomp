@@ -47,8 +47,8 @@ void fn_80081CB0(s32 arg0) {
     void fn_8007FF58(s32);
     void fn_80080698(s32);
     void fn_800810BC(s32);
-    void fn_80081830(s32);
-    fn_80081830(arg0);
+    void fn_80081830(void);
+    fn_80081830();
     fn_800810BC(arg0);
     fn_80080698(arg0);
     fn_8007FF58(arg0);
