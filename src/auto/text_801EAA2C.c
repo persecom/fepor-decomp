@@ -612,14 +612,18 @@ void fn_801EDB38(void *arg0) {
 }
 
 void fn_801EDB70(void *arg0) {
+    u8 temp_r0;
+
     M2C_FIELD(arg0, s16 *, 0x3A) = -1;
     M2C_FIELD(arg0, s8 *, 0x39) = 1;
     M2C_FIELD(arg0, s32 *, 0x4C) = 0;
     M2C_FIELD(arg0, s32 *, 0x50) = 0;
-    if ((s32) M2C_FIELD(arg0, u8 *, 0x38) != 1) {
-        return;
+    temp_r0 = *(u8 *)((char *)arg0 + 0x38);
+    switch ((s32)temp_r0) {
+    case 1:
+        fn_8000C070(arg0, 0xA);
+        break;
     }
-    fn_8000C070(0xA);
 }
 
 void fn_801EDDF0(void *arg0) {
