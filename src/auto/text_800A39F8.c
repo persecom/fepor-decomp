@@ -1234,10 +1234,13 @@ void fn_800A8AE4(s32 arg0) {
 }
 
 void fn_800A8BD8(void *arg0) {
-    extern u16 *lbl_80367240;
+    void fn_801475FC(void *, s32);
+    void fn_801481CC(void *, s32);
+    void fn_8000C070(void *, s32);
+    extern u8 *lbl_80367240;
     extern u8 lbl_8026E470[];
-    
-    if (lbl_80367240[2] & 0x1100) {
+
+    if (*(u32 *)(lbl_80367240 + 4) & 0x1100) {
         fn_801475FC((u8 *)&lbl_8026E470 + 0x82, 0x64);
         fn_801481CC((u8 *)&lbl_8026E470 + 0x73, 0x1F4);
         ((u8 *)arg0)[0x38] = 1;
