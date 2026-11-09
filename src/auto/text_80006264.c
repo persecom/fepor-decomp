@@ -326,6 +326,15 @@ s32 fn_800070C8(s32 arg0) {
 
 void fn_80007124(u8 *arg0,u8*a,u8*b,u8*c){u32*g=(u32*)0x80367140;u32*ctx=*(u32**)((u8*)g+0xc);u8*dst=(u8*)ctx[1];u8*s=arg0;u32 n=1,len;u8*out,*src;if(!s)s=(u8*)0x80366da4;while((s8)*s++){n++;}len=(n+3)&0xfc;if(len>0xd4)len=0xd4;out=(u8*)*(u32*)((u8*)g+8);*(u32*)((u8*)g+8)=(u32)(out+len);src=arg0;while((s8)*src){*out++=*src++;}*out=0;dst[5]+=len;dst[0x18]=dst[0xc];dst[0x19]=dst[0xd];dst[0x1a]=dst[0xe];dst[0x1b]=dst[0xf];}
 
+void fn_80007268(f32 arg0) {
+    extern void *lbl_80367140;
+
+    u8 *ptr = (u8 *)lbl_80367140;
+    ptr = *(u8 **)(ptr + 0xC);
+    ptr = *(u8 **)(ptr + 0x4);
+    *(f32 *)(ptr + 0x20) = arg0;
+}
+
 void fn_80007290(s32 arg0, s32 arg1, s32 arg2) {
     u8* temp = (u8*)arg0;
     temp[0x14] = (u8)arg1;
