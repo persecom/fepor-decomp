@@ -4858,13 +4858,36 @@ void fn_800E9050(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0xAC) = 1;
 }
 
-void fn_800E940C(void *arg0) {
-    M2C_FIELD(M2C_FIELD(arg0, void **, 0x40), M2C_UNK (**)(), 0x50)();
-    if ((u8) M2C_FIELD(arg0, u8 *, 0xAC) != 0) {
-        M2C_FIELD(M2C_FIELD(arg0, void **, 0x40), M2C_UNK (**)(void *), 0x20)(arg0);
+#pragma cplusplus on
+extern "C" void fn_800E940C(void *arg0) {
+    struct Obj {
+        u8 pad[0x40];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+    };
+    ((Obj *)arg0)->v18();
+    if ((u8)M2C_FIELD(arg0, u8 *, 0xAC) != 0) {
+        ((Obj *)arg0)->v6();
     }
 }
-
+#pragma cplusplus reset
 void fn_800E99CC(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
