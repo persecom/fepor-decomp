@@ -1384,10 +1384,9 @@ void fn_8011C64C(void *arg0) {
     return;
 }
 
-void fn_8011C674(void *arg0) {
-    M2C_UNK fn_8011CAAC(s32, M2C_UNK);
-    s32 temp = M2C_FIELD(arg0, s32 *, 0x424);
-    fn_8011CAAC(temp, 0);
+void fn_8011C674(void *arg0, s32 arg1) {
+    void fn_8011CAAC(s32, s32, s32);
+    fn_8011CAAC(*(s32 *)((u8 *)arg0 + 0x424), arg1, 0);
 }
 
 void fn_8011C9A8(void *arg0, s32 arg1) {
