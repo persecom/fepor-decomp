@@ -1200,6 +1200,11 @@ void fn_801C32D4(s32 arg0) {
     }
 }
 
+void fn_801C4394(s32 unused, s16 *p) {
+    extern void fn_80225058(s16, s16, s16, s16);
+    fn_80225058(p[0], p[1], p[2], p[3]);
+}
+
 void *fn_801C43C8(void *arg0, s16 arg1) {
     extern u16 lbl_802981AC;
     if (arg0 != NULL) {
