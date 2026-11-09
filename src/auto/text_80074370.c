@@ -279,11 +279,8 @@ void fn_800753D4(void) {
 }
 
 void fn_80075400(void) {
-    M2C_UNK fn_8000E0E4(void *);
-    extern u32 lbl_8026C0B8;
-    void *ptr = &lbl_8026C0B8;
-    ptr = (char *) ptr + 0x1E9;
-    fn_8000E0E4(ptr);
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x1e9);
 }
 
 s32 fn_8007542C(void) {
