@@ -382,6 +382,10 @@ void *fn_801343F8(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
     return arg0;
 }
 
+void fn_80134730(void **arg0) {
+    M2C_FIELD(*arg0, M2C_UNK (**)(), 0x20)();
+}
+
 s32 fn_80134988(s32 arg0, s32 arg1) {
     if (arg0 < 0) {
         return -1;
@@ -2295,6 +2299,11 @@ void fn_80140210(void) {
     fn_80140E58(0x1);
 }
 
+void fn_80140234(void) {
+    fn_80140E58(0);
+    return;
+}
+
 void fn_80140258(void) {
     fn_801414F8(0x2);
 }
@@ -2527,6 +2536,12 @@ void fn_801427D4(void *arg0, s16 arg1, s16 arg2, s32 *arg4, s32 arg5) {
 void fn_80142814(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 *arg4, s32 arg5) {
     M2C_UNK fn_8008D000(s32, s32, s32, s32);
     fn_8008D000(*arg4, arg5, arg1, arg2);
+}
+
+void fn_80143424(void *arg0) {
+    M2C_UNK fn_8015DE0C(M2C_UNK, M2C_UNK, s16, s16, M2C_UNK, M2C_UNK);
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0), M2C_UNK (**)(), 0x10)();
+    fn_8015DE0C(0, 0, (s16) (M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA)), (s16) (M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC)), 0xFF, 0x10);
 }
 
 void fn_801434E4(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 *arg4, s32 arg5) {
@@ -3332,6 +3347,10 @@ loop_1:
         return -1;
     }
     goto loop_1;
+}
+
+void fn_801497AC(void *arg0) {
+    fn_800AF7F0(*(s8*)((uintptr_t)arg0 + 4));
 }
 
 s32 fn_80149974(void *arg0) {
