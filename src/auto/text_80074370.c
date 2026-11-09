@@ -1788,18 +1788,17 @@ s32 fn_800790CC(void) {
 }
 
 void fn_80079138(void *arg0) {
-    M2C_UNK fn_8000C60C();
-    extern M2C_UNK lbl_80312040;
-    s32 temp_r30;
+    extern void *lbl_80312040[];
+    void fn_8000C60C(void *);
     void *temp_r3;
 
     temp_r3 = M2C_FIELD(arg0, void **, 0x30);
     if (temp_r3 != NULL) {
-        temp_r30 = M2C_FIELD(temp_r3, u8 *, 0x40) * 4;
-        if ((u32) *(&lbl_80312040 + temp_r30) != 0U) {
-            fn_8000C60C();
+        s32 index = *(u8 *)((u8 *)temp_r3 + 0x40);
+        if (lbl_80312040[index] != NULL) {
+            fn_8000C60C(lbl_80312040[index]);
         }
-        *(&lbl_80312040 + temp_r30) = 0;
+        lbl_80312040[index] = NULL;
     }
 }
 
