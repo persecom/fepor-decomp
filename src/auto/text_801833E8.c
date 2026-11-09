@@ -4340,6 +4340,26 @@ s32 fn_8019D268(void) {
     return 1;
 }
 
+void fn_8019D2FC(void *arg0) {
+    void *fn_8000CAF0(void *, void *);
+    extern u8 lbl_802968E8[];
+    void *temp_r3;
+    void *temp_r4;
+    s32 var_r0;
+
+    temp_r3 = fn_8000CAF0(lbl_802968E8, arg0);
+    temp_r4 = *(void **)((u8 *)arg0 + 0x30);
+    temp_r4 = *(void **)temp_r4;
+    if (temp_r4 != NULL) {
+        var_r0 = *(s32 *)((u8 *)temp_r4 + 0x280);
+    } else {
+        var_r0 = 0;
+    }
+    *(s32 *)((u8 *)temp_r3 + 0x30) = var_r0;
+    *(u8 *)((u8 *)temp_r3 + 0x34) = 0;
+    *(u8 *)((u8 *)temp_r3 + 0x35) = 0;
+}
+
 void fn_8019D360(void *arg0) {
     void *temp_r5;
 
