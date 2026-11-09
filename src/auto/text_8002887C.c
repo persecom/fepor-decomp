@@ -1059,22 +1059,17 @@ void *fn_8002F658(s32 *arg0, s32 arg1) {
 }
 
 void *fn_8002F680(s32 *arg0, s8 arg1, s8 arg2) {
-    u32 temp_r0 = *(u32 *)arg0;
-    s32 var_r5 = 0;
-    s32 *var_r6 = arg0;
-    
-    if (temp_r0 <= 0) {
-        return NULL;
-    }
-    
-    do {
-        if ((arg1 == *(s8 *)((char *)var_r6 + 8)) && (arg2 == *(s8 *)((char *)var_r6 + 9))) {
-            return (void *)(((u32)arg0) + (var_r5 * 0x14) + 8);
+    s32 *p;
+    s32 i;
+    s32 n;
+
+    n = *arg0;
+    p = arg0;
+    for (i = 0; i < n; p = (s32 *)((char *)p + 0x14), i++) {
+        if (arg1 == *(s8 *)((char *)p + 8) && arg2 == *(s8 *)((char *)p + 9)) {
+            return (void *)((char *)arg0 + i * 0x14 + 8);
         }
-        var_r6 = (s32 *) ((char *)var_r6 + 0x14);
-        var_r5++;
-    } while (--temp_r0 != 0);
-    
+    }
     return NULL;
 }
 
