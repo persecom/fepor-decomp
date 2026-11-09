@@ -681,10 +681,10 @@ void fn_80169644(void *arg0) {
     void fn_8000A408(void);
     void fn_8007D064(s32, void *, s32);
     void fn_8013FEF0(void);
-    extern u16 lbl_80277BC0[];
-    
+    extern u8 lbl_80277BC0[];
+
     fn_8013FEF0();
-    if (fn_8000BCA4(&lbl_80277BC0[0x17c]) != 0) {
+    if (fn_8000BCA4(lbl_80277BC0 + 0xBE) != 0) {
         fn_8000A408();
     }
     fn_8007D064(*(s32 *)((u8 *)arg0 + 0x30), arg0, *(s32 *)((u8 *)arg0 + 0x34));
