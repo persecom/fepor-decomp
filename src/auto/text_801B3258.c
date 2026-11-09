@@ -3126,18 +3126,22 @@ void fn_801D3D3C(void *arg0) {
     fn_80006160(*(s8 *)((u8 *)state + 0x12)); fn_8000C188(arg0); break;
    }
  case 0xc8: {
-  void fn_801DBEA8(void *, s32); void fn_801D8D58(void *); void fn_801D8C0C(void *, s16); void fn_801D88B8(void *, void *, u8);
-  slot = (u8 *)state; fn_801DBEA8(state, 1); *(s8 *)((u8 *)state + 0x12) = -1;
-  for (m = 0; m < 5; m++) { fn_801D8D58(slot + 0x1b4); fn_801D8C0C(slot + 0x1b4, (s16)m); slot += 0x4c; }
-  slot = (u8 *)state;
-  for (n = 0; n < 5; n++) {
-   fn_801D88B8(slot + 0x1b4, state, 0);
-   if (!(*(s16 *)(slot + 0x1b4) & 4) && *(s8 *)((u8 *)state + 0x12) == -1) *(u8 *)((u8 *)state + 0x12) = (u8)n;
-   slot += 0x4c;
-  }
-  { s8 idx = *(s8 *)((u8 *)state + 0x12); s16 *fl = (s16 *)((u8 *)state + idx * 0x4c + 0x1b4); *fl = (s16)(*fl | 2); }
-  *(s32 *)state = 0xcd; fn_801DDDE8(0x14, arg0); break;
- }
+    void fn_801DBEA8(void *, s32); void fn_801D8C0C(void *, s16); void fn_801D88B8(void *, void *, u8);
+    fn_801DBEA8(state, 1); *(s8 *)((u8 *)state + 0x12) = -1;
+    p24 = (s32 *)state; i25 = 0;
+    while (i25 < 5) {
+     fn_801D8D58((u8 *)p24 + 0x1b4); fn_801D8C0C((u8 *)p24 + 0x1b4, (s16)i25);
+     i25++; p24 = (s32 *)((u8 *)p24 + 0x4c);
+    }
+    p24 = (s32 *)state; i25 = 0;
+    while (i25 < 5) {
+     fn_801D88B8((u8 *)p24 + 0x1b4, state, 0);
+     if (!(*(s16 *)((u8 *)p24 + 0x1b4) & 4) && *(s8 *)((u8 *)state + 0x12) == -1) *(u8 *)((u8 *)state + 0x12) = (u8)i25;
+     i25++; p24 = (s32 *)((u8 *)p24 + 0x4c);
+    }
+    { s8 idx = *(s8 *)((u8 *)state + 0x12); s16 *fl = (s16 *)((u8 *)state + idx * 0x4c + 0x1b4); *fl = (s16)(*fl | 2); }
+    *(s32 *)state = 0xcd; fn_801DDDE8(0x14, arg0); break;
+   }
  case 0xcd: *(s32 *)state = 0xcd; break;
  case 0xce: *(s32 *)state = 0xce; break;
  case 0xd2:
