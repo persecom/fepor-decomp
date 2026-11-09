@@ -1671,42 +1671,35 @@ s32 fn_80026A80(s32 arg0) {
 
 s32 fn_80026AF4(s32 arg0) {
     extern u16 lbl_80330EAC[];
-    
-    void *temp_r6;
-    void *var_r7;
-    u8 var_r0;
+    u8 *base;
+    u8 *second;
+    u8 *selected;
+    s32 var_r0;
     void *temp_r4;
-    
-    var_r7 = NULL;
-    temp_r6 = &lbl_80330EAC[0x2E0 / 2];
-    
-    if (((u8) *(u8*)(((u8*)(&lbl_80330EAC[0x190 / 2])) + 8) == 0) && 
-        ((u8) *(u8*)(((u8*)(&lbl_80330EAC)) + 0x2C6) != 0)) {
-        var_r7 = &lbl_80330EAC;
+
+    selected = NULL;
+    base = (u8 *)lbl_80330EAC;
+    second = base + 0x2E0;
+
+    if (*(u8 *)((u8 *)(*(void **)(base + 0x190)) + 8) == 0 && *(u8 *)(base + 0x2C6) != 0) {
+        selected = base;
     }
-    
-    if (!(lbl_80330EAC[0xCAC / 2] & 1) && 
-        ((u8) *(u8*)(((u8*)(((void**)(&lbl_80330EAC[0x190 / 2]))[0])) + 8) == 0) && 
-        ((u8) *(u8*)(((u8*)temp_r6) + 0x2C6) != 0)) {
-        var_r7 = temp_r6;
+    if ((*(u32 *)((u8 *)lbl_80330EAC + 0xCAC) & 1) == 0 && *(u8 *)((u8 *)(*(void **)(second + 0x190)) + 8) == 0 && *(u8 *)(second + 0x2C6) != 0) {
+        selected = second;
     }
-    
-    if (var_r7 == NULL) {
+    if (selected == NULL) {
         return 0;
     }
-    
-    if ((s8) *(u8*)(((u8*)var_r7) + 0x1A8) == 0) {
+    if ((s8)*(u8 *)(selected + 0x1A8) == 0) {
         return 0;
     }
-    
-    temp_r4 = ((void**)var_r7)[0x28C / 4];
+    temp_r4 = *(void **)(selected + 0x28C);
     if (temp_r4 != NULL) {
-        var_r0 = *(u8*)(((u8*)temp_r4) + 0x12);
+        var_r0 = *(u8 *)((u8 *)temp_r4 + 0x12);
     } else {
         var_r0 = 0xC;
     }
-    
-    fn_800910D8((s8) var_r0, arg0, -1, -1, -1);
+    fn_800910D8((s8)(u8)var_r0, arg0, -1, -1, -1);
     return 1;
 }
 
