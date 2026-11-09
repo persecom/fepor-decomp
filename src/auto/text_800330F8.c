@@ -2549,9 +2549,9 @@ loop_2:
     }
 }
 
-void fn_80046400(void) {
-    M2C_UNK fn_80046424(M2C_UNK);
-    fn_80046424(0);
+void fn_80046400(void *arg0, void *arg1, void *arg2) {
+    M2C_UNK fn_80046424(void *, void *, void *, M2C_UNK);
+    fn_80046424(arg0, arg1, arg2, 0);
 }
 
 s32 fn_80046F14(void *arg0, s32 arg1) {
