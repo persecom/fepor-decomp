@@ -1048,6 +1048,13 @@ s32 fn_80127000(void) {
     return 1;
 }
 
+s32 fn_80127028(void) {
+    void fn_8000BE54(void *);
+    extern u8 lbl_80290510[];
+    fn_8000BE54(lbl_80290510);
+    return 0;
+}
+
 s32 fn_80127054(void) {
     extern u16 lbl_80290510[];
     fn_8000CAF0(lbl_80290510, 4);
