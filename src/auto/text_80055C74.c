@@ -17,12 +17,12 @@ void *fn_8000CAA0(void *, s32, void *);             /* extern */
 s32 fn_80234450(void *, s32);                       /* extern */
 extern u16 lbl_80285BD0[16];
 void fn_80055C8C(s32 arg0, s32 arg1, s32 arg2) {
+    void *fn_8000CAA0(void *, s32);
     void *temp_r3;
 
-    temp_r3 = fn_8000CAA0(&lbl_80285BD0, arg2, &lbl_80285BD0);
+    temp_r3 = fn_8000CAA0(lbl_80285BD0, arg2);
     *(s32 *)((char *)temp_r3 + 0x6C) = arg1;
     fn_80234450((char *)temp_r3 + 0x30, arg0);
-    return;
 }
 
 void fn_80055D68(void *arg0) {
