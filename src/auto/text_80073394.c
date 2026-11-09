@@ -92,8 +92,7 @@ void fn_8007355C(void) {
 
 void fn_80073588(void) {
     extern u16 lbl_8026BE40[];
-    u16* ptr = &lbl_8026BE40[0x226];
-    fn_8000E0E4(ptr);
+    fn_8000E0E4((u8 *)lbl_8026BE40 + 0x226);
 }
 
 s32 fn_800735B4(s32 arg0, s32 arg1) {
