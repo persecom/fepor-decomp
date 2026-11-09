@@ -2618,17 +2618,21 @@ s32 fn_800DDC04(s32 arg0) {
 }
 
 void fn_800DDC2C(void *arg0, void *arg1) {
-    M2C_UNK fn_800616A0(void *);
-    M2C_UNK fn_8006D8E8();
+    void fn_800616A0(void *);
+    void fn_8006D8E8(u32);
     u32 temp_r0;
+    u32 temp_r3;
 
     M2C_FIELD(arg1, s32 *, 0x40) = 0;
     M2C_FIELD(arg1, s32 *, 0x48) = 0;
     M2C_FIELD(arg1, s32 *, 0x44) = 0;
     temp_r0 = M2C_FIELD(arg0, u32 *, 0x54);
-    if ((temp_r0 != 0U) && ((u32) M2C_FIELD(arg1, u32 *, 0x4C) == temp_r0)) {
-        fn_8006D8E8();
-        M2C_FIELD(arg1, u32 *, 0x4C) = 0U;
+    if (temp_r0 != 0) {
+        temp_r3 = M2C_FIELD(arg1, u32 *, 0x4C);
+        if (temp_r3 == temp_r0) {
+            fn_8006D8E8(temp_r3);
+            M2C_FIELD(arg1, u32 *, 0x4C) = 0;
+        }
     }
     fn_800616A0(arg1);
 }
