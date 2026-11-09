@@ -190,11 +190,13 @@ void fn_801A3164(s32 arg0) {
 
 extern u16 lbl_80330EAC[];
 void fn_801A372C(void) {
-    u16* temp_r31;
-    
-    temp_r31 = (u16*)lbl_80330EAC;
-    fn_80104480(&temp_r31[0x242]); // 0x484 / 2
-    fn_80104480((u16*)(((u8*)temp_r31) + 0x560) + 0x1A4); // Equivalent to the original instruction pattern
+    void fn_80104480(void *);
+    extern u16 lbl_80330EAC[];
+    u8 *temp_r31;
+
+    temp_r31 = (u8 *)lbl_80330EAC;
+    fn_80104480(temp_r31 + 0x484);
+    fn_80104480((u8 *)*(void **)(temp_r31 + 0x560) + 0x1A4);
 }
 
 s32 fn_801A3E24(s32 arg0)
