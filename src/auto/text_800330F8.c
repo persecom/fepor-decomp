@@ -1483,11 +1483,13 @@ s32 fn_8003BE50(s32 arg0)
     }
 }
 
-u8 fn_8003C114(void *arg0) {
-    if (fn_80105BC0((char*)arg0 + 0x1BC, 0xA) != 0) {
-        return 0x14U;
+u8 fn_8003C114(u8 *arg0) {
+    u8 fn_80105BC0(u8 *, s32);
+
+    if ((u8)fn_80105BC0(arg0 + 0x1BC, 0xA) != 0) {
+        return 0x14;
     }
-    return *(u8*)((char*)arg0 + 0x19C);
+    return arg0[0x19C];
 }
 
 void fn_8003C15C(void *arg0) {
