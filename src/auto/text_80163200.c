@@ -132,11 +132,20 @@ void fn_80163E50(void *arg0) {
     *(s16 *)((char *)arg0 + 0x18) = 0x86;
 }
 
-void fn_80163E70(void **arg0) {
-    void (**func_ptr)(void) = (void (**)(void))((u8*)*arg0 + 0x20);
-    (*func_ptr)();
+#pragma cplusplus on
+extern "C" void fn_80163E70(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+    };
+    ((Obj *)arg0)->v6();
 }
-
+#pragma cplusplus reset
 void fn_80164940(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
     void fn_8008AB7C(s32, s32, s32, s32, s32, s32, s32);
     fn_8008AB7C(arg1 + (arg3 >> 1), arg2 + (arg4 >> 1), arg3, 0x18, 0x19, 0x4C, arg5);
