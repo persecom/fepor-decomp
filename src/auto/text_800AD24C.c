@@ -3262,6 +3262,21 @@ s8 fn_800BC380(u8 arg0) {
     return (s8)temp;
 }
 
+s8 fn_800BC3F4(u8 arg0) {
+    s32 fn_80037E00(void *);
+    extern u8 lbl_802B14E4[];
+    void *unit;
+    if (arg0 != 0) {
+        unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
+    } else {
+        unit = NULL;
+    }
+    if (unit == NULL || *(u32 *)((u8 *)unit + 0x188) == 0) {
+        return 0;
+    }
+    return fn_80037E00(unit);
+}
+
 u8 fn_800BC4FC(u8 arg0, s32 arg1) {
     u32 *fn_80037BD0(s32, s32);
     s32 fn_800939FC(void *, u32);
@@ -5192,42 +5207,32 @@ s8 fn_800C2D60(s32 arg0, s32 arg1) {
     return ptr[(arg1 * 0x18) - 8];
 }
 
-s32 fn_800C2D74(s32 arg0, s32 arg1, u8 arg2) {
-    s32 temp_r7;
-    u8 var_r6;
-    void *temp_r8;
-    s32 temp_r5;
+s32 fn_800C2D74(Unk800C2ACC *arr, s32 idx, u8 val) {
+    s32 off = idx * 0x18;
+    u8 flag = 0;
+    Unk800C2ACC *p = &arr[idx];
 
-    temp_r7 = arg1 * 0x18;
-    temp_r8 = (u8*)arg0 + temp_r7;
-    *(u8*)((u8*)temp_r8 - 0x8) = arg2;
-    if ((*(s8*)((u8*)temp_r8 - 0x17) == 0) &&
-        (*(s8*)((u8*)temp_r8 - 0x8) == 0) &&
-        (*(s8*)((u8*)temp_r8 - 0x7) == 0) &&
-        (*(s8*)((u8*)temp_r8 - 0x6) == 0) &&
-        (*(s8*)((u8*)temp_r8 - 0x5) == 0) &&
-        (*(u8*)((u8*)temp_r8 - 0x4) == 0x80) &&
-        (*(u8*)((u8*)temp_r8 - 0x3) == 0x80) &&
-        (*(u8*)((u8*)temp_r8 - 0x2) == 0x80) &&
-        (*(u8*)((u8*)temp_r8 - 0x1) == 0xFF)) {
-        var_r6 = 1;
-    } else {
-        var_r6 = 0;
+    ((u8 *)p)[-8] = val;
+    if ((s8)((u8 *)p)[-0x17] == 0 && (s8)((u8 *)p)[-8] == 0 && (s8)((u8 *)p)[-7] == 0 &&
+        (s8)((u8 *)p)[-6] == 0 && (s8)((u8 *)p)[-5] == 0 && ((u8 *)p)[-4] == 0x80 &&
+        ((u8 *)p)[-3] == 0x80 && ((u8 *)p)[-2] == 0x80 && ((u8 *)p)[-1] == 0xFF) {
+        flag = 1;
     }
-    if (var_r6 != 0) {
-        temp_r5 = arg0 + temp_r7;
-        *(u8*)((u8*)temp_r5 - 0x18) = 0U;
-        *(u8*)((u8*)temp_r8 - 0x17) = 0U;
-        *(u8*)((u8*)temp_r5 - 0x5) = 0U;
-        *(u8*)((u8*)temp_r5 - 0x6) = 0U;
-        *(u8*)((u8*)temp_r5 - 0x7) = 0U;
-        *(u8*)((u8*)temp_r8 - 0x8) = 0U;
-        *(u8*)((u8*)temp_r5 - 0x2) = 0x80U;
-        *(u8*)((u8*)temp_r5 - 0x3) = 0x80U;
-        *(u8*)((u8*)temp_r5 - 0x4) = 0x80U;
-        *(u8*)((u8*)temp_r5 - 0x1) = 0xFFU;
+    if (flag) {
+        u8 *q = (u8 *)arr + off;
+        idx = 0;
+        q[-0x18] = (u8)idx;
+        ((u8 *)p)[-0x17] = (u8)idx;
+        q[-5] = (u8)idx;
+        q[-6] = (u8)idx;
+        q[-7] = (u8)idx;
+        ((u8 *)p)[-8] = (u8)idx;
+        q[-2] = 0x80;
+        q[-3] = 0x80;
+        q[-4] = 0x80;
+        q[-1] = 0xFF;
     }
-    return 0;
+    return idx;
 }
 
 s32 fn_800C30CC(s32 arg0, s32 arg1) {
