@@ -1785,10 +1785,10 @@ u8 fn_801F19A0(void) {
 u8 fn_801F1C5C(void) {
     s32 fn_8000D354(void *);
     s32 temp_r3;
-    u8 var_r0;
+    s8 var_r0;
 
-    temp_r3 = fn_8000D354(&lbl_8027F710[0x15]);
-    switch ((s32) lbl_80330708[0xA6]) { /* irregular */
+    temp_r3 = fn_8000D354(lbl_8027F710 + 0x15);
+    switch ((s32)lbl_80330708[0xA6]) {
     case 3:
         var_r0 = 3;
         break;
@@ -1805,7 +1805,8 @@ u8 fn_801F1C5C(void) {
         var_r0 = 0;
         break;
     }
-    return lbl_80330708[temp_r3 + var_r0 + 0x4];
+    temp_r3 = temp_r3 + var_r0;
+    return *(u8 *)(temp_r3 + 4);
 }
 
 #include "common.h"
