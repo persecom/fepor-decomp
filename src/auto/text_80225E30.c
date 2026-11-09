@@ -1200,15 +1200,21 @@ void __register_global_object(s32 arg0, s32 arg1, void *arg2) {
     __global_destructor_chain = arg2;
 }
 
-void fn_8022C1B8(u8 *arg0, u8 *arg1, u32 arg2) {
-    if (arg0 != NULL && arg2 != 0) {
+u8 *fn_8022C1B8(u8 *arg0, u8 *arg1, u32 arg2) {
+    u8 *var_r6;
+    u8 temp_r0;
+
+    if (arg0 != NULL && arg2 != 0U) {
+        var_r6 = arg0;
         do {
-            *arg0 = *arg1;
-            arg1++;
-            arg0++;
-            arg2--;
-        } while (arg2 != 0);
+            temp_r0 = *arg1;
+            arg2 -= 1;
+            arg1 += 1;
+            *var_r6 = temp_r0;
+            var_r6 += 1;
+        } while (arg2 != 0U);
     }
+    return arg0;
 }
 #include "global.h"
 extern u16 lbl_802822A8[19];
