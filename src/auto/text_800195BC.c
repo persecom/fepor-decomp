@@ -1165,17 +1165,25 @@ u8 fn_8001D500(void *arg0) {
 }
 
 s32 fn_8001D5F4(void *arg0, u8 arg1) {
-    extern void fn_800C3220(void *);
-    extern u8 lbl_803206EC;
+    void fn_800C3220(void *, s32);
+    extern u8 lbl_803206EC[];
+    typedef struct {
+        u8 pad : 1;
+        u8 flag : 1;
+        u8 rest : 6;
+    } BitField;
+    BitField *bf;
+
     *(u8 *)((u8 *)arg0 + 4) = arg1;
     if (*(u8 *)((u8 *)arg0 + 4) == 0) {
-        *(s32 *)((u8 *)arg0 + 0) = 0;
-        *(u8 *)((u8 *)arg0 + 4) = 0U;
-        *(u8 *)((u8 *)arg0 + 5) = (u8) (*(u8 *)((u8 *)arg0 + 5) & ~0x80);
-        *(u8 *)((u8 *)arg0 + 5) = (u8) (*(u8 *)((u8 *)arg0 + 5) & ~0x40);
-        if (*(u8 *)((u8 *)arg0 + 5) & 0x3F) {
-            fn_800C3220(&lbl_803206EC);
-            *(u8 *)((u8 *)arg0 + 5) = (u8) (*(u8 *)((u8 *)arg0 + 5) & ~0x3F);
+        *(s32 *)arg0 = 0;
+        *(u8 *)((u8 *)arg0 + 4) = 0;
+        bf = (BitField *)((u8 *)arg0 + 5);
+        bf->pad = 0;
+        bf->flag = 0;
+        if (bf->rest != 0) {
+            fn_800C3220(lbl_803206EC, bf->rest);
+            bf->rest = 0;
         }
         return 1;
     }
