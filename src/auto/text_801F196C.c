@@ -742,6 +742,13 @@ void fn_801F7880(void* arg0) {
     fn_8006EEFC(temp_r31, 0x80280F05, temp_r5);
 }
 
+extern u8 lbl_8029B438[16];
+void fn_801F8798(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_8029B438[16];
+    fn_8000CAA0(lbl_8029B438, arg0);
+}
+
 s32 fn_801F87C4(void) {
     extern u8 lbl_80330708[];
     u8 val = lbl_80330708[0x10];
