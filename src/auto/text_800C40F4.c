@@ -3975,16 +3975,18 @@ void fn_800E4F0C(void *arg0) {
 
 void fn_800E4FE8(void *arg0, void *arg1, s32 arg2) {
     extern f32 lbl_80369F3C;
+    f32 f;
     s32 temp_r3;
 
     if (arg1 != NULL) {
-        temp_r3 = fn_8006135C(M2C_FIELD(arg1, s32 *, 0xE0), arg2);
-        M2C_FIELD(arg0, void **, 0xEC) = arg1;
-        M2C_FIELD(arg0, s32 *, 0xF0) = temp_r3;
+        temp_r3 = fn_8006135C(*(s32 *)((u8 *)arg1 + 0xE0), arg2);
+        *(void **)((u8 *)arg0 + 0xEC) = arg1;
+        *(s32 *)((u8 *)arg0 + 0xF0) = temp_r3;
     }
-    *(f32*)((u8*)arg0 + 0x84) = lbl_80369F3C;
-    *(f32*)((u8*)arg0 + 0x88) = lbl_80369F3C;
-    *(f32*)((u8*)arg0 + 0x8C) = lbl_80369F3C;
+    f = lbl_80369F3C;
+    *(f32 *)((u8 *)arg0 + 0x84) = f;
+    *(f32 *)((u8 *)arg0 + 0x88) = f;
+    *(f32 *)((u8 *)arg0 + 0x8C) = f;
 }
 
 void fn_800E5044(void *arg0) {
