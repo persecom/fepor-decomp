@@ -1818,6 +1818,12 @@ void fn_800D7540(void *arg0) {
     fn_800E3F48(*(void **)((u8 *)arg0 + 0x10));
 }
 
+void fn_800D7564(void *arg0) {
+    extern void fn_800E3F54(void *);
+
+    fn_800E3F54(*(void **)((u8 *)arg0 + 0x10));
+}
+
 void fn_800D7588(void) {
 
 }
