@@ -286,6 +286,12 @@ void fn_80075400(void) {
     fn_8000E0E4(ptr);
 }
 
+s32 fn_8007542C(void) {
+    extern u8 lbl_802EF4C8[24];
+    lbl_802EF4C8[8] = 0;
+    return 9;
+}
+
 void fn_80075444(void *arg0) {
     extern u32 lbl_8026C0B8[];
     s32 fn_8000E0E4(void *);
