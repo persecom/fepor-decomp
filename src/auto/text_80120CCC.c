@@ -327,6 +327,11 @@ void fn_801229F8(void *arg0) {
     }
 }
 
+void fn_80122A74(s32 unused, s16 *p) {
+    extern void fn_80225058(s16, s16, s16, s16);
+    fn_80225058(p[0], p[1], p[2], p[3]);
+}
+
 void fn_80122AA8(void* arg0) {
     // Placeholder - just want to get it to compile
 }
