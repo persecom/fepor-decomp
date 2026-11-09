@@ -32,8 +32,8 @@ void *fn_8014A388(void) {
 }
 
 void *fn_8014A398(void) {
-    extern const u16 lbl_80276F00[];
-    return (void*)(((u32)&lbl_80276F00[0xC6]));
+    extern u16 lbl_80276F00[];
+    return (u8 *)lbl_80276F00 + 0xc6;
 }
 
 s32 fn_8014A3A8(void) {
