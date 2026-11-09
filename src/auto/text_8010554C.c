@@ -255,6 +255,21 @@ block_8:
     }
 }
 
+u8 fn_80105E88(s32 arg0, s32 arg1) {
+    s32 fn_8000D354(s32);
+    void *fn_80234198(void *, u8 *);
+    extern u8 lbl_802738F8[];
+    void *temp_r3;
+    if (fn_8000D354(arg0) == 0U) {
+        return 0U;
+    }
+    temp_r3 = fn_80234198((void *)arg0, lbl_802738F8 + 0x26);
+    if (temp_r3 == NULL) {
+        return 0U;
+    }
+    return (u8)((s8) * (u8 *)((u8 *)temp_r3 + 5) == (arg1 + 0x30));
+}
+
 extern void fn_8002297C(void* arg0);
 extern s32 fn_80183AB4(s32 arg0, s8 arg1, s8 arg2, void* arg3);
 extern s32 fn_80184264(void* arg0, u16 arg1, void* arg2);
