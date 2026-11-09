@@ -4724,6 +4724,28 @@ s32 fn_800C1360(s32 arg0, s32 arg1, s32 arg2)
     return arg2;
 }
 
+void fn_800C14D0(void *arg0) {
+    void fn_800062EC(s32, s32, u32);
+    void DCFlushRange(void *, u32);
+    void fn_800C1BDC();
+    extern s32 lbl_80320030[];
+    extern s32 lbl_8036785C;
+    s32 temp_r29;
+    s32 var_r28;
+
+    var_r28 = 1;
+    M2C_FIELD(arg0, s32 *, 0x60) = 0;
+    do {
+        temp_r29 = lbl_80320030[(lbl_8036785C + var_r28) % 3];
+        fn_800062EC(temp_r29, lbl_80320030[lbl_8036785C], 0x2000);
+        DCFlushRange((void *)temp_r29, 0x2000);
+        var_r28 += 1;
+    } while (var_r28 < 3);
+    fn_800C1BDC();
+    lbl_8036785C += 1;
+    lbl_8036785C %= 3;
+}
+
 #pragma optimization_level 2
 s32 fn_800C1730(void) {
     s32 fn_80069D58(void);
