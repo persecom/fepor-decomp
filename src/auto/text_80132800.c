@@ -2272,8 +2272,8 @@ s16 fn_8013E780(void *arg0) {
     return (s16) (temp_r31 - (M2C_FIELD(M2C_FIELD(arg0, void **, 4), s16 (**)(void *), 0x48)(arg0) * 2));
 }
 
-s8 fn_8013E7E8(void *arg1) {
-    return (s8) M2C_FIELD(arg1, u8 *, 0x60);
+s32 fn_8013E7E8(s32 unused, void *arg1) {
+    return *(s8 *)((u8 *)arg1 + 0x60);
 }
 
 void *fn_8013E7F4(void) {
