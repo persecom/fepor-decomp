@@ -1194,10 +1194,11 @@ void fn_8000C188(void *arg0) {
 }
 
 void fn_8000C194(s32 arg0) {
-    M2C_UNK fn_8000C1CC();
-    extern u16 lbl_802ADADC[];
-    if (lbl_802ADADC[arg0] != 0) {
-        fn_8000C1CC();
+    void fn_8000C1CC(u32);
+    extern u32 lbl_802ADADC[];
+    u32 v = lbl_802ADADC[arg0];
+    if (v != 0) {
+        fn_8000C1CC(v);
     }
 }
 
