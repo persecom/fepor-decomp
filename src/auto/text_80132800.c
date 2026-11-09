@@ -116,7 +116,9 @@ s32 fn_8013289C(void) {
 
 s32 fn_801328A4(void) {
     extern u16 lbl_80276008[];
-    fn_801C1C64(0x17C, 0x50, &lbl_80276008[0x394], 0xFA, 0x7D0, 0xFA, 3);
+    void fn_801C1C64(s32, s32, void *, s32, s32, s32, s32);
+
+    fn_801C1C64(0x17C, 0x50, (u8 *)lbl_80276008 + 0xE5, 0xFA, 0x7D0, 0xFA, 3);
     return 5;
 }
 
@@ -1074,6 +1076,33 @@ void fn_80138D44(void *arg0) {
     ptr[0x14/2] = 5;
     ptr[0x16/2] = (s16) ((s16) (ptr[0xE/2] - ptr[0xA/2]) - 3);
     ptr[0x18/2] = (s16) ((s16) (ptr[0x10/2] - ptr[0xC/2]) - 5);
+}
+
+void fn_80138D88(void *arg0) {
+    s16 r8;
+    s16 r7;
+    s16 r6;
+    s16 r5;
+
+    r8 = *(s16 *)((u8 *)arg0 + 0xC);
+    r7 = *(s16 *)((u8 *)arg0 + 0x10);
+    r6 = *(s16 *)((u8 *)arg0 + 0xA);
+    r5 = *(s16 *)((u8 *)arg0 + 0xE);
+
+    *(s16 *)((u8 *)arg0 + 0x12) = 3;
+    *(s16 *)((u8 *)arg0 + 0x14) = 5;
+
+    r7 = r8 - r7;
+    r7 = (s16)r7;
+
+    r5 = r5 - r6;
+    r5 = (s16)r5;
+
+    r7 = r7 - 5;
+    r5 = r5 - 3;
+
+    *(s16 *)((u8 *)arg0 + 0x16) = r5;
+    *(s16 *)((u8 *)arg0 + 0x18) = r7;
 }
 
 void *fn_80138DCC(void *arg0, s16 arg1) {
@@ -2920,6 +2949,46 @@ void fn_80142814(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 *arg4, s32 arg5) {
     M2C_UNK fn_8008D000(s32, s32, s32, s32);
     fn_8008D000(*arg4, arg5, arg1, arg2);
 }
+
+#pragma cplusplus on
+extern "C" void fn_80142934(void *arg0, s32 arg1) {
+    extern u8 lbl_80292314[];
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+    };
+    struct Node {
+        Node *prev;
+        Node *next;
+        Obj *obj;
+    };
+    typedef void (Obj::*PTMF)(s32);
+    struct Pair {
+        PTMF ptmf;
+        s32 arg;
+    };
+    Pair p[2];
+    Node *it;
+    Node *sent;
+
+    ((Obj *)arg0)->v6();
+    sent = (Node *)((u8 *)arg0 + 0x40);
+    p[0].arg = arg1;
+    p[0].ptmf = *(PTMF *)lbl_80292314;
+    it = sent->next;
+    p[1].ptmf = *(PTMF *)lbl_80292314;
+    p[1].arg = arg1;
+    while (it != sent) {
+        (it->obj->*p[0].ptmf)(p[0].arg);
+        it = it->next;
+    }
+}
+#pragma cplusplus reset
 
 void fn_80143424(void *arg0) {
     M2C_UNK fn_8015DE0C(M2C_UNK, M2C_UNK, s16, s16, M2C_UNK, M2C_UNK);
