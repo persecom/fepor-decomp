@@ -236,6 +236,52 @@ s32 fn_801EBFA8(void) {
     return 0xB0;
 }
 
+#pragma cplusplus on
+extern "C" void fn_801EBFB0(void *arg0, void *arg1) {
+    void fn_8008C1D8(s32, s32, s32, s32, s32);
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual s16 v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual void v25() = 0;
+        virtual void v26() = 0;
+        virtual void v27() = 0;
+        virtual void v28() = 0;
+        virtual void v29() = 0;
+    };
+    register s8 temp_r31;
+    void *r30;
+
+    r30 = arg1;
+    temp_r31 = *(u8 *)((u8 *)arg1 + 0x60);
+    ((Obj *)arg0)->v29();
+    fn_8008C1D8(0, 0, 0, temp_r31 * ((Obj *)*(void **)((u8 *)r30 + 0x3C))->v20() + 0x20, 2);
+}
+#pragma cplusplus reset
+
 s32 fn_801EC17C(void) {
     return 0x60;
 }
@@ -293,6 +339,12 @@ void fn_801EC5C0(void) {
 void *fn_801EC5EC(void) {
     extern u16 lbl_8027EE08[];
     return &lbl_8027EE08[0x2CD];
+}
+
+s32 fn_801EC610(void) {
+    extern u8 lbl_802EF4C8[24];
+    lbl_802EF4C8[8] = 0x83;
+    return 5;
 }
 
 void fn_801EC628(void) {
@@ -444,6 +496,12 @@ void fn_801ED848(void *arg0, void *arg1, void *arg2, void *arg3) {
     *(s32 *)((char *)arg0 + 0x58) = fn_8005E55C();
     DCInvalidateRange(arg1, *(u32 *)((char *)arg0 + 0x64));
     fn_80215D9C(arg0, 0, 1, 0, *(s32 *)((char *)arg0 + 0x68), arg1, *(s32 *)((char *)arg0 + 0x64), fn_801ED800);
+}
+
+void fn_801ED940(s32 arg0) {
+    extern u16 lbl_803392B8;
+    s32 temp_r5 = (s32)&lbl_803392B8;
+    fn_80024398(temp_r5, arg0, 0);
 }
 
 void fn_801ED9DC(void *arg0) {
@@ -635,6 +693,44 @@ void fn_801F0A08(void *arg0) {
         M2C_FIELD(M2C_FIELD(temp_r3, void **, 0x10), M2C_UNK (**)(M2C_UNK), 0xC)(1);
     }
     fn_8005376C();
+}
+
+void fn_801F0E4C(void *arg0) {
+    f32 fn_80059F64(u8, u8, f32, f32, f32, f32);
+    M2C_UNK fn_8005F7B0(s32, u8);
+    M2C_UNK fn_8005F7E0(s32, u8, u8, u8);
+
+    s32 temp_r28;
+    s32 temp_r29;
+    s32 temp_r31;
+    s32 temp_r31_2;
+    u8 temp_r4;
+    u8 temp_r4_2;
+    u8 temp_r4_3;
+    u8 temp_r4_4;
+    u8 temp_r6;
+    u8 temp_r6_2;
+    u8 temp_r6_3;
+    u8 temp_r6_4;
+
+    M2C_FIELD(arg0, s32 *, 0x40) = (s32) (M2C_FIELD(arg0, s32 *, 0x40) + 1);
+    if ((s32) M2C_FIELD(arg0, s32 *, 0x40) >= (s32) M2C_FIELD(arg0, s32 *, 0x38)) {
+        fn_8000C188();
+    }
+    temp_r6 = M2C_FIELD(arg0, u8 *, 0x44);
+    temp_r4 = M2C_FIELD(arg0, u8 *, 0x48);
+    temp_r6_2 = M2C_FIELD(arg0, u8 *, 0x45);
+    temp_r4_2 = M2C_FIELD(arg0, u8 *, 0x49);
+    temp_r31 = (s32) fn_80059F64(temp_r4, temp_r6, (f32) temp_r6, (f32) temp_r4, (f32) M2C_FIELD(arg0, s32 *, 0x38), (f32) M2C_FIELD(arg0, s32 *, 0x40));
+    temp_r6_3 = M2C_FIELD(arg0, u8 *, 0x46);
+    temp_r4_3 = M2C_FIELD(arg0, u8 *, 0x4A);
+    temp_r28 = (s32) fn_80059F64(temp_r4_2, temp_r6_2, (f32) temp_r6_2, (f32) temp_r4_2, (f32) M2C_FIELD(arg0, s32 *, 0x38), (f32) M2C_FIELD(arg0, s32 *, 0x40));
+    temp_r6_4 = M2C_FIELD(arg0, u8 *, 0x47);
+    temp_r4_4 = M2C_FIELD(arg0, u8 *, 0x4B);
+    temp_r29 = (s32) fn_80059F64(temp_r4_3, temp_r6_3, (f32) temp_r6_3, (f32) temp_r4_3, (f32) M2C_FIELD(arg0, s32 *, 0x38), (f32) M2C_FIELD(arg0, s32 *, 0x40));
+    temp_r31_2 = (s32) fn_80059F64(temp_r4_4, temp_r6_4, (f32) temp_r6_4, (f32) temp_r4_4, (f32) M2C_FIELD(arg0, s32 *, 0x38), (f32) M2C_FIELD(arg0, s32 *, 0x40));
+    fn_8005F7E0(M2C_FIELD(arg0, s32 *, 0x30), (u8) temp_r31, (u8) temp_r28, (u8) temp_r29);
+    fn_8005F7B0(M2C_FIELD(arg0, s32 *, 0x30), (u8) temp_r31_2);
 }
 
 void fn_801F109C(void *arg0) {
