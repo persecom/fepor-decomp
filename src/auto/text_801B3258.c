@@ -2856,10 +2856,46 @@ void fn_801D3D3C(void *arg0) {
     case 0x32: *(s32 *)state = 0x32; break;
     case 0x37: *(s32 *)state = 0x37; break;
     case 0x3c: *(s32 *)state = 0x3c; break;
-    case 0x64: *(s32 *)state = 0x64; break;
+    case 0x64: {
+        void fn_801DBEA8(void *, s32);
+        void fn_801D8D58(void *);
+        void fn_801D8C0C(void *, s16);
+        void fn_801D88B8(void *, void *, u8);
+        u8 *slot = (u8 *)state;
+        fn_801DBEA8(state, 0);
+        *(s8 *)((u8 *)state + 0x12) = -1;
+        for (i = 0; i < 5; i++) {
+            fn_801D8D58(slot + 0x1b4);
+            fn_801D8C0C(slot + 0x1b4, (s16)i);
+            slot += 0x4c;
+        }
+        slot = (u8 *)state;
+        for (i = 0; i < 5; i++) {
+            fn_801D88B8(slot + 0x1b4, state, 0);
+            if (!(*(s16 *)(slot + 0x1b4) & 4) && *(s8 *)((u8 *)state + 0x12) == -1) {
+                *(u8 *)((u8 *)state + 0x12) = (u8)i;
+            }
+            slot += 0x4c;
+        }
+        {
+            s8 idx = *(s8 *)((u8 *)state + 0x12);
+            s16 *fl = (s16 *)((u8 *)state + idx * 0x4c + 0x1b4);
+            *fl = (s16)(*fl | 2);
+        }
+        *(s32 *)state = 0x69;
+        fn_801DDDE8(0x14, arg0);
+        break;
+    }
     case 0x69: *(s32 *)state = 0x69; break;
     case 0x6a: *(s32 *)state = 0x6a; break;
-    case 0x6e: *(s32 *)state = 0x6e; break;
+    case 0x6e:
+        if (*(s8 *)((u8 *)state + 0x14) == 0) {
+            fn_801E00EC(&lbl_803682F0, arg0);
+            *(s32 *)state = 0x71;
+        } else {
+            *(s32 *)state = 0x69;
+        }
+        break;
     case 0x71: *(s32 *)state = 0x71; break;
     case 0x73: *(s32 *)state = 0x73; break;
     case 0x74: *(s32 *)state = 0x74; break;
