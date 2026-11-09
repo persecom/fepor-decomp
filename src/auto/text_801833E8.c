@@ -4423,10 +4423,10 @@ void fn_8019D4F4(void *arg0) {
 }
 
 s32 fn_8019D7A8(void) {
-    extern u16 lbl_80367110;
+    extern s32 lbl_80367110;
     extern u8 lbl_80296F50[];
-    
-    void *fn_8000CAA0(void *, s32, void *);
+
+    void *fn_8000CAA0(void *, s32);
     void fn_80013864(void);
     s32 fn_800C0658(void);
     u8 fn_80194E38(void);
@@ -4435,7 +4435,7 @@ s32 fn_8019D7A8(void) {
         return 0;
     }
     if (fn_80194E38() != 0) {
-        fn_8000CAA0(lbl_80296F50, fn_800C0658(), lbl_80296F50);
+        fn_8000CAA0(lbl_80296F50, fn_800C0658());
         fn_80013864();
     }
     return 1;
