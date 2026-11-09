@@ -23,6 +23,11 @@ extern u32 lbl_8035C918[];
 
 u32 fn_8026367C(void);
 
+typedef struct {
+    s32 x;
+    s32 y;
+} Pair_80266D70;
+
 typedef struct Voice {
     u8 pad0[0x110];
     u64 flags;
@@ -306,16 +311,18 @@ void fn_80266B38(s32 arg0) {
     fn_8020AEC4(ptr);
 }
 
-s32 fn_80266D70(s32 arg0, s32 arg2, s32 arg3) {
-    extern u16 lbl_803669A0[512];
-    s32 temp_r3;
-    void *temp_r7;
+s32 fn_80266D70(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    extern u8 lbl_803669A0[];
+    u8 *p;
+    s32 old30;
+    s32 old34;
 
-    temp_r7 = &lbl_803669A0 + (arg0 << 18);
-    temp_r3 = *(s32 *)((u8 *)temp_r7 + 0x30);
-    *(s32 *)((u8 *)temp_r7 + 0x34) = arg3;
-    *(s32 *)((u8 *)temp_r7 + 0x30) = arg2;
-    return temp_r3;
+    p = lbl_803669A0 + (arg0 << 8);
+    old30 = *(s32 *)(p + 0x30);
+    old34 = *(s32 *)(p + 0x34);
+    *(s32 *)(p + 0x34) = arg3;
+    *(s32 *)(p + 0x30) = arg2;
+    return old30 + (old34 - old34);
 }
 
 void fn_80266E70(u32 arg0) {
