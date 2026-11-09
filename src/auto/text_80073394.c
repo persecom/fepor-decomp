@@ -219,12 +219,14 @@ void fn_80073808(void) {
     fn_8000E0E4((u8 *)lbl_8026BE40 + 0x267);
 }
 
-s32 fn_80073834(s32 arg1) {
+s32 fn_80073834(s32 arg0, s32 arg1)
+{
     void *fn_800241C8(s32);
-    M2C_UNK fn_8012C9FC(M2C_UNK, s32);
-    void *ptr = fn_800241C8(arg1);
-    s32 val = *(s32 *)((u8 *)ptr + 0x18);
-    fn_8012C9FC(0, val);
+    void fn_8012C9FC(s32, s32);
+    void *ptr;
+
+    ptr = fn_800241C8(arg1);
+    fn_8012C9FC(0, *(s32 *)((u8 *)ptr + 0x18));
     return 5;
 }
 
