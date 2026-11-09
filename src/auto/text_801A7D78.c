@@ -796,6 +796,11 @@ void fn_801ACF4C(void *arg0) {
     fn_8000A248();
 }
 
+void fn_801ADD58(s32 unused, s16 *p) {
+    extern void fn_80225058(s16, s16, s16, s16);
+    fn_80225058(p[0], p[1], p[2], p[3]);
+}
+
 #pragma cplusplus on
 extern "C" void fn_801ADD8C(void *arg0) {
     struct Obj {
