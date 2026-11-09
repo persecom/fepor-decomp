@@ -149,15 +149,39 @@ s32 fn_8018361C(void) {
     return 4;
 }
 
-s32 fn_801836D4(void **arg0) {
-    M2C_UNK fn_80091A1C();
-    extern M2C_UNK lbl_802EF4C8;
-    M2C_FIELD(&lbl_802EF4C8, s8 *, 0x14) = M2C_FIELD(*arg0, s8 (**)(), 0x54)();
-    M2C_FIELD(*arg0, M2C_UNK (**)(void **, M2C_UNK *), 0xC)(arg0, &lbl_802EF4C8);
+#pragma cplusplus on
+extern "C" s32 fn_801836D4(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1(u8 *) = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual s32 v19() = 0;
+    };
+    extern u8 lbl_802EF4C8[];
+    void fn_80091A1C(void);
+
+    lbl_802EF4C8[0x14] = (s8) ((Obj *)arg0)->v19();
+    ((Obj *)arg0)->v1(lbl_802EF4C8);
     fn_80091A1C();
     return 6;
 }
-
+#pragma cplusplus reset
 void fn_80183734(void) {
     extern u8 lbl_803681F0;
     extern u8 lbl_80278BB8[];
