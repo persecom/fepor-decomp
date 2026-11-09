@@ -479,6 +479,13 @@ void fn_801F6170(void *arg0) {
     }
 }
 
+extern u8 lbl_8029B198[16];
+void fn_801F649C(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_8029B198[16];
+    fn_8000CAA0(lbl_8029B198, arg0);
+}
+
 void fn_801F64C8(void) {
     extern s32 lbl_80280CF0;
     fn_80109020(&lbl_80280CF0 + 0x20);
