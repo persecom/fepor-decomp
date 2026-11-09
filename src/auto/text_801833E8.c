@@ -1472,16 +1472,16 @@ void fn_8018D864(void *arg0, s32 arg1, s32 arg2) {
     void fn_8002C6F4(void *);
     extern u8 lbl_802CA518[];
     u8 *base;
-    s8 x;
-    s32 yoff;
     u8 *row;
+    s32 yoff;
+    s32 x;
     u8 id;
 
     base = lbl_802CA518;
     x = arg1;
     row = base + 0x10000;
-    yoff = (s8)arg2 << 6;
-    row = row + x;
+    row += x;
+    yoff = arg2 << 6;
     if ((s8)row[yoff - 0x1E72] == 0) {
         if ((*(u32 *)((u8 *)*(void **)((u8 *)arg0 + 4) + 0x254) & 0x20000) == 0 ||
             (*(base + x + yoff + 0x300D) & 2) == 0) {
@@ -1832,6 +1832,18 @@ extern "C" void fn_8018F6E8(void *arg0, s32 arg1) {
         fn_80007884();
     }
 }
+
+extern "C" void fn_8018F94C(void *arg0) {
+    void fn_80154004(s32, s32, s32);
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    ((Obj *)arg0)->v2();
+    fn_80154004(0, 0, 0x10);
+}
+
 #pragma cplusplus reset
 
 void *fn_8018FFB4(void *arg0, s16 arg1) {
@@ -1960,10 +1972,11 @@ void fn_80190258(void *arg0) {
 }
 
 void fn_801903D8(void *arg0, s32 arg1) {
-    if ((u8) M2C_FIELD(arg0, u8 *, 0x44) != 0) {
-        M2C_FIELD(M2C_FIELD(arg0, void **, 0), M2C_UNK (**)(), 0x2C)();
+    if (*(u8 *)((u8 *)arg0 + 0x44) != 0) {
+        void (**vtable_ptr)(void) = (void (**)(void))(*(u32 **)((u8 *)arg0 + 0x0) + 0xB);
+        (*vtable_ptr)();
     }
-    M2C_FIELD(M2C_FIELD(arg0, void **, 0), M2C_UNK (**)(void *, s32), 0x30)(arg0, arg1);
+    (*(void (**)(void *, s32))(*(u32 **)((u8 *)arg0 + 0x0) + 0xC))(arg0, arg1);
 }
 
 #pragma cplusplus on
