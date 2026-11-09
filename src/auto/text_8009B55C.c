@@ -237,8 +237,8 @@ void fn_8009E5F8(void) {
 }
 
 void fn_8009E638(void) {
-    extern u16 lbl_80312100[100];
-    *(u16*)((u8*)lbl_80312100 + 0xe) = 0;
+    extern u8 lbl_80312100[];
+    *(s32 *)(lbl_80312100 + 0x1c) = 0;
 }
 
 void fn_8009E64C(void) {
