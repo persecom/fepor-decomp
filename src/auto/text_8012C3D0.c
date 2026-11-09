@@ -226,11 +226,12 @@ void fn_8012C788(s32 arg0, s32 arg1) {
     *(u8 *)((u8 *)temp_r3 + 0x6C) = 2;
 }
 
-void fn_8012C7C8(s32 arg0) {
-    extern u16 lbl_80291084[108];
+void fn_8012C7C8(s32 arg0, s32 arg1) {
+    void *fn_8000CAA0(void *, s32);
+    extern u8 lbl_80291084[];
     void *temp_r3;
 
-    temp_r3 = (void *)fn_8000CAA0(lbl_80291084, lbl_80291084);
+    temp_r3 = fn_8000CAA0(lbl_80291084, arg1);
     *(s32 *)((u8 *)temp_r3 + 0x54) = arg0;
     *(u8 *)((u8 *)temp_r3 + 0x6C) = 1;
 }
