@@ -831,8 +831,7 @@ void *fn_800A07B4(void) {
 
 s32 fn_800A07C4(void) {
     extern u16 lbl_80330708[1400];
-    u16* ptr = &lbl_80330708[0x3C4];
-    fn_8014DD10(ptr);
+    fn_8014DD10((u8 *)lbl_80330708 + 0x3c4);
     return 6;
 }
 
@@ -1040,6 +1039,20 @@ void *fn_800A1814(void) {
     return &lbl_8026D8D8 + 0x640;
 }
 
+#pragma dont_inline on
+s32 fn_800A1824(void) {
+    extern f32 lbl_80330708[];
+    s32 temp_r3;
+    s8 temp_r30;
+    s8 temp_r31;
+
+    temp_r31 = (s8) lbl_80330708[0x14A];
+    temp_r30 = (s8) lbl_80330708[0x149];
+    fn_80040844(lbl_80330708);
+    fn_80047178(temp_r30, temp_r31);
+    temp_r3 = fn_80049D84();
+    return 2 & ~((s32) (-(s32) temp_r3 | temp_r3) >> 0x1F);
+}
 void *fn_800A1910(void) {
     extern u16 lbl_8026D8D8[];
     return (u16*)((char*)lbl_8026D8D8 + 0x651);
