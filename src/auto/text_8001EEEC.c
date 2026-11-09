@@ -1537,10 +1537,9 @@ s32 fn_800269C0(s32 arg0) {
 }
 
 void fn_80026A54(void) {
-    extern s32 lbl_802EF4C8;
-    void fn_8003BE50(s32);
-    s32 temp = lbl_802EF4C8;
-    fn_8003BE50(temp);
+    void fn_8003BE50(void *);
+    extern u8 lbl_802EF4C8[24];
+    fn_8003BE50(*(void **)lbl_802EF4C8);
 }
 
 s32 fn_80026A80(s32 arg0) {
