@@ -1763,6 +1763,28 @@ void fn_800280C8(s32 arg0, s32 *arg1) {
     *arg1 = *(s32 *)((char *)lbl_802EF4C8 + arg0 * 4);
 }
 
+void fn_80028160(void *arg0) {
+    void *unit;
+    u8 *map;
+
+    unit = *(void **)arg0;
+    map = (u8 *)&lbl_802CA518;
+    *((u8 *)arg0 + 0xB) = *((u8 *)unit + 0x19E);
+    *((u8 *)arg0 + 0xC) = *((u8 *)unit + 0x19F);
+    *(s32 *)((u8 *)arg0 + 4) = 0;
+    *((u8 *)arg0 + 8) = 0;
+    *((s8 *)arg0 + 0xA) = -1;
+    *((s8 *)arg0 + 0xD) = -1;
+    *((s8 *)arg0 + 0xE) = -1;
+    *((s8 *)arg0 + 0xF) = -1;
+    *((s8 *)arg0 + 0x10) = -1;
+    *((u8 *)arg0 + 0x14) = 0;
+    *((u8 *)arg0 + 0x15) = 0;
+    *((u8 *)arg0 + 0x12) = 1;
+    *((u8 *)arg0 + 0x16) = 0;
+    map[(s8)*((u8 *)arg0 + 0xB) + ((s8)*((u8 *)arg0 + 0xC) << 6) + 0xD] = 0;
+}
+
 void fn_800281D8(void *arg0) {
     void *temp_r3;
 
