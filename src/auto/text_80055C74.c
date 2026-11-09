@@ -1,20 +1,6 @@
 /* Functions from 0x80055C74 to 0x8005A29C, found by decomp-toolkit. */
 #include "common.h"
 
-#pragma cplusplus on
-struct Scroll57020 {
-    u8 pad[0x2C];
-    virtual u8 v0();
-    virtual u8 v1();
-    virtual u8 v2();
-    virtual u8 v3();
-    virtual u8 v4();
-    virtual u8 v5();
-    virtual u8 v6();
-    virtual u8 v7();
-};
-#pragma cplusplus off
-
 s32 fn_80055C74(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 8);
 }
