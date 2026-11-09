@@ -272,7 +272,7 @@ extern "C" void fn_801EBFB0(void *arg0, void *arg1) {
         virtual void v28() = 0;
         virtual void v29() = 0;
     };
-    register s8 temp_r31;
+    s8 temp_r31;
     void *r30;
 
     r30 = arg1;
@@ -288,8 +288,7 @@ s32 fn_801EC17C(void) {
 
 void fn_801EC370(void) {
     extern u16 lbl_8027EE08[];
-    s32 offset = 0x9B0; // Calculated from the address: 0x1258 - 0x8A8 = 0x9B0
-    fn_8000E0E4(&lbl_8027EE08[offset]);
+    fn_8000E0E4((u8 *)lbl_8027EE08 + 0x26c);
 }
 
 void *fn_801EC39C(void) {
