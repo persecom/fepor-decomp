@@ -281,12 +281,10 @@ block_11:
 }
 
 void fn_8012C964(s32 arg0) {
-    void *fn_8000CAA0(void *, s32, void *);  // Updated to reflect 3 arguments
-    extern u16 lbl_80290FA0[114];  // 228 bytes -> 114 u16
-
+    void *fn_8000CAA0(void *, s32);
+    extern u8 lbl_80290FA0[];
     void *temp_r3;
-
-    temp_r3 = fn_8000CAA0(lbl_80290FA0, arg0, lbl_80290FA0);
+    temp_r3 = fn_8000CAA0(lbl_80290FA0, arg0);
     *(u32 *)((u8 *)temp_r3 + 0x54) = 0;
     *(u8 *)((u8 *)temp_r3 + 0x6C) = 3;
 }
