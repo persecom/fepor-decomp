@@ -1752,8 +1752,8 @@ extern "C" void fn_8003284C(void *arg0, void *arg1) {
 }
 #pragma cplusplus reset
 void *fn_80032B4C(void) {
-    extern void *lbl_802695F0;
-    return (void *)((u32)&lbl_802695F0 + 0x14F);
+    extern u16 lbl_802695F0[];
+    return (u8 *)lbl_802695F0 + 0x14F;
 }
 
 void fn_80032C80(void *arg0, void *arg1) {
