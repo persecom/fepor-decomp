@@ -5963,6 +5963,13 @@ void fn_800FC490(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x31) = 0;
 }
 
+extern u8 lbl_8028E758[16];
+void fn_800FC49C(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_8028E758[16];
+    fn_8000CAA0(lbl_8028E758, arg0);
+}
+
 void fn_800FC504(struct unit *arg0) {
     arg0->pad_0x0[0] = 0;
     arg0->pad_0x0[1] = 0;
