@@ -1371,15 +1371,15 @@ void fn_80127AC4(void) {
 }
 
 u8 fn_80127B50(s32 arg0) {
-    s32 fn_8000C0C0(void*, void*);
+    void *fn_8000C0C0(void *);
     s32 fn_802342B8(s32, s32);
     s32 temp_r3;
 
-    temp_r3 = fn_8000C0C0(&lbl_80290480, &lbl_80290480);
+    temp_r3 = (s32)fn_8000C0C0(lbl_80290480);
     if (temp_r3 == 0) {
         return 0U;
     }
-    return (u8) (fn_802342B8(arg0, temp_r3 + 0x30) == 0);
+    return (u8)(fn_802342B8(arg0, temp_r3 + 0x30) == 0);
 }
 
 s32 fn_80127BA8(s32 arg0, s32 arg1) {
