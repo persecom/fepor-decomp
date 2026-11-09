@@ -1295,6 +1295,24 @@ void fn_800319E8(s32 arg0) {
     fn_8002EB54(&lbl_802EFD4C, arg0);
 }
 
+void fn_80031A70(s32 arg0) {
+    void fn_8002AE6C(void *);
+    void fn_8002EB54(void *, s32);
+    extern void *lbl_802EF4C8[6];
+    extern u8 lbl_80367269;
+    extern u8 lbl_80285050[];
+    extern u8 lbl_802852AC[];
+    extern u8 lbl_802EFD40[];
+
+    fn_8002AE6C(lbl_802EF4C8[0]);
+    if ((s8)lbl_80367269 == 0) {
+        *(void **)(lbl_802EFD40 + 4) = lbl_80285050;
+        *(void **)(lbl_802EFD40 + 4) = lbl_802852AC;
+        lbl_80367269 = 1;
+    }
+    fn_8002EB54(lbl_802EFD40, arg0);
+}
+
 void fn_80031BD0(s32 arg0) {
     extern u16 lbl_802EF4C8[12];
     extern u16 lbl_802EFCB8[6];
@@ -1326,6 +1344,25 @@ void fn_80031C18(s32 arg0) {
     fn_8002EB54(&lbl_802EFD28, arg0);
 }
 
+void fn_80031CA0(s32 arg0) {
+    M2C_UNK fn_8002B520(s32, s32 *);
+    M2C_UNK fn_8002EB54(M2C_UNK *, s32);
+    extern M2C_UNK lbl_80285050;
+    extern M2C_UNK lbl_802851DC;
+    extern M2C_UNK lbl_80285244;
+    extern s32 lbl_802EF4C8;
+    extern M2C_UNK lbl_802EFD1C;
+    extern u8 lbl_80367266;
+    fn_8002B520(lbl_802EF4C8, &lbl_802EF4C8);
+    if ((s8) lbl_80367266 == 0) {
+        M2C_FIELD(&lbl_802EFD1C, M2C_UNK **, 4) = &lbl_80285050;
+        M2C_FIELD(&lbl_802EFD1C, M2C_UNK **, 4) = &lbl_80285244;
+        M2C_FIELD(&lbl_802EFD1C, M2C_UNK **, 4) = &lbl_802851DC;
+        lbl_80367266 = 1;
+    }
+    fn_8002EB54(&lbl_802EFD1C, arg0);
+}
+
 void fn_80031D28(s32 arg0, s32 arg1) {
     s32 *temp_r3 = (s32 *)arg0;
     s32 temp_r4 = *temp_r3;
@@ -1339,6 +1376,26 @@ void fn_80031D28(s32 arg0, s32 arg1) {
     }
     
     *(s32 *)arg1 = *temp_r3;
+}
+
+void fn_80031EE4(s32 arg0) {
+    extern u16 lbl_802EF4C8[12];
+    extern u8 lbl_80367262;
+    extern u32 lbl_80285050[14];
+    extern u32 lbl_80285140[13];
+    extern u32 lbl_80285244[13];
+    extern u16 lbl_802EFCE8[6];
+    
+    fn_8002B89C(lbl_802EF4C8, &lbl_802EF4C8);
+    
+    if ((s8) lbl_80367262 == 0) {
+        lbl_802EFCE8[2] = (u16) lbl_80285050;
+        lbl_802EFCE8[4] = (u16) lbl_80285244;
+        lbl_802EFCE8[6] = (u16) lbl_80285140;
+        lbl_80367262 = 1;
+    }
+    
+    fn_8002EB54(lbl_802EFCE8, arg0);
 }
 
 void fn_80031F6C(s32 arg0) {
