@@ -329,15 +329,15 @@ void fn_80116760(s32 arg0) {
     fn_800C9A60(&sp8, -1);
 }
 
-void fn_801168F4(void *arg0) {
-    M2C_UNK fn_800C9A60(M2C_UNK *, M2C_UNK);
-    M2C_UNK fn_800C9ABC(M2C_UNK *, M2C_UNK *);
-    s32 fn_800E7DA4(s32, M2C_UNK *);
+void fn_801168F4(void *arg0, char *arg1) {
+    void fn_800C9A60(void *, s32);
+    void fn_800C9ABC(void *, char *, void *);
+    s32 fn_800E7DA4(s32, void *);
     M2C_UNK spC;
     M2C_UNK sp8;
 
-    fn_800C9ABC(&spC, &sp8);
-    M2C_FIELD(arg0, s32 *, 0x118) = fn_800E7DA4(M2C_FIELD(arg0, s32 *, 0xAC), &spC);
+    fn_800C9ABC(&spC, arg1, &sp8);
+    *(s32 *)((u8 *)arg0 + 0x118) = fn_800E7DA4(*(s32 *)((u8 *)arg0 + 0xAC), &spC);
     fn_800C9A60(&spC, -1);
 }
 
