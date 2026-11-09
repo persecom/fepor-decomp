@@ -662,38 +662,33 @@ void fn_800A6D78(void *arg0) {
 }
 
 void fn_800A6E20(void *arg0) {
-    extern f32 lbl_80330708[];
+    extern u8 lbl_80330708[];
     extern u8 lbl_802CA518[];
     extern u8 lbl_802B14E4[];
+    void fn_8000C070(void *, s32);
+    s8 sx;
+    s8 sy;
+    u8 id;
+    void *unit;
 
-    s32 temp_r3;
-    void *var_r30;
-
-    f32 temp_f1 = lbl_80330708[0x524 / 4];
-    f32 temp_f0 = lbl_80330708[0x528 / 4];
-    s32 temp_r31 = (s32)temp_f1;
-    s32 temp_r30_2 = (s32)temp_f0;
-    
-    temp_r3 = lbl_802CA518[(temp_r31 + (temp_r30_2 << 6)) + 0xD];
-    if (temp_r3 != 0) {
-        var_r30 = &lbl_802B14E4[(temp_r3 - 1) * 0x280];
+    sx = (s8)*(f32 *)(lbl_80330708 + 0x524);
+    sy = (s8)*(f32 *)(lbl_80330708 + 0x528);
+    id = lbl_802CA518[sx + (sy << 6) + 0xD];
+    if (id != 0) {
+        unit = &lbl_802B14E4[(id - 1) * 0x280];
     } else {
-        var_r30 = NULL;
+        unit = NULL;
     }
-    
-    if (var_r30 != NULL) {
-        void **ptr = (void **)arg0;
-        if (*ptr == NULL) {
+
+    if (unit != NULL) {
+        if (*(void **)((u8 *)arg0 + 0x30) == NULL) {
             fn_8000C070(arg0, 2);
         }
-        if (*ptr != var_r30) {
-            *((s16 *)arg0 + 0x36/2) = -1;
+        if (*(void **)((u8 *)arg0 + 0x30) != unit) {
+            *(s16 *)((u8 *)arg0 + 0x36) = -1;
         }
-        *ptr = var_r30;
-        return;
-    }
-    
-    if (*(void **)arg0 != NULL) {
+        *(void **)((u8 *)arg0 + 0x30) = unit;
+    } else if (*(void **)((u8 *)arg0 + 0x30) != NULL) {
         fn_8000C070(arg0, 3);
     }
 }
