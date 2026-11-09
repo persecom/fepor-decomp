@@ -1732,6 +1732,51 @@ extern "C" void fn_80032564(void *arg0, void *arg1) {
         fn_8000A248();
     }
 }
+
+#pragma cplusplus on
+extern "C" void fn_800326B4(void *arg0, void *arg1) {
+    extern f32 lbl_80368E24;
+    extern f32 lbl_80368E28;
+    extern f32 lbl_80368E34;
+    extern u8 lbl_802EF4C8[];
+    struct Obj {
+        u8 pad[4];
+        virtual void v0(s32 *, s32 *, s32 *) = 0;
+    };
+    s32 x;
+    s32 y;
+    s32 alpha;
+    s32 alpha2;
+    s32 y2;
+    s32 x2;
+
+    if (M2C_FIELD(arg1, u32 *, 0x40) != 0) {
+        ((Obj *)arg0)->v0(&x, &y, &alpha);
+        fn_8000A258();
+        fn_80009D74((f32)(x + 0x20), (f32)(y + 0xB0), lbl_80368E24, lbl_80368E28);
+        fn_80009B8C((u8)alpha);
+        fn_8000A248();
+        fn_800900F4(fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40)));
+        fn_8000A258();
+        fn_80009D74((f32)(x + 0x20), (f32)(y + 0x30), lbl_80368E24, lbl_80368E28);
+        fn_8000A248();
+        fn_80090C50(M2C_FIELD(lbl_802EF4C8, s32 *, 0));
+        fn_8000A258();
+        fn_80009B8C(0xFF);
+        fn_8000A248();
+        ((Obj *)arg0)->v0(&x2, &y2, &alpha2);
+        fn_8000A258();
+        fn_80009C0C(lbl_80368E34);
+        fn_80009B8C((u8)alpha2);
+        fn_8000A248();
+        fn_8008BD90(0x64, 0x6A, 1);
+        fn_8000A258();
+        fn_80009B8C(0xFF);
+        fn_8000A248();
+    }
+}
+#pragma cplusplus reset
+
 #pragma cplusplus reset
 
 #pragma cplusplus on
