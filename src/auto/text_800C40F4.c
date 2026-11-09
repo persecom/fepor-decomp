@@ -4099,6 +4099,8 @@ void fn_800E5A4C(void *arg0) {
     u8 *p;
     s32 alpha;
     s32 temp_r31;
+    s32 t2;
+    s32 t6;
 
     e0 = *(void **)((u8 *)arg0 + 0xE0);
     if (e0 != NULL) {
@@ -4109,7 +4111,9 @@ void fn_800E5A4C(void *arg0) {
         e0 = *(void **)((u8 *)arg0 + 0xE0);
         temp_r31 = ((u8 *)e0)[0xB];
         p = (u8 *)fn_80067440(0);
-        alpha = (((p[4] + (p[6] + p[5])) / 3) * (0xFF - ((p[0] + (p[2] + p[1])) / 3))) / 255;
+        t2 = p[2];
+        t6 = p[6];
+        alpha = (((p[4] + (t6 + p[5])) / 3) * (0xFF - ((p[0] + (t2 + p[1])) / 3))) / 255;
         if (alpha < 0) {
             alpha = 0;
         }
@@ -6870,9 +6874,9 @@ s32 fn_80100130(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     return temp_r31;
 }
 
-void fn_801001B8(s32 arg1, s32 arg2, s32 arg3) {
-    M2C_UNK fn_80100284(M2C_UNK, s32, s32, s32, s32);
-    fn_80100284(2, arg1, arg2, arg3, arg1);
+void fn_801001B8(s32 a0, s32 a1, s32 a2, s32 a3) {
+    void fn_80100284(s32, s32, s32, s32, s32);
+    fn_80100284(a0, 2, a1, a2, a3);
 }
 
 #pragma opt_loop_invariants off
