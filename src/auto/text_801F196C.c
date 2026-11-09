@@ -570,6 +570,21 @@ void fn_801F5BB0(void *arg0) {
     fn_8000BF00(&lbl_8029B068);
 }
 
+void fn_801F5C04(void *arg0) {
+    void *fn_800C4638(s32, void *, s32);
+    void fn_80109180(void *, void *);
+    void *memset(void *, s32, s32);
+    extern u16 lbl_80280B58[18];
+    void *temp_r31;
+
+    *(void **)((u8 *)arg0 + 0x50) = fn_800C4638(0x1EA, (u8 *)&lbl_80280B58 + 0x12A, 0);
+    temp_r31 = *(void **)((u8 *)arg0 + 0x50);
+    memset(temp_r31, 0, 0x1EA);
+    *((s16 *)temp_r31) = (*(((s16 *)temp_r31) + 1) = 0);
+    *(((s16 *)temp_r31) + 0xF) = 0;
+    fn_80109180((u8 *)&lbl_80280B58 + 0x12B, arg0);
+}
+
 void fn_801F5C88(void *arg0) {
     M2C_UNK fn_80009D74(f32, f32, f32, f32);
     M2C_UNK fn_8000A248();
