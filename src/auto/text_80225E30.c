@@ -219,19 +219,19 @@ s32 fn_80226888(void *arg0, u8 *arg1, u32 arg2) {
     if (var_r30 == 0U) {
         return 0;
     }
-    temp_r3 = ((s32*)arg0)[2];
+    temp_r3 = *(s32 *)((u8 *)arg0 + 0xC);
     temp_r0 = 0x880 - temp_r3;
     if (temp_r0 < var_r30) {
         var_r31 = 0x301;
         var_r30 = temp_r0;
     }
     if (var_r30 == 1U) {
-        ((u8*)arg0)[temp_r3 + 0x10] = *arg1;
+        ((u8 *)arg0 + temp_r3)[0x10] = *arg1;
     } else {
-        fn_80003488(arg0, arg1, var_r30);
+        fn_80003488((u8 *)arg0 + temp_r3 + 0x10, arg1, var_r30);
     }
-    ((s32*)arg0)[2] = (s32) (((s32*)arg0)[2] + var_r30);
-    ((s32*)arg0)[1] = (s32) ((s32*)arg0)[2];
+    *(s32 *)((u8 *)arg0 + 0xC) = *(s32 *)((u8 *)arg0 + 0xC) + var_r30;
+    *(s32 *)((u8 *)arg0 + 0x8) = *(s32 *)((u8 *)arg0 + 0xC);
     return var_r31;
 }
 
@@ -865,14 +865,12 @@ void ReserveEXI2Port(void) {
     ((void (*)(u8 *))*(u32 **)(gDBCommTable + 0x24))(gDBCommTable);
 }
 
-s32 fn_8022B078(void) {
-    extern u16 gDBCommTable[20];
-    u16 *tbl;
+s32 fn_8022B078(s32 a, s32 b) {
+    extern u8 gDBCommTable[40];
     s32 temp_r3;
 
-    tbl = &gDBCommTable[0x14/2];
-    temp_r3 = ((u32 (*)(u16 *))(tbl[0]))(gDBCommTable);
-    return (s32) (-temp_r3 | temp_r3) >> 0x1F;
+    temp_r3 = ((s32 (*)(s32, s32))*(u32 *)(gDBCommTable + 0x14))(a, b);
+    return (s32)(-temp_r3 | temp_r3) >> 31;
 }
 
 s32 fn_8022B0B4(void) {
