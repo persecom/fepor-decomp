@@ -266,6 +266,12 @@ void fn_80075390(void) {
     fn_8000E0E4((u8 *)&lbl_8026C0B8 + 0x1DC);
 }
 
+s32 fn_800753BC(void) {
+    extern u8 lbl_802EF4C8[24];
+    lbl_802EF4C8[8] = 0;
+    return 9;
+}
+
 void fn_800753D4(void) {
     extern u16 lbl_8026C0B8[];
     u16* temp = &lbl_8026C0B8[0x3C6];
