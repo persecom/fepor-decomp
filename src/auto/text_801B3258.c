@@ -2966,18 +2966,15 @@ void fn_801CFC4C(void *arg0, s32 arg1) {
     *(u32 *)((u8 *)arg0 + 8) |= 2;
 }
 
-void fn_801CFC80(void *arg0, s16 arg1) {
-    s16 var_r4;
-
-    var_r4 = arg1;
-    if (var_r4 <= 0) {
-        var_r4 = 1;
+void fn_801CFC80(void *arg0, s32 arg1) {
+    if (arg1 <= 0) {
+        arg1 = 1;
     }
-    M2C_FIELD(arg0, s8 *, 0x158) = 0;
-    M2C_FIELD(arg0, s8 *, 0x159) = 0xFF;
-    M2C_FIELD(arg0, s16 *, 0x154) = 0;
-    M2C_FIELD(arg0, s16 *, 0x156) = var_r4;
-    M2C_FIELD(arg0, s32 *, 8) = (s32) (M2C_FIELD(arg0, s32 *, 8) | 2);
+    *(u8 *)((u8 *)arg0 + 0x158) = 0;
+    *(u8 *)((u8 *)arg0 + 0x159) = 0xFF;
+    *(u16 *)((u8 *)arg0 + 0x154) = 0;
+    *(u16 *)((u8 *)arg0 + 0x156) = arg1;
+    *(u32 *)((u8 *)arg0 + 8) |= 2;
 }
 
 void fn_801CFCB4(void*a){u8*p=(u8*)a; s8 x; x=(s8)p[0xec];if(x)p[0xec]=3;x=(s8)p[0xf4];if(x)p[0xf4]=3;p+=16;x=(s8)p[0xec];if(x)p[0xec]=3;x=(s8)p[0xf4];if(x)p[0xf4]=3;x=(s8)p[0xfc];if(x)p[0xfc]=3;x=(s8)p[0x104];if(x)p[0x104]=3;x=(s8)p[0x10c];if(x)p[0x10c]=3;x=(s8)p[0x114];if(x)p[0x114]=3;}
