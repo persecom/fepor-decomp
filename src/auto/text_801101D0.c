@@ -329,11 +329,11 @@ void fn_8011662C(void *arg0, s32 arg1) {
     }
 }
 
-void fn_80116760(s32 arg0) {
+void fn_80116760(s32 arg0, s32 arg1) {
     extern u16 lbl_80273DF8[];
     s32 sp8;
 
-    fn_800CB90C(&sp8, &lbl_80273DF8[0x1F8]);
+    fn_800CB90C(&sp8, arg1, (u8 *)lbl_80273DF8 + 0xfc);
     fn_800C9758(arg0 + 0x154, &sp8, 0, -1);
     fn_800C9A60(&sp8, -1);
 }
