@@ -2990,6 +2990,15 @@ loop_4:
     *arg0 = temp_r0;
 }
 
+int fn_80193DC0(void *arg0) {
+    u32 *ptr;
+
+    ptr = (u32 *)((u8 *)arg0 + 0x4);
+    *(u32 *)arg0 = 0;
+    ptr[1] = (u32)ptr;
+    ptr[0] = (u32)ptr;
+}
+
 void *fn_80193DD8(u32 arg0) {
     void *fn_8000CAA0(void *, u32);
     void *fn_8000CAF0(void *, u32);
