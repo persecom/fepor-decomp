@@ -159,7 +159,7 @@ s32 fn_8013296C(void) {
 
 s32 fn_80132974(void) {
     extern u16 lbl_80276008[];
-    fn_8006F10C(&lbl_80276008[0x45c], &lbl_80276008[0x480]);
+    fn_8006F10C((u8 *)lbl_80276008 + 0x117, (u8 *)lbl_80276008 + 0x120);
     return 5;
 }
 
@@ -2915,15 +2915,15 @@ void fn_801426B4(void *arg0) {
 
 void fn_801426C0(void *arg0) {
     M2C_UNK fn_80140304(M2C_UNK);
+    void *var_r4;
 
-    if (*(u32 *)((u8 *)arg0 + 0x34) != 0U) {
-        *(s16 *)((u8 *)*(void **)((u8 *)arg0 + 0x38) + 0x8C) = 0;
-        *(s16 *)((u8 *)*(void **)((u8 *)arg0 + 0x38) + 0x8E) = 0;
+    if ((u32) M2C_FIELD(arg0, u32 *, 0x34) != 0U) {
+        var_r4 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 8);
     } else {
-        *(s16 *)((u8 *)arg0 + 0x38) = 0;
-        *(s16 *)((u8 *)arg0 + 0x3A) = 0;
+        var_r4 = NULL;
     }
-
+    M2C_FIELD(var_r4, s16 *, 0x8C) = 0;
+    M2C_FIELD(var_r4, s16 *, 0x8E) = 0;
     if (arg0 != NULL) {
         fn_80140304(0);
     }
