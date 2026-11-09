@@ -441,9 +441,10 @@ u8 fn_801517C0(void *arg0) {
 }
 
 void fn_801517C8(void *arg0) {
-    M2C_UNK fn_800535B0();
-    if ((u32) M2C_FIELD(arg0, u32 *, 0xB0) != 0U) {
-        fn_800535B0();
+    void fn_800535B0();
+    void *x = *(void **)((u8 *)arg0 + 0xB0);
+    if (x != NULL) {
+        fn_800535B0(x);
     }
 }
 
