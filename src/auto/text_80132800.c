@@ -3393,6 +3393,10 @@ loop_1:
     goto loop_1;
 }
 
+void fn_801499F0(void *arg0) {
+    fn_800B24D8(*(s8*)((uintptr_t)arg0 + 4));
+}
+
 void fn_80149A18(void *arg0, s32 arg1) {
     M2C_UNK fn_800B24D8(s8, s32);
     M2C_UNK fn_800B26B0(s8, s32);
