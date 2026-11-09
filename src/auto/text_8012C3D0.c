@@ -1303,7 +1303,8 @@ void fn_801326D0(s32 unused, s32 kind, s32 *a, s32 *b, s32 *c, s32 *d) {
 extern f32 lbl_8036A500;
 extern f32 lbl_8036A50C;
 extern f32 lbl_8036A510;
-extern f32 lbl_8036A4F0;
+extern f64 lbl_8036A4F0;
+extern f64 lbl_8036A4F8;
 extern u8 lbl_80275AC0[];
 extern u32 jumptable_8029137C[];
 extern u8 lbl_80275AC0[];
