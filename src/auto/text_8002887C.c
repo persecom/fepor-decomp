@@ -1150,6 +1150,15 @@ s32 fn_8002F468(void) {
     return 9;
 }
 
+void fn_8002F4EC(void *arg0, void *arg1) {
+    void fn_8004A1F0(void *);
+    void fn_8014CBD8(void *, f32, f32);
+    extern u8 lbl_80330708[];
+
+    fn_8004A1F0(arg0);
+    fn_8014CBD8(lbl_80330708, (f32)*(s8 *)((u8 *)arg1 + 0x48), (f32)*(s8 *)((u8 *)arg1 + 0x49));
+}
+
 void fn_8002F61C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + 1);
 }
