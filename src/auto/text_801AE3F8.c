@@ -410,6 +410,29 @@ void fn_801AF1C8(void *arg0) {
     fn_8011D79C(M2C_FIELD(M2C_FIELD(arg0, void **, 0x6C), s32 *, 0x34));
 }
 
+void fn_801AF40C(void *arg0) {
+    void fn_80024398(void *, void *, s32);
+    void *fn_8013BC10(s32, s32);
+    u32 fn_8013FF94(void *, s32, s32, void *);
+    void fn_801658DC(u32, s32);
+    s32 temp_r31;
+    void *temp_r3;
+    void *temp_r6;
+    u32 res;
+
+    temp_r3 = fn_8013BC10(0, 0);
+    *(s16 *)((u8 *)temp_r3 + 8) = 0x178;
+    *(s16 *)((u8 *)temp_r3 + 0xA) = 0x3C;
+    *(u8 *)((u8 *)temp_r3 + 0x24) = 1;
+    fn_80024398(temp_r3, arg0, 0);
+    temp_r6 = *(void **)((u8 *)arg0 + 0x6C);
+    temp_r31 = *(s32 *)((u8 *)temp_r6 + 0x8C);
+    res = fn_8013FF94(arg0, -0x1000, 0, temp_r6);
+    if (res != 0U) {
+        fn_801658DC(res, temp_r31);
+    }
+}
+
 void fn_801B04F8(void *arg0) {
     void fn_80140258(void *, void *, s16 *, s32);
     s16 spC[2];
