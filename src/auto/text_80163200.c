@@ -137,6 +137,11 @@ void fn_80163E70(void **arg0) {
     (*func_ptr)();
 }
 
+void fn_80164940(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
+    void fn_8008AB7C(s32, s32, s32, s32, s32, s32, s32);
+    fn_8008AB7C(arg1 + (arg3 >> 1), arg2 + (arg4 >> 1), arg3, 0x18, 0x19, 0x4C, arg5);
+}
+
 s32 fn_801649C8(void *arg0, s32 *arg1) {
     u8 (*temp_r12)(s32 *, s32);
 
@@ -1138,6 +1143,18 @@ void fn_8016AC30(void) {
 void *fn_8016AC5C(void) {
     extern u16 lbl_80277BC0[80];
     return &lbl_80277BC0[0x1C8 / sizeof(u16)];
+}
+
+u8 fn_8016AC6C(void) {
+    u8 fn_801E3620(M2C_UNK *);
+    extern M2C_UNK lbl_80331FB8;
+    u8 var_r3;
+
+    var_r3 = 2;
+    if (fn_801E3620(&lbl_80331FB8) != 0) {
+        var_r3 = 0;
+    }
+    return var_r3;
 }
 
 s32 fn_8016ACA8(void *arg1, void *arg2) {
