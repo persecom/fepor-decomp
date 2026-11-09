@@ -68,9 +68,11 @@ void fn_80095678(void) {
 }
 
 void fn_800956A0(s32 arg0) {
+    void fn_8000CAF0(void *, s32);
     extern u8 lbl_8036728B;
+    extern u8 lbl_80289B00[16];
     if (!(lbl_8036728B & 2)) {
-        fn_8000CAF0(&lbl_80289B00, arg0);
+        fn_8000CAF0(lbl_80289B00, arg0);
     }
 }
 
