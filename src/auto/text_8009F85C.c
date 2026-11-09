@@ -929,6 +929,15 @@ void *fn_800A0AF0(void) {
     return (char *)&lbl_8026D8D8 + 0x53C;
 }
 
+s32 fn_800A0B00(void) {
+    void fn_800056A0(s32);
+    void fn_8010FBD8(void *);
+    extern u8 lbl_8032BB58[];
+    fn_800056A0(0);
+    fn_8010FBD8(lbl_8032BB58);
+    return 6;
+}
+
 void *fn_800A0B34(void) {
     extern u8 lbl_8026D8D8[];
     return (u16*)(lbl_8026D8D8 + 0x54A);
