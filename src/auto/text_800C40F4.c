@@ -2794,6 +2794,18 @@ void fn_800DF584(void *arg0) {
     }
 }
 
+#pragma cplusplus on
+extern "C" void fn_800DF5E0(void *arg0) {
+    struct Obj {
+        u8 pad[0x40];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    ((Obj *)arg0)->v2();
+}
+#pragma cplusplus reset
+
 void fn_800DF60C(void *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0x40), M2C_UNK (**)(), 0xC)();
 }
