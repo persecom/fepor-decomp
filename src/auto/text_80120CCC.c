@@ -40,20 +40,24 @@ void fn_80121328(void *arg0) {
 }
 
 void fn_80121338(void *arg0) {
-    f32 fn_800067BC(M2C_UNK, u8, u8, u8, f32, f32, f32, f32);
-    
-    u8 temp_r7 = M2C_FIELD(arg0, u8 *, 0x4C);
-    u8 temp_r5 = M2C_FIELD(arg0, u8 *, 0x4D);
-    u8 temp_r4 = M2C_FIELD(arg0, u8 *, 0x4E);
-    
-    // The function call seems complex but essentially this is just doing some math operations
-    M2C_FIELD(arg0, u8 *, 0x4C) = (u8) (s32) fn_800067BC(0, temp_r4, temp_r5, temp_r7, (f32) temp_r7, (f32) temp_r5, (f32) temp_r4, (f32) M2C_FIELD(arg0, u8 *, 0x4F));
-    
-    // Set the other fields to zero/8
-    M2C_FIELD(arg0, u8 *, 0x4D) = 0U;
-    M2C_FIELD(arg0, u8 *, 0x4E) = 0U;
-    M2C_FIELD(arg0, u8 *, 0x4F) = 8U;
-    M2C_FIELD(arg0, s16 *, 0x28) = (s16) M2C_FIELD(arg0, u8 *, 0x4F);
+    f32 fn_800067BC(s32, f32, f32, f32, f32);
+    s32 result;
+    s32 zero;
+    s32 eight;
+
+    result = (s32)fn_800067BC(
+        0,
+        (f32)*(u8 *)((u8 *)arg0 + 0x4C),
+        (f32)*(u8 *)((u8 *)arg0 + 0x4D),
+        (f32)*(u8 *)((u8 *)arg0 + 0x4E),
+        (f32)*(u8 *)((u8 *)arg0 + 0x4F));
+    zero = 0;
+    eight = 8;
+    *(u8 *)((u8 *)arg0 + 0x4C) = result;
+    *(u8 *)((u8 *)arg0 + 0x4D) = zero;
+    *(u8 *)((u8 *)arg0 + 0x4E) = zero;
+    *(u8 *)((u8 *)arg0 + 0x4F) = eight;
+    *(s16 *)((u8 *)arg0 + 0x28) = *(u8 *)((u8 *)arg0 + 0x4F);
 }
 
 void fn_801213EC(void *arg0) {
