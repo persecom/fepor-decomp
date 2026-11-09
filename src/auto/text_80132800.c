@@ -3349,6 +3349,10 @@ loop_1:
     goto loop_1;
 }
 
+void fn_80149784(void *arg0) {
+    fn_800AFAFC(*(s8*)((uintptr_t)arg0 + 4));
+}
+
 void fn_801497AC(void *arg0) {
     fn_800AF7F0(*(s8*)((uintptr_t)arg0 + 4));
 }
