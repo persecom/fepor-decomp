@@ -725,6 +725,33 @@ void fn_80186028(void *arg0) {
     *temp_r3 &= 0xFFFFFFBF;
 }
 
+void fn_80186080(void *arg0) {
+    void fn_80050C50(void *, f32, f32, f32);
+    void fn_80050BCC(void *, s32);
+    void fn_8004BE88(void *, s32);
+    void fn_8000C070(void *, s32);
+    extern f32 lbl_8036ACD8;
+    s32 flags;
+
+    flags = *(u16 *)((u8 *)arg0 + 0x38) & 5;
+    switch (flags) {
+    case 0:
+    case 1:
+        fn_80050C50(*(void **)((u8 *)arg0 + 0x30),
+                    lbl_8036ACD8 + (f32)*(s32 *)((u8 *)arg0 + 0x3C),
+                    lbl_8036ACD8 + (f32)*(s32 *)((u8 *)arg0 + 0x40),
+                    lbl_8036ACD8);
+        fn_80050BCC(*(void **)((u8 *)arg0 + 0x30), 0);
+        if (*(u16 *)((u8 *)arg0 + 0x38) & 0x10) {
+            fn_8004BE88(*(void **)((u8 *)arg0 + 0x30), 0);
+        }
+        break;
+    case 4:
+        fn_8000C070(arg0, 2);
+        break;
+    }
+}
+
 void fn_80186318(void *arg0) {
     s32 fn_80053C30(void *, void *);
     extern M2C_UNK lbl_80278E24;
