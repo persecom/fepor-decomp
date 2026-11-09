@@ -120,8 +120,8 @@
     s32 sub;
     s32 r27;
     s32 r28;
-    s32 r30;
     s32 state;
+    s32 r30;
     void *self = arg0;
 
     fn_800D3590(lbl_80367240);
