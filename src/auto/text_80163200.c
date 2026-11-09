@@ -457,7 +457,7 @@ void fn_801669B0(void* arg0, s32 arg1) {
     temp_r4 = *(u32*)&lbl_80278080[temp_r3 * 2 + 0x10];
     temp_r5 = *(u32*)&lbl_80294604[temp_r3 * 2 + 0x10];
     temp_r6 = *(u16*)&lbl_80330708[arg1 * 2];
-    temp_r7 = *(u16*)&lbl_803680E8[arg1 * 2];
+    temp_r7 = *((u16 *)&lbl_803680E8 + arg1 * 2);
     temp_r8 = *(u16*)&lbl_80278080[temp_r3 * 2 + 0x12];
     
     // Store values to arg0
