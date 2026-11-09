@@ -96,6 +96,24 @@ void fn_801A2AC4(void) {
     fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
 }
 
+s32 fn_801A2CC0(void) {
+    s32 fn_801044E0(s32);
+    extern s32 lbl_802EF4C8;
+    extern u8 lbl_80367289;
+    u8 temp_r0;
+    u8 var_r4;
+
+    var_r4 = 1;
+    temp_r0 = lbl_80367289 - 1;
+    if (((u32) ((1 | ~temp_r0) - ((u32) (1 - temp_r0) >> 1U)) >> 0x1FU) == 0) {
+        var_r4 = 0;
+    }
+    if (var_r4 == 0) {
+        return 0;
+    }
+    return fn_801044E0(lbl_802EF4C8 + 0x1A4);
+}
+
 s32 fn_801A2D2C(void) {
     return 0;
 }
@@ -391,4 +409,4 @@ void fn_801A7CDC(void *arg0)
 }
 
 #include "global.h"
-
+extern u16 lbl_802EF4E0;
