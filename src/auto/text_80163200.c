@@ -3,7 +3,7 @@ extern u32 lbl_802EF4C8[];
 extern u16 lbl_80278080[];
 extern u16 lbl_80294604[];
 extern u8 lbl_80330708[];
-extern u16 lbl_803680E8[];
+extern u16 lbl_803680E8;
 extern f32 lbl_8036AC2C;
 extern f32 lbl_8036AC30;
 extern f32 lbl_8036AC34;
