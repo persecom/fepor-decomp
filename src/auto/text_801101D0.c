@@ -1182,8 +1182,8 @@ void fn_8011BD70(void) {
 }
 
 void *fn_8011BD9C(void) {
-    extern M2C_UNK lbl_80274508;
-    return &lbl_80274508 + 0x3D8;
+    extern u16 lbl_80274508[];
+    return (u8 *)lbl_80274508 + 0x3D8;
 }
 
 u8 fn_8011BDAC(void) {
