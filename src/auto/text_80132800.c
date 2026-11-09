@@ -1136,30 +1136,27 @@ void fn_80138D44(void *arg0) {
 }
 
 void fn_80138D88(void *arg0) {
-    s16 r8;
-    s16 r7;
-    s16 r6;
-    s16 r5;
+    s16 var_r5;
+    s16 var_r4;
+    s16 var_r6;
+    s16 var_r7;
+    s16 var_r8;
 
-    r8 = *(s16 *)((u8 *)arg0 + 0xC);
-    r7 = *(s16 *)((u8 *)arg0 + 0x10);
-    r6 = *(s16 *)((u8 *)arg0 + 0xA);
-    r5 = *(s16 *)((u8 *)arg0 + 0xE);
+    var_r8 = *(s16 *)((u8 *)arg0 + 0xC);
+    var_r7 = *(s16 *)((u8 *)arg0 + 0x10);
+    var_r6 = *(s16 *)((u8 *)arg0 + 0xA);
+    var_r5 = *(s16 *)((u8 *)arg0 + 0xE);
 
+    var_r7 = var_r7 - var_r8;
+    var_r7 = (s16)var_r7;
     *(s16 *)((u8 *)arg0 + 0x12) = 3;
+    var_r4 = var_r5 - var_r6;
+    var_r4 = (s16)var_r4;
+    var_r5 = var_r7 - 5;
     *(s16 *)((u8 *)arg0 + 0x14) = 5;
-
-    r7 = r8 - r7;
-    r7 = (s16)r7;
-
-    r5 = r5 - r6;
-    r5 = (s16)r5;
-
-    r7 = r7 - 5;
-    r5 = r5 - 3;
-
-    *(s16 *)((u8 *)arg0 + 0x16) = r5;
-    *(s16 *)((u8 *)arg0 + 0x18) = r7;
+    var_r4 = var_r4 - 3;
+    *(s16 *)((u8 *)arg0 + 0x16) = var_r4;
+    *(s16 *)((u8 *)arg0 + 0x18) = var_r5;
 }
 
 void *fn_80138DCC(void *arg0, s16 arg1) {
@@ -3438,14 +3435,20 @@ void *fn_80144584(void *arg0, s16 arg1) {
 void fn_80144D84(ListIter *ret, List *list, ListIter *start, ListIter *end);
 
 void *fn_80144610(void *arg0, s16 arg1) {
-      ListIter sp10;
-      ListIter spC;
-      ListIter sp8;
-      
-      if (arg0 != NULL) {
-          sp10.node = (ListNode *)((char *)arg0 + 4);
-          spC.node = *(ListNode **)((char *)arg0 + 0x8);
-          fn_80144D84(&sp8, (List *)arg0, &spC, &sp10);
+    void fn_80144D84(void *, void *, void *, void *);
+    void fn_800C428C(void *);
+    ListNode *sp10;
+    ListNode *spC;
+    u8 sp8[4];
+
+    if (arg0 != NULL) {
+        if (arg0 != NULL) {
+            if (arg0 != NULL) {
+                sp10 = (ListNode *)((u8 *)arg0 + 4);
+                spC = *(ListNode **)((u8 *)arg0 + 8);
+                fn_80144D84(sp8, arg0, &spC, &sp10);
+            }
+        }
         if (arg1 > 0) {
             fn_800C428C(arg0);
         }
