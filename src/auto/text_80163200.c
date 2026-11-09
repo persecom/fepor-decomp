@@ -4009,10 +4009,9 @@ void fn_8017DEE8(void *arg0) {
 }
 
 void fn_8017DF14(void *arg0) {
-    s32 fn_8006D948(u16 *, u16 *);
-    extern u16 lbl_802788A0[17];
-    u16* ptr = (u16*)&lbl_802788A0[0];
-    *(s32*)arg0 = fn_8006D948(ptr, ptr);
+    s32 fn_8006D948(u8 *);
+    extern u8 lbl_802788A0[];
+    *(s32 *)((u8 *)arg0 + 4) = fn_8006D948(lbl_802788A0);
 }
 
 s32 fn_8017DF4C(void) {
