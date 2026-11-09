@@ -916,11 +916,14 @@ s32 fn_80025478(void) {
     return var_r3;
 }
 
-void fn_800254B0(void **arg0) {
-    void (**func_ptr)(void) = (void (**)(void))(*arg0);
-    func_ptr[2]();
+#pragma cplusplus on
+extern "C" void fn_800254B0(void *arg0) {
+    struct Obj {
+        virtual void v0();
+    };
+    ((Obj *)arg0)->v0();
 }
-
+#pragma cplusplus reset
 void *fn_800254DC(void) {
     extern u16 lbl_80268D90;
     u16* ptr = &lbl_80268D90;
