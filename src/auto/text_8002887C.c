@@ -1063,12 +1063,17 @@ extern "C" void fn_8002EEA8(void *arg0) {
     ((Obj *)*(void **)((u8 *)arg0 + 0x30))->v9(arg0);
 }
 #pragma cplusplus reset
-void fn_8002EEDC(void *arg0) {
-    void **temp_r3;
-    
-    temp_r3 = (void **)M2C_FIELD(arg0, void **, 0x30);
-    M2C_FIELD(M2C_FIELD(temp_r3, void **, 4), M2C_UNK (**)(void *, void *), 0x10)(arg0, temp_r3);
+#pragma cplusplus on
+extern "C" void fn_8002EEDC(void *arg0) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0(void *) = 0;
+        virtual void v1(void *) = 0;
+        virtual void v2(void *) = 0;
+    };
+    ((Obj *)*(void **)((u8 *)arg0 + 0x30))->v2(arg0);
 }
+#pragma cplusplus reset
 
 void fn_8002F0B0(void) {
     M2C_UNK fn_800F20E0();
