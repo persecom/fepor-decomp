@@ -510,8 +510,8 @@ void fn_80228D00(f64 *arg0)
 }
 
 s32 fn_80228DF8(void) {
-    extern u16 gTRKState[];
-    *(u16 *)((u8 *)&gTRKState + 0x98) = 1;
+    extern u8 gTRKState[];
+    *(s32 *)(gTRKState + 0x98) = 1;
     return 0;
 }
 
