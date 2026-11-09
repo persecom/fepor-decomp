@@ -380,7 +380,7 @@ void fn_801EC690(void) {
 
 void *fn_801EC6BC(void) {
     extern u16 lbl_8027EE08[];
-    return &lbl_8027EE08[0x5FB];
+    return (u8 *)lbl_8027EE08 + 0x2fd;
 }
 
 s32 fn_801EC6CC(void) {
