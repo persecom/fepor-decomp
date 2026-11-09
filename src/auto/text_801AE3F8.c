@@ -753,22 +753,28 @@ void *fn_801B2A80(u32 arg0) {
 }
 
 void fn_801B2DA8(void *arg0) {
-    extern u16 lbl_802EF4C8;
+    void fn_8000C070(void *, s32);
+    void fn_8011D79C(s32);
+    u32 fn_8013FF94(void *, s32, s32);
+    void fn_801658DC(s32, s32);
+    extern u8 lbl_802EF4C8[];
     s32 temp_r31;
     void *temp_r6;
+    u32 result;
 
-    switch ((s32) M2C_FIELD(&lbl_802EF4C8, u8 *, 8)) { /* irregular */
+    switch ((s32)lbl_802EF4C8[8]) {
     case 0x80:
-        fn_8011D79C(M2C_FIELD(M2C_FIELD(arg0, void **, 0x6C), s32 *, 0x58));
-        temp_r6 = M2C_FIELD(arg0, void **, 0x6C);
-        temp_r31 = M2C_FIELD(temp_r6, s32 *, 0x88);
-        if (fn_8013FF94(arg0, -0x1000, 0, temp_r6) != 0U) {
-            fn_801658DC(temp_r31);
+        fn_8011D79C(*(s32 *)(*(u8 **)((u8 *)arg0 + 0x6C) + 0x58));
+        temp_r6 = *(void **)((u8 *)arg0 + 0x6C);
+        temp_r31 = *(s32 *)((u8 *)temp_r6 + 0x88);
+        result = fn_8013FF94(arg0, -0x1000, 0);
+        if (result != 0U) {
+            fn_801658DC(result, temp_r31);
         }
         fn_8000C070(arg0, 0x25);
-        /* fallthrough */
+        break;
     case 0x81:
-        return;
+        break;
     }
 }
 
