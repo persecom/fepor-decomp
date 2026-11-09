@@ -119,30 +119,3 @@ void fn_8008D000(void *arg0, u8 arg1, s32 arg2, s16 arg3) {
     }
 }
 
-void fn_8008D6D8(s32 arg0, s32 arg1, s32 arg2)
-{
-    s32 temp_r3;
-    u8 *temp_r31;
-
-    if (arg0 < 0) {
-        arg0 = 0;
-    }
-
-    temp_r3 = arg0 + arg1;
-    if (temp_r3 > arg2) {
-        arg0 = arg2;
-    } else {
-        arg0 = temp_r3;
-    }
-    
-    temp_r31 = (u8 *)arg0;
-    *(s16 *)(temp_r31 + 0x38) = *(s16 *)(temp_r31 + 0x3e) >> 1;
-}
-
-void fn_8008D7EC(void *arg0) {
-    M2C_UNK fn_8000C188();
-    M2C_FIELD(arg0, u8 *, 0x3A) = (u8) (M2C_FIELD(arg0, u8 *, 0x3A) + M2C_FIELD(arg0, u8 *, 0x3C));
-    if ((s8) M2C_FIELD(arg0, u8 *, 0x3A) == (s8) M2C_FIELD(arg0, u8 *, 0x3B)) {
-        fn_8000C188();
-    }
-}

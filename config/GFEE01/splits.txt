@@ -148,7 +148,10 @@ auto/text_8008CDE0.c:
 	.text       start:0x8008CDE0 end:0x8008D000
 
 auto/text_8008D000.c:
-	.text       start:0x8008D000 end:0x8008D834
+	.text       start:0x8008D000 end:0x8008D264
+
+auto/text_8008D264.c:
+	.text       start:0x8008D264 end:0x8008D834
 
 auto/text_8008D834.c:
 	.text       start:0x8008D834 end:0x8008D86C
