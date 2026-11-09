@@ -1824,20 +1824,21 @@ restart:
 
 s32 fn_80256738(u8 arg0, u8 arg1, s32 arg2, u8 arg3, s32 *out) {
     s32 fn_802562A0(u8, u8, s32, u8);
-    typedef struct {
-        u8 pad[0x100];
-        s32 val;
-    } Rec;
     s32 idx;
+    u8 *p;
+    u8 *table;
 
     idx = fn_802562A0(arg0, arg1, arg2, arg3);
     if (idx == -1) {
         return 0;
     }
-    if (*(u16 *)((u8 *)lbl_8035A510 + (idx * 4) + 2) == 1) {
+    p = (u8 *)lbl_8035A510;
+    if (*(u16 *)(p + idx * 4 + 2) == 1) {
         return 0;
     }
-    *out = ((Rec *)(lbl_803689A8 + idx * 0x458))->val;
+    table = (u8 *)lbl_803689A8;
+    table += idx * 0x458;
+    *out = *(s32 *)(table + 0x100);
     return 1;
 }
 
@@ -3138,11 +3139,10 @@ void fn_80260174(u8 arg0, u8 arg1, s8 arg2) {
 }
 
 u8 fn_802601B0(u8 arg0, u8 arg1) {
-    extern u8 lbl_80363E58[128];
+    extern u8 lbl_80363E58[8][16];
     extern u8 lbl_80363ED8[64];
-    
     if (arg1 != 0xFF) {
-        return lbl_80363E58[((arg1 & 0xFF) * 0x10) & 0xFF0] + arg0;
+        return lbl_80363E58[arg1][arg0];
     }
     return lbl_80363ED8[arg0];
 }
