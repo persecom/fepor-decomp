@@ -1360,6 +1360,13 @@ loop_2:
     fn_8019C0C0(arg1, &fn_80026374);
 }
 
+extern u8 lbl_802847EC[16];
+void fn_80026374(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_802847EC[16];
+    fn_8000CAA0(lbl_802847EC, arg0);
+}
+
 s32 fn_800263A0(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 {
     if (arg0 >= 0 || arg0 < -0x200)
