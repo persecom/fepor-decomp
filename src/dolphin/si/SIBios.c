@@ -198,8 +198,8 @@ static u32 InputBuffer[4][2];
 static volatile u32 InputBufferVcount[4];
 
 s32 fn_8023ABD4(void) {
-    extern u16 Si_8029EFAC[];
-if ((s32) Si_8029EFAC != -1) {
+    extern s32 Si_8029EFAC[];
+    if (Si_8029EFAC[0] != -1) {
         return 1;
     }
     return 0;
