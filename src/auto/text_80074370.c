@@ -291,6 +291,12 @@ void fn_80075470(void) {
     fn_8000E0E4(&lbl_8026C0B8[0x3D2]);
 }
 
+s32 fn_8007549C(void) {
+    extern u8 lbl_802EF4C8[24];
+    lbl_802EF4C8[8] = 0;
+    return 9;
+}
+
 void fn_800754B4(void) {
     M2C_UNK fn_8000E0E4(void *);
     extern M2C_UNK lbl_8026C0B8;
