@@ -2330,6 +2330,20 @@ void fn_800DBED4(void) {
 
 }
 
+void *fn_800DBED8(void *arg0, s16 arg1) {
+    void fn_800DF724(void *, s16);
+    void fn_800C428C(void *);
+    extern u8 lbl_8028DF20[];
+    if (arg0 != NULL) {
+        *(void **)((char *)arg0 + 0x40) = lbl_8028DF20;
+        fn_800DF724(arg0, 0);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_800DBF38(void *arg0, s32 arg1, f32 farg0, f32 farg1) {
     extern f32 lbl_80369E88;
     extern f32 lbl_80369E8C;
