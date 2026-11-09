@@ -610,7 +610,7 @@ void fn_8012AC88(void *arg0) {
 
 void fn_8012AD80(void) {
     extern u16 lbl_80275740[];
-    fn_800558D8(&lbl_80275740[0x164 / sizeof(u16)]);
+    fn_800558D8((u8 *)lbl_80275740 + 0x165);
 }
 
 void fn_8012ADAC(s32 arg0, s32 arg1, u32 arg2) {
