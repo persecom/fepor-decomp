@@ -143,7 +143,7 @@ s32 __OSSyncSram(void);
 
 #pragma dont_inline on
 s32 PPCMfmsr(void) {
-    return 0; /* mfmsr: not expressible in C */
+    return M2C_ERROR(/* unknown instruction: mfmsr $r3 */);
 }
 #pragma dont_inline reset
 
@@ -153,8 +153,8 @@ void PPCMtmsr(register u32 msr) {
 }
 #pragma dont_inline reset
 
-void fn_80203790(void) {
-    M2C_ERROR(/* unknown instruction: mtspr HID0, $r3 */);
+void fn_80203790(u32 arg0) {
+    (void)arg0;
 }
 
 s32 PPCMfl2cr(void) {
@@ -212,11 +212,11 @@ void DBPrintf(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 ar
 
 u32 fn_80203AAC(void) {
     extern void *BootInfo_80368458;
-
-    if (BootInfo_80368458 == NULL || M2C_FIELD(BootInfo_80368458, u32 *, 0x2C) == 0) {
+    
+    if (BootInfo_80368458 == NULL || *(u32*)((char*)BootInfo_80368458 + 0x2C) == 0) {
         return 0x10000002;
     }
-    return M2C_FIELD(BootInfo_80368458, u32 *, 0x2C);
+    return *(u32*)((char*)BootInfo_80368458 + 0x2C);
 }
 
 void InquiryCallback(void *arg1) {
@@ -676,14 +676,15 @@ void *fn_80205B50(void) {
     return 0; /* OSGetStackPointer: asm (mr r3, r1) */
 }
 
+#pragma peephole off
 void OSClearContext(OSContext *context) {
-    *(u16*)(((u8*)context) + 0x1A0) = 0;
-    *(u16*)(((u8*)context) + 0x1A2) = 0;
-    if (context == *(void**)0x800000D8) {
-        *(u32*)0x800000D8 = 0;
+    context->mode = 0;
+    context->state = 0;
+    if (context == *(OSContext **)0x800000D8) {
+        *(OSContext **)0x800000D8 = NULL;
     }
 }
-
+#pragma peephole reset
 void fn_80205B7C(void *arg0, s32 arg1, s32 arg2) {
     *(s32 *) ((u8 *) arg0 + 0x198) = arg1;
     *(s32 *) ((u8 *) arg0 + 4) = arg2;
@@ -769,14 +770,11 @@ extern void OSLoadContext(void *);
 
 #pragma use_lmw_stmw on
 void __OSUnhandledException(u8 exception, OSContext *context, u32 dsisr, u32 dar) {
-    u32 enableBits;
-    s32 msr;
     OSErrorHandler *table;
     char *msgs;
     u32 srr1;
     OSErrorHandler *entry;
-    void *fpuContext;
-    u32 fpscr;
+    u32 exc;
     s64 now;
 
     table = __OSErrorTable;
@@ -791,12 +789,15 @@ void __OSUnhandledException(u8 exception, OSContext *context, u32 dsisr, u32 dar
     }
 
     if (exception == 6 && (srr1 & 0x100000) && table[16] != 0) {
+        u32 enableBits;
+        s32 msr;
+        u32 fpscr;
+
         exception = 16;
         msr = PPCMfmsr();
         PPCMtmsr((u32)msr | 0x2000);
-        fpuContext = *(void **)0x800000D8;
-        if (fpuContext != 0) {
-            OSSaveFPUContext(fpuContext);
+        if (*(void **)0x800000D8 != 0) {
+            OSSaveFPUContext(*(void **)0x800000D8);
         }
         fpscr = PPCMffpscr();
         enableBits = 0x60060000 - 0x701;
@@ -818,10 +819,11 @@ void __OSUnhandledException(u8 exception, OSContext *context, u32 dsisr, u32 dar
         }
     }
 
-    entry = &table[exception];
+    exc = exception;
+    entry = table + exception;
     if (*entry != 0) {
         OSDisableScheduler();
-        (*entry)(exception, context, dsisr, dar);
+        (*entry)(exc, context, dsisr, dar);
         OSEnableScheduler();
         __OSReschedule();
         OSLoadContext(context);
