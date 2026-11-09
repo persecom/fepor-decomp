@@ -366,20 +366,19 @@ void fn_80183E3C(s32 arg0, s32 arg1, s32 arg2, s8 arg3, s8 arg4, s32 arg5) {
 }
 
 void fn_80183EAC(s32 arg0, s32 arg1, s8 arg2, s8 arg3, s32 arg4) {
-    void *fn_8000CA64(void *, u32, void *);
+    void *fn_8000CA64(void *, s32);
     extern u16 lbl_80295C60[];
-    
     void *temp_r3;
 
-    temp_r3 = fn_8000CA64(&lbl_80295C60, arg4, &lbl_80295C60);
-    M2C_FIELD(temp_r3, s32 *, 0x30) = arg0;
-    M2C_FIELD(temp_r3, s32 *, 0x34) = arg1;
-    M2C_FIELD(temp_r3, s8 *, 0x3A) = arg2;
-    M2C_FIELD(temp_r3, s8 *, 0x3B) = arg3;
-    M2C_FIELD(temp_r3, s32 *, 0x40) = 0;
-    M2C_FIELD(temp_r3, s32 *, 0x44) = 0;
-    M2C_FIELD(temp_r3, s8 *, 0x48) = 0;
-    M2C_FIELD(temp_r3, s8 *, 0x49) = 0;
+    temp_r3 = fn_8000CA64(lbl_80295C60, arg4);
+    *(s32 *)((u8 *)temp_r3 + 0x30) = arg0;
+    *(s32 *)((u8 *)temp_r3 + 0x34) = arg1;
+    *((u8 *)temp_r3 + 0x3A) = (u8)arg2;
+    *((u8 *)temp_r3 + 0x3B) = (u8)arg3;
+    *(s32 *)((u8 *)temp_r3 + 0x40) = 0;
+    *(s32 *)((u8 *)temp_r3 + 0x44) = 0;
+    *((u8 *)temp_r3 + 0x48) = 0;
+    *((u8 *)temp_r3 + 0x49) = 0;
 }
 
 void fn_80184578(s32 arg0, void *arg1, u32 arg2) {
