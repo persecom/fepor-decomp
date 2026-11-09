@@ -549,19 +549,3 @@ void fn_80095070(void* arg0, void* arg1, s32 arg2) {
     }
 }
 
-s32 fn_800955BC(void *arg0) {
-    if ((u32) M2C_FIELD(arg0, u32 *, 0x1EC) == 0U) {
-        return 0;
-    }
-    if ((u32) M2C_FIELD(arg0, u32 *, 0x1F4) == 0U) {
-        return 1;
-    }
-    if ((u32) M2C_FIELD(arg0, u32 *, 0x1FC) == 0U) {
-        return 2;
-    }
-    if ((u32) M2C_FIELD(arg0, u32 *, 0x204) == 0U) {
-        return 3;
-    }
-    return -1;
-}
-

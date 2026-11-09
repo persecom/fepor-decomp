@@ -175,7 +175,10 @@ auto/text_80092414.c:
 	.text       start:0x80092414 end:0x80092438
 
 auto/text_80092438.c:
-	.text       start:0x80092438 end:0x80095614
+	.text       start:0x80092438 end:0x800955BC
+
+auto/text_800955BC.c:
+	.text       start:0x800955BC end:0x80095614
 
 auto/text_80095614.c:
 	.text       start:0x80095614 end:0x80095850
