@@ -867,6 +867,23 @@ void fn_801B88D4(void *arg0) {
     fn_800C4588(work);
 }
 
+void fn_801B91D8(void *arg0) {
+    s32 fn_80059208(void *, void *);
+    s32 fn_8005C6A0(char *);
+    void fn_8006EEFC(void *, void *);
+    void fn_8000C188(void *);
+    extern u16 lbl_8027C5E8[];
+    
+    void *temp_r31;
+    
+    temp_r31 = *(void **)((char *)arg0 + 0x30);
+    if (fn_8005C6A0((char *)lbl_8027C5E8 + 0x9C) & 0x2000) {
+        fn_8006EEFC((char *)temp_r31 + 8, (char *)lbl_8027C5E8 + 0x9C);
+        *(s32 *)((char *)arg0 + 0x34) = fn_80059208((void *)0x801B8B94, arg0);
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_801B9254(void *arg0) {
     M2C_UNK fn_8000C070(void *, M2C_UNK);
     M2C_UNK fn_8005C8B4(void *);
@@ -1488,6 +1505,20 @@ void fn_801BE7CC(void) {
 
 void *fn_801BE7F8(void){extern u8 lbl_8027C698[];return lbl_8027C698+0x29b;}
 
+u8 fn_801BE808(void) {
+    extern u16 lbl_80297C14;
+    s32 fn_8000C0C0(u16 *);
+    s32 fn_8013FF94(s32, s32);
+    s32 fn_8017BC94(void);
+
+    fn_8000C0C0(&lbl_80297C14);
+    fn_8013FF94(0x106, 0);
+    if (fn_8017BC94() != 0) {
+        return 0;
+    }
+    return 2;
+}
+
 void fn_801BE8F0(void) {
     extern u16 lbl_8027C698[];
     fn_8000E0E4((u8 *)lbl_8027C698 + 0x16E);
@@ -1667,6 +1698,51 @@ void fn_801C19E4(u8 *arg0, u8 *arg1) {
         arg0[0x31] = 0xA;
         *(s16 *)(arg0 + 0x3A) = *(s32 *)(arg1 + 4);
     }
+}
+
+void fn_801C1A18(s8 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6) {
+    void *fn_8000CAF0(void *, s32, void *);
+    extern u16 lbl_80297FF8[];
+    extern f64 lbl_8036B330;
+    extern f32 lbl_8036B328;
+
+    // Prepare the struct pointer
+    void *temp_r3 = fn_8000CAF0(lbl_80297FF8, arg6, lbl_80297FF8);
+
+    *(u16 *)((u8 *)temp_r3 + 0x3c) = arg1;
+    *(u16 *)((u8 *)temp_r3 + 0x3e) = arg2;
+    *(u16 *)((u8 *)temp_r3 + 0x40) = arg3;
+    *(u32 *)((u8 *)temp_r3 + 0x44) = arg4;
+    *(u8 *)((u8 *)temp_r3 + 0x30) = arg0;
+    
+    // Directly compute the result of the division without intermediate variable to simplify
+    *(u16 *)((u8 *)temp_r3 + 0x36) = (s16) ((f32)arg5 / lbl_8036B328);
+    
+    *(u16 *)((u8 *)temp_r3 + 0x38) = -1;
+    *(u16 *)((u8 *)temp_r3 + 0x3a) = 0;
+    *(u8 *)((u8 *)temp_r3 + 0x48) = 1;
+}
+
+void fn_801C1BC0(s8 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    void *fn_8000CAF0(void *, s32, void *);
+    extern u16 lbl_80297FF8[];
+    extern f32 lbl_8036B328;
+    extern f64 lbl_8036B330;
+    void *temp_r3;
+    s32 temp_r5;
+    s32 temp_r6;
+
+    temp_r3 = fn_8000CAF0(lbl_80297FF8, arg5, lbl_80297FF8);
+    *(u16 *)((u8 *)temp_r3 + 0x3C) = arg1;
+    *(u16 *)((u8 *)temp_r3 + 0x3E) = arg2;
+    *(s32 *)((u8 *)temp_r3 + 0x44) = arg3;
+    *(u8 *)((u8 *)temp_r3 + 0x30) = arg0;
+    temp_r5 = (s32) ((f32) arg4 / lbl_8036B328);
+    temp_r6 = -1;
+    *(u16 *)((u8 *)temp_r3 + 0x36) = temp_r5;
+    *(u16 *)((u8 *)temp_r3 + 0x38) = temp_r6;
+    *(u16 *)((u8 *)temp_r3 + 0x3A) = 0;
+    *(u8 *)((u8 *)temp_r3 + 0x48) = 0;
 }
 
 void fn_801C2250(void *arg0) {
@@ -2874,7 +2950,39 @@ s16 fn_801CDC54(void *p,u8 flag){
     return *(s16*)((u8*)p + 0x70);
 }
 
-s16 fn_801CDD10(void *p,u8 flag){extern s16 lbl_80366EA8;extern u8 lbl_8027DE18[];s16 sp=0;u32*q=(u32*)((u8*)p+0x3c);s16*cap=&sp; s16 old=*(s16*)((u8*)p+0x70),v;void fn_801475FC(void*,s32);for(;;){if(*q==0)break;sp++;q+=4;}if(lbl_80366EA8<sp)cap=&lbl_80366EA8;v=old-1;*(s16*)((u8*)p+0x70)=v;if(v<0)*(s16*)((u8*)p+0x70)=*cap & ((-(s32)flag|flag)>>31);if(old!=*(s16*)((u8*)p+0x70))fn_801475FC(lbl_8027DE18+8,100);return *(s16*)((u8*)p+0x70);}
+s16 fn_801CDD10(void *p,u8 flag){
+    extern s16 lbl_80366EA8;
+    extern u8 lbl_8027DE18[];
+    
+    s16 sp = 0;
+    u32 *q = (u32*)((u8*)p + 0x3c);
+    s16 *cap = &sp;
+    s16 old = *(s16*)((u8*)p + 0x70), v;
+    void fn_801475FC(void*, s32);
+    
+    for(;;){
+        if(*q == 0) break;
+        sp++;
+        q += 4;
+    }
+    
+    if(lbl_80366EA8 < sp) {
+        cap = &lbl_80366EA8;
+    }
+    
+    v = old - 1;
+    *(s16*)((u8*)p + 0x70) = v;
+    
+    if(v < 0) {
+        *(s16*)((u8*)p + 0x70) = *cap & (((-(s32)flag)|flag)>>31);
+    }
+    
+    if(old != *(s16*)((u8*)p + 0x70)) {
+        fn_801475FC(lbl_8027DE18 + 8, 100);
+    }
+    
+    return *(s16*)((u8*)p + 0x70);
+}
 
 void fn_801CDDC8(s32 arg0, s8 *arg1) {
     u32 *var_r31;
@@ -5694,6 +5802,29 @@ s32 fn_801E3620(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 4) == 0x20050201;
 }
 
+void fn_801E3A60(void *arg0, s32 *arg1, s32 *arg2, s32 *arg3) {
+    s32 r3_1;
+    s32 temp_r4;
+    s32 temp_r5;
+    s32 temp_r6;
+    s32 temp_r7;
+    
+    temp_r4 = *(s32 *)((char *)arg0 + 0x58);
+    temp_r5 = *(s32 *)((char *)arg0 + 0x5C);
+    temp_r6 = *(s32 *)0x800000F8;
+    
+    r3_1 = temp_r4;
+    temp_r7 = __div2i(r3_1, temp_r5, 0, (u32)temp_r6 >> 2U);
+    
+    temp_r4 = temp_r7 % 60;
+    temp_r5 = (temp_r7 / 60) % 60;
+    temp_r6 = temp_r7 / 3600;
+    
+    *arg3 = temp_r4;
+    *arg2 = temp_r5;
+    *arg1 = temp_r6;
+}
+
 void fn_801E3B08(u8* arg0) {
     u32 i;
     
@@ -5745,3 +5876,5 @@ extern f32 lbl_8036B664;
 extern f32 lbl_8036B668;
 extern f32 lbl_8036B698;
 extern f32 lbl_8036B69C;
+#include "common.h"
+#include "structs.h"
