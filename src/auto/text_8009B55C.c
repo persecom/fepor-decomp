@@ -126,13 +126,12 @@ void fn_8009E574(void) {
 }
 
 void fn_8009E588(void) {
-    M2C_UNK fn_8006EB9C();
-    M2C_UNK fn_8021F1B8(M2C_UNK *, M2C_UNK *);
-    M2C_UNK spC;
-    M2C_UNK sp8;
+    s32 fn_8006EB9C(void);
+    void fn_8021F1B8(s32, void *, void *);
+    s32 spC;
+    s32 sp8;
 
-    fn_8006EB9C();
-    fn_8021F1B8(&sp8, &spC);
+    fn_8021F1B8(fn_8006EB9C(), &sp8, &spC);
 }
 
 void fn_8009E5B4(void) {
