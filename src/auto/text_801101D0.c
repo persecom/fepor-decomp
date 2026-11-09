@@ -287,9 +287,12 @@ s32 fn_8011654C(void *arg0) {
 }
 
 s32 fn_80116580(void *arg0) {
-    s32 fn_80199310();
-    if (*(u32 *)((char *)arg0 + 0x11C) != 0U) {
-        return fn_80199310();
+    s32 fn_80199310(void *);
+    void *v;
+
+    v = *(void **)((u8 *)arg0 + 0x11C);
+    if (v != NULL) {
+        return fn_80199310(v);
     }
     return -1;
 }
