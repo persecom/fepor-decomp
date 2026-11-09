@@ -1162,9 +1162,8 @@ s32 fn_8011BE60(void) {
 }
 
 void fn_8011BE78(void) {
-    M2C_UNK fn_8000E0E4(void *);
-    extern M2C_UNK lbl_80274508;
-    fn_8000E0E4(&lbl_80274508 + 0x402);
+    extern u16 lbl_80274508[];
+    fn_8000E0E4((u8 *)lbl_80274508 + 0x402);
 }
 
 void *fn_8011BEA4(void) {
