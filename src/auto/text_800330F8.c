@@ -3620,9 +3620,9 @@ void fn_8004C148(void) {
 }
 
 void fn_8004D370(void) {
-    M2C_UNK fn_80067708(M2C_UNK, M2C_UNK, M2C_UNK *, M2C_UNK);
-    extern M2C_UNK fn_8004C80C;
-    fn_80067708(2, 1, &fn_8004C80C, 0);
+    void fn_80067708(s32, s32, void (*)(void), s32);
+    void fn_8004C80C(void);
+    fn_80067708(2, 1, fn_8004C80C, 0);
 }
 
 void fn_8004D5D4(s32 arg0) {
