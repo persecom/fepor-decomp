@@ -422,7 +422,7 @@ void *fn_8009809C(void) {
 
 void *fn_800980D4(s32 arg0) {
     extern u16 lbl_803120C0[];
-    return &lbl_803120C0[arg0 * 0x28];
+    return (u8 *)lbl_803120C0 + arg0 * 0x14;
 }
 
 s32 fn_800980E8(s32 arg0)
