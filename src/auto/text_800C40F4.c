@@ -2815,6 +2815,17 @@ extern "C" void fn_800DF60C(void *arg0) {
     };
     ((Obj *)arg0)->v1();
 }
+
+#pragma cplusplus on
+extern "C" void fn_800DF638(s32 arg0) {
+    struct Obj {
+        u8 pad[0x40];
+        virtual void v0() = 0;
+    };
+    ((Obj *)arg0)->v0();
+}
+#pragma cplusplus reset
+
 #pragma cplusplus reset
 void fn_800DF664(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x2C) = 0;
