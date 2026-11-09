@@ -4572,6 +4572,8 @@ extern f32 lbl_8036A738;
 extern s32 gUnknown_0x8013C030;
 #include "global.h"
 #include "unit.h"
+extern u32 lbl_802918E0;
+extern u32 lbl_80295478;
 
 extern s32 fn_800B503C(void);
 extern s32 fn_800B412C(void);
