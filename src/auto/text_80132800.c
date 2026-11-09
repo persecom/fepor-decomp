@@ -4269,10 +4269,16 @@ s32 fn_80149D4C(void *arg0) {
     return fn_800B1B24(temp_r3);
 }
 
-void fn_80149D84(void *arg0) {
-    M2C_FIELD(M2C_FIELD(arg0, void **, 8), M2C_UNK (**)(), 0xC)();
+#pragma cplusplus on
+extern "C" void fn_80149D84(void *arg0) {
+    struct Obj {
+        u8 pad[8];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+    };
+    ((Obj *)arg0)->v1();
 }
-
+#pragma cplusplus reset
 void fn_80149DB0(void) {
 
 }
