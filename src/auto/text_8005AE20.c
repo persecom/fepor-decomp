@@ -3159,7 +3159,7 @@ extern f32 lbl_803692F0;
 #include "common.h"
 #include "global.h"
 
-extern void* lbl_80366DDC;
+extern s32 lbl_80366DDC;
 extern f32 lbl_80369248;
 extern const s32 lbl_8026B75C[3];
 #include "common.h"
