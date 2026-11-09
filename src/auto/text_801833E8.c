@@ -1275,6 +1275,19 @@ void fn_8018B854(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x44) = 0;
 }
 
+void fn_8018B884(void *arg0) {
+    extern f32 lbl_8036ACEC;
+    u8 *ptr;
+    f32 value;
+
+    ptr = *(u8 **)((u8 *)arg0 + 0x30);
+    value = lbl_8036ACEC;
+
+    *(f32 *)(ptr + 0x10) = value;
+    *(f32 *)(ptr + 0x14) = value;
+    *(f32 *)(ptr + 0x18) = value;
+}
+
 void fn_8018B920(void *arg0) {
     extern f32 lbl_8036ACEC;
     *(s32 *)((char *)arg0 + 0x40) = 0;
