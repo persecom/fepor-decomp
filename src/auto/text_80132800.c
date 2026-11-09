@@ -37,6 +37,44 @@ typedef struct List {
     s32 size;
 } List;
 
+typedef struct Anim Anim;
+
+typedef struct {
+    u8 pad0[8];
+    u8 (*f8)(Anim *);         /* +0x08 */
+    u8 padC[4];
+    void (*f10)(Anim *);      /* +0x10 */
+    void (*f14)(Anim *);      /* +0x14 */
+    u8 pad18[0x3C];
+    u8 (*f54)(Anim *);        /* +0x54 */
+} AnimFuncs;
+
+typedef struct {
+    u8 pad0[8];
+    void (*f8)(Anim *, u8, u8, u8, u16); /* +0x08 */
+    void (*fc)(Anim *);                 /* +0x0C */
+} AnimDrawFuncs;
+
+struct Anim {
+    u8 pad0[8];
+    AnimFuncs *funcs;   /* +0x08 */
+    u8 flags;           /* +0x0C */
+    u8 unk_d;           /* +0x0D */
+    u8 unk_e;           /* +0x0E */
+    u8 unk_10;          /* +0x10 */
+    u8 delay;           /* +0x11 */
+    s16 unk_12;         /* +0x12 */
+    u8 pad14[2];
+    u8 cur;             /* +0x16 */
+    u8 prev;            /* +0x17 */
+    AnimDrawFuncs *draw; /* +0x18 */
+    u8 pad1C[0xC];
+    u8 start;           /* +0x28 */
+    u8 end;             /* +0x29 */
+    u16 frame;          /* +0x2C */
+    u16 frames;         /* +0x2E */
+};
+
 void *fn_80132800(void) {
     extern u16 lbl_80276008[];
     return &lbl_80276008[0x50 / 2];
