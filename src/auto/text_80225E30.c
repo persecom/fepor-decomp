@@ -287,6 +287,10 @@ s32 TRKInitializeDispatcher(void) {
     return 0;
 }
 
+void fn_80227BF0(void) {
+    OSReport("Error: Unknown unit type for %s\n", "null");
+}
+
 s32 fn_80227E34(void) {
     return 0;
 }
@@ -544,6 +548,63 @@ u16 TRKTargetStopped(void) {
     return (u16)gTRKState[0x98 / sizeof(u16)];
 }
 
+s32 TRKTargetSupportRequest(void) {
+    s32 temp_r27;
+    s32 var_r30;
+    s32 spC;
+    s32 sp8;
+    s32 temp_r28;
+    s32 temp_r7;
+    u8* r4_temp;
+
+    temp_r27 = *(u16*) (gTRKCPUState + 0x0C); // offset 0xC
+    if ((temp_r27 != 0xD1) && (temp_r27 != 0xD0) && (temp_r27 != 0xD2) && (temp_r27 != 0xD3) && (temp_r27 != 0xD4)) {
+        fn_80225F4C(&spC, 4);
+        fn_80225F64(&spC);
+        return 0;
+    }
+
+    switch (temp_r27) {
+    case 0xD2:
+        var_r30 = fn_8022828C(*(u16*) (gTRKCPUState + 0x10), (u8) *(u16*) (gTRKCPUState + 0x14), *(u16*) (gTRKCPUState + 0x18), &spC);
+        if ((spC == 0) && (var_r30 != 0)) {
+            spC = 1;
+        }
+        *(u16*) (gTRKCPUState + 0x0C) = spC;
+        break;
+    case 0xD3:
+        var_r30 = fn_802281A4(*(u16*) (gTRKCPUState + 0x10), &spC);
+        if ((spC == 0) && (var_r30 != 0)) {
+            spC = 1;
+        }
+        *(u16*) (gTRKCPUState + 0x0C) = spC;
+        break;
+    case 0xD4:
+        temp_r7 = *(u32*) (gTRKCPUState + 0x14);
+        sp8 = temp_r7;
+        var_r30 = fn_80228094(*(u16*) (gTRKCPUState + 0x10), &sp8, (u8) *(u16*) (gTRKCPUState + 0x18), &spC, temp_r7);
+        if ((spC == 0) && (var_r30 != 0)) {
+            spC = 1;
+        }
+        *(u16*) (gTRKCPUState + 0x0C) = spC;
+        *(u32*) (gTRKCPUState + 0x14) = sp8;
+        break;
+    default:
+        temp_r28 = (s32) (gTRKCPUState + 0x14);
+        var_r30 = fn_80228588(*(u16*) (gTRKCPUState + 0x10), *(u16*) (gTRKCPUState + 0x18), temp_r28, &spC, 1, temp_r27 == 0xD1);
+        if ((spC == 0) && (var_r30 != 0)) {
+            spC = 1;
+        }
+        *(u16*) (gTRKCPUState + 0x0C) = spC;
+        if (temp_r27 == 0xD1) {
+            fn_80228858(*(u16*) (gTRKCPUState + 0x18), *(u32*) (gTRKCPUState + 0x14));
+        }
+        break;
+    }
+    *(u16*) (gTRKCPUState + 0x80) = *(u16*) (gTRKCPUState + 0x80) + 4;
+    return var_r30;
+}
+
 u32 fn_80229030(void) {
     return *(u32 *)(gTRKCPUState + 0x80);
 }
@@ -624,13 +685,13 @@ s32 fn_80229FA4(s32 arg0, u32 arg1, s32 arg2, s32 *arg3, s32 arg4) {
     return var_r3;
 }
 
-s32 fn_8022A098(void) {
-    s32 fn_8022A0E4(u32 *, M2C_UNK, M2C_UNK);
+s32 fn_8022A098(u32 *arg0, u32 arg1) {
+    s32 fn_8022A0E4(u32 *, u32, u32 *, s32, s32);
     u32 sp8;
     s32 var_r3;
 
     sp8 = 4U;
-    var_r3 = fn_8022A0E4(&sp8, 0, 1);
+    var_r3 = fn_8022A0E4(arg0, arg1, &sp8, 0, 1);
     if ((var_r3 == 0) && (sp8 != 4U)) {
         var_r3 = 0x700;
     }
@@ -654,6 +715,10 @@ s32 fn_8022A0E4(void *arg0, void *arg1) {
 
 u8 fn_8022A4E0(s32 command, s32 file_handle, s32 *length_ptr, s32 buffer_ptr) {
     __builtin_trap();
+}
+
+void fn_8022A4E8(void) {
+    return;
 }
 
 void InitMetroTRK_BBA(void) {
