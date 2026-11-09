@@ -8,8 +8,8 @@ extern u8 lbl_803689B0;
 extern u8 lbl_8034C110[]; char lbl_80282B20[];
 extern u8 lbl_8034C110[];
 extern f64 lbl_8036C368;
-extern f64 lbl_8036C290;
-extern f64 lbl_8036C2A0;
+const f64 lbl_8036C290 = 4503601774854144.0;
+const f64 lbl_8036C2A0 = 4503599627370496.0;
 extern u16 Ecb_8033E188[192];u16 *D_80256B30;
 extern s32 lbl_803687F8;
 extern f32 lbl_8036C374;
@@ -2094,16 +2094,11 @@ void fn_80257C04(void *arg0) {
 }
 
 s32 fn_80257C2C(u8 *arg0, u32 arg1) {
-    s32 fn_8022C568(f32);
+    u32 fn_8022C568(f32, f32, f32);
     extern u8 lbl_8029FB7C[];
     extern f32 lbl_8036C298;
-    extern f64 lbl_8036C290;
-    extern f64 lbl_8036C2A0;
     f32 temp_f2;
     u32 temp_r3;
-
-    (void)lbl_8036C290;
-    (void)lbl_8036C2A0;
 
     switch (arg0[0]) {
     case 0:
@@ -2120,8 +2115,8 @@ s32 fn_80257C2C(u8 *arg0, u32 arg1) {
         if (arg0[0x26] == 0 && arg0[1] == 1) {
             *(s32 *)(arg0 + 0xC) = (0xC1 - lbl_8029FB7C[*(s32 *)(arg0 + 8) >> 21]) << 16;
         }
-        temp_f2 = (f32)*(s32 *)(arg0 + 0xC) * lbl_8036C298;
-        *(u32 *)(arg0 + 4) = (u32)fn_8022C568(temp_f2 * (f32)arg1) >> 12;
+        temp_f2 = lbl_8036C298 * (f32)*(s32 *)(arg0 + 0xC);
+        *(u32 *)(arg0 + 4) = fn_8022C568(temp_f2 * (f32)arg1, temp_f2, lbl_8036C298) >> 12;
         arg0[1] = 4;
         temp_r3 = *(u32 *)(arg0 + 4);
         if (temp_r3 == 0) {
