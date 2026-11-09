@@ -2707,20 +2707,22 @@ s32 fn_8006F020(void *arg0) {
 }
 
 void fn_8006F10C(s32 arg0, s32 arg1) {
-    extern void *lbl_80311CA8;
-    void *var_r5;
-    void *var_r6;
-    void *var_r7;
-
-    var_r6 = (u8 *)lbl_80311CA8 + 0x4C;
-    var_r7 = (u8 *)lbl_80311CA8 + 0x6C;
-    *(void **)var_r7 = var_r6;
-    var_r5 = (u8 *)var_r6 + 8;
-    *(s32 *)((u8 *)var_r6 + 4) = arg0;
-    *(void **)((u8 *)var_r7 + 4) = var_r5;
-    *(s32 *)((u8 *)var_r6 + 0xC) = arg1;
-    *(s32 *)((u8 *)var_r7 + 8) = 0;
-    fn_80024398((u8 *)lbl_80311CA8 + 0x80, fn_800C0658(var_r5, var_r6, var_r7), 0);
+    extern u8 lbl_80311CA8[];
+    u32 r31;
+    u32 r6;
+    u32 r7;
+    
+    r31 = (u32)lbl_80311CA8;
+    r6 = r31 + 0x4C;
+    r7 = r31 + 0x6C;
+    
+    *(u8 **)(u32)r7 = (u8 *)r6;
+    *(u8 **)((u32)r7 + 4) = (u8 *)(r6 + 8);
+    *(s32 *)(r6 + 4) = arg0;
+    *(s32 *)(r6 + 0xC) = arg1;
+    *(s32 *)(r7 + 8) = 0;
+    
+    fn_80024398((u8 *)r31 + 0x80, fn_800C0658((u8 *)r6 + 8, (u8 *)r6, (u8 *)r7), 0);
 }
 
 s32 fn_8006F2B8(s32 arg1) {
@@ -3260,8 +3262,8 @@ f32 fn_80072238(void) {
 }
 
 void *fn_80072250(void) {
-    extern M2C_UNK lbl_8026BB84;
-    return &lbl_8026BB84 + 0x88;
+    extern u16 lbl_8026BB84[];
+    return (u8 *)lbl_8026BB84 + 0x88;
 }
 
 void *fn_80072260(void) {
