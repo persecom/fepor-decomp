@@ -240,12 +240,18 @@ s32 fn_80165250(void) {
     return 0;
 }
 
-void fn_80165300(void **arg0) {
-    void (**func_ptr)(void) = (void (**)(void))(*arg0);
-    func_ptr[4]();
+#pragma cplusplus on
+extern "C" void fn_80165300(void *arg0) {
+    void fn_80154138(s32, s32, s32);
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    ((Obj *)arg0)->v2();
     fn_80154138(0, 0, 0x10);
 }
-
+#pragma cplusplus reset
 void fn_801658DC(s32 arg0, s32 arg1) {
     s32 fn_8000E0E4(s32);
     s32 strlen(void);
