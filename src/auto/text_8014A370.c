@@ -255,6 +255,115 @@ s32 fn_8014ADF0(void) {
     return 0;
 }
 
+#pragma cplusplus on
+extern "C" void fn_8014AE50(void *arg0, void *arg1, void *arg2) {
+    struct Model {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual void v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual f32 v25() = 0;
+    };
+    struct Drawer {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void *v4(void *) = 0;
+    };
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual s32 v20() = 0;
+    };
+    void fn_8000A258(void);
+    void fn_80009D74(f32, f32, f32, f32);
+    void fn_8000A174(s32, s32);
+    void fn_8000A248(void);
+    void fn_80007898(s32);
+    void fn_80007858(f32, f32);
+    void fn_80007124(void *);
+    void fn_8000727C(f32);
+    void fn_80007290(s32, s32, s32, s32);
+    void fn_80007884(void);
+    void fn_80231D94(void *, void *, ...);
+    extern f32 lbl_8036A7BC;
+    extern f32 lbl_8036A7C0;
+    extern f32 lbl_8036A7C4;
+    extern u8 lbl_80276F00[];
+    char sp8[8];
+
+    fn_8000A258();
+    fn_80009D74((f32)*(s16 *)((u8 *)arg1 + 0x30), (f32)*(s16 *)((u8 *)arg1 + 0x32),
+                (*(Model **)((u8 *)arg1 + 0x3C))->v25() - lbl_8036A7C0, lbl_8036A7BC);
+    fn_8000A174(0, 0x13);
+    fn_8000A248();
+    fn_80007898(5);
+    fn_80007858((f32)*(s16 *)((u8 *)arg2 + 0x30), (f32)*(s16 *)((u8 *)arg2 + 0x32));
+    fn_80007124((*(Drawer **)((u8 *)arg2 + 0x34))->v4(arg2));
+    fn_8000727C(lbl_8036A7C4);
+    if (*(u8 *)((u8 *)arg2 + 0x38) != 0) {
+        fn_80007290(0xFF, 0xFF, 0, 0xFF);
+    }
+    if (*(u8 *)((u8 *)arg2 + 0x39) == 2) {
+        fn_80007290(0, 0, 0, 0xFF);
+    }
+    fn_80007884();
+    fn_80231D94(sp8, lbl_80276F00 + 0x10D, ((Obj *)arg0)->v20());
+    fn_80007898(5);
+    fn_80007858((f32)(*(s16 *)((u8 *)arg2 + 0x30) + 0x60), (f32)*(s16 *)((u8 *)arg2 + 0x32));
+    fn_80007124(sp8);
+    fn_8000727C(lbl_8036A7C4);
+    if (*(u8 *)((u8 *)arg2 + 0x38) != 0) {
+        fn_80007290(0xFF, 0xFF, 0, 0xFF);
+    }
+    if (*(u8 *)((u8 *)arg2 + 0x39) == 2) {
+        fn_80007290(0, 0, 0, 0xFF);
+    }
+    fn_80007884();
+}
+#pragma cplusplus off
+
 s32 fn_8014B20C(void) {
     return 0x7F;
 }
@@ -647,10 +756,10 @@ s32 fn_8014DA68(void) {
 }
 
 void fn_8014DBE0(s32 arg0, s32 arg1, u8 *arg2, u16 *arg3, s32 *arg4) {
-    s32 temp_r4;
     u8 *temp_r3;
+    s32 temp_r4;
 
-    temp_r4 = arg1 * 8;
+    temp_r4 = arg1 << 3;
     temp_r3 = (u8 *)arg0 + temp_r4;
     *arg2 = *(u8 *)temp_r3;
     *arg3 = *(u16 *)((u8 *)temp_r3 + 0x2);
