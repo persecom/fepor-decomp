@@ -4716,6 +4716,17 @@ s32 fn_8019D268(void) {
     return 1;
 }
 
+u8 fn_8019D2C0(void) {
+    void *fn_8000C0C0(void *);
+    extern u8 lbl_802968E8[];
+    void *p;
+    p = fn_8000C0C0(lbl_802968E8);
+    if (p != NULL) {
+        return M2C_FIELD(p, u8 *, 0x34);
+    }
+    return 1;
+}
+
 void fn_8019D2FC(void *arg0) {
     void *fn_8000CAF0(void *, void *);
     extern u8 lbl_802968E8[];
