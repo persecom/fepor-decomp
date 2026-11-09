@@ -107,6 +107,84 @@ s32 fn_8005AE60(void) {
     return 0x20;
 }
 
+void fn_8005AE78(void) {
+    void OSResetSystem(s32, s32, s32);
+    u8 fn_80014E70(void);
+    void fn_800B46D8(void);
+    s32 fn_80208D18(void);
+    void fn_802107A8(void);
+    void fn_80211478(void);
+    void fn_80211614(s32);
+    void fn_8022097C(void);
+    extern s32 lbl_80367110;
+    extern void *lbl_80367240;
+    extern s32 lbl_803672DC;
+    extern s8 lbl_803672E0;
+    extern u8 lbl_803672E1;
+    extern s8 lbl_803672E2;
+    extern u8 lbl_803672E3;
+    extern s8 lbl_803672E4;
+    extern u32 lbl_803682A4;
+    s32 temp_r0;
+    s32 var_r31;
+    u16 temp_r3;
+
+    if (lbl_803672E0 == 0) {
+        lbl_803672DC = 0;
+        lbl_803672E0 = 1;
+    }
+    if (lbl_803672E2 == 0) {
+        lbl_803672E1 = 0;
+        lbl_803672E2 = 1;
+    }
+    if (lbl_803672E4 == 0) {
+        lbl_803672E3 = 0;
+        lbl_803672E4 = 1;
+    }
+    temp_r3 = **(u16 **)lbl_80367240;
+    temp_r0 = (temp_r3 == 0x1600) ? (lbl_803672DC + 1) : 0;
+    lbl_803672DC = temp_r0;
+    if (temp_r0 >= 0x1E) {
+        lbl_803672E3 = 1;
+    }
+    if (lbl_803672E1 != 0 && fn_80208D18() == 0) {
+        lbl_803672E3 = 1;
+    }
+    lbl_803672E1 = fn_80208D18() != 0;
+    if (!(lbl_80367110 & 0x100) && lbl_803672E3 != 0) {
+        fn_80211614(1);
+        fn_80211478();
+        fn_802107A8();
+        fn_802107A8();
+        fn_8022097C();
+        fn_802107A8();
+        fn_802107A8();
+        fn_802107A8();
+        var_r31 = 0;
+        if (lbl_803682A4 & 0x90000) {
+            if (!(lbl_803682A4 & 0x10)) {
+                var_r31 |= 2;
+            }
+            if (lbl_803682A4 & 0x40) {
+                var_r31 |= 1;
+            }
+        } else if (lbl_803682A4 & 0x60000) {
+            if (!(lbl_803682A4 & 0x10)) {
+                var_r31 |= 0x20;
+            }
+            if (lbl_803682A4 & 0x100) {
+                var_r31 |= 0x10;
+            }
+        }
+        if (fn_80014E70() != 0) {
+            var_r31 |= 0x100;
+            fn_800B46D8();
+        }
+        OSResetSystem(0, var_r31, 0);
+        while (1) {}
+    }
+}
+
 s32 fn_8005B42C(u32 *arg0, u32 arg1) {
     return (u32) *arg0 <= arg1;
 }
