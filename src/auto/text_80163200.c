@@ -3212,6 +3212,21 @@ void fn_8017AA48(s32 arg0, s32 arg1, void *arg2) {
     fn_8000C070(proc, 0);
 }
 
+#pragma cplusplus on
+extern "C" void fn_8017AAA0(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+    };
+    ((Obj *)arg0)->v6();
+}
+#pragma cplusplus reset
+
 s32 fn_80105A5C();
 #pragma cplusplus on
 extern "C" void fn_801547E4(s16, s16, s16, s16, s32, s32, s32, f32);
