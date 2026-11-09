@@ -587,6 +587,24 @@ s32 fn_80108948(void) {
     return 0;
 }
 
+s32 fn_80108970(void) {
+    M2C_UNK **fn_800D758C(s32);
+    extern s32 lbl_803679D0;
+    M2C_UNK fn_800DC3B0(s32);
+    M2C_UNK fn_800DA748(void);
+    s32 *global;
+    s32 *object;
+
+    global = &lbl_803679D0;
+    fn_800D758C(*global);
+
+    object = (s32 *)*global;
+    fn_800DC3B0(*(s32 *)((u8 *)object + 0x424));
+
+    fn_800DA748();
+    return 0;
+}
+
 #pragma cplusplus on
 extern "C" void fn_801089A8(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
     void fn_800D7254(void);
@@ -941,9 +959,14 @@ u8 fn_80109B48(void *arg0) {
 
 void fn_80109B54(void *arg0, f32 farg0) {
     extern f32 lbl_8036A140;
-    M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), f32 *, 8) = farg0;
-    M2C_FIELD(arg0, f32 *, 0x34) = (f32) M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), u8 *, 4);
-    M2C_FIELD(arg0, f32 *, 0x38) = (f32) (M2C_FIELD(arg0, f32 *, 0x34) / (lbl_8036A140 * M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), f32 *, 8)));
+    f32 mul;
+
+    *(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 8) = farg0;
+    mul = lbl_8036A140;
+    *(f32 *)((u8 *)arg0 + 0x34) = (f32)*(u8 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 4);
+    *(f32 *)((u8 *)arg0 + 0x38) =
+        *(f32 *)((u8 *)arg0 + 0x34) /
+        (mul * *(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 8));
 }
 
 f32 fn_80109BA8(void *arg0) {
