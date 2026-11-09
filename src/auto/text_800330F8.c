@@ -3149,17 +3149,21 @@ void fn_80049A98(void *arg0) {
 }
 
 extern u16* lbl_803672AC;
-void fn_80049BD4(void* arg0, u8 arg1) {
+void fn_80049BD4(void *arg0, u8 arg1) {
+    void fn_8005F7B0(void *, s32, void *);
+    void fn_80044450(s32, s32);
+    void fn_80016180(void);
+    extern u16 *lbl_803672AC;
     u8 temp;
-    
-    temp = *(u8*)((uintptr_t)arg0 + 2);
+
+    temp = *(u8 *)((u8 *)arg0 + 2);
     temp &= 0xFC;
-    *(u8*)((uintptr_t)arg0 + 2) = temp;
-    
-    fn_8005F7B0((void*)((uintptr_t)arg0 + 0x14), 0xFF, arg0);
-    
+    *(u8 *)((u8 *)arg0 + 2) = temp;
+
+    fn_8005F7B0((u8 *)arg0 + 0x14, 0xFF, arg0);
+
     if (arg1 != 0) {
-        fn_80044450(*lbl_803672AC, 1);
+        fn_80044450((s32)lbl_803672AC, 1);
         fn_80016180();
     }
 }
