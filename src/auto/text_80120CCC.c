@@ -1011,6 +1011,12 @@ s32 fn_80126E20(void) {
     return 1;
 }
 
+extern u16 lbl_8029053C[];
+s32 fn_80126E50(void) {
+    fn_8000CAF0(lbl_8029053C, 3);
+    return 1;
+}
+
 s32 fn_80126EB0(s32 arg0, s32 arg1) {
     M2C_UNK fn_80013E24(s32);
     s8 fn_8005BA00();
