@@ -37,6 +37,10 @@ static inline u8 IsSlotAvailable(void *obj, s16 slot) {
     return IsSlotFilled(obj, slot);
 }
 
+static inline s32 PromoteSlot(s16 slot) {
+    return (s32)slot;
+}
+
 void fn_80163200(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
     *(s8*)((u8*)arg0 + 0) = arg1;
     *(s8*)((u8*)arg0 + 1) = arg2;
@@ -133,17 +137,18 @@ void fn_80164A24(void *arg0) {
     fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58));
 }
 
+#pragma scheduling off
 s32 fn_80164BB0(void *arg0) {
     u32 *fn_80037BD0(s32, s32);
     s16 slot = M2C_FIELD(arg0, s16 *, 0x4C);
-    s32 idx = slot;
+    s32 idx = (s32)slot;
 
-    if ((idx < 0) || (slot > 7)) {
+    if (idx < 0 || 7 < slot) {
         return 0;
     }
-    return (s32) fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58), idx);
+    return (s32)fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58), idx);
 }
-
+#pragma scheduling reset
 s16 fn_80164FBC(void *arg0, s16 arg1) {
     for (; arg1 >= 0; arg1--) {
         if (IsSlotAvailable(arg0, arg1)) {
