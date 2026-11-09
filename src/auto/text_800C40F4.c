@@ -754,7 +754,8 @@ s32 fn_800C8EFC(void *arg0) {
 }
 
 void fn_800C8F48(void *arg0) {
-    fn_800C802C(M2C_FIELD(arg0, s32 *, 0x20) + 1);
+    void fn_800C802C(void *, s32);
+    fn_800C802C(arg0, *(s32 *)((u8 *)arg0 + 0x20) + 1);
 }
 
 void fn_800C908C(void *arg0, String *arg1, s32 *arg2) {
