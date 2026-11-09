@@ -187,6 +187,19 @@ void fn_800291D8(void) {
     // Empty implementation for testing compilation only
 }
 
+void fn_80029730(void) {
+    void fn_800F214C(void);
+    void fn_800F20E0(void);
+    void fn_800F0BFC(s32, s32);
+    void fn_800F0BC8(void);
+    extern u8 lbl_80330708[];
+
+    fn_800F214C();
+    fn_800F20E0();
+    fn_800F0BFC((s32)*(f32 *)(lbl_80330708 + 0x524), (s32)*(f32 *)(lbl_80330708 + 0x528));
+    fn_800F0BC8();
+}
+
 void fn_80029784(void) {
     u8 fn_800AA188();
     M2C_UNK fn_800F214C();
