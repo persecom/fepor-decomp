@@ -1341,9 +1341,8 @@ s32 fn_800780E8(void) {
 }
 
 void fn_80078100(void) {
-    extern u32 lbl_8026C0B8[];
-    u16* ptr = (u16*)((u8*)lbl_8026C0B8 + 0x96E);
-    fn_8000E0E4(ptr);
+    extern u16 lbl_8026C0B8[];
+    fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x4b7);
 }
 
 void fn_8007812C(void) {
