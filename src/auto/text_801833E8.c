@@ -5664,6 +5664,18 @@ void fn_801A1A90(void) {
     lbl_801B1C8C = 0xA491;
 }
 
+u16 fn_801A1CC8(void) {
+    void *fn_8000C0C0(void *);
+    extern u8 lbl_80296F90[];
+    void *p;
+
+    p = fn_8000C0C0(lbl_80296F90);
+    if (p != NULL) {
+        return *(u16 *)((u8 *)p + 0x34);
+    }
+    return 0;
+}
+
 s32 fn_801A1E6C(s8 arg0, s8 arg1) {
     void *fn_8000C0C0(void *, void *);
     f32 fn_80023430(void *, void *, f32, f32);
