@@ -783,6 +783,11 @@ void fn_801F6170(void *arg0) {
     }
 }
 
+void fn_801F6260(void *arg0) {
+    *(u8 *)((u8 *)arg0 + 0x4C) = 0;
+    fn_8005C7C8((u8 *)&lbl_80280B58 + 0x18C);
+}
+
 extern u8 lbl_8029B198[16];
 void fn_801F649C(s32 arg0) {
     void fn_8000CAA0(void *, s32);
