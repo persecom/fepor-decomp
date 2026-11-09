@@ -1147,6 +1147,13 @@ void fn_80127918(u8 *arg0) {
     }
 }
 
+s32 fn_801279D4(void) {
+    void fn_8014D55C(void *);
+    extern u8 lbl_80330708[];
+    fn_8014D55C(lbl_80330708);
+    return 1;
+}
+
 void fn_80127AC4(void) {
     extern u16 lbl_80275048[];
     
