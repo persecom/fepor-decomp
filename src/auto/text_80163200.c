@@ -2350,7 +2350,7 @@ void fn_801775F0(void) {
 }
 
 void *fn_8017761C(void) {
-    return &lbl_80278080[0x4d7];
+    return (u8 *)lbl_80278080 + 0x4d7;
 }
 
 void fn_80177854(void **arg0, void *arg1, void *arg2) {
