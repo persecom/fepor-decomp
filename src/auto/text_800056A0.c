@@ -113,8 +113,8 @@ u8 fn_80005E2C(void) {
 }
 
 s32 fn_80005E98(void) {
-    extern M2C_UNK lbl_80330708;
-    return M2C_FIELD(&lbl_80330708, u8 *, 0x10) == 0x1D;
+    extern u8 lbl_80330708[];
+    return (*(u8 *)((uintptr_t)lbl_80330708 + 0x10) ^ 0x1D) == 0;
 }
 
 void fn_80005EB4(void) {
@@ -144,11 +144,14 @@ void fn_80006118(void) {
     M2C_FIELD(temp_r31, s8 *, 0x65) = 0xA;
 }
 
-void fn_80006160(s32 arg0) {
+void fn_80006160(s32 arg0)
+{
     extern u16 lbl_802832FC[];
-    void *fn_8000C0C0(u16 *, u16 *);
-    u16 *r4 = lbl_802832FC;
-    *(s32*)((char*)fn_8000C0C0(r4, r4) + 0x64) = arg0;
+    void *fn_8000C0C0(u16 *);
+    s32 *obj;
+
+    obj = (s32 *)fn_8000C0C0(lbl_802832FC);
+    obj[0x64 / 4] = arg0;
 }
 
 void fn_80006198(void) {
