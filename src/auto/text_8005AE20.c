@@ -1309,6 +1309,7 @@ M2C_UNK fn_80063954(char *arg0) {
 }
 #pragma inline_depth(reset)
 
+/* split boundary */
 M2C_UNK fn_800639B4(char *arg0) {
     M2C_UNK fn_8005C82C(char *, s32);
     M2C_UNK fn_80063A14(M2C_UNK);
