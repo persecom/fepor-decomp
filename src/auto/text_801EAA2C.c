@@ -280,6 +280,36 @@ extern "C" void fn_801EBFB0(void *arg0, void *arg1) {
     ((Obj *)arg0)->v29();
     fn_8008C1D8(0, 0, 0, temp_r31 * ((Obj *)*(void **)((u8 *)r30 + 0x3C))->v20() + 0x20, 2);
 }
+
+#pragma cplusplus on
+extern "C" s16 fn_801EC140(void *arg0) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual s16 v18() = 0;
+    };
+    s16 temp = ((Obj *)arg0)->v18();
+    return (s16)((0x260 - temp) >> 1);
+}
+#pragma cplusplus reset
+
 #pragma cplusplus reset
 
 s32 fn_801EC17C(void) {
