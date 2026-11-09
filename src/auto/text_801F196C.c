@@ -755,8 +755,8 @@ void fn_801F649C(s32 arg0) {
 }
 
 void fn_801F64C8(void) {
-    extern s32 lbl_80280CF0;
-    fn_80109020(&lbl_80280CF0 + 0x20);
+    extern u16 lbl_80280CF0[];
+    fn_80109020((u8 *)lbl_80280CF0 + 0x20);
 }
 
 void fn_801F6538(void) {
