@@ -332,7 +332,7 @@ void fn_801EC558(void) {
 
 void *fn_801EC584(void) {
     extern u16 lbl_8027EE08[];
-    return &lbl_8027EE08[0xAD0];
+    return (u8 *)lbl_8027EE08 + 0x2b4;
 }
 
 s32 fn_801EC5A8(void) {
