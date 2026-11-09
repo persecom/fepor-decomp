@@ -1192,6 +1192,15 @@ s32 fn_800B6E8C(s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     return (s32) fn_800067BC((f32) arg1, (f32) arg2, (f32) arg3, (f32) arg4);
 }
 
+s32 fn_800B6F10(void) {
+    M2C_UNK fn_8000CAA0(M2C_UNK *, s32, M2C_UNK *);
+    M2C_UNK fn_80013864();
+    extern M2C_UNK lbl_8028D26C;
+    fn_8000CAA0(&lbl_8028D26C, fn_800C0658(), &lbl_8028D26C);
+    fn_80013864();
+    return 1;
+}
+
 void fn_800B6F48(void) {
     M2C_UNK fn_801E2594(M2C_UNK *);
     extern M2C_UNK lbl_803682F0;
@@ -3319,21 +3328,21 @@ u8 fn_800BCD58(void) {
 }
 
 s32 fn_800BCD7C(u8 arg0) {
-    extern u16 lbl_802B14E4[];
-    void *var_r4;
+    extern u8 lbl_802B14E4[];
+    void *unit;
 
     if (arg0 != 0) {
-        var_r4 = &lbl_802B14E4[((s32)arg0 - 1) * 0x500];
+        unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
     } else {
-        var_r4 = NULL;
+        unit = NULL;
     }
-    if ((var_r4 == NULL) || (M2C_FIELD(var_r4, void **, 0x188) == NULL)) {
+    if (unit == NULL || *(void **)((u8 *)unit + 0x188) == NULL) {
         return 0;
     }
-    switch (M2C_FIELD(M2C_FIELD(var_r4, void **, 0x190), u8 *, 8)) {
+    switch (*(u8 *)(*(u8 **)((u8 *)unit + 0x190) + 8)) {
     case 0:
     case 5:
-        M2C_FIELD(var_r4, s32 *, 0x1A0) |= 0x20000;
+        *(u32 *)((u8 *)unit + 0x1A0) |= 0x20000;
         break;
     }
     return 1;
