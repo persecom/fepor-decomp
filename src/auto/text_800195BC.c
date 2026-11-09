@@ -1061,28 +1061,27 @@ u8 fn_8001D37C(void *arg0) {
 }
 
 u8 fn_8001D3FC(void *arg0) {
-    s8 fn_800C2BA8(M2C_UNK *);
-    extern M2C_UNK lbl_803206EC;
-    void **var_r31;
-    s32 var_r0;
-    s8 var_r4;
-
-    if ((void *) M2C_FIELD(arg0, void **, 0) == NULL) {
+    s32 fn_800C2BA8(void *, s32);
+    extern u8 lbl_803206EC[];
+    s8 result;
+    s32 mask;
+    s32 var;
+    u8 *inner;
+    if (*(void **)arg0 == NULL) {
         return 0U;
     }
-    
-    var_r31 = (void **) arg0;
-    if (!(M2C_FIELD(var_r31, u8 *, 5) & 0x3F)) {
-        var_r4 = 0;
+    mask = *((u8 *)arg0 + 5) & 0x3F;
+    if (mask == 0) {
+        result = 0;
     } else {
-        var_r4 = fn_800C2BA8(&lbl_803206EC);
+        result = fn_800C2BA8(lbl_803206EC, mask);
     }
-    
-    var_r0 = M2C_FIELD(M2C_FIELD(var_r31, void **, 0), u8 *, 0x1C) + (var_r4 * 3);
-    if (var_r0 < 0) {
-        var_r0 = 0;
+    inner = *(u8 **)arg0;
+    var = inner[0x1C] + result * 3;
+    if (var < 0) {
+        var = 0;
     }
-    return (u8) var_r0;
+    return (u8)var;
 }
 
 u8 fn_8001D47C(void *arg0) {
