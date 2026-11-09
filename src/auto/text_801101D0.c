@@ -50,10 +50,11 @@ extern f32 lbl_8036A1F8;
 extern u8 lbl_80367A48;
 
 void fn_801101D0(void *arg0, s32 arg1) {
-    M2C_UNK fn_800E5A4C(void *, s32);
-    M2C_UNK fn_801C6978();
-    if ((u32) M2C_FIELD(arg0, u32 *, 0xE0) != 0U) {
-        fn_801C6978();
+    void fn_800E5A4C(void *, s32);
+    void fn_801C6978(void *);
+    void *tmp = *(void **)((u8 *)arg0 + 0xE0);
+    if (tmp != NULL) {
+        fn_801C6978(tmp);
     }
     fn_800E5A4C(arg0, arg1);
 }
