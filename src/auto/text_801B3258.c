@@ -2702,22 +2702,28 @@ void fn_801D3D3C(void *arg0) {
         if (result == -1) { *(s32 *)state = 0; break; }
         if (result != 0) { *(s32 *)state = 5; break; }
         if (*(u8 *)((u8 *)state + 0x10) != 1) {
-            p = arr_hi; count = 0;
-            for (i = 0; i < 5; i++) {
-                if (fn_801DC10C(i) != 0) {
-                    tmp_u8 = fn_801DE368(fn_801DC10C(i));
-                    count++; *p = tmp_u8; p++;
+            p24 = arr_hi; count = 0; i25 = 0;
+            while (i25 < 5) {
+                if (fn_801DC10C(i25) != 0) {
+                    tmp_u8 = fn_801DE368(fn_801DC10C(i25));
+                    count++;
+                    *p24 = tmp_u8;
+                    p24++;
                 }
+                i25++;
             }
             arr_hi[count] = 1; arr_hi[count+1] = 0x20; arr_hi[count+2] = 0x63; arr_hi[count+3] = -1;
             fn_801DE0EC(arr_hi, arg0);
         } else {
-            count = 0; p = arr_lo;
-            for (i = 0; i < 5; i++) {
-                if (fn_801DC10C(i) != 0) {
-                    tmp_u8 = fn_801DE368(fn_801DC10C(i));
-                    count++; *p = tmp_u8; p++;
+            count = 0; p24 = arr_lo; i25 = 0;
+            while (i25 < 5) {
+                if (fn_801DC10C(i25) != 0) {
+                    tmp_u8 = fn_801DE368(fn_801DC10C(i25));
+                    count++;
+                    *p24 = tmp_u8;
+                    p24++;
                 }
+                i25++;
             }
             tmp_u8 = fn_801DE3D0(lbl_80330708);
             if ((s32)tmp_u8 - 2 >= 1) { tmp_u8 = fn_801DE3D0(lbl_80330708); arr_lo[count] = (s32)tmp_u8 - 2; count++; }
