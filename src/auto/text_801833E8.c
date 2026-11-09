@@ -3227,6 +3227,18 @@ void fn_80194E10(void) {
     fn_8000BF00(&lbl_802966D8);
 }
 
+void *fn_80194F54(s32 arg0) {
+    void *fn_8000C0C0(void *);
+    void *fn_8000CAF0(void *, s32);
+    void *obj;
+
+    obj = fn_8000C0C0(lbl_802966D8);
+    if (obj == NULL) {
+        obj = fn_8000CAF0(lbl_802966D8, 3);
+    }
+    return (void *)(*(s32 *)((u8 *)obj + 0x30) + arg0 * 0x3250);
+}
+
 void fn_801950CC(void *arg0) {
     M2C_UNK fn_800C426C(s32);
     u32 temp_r3;
