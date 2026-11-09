@@ -163,7 +163,10 @@ auto/text_8008FE24.c:
 	.text       start:0x8008FE24 end:0x8008FE5C
 
 auto/text_8008FE5C.c:
-	.text       start:0x8008FE5C end:0x80098170
+	.text       start:0x8008FE5C end:0x80091858
+
+auto/text_80091858.c:
+	.text       start:0x80091858 end:0x80098170
 
 auto/text_80098170.c:
 	.text       start:0x80098170 end:0x800981D0
