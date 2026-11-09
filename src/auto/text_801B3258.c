@@ -2108,6 +2108,22 @@ void fn_801CCF88(void *arg0) {
     M2C_FIELD(arg0, f32 *, 0xA8) = (f32) lbl_8036B4E0;
 }
 
+#pragma cplusplus on
+extern "C" void fn_801CD2AC(void *arg0) {
+    void fn_80158DD8(s32, s32, s16, s16, s32, s32);
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    ((Obj *)arg0)->v2();
+    fn_80158DD8(0, 0,
+        (s16)(*(s16 *)((u8 *)arg0 + 0xE) - *(s16 *)((u8 *)arg0 + 0xA)),
+        (s16)(*(s16 *)((u8 *)arg0 + 0x10) - *(s16 *)((u8 *)arg0 + 0xC)),
+        0xFF, 0x10);
+}
+#pragma cplusplus reset
+
 void *fn_801CD318(void *arg0) {
     void *fn_8000CAA0(void *, s32, void *);
     void fn_801403F0(void);
