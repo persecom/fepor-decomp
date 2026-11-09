@@ -9,6 +9,23 @@ void fn_80120CCC(u16 *arg0) {
     *arg0 &= ~0x130;
 }
 
+void fn_80120DD4(void *arg0, s32 arg1) {
+    void *fn_8000CAF0(void *, s32);
+    extern u8 lbl_8029023C[];
+    u8 temp_r31;
+    u8 *temp_r3;
+
+    temp_r31 = ((u8 *)arg0)[0x41];
+    if (temp_r31 != (u8)arg1) {
+        temp_r3 = fn_8000CAF0(lbl_8029023C, (s32)arg0);
+        *(void **)(temp_r3 + 0x30) = arg0;
+        temp_r3[0x36] = 0;
+        temp_r3[0x37] = 4;
+        temp_r3[0x34] = temp_r31;
+        temp_r3[0x35] = (u8)arg1;
+    }
+}
+
 void fn_80120E4C(void *arg0) {
     f32 fn_800067BC(s32, f32, f32, f32, f32);
     void fn_8000C188(void *);
