@@ -1728,14 +1728,11 @@ s32 fn_800B7D08(u8 arg0, s16 arg1) {
     return 1;
 }
 
-s32 fn_800B7F98(u8 arg0, u8 arg1, s16 arg2) {
-    extern u16 lbl_8032FF08[];
-    s32 temp_r6;
-    s32 temp_r3;
+s32 fn_800B7F98(s32 arg0, s32 arg1, s32 arg2) {
+    void fn_8014876C(void *, u8, s16);
+    extern u8 lbl_8032FF08[];
 
-    temp_r6 = arg0 * 0x30;
-    temp_r3 = temp_r6 << 1;
-    fn_8014876C(&lbl_8032FF08[temp_r3], arg1, arg2, temp_r6);
+    fn_8014876C(lbl_8032FF08 + (u8)arg0 * 0x30, (u8)arg1, (s16)arg2);
     return 1;
 }
 
