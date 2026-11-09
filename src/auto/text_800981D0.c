@@ -138,17 +138,16 @@ void *fn_800984FC(void **arg0) {
 }
 
 void fn_80098524(void **arg0) {
-    void *temp_r3;
-    u32 var_r3;
+    void *var;
 
-    temp_r3 = *arg0;
-    if (temp_r3 != NULL) {
-        var_r3 = *(u32 *)((char *)temp_r3 + 0x280);
+    var = *arg0;
+    if (var != NULL) {
+        var = *(void **)((char *)var + 0x280);
     } else {
-        var_r3 = 0U;
+        var = NULL;
     }
-    if (var_r3 != 0U) {
-        fn_8004BE88(0);
+    if (var != NULL) {
+        fn_8004BE88(var, 0);
     }
 }
 
