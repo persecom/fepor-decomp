@@ -75,8 +75,9 @@ static inline u32 FindUnk48(void *arg0) {
 }
 
 void *fn_8005AE20(void) {
-    extern void *lbl_8026AE88;
-    return (void *)(((u32)&lbl_8026AE88) + 0x9);
+    extern u8 lbl_8026AE88[];
+
+    return lbl_8026AE88 + 9;
 }
 
 s32 fn_8005AE30(void) {
