@@ -261,9 +261,10 @@ u16 fn_80089634(void) {
     return M2C_FIELD(lbl_803674E4, u16 *, 0x32);
 }
 
-u16 fn_80089640(void) {
+u32 fn_80089640(void) {
     extern u16 *lbl_803674E4;
-    return lbl_803674E4[0x19];
+
+    return lbl_803674E4[0x19] & 1;
 }
 
 void fn_80089650(s32 arg0, s32 arg1) {
