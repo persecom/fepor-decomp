@@ -3868,11 +3868,10 @@ void fn_8014716C(u8 arg0) {
     }
 }
 
-void fn_80147548(void *arg1, s32 arg2) {
-    f32 var1 = *(f32*)((u8*)arg1 + 0);
-    f32 var2 = *(f32*)((u8*)arg1 + 4);
-    f32 var3 = *(f32*)((u8*)arg1 + 8);
-    fn_80147578(arg2, var1, var2, var3);
+s32 fn_80147578(void *, s32, f32, f32, f32);
+
+void fn_80147548(void *arg0, void *arg1, s32 arg2) {
+    fn_80147578(arg0, arg2, *(f32 *)((u8 *)arg1 + 0), *(f32 *)((u8 *)arg1 + 4), *(f32 *)((u8 *)arg1 + 8));
 }
 
 void fn_801478D0(s16 arg0) {
