@@ -218,8 +218,8 @@ void fn_80099ED0(void *arg0) {
 }
 
 void fn_80099EF4(void *arg0) {
-    M2C_UNK fn_8017E35C();
-    if ((u8) M2C_FIELD(arg0, u8 *, 0x34) != 2) {
+    void fn_8017E35C(void);
+    if (*(u8 *)((char *)arg0 + 0x34) != 2) {
         fn_8017E35C();
     }
 }
