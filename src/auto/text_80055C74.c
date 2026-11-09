@@ -922,19 +922,19 @@ void fn_800590D8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 }
 
 void fn_80059138(s32 arg0, s32 arg1, s32 arg2, u32 arg3) {
-    void *fn_8000CAF0(void *, u32);
-    extern s16 lbl_80285B08;
+    void *fn_8000CAF0(void *, s32);
+    extern u8 lbl_80285B08[];
     u32 var_r6;
     void *temp_r3;
 
     var_r6 = arg3;
-    if (var_r6 == 0U) {
-        var_r6 = 3U;
+    if (var_r6 == 0) {
+        var_r6 = 3;
     }
-    temp_r3 = fn_8000CAF0(&lbl_80285B08, var_r6);
-    *(s32 *)((char *)temp_r3 + 0x30) = arg0;
-    *(s32 *)((char *)temp_r3 + 0x34) = arg1;
-    *(s32 *)((char *)temp_r3 + 0x38) = arg2;
+    temp_r3 = fn_8000CAF0(lbl_80285B08, var_r6);
+    *(s32 *)((u8 *)temp_r3 + 0x30) = arg0;
+    *(s32 *)((u8 *)temp_r3 + 0x34) = arg1;
+    *(s32 *)((u8 *)temp_r3 + 0x38) = arg2;
 }
 
 void fn_800591A0(void *arg0) {
