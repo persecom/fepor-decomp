@@ -519,9 +519,13 @@ void fn_80118388(s32 arg0) {
 }
 
 void fn_801183C0(s32 arg0) {
-    fn_8013FED0();
-    lbl_80330708[0x54] = 2;
-    fn_801D3B14(arg0, &lbl_80330708);
+    void fn_8013FED0(s32);
+    void fn_801D3B14(s32);
+    extern s32 lbl_80330708[];
+
+    fn_8013FED0(arg0);
+    *((u8 *)lbl_80330708 + 0x54) = 2;
+    fn_801D3B14(arg0);
 }
 
 void fn_80118404(s32 arg0) {
