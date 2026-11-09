@@ -1035,8 +1035,8 @@ extern "C" s32 fn_8011B78C(void *arg0, void *arg1) {
 }
 #pragma cplusplus reset
 void fn_8011B978(void) {
-    extern u32 lbl_80274508;
-    fn_8000E0E4(&lbl_80274508 + 0x357);
+    extern u16 lbl_80274508[];
+    fn_8000E0E4((u8 *)lbl_80274508 + 0x357);
 }
 
 void *fn_8011B9A4(void) {
