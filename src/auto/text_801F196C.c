@@ -823,10 +823,10 @@ void fn_801F6538(void) {
 }
 
 void fn_801F6594(void) {
-    M2C_UNK fn_80108FA8(void *);
-    M2C_UNK fn_801480D8(M2C_UNK);
-    extern M2C_UNK lbl_80280CF0;
-    fn_80108FA8(&lbl_80280CF0 + 0x20);
+    void fn_80108FA8(void *);
+    void fn_801480D8(s32);
+    extern u16 lbl_80280CF0[];
+    fn_80108FA8(lbl_80280CF0 + 0x10);
     fn_801480D8(0x1388);
 }
 
