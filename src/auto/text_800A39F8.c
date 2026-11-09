@@ -1175,8 +1175,11 @@ s32 fn_800A886C(u8 arg0, u8 arg1) {
 }
 
 u8 *fn_800A88E0(void *arg0) {
-    fn_80234450(lbl_80312A80, &lbl_8026E408[0x2C], lbl_80312A80);
-    fn_802343E0(lbl_80312A80, *(s32*)((char*)arg0 + 0xC) + 4);
+    void fn_80234450(void *, void *);
+    void fn_802343E0(void *, s32);
+
+    fn_80234450(lbl_80312A80, (u8 *)lbl_8026E408 + 0x58);
+    fn_802343E0(lbl_80312A80, *(s32 *)((char *)arg0 + 0xC) + 4);
     return lbl_80312A80;
 }
 
