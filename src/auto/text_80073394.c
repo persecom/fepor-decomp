@@ -280,8 +280,10 @@ void fn_80073C44(s32 arg0) {
 }
 
 void fn_80073C74(s32 arg0) {
-    extern u16 lbl_80311F70;
-    fn_80024398((u16 *)&lbl_80311F70, arg0, 0);
+    M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
+    extern u8 lbl_80311F70[];
+
+    fn_80024398((M2C_UNK *)lbl_80311F70, arg0, 0);
 }
 
 void fn_80073CA4(void) {
