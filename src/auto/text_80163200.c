@@ -2511,6 +2511,22 @@ s32 fn_801788A0(struct unit* arg0, s32 arg1, s32 arg2) {
     return 0;
 }
 
+void *fn_80178A08(void *arg0, s16 arg1) {
+    extern u16 lbl_802951E4[76];
+    extern u16 lbl_802920E0[76];
+    
+    if (arg0 != NULL) {
+        *(u16**)((char*)arg0 + 4) = lbl_802951E4;
+        if (arg0 != NULL) {
+            *(u16**)((char*)arg0 + 4) = lbl_802920E0;
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 s32 fn_80178A64(void) {
     return 0;
 }
