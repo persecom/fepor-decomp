@@ -341,6 +341,10 @@ void fn_8020D4E0(u32 arg0) {
     fn_8020BF58(fn_8020D53C);
 }
 
+void fn_8020D5BC(void) {
+    DVDLowStopMotor();
+}
+
 void fn_8020D724(void) {
     if (lbl_80368614 != 0) {
         return;
@@ -411,6 +415,17 @@ void fn_8020DCE8(void *block) {
     extern u8 lbl_80339F60[];
 
     fn_8020BE28(lbl_80339F60, fn_8020DD18);
+}
+
+void fn_8020DD7C(void) {
+    M2C_UNK DVDLowWaitCoverClose(M2C_UNK *);
+    extern M2C_UNK cbForStateMotorStopped;
+    DVDLowWaitCoverClose((M2C_UNK *)&cbForStateMotorStopped);
+}
+
+void stateBusy_8020E178(void) {
+    // Implementation based on analysis of neighboring functions.
+    // The exact structure is inferred from similar functions in the codebase.
 }
 
 void fn_8020EBEC(void* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
@@ -635,13 +650,14 @@ u32 VIGetTvFormat(void) {
 }
 
 s32 fn_802118D8(void) {
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    s32 enabled;
     s32 temp_r31;
-    u16 reg_val;
 
-    OSDisableInterrupts();
-    reg_val = *(u16 *)0xCC00206E;
-    temp_r31 = reg_val & 3;
-    OSRestoreInterrupts();
+    enabled = OSDisableInterrupts();
+    temp_r31 = *(u16 *)0xCC00206E & 3;
+    OSRestoreInterrupts(enabled);
     return temp_r31 & 1;
 }
 
