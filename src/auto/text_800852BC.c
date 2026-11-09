@@ -3,7 +3,6 @@
 #include "global.h"
 extern void* lbl_803674E8;
 extern f32 lbl_803696C8;
-f64 lbl_803696C0 = 4503599627370496.0;
 
 extern s32 lbl_803682F0;
 extern void *lbl_8026CC58;
@@ -205,7 +204,6 @@ void fn_80089680(void *arg0) {
     extern f32 lbl_803696A0;
     extern f32 lbl_803696A4;
     extern f32 lbl_803696BC;
-    extern f64 lbl_803696C0;
     u8 spC[0x44];
     s32 sp8;
     f32 temp_f5;
@@ -225,8 +223,7 @@ void fn_80089680(void *arg0) {
         *(u8 *)((u8 *)arg0 + 0x43) = (u8)(s32)(bc * *(f32 *)((u8 *)arg0 + 0x3C));
     }
     if (*(u16 *)((u8 *)arg0 + 0x32) & 1) {
-        u16 cur = *(u16 *)((u8 *)arg0 + 0x34);
-        *(u16 *)((u8 *)arg0 + 0x34) = cur + 1;
+        *(u16 *)((u8 *)arg0 + 0x34) = *(u16 *)((u8 *)arg0 + 0x34) + 1;
         bc = lbl_803696BC;
         u34 = *(u16 *)((u8 *)arg0 + 0x34);
         u36 = *(u16 *)((u8 *)arg0 + 0x36);
