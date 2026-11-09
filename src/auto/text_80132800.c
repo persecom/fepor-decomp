@@ -175,8 +175,10 @@ s32 fn_801329C8(void) {
 
 s32 fn_801329D0(void) {
     extern u16 lbl_80276008[];
-    fn_800C0658();
-    fn_8006F6A4((u8*)&lbl_80276008[0x186], 0, 0);
+    void fn_8006F6A4(s32, void *, s32, s32);
+    s32 fn_800C0658(void);
+
+    fn_8006F6A4(fn_800C0658(), (u8 *)lbl_80276008 + 0x186, 0, 0);
     return 5;
 }
 
@@ -2601,13 +2603,17 @@ void fn_8013FC00(void *arg0, void *arg1) {
     *(s16 *)((char *)arg0 + 0x2) = *(s16 *)((char *)arg1 + 0x2);
 }
 
+#pragma scheduling off
 void fn_8013FC14(void *arg0, void *arg1) {
-    s16 src0 = *(s16*)((u8*)arg1 + 0);
-    s16 src1 = *(s16*)((u8*)arg1 + 2);
-    *(s16*)((u8*)arg0 + 0) = src0;
-    *(s16*)((u8*)arg0 + 2) = src1;
-}
+    s16 src0;
+    s16 src1;
 
+    src0 = *(s16 *)((u8 *)arg1 + 0);
+    src1 = *(s16 *)((u8 *)arg1 + 2);
+    *(s16 *)((u8 *)arg0 + 0) = src0;
+    *(s16 *)((u8 *)arg0 + 2) = src1;
+}
+#pragma scheduling reset
 void fn_8013FC64(void) {
 
 }
@@ -2911,8 +2917,8 @@ s32 fn_80141B00(s32 arg0, s32 arg1)
 }
 
 void fn_80142018(Vec2s *out, void *arg0) {
-    s16 w = M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA);
-    s16 h = M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC);
+    s16 w = *(s16*)((u8*)arg0 + 0xE) - *(s16*)((u8*)arg0 + 0xA);
+    s16 h = *(s16*)((u8*)arg0 + 0x10) - *(s16*)((u8*)arg0 + 0xC);
     out->x = w;
     out->y = h;
 }
