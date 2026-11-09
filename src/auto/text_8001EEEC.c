@@ -825,13 +825,19 @@ void fn_80024728(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x61) = 0;
 }
 
-void fn_80024734(void *arg0) {
-    void **temp_r3;
-    M2C_FIELD(arg0, void **, 0x3C);
-    temp_r3 = (void **)M2C_FIELD(arg0, void **, 0x3C);
-    M2C_FIELD(M2C_FIELD(temp_r3, void **, 4), M2C_UNK (**)(void *, void *), 0x18)(temp_r3, arg0);
+#pragma cplusplus on
+extern "C" void fn_80024734(void *arg0) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0(void *) = 0;
+        virtual void v1(void *) = 0;
+        virtual void v2(void *) = 0;
+        virtual void v3(void *) = 0;
+        virtual void v4(void *) = 0;
+    };
+    ((Obj *)*(void **)((u8 *)arg0 + 0x3C))->v4(arg0);
 }
-
+#pragma cplusplus reset
 void fn_80024D18(s32 unused, void *arg1) {
     extern u32 *lbl_80367240;
     extern u8 lbl_80268D90[];
