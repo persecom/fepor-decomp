@@ -2002,6 +2002,20 @@ void fn_80170034(void *arg0) {
     fn_8000A430(M2C_FIELD(arg0, s32 *, 0x5C));
 }
 
+void fn_8017073C(void *arg0) {
+    M2C_UNK fn_8013FF00(void *, s32);
+    u32 fn_8013FF94(void *, s32, s32);
+    void fn_801658DC(s32, s32);
+    extern u16 lbl_80278080[];
+    u32 ret;
+
+    fn_8013FF00(arg0, M2C_FIELD(arg0, s32 *, 0x4C));
+    ret = fn_8013FF94(arg0, -0x1000, 0);
+    if (ret != 0) {
+        fn_801658DC(ret, (s32)((u8 *)lbl_80278080 + 0x248));
+    }
+}
+
 void fn_80170794(void *arg0) {
     s16 fn_80164E78(void *, s32);
     void *temp_r31;
