@@ -748,8 +748,8 @@ s32 fn_8007633C(void) {
     return 0;
 }
 
-s32 fn_80076380(void *arg0) {
-    if (*(u8 *)((uintptr_t)arg0 + 0x39) == 2) {
+s32 fn_80076380(s32 arg0, s32 arg1, void *arg2) {
+    if (*(u8 *)((u8 *)arg2 + 0x39) == 2) {
         return 0x10;
     }
     return 5;
