@@ -292,16 +292,16 @@ extern "C" void fn_8002A63C(void *arg0) {
         virtual void v0(s8, s8) = 0;
         virtual void visit(s8, s8) = 0;
     };
-    s8 y;
-    s8 x;
     struct {
         void *vtbl;
         u8 flag;
     } obj;
+    s8 y;
+    register s8 x;
 
     obj.vtbl = lbl_80284E20;
-    obj.flag = 0;
     obj.vtbl = lbl_80284DB0;
+    obj.flag = 0;
     obj.flag = 2;
     fn_8001EDA0(&obj.flag);
     fn_8002F728(lbl_802EF4E0);
@@ -713,13 +713,11 @@ void fn_8002D72C(void) {
 }
 
 extern u16 lbl_80284E78[216];
-void fn_8002D780(u8 arg0) {
+void fn_8002D780(s32 arg0) {
     void *fn_8000C0C0(void *);
-    void fn_8000C070(u8);
-    
-    void *temp_r3 = &lbl_80284E78;
-    fn_8000C0C0(temp_r3);
-    fn_8000C070(arg0);
+    void fn_8000C070(void *, u8);
+
+    fn_8000C070(fn_8000C0C0(lbl_80284E78), (u8)arg0);
 }
 
 void fn_8002D7BC(s32 arg0) {
