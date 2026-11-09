@@ -579,19 +579,18 @@ void fn_80123BEC(void *arg0) {
 }
 
 void fn_80123C2C(void *arg0) {
-    extern void *fn_80123D1C;
-    extern s32 fn_8006785C(s32, void **, void *);
-    extern s32 fn_80124424(void *);
-    extern s32 fn_800AA188(void);
-    
-    // This is very basic - let's examine the structure carefully
-    if (*(u8*)((u8*)arg0 + 0x4D) != 0) {
-        fn_8006785C(2, &fn_80123D1C, arg0);
+    void fn_8006785C(s32, void *, void *);
+    void fn_80124424(void *);
+    u8 fn_800AA188(void);
+    void fn_80123D1C(void);
+
+    if (*(u8 *)((u8 *)arg0 + 0x4D) != 0) {
+        fn_8006785C(2, fn_80123D1C, arg0);
         goto block_4;
     }
     if (fn_800AA188() != 0) {
-        fn_8006785C(2, &fn_80123D1C, arg0);
-block_4:
+        fn_8006785C(2, fn_80123D1C, arg0);
+    block_4:
         fn_80124424(arg0);
     }
 }
