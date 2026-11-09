@@ -1742,14 +1742,17 @@ void fn_8018F090(void **arg0) {
     fn_80152A18(0, 0, 0x10);
 }
 
-void fn_8018F338(void **arg0) {
-    void (*func)(void) = (void (*)(void))(*((void **)*arg0 + 0x4));
-    func();
+#pragma cplusplus on
+extern "C" void fn_8018F338(void *arg0) {
+    void fn_80154004(s32, s32, s32);
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    ((Obj *)arg0)->v2();
     fn_80154004(0, 0, 0x10);
 }
-
-#pragma use_lmw_stmw on
-#pragma cplusplus on
 extern "C" void fn_8018F6E8(void *arg0, s32 arg1) {
     struct Obj {
         virtual void v0() = 0;
