@@ -3446,6 +3446,61 @@ void fn_80148980(void *arg0, s16 arg1) {
     }
 }
 
+extern u8 lbl_80367AEA;
+extern u8 lbl_80367AEB;
+s32 fn_8014953C(void);
+void fn_80148A28(void *arg0) {
+    s32 rate;
+    Anim *self = (Anim *)arg0;
+    u8 level;
+    u8 alive;
+
+    rate = 0x64;
+    if (self->flags & 1) {
+        if (self->delay == 0) {
+            if (self->flags & 2) {
+                rate = fn_8014953C();
+            }
+            if (self->frame <= self->frames) {
+                self->cur = (u8)((f32)self->start + (f32)self->frame * ((f32)self->end - (f32)self->start) / (f32)self->frames);
+                self->frame++;
+                if (self->frame > self->frames && (self->flags & 4)) {
+                    (*(void (**)(void *))(*(void ***)((char *)self + 8) + 5))(self);
+                    self->flags &= ~4;
+                }
+                if (self->frame > self->frames && (self->flags & 8)) {
+                    (*(void (**)(void *))(*(void ***)((char *)self + 8) + 4))(self);
+                    self->flags &= ~8;
+                }
+            }
+            if (self->cur != self->prev || lbl_80367AEA != lbl_80367AEB || (self->flags & 2)) {
+                level = (u8)(lbl_80367AEA * rate / 100);
+                self->unk_d = (u8)(level * (self->cur * (*(u8 (**)(void *))(*(void ***)((char *)self + 8) + 0x15))(self)) / 10000);
+                self->prev = self->cur;
+            }
+            (*(void (**)(void *))(*(void ***)((char *)self + 0x18) + 3))(self);
+            alive = 0;
+            if ((self->flags & 1) && (*(u8 (**)(void *))(*(void ***)((char *)self + 8) + 2))(self)) {
+                alive = 1;
+            }
+            if (alive == 0) {
+                self->flags &= ~1;
+            }
+        } else {
+            self->delay--;
+            if (self->delay == 0) {
+                if (self->flags & 2) {
+                    rate = fn_8014953C();
+                }
+                level = (u8)(lbl_80367AEA * rate / 100);
+                self->unk_d = (u8)(level * (self->cur * (*(u8 (**)(void *))(*(void ***)((char *)self + 8) + 0x15))(self)) / 10000);
+                (*(void (**)(void *, u8, u8, u8, u16))(*(void ***)((char *)self + 0x18) + 2))(self, self->unk_d, self->unk_e, self->unk_10, (u16)self->unk_12);
+                (*(void (**)(void *))(*(void ***)((char *)self + 0x18) + 3))(self);
+            }
+        }
+    }
+}
+
 s8 fn_80149734(void) {
     s32 fn_800AF704(s8);
     s8 var_r31;
