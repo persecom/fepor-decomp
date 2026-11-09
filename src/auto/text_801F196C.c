@@ -1792,6 +1792,33 @@ u8 fn_801F19A0(void) {
     return *(u8 *)(temp_r3 + 0x18);
 }
 
+u8 fn_801F1A2C(void) {
+    void *fn_8000D354(void *);
+    s8 var_r0;
+    void *temp_r3;
+
+    temp_r3 = fn_8000D354(lbl_8027F710 + 0x15);
+    switch ((s32)lbl_80330708[0xA6]) {
+    case 3:
+        var_r0 = 3;
+        break;
+    case 0:
+        var_r0 = 0;
+        break;
+    case 1:
+        var_r0 = 1;
+        break;
+    case 2:
+        var_r0 = 2;
+        break;
+    default:
+        var_r0 = 0;
+        break;
+    }
+    temp_r3 = (void *)((u8 *)temp_r3 + var_r0);
+    return *(u8 *)((u8 *)temp_r3 + 0x14);
+}
+
 u8 fn_801F1BD0(void) {
     void *fn_8000D354(void *);
     s8 var_r0;
