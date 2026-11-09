@@ -409,10 +409,20 @@ void *fn_801343F8(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
     return arg0;
 }
 
-void fn_80134730(void **arg0) {
-    M2C_FIELD(*arg0, M2C_UNK (**)(), 0x20)();
+#pragma cplusplus on
+extern "C" void fn_80134730(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+    };
+    ((Obj *)arg0)->v6();
 }
-
+#pragma cplusplus reset
 s32 fn_80134988(s32 arg0, s32 arg1) {
     if (arg0 < 0) {
         return -1;
@@ -1190,7 +1200,8 @@ extern "C" void fn_80139884(void *arg0, s32 arg1) {
     s16 width;
     s16 margin;
     s16 height;
-    bool flag;
+    s16 lineHeight;
+    u8 flag;
     s16 y;
     s32 shadow;
 
@@ -1211,8 +1222,12 @@ extern "C" void fn_80139884(void *arg0, s32 arg1) {
     fn_8000A258();
     fn_80009C0C(lbl_8036A6A0);
     fn_8000A248();
-    y = (((Obj *)arg0)->GetLineHeight() - fn_800102BC(-1, lbl_8036A674)) >> 1;
-    flag = !fn_8014D8DC(lbl_80330708) || fn_800C3D48(lbl_803200AC) < 0;
+    lineHeight = ((Obj *)arg0)->GetLineHeight();
+    y = (lineHeight - fn_800102BC(-1, lbl_8036A674)) >> 1;
+    flag = 0;
+    if (!fn_8014D8DC(lbl_80330708) || fn_800C3D48(lbl_803200AC) < 0) {
+        flag = 1;
+    }
     shadow = 6;
     if (flag) {
         shadow = 0;
