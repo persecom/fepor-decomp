@@ -382,71 +382,63 @@ void fn_8005BCF0(void) {
     extern u8 lbl_802F04E0[126976];
     extern u8 lbl_8030FAF8[8192];
     extern u8 lbl_8030F7E0[792];
-
     void OSInitThreadQueue(u8 *queue);
     s32 fn_8020A558(u8 *a, void *b, s32 c, u8 *d, s32 e, s32 f, s32 g);
     s32 fn_8020A9E0(u8 *a);
+    extern void fn_8005BE48(void);
+    s32 i;
+    u8 (*e)[0x3E0];
 
-    extern void fn_8005BE48(void); // Not a real function signature
-
-    u8 *var_r5;
-    s32 var_ctr;
-
-    var_r5 = lbl_802F04E0;
-    var_ctr = 0x80;
-    do {
-        *(s8 *)(var_r5 + 0x0) = 0;
-        *(s32 *)(var_r5 + 0x2C) = 0;
-        *(s16 *)(var_r5 + 0x30) = 0;
-        *(s16 *)(var_r5 + 0x32) = 0;
-        *(s32 *)(var_r5 + 0x38) = 0;
-        *(s32 *)(var_r5 + 0x3C) = 0;
-        *(s8 *)(var_r5 + 0x7C) = 0;
-        *(s32 *)(var_r5 + 0xA8) = 0;
-        *(s16 *)(var_r5 + 0xAC) = 0;
-        *(s16 *)(var_r5 + 0xAE) = 0;
-        *(s32 *)(var_r5 + 0xB4) = 0;
-        *(s32 *)(var_r5 + 0xB8) = 0;
-        *(s8 *)(var_r5 + 0xF8) = 0;
-        *(s32 *)(var_r5 + 0x124) = 0;
-        *(s16 *)(var_r5 + 0x128) = 0;
-        *(s16 *)(var_r5 + 0x12A) = 0;
-        *(s32 *)(var_r5 + 0x130) = 0;
-        *(s32 *)(var_r5 + 0x134) = 0;
-        *(s8 *)(var_r5 + 0x174) = 0;
-        *(s32 *)(var_r5 + 0x1A0) = 0;
-        *(s16 *)(var_r5 + 0x1A4) = 0;
-        *(s16 *)(var_r5 + 0x1A6) = 0;
-        *(s32 *)(var_r5 + 0x1AC) = 0;
-        *(s32 *)(var_r5 + 0x1B0) = 0;
-        *(s8 *)(var_r5 + 0x1F0) = 0;
-        *(s32 *)(var_r5 + 0x21C) = 0;
-        *(s16 *)(var_r5 + 0x220) = 0;
-        *(s16 *)(var_r5 + 0x222) = 0;
-        *(s32 *)(var_r5 + 0x228) = 0;
-        *(s32 *)(var_r5 + 0x22C) = 0;
-        *(s8 *)(var_r5 + 0x26C) = 0;
-        *(s32 *)(var_r5 + 0x298) = 0;
-        *(s16 *)(var_r5 + 0x29C) = 0;
-        *(s16 *)(var_r5 + 0x29E) = 0;
-        *(s32 *)(var_r5 + 0x2A4) = 0;
-        *(s32 *)(var_r5 + 0x2A8) = 0;
-        *(s8 *)(var_r5 + 0x2E8) = 0;
-        *(s32 *)(var_r5 + 0x314) = 0;
-        *(s16 *)(var_r5 + 0x318) = 0;
-        *(s16 *)(var_r5 + 0x31A) = 0;
-        *(s32 *)(var_r5 + 0x320) = 0;
-        *(s32 *)(var_r5 + 0x324) = 0;
-        *(s8 *)(var_r5 + 0x364) = 0;
-        *(s32 *)(var_r5 + 0x390) = 0;
-        *(s16 *)(var_r5 + 0x394) = 0;
-        *(s16 *)(var_r5 + 0x396) = 0;
-        *(s32 *)(var_r5 + 0x39C) = 0;
-        *(s32 *)(var_r5 + 0x3A0) = 0;
-        var_r5 += 0x3E0;
-        var_ctr -= 1;
-    } while (var_ctr != 0);
-
+    for (i = 0, e = (u8 (*)[0x3E0])lbl_802F04E0; i < 0x80; i++, e++) {
+        *(s8 *)(*e + 0x0) = 0;
+        *(s32 *)(*e + 0x2C) = 0;
+        *(s16 *)(*e + 0x30) = 0;
+        *(s16 *)(*e + 0x32) = 0;
+        *(s32 *)(*e + 0x38) = 0;
+        *(s32 *)(*e + 0x3C) = 0;
+        *(s8 *)(*e + 0x7C) = 0;
+        *(s32 *)(*e + 0xA8) = 0;
+        *(s16 *)(*e + 0xAC) = 0;
+        *(s16 *)(*e + 0xAE) = 0;
+        *(s32 *)(*e + 0xB4) = 0;
+        *(s32 *)(*e + 0xB8) = 0;
+        *(s8 *)(*e + 0xF8) = 0;
+        *(s32 *)(*e + 0x124) = 0;
+        *(s16 *)(*e + 0x128) = 0;
+        *(s16 *)(*e + 0x12A) = 0;
+        *(s32 *)(*e + 0x130) = 0;
+        *(s32 *)(*e + 0x134) = 0;
+        *(s8 *)(*e + 0x174) = 0;
+        *(s32 *)(*e + 0x1A0) = 0;
+        *(s16 *)(*e + 0x1A4) = 0;
+        *(s16 *)(*e + 0x1A6) = 0;
+        *(s32 *)(*e + 0x1AC) = 0;
+        *(s32 *)(*e + 0x1B0) = 0;
+        *(s8 *)(*e + 0x1F0) = 0;
+        *(s32 *)(*e + 0x21C) = 0;
+        *(s16 *)(*e + 0x220) = 0;
+        *(s16 *)(*e + 0x222) = 0;
+        *(s32 *)(*e + 0x228) = 0;
+        *(s32 *)(*e + 0x22C) = 0;
+        *(s8 *)(*e + 0x26C) = 0;
+        *(s32 *)(*e + 0x298) = 0;
+        *(s16 *)(*e + 0x29C) = 0;
+        *(s16 *)(*e + 0x29E) = 0;
+        *(s32 *)(*e + 0x2A4) = 0;
+        *(s32 *)(*e + 0x2A8) = 0;
+        *(s8 *)(*e + 0x2E8) = 0;
+        *(s32 *)(*e + 0x314) = 0;
+        *(s16 *)(*e + 0x318) = 0;
+        *(s16 *)(*e + 0x31A) = 0;
+        *(s32 *)(*e + 0x320) = 0;
+        *(s32 *)(*e + 0x324) = 0;
+        *(s8 *)(*e + 0x364) = 0;
+        *(s32 *)(*e + 0x390) = 0;
+        *(s16 *)(*e + 0x394) = 0;
+        *(s16 *)(*e + 0x396) = 0;
+        *(s32 *)(*e + 0x39C) = 0;
+        *(s32 *)(*e + 0x3A0) = 0;
+    }
     if ((u8) lbl_803672E9 == 0) {
         lbl_803672EB = 0;
         lbl_803672EA = 0;
@@ -563,21 +555,21 @@ s32 fn_8005C268(char *name) {
     return 0;
 }
 
-u16 fn_8005C368(u32 arg0) {
-    extern M2C_UNK lbl_802F04E0;
-    M2C_UNK *var_r5;
+s32 fn_8005C368(u32 arg0) {
+    extern u16 lbl_802F04E0[];
+    void *var_r3;
+    u16 *var_r5;
     s32 var_ctr;
     s32 var_r4;
-    void *var_r3;
 
-    var_r5 = &lbl_802F04E0;
+    var_r5 = &lbl_802F04E0[0];
     var_r4 = 0;
     var_ctr = 0x400;
 loop_1:
-    if ((u32) M2C_FIELD(var_r5, u32 *, 0x38) == arg0) {
-        var_r3 = &lbl_802F04E0 + (var_r4 * 0x7C);
+    if ((u32) *(var_r5 + 0x38 / sizeof(u16)) == arg0) {
+        var_r3 = &lbl_802F04E0[0] + (var_r4 * 0x7C);
     } else {
-        var_r5 += 0x7C;
+        var_r5 += 0x7C / sizeof(u16);
         var_r4 += 1;
         var_ctr -= 1;
         if (var_ctr == 0) {
@@ -587,9 +579,9 @@ loop_1:
         }
     }
     if (var_r3 == NULL) {
-        return -1U;
+        return -1;
     }
-    return M2C_FIELD(var_r3, u16 *, 0x32);
+    return *(u16 *)((uintptr_t) var_r3 + 0x32);
 }
 
 s32 fn_8005C3C4(char *name) {
@@ -2985,13 +2977,33 @@ extern "C" void fn_80070B3C(void *arg0, void *arg1) {
 }
 #pragma cplusplus reset
 
-void fn_80070C24(void **arg0, void *arg2) {
-    M2C_UNK fn_8008D510(s32, s16, s16);
-    M2C_FIELD(*arg0, M2C_UNK (**)(), 0x4C)();
-    M2C_FIELD(*arg0, M2C_UNK (**)(void **, void *), 0x48)(arg0, arg2);
-    fn_8008D510(M2C_FIELD(arg2, u8 *, 0x39) == 0, M2C_FIELD(arg2, s16 *, 0x30), M2C_FIELD(arg2, s16 *, 0x32));
+#pragma cplusplus on
+extern "C" void fn_80070C24(void *arg0, s32 arg1, void *arg2) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual s32 v16(void *) = 0;
+        virtual void v17() = 0;
+    };
+    void fn_8008D510(s32, bool, s16, s16);
+    ((Obj *)arg0)->v17();
+    fn_8008D510(((Obj *)arg0)->v16(arg2), *(u8 *)((u8 *)arg2 + 0x39) == 0, *(s16 *)((u8 *)arg2 + 0x30), *(s16 *)((u8 *)arg2 + 0x32));
 }
-
+#pragma cplusplus reset
 void fn_80070EDC(void) {
 
 }
