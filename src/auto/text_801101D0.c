@@ -934,10 +934,10 @@ s32 fn_8011AC10(void) {
 }
 
 void fn_8011AC44(void) {
-    u32 fn_8000C0C0(M2C_UNK *);
-    M2C_UNK fn_8000C60C();
-    extern M2C_UNK lbl_8028F814;
-    if (fn_8000C0C0(&lbl_8028F814) != 0U) {
+    u32 fn_8000C0C0(void *);
+    void fn_8000C60C(void);
+    extern u8 lbl_8028F814[];
+    if (fn_8000C0C0(lbl_8028F814) != 0U) {
         fn_8000C60C();
     }
 }
