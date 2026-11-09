@@ -577,61 +577,59 @@ s32 fn_801044FC(u8 *arg0) {
 }
 
 void fn_8010455C(void *arg0, u8 arg1) {
-    s32 temp_r5;
-    s32 temp_r5_2;
-    s32 temp_r5_3;
-    s32 temp_r5_4;
-    s32 temp_r5_5;
-    s32 temp_r5_6;
-    s32 temp_r5_7;
-    u16 temp_r4_2;
-    u8 temp_r4;
-    u8 temp_r4_3;
-    u8 temp_r4_4;
-    u8 temp_r4_5;
-    u8 temp_r4_6;
-    u8 temp_r4_7;
+    typedef struct {
+        u8 hi:5;
+        u8 cnt:3;
+    } Lo3;
+    u8 *p;
+    u8 b;
+    u16 h;
+    s32 v;
 
-    switch ((s32) arg1) {                           /* irregular */
+    p = (u8 *)arg0;
+    switch ((s32)arg1) {
     case 1:
-        temp_r4 = M2C_FIELD(arg0, u8 *, 0);
-        temp_r5 = (temp_r4 >> 5U) & 7;
-        if (temp_r5 != 0) {
-            M2C_FIELD(arg0, u8 *, 0) = (u8) ((temp_r4 & ~0xE0) | (((temp_r5 - 1) << 5) & 0xE0));
+        b = p[0];
+        v = (b >> 5U) & 7;
+        if (v != 0) {
+            p[0] = (u8)((b & ~0xE0) | (((v - 1) << 5) & 0xE0));
         }
-        temp_r4_2 = (u16) M2C_FIELD(arg0, u8 *, 0);
-        temp_r5_2 = (temp_r4_2 >> 7U) & 7;
-        if (temp_r5_2 != 0) {
-            M2C_FIELD(arg0, u8 *, 0) = (s16) ((temp_r4_2 & ~0x380) | (((temp_r5_2 - 1) << 7) & 0x380));
+        h = *(u16 *)p;
+        v = (h >> 7U) & 7;
+        if (v != 0) {
+            *(u16 *)p = (u16)((h & ~0x380) | (((v - 1) << 7) & 0x380));
         }
-        temp_r4_3 = M2C_FIELD(arg0, u8 *, 1);
-        temp_r5_3 = (temp_r4_3 >> 4U) & 7;
-        if (temp_r5_3 != 0) {
-            M2C_FIELD(arg0, u8 *, 1) = (u8) ((temp_r4_3 & ~0x70) | (((temp_r5_3 - 1) << 4) & 0x70));
+        p = (u8 *)arg0;
+        b = p[1];
+        v = (b >> 4U) & 7;
+        if (v != 0) {
+            p[1] = (u8)((b & ~0x70) | (((v - 1) << 4) & 0x70));
         }
-        temp_r4_4 = M2C_FIELD(arg0, u8 *, 0);
-        temp_r5_4 = (temp_r4_4 >> 2U) & 7;
-        if (temp_r5_4 != 0) {
-            M2C_FIELD(arg0, u8 *, 0) = (u8) ((temp_r4_4 & ~0x1C) | (((temp_r5_4 - 1) << 2) & 0x1C));
+        p = (u8 *)arg0;
+        b = p[0];
+        v = (b >> 2U) & 7;
+        if (v != 0) {
+            p[0] = (u8)((b & ~0x1C) | (((v - 1) << 2) & 0x1C));
         }
-        temp_r4_5 = M2C_FIELD(arg0, u8 *, 2);
-        temp_r5_5 = (temp_r4_5 >> 5U) & 7;
-        if (temp_r5_5 != 0) {
-            M2C_FIELD(arg0, u8 *, 2) = (u8) ((temp_r4_5 & ~0xE0) | (((temp_r5_5 - 1) << 5) & 0xE0));
+        p = (u8 *)arg0;
+        b = p[2];
+        v = (b >> 5U) & 7;
+        if (v != 0) {
+            p[2] = (u8)((b & ~0xE0) | (((v - 1) << 5) & 0xE0));
         }
-        temp_r4_6 = M2C_FIELD(arg0, u8 *, 2);
-        temp_r5_6 = (temp_r4_6 >> 2U) & 7;
-        if (temp_r5_6 != 0) {
-            M2C_FIELD(arg0, u8 *, 2) = (u8) ((temp_r4_6 & ~0x1C) | (((temp_r5_6 - 1) << 2) & 0x1C));
-            return;
+        p = (u8 *)arg0;
+        b = p[2];
+        v = (b >> 2U) & 7;
+        if (v != 0) {
+            p[2] = (u8)((b & ~0x1C) | (((v - 1) << 2) & 0x1C));
         }
         return;
     case 0:
-        temp_r4_7 = M2C_FIELD(arg0, u8 *, 1);
-        temp_r5_7 = temp_r4_7 & 7;
-        if (temp_r5_7 != 0) {
-            M2C_FIELD(arg0, u8 *, 1) = (u8) ((temp_r4_7 & ~7) | ((temp_r5_7 - 1) & 7));
-            return;
+        p = (u8 *)arg0;
+        b = p[1];
+        v = b & 7;
+        if (v != 0) {
+            ((Lo3 *)&p[1])->cnt = v - 1;
         }
         break;
     }
