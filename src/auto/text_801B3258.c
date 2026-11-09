@@ -15,6 +15,10 @@ typedef struct List {
     s32 size;
 } List;
 
+static inline s32 MsgBoxAddPad(s32 h, s32 pad) {
+    return h + pad;
+}
+
 void fn_801E00EC(void *arg0, void *arg1);
 extern u8 lbl_8032FF08[];
 extern u16 lbl_80331D00[];
@@ -1415,31 +1419,33 @@ extern "C" void *fn_801BE21C(void *arg0, s16 arg1) {
 
 #pragma cplusplus reset
 void *fn_801BE6A8(s32 arg0) {
-    M2C_UNK fn_8000C070(void *, M2C_UNK);
-    void *fn_8000CAA0(M2C_UNK *, s32, M2C_UNK *, M2C_UNK *);
-    M2C_UNK fn_801403F0();
-    extern M2C_UNK lbl_80297C14;
-    extern M2C_UNK lbl_80297E78;
-    extern M2C_UNK lbl_802EF4C8;
+    void *fn_8000CAA0(void *, s32, void *, void *);
+    void fn_801403F0(void);
+    extern u8 lbl_80297C14[];
+    extern u8 lbl_80297E78[];
+    extern u8 lbl_802EF4C8[];
     extern s8 lbl_80368274;
-    void *temp_r3;
-
-    temp_r3 = fn_8000CAA0(&lbl_80297C14, arg0, &lbl_80297C14, &lbl_802EF4C8);
+    
+    void *temp_r3 = fn_8000CAA0(lbl_80297C14, arg0, lbl_80297C14, lbl_802EF4C8);
+    
     if (temp_r3 != NULL) {
         fn_801403F0();
-        M2C_FIELD(temp_r3, M2C_UNK **, 0x40) = &lbl_80297E78;
-        M2C_FIELD(temp_r3, s32 *, 0x48) = 0;
-        M2C_FIELD(temp_r3, s32 *, 0x4C) = 0;
-        M2C_FIELD(temp_r3, s32 *, 0x50) = 0;
-        M2C_FIELD(temp_r3, s32 *, 0x54) = 0;
-        M2C_FIELD(temp_r3, s32 *, 0x58) = 0;
-        M2C_FIELD(temp_r3, s32 *, 0x5C) = 0;
-        M2C_FIELD(temp_r3, s32 *, 0x60) = 0;
-        M2C_FIELD(temp_r3, s32 *, 0x64) = 0;
-        M2C_FIELD(temp_r3, s32 *, 0x68) = 0;
-        M2C_FIELD(temp_r3, s32 *, 0x6C) = 0;
+        
+        *(u32*)((char*)temp_r3 + 0x40) = (u32)lbl_80297E78;
+        *(u32*)((char*)temp_r3 + 0x48) = 0; // Initialize to zero
+        *(u32*)((char*)temp_r3 + 0x4c) = 0;
+        *(u32*)((char*)temp_r3 + 0x50) = 0;
+        *(u32*)((char*)temp_r3 + 0x54) = 0;
+        *(u32*)((char*)temp_r3 + 0x58) = 0;
+        *(u32*)((char*)temp_r3 + 0x5c) = 0;
+        *(u32*)((char*)temp_r3 + 0x60) = 0;
+        *(u32*)((char*)temp_r3 + 0x64) = 0;
+        *(u32*)((char*)temp_r3 + 0x68) = 0;
+        *(u32*)((char*)temp_r3 + 0x6c) = 0;
+        
         lbl_80368274 = 0x80;
     }
+
     fn_8000C070(temp_r3, 0xB);
     return temp_r3;
 }
@@ -1484,6 +1490,24 @@ void fn_801BE8F0(void) {
 }
 
 void *fn_801BE91C(void) { extern u8 lbl_8027C698[]; return lbl_8027C698+0x2D4; }
+
+void *fn_801BEB24(void *arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4) {
+    s16 spE;
+    s16 spC;
+    s16 spA;
+    s16 sp8;
+
+    spA = arg3;
+    spC = arg1;
+    spE = arg2;
+    sp8 = 0x108;
+
+    fn_801BEB9C(&spC, &sp8, arg4);
+    *(u16 **)arg0 = (u16 *)0x802918A0;
+    *(s32 *)((u8 *)arg0 + 0xCC) = 0;
+    ((void (*)(void *, u16 *))((u32 *)*(u32 **)arg0)[0x28 / 4])(arg0, (u16 *)0x802918A0);
+    return arg0;
+}
 
 void fn_801BEDC4(void) {
     // Function body will be filled in
