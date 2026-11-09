@@ -570,6 +570,17 @@ s32 fn_800A039C(void *arg2) {
     return 0;
 }
 
+u8 fn_800A03C4(void) {
+    extern u8 lbl_80367704;
+    u8 var_r3;
+
+    var_r3 = 2;
+    if ((u8) lbl_80367704 != 0) {
+        var_r3 = 0;
+    }
+    return var_r3;
+}
+
 void *fn_800A03E0(void) {
     extern u16 lbl_8026D8D8;
     void* temp = &lbl_8026D8D8;
@@ -1719,13 +1730,10 @@ void *fn_800A3698(void) {
     return &lbl_8026D8D8 + 0x7A8;
 }
 
-s32 fn_800A36A8(s32 arg1) {
-    s32 *temp_r3;
+s32 fn_800A36A8(s32 arg0, s32 arg1) {
     void *fn_800241C8(s32);
     M2C_UNK fn_80127170(s32);
-    
-    temp_r3 = (s32 *)fn_800241C8(arg1);
-    fn_80127170(temp_r3[0x18 / 4]);
+    fn_80127170(M2C_FIELD(fn_800241C8(arg1), s32 *, 0x18));
     return 6;
 }
 
