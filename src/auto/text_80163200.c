@@ -4,6 +4,19 @@ extern u16 lbl_80278080[];
 extern u16 lbl_80294604[];
 extern u8 lbl_80330708[];
 extern u16 lbl_803680E8[];
+extern f32 lbl_8036AC2C;
+extern f32 lbl_8036AC30;
+extern f32 lbl_8036AC34;
+extern f32 lbl_8036AC40;
+extern f32 lbl_8036AC48;
+extern f32 lbl_8036AC5C;
+extern f32 lbl_8036AC60;
+extern f32 lbl_8036AC64;
+extern f32 lbl_8036AC68;
+extern f32 lbl_8036AC6C;
+extern f32 lbl_8036AC70;
+extern f32 lbl_8036AC74;
+extern f32 lbl_8036AC78;
 extern f32 lbl_8036AB94;
 extern u16 lbl_80294604[];
 extern u16 lbl_80295580[10];
@@ -119,6 +132,11 @@ void fn_80163E50(void *arg0) {
     *(s16 *)((char *)arg0 + 0x18) = 0x86;
 }
 
+void fn_80163E70(void **arg0) {
+    void (**func_ptr)(void) = (void (**)(void))((u8*)*arg0 + 0x20);
+    (*func_ptr)();
+}
+
 s32 fn_801649C8(void *arg0, s32 *arg1) {
     u8 (*temp_r12)(s32 *, s32);
 
@@ -137,12 +155,12 @@ void fn_80164A24(void *arg0) {
 s32 fn_80164BB0(void *arg0) {
     u32 *fn_80037BD0(s32, s32);
     s16 slot = M2C_FIELD(arg0, s16 *, 0x4C);
-    s32 idx = (s32)slot;
+    s32 idx = slot;
 
-    if (idx < 0 || 7 < slot) {
+    if ((idx < 0) || (slot > 7)) {
         return 0;
     }
-    return (s32)fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58), idx);
+    return (s32) fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58), idx);
 }
 #pragma scheduling reset
 s16 fn_80164FBC(void *arg0, s16 arg1) {
@@ -209,6 +227,12 @@ void *fn_801651E0(void *arg0, s16 arg1) {
 
 s32 fn_80165250(void) {
     return 0;
+}
+
+void fn_80165300(void **arg0) {
+    void (**func_ptr)(void) = (void (**)(void))(*arg0);
+    func_ptr[4]();
+    fn_80154138(0, 0, 0x10);
 }
 
 void fn_801658DC(s32 arg0, s32 arg1) {
@@ -3543,6 +3567,12 @@ void fn_801812CC(void *arg0) {
         fn_8000C188(arg0);
     }
 }
+
+void fn_80181328(void **arg0) {
+    void (**func_ptr)(void) = (void (**)(void))(*arg0);
+    func_ptr[0x20 / sizeof(void*)]();
+}
+
 #pragma opt_common_subs reset
 
 #pragma cplusplus on
