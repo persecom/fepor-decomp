@@ -2500,15 +2500,18 @@ void fn_8007C318(u16 arg1) {
 }
 
 void fn_8007C34C(void) {
-    extern M2C_UNK lbl_80312040;
-    M2C_FIELD(&lbl_80312040, s32 *, 0) = 0;
-    M2C_FIELD(&lbl_80312040, s32 *, 4) = 0;
-    M2C_FIELD(&lbl_80312040, s32 *, 8) = 0;
-    M2C_FIELD(&lbl_80312040, s32 *, 0xC) = 0;
-    M2C_FIELD(&lbl_80312040, s32 *, 0x10) = 0;
-    M2C_FIELD(&lbl_80312040, s32 *, 0x14) = 0;
-    M2C_FIELD(&lbl_80312040, s32 *, 0x18) = 0;
-    M2C_FIELD(&lbl_80312040, s32 *, 0x1C) = 0;
+    extern u32 lbl_80312040[];
+    u32 *p;
+
+    p = lbl_80312040;
+    p[0] = 0;
+    p[1] = 0;
+    p[2] = 0;
+    p[3] = 0;
+    p[4] = 0;
+    p[5] = 0;
+    p[6] = 0;
+    p[7] = 0;
 }
 
 void fn_8007C3BC(void) {
