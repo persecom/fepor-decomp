@@ -2033,11 +2033,8 @@ void fn_800287E4(void) {
 }
 
 void fn_80028824(s32 arg0) {
-    extern void *lbl_80330708;
-    void *temp_r5;
-    
-    temp_r5 = lbl_80330708;
-    fn_8014C718(temp_r5, arg0, temp_r5);
+    extern u16 lbl_80330708[66];
+    fn_8014C718(lbl_80330708, arg0);
     fn_800162B8();
 }
 
