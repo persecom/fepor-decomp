@@ -413,6 +413,16 @@ u8 fn_801661CC(void *arg0) {
     }
 }
 
+void fn_80166228(void) {
+    void fn_8003F670(void *);
+    void fn_80013D4C(void);
+    void *p = *(void **)&lbl_803680E8;
+    if (p != NULL) {
+        fn_8003F670(p);
+    }
+    fn_80013D4C();
+}
+
 void *fn_801662F0(void **arg0) {
     extern u16 lbl_802778A8[];
     void *fn_8000E0E4(void *);
