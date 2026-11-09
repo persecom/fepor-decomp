@@ -4329,14 +4329,14 @@ void fn_8017EE3C(s32 arg0, u8 arg1, u8 arg2, s32 arg3, s32 arg4, u8 arg5, f32 fa
 }
 
 void fn_8017F040(s32 arg0, s32 arg1, s32 arg2) {
-    void *fn_8000CAF0(M2C_UNK *, s32);
-    extern M2C_UNK lbl_80295508;
+    void *fn_8000CAF0(u8 *, s32);
+    extern u8 lbl_80295508[];
     void *temp_r3;
 
     if ((arg0 != 0) && (arg1 != 0)) {
-        temp_r3 = fn_8000CAF0(&lbl_80295508, arg2);
-        M2C_FIELD(temp_r3, s32 *, 0x30) = arg0;
-        M2C_FIELD(temp_r3, s32 *, 0x3C) = arg1;
+        temp_r3 = fn_8000CAF0(lbl_80295508, arg2);
+        *(s32 *)((u8 *)temp_r3 + 0x30) = arg0;
+        *(s32 *)((u8 *)temp_r3 + 0x3C) = arg1;
     }
 }
 
