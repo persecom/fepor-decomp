@@ -994,6 +994,7 @@ M2C_UNK *fn_8001CDE4(u8 arg0) {
     return &lbl_80268820;
 }
 
+#pragma peephole off
 u32 fn_8001CFA8(u8 arg0) {
     if (arg0 >= 0xFBU) {
         return 0xFBU;
@@ -1010,9 +1011,9 @@ u32 fn_8001CFA8(u8 arg0) {
     if (arg0 >= 0x1FU) {
         return 0x1FU;
     }
-    return (u32) ((arg0 | ~1) - ((u32) (arg0 - 1) >> 1U)) >> 0x1FU;
+    return arg0 >= 1U;
 }
-
+#pragma peephole reset
 void fn_8001D018(s32 arg0, s32 arg1) {
     M2C_UNK fn_8017A810(s32, M2C_UNK, s32);
     fn_8017A810(arg1, 8, arg0);
