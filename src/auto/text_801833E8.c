@@ -5400,6 +5400,19 @@ s32 fn_801A23D0(void) {
     return 1;
 }
 
+void fn_801A24C4(void *arg0) {
+    s32 fn_8000C0C0(void *);
+    u8 fn_80183974(void);
+    void fn_8000C188(void *);
+    extern u8 lbl_80296FA8[];
+    s32 temp_r3;
+
+    temp_r3 = fn_8000C0C0(lbl_80296FA8);
+    if (((u32)(-temp_r3 | temp_r3) >> 31) == 0 && fn_80183974() == 0) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_801A2570(void) {
     M2C_UNK fn_800C1060();
     extern u8 lbl_80367289;
