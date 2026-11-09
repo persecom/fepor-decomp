@@ -16,6 +16,16 @@ void *fn_80103750(void) {
     return &lbl_802734D0[0x56/2];
 }
 
+s32 fn_80103760(void *arg0, s32 arg1) {
+    void fn_80016358(void *);
+    void fn_80024398(void *, s32, s32);
+    extern u8 lbl_803679B4[8];
+
+    fn_80016358(arg0);
+    fn_80024398(lbl_803679B4, arg1, 0);
+    return 4;
+}
+
 void *fn_801037A0(void) {
     extern u16 lbl_802734D0[];
     return (u8 *)lbl_802734D0 + 0xa3;
