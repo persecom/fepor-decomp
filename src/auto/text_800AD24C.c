@@ -3170,6 +3170,23 @@ s32 fn_800BC90C(u8 arg0, s32 arg1) {
     return 1;
 }
 
+s32 fn_800BC970(u8 arg0, s32 arg1) {
+    void fn_8003C5EC(void *, s32);
+    extern u8 lbl_802B14E4[];
+    void *unit;
+
+    if (arg0 != 0) {
+        unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
+    } else {
+        unit = NULL;
+    }
+    if (unit == NULL || *(u32 *)((u8 *)unit + 0x188) == 0) {
+        return 0;
+    }
+    fn_8003C5EC(unit, arg1);
+    return 1;
+}
+
 s32 fn_800BCA38(u8 arg0, s32 arg1) {
     void *fn_80016A9C(s32);
     M2C_UNK fn_8003D5FC(void *, u8);
