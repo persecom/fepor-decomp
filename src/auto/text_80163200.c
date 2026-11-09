@@ -1249,7 +1249,7 @@ s32 fn_8016AE7C(s32 arg0, s32 arg1, void *arg2) {
 
 void fn_8016AFC4(void) {
     extern u16 lbl_80277BC0[];
-    fn_8000E0E4(&lbl_80277BC0[0x20A]);
+    fn_8000E0E4((u8 *)lbl_80277BC0 + 0x20b);
 }
 
 void *fn_8016AFF0(void) {
