@@ -90,7 +90,7 @@ M2C_UNK *fn_8012C4F0(void) {
 
 void *fn_8012C53C(void) {
     extern u16 lbl_802758F8[];
-    return &(lbl_802758F8[0x14D]);
+    return (u8 *)lbl_802758F8 + 0x14d;
 }
 
 s32 fn_8012C54C(void) {
