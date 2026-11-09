@@ -734,18 +734,18 @@ void fn_80136320(s32 *arg0, void *arg1) {
     *arg0 = *fn_8013F748(arg1, &spC, &sp8, temp_r6, (s16) temp_r11, temp_r8, temp_r9, temp_r10);
 }
 
-void **fn_801363C4(void **arg0, s16 arg1) {
-    void fn_800C428C(void**);
-    extern void* lbl_8028FDB0;
-    extern void* lbl_8029186C;
-    extern void* lbl_80292230;
+void *fn_801363C4(void *arg0, s16 arg1) {
+    void fn_800C428C(void *);
+    extern void *lbl_8029186C[];
+    extern void *lbl_80292230[];
+    extern void *lbl_8028FDB0[];
 
     if (arg0 != NULL) {
-        *arg0 = &lbl_8029186C;
+        *(void **)arg0 = lbl_8029186C;
         if (arg0 != NULL) {
-            *arg0 = &lbl_80292230;
+            *(void **)arg0 = lbl_80292230;
             if (arg0 != NULL) {
-                *arg0 = &lbl_8028FDB0;
+                *(void **)arg0 = lbl_8028FDB0;
             }
         }
         if (arg1 > 0) {
