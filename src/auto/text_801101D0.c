@@ -1172,8 +1172,9 @@ u8 fn_8011BD44(void) {
 }
 
 s32 fn_8011BD58(void) {
-    extern s8 lbl_802EF4C8[];
-    return lbl_802EF4C8[0x1F];
+    extern u8 lbl_802EF4C8[24];
+    lbl_802EF4C8[8] = 0x86;
+    return 5;
 }
 
 void fn_8011BD70(void) {
