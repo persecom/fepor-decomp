@@ -815,9 +815,9 @@ s32 fn_80131714(s32 arg0, s32 arg1)
     }
 }
 
-void *fn_801317B0(s32 arg1) {
+void *fn_801317B0(s32 arg0, s32 arg1) {
     extern u8 lbl_80275AC0[];
-    switch (arg1) {                                 /* irregular */
+    switch (arg1) {
     case 1:
         return &lbl_80275AC0[0x34B];
     case 2:
