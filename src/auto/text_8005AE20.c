@@ -2911,6 +2911,13 @@ void fn_800701FC(u32 arg0, u32 arg1, s32 arg2, u32 arg3, u32 arg4, u32 arg5)
     // Function body to be filled in
 }
 
+u32 fn_800703C4(void) {
+    extern u8 lbl_80366DE8;
+
+    lbl_80366DE8 = 0;
+    return 9;
+}
+
 s32 fn_800703D4(void) {
     return 0;
 }
