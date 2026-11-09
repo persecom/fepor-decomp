@@ -158,6 +158,155 @@ s32 fn_8000E684(void* arg0) {
     return fn_80004610(arg0);
 }
 
+extern f32 lbl_80368BDC;
+extern f32 lbl_80368BE0;
+extern f64 lbl_80368C20;
+s32 fn_80010770(u8 *str, s32 idx, f32 scale) {
+    register u8 *digits;
+    u32 *tbl;
+    u32 found;
+    s32 i;
+    s32 result;
+    f32 fmax;
+    u8 *p;
+    s32 c;
+    s32 code;
+    s16 digi;
+    s16 shift;
+    s32 val;
+    f32 ftmp;
+    s32 rnd;
+
+    p = str;
+    if (idx == -1) {
+        idx = 0;
+    }
+    found = (u32)fn_8010494C((void *)lbl_802AEE20[idx]);
+    tbl = (u32 *)lbl_802AEE20;
+    if (tbl[0] == found) {
+        i = 0;
+    } else if (tbl[1] == found) {
+        i = 1;
+    } else if (tbl[2] == found) {
+        i = 2;
+    } else if (tbl[3] == found) {
+        i = 3;
+    } else if (tbl[4] == found) {
+        i = 4;
+    } else {
+        i = -1;
+    }
+
+    fmax = lbl_80368BDC;
+    result = 0;
+
+    while ((s8)*p != 0) {
+        if (*p++ == '#') {
+            c = (s8)*p++;
+            code = c - '#';
+            if ((u32)code <= 0x56U) {
+                switch (code) {
+                case 30:
+                case 31:
+                case 32:
+                case 36:
+                case 38:
+                case 47:
+                case 53:
+                case 85:
+                    p += 2;
+                    break;
+                case 45:
+                    p += 3;
+                    break;
+                case 35:
+                    digits = (u8 *)__alloca(8);
+                    digi = 0;
+                    while ((u8)digi < 2) {
+                        c = (s8)*p++;
+                        if (c >= '0' && c <= '9') {
+                            digits[(u8)digi] = (u8)(c - '0');
+                        } else if (c >= 'a' && c <= 'f') {
+                            digits[(u8)digi] = (u8)(c - 0x57);
+                        } else if (c >= 'A' && c <= 'F') {
+                            digits[(u8)digi] = (u8)(c - 0x37);
+                        }
+                        digi += 1;
+                    }
+                    val = 0;
+                    digi = 1;
+                    shift = 0;
+                    while (digi >= 0) {
+                        val += digits[digi] << shift;
+                        digi -= 1;
+                        shift += 4;
+                    }
+                    if (val == -1) {
+                        val = 0;
+                    }
+                    found = (u32)fn_8010494C((void *)lbl_802AEE20[val]);
+                    if (tbl[0] == found) {
+                    } else if (tbl[1] == found) {
+                    } else if (tbl[2] == found) {
+                    } else if (tbl[3] == found) {
+                    } else if (tbl[4] == found) {
+                    }
+                    break;
+                case 48:
+                case 54:
+                    digits = (u8 *)__alloca(8);
+                    digi = 0;
+                    while ((u8)digi < 2) {
+                        c = (s8)*p++;
+                        if (c >= '0' && c <= '9') {
+                            digits[(u8)digi] = (u8)(c - '0');
+                        } else if (c >= 'a' && c <= 'f') {
+                            digits[(u8)digi] = (u8)(c - 0x57);
+                        } else if (c >= 'A' && c <= 'F') {
+                            digits[(u8)digi] = (u8)(c - 0x37);
+                        }
+                        digi += 1;
+                    }
+                    val = 0;
+                    digi = 1;
+                    shift = 0;
+                    while (digi >= 0) {
+                        val += digits[digi] << shift;
+                        digi -= 1;
+                        shift += 4;
+                    }
+                    ftmp = (f32)(u32)val * lbl_80368BE0;
+                    if (ftmp > fmax) {
+                        fmax = ftmp;
+                    }
+                    break;
+                default:
+                    break;
+                }
+            }
+        } else {
+            rnd = fn_80104E40();
+            ftmp = fmax * (f32)rnd * scale;
+            rnd = (s32)ftmp;
+            if (result < rnd) {
+                result = rnd;
+            }
+        }
+    }
+
+    if (i == -1) {
+        i = 0;
+    }
+    found = (u32)fn_8010494C((void *)lbl_802AEE20[i]);
+    if (tbl[0] == found) {
+    } else if (tbl[1] == found) {
+    } else if (tbl[2] == found) {
+    } else if (tbl[3] == found) {
+    } else if (tbl[4] == found) {
+    }
+    return result;
+}
+
 s32 fn_80010B78(void) {
     s32 r31, r30, r29, r28, r27;
     
@@ -221,11 +370,24 @@ u16 fn_8001131C(void *arg0) {
     return **fn_8006EDD8(M2C_FIELD(arg0, s32 *, 4), M2C_FIELD(M2C_FIELD(arg0, void **, 0), s32 (**)(), 0x24)());
 }
 
-u16 fn_80011368(void *arg0) {
+#pragma cplusplus on
+extern "C" u16 fn_80011368(void *arg0) {
+    struct Obj {
+        virtual s32 v0() = 0;
+        virtual s32 v1() = 0;
+        virtual s32 v2() = 0;
+        virtual s32 v3() = 0;
+        virtual s32 v4() = 0;
+        virtual s32 v5() = 0;
+        virtual s32 v6() = 0;
+        virtual s32 v7() = 0;
+        s32 unk04;
+    };
     void **fn_8006EDD8(s32, s32);
-    return M2C_FIELD(*fn_8006EDD8(M2C_FIELD(arg0, s32 *, 4), M2C_FIELD(M2C_FIELD(arg0, void **, 0), s32 (**)(), 0x24)()), u16 *, 2);
+    Obj *obj = (Obj *)arg0;
+    return *(u16 *)((u8 *)*fn_8006EDD8(obj->unk04, obj->v7()) + 2);
 }
-
+#pragma cplusplus reset
 s32 fn_800113B4(void) {
     return 0;
 }
