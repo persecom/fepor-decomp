@@ -2,22 +2,16 @@
 #include "common.h"
 
 static inline void *map_find_xy(s32 *arg0, s8 arg1, s8 arg2) {
-    s32 *base = arg0;
     s32 *var_r6;
     s32 var_r5;
     s32 n;
 
     n = *arg0;
-    var_r6 = base;
-    var_r5 = 0;
-    if (n > 0) {
-        do {
-            if (arg1 == *(s8 *)((char *)var_r6 + 8) && arg2 == *(s8 *)((char *)var_r6 + 9)) {
-                return (void *)((char *)base + var_r5 * 0x14 + 8);
-            }
-            var_r6 = (s32 *)((char *)var_r6 + 0x14);
-            var_r5++;
-        } while (--n);
+    var_r6 = arg0;
+    for (var_r5 = 0; var_r5 < n; var_r5++, var_r6 = (s32 *)((char *)var_r6 + 0x14)) {
+        if (arg1 == *(s8 *)((char *)var_r6 + 8) && arg2 == *(s8 *)((char *)var_r6 + 9)) {
+            return (void *)((char *)arg0 + var_r5 * 0x14 + 8);
+        }
     }
     return NULL;
 }
