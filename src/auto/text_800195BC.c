@@ -222,14 +222,14 @@ s32 fn_80019ED0(s32 arg0) {
 }
 
 void *fn_80019F3C(void *arg0, s16 arg1) {
-    extern void *lbl_802842B8;
-    extern void *lbl_802842A4;
+    extern u8 lbl_802842B8[];
+    extern u8 lbl_802842A4[];
     s32 temp_r30;
 
     if (arg0 != NULL) {
-        *(void **)((char *)arg0 + 0x10) = &lbl_802842B8;
+        *(void **)((char *)arg0 + 0x10) = lbl_802842B8;
         if (arg0 != NULL) {
-            *(void **)((char *)arg0 + 0x10) = &lbl_802842A4;
+            *(void **)((char *)arg0 + 0x10) = lbl_802842A4;
             if (*(u8 *)((char *)arg0 + 0xC) != 0) {
                 fn_800C4588(*(s32 *)((char *)arg0));
                 *(s32 *)((char *)arg0) = 0;
