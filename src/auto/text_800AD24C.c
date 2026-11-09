@@ -1158,10 +1158,14 @@ s32 fn_800B6AA8(s32 arg0) {
     return (s32) (lbl_80369CF4 * (f32) arg0);
 }
 
-s32 fn_800B6B20(void) {
-    extern s32 lbl_8028D298;
-    
-    fn_8000CAA0(&lbl_8028D298, fn_800C0658(), &lbl_8028D298);
+s32 fn_800B6B20(void)
+{
+    s32 fn_800C0658(void);
+    void fn_8000CAA0(u16 *, s32);
+    void fn_80013864(void);
+    extern u16 lbl_8028D298[];
+
+    fn_8000CAA0(lbl_8028D298, fn_800C0658());
     fn_80013864();
     return 1;
 }
