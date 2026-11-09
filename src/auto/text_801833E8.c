@@ -3230,6 +3230,7 @@ void fn_80194E10(void) {
 void *fn_80194F54(s32 arg0) {
     void *fn_8000C0C0(void *);
     void *fn_8000CAF0(void *, s32);
+    extern u8 lbl_802966D8[16];
     void *obj;
 
     obj = fn_8000C0C0(lbl_802966D8);
