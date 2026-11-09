@@ -938,16 +938,16 @@ void fn_80169870(void *arg0) {
 
 void fn_801698EC(void *arg0) {
     M2C_UNK fn_8000C5B8();
-    s32 fn_80024398(void *, M2C_UNK);
+    s32 fn_80024398(void *, void *, s32);
     void *fn_80169948();
     extern f32 lbl_8036A9C0;
     s32 temp_r31;
     void *temp_r3;
 
     temp_r3 = fn_80169948();
-    M2C_FIELD(temp_r3, f32 *, 0x18) = (f32) lbl_8036A9C0;
+    M2C_FIELD(temp_r3, f32 *, 0x18) = lbl_8036A9C0;
     M2C_FIELD(temp_r3, s16 *, 0x1E) = 0;
-    temp_r31 = fn_80024398(arg0, 0);
+    temp_r31 = fn_80024398(temp_r3, arg0, 0);
     fn_8000C5B8();
     M2C_FIELD(arg0, s32 *, 0x4C) = temp_r31;
 }
@@ -4936,11 +4936,9 @@ void fn_80181C40(s32 *arg0, void *arg1) {
     struct Point *fn_8013F748(void *, struct Point *, struct Point *);
     struct Point out;
     struct Point in;
-    s16 idx;
     s32 row;
 
-    idx = M2C_FIELD(arg1, s16 *, 0x4E);
-    row = M2C_FIELD(arg1, s16 *, 0x54) * idx;
+    row = M2C_FIELD(arg1, s16 *, 0x54) * M2C_FIELD(arg1, s16 *, 0x4E);
     in.x = M2C_FIELD(arg1, s16 *, 0x56);
     in.y = row + M2C_FIELD(arg1, s16 *, 0x58);
     *(struct Point *)arg0 = *fn_8013F748(arg1, &out, &in);
