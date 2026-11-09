@@ -4593,9 +4593,10 @@ void fn_800558FC(void* arg0)
 }
 
 s32 fn_80055AC0(s32 *arg0, s32 arg1) {
-    M2C_UNK fn_80231D94(s32, void *, void *, s32);
-    extern u16 lbl_8026AC0C[];
-    fn_80231D94(arg1, &lbl_8026AC0C[0x120/2], &lbl_8026AC0C[0x128/2], *arg0);
+    void fn_80231D94(s32, void *, void *, ...);
+    extern u8 lbl_8026AC0C[];
+
+    fn_80231D94(arg1, lbl_8026AC0C + 0x120, lbl_8026AC0C + 0x129, *arg0);
     return arg1;
 }
 
