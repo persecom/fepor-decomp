@@ -137,9 +137,9 @@ s32 fn_801FE430(void) {
 }
 
 void fn_801FE444(void) {
-    extern void *lbl_80281F00;
-    fn_8005C870((char *)&lbl_80281F00 + 0x4D, 0);
-    fn_8005C870((char *)&lbl_80281F00 + 0x64, 0);
+    extern u16 lbl_80281F00[];
+    fn_8005C870((char *)lbl_80281F00 + 0x4D, 0);
+    fn_8005C870((char *)lbl_80281F00 + 0x64, 0);
 }
 
 #pragma opt_common_subs off
