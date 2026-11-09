@@ -101,6 +101,6 @@ void fn_8009A890(void *arg0) {
 void fn_8009A934(void *arg0) {
     s32 fn_8006D948(void *);
     extern u8 lbl_8026D404[];
-    M2C_FIELD(arg0, s32 *, 0x38) = fn_8006D948(lbl_8026D404 + 0xD8);
+    *(s32 *)((char *)arg0 + 0x38) = fn_8006D948(lbl_8026D404 + 0xD8);
 }
 
