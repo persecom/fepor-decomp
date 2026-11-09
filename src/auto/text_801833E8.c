@@ -5527,6 +5527,10 @@ void fn_80198910(void) {
     return;
 }
 
+void fn_80198F8C(s32 arg0, s32 arg1) {
+    fn_800C9B6C(arg0, arg1 + 0x138);
+}
+
 s32 fn_80199028(void *arg0) {
     s32 fn_801518D0(void *, s32);
     void *p = *(void **)((u8 *)arg0 + 0x144);
