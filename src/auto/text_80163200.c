@@ -1137,7 +1137,7 @@ extern void *lbl_8028D9A4[];
 
 void fn_8016AC30(void) {
     extern u16 lbl_80277BC0[];
-    fn_8000E0E4(&lbl_80277BC0[0x6fc]);
+    fn_8000E0E4((u8 *)lbl_80277BC0 + 0x1bf);
 }
 
 void *fn_8016AC5C(void) {
