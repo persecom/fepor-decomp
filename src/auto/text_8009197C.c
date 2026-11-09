@@ -46,12 +46,15 @@ extern f32 lbl_803697E4;
 #pragma scheduling reset
 
 void fn_8009197C(void) {
+    void fn_8000C188(u32);
     extern u32 lbl_803120A0[];
     extern s32 lbl_803674F8;
-    
+
     while (lbl_803674F8 != 0) {
-        lbl_803674F8--;
-        fn_8000C188(lbl_803120A0[lbl_803674F8]);
+        if (lbl_803674F8 != 0) {
+            lbl_803674F8--;
+            fn_8000C188(lbl_803120A0[lbl_803674F8]);
+        }
     }
 }
 
