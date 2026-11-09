@@ -413,7 +413,7 @@ void fn_80009BF4(f32 farg0) {
 }
 
 f32 fn_80009C00(void) {
-    return *(f32*)((char*)&lbl_80367140 + 0x28);
+    return *(f32 *)(*(u8 **)&lbl_80367140 + 0x28);
 }
 
 void fn_80009C0C(f32 farg0) {
