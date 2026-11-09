@@ -38,26 +38,11 @@ typedef struct List {
 } List;
 
 typedef struct Anim Anim;
-
-typedef struct {
-    u8 pad0[8];
-    u8 (*f8)(Anim *);         /* +0x08 */
-    u8 padC[4];
-    void (*f10)(Anim *);      /* +0x10 */
-    void (*f14)(Anim *);      /* +0x14 */
-    u8 pad18[0x3C];
-    u8 (*f54)(Anim *);        /* +0x54 */
-} AnimFuncs;
-
-typedef struct {
-    u8 pad0[8];
-    void (*f8)(Anim *, u8, u8, u8, u16); /* +0x08 */
-    void (*fc)(Anim *);                 /* +0x0C */
-} AnimDrawFuncs;
+typedef void (*AnimFn)(Anim *);
 
 struct Anim {
     u8 pad0[8];
-    AnimFuncs *funcs;   /* +0x08 */
+    AnimFn *funcs;      /* +0x08 */
     u8 flags;           /* +0x0C */
     u8 unk_d;           /* +0x0D */
     u8 unk_e;           /* +0x0E */
@@ -68,7 +53,7 @@ struct Anim {
     u8 pad14[2];
     u8 cur;             /* +0x16 */
     u8 prev;            /* +0x17 */
-    AnimDrawFuncs *draw; /* +0x18 */
+    AnimFn *draw;       /* +0x18 */
     u8 pad1C[0xC];
     u8 start;           /* +0x28 */
     u8 end;             /* +0x29 */
@@ -3449,7 +3434,7 @@ void fn_80148980(void *arg0, s16 arg1) {
 extern u8 lbl_80367AEA;
 extern u8 lbl_80367AEB;
 s32 fn_8014953C(void);
-void fn_80148A28(void *arg0) {
+void fn_80148A28(void *arg0, s32 arg1) {
     s32 rate;
     Anim *self = (Anim *)arg0;
     u8 level;
