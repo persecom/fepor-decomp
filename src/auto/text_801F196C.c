@@ -102,17 +102,14 @@ void fn_801F20A8(s32 arg0) {
 }
 
 void fn_801F2DB4(s32 arg0) {
-    void *fn_8000CAA0(void *, s32, void *);
+    void *fn_8000CAA0(void *, s32);
     s32 fn_800C4638(s32, void *, s32);
-    extern u16 lbl_8029AF78[];
-    extern char lbl_8027F868[];
-
+    extern u8 lbl_8029AF78[];
+    extern u8 lbl_8027F868[];
     void *temp_r31;
-    void *temp_r5;
 
-    temp_r5 = lbl_8029AF78;
-    temp_r31 = fn_8000CAA0(temp_r5, arg0, temp_r5);
-    *(s32 *)((u8 *)temp_r31 + 0x30) = fn_800C4638(0xE8, (u8 *)lbl_8027F868 + 0x11BC, 0);
+    temp_r31 = fn_8000CAA0(lbl_8029AF78, arg0);
+    M2C_FIELD(temp_r31, s32 *, 0x30) = fn_800C4638(0xE8, lbl_8027F868 + 0x11BC, 0);
 }
 
 #pragma use_lmw_stmw on
