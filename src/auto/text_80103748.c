@@ -221,7 +221,7 @@ s32 fn_80103B38(void) {
 }
 
 void *fn_80103B8C(void) {
-    extern M2C_UNK lbl_802734D0;
+    extern u16 lbl_802734D0[];
     return (char *) &lbl_802734D0 + 0x167;
 }
 
