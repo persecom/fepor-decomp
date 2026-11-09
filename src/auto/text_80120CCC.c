@@ -919,6 +919,17 @@ void fn_80126944(void) {
     lbl_80330708.unkA6 = one;
 }
 
+extern u16 lbl_80290564[];
+s32 fn_80126A60(void) {
+    s32 fn_800C0658();
+    void fn_8000CAA0(u16*, s32, u16*);
+    void fn_80013864();
+    
+    fn_8000CAA0(lbl_80290564, fn_800C0658(), lbl_80290564);
+    fn_80013864();
+    return 1;
+}
+
 void fn_80126A98(s32 arg0) {
     extern u8 lbl_802EF4C8[24];
     extern u8 lbl_80330708[1400];
@@ -1136,6 +1147,13 @@ void fn_80127700(void* arg0, s32 arg1) {
     }
 
     temp_r30->field_0x84 = temp_r6;
+}
+
+s32 fn_801278EC(void) {
+    void fn_8000BF00(void *);
+    extern u8 lbl_802904AC[];
+    fn_8000BF00(lbl_802904AC);
+    return 1;
 }
 
 void fn_80127918(u8 *arg0) {
