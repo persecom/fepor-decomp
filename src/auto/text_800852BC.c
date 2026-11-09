@@ -779,4 +779,11 @@ void fn_8008CD64(f32 farg0) {
 }
 
 #pragma scheduling reset
+#include "common.h"
+#include "unit.h"
 
+extern u16 lbl_803674F4;
+extern f32 lbl_80369704;
+extern f32 lbl_80369708;
+extern f32 lbl_803696E8;
+extern f32 lbl_803696F0;
