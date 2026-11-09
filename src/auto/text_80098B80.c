@@ -46,8 +46,8 @@ extern f32 lbl_803697E4;
 #pragma scheduling reset
 
 void fn_80098B80(void *arg0) {
-    M2C_UNK fn_80095678();
-    if ((u8) M2C_FIELD(arg0, u8 *, 0x34) != 2) {
+    void fn_80095678(void);
+    if (*(u8 *)((char *)arg0 + 0x34) != 2) {
         fn_80095678();
     }
 }
