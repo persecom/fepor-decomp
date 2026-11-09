@@ -5099,12 +5099,13 @@ s32 fn_800EB774(void) {
     return *(u32*)((u8*)lbl_80320C20 + 0xA004);
 }
 
-s32 fn_800EB788(void) {
+s32 fn_800EB788(void *arg0) {
     extern u16 lbl_80320C20[];
-    
-    if ((s32) *(u32 *) (lbl_80320C20 + 0xA004) < 0) {
-        fn_8000C070(0x63);
-        *(u8 *) (lbl_80320C20 + 0xA01A) = 0;
+    void fn_8000C070(void *, s32);
+
+    if (*(s32 *)((u8 *)lbl_80320C20 + 0xA004) < 0) {
+        fn_8000C070(arg0, 0x63);
+        *((u8 *)lbl_80320C20 + 0xA01A) = 0;
         return 1;
     }
     return 0;
