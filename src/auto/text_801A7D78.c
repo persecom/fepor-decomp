@@ -626,6 +626,13 @@ void fn_801AA03C(s32 arg1) {
     fn_800F5504(arg1, 0x15);
 }
 
+extern u8 lbl_802973C8[16];
+void fn_801AA120(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_802973C8[16];
+    fn_8000CAA0(lbl_802973C8, arg0);
+}
+
 void fn_801AA14C(void *arg0) {
     M2C_UNK fn_800A7EC4();
     M2C_FIELD(arg0, u8 *, 0x30) = (u8) (M2C_FIELD(arg0, u8 *, 0x30) & 0xFE);
