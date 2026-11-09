@@ -6587,6 +6587,30 @@ s32 fn_800FBAB8(void *arg0) {
     return 1;
 }
 
+s32 fn_800FBAF8(void) {
+    u8 fn_800FB64C(void);
+    void fn_800FB7A8(void);
+    extern u8 lbl_8032B3C0[];
+
+    if (lbl_8032B3C0[1] & 4) {
+        return 1;
+    }
+    {
+        s32 r31 = 0;
+        for (;;) {
+            if (fn_800FB64C() == 1) {
+                break;
+            }
+            if (r31 > 0xFF) {
+                fn_800FB7A8();
+                break;
+            }
+            r31 += 1;
+        }
+    }
+    return 1;
+}
+
 s32 fn_800FBB68(void) {
     u8 fn_800FB6FC(void);
     void fn_800FB868(void);
