@@ -2758,8 +2758,8 @@ extern "C" void fn_80175E3C(void *arg0) {
     struct VObj {
         virtual void v0();
         virtual void v1();
-        virtual void v2();
         virtual void v3();
+        virtual void v2();
         virtual void v4();
         virtual void v5();
         virtual void v6();
@@ -2771,11 +2771,11 @@ extern "C" void fn_80175E3C(void *arg0) {
     };
 
     s16 sp8[2];
+    s32 btn;
+    register u8 gate;
+    register int flags;
     s16 tmp;
-    u32 var_r30;
-    u32 flags;
-    u32 btn;
-    u8 gate;
+    unsigned int var_r30;
     void *obj4c;
     void *obj44;
 
@@ -2792,14 +2792,14 @@ extern "C" void fn_80175E3C(void *arg0) {
     if ((flags & 0x10) && !(flags & 0x20)) {
         gate = 1;
     }
-    if (gate == 0) {
-        btn = *(s32 *)((u8 *)lbl_80367240 + 4);
+    if (!gate) {
+        register btn = *(s32 *)((u8 *)lbl_80367240 + 4);
         btn = btn & (*(s32 *)((u8 *)lbl_80367240 + 8) ^ btn);
-        if ((btn & 0x100) && (var_r30 != 0)) {
+        if ((btn & 0x100) && (var_r30)) {
             fn_8002833C(lbl_802EF4C8, var_r30);
             obj4c = *(void **)((u8 *)arg0 + 0x4C);
-            *(u8 *)((u8 *)obj4c + 0x78) = 1;
-            *(u8 *)((u8 *)*(void **)((u8 *)arg0 + 0x4C) + 0x4A) = 0;
+            *(u8 *)((u8 *)obj4c + (int)0x78) = 1;
+            *(u8 *)((u8 *)*(void **)((u8 *)arg0 + (u32)0x4C) + 0x4A) = 0;
             obj44 = *(void **)((u8 *)arg0 + 0x44);
             tmp = *(s16 *)((u8 *)obj44 + 0xC);
             sp8[0] = 0x260;
@@ -2808,11 +2808,11 @@ extern "C" void fn_80175E3C(void *arg0) {
             fn_80140210(arg0, *(void **)((u8 *)arg0 + 0x48), 0);
             fn_8000C070(arg0, 6);
             fn_801475FC((u8 *)lbl_80278080 + 0x1DD, 0x64);
-        } else if ((btn & 0x800) && (var_r30 != 0)) {
+        } else if ((btn & 0x800) && (var_r30)) {
             fn_801695BC(var_r30, arg0, 0x1000000);
             *(u8 *)((u8 *)arg0 + 0x65) = 5;
             fn_8000C070(arg0, 0x31);
-        } else if ((btn & 0x400) && (var_r30 != 0)) {
+        } else if ((btn & 0x400) && (var_r30)) {
             fn_801694AC(var_r30, arg0);
             *(u8 *)((u8 *)arg0 + 0x65) = 5;
             fn_8000C070(arg0, 0x32);
