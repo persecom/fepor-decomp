@@ -1192,6 +1192,13 @@ void fn_800A8BD8(void *arg0) {
     }
 }
 
+extern u8 lbl_8028C870[16];
+void fn_800A9088(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_8028C870[16];
+    fn_8000CAA0(lbl_8028C870, arg0);
+}
+
 void fn_800A90B4(void) {
     void fn_80148618(void *, s32);
     extern u8 lbl_8026E470[];
