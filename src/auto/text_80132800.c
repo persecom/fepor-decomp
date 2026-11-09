@@ -2801,7 +2801,8 @@ void fn_80143424(void *arg0) {
     fn_8015DE0C(0, 0, (s16) (M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA)), (s16) (M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC)), 0xFF, 0x10);
 }
 
-void fn_80143490(s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
+void fn_80143490(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
+    void fn_8008AB7C(s32, s32, s32, s32, s32, s32, s32);
     fn_8008AB7C(arg1 + (arg3 >> 1), arg2 + (arg4 >> 1), arg3, 0x18, 0x19, 0x4C, arg5);
 }
 
