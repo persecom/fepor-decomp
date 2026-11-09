@@ -1946,6 +1946,15 @@ void fn_8003FFD8(void) {
     fn_8003FFF8();
 }
 
+void fn_8003FFF8(void) {
+    extern void *lbl_803672AC;
+    extern void fn_80044450(void *, int);
+
+    if (lbl_803672AC != 0) {
+        fn_80044450(lbl_803672AC, 0);
+    }
+}
+
 s32 fn_80040824(void) {
     return 0;
 }
