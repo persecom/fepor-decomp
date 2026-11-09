@@ -557,6 +557,34 @@ void fn_801F5518(s32 arg0) {
     fn_801E3118(&lbl_803682F0, arg0, 1);
 }
 
+void fn_801F5AEC(void *arg0) {
+    s32 fn_8000E0E4(void *);
+    void fn_801DDBA8(void *, s32, s32, s32, s32);
+    void fn_801475FC(void *, s32);
+    void fn_8000C188(void *);
+    void fn_8000C070(void *, s32);
+    extern void *lbl_80367240;
+    extern u16 lbl_80280B58[18];
+    s32 temp_r3;
+    s32 pressed;
+    void *temp_r5;
+
+    temp_r3 = *(s32 *)((u8 *)lbl_80367240 + 4);
+    pressed = temp_r3 & (*(s32 *)((u8 *)lbl_80367240 + 8) ^ temp_r3);
+    if (pressed & 0x100) {
+        fn_801475FC((u8 *)&lbl_80280B58 + 0x5A, 0x64);
+        fn_801DDBA8(*(void **)((u8 *)arg0 + 0x50), fn_8000E0E4((u8 *)&lbl_80280B58 + 0x121), 0, 0, 0);
+        fn_8000C188(arg0);
+        return;
+    }
+    if (pressed & 0x200) {
+        fn_801475FC((u8 *)&lbl_80280B58 + 0x111, 0x64);
+        temp_r5 = *(void **)((u8 *)arg0 + 0x50);
+        *(s16 *)((u8 *)temp_r5 + 2) = 0xC8;
+        fn_8000C070(arg0, 0x63);
+    }
+}
+
 void fn_801F5BAC(void) {
 
 }
