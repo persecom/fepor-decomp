@@ -3665,7 +3665,7 @@ u8 fn_800BD424(u8 arg0) {
     if ((var_r3 == NULL) || (*(u32 *)((u8 *)var_r3 + 0x188) == 0U)) {
         return 0U;
     }
-    return *(u8 *)((u8 *)var_r3 + 0x1A8);
+    return *(u8 *)((u8 *)*(void **)((u8 *)var_r3 + 0x190) + 8);
 }
 
 u8 fn_800BD470(u8 arg0) {
@@ -5266,45 +5266,46 @@ s32 fn_800C3D48(void *arg0) {
     return -1;
 }
 
-s32 fn_800C3E54(void *arg0) {
+s32 fn_800C3E54(u32 *arg0) {
     s32 count = 0;
-    void *cur = arg0;
-    int i;
+    s32 i;
+    s32 j = 0;
 
     for (i = 0; i < 0x14; i++) {
-        if (*(u32*)cur != 0) {
+        if (arg0[0] != 0) {
             count++;
         }
-        if (*((u32*)cur + 2) != 0) {
+        if (arg0[2] != 0) {
             count++;
         }
-        if (*((u32*)cur + 4) != 0) {
+        if (arg0[4] != 0) {
             count++;
         }
-        if (*((u32*)cur + 6) != 0) {
+        if (arg0[6] != 0) {
             count++;
         }
-        if (*((u32*)cur + 8) != 0) {
+        if (arg0[8] != 0) {
             count++;
         }
-        if (*((u32*)cur + 10) != 0) {
+        if (arg0[10] != 0) {
             count++;
         }
-        if (*((u32*)cur + 12) != 0) {
+        if (arg0[12] != 0) {
             count++;
         }
-        if (*((u32*)cur + 14) != 0) {
+        if (arg0[14] != 0) {
             count++;
         }
-        if (*((u32*)cur + 16) != 0) {
+        if (arg0[16] != 0) {
             count++;
         }
-        if (*((u32*)cur + 18) != 0) {
+        if (arg0[18] != 0) {
             count++;
         }
-        cur = (u8*)cur + 0x50;
+        arg0 += 0x14;
+        j += 9;
     }
-    return count;
+    return j ? count : count;
 }
 
 #include "common.h"
