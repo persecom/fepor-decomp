@@ -139,7 +139,10 @@ auto/text_80083DC0.c:
 	.text       start:0x80083DC0 end:0x800852BC
 
 auto/text_800852BC.c:
-	.text       start:0x800852BC end:0x8008D834
+	.text       start:0x800852BC end:0x8008CD9C
+
+auto/text_8008CD9C.c:
+	.text       start:0x8008CD9C end:0x8008D834
 
 auto/text_8008D834.c:
 	.text       start:0x8008D834 end:0x8008D86C
