@@ -709,7 +709,7 @@ void fn_801F5FE0(void *arg0) {
     fn_8000C188(arg0);
 }
 
-void fn_801F6164(s32 arg1) {
+void fn_801F6164(s32 unused, s32 arg1) {
     extern void *lbl_803683F4;
     M2C_FIELD(lbl_803683F4, s32 *, 0x3C) = arg1;
 }
