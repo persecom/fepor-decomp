@@ -2411,7 +2411,7 @@ void fn_80177854(void **arg0, void *arg1, void *arg2) {
 
 void fn_80177AD4(void) {
     extern u16 lbl_80278080[];
-    fn_8000E0E4(&lbl_80278080[0x4EC / sizeof(u16)]);
+    fn_8000E0E4((u8 *)lbl_80278080 + 0x4ed);
 }
 
 void *fn_80177B00(void) {
