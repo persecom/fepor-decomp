@@ -22,12 +22,37 @@ s32 fn_8009F87C(s32 arg0, s32 arg1) {
 }
 
 void fn_8009F8A8(void *arg1) {
-    M2C_UNK fn_8001E4D0(u8, M2C_UNK);
     u8 temp = *(u8 *)((u8 *)arg1 + 0x3A);
     fn_8001E4D0(temp, 0);
 }
 
-s32 fn_8009F8D0(void *arg2){void *fn_800AA794(void);u8 fn_80092ADC(u8);extern u32 lbl_80367240[];u8 *base=fn_800AA794();u8 index=*((u8*)arg2+0x3a);s32 value=fn_80092ADC(index);s32 step=1;if(lbl_80367240[1]&0x400)step=8;if(lbl_80367240[4]&0x01000001)value-=step;if(lbl_80367240[4]&0x02000002)value+=step;if(value<0)value=0;if(value>0xfb)value=0xfb;base[index+0x20c]=value;return 0;}
+s32 fn_8009F8D0(void *arg2){
+    void *fn_800AA794(void);
+    u8 fn_80092ADC(u8);
+    
+    u8 *base = fn_800AA794();
+    u8 index = *((u8*)arg2 + 0x3a);
+    s32 value = fn_80092ADC(index);
+    s32 step = 1;
+    
+    if (*((u32*)0x80367240 + 1) & 0x400)
+        step = 8;
+        
+    if (*((u32*)0x80367240 + 4) & 0x01000001)
+        value -= step;
+        
+    if (*((u32*)0x80367240 + 4) & 0x02000002)
+        value += step;
+        
+    if (value < 0)
+        value = 0;
+        
+    if (value > 0xfb)
+        value = 0xfb;
+    
+    base[index + 0x20c] = value;
+    return 0;
+}
 
 void fn_8009F980(s32 arg0, s32 arg1, void *arg2) {
     M2C_UNK fn_80007124(M2C_UNK *);
@@ -459,17 +484,30 @@ void fn_800A01B4(void) {
     fn_80018AAC();
 }
 
-s32 fn_800A01D4(void **arg0) {
+#pragma cplusplus on
+extern "C" s32 fn_800A01D4(void *arg0, void *arg1, s32 arg2) {
+    struct Obj {
+        virtual s32 v0(void *, s32) = 0;
+        virtual s32 v1(void *, s32) = 0;
+        virtual s32 v2(void *, s32) = 0;
+        virtual s32 v3(void *, s32) = 0;
+        virtual s32 v4(void *, s32) = 0;
+        virtual s32 v5(void *, s32) = 0;
+        virtual s32 v6(void *, s32) = 0;
+        virtual s32 v7(void *, s32) = 0;
+        virtual s32 v8(void *, s32) = 0;
+        virtual s32 v9(void *, s32) = 0;
+    };
     extern void *lbl_80367240;
     s32 temp_r8;
 
     temp_r8 = M2C_FIELD(lbl_80367240, s32 *, 4);
     if (temp_r8 & (M2C_FIELD(lbl_80367240, s32 *, 8) ^ temp_r8) & 0x03000003) {
-        return M2C_FIELD(*arg0, s32 (**)(), 0x2C)();
+        return ((Obj *)arg0)->v9(arg1, arg2);
     }
     return 0;
 }
-
+#pragma cplusplus reset
 s32 fn_800A022C(void) {
     M2C_UNK fn_80018E0C();
     fn_80018E0C();
@@ -1404,8 +1442,16 @@ s32 fn_800A2748(void *arg0) {
 }
 
 s32 fn_800A279C(void *arg0) {
-    M2C_FIELD(arg0, u16 *, 4) = (u16) M2C_FIELD(M2C_FIELD(fn_800AA794(), void **, 0x188), u16 *, 0x18);
-    return 0;
+    void *fn_800AA794(void);
+    void *temp;
+    s32 val;
+    s32 ret;
+
+    temp = fn_800AA794();
+    ret = 0;
+    val = *(u16 *)((u8 *)*(void **)((u8 *)temp + 0x188) + 0x18);
+    *(u16 *)((u8 *)arg0 + 4) = (u16)val;
+    return ret;
 }
 
 s32 fn_800A28C0(void *arg0) {
@@ -1669,7 +1715,37 @@ s32 fn_800A320C(void) {
     return 0;
 }
 
-s32 fn_800A3278(void*a,void*b,void*arg){extern u8 lbl_80330708[];extern u8 lbl_80367558;void fn_800BDB54(void*,s32);void fn_800BDB78(void*,s32);u8 fn_800BDB9C(void*,s32);void*base=lbl_80330708+0xb4;s32 index=(*((u8*)arg+0x3a)-1)+((s8)lbl_80367558*16);if(*(u32*)((u8*)base+index*4)==0)return 0;if(fn_800BDB9C(base,index))fn_800BDB54(base,index);else fn_800BDB78(base,index);return 0;}
+s32 fn_800A3278(void *a, void *b, void *arg) {
+    extern u8 lbl_80330708[]; 
+    extern u8 lbl_80367558;
+    void fn_800BDB54(void *, s32); 
+    void fn_800BDB78(void *, s32); 
+    u8 fn_800BDB9C(void *, s32);
+    
+    void *base;
+    s32 col, row, index;
+    
+    // Load base address into r30 (as shown in target)
+    base = lbl_80330708 + 0xb4;
+    
+    col = *((u8 *)arg + 0x3a);
+    row = (s8)lbl_80367558;
+    
+    // Compute index with exact register allocation per target
+    index = ((row * 16) + col) - 1;
+    
+    if (*(u32 *)((u8 *)base + index * 4) == 0) {
+        return 0;
+    }
+    
+    if (fn_800BDB9C(base, index)) {
+        fn_800BDB54(base, index);
+    } else {
+        fn_800BDB78(base, index);
+    }
+    
+    return 0;
+}
 
 s32 fn_800A34E8(void) {
     extern void *lbl_80367240;
