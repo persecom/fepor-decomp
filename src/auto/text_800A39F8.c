@@ -736,24 +736,24 @@ void fn_800A6FD4(void *arg0) {
 }
 
 void fn_800A7014(void *arg0) {
-    void fn_80055C8C(void *, void *, void *, void *, int, int);
+    void fn_80055C8C(void *, void *, void *);
     void fn_80059208(void *, void *);
-    extern u16 lbl_8026E378[];
-    extern void fn_800A70A0(void);
-    extern void fn_800A70DC(void);
+    extern u8 lbl_8026E378[];
+    void fn_800A70A0(void);
+    void fn_800A70DC(void);
 
-    M2C_FIELD(arg0, s16 *, 0x36) = -1;
-    M2C_FIELD(arg0, u8 *, 0x38) = 0;
-    M2C_FIELD(arg0, u8 *, 0x39) = 0;
-    M2C_FIELD(arg0, u8 *, 0x3A) = 0xE0;
-    M2C_FIELD(arg0, u8 *, 0x3B) = 4;
-    M2C_FIELD(arg0, s16 *, 0x34) = 0;
-    M2C_FIELD(arg0, s32 *, 0x30) = 0;
-    M2C_FIELD(arg0, s16 *, 0x44) = -1;
-    M2C_FIELD(arg0, s16 *, 0x46) = -1;
-    M2C_FIELD(arg0, s32 *, 0x40) = 0;
-    fn_80055C8C(&lbl_8026E378[0x28 / sizeof(u16)], &fn_800A70A0, arg0, &lbl_8026E378, 0, -1);
-    fn_80059208(&fn_800A70DC, arg0);
+    *(s16 *)((u8 *)arg0 + 0x36) = -1;
+    *(u8 *)((u8 *)arg0 + 0x38) = 0;
+    *(u8 *)((u8 *)arg0 + 0x39) = 0;
+    *(u8 *)((u8 *)arg0 + 0x3A) = 0xE0;
+    *(u8 *)((u8 *)arg0 + 0x3B) = 4;
+    *(s16 *)((u8 *)arg0 + 0x34) = 0;
+    *(s32 *)((u8 *)arg0 + 0x30) = 0;
+    *(s16 *)((u8 *)arg0 + 0x44) = -1;
+    *(s16 *)((u8 *)arg0 + 0x46) = -1;
+    *(s32 *)((u8 *)arg0 + 0x40) = 0;
+    fn_80055C8C(lbl_8026E378 + 0x28, fn_800A70A0, arg0);
+    fn_80059208(fn_800A70DC, arg0);
 }
 
 #pragma use_lmw_stmw on
