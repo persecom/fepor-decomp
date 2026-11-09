@@ -1600,22 +1600,25 @@ void fn_8016B800(void *arg0) {
 }
 
 void fn_8016BA5C(void *arg0) {
-    extern u32 lbl_80277EA0;
-    M2C_FIELD(arg0, u32 *, 0x30) = 0x10;
-    M2C_FIELD(arg0, u8 *, 0x35) = 0;
-    M2C_FIELD(arg0, u16 *, 0x36) = 0;
-    M2C_FIELD(arg0, u32 *, 0x38) = 0;
-    M2C_FIELD(arg0, u32 *, 0x3C) = 0;
-    M2C_FIELD(arg0, u32 *, 0x40) = 0;
-    M2C_FIELD(arg0, u32 *, 0x44) = 0;
-    M2C_FIELD(arg0, u32 *, 0x54) = 0;
-    M2C_FIELD(arg0, u8 *, 0x58) = 0;
-    M2C_FIELD(arg0, u8 *, 0x59) = 0;
-    M2C_FIELD(arg0, u8 *, 0x5A) = 0;
-    M2C_FIELD(arg0, u8 *, 0x5B) = 0xA;
-    fn_8016C3C8(0);
-    fn_8005C8B4(&lbl_80277EA0 + 0x78);
-    M2C_FIELD(arg0, u32 *, 0x38) = 0;
+    void fn_8016C3C8(void *);
+    void fn_8005C8B4(void *);
+    extern u8 lbl_80277EA0[];
+
+    M2C_FIELD(arg0, s32 *, 0x30) = 0x10;
+    M2C_FIELD(arg0, s8 *, 0x35) = 0;
+    M2C_FIELD(arg0, s16 *, 0x36) = 0;
+    M2C_FIELD(arg0, s32 *, 0x38) = 0;
+    M2C_FIELD(arg0, s32 *, 0x3C) = 0;
+    M2C_FIELD(arg0, s32 *, 0x40) = 0;
+    M2C_FIELD(arg0, s32 *, 0x44) = 0;
+    M2C_FIELD(arg0, s32 *, 0x54) = 0;
+    M2C_FIELD(arg0, s8 *, 0x58) = 0;
+    M2C_FIELD(arg0, s8 *, 0x59) = 0;
+    M2C_FIELD(arg0, s8 *, 0x5A) = 0;
+    M2C_FIELD(arg0, s8 *, 0x5B) = 0xA;
+    fn_8016C3C8(arg0);
+    fn_8005C8B4(lbl_80277EA0 + 0x78);
+    M2C_FIELD(arg0, s32 *, 0x38) = 0;
 }
 
 void fn_8016BADC(void *arg0) {
