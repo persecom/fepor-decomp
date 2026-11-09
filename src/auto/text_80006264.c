@@ -42,6 +42,20 @@ void fn_80006298(s32 arg0, s32 arg1, u32 arg2) {
     } while (var_ctr != 0);
 }
 
+void fn_800062B0(u32 *arg0, u32 arg1, u32 arg2) {
+    register u32 count;
+
+    count = arg2 >> 3;
+    arg0--;
+
+    do {
+        arg0[1] = arg1;
+        arg0++;
+        arg0[1] = arg1;
+        arg0++;
+    } while (--count != 0);
+}
+
 void fn_800062CC(s32 arg0, s32 arg1, u32 arg2) {
     s32 temp_r11;
     u32 var_ctr;
@@ -1432,6 +1446,13 @@ void fn_8000C194(s32 arg0) {
     if (v != 0) {
         fn_8000C1CC(v);
     }
+}
+
+s32 fn_8000C510(void) {
+    extern void *lbl_80367148;
+    extern u8 lbl_802AD6D8[];
+
+    return ((s32)lbl_80367148 - (s32)lbl_802AD6D8) / 4;
 }
 
 void fn_8000C52C(s32 arg0) {
