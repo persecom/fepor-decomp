@@ -1693,6 +1693,128 @@ loop_16:
     goto loop_16;
 }
 
+#pragma optimization_level 2
+void *fn_800656C8(void *node, void *out)
+{
+    void fn_80201FC4(void *);
+    void fn_80202024(void *, void *, void *);
+    u32 fn_80202140(void *, void *);
+    void fn_80202300(void *, s32, f32);
+    int fn_8006DA64(void *, int, void *);
+    extern f32 lbl_80369218;
+    extern f32 lbl_8036921C;
+    extern u8 lbl_8026B6E8[];
+    u8 sp38[0x30];
+    s32 order;
+    f32 rx;
+    f32 ry;
+    u8 sp8[0x30];
+    f32 rz;
+
+    fn_80201FC4(out);
+
+    while (node != NULL) {
+        if (*(u32 *)((u8 *)node + 0xC) & 0x40) {
+            rx = *(f32 *)((u8 *)node + 0x64);
+            ry = *(f32 *)((u8 *)node + 0x68);
+            rz = *(f32 *)((u8 *)node + 0x6C);
+            order = *(u16 *)((u8 *)node + 0xEE);
+            fn_80201FC4(sp38);
+
+            switch (order) {
+            case 1:
+                if (lbl_80369218 != rx) {
+                    fn_80202300(sp38, 0x58, lbl_8036921C * rx);
+                }
+                if (lbl_80369218 != ry) {
+                    fn_80202300(sp8, 0x59, lbl_8036921C * ry);
+                    fn_80202024(sp8, sp38, sp38);
+                }
+                if (lbl_80369218 != rz) {
+                    fn_80202300(sp8, 0x5A, lbl_8036921C * rz);
+                    fn_80202024(sp8, sp38, sp38);
+                }
+                break;
+            case 2:
+                if (lbl_80369218 != ry) {
+                    fn_80202300(sp38, 0x59, lbl_8036921C * ry);
+                }
+                if (lbl_80369218 != rz) {
+                    fn_80202300(sp8, 0x5A, lbl_8036921C * rz);
+                    fn_80202024(sp8, sp38, sp38);
+                }
+                if (lbl_80369218 != rx) {
+                    fn_80202300(sp8, 0x58, lbl_8036921C * rx);
+                    fn_80202024(sp8, sp38, sp38);
+                }
+                break;
+            case 3:
+                if (lbl_80369218 != rz) {
+                    fn_80202300(sp38, 0x5A, lbl_8036921C * rz);
+                }
+                if (lbl_80369218 != rx) {
+                    fn_80202300(sp8, 0x58, lbl_8036921C * rx);
+                    fn_80202024(sp8, sp38, sp38);
+                }
+                if (lbl_80369218 != ry) {
+                    fn_80202300(sp8, 0x59, lbl_8036921C * ry);
+                    fn_80202024(sp8, sp38, sp38);
+                }
+                break;
+            case 4:
+                if (lbl_80369218 != rx) {
+                    fn_80202300(sp38, 0x58, lbl_8036921C * rx);
+                }
+                if (lbl_80369218 != rz) {
+                    fn_80202300(sp8, 0x5A, lbl_8036921C * rz);
+                    fn_80202024(sp8, sp38, sp38);
+                }
+                if (lbl_80369218 != ry) {
+                    fn_80202300(sp8, 0x59, lbl_8036921C * ry);
+                    fn_80202024(sp8, sp38, sp38);
+                }
+                break;
+            case 5:
+                if (lbl_80369218 != ry) {
+                    fn_80202300(sp38, 0x59, lbl_8036921C * ry);
+                }
+                if (lbl_80369218 != rx) {
+                    fn_80202300(sp8, 0x58, lbl_8036921C * rx);
+                    fn_80202024(sp8, sp38, sp38);
+                }
+                if (lbl_80369218 != rz) {
+                    fn_80202300(sp8, 0x5A, lbl_8036921C * rz);
+                    fn_80202024(sp8, sp38, sp38);
+                }
+                break;
+            case 6:
+                if (lbl_80369218 != rz) {
+                    fn_80202300(sp38, 0x5A, lbl_8036921C * rz);
+                }
+                if (lbl_80369218 != ry) {
+                    fn_80202300(sp8, 0x59, lbl_8036921C * ry);
+                    fn_80202024(sp8, sp38, sp38);
+                }
+                if (lbl_80369218 != rx) {
+                    fn_80202300(sp8, 0x58, lbl_8036921C * rx);
+                    fn_80202024(sp8, sp38, sp38);
+                }
+                break;
+            default:
+                fn_8006DA64(lbl_8026B6E8, 0xED, lbl_8026B6E8 + 8);
+                break;
+            }
+
+            if (fn_80202140(sp38, sp38) != 0U) {
+                fn_80202024(sp38, out, out);
+            }
+        }
+        node = *(void **)node;
+    }
+
+    return out;
+}
+#pragma optimization_level 4
 void fn_80065E68(void) {
     M2C_UNK fn_8005C7E8();
     fn_8005C7E8();
