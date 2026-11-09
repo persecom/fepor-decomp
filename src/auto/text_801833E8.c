@@ -3488,6 +3488,15 @@ void fn_8019C6C4(s32 arg0, s32 arg1) {
     fn_8019D51C(fn_8000CAA0(lbl_80296A80, arg0), temp, 0);
 }
 
+void fn_8019C85C(s32 arg0, s32 arg1) {
+    void *fn_8000CAA0(void *, s32);
+    void fn_8019D51C(void *, s32);
+    extern u16 lbl_80296A20[];
+    
+    fn_8000CAA0(lbl_80296A20, arg0);
+    fn_8019D51C(lbl_80296A20, arg1);
+}
+
 void fn_8019C8A4(s32 arg0, s32 arg1) {
     void *fn_8000CAA0(void *, s32);
     void fn_8019D51C(void *, s32, s32);
@@ -3496,6 +3505,16 @@ void fn_8019C8A4(s32 arg0, s32 arg1) {
 
     temp = arg1;
     fn_8019D51C(fn_8000CAA0(lbl_802969E4, arg0), temp, 0);
+}
+
+void fn_8019C994(s32 arg0, s32 arg1) {
+    void *fn_8000CAA0(void *, s32);
+    void fn_8019D51C(void *, s32, s32);
+    extern u8 lbl_80296970[];
+    s32 temp;
+
+    temp = arg1;
+    fn_8019D51C(fn_8000CAA0(lbl_80296970, arg0), temp, 0);
 }
 
 s32 fn_8019CC80(void *arg0) {
