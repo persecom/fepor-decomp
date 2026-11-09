@@ -1083,12 +1083,15 @@ void fn_800CB90C(M2C_UNK *arg0, s32 arg2) {
     fn_800C9A60(&sp8, -1);
 }
 
-void fn_800CBF24(s32 arg0, s32 arg2) {
+void fn_800CBF24(s32 arg0, char *arg1, s32 arg2) {
+    M2C_UNK fn_800C9A60(M2C_UNK *, M2C_UNK);
+    s32 fn_800C99A0(M2C_UNK *, s32, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_800C9ABC(M2C_UNK *, char *, M2C_UNK *);
+    M2C_UNK fn_800C9B6C(s32, s32);
     M2C_UNK spC;
     M2C_UNK sp8;
-    
-    // Force correct stack usage and calls to match target
-    fn_800C9ABC(&spC, &sp8);
+
+    fn_800C9ABC(&spC, arg1, &sp8);
     fn_800C9B6C(arg0, fn_800C99A0(&spC, arg2, 0, -1));
     fn_800C9A60(&spC, -1);
 }
