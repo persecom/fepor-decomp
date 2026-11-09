@@ -233,25 +233,25 @@ void fn_800A5158(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, u16 arg5, u16
     M2C_UNK fn_802228D8(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, f32, f32, f32);
     M2C_UNK fn_80222C50(M2C_UNK *, M2C_UNK);
     extern f32 lbl_80369A3C;
-    M2C_UNK sp48;
-    M2C_UNK sp28;
-    M2C_UNK sp8;
+    M2C_UNK sp48[8];
+    M2C_UNK sp28[8];
+    M2C_UNK sp8[8];
     s16 temp_r5;
     s16 temp_r6;
     s32 temp_r28;
     s32 temp_r29;
 
-    fn_80222644(&sp48, arg0, arg5, arg6, 1, 0, 0, 0);
-    fn_802228D8(&sp48, 0, 0, 0, 0, 0, lbl_80369A3C, lbl_80369A3C, lbl_80369A3C);
-    fn_80222C50(&sp48, 0);
+    fn_80222644(sp48, arg0, arg5, arg6, 1, 0, 0, 0);
+    fn_802228D8(sp48, 0, 0, 0, 0, 0, lbl_80369A3C, lbl_80369A3C, lbl_80369A3C);
+    fn_80222C50(sp48, 0);
     temp_r28 = (s16) arg5 >> 1;
     temp_r29 = (s16) arg6 >> 1;
-    fn_80222644(&sp28, arg1, (u16) temp_r28, (u16) temp_r29, 1, 0, 0, 0);
-    fn_802228D8(&sp28, 0, 0, 0, 0, 0, lbl_80369A3C, lbl_80369A3C, lbl_80369A3C);
-    fn_80222C50(&sp28, 1);
-    fn_80222644(&sp8, arg2, (u16) temp_r28, (u16) temp_r29, 1, 0, 0, 0);
-    fn_802228D8(&sp8, 0, 0, 0, 0, 0, lbl_80369A3C, lbl_80369A3C, lbl_80369A3C);
-    fn_80222C50(&sp8, 2);
+    fn_80222644(sp28, arg1, (u16) temp_r28, (u16) temp_r29, 1, 0, 0, 0);
+    fn_802228D8(sp28, 0, 0, 0, 0, 0, lbl_80369A3C, lbl_80369A3C, lbl_80369A3C);
+    fn_80222C50(sp28, 1);
+    fn_80222644(sp8, arg2, (u16) temp_r28, (u16) temp_r29, 1, 0, 0, 0);
+    fn_802228D8(sp8, 0, 0, 0, 0, 0, lbl_80369A3C, lbl_80369A3C, lbl_80369A3C);
+    fn_80222C50(sp8, 2);
     fn_80220DEC(0x80, 7, 4);
     *(s16 *)0xCC008000 = arg3;
     temp_r6 = arg4 + arg_sp8;
@@ -1352,9 +1352,9 @@ s32 fn_800A8978(void *arg0) {
 }
 
 void *fn_800A89C0(void *arg0) {
-    M2C_UNK memset(M2C_UNK, M2C_UNK);
-    M2C_FIELD(arg0, s16 *, 0x3A) = 0;
-    memset(0, 0x64);
+    void *memset(void *, int, unsigned int);
+    *(short *)((char *)arg0 + 0x3A) = 0;
+    memset(arg0, 0, 0x64);
     return arg0;
 }
 
