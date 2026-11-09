@@ -3525,20 +3525,26 @@ s32 fn_800BD10C(s32 arg0, s32 arg1) {
     return -1;
 }
 
-s32 fn_800BD334(u8 arg0, s32 arg1) {
-    extern u16 lbl_802B14E4[];
-    void *var_r3;
-
-    if (arg0 != 0) {
-        var_r3 = &lbl_802B14E4[(arg0 - 1) * 0x140];
-    } else {
-        var_r3 = NULL;
-    }
-    if ((var_r3 == NULL) || (*(u32 *)((u8 *)var_r3 + 0x188) == 0U)) {
-        return 0;
-    }
-    *(s32 *)((u8 *)var_r3 + 0x1A0) = *(s32 *)((u8 *)var_r3 + 0x1A0) | arg1;
-    return *(s32 *)((u8 *)var_r3 + 0x1A0);
+s32 fn_800BD334(u8 arg0, s32 arg1)
+{
+  extern u16 lbl_802B14E4[];
+  u8 *new_var;
+  void *var_r3;
+  if (arg0 != 0)
+  {
+    var_r3 = &lbl_802B14E4[(arg0 - 1) * 0x140];
+  }
+  else
+  {
+    var_r3 = NULL;
+  }
+  if ((var_r3 == NULL) || ((*((u32 *) (((u8 *) var_r3) + 0x188))) == 0U))
+  {
+    return 0;
+  }
+  new_var = (u8 *) var_r3;
+  *((s32 *) (new_var + 0x1A0)) = (*((s32 *) (new_var + 0x1A0))) | arg1;
+  return *((s32 *) (new_var + 0x1A0));
 }
 
 s32 fn_800BD388(u8 arg0, s32 arg1)
