@@ -1132,18 +1132,19 @@ void fn_8000BF00(u32 arg0) {
     } while (var_r30 < 0x100);
 }
 
-void fn_8000BFEC(M2C_UNK (*arg0)(u32 *)) {
-    u32 *var_r31;
+void fn_8000BFEC(void (*arg0)(void *)) {
+    extern u8 lbl_802A66D8[];
+    u8 *var_r31;
     s32 var_r30;
 
-    var_r31 = (u32 *)0x802A66D8;
+    var_r31 = lbl_802A66D8;
     var_r30 = 0;
     do {
-        if ((u32) *var_r31 != 0U) {
+        if (*(u32 *)var_r31 != 0) {
             arg0(var_r31);
         }
         var_r30 += 1;
-        var_r31 += 0x70 / sizeof(u32);
+        var_r31 += 0x70;
     } while (var_r30 < 0x100);
 }
 
