@@ -308,7 +308,8 @@ void fn_80073DD4(s32 arg0) {
 
 void fn_80073E04(s32 arg0) {
     M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
-    extern M2C_UNK lbl_80311F40;
-    fn_80024398(&lbl_80311F40, arg0, 0);
+    extern u8 lbl_80311F40[];
+
+    fn_80024398((M2C_UNK *)lbl_80311F40, arg0, 0);
 }
 
