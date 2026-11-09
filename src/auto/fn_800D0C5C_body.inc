@@ -1,1 +1,1 @@
-#error body_inc_probe
+/* obsolete probe stub */
