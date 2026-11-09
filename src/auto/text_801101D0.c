@@ -1378,10 +1378,9 @@ s32 fn_8011C5B4(void) {
     return 0;
 }
 
-void fn_8011C64C(void *arg0) {
-    s32 val = *(s32 *)((u8 *)arg0 + 0x428);
-    fn_8011CAAC(val, 0);
-    return;
+void fn_8011C64C(void *arg0, s32 arg1) {
+    void fn_8011CAAC(s32, s32, s32);
+    fn_8011CAAC(*(s32 *)((u8 *)arg0 + 0x428), arg1, 0);
 }
 
 void fn_8011C674(void *arg0, s32 arg1) {
