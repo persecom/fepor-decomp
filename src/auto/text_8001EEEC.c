@@ -33,6 +33,60 @@ void fn_8001EF7C(void) {
 
 }
 
+s32 fn_8001EF80(void *arg0, s8 arg1, s8 arg2) {
+    u8 *ptr;
+    u8 var_r0_2;
+    s32 tmp;
+    
+    if (arg1 < 0 || arg2 < 0) {
+        return 0;
+    }
+    
+    // Load grid data pointer
+    ptr = M2C_FIELD(arg0, u8 **, 0x408E);
+    
+    // Check bounds
+    if ((s8)(arg1 + 1) >= M2C_FIELD(arg0, u8 *, 0xA)) {
+        return 0;
+    }
+    if ((s8)(arg2 + 1) >= M2C_FIELD(arg0, u8 *, 0xB)) {
+        return 0;
+    }
+    if ((s8)(arg1 - 1) < M2C_FIELD(arg0, u8 *, 8)) {
+        return 0;
+    }
+    if ((s8)(arg2 - 1) < M2C_FIELD(arg0, u8 *, 9)) {
+        return 0;
+    }
+    
+    // Check if movement is possible in all four directions
+    var_r0_2 = 0x10;
+    if (ptr[(s8)(arg1 + 1) + (arg2 << 6)] & 0x20) {
+        var_r0_2 = 0x20;
+    }
+    if (ptr[(s8)(arg1 - 1) + (arg2 << 6)] & 0x40) {
+        var_r0_2 = 0x40;
+    }
+    if (ptr[arg1 + ((s8)(arg2 + 1) << 6)] & 0x80) {
+        var_r0_2 = 0x80;
+    }
+    if (ptr[arg1 + ((s8)(arg2 - 1) << 6)] & 0x100) {
+        var_r0_2 = 0x100;
+    }
+    
+    // Final check for valid direction
+    tmp = M2C_FIELD(arg0, s16 **, 0x14190)[arg1 + (arg2 << 6)];
+    if (tmp == 0) {
+        return 0;
+    }
+    
+    if ((s32)(ptr[arg1 + (arg2 << 6)] & var_r0_2) != 0) {
+        return 1;
+    }
+    
+    return 0;
+}
+
 s32 fn_8001F4CC(void *arg0, s8 arg1, s8 arg2) {
     if (arg1 < (s8) M2C_FIELD(arg0, u8 *, 8)) {
         return 0;
@@ -360,6 +414,100 @@ void fn_800227F8(void* arg0, s32 arg1)
     return;
 }
 
+extern u16 jumptable_80284514[12];
+void fn_80022DAC(s32 arg0, s32 arg1) {
+    if (arg0 >= 11) {
+        return;
+    }
+    
+    switch(arg0) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+            {
+                u32 tmp1 = (arg1 & 0xFF000000) >> 24; // r5 -> r3
+                u32 tmp2 = (arg1 & 0x00FF0000) >> 16; // r5 -> r0  
+                u32 tmp3 = (arg1 & 0x000000FF);       // r5 -> r4
+                u32 tmp4 = (arg1 & 0xFF000000) << 24;
+                s32 arg2 = ((tmp2 + tmp1) * 0x1000) + tmp4 + tmp3;
+                s32 arg3 = arg1;
+                fn_800062B0(arg2, arg3);
+            }
+            break;
+        case 4:
+            {
+                u32 tmp1 = (arg1 & 0xFF000000) >> 24; // r5 -> r3
+                u32 tmp2 = (arg1 & 0x00FF0000) >> 16; // r5 -> r0  
+                u32 tmp3 = (arg1 & 0x000000FF);       // r5 -> r4
+                u32 tmp4 = (arg1 & 0xFF000000) << 24;
+                s32 arg2 = ((tmp2 + tmp1) * 0x1000) + tmp4 + tmp3;
+                s32 arg3 = arg1;  
+                fn_800062B0(arg2, arg3);
+            }
+            break;
+        case 5:
+            {
+                u32 tmp1 = (arg1 & 0xFF000000) >> 24; // r5 -> r3
+                u32 tmp2 = (arg1 & 0x00FF0000) >> 16; // r5 -> r0  
+                u32 tmp3 = (arg1 & 0x000000FF);       // r5 -> r4
+                u32 tmp4 = (arg1 & 0xFF000000) << 24;
+                s32 arg2 = ((tmp2 + tmp1) * 0x1000) + tmp4 + tmp3;
+                s32 arg3 = arg1;
+                fn_800062B0(arg2, arg3);
+            }
+            break;
+        case 6:
+            {
+                u32 tmp1 = (arg1 & 0xFF000000) >> 24; // r5 -> r3
+                u32 tmp2 = (arg1 & 0x00FF0000) >> 16; // r5 -> r0  
+                u32 tmp3 = (arg1 & 0x000000FF);       // r5 -> r4
+                u32 tmp4 = (arg1 & 0xFF000000) << 24;
+                s32 arg2 = ((tmp2 + tmp1) * 0x1000) + tmp4 + tmp3;
+                s32 arg3 = arg1;
+                fn_800062B0(arg2, arg3);
+            }
+            break;
+        case 7:
+            {
+                u32 tmp1 = (arg1 & 0x0000FFFF); // r5 -> r4
+                u32 tmp2 = (arg1 & 0xFFFF0000); // r5 -> r0
+                s32 arg2 = tmp1 + (tmp2 >> 16);
+                s32 arg3 = arg1;
+                fn_800062B0(arg2, arg3);
+            }
+            break;
+        case 8:
+            {
+                u32 tmp1 = (arg1 & 0x0000FFFF); // r5 -> r4
+                u32 tmp2 = (arg1 & 0xFFFF0000); // r5 -> r0
+                s32 arg2 = tmp1 + (tmp2 >> 16);
+                s32 arg3 = arg1;
+                fn_800062B0(arg2, arg3);
+            }
+            break;
+        case 9: 
+        case 10:
+            {
+                u32 tmp1 = (arg1 & 0x0000FFFF); // r5 -> r4
+                u32 tmp2 = (arg1 & 0xFFFF0000); // r5 -> r0
+                s32 arg2 = tmp1 + (tmp2 >> 16);
+                s32 arg3 = arg1;
+                fn_800062B0(arg2, arg3);
+            }
+            break;
+        case 11:
+            {
+                u32 tmp1 = (arg1 & 0x0000FFFF); // r5 -> r4
+                u32 tmp2 = (arg1 & 0xFFFF0000); // r5 -> r0
+                s32 arg2 = tmp1 + (tmp2 >> 16);
+                s32 arg3 = arg1;
+                fn_800062B0(arg2, arg3);
+            }
+            break;
+    }
+}
+
 s32 fn_80022FB0(u16 arg0) {
     return arg0 + (arg0 << 0x10);
 }
@@ -467,6 +615,43 @@ f32 fn_80023EE0(void *arg0) {
     default:
         return lbl_80368DAC;
     }
+}
+
+void fn_80023FF4(void* arg0, s32 arg1, s32 arg2) {
+    s32 r3;
+    s32 r4;
+    s32 r5;
+    s32 r6;
+    s32 r7;
+    s32 r8;
+    s32 r9;
+    
+    r3 = *(s32*)((u8*)arg0 + 0x2A);
+    if (r3 == 0) {
+        return;
+    }
+    
+    r4 = *(s32*)((u8*)arg0 + 0x26);
+    r5 = arg2 * 0xC;
+    r6 = ((s8)r4 << 0x10) >> 0x10;
+    r7 = (r6 << 2) + r5;
+    
+    if (r7 < 0) {
+        return;
+    }
+    
+    r8 = *(s32*)(r7 + (u8*)arg0 + 0x40E8);
+    if (r8 == 0) {
+        return;
+    }
+    
+    r9 = (r7 >> 2) & 7;
+    if (r9 != 0) {
+        return;
+    }
+    
+    *(s32*)((u8*)arg0 + 0x40E8 + r5 + 0x10) = r8;
+    *(s32*)((u8*)arg0 + 0x40E8 + r5 + 0xC) = arg1;
 }
 
 void *fn_800241C8(void *arg0) {
@@ -1311,9 +1496,9 @@ void fn_80026850(s32 arg0) {
 }
 
 void fn_80026994(void) {
-    M2C_UNK fn_8003BE50(s32);
-    extern M2C_UNK lbl_802EF4C8;
-    fn_8003BE50(M2C_FIELD(&lbl_802EF4C8, s32 *, 4));
+    void fn_8003BE50(void *);
+    extern u8 lbl_802EF4C8[];
+    fn_8003BE50(*(void **)(lbl_802EF4C8 + 4));
 }
 
 s32 fn_800269C0(s32 arg0) {
