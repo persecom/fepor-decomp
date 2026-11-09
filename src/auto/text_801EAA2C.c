@@ -399,6 +399,14 @@ void *fn_801EC584(void) {
     return (u8 *)lbl_8027EE08 + 0x2b4;
 }
 
+u8 fn_801EC594(void) {
+    extern u8 lbl_803683B8;
+    u32 temp;
+
+    temp = __cntlzw(0x84 - lbl_803683B8);
+    return (u8)((temp >> 5) & 0xFF);
+}
+
 s32 fn_801EC5A8(void) {
     extern u8 lbl_802EF4C8[24];
     lbl_802EF4C8[8] = 0x84;
