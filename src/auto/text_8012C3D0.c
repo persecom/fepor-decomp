@@ -421,18 +421,14 @@ block_4:
 }
 
 void fn_8012DED8(void *arg0) {
-    M2C_UNK fn_8000C188(void *);
-    M2C_UNK fn_80057860(s32, s16);
-    s16 temp_r3;
-    u32 temp_r0;
-    u32 temp_r3_2;
+    void fn_80057860(s32, s32);
+    void fn_8000C188(void *);
+    s16 *p;
 
-    M2C_FIELD(arg0, s16 *, 0x6A) = (s16) (M2C_FIELD(arg0, s16 *, 0x6A) - M2C_FIELD(arg0, u8 *, 0x6F));
-    fn_80057860(M2C_FIELD(arg0, s32 *, 0x4C), M2C_FIELD(arg0, s16 *, 0x6A));
-    temp_r3 = M2C_FIELD(arg0, s16 *, 0x6A);
-    temp_r3_2 = (u32) temp_r3 >> 0x1FU;
-    temp_r0 = (temp_r3 << 0x1B) - temp_r3_2;
-    if ((((temp_r0 << 5) | (temp_r0 >> 0x1BU)) + temp_r3_2) == 0) {
+    p = (s16 *)((u8 *)arg0 + 0x6A);
+    *p = (s16)(*p - *((u8 *)arg0 + 0x6F));
+    fn_80057860(*(s32 *)((u8 *)arg0 + 0x4C), *p);
+    if (*p % 32 == 0) {
         fn_8000C188(arg0);
     }
 }
