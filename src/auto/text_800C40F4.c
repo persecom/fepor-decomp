@@ -2724,6 +2724,8 @@ void *fn_800DDC90(void *arg0) {
     return temp_r3;
 }
 
+void fn_800E5A4C(void *arg0);
+
 void fn_800DDD08(void* arg0) {
     u32* ptr = (u32*)arg0;
     u32 val = *ptr;
@@ -2737,10 +2739,10 @@ void fn_800DDD08(void* arg0) {
             fn_80006B38();
         }
 
-                  val = ptr[4];
-          if (val != 0) {
-              /* fn_800E5A4C call restored after prototype */
-          }
+        val = ptr[4];
+        if (val != 0) {
+            fn_800E5A4C((void *)ptr[8]);
+        }
     }
 }
 
