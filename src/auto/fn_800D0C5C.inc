@@ -1,6 +1,6 @@
-#pragma use_lmw_stmw on
-#pragma cplusplus on
-extern "C" s32 fn_800D0C5C(void *arg0) {
+/* removed temporary include stub - see text_800C40F4.c */
+#if 0
+extern "C" s32 fn_800D0C5C_REMOVED(void *arg0) {
     struct H {
         u8 pad[0x40];
         virtual void v0() = 0;
