@@ -3060,7 +3060,7 @@ s32 fn_800723DC(void) {
 void fn_800723E4(void *arg0) {
     fn_8000E0E4(M2C_FIELD(arg0, s32 *, 4));
 }
-extern u16 lbl_803672F8;
+extern u32 *lbl_803672F8;
 extern s32 *jumptable_80285D18;
 extern u8 lbl_80366DE9;
 extern struct Unit {
