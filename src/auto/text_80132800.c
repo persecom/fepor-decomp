@@ -124,7 +124,7 @@ s32 fn_801328A4(void) {
 
 void *fn_801328EC(void) {
     extern u16 lbl_80276008[];
-    return &lbl_80276008[0x1DC];
+    return (u8 *)lbl_80276008 + 0xee;
 }
 
 void *fn_801328FC(void) {
