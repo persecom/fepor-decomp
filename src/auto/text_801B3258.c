@@ -1491,13 +1491,12 @@ void fn_801BEDC4(void) {
 
 void fn_801C0A28(void *arg0) {
     s32 temp_r31;
-    
+
     temp_r31 = fn_8013FF94(arg0, 0x81, 0);
-    fn_8016A5AC(*(s32*)((char*)arg0 + 0x18));
+    fn_8016A5AC(*(s32 *)((char *)arg0 + 0x18));
     fn_8013FEF0();
-    fn_8014876C(&lbl_8032FF08, 0x46, 0x2EE);
-    fn_801D2AAC(temp_r31);
-    fn_800BE658(arg0);
+    fn_8014876C(lbl_8032FF08, 0x46, 0x2EE);
+    fn_800BE658(fn_801D2AAC(temp_r31), arg0);
 }
 
 void fn_801C0A9C(void)
