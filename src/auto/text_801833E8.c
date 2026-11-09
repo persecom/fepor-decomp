@@ -4190,11 +4190,14 @@ void fn_8019D1DC(void *arg0) {
 }
 
 s32 fn_8019D268(void) {
-    extern u16 lbl_802968E8[];
-    s32 temp_r3;
+    void *fn_8000C0C0(void *);
+    u8 fn_800537E8(void);
+    void fn_8000C60C(void *);
+    extern u8 lbl_802968E8[];
+    void *temp_r3;
 
     temp_r3 = fn_8000C0C0(lbl_802968E8);
-    if ((temp_r3 != 0) && (fn_800537E8() == 0)) {
+    if (temp_r3 != NULL && fn_800537E8() == 0) {
         fn_8000C60C(temp_r3);
         return 0;
     }
