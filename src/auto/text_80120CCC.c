@@ -344,17 +344,18 @@ void fn_80122AA8(void* arg0) {
 }
 
 void fn_80122C84(void *arg0) {
-    s32* var_r30;
-    s32 var_r29;
+    void *p;
+    s32 i;
+    s32 zero = 0;
 
-    var_r30 = (s32*)arg0;
-    var_r29 = 0;
+    p = arg0;
+    i = 0;
     do {
-        fn_800C428C(*var_r30);
-        *var_r30 = 0;
-        var_r29 += 1;
-        var_r30 += 1;
-    } while (var_r29 < 5);
+        fn_800C428C(*(s32 *)((u8 *)p + 0x30));
+        *(s32 *)((u8 *)p + 0x30) = zero;
+        i += 1;
+        p = (u8 *)p + 4;
+    } while (i < 5);
 }
 
 void fn_80122CE0(void *arg0, void *arg1) {
