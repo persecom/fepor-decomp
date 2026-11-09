@@ -1170,6 +1170,7 @@ void fn_8018B920(void *arg0) {
     *(f32 *)((char *)arg0 + 0x44) = lbl_8036ACEC;
 }
 
+#pragma fp_contract on
 void fn_8018B934(void *arg0) {
     f32 fn_8005A028(s32, f32, f32, f32, f32);
     void fn_8000C188(void *);
@@ -1177,8 +1178,6 @@ void fn_8018B934(void *arg0) {
     extern f32 lbl_8036AD48;
     f32 ad48;
     f32 ace8;
-    f32 quot;
-    f32 rem;
     f32 temp_f1;
     void *temp_r4;
 
@@ -1186,16 +1185,14 @@ void fn_8018B934(void *arg0) {
     temp_f1 = fn_8005A028(2, M2C_FIELD(arg0, f32 *, 0x40), M2C_FIELD(arg0, f32 *, 0x44), (f32) M2C_FIELD(arg0, s32 *, 0x38), (f32) M2C_FIELD(arg0, s32 *, 0x3C));
     ad48 = lbl_8036AD48;
     ace8 = lbl_8036ACE8;
-    quot = (f32) (s32) (temp_f1 / ad48);
-    rem = temp_f1 - ad48 * quot;
-    M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s16 *, 0x15C) = (s16) (ace8 * rem);
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s16 *, 0x15C) = (s16) (ace8 * (temp_f1 - ad48 * (f32) (s32) (temp_f1 / ad48)));
     if (M2C_FIELD(arg0, s32 *, 0x3C) == M2C_FIELD(arg0, s32 *, 0x38)) {
         temp_r4 = M2C_FIELD(arg0, void **, 0x30);
         M2C_FIELD(temp_r4, s16 *, 0x15C) = (s16) (ace8 * M2C_FIELD(arg0, f32 *, 0x34));
         fn_8000C188(arg0);
     }
 }
-
+#pragma fp_contract reset
 void fn_8018BA34(void *arg0) {
     extern f32 lbl_8036ACE8;
     extern f32 lbl_8036AD2C;
@@ -2076,6 +2073,26 @@ extern "C" void fn_8018F94C(void *arg0) {
     ((Obj *)arg0)->v2();
     fn_80154004(0, 0, 0x10);
 }
+
+#pragma cplusplus on
+extern "C" void fn_8018F988(void *arg0, s32 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10(s32) = 0;
+    };
+    ((Obj *)arg0)->v9();
+    ((Obj *)arg0)->v10(arg1);
+}
+#pragma cplusplus reset
 
 extern "C" void fn_8018FC1C(void *arg0) {
     void fn_80154004(s32, s32, s32);
