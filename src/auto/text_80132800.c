@@ -406,6 +406,11 @@ void *fn_801343F8(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
     return arg0;
 }
 
+s32 fn_80134718(void *arg0) {
+    extern s32 lbl_80291730[];
+    return lbl_80291730[M2C_FIELD(arg0, s16 *, 0x3E)];
+}
+
 #pragma cplusplus on
 extern "C" void fn_80134730(void *arg0) {
     struct Obj {
