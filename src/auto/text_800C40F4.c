@@ -2310,6 +2310,21 @@ void fn_800DBB90(void *arg0, void *arg1) {
     dst[2] = src[0x14];
 }
 
+void fn_800DBBAC(f32 *arg0, u8 *arg1) {
+    extern f32 lbl_80369E70;
+    f32 value0;
+    f32 value1;
+    f32 value2;
+
+    value2 = *(volatile f32 *)(arg1 + 0x50);
+    value1 = *(volatile f32 *)(arg1 + 0x48);
+    value0 = lbl_80369E70;
+
+    arg0[0] = value1;
+    arg0[1] = value0;
+    arg0[2] = value2;
+}
+
 void fn_800DBBC8(f32 *arg0, f32 *arg1) {
     arg0[0] = arg1[0x14];
     arg0[1] = arg1[0x13];
