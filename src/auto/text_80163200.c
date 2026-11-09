@@ -2242,6 +2242,34 @@ extern "C" void fn_80174B10(void *arg0) {
         h->p58 = (RefObj *)0;
     }
 }
+
+extern "C" void fn_80174C5C(void *arg0) {
+    M2C_UNK fn_80184C7C(void *, s32, s32, s32);
+    M2C_UNK fn_80138808(void *, void *);
+    void fn_8000C070(void *, s32);
+    void *temp_r31;
+    void *temp_r3;
+    void *temp_r4;
+
+    temp_r31 = arg0;
+    temp_r3 = M2C_FIELD(lbl_802EF4C8, void **, 0);
+    if (temp_r3 != NULL) {
+        fn_80184C7C(temp_r3, 0, 4, 0);
+    }
+    temp_r3 = M2C_FIELD(lbl_802EF4C8, void **, 4);
+    if (temp_r3 != NULL) {
+        fn_80184C7C(temp_r3, 0, 4, 0);
+    }
+    temp_r3 = M2C_FIELD(temp_r31, void **, 0x44);
+    if (temp_r3 != NULL) {
+        temp_r4 = M2C_FIELD(temp_r3, void **, 0x3C);
+        if (temp_r4 != NULL) {
+            fn_80138808(temp_r3, temp_r4);
+        }
+    }
+    fn_8000C070(temp_r31, 0xB);
+}
+
 #pragma cplusplus reset
 
 void fn_80174E0C(s32 arg0) {
