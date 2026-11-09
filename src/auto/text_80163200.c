@@ -1328,18 +1328,18 @@ void *fn_8016AFF0(void) {
 u8 fn_8016B000(void *arg0) {
     extern u8 lbl_80330708[];
     u8 temp_r3;
-    u8 var_r0;
+    s32 ret;
 
     if (lbl_80330708[0x55] != 0) {
         return 3U;
     }
     temp_r3 = fn_801C13F0();
-    *(u8 *)((uintptr_t)arg0 + 4) = temp_r3;
-    var_r0 = 2;
+    *((u8 *)arg0 + 4) = temp_r3;
+    ret = 2;
     if (temp_r3 != 0) {
-        var_r0 = 0;
+        ret = 0;
     }
-    return var_r0;
+    return ret;
 }
 
 void fn_8016B060(void *arg0, void *arg2) {
