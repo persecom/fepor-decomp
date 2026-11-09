@@ -730,22 +730,25 @@ void fn_8011A2FC(s32 arg0) {
 }
 
 void fn_8011A470(s32 arg0) {
-    M2C_UNK fn_80018AF4();
-    M2C_UNK fn_800A8450();
-    M2C_UNK fn_8011A2FC(s32);
-    M2C_UNK fn_8011A4E4(s32);
-    u32 fn_8013FF94(s32, M2C_UNK, M2C_UNK);
-    M2C_UNK fn_801658DC(void *);
-    extern M2C_UNK lbl_80274508;
+    void fn_80018AF4(void);
+    void fn_800A8450(void);
+    void fn_8011A2FC(s32);
+    void fn_8011A4E4(s32);
+    u32 fn_8013FF94(s32, s32, s32);
+    void fn_801658DC(u32, u8 *);
     extern u8 lbl_803671C0;
-    if ((u8) lbl_803671C0 == 0) {
+    extern u8 lbl_80274508[];
+    u32 temp;
+
+    if (lbl_803671C0 == 0) {
         fn_80018AF4();
     }
     fn_800A8450();
     fn_8011A4E4(arg0);
     fn_8011A2FC(arg0);
-    if (fn_8013FF94(arg0, -0x1000, 0) != 0U) {
-        fn_801658DC(&lbl_80274508 + 0x2F5);
+    temp = fn_8013FF94(arg0, -0x1000, 0);
+    if (temp != 0) {
+        fn_801658DC(temp, lbl_80274508 + 0x2F5);
     }
 }
 
