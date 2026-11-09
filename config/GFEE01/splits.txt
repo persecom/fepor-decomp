@@ -166,7 +166,10 @@ auto/text_800981D0.c:
 	.text       start:0x800981D0 end:0x80098AE4
 
 auto/text_80098AE4.c:
-	.text       start:0x80098AE4 end:0x8009F0BC
+	.text       start:0x80098AE4 end:0x80098B74
+
+auto/text_80098B74.c:
+	.text       start:0x80098B74 end:0x8009F0BC
 
 auto/text_8009F0BC.c:
 	.text       start:0x8009F0BC end:0x8009F85C
