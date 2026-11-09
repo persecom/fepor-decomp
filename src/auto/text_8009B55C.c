@@ -211,11 +211,13 @@ void fn_8009E588(void) {
 }
 
 void fn_8009E5B4(void) {
-    extern u16 lbl_80312100[];
-    
-    lbl_80312100[0x62] = 0;
-    fn_8006EB9C(lbl_80312100);
-    fn_8021F1B8(&lbl_80312100[0x2D], &lbl_80312100[0x6E]);
+    s32 fn_8006EB9C(void *);
+    void fn_8021F1B8(s32, void *, void *);
+    extern u8 lbl_80312100[];
+    s32 sp8;
+
+    lbl_80312100[0xC4] = 0;
+    fn_8021F1B8(fn_8006EB9C(lbl_80312100), &sp8, lbl_80312100 + 0xB4);
 }
 
 void fn_8009E5F8(void) {
