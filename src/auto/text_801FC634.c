@@ -126,13 +126,8 @@ void fn_801FE3DC(void *arg0) {
 }
 
 s32 fn_801FE430(void) {
-    extern s32 lbl_803682A4;
-    u32 temp = lbl_803682A4;
-    temp &= 0x20;
-    if (temp == 0) {
-        return 1;
-    }
-    return 0;
+    extern u32 lbl_803682A4;
+    return !(lbl_803682A4 & 0x20);
 }
 
 void fn_801FE444(void) {
