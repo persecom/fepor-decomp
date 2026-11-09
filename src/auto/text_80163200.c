@@ -1344,7 +1344,7 @@ void fn_8016B30C(void) {
 
 void *fn_8016B338(void) {
     extern u16 lbl_80277BC0[];
-    return &lbl_80277BC0[0x8E8];
+    return (u8 *)lbl_80277BC0 + 0x23a;
 }
 
 void fn_8016B5E8(void) {
