@@ -701,11 +701,11 @@ void fn_801EDEC8(void *arg0) {
 void fn_801EDF7C(void *arg0) {
     M2C_UNK fn_800162B8();
     u8 fn_80040824();
-    M2C_UNK fn_8014C718(M2C_UNK *, void *);
-    extern M2C_UNK lbl_80330708;
+    M2C_UNK fn_8014C718(void *, void *);
+    extern u8 lbl_80330708[];
     M2C_FIELD(arg0, u8 *, 0x39) = fn_80040824();
     if ((u8) M2C_FIELD(arg0, u8 *, 0x39) != 0) {
-        fn_8014C718(&lbl_80330708, arg0);
+        fn_8014C718(lbl_80330708, arg0);
     }
     fn_800162B8();
 }
