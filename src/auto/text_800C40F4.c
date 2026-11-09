@@ -2831,6 +2831,59 @@ void fn_800DEF00(void *arg0) {
     }
 }
 
+void fn_800DF110(void *arg0, s32 arg1, f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 farg4, f32 farg5) {
+    f32 fn_802032CC(f32 *, f32 *);
+    extern f32 lbl_80369EA0;
+    f32 sp14[3];
+    f32 sp8[3];
+    f32 temp_f1;
+
+    if (arg1 == 0) {
+        M2C_FIELD(arg0, f32 *, 0x30) = farg0;
+        M2C_FIELD(arg0, f32 *, 0x34) = farg1;
+        M2C_FIELD(arg0, f32 *, 0x38) = farg2;
+        M2C_FIELD(arg0, f32 *, 0x3C) = farg0;
+        M2C_FIELD(arg0, f32 *, 0x40) = farg1;
+        M2C_FIELD(arg0, f32 *, 0x44) = farg2;
+    } else {
+        M2C_FIELD(arg0, f32 *, 0x30) = (f32) M2C_FIELD(arg0, f32 *, 0x3C);
+        M2C_FIELD(arg0, f32 *, 0x34) = (f32) M2C_FIELD(arg0, f32 *, 0x40);
+        M2C_FIELD(arg0, f32 *, 0x38) = (f32) M2C_FIELD(arg0, f32 *, 0x44);
+        M2C_FIELD(arg0, f32 *, 0x3C) = (f32) M2C_FIELD(arg0, f32 *, 0);
+        M2C_FIELD(arg0, f32 *, 0x40) = (f32) M2C_FIELD(arg0, f32 *, 4);
+        M2C_FIELD(arg0, f32 *, 0x44) = (f32) M2C_FIELD(arg0, f32 *, 8);
+    }
+    M2C_FIELD(arg0, f32 *, 0x48) = farg0;
+    M2C_FIELD(arg0, f32 *, 0x4C) = farg1;
+    M2C_FIELD(arg0, f32 *, 0x50) = farg2;
+    M2C_FIELD(arg0, f32 *, 0x54) = farg3;
+    M2C_FIELD(arg0, f32 *, 0x58) = farg4;
+    M2C_FIELD(arg0, f32 *, 0x5C) = farg5;
+    M2C_FIELD(arg0, f32 *, 0xC) = farg0;
+    M2C_FIELD(arg0, f32 *, 0x10) = farg1;
+    M2C_FIELD(arg0, f32 *, 0x14) = farg2;
+    M2C_FIELD(arg0, s32 *, 0x2C) = arg1;
+    M2C_FIELD(arg0, f32 *, 0x18) = (f32) arg1;
+    if (arg1 == 0) {
+        M2C_FIELD(arg0, f32 *, 0) = (f32) M2C_FIELD(arg0, f32 *, 0xC);
+        M2C_FIELD(arg0, f32 *, 4) = (f32) M2C_FIELD(arg0, f32 *, 0x10);
+        M2C_FIELD(arg0, f32 *, 8) = (f32) M2C_FIELD(arg0, f32 *, 0x14);
+        return;
+    }
+    sp14[0] = M2C_FIELD(arg0, f32 *, 0);
+    sp14[1] = M2C_FIELD(arg0, f32 *, 4);
+    sp14[2] = M2C_FIELD(arg0, f32 *, 8);
+    sp8[0] = M2C_FIELD(arg0, f32 *, 0xC);
+    sp8[1] = M2C_FIELD(arg0, f32 *, 0x10);
+    sp8[2] = M2C_FIELD(arg0, f32 *, 0x14);
+    temp_f1 = fn_802032CC(sp8, sp14);
+    if (lbl_80369EA0 == temp_f1) {
+        M2C_FIELD(arg0, s32 *, 0x2C) = 0;
+        return;
+    }
+    M2C_FIELD(arg0, f32 *, 0x1C) = (f32) (temp_f1 / M2C_FIELD(arg0, f32 *, 0x18));
+}
+
 #pragma cplusplus on
 #pragma dont_inline on
 extern "C" bool fn_800DF298(void *arg0, const char *arg1) {
