@@ -7044,10 +7044,7 @@ s32 fn_80100FD0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 }
 
 void fn_80101448(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
-    void fn_800FE2A0(s32, s32);
-    void fn_80101530(s32, s32, s32, s32, s32, s32, s32, s32);
-
-    fn_800FE2A0(5, arg7);
+    fn_800FE2A0(arg0, 5, arg7);
     fn_80101530(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 }
 
