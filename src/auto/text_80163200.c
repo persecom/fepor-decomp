@@ -1247,17 +1247,19 @@ void *fn_8016A6DC(void *arg0, s16 arg1) {
 
 void fn_8016A738(void) {
     void fn_8013E300(void);
-    void fn_8000C0C0(s32);
-    s32 fn_8013FF94(s32, s32);
-    void fn_801658DC(s32, s32);
+    void *fn_8000C0C0(u8 *);
+    u32 fn_8013FF94(void *, s32, s32);
+    void fn_801658DC(u32, u8 *);
 
     extern u8 lbl_80293D8C[];
     extern u8 lbl_80277BC0[];
 
     fn_8013E300();
-    fn_8000C0C0((s32)&lbl_80293D8C);
-    if (fn_8013FF94(-0x1000, 0) != 0) {
-        fn_801658DC((s32)&lbl_80277BC0 + 0x14C, 0);
+    {
+        u32 r = fn_8013FF94(fn_8000C0C0(lbl_80293D8C), -0x1000, 0);
+        if (r != 0) {
+            fn_801658DC(r, lbl_80277BC0 + 0x14C);
+        }
     }
 }
 
