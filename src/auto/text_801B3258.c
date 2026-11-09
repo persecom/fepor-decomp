@@ -3152,9 +3152,8 @@ void fn_801CF5A4(s32 *arg0, void *arg1) {
 }
 
 s32 fn_801CF5FC(void *arg0) {
-    extern u16 lbl_80298720[];
-    s16 val = *(s16*)((u8*)arg0 + 0x3C);
-    return lbl_80298720[val * 2];
+    extern s32 lbl_80298720[];
+    return lbl_80298720[M2C_FIELD(arg0, s16 *, 0x3C)];
 }
 
 s32 fn_801CF614(void *arg0) {
