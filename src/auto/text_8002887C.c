@@ -355,8 +355,8 @@ extern "C" void fn_8002B758(void *arg0) {
     obj.vtbl = lbl_80284D10;
     fn_8002F728(lbl_802EF4E0);
     fn_800227F8(lbl_802CA518, M2C_FIELD(M2C_FIELD(obj.unit, void **, 0x194), s32 *, 0x18C));
-    y = M2C_FIELD(obj.unit, s8 *, 0x19F);
-    x = M2C_FIELD(obj.unit, s8 *, 0x19E);
+    y = *(s8 *)((u8 *)obj.unit + 0x19F);
+    x = *(s8 *)((u8 *)obj.unit + 0x19E);
     flags = (u16 *)(lbl_802CA518 + 0x408E) + (x + (y << 6));
     if (*flags & 8) {
         ((Visitor *)&obj)->visit(x, y - 1);
@@ -1782,7 +1782,7 @@ void fn_80032C80(void *arg0, void *arg1) {
 
 void *fn_80032D4C(void) {
     extern u16 lbl_802695F0[];
-    return &lbl_802695F0[0x14F];
+    return (u8 *)lbl_802695F0 + 0x14F;
 }
 
 void fn_80032DB4(void *arg0, void *arg1) {
