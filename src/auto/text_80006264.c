@@ -119,18 +119,19 @@ void fn_800065B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     fn_8020AEC4(lbl_80367138, temp_r7, temp_r8, temp_r9);
 }
 
-void fn_80006608(void *arg0) {
-    s16 temp_r0;
-    s16 temp_r4;
-    s16 temp_r5;
+void fn_80006608(s16 *arg0) {
+    s16 x;
+    s16 y;
+    s16 dx;
 
-    temp_r4 = M2C_FIELD(arg0, s16 *, 0);
-    temp_r0 = -temp_r4;
-    temp_r5 = -M2C_FIELD(arg0, s16 *, 2);
-    M2C_FIELD(arg0, s16 *, 0) = (s16) (temp_r4 + temp_r0);
-    M2C_FIELD(arg0, s16 *, 2) = (s16) (M2C_FIELD(arg0, s16 *, 2) + temp_r5);
-    M2C_FIELD(arg0, s16 *, 4) = (s16) (M2C_FIELD(arg0, s16 *, 4) + temp_r0);
-    M2C_FIELD(arg0, s16 *, 6) = (s16) (M2C_FIELD(arg0, s16 *, 6) + temp_r5);
+    x = arg0[0];
+    y = arg0[1];
+    dx = -x;
+    y = -y;
+    arg0[0] = x + dx;
+    arg0[1] = arg0[1] + y;
+    arg0[2] = arg0[2] + dx;
+    arg0[3] = arg0[3] + y;
 }
 
 s32 fn_80006650(s16 *arg0, s16 *arg1) {
@@ -784,9 +785,10 @@ void *fn_8000A2A8(u32 arg0) {
  return *(void**)0x80367140;
 }
 
-void fn_8000A358(void) {
-    extern u16 lbl_80267C70[];
-    fn_800C4638(&lbl_80267C70[0x3A * 2], 0);
+void *fn_800C4638(s32, void *, s32);
+void fn_8000A358(s32 arg0) {
+    extern u8 lbl_80267C70[];
+    fn_800C4638(arg0, lbl_80267C70 + 0x3A, 0);
 }
 
 void fn_8000A3F8(void *arg0) {
@@ -1082,7 +1084,34 @@ void fn_8000B950(void *arg0, void (*arg1)(void *)) {
     }
 }
 
-void fn_8000BD98(u8 *arg0) {extern u8 lbl_802A66D8[];u8*p=lbl_802A66D8;int i=0;while(i<256){if(*(u32*)p){s8*a=(s8*)(p+20),*b=(s8*)arg0;s32 d;while(1){s8 x=*a++,y=*b++;if(x!=y){d=x-y;break;}if(!x){d=0;break;}}if(!d)fn_8000C60C(p);}i++;p+=112;}}
+void fn_8000BD98(u8 *arg0) {
+    extern u8 lbl_802A66D8[];
+    u32 *p = (u32 *)lbl_802A66D8;
+    int i = 0;
+    while (i < 256) {
+        if (*p) {
+            s8 *a = (s8 *)(p + 5); // p+20/4
+            s8 *b = (s8 *)arg0;
+            s32 d;
+            while (1) {
+                s8 x = *a++;
+                s8 y = *b++;
+                if (x != y) {
+                    d = x - y;
+                    break;
+                }
+                if (!x) {
+                    d = 0;
+                    break;
+                }
+            }
+            if (!d)
+                fn_8000C60C((u8 *)p);
+        }
+        i++;
+        p += 28; // 112/4
+    }
+}
 
 void fn_8000BE54(u32 arg0) {
  extern u8 lbl_802A66D8[]; u8 *p=lbl_802A66D8; s32 i,j;
