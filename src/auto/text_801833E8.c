@@ -2381,26 +2381,27 @@ void fn_801919B8(void *arg0) {
     fn_8011D79C(M2C_FIELD(M2C_FIELD(arg0, void **, 0x68), s32 *, 0x1C));
 }
 
-void fn_80192DB8(void* arg0) {
-    void** temp_r31;
-    s16 spC;
-    s16 spE;
-    s16 spA;
-    s16 sp8;
-    s16 temp_r7;
-    s16 temp_r7_2;
+void fn_80192DB8(void *arg0) {
+    void fn_8013F748(void *, void *, void *);
+    void fn_80140258(void *, void *, s16 *, s32);
+    void *fn_8013FF94(void *, s32, s32);
+    s16 spC[2];
+    s16 sp8[2];
+    void *r31;
+    void *r4;
+    s16 r7;
 
-    temp_r31 = *(void**)((char*)arg0 + 0x4C);
-    fn_8013F748(temp_r31, (void*)((char*)arg0 + 0x5E), (void*)((char*)temp_r31 + 0x7C));
-    temp_r7 = *(s16*)((char*)temp_r31 + 0xC);
-    spC = 0x260;
-    spE = temp_r7;
-    fn_80140258(arg0, temp_r31, &spC, 0, temp_r7);
-    temp_r31 = (void**)fn_8013FF94(arg0, 1, 0);
-    temp_r7_2 = *(s16*)((char*)temp_r31 + 0xC);
-    sp8 = 0x260;
-    spA = temp_r7_2;
-    fn_80140258(arg0, temp_r31, &sp8, 0, temp_r7_2);
+    r31 = *(void **)((u8 *)arg0 + 0x4C);
+    fn_8013F748(r31, (u8 *)arg0 + 0x5E, (u8 *)r31 + 0x7C);
+    r7 = *(s16 *)((u8 *)r31 + 0xC);
+    spC[0] = 0x260;
+    spC[1] = r7;
+    fn_80140258(arg0, r31, spC, 0);
+    r4 = fn_8013FF94(arg0, 1, 0);
+    r7 = *(s16 *)((u8 *)r4 + 0xC);
+    sp8[0] = 0x260;
+    sp8[1] = r7;
+    fn_80140258(arg0, r4, sp8, 0);
 }
 
 void fn_80192E54(void *arg0) {
