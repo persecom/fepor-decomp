@@ -2162,24 +2162,23 @@ u32* fn_801C7080(u32 arg0) {
 }
 
 extern u32 lbl_8036C510;
-void fn_801C7598(void* arg0) {
-    void* temp_r3;
-    
-    temp_r3 = (void*)fn_800675E0();
-    if (temp_r3 != NULL && *(u8*)temp_r3 != 0) {
-        u8 r6 = ((u8*)temp_r3)[1];
-        u8 r5 = ((u8*)temp_r3)[2];
-        u8 r0 = ((u8*)temp_r3)[3];
-        
-        u32 temp_r4 = lbl_8036C510;
-        u32 arg_ptr;
-        
-        *(u8*)((char*)&temp_r4 + 0xC) = r6;
-        *(u8*)((char*)&temp_r4 + 0xD) = r5;
-        *(u8*)((char*)&temp_r4 + 0xE) = r0;
-        
-        arg_ptr = (u32)temp_r4;
-        fn_802217AC(&arg_ptr, 0xFFFFFF, r5, r6);
+void fn_801C7598(void *arg0) {
+    void *tmp = (void *)fn_800675E0();
+    if (tmp != NULL && *(u8 *)tmp != 0) {
+        u32 local_c;
+        u8 local_b1;
+        u8 local_b2;
+        u8 local_b3;
+        u32 local_8;
+        local_c = lbl_8036C510;
+        local_b1 = ((u8 *)tmp)[1];
+        local_b2 = ((u8 *)tmp)[2];
+        local_b3 = ((u8 *)tmp)[3];
+        ((u8 *)&local_c)[0] = local_b1;
+        ((u8 *)&local_c)[1] = local_b2;
+        ((u8 *)&local_c)[2] = local_b3;
+        local_8 = local_c;
+        fn_802217AC(&local_8, 0xFFFFFF, local_b2, local_b1);
     }
 }
 
