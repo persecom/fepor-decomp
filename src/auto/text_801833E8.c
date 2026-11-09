@@ -4882,10 +4882,8 @@ s32 fn_801A16BC(void *arg0) {
     return 1;
 }
 
-s32 fn_801A17A0(void) {
-    s32 arg0 = 0;
-    s32 arg1 = 1;
-    fn_80105F0C(arg0, arg1);
+s32 fn_801A17A0(void *arg0) {
+    fn_80105F0C(arg0, 0, 1);
     return 1;
 }
 
