@@ -2345,18 +2345,14 @@ s32 fn_800DC44C(void *arg0) {
 }
 
 void fn_800DC494(void *arg0, s32 arg1) {
-    s32 temp_r1;
-    s32 temp_r2;
     extern void fn_800DD87C(void*, s32);
     extern void fn_800DD948(void*, s32);
 
     if ((arg1 >= 0) && (arg1 < *(s32*)((char*)arg0 + 0xB0))) {
         fn_800DD948((char*)arg0 + 0xAC, *(s32*)((char*)arg0 + 0xB4) + (arg1 * 0xC));
         fn_800DD87C((char*)arg0 + 0xB8, *(s32*)((char*)arg0 + 0xC0) + (arg1 << 2));
-        temp_r1 = *(s32*)((char*)arg0 + 0xB0);
-        temp_r2 = *(s32*)((char*)arg0 + 0x110);
-        if (temp_r2 >= temp_r1) {
-            *(s32*)((char*)arg0 + 0x110) = temp_r1 - 1;
+        if (*(s32*)((char*)arg0 + 0x110) >= *(s32*)((char*)arg0 + 0xB0)) {
+            *(s32*)((char*)arg0 + 0x110) = *(s32*)((char*)arg0 + 0xB0) - 1;
         }
     }
 }
