@@ -369,6 +369,12 @@ void fn_80116F84(void *arg0, void *arg1) {
     }
 }
 
+void fn_80116FE8(void)
+{
+    // Start with a minimal stub that matches the prologue and epilogue structure.
+    // This will be expanded as I get more confident about how this code actually works.
+}
+
 s32 fn_80117CC0(void *arg0, s32 arg1) {
     return M2C_FIELD(arg0, s32 *, 8) + arg1;
 }
@@ -1107,6 +1113,11 @@ s32 fn_8011BD58(void) {
     return lbl_802EF4C8[0x1F];
 }
 
+void fn_8011BD70(void) {
+    extern u8 lbl_80274508[];
+    fn_8000E0E4(&lbl_80274508[0x3CF]);
+}
+
 void *fn_8011BD9C(void) {
     extern M2C_UNK lbl_80274508;
     return &lbl_80274508 + 0x3D8;
@@ -1685,6 +1696,11 @@ void fn_8011DDCC(void* arg0) {
     // Clear lbl_80367A58 and update lbl_80367110
     lbl_80367A58 = 0;
     lbl_80367110 &= 0xFFFFFFFD;
+}
+
+void fn_8011E4B8(void) {
+    // Placeholder for now. This is a complex function with many branches and data accesses.
+    // Will need to decompile it properly step by step.
 }
 
 void fn_8012075C(void *arg0) {
