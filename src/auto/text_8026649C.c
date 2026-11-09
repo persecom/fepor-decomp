@@ -257,12 +257,11 @@ extern s32 lbl_8036894C;
 extern s32 lbl_8033E578[];
 
 void fn_802668D4(s32 arg0) {
-    extern u16 lbl_803669A0[1024];
-    void *temp_r3;
+    extern u8 lbl_803669A0[];
+    u8 *temp_r3 = lbl_803669A0 + (arg0 << 8);
 
-    temp_r3 = &lbl_803669A0 + (arg0 << 18);
-    if ((s32) M2C_FIELD(temp_r3, s32 *, 0x20) == 0) {
-        *M2C_FIELD(temp_r3, s8 **, 0x14) = M2C_FIELD(temp_r3, u8 *, 5) & 0x3A;
+    if (*(s32 *)(temp_r3 + 0x20) == 0) {
+        *(u8 *)(*(void **)(temp_r3 + 0x14)) = temp_r3[5] & 0x3A;
     }
 }
 
