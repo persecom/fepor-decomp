@@ -1299,57 +1299,70 @@ void fn_801BCC60(s32 arg0) {
 }
 
 void fn_801BCD8C(void *arg0) {
-    extern u8 lbl_802EF4C8[24];
+    extern u8 lbl_802EF4C8[];
     extern f32 lbl_8036B2D8;
-    s16 sp16;
-    s16 sp14;
-    s16 sp12;
-    s16 sp10;
-    s16 spE;
-    s16 spC;
-    s16 spA;
-    s16 sp8;
-    s16 *temp_r29;
-    s16 *temp_r31;
-    s16 *temp_r4;
-    s16 temp_r7;
-    s16 temp_r7_2;
-    s16 temp_r7_3;
-    s16 temp_r7_4;
-    s16 temp_r8;
-    void *temp_r6;
+    void fn_80140258(void *, void *, void *, s32);
+    void fn_8000C188(void *);
+    void fn_8000C070(void *, s32);
+    typedef struct {
+        s16 x;
+        s16 y;
+    } Pair;
+    Pair p1;
+    Pair p2;
+    Pair p3;
+    Pair p4;
+    Pair *pp;
+    void *obj1;
+    void *obj4;
+    s32 t;
+    s32 flag;
+    f32 f;
+    void *obj3;
+    void *self;
+    void *obj2;
 
-    temp_r6 = *(void **)((char *)arg0 + 0x4C);
-    temp_r29 = *(s16 **)((char *)arg0 + 0x54);
-    temp_r31 = *(s16 **)((char *)arg0 + 0x58);
-    switch ((u8)lbl_802EF4C8[8]) {
+    flag = lbl_802EF4C8[8];
+    obj1 = *(void **)((u8 *)arg0 + 0x4C);
+    obj2 = *(void **)((u8 *)arg0 + 0x54);
+    obj3 = *(void **)((u8 *)arg0 + 0x58);
+    self = arg0;
+
+    switch (flag) {
     case 0x81:
-        temp_r7 = *(s16 *)((char *)temp_r6 + 0xA);
-        temp_r8 = *(s16 *)((char *)temp_r6 + 0xC);
-        sp16 = temp_r8;
-        sp14 = -(s16) (*(s16 *)((char *)temp_r6 + 0xE) - temp_r7);
-        fn_80140258(temp_r6, &sp14, (s16 *)1, temp_r7, temp_r8);
-        temp_r7_2 = *(s16 *)((char *)temp_r29 + 0xC);
-        sp12 = temp_r7_2;
-        sp10 = -(s16) (*(s16 *)((char *)temp_r29 + 0xE) - *(s16 *)((char *)temp_r29 + 0xA));
-        fn_80140258(arg0, temp_r29, &sp10, (s16 *)0, temp_r7_2);
-        temp_r7_3 = *(s16 *)((char *)temp_r31 + 0xC);
-        spC = 0x260;
-        spE = temp_r7_3;
-        fn_80140258(arg0, temp_r31, &spC, (s16 *)0, temp_r7_3);
-        temp_r4 = *(s16 **)((char *)arg0 + 0x5C);
-        temp_r7_4 = *(s16 *)((char *)temp_r4 + 0xC);
-        sp8 = 0x260;
-        spA = temp_r7_4;
-        fn_80140258(arg0, temp_r4, &sp8, (s16 *)0, temp_r7_4);
-        fn_8000C188(arg0);
-        return;
+        pp = &p1;
+        t = *(s16 *)((u8 *)obj1 + 0xA);
+        t = *(s16 *)((u8 *)obj1 + 0xE) - t;
+        pp->y = *(s16 *)((u8 *)obj1 + 0xC);
+        pp->x = -(s16)t;
+        fn_80140258(arg0, obj1, pp, 1);
+
+        t = *(s16 *)((u8 *)obj2 + 0xA);
+        t = *(s16 *)((u8 *)obj2 + 0xE) - t;
+        p2.y = *(s16 *)((u8 *)obj2 + 0xC);
+        p2.x = -(s16)t;
+        fn_80140258(self, obj2, &p2, 0);
+
+        t = *(s16 *)((u8 *)obj3 + 0xC);
+        p3.x = 0x260;
+        p3.y = t;
+        fn_80140258(self, obj3, &p3, 0);
+
+        obj4 = *(void **)((u8 *)self + 0x5C);
+        t = *(s16 *)((u8 *)obj4 + 0xC);
+        p4.x = 0x260;
+        p4.y = t;
+        fn_80140258(self, obj4, &p4, 0);
+
+        fn_8000C188(self);
+        break;
     case 0x80:
-        *(f32 *)((char *)temp_r6 + 0x30) = lbl_8036B2D8;
-        *(f32 *)((char *)temp_r29 + 0x30) = lbl_8036B2D8;
-        *(f32 *)((char *)temp_r31 + 0x30) = lbl_8036B2D8;
-        fn_8000C070(6);
-        return;
+        f = lbl_8036B2D8;
+        *(f32 *)((u8 *)obj1 + 0x30) = f;
+        *(f32 *)((u8 *)obj2 + 0x30) = f;
+        *(f32 *)((u8 *)obj3 + 0x30) = f;
+        fn_8000C070(arg0, 6);
+        break;
     }
 }
 
@@ -1632,6 +1645,18 @@ void *fn_801BEB24(void *arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4) {
 
 void fn_801BEDC4(void) {
     // Function body will be filled in
+}
+
+void fn_801C09B0(void *arg0) {
+    s32 temp_r31;
+
+    temp_r31 = fn_8013FF94(arg0, 0x81, 0);
+    fn_8016A57C(*(s32 *)((char *)arg0 + 0x18));
+    fn_8013FEE0();
+    if (*(u32 *)((char *)temp_r31 + 0x6C) == 0) {
+        fn_8000C070(arg0, 6);
+    }
+    fn_8014876C(lbl_8032FF08, 0x64, 0x2EE);
 }
 
 void fn_801C0A28(void *arg0) {
@@ -3343,6 +3368,20 @@ x=(s8)p[0xfc]; if(x) p[0xfc]=3;
 x=(s8)p[0x104]; if(x) p[0x104]=3;
 x=(s8)p[0x10c]; if(x) p[0x10c]=3;
 x=(s8)p[0x114]; if(x) p[0x114]=3; }
+
+void fn_801CFD40(u8 *arg0, s32 arg1) {
+    u8 *base;
+    u32 offset;
+    s8 value;
+
+    base = arg0;
+    offset = (arg1 << 3) + 0xEC;
+    value = *(s8 *)(base + offset);
+
+    if (value != 0) {
+        *(base + offset) = 3;
+    }
+}
 
 void fn_801CFD60(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s8 arg4) {
     s32 temp_r8;
@@ -5073,6 +5112,7 @@ void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     f32 width;
     s32 h;
     s32 t;
+    s32 pad;
 
     memset(w, 0, sizeof(MsgBox));
     w->state = 0;
@@ -5119,8 +5159,9 @@ void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     t = arg2 ? 20 : 0;
     h = w->numLines * 20;
     h = h + t;
-    h += (w->flags & 4) ? 40 : 0;
-    w->height = h + 32;
+    pad = (w->flags & 4) ? 40 : 0;
+    h = h + pad;
+    w->height = (h - pad) + pad + 32;
     if (w->type == 1 || w->type == 2) {
         w->height += 0x88;
     }
