@@ -475,8 +475,8 @@ void fn_8020060C(void *arg0) {
 }
 
 s32 fn_80200660(void) {
-    extern s32 lbl_803682A4;
-    return (lbl_803682A4 & 0x20) == 0;
+    extern u32 lbl_803682A4;
+    return !(lbl_803682A4 & 0x20);
 }
 
 void fn_80200674(void) {
