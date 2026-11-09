@@ -580,8 +580,9 @@ void fn_80249DD0(s32 arg0) {
     fn_80249C1C(arg0, 1, 0);
 }
 
-void fn_80249E14(void) {
-    fn_80249C1C(2, 0);
+void fn_80249E14(void *arg0) {
+    void fn_80249C1C(void *, s32, s32);
+    fn_80249C1C(arg0, 2, 0);
 }
 
 void fn_8024A34C(u16 arg0, u8 arg1, u8 arg2, u8 arg3, s32 arg4, s32 arg5) {
