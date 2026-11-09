@@ -291,6 +291,12 @@ void DVDLowReset(void) {
     *(u32 *)0x80368544 = (u32) temp_ret;
 }
 
+BOOL fn_8020C2FC(void) {
+    StopAtNextInt_80368530 = TRUE;
+    lbl_80368550 = TRUE;
+    return TRUE;
+}
+
 s32 fn_8020C310(void) {
     extern s32 Callback_80368538;
     extern s32 WaitingCoverClose_8036854C;
