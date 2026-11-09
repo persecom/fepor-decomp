@@ -5490,6 +5490,20 @@ s32 fn_800ED92C(void) {
     return 0;
 }
 
+void *fn_800EDEB8(void *arg0, s16 arg1) {
+    void fn_800E45EC(void *, s16);
+    void fn_800C428C(void *);
+    extern u8 lbl_8028E4F8[];
+    if (arg0 != NULL) {
+        *(void **)((char *)arg0 + 0x40) = lbl_8028E4F8;
+        fn_800E45EC(arg0, 0);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 #pragma dont_inline reset
 void fn_800EDF18(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0xB4) = (s32) ((s32) (M2C_FIELD(arg0, s32 *, 0xB0) * (arg1 - M2C_FIELD(arg0, s32 *, 0x48))) / (s32) M2C_FIELD(arg0, s32 *, 0x60));
