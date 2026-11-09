@@ -862,8 +862,9 @@ void fn_8005806C(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x4A) = (s16) (temp_f4_2 + (temp_f2 - ((temp_f2 * (temp_f3_2 * temp_f3_2)) / temp_f6)));
 }
 
-void fn_800588EC(void) {
-    fn_8000C070(0);
+void fn_800588EC(s32 arg0) {
+    void fn_8000C070(s32, s32);
+    fn_8000C070(arg0, 0);
 }
 
 void fn_80058910(void *arg0, u8 arg1) {
