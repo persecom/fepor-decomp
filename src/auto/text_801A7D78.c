@@ -908,17 +908,24 @@ void fn_801ADFCC(void *arg0, void *arg1) {
     }
 }
 
-#pragma opt_common_subs reset
-void fn_801AE154(void **arg0) {
-    M2C_UNK fn_80152548(M2C_UNK, M2C_UNK, M2C_UNK);
-    M2C_UNK fn_8015267C(M2C_UNK, M2C_UNK, M2C_UNK);
-    M2C_UNK fn_801527B0(M2C_UNK, M2C_UNK, M2C_UNK);
-    M2C_FIELD(*arg0, M2C_UNK (**)(), 0x14)();
+#pragma cplusplus on
+extern "C" void fn_801AE154(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+    };
+    void fn_80152548(s32, s32, s32);
+    void fn_801527B0(s32, s32, s32);
+    void fn_8015267C(s32, s32, s32);
+
+    ((Obj *)arg0)->v3();
     fn_80152548(0x16, 0x10, 0x10);
     fn_801527B0(0x1C, 0x40, 0x10);
     fn_8015267C(0x88, 0x40, 0x10);
 }
-
+#pragma cplusplus reset
 void fn_801AE1B0(s32 *arg0, void *arg1) {
     s32 *fn_8013F748(void *, M2C_UNK *, s16 *);
     s16 sel = *(s16 *)((u8 *)arg1 + 0x3E);
