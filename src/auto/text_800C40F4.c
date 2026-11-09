@@ -3682,10 +3682,13 @@ void fn_800E4C14(void *arg0, f32 farg0) {
 }
 
 void fn_800E4C1C(void *arg0) {
-    u32 *ptr = (u32*)((char*)arg0 + 0xE8);
-    if (*ptr != 0) {
-        fn_800588EC();
-        *ptr = 0;
+    void fn_800588EC(void *);
+    void *ptr;
+
+    ptr = *(void **)((u8 *)arg0 + 0xe8);
+    if (ptr != NULL) {
+        fn_800588EC(ptr);
+        *(void **)((u8 *)arg0 + 0xe8) = NULL;
     }
 }
 
