@@ -2316,21 +2316,20 @@ void fn_8006C944(u32 *arg0) {
     }
 }
 
-void fn_8006C9E8(void *arg0) {
-    u8 temp_r31;
-    s32 temp_r30;
-    s32 temp_r5;
+void fn_8006C9E8(u32 *arg0) {
+    void fn_8006C2A4(void *, s32);
+    u32 saved_w;
+    u8 saved_b;
 
-    temp_r31 = *(u8 *)((char *)arg0 + 0xB);
-    temp_r30 = *(s32 *)arg0;
-    if (temp_r31 != 0) {
-        *(s32 *)arg0 = (s32)(temp_r30 & 0x8FFF7FDF);
-        temp_r5 = *(s32 *)arg0 | 0x50000000 | 0x6000;
-        *(s32 *)arg0 = temp_r5;
-        *(u8 *)((char *)arg0 + 0xB) = 0xFFU;
-        fn_8006C2A4(arg0, temp_r5);
-        *(u8 *)((char *)arg0 + 0xB) = temp_r31;
-        *(s32 *)arg0 = temp_r30;
+    saved_b = *((u8 *)arg0 + 0xB);
+    saved_w = *arg0;
+    if (saved_b != 0) {
+        *arg0 = saved_w & 0x8FFF7FDF;
+        *arg0 = *arg0 | 0x50006000;
+        *((u8 *)arg0 + 0xB) = 0xFF;
+        fn_8006C2A4(arg0, 0);
+        *((u8 *)arg0 + 0xB) = saved_b;
+        *arg0 = saved_w;
     }
 }
 
