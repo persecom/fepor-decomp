@@ -6606,10 +6606,11 @@ void fn_800FC600(s32 arg0) {
 }
 
 void fn_800FC63C(s32 arg0) {
-    extern u8 lbl_8028E7F8[64];
-    extern u8 lbl_8032B3C0[544];
-    
-    fn_8000CAA0(lbl_8028E7F8, arg0, lbl_8028E7F8);
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_8028E7F8[];
+    extern u8 lbl_8032B3C0[];
+
+    fn_8000CAA0(lbl_8028E7F8, arg0);
     lbl_8032B3C0[1] = 1;
 }
 
