@@ -856,17 +856,15 @@ f32 fn_80109BA8(void *arg0) {
 }
 
 void fn_80109C1C(void *arg0, u8 arg1) {
-    void *fn_8000CAF0(void *, void *, void *);
-    extern u16 lbl_8028F360[];
-    
+    void *fn_8000CAF0(void *, void *);
+    extern u8 lbl_8028F360[];
     void *temp_r3;
-    void *temp_r5;
-    
-    temp_r3 = fn_8000CAF0(&lbl_8028F360[0], arg0, &lbl_8028F360[0]);
+
+    temp_r3 = fn_8000CAF0(lbl_8028F360, arg0);
     *(void **)((char *)temp_r3 + 0x30) = arg0;
     *(u32 *)((char *)temp_r3 + 0x34) = 0;
-    *(u32 *)((char *)temp_r3 + 0x38) = (u32) arg1;
-    *(u32 *)((char *)temp_r3 + 0x3C) = (u32) *(u8 *)((char *)arg0 + 0x60);
+    *(u32 *)((char *)temp_r3 + 0x38) = (u32)arg1;
+    *(u32 *)((char *)temp_r3 + 0x3C) = (u32)*(u8 *)((char *)arg0 + 0x60);
     *(u32 *)((char *)temp_r3 + 0x40) = 0;
 }
 
