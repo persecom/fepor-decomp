@@ -1840,9 +1840,9 @@ s32 fn_8003F21C(s32 arg0) {
     return arg0 + 0x1A0;
 }
 
-void fn_8003FCCC(void) {
-    void fn_8003F87C(s32);
-    fn_8003F87C(0);
+void fn_8003FCCC(s32 arg0) {
+    void fn_8003F87C(s32, s32);
+    fn_8003F87C(arg0, 0);
 }
 
 extern u8 lbl_80366DC0[7];
