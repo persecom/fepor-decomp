@@ -1832,9 +1832,15 @@ void fn_8018D7A4(s32 arg0, s32 arg1) {
 }
 
 void fn_8018D7FC(void *arg0, void *arg1) {
-    extern u16 lbl_802EF4E0[2008];
+    extern u8 lbl_802EF4E0[];
+    void fn_8002F6E8(void *, u8, u8, u8, s32);
+
     if (((u8 (**)(void *))arg0)[2](arg1) != 0) {
-        fn_8002F6E8(&lbl_802EF4E0, *(u8 *)((u8 *)arg1 + 0xC), *(u8 *)((u8 *)arg1 + 0xD), *(u8 *)((u8 *)arg1 + 0x198), 0);
+        fn_8002F6E8(lbl_802EF4E0,
+                    *(u8 *)((u8 *)arg0 + 0xC),
+                    *(u8 *)((u8 *)arg0 + 0xD),
+                    *(u8 *)((u8 *)arg1 + 0x198),
+                    0);
     }
 }
 
