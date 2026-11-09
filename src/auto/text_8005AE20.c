@@ -1969,6 +1969,13 @@ void fn_80067FE8(s32 arg0, s32 arg1, s32 arg2)
     lbl_80330708[temp_r5] = temp_r4;
 }
 
+void fn_8006805C(f32 arg0, f32 arg1) {
+    extern u8 *lbl_803672F8;
+
+    *(f32 *)(lbl_803672F8 + 0x180) = arg0;
+    *(f32 *)(lbl_803672F8 + 0x184) = arg1;
+}
+
 s32 fn_80068124(char *name) {
     extern u16 lbl_80330708[1400];
     u8 *e;
