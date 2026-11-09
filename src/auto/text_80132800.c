@@ -1738,11 +1738,12 @@ void fn_8013CD90(void) {
 }
 
 s32 fn_8013CDCC(void) {
-    M2C_UNK fn_801475FC(void *, M2C_UNK);
-    extern M2C_UNK lbl_80276908;
-    extern M2C_UNK lbl_802EF4C8;
-    M2C_FIELD(&lbl_802EF4C8, s8 *, 8) = 0x80;
-    fn_801475FC(&lbl_80276908 + 0x73, 0x64);
+    extern u8 lbl_802EF4C8[24];
+    extern u8 lbl_80276908[];
+    u8 *ptr1 = (u8 *)&lbl_802EF4C8;
+    u8 *ptr2 = (u8 *)&lbl_80276908;
+    ptr1[8] = 0x80;
+    fn_801475FC(ptr2 + 0x73, 0x64);
     return 1;
 }
 
@@ -2784,8 +2785,9 @@ s32 fn_80140B04(s32 arg0) {
     return arg0 + 4;
 }
 
-void fn_80140D98(void *arg0, f32 farg1) {
+void fn_80140D98(void *arg0) {
     extern f32 lbl_8036A730;
+    extern f64 lbl_8036A738;
     f32 temp_f3;
     f32 temp_f4;
     f32 var_f2;
@@ -2794,30 +2796,30 @@ void fn_80140D98(void *arg0, f32 farg1) {
     void *var_r3;
     void *var_r4;
 
-    var_f2 = farg1;
-    temp_r7 = M2C_FIELD(arg0, u32 *, 0x34);
+    (void)lbl_8036A738;
+    temp_r7 = *(u32 *)((u8 *)arg0 + 0x34);
     if (temp_r7 != 0U) {
-        var_r4 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 8);
+        var_r4 = *(void **)((u8 *)*(void **)((u8 *)arg0 + 0x38) + 8);
     } else {
         var_r4 = NULL;
     }
-    temp_r0 = M2C_FIELD(arg0, s32 *, 0x40);
-    temp_f4 = (f32) (M2C_FIELD(var_r4, s16 *, 0x24) + 1);
-    temp_f3 = (f32) (M2C_FIELD(arg0, s16 *, 0x28) + 1);
-    switch (temp_r0) {                              /* irregular */
+    temp_f4 = (f32)(*(s16 *)((u8 *)var_r4 + 0x24) + 1);
+    temp_f3 = (f32)(*(s16 *)((u8 *)arg0 + 0x28) + 1);
+    temp_r0 = *(s32 *)((u8 *)arg0 + 0x40);
+    switch (temp_r0) {
     case 0:
         var_f2 = (lbl_8036A730 / temp_f4) * (temp_f4 - temp_f3);
         break;
     case 1:
-        var_f2 = (lbl_8036A730 / temp_f4) * temp_f3;
+        var_f2 = temp_f3 * (lbl_8036A730 / temp_f4);
         break;
     }
     if (temp_r7 != 0U) {
-        var_r3 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 8);
+        var_r3 = *(void **)((u8 *)*(void **)((u8 *)arg0 + 0x38) + 8);
     } else {
         var_r3 = NULL;
     }
-    M2C_FIELD(var_r3, f32 *, 0x2C) = var_f2;
+    *(f32 *)((u8 *)var_r3 + 0x2C) = var_f2;
 }
 
 void fn_80141040(void)
