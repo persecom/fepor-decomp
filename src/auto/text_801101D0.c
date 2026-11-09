@@ -350,12 +350,18 @@ void fn_801168F4(void *arg0, char *arg1) {
     fn_800C9A60(&spC, -1);
 }
 
-void fn_80116944(void *arg0) {
-    M2C_UNK fn_800608AC(s32);
+#pragma cplusplus on
+extern "C" void fn_80116944(void *arg0) {
+    struct Obj {
+        u8 pad[0x40];
+        virtual void v0();
+        virtual void v1();
+    };
+    void fn_800608AC(s32);
     fn_800608AC(M2C_FIELD(arg0, s32 *, 0xE0));
-    M2C_FIELD(M2C_FIELD(arg0, void **, 0x40), M2C_UNK (**)(void *), 0xC)(arg0);
+    ((Obj *)arg0)->v1();
 }
-
+#pragma cplusplus reset
 void fn_80116F84(void *arg0, void *arg1) {
     s32 temp_r0;
     s32 temp_r5;
