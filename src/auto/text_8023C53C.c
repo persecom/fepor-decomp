@@ -3548,11 +3548,11 @@ s32 fn_80262538(s32 arg0) {
 void fn_80262558(void *arg0) {
     extern u8 lbl_80363F28[0x284];
     extern u8 lbl_803641AC[0x284];
-    u8* base;
+    u8 *base;
+    u8 *ptr;
     u32 count;
-    u8* ptr;
 
-    if (*(u32*)((char*)arg0 + 0xC) == 1) {
+    if (*(u32 *)((char *)arg0 + 0xC) == 1) {
         base = lbl_803641AC;
     } else {
         base = lbl_80363F28;
@@ -3564,14 +3564,14 @@ void fn_80262558(void *arg0) {
         if (arg0 == ptr) {
             void (*func)(s32) = *(void (**)(s32))(ptr + 0x20);
             if (func != NULL) {
-                func(*(s32*)(ptr + 0x24));
+                func(*(s32 *)(ptr + 0x24));
             }
         }
         count += 1;
         ptr += 0x28;
     } while (count < 0x10);
 
-    *(u8*)(base + 0x281) -= 1;
+    *(u8 *)(base + 0x281) -= 1;
 }
 
 void fn_802625F8(void)
