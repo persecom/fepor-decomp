@@ -366,19 +366,22 @@ void fn_8023B818(void) {
     __SIRegs[14] = 0x80000000;
 }
 
-s32 fn_8023B930(u32 arg0) {
-    extern u16 Si_8029EFAC[10];
-    s32 r31;
-    
-    if (arg0 == 0) {
-        return Si_8029EFAC[2];
+u32 fn_8023B930(u32 type) {
+    extern u32 Si_8029EFAC[];
+    BOOL enabled;
+    u32 *p;
+
+    if (type == 0) {
+        return Si_8029EFAC[1];
     }
-    OSDisableInterrupts();
-    r31 = Si_8029EFAC[2] & ~((arg0 >> 0x18U) & 0xF0);
-    *(volatile u32 *)0xCC006430 = r31;
-    Si_8029EFAC[2] = r31;
-    OSRestoreInterrupts();
-    return r31;
+    enabled = OSDisableInterrupts();
+    p = &Si_8029EFAC[1];
+    type = __rlwinm(type, 8, 24, 27);
+    type = *p & ~type;
+    __SIRegs[12] = type;
+    *p = type;
+    OSRestoreInterrupts(enabled);
+    return type;
 }
 
 void fn_8023B99C(void)
