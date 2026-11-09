@@ -1098,7 +1098,8 @@ s32 fn_80126D40(u8 arg0) {
 
 s32 fn_80126D78(u8 arg0) {
     extern u16 lbl_80330708[];
-    fn_80105D4C(&lbl_80330708[0x210], arg0);
+    u16* ptr = (u16*)((u32)lbl_80330708 + 0x84);
+    fn_80105D4C(ptr, arg0);
     return 1;
 }
 
