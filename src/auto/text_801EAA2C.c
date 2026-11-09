@@ -766,7 +766,7 @@ void fn_801F109C(void *arg0) {
 
 void fn_801F10D4(void) {
     extern u16 lbl_8027F26C[];
-    fn_8000E0E4(&lbl_8027F26C[0x1088 / sizeof(u16)]);
+    fn_8000E0E4((u8 *)lbl_8027F26C + 0x422);
 }
 
 s32 fn_801F1100(void) {
