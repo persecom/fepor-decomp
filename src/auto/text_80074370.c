@@ -251,8 +251,8 @@ void fn_80075320(void) {
 }
 
 s32 fn_8007534C(void) {
-    extern u8 lbl_802EF4C8;
-    *(u8 *)((u32)&lbl_802EF4C8 + 8) = 0;
+    extern u8 lbl_802EF4C8[24];
+    lbl_802EF4C8[8] = 0;
     return 9;
 }
 
