@@ -341,6 +341,26 @@ void fn_801B6600(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x3C) = 0;
 }
 
+void fn_801B660C(void *arg0) {
+    f32 fn_80059F64(f32, f32, f32, f32);
+    void fn_801475FC(void *, s32);
+    void fn_8000C188(void *);
+    extern u8 lbl_8027C248[];
+    s16 temp_r4;
+    s16 temp_r6;
+
+    *(u16 *)((u8 *)arg0 + 0x3C) = (u16)(*(u16 *)((u8 *)arg0 + 0x3C) + 1);
+    temp_r4 = *(s16 *)((u8 *)arg0 + 0x4A);
+    temp_r6 = *(s16 *)((u8 *)arg0 + 0x48);
+    *(s16 *)((u8 *)arg0 + 0x3E) = (s16)fn_80059F64((f32)temp_r6, (f32)(temp_r6 + temp_r4), (f32)temp_r4, (f32)*(u16 *)((u8 *)arg0 + 0x3C));
+    if (*(u16 *)((u8 *)arg0 + 0x3C) & 1) {
+        fn_801475FC(lbl_8027C248 + 0x102, 0x64);
+    }
+    if ((s32)*(u16 *)((u8 *)arg0 + 0x3C) == *(s16 *)((u8 *)arg0 + 0x4A)) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_801B66F4(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x3C) = 0;
 }
