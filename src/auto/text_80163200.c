@@ -2309,7 +2309,8 @@ void fn_80177404(void) {
 }
 
 void *fn_80177430(void) {
-    return &lbl_80278080[0x936];
+    extern u16 lbl_80278080[];
+    return (u8 *)lbl_80278080 + 0x49b;
 }
 
 s32 fn_80177440(s32 arg1) {
