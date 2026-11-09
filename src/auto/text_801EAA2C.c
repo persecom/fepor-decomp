@@ -702,22 +702,28 @@ void fn_801F09E8(void) {
     fn_801F0BC4();
 }
 
-void fn_801F0A08(void *arg0) {
-    M2C_UNK fn_8005376C();
-    M2C_UNK fn_800C428C(s32);
-    void *temp_r3;
+#pragma cplusplus on
+extern "C" void fn_801F0A08(void *arg0) {
+    void fn_8005376C(void);
+    void fn_800C428C(void *);
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1(s32) = 0;
+    };
+    void *temp;
 
-    fn_800C428C(M2C_FIELD(arg0, s32 *, 0x38));
-    fn_800C428C(M2C_FIELD(arg0, s32 *, 0x3C));
-    fn_800C428C(M2C_FIELD(arg0, s32 *, 0x40));
-    fn_800C428C(M2C_FIELD(arg0, s32 *, 0x44));
-    temp_r3 = M2C_FIELD(arg0, void **, 0x30);
-    if (temp_r3 != NULL) {
-        M2C_FIELD(M2C_FIELD(temp_r3, void **, 0x10), M2C_UNK (**)(M2C_UNK), 0xC)(1);
+    fn_800C428C(*(void **)((char *)arg0 + 0x38));
+    fn_800C428C(*(void **)((char *)arg0 + 0x3C));
+    fn_800C428C(*(void **)((char *)arg0 + 0x40));
+    fn_800C428C(*(void **)((char *)arg0 + 0x44));
+    temp = *(void **)((char *)arg0 + 0x30);
+    if (temp != NULL) {
+        ((Obj *)temp)->v1(1);
     }
     fn_8005376C();
 }
-
+#pragma cplusplus reset
 void fn_801F0E4C(void *arg0) {
     f32 fn_80059F64(u8, u8, f32, f32, f32, f32);
     M2C_UNK fn_8005F7B0(s32, u8);
