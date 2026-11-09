@@ -139,4 +139,5 @@ extern "C" s32 fn_800D0C5C_REMOVED(void *arg0) {
     return 0;
 }
 #pragma cplusplus reset
+#endif
 
