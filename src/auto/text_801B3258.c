@@ -1521,8 +1521,9 @@ void fn_801C838C(void *arg0) {
 }
 
 void fn_801C8490(void) {
-    extern void *lbl_802983A4;
-    fn_8005C8B4(*(s32*)((char*)&lbl_802983A4 + 4));
+    void fn_8005C8B4(void *);
+    extern u8 lbl_802983A4[];
+    fn_8005C8B4(*(void **)(lbl_802983A4 + 4));
 }
 
 void fn_801C84BC(s32 arg0) {
