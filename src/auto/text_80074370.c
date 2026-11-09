@@ -1802,6 +1802,20 @@ void fn_80079198(s32 arg0) {
     M2C_FIELD(temp_r3, s32 *, 0x40) = 0;
 }
 
+void fn_800791F0(s32 arg0, s32 arg1) {
+    void *fn_8000CA64(void *, s32);
+    extern u8 lbl_80288CAC[];
+    void *temp_r3;
+
+    temp_r3 = fn_8000CA64(lbl_80288CAC, arg1);
+    *(s32 *)((char *)temp_r3 + 0x30) = arg0;
+    *(s32 *)((char *)temp_r3 + 0x34) = 0;
+    *(s32 *)((char *)temp_r3 + 0x38) = 8;
+    *(s16 *)((char *)temp_r3 + 0x28) = 8;
+    *(s32 *)((char *)temp_r3 + 0x3C) = 0;
+    *(s32 *)((char *)temp_r3 + 0x40) = 0xFF;
+}
+
 void fn_80079248(void*p){f32 fn_800067BC(s32,f32,f32,f32,f32);*(s32*)((u8*)p+0x34)+=1;*(s8*)((u8*)*(void**)((u8*)p+0x30)+0x42)=fn_800067BC(0,(f32)*(s32*)((u8*)p+0x3c),(f32)*(s32*)((u8*)p+0x40),(f32)*(s32*)((u8*)p+0x34),(f32)*(s32*)((u8*)p+0x38));}
 
 void *fn_80079380(s8 arg0) {
