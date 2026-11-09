@@ -1120,26 +1120,28 @@ s32 fn_80126A60(void)
 }
 
 void fn_80126A98(s32 arg0) {
-    extern u8 lbl_802EF4C8[24];
-    extern u8 lbl_80330708[1400];
-    extern u8 lbl_80275048[206];
-    
-    switch ((s32) lbl_802EF4C8[8]) {
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_80330708[];
+    extern u8 lbl_80275048[];
+    void fn_8011D79C(void *);
+    void fn_8011D650(void *);
+    void fn_8000C188(s32);
+    struct {
+        u8 hi : 6;
+        u8 mid : 1;
+        u8 lo : 1;
+    } *bf;
+
+    switch ((s32)lbl_802EF4C8[8]) {
     case 0x81:
-        {
-            u8 temp = lbl_80330708[0x9D];
-            temp = temp & ~2;
-            lbl_80330708[0x9D] = temp;
-            fn_8011D79C(&lbl_80275048[0x42A], &lbl_80330708, 0);
-        }
+        bf = (void *)&lbl_80330708[0x9D];
+        bf->mid = 0;
+        fn_8011D79C(lbl_80275048 + 0x42A);
         break;
     case 0x80:
-        {
-            u8 temp = lbl_80330708[0x9D];
-            temp = temp | 2;
-            lbl_80330708[0x9D] = temp;
-            fn_8011D650(&lbl_80330708, 1);
-        }
+        bf = (void *)&lbl_80330708[0x9D];
+        bf->mid = 1;
+        fn_8011D650(lbl_80330708);
         break;
     }
     fn_8000C188(arg0);
