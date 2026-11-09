@@ -2874,10 +2874,10 @@ extern "C" void fn_80174C5C(void *arg0) {
 #pragma cplusplus reset
 
 void fn_80174E0C(s32 arg0) {
-    void fn_800AAE78(s32, s32, s32);
+    void fn_800AAE78(s32, s32, s32, s32);
     void fn_8013FED0(s32);
 
-    fn_800AAE78(0xCC, -1, -1);
+    fn_800AAE78(arg0, 0xCC, -1, -1);
     fn_8013FED0(arg0);
 }
 
