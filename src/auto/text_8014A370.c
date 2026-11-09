@@ -469,6 +469,12 @@ void *fn_8014B2EC(void) {
     return (u8 *)lbl_80276F00 + 0x12a;
 }
 
+u8 fn_8014B2FC(void) {
+    extern u8 *lbl_80367B14;
+
+    return lbl_80367B14[0x6];
+}
+
 void fn_8014B308(u8 arg0, u8 arg1) {
     extern u8 *lbl_80367B14;
 
