@@ -1218,9 +1218,8 @@ s32 fn_8011BF98(void) {
 }
 
 void fn_8011BFB0(void) {
-    M2C_UNK fn_8000E0E4(void *);
-    extern u8 lbl_80274508;
-    fn_8000E0E4(&lbl_80274508 + 0x44F);
+    extern u16 lbl_80274508[];
+    fn_8000E0E4((u8 *)lbl_80274508 + 0x44F);
 }
 
 void *fn_8011BFDC(void) {
