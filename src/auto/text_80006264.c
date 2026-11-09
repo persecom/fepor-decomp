@@ -387,6 +387,18 @@ void fn_80007340(s32 arg0, s32 arg1) {
     *(s32 *)(ptr + 0x14) = arg1;
 }
 
+void fn_80007358(f32 arg0, f32 arg1) {
+    extern void *lbl_80367140;
+    u8 *ptr;
+
+    ptr = (u8 *)lbl_80367140;
+    ptr = *(u8 **)(ptr + 0xC);
+    ptr = *(u8 **)(ptr + 0x4);
+
+    *(f32 *)(ptr + 0x30) = arg0;
+    *(f32 *)(ptr + 0x34) = arg1;
+}
+
 void fn_800075D8(void) {
     void *temp_r3;
 
