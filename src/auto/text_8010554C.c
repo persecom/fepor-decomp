@@ -983,6 +983,22 @@ f32 fn_80109BA8(void *arg0) {
     return M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), f32 *, 8);
 }
 
+void fn_80109BB4(void *arg0, u8 arg1) {
+    void *fn_8000CAF0(void *, void *);
+    extern u8 lbl_8028F360[];
+    void *temp_r3;
+    s16 temp_r5;
+
+    temp_r3 = fn_8000CAF0(lbl_8028F360, arg0);
+    *(void **)((char *)temp_r3 + 0x30) = arg0;
+    temp_r5 = (s16)arg1;
+    *(u32 *)((char *)temp_r3 + 0x34) = 0;
+    *(u32 *)((char *)temp_r3 + 0x38) = (u32)temp_r5;
+    *(u32 *)((char *)temp_r3 + 0x3C) = (u32)*(u8 *)((char *)arg0 + 0x60);
+    *(u32 *)((char *)temp_r3 + 0x40) = 0;
+    *(s16 *)((char *)arg0 + 0x28) = temp_r5;
+}
+
 void fn_80109C1C(void *arg0, u8 arg1) {
     void *fn_8000CAF0(void *, void *);
     extern u8 lbl_8028F360[];
