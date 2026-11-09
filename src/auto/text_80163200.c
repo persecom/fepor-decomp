@@ -5292,6 +5292,21 @@ extern "C" void fn_80180ED4(void *arg0) {
     }
     ((Obj *)arg0)->v0(-1);
 }
+
+extern "C" void *fn_80180F24(void *arg0, s16 arg1) {
+    void fn_80140304(void *, s16);
+    void fn_800C428C(void *);
+    extern u8 lbl_80295764[];
+    if (arg0 != NULL) {
+        *(void **)((char *)arg0 + 0x40) = lbl_80295764;
+        fn_80140304(arg0, 0);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 #pragma cplusplus reset
 
 void fn_801812A0(void) {
