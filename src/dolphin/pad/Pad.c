@@ -643,13 +643,15 @@ s32 fn_80214014(s32 arg0) {
 }
 
 s32 fn_80214058(void) {
-    u16 reg_val;
-    
-    OSDisableInterrupts();
-    reg_val = *(u16 *)0xCC00500A;
-    reg_val = (reg_val & 0x200) >> 9;  // Extract bit 9 (0x200 = bit 9)
-    OSRestoreInterrupts();
-    return (reg_val & 1);
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    s32 enabled;
+    s32 temp_r31;
+
+    enabled = OSDisableInterrupts();
+    temp_r31 = *(u16 *)0xCC00500A & 0x200;
+    OSRestoreInterrupts(enabled);
+    return temp_r31;
 }
 
 s32 fn_802142B0(void) {
@@ -962,40 +964,51 @@ void fn_80216860(void *arg0) {
     extern void *lbl_80368734;
     extern void *lbl_80368738;
     extern void *lbl_8036873C;
-    void *temp_r4;
-    void *var_r5;
+    struct Node {
+        s32 state;
+        s32 unk04;
+        s32 unk08;
+        u8 pad[0x2C];
+        struct Node *next;
+        struct Node *prev;
+    } *node = (struct Node *)arg0;
+    struct Node *cur;
+    struct Node *tmp;
 
-    if ((void *) lbl_80368738 == NULL) {
-        lbl_8036873C = arg0;
-        lbl_80368734 = arg0;
-        lbl_80368738 = arg0;
-        M2C_FIELD(arg0, void **, 0x3C) = NULL;
-        M2C_FIELD(arg0, void **, 0x38) = NULL;
+    if (lbl_80368738 == NULL) {
+        lbl_8036873C = node;
+        lbl_80368734 = node;
+        lbl_80368738 = node;
+        node->prev = NULL;
+        node->next = NULL;
         return;
     }
-    var_r5 = lbl_80368738;
-loop_8:
-    if (var_r5 != NULL) {
-        if ((u32) M2C_FIELD(arg0, u32 *, 4) < (u32) M2C_FIELD(var_r5, u32 *, 4)) {
-            M2C_FIELD(arg0, void **, 0x3C) = (void *) M2C_FIELD(var_r5, void **, 0x3C);
-            M2C_FIELD(var_r5, void **, 0x3C) = arg0;
-            M2C_FIELD(arg0, void **, 0x38) = var_r5;
-            temp_r4 = M2C_FIELD(arg0, void **, 0x3C);
-            if (temp_r4 == NULL) {
-                lbl_80368738 = arg0;
-            } else {
-                M2C_FIELD(temp_r4, void **, 0x38) = arg0;
-            }
+
+    cur = (struct Node *)lbl_80368738;
+    goto check;
+loop:
+    if ((u32)node->unk04 < (u32)cur->unk04) {
+        node->prev = cur->prev;
+        cur->prev = node;
+        node->next = cur;
+        tmp = node->prev;
+        if (tmp == NULL) {
+            lbl_80368738 = node;
         } else {
-            var_r5 = M2C_FIELD(var_r5, void **, 0x38);
-            goto loop_8;
+            tmp->next = node;
         }
-    }
-    if (var_r5 == NULL) {
-        M2C_FIELD(lbl_80368734, void **, 0x38) = arg0;
-        M2C_FIELD(arg0, void **, 0x38) = NULL;
-        M2C_FIELD(arg0, void **, 0x3C) = (void *) lbl_80368734;
-        lbl_80368734 = arg0;
+    } else {
+        cur = cur->next;
+check:
+        if (cur != NULL) {
+            goto loop;
+        }
+        if (cur == NULL) {
+            ((struct Node *)lbl_80368734)->next = node;
+            node->next = NULL;
+            node->prev = (struct Node *)lbl_80368734;
+            lbl_80368734 = node;
+        }
     }
 }
 
