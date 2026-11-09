@@ -983,9 +983,10 @@ void fn_800B47A0(void) {
     fn_800C4588();
 }
 
-void fn_800B47C0(void) {
-    extern u16 lbl_8026EB70[];
-    fn_800C4638((u16*)((u8*)lbl_8026EB70 + 0x5C), 0);
+void *fn_800C4638(s32, void *, s32);
+void fn_800B47C0(s32 arg0) {
+    extern u8 lbl_8026EB70[];
+    fn_800C4638(arg0, lbl_8026EB70 + 0x2E, 0);
 }
 
 s32 fn_800B49C8(void *arg0) {
