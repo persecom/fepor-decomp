@@ -2093,8 +2093,8 @@ s32 fn_801CAF8C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x6C);
 }
 
-void fn_801CB25C(s32 arg0) {
-    fn_800C9B6C(arg0 + 0x60);
+void fn_801CB25C(s32 arg0, s32 arg1) {
+    fn_800C9B6C(arg0, arg1 + 0x60);
 }
 
 void fn_801CB280(s32 arg0, s32 arg1) {
