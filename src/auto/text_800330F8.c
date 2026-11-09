@@ -4283,9 +4283,8 @@ void fn_80051538(s32 *arg0) {
 }
 
 s32 fn_80052B30(s32 arg0) {
-    extern u16 lbl_802858E8[];
-    s32 temp = arg0 << 2;
-    return *(u16*)((u8*)lbl_802858E8 + temp);
+    extern s32 lbl_802858E8[];
+    return lbl_802858E8[arg0];
 }
 
 void fn_80052B44(void *arg0) {
