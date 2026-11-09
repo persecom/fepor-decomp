@@ -1931,6 +1931,7 @@ extern "C" void fn_8013E398(void *arg0) {
     fn_8015B820(0, 0, 0x10);
 }
 
+#pragma cplusplus reset
 void *fn_8013E3D4(void *arg0, s16 arg1) {
     void fn_800C428C(void *);
     extern void *lbl_80291CF8[];
@@ -1951,8 +1952,6 @@ void *fn_8013E3D4(void *arg0, s16 arg1) {
     }
     return arg0;
 }
-
-#pragma cplusplus reset
 
 void *fn_8013E440(void) {
     extern void *lbl_80276908;
