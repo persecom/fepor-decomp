@@ -409,7 +409,7 @@ void fn_80009BC0(s32 arg0, s32 arg1) {
 }
 
 void fn_80009BF4(f32 farg0) {
-    *(f32*)((char*)lbl_80367140 + 0x28) = farg0;
+    *(f32 *)(*(u8 **)&lbl_80367140 + 0x28) = farg0;
 }
 
 f32 fn_80009C00(void) {
