@@ -5299,16 +5299,20 @@ s32 fn_800EF1C0(void) {
 }
 
 void fn_800F0774(void) {
-    M2C_UNK fn_8000C60C();
-    extern u32 lbl_803678E8;
-    extern u32 lbl_803678EC;
-    if ((u32) lbl_803678E8 != 0U) {
-        fn_8000C60C();
-        lbl_803678E8 = 0U;
+    void fn_8000C60C(void *);
+    extern void *lbl_803678E8;
+    extern void *lbl_803678EC;
+    void *ptr;
+
+    ptr = lbl_803678E8;
+    if (ptr != NULL) {
+        fn_8000C60C(ptr);
+        lbl_803678E8 = NULL;
     }
-    if ((u32) lbl_803678EC != 0U) {
-        fn_8000C60C();
-        lbl_803678EC = 0U;
+    ptr = lbl_803678EC;
+    if (ptr != NULL) {
+        fn_8000C60C(ptr);
+        lbl_803678EC = NULL;
     }
 }
 
