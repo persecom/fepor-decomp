@@ -613,9 +613,9 @@ u16 fn_8008B1B0(s32 arg0, s32 arg1) {
     return sp28;
 }
 
-void fn_8008BA50(s32 arg1) {
-    s32 tmp = arg1 - 0x40;
-    fn_80225058(tmp, 0, 0x87, 0x1E0);
+void fn_8008BA50(s32 unused, s32 arg1) {
+    void fn_80225058(s32, s32, s32, s32);
+    fn_80225058(arg1 - 0x40, 0, 0x87, 0x1E0);
 }
 
 void fn_8008BBF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5) {
