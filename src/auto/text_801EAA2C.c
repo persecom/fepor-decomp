@@ -707,11 +707,12 @@ void fn_801EDFCC(void) {
 }
 
 void fn_801EE018(void *arg0) {
-    extern u16 lbl_8032FF08[192];
+    extern u8 lbl_8032FF08[];
+    void fn_80148980(void *, s32, s32);
     s16 temp_r5;
 
     temp_r5 = *(s16 *)((char *)arg0 + 0x3A);
-    fn_80148980((u8 *)&lbl_8032FF08 + (temp_r5 * 0x30), 0x3E8, temp_r5);
+    fn_80148980(lbl_8032FF08 + ((u8)temp_r5 * 0x30), 0x3E8, temp_r5);
 }
 
 void fn_801EE054(void *arg0) {
