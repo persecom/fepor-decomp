@@ -8,7 +8,7 @@ s32 fn_8000E0E4(void *);
 
 void *fn_80073394(void) {
     extern u16 lbl_8026BE40[];
-    return &lbl_8026BE40[0x1A7];
+    return (u8 *)lbl_8026BE40 + 0x1a7;
 }
 
 void *fn_800733E4(void) {
