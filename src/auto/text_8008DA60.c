@@ -46,7 +46,7 @@ extern f32 lbl_803697E4;
 #pragma scheduling reset
 
 void fn_8008DA60(void) {
-    M2C_UNK fn_8008DA80();
+    void fn_8008DA80(void);
     fn_8008DA80();
 }
 
