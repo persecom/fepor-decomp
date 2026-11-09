@@ -339,21 +339,21 @@ void SIInit(void) {
     SIGetType(3);
 }
 
-u32 fn_8023B788(s32 arg0) {
-    extern M2C_UNK Type_8029EFC0;
-    s32 *temp_r4;
-    u32 temp_r31;
+u32 fn_8023B788(s32 chan) {
+    extern u32 Type_8029EFC0[4];
+    BOOL enabled;
+    u32 status;
 
-    OSDisableInterrupts();
-    temp_r31 = (u32) *(u32 *)0xCC006438 >> ((3 - arg0) * 8);
-    if (temp_r31 & 8) {
-        temp_r4 = &Type_8029EFC0 + (arg0 * 4);
-        if (!(*temp_r4 & 0x80)) {
-            *temp_r4 = 8;
+    enabled = OSDisableInterrupts();
+    status = __SIRegs[14];
+    status >>= (3 - chan) * 8;
+    if (status & 8) {
+        if (!(Type_8029EFC0[chan] & 0x80)) {
+            Type_8029EFC0[chan] = 8;
         }
     }
-    OSRestoreInterrupts();
-    return temp_r31;
+    OSRestoreInterrupts(enabled);
+    return status;
 }
 
 void fn_8023B804(s32 arg0, s32 arg1) {
