@@ -1565,13 +1565,10 @@ void *fn_800A3658(void) {
     return &lbl_8026D8D8 + 0x796;
 }
 
-s32 fn_800A3668(s32 arg1) {
+s32 fn_800A3668(s32 arg0, s32 arg1) {
     void *fn_800241C8(s32);
-    s32 fn_8012B488(s32);
-
-    void * ptr = fn_800241C8(arg1);
-    s32 val = *(s32 *)((char *)ptr + 0x18);
-    fn_8012B488(val);
+    M2C_UNK fn_8012B488(s32);
+    fn_8012B488(M2C_FIELD(fn_800241C8(arg1), s32 *, 0x18));
     return 6;
 }
 
