@@ -56,13 +56,13 @@ void fn_800561C8(void *arg0) {
 }
 
 void fn_80056580(void) {
-    void *fn_8000C0C0(M2C_UNK *);
-    extern M2C_UNK lbl_80285B90;
+    void *fn_8000C0C0(void *);
+    extern u8 lbl_80285B90[];
     void *temp_r3;
 
-    temp_r3 = fn_8000C0C0(&lbl_80285B90);
+    temp_r3 = fn_8000C0C0(lbl_80285B90);
     if (temp_r3 != NULL) {
-        M2C_FIELD(temp_r3, s8 *, 0x36) = -1;
+        *(s8 *)((u8 *)temp_r3 + 0x36) = -1;
     }
 }
 
@@ -895,6 +895,25 @@ void fn_80058910(void *arg0, u8 arg1) {
     M2C_FIELD(arg0, u16 *, 0x54) = (u16) (M2C_FIELD(arg0, u16 *, 0x54) & 0xFFFFFFFB);
 }
 
+#pragma scheduling off
+void fn_80058970(void *arg0, void *arg1) {
+    M2C_FIELD(arg0, u8 *, 0x38) = (u8) M2C_FIELD(arg1, u8 *, 0);
+    M2C_FIELD(arg0, u8 *, 0x39) = (u8) M2C_FIELD(arg1, u8 *, 1);
+    M2C_FIELD(arg0, u8 *, 0x3A) = (u8) M2C_FIELD(arg1, u8 *, 2);
+    M2C_FIELD(arg0, u8 *, 0x3B) = (u8) M2C_FIELD(arg1, u8 *, 3);
+    M2C_FIELD(arg0, u8 *, 0x3C) = (u8) M2C_FIELD(arg0, u8 *, 0x38);
+    M2C_FIELD(arg0, u8 *, 0x3D) = (u8) M2C_FIELD(arg0, u8 *, 0x39);
+    M2C_FIELD(arg0, u8 *, 0x3E) = (u8) M2C_FIELD(arg0, u8 *, 0x3A);
+    M2C_FIELD(arg0, u8 *, 0x3F) = (u8) M2C_FIELD(arg0, u8 *, 0x3B);
+    if (((u8) M2C_FIELD(arg1, u8 *, 0) < 0x80U) && ((u8) M2C_FIELD(arg1, u8 *, 1) < 0x80U) && ((u8) M2C_FIELD(arg1, u8 *, 2) < 0x80U)) {
+        M2C_FIELD(arg0, u16 *, 0x54) = (u16) (M2C_FIELD(arg0, u16 *, 0x54) & 0xFFFE);
+        M2C_FIELD(arg0, u16 *, 0x54) = (u16) (M2C_FIELD(arg0, u16 *, 0x54) | 2);
+        return;
+    }
+    M2C_FIELD(arg0, u16 *, 0x54) = (u16) (M2C_FIELD(arg0, u16 *, 0x54) & 0xFFFFFFFD);
+    M2C_FIELD(arg0, u16 *, 0x54) = (u16) (M2C_FIELD(arg0, u16 *, 0x54) | 1);
+}
+#pragma scheduling reset
 void fn_80058A0C(void* arg0, s32 arg1, s32 arg2, s32 arg3) {
     // Just setting the first field to make sure we have a valid compile
     *(u16*)((char*)arg0 + 0x34) = (u16)arg1;
