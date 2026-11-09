@@ -1420,9 +1420,23 @@ loop_2:
 }
 
 void fn_8002626C(void) {
-    extern M2C_UNK lbl_802EF4C8;
-    M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 4), u8 *, 0x1A5) = (u8) ((M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 4), u8 *, 0x1A5) & ~7) | 1);
-    M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 0), s32 *, 0x1A0) = (s32) (M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 0), s32 *, 0x1A0) | 0x1000);
+    extern u8 lbl_802EF4C8[];
+
+    struct {
+        unsigned int pad : 29;
+        unsigned int flags : 3;
+    } *bits;
+
+    u8 *ptr;
+    u32 *state;
+
+    ptr = *(u8 **)(lbl_802EF4C8 + 4);
+
+    bits = (void *)(ptr + 0x1A2);
+    bits->flags = 1;
+
+    state = *(u32 **)lbl_802EF4C8;
+    state[0x1A0 / 4] |= 0x1000;
 }
 
 void fn_8002629C(s32 *arg0, s32 arg1) {
@@ -1556,7 +1570,10 @@ void fn_800266E4(s32 arg0) {
     extern s32 *lbl_802EF4C8;
     extern void *lbl_80330EAC;
     
-    fn_80034A8C(lbl_80330EAC, lbl_802EF4C8[0], 0xA, arg0, 1);
+    s32 val1 = *(s32*)lbl_802EF4C8;
+    void *ptr2 = lbl_80330EAC;
+    
+    fn_80034A8C(ptr2, val1, 0xA, arg0, 1);
 }
 
 void fn_80026724(void *arg0) {
