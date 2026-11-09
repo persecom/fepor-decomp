@@ -366,6 +366,17 @@ void fn_800072B0(u8* a, u8* b, u8* c, u8* d)
     p[0x5b] = d[3];
 }
 
+void fn_80007340(s32 arg0, s32 arg1) {
+    extern void *lbl_80367140;
+
+    u8 *ptr = (u8 *)lbl_80367140;
+    ptr = *(u8 **)(ptr + 0xC);
+    ptr = *(u8 **)(ptr + 0x4);
+
+    *(s32 *)(ptr + 0x10) = arg0;
+    *(s32 *)(ptr + 0x14) = arg1;
+}
+
 void fn_800075D8(void) {
     void *temp_r3;
 
