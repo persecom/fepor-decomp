@@ -154,9 +154,9 @@ void fn_80006160(s32 arg0) {
 void fn_80006198(void) {
     extern u16 lbl_802832FC[];
     void *fn_8000C0C0(u16 *);
-    u8 temp = *(u32*)((char*)fn_8000C0C0(lbl_802832FC) + 0x60) >> 24;
-    void fn_8000C070(u8);
-    fn_8000C070(temp);
+    void fn_8000C070(void *, u8);
+    void *arg0 = fn_8000C0C0(lbl_802832FC);
+    fn_8000C070(arg0, (u8)*(u32 *)((u8 *)arg0 + 0x60));
 }
 
 void fn_800061CC(void *arg0) {
