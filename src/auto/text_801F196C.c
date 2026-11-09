@@ -1535,8 +1535,18 @@ extern "C" void fn_801FB2EC(void **arg0, s32 *arg1, void ***arg2, s32 *arg3) {
         *arg0 = n;
     }
 }
+
 #pragma use_lmw_stmw reset
 #pragma cplusplus reset
+
+int fn_801FB410(void *arg0) {
+    u32 *ptr;
+
+    ptr = (u32 *)((u8 *)arg0 + 0x4);
+    *(u32 *)arg0 = 0;
+    ptr[1] = (u32)ptr;
+    ptr[0] = (u32)ptr;
+}
 
 void fn_801FB548(void *arg0) {
     u32 temp_r4;
