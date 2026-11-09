@@ -53,8 +53,8 @@ void fn_80098BAC(void *arg0) {
 }
 
 void fn_80098BD8(void *arg0) {
-    M2C_UNK fn_801B61CC();
-    if ((u8) M2C_FIELD(arg0, u8 *, 0x34) != 2) {
+    void fn_801B61CC(void);
+    if (*(u8 *)((char *)arg0 + 0x34) != 2) {
         fn_801B61CC();
     }
 }
