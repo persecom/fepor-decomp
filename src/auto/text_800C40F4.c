@@ -6527,10 +6527,9 @@ s32 fn_800FB548(s32 arg0, s32 arg1) {
 }
 
 s32 fn_800FB5C8(void *arg0) {
-    extern u32 lbl_802EF4C8[12];
-    s32 val1 = *(u32*)((u8*)arg0 + 0x190);
-    s32 val2 = *(u32*)((u8*)lbl_802EF4C8 + 0x190);
-    return fn_80015610(val1, val2) == 1;
+    extern u8 lbl_802EF4C8[];
+    return (u8) fn_80015610(*(s32*)((u8*)arg0 + 0x190),
+                            *(s32*)((u8*)*(void**)&lbl_802EF4C8 + 0x190)) == 1;
 }
 
 void fn_800FB918(void *arg0, s32 arg1, s32 *arg2) {
