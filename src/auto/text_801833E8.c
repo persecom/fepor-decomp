@@ -295,46 +295,46 @@ void fn_80183B24(s32 arg0) {
     M2C_FIELD(fn_8000CA64(&lbl_80295DF0, &lbl_80295DF0), s32 *, 0x30) = arg0;
 }
 
-void *fn_80183B5C(void *arg0) {
-    void *fn_8000CA64(u8 *, u8 *);
-    u8 fn_800AA188();
+void *fn_80183B5C(void *arg0, s32 unused) {
+    void *fn_8000CA64(void *);
+    u8 fn_800AA188(void);
     extern u8 lbl_80295D8C[];
-    
-    void *temp_r3;
-    temp_r3 = fn_8000CA64(lbl_80295D8C, lbl_80295D8C);
-    *(void**)((char*)temp_r3 + 0x30) = arg0;
-    *(u8*)((char*)temp_r3 + 0x3D) = 0;
-    *(u8*)((char*)temp_r3 + 0x3C) = 1;
-    *(u8*)((char*)temp_r3 + 0x3E) = 0;
-    if (*(s32*)((char*)arg0 + 0x1A0) & 0x010000DC) {
-        *(u8*)((char*)temp_r3 + 0x3C) = 0;
+    void *temp_r31;
+
+    (void)unused;
+    temp_r31 = fn_8000CA64(lbl_80295D8C);
+    *(void **)((u8 *)temp_r31 + 0x30) = arg0;
+    *((u8 *)temp_r31 + 0x3D) = 0;
+    *((u8 *)temp_r31 + 0x3C) = 1;
+    *((u8 *)temp_r31 + 0x3E) = 0;
+    if (*(s32 *)((u8 *)arg0 + 0x1A0) & 0x010000DC) {
+        *((u8 *)temp_r31 + 0x3C) = 0;
     }
     if (fn_800AA188() == 0) {
-        *(u8*)((char*)temp_r3 + 0x3C) = 0;
+        *((u8 *)temp_r31 + 0x3C) = 0;
     }
-    return temp_r3;
+    return temp_r31;
 }
 
-void *fn_80183BE4(void *arg0) {
+void *fn_80183BE4(void *arg0, void *arg1) {
     void *fn_8000CA64(void *, void *);
-    u8 fn_800AA188();
+    u8 fn_800AA188(void);
     extern u16 lbl_80295D8C[];
-    
-    void *temp_r3;
-    s32 temp_r4;
 
-    temp_r3 = fn_8000CA64(&lbl_80295D8C, &lbl_80295D8C);
-    M2C_FIELD(temp_r3, void **, 0x30) = arg0;
-    M2C_FIELD(temp_r3, s8 *, 0x3D) = 0;
-    M2C_FIELD(temp_r3, s8 *, 0x3C) = 1;
-    M2C_FIELD(temp_r3, s8 *, 0x3E) = 1;
-    if (M2C_FIELD(arg0, s32 *, 0x1A0) & 0x010000DC) {
-        M2C_FIELD(temp_r3, s8 *, 0x3C) = 0;
+    void *temp_r31;
+
+    temp_r31 = fn_8000CA64(lbl_80295D8C, arg1);
+    *(void **)((u8 *)temp_r31 + 0x30) = arg0;
+    *((u8 *)temp_r31 + 0x3D) = 0;
+    *((u8 *)temp_r31 + 0x3C) = 1;
+    *((u8 *)temp_r31 + 0x3E) = 1;
+    if (*(s32 *)((u8 *)arg0 + 0x1A0) & 0x010000DC) {
+        *((u8 *)temp_r31 + 0x3C) = 0;
     }
     if (fn_800AA188() == 0) {
-        M2C_FIELD(temp_r3, s8 *, 0x3C) = 0;
+        *((u8 *)temp_r31 + 0x3C) = 0;
     }
-    return temp_r3;
+    return temp_r31;
 }
 
 void fn_80183DEC(s32 arg0, s32 arg1, s32 arg2) {
