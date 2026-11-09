@@ -3507,8 +3507,8 @@ s16 fn_800BCB0C(s32 arg0, s16 arg1) {
 }
 
 extern u16 lbl_80330708[700];
-u16 fn_800BCB24(s32 arg0) {
-    return lbl_80330708[arg0];
+s32 fn_800BCB24(s32 arg0) {
+    return ((s16 *)lbl_80330708)[arg0];
 }
 
 extern u16 lbl_80330708[];
@@ -4913,6 +4913,43 @@ void fn_800C1984(void) {
         return;
     }
     fn_80046360(fn_80040844(), 0, fn_800C1730, 0, 0, 0x8000);
+}
+
+void fn_800C1E24(void) {
+    M2C_UNK DCFlushRange(s32, M2C_UNK);
+    M2C_UNK fn_800C1BDC();
+    s32 fn_800C4638(M2C_UNK, void *, M2C_UNK);
+    M2C_UNK fn_80222644(M2C_UNK *, s32, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_802228D8(M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, f32, f32, f32);
+    extern M2C_UNK lbl_8026FDC0;
+    extern M2C_UNK lbl_8031FFD0;
+    extern s32 lbl_80320030;
+    extern s32 lbl_80367850;
+    extern s32 lbl_80367854;
+    extern s32 lbl_80367858;
+    extern s32 lbl_8036785C;
+    extern f32 lbl_80369D28;
+    M2C_UNK *var_r29;
+    s32 *var_r30;
+    s32 var_r28;
+
+    var_r30 = &lbl_80320030;
+    var_r29 = &lbl_8031FFD0;
+    var_r28 = 0;
+    lbl_80367850 = 0x4000;
+    lbl_80367854 = 0x80;
+    lbl_80367858 = 0x80;
+    lbl_8036785C = 0;
+    do {
+        *var_r30 = fn_800C4638(0x2000, &lbl_8026FDC0 + 0x53, 0);
+        fn_80222644(var_r29, *var_r30, 0x80, 0x80, 0, 0, 0, 0);
+        fn_802228D8(var_r29, 1, 1, 0, 0, 0, lbl_80369D28, lbl_80369D28, lbl_80369D28);
+        DCFlushRange(*var_r30, 0x2000);
+        var_r28 += 1;
+        var_r29 += 0x20;
+        var_r30 += 4;
+    } while (var_r28 < 3);
+    fn_800C1BDC();
 }
 
 s32 fn_800C1F1C(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
