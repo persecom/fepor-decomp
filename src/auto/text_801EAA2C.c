@@ -628,14 +628,12 @@ void fn_801EDAC8(void *arg0) {
 }
 
 void fn_801EDB38(void *arg0) {
-    u8 temp_r0;
-
-    temp_r0 = *(u8 *)((char *)arg0 + 0x38);
-    if ((s32) temp_r0 >= 4) {
-        return;
-    }
-    if ((s32) temp_r0 >= 2) {
+    void fn_8016969C(void);
+    switch ((s32)*(u8 *)((char *)arg0 + 0x38)) {
+    case 2:
+    case 3:
         fn_8016969C();
+        break;
     }
 }
 
