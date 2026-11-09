@@ -69,7 +69,10 @@ auto/text_80033080.c:
 	.ctors      start:0x80267A9C end:0x80267AA0
 
 auto/text_800330F8.c:
-	.text       start:0x800330F8 end:0x80055C70
+	.text       start:0x800330F8 end:0x80055B64
+
+auto/text_80055B64.c:
+	.text       start:0x80055B64 end:0x80055C70
 
 auto/text_80055C70.c:
 	.text       start:0x80055C70 end:0x80055C74
