@@ -733,6 +733,105 @@ void fn_80125B94(void *arg0) {
     *(f32*)((char*)arg0 + 0x30) = lbl_8036A35C;
 }
 
+s32 fn_80125BB0(void) {
+    void *fn_8000C0C0(M2C_UNK *, M2C_UNK *);
+    s32 fn_80069D58();
+    s32 fn_80069DBC();
+    s32 fn_80069E18();
+    s32 fn_80069EA8();
+    M2C_UNK fn_8006A384(M2C_UNK *);
+    M2C_UNK fn_8006ECCC(s32, M2C_UNK *, M2C_UNK);
+    M2C_UNK fn_80202024(M2C_UNK *, M2C_UNK *, M2C_UNK *);
+    M2C_UNK fn_802026E4(M2C_UNK *, f32 *, s32 *, f32 *, s32, s32, f32, f32, f32, f32);
+    M2C_UNK fn_8020293C(M2C_UNK *, f32, f32, f32, f32, f32, f32, f32, f32);
+    M2C_UNK fn_802201A8(s32, M2C_UNK, M2C_UNK, s32, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80222C50(M2C_UNK *, s32);
+    M2C_UNK fn_80223A5C(s32, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80223AA0(s32, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80223AE4(s32, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80223B4C(s32, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    M2C_UNK fn_80223F2C(s32, s32, s32, M2C_UNK);
+    M2C_UNK fn_80224E50(M2C_UNK *, s32, M2C_UNK);
+    extern M2C_UNK lbl_80274EE0;
+    extern M2C_UNK lbl_80290328;
+    extern f32 lbl_8036A378;
+    extern f32 lbl_8036A3B4;
+    M2C_UNK spF4;
+    M2C_UNK spC4;
+    M2C_UNK sp94;
+    M2C_UNK sp64;
+    M2C_UNK sp44;
+    s32 sp40;
+    f32 sp3C;
+    f32 sp38;
+    s32 sp34;
+    f32 sp30;
+    f32 sp2C;
+    s32 sp28;
+    s32 sp24;
+    s32 sp20;
+    s32 sp1C;
+    f32 sp18;
+    f32 sp14;
+    s32 sp10;
+    f32 spC;
+    f32 sp8;
+    f32 temp_f0;
+    f32 temp_f1;
+    f32 temp_f1_2;
+    s32 temp_r26;
+    s32 temp_r27;
+    s32 temp_r28;
+    s32 temp_r29;
+    void *temp_r3;
+
+    temp_r3 = fn_8000C0C0(&lbl_80290328, &lbl_80274EE0);
+    if (temp_r3 == NULL) {
+        return 1;
+    }
+    fn_8006A384(&sp64);
+    temp_r28 = fn_80069DBC();
+    temp_r29 = fn_80069EA8();
+    temp_r27 = fn_80069E18();
+    temp_r26 = fn_80069D58();
+    temp_f1 = lbl_8036A3B4 + M2C_FIELD(temp_r3, f32 *, 0x4C);
+    temp_f0 = lbl_8036A3B4 + M2C_FIELD(temp_r3, f32 *, 0x50);
+    sp14 = M2C_FIELD(&lbl_80274EE0, f32 *, 0xC);
+    sp18 = M2C_FIELD(&lbl_80274EE0, f32 *, 0x10);
+    sp8 = M2C_FIELD(&lbl_80274EE0, f32 *, 0x18);
+    sp18 = temp_f0;
+    spC = M2C_FIELD(&lbl_80274EE0, f32 *, 0x1C);
+    sp8 = temp_f1;
+    sp14 = temp_f1;
+    spC = temp_f0;
+    sp1C = M2C_FIELD(&lbl_80274EE0, s32 *, 0x14);
+    sp38 = sp14;
+    sp3C = sp18;
+    sp40 = M2C_FIELD(&lbl_80274EE0, s32 *, 0x14);
+    sp10 = M2C_FIELD(&lbl_80274EE0, s32 *, 0x20);
+    sp2C = sp8;
+    sp30 = spC;
+    sp34 = M2C_FIELD(&lbl_80274EE0, s32 *, 0x20);
+    sp20 = M2C_FIELD(&lbl_80274EE0, s32 *, 0x24);
+    sp24 = M2C_FIELD(&lbl_80274EE0, s32 *, 0x28);
+    sp28 = M2C_FIELD(&lbl_80274EE0, s32 *, 0x2C);
+    fn_802026E4(&sp94, &sp2C, &sp20, &sp38, M2C_FIELD(&lbl_80274EE0, s32 *, 0x28), M2C_FIELD(&lbl_80274EE0, s32 *, 0x24), spC, sp8, temp_f1, lbl_8036A3B4);
+    temp_f1_2 = -lbl_8036A3B4;
+    fn_8020293C(&spC4, temp_f1_2, lbl_8036A3B4, temp_f1_2, lbl_8036A3B4, lbl_8036A378, lbl_8036A378, lbl_8036A378, lbl_8036A378);
+    fn_80202024(&sp94, &sp64, &sp94);
+    fn_80202024(&spC4, &sp94, &spF4);
+    fn_80224E50(&spF4, temp_r26, 0);
+    fn_8006ECCC(M2C_FIELD(temp_r3, s32 *, 0x54), &sp44, 5);
+    fn_80222C50(&sp44, temp_r27);
+    fn_802201A8(temp_r28, 0, 0, temp_r26, 0, 0x7D);
+    fn_80223F2C(temp_r29, temp_r28, temp_r27, 4);
+    fn_80223A5C(temp_r29, 0xF, 0, 8, 0xF);
+    fn_80223AE4(temp_r29, 0, 0, 0, 1, 0);
+    fn_80223AA0(temp_r29, 7, 7, 7, 0);
+    fn_80223B4C(temp_r29, 1, 0, 0, 1, 0);
+    return 1;
+}
+
 void fn_80125E5C(void *arg0) {
     u8 fn_800AA188();
     if (fn_800AA188() != 0) {
@@ -997,10 +1096,23 @@ s32 fn_80126D40(u8 arg0) {
     return 1;
 }
 
+s32 fn_80126D78(u8 arg0) {
+    extern u16 lbl_80330708[];
+    fn_80105D4C(&lbl_80330708[0x210], arg0);
+    return 1;
+}
+
 s32 fn_80126DB0(u8 arg0) {
     extern s32 lbl_80330708;
     void *r4 = &lbl_80330708 + 0x74;
     fn_80105CEC(r4, arg0);
+    return 1;
+}
+
+s32 fn_80126DE8(u8 arg0) {
+    extern u16 lbl_80330708[];
+    u16* ptr = (u16*)((u32)lbl_80330708 + 0x74);
+    fn_80105D4C(ptr, arg0);
     return 1;
 }
 
