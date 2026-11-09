@@ -4539,6 +4539,90 @@ s32 fn_800C1360(s32 arg0, s32 arg1, s32 arg2)
     return arg2;
 }
 
+#pragma optimization_level 2
+s32 fn_800C1730(void) {
+    s32 fn_80069D58(void);
+    s32 fn_80069DBC(void);
+    s32 fn_80069E18(void);
+    s32 fn_80069EA8(void);
+    void fn_8006A384(void *);
+    void fn_80202024(void *, void *, void *);
+    void fn_80202540(void *, f32, f32, f32);
+    void fn_8020293C(void *, f32, f32, f32, f32, f32, f32, f32, f32);
+    void fn_802201A8(s32, s32, s32, s32, s32, s32);
+    void fn_80222C50(void *, s32);
+    void fn_80223A5C(s32, s32, s32, s32, s32);
+    void fn_80223AA0(s32, s32, s32, s32, s32);
+    void fn_80223AE4(s32, s32, s32, s32, s32, s32);
+    void fn_80223B4C(s32, s32, s32, s32, s32, s32);
+    void fn_80223C78(s32, s32 *);
+    void fn_80223CDC(s32, s32);
+    void fn_80223F2C(s32, s32, s32, s32);
+    void fn_80224E50(void *, s32, s32);
+    extern u8 lbl_8031FFD0[];
+    extern u8 lbl_80367289;
+    extern s32 lbl_8036785C;
+    extern s32 lbl_80369D20;
+    extern f32 lbl_80369D28;
+    extern f32 lbl_80369D44;
+    extern f32 lbl_80369D48;
+    extern f32 lbl_80369D4C;
+    extern f32 lbl_80369D50;
+    u8 sp6C[0x30];
+    u8 sp3C[0x30];
+    u8 spC[0x30];
+    s32 sp8;
+    s32 r31;
+    s32 r30;
+    s32 r29;
+    s32 r28;
+    f32 t5;
+    void *p;
+    f32 t1;
+    f32 t2;
+
+    if ((s32)lbl_80367289 == 0) {
+        return 0;
+    }
+    t5 = lbl_80369D4C;
+    p = sp3C;
+    t1 = lbl_80369D44;
+    t2 = lbl_80369D48;
+    fn_8020293C(p, t1, t2, t2, t1, t5, t5, t5, t5);
+    fn_80202540(sp6C, lbl_80369D50, lbl_80369D50, lbl_80369D28);
+    fn_8006A384(spC);
+    fn_80202024(sp6C, spC, spC);
+    fn_80202024(sp3C, spC, spC);
+    r31 = fn_80069EA8();
+    r30 = fn_80069DBC();
+    r29 = fn_80069E18();
+    r28 = fn_80069D58();
+    fn_80222C50(lbl_8031FFD0 + (lbl_8036785C << 5), r29);
+    fn_80224E50(spC, r28, 1);
+    fn_802201A8(r30, 1, 0, r28, 0, 0x7D);
+    fn_80223F2C(r31, r30, r29, 4);
+    switch ((s32)lbl_80367289) {
+    case 1:
+        fn_80223A5C(r31, 0xF, 0, 8, 0xF);
+        fn_80223AE4(r31, 0, 0, 0, 1, 0);
+        break;
+    case 2:
+        fn_80223A5C(r31, 0xD, 0xF, 8, 0);
+        fn_80223AE4(r31, 0, 0, 0, 1, 0);
+        break;
+    case 3:
+        sp8 = lbl_80369D20;
+        fn_80223C78(3, &sp8);
+        fn_80223CDC(r31, 0xF);
+        fn_80223A5C(r31, 0, 0xE, 8, 0);
+        fn_80223AE4(r31, 0, 0, 3, 1, 0);
+        break;
+    }
+    fn_80223AA0(r31, 7, 7, 7, 0);
+    fn_80223B4C(r31, 0, 0, 0, 1, 0);
+    return 1;
+}
+#pragma optimization_level 4
 void fn_800C1984(void) {
     void fn_80040844(void);
     void fn_800462FC(s32, s32, s32 (*)(void));
