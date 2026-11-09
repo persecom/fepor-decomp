@@ -6871,34 +6871,53 @@ s32 fn_800FE8E8(void *arg0, void *arg1) {
     return (u32) M2C_FIELD(arg0, u32 *, 0x24C) < (u32) M2C_FIELD(arg1, u32 *, 0x24C);
 }
 
-void fn_800FEFD4(s32 *arg0, s32 *arg1, s32 *arg2, u8 (*arg3)(s32, s32)) {
-    u8 temp_r28 = arg3(*arg2, *arg0);
-    u8 temp_r3 = arg3(*arg1, *arg2);
+void fn_800FEFD4(s32 *arg0, s32 *arg1, s32 *arg2, u8 (*cmp)(s32, s32)) {
+    s32 *a2;
+    s32 *a1;
+    s32 *a0;
+    s32 z1;
+    u8 (*c)(s32, s32);
 
-    if ((temp_r28 == 0) || (temp_r3 == 0)) {
-        if ((temp_r28 != 0) && (temp_r3 != 0)) {
-            s32 temp = *arg0;
-            *arg0 = *arg1;
-            *arg1 = temp;
+    a2 = arg2;
+    a1 = arg1;
+    a0 = arg0;
+    c = cmp;
+
+    z1 = ((u8)c(*a2, *a0) == 0);
+    {
+        s32 z2 = ((u8)c(*a1, *a2) == 0);
+        if ((u8)z1) {
+            if ((u8)z2) {
+                return;
+            }
         }
+        if ((u8)z1) {
+            goto sort;
+        }
+        if ((u8)z2) {
+            goto sort;
+        }
+        {
+            s32 tmp = *a0;
+            *a0 = *a1;
+            *a1 = tmp;
+        }
+        return;
+    }
+sort:
+    if ((u8)c(*a1, *a0) != 0) {
+        s32 tmp = *a0;
+        *a0 = *a1;
+        *a1 = tmp;
+    }
+    if ((u8)z1) {
+        s32 tmp = *a1;
+        *a1 = *a2;
+        *a2 = tmp;
     } else {
-        s32 temp;
-
-        if (arg3(*arg1, *arg0) == 0) {
-            temp = *arg0;
-            *arg0 = *arg1;
-            *arg1 = temp;
-        }
-
-        if (temp_r28 != 0) {
-            temp = *arg1;
-            *arg1 = *arg2;
-            *arg2 = temp;
-        } else {
-            temp = *arg0;
-            *arg0 = *arg2;
-            *arg2 = temp;
-        }
+        s32 tmp = *a0;
+        *a0 = *a2;
+        *a2 = tmp;
     }
 }
 
