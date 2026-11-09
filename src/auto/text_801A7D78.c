@@ -171,36 +171,37 @@ extern u16 lbl_80330EAC[1634];
 u8 fn_8000CD88(s16);
 u8 fn_8000CE68(s16);
 s32 fn_801A8A28(void *arg0) {
-    u8 temp_r3;
-    s16 *temp_r4;
+    u8 fn_8000CD88(s16);
+    u8 fn_8000CE68(s16);
+    extern u8 lbl_802EFDB8[104];
+    extern u16 lbl_80330EAC[1634];
+    u8 flags;
+    u8 *base;
 
-    temp_r3 = *(lbl_802EFDB8 + *(u8 *) (lbl_802EFDB8 + 0x60));
+    base = lbl_802EFDB8;
+    flags = base[base[0x60]];
 
-    if (temp_r3 & 1) {
+    if (flags & 1) {
         return 0x50;
     }
-
-    if (temp_r3 & 2) {
+    if (flags & 2) {
         return 0x51;
     }
-
-    if (temp_r3 & 4) {
+    if (flags & 4) {
         return 0x52;
     }
 
-    if (*(u8 *) ((uintptr_t) arg0 + 0x2CA) != 0) {
-        *(u8 *) ((uintptr_t) arg0 + 0x2CA) = 0U;
-        *(u32 *) (lbl_80330EAC + 0xCAC) = *(u32 *) (lbl_80330EAC + 0xCAC) | 0x1000;
+    if (*(u8 *)((u8 *)arg0 + 0x2CA) != 0) {
+        *(u8 *)((u8 *)arg0 + 0x2CA) = 0;
+        *(u32 *)((u8 *)lbl_80330EAC + 0xCAC) |= 0x1000;
         return 0x51;
     }
 
-    temp_r4 = (s16 *) ((uintptr_t) arg0 + 0x2A2);
-
-    if (fn_8000CD88(*temp_r4) == 0) {
+    if (fn_8000CD88(*(s16 *)((u8 *)arg0 + 0x2A2)) == 0) {
         return 0x52;
     }
 
-    return (fn_8000CE68(*(s16 *) ((uintptr_t) arg0 + 0x2A8)) != 0) + 0x50;
+    return (fn_8000CE68(*(s16 *)((u8 *)arg0 + 0x2A8)) != 0) + 0x50;
 }
 
 void fn_801A8AF4(void *arg0) {
