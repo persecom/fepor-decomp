@@ -347,10 +347,13 @@ void fn_8022257C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u16* arg5, u1
     }
 }
 
-void fn_80222890(void *arg0, s32 arg_sp8) {
-    fn_80222644(arg0);
-    *(u8*)((char*)arg0 + 0x1F) = (*(u8*)((char*)arg0 + 0x1F) & 0xFFFFFFFD);
-    *(s32*)((char*)arg0 + 0x18) = arg_sp8;
+void fn_80222644(void *, void *, u16, u16, s32, s32, s32, u8);
+void fn_80222890(void *obj, void *image_ptr, u16 width, u16 height,
+                 s32 format, s32 wrap_s, s32 wrap_t, u8 mipmap, u32 tlut_name)
+{
+    fn_80222644(obj, image_ptr, width, height, format, wrap_s, wrap_t, mipmap);
+    *(u8 *)((char *)obj + 0x1F) = (u8)(*(u8 *)((char *)obj + 0x1F) & ~2);
+    *(u32 *)((char *)obj + 0x18) = tlut_name;
 }
 
 void fn_802228D8(u32 *t, s32 min_filt, s32 mag_filt, f32 min_lod, f32 max_lod, f32 lod_bias, u8 bias_clamp, u8 do_edge_lod, s32 max_aniso) {
@@ -448,46 +451,51 @@ u16 fn_80222CE8(void *arg0) {
     return M2C_FIELD(arg0, u16 *, 8);
 }
 
-void GXInitTexCacheRegion(void *arg0, s8 arg1, u32 arg2, s32 arg3, u32 arg4, s32 arg5, s32 arg6) {
+void GXInitTexCacheRegion(void *region, s8 is_32b, u32 tmem_even, s32 size_even, u32 tmem_odd, s32 size_odd) {
+    u32 a;
     s32 var_r9;
 
-    var_r9 = arg6;
-    switch (arg3) {                                 /* switch 1; irregular */
-    case 0:                                         /* switch 1 */
+    switch (size_even) {
+    case 0:
         var_r9 = 3;
         break;
-    case 1:                                         /* switch 1 */
+    case 1:
         var_r9 = 4;
         break;
-    case 2:                                         /* switch 1 */
+    case 2:
         var_r9 = 5;
         break;
     }
-    M2C_FIELD(arg0, s32 *, 0) = 0;
-    M2C_FIELD(arg0, s32 *, 0) = (s32) ((M2C_FIELD(arg0, s32 *, 0) & ~0x7FFF) | ((arg2 >> 5U) & 0x7FFF));
-    M2C_FIELD(arg0, s32 *, 0) = (s32) ((M2C_FIELD(arg0, s32 *, 0) & ~0x38000) | ((var_r9 << 0xF) & 0x38000));
-    M2C_FIELD(arg0, s32 *, 0) = (s32) ((M2C_FIELD(arg0, s32 *, 0) & ~0x1C0000) | ((var_r9 << 0x12) & 0x1C0000));
-    M2C_FIELD(arg0, s32 *, 0) = (s32) (M2C_FIELD(arg0, s32 *, 0) & ~0x200000);
-    switch (arg5) {                                 /* switch 2; irregular */
-    case 0:                                         /* switch 2 */
+    *(u32 *)region = 0;
+    *(u32 *)region = __rlwimi(*(u32 *)region, tmem_even >> 5, 0, 17, 31);
+    *(u32 *)region = __rlwimi(*(u32 *)region, var_r9, 15, 14, 16);
+    *(u32 *)region = __rlwimi(*(u32 *)region, var_r9, 18, 11, 13);
+    *(u32 *)region = __rlwimi(*(u32 *)region, 0, 21, 10, 10);
+
+    switch (size_odd) {
+    case 0:
         var_r9 = 3;
         break;
-    case 1:                                         /* switch 2 */
+    case 1:
         var_r9 = 4;
         break;
-    case 2:                                         /* switch 2 */
+    case 2:
         var_r9 = 5;
         break;
-    case 3:                                         /* switch 2 */
+    case 3:
         var_r9 = 0;
         break;
     }
-    M2C_FIELD(arg0, s32 *, 4) = 0;
-    M2C_FIELD(arg0, s32 *, 4) = (s32) ((M2C_FIELD(arg0, s32 *, 4) & ~0x7FFF) | ((arg4 >> 5U) & 0x7FFF));
-    M2C_FIELD(arg0, s32 *, 4) = (s32) ((M2C_FIELD(arg0, s32 *, 4) & ~0x38000) | ((var_r9 << 0xF) & 0x38000));
-    M2C_FIELD(arg0, s32 *, 4) = (s32) ((M2C_FIELD(arg0, s32 *, 4) & ~0x1C0000) | ((var_r9 << 0x12) & 0x1C0000));
-    M2C_FIELD(arg0, s8 *, 0xC) = arg1;
-    M2C_FIELD(arg0, s8 *, 0xD) = 1;
+    a = 0;
+    *((u32 *)region + 1) = a;
+    a = __rlwimi(*((u32 *)region + 1), tmem_odd, 27, 17, 31);
+    *((u32 *)region + 1) = a;
+    a = __rlwimi(*((u32 *)region + 1), var_r9, 15, 14, 16);
+    *((u32 *)region + 1) = a;
+    a = __rlwimi(*((u32 *)region + 1), var_r9, 18, 11, 13);
+    *((u32 *)region + 1) = a;
+    *((s8 *)region + 0xC) = is_32b;
+    *((s8 *)region + 0xD) = 1;
 }
 
 void GXInitTlutRegion(s32 *arg0, s32 arg1, s32 arg2) {
@@ -990,7 +998,8 @@ void fn_802240C8(u8 arg0) {
     __GXData[0x16B] = __GXData[0x16B] | 4;
 }
 
-void fn_80224304(s16 *arg0, u16 arg1, void *arg2) {
+void fn_80224304(s16 *arg0, u16 arg1, f32 *arg2) {
+    s32 fn_8022C568(f32);
     extern f32 lbl_8036BD58;
     extern f32 lbl_8036BD5C;
     extern f32 lbl_8036BD70;
@@ -999,57 +1008,60 @@ void fn_80224304(s16 *arg0, u16 arg1, void *arg2) {
     extern f32 lbl_8036BD98;
     extern f64 lbl_8036BDA0;
     extern f32 lbl_8036BDA8;
-    f32 temp_f0;
-    f32 temp_f1;
-    f32 temp_f2;
-    f32 temp_f23;
-    f32 temp_f25;
-    f32 temp_f28;
-    f32 temp_f29;
+    extern f64 lbl_8036BDB0;
+    f64 f31;
+    f64 f30;
+    f32 f29;
+    f32 f28;
+    f64 f27;
+    f32 f26;
+    f32 f25;
+    f32 f24;
+    f32 f23;
     f32 var_f0;
-    f32 var_f24;
-    f32 var_f2;
-    f64 temp_f30;
-    f64 temp_f31;
+    f32 temp_f1;
     s16 *var_r30;
     u32 var_r29;
+    f32 var_f2;
+    volatile f32 sp14;
 
-    if (lbl_8036BD90 == *(f32*) ((u8*)arg2 + 0x3C)) {
-        temp_f1 = *(f32*) ((u8*)arg2 + 0x2C) / (*(f32*) ((u8*)arg2 + 0x28) - lbl_8036BD5C);
-        var_f24 = temp_f1 / *(f32*) ((u8*)arg2 + 0x0);
+    if (lbl_8036BD90 == arg2[0x3C / 4]) {
+        temp_f1 = arg2[0x2C / 4] / (arg2[0x28 / 4] - lbl_8036BD5C);
+        f24 = temp_f1 / arg2[0];
         var_f0 = temp_f1;
     } else {
-        temp_f1 = lbl_8036BD5C / *(f32*) ((u8*)arg2 + 0x0);
-        var_f24 = temp_f1;
+        temp_f1 = lbl_8036BD5C / arg2[0];
+        f24 = temp_f1;
         var_f0 = lbl_8036BD98 * temp_f1;
     }
-    temp_f28 = lbl_8036BD5C;
+    f27 = lbl_8036BDB0;
+    f26 = var_f0 * var_f0;
+    f28 = lbl_8036BD5C;
     var_r30 = arg0;
-    temp_f29 = lbl_8036BD58;
-    var_r29 = 0U;
-    temp_f30 = lbl_8036BD78;
-    temp_f31 = lbl_8036BDA0;
-    temp_f23 = lbl_8036BDA8;
-    temp_f25 = lbl_8036BD70 / (f32) arg1;
+    f29 = lbl_8036BD58;
+    var_r29 = 0;
+    f30 = lbl_8036BD78;
+    f31 = lbl_8036BDA0;
+    f23 = lbl_8036BDA8;
+    f25 = lbl_8036BD70 / (f32)arg1;
+    (void)f27;
     do {
-        temp_f0 = (f32) ((var_r29 + 1) << 5) * temp_f25 * var_f24;
-        var_f2 = temp_f28 + ((temp_f0 * temp_f0) / (var_f0 * var_f0));
-        if (var_f2 > temp_f29) {
-            f32 sp14;
-            f64 temp_f1_3;
-            f64 temp_f1_4;
-            f64 temp_f1_5;
-            
-            temp_f1_3 = __frsqrte(var_f2);
-            temp_f1_4 = temp_f30 * temp_f1_3 * (temp_f31 - ((f64) var_f2 * (temp_f1_3 * temp_f1_3)));
-            temp_f1_5 = temp_f30 * temp_f1_4 * (temp_f31 - ((f64) var_f2 * (temp_f1_4 * temp_f1_4)));
-            sp14 = (f32) ((f64) var_f2 * (temp_f30 * temp_f1_5 * (temp_f31 - ((f64) var_f2 * (temp_f1_5 * temp_f1_5)))));
+        temp_f1 = (f32)((var_r29 + 1) << 5);
+        temp_f1 = temp_f1 * f25;
+        temp_f1 = temp_f1 * f24;
+        var_f2 = f28 + (temp_f1 * temp_f1) / f26;
+        if (var_f2 > f29) {
+            f64 guess = __frsqrte((f64)var_f2);
+            guess = f30 * guess * (f31 - (f64)var_f2 * (guess * guess));
+            guess = f30 * guess * (f31 - (f64)var_f2 * (guess * guess));
+            guess = f30 * guess * (f31 - (f64)var_f2 * (guess * guess));
+            sp14 = (f32)((f64)var_f2 * guess);
             var_f2 = sp14;
         }
+        *var_r30 = (s16)(fn_8022C568(f23 * var_f2) & 0xFFF);
         var_r29 += 1;
-        *var_r30 = (s16) fn_8022C568(temp_f23 * var_f2);
-        var_r30 += 2;
-    } while (var_r29 < 0xAU);
+        var_r30 += 1;
+    } while (var_r29 < 10U);
 }
 
 void fn_802245D8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
