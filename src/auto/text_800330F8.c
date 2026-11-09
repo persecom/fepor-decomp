@@ -2432,6 +2432,13 @@ void fn_80043AC8(void *arg0) {
     lbl_803682A4 &= 0xFFFFFFF7;
 }
 
+void fn_80043B20(void) {
+    extern void *lbl_803672AC;
+    extern void fn_800432D8(void *);
+
+    fn_800432D8(lbl_803672AC);
+}
+
 void fn_80043B44(void* arg0, s32 arg1) {
     if (arg0 == NULL) {
         return;
