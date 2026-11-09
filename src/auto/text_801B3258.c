@@ -172,10 +172,8 @@ void fn_801B3D68(void *arg0) {
 
 void fn_801B4810(void) {
     extern u16 lbl_8027C128[];
-    u16 *ptr1 = &lbl_8027C128[0xB1];
-    u16 *ptr2 = &lbl_8027C128[0x95];
-    fn_800558D8(ptr1);
-    fn_800558D8(ptr2);
+    fn_800558D8((u8 *)lbl_8027C128 + 0xb1);
+    fn_800558D8((u8 *)lbl_8027C128 + 0x95);
 }
 
 #pragma opt_common_subs off
