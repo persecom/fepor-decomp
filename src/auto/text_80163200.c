@@ -413,13 +413,16 @@ u8 fn_801661CC(void *arg0) {
     }
 }
 
-void *fn_801662F0(u32 *arg0) {
+void *fn_801662F0(void **arg0) {
     extern u16 lbl_802778A8[];
-    u32 temp = (u32)*arg0;
-    if (temp == 0U) {
-        return (void *)&lbl_802778A8[0xE7];
+    void *fn_8000E0E4(void *);
+    void *v;
+
+    v = *arg0;
+    if (v == NULL) {
+        return (u8 *)lbl_802778A8 + 0xE7;
     }
-    return (void *)fn_8000E0E4();
+    return fn_8000E0E4(v);
 }
 
 extern u16 lbl_8028DED0[];
