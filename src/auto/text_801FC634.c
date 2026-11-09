@@ -308,9 +308,9 @@ s32 fn_801FFD74(void) {
 }
 
 void fn_801FFD7C(s32 arg0) {
-    extern u16 lbl_8029B748;
-    s32* ptr = (s32*)&lbl_8029B748;
-    fn_8000CAA0(ptr, arg0, ptr);
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_8029B748[16];
+    fn_8000CAA0(lbl_8029B748, arg0);
 }
 
 void fn_801FFDA8(void)
@@ -460,6 +460,76 @@ void fn_80200750(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x3C) = 0xA;
 }
 
+void fn_802007E0(void *arg0) {
+    f32 fn_800067BC(s32, f32, f32, f32, f32);
+    void fn_80009C20(f32, f32, f32, f32, f32, f32, f32, f32);
+    void fn_80009B8C(s32);
+    void fn_80009B80(s32);
+    void fn_80009C0C(f32);
+    M2C_UNK fn_80200A7C(M2C_UNK, M2C_UNK, s16, s16, s32 *);
+    void fn_8001003C(s32, s32, s32, s32, s32, void *, ...);
+    extern s32 lbl_8036BBD4;
+    extern f32 lbl_8036BBD8;
+    extern f32 lbl_8036BBDC;
+    extern f32 lbl_8036BBE0;
+    extern f32 lbl_8036BBE4;
+    extern f32 lbl_8036BBE8;
+    extern f32 lbl_8036BBEC;
+    s32 sp8;
+    f32 temp_f31;
+    f32 var_f1;
+    f32 var_f3;
+    s32 temp_r3;
+    s32 temp_r3_2;
+    u8 temp_r0;
+    u8 temp_r0_2;
+
+    var_f3 = lbl_8036BBD8;
+    temp_r0 = M2C_FIELD(arg0, u8 *, 0x30);
+    temp_r3 = M2C_FIELD(arg0, s16 *, 0x28) + 1;
+    switch ((s32) temp_r0) {
+    case 1:
+        break;
+    case 0:
+        var_f3 = (f32) (5 - temp_r3) / lbl_8036BBDC;
+        break;
+    case 2:
+        var_f3 = (f32) temp_r3 / lbl_8036BBDC;
+        break;
+    }
+    temp_f31 = fn_800067BC(5, lbl_8036BBE0, lbl_8036BBD8, var_f3, lbl_8036BBD8);
+    fn_8000A258();
+    fn_80009C20((f32) M2C_FIELD(arg0, s16 *, 0x38), (f32) M2C_FIELD(arg0, s16 *, 0x3A), (f32) M2C_FIELD(arg0, s16 *, 0x3C), (f32) ((s16) M2C_FIELD(arg0, s16 *, 0x3E) >> 1), (f32) ((s16) M2C_FIELD(arg0, s16 *, 0x40) >> 1), temp_f31, temp_f31, lbl_8036BBE0);
+    temp_r0_2 = M2C_FIELD(arg0, u8 *, 0x30);
+    var_f1 = lbl_8036BBD8;
+    temp_r3_2 = M2C_FIELD(arg0, s16 *, 0x28) + 1;
+    switch ((s32) temp_r0_2) {
+    case 1:
+        break;
+    case 0:
+        var_f1 = (f32) (5 - temp_r3_2) / lbl_8036BBDC;
+        break;
+    case 2:
+        var_f1 = (f32) temp_r3_2 / lbl_8036BBDC;
+        break;
+    }
+    fn_80009B8C((s32) (lbl_8036BBE4 * var_f1));
+    fn_80009B80(0x80);
+    fn_8000A248();
+    sp8 = lbl_8036BBD4;
+    fn_80200A7C(0, 0, M2C_FIELD(arg0, s16 *, 0x3E), M2C_FIELD(arg0, s16 *, 0x40), &sp8);
+    fn_8000A258();
+    fn_80009C0C(lbl_8036BBE8);
+    fn_8000A248();
+    fn_8000A258();
+    fn_8000A174(0, 0x13);
+    fn_8000A248();
+    fn_8001003C(0x10, 0x20, 1, 1, 0, (void *) fn_8000E0E4(M2C_FIELD(arg0, s32 *, 0x34)), lbl_8036BBD8, lbl_8036BBE0);
+    fn_8000A258();
+    fn_80009C0C(lbl_8036BBEC);
+    fn_8000A248();
+}
+
 void fn_80201160(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x30) = 0;
     M2C_FIELD(arg0, s16 *, 0x28) = 4;
@@ -577,8 +647,18 @@ s32 fn_802016E4(void) {
     return 0x9C;
 }
 
-f32 fn_80201FF0(void) {
-    return M2C_ERROR(/* psq_l unimplemented */);
+void fn_80201FF0(void *src, void *dst) {
+    f32 (*s)[4] = src;
+    f32 (*d)[4] = dst;
+
+    d[0][0] = s[0][0];
+    d[0][1] = s[0][1];
+    d[0][2] = s[0][2];
+    d[0][3] = s[0][3];
+    d[1][0] = s[1][0];
+    d[1][1] = s[1][1];
+    d[1][2] = s[1][2];
+    d[1][3] = s[1][3];
 }
 
 void fn_80202024(f32* mtx, f32* vec, f32* out) {
@@ -684,6 +764,21 @@ void fn_802025C0(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
     *(f32*)((u8*)arg0 + 0x20) = lbl_8036BC3C;
     *(f32*)((u8*)arg0 + 0x28) = farg2;
     *(f32*)((u8*)arg0 + 0x2C) = lbl_8036BC3C;
+}
+
+void fn_802026E4(f32 *out, f32 *arg1, f32 *arg2, f32 *arg3) {
+    f32 sp30;
+    f32 sp34;
+    f32 sp38;
+
+    sp30 = arg2[0] - arg3[0];
+    sp34 = arg2[1] - arg3[1];
+    sp38 = arg2[2] - arg3[2];
+
+    // Assuming fn_802031E8 is some kind of vector normalization
+    // and fn_80203290 is cross product but with different parameters
+    PSVECCrossProduct(&sp30, &sp34, out);
+    out[3] = -(arg2[2] * sp38 + (arg2[0] * sp30 + arg2[1] * sp34));
 }
 
 void fn_80202870(void *arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 farg4, f32 farg5) {
