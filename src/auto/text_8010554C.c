@@ -32,19 +32,31 @@ void fn_8010554C(void) {
     fn_8000D3EC(&lbl_802737A0[0xF2/2], &lbl_8028F2D0[0], &lbl_802737A0[0]);
 }
 
-s32 fn_801055B0(void) {
-    extern u8 lbl_802EF4C8[24];
-    extern u32 lbl_80330EAC[817];
-    
-    fn_800BEAC0(lbl_802EF4C8[8], lbl_802EF4C8[0xF], lbl_802EF4C8[0x10]);
-    
-    if ((s8) lbl_802EF4C8[0xA] < 0) {
+s32 fn_801055B0(s32 arg0) {
+    void fn_800BEAC0(s32, s32, s32, s32);
+    void fn_80094A08(s32, s32);
+    extern struct {
+        s32 unk0;
+        s32 unk4;
+        u8 unk8;
+        u8 unk9;
+        s8 unkA;
+        u8 padB[4];
+        u8 unkF;
+        u8 unk10;
+    } lbl_802EF4C8;
+    extern u8 lbl_80330EAC[];
+    s8 temp;
+
+    fn_800BEAC0(arg0, lbl_802EF4C8.unk8, lbl_802EF4C8.unkF, lbl_802EF4C8.unk10);
+
+    temp = lbl_802EF4C8.unkA;
+    if (temp < 0) {
         return 1;
     }
-    
-    fn_80094A08(*(u32*)lbl_802EF4C8, (s8) lbl_802EF4C8[0xA]);
-    lbl_80330EAC[0x333] |= 0x2000;
-    
+
+    fn_80094A08(lbl_802EF4C8.unk0, temp);
+    *(u32 *)(lbl_80330EAC + 0xCAC) |= 0x2000;
     return 1;
 }
 
