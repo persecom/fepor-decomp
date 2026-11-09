@@ -1193,9 +1193,9 @@ void fn_800A8BD8(void *arg0) {
 }
 
 void fn_800A90B4(void) {
-    M2C_UNK fn_80148618(void *, M2C_UNK);
-    extern M2C_UNK lbl_8026E470;
-    fn_80148618(&lbl_8026E470 + 0x73, 0x1F4);
+    void fn_80148618(void *, s32);
+    extern u8 lbl_8026E470[];
+    fn_80148618(lbl_8026E470 + 0x73, 0x1F4);
 }
 
 void fn_800A90E4(s32 arg0) {
