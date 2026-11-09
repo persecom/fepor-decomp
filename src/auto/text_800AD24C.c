@@ -1251,11 +1251,14 @@ s32 fn_800B6E8C(s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     return (s32) fn_800067BC((f32) arg1, (f32) arg2, (f32) arg3, (f32) arg4);
 }
 
-s32 fn_800B6F10(void) {
-    M2C_UNK fn_8000CAA0(M2C_UNK *, s32, M2C_UNK *);
-    M2C_UNK fn_80013864();
-    extern M2C_UNK lbl_8028D26C;
-    fn_8000CAA0(&lbl_8028D26C, fn_800C0658(), &lbl_8028D26C);
+s32 fn_800B6F10(void)
+{
+    s32 fn_800C0658(void);
+    void fn_8000CAA0(u16 *, s32);
+    void fn_80013864(void);
+    extern u16 lbl_8028D26C[];
+
+    fn_8000CAA0(lbl_8028D26C, fn_800C0658());
     fn_80013864();
     return 1;
 }
