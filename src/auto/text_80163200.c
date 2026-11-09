@@ -762,12 +762,14 @@ void fn_80169644(void *arg0) {
 }
 
 void fn_8016969C(void) {
-    s32 fn_8000C0C0(u16 *);
-    u16 lbl_80293D8C;
-    s32 temp_r31;
+    void *fn_8000C0C0(void *);
+    void fn_800AA208(void);
+    void fn_8000C60C(void *);
+    extern u8 lbl_80293D8C[];
+    void *temp_r31;
 
-    temp_r31 = fn_8000C0C0(&lbl_80293D8C);
-    if (temp_r31 != 0) {
+    temp_r31 = fn_8000C0C0(lbl_80293D8C);
+    if (temp_r31 != NULL) {
         fn_800AA208();
         fn_8000C60C(temp_r31);
     }
