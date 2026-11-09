@@ -3836,27 +3836,36 @@ void fn_80148888(void *arg0, s16 arg1) {
     }
 }
 
-void fn_80148980(void *arg0, s16 arg1) {
+#pragma cplusplus on
+extern "C" void fn_80148980(void *arg0, s16 arg1) {
+    struct Obj {
+        u8 pad[8];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
     extern f32 lbl_8036A7A0;
+    s32 temp;
     s16 var_r5;
 
     if (arg1 <= 0) {
-        M2C_FIELD(M2C_FIELD(arg0, void **, 8), M2C_UNK (**)(), 0x10)();
+        ((Obj *)arg0)->v2();
         return;
     }
     if (!(M2C_FIELD(arg0, u8 *, 0xC) & 8)) {
-        register var_r5 = (s16) ((f32) arg1 / lbl_8036A7A0);
-        if (0 >= var_r5) {
+        temp = (s32)((f32)arg1 / lbl_8036A7A0);
+        var_r5 = (s16)temp;
+        if (var_r5 <= 0) {
             var_r5 = 1;
         }
-        M2C_FIELD(arg0, u8 *, 0x28) = (u8) M2C_FIELD(arg0, u8 *, 0x16);
-        M2C_FIELD(arg0, s8 *, 0x29) = 0;
+        M2C_FIELD(arg0, u8 *, 0x28) = M2C_FIELD(arg0, u8 *, 0x16);
+        M2C_FIELD(arg0, u8 *, 0x29) = 0;
         M2C_FIELD(arg0, s16 *, 0x2E) = var_r5;
         M2C_FIELD(arg0, s16 *, 0x2C) = 0;
-        M2C_FIELD(arg0, u8 *, 0xC) = (u8) (M2C_FIELD(arg0, u8 *, 0xC) | 8);
+        M2C_FIELD(arg0, u8 *, 0xC) = (u8)(M2C_FIELD(arg0, u8 *, 0xC) | 8);
     }
 }
-
+#pragma cplusplus reset
 extern u8 lbl_80367AEA;
 extern u8 lbl_80367AEB;
 s32 fn_8014953C(void);
