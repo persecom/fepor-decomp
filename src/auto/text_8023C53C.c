@@ -2200,8 +2200,7 @@ s32 fn_80257EE4(u8 *arg0, s16 *arg1, s16 *arg2) {
 
 s32 fn_8025807C(s32 arg0, s32 arg1, s32 arg2) {
     u32 fn_80257EE4(s32, s32, s32);
-    s32 i;
-
+    u8 i;
     for (i = 0; i < 15; i++) {
         if (fn_80257EE4(arg0, arg1, arg2) != 0) {
             return 1;
