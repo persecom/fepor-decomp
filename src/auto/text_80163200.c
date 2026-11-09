@@ -3636,13 +3636,12 @@ void fn_8017E35C(void) {
     }
 }
 
-void fn_8017E394(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    void *fn_8000CAF0(void *, s32);
-    void fn_8017E5B0(s32, s32, s32);
-    extern u16 lbl_80295550[24];
-    
-    fn_8000CAF0(lbl_80295550, arg2);
-    fn_8017E5B0(arg0, arg1, arg3);
+void fn_8017E394(void *arg0, void *arg1, void *arg2, void *arg3) {
+    void *fn_8000CAF0(void *, void *);
+    void fn_8017E5B0(void *, void *, void *, void *);
+    extern u8 lbl_80295550[];
+
+    fn_8017E5B0(fn_8000CAF0(lbl_80295550, arg2), arg0, arg1, arg3);
 }
 
 void fn_8017E540(void* arg0) {
