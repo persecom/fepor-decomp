@@ -3357,6 +3357,10 @@ void fn_801497AC(void *arg0) {
     fn_800AF7F0(*(s8*)((uintptr_t)arg0 + 4));
 }
 
+void fn_801497D4(void *arg0) {
+    fn_800AF96C(*(s8*)((uintptr_t)arg0 + 4));
+}
+
 s32 fn_80149974(void *arg0) {
     u8 temp = *(u8 *)((u8 *)arg0 + 4);
     return (fn_800AF704((s8)temp) >> 1U) & 1;
