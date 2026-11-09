@@ -3694,27 +3694,26 @@ loop_4:
 }
 
 s32 fn_8019BF5C(void *arg0) {
-    M2C_UNK fn_80054C14(void *);
-    u8 fn_8005F9B8(M2C_UNK);
-    M2C_UNK fn_80184688(s32, M2C_UNK, M2C_UNK, void *);
-    extern s32 lbl_802EF4E0;
+    void fn_80054C14(void *);
+    u8 fn_8005F9B8(void *, s32);
+    void fn_80184688(s32, s32, s32, void *);
     void *temp_r4;
-    u8 temp_r3;
     void *temp_r31;
     s32 temp_r30;
-    u32 temp_r3_2;
+    void *temp_r3;
+    u8 temp_r3_flags;
 
-    temp_r4 = M2C_FIELD(arg0, void **, 0x30);
-    temp_r31 = M2C_FIELD(temp_r4, void **, 0x4C);
-    temp_r30 = M2C_FIELD(temp_r4, s32 *, 0x50);
-    temp_r3_2 = M2C_FIELD(temp_r4, u32 *, 0x5C);
-    if ((temp_r3_2 != 0U) && (fn_8005F9B8(0) != 0)) {
+    temp_r4 = *(void **)((u8 *)arg0 + 0x30);
+    temp_r3 = *(void **)((u8 *)temp_r4 + 0x5C);
+    temp_r31 = *(void **)((u8 *)temp_r4 + 0x4C);
+    temp_r30 = *(s32 *)((u8 *)temp_r4 + 0x50);
+    if (temp_r3 != NULL && fn_8005F9B8(temp_r3, 0) != 0) {
         fn_80184688(temp_r30, 1, 0x20, temp_r31);
-        if (((M2C_UNK (*)(void *)) M2C_FIELD(temp_r31, M2C_UNK (**)(void *), 0x58)) != NULL) {
-            temp_r3 = M2C_FIELD(temp_r31, u8 *, 0x40);
-            if (!(temp_r3 & 4)) {
-                M2C_FIELD(temp_r31, u8 *, 0x40) = (u8) (temp_r3 | 4);
-                M2C_FIELD(temp_r31, M2C_UNK (**)(void *), 0x58)(temp_r31);
+        if (*(void **)((u8 *)temp_r31 + 0x58) != NULL) {
+            temp_r3_flags = *(u8 *)((u8 *)temp_r31 + 0x40);
+            if (!(temp_r3_flags & 4)) {
+                *(u8 *)((u8 *)temp_r31 + 0x40) = (u8)(temp_r3_flags | 4);
+                (*(void (**)(void *))((u8 *)temp_r31 + 0x58))(temp_r31);
             }
         }
     }
