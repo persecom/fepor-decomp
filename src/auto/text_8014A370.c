@@ -4,6 +4,13 @@ extern u8 lbl_80367B08;
 extern u8 lbl_80367B09;
 extern u8 lbl_80367B0A;
 extern u8 lbl_80367B0B;
+extern u16 lbl_80292F60[];
+extern f32 lbl_8036A7D0;
+extern f32 lbl_8036A7D4;
+extern f32 lbl_8036A7D8;
+extern f32 lbl_8036A7DC;
+extern f32 lbl_8036A7E0;
+extern f64 lbl_8036A7E8;
 extern u8 lbl_80367B0C;
 extern u8 lbl_80367B0D;
 
@@ -77,6 +84,11 @@ s32 fn_8014A4D8(void) {
 
 s32 fn_8014A4E0(void) {
     return 0;
+}
+
+void *fn_8014A4E8(void) {
+    extern M2C_UNK lbl_80276F00;
+    return &lbl_80276F00 + 0xDE;
 }
 
 void *fn_8014A6FC(void) {
@@ -605,6 +617,16 @@ void fn_8014D3B4(void *arg0) {
 }
 
 s32 fn_8014D8BC(void *arg0) {
+    u8 temp_r0;
+
+    temp_r0 = M2C_FIELD(arg0, u8 *, 0x10);
+    if ((temp_r0 >= 9U) || (temp_r0 == 0)) {
+        return 1;
+    }
+    return 0;
+}
+
+s32 fn_8014D8DC(void *arg0) {
     u8 temp_r0;
 
     temp_r0 = M2C_FIELD(arg0, u8 *, 0x10);
