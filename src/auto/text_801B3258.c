@@ -3171,16 +3171,19 @@ void fn_801D3288(void* unit) {
 }
 
 void fn_801D3488(s32 arg0) {
+    void fn_8000C188(s32);
+    void fn_8011D79C(void *);
+    void fn_80231D94(void *, ...);
     extern u8 lbl_803682D4;
     extern void *lbl_803682D0;
     extern u8 lbl_8027E148[];
     extern u8 lbl_80330708[];
-    
-    if ((s8) lbl_803682D4 == 0) {
+
+    if ((s8)lbl_803682D4 == 0) {
         lbl_803682D4 = 1;
         lbl_803682D0 = &lbl_8027E148[0x65];
     }
-    
+
     fn_80231D94(lbl_803682D0, &lbl_8027E148[0x76], lbl_80330708[0x10], &lbl_8027E148);
     fn_8011D79C(lbl_803682D0);
     fn_8000C188(arg0);
