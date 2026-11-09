@@ -3435,12 +3435,12 @@ s32 fn_80149B3C(void) {
 }
 
 void fn_80149B44(void *arg0) {
-    M2C_UNK fn_800B1C54(s8);
-    u8 temp_r3;
+    void fn_800B1C54(s32);
+    s32 temp;
 
-    temp_r3 = *(u8 *)((char *)arg0 + 4);
-    if ((s8) temp_r3 >= 0) {
-        fn_800B1C54((s8) temp_r3);
+    temp = *(u8 *)((u8 *)arg0 + 4);
+    if ((s8)temp >= 0) {
+        fn_800B1C54((s8)temp);
     }
 }
 
