@@ -1980,25 +1980,85 @@ void fn_80257614(void *arg0) {
 }
 
 void fn_802576DC(void) {
-    u8 *ptr;
-    int i, j;
-    
-    // First loop: fill 128 bytes (16 bytes at a time, 8 times)
-    ptr = (u8 *)0x8035A650;
-    for (i = 0; i < 8; i++) {
-        for (j = 0; j < 16; j++) {
-            ptr[j] = 0xFF;
-        }
-        ptr += 16;
-    }
-    
-    // Second loop: fill 64 bytes (16 bytes at a time, 4 times)
-    ptr = (u8 *)0x8035A610;
+    extern u8 lbl_8035A650[];
+    extern u8 lbl_8035A610[];
+    s32 i;
+    u8 *p;
+    u8 c;
+
+    c = 0xFF;
+    p = lbl_8035A650;
     for (i = 0; i < 4; i++) {
-        for (j = 0; j < 16; j++) {
-            ptr[j] = 0xFF;
-        }
-        ptr += 16;
+        p[0] = c;
+        p[1] = c;
+        p[2] = c;
+        p[3] = c;
+        p[4] = c;
+        p[5] = c;
+        p[6] = c;
+        p[7] = c;
+        p[8] = c;
+        p[9] = c;
+        p[10] = c;
+        p[11] = c;
+        p[12] = c;
+        p[13] = c;
+        p[14] = c;
+        p[15] = c;
+        p += 16;
+        p[0] = c;
+        p[1] = c;
+        p[2] = c;
+        p[3] = c;
+        p[4] = c;
+        p[5] = c;
+        p[6] = c;
+        p[7] = c;
+        p[8] = c;
+        p[9] = c;
+        p[10] = c;
+        p[11] = c;
+        p[12] = c;
+        p[13] = c;
+        p[14] = c;
+        p[15] = c;
+        p += 16;
+    }
+    p = lbl_8035A610;
+    for (i = 0; i < 2; i++) {
+        p[0] = c;
+        p[1] = c;
+        p[2] = c;
+        p[3] = c;
+        p[4] = c;
+        p[5] = c;
+        p[6] = c;
+        p[7] = c;
+        p[8] = c;
+        p[9] = c;
+        p[10] = c;
+        p[11] = c;
+        p[12] = c;
+        p[13] = c;
+        p[14] = c;
+        p[15] = c;
+        p[16] = c;
+        p[17] = c;
+        p[18] = c;
+        p[19] = c;
+        p[20] = c;
+        p[21] = c;
+        p[22] = c;
+        p[23] = c;
+        p[24] = c;
+        p[25] = c;
+        p[26] = c;
+        p[27] = c;
+        p[28] = c;
+        p[29] = c;
+        p[30] = c;
+        p[31] = c;
+        p += 32;
     }
 }
 
@@ -2870,7 +2930,7 @@ void fn_8025C9E0(void *arg0, u8 arg1) {
 }
 
 void fn_8025CA80(void *arg0) {
-    extern u16 lbl_8035B838;
+    extern u8 lbl_8035B838[];
     void *temp_r4;
 
     if ((u8) M2C_FIELD(arg0, u8 *, 0xF0) != 0) {
@@ -2878,11 +2938,11 @@ void fn_8025CA80(void *arg0) {
         if (temp_r4 != NULL) {
             M2C_FIELD(temp_r4, void **, 0xC) = (void *) M2C_FIELD(arg0, void **, 0xC);
         } else {
-            temp_r4 = &lbl_8035B838 + ((u32) M2C_FIELD(arg0, u8 *, 0xF3) * 0xBC);
-            M2C_FIELD(temp_r4, void **, 0x48) = (void *) M2C_FIELD(arg0, void **, 0xC);
+            M2C_FIELD((void *)(lbl_8035B838 + (u32)(u8)M2C_FIELD(arg0, u8 *, 0xF3) * 0xBC), void **, 0x48) = (void *) M2C_FIELD(arg0, void **, 0xC);
         }
-        if (M2C_FIELD(arg0, void **, 0xC) != NULL) {
-            M2C_FIELD(M2C_FIELD(arg0, void **, 0xC), void **, 0x10) = (void *) M2C_FIELD(arg0, void **, 0x10);
+        temp_r4 = (void *) M2C_FIELD(arg0, void **, 0xC);
+        if (temp_r4 != NULL) {
+            M2C_FIELD(temp_r4, void **, 0x10) = (void *) M2C_FIELD(arg0, void **, 0x10);
         }
         M2C_FIELD(arg0, u8 *, 0xF0) = 0U;
     }
@@ -4017,23 +4077,21 @@ void *fn_8026423C(void *arg0, void *arg1) {
     return arg0;
 }
 
-void fn_802648CC(s32 arg0, s32 arg1, s32 arg2, void *arg3, M2C_UNK arg_sp0) {
-    M2C_UNK fn_8026423C(s32, s32, f32, f32);
-    M2C_UNK fn_802643C0(s32, void *, M2C_UNK);
+void fn_802648CC(s32 arg0, s32 arg1, s32 arg2, void *arg3) {
+    void fn_8026423C(s32, s32, f32, f32);
+    void fn_802643C0(s32, void *, s32);
     extern f32 lbl_8036C3A8;
     extern f32 lbl_8036C3AC;
     extern f32 lbl_8036C3E8;
     f32 temp_f1;
     f32 temp_f2;
-    u8 var_r31;
+    u8 i;
 
-    var_r31 = 0;
-loop_13:
-    if (var_r31 < 3U) {
-        switch ((s32) var_r31) {                    /* irregular */
+    for (i = 0; i < 3; i++) {
+        switch (i) {
         case 0:
-            temp_f2 = M2C_FIELD(arg3, f32 *, 0x1A8);
-            if (lbl_8036C3A8 != temp_f2) {
+            if (lbl_8036C3A8 != *(f32 *)((char *)arg3 + 0x1A8)) {
+                temp_f2 = *(f32 *)((char *)arg3 + 0x1A8);
                 temp_f1 = lbl_8036C3E8 * temp_f2;
                 fn_8026423C(arg0, arg1, temp_f1, lbl_8036C3AC - temp_f1);
             }
@@ -4046,8 +4104,6 @@ loop_13:
             fn_802643C0(arg2, arg3, 2);
             break;
         }
-        var_r31 += 1;
-        goto loop_13;
     }
 }
 
