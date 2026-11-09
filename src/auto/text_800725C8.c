@@ -113,11 +113,11 @@ void fn_80072A2C(void) {
     lbl_80311D50[0x3A] = -0x20;
 }
 
-void fn_80072AD4(void) {
-    M2C_UNK fn_8000C188();
+void fn_80072AD4(void *arg0) {
+    void fn_8000C188(void *);
     extern void *lbl_80367240;
-    if (M2C_FIELD(lbl_80367240, s32 *, 4) & 0x300) {
-        fn_8000C188();
+    if (*(s32 *)((char *)lbl_80367240 + 4) & 0x300) {
+        fn_8000C188(arg0);
     }
 }
 
