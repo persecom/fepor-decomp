@@ -371,11 +371,10 @@ void fn_800C4588(void *arg0) {
     }
 }
 
-s32 fn_800C4604(s32 arg0) {
-    extern u16 lbl_80320B88[];
-    s32 index = arg0 * 2;
-    u16* ptr = &lbl_80320B88[index];
-    return fn_800C5A48(*ptr, &lbl_80320B88[0]) + 0x20;
+s32 fn_800C4604(s32 arg0, s32 arg1) {
+    extern u32 lbl_80320B88[];
+    s32 fn_800C5A48(s32, s32);
+    return fn_800C5A48(lbl_80320B88[arg0], arg1) + 0x20;
 }
 
 s32 fn_800C4638(s32 arg0) {
