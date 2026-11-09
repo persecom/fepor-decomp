@@ -1458,9 +1458,8 @@ void fn_8010FF90(void *arg0) {
 }
 
 s32 fn_80110030(void *arg0) {
-    extern u16 lbl_8032BD5C[];
-    u8 r0 = *(u8*)((char*)arg0 + 7);
-    return lbl_8032BD5C[r0];
+    extern s32 lbl_8032BD5C[];
+    return lbl_8032BD5C[*(u8 *)((u8 *)arg0 + 7)];
 }
 
 s32 fn_80110048(u32 arg0) {
