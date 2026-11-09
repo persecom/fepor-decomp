@@ -145,19 +145,19 @@ void fn_800AD678(void) {
 }
 
 void fn_800AD6AC(void *arg0) {
+    void fn_8000C070(void *, s32);
+    void fn_80034A8C(void *, void *, u8, void *, s32);
     extern u16 lbl_80330EAC[];
     void *temp_r4;
     void *temp_r5;
-    u8 temp_r7;
 
     temp_r4 = *(void **)((u8 *)arg0 + 0x30);
     temp_r5 = *(void **)((u8 *)temp_r4 + 0x190);
     if (*(u8 *)((u8 *)temp_r5 + 8) != 0) {
-        fn_8000C070(0x64);
+        fn_8000C070(arg0, 0x64);
         return;
     }
-    temp_r7 = *(u8 *)((u8 *)arg0 + 0x3A);
-    fn_80034A8C(lbl_80330EAC, temp_r7, 1);
+    fn_80034A8C(lbl_80330EAC, temp_r4, *(u8 *)((u8 *)arg0 + 0x3A), arg0, 1);
 }
 
 s32 fn_800ADB74(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
