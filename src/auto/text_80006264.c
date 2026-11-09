@@ -1147,8 +1147,8 @@ void fn_8000A430(void *arg0) {
 }
 
 void fn_8000A440(s32 arg0, s32 arg1) {
-    extern u16 lbl_802ADAFC[9]; // 36 bytes / 2 bytes per element
-    lbl_802ADAFC[arg0 * 2] = (u16)arg1;
+    extern s32 lbl_802ADAFC[];
+    lbl_802ADAFC[arg0] = arg1;
 }
 
 s32 fn_8000A930(void *arg0) {
@@ -1632,6 +1632,18 @@ void fn_8000CC88(void *arg0) {
     fn_8000A738(arg0, 4);
     fn_8000B5F0(arg0);
     fn_8000B70C(arg0);
+}
+
+void fn_8000CD60(void) {
+    extern u32 lbl_80367158;
+    u32 temp;
+    u32 other;
+
+    temp = (lbl_80367158 << 2) + 2;
+    other = temp + 1;
+    temp = temp * other;
+    temp >>= 2;
+    lbl_80367158 = temp;
 }
 
 void fn_8000CD80(s32 arg0) {
