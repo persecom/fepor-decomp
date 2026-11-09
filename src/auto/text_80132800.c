@@ -169,7 +169,7 @@ void *fn_801329A8(void) {
 
 void *fn_801329B8(void) {
     extern u16 lbl_80276008[];
-    return &lbl_80276008[0x2D6];
+    return (u8 *)lbl_80276008 + 0x16b;
 }
 
 s32 fn_801329C8(void) {
