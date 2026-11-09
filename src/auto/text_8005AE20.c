@@ -2547,10 +2547,9 @@ void fn_8006F00C(s8 arg0) {
     lbl_80366DE9 = arg0;
 }
 
-s8 fn_8006F014(void) {
+s32 fn_8006F014(void) {
     extern s8 lbl_80366DE8;
-    s8 temp = (s8) lbl_80366DE8;
-    return temp;
+    return lbl_80366DE8;
 }
 
 s32 fn_8006F020(void *arg0) {
