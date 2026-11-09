@@ -815,6 +815,29 @@ void fn_800163F8(void) {
     } while ((s32) var_r29 <= 0x9F);
 }
 
+void fn_80016498(void) {
+    M2C_UNK fn_80015320(M2C_UNK, M2C_UNK *);
+    M2C_UNK fn_8004F5EC(M2C_UNK);
+    extern M2C_UNK lbl_802B14E4;
+    M2C_UNK sp8;
+    u8 var_r29;
+    void *var_r3;
+
+    fn_80015320(3, &sp8);
+    var_r29 = 1;
+    do {
+        if (var_r29 != 0) {
+            var_r3 = &lbl_802B14E4 + ((var_r29 - 1) * 0x280);
+        } else {
+            var_r3 = NULL;
+        }
+        if (((u32) M2C_FIELD(var_r3, u32 *, 0x188) != 0U) && ((u8) *(&sp8 + M2C_FIELD(M2C_FIELD(var_r3, void **, 0x190), u8 *, 8)) != 0)) {
+            fn_8004F5EC(0);
+        }
+        var_r29 += 1;
+    } while ((s32) var_r29 <= 0x9F);
+}
+
 void fn_80016628(s32 arg0) {
     M2C_UNK fn_80015718(M2C_UNK *, M2C_UNK *);
     M2C_UNK fn_800158A0(M2C_UNK *);
@@ -1086,6 +1109,6 @@ extern u32 lbl_80330708[];
 #include "common.h"
 extern s32 lbl_80367184;
 extern s32 lbl_8036718C;
-extern s32 lbl_80367180;
+extern void *lbl_80367180;
 extern s32 lbl_803671A4;
 extern s32 lbl_80367198;
