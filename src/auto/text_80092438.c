@@ -38,6 +38,15 @@ extern u8 lbl_80289B00[16];
 extern void* fn_800980D4(s32 arg0);
 extern void fn_8017E394(void* arg0, void* arg1, void* arg2, s32 arg3);
 
+/* record returned by fn_80037BD0; bit 6 of byte 5 is set/cleared by fn_800946F0 */
+typedef struct {
+    u32 unk0;
+    u8 unk4;
+    u8 unk5:6;
+    u8 unk5_bit6:1;
+    u8 unk5_bit7:1;
+} Unk80037BD0;
+
 extern u8 lbl_80289EB8[16];
 
 extern f32 lbl_803697E0;
@@ -219,20 +228,22 @@ u8 fn_80092F38(void *arg0) {
     u8 var_r4;
 
     var_r4 = 0;
-    if ((u32) M2C_FIELD(arg0, u32 *, 0x1EC) != 0U) {
+    if (M2C_FIELD(arg0, u32 *, 0x1EC) != 0) {
         var_r4 = 1;
     }
-    if ((u32) M2C_FIELD(arg0, u32 *, 0x1F4) != 0U) {
-        var_r4 = var_r4 + 1;
+    if (M2C_FIELD(arg0, u32 *, 0x1F4) != 0) {
+        var_r4 = (u8)var_r4 + 1;
     }
-    if ((u32) M2C_FIELD(arg0, u32 *, 0x1FC) != 0U) {
-        var_r4 = var_r4 + 1;
+    if (M2C_FIELD(arg0, u32 *, 0x1FC) != 0) {
+        var_r4 = (u8)var_r4 + 1;
     }
-    if ((u32) M2C_FIELD(arg0, u32 *, 0x204) != 0U) {
-        var_r4 = var_r4 + 1;
+    if (M2C_FIELD(arg0, u32 *, 0x204) != 0) {
+        var_r4 = (u8)var_r4 + 1;
     }
-
-    return var_r4;
+    {
+        u8 r = var_r4;
+        return r;
+    }
 }
 
 s32 fn_80093088(void *arg0) {
@@ -472,14 +483,17 @@ s32 fn_80094614(void* arg0, void* arg1) {
 }
 
 void fn_800946F0(s32 arg0) {
+    s32 r31;
     s32 r30;
     void *temp_r3;
 
+    r31 = 0;
     r30 = 0;
     do {
         temp_r3 = (void *)fn_80037BD0(arg0, r30);
-        if ((temp_r3 != NULL) && (*(u32*)temp_r3 != 0U)) {
-            *(u8*)((u8*)temp_r3 + 4) = *(u8*)((u8*)temp_r3 + 4) & ~0x40;
+        if ((temp_r3 != NULL) && (*(u32 *)temp_r3 != 0U)) {
+            *(u8 *)((u8 *)temp_r3 + 5) =
+                (*(u8 *)((u8 *)temp_r3 + 5) & ~0x40U) | ((r31 << 6) & 0x40U);
         }
         r30 += 1;
     } while (r30 < 8);
@@ -564,14 +578,19 @@ void fn_800947E0(s32 arg0) {
     fn_8001C5F8(&sp28, -1);
 }
 
-void fn_800949A4(s32 arg0, s8 arg1) {
+void fn_800949A4(void *arg0, s8 arg1) {
+    void *fn_80037BBC(void);
+    void fn_8001D580(void *);
+    void fn_800947E0(void *);
+    void *p;
+
     if (arg1 < 4) {
-        fn_80037BBC();
-        fn_8001D580(arg0);
+        fn_8001D580(fn_80037BBC());
         fn_800947E0(arg0);
         return;
     }
-    fn_8001D580(arg0 + (((arg1 - 4) * 8) + 0x1EC));
+    p = (void *)(((arg1 - 4) * 8) + 0x1EC);
+    fn_8001D580((void *)((s32)arg0 + (s32)p));
     fn_800947E0(arg0);
 }
 
@@ -627,13 +646,13 @@ void *fn_800951D0(void *arg0, s32 arg1) {
     u8 fn_800940B0(void *, void *);
     void *fn_8009542C(void *, s32);
     u8 fn_80105BC0(void *, s32);
-    s32 var_r29;
-    s32 var_r30;
     void **slot;
     void *obj;
     u8 ok;
     u8 result;
     u64 flags;
+    s32 var_r29;
+    s32 var_r30;
 
     if (fn_80105BC0((u8 *)arg0 + 0x1BC, 8) != 0) {
         return fn_80037BBC(arg0, 0);
