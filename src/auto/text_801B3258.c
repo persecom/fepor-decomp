@@ -3126,24 +3126,24 @@ void fn_801D3D3C(void *arg0) {
  case 0x87:
   fn_8008A290(3, 0xfa); fn_80006220(0x1c);
   fn_80006160(*(s8 *)((u8 *)state + 0x12)); fn_8000C188(arg0); break;
- case 0xc8:
-  fn_801DBEA8(state, 1); *(s8 *)((u8 *)state + 0x12) = -1;
-  p24 = (s32 *)state; i25 = 0;
-  while (i25 < 5) {
-   fn_801D8D58((u8 *)p24 + 0x1b4); fn_801D8C0C((u8 *)p24 + 0x1b4, (s16)i25);
-   i25++; p24 = (s32 *)((u8 *)p24 + 0x4c);
-  }
-  tmp_ptr = lbl_80331FB8; p24 = (s32 *)state; changed = 0;
-  while (changed < 5) {
-   fn_801D88B8((u8 *)p24 + 0x1b4, state, 0);
-   if (*(s16 *)((u8 *)p24 + 0x1b4) & 4) {
-    if (*(s8 *)((u8 *)state + 0x12) == -1 || (s32)(u8)fn_801DE358(tmp_ptr) == changed)
-     *(u8 *)((u8 *)state + 0x12) = (u8)changed;
-   }
-   changed++; p24 = (s32 *)((u8 *)p24 + 0x4c);
-  }
-  { s8 idx = *(s8 *)((u8 *)state + 0x12); s16 *fl = (s16 *)((u8 *)state + idx * 0x4c + 0x1b4); *fl = (s16)(*fl | 2); }
-  *(s32 *)state = 0xcd; fn_801DDDE8(0x14, arg0); break;
+    case 0xc8:
+    fn_801DBEA8(state, 1); *(s8 *)((u8 *)state + 0x12) = -1;
+    p24 = (s32 *)state; i25 = 0;
+    while (i25 < 5) {
+     fn_801D8D58((u8 *)p24 + 0x1b4); fn_801D8C0C((u8 *)p24 + 0x1b4, i25);
+     i25 += 1; p24 = (s32 *)((u8 *)p24 + 0x4c);
+    }
+    p24 = (s32 *)lbl_80331FB8; tmp_ptr = (void *)state; changed = 0;
+    while (changed < 5) {
+     fn_801D88B8((u8 *)tmp_ptr + 0x1b4, state, 0);
+     if (*(s16 *)((u8 *)tmp_ptr + 0x1b4) & 4) {
+      if (*(s8 *)((u8 *)state + 0x12) == -1 || (s32)(u8)fn_801DE358(p24) == changed)
+       *(u8 *)((u8 *)state + 0x12) = (u8)changed;
+     }
+     changed += 1; tmp_ptr = (u8 *)tmp_ptr + 0x4c;
+    }
+    { s8 idx = *(s8 *)((u8 *)state + 0x12); s16 *fl = (s16 *)((u8 *)state + idx * 0x4c + 0x1b4); *fl = (s16)(*fl | 2); }
+    *(s32 *)state = 0xcd; fn_801DDDE8(0x14, arg0); break;
  case 0xcd: {
   s8 idx = *(s8 *)((u8 *)state + 0x12); u8 *base = (u8 *)state + idx * 0x4c;
   fn_801D8E18((u8 *)state + 0x51a, *(s16 *)(base + 0x1be), *(s16 *)(base + 0x1c0), 1, 0);
