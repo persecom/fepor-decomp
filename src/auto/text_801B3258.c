@@ -3163,28 +3163,38 @@ s32 fn_801D28A8(s32 arg0, s32 arg1)
 }
 
 s32 fn_801D2A38(void *arg0) {
-    s32 *var_r4;
+    s32 fn_800BE890(s32);
+    struct Node {
+        struct Node *prev;
+        struct Node *next;
+        s32 unk8;
+    };
+    struct Node *var_r4;
     s16 var_r3;
 
-    if ((u32) *(u32 *) ((char *) arg0 + 0x6C) == 0U) {
+    if (*(u32 *)((u8 *)arg0 + 0x6C) == 0) {
         return 0;
     }
-    var_r4 = (s32 *) ((char *) arg0 + 0x74);
-    var_r3 = *(s16 *) ((char *) arg0 + 0x4E);
+    var_r4 = *(struct Node **)((u8 *)arg0 + 0x74);
+    var_r3 = *(s16 *)((u8 *)arg0 + 0x4E);
     if (var_r3 >= 0) {
-loop_2:
-        while (var_r3 > 0) {
-            var_r4 = (s32 *) *var_r4;
+        goto loop_pos;
+        do {
+            var_r4 = var_r4->next;
             var_r3 -= 1;
-        }
+        loop_pos:
+            ;
+        } while (var_r3 > 0);
     } else {
-loop_3:
-        while (var_r3 < 0) {
-            var_r4 = (s32 *) *var_r4;
+        goto loop_neg;
+        do {
+            var_r4 = var_r4->prev;
             var_r3 += 1;
-        }
+        loop_neg:
+            ;
+        } while (var_r3 < 0);
     }
-    return fn_800BE890(*(s32 *) ((char *) var_r4 + 0x8));
+    return fn_800BE890(var_r4->unk8);
 }
 
 s32 fn_801D2B04(void*a){
@@ -5269,9 +5279,10 @@ s32 fn_801E2580(s32 *arg0, s32 arg1) {
 
 void fn_801E2594(u32 *arg0) {
     extern u16 lbl_8027E980[];
-    if ((u32) *arg0 != 0U) {
-        u16 *temp = &lbl_8027E980[0x122];
-        fn_800056CC(temp);
+    void fn_800056CC(char *, ...);
+
+    if (*arg0 != 0U) {
+        fn_800056CC((char *)((u8 *)lbl_8027E980 + 0x122));
         fn_800C4588(*arg0);
         *arg0 = 0U;
     }
