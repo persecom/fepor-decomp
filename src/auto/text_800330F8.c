@@ -701,13 +701,13 @@ u8 fn_800385E4(void *arg0) {
     return *(u8*)(r31 + 0x19A);
 }
 
-u8 fn_8003863C(void *arg0) {
-    s32 r31 = (s32)arg0;
-    s32 r3 = fn_80105BC0(r31 + 0x1BC, 2);
-    if (r3 != 0) {
-        return ((u8*)r31)[0x19A] + 0x14;
+u8 fn_8003863C(u8 *arg0) {
+    u8 fn_80105BC0(u8 *, s32);
+
+    if ((u8)fn_80105BC0(arg0 + 0x1BC, 2) != 0) {
+        return (u8)(arg0[0x19A] + 0x14);
     }
-    return ((u8*)r31)[0x19A];
+    return arg0[0x19A];
 }
 
 void fn_8003868C(void *arg0, s8 arg1) {
