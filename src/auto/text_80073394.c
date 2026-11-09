@@ -300,9 +300,10 @@ void fn_80073DA4(s32 arg0) {
 }
 
 void fn_80073DD4(s32 arg0) {
-    extern u16 lbl_80311F50;
-    s32* temp_r5 = (s32*)&lbl_80311F50;
-    fn_80024398(temp_r5, arg0, 0);
+    M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
+    extern u8 lbl_80311F50[];
+
+    fn_80024398((M2C_UNK *)lbl_80311F50, arg0, 0);
 }
 
 void fn_80073E04(s32 arg0) {
