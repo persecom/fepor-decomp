@@ -568,6 +568,25 @@ s32 fseek(s32 arg0, s32 arg1, s32 arg2) {
     return fn_802314D8(arg0, arg1, arg2);
 }
 
+void *__memrchr(void *arg0, int arg1, u32 arg2) {
+    u8 *ptr;
+    u8 value;
+
+    ptr = (u8 *)arg0 + arg2;
+    value = (u8)arg1;
+
+    while (arg2 != 0) {
+        arg2--;
+        ptr--;
+
+        if (*ptr == value) {
+            return ptr;
+        }
+    }
+
+    return NULL;
+}
+
 #pragma use_lmw_stmw on
 s32 fn_80231D94(char *dest, const char *fmt, ...) {
     va_list args;
@@ -1093,25 +1112,16 @@ bytecopy:
     return 0;
 }
 
-void fn_802343E0(u8 *arg0, u8 *arg1) {
-    u8 temp_r0;
-    
-    arg1 -= 1;
-    arg0 -= 1;
-    
-    do {
-        temp_r0 = *(arg0 + 1);
-        arg0 += 1;
-    } while (temp_r0 != 0);
-    
-    arg1 -= 1;
-    
-    do {
-        temp_r0 = *(arg1 + 1);
-        arg1 += 1;
-        *(arg0 + 1) = temp_r0;
-        arg0 += 1;
-    } while (temp_r0 != 0);
+void fn_802343E0(u8 *dest, u8 *src) {
+    u8 *d;
+
+    src--;
+    d = dest - 1;
+    while (*++d != 0) {
+    }
+    d--;
+    while ((*++d = *++src) != 0) {
+    }
 }
 
 void fn_80234450(s32 arg0, s32 arg1) {
@@ -1429,76 +1439,68 @@ void fn_802380D0(void* arg0, s32 arg1, s32 arg2) {
 
 extern f64 lbl_8036C138;
 extern f64 lbl_8036C140;
-f64 fn_802381A4(f64 farg0) {
-    f64 var_f1;
-    s32 temp_r7;
-    u32 temp_r4;
-    u32 temp_r0;
-    u32 temp_r4_2;
-    u32 var_r5;
-    u32 var_r6;
+f64 fn_802381A4(f64 x) {
+    s32 i0;
+    u32 i1;
+    s32 j0;
+    u32 i;
+    u32 j;
 
-    var_f1 = farg0;
-    var_r5 = *(u32*)&var_f1;
-    var_r6 = *(u32*)((char*)&var_f1 + 4);
-    temp_r7 = ((var_r5 >> 0x14U) & 0x7FF) - 0x3FF;
-    if (temp_r7 < 0x14) {
-        if (temp_r7 >= 0) {
-            if ((f32) (lbl_8036C138 + var_f1) > (f32) lbl_8036C140) {
-                if ((s32) var_r5 >= 0) {
-                    var_r6 = 0;
-                    var_r5 = 0;
+    i0 = ((s32 *)&x)[0];
+    i1 = ((u32 *)&x)[1];
+    j0 = ((i0 >> 20) & 0x7ff) - 0x3ff;
+    if (j0 < 20) {
+        if (j0 < 0) {
+            if (lbl_8036C138 + x > lbl_8036C140) {
+                if (i0 >= 0) {
+                    i1 = 0;
+                    i0 = 0;
+                } else if (((i0 & 0x7fffffff) | i1) != 0) {
+                    i0 = 0xbff00000;
+                    i1 = 0;
+                }
+            }
+        } else {
+            i = 0x000fffff >> j0;
+            if (((i0 & i) | i1) == 0) {
+                return x;
+            }
+            if (lbl_8036C138 + x > lbl_8036C140) {
+                if (i0 < 0) {
+                    i0 += 0x00100000 >> j0;
+                }
+                i0 &= ~i;
+                i1 = 0;
+            }
+        }
+    } else if (j0 > 51) {
+        if (j0 == 0x400) {
+            return x + x;
+        }
+        return x;
+    } else {
+        i = 0xffffffffU >> (j0 - 20);
+        if ((i1 & i) == 0) {
+            return x;
+        }
+        if (lbl_8036C138 + x > lbl_8036C140) {
+            if (i0 < 0) {
+                if (j0 == 20) {
+                    i0 += 1;
                 } else {
-                    if (((var_r5 & 0x7FFFFFFF) | var_r6) != 0) {
-                        var_r5 = 0xBFF00000;
-                        var_r6 = 0;
+                    j = i1 + (1 << (52 - j0));
+                    if (j < i1) {
+                        i0 += 1;
                     }
+                    i1 = j;
                 }
             }
-            goto block_26;
+            i1 &= ~i;
         }
-        temp_r4 = 0xFFFFF >> temp_r7;
-        if ((var_r6 | (var_r5 & temp_r4)) == 0) {
-            return var_f1;
-        }
-        if ((f32) (lbl_8036C138 + var_f1) > (f32) lbl_8036C140) {
-            if ((s32) var_r5 < 0) {
-                var_r5 += 0x100000 >> temp_r7;
-            }
-            var_r5 &= ~temp_r4;
-            var_r6 = 0;
-        }
-        goto block_26;
     }
-    if (temp_r7 > 0x33) {
-        if (temp_r7 == 0x400) {
-            return 2.0 * var_f1;
-        }
-        /* Duplicate return node #27. Try simplifying control flow for better match */
-        return var_f1;
-    }
-block_26:
-    temp_r4_2 = -1U >> (temp_r7 - 0x14);
-    if (!(var_r6 & temp_r4_2)) {
-        return var_f1;
-    }
-    if ((f32) (lbl_8036C138 + var_f1) > (f32) lbl_8036C140) {
-        if ((s32) var_r5 < 0) {
-            if (temp_r7 == 0x14) {
-                var_r5 += 1;
-            } else {
-                temp_r0 = var_r6 + (1 << (0x34 - temp_r7));
-                if (temp_r0 < var_r6) {
-                    var_r5 += 1;
-                }
-                var_r6 = temp_r0;
-            }
-        }
-        var_r6 &= ~temp_r4_2;
-    }
-    *(u32*)((char*)&var_f1 + 4) = var_r6;
-    *(u32*)&var_f1 = var_r5;
-    return var_f1;
+    ((s32 *)&x)[0] = i0;
+    ((u32 *)&x)[1] = i1;
+    return x;
 }
 
 extern f64 lbl_8036C148;
