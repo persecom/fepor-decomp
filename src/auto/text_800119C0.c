@@ -532,67 +532,88 @@ void fn_800156A0(void *arg0, void *arg1) {
 }
 
 void fn_80015718(void *arg0, void *arg1) {
-    M2C_UNK fn_8003B6C4(void *, void *);
-    u8 temp_r0;
-    void *temp_r3;
+    void fn_8003B6C4(void *, void *);
+    void *list;
+    void *node;
+    s32 kind;
+    void *tail;
 
-    fn_8003B6C4(arg1, arg0);
-    temp_r0 = *(u8 *)((char *)arg0 + 8);
-    switch ((s32) temp_r0) {                        /* irregular */
-    case 0:
-        *(s32 *)((char *)arg1 + 0x1A0) = *(s32 *)((char *)arg1 + 0x1A0) & 0xFFFFFFE7;
-        break;
-    case 5:
-        *(s32 *)((char *)arg1 + 0x1A0) = *(s32 *)((char *)arg1 + 0x1A0) | 0x18;
-        *(s32 *)((char *)arg1 + 0x1A0) = *(s32 *)((char *)arg1 + 0x1A0) & 0xFFFFFFF7;
-        break;
-    case 6:
-        *(s32 *)((char *)arg1 + 0x1A0) = *(s32 *)((char *)arg1 + 0x1A0) | 8;
-        break;
-    default:
-        break;
+    list = arg0;
+    node = arg1;
+    fn_8003B6C4(node, list);
+    kind = *(u8 *)((u8 *)list + 8);
+    if (kind == 6) {
+        goto case6;
     }
-    temp_r3 = *(void **)((char *)arg0 + 4);
-    if (temp_r3 == NULL) {
-        *(void **)((char *)arg0 + 0) = arg1;
-        *(void **)((char *)arg0 + 4) = arg1;
-        return;
+    if (kind >= 6) {
+        goto done_sw;
     }
-    *(void **)((char *)temp_r3 + 0x184) = arg1;
-    *(void **)((char *)arg1 + 0x180) = temp_r3;
-    *(void **)((char *)arg0 + 4) = arg1;
+    if (kind >= 5) {
+        goto case5;
+    }
+    if (kind >= 0) {
+        goto case04;
+    } else {
+        goto done_sw;
+    }
+    goto done_sw;
+case04:
+    *(u32 *)((u8 *)node + 0x1A0) &= ~0x18;
+    goto done_sw;
+case5:
+    *(u32 *)((u8 *)node + 0x1A0) |= 0x18;
+    *(u32 *)((u8 *)node + 0x1A0) &= ~0x8;
+    goto done_sw;
+case6:
+    *(u32 *)((u8 *)node + 0x1A0) |= 0x8;
+done_sw:
+    tail = *(void **)((u8 *)list + 4);
+    if (tail == NULL) {
+        *(void **)list = node;
+        *(void **)((u8 *)list + 4) = node;
+    } else {
+        *(void **)((u8 *)tail + 0x184) = node;
+        *(void **)((u8 *)node + 0x180) = tail;
+        *(void **)((u8 *)list + 4) = node;
+    }
 }
 
 void fn_800157DC(void *arg0, void *arg1) {
-    M2C_UNK fn_8003B6C4(void *, void *);
-    u8 temp_r0;
-    void *temp_r3;
+    void fn_8003B6C4(void *, void *);
+    void *list;
+    void *node;
+    u8 kind;
+    void *head;
 
-    fn_8003B6C4(arg1, arg0);
-    temp_r0 = *(u8 *)((char *)arg0 + 8);
-    switch ((s32) temp_r0) {                        /* irregular */
+    list = arg0;
+    node = arg1;
+    fn_8003B6C4(node, list);
+    kind = *(u8 *)((u8 *)list + 8);
+    switch (kind) {
     case 0:
-        *(s32 *)((char *)arg1 + 0x1A0) = *(s32 *)((char *)arg1 + 0x1A0) & 0xFFFFFFE7;
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+        *(u32 *)((u8 *)node + 0x1A0) &= ~0x18;
         break;
     case 5:
-        *(s32 *)((char *)arg1 + 0x1A0) = *(s32 *)((char *)arg1 + 0x1A0) | 0x18;
-        *(s32 *)((char *)arg1 + 0x1A0) = *(s32 *)((char *)arg1 + 0x1A0) & 0xFFFFFFF7;
+        *(u32 *)((u8 *)node + 0x1A0) |= 0x18;
+        *(u32 *)((u8 *)node + 0x1A0) &= ~0x8;
         break;
     case 6:
-        *(s32 *)((char *)arg1 + 0x1A0) = *(s32 *)((char *)arg1 + 0x1A0) | 8;
-        break;
-    default:
+        *(u32 *)((u8 *)node + 0x1A0) |= 0x8;
         break;
     }
-    temp_r3 = *(void **)((char *)arg0 + 0);
-    if (temp_r3 == NULL) {
-        *(void **)((char *)arg0 + 0) = arg1;
-        *(void **)((char *)arg0 + 4) = arg1;
-        return;
+    head = *(void **)list;
+    if (head == NULL) {
+        *(void **)list = node;
+        *(void **)((u8 *)list + 4) = node;
+    } else {
+        *(void **)((u8 *)head + 0x180) = node;
+        *(void **)((u8 *)node + 0x184) = head;
+        *(void **)list = node;
     }
-    *(void **)((char *)temp_r3 + 0x180) = arg1;
-    *(void **)((char *)arg1 + 0x184) = temp_r3;
-    *(void **)((char *)arg0 + 0) = arg1;
 }
 
 void fn_800158A0(void *arg0) {
@@ -1032,33 +1053,26 @@ void fn_80016ADC(void) {
 }
 
 void *fn_80016BDC(void) {
-    u32 fn_8000D354();
-    extern u16 lbl_802B14E4[];
-    u16 *var_r4;
-    s32 var_ctr;
-    s32 var_r5;
-    u32 temp_r0;
-    u32 temp_r3;
+    u32 fn_8000D354(void);
+    extern u8 lbl_802B14E4[];
+    u8 *p;
+    s32 i;
+    u32 id;
+    u32 v;
 
-    temp_r3 = fn_8000D354();
-    if (temp_r3 == 0U) {
+    id = fn_8000D354();
+    if (id == 0U) {
         return NULL;
     }
-    var_r4 = lbl_802B14E4;
-    var_r5 = 0;
-    var_ctr = 0x9F;
-loop_3:
-    temp_r0 = *(u32 *)(var_r4 + 0x188 / sizeof(u16));
-    if ((temp_r0 != 0U) && (temp_r0 == temp_r3)) {
-        return lbl_802B14E4 + (var_r5 * 0x280);
+    p = lbl_802B14E4;
+    for (i = 0; i < 0x9F; i++) {
+        v = *(u32 *)(p + 0x188);
+        if (v != 0U && v == id) {
+            return &lbl_802B14E4[i * 0x280];
+        }
+        p += 0x280;
     }
-    var_r4 += 0x280;
-    var_r5 += 1;
-    var_ctr -= 1;
-    if (var_ctr == 0) {
-        return NULL;
-    }
-    goto loop_3;
+    return NULL;
 }
 
 s32 fn_80016C58(s32 arg0)
