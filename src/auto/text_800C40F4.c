@@ -5583,6 +5583,19 @@ s32 fn_800ED8C0(void) {
     return 0;
 }
 
+s32 fn_800ED8F4(void) {
+    extern u16 *lbl_803678C8;
+    void *target;
+
+    target = *(void **)((u8 *)lbl_803678C8 + 0x440);
+
+    if (target != NULL) {
+        fn_800E56D8(target, 1);
+    }
+
+    return 0;
+}
+
 s32 fn_800ED92C(void) {
     void *p = M2C_FIELD(lbl_803678C8, void **, 0x440);
     if (p != NULL) {
