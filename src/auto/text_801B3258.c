@@ -2633,6 +2633,9 @@ void fn_801D3D3C(void *arg0) {
     void fn_801D8C64(void *, s16, s16);
     s32 fn_801DBFF8(void);
     void *fn_801DC0CC(void);
+    void fn_801D8894(void *);
+    void fn_801D88B0(void *, s8);
+    void fn_801D888C(void *, s16);
     extern void *lbl_80367240;
     extern s8 lbl_803682EC;
     extern s32 lbl_803682E8;
