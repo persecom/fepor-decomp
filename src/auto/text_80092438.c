@@ -286,8 +286,8 @@ void fn_800931B0(s32 arg0, u8 arg1, s32 arg2) {
     fn_8001C4FC(arg0 + (arg1 << 3) + 0x1EC, arg2);
 }
 
-void fn_800931E4(s32 arg0, s32 arg1, s32 arg2) {
-    fn_8001C4FC(arg0 + ((arg1 << 3) & 0x7F8) + 0x1CC, arg2);
+void fn_800931E4(s32 arg0, u8 arg1, s32 arg2) {
+    fn_8001C4FC(arg0 + (arg1 << 3) + 0x1CC, arg2);
 }
 
 s32 fn_80093218(void *arg1) {
