@@ -413,3 +413,6 @@ extern u16 lbl_802EF4E0;
 #include "common.h"
 
 extern u16 lbl_802EF4E0;
+#include "global.h"
+
+extern u16 lbl_802EF4E0;
