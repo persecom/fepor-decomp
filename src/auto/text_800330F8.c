@@ -2351,14 +2351,12 @@ s32 fn_800431E4(void *arg0) {
 }
 
 extern f32 lbl_80368EE4;
-void fn_800431EC(s32 arg1) {
-    f32 temp_f2;
-    f32 temp_f1;
-    
-    temp_f2 = ((f32*)lbl_803672A8)[2];
-    temp_f1 = ((f32*)lbl_803672A8)[3];
-    
-    fn_80222644(arg1, (s32)temp_f2, (s32)temp_f1, 0, 4, 0, 0, 0);
+void fn_800431EC(s32 unused, s32 arg1) {
+    extern void *lbl_803672A8;
+    extern f32 lbl_80368EE4;
+    void *ptr = lbl_803672A8;
+
+    fn_80222644(arg1, M2C_FIELD(ptr, s32 *, 0x1C), (s32)M2C_FIELD(ptr, f32 *, 0x10), (s32)M2C_FIELD(ptr, f32 *, 0x14), 4, 0, 0, 0);
     fn_802228D8(arg1, 0, 0, 0, 0, 0, lbl_80368EE4, lbl_80368EE4, lbl_80368EE4);
 }
 
