@@ -126,7 +126,7 @@
 
     fn_800D3590(lbl_80367240);
     state = *(u32 *)((u8 *)self + 0xC);
-    r28 = 0;
+    r28 = 1;
     r30 = 0;
     if (state <= 0x39U) {
         switch (state) {
