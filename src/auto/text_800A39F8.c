@@ -530,8 +530,9 @@ s32 fn_800A69D8(s32 *arg0, s32 *arg1) {
 }
 
 void fn_800A6A3C(void) {
-    if (fn_8000C0C0(&lbl_8028C750) != 0U) {
-        fn_8000C070(7);
+    u32 temp_r3 = fn_8000C0C0(lbl_8028C750);
+    if (temp_r3 != 0) {
+        fn_8000C070(temp_r3, 7);
     }
 }
 
