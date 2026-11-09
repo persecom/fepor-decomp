@@ -152,6 +152,10 @@ void fn_80028EC8(s32 arg0) {
     }
 }
 
+void fn_800291D8(void) {
+    // Empty implementation for testing compilation only
+}
+
 void fn_80029784(void) {
     u8 fn_800AA188();
     M2C_UNK fn_800F214C();
@@ -623,6 +627,12 @@ void fn_8002D398(void) {
 
 void fn_8002D39C(void) {
 
+}
+
+void fn_8002D420(s32 arg0) {
+    void fn_8014C718(void *, s32);
+    extern u8 lbl_80330708[16];
+    fn_8014C718(lbl_80330708, arg0);
 }
 
 void fn_8002D44C(void) {
@@ -1338,6 +1348,30 @@ extern "C" void fn_8003284C(void *arg0, void *arg1) {
 void *fn_80032B4C(void) {
     extern void *lbl_802695F0;
     return (void *)((u32)&lbl_802695F0 + 0x14F);
+}
+
+void fn_80032C80(void *arg0, void *arg1) {
+    extern f64 lbl_80368E80;
+    extern f32 lbl_80368E24;
+    extern f32 lbl_80368E28;
+
+    s32 sp10;
+    s32 spC;
+    s32 sp8;
+    
+    if (*(u32 *)((uintptr_t)arg1 + 0x40) != 0U) {
+        void (**r12)(s32 *, s32 *, s32 *) = (void (**)(s32 *, s32 *, s32 *))*(u32 *)((uintptr_t)arg0 + 0x4);
+        r12[2](&sp10, &spC, &sp8);
+        fn_8000A258();
+        fn_80009D74(sp10 + 0x20, (f32)(sp10 + 0x20), (f32)(spC + 0x30), lbl_80368E24, lbl_80368E28);
+        fn_80009B8C((u8)sp8);
+        fn_8000A248();
+        fn_8002F740(*(u32 *)((uintptr_t)arg1 + 0x40));
+        fn_800907B8();
+        fn_8000A258();
+        fn_80009B8C(0xFFU);
+        fn_8000A248();
+    }
 }
 
 void fn_80032DB4(void *arg0, void *arg1) {
