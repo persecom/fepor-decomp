@@ -494,10 +494,14 @@ void fn_8003708C(void *arg0, void *arg1) {
 
 void *fn_800377D8(void *arg0) {
     extern u8 lbl_8026A3A8[];
-    if (*(u8 *)((u8 *)arg0 + 0x199) == 0) {
-        return (void *)&lbl_8026A3A8[0x1D];
+    void *fn_80014EDC(s32);
+    u8 v;
+
+    v = *(u8 *)((u8 *)arg0 + 0x199);
+    if (v == 0) {
+        return lbl_8026A3A8 + 0x1D;
     }
-    return (void *)fn_80014EDC();
+    return fn_80014EDC(v);
 }
 
 void fn_80037814(void) {
