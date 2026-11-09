@@ -2955,7 +2955,7 @@ void fn_801CF92C(void *arg0) {
     fn_801D107C((u16 *)&lbl_80331D00 + (temp_r4_2 * 0x2B8), temp_r4_2);
 }
 
-void fn_801CFC4C(void *arg0, s16 arg1) {
+void fn_801CFC4C(void *arg0, s32 arg1) {
     if (arg1 <= 0) {
         arg1 = 1;
     }
