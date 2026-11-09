@@ -144,7 +144,7 @@ s32 fn_80132914(void) {
 
 void *fn_8013294C(void) {
     extern u16 lbl_80276008[];
-    return &lbl_80276008[0x132 * 2];
+    return (u8 *)lbl_80276008 + 0x132;
 }
 
 void *fn_8013295C(void) {
