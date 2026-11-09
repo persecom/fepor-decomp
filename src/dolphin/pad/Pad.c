@@ -464,37 +464,46 @@ void fn_802130C0(s32 chan, PADStatus* status, u32* data) {
     ClampU8(&status->triggerRight, origin[7]);
 }
 
-s32 fn_80213530(s32 arg0) {
-    s32 fn_8021275C(M2C_UNK);
-    M2C_UNK fn_8021364C(M2C_UNK);
-    s32 fn_8023ABD4();
-    extern s32 lbl_80366FA4;
-    extern u32 lbl_80368670;
-    extern u32 lbl_80368688;
-    extern s32 lbl_8036868C;
-    s32 var_r31;
-    s32 var_r3;
-
-    if ((u32) lbl_80368688 != 0U) {
-        fn_8021364C(0);
+s32 fn_80213530(s32 arg0)
+{
+  s32 fn_8021275C(M2C_UNK);
+  int new_var;
+  M2C_UNK fn_8021364C(M2C_UNK);
+  s32 fn_8023ABD4();
+  extern s32 lbl_80366FA4;
+  extern u32 lbl_80368670;
+  int new_var2;
+  extern u32 lbl_80368688;
+  extern s32 lbl_8036868C;
+  s32 var_r31;
+  s32 var_r3;
+  if (((u32) lbl_80368688) != 0U)
+  {
+    fn_8021364C(0);
+  }
+  if (arg0 == 0)
+  {
+    var_r31 = 0;
+    var_r3 = 0;
+    new_var2 = ((u32) lbl_80368670) == 0U;
+    if (new_var2 && (((s32) lbl_80366FA4) == 0x20))
+    {
+      var_r3 = 1;
     }
-    if (arg0 == 0) {
-        var_r31 = 0;
-        var_r3 = 0;
-        if (((u32) lbl_80368670 == 0U) && ((s32) lbl_80366FA4 == 0x20)) {
-            var_r3 = 1;
-        }
-        if ((var_r3 != 0) && (fn_8023ABD4() == 0)) {
-            var_r31 = 1;
-        }
-        if (((s32) lbl_8036868C == 0) && (var_r31 != 0)) {
-            lbl_8036868C = fn_8021275C(0xF0000000);
-            return 0;
-        }
-        return var_r31;
+    new_var = 1;
+    if ((var_r3 != 0) && (fn_8023ABD4() == 0))
+    {
+      var_r31 = new_var;
     }
-    lbl_8036868C = 0;
-    return 1;
+    if ((((s32) lbl_8036868C) == 0) && (var_r31 != 0))
+    {
+      lbl_8036868C = fn_8021275C(0xF0000000);
+      return (int) 0;
+    }
+    return var_r31;
+  }
+  lbl_8036868C = 0;
+  return 1;
 }
 
 u32 fn_8021364C(u32 arg0) {
@@ -743,6 +752,27 @@ void fn_80216050(void) {
     OSDisableInterrupts();
 }
 
+void fn_802160C0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, f64 farg0, f64 farg1, f64 farg2, f64 farg3, f64 farg4, f64 farg5, f64 farg6, f64 farg7) {
+    if (arg0 != 0) {
+        *(f64*)(0x28 + (s32)0x28) = farg0;
+        *(f64*)(0x30 + (s32)0x28) = farg1;
+        *(f64*)(0x38 + (s32)0x28) = farg2;
+        *(f64*)(0x40 + (s32)0x28) = farg3;
+        *(f64*)(0x48 + (s32)0x28) = farg4;
+        *(f64*)(0x50 + (s32)0x28) = farg5;
+        *(f64*)(0x58 + (s32)0x28) = farg6;
+        *(f64*)(0x60 + (s32)0x28) = farg7;
+    }
+    *(s32*)(0x8 + (s32)0x28) = arg0;
+    *(s32*)(0xc + (s32)0x28) = arg1;
+    *(s32*)(0x10 + (s32)0x28) = arg2;
+    *(s32*)(0x14 + (s32)0x28) = arg3;
+    *(s32*)(0x18 + (s32)0x28) = arg4;
+    *(s32*)(0x1c + (s32)0x28) = arg5;
+    *(s32*)(0x20 + (s32)0x28) = arg6;
+    *(s32*)(0x24 + (s32)0x28) = arg7;
+}
+
 void fn_80216534(void *arg0, void *arg1) {
     M2C_UNK fn_80215F78(s32);
     if (arg0 != NULL) {
@@ -972,16 +1002,23 @@ loop_8:
 void fn_80216900(void *arg0) {
     extern void *lbl_80368738;
     extern void *lbl_80368734;
-    void *temp_r0;
     extern void *lbl_8036873C;
+    struct Node {
+        s32 state;
+        s32 unk04;
+        s32 unk08;
+        u8 pad[0x2C];
+        struct Node *next;
+        struct Node *prev;
+    } *node = (struct Node *)arg0;
+    struct Node *tmp;
 
-    M2C_FIELD((unsigned short)arg0, s32 *, 8) = 0;
-    M2C_FIELD(arg0, s32 *, 0) = 3;
-    if ((void *) lbl_80368738 == arg0) {
-        temp_r0 = M2C_FIELD(arg0, void **, 0x38);
-        if (temp_r0 != NULL) {
-            lbl_80368738 = temp_r0;
-            M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 0x3C) = NULL;
+    node->unk08 = 0;
+    node->state = 3;
+    if ((struct Node *)lbl_80368738 == node) {
+        if (node->next != NULL) {
+            lbl_80368738 = node->next;
+            node->next->prev = NULL;
             return;
         }
         lbl_8036873C = NULL;
@@ -989,15 +1026,15 @@ void fn_80216900(void *arg0) {
         lbl_80368738 = NULL;
         return;
     }
-    if ((void *) lbl_80368734 == arg0) {
-        lbl_80368734 = M2C_FIELD(arg0, void **, 0x3C);
-        M2C_FIELD(M2C_FIELD(arg0, void **, 0x3C), void **, 0x38) = NULL;
+    if ((struct Node *)lbl_80368734 == node) {
+        lbl_80368734 = node->prev;
+        node->prev->next = NULL;
         lbl_8036873C = lbl_80368738;
         return;
     }
-    lbl_8036873C = M2C_FIELD(arg0, void **, 0x38);
-    M2C_FIELD(M2C_FIELD(arg0, void **, 0x3C), void **, 0x38) = (void *) M2C_FIELD(arg0, void **, 0x38);
-    M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 0x3C) = (void *) M2C_FIELD(arg0, void **, 0x3C);
+    lbl_8036873C = node->next;
+    node->prev->next = node->next;
+    node->next->prev = node->prev;
 }
 #include "common.h"
 #include <dolphin/os.h>
