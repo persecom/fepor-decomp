@@ -311,7 +311,7 @@ void fn_80266B38(s32 arg0) {
     fn_8020AEC4(ptr);
 }
 
-s32 fn_80266D70(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+s64 fn_80266D70(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     extern u8 lbl_803669A0[];
     u8 *p;
     s32 old30;
@@ -322,7 +322,7 @@ s32 fn_80266D70(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     old34 = *(s32 *)(p + 0x34);
     *(s32 *)(p + 0x34) = arg3;
     *(s32 *)(p + 0x30) = arg2;
-    return old30 + (old34 - old34);
+    return ((s64)old30 << 32) | (u32)old34;
 }
 
 void fn_80266E70(u32 arg0) {
