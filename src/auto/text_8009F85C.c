@@ -340,8 +340,9 @@ s32 fn_8009FF40(void) {
 }
 
 void *fn_8009FF6C(void) {
-    extern void *lbl_8026D8D8;
-    return (char*)&lbl_8026D8D8 + 0x365;
+    extern u16 lbl_8026D8D8;
+    void *addr = &lbl_8026D8D8;
+    return (char *)addr + 0x365;
 }
 
 s32 fn_8009FF7C(void) {
@@ -1061,8 +1062,8 @@ s32 fn_800A1710(void) {
 }
 
 void *fn_800A1718(void) {
-    extern void *lbl_8026D8D8;
-    return (char *)&lbl_8026D8D8 + 0x62F;
+    extern u16 lbl_8026D8D8[];
+    return (u8 *)lbl_8026D8D8 + 0x62F;
 }
 
 s32 fn_800A1728(void) {
