@@ -1401,6 +1401,78 @@ void fn_8013ACC4(s32 *arg0, void *arg1) {
     *arg0 = *fn_8013F748(arg1, &spC, &sp8, temp_r6_2, temp_r7, temp_r8, temp_r9, temp_r10);
 }
 
+#pragma cplusplus on
+extern "C" void fn_8013AF08(void *arg0, s16 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual s16 v13() = 0;
+    };
+    s16 var_r3;
+    s32 temp_r4;
+    s32 temp_r5;
+    s32 temp_r6;
+    s32 temp_r7;
+    s32 temp_r8;
+    s32 t;
+
+    if (arg1 != (s16) M2C_FIELD(arg0, s16 *, 0x4E)) {
+        var_r3 = ((Obj *)arg0)->v13();
+        temp_r5 = M2C_FIELD(arg0, s32 *, 0x70);
+        temp_r4 = M2C_FIELD(arg0, s16 *, 0x58);
+        temp_r6 = temp_r4 - 1;
+        temp_r7 = (s16) temp_r5;
+        temp_r8 = (s16) ((temp_r7 + temp_r6) / temp_r4);
+        if ((arg1 < 0) || (temp_r7 <= arg1)) {
+            return;
+        }
+        if (var_r3 > temp_r8) {
+            var_r3 = temp_r8;
+        }
+        if (arg1 < (s16) M2C_FIELD(arg0, s16 *, 0x4E)) {
+            do {
+                M2C_FIELD(arg0, s16 *, 0x4E) = (s16) (M2C_FIELD(arg0, s16 *, 0x4E) - 1);
+                if ((s16) M2C_FIELD(arg0, s16 *, 0x4E) > temp_r6) {
+                    if ((s16) (M2C_FIELD(arg0, s16 *, 0x4E) / temp_r4)
+                        - (s16) M2C_FIELD(arg0, s16 *, 0x56) == 0) {
+                        M2C_FIELD(arg0, s16 *, 0x56) = (s16) (M2C_FIELD(arg0, s16 *, 0x56) - 1);
+                    }
+                }
+            } while (arg1 < (s16) M2C_FIELD(arg0, s16 *, 0x4E));
+        } else {
+            temp_r6 = temp_r7 - 1;
+            temp_r7 = temp_r8 - 1;
+            temp_r8 = var_r3 - 1;
+            do {
+                M2C_FIELD(arg0, s16 *, 0x4E) = (s16) (M2C_FIELD(arg0, s16 *, 0x4E) + 1);
+                if ((s16) M2C_FIELD(arg0, s16 *, 0x4E) > temp_r6) {
+                    M2C_FIELD(arg0, s16 *, 0x4E) = (s16) temp_r6;
+                }
+                t = (s16) (M2C_FIELD(arg0, s16 *, 0x4E) / temp_r4);
+                if (t < temp_r7) {
+                    if (temp_r8 == t - (s16) M2C_FIELD(arg0, s16 *, 0x56)) {
+                        M2C_FIELD(arg0, s16 *, 0x56) = (s16) (M2C_FIELD(arg0, s16 *, 0x56) + 1);
+                    }
+                }
+            } while ((s16) M2C_FIELD(arg0, s16 *, 0x4E) < arg1);
+        }
+        M2C_FIELD(arg0, s16 *, 0x52) = -1;
+        M2C_FIELD(arg0, s16 *, 0x54) = -1;
+    }
+}
+#pragma cplusplus reset
+
 void fn_8013B064(s32 arg0, s32 arg1) {
     void *fn_80061870();
     s32 fn_800639B4();
@@ -3021,15 +3093,14 @@ void fn_80142078(void *arg0) {
     s16 temp_r28;
     s16 temp_r31;
     s16 temp_r4_2;
+    void *var_r30;
     s16 var_r29;
     s32 temp_r0;
     u32 temp_r4;
-    void *var_r30;
     void *var_r3;
     void *var_r4;
     void *var_r4_2;
     void *var_r6;
-
     temp_r4 = M2C_FIELD(arg0, u32 *, 0x34);
     if (temp_r4 != 0U) {
         var_r30 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 8);
@@ -3045,7 +3116,7 @@ void fn_80142078(void *arg0) {
     var_r6 = NULL;
     temp_r31 = M2C_FIELD(var_r3, s16 *, 0x24);
     var_r29 = 0;
-    switch (temp_r0) {                              /* irregular */
+    switch (temp_r0) {
     case 0:
         if (temp_r4 != 0U) {
             var_r6 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 8);
@@ -4099,7 +4170,7 @@ void fn_8014876C(void *arg0, s8 arg1, s16 arg2) {
     M2C_FIELD(arg0, s16 *, 0x2C) = 0;
 }
 
-extern f32 lbl_8036A788;
+extern f64 lbl_8036A788;
 void fn_801487D0(void *arg0, s16 arg1) {
     extern f32 lbl_8036A7A0;
     s16 var_r31;
