@@ -292,8 +292,7 @@ s32 fn_80103E30(void) {
 
 void *fn_80103E38(void) {
     extern u16 lbl_802734D0[];
-    void *ptr = &lbl_802734D0[0x398];
-    return ptr;
+    return (u8 *)lbl_802734D0 + 0x1cc;
 }
 
 s32 fn_80103E48(void) {
