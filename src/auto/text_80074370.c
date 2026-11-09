@@ -893,8 +893,7 @@ void fn_80076D64(void) {
 
 void fn_80076D90(void) {
     extern u16 lbl_8026C0B8[];
-    s32 offset = 0x332; // Trying to match the instruction directly, using exact value from target
-    fn_8000E0E4(&lbl_8026C0B8[offset]);
+    fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x333);
 }
 
 s32 fn_80076DBC(void) {
