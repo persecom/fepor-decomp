@@ -1260,6 +1260,11 @@ s32 fn_800B6DB8(s32 arg0, s32 arg1) {
     return 1;
 }
 
+u8 fn_800B6DF0(void) {
+    extern u16 lbl_80330708[];
+    return *(u8 *)((u8 *)lbl_80330708 + 0x56);
+}
+
 s32 fn_800B6E8C(s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     f32 fn_800067BC(f32, f32, f32, f32);
     return (s32) fn_800067BC((f32) arg1, (f32) arg2, (f32) arg3, (f32) arg4);
@@ -1345,8 +1350,7 @@ u8 fn_800B719C(u8 arg0) {
 }
 
 void *fn_800B7200(void) {
-    extern u16 lbl_8031FFC0;
-    return (u8 *)&lbl_8031FFC0 + 0x4;
+    return (u8 *)0x8031FFC4;
 }
 
 s32 fn_800B7210(void) {
