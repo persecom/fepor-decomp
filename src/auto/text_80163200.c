@@ -1591,12 +1591,12 @@ void fn_8016B5E8(void) {
 
 void fn_8016B60C(void) {
     void *fn_8000BCA4(void *);
-    extern u16 lbl_80277EA0;
+    extern u16 lbl_80277EA0[40];
     void *temp_r3;
 
-    temp_r3 = fn_8000BCA4(&lbl_80277EA0 + 0xB2);
+    temp_r3 = fn_8000BCA4((u8 *)lbl_80277EA0 + 0x59);
     if (temp_r3 != NULL) {
-        *(u32*)((char*)temp_r3 + 0x30) = *(u32*)((char*)temp_r3 + 0x30) | 4;
+        *(u32 *)((u8 *)temp_r3 + 0x30) = *(u32 *)((u8 *)temp_r3 + 0x30) | 4;
     }
 }
 
