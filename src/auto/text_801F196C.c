@@ -1084,6 +1084,66 @@ s32 fn_801F8A18(s32 arg0) {
     return arg0;
 }
 
+u32 fn_801F8D38(void **arg0, void **arg1) {
+    u16 temp_r0;
+    u16 temp_r0_3;
+    u16 temp_r3;
+    u8 temp_r4_2;
+    u8 temp_r0_2;
+    u8 temp_r3_2;
+    u16 temp_r3_3;
+    void *temp_r5;
+    void *temp_r4;
+    void *temp_r6;
+    void *p;
+    u16 a;
+    u16 b;
+
+    temp_r5 = *arg0;
+    temp_r6 = *arg1;
+    temp_r4 = M2C_FIELD(temp_r5, void **, 0x190);
+    if ((u8)M2C_FIELD((s32)temp_r4, u8 *, 8) == 6) {
+        if ((u8)M2C_FIELD(M2C_FIELD(temp_r6, void **, 0x190), u8 *, 8) != 6) {
+            return 1U;
+        }
+    }
+    temp_r4_2 = M2C_FIELD(temp_r4, u8 *, 8);
+    if (temp_r4_2 != 6) {
+        if ((u8)M2C_FIELD(M2C_FIELD(temp_r6, void **, 0x190), u8 *, 8) == 6) {
+            return 0U;
+        }
+    }
+    if (temp_r4_2 == 6) {
+        if ((u8)M2C_FIELD(M2C_FIELD(temp_r6, void **, 0x190), u8 *, 8) == 6) {
+            temp_r3_2 = M2C_FIELD(temp_r5, u8 *, 0x234);
+            temp_r0_2 = M2C_FIELD(temp_r6, u8 *, 0x234);
+            if (temp_r3_2 == temp_r0_2) {
+                temp_r3_3 = M2C_FIELD(temp_r5, u16 *, 0x22A);
+                temp_r0_3 = M2C_FIELD(temp_r6, u16 *, 0x22A);
+                if (temp_r3_3 == temp_r0_3) {
+                    p = M2C_FIELD(temp_r5, void **, 0x188);
+                    a = M2C_FIELD(p, u16 *, 0x5A);
+                    p = M2C_FIELD(temp_r6, void **, 0x188);
+                    b = M2C_FIELD(p, u16 *, 0x5A);
+                    return (u32)(a - b) >> 0x1FU;
+                }
+                return (u32)(temp_r3_3 - temp_r0_3) >> 0x1FU;
+            }
+            return (u32)(temp_r3_2 - temp_r0_2) >> 0x1FU;
+        }
+    }
+    temp_r3 = M2C_FIELD(temp_r5, u16 *, 0x22A);
+    temp_r0 = M2C_FIELD(temp_r6, u16 *, 0x22A);
+    if (temp_r3 == temp_r0) {
+        p = M2C_FIELD(temp_r5, void **, 0x188);
+        a = M2C_FIELD(p, u16 *, 0x5A);
+        p = M2C_FIELD(temp_r6, void **, 0x188);
+        b = M2C_FIELD(p, u16 *, 0x5A);
+        return (u32)(a - b) >> 0x1FU;
+    }
+    return (u32)(temp_r3 - temp_r0) >> 0x1FU;
+}
+
 void fn_801F9464(void) {
     M2C_UNK fn_80059C2C(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
     fn_80059C2C(0, 0, 0x260, 0x1C0, 0);
