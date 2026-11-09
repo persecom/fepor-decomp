@@ -4495,3 +4495,5 @@ extern u16 lbl_80291730[];
 #include "dolphin/os.h"
 
 extern f64 lbl_8036A600;
+
+typedef s32 (*FuncPtr0)(void);
