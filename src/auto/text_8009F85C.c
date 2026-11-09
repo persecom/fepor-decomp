@@ -1124,16 +1124,17 @@ void *fn_800A1814(void) {
 #pragma dont_inline on
 s32 fn_800A1824(void) {
     extern f32 lbl_80330708[];
-    s32 temp_r3;
-    s8 temp_r30;
-    s8 temp_r31;
+    s32 fn_80040844(void *);
+    s32 fn_80047178(s32, s32, s32);
+    s32 fn_80049D84(s32);
+    s32 temp_r31;
+    s32 temp_r30;
+    u8 temp_r4;
 
-    temp_r31 = (s8) lbl_80330708[0x14A];
-    temp_r30 = (s8) lbl_80330708[0x149];
-    fn_80040844(lbl_80330708);
-    fn_80047178(temp_r30, temp_r31);
-    temp_r3 = fn_80049D84();
-    return 2 & ~((s32) (-(s32) temp_r3 | temp_r3) >> 0x1F);
+    temp_r31 = (s32) lbl_80330708[0x14A];
+    temp_r30 = (s32) lbl_80330708[0x149];
+    temp_r4 = (u8) fn_80049D84(fn_80047178(fn_80040844(lbl_80330708), (s8) temp_r30, (s8) temp_r31));
+    return (temp_r4 != 0) ? 0 : 2;
 }
 void *fn_800A1910(void) {
     extern u16 lbl_8026D8D8[];
@@ -1249,6 +1250,20 @@ s32 fn_800A1C74(s32 arg0, s32 arg1, void *arg2) {
     return 0;
 }
 
+#pragma peephole off
+s32 fn_800A1CB4(void) {
+    void *fn_800AA794(void);
+    void *p;
+    s32 two;
+    s32 v;
+
+    p = fn_800AA794();
+    p = *(void **)((u8 *)p + 0x188);
+    two = 2;
+    v = *(s32 *)((u8 *)p + 0x50);
+    return two & -(v == 0);
+}
+#pragma peephole reset
 void *fn_800A1CF0(void) {
     extern u16 lbl_8026D8D8;
     return (void*)((u32)&lbl_8026D8D8 + 0x6B8);
