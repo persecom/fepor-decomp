@@ -1570,7 +1570,7 @@ void fn_80078C68(void) {
 
 void fn_80078C94(void) {
     extern u16 lbl_8026C0B8[];
-    fn_8000E0E4((u16*)((uintptr_t)lbl_8026C0B8 + 0x557 * sizeof(u16)));
+    fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x557);
 }
 
 s32 fn_80078D48(void) {
