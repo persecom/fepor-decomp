@@ -1320,9 +1320,10 @@ void *fn_8011BFDC(void) {
 
 u8 fn_8011BFEC(void) {
     extern u8 lbl_80367A48;
-    u8 temp = lbl_80367A48;
-    temp = 0x80 - temp;
-    return (u8) __builtin_clz(temp);
+    u32 temp;
+
+    temp = __cntlzw(0x80 - lbl_80367A48);
+    return (u8)((temp >> 5) & 0xFF);
 }
 
 s32 fn_8011C000(void) {
