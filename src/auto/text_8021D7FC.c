@@ -104,15 +104,11 @@ extern void fn_8020C1A4(u8, u32, void *);
 extern u8 lbl_80289EB8[16];
 
 void *fn_8021D8F8(u32 arg0) {
-    extern u16 *__GXData;
-    void *ret;
-
+    extern u8 *__GXData;
     if (arg0 >= 0x14) {
-        ret = 0;
-    } else {
-        ret = __GXData + 0x388 + arg0 * 0x10;
+        return 0;
     }
-    return ret;
+    return __GXData + 0x388 + arg0 * 0x10;
 }
 
 void GXInitFifoBase(void* arg0, void* arg1, u32 arg2) {
@@ -127,17 +123,22 @@ void GXInitFifoBase(void* arg0, void* arg1, u32 arg2) {
 }
 
 void fn_8021ED28(void *arg0, s32 arg1, s32 arg2) {
-    s32 temp_r4;
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    s32 *p;
+    s32 enabled;
+    s32 temp;
 
-    OSDisableInterrupts();
-    M2C_FIELD(arg0, s32 *, 0x14) = arg1;
-    M2C_FIELD(arg0, s32 *, 0x18) = arg2;
-    M2C_FIELD(arg0, s32 *, 0x1C) = (s32) (arg2 - arg1);
-    temp_r4 = M2C_FIELD(arg0, s32 *, 0x1C);
-    if (temp_r4 < 0) {
-        M2C_FIELD(arg0, s32 *, 0x1C) = (s32) (temp_r4 + M2C_FIELD(arg0, s32 *, 8));
+    p = (s32 *)arg0;
+    enabled = OSDisableInterrupts();
+    p[5] = arg1;
+    p[6] = arg2;
+    p[7] = arg2 - arg1;
+    temp = p[7];
+    if (temp < 0) {
+        p[7] = temp + p[2];
     }
-    OSRestoreInterrupts();
+    OSRestoreInterrupts(enabled);
 }
 
 void fn_8021ED98(void *arg0, s32 arg1, s32 arg2) {
@@ -586,12 +587,25 @@ s32 fn_80220C34(s32 arg0) {
     return old;
 }
 
-void fn_80220C78(void* arg0, void* arg1) {
-    if (arg0 != NULL) {
-        if (arg1 != NULL) {
-            *(u32*)arg0 = **(u32**)arg1;
-        }
+void fn_80220C78(M2C_UNK *arg1) {
+    M2C_UNK OSClearContext(M2C_UNK *);
+    M2C_UNK OSSetCurrentContext(M2C_UNK *);
+    M2C_UNK fn_8020AEC4(M2C_UNK *);
+    extern M2C_UNK (*lbl_80368794)();
+    extern s8 lbl_80368798;
+    extern M2C_UNK lbl_8036879C;
+    M2C_UNK sp10;
+
+    M2C_FIELD(__peReg, u16 *, 0xA) = (u16) (M2C_FIELD(__peReg, u16 *, 0xA) | 8);
+    lbl_80368798 = 1;
+    if (((M2C_UNK (*)()) lbl_80368794) != NULL) {
+        OSClearContext(&sp10);
+        OSSetCurrentContext(&sp10);
+        lbl_80368794();
+        OSClearContext(&sp10);
+        OSSetCurrentContext(arg1);
     }
+    fn_8020AEC4(&lbl_8036879C);
 }
 
 s32 fn_80220FC4(s32 arg0, s32 arg1) {
