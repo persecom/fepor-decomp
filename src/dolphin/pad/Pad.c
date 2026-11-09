@@ -355,23 +355,25 @@ void fn_80212F4C(s32 chan, PADStatus *status, u32 *data) {
 }
 
 static void ClampS8(s8* p, s8 o) {
+    s8 s = *p;
     if (0 < o) {
-        if (*p < (s8)(o - 128)) {
-            *p = (s8)(o - 128);
+        if (s < (s8)(o - 128)) {
+            s = (s8)(o - 128);
         }
     } else if (o < 0) {
-        if ((s8)(o + 127) < *p) {
-            *p = (s8)(o + 127);
+        if ((s8)(o + 127) < s) {
+            s = (s8)(o + 127);
         }
     }
-    *p -= o;
+    *p = s - o;
 }
 
 static void ClampU8(u8* p, u8 o) {
-    if (*p < o) {
-        *p = o;
+    u8 s = *p;
+    if (s < o) {
+        s = o;
     }
-    *p -= o;
+    *p = s - o;
 }
 
 void fn_802130C0(s32 chan, PADStatus* status, u32* data) {
