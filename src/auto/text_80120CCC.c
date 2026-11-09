@@ -609,6 +609,19 @@ block_4:
     }
 }
 
+void fn_80123CA0(void *arg0) {
+    void fn_8006D8E8(s32);
+    void fn_800C426C(s32);
+    void fn_801479C4(u8 *, s32);
+    extern u8 lbl_80274F74[];
+
+    fn_800C426C(*(s32 *)((u8 *)arg0 + 0x64));
+    fn_800C426C(*(s32 *)((u8 *)arg0 + 0x60));
+    fn_800C426C(*(s32 *)((u8 *)arg0 + 0x5C));
+    fn_8006D8E8(*(s32 *)((u8 *)arg0 + 0x58));
+    fn_801479C4(lbl_80274F74 + 0x72, 0xFA);
+}
+
 void fn_80123CFC(void) {
     M2C_UNK fn_801246FC();
     fn_801246FC();
