@@ -3396,7 +3396,7 @@ void fn_8017B728(void *arg0, s16 arg1, s16 arg2, s32 arg3, void *arg4, u8 arg6) 
     fn_8000A248();
 }
 
-s32 fn_8017B8F8(s32 arg1) {
+s32 fn_8017B8F8(s32 unused, s32 arg1) {
     return arg1 != 0;
 }
 
