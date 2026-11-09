@@ -339,15 +339,15 @@ void fn_800913D4(void **arg0, s32 arg1, s32 arg2) {
 
 void fn_8009149C(s32 arg0, s32 arg1) {
     extern u8 lbl_8026CD60[];
-    
-    u8 *ptr;
-    s32 temp_r31 = arg1;
-    
-    ptr = (u8 *)&lbl_8026CD60 + 0x228;
-    fn_80231E74(&ptr, 0x80, ptr, arg0);
-    fn_8000D864(0, &ptr);
-    fn_8000E0E4((u8 *)&lbl_8026CD60 + 0x22B);
-    fn_801B79A0((u8 *)&lbl_8026CD60 + 0x1AC, temp_r31, 0);
+    s32 fn_80231E74(char *, s32, char *, ...);
+    void fn_8000D864(s32, char *);
+    s32 fn_8000E0E4(void *);
+    void fn_801B79A0(s32, void *, s32, s32);
+    char sp8[0x80];
+
+    fn_80231E74(sp8, 0x80, (char *)lbl_8026CD60 + 0x228, arg0);
+    fn_8000D864(0, sp8);
+    fn_801B79A0(fn_8000E0E4((char *)lbl_8026CD60 + 0x22B), lbl_8026CD60 + 0x1AC, arg1, 0);
 }
 
 void fn_80091518(void **arg0, s32 arg1, s32 arg2) {
