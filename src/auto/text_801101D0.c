@@ -1217,9 +1217,10 @@ void *fn_8011BD9C(void) {
 
 u8 fn_8011BDAC(void) {
     extern u8 lbl_80367A48;
-    u8 temp = lbl_80367A48;
-    temp = 0x85 - temp;
-    return (u8) __builtin_clz(temp) >> 24;
+    u32 temp;
+
+    temp = __cntlzw(0x85 - lbl_80367A48);
+    return (u8)((temp >> 5) & 0xFF);
 }
 
 extern s8 lbl_802EF4C8[];
