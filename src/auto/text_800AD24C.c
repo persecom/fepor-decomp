@@ -1,9 +1,11 @@
 /* Functions from 0x800AD24C to 0x800C3F18, found by decomp-toolkit. */
 #include "common.h"
 extern s32 fn_80010710(u8* arg0);
-extern s32 lbl_80368230;
-extern s32 lbl_8028D544[];
-extern u16 lbl_80319A68[32];
+  extern s32 lbl_80368230;
+  extern s32 lbl_8028D544[];
+  extern u16 lbl_80319A68[32];
+  void fn_800AE904(void *);
+  void fn_800AEA74(void *);
 
 /* 0x18-byte record used by fn_800C29D0 / fn_800C2ACC / fn_800C30CC (1-based index) */
 typedef struct Unk800C2ACC {
@@ -341,6 +343,104 @@ void fn_800AE3DC(s32 arg0) {
     if (lbl_80330708[lbl_80330708[0x11] + 0x14] == 1) {
         fn_8000CAA0(lbl_80284AC8, arg0);
     }
+}
+
+void fn_800AE694(void *arg0) {
+    void *fn_8014D8FC(void *);
+    s8 fn_80146C94(void *);
+    void fn_8014832C(s32, void *, s32, s32);
+    void *fn_80053C30(void *, void *);
+    void fn_80053658(void *, s32, void *);
+    void fn_80059208(void *, void *);
+    void fn_800AE904(void);
+    void fn_800AEA74(void);
+    extern u8 lbl_80330708[];
+    extern u8 lbl_8026EAA0[];
+    extern u8 lbl_8032FF08[];
+    extern f32 lbl_80369C7C;
+
+    f32 f0;
+    void *temp_r30;
+    void *var_r29;
+    void *var_r3;
+    void *temp_r3;
+    u8 temp_r0;
+    u8 var_r6;
+    s32 var_ctr;
+
+    temp_r30 = fn_8014D8FC(lbl_80330708);
+    *(s32 *)((u8 *)arg0 + 0x30) = 0;
+    f0 = lbl_80369C7C;
+    *(s32 *)((u8 *)arg0 + 0x34) = 0;
+    var_r29 = NULL;
+    *(f32 *)((u8 *)arg0 + 0x38) = f0;
+    *(f32 *)((u8 *)arg0 + 0x3C) = f0;
+    *(s32 *)((u8 *)arg0 + 0x44) = 0xF;
+    *(s32 *)((u8 *)arg0 + 0x48) = 0x1E;
+    if ((s8)fn_80146C94(lbl_8026EAA0 + 0x2B) == -1) {
+        switch (lbl_80330708[0x11]) {
+        case 0:
+            temp_r0 = *((u8 *)temp_r30 + 0x3C);
+            if ((s32)temp_r0 <= 0x12 || (s32)temp_r0 >= 0x32) {
+                var_r29 = lbl_8026EAA0 + 0x38;
+            } else {
+                var_r29 = lbl_8026EAA0 + 0x46;
+            }
+            break;
+        case 1:
+            temp_r0 = *((u8 *)temp_r30 + 0x3C);
+            if ((s32)temp_r0 <= 0x12 || (s32)temp_r0 >= 0x32) {
+                var_r29 = lbl_8026EAA0 + 0x54;
+            } else {
+                var_r29 = lbl_8026EAA0 + 0x62;
+            }
+            break;
+        case 2:
+            var_r29 = lbl_8026EAA0 + 0x70;
+            break;
+        case 3:
+            var_r29 = lbl_8026EAA0 + 0x80;
+            break;
+        }
+        if (var_r29 != NULL) {
+            var_r6 = 1;
+            var_ctr = 3;
+            do {
+                if (!(lbl_8032FF08[(u8)var_r6 * 0x30 + 0xC] & 1)) {
+                    fn_8014832C((u8)var_r6, var_r29, 0x64, 1);
+                    goto end_loop;
+                }
+                var_r6 += 1;
+            } while (--var_ctr);
+        end_loop:;
+        }
+    }
+    switch (lbl_80330708[0x11]) {
+    case 0:
+        var_r3 = lbl_8026EAA0 + 0x90;
+        break;
+    case 1:
+        var_r3 = lbl_8026EAA0 + 0xA0;
+        break;
+    case 2:
+        var_r3 = lbl_8026EAA0 + 0xAF;
+        break;
+    case 3:
+        var_r3 = lbl_8026EAA0 + 0xBE;
+        break;
+    default:
+        var_r3 = NULL;
+        break;
+    }
+    *(void **)((u8 *)arg0 + 0x4C) = fn_80053C30(var_r3, arg0);
+    f0 = lbl_80369C7C;
+    temp_r3 = *(void **)((u8 *)arg0 + 0x4C);
+    *(f32 *)((u8 *)*(void **)((u8 *)temp_r3 + 0x30) + 0x1C) = f0;
+    *(s16 *)*(void **)((u8 *)*(void **)((u8 *)arg0 + 0x4C) + 0x30) = 0x63;
+    fn_80053658(*(void **)((u8 *)arg0 + 0x4C), 0, arg0);
+    temp_r3 = *(void **)((u8 *)*(void **)((u8 *)arg0 + 0x4C) + 0x30);
+    *(void **)((u8 *)temp_r3 + 0x44) = fn_800AE904;
+    fn_80059208(fn_800AEA74, arg0);
 }
 
 void fn_800AE904(void *arg0) {
@@ -2194,6 +2294,11 @@ void fn_800B9C38(s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     temp_f4 = (f32) arg1;
     temp_f3 = -((temp_f4 * temp_f1) - lbl_80369D0C);
     fn_800B9CD4((s32) temp_f3, (s32) -(((f32) arg2 * temp_f1) - lbl_80369D10), arg4, arg5, temp_f1, temp_f3, temp_f4);
+}
+
+s32 fn_800B9EA8(u8* arg0, u8* arg1, s32 arg2)
+{
+    return fn_80010710(arg0);
 }
 
 s32 fn_800BA138(u32 arg0, s16 arg1, s16 arg2) {
