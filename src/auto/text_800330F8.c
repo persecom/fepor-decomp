@@ -4033,18 +4033,25 @@ void fn_8004E040(void) {
 }
 
 void fn_8004E9D8(void *arg0, s32 arg1) {
-    u8 *ptr = (u8 *)arg0;
-    u8 temp = ptr[0x3];
+    void fn_800616A0(void *);
+    void fn_80184F20(void *);
+    void fn_8005C7E8(u32);
+    void fn_8004EB14(void *, s32);
+    u8 temp;
+    u32 p;
+
+    fn_800616A0((u8 *)arg0 + 0xBC);
+    temp = *((u8 *)arg0 + 3);
     if ((temp & 2) != 0) {
-        temp &= 0xFD;
-        ptr[0x3] = temp;
+        *((u8 *)arg0 + 3) = (u8)(temp & ~2);
         fn_80184F20(arg0);
-        fn_800616A0(ptr + 0x1C);
-        if (*(u32 *)(ptr + 0x164) != 0) {
-            fn_8005C7E8();
-            *(u32 *)(ptr + 0x164) = 0;
-            *(u32 *)(ptr + 0x17C) = 0;
+        fn_800616A0((u8 *)arg0 + 0x1C);
+        p = *(u32 *)((u8 *)arg0 + 0x164);
+        if (p != 0) {
+            fn_8005C7E8(p);
         }
+        *(u32 *)((u8 *)arg0 + 0x164) = 0;
+        *(u32 *)((u8 *)arg0 + 0x17C) = 0;
     }
     fn_8004EB14(arg0, arg1);
 }
