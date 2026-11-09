@@ -537,9 +537,9 @@ void fn_800A6A3C(void) {
 }
 
 void fn_800A6A74(void) {
-    u32 temp_r3 = fn_8000C0C0(&lbl_8028C750);
+    u32 temp_r3 = fn_8000C0C0(lbl_8028C750);
     if (temp_r3 != 0) {
-        fn_8000C070(0x6);
+        fn_8000C070(temp_r3, 6);
     }
 }
 
