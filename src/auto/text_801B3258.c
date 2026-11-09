@@ -2653,6 +2653,8 @@ void fn_801D3D3C(void *arg0) {
     s32 n;
     s32 count;
     s32 *p;
+    s32 *p24;
+    s32 i25;
     s8 saved_byte;
     s32 result;
     u8 tmp_u8;
