@@ -5298,14 +5298,13 @@ void fn_801E25EC(void) {
 }
 
 void fn_801E2F9C(s32 *arg0, s32 arg1) {
-    extern u16 lbl_8027E980[];
-    s32 fn_800056CC(void *, void *);
+    extern u8 lbl_8027E980[];
+    void fn_800056CC(char *, ...);
     s32 fn_800C4604(s32, s32, void *, s32);
-    s32 fn_800EA540(s32, s32);
+    void fn_800EA540(s32, s32);
 
-    s32 r30 = (s32)lbl_8027E980;
-    fn_800056CC(&lbl_8027E980[0x137], &lbl_8027E980);
-    *arg0 = fn_800C4604(0, 0xFFFDA000, &lbl_8027E980[0x14E], 0);
+    fn_800056CC((char *)(lbl_8027E980 + 0x137));
+    *arg0 = fn_800C4604(0, 0xFFFDA000, lbl_8027E980 + 0x14E, 0);
     fn_800EA540(*arg0, arg1);
 }
 
