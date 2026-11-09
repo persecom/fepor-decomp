@@ -152,15 +152,15 @@ void fn_80098524(void **arg0) {
 }
 
 void fn_80098A9C(s32 arg0) {
-    extern u16 lbl_80330EAC[];
+    void fn_8019A7E8(void);
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_80330EAC[];
     extern u8 lbl_80289C54[];
 
-    if (lbl_80330EAC[0x6D6] & 0x200)
-    {
+    if (*(u32 *)(lbl_80330EAC + 0xCAC) & 0x200) {
         fn_8019A7E8();
-        return;
+    } else {
+        fn_8000CAA0(lbl_80289C54, arg0);
     }
-
-    fn_8000CAA0(lbl_80289C54, arg0, lbl_80289C54);
 }
 
