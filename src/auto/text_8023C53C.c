@@ -8,8 +8,6 @@ extern u8 lbl_803689B0;
 extern u8 lbl_8034C110[]; char lbl_80282B20[];
 extern u8 lbl_8034C110[];
 extern f64 lbl_8036C368;
-const f64 lbl_8036C290 = 4503601774854144.0;
-const f64 lbl_8036C2A0 = 4503599627370496.0;
 extern u16 Ecb_8033E188[192];u16 *D_80256B30;
 extern s32 lbl_803687F8;
 extern f32 lbl_8036C374;
