@@ -1677,52 +1677,48 @@ extern "C" void fn_80032488(void *arg0, void *arg1) {
     }
 }
 #pragma cplusplus reset
-void fn_80032564(void *arg0, void *arg1) {
-    M2C_UNK fn_80009B8C(u8);
-    M2C_UNK fn_80009C0C(f32);
-    M2C_UNK fn_80009D74(s32, f32, f32, f32, f32);
-    M2C_UNK fn_8000A248();
-    M2C_UNK fn_8000A258();
-    M2C_UNK fn_8002F740(u32);
-    M2C_UNK fn_8008BD90(M2C_UNK, M2C_UNK, M2C_UNK);
-    M2C_UNK fn_800900F4(s32);
-    M2C_UNK fn_80090C50();
-    extern s32 lbl_802EF4C8;
+
+#pragma cplusplus on
+extern "C" void fn_80090C50(s32);
+extern "C" void fn_800900F4(s32);
+extern "C" void fn_8008BD90(s32, s32, s32);
+extern "C" void fn_80009C0C(f32);
+extern "C" void fn_80032564(void *arg0, void *arg1) {
     extern f32 lbl_80368E24;
     extern f32 lbl_80368E28;
     extern f32 lbl_80368E34;
-    s32 sp10;
-    s32 spC;
-    s32 sp8;
-    s32 temp_r5;
-    s32 temp_r5_2;
+    extern u8 lbl_802EF4C8[];
+    struct Obj {
+        u8 pad[4];
+        virtual void v0(s32 *, s32 *, s32 *) = 0;
+    };
+    s32 x;
+    s32 y;
+    s32 alpha;
 
-    if ((u32) M2C_FIELD(arg1, u32 *, 0x40) != 0U) {
-        M2C_FIELD(M2C_FIELD(arg0, void **, 4), M2C_UNK (**)(s32 *, s32 *, s32 *), 8)(&sp10, &spC, &sp8);
+    if (M2C_FIELD(arg1, u32 *, 0x40) != 0) {
+        ((Obj *)arg0)->v0(&x, &y, &alpha);
         fn_8000A258();
-        temp_r5 = sp10 + 0x20;
-        fn_80009D74(temp_r5, (f32) temp_r5, (f32) (spC + 0x118), lbl_80368E24, lbl_80368E28);
-        fn_80009B8C((u8) sp8);
+        fn_80009D74((f32)(x + 0x20), (f32)(y + 0x118), lbl_80368E24, lbl_80368E28);
+        fn_80009B8C((u8)alpha);
         fn_8000A248();
-        fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40));
-        fn_80090C50();
+        fn_80090C50(fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40)));
         fn_8000A258();
-        temp_r5_2 = sp10 + 0x20;
-        fn_80009D74(temp_r5_2, (f32) temp_r5_2, (f32) (spC + 0x30), lbl_80368E24, lbl_80368E28);
+        fn_80009D74((f32)(x + 0x20), (f32)(y + 0x30), lbl_80368E24, lbl_80368E28);
         fn_8000A248();
-        fn_800900F4(lbl_802EF4C8);
+        fn_800900F4(M2C_FIELD(lbl_802EF4C8, s32 *, 0));
         fn_8000A258();
         fn_80009C0C(lbl_80368E34);
         fn_8000A248();
         fn_8008BD90(0x64, 0xD2, 0);
         fn_8000A258();
-        fn_80009B8C(0xFFU);
+        fn_80009B8C(0xFF);
         fn_8000A248();
     }
 }
+#pragma cplusplus reset
 
 #pragma cplusplus on
-extern "C" void fn_80090C50(s32);
 extern "C" void fn_8003284C(void *arg0, void *arg1) {
     extern f32 lbl_80368E24;
     extern f32 lbl_80368E28;
