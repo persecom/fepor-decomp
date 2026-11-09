@@ -648,33 +648,25 @@ void fn_8012ABAC(void *arg0) {
 }
 
 void fn_8012AC88(void *arg0) {
-    f32 fn_80023068(void *, s8, void *, f32, f32, f32);
+    f32 fn_80023068(void *, f32, f32);
+    void fn_80053C30(void *, s32);
     void fn_800536B0(f32, f32, f32);
-    void *fn_80053C30(void *, s32);
     void fn_80147578(void *, s32, f32, f32, f32);
     extern u8 lbl_80275740[];
     extern u8 lbl_802CA518[];
-    extern f64 lbl_8036A418;
     extern f32 lbl_8036A410;
-
-    void *temp_r6;
-    s8 temp_r5;
-    f32 temp_f30;
+    u8 *temp_r6;
     f32 temp_f31;
+    f32 temp_f30;
     f32 temp_f29;
-    u32 r4;
 
-    temp_r6 = (void *) M2C_FIELD(arg0, void **, 0x30);
-    temp_r5 = *(u8 *) temp_r6;
-    temp_f30 = lbl_8036A410 + (f32) (s8) temp_r5;
-    temp_f31 = lbl_8036A410 + (f32) (s8) *(u8 *) (((u8 *) temp_r6) + 1);
-    r4 = 0x43300000;
-    *(u32 *) ((u8 *) arg0 + 0x8) = r4;
-    *(u32 *) ((u8 *) arg0 + 0x10) = r4;
-    temp_f29 = fn_80023068(&lbl_802CA518, (s8) temp_r5, temp_r6, temp_f30, temp_f31, lbl_8036A410);
-    fn_80053C30((void *) ((u8 *) lbl_80275740 + 0x165), 0);
+    temp_r6 = *(u8 **)((u8 *)arg0 + 0x30);
+    temp_f30 = lbl_8036A410 + (f32)(s8)temp_r6[0];
+    temp_f31 = lbl_8036A410 + (f32)(s8)temp_r6[1];
+    temp_f29 = fn_80023068(lbl_802CA518, temp_f30, temp_f31);
+    fn_80053C30(lbl_80275740 + 0x165, 0);
     fn_800536B0(temp_f30, temp_f31, temp_f29);
-    fn_80147578((void *) ((u8 *) lbl_80275740 + 0x196), 0x64, temp_f30, temp_f31, temp_f29);
+    fn_80147578(lbl_80275740 + 0x196, 0x64, temp_f30, temp_f31, temp_f29);
 }
 
 void fn_8012AD80(void) {
