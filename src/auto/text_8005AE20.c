@@ -1884,9 +1884,11 @@ void fn_80067480(void)
 void fn_800675C8(void *arg0) {
     extern u8 lbl_80311AF8[];
     extern void *lbl_80366DD4;
-    if (arg0 == NULL) {
-        lbl_80366DD4 = lbl_80311AF8;
+
+    if (arg0 != NULL) {
+        return;
     }
+    lbl_80366DD4 = lbl_80311AF8;
 }
 #pragma peephole reset
 s32 fn_800675E0(void) {
@@ -3230,6 +3232,18 @@ void fn_80071E0C(void *arg0, void *arg1) {
     }
 }
 
+void fn_80072088(void *arg0, void *arg1) {
+    void *fn_8000C0C0(void *);
+    void fn_8018DC58(void);
+    extern u16 lbl_80286860[];
+    void *p;
+
+    p = *(void **)((u8 *)arg1 + 0x18);
+    if (p == fn_8000C0C0(&lbl_80286860)) {
+        fn_8018DC58();
+    }
+}
+
 void fn_800720C8(s32 unused, void *arg1) {
     s16 temp_r5;
     s32 temp_r3;
@@ -3404,6 +3418,23 @@ extern "C" s16 fn_800722DC(void *arg0) {
 #pragma cplusplus reset
 s32 fn_80072320(void) {
     return 0x54;
+}
+
+s32 fn_80072328(void *arg0) {
+    s16 left;
+    s16 right;
+    s16 *selected;
+
+    left = *(s16 *)((u8 *)arg0 + 0x12);
+    right = *(s16 *)((u8 *)arg0 + 0x10);
+
+    if (left >= right) {
+        selected = (s16 *)((u8 *)arg0 + 0x12);
+    } else {
+        selected = (s16 *)((u8 *)arg0 + 0x10);
+    }
+
+    return *selected;
 }
 
 s32 fn_8007234C(void) {
