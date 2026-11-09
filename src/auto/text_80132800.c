@@ -1984,6 +1984,39 @@ s16 fn_8013E834(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0x1E);
 }
 
+void *fn_8013E83C(void *arg0, s16 arg1) {
+    extern u16 lbl_80291F60;
+    extern u16 lbl_802920E0;
+    void *temp_r31 = arg0;
+
+    if (temp_r31 != NULL) {
+        *(u16 **)((u8 *)temp_r31 + 4) = &lbl_80291F60;
+        if (temp_r31 != NULL) {
+            *(u16 **)((u8 *)temp_r31 + 4) = &lbl_802920E0;
+        }
+        if (arg1 > 0) {
+            fn_800C428C(temp_r31);
+        }
+    }
+    return temp_r31;
+}
+
+void *fn_8013E898(void *arg0, s16 arg1) {
+    extern u16 lbl_80291FF8[76];
+    extern u16 lbl_802920E0[76];
+    
+    if (arg0 != NULL) {
+        *(u16**)((char*)arg0 + 4) = lbl_80291FF8;
+        if (arg0 != NULL) {
+            *(u16**)((char*)arg0 + 4) = lbl_802920E0;
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_8013EB6C(void **arg0) {
     void (**func_ptr)(void);
     
