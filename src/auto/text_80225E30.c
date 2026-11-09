@@ -250,6 +250,17 @@ s32 fn_8022692C(void *arg0, u32 arg1) {
     return var_r5;
 }
 
+void fn_8022695C(void *arg0, s32 arg1) {
+    extern void fn_80003458(void *, s32, s32);
+
+    *(u32 *)((u8 *)arg0 + 0x8) = 0;
+    *(u32 *)((u8 *)arg0 + 0xC) = 0;
+
+    if (arg1 == 0) {
+        fn_80003458((u8 *)arg0 + 0x10, 0, 0x880);
+    }
+}
+
 s32 fn_80226A2C(void) {
     return 0;
 }
