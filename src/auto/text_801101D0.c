@@ -1492,6 +1492,20 @@ void fn_8011C674(void *arg0, s32 arg1) {
     fn_8011CAAC(*(s32 *)((u8 *)arg0 + 0x424), arg1, 0);
 }
 
+void *fn_8011C984(void *arg0, u32 arg1) {
+    u32 count;
+    void **array;
+
+    count = *(u32 *)((u8 *)arg0 + 0xBC);
+
+    if (arg1 < count) {
+        array = *(void ***)((u8 *)arg0 + 0xC0);
+        return array[arg1];
+    }
+
+    return NULL;
+}
+
 void fn_8011C9A8(void *arg0, s32 arg1) {
     s32 temp_r4;
     s32 temp_r5;
