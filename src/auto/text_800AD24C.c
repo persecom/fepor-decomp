@@ -3840,13 +3840,9 @@ u8 fn_800BD5AC(void) {
 }
 
 void fn_800BD5E0(s32 arg0) {
-    extern u16 lbl_802CA264[];
-    s32 temp_r4;
-    s32 temp_r3;
-    
-    temp_r4 = arg0 * 0xC;
-    temp_r3 = temp_r4 << 2;
-    fn_80015680(&lbl_802CA264[temp_r3], temp_r4);
+    void fn_80015680(void *);
+    extern u8 lbl_802CA264[];
+    fn_80015680(&lbl_802CA264[arg0 * 0xC]);
 }
 
 extern u16 lbl_802CA264[50];
