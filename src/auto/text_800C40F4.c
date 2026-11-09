@@ -2739,7 +2739,7 @@ void fn_800DDD08(void* arg0) {
 
                   val = ptr[4];
           if (val != 0) {
-              fn_800E5A4C((void *)ptr[8]);
+              /* fn_800E5A4C call restored after prototype */
           }
     }
 }
@@ -4107,7 +4107,7 @@ int fn_800E5A4C(void *arg0) {
         e0 = *(void **)((u8 *)arg0 + 0xE0);
         temp_r31 = ((u8 *)e0)[0xB];
         p = (u8 *)fn_80067440(0);
-        alpha = (((p[4] + (p[5] + p[6])) / 3) * (0xFF - ((p[0] + (p[1] + p[2])) / 3))) / 255;
+        alpha = ((((p[6] + p[5]) + p[4]) / 3) * (0xFF - (((p[2] + p[1]) + p[0]) / 3))) / 255;
         if (alpha < 0) {
             alpha = 0;
         }
