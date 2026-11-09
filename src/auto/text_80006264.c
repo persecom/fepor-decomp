@@ -646,6 +646,130 @@ void fn_80009008(void *list, s32 a, s32 b) {
         node = *(u8 **)node;
     }
 }
+
+void fn_80009728(u32 arg0, void *arg1, s32 arg2, s32 arg3) {
+    void fn_802025C0(void *, f32, f32, f32);
+    void fn_80220428(s32);
+    void fn_802201A8(s32, s32, s32, s32, s32, s32);
+    void fn_80223F2C(s32, s32, s32, s32);
+    void fn_80222CF0(s32, s32);
+    void fn_80222C50(void *, s32);
+    u32 fn_80222A80(void *);
+    u32 fn_80222A90(void *);
+    s32 fn_80222AA0(void *);
+    void fn_80224E50(void *, s32, s32);
+    void fn_802245D8(s32, s32, s32, s32);
+    void fn_802239D0(s32, s32);
+    void fn_80223A5C(s32, s32, s32, s32, s32);
+    void fn_80223AE4(s32, s32, s32, s32, s32, s32);
+    void fn_80223AA0(s32, s32, s32, s32, s32);
+    void fn_80223B4C(s32, s32, s32, s32, s32, s32);
+    extern f32 lbl_80368B94;
+    u8 sp8[0x30];
+    u16 temp_r31;
+    u8 var_r30;
+    f32 temp_f31;
+    f32 temp_f1;
+    s32 temp_r3;
+    s32 a;
+    s32 b;
+
+    temp_r31 = (u16)arg0;
+    var_r30 = 1;
+    switch (arg0 & 3) {
+    case 2:
+        var_r30 = 0;
+        fn_80220428(0);
+        fn_80223F2C(0, 0xFF, 0xFF, 4);
+        break;
+    case 0:
+        if (temp_r31 & 0x8000) {
+            fn_80222CF0(arg2, arg3);
+        }
+        fn_80222C50(arg1, 0);
+        fn_80220428(1);
+        fn_802201A8(0, 1, 4, 0x3C, 0, 0x7D);
+        fn_80223F2C(0, 0, 0, 4);
+        break;
+    case 1:
+        if (temp_r31 & 0x8000) {
+            fn_80222CF0(arg2, arg3);
+        }
+        fn_80222C50(arg1, 0);
+        temp_f31 = lbl_80368B94 / (f32)(u16)fn_80222A90(arg1);
+        temp_f1 = lbl_80368B94 / (f32)(u16)fn_80222A80(arg1);
+        fn_802025C0(sp8, temp_f1, temp_f31, lbl_80368B94);
+        fn_80224E50(sp8, 0x1E, 1);
+        fn_80220428(1);
+        fn_802201A8(0, 1, 4, 0x1E, 0, 0x7D);
+        fn_80223F2C(0, 0, 0, 4);
+        break;
+    case 3:
+        fn_80220428(1);
+        fn_802201A8(0, 1, 4, 0x1E, 0, 0x7D);
+        fn_80223F2C(0, 0, 0, 4);
+        break;
+    }
+
+#pragma scheduling off
+    switch (temp_r31 & 0xF0) {
+    case 0x0:
+        fn_802245D8(0, 0, 0, 0);
+        a = 0;
+        b = 4;
+        if (var_r30 != 0) {
+            b = 0;
+        }
+        fn_802239D0(a, b);
+        break;
+    case 0x10:
+        fn_802245D8(1, 4, 5, 0);
+        if (var_r30 != 0) {
+            temp_r3 = fn_80222AA0(arg1);
+            switch (temp_r3) {
+            case 0:
+            case 1:
+                fn_80223A5C(0, 0xF, 0xF, 0xF, 0xA);
+                fn_80223AE4(0, 0, 0, 0, 1, 0);
+                fn_80223AA0(0, 7, 4, 5, 7);
+                fn_80223B4C(0, 0, 0, 0, 1, 0);
+                break;
+            default:
+                fn_802239D0(0, 0);
+                break;
+            }
+        } else {
+            fn_802239D0(0, 4);
+        }
+        break;
+    case 0x20:
+        fn_802245D8(1, 4, 1, 0);
+        a = 0;
+        b = 4;
+        if (var_r30 != 0) {
+            b = 0;
+        }
+        fn_802239D0(a, b);
+        break;
+    case 0x30:
+        fn_802245D8(3, 4, 1, 0);
+        a = 0;
+        b = 4;
+        if (var_r30 != 0) {
+            b = 0;
+        }
+        fn_802239D0(a, b);
+        break;
+    case 0x40:
+        fn_80223A5C(0, 0xF, 0xF, 0xF, 0xA);
+        fn_80223AE4(0, 0, 0, 0, 1, 0);
+        fn_80223AA0(0, 7, 4, 5, 7);
+        fn_80223B4C(0, 0, 0, 0, 1, 0);
+        break;
+    }
+#pragma scheduling reset
+}
+
 void fn_80009B28(void) {
     extern u16 lbl_80367140;
 
@@ -877,15 +1001,12 @@ s32 fn_8000AFB4(void **arg0) {
     return 0;
 }
 
-s32 fn_8000B018(void *arg0) {
-    void **obj = (void **)((char *)arg0 + 4);
-    void **vtable_ptr = *obj;
-    s32 (*func)(void *obj) = (s32 (*)(void *))vtable_ptr[1]; // offset 0x4 is vtable[1] (second entry)
-    
-    void *new_val = (char *)*obj + 0xc;
-    *obj = new_val;
-    
-    return func(arg0);
+void fn_8000B018(void *arg0) {
+    s32 *node = ((s32 **)arg0)[1];
+    void (*func)(void *, s32) = (void (*)(void *, s32))node[1];
+    s32 arg1 = node[2];
+    ((s32 **)arg0)[1] = node + 3;
+    func(arg0, arg1);
 }
 
 void fn_8000B050(void *arg0) {
