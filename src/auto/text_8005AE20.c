@@ -398,21 +398,25 @@ void fn_8005BFE4(void *arg0) {
  else {if(*flags&0x400){fn_8005DE84(arg0);return;}if(*flags&0x800)fn_8005D9A8(arg0);*flags|=0x2000;}
 }
 
-s32 fn_8005C0AC(u8 *arg0) {
-    u8 *sp18;
-    u8 *sp8;
+s32 fn_8005C0AC(u8 *arg1) {
+    M2C_UNK sp18;
+    M2C_UNK sp8;
+    s32 temp_r3;
+    u8 *var_r31;
 
-    if (*arg0 == '.') {
-        arg0++;
+    var_r31 = arg1;
+    if ((s32) *arg1 == 0x2E) {
+        var_r31 += 1;
     }
-    if (fn_80234200('.') != 0) {
-        fn_80234450(&sp18, arg0 + 1);
-        fn_80238ADC(&sp18);
-        fn_80234450(&sp8, arg0);
-        fn_80238ADC(&sp8);
-        return fn_802342B8(&sp18, &sp8) == 0;
+    temp_r3 = fn_80234200(0x2E);
+    if (temp_r3 == 0) {
+        return (s8) *var_r31 == 0;
     }
-    return (s8) *arg0 == 0;
+    fn_80234450(&sp18, temp_r3 + 1);
+    fn_80238ADC(&sp18);
+    fn_80234450(&sp8, var_r31);
+    fn_80238ADC(&sp8);
+    return fn_802342B8(&sp18, &sp8) == 0;
 }
 
 u16 fn_8005C144(u8 *arg0) {
@@ -611,7 +615,8 @@ void fn_8005C870(void) {
 }
 
 void fn_8005C890(void) {
-    fn_8005D330(0xC);
+    extern void fn_8005D330(int);
+    fn_8005D330(0x0C);
 }
 
 void fn_8005C8B4(void) {
@@ -2009,13 +2014,13 @@ void fn_8006B39C(void) {
 }
 
 void fn_8006C6F8(void *arg0) {
-    M2C_UNK fn_80066D00(M2C_UNK);
+    void fn_80066D00(s32);
     s32 temp_r5;
 
-    temp_r5 = M2C_FIELD(arg0, s32 *, 0);
+    temp_r5 = *(s32 *)arg0;
     if (temp_r5 & 0xF025C820) {
         if (temp_r5 & 0x80000000) {
-            M2C_FIELD(arg0, M2C_UNK (**)(M2C_UNK), 0x94)(1);
+            (*(void (**)(void *, s32))((u8 *)arg0 + 0x94))(arg0, 1);
         }
         fn_80066D00(-1);
     }
@@ -2507,8 +2512,8 @@ s32 fn_8006F2B8(s32 arg1) {
 }
 
 s32 fn_8006F2E0(void *arg2) {
-    extern s8 lbl_80366DE8;
-    lbl_80366DE8 = *(u8 *)((u8 *)arg2 + 0x3A);
+    extern u8 lbl_80366DE8;
+    *(u8 *)&lbl_80366DE8 = *(u8 *)((u8 *)arg2 + 0x3A);
     return 5;
 }
 
@@ -2689,7 +2694,7 @@ extern "C" void fn_80070B3C(void *arg0, void *arg1) {
         p = (Ent *)fn_8000B908(g->ids[i]);
         if (p->level >= 4) {
             p->y = g->obj->v17() + 0x90;
-            p->y += g->obj->v20() * (u32)(p->level - 4);
+            p->y += (p->level - 4) * g->obj->v20();
         }
     }
 }
@@ -2987,9 +2992,11 @@ s32 fn_80072290(void) {
 }
 
 s16 fn_80072298(void *arg0) {
+    s16 (*func_ptr)(void);
     s16 temp_r3;
 
-    temp_r3 = M2C_FIELD(M2C_FIELD(arg0, void **, 4), s16 (**)(), 0x50)();
+    func_ptr = ((s16 (**)())((void ***)arg0)[1])[0x50 / sizeof(void *)];
+    temp_r3 = func_ptr();
     return (s16) (0x130 - ((s32) (((u32) temp_r3 >> 0x1FU) + temp_r3) >> 1));
 }
 
