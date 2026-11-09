@@ -355,8 +355,11 @@ void fn_80122998(s32 arg0) {
     fn_8000CAF0(lbl_80290288, arg0);
 }
 
-u8 fn_801229C4(void *arg0) {
-    return (u8) ((s8) M2C_FIELD(arg0, u8 *, 0x45) <= ((s8) M2C_FIELD(arg0, u8 *, 0x47) - (s8) M2C_FIELD(arg0, u8 *, 0x46)));
+u8 fn_801229C4(u8 *arg0) {
+    s8 a = (s8)arg0[0x46];
+    s8 b = (s8)arg0[0x47];
+    s8 c = (s8)arg0[0x45];
+    return (u8)((b - a) >= c);
 }
 
 void fn_801229F8(void *arg0) {
