@@ -3250,36 +3250,32 @@ s16 fn_80261214(s32 arg0) {
     return -(*ptr);
 }
 
-s32 fn_802612A0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 (*arg4)(s32, s32), M2C_UNK arg_sp0) {
-    s32 temp_r28;
-    s32 temp_r29;
-    s32 temp_r3;
-    s32 var_r30;
-    s32 var_r31;
+void *fn_802612A0(void *key, void *base, s32 count, s32 stride, s32 (*cmp)(void *, void *)) {
+    s32 low;
+    s32 high;
+    s32 mid;
+    void *ptr;
+    s32 result;
 
-    if (arg2 != 0) {
-        var_r31 = 1;
-        var_r30 = arg2;
-loop_2:
-        temp_r29 = (s32) (var_r31 + var_r30) >> 1;
-        temp_r28 = arg1 + (arg3 * (temp_r29 - 1));
-        temp_r3 = arg4(arg0, temp_r28);
-        if (temp_r3 == 0) {
-            return temp_r28;
-        }
-        if (temp_r3 < 0) {
-            var_r30 = temp_r29 - 1;
-        }
-        if (((u32) temp_r3 >> 0x1FU) == 0) {
-            var_r31 = temp_r29 + 1;
-        }
-        if (var_r31 > var_r30) {
-            goto block_9;
-        }
-        goto loop_2;
+    if (count != 0) {
+        low = 1;
+        high = count;
+        do {
+            mid = (low + high) >> 1;
+            ptr = (u8 *)base + (stride * (mid - 1));
+            result = cmp(key, ptr);
+            if (result == 0) {
+                return ptr;
+            }
+            if (result < 0) {
+                high = mid - 1;
+            }
+            if (((u32)result >> 31) == 0) {
+                low = mid + 1;
+            }
+        } while (low <= high);
     }
-block_9:
-    return 0;
+    return NULL;
 }
 
 f64 fn_80261344(f32 farg0) {
