@@ -502,19 +502,22 @@ void __DVDClearWaitingQueue(void) {
 }
 
 s32 fn_8020F7F0(void *arg0) {
-    void **r4;
-    void *r5;
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    void **prev;
+    void *next;
+    s32 enabled;
 
-    OSDisableInterrupts();
-    r4 = *(void ***)((char*)arg0 + 4);
-    r5 = *(void ***)arg0;
-    if ((r4 == NULL) || (r5 == NULL)) {
-        OSRestoreInterrupts();
+    enabled = OSDisableInterrupts();
+    prev = *(void ***)((char *)arg0 + 4);
+    next = *(void **)arg0;
+    if (prev == NULL || next == NULL) {
+        OSRestoreInterrupts(enabled);
         return 0;
     }
-    *r4 = r5;
-    *(void ***)((char*)r5 + 4) = r4;
-    OSRestoreInterrupts();
+    *prev = next;
+    *(void **)((char *)next + 4) = prev;
+    OSRestoreInterrupts(enabled);
     return 1;
 }
 
