@@ -3600,8 +3600,8 @@ void fn_8004D370(void) {
 void fn_8004D5D4(s32 arg0) {
     extern s32 lbl_803672B8;
     extern f32 lbl_80368FCC;
-    
-    fn_80222644(lbl_803672B8, 0xA0, 0x78, 0, 0, 0, 0);
+
+    fn_80222644(arg0, lbl_803672B8, 0xA0, 0x78, 0, 0, 0, 0);
     fn_802228D8(arg0, 1, 1, 0, 0, 0, lbl_80368FCC, lbl_80368FCC, lbl_80368FCC);
 }
 
