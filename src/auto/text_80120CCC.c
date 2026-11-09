@@ -967,6 +967,13 @@ s32 fn_80126CE8(void) {
     return 1;
 }
 
+s32 fn_80126D0C(void) {
+    extern u16 lbl_80275048[103];
+    fn_8000BCA4((u16*)((u8*)&lbl_80275048 + 0x467));
+    fn_8011AC78();
+    return 1;
+}
+
 s32 fn_80126D40(u8 arg0) {
     M2C_UNK fn_80105CEC(void *, u8);
     extern M2C_UNK lbl_80330708;
