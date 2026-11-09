@@ -2011,6 +2011,20 @@ void fn_80170794(void *arg0) {
     M2C_FIELD(temp_r31, s16 *, 0x4C) = fn_80164E78(temp_r31, 0);
 }
 
+void fn_80170DB0(void *arg0) {
+    void fn_8013FF00(void *, s32);
+    u32 fn_8013FF94(void *, s32, s32);
+    void fn_801658DC(s32, s32);
+    extern u16 lbl_80278080[];
+    u32 ret;
+
+    fn_8013FF00(arg0, *(s32 *)((u8 *)arg0 + 0x54));
+    ret = fn_8013FF94(arg0, -0x1000, 0);
+    if (ret != 0) {
+        fn_801658DC(ret, (s32)((u8 *)lbl_80278080 + 0x272));
+    }
+}
+
 void fn_80170E08(void *arg0) {
     *(u8*)((char*)arg0 + 0x54) = 1;
 }
