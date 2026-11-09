@@ -14,3 +14,4 @@ void fn_80105504(void) {
     lbl_8032BB44[3] = 0;
     __register_global_object(lbl_8032BB44, fn_80105334, lbl_8032BB38);
 }
+__declspec(section ".ctors") static void (*const lbl_80105504_ctor)(void) = fn_80105504;
