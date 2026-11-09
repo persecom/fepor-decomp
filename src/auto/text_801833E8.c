@@ -3746,12 +3746,11 @@ void fn_8019C00C(s32 arg0, s32 arg1) {
 
 void fn_8019C070(s32 arg0, s32 arg1) {
     void *fn_8000CAA0(void *, s32);
-    void fn_8019D51C(void *, s32);
+    void fn_8019D51C(void *, s32, void *);
     extern u8 lbl_80296938[];
     extern u8 lbl_8027AA38[];
 
-    fn_8000CAA0(lbl_80296938, arg0);
-    fn_8019D51C((void *) (lbl_8027AA38 + 0x1D4), arg1);
+    fn_8019D51C(fn_8000CAA0(lbl_80296938, arg0), arg1, lbl_8027AA38 + 0x1D4);
 }
 
 extern s32* lbl_80367240;
