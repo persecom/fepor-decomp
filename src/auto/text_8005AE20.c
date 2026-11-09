@@ -3141,16 +3141,14 @@ void fn_80071E0C(void *arg0, void *arg1) {
     }
 }
 
-void fn_800720C8(void *arg1) {
-    u32 temp_r3_2;
-    u32 temp_r3;
+void fn_800720C8(s32 unused, void *arg1) {
     s16 temp_r5;
+    s32 temp_r3;
 
-    temp_r5 = M2C_FIELD(arg1, s16 *, 0x36);
-    temp_r3 = M2C_FIELD(arg1, s16 *, 0x32) + temp_r5;
-    if ((s32) ((s32) ((temp_r3 >> 0x1FU) + temp_r3) >> 1) > 0xE0) {
-        temp_r3_2 = 0x1C0 - temp_r5;
-        M2C_FIELD(arg1, s16 *, 0x32) = (s16) ((s32) ((temp_r3_2 >> 0x1FU) + (s32)temp_r3_2) >> 1);
+    temp_r5 = *(s16 *)((u8 *)arg1 + 0x36);
+    temp_r3 = *(s16 *)((u8 *)arg1 + 0x32) + temp_r5;
+    if (temp_r3 / 2 > 0xE0) {
+        *(s16 *)((u8 *)arg1 + 0x32) = (s16)((0x1C0 - temp_r5) / 2);
     }
 }
 
