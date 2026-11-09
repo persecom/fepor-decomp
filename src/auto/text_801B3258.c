@@ -1145,32 +1145,29 @@ loop_5:
 
 void fn_800C428C(void *);
 void *fn_801D2E40(void *, s16);
-void fn_801C1824(void **ret, s32 *list, void **start, void **end) {
-    void **first;
-    void **last;
-    void **a;
-    void **b;
-    void **node;
+void fn_801C1824(ListIter *ret, List *list, ListIter *start, ListIter *end) {
+    ListNode *first;
+    ListNode *last;
+    ListNode *a;
+    ListNode *node;
 
-    first = (void **)*start;
-    last = (void **)*end;
+    first = start->node;
+    last = end->node;
     if (first == last) {
-        *ret = last;
+        ret->node = last;
         return;
     }
-    a = (void **)*last;
-    b = (void **)*first;
-    b[1] = a[1];
-    *(void **)a[1] = b;
-    while (*start != *end) {
-        first = (void **)*start;
-        fn_801D2E40((u8 *)first + 8, -1);
-        node = (void **)*start;
-        *start = node[1];
+    a = last->prev;
+    first->prev->next = a->next;
+    a->next->prev = first->prev;
+    while (start->node != end->node) {
+        fn_801D2E40((u8 *)start->node + 8, -1);
+        node = start->node;
+        start->node = node->next;
         fn_800C428C(node);
-        *list -= 1;
+        list->size--;
     }
-    *ret = *end;
+    ret->node = end->node;
 }
 
 void fn_801C18FC(s32 arg0) {
@@ -4708,3 +4705,13 @@ extern s32 lbl_80367110;
 extern f32 lbl_8036B330;
 extern f32 lbl_8036B338;
 extern f32 lbl_8036B358;
+#include "global.h"
+#include "m2c.h"
+
+extern u8 lbl_8027E258[];
+extern f32 lbl_8036B630;
+extern f32 lbl_8036B650;
+extern f32 lbl_8036B664;
+extern f32 lbl_8036B668;
+extern f32 lbl_8036B698;
+extern f32 lbl_8036B69C;
