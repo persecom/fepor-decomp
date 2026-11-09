@@ -1816,10 +1816,12 @@ void fn_801C4394(s32 unused, s16 *p) {
 }
 
 void *fn_801C43C8(void *arg0, s16 arg1) {
-    extern u16 lbl_802981AC;
+    void fn_800578F0(void *, s16);
+    void fn_800C428C(void *);
+    extern u8 lbl_802981AC[];
     if (arg0 != NULL) {
-        *(u16**)((char*)arg0 + 0x2C) = &lbl_802981AC;
-        fn_800578F0(0, &lbl_802981AC);
+        *(void **)((char *)arg0 + 0x2C) = lbl_802981AC;
+        fn_800578F0(arg0, 0);
         if (arg1 > 0) {
             fn_800C428C(arg0);
         }
