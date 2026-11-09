@@ -1104,6 +1104,10 @@ void fn_800CDAA0(void *arg0, void *arg1) {
     }
 }
 
+s32 fn_800CDBA4(s32 *arg1, u32 arg2) {
+    return 0;
+}
+
 void fn_800CDFFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     // Simplest possible version for initial attempt
     return;
@@ -2015,6 +2019,24 @@ void fn_800DB9E8(void *arg0, void *arg1) {
     M2C_FIELD(arg0, f32 *, 0) = sp8;
     M2C_FIELD(arg0, f32 *, 4) = spC;
     M2C_FIELD(arg0, f32 *, 8) = sp10;
+}
+
+void fn_800DBA50(void *arg0, void *arg1) {
+    f32 f0;
+    f32 f1;
+    f32 f2;
+
+    f0 = *(f32 *)(((u8 *)arg1) + 0x48);
+    f1 = *(f32 *)(((u8 *)arg1) + 0x4C);
+    f2 = *(f32 *)(((u8 *)arg1) + 0x50);
+    
+    fn_80067FD0();
+    
+    fn_8020310C(&f0, &f0);
+    
+    *(f32 *)(((u8 *)arg0) + 0) = f0;
+    *(f32 *)(((u8 *)arg0) + 4) = f1;
+    *(f32 *)(((u8 *)arg0) + 8) = f2;
 }
 
 void fn_800DBAB8(void *arg0, void *arg1) {
@@ -6023,8 +6045,11 @@ void fn_800FC63C(s32 arg0) {
 void fn_800FC678(void) {
     extern u16 lbl_802731D0[29];
     extern s32 lbl_80367900;
-    
-    lbl_80367900 = fn_8003FCCC(&lbl_802731D0[0x2D]);
+    s32 fn_8003FCCC(void *);
+    void fn_8010F970(void);
+    void fn_80129374(void);
+
+    lbl_80367900 = fn_8003FCCC((u8 *)lbl_802731D0 + 0x2D);
     fn_8010F970();
     fn_80129374();
 }
