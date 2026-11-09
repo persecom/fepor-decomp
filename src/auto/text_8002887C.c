@@ -1385,9 +1385,12 @@ void fn_8003182C(s32 arg0) {
 }
 
 void fn_800318A8(s32 arg0) {
-    extern u16 lbl_802EF4C8[12];
-    extern u16 lbl_802EFCC4[6];
-    fn_8002A2BC(lbl_802EF4C8, (u16*)((u32)lbl_802EF4C8));
+    extern u16 lbl_802EF4C8[];
+    extern u16 lbl_802EFCC4[];
+    void fn_8002A2BC(s32);
+    void fn_8002EB54(void *, s32);
+
+    fn_8002A2BC(*(s32 *)lbl_802EF4C8);
     fn_8002EB54(lbl_802EFCC4, arg0);
 }
 
