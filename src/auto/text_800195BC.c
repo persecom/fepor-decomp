@@ -1187,7 +1187,6 @@ extern f32 lbl_80368D0C;
 extern f32 lbl_80368D10;
 #include "common.h"
 #include "global.h"
-extern f32 fabsf(f32 x); // Forward declaration of fabsf
 #include "m2c_macros.h"
 extern u16 lbl_803206EC;
 s32 fn_800C3260(u16 *);
