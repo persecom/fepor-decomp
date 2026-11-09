@@ -863,6 +863,12 @@ void fn_800A7014(void *arg0) {
     fn_80059208(fn_800A70DC, arg0);
 }
 
+void fn_800A70A0(void *arg0) {
+    s32 fn_8006D948(void *);
+    extern u8 lbl_8026E378[];
+    *(s32 *)((char *)arg0 + 0x40) = fn_8006D948(lbl_8026E378 + 0x28);
+}
+
 #pragma use_lmw_stmw on
 #pragma optimization_level 2
 #pragma opt_common_subs off
