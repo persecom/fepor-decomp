@@ -72,10 +72,10 @@ void fn_80005C60(void) {
 }
 
 void fn_80005D88(void) {
-    extern s32 lbl_80330708;
+    extern u16 lbl_80330708[];
     void *temp_r31;
 
-    temp_r31 = &lbl_80330708 + 0x9C;
+    temp_r31 = (u16 *)lbl_80330708 + 0x9C / sizeof(u16);
     fn_801998B0(temp_r31);
     fn_80199818(temp_r31);
 }
