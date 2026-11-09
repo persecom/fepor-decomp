@@ -322,10 +322,10 @@ void *fn_801A46BC(void *arg0, void *arg1) {
 }
 
 void fn_801A48A4(s32 arg0) {
-    M2C_UNK fn_80034068(s32, M2C_UNK, s8);
-    M2C_UNK fn_800351FC(s32, u8, M2C_UNK, s32);
-    s8 fn_800386B0(s32);
-    u8 fn_8003D094();
+    void fn_80034068(s32, s32, s8);
+    void fn_800351FC(s32, u8, s32, s32);
+    s32 fn_800386B0(s32);
+    u8 fn_8003D094(void);
     u8 fn_8003D13C(s32);
     u8 var_r31;
 
@@ -335,8 +335,8 @@ void fn_801A48A4(s32 arg0) {
     }
     if (var_r31 != 0) {
         fn_80034068(arg0 + 0x8A0, 0x25, 0);
-        fn_80034068(arg0 + 0x8A0, 0x27, fn_800386B0(arg0));
-        fn_80034068(arg0 + 0x8A0, 0x28, (s8) var_r31);
+        fn_80034068(arg0 + 0x8A0, 0x27, (s8)fn_800386B0(arg0));
+        fn_80034068(arg0 + 0x8A0, 0x28, (s8)var_r31);
         fn_800351FC(arg0, var_r31, 0, arg0 + 0x8A0);
     }
 }
