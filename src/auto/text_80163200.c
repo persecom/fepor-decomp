@@ -3230,6 +3230,27 @@ void fn_8017C3C8(void *arg0, void *arg1, s32 arg2) {
     fn_80105A5C(temp_r4 + 0x1c, arg1);
 }
 
+void *fn_8017C40C(void *arg0, s16 arg1) {
+    void fn_800C428C(void *);
+    extern void *lbl_80295404[];
+    extern void *lbl_80292230[];
+    extern void *lbl_8028FDB0[];
+
+    if (arg0 != NULL) {
+        *(void **)arg0 = lbl_80295404;
+        if (arg0 != NULL) {
+            *(void **)arg0 = lbl_80292230;
+            if (arg0 != NULL) {
+                *(void **)arg0 = lbl_8028FDB0;
+            }
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_8017D4B8(s32 *arg0, void *arg1) {
     s32 *fn_8013F748(void *, M2C_UNK *, s16 *, s16, s32, s16, void *);
     M2C_UNK spC;
