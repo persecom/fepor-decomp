@@ -309,3 +309,17 @@ s32 fn_8020C310(void) {
     return temp_r3;
 }
 
+s32 fn_8020C370(void *arg0) {
+    extern u8 lbl_80339F00[];
+
+    if (arg0 == lbl_80339F00) {
+        return 1;
+    }
+
+    if (arg0 == AlarmForTimeout_80339ED8) {
+        return 1;
+    }
+
+    return 0;
+}
+
