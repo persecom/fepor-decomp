@@ -2,9 +2,9 @@
 #include "common.h"
 
 static inline void *map_find_xy(s32 *arg0, s8 arg1, s8 arg2) {
-    s32 *var_r6;
-    s32 var_r5;
-    s32 n;
+    register s32 *var_r6 asm("r6");
+    register s32 var_r5 asm("r5");
+    register s32 n asm("r7");
 
     n = *arg0;
     var_r6 = arg0;
@@ -946,6 +946,7 @@ extern "C" void fn_8002F0D0(void *arg0, void *arg1) {
     void *cur;
     s32 flags;
     u8 changed;
+    u8 temp_r4;
     f32 fa;
     f32 fb;
     u8 t0;
@@ -963,9 +964,10 @@ extern "C" void fn_8002F0D0(void *arg0, void *arg1) {
         *(f32 *)((u8 *)arg1 + 0x38) = fa;
         ((u8 *)arg1)[0x3E] = (u8)(s32)*(f32 *)((u8 *)arg1 + 0x34);
         ((u8 *)arg1)[0x3F] = (u8)(s32)*(f32 *)((u8 *)arg1 + 0x38);
-        if ((s8)((u8 *)arg1)[0x3C] != (s8)((u8 *)arg1)[0x3E] ||
+        temp_r4 = ((u8 *)arg1)[0x3E];
+        if ((s8)((u8 *)arg1)[0x3C] != (s8)temp_r4 ||
             (s8)((u8 *)arg1)[0x3D] != (s8)((u8 *)arg1)[0x3F]) {
-            found = map_find_xy(lbl_802EF4E0, ((u8 *)arg1)[0x3E], ((u8 *)arg1)[0x3F]);
+            found = map_find_xy(lbl_802EF4E0, temp_r4, ((u8 *)arg1)[0x3F]);
             *(void **)((u8 *)arg1 + 0x40) = found;
             if (found != NULL) {
                 *(void **)((u8 *)arg1 + 0x44) = found;
@@ -989,19 +991,22 @@ extern "C" void fn_8002F0D0(void *arg0, void *arg1) {
         }
         goto end;
     do_body:
-        t0 = ((u8 *)arg1)[0x3E];
-        fa = lbl_80368E08 + (f32)(s8)((u8 *)var_r31)[0];
-        fb = lbl_80368E08 + (f32)(s8)((u8 *)var_r31)[1];
-        ((u8 *)arg1)[0x3C] = t0;
-        t1 = ((u8 *)arg1)[0x3F];
-        ((u8 *)arg1)[0x3D] = t1;
-        *(f32 *)((u8 *)arg1 + 0x34) = fa;
-        *(f32 *)((u8 *)arg1 + 0x38) = fb;
+        {
+            s8 c0 = ((u8 *)var_r31)[0];
+            s8 c1 = ((u8 *)var_r31)[1];
+            t0 = ((u8 *)arg1)[0x3E];
+            ((u8 *)arg1)[0x3C] = t0;
+            t1 = ((u8 *)arg1)[0x3F];
+            ((u8 *)arg1)[0x3D] = t1;
+            *(f32 *)((u8 *)arg1 + 0x34) = lbl_80368E08 + (f32)c0;
+            *(f32 *)((u8 *)arg1 + 0x38) = lbl_80368E08 + (f32)c1;
+        }
         ((u8 *)arg1)[0x3E] = (u8)(s32)*(f32 *)((u8 *)arg1 + 0x34);
         ((u8 *)arg1)[0x3F] = (u8)(s32)*(f32 *)((u8 *)arg1 + 0x38);
-        if ((s8)((u8 *)arg1)[0x3C] != (s8)((u8 *)arg1)[0x3E] ||
+        temp_r4 = ((u8 *)arg1)[0x3E];
+        if ((s8)((u8 *)arg1)[0x3C] != (s8)temp_r4 ||
             (s8)((u8 *)arg1)[0x3D] != (s8)((u8 *)arg1)[0x3F]) {
-            found = map_find_xy(lbl_802EF4E0, ((u8 *)arg1)[0x3E], ((u8 *)arg1)[0x3F]);
+            found = map_find_xy(lbl_802EF4E0, temp_r4, ((u8 *)arg1)[0x3F]);
             *(void **)((u8 *)arg1 + 0x40) = found;
             if (found != NULL) {
                 *(void **)((u8 *)arg1 + 0x44) = found;
