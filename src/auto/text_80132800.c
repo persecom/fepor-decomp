@@ -3242,6 +3242,40 @@ void fn_80143E0C(void *unit, s16 arg1) {
 }
 
 #pragma cplusplus on
+extern "C" void fn_80143F64(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    void *fn_8000CAA0(void *, s32);
+    void fn_801400F4(void *, void *);
+    void fn_801403F0(void);
+    extern u8 lbl_80292320[];
+    struct Obj {
+        virtual s32 v0() = 0;
+        virtual s32 v1() = 0;
+        virtual s32 v2() = 0;
+        virtual s32 v3() = 0;
+        virtual s32 v4() = 0;
+        virtual s32 v5() = 0;
+        virtual s32 v6() = 0;
+        virtual s32 v7() = 0;
+        virtual s32 v8() = 0;
+        virtual s32 v9() = 0;
+        virtual s32 v10() = 0;
+    };
+    void *temp;
+
+    if (arg2 != ((Obj *)arg0)->v10()) {
+        *(s16 *)((u8 *)arg0 + 0x24) = 6;
+        temp = fn_8000CAA0(lbl_80292320, arg1);
+        if (temp != NULL) {
+            fn_801403F0();
+        }
+        fn_801400F4(temp, arg0);
+        *(s32 *)((u8 *)temp + 0x44) = arg2;
+        *(s32 *)((u8 *)temp + 0x48) = arg3;
+    }
+}
+#pragma cplusplus off
+
+#pragma cplusplus on
 extern "C" void fn_80144000(void *arg0) {
     struct Obj {
         virtual void v0() = 0;
