@@ -384,6 +384,19 @@ void fn_800898E4(void *arg0) {
     fn_80222EB4();
 }
 
+u32 fn_80089948(void) {
+    extern u8 *lbl_803674EC;
+    u16 value;
+
+    value = *(u16 *)(lbl_803674EC + 0x32);
+
+    if (value == 1 || value == 3) {
+        return 1;
+    }
+
+    return 0;
+}
+
 void fn_80089970(void) {
     extern void *lbl_803674EC;
     M2C_FIELD(lbl_803674EC, s16 *, 0x32) = 0;
