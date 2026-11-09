@@ -2356,18 +2356,17 @@ s32 fn_801C9A88(void) {
 
 s32 fn_801C9A90(void) {
     s32 fn_800DC3B0(s32);
-    M2C_UNK fn_8011C984(s32, s32);
+    s32 fn_8011C984(s32, s32);
     s32 fn_8011C9E4(s32);
-    M2C_UNK fn_801C9EE0(void *, s32);
-    M2C_UNK fn_801CACE4(s32);
+    void fn_801C9EE0(void *, s32);
+    void fn_801CACE4(void *, s32);
     extern void *lbl_803682B8;
     s32 temp_r30;
     void *temp_r31;
 
-    temp_r31 = lbl_803682B8;
     temp_r30 = fn_800DC3B0(M2C_FIELD(lbl_803682B8, s32 *, 0x438));
-    fn_8011C984(M2C_FIELD(temp_r31, s32 *, 0x430), fn_8011C9E4(M2C_FIELD(temp_r31, s32 *, 0x430)));
-    fn_801CACE4(temp_r30);
+    temp_r31 = lbl_803682B8;
+    fn_801CACE4((void *)fn_8011C984(M2C_FIELD(temp_r31, s32 *, 0x430), fn_8011C9E4(M2C_FIELD(temp_r31, s32 *, 0x430))), temp_r30);
     fn_801C9EE0(lbl_803682B8, fn_8011C9E4(M2C_FIELD(lbl_803682B8, s32 *, 0x430)));
     return 0;
 }
