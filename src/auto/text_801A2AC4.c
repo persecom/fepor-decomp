@@ -100,6 +100,13 @@ s32 fn_801A2D2C(void) {
     return 0;
 }
 
+extern u8 lbl_80297144[16];
+void fn_801A2E3C(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_80297144[16];
+    fn_8000CAA0(lbl_80297144, arg0);
+}
+
 s32 fn_801A2E68(void) {
     M2C_UNK fn_8002A084();
     extern s32 lbl_802EF4E0;
