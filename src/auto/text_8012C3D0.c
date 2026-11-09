@@ -439,16 +439,14 @@ void fn_8012DED8(void *arg0) {
 }
 
 void fn_8012DF40(void *arg0) {
-    u8 temp_r3;
-    s16 temp_r4;
-    u32 temp_r5;
+    void fn_80057860(s32, s32);
+    void fn_8000C188(void *);
+    s16 *p;
 
-    M2C_FIELD(arg0, s16 *, 0x6A) = (s16) (M2C_FIELD(arg0, s16 *, 0x6A) + M2C_FIELD(arg0, u8 *, 0x6F));
-    fn_80057860(M2C_FIELD(arg0, s32 *, 0x4C), M2C_FIELD(arg0, s16 *, 0x6A));
-    temp_r4 = M2C_FIELD(arg0, s16 *, 0x6A);
-    temp_r5 = (u32) temp_r4 >> 0x1FU;
-    temp_r3 = (u8) ((temp_r4 << 0x1B) - temp_r5);
-    if ((((temp_r3 << 5) | (temp_r3 >> 0x1BU)) + temp_r5) == 0) {
+    p = (s16 *)((u8 *)arg0 + 0x6A);
+    *p = (s16)(*p + *((u8 *)arg0 + 0x6F));
+    fn_80057860(*(s32 *)((u8 *)arg0 + 0x4C), *p);
+    if (*p % 32 == 0) {
         fn_8000C188(arg0);
     }
 }
