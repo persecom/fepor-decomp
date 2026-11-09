@@ -2698,8 +2698,9 @@ void fn_8014027C(void *arg0, void *arg1, void *arg2, void *arg3) {
     fn_801414F8(arg0, arg1, arg2, arg3, 1);
 }
 
-void fn_801402A0(void) {
-    fn_801414F8(0x0);
+void fn_801402A0(void *arg0, void *arg1, void *arg2, void *arg3) {
+    M2C_UNK fn_801414F8(void *, void *, void *, void *, M2C_UNK);
+    fn_801414F8(arg0, arg1, arg2, arg3, 0);
 }
 
 void fn_801402C4(void) {
