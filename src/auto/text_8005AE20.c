@@ -582,8 +582,9 @@ u16 fn_8005C6A0(char *name) {
     return *(u16 *)(e + 0x30);
 }
 
-void fn_8005C7A4(void) {
-    fn_8005D474(1);
+void fn_8005C7A4(s32 arg0) {
+    arg0 = (s8)arg0;
+    fn_8005CF6C(arg0);
 }
 
 void fn_8005C7C8(void) {
