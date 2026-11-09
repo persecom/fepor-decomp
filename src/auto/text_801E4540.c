@@ -430,6 +430,12 @@ void fn_801E9D0C(void) {
     fn_800138F4();
 }
 
+void fn_801E9D3C(s32 arg0) {
+    void fn_8014C718(void *, s32);
+    extern u8 lbl_80330708[16];
+    fn_8014C718(lbl_80330708, arg0);
+}
+
 extern u32 lbl_8027EB78;
 extern u32 lbl_80330708;
 extern u32 lbl_802CA518;
