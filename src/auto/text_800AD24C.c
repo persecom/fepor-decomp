@@ -1151,7 +1151,7 @@ s32 fn_800B6CD8(u32 arg0) {
     if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
         return 0;
     }
-    OSReport();
+    fn_80010710(NULL);
     return 1;
 }
 
@@ -4498,7 +4498,6 @@ char *fn_800C2048(s8 arg0, s8 arg1) {
     s32 value;
     void *node;
     char *base;
-    s16 hw;
 
     for (node = fn_80013B60(NULL); node != NULL; node = fn_80013B60(node)) {
         if ((s32) M2C_FIELD(node, u8 *, 0xC) == 5 && arg0 == M2C_FIELD(node, s16 *, 0x14) && arg1 == M2C_FIELD(node, s16 *, 0x16)) {
@@ -4526,9 +4525,11 @@ char *fn_800C2048(s8 arg0, s8 arg1) {
                         value = *p++;
                         break;
                     case 29:
-                        hw = ((p[0] & 0xFF) << 8) + p[1];
-                        p += 2;
-                        value = hw;
+                        {
+                            s16 hw = (s16) (((p[0] & 0xFF) << 8) + p[1]);
+                            p += 2;
+                            value = hw;
+                        }
                         break;
                     case 30:
                         value = p[0] << 24;
@@ -5253,8 +5254,9 @@ void fn_800AFE0C(s32 arg0) {
     }
 }
 
-void fn_800B0AC8(void) {
-    fn_800B080C(0);
+void fn_800B0AC8(void *arg0, void *arg1) {
+    M2C_UNK fn_800B080C(void *, void *, M2C_UNK);
+    fn_800B080C(arg0, arg1, 0);
 }
 
 s32 fn_800B125C(s32 arg0, s32 arg1) {
