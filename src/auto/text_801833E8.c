@@ -5068,11 +5068,10 @@ s32 fn_8019D850(s32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4) {
     return 1;
 }
 
-extern void fn_80194F54(void);
+extern void *fn_80194F54(s32);
 extern void fn_80195170(void *arg0, s8 arg1);
 s32 fn_8019D8CC(s32 arg1) {
-    fn_80194F54();
-    fn_80195170(0, (arg1 != 0) ? 1 : 0);
+    fn_80195170(fn_80194F54(0), (arg1 != 0) ? 1 : 0);
     return 1;
 }
 
