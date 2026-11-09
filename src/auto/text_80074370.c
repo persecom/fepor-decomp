@@ -2253,17 +2253,15 @@ void fn_8007C484(void *arg0) {
 }
 
 void fn_8007C4D4(void *arg0, s32 arg1) {
-    extern u16 lbl_8026C640[];
     void fn_80234450(void *, void *, void *);
     void fn_802343E0(void *, s32);
     void fn_8005C870(void *, s32);
+    extern u16 lbl_8026C640[];
+    char sp8[0x40];
 
-    u16 *var_8026C640_ptr = lbl_8026C640;
-    void *sp8;
-
-    fn_80234450(&sp8, &var_8026C640_ptr[0x122], var_8026C640_ptr);
-    fn_802343E0(&sp8, *(s32*)((char*)arg0 + 8));
-    fn_8005C870(&sp8, arg1);
+    fn_80234450(sp8, (u8 *)lbl_8026C640 + 0x122, lbl_8026C640);
+    fn_802343E0(sp8, *(s32 *)((char *)arg0 + 8));
+    fn_8005C870(sp8, arg1);
 }
 
 #include "common.h"
