@@ -1471,10 +1471,9 @@ s32 fn_800A2A50(void) {
     return 0x10;
 }
 
-void fn_800A2A58(void *arg1) {
-    extern u8 fn_801043FC(u8);
-    u8 val = *(u8*)((u8*)arg1 + 0x3A);
-    fn_801043FC(val);
+void fn_800A2A58(void *arg0, void *arg1) {
+    M2C_UNK fn_801043FC(u8);
+    fn_801043FC(*(u8 *)((char *)arg1 + 0x3A));
 }
 
 void fn_800A2BA8(s32 arg0, s32 arg1, void *arg2) {
