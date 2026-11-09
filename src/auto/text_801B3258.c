@@ -1299,6 +1299,121 @@ extern "C" void fn_801BE1EC(void *arg0) {
     };
     ((Obj *) arg0)->m08(-1);
 }
+
+#pragma cplusplus on
+extern "C" void *fn_801BE21C(void *arg0, s16 arg1) {
+    void fn_80140304(void *, s32);
+    void fn_800C428C(void *);
+    extern void lbl_80297E78;
+
+    struct RefObj {
+        virtual void destroy(s32);
+        s32 refCount;
+    };
+
+    struct Holder {
+        u8 pad[0x40];
+        void *vt;
+        u8 pad44[4];
+        RefObj *p48;
+        RefObj *p4c;
+        RefObj *p50;
+        RefObj *p54;
+        RefObj *p58;
+        RefObj *p5c;
+        RefObj *p60;
+        RefObj *p64;
+        RefObj *p68;
+        RefObj *p6c;
+    };
+
+    s16 doFree;
+    RefObj *p;
+    Holder *h;
+
+    doFree = arg1;
+    if (arg0 != NULL) {
+        h = (Holder *)arg0;
+        h->vt = &lbl_80297E78;
+        p = h->p48;
+        if (p != NULL) {
+            if (--p->refCount == 0 && p != NULL) {
+                p->destroy(1);
+            }
+            h->p48 = (RefObj *)0;
+        }
+        p = h->p4c;
+        if (p != NULL) {
+            if (--p->refCount == 0 && p != NULL) {
+                p->destroy(1);
+            }
+            h->p4c = (RefObj *)0;
+        }
+        p = h->p50;
+        if (p != NULL) {
+            if (--p->refCount == 0 && p != NULL) {
+                p->destroy(1);
+            }
+            h->p50 = (RefObj *)0;
+        }
+        p = h->p54;
+        if (p != NULL) {
+            if (--p->refCount == 0 && p != NULL) {
+                p->destroy(1);
+            }
+            h->p54 = (RefObj *)0;
+        }
+        p = h->p58;
+        if (p != NULL) {
+            if (--p->refCount == 0 && p != NULL) {
+                p->destroy(1);
+            }
+            h->p58 = (RefObj *)0;
+        }
+        p = h->p5c;
+        if (p != NULL) {
+            if (--p->refCount == 0 && p != NULL) {
+                p->destroy(1);
+            }
+            h->p5c = (RefObj *)0;
+        }
+        p = h->p60;
+        if (p != NULL) {
+            if (--p->refCount == 0 && p != NULL) {
+                p->destroy(1);
+            }
+            h->p60 = (RefObj *)0;
+        }
+        p = h->p64;
+        if (p != NULL) {
+            if (--p->refCount == 0 && p != NULL) {
+                p->destroy(1);
+            }
+            h->p64 = (RefObj *)0;
+        }
+        p = h->p68;
+        if (p != NULL) {
+            if (--p->refCount == 0 && p != NULL) {
+                p->destroy(1);
+            }
+            h->p68 = (RefObj *)0;
+        }
+        p = h->p6c;
+        if (p != NULL) {
+            if (--p->refCount == 0 && p != NULL) {
+                p->destroy(1);
+            }
+            h->p6c = (RefObj *)0;
+        }
+        fn_80140304(arg0, 0);
+        if (doFree > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+#pragma cplusplus reset
+
 #pragma cplusplus reset
 void *fn_801BE6A8(s32 arg0) {
     M2C_UNK fn_8000C070(void *, M2C_UNK);
