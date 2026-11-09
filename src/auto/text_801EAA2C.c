@@ -659,9 +659,10 @@ void fn_801EE018(void *arg0) {
 }
 
 void fn_801EE054(void *arg0) {
-    extern void *lbl_8027F26C[];
     s8 fn_80148618(void *, s32);
-    *(u16 *)((char *)arg0 + 0x3A) = (u16) fn_80148618((void *)&lbl_8027F26C[0x195], 1);
+    extern u16 lbl_8027F26C[];
+
+    *(s16 *)((char *)arg0 + 0x3A) = fn_80148618((u8 *)lbl_8027F26C + 0x195, 1);
 }
 
 void fn_801EE098(void) {
