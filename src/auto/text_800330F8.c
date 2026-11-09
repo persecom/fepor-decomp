@@ -2684,44 +2684,32 @@ s32 fn_80046F14(void *arg0, s32 arg1) {
 }
 
 s32 fn_8004721C(void *arg0, s32 arg1, s32 arg2, u32 arg3, s32 arg4) {
-    s32 temp_r11;
-    s32 temp_r8;
-    s32 var_ctr;
-    s32 var_r12;
-    s32 var_r9;
-    u8 var_r0;
-    void *temp_r10;
+    u8 *entry;
+    s32 base;
+    s32 i;
+    s32 count;
+    u8 ok;
 
-    var_r12 = *(s16 *)((char *)arg0 + 0x6) - 1;
-    var_r9 = var_r12 * 0xB4;
-    var_ctr = var_r12 + 1;
-    if (var_r12 >= 0) {
-loop_1:
-        temp_r11 = *(s32 *)((char *)arg0 + 0x14);
-        temp_r10 = (void *)(temp_r11 + var_r9);
-        temp_r8 = *(s32 *)((char *)*(s32 *)((char *)temp_r10 + 0x10) + 0xBC);
-        if (!(temp_r8 & arg4)) {
-            if ((arg3 == 0) || (arg3 == (u32)(arg3 & temp_r8))) {
-                if ((arg1 >= *(s8 *)((char *)temp_r10 + 0x4)) && 
-                    (arg1 <= *(s8 *)((char *)temp_r10 + 0x6)) &&
-                    (arg2 >= *(s8 *)((char *)temp_r10 + 0x5)) && 
-                    (arg2 <= *(s8 *)((char *)temp_r10 + 0x7))) {
-                    var_r0 = 1;
-                } else {
-                    var_r0 = 0;
-                }
-                if (var_r0 != 0) {
-                    return temp_r11 + (var_r12 * 0xB4);
+    count = *(s16 *)((u8 *)arg0 + 0x6);
+    for (i = count - 1; i >= 0; i--) {
+        base = *(s32 *)((u8 *)arg0 + 0x14);
+        entry = (u8 *)base + i * 0xB4;
+        {
+            s32 flags = *(s32 *)((u8 *)*(s32 *)(entry + 0x10) + 0xBC);
+            if (!(flags & arg4)) {
+                if (arg3 == 0 || arg3 == (u32)(arg3 & flags)) {
+                    if (arg1 >= *(s8 *)(entry + 0x4) && arg1 <= *(s8 *)(entry + 0x6) &&
+                        arg2 >= *(s8 *)(entry + 0x5) && arg2 <= *(s8 *)(entry + 0x7)) {
+                        ok = 1;
+                    } else {
+                        ok = 0;
+                    }
+                    if (ok != 0) {
+                        return base + i * 0xB4;
+                    }
                 }
             }
         }
-        var_r9 -= 0xB4;
-        var_r12 -= 1;
-        var_ctr -= 1;
-        if (var_ctr != 0) {
-            goto loop_1;
-        }
-        return 0;
     }
     return 0;
 }
@@ -3472,12 +3460,12 @@ s32 fn_8004AE28(s32 arg0, s32 arg1, s32 arg2)
     return 0;
 }
 
-s32 fn_8004AF30(u16 arg0) {
-    u16 temp_r3 = arg0;
-    if (temp_r3 == 0xFFFF) {
+s32 fn_8004AF30(s32 arg0) {
+    arg0 &= 0xFFFF;
+    if (arg0 == 0xFFFFu) {
         return 0;
     }
-    if (temp_r3 < 0x3E8) {
+    if (arg0 < 0x3E8u) {
         return 0;
     }
     return fn_80146B10();
