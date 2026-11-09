@@ -285,13 +285,10 @@ void *fn_8009FFA0(void) {
     return (char*)&lbl_8026D8D8 + 0x36a;
 }
 
-s32 fn_8009FFB0(s32 arg1) {
+s32 fn_8009FFB0(s32 arg0, s32 arg1) {
     void *fn_800241C8(s32);
-    void fn_8014A030(s32);
-
-    s32 temp_r3 = (s32)fn_800241C8(arg1);
-    temp_r3 = M2C_FIELD(temp_r3, s32 *, 0x18);
-    fn_8014A030(temp_r3);
+    M2C_UNK fn_8014A030(s32);
+    fn_8014A030(M2C_FIELD(fn_800241C8(arg1), s32 *, 0x18));
     return 6;
 }
 
