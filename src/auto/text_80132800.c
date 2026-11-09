@@ -2902,25 +2902,26 @@ extern "C" void fn_801441A4(void *arg0) {
 }
 #pragma cplusplus reset
 
-void fn_80144584(void *arg0, s16 arg1) {
+void *fn_80144584(void *arg0, s16 arg1) {
     void fn_8013F2A4(void *, s32);
     void fn_8022C1E8(void *, void *, s32, s32);
     void fn_800C428C(void *);
-    extern u16 lbl_80292358;
-    extern u16 lbl_80292488;
-    extern void fn_80144610;
+    void *fn_80144610(void *, s16);
+    extern void *lbl_80292358[];
+    extern void *lbl_80292488[];
 
     if (arg0 != NULL) {
-        *(u16**)arg0 = &lbl_80292358;
+        *(void **)arg0 = lbl_80292358;
         if (arg0 != NULL) {
-            *(u16**)arg0 = &lbl_80292488;
-            fn_8022C1E8((u8*)arg0 + 0x90, &fn_80144610, 0xC, 0xB);
+            *(void **)arg0 = lbl_80292488;
+            fn_8022C1E8((u8 *)arg0 + 0x90, (void *)fn_80144610, 0xC, 0xB);
             fn_8013F2A4(arg0, 0);
         }
         if (arg1 > 0) {
             fn_800C428C(arg0);
         }
     }
+    return arg0;
 }
 
 void fn_80144D84(ListIter *ret, List *list, ListIter *start, ListIter *end);
