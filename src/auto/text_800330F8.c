@@ -161,17 +161,20 @@ void fn_800340E4(s16 *arg0) {
     *arg0 = 0;
 }
 
-void fn_800340F0(void* arg0) {
-    s32 temp_r0;
-    u32 zero = 0;
-    
-    *(u8*)((char*)arg0 + 0x404) = zero;
-    *(u16*)((char*)arg0 + 0x0) = zero;
-    *(u16*)((char*)arg0 + 0x2) = zero;
-    *(u32*)((char*)arg0 + 0x400) = zero;
-    temp_r0 = *(s16*)((char*)arg0 + 0x0);
-    *(u8*)((char*)arg0 + (temp_r0 * 4) + 0x4) = zero;
-    *(u16*)((char*)arg0 + (temp_r0 * 4) + 0x6) = zero;
+void fn_800340F0(void *arg0) {
+    s32 zero;
+    s16 idx;
+    u8 *p;
+
+    zero = 0;
+    *(u8 *)((u8 *)arg0 + 0x404) = zero;
+    *(s16 *)((u8 *)arg0 + 0) = zero;
+    *(s16 *)((u8 *)arg0 + 2) = zero;
+    *(s32 *)((u8 *)arg0 + 0x400) = zero;
+    idx = *(s16 *)((u8 *)arg0 + 0);
+    p = (u8 *)arg0 + (idx * 4) + 4;
+    *p = zero;
+    *(s16 *)(p + 2) = zero;
 }
 
 void fn_80034120(void *arg0) {
@@ -3460,12 +3463,11 @@ s32 fn_8004AE28(s32 arg0, s32 arg1, s32 arg2)
     return 0;
 }
 
-s32 fn_8004AF30(s32 arg0) {
-    arg0 &= 0xFFFF;
-    if (arg0 == 0xFFFFu) {
+s32 fn_8004AF30(u16 arg0) {
+    if (arg0 == 0xFFFF) {
         return 0;
     }
-    if (arg0 < 0x3E8u) {
+    if (arg0 < 0x3E8) {
         return 0;
     }
     return fn_80146B10();
