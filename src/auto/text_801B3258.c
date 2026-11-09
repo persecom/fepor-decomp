@@ -1651,14 +1651,14 @@ void fn_801C2250(void *arg0) {
 }
 
 void fn_801C29E8(s32 arg0) {
-    void *fn_8000CAA0(void *, s32, void *);
+    void *fn_8000CAA0(void *, s32);
     s32 fn_800C4638(s32, void *, s32);
-    extern u16 lbl_80298140[];
+    extern u8 lbl_80298140[];
     extern u8 lbl_8027D030[];
-
     void *temp_r31;
-    temp_r31 = fn_8000CAA0(lbl_80298140, arg0, lbl_80298140);
-    *(s32 *)((u8 *)temp_r31 + 0x30) = fn_800C4638(0x160, (void *)(lbl_8027D030 + 0x3F1), 0);
+
+    temp_r31 = fn_8000CAA0(lbl_80298140, arg0);
+    M2C_FIELD(temp_r31, s32 *, 0x30) = fn_800C4638(0x160, lbl_8027D030 + 0x3F1, 0);
 }
 
 void fn_801C2A3C(void *arg0) {
