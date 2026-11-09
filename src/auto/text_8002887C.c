@@ -2017,9 +2017,9 @@ void fn_80033024(void) {
 M2C_UNK *fn_80033044(void) {
     s32 fn_80019E04(void *);
     M2C_UNK fn_8001D818(M2C_UNK *, s32);
-    extern M2C_UNK lbl_802695F0;
+    extern u8 lbl_802695F0[];
     extern M2C_UNK lbl_80367278;
-    fn_8001D818(&lbl_80367278, fn_80019E04(&lbl_802695F0 + 0xE5));
+    fn_8001D818(&lbl_80367278, fn_80019E04(lbl_802695F0 + 0xE5));
     return &lbl_80367278;
 }
 
