@@ -152,8 +152,10 @@ void PPCMtmsr(register u32 msr) {
     (void)msr; /* mtmsr: not expressible in C */
 }
 
-s32 PPCMfhid0(void) {
-    return M2C_ERROR(/* unknown instruction: mfspr $r3, HID0 */);
+u32 PPCMfhid0(void) {
+    register u32 hid0;
+    hid0 = *(volatile u32 *)0;
+    return hid0;
 }
 
 #pragma dont_inline reset
@@ -196,14 +198,25 @@ s32 fn_802037B0(void) {
 
 #pragma dont_inline on
 void PPCHalt(void) {
-    sync();
-    while (1) {
-        ;
-    }
+    M2C_SYNC();
+loop_1:
+    goto loop_1;
+}
+
+u32 PPCMtmmcr0(void) {
+    return 0;
+}
+
+void PPCMtpmc3(void) {
+    M2C_ERROR(/* unknown instruction: mtspr PMC3, $r3 */);
 }
 
 s32 PPCMfhid2(void) {
     return 0x392;
+}
+
+void PPCMthid2(void) {
+    M2C_ERROR(/* unknown instruction: mtspr HID2, $r3 */);
 }
 
 #pragma dont_inline reset
@@ -212,14 +225,22 @@ void PPCMtwpar(void) {
     M2C_ERROR(/* unknown instruction: mtspr WPAR, $r3 */);
 }
 
+void PPCDisableSpeculation(void) {
+    __builtin_mfspr(0x398);
+    __builtin_mtspr(0x398, 0x4000);
+    __builtin_isync();
+}
+
+void PPCSetFpNonIEEEMode(void) {
+    M2C_ERROR(/* unknown instruction: mtfsb1 cr7gt */);
+}
+
 void fn_802038C0(void) {
-    M2C_UNK OSDumpContext(s32);
-    M2C_UNK PPCHalt();
-    extern M2C_UNK lbl_8029B910;
+    extern char lbl_8029B910[24];
     s32 temp_r4;
 
     temp_r4 = *(s32 *)0xC0;
-    OSReport(&lbl_8029B910, temp_r4);
+    OSReport(lbl_8029B910, temp_r4);
     OSDumpContext(temp_r4 + 0x80000000);
     PPCHalt();
 }
@@ -684,6 +705,17 @@ void __OSSaveFPUContext(void* context) {
 void OSSaveFPUContext(void *arg0) {
     __OSSaveFPUContext(arg0);
 }
+
+void OSSetCurrentContext(struct OSContext *arg0) {
+    *(s32 *)0x800000D4 = (s32)arg0;
+    *(s32 *)0x800000C0 = (s32)arg0 & 0x3FFFFFFF;
+    if ((s32) *(s32 *)0x800000D8 == (s32)arg0) {
+        M2C_FIELD((s32)arg0, s32 *, 0x19C) = (s32) (M2C_FIELD((s32)arg0, s32 *, 0x19C) | 0x2000);
+        return;
+    }
+    M2C_FIELD((s32)arg0, s32 *, 0x19C) = (s32) (M2C_FIELD((s32)arg0, s32 *, 0x19C) & 0xFFFFDFFF);
+}
+
 #pragma dont_inline reset
 
 s32 fn_802059EC(void) {
@@ -701,6 +733,7 @@ void *fn_80205B50(void) {
     return 0; /* OSGetStackPointer: asm (mr r3, r1) */
 }
 
+#pragma dont_inline on
 #pragma peephole off
 void OSClearContext(OSContext *context) {
     context->mode = 0;
@@ -710,6 +743,7 @@ void OSClearContext(OSContext *context) {
     }
 }
 #pragma peephole reset
+#pragma dont_inline reset
 void fn_80205B7C(void *arg0, s32 arg1, s32 arg2) {
     *(s32 *) ((u8 *) arg0 + 0x198) = arg1;
     *(s32 *) ((u8 *) arg0 + 4) = arg2;
