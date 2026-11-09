@@ -1761,19 +1761,17 @@ void fn_8013E300(void) {
 }
 
 void *fn_8013E314(void *arg0, s16 arg1) {
-    M2C_UNK fn_800C428C(void *);
-    extern M2C_UNK lbl_80291C50;
-    extern M2C_UNK lbl_80291DA0;
-    extern M2C_UNK lbl_802920E0;
-    s32 temp_cr0_eq;
+    void fn_800C428C(void *);
+    extern void *lbl_80291C50[];
+    extern void *lbl_80291DA0[];
+    extern void *lbl_802920E0[];
 
-    temp_cr0_eq = arg0 == NULL;
-    if (temp_cr0_eq == 0) {
-        M2C_FIELD(arg0, M2C_UNK **, 4) = &lbl_80291C50;
-        if (temp_cr0_eq == 0) {
-            M2C_FIELD(arg0, M2C_UNK **, 4) = &lbl_80291DA0;
-            if (temp_cr0_eq == 0) {
-                M2C_FIELD(arg0, M2C_UNK **, 4) = &lbl_802920E0;
+    if (arg0 != NULL) {
+        *(void **)((u8 *)arg0 + 4) = lbl_80291C50;
+        if (arg0 != NULL) {
+            *(void **)((u8 *)arg0 + 4) = lbl_80291DA0;
+            if (arg0 != NULL) {
+                *(void **)((u8 *)arg0 + 4) = lbl_802920E0;
             }
         }
         if (arg1 > 0) {
