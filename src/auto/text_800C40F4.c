@@ -1400,6 +1400,65 @@ s32 fn_800D3590(void *arg0) {
     return temp_r4 & (M2C_FIELD(arg0, s32 *, 8) ^ temp_r4);
 }
 
+#pragma cplusplus on
+extern "C" void fn_800D52F8(void) {
+    void fn_801C76E8(void);
+    extern void *lbl_80367880;
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0();
+        virtual void v1();
+        virtual void v2();
+        virtual void v3();
+        virtual void v4();
+        virtual void v5();
+        virtual void v6();
+        virtual void v7();
+        virtual void v8();
+        virtual void v9();
+        virtual void v10();
+        virtual void v11();
+        virtual void v12();
+        virtual void v13(s32);
+        virtual void v14();
+        virtual void v15();
+        virtual void v16(s32, s32);
+    };
+    u8 *unit;
+    Obj *obj;
+
+    unit = (u8 *)lbl_80367880;
+    if (unit == NULL) {
+        return;
+    }
+    if (unit[0x187] == 0) {
+        obj = *(Obj **)(unit + 4);
+        if (obj != NULL) {
+            if (unit[0x1a5] == 0) {
+                obj->v13(1);
+            }
+            obj = *(Obj **)(unit + 4);
+            obj->v14();
+            obj = *(Obj **)(unit + 4);
+            obj->v16(0, 0);
+            obj = *(Obj **)(unit + 4);
+            obj->v15();
+            fn_801C76E8();
+        }
+    }
+    obj = *(Obj **)(unit + 8);
+    if (obj != NULL) {
+        obj->v13(1);
+        obj = *(Obj **)(unit + 8);
+        obj->v14();
+        obj = *(Obj **)(unit + 8);
+        obj->v16(0, 0);
+        obj = *(Obj **)(unit + 8);
+        obj->v15();
+    }
+}
+#pragma cplusplus reset
+
 void fn_800D588C(s32 arg0) {
     extern s32 lbl_8036787C;
     lbl_8036787C = arg0;
