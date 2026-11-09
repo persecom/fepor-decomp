@@ -114,10 +114,12 @@ extern "C" void fn_80112E30(void *arg0) {
     if (target == NULL) {
         dist = lbl_8036A184;
     } else {
-        Vec3f a(lbl_8036A184, lbl_8036A184, lbl_8036A184);
+        Vec3f pb;
+        Vec3f pa;
         Vec3f b(lbl_8036A184, lbl_8036A184, lbl_8036A184);
-        Vec3f pa = a = self->GetPos(0);
-        Vec3f pb = b = target->GetPos(0);
+        Vec3f a(lbl_8036A184, lbl_8036A184, lbl_8036A184);
+        pa = a = self->GetPos(0);
+        pb = b = target->GetPos(0);
         dist = fn_802032CC(pa, pb);
     }
     if (dist >= lbl_8036A1A8 + M2C_FIELD(arg0, f32 *, 0x128)) {
@@ -274,9 +276,12 @@ s32 fn_80114AF0(void *arg0) {
 }
 
 s32 fn_8011654C(void *arg0) {
-    void **ptr = (void **)((char *)arg0 + 0x11C);
-    if (*ptr != 0) {
-        return fn_801992F0();
+    s32 fn_801992F0(void *);
+    void *v;
+
+    v = *(void **)((u8 *)arg0 + 0x11C);
+    if (v != NULL) {
+        return fn_801992F0(v);
     }
     return 0;
 }
