@@ -1639,6 +1639,30 @@ void fn_8016F0C4(void *arg0) {
     fn_8000C070(temp);
 }
 
+void fn_8016F0E8(void *arg0) {
+    void fn_8000C5E0(void *);
+    void fn_80023FF4(void *);
+    register void *temp_r3;
+    void *temp_r31;
+    s32 temp_r30_2;
+    s32 temp_r30;
+
+    fn_8000A3F8(M2C_FIELD(arg0, void **, 0x5C));
+    fn_8000C5E0(M2C_FIELD(arg0, void **, 0x5C));
+    temp_r3 = M2C_FIELD(arg0, void **, 0x5C);
+    temp_r30 = M2C_FIELD(temp_r3, s8 *, 0x62);
+    fn_80023FF4(temp_r3);
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0x5C), s8 *, 0x62) = temp_r30;
+    temp_r31 = M2C_FIELD(arg0, void **, 0x60);
+    fn_8000A420(temp_r31);
+    temp_r30_2 = M2C_FIELD(temp_r31, s8 *, 0x62);
+    fn_80023FF4(temp_r31);
+    M2C_FIELD(temp_r31, s8 *, 0x62) = temp_r30_2;
+    fn_8013FEC0(arg0);
+    fn_8013FF00(arg0, fn_8013FF94(arg0, 0x100, 0));
+    fn_8000C188(arg0);
+}
+
 void fn_8016F194(void *arg0) {
     fn_8000A408(*(s32**)((u8*)arg0 + 0x5C));
     fn_8013FED0(arg0);
