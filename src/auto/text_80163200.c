@@ -5395,6 +5395,10 @@ void fn_8017FC00(void *arg0) {
     fn_8013AD70(fn_8013FF94(arg0, 0x81, 0), *(s32 *)((u8 *)&lbl_80330708 + 0xB0));
 }
 
+void fn_8017FC38(void *arg0) {
+    fn_8013AD70(fn_8013FF94(arg0, 0x81, 0), *(s32 *)((u8 *)&lbl_80330708 + 0xAC));
+}
+
 void fn_8017FC70(void *arg0, s32 arg1) {
     void fn_8013FF94(s32, s32);
     u32 *fn_80037BD0(s32, s16);
