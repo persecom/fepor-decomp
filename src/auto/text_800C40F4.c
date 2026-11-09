@@ -2861,20 +2861,36 @@ void fn_800DF50C(void *arg0) {
     *(f32*)((u8*)arg0 + 0x38) = 0.0f;
 }
 
-void fn_800DF584(void *arg0) {
-    void *temp_r4;
-    void *temp_r12;
+#pragma cplusplus on
+extern "C" void fn_800DF584(void *arg0) {
+    struct Obj {
+        u8 pad[0x2C];
+        u8 flag_2c;
+        u8 pad2D[0xB];
+        void *field_38;
+        u8 flag_3c;
+        u8 pad3D[3];
+        virtual void v0();
+        virtual void v1();
+        virtual void v2();
+        virtual void v3();
+    };
+    struct Other {
+        u8 pad[0x2C];
+        u8 flag_2c;
+    };
+    Obj *self = (Obj *)arg0;
+    Other **pp;
+    Other *other;
 
-    if ((u8) M2C_FIELD(arg0, u8 *, 0x3C) != 0) {
-        temp_r4 = M2C_FIELD(arg0, void **, 0x38);
-        if ((temp_r4 != NULL) && ((u8) M2C_FIELD(temp_r4, u8 *, 0x2C) != 0) && ((u8) M2C_FIELD(arg0, u8 *, 0x2C) != 0)) {
-            temp_r12 = M2C_FIELD(arg0, void **, 0x40);
-            M2C_FIELD(temp_r12, M2C_UNK (**)(), 0x14)();
+    if (self->flag_3c != 0) {
+        pp = (Other **)((u8 *)arg0 + 0x38);
+        other = *pp;
+        if (other != NULL && other->flag_2c != 0 && self->flag_2c != 0) {
+            self->v3();
         }
     }
 }
-
-#pragma cplusplus on
 extern "C" void fn_800DF5E0(void *arg0) {
     struct Obj {
         u8 pad[0x40];
@@ -2927,8 +2943,9 @@ s32 fn_800DF6B0(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x28);
 }
 
-void fn_800DF6B8(s32 arg1) {
-    fn_800C9B6C(arg1 + 0x1c);
+void fn_800DF6B8(void *arg0, u8 *arg1) {
+    void fn_800C9B6C(void *, u8 *);
+    fn_800C9B6C(arg0, arg1 + 0x1C);
 }
 
 void fn_800DF6DC(s32 arg1) {
