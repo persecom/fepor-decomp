@@ -1812,6 +1812,12 @@ void fn_800D74FC(void *arg0) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0xC), M2C_UNK (**)(s32, s32, s32), 0xC)(temp_r4, temp_r4 & (M2C_FIELD(lbl_80367240, s32 *, 8) ^ temp_r4), M2C_FIELD(lbl_80367240, s32 *, 0xC));
 }
 
+void fn_800D7540(void *arg0) {
+    extern void fn_800E3F48(void *);
+
+    fn_800E3F48(*(void **)((u8 *)arg0 + 0x10));
+}
+
 void fn_800D7588(void) {
 
 }
@@ -2882,6 +2888,21 @@ void fn_800DEF00(void *arg0) {
         tree->root = NULL;
         tree->first = &tree->root;
     }
+}
+
+void fn_800DEF4C(void *arg0, u8 *arg1) {
+    u8 *ptr;
+    u32 zero;
+    u8 value;
+
+    ptr = (u8 *)arg0 + 4;
+    zero = 0;
+    value = *(volatile u8 *)arg1;
+
+    *(u32 *)arg0 = zero;
+    *(u32 *)ptr = zero;
+    *((u8 *)arg0 + 8) = value;
+    *(u32 *)((u8 *)arg0 + 0xC) = (u32)ptr;
 }
 
 void fn_800DF110(void *arg0, s32 arg1, f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 farg4, f32 farg5) {
