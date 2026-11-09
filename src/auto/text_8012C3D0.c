@@ -677,15 +677,16 @@ s32 fn_80131464(void** arg1, s32 arg2) {
     return result;
 }
 
-void *fn_801314DC(s32 arg1) {
+void *fn_801314DC(void *unused, s32 arg1) {
     extern u16 lbl_80275AC0[];
+
     switch (arg1) {
-    case 0:
-        return &lbl_80275AC0[0x314 / sizeof(u16)];
     case 1:
-        return &lbl_80275AC0[0x328 / sizeof(u16)];
+        return (u8 *)lbl_80275AC0 + 0x314;
+    case 2:
+        return (u8 *)lbl_80275AC0 + 0x328;
     default:
-        return &lbl_80275AC0[0x247 / sizeof(u16)];
+        return (u8 *)lbl_80275AC0 + 0x247;
     }
 }
 
