@@ -156,6 +156,12 @@ void fn_80164A24(void *arg0) {
     fn_80037BD0(M2C_FIELD(arg0, s32 *, 0x58));
 }
 
+void fn_80164A48(void *arg0) {
+    if (*(u32 *)((char *)arg0 + 0x58) != 0) {
+        fn_800947E0();
+    }
+}
+
 #pragma scheduling off
 s32 fn_80164BB0(void *arg0) {
     u32 *fn_80037BD0(s32, s32);
@@ -1184,8 +1190,8 @@ void fn_8016ADAC(void) {
 }
 
 void *fn_8016ADD8(void) {
-    extern u16 lbl_80277BC0[80];
-    return &lbl_80277BC0[0x1EC / sizeof(u16)];
+    extern u16 lbl_80277BC0[];
+    return (u8 *)lbl_80277BC0 + 0x1ed;
 }
 
 void *fn_8016AE6C(void) {
