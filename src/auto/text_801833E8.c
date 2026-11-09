@@ -1804,6 +1804,27 @@ void *fn_80190130(void *arg0, s16 arg1) {
     return arg0;
 }
 
+void *fn_801901EC(void *arg0, s16 arg1) {
+    void fn_800C428C(void *);
+    extern void *lbl_802961F4[];
+    extern void *lbl_80292230[];
+    extern void *lbl_8028FDB0[];
+
+    if (arg0 != NULL) {
+        *(void **)arg0 = lbl_802961F4;
+        if (arg0 != NULL) {
+            *(void **)arg0 = lbl_80292230;
+            if (arg0 != NULL) {
+                *(void **)arg0 = lbl_8028FDB0;
+            }
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_801903D8(void *arg0, s32 arg1) {
     if ((u8) M2C_FIELD(arg0, u8 *, 0x44) != 0) {
         M2C_FIELD(M2C_FIELD(arg0, void **, 0), M2C_UNK (**)(), 0x2C)();
