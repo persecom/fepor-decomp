@@ -121,7 +121,7 @@ s32 fn_8012C54C(void) {
 
 void *fn_8012C618(void) {
     extern u16 lbl_802758F8[];
-    return &lbl_802758F8[0x2ED];
+    return (u8 *)lbl_802758F8 + 0x175;
 }
 
 s32 fn_8012C628(void) {
