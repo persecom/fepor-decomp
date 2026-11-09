@@ -1054,8 +1054,7 @@ void fn_800774DC(void) {
 
 void fn_80077508(void) {
     extern u16 lbl_8026C0B8[];
-    u16 *ptr = &lbl_8026C0B8[0x3A6];
-    fn_8000E0E4(ptr);
+    fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x3a6);
 }
 
 void fn_80077534(void) {
