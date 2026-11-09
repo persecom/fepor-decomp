@@ -801,15 +801,14 @@ void fn_801F65C8(s32 arg0) {
 }
 
 void fn_801F661C(s32 arg0) {
-    void *fn_8000CAA0(void *, s32, void *);
+    void *fn_8000CAA0(void *, s32);
     s32 fn_800C4638(s32, void *, s32);
-    extern u16 lbl_8029B1F8[];
+    extern u8 lbl_8029B1F8[];
     extern u8 lbl_80280D38[];
-
     void *temp_r31;
 
-    temp_r31 = fn_8000CAA0(lbl_8029B1F8, arg0, lbl_8029B1F8);
-    *(s32 *)((u8 *)temp_r31 + 0x30) = fn_800C4638(0x210, &lbl_80280D38[0x6A], 0);
+    temp_r31 = fn_8000CAA0(lbl_8029B1F8, arg0);
+    M2C_FIELD(temp_r31, s32 *, 0x30) = fn_800C4638(0x210, lbl_80280D38 + 0x6A, 0);
 }
 
 extern s32 lbl_80368400;
