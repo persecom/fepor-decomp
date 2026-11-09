@@ -687,16 +687,14 @@ void fn_8002D2B4(void)
     return;
 }
 
-void fn_8002D33C(s8 arg1, s8 arg2) {
+void fn_8002D33C(void *arg0, s8 arg1, s8 arg2) {
     extern u8 lbl_802CA518[];
     extern u8 lbl_802EF4E0[];
-    void fn_8002F6E8(u8 *, s32);
-    
-    u8 temp_r6;
-    
-    temp_r6 = lbl_802CA518[arg1 + (arg2 << 6) + 0xD];
-    if (((u32)(-(s32)temp_r6 | temp_r6) >> 31) != 0) {
-        fn_8002F6E8(lbl_802EF4E0, 2);
+    void fn_8002F6E8(void *, s8, s8, u8, s32);
+    u8 temp;
+    temp = lbl_802CA518[arg1 + (arg2 << 6) + 0xD];
+    if (((u32)(-(s32)temp | temp) >> 31) != 0) {
+        fn_8002F6E8(lbl_802EF4E0, arg1, arg2, temp, 2);
     }
 }
 
