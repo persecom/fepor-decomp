@@ -571,25 +571,27 @@ void fn_8016746C(void *arg0, s32 arg1, s32 arg2, f32 farg0, f32 farg1) {
 }
 
 void fn_8016758C(void *arg0, s32 arg1, s32 arg2, f32 farg0, f32 farg1) {
-    void *fn_8000C0C0(void *, void *);
+    void *fn_8000C0C0(void *);
     void fn_8000CAF0(void *, s32);
     void fn_8005C8B4(void *);
     void fn_801475FC(void *, s32);
     void fn_80167190(void *, s32, f32, f32);
     void *memset(void *, int, s32);
 
-    extern u8 lbl_80293D20[32];
-    extern u8 lbl_80330D68[296];
-    extern u8 lbl_80277A20[59];
+    extern u8 lbl_80293D20[];
+    extern u8 lbl_80330D68[];
+    extern u8 lbl_80277A20[];
     extern f32 lbl_8036A92C;
 
     void *temp_r3;
     u8 var_r0;
+    f32 f0;
+    u8 *base;
 
-    temp_r3 = fn_8000C0C0(lbl_80293D20, lbl_80293D20);
+    temp_r3 = fn_8000C0C0(lbl_80293D20);
     if (temp_r3 == NULL) {
         var_r0 = 0;
-    } else if (*(u8 *)((uintptr_t)temp_r3 + 0x2E) != 0) {
+    } else if (*(u8 *)((u8 *)temp_r3 + 0x2E) != 0) {
         var_r0 = 0;
     } else {
         var_r0 = 1;
@@ -597,14 +599,16 @@ void fn_8016758C(void *arg0, s32 arg1, s32 arg2, f32 farg0, f32 farg1) {
     if (var_r0 == 0) {
         fn_8000CAF0(lbl_80293D20, arg1);
         memset(lbl_80330D68, 0, 0x124);
-        *(f32 *)((uintptr_t)arg0 + 0xDC) = farg0;
-        *(f32 *)((uintptr_t)arg0 + 0xE0) = farg1;
-        *(f32 *)((uintptr_t)arg0 + 0xF4) = farg0;
-        *(f32 *)((uintptr_t)arg0 + 0xF8) = farg1;
-        *(f32 *)((uintptr_t)arg0 + 0x10C) = lbl_8036A92C;
-        *(f32 *)((uintptr_t)arg0 + 0x110) = lbl_8036A92C;
-        fn_8005C8B4(lbl_80277A20 + 0x42);
-        fn_801475FC(lbl_80277A20 + 0x52, 0x64);
+        *(f32 *)((u8 *)arg0 + 0xDC) = farg0;
+        base = lbl_80277A20;
+        f0 = lbl_8036A92C;
+        *(f32 *)((u8 *)arg0 + 0xE0) = farg1;
+        *(f32 *)((u8 *)arg0 + 0xF4) = farg0;
+        *(f32 *)((u8 *)arg0 + 0xF8) = farg1;
+        *(f32 *)((u8 *)arg0 + 0x10C) = f0;
+        *(f32 *)((u8 *)arg0 + 0x110) = f0;
+        fn_8005C8B4(base + 0x42);
+        fn_801475FC(base + 0x52, 0x64);
         fn_80167190(arg0, arg2, farg0, farg1);
     }
 }
@@ -1991,6 +1995,33 @@ void fn_80170E08(void *arg0) {
     *(u8*)((char*)arg0 + 0x54) = 1;
 }
 
+void fn_80170E18(void *arg0) {
+    void fn_8000A420(void *);
+    void fn_8000C5E0(void *);
+    void fn_80023FF4(void *);
+    void fn_801658DC(s32, s32);
+    u32 fn_8013FF94(void *, s32, s32);
+    extern u16 lbl_80278080[];
+    void *obj;
+    s32 saved;
+    void *obj2;
+    u32 ret;
+
+    obj = *(void **)((u8 *)arg0 + 0x5C);
+    saved = *(s8 *)((u8 *)obj + 0x62);
+    fn_80023FF4(obj);
+    *(s8 *)((u8 *)obj + 0x62) = saved;
+    obj2 = *(void **)((u8 *)arg0 + 0x5C);
+    if (!(*(u8 *)((u8 *)obj2 + 0x2C) & 2)) {
+        fn_8000C5E0(obj2);
+    }
+    fn_8000A420(obj2);
+    ret = fn_8013FF94(arg0, -0x1000, 0);
+    if (ret != 0) {
+        fn_801658DC(ret, (s32)((u8 *)lbl_80278080 + 0x2A3));
+    }
+}
+
 void fn_80171218(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
     extern u16 lbl_8028FDB0[4];
     extern u16 lbl_80292230[10];
@@ -3356,22 +3387,27 @@ void fn_8017A480(void *arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + arg1);
 }
 
-void fn_8017A574(void *arg0, u32 arg1) {
-    u8* r5_ptr = *(u8**)((char*)arg0 + 4);
-    *(u8**)((char*)arg0 + 4) = r5_ptr + 1;
-    *r5_ptr = (u8)(arg1 >> 24);
+void fn_8017A574(u8 **arg0, u32 arg1) {
+    u8 *p;
+    u8 b0;
+    u8 b1;
+    u8 b2;
 
-    r5_ptr = *(u8**)((char*)arg0 + 4);
-    *(u8**)((char*)arg0 + 4) = r5_ptr + 1;
-    *r5_ptr = (u8)(arg1 >> 16);
-
-    r5_ptr = *(u8**)((char*)arg0 + 4);
-    *(u8**)((char*)arg0 + 4) = r5_ptr + 1;
-    *r5_ptr = (u8)(arg1 >> 8);
-
-    r5_ptr = *(u8**)((char*)arg0 + 4);
-    *(u8**)((char*)arg0 + 4) = r5_ptr + 1;
-    *r5_ptr = (u8)arg1;
+    p = arg0[1];
+    b0 = arg1 >> 24;
+    b1 = arg1 >> 16;
+    b2 = arg1 >> 8;
+    arg0[1] = p + 1;
+    *p = b0;
+    p = arg0[1];
+    arg0[1] = p + 1;
+    *p = b1;
+    p = arg0[1];
+    arg0[1] = p + 1;
+    *p = b2;
+    p = arg0[1];
+    arg0[1] = p + 1;
+    *p = arg1;
 }
 
 void fn_8017A5C4(void *arg0, u8 arg1) {
