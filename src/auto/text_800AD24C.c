@@ -160,8 +160,7 @@ void fn_800AD6AC(void *arg0) {
     fn_80034A8C(lbl_80330EAC, temp_r4, *(u8 *)((u8 *)arg0 + 0x3A), arg0, 1);
 }
 
-s32 fn_800ADB74(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
-{
+s32 fn_800ADB74(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 temp0, temp1, temp2, temp3;
     s32 var_r3, var_r4;
     
