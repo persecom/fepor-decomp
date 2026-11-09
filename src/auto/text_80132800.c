@@ -285,19 +285,13 @@ void fn_80132C14(s32 arg0) {
 }
 
 void fn_80132C5C(void *arg0) {
-    M2C_UNK fn_8016E9DC(void *);
-    M2C_UNK fn_801CE070(void *, const char *, void *);
-    M2C_UNK fn_80234450(void *, const char *);
-    extern u8 lbl_802762DC[];
-    extern u8 lbl_8032FE80[];
-
-    switch (M2C_FIELD(arg0, s32 *, 0x44)) {
+    switch (*(s32 *)((u8 *)arg0 + 0x44)) {
     case 0:
         fn_8016E9DC(arg0);
         break;
     case 1:
-        fn_80234450(lbl_8032FE80, (const char *)lbl_802762DC + 0x2C);
-        fn_801CE070(lbl_8032FE80, (const char *)lbl_802762DC + 0x2C, arg0);
+        fn_80234450((void *)0x8032FE80, (const char *)0x802762DC + 0x2C);
+        fn_801CE070((void *)0x8032FE80, (const char *)0x802762DC + 0x2C, arg0);
         break;
     }
 }
@@ -388,23 +382,21 @@ s16 fn_8013432C(void *arg0) {
 }
 
 void *fn_801343F8(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
-    M2C_UNK *fn_8000D354(void *);
-    M2C_UNK fn_80134E48(s32, s32, s32, s32, s32);
-    M2C_UNK fn_80231D94(void *, void *, u8);
-    extern M2C_UNK lbl_80276354;
-    extern M2C_UNK lbl_802764BC;
-    extern M2C_UNK lbl_80291794;
-    extern M2C_UNK lbl_80330708;
-    void *temp_r31;
+    extern u16 lbl_80276354;
+    extern u8 lbl_802764BC[];
+    extern u16 lbl_80291794[];
+    extern u8 lbl_80330708[];
+    void *fn_8000D354(void *);
+    void fn_80134E48(s32, s32, s32, s32, s32);
+    void fn_80231D94(void *, void *, u8);
 
     fn_80134E48(arg2, arg3, arg4, arg5, arg6);
-    M2C_FIELD(arg0, M2C_UNK **, 0) = &lbl_80291794;
-    temp_r31 = &lbl_802764BC + 0x218;
-    M2C_FIELD(arg0, s32 *, 0x4C) = arg1;
-    fn_80231D94(temp_r31, &lbl_802764BC + 0x228, M2C_FIELD(&lbl_80330708, u8 *, 0x10));
-    M2C_FIELD(arg0, M2C_UNK **, 0x50) = fn_8000D354(temp_r31);
-    if ((M2C_UNK *) M2C_FIELD(arg0, M2C_UNK **, 0x50) == NULL) {
-        M2C_FIELD(arg0, M2C_UNK **, 0x50) = &lbl_80276354;
+    *(u16 **)arg0 = lbl_80291794;
+    *(s32 *)((char *)arg0 + 0x4c) = arg1;
+    fn_80231D94(lbl_802764BC + 0x218, lbl_802764BC + 0x228, *(u8 *)((char *)lbl_80330708 + 0x10));
+    *(void **)((char *)arg0 + 0x50) = fn_8000D354(lbl_802764BC + 0x218);
+    if (*(void **)((char *)arg0 + 0x50) == NULL) {
+        *(void **)((char *)arg0 + 0x50) = &lbl_80276354;
     }
     return arg0;
 }
@@ -4499,3 +4491,7 @@ extern f32 lbl_8036A6C0;
 extern f32 lbl_8036A6C4;
 extern f32 lbl_8036A6C8;
 extern u16 lbl_80291730[];
+#include "common.h"
+#include "dolphin/os.h"
+
+extern f64 lbl_8036A600;
