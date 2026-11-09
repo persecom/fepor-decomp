@@ -2431,27 +2431,27 @@ void fn_80259CD8(u16 *arg0, u16 *arg1, s16 arg2) {
     *arg1 += (s16) *arg0 * 0xA0;
 }
 
-void fn_80259D20(void *arg0) {
+void fn_80259D20(void *arg0)
+{
     u32 temp_r4;
     u32 var_r5;
 
-    if ((u32) M2C_FIELD(arg0, u32 *, 0x8C) == 0U) {
-        if ((u16) M2C_FIELD(M2C_FIELD(arg0, void **, 0), u16 *, 8) != 2) {
-            var_r5 = (M2C_FIELD(arg0, s32 *, 0xE4) << 5);
+    if (*(u32 *)((char *)arg0 + 0x8C) == 0U) {
+        if (*(u16 *)((char *)*(void **)arg0 + 8) != 2) {
+            var_r5 = *(s32 *)((char *)arg0 + 0xE4) << 5;
         } else {
             var_r5 = 0x200000;
         }
-        temp_r4 = M2C_FIELD(arg0, u32 *, 0xE0);
-        M2C_FIELD(arg0, u32 *, 0xE0) = (u32) (temp_r4 + (var_r5 << 0x10));
-        if (temp_r4 > (u32) M2C_FIELD(arg0, u32 *, 0xE0)) {
-            s32 temp_r0;
-            temp_r0 = (var_r5 >> 0x10U);
-            M2C_FIELD(arg0, s32 *, 0xDC) = (s32) (temp_r0 + M2C_FIELD(arg0, s32 *, 0xDC) + 1);
+        temp_r4 = *(u32 *)((char *)arg0 + 0xE0);
+        *(u32 *)((char *)arg0 + 0xE0) = (u32)(temp_r4 + (var_r5 << 16));
+        if (temp_r4 > *(u32 *)((char *)arg0 + 0xE0)) {
+            temp_r4 = *(u32 *)((char *)arg0 + 0xDC);
+            temp_r4 = (var_r5 >> 16) + temp_r4;
+            *(u32 *)((char *)arg0 + 0xDC) = temp_r4 + 1;
             return;
         }
-        temp_r4 = M2C_FIELD(arg0, s32 *, 0xDC);
-        var_r5 = (var_r5 >> 0x10U);
-        M2C_FIELD(arg0, s32 *, 0xDC) = (s32) (temp_r4 + var_r5);
+        *(u32 *)((char *)arg0 + 0xDC) =
+            *(u32 *)((char *)arg0 + 0xDC) + (var_r5 >> 16);
     }
 }
 
