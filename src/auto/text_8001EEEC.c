@@ -1019,7 +1019,7 @@ s32 fn_8002560C(void) {
 
 void *fn_80025614(void) {
     extern u16 lbl_80268D90[];
-    return &lbl_80268D90[0x8C / sizeof(u16)];
+    return (u8 *)lbl_80268D90 + 0x8D;
 }
 
 void fn_80025624(void *arg0, s8 arg1) {
