@@ -45,6 +45,19 @@ void *fn_8007C6AC(void) {
     return (u8 *)lbl_8026C640 + 0x15a;
 }
 
+s32 fn_8007C6BC(void) {
+    extern void *lbl_80367488;
+    u8 *ptr;
+
+    ptr = *(u8 **)((u8 *)lbl_80367488 + 0x54);
+
+    if (ptr != NULL) {
+        *(u16 *)(ptr + 0x36) = 3;
+    }
+
+    return 0;
+}
+
 void *fn_8007C6DC(void) {
     extern u16 lbl_8026C640[];
     return (u8 *)lbl_8026C640 + 0x169;
