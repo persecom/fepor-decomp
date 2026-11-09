@@ -2483,12 +2483,18 @@ void fn_800DC2E4(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x17) = 0xFF;
 }
 
-s32 fn_800DC38C(void *arg0, u32 arg1) {
-    s32 *ptr = (s32*)((char*)arg0 + 0xC0);
-    if (arg1 >= *(u32*)((char*)arg0 + 0xBC)) {
-        return 0;
+void *fn_800DC38C(void *arg0, u32 arg1) {
+    u32 count;
+    void **array;
+
+    count = *(u32 *)((u8 *)arg0 + 0xBC);
+
+    if (arg1 < count) {
+        array = *(void ***)((u8 *)arg0 + 0xC0);
+        return array[arg1];
     }
-    return ptr[arg1];
+
+    return NULL;
 }
 
 s32 fn_800DC3B0(void *arg0) {
