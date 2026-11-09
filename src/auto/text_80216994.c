@@ -131,19 +131,19 @@ s32 fn_80216CE8(s32 arg0, s32 arg1) {
 s32 fn_80216F88(s32 arg0) {
     s32 EXIDeselect(s32);
     s32 EXIImm(s32, s32 *, s32, s32, s32);
-    s32 EXISelect(s32, s32);
+    s32 EXISelect(s32, s32, s32);
     s32 EXISync(s32);
     s32 spC;
     s32 temp_r31;
-    s32 temp_r31_2;
 
-    if (EXISelect(0, 4) == 0) {
+    if (EXISelect(arg0, 0, 4) == 0) {
         return -3;
     }
     spC = 0x89000000;
-    temp_r31 = EXIImm(arg0, &spC, 1, 1, 0) == 0;
-    temp_r31_2 = temp_r31 | (EXISync(arg0) == 0);
-    if ((temp_r31_2 | (EXIDeselect(arg0) == 0)) != 0) {
+    temp_r31 = !EXIImm(arg0, &spC, 1, 1, 0);
+    temp_r31 |= !EXISync(arg0);
+    temp_r31 |= !EXIDeselect(arg0);
+    if (temp_r31 != 0) {
         return -3;
     }
     return 0;
