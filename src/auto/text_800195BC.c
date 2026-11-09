@@ -365,6 +365,24 @@ s32 fn_80019ED0(s32 arg0) {
     return lbl_80367204 + (arg0 * 0x60);
 }
 
+void *fn_80019F04(int arg0) {
+    extern int lbl_80367208;
+    extern u8 *lbl_80367204;
+    int i;
+    u8 *ptr;
+
+    ptr = lbl_80367204;
+
+    for (i = 0; i < lbl_80367208; i++) {
+        if (ptr[0x3C] == arg0) {
+            return ptr;
+        }
+        ptr += 0x60;
+    }
+
+    return 0;
+}
+
 void *fn_80019F3C(void *arg0, s16 arg1) {
     extern u8 lbl_802842B8[];
     extern u8 lbl_802842A4[];
