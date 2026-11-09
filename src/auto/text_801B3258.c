@@ -1771,6 +1771,21 @@ void fn_801CC030(void *arg0) {
     M2C_FIELD(arg0, s32 *, 4) = 0;
 }
 
+#pragma cplusplus on
+extern "C" void fn_801CCE7C(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+    };
+    ((Obj *)arg0)->v2();
+}
+#pragma cplusplus reset
+
 void fn_801CCEA8(void* arg0, int arg1) {
     short val1 = *(short*)((char*)arg0 + 0x48);
     short val2 = *(short*)((char*)arg0 + 0x4a);
