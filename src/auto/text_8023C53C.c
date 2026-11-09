@@ -3863,6 +3863,19 @@ void fn_80262504(void) {
     lbl_80368A8C = 1;
 }
 
+int fn_80262510(int arg0) {
+    extern u8 *lbl_80368AA0;
+    u8 *ptr;
+
+    ptr = lbl_80368AA0 + (arg0 * 0xF8);
+
+    if (ptr[0xF0] == 0) {
+        return -1;
+    }
+
+    return *(int *)(ptr + 0xEC);
+}
+
 s32 fn_80262538(s32 arg0) {
       extern u16* lbl_80368AA0;
       s32 var = ((u8*)lbl_80368AA0)[(arg0 * 0xF8) + 0xF0];
