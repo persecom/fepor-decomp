@@ -2888,10 +2888,10 @@ void fn_801D3D3C(void *arg0) {
   }
   break;
  case 0x32:
-  slot = (u8 *)state;
-  for (i = 0; i < 6; i++) { fn_801D8D68(slot + 0x7c); slot += 0x34; }
-  slot = (u8 *)state;
-  for (i = 0; i < 5; i++) { fn_801D8D58(slot + 0x1b4); slot += 0x4c; }
+    p24 = (s32 *)state; i25 = 0;
+    while (i25 < 6) { fn_801D8D68((u8 *)p24 + 0x7c); i25++; p24 = (s32 *)((u8 *)p24 + 0x34); }
+    p24 = (s32 *)state; i25 = 0;
+    while (i25 < 5) { fn_801D8D58((u8 *)p24 + 0x1b4); i25++; p24 = (s32 *)((u8 *)p24 + 0x4c); }
   *(u8 *)((u8 *)state + 0x15) = 0;
   result = fn_801DBFF8();
   if (fn_801DC0CC() != 0) {
