@@ -894,8 +894,8 @@ s32 fn_800B34B0(u8 *arg0) {
     u32 buffer;
     s32 size;
     u32 value;
-    u32 *counter;
     s32 i;
+    u8 *counter_ptr;
 
     base = lbl_80317338;
     if (*(u32 *)(base + 0xE0) >= 8) {
@@ -942,27 +942,27 @@ stored:
     }
     {
         u8 *ptr = lbl_80317338;
-        counter = (u32 *)(ptr + 0xC0);
+        counter_ptr = (u8 *)(ptr + 0xC0);
         *(u32 *)(ptr + 0xC0) = 0;
         if (arg0 != NULL) {
             while (*arg0 != 0xFF) {
                 fn_80258D94(*(s32 *)(ptr + 0x20), *arg0, 0, *(s32 *)(ptr + 0x40), *(s32 *)(ptr + 0x0));
-                *counter += 1;
+                *(u32 *)counter_ptr += 1;
                 arg0++;
             }
         } else {
             for (i = 0; i < 6; i++) {
                 if (fn_80258D94(*(s32 *)(ptr + 0x20), i, 0, *(s32 *)(ptr + 0x40), *(s32 *)(ptr + 0x0)) == 1) {
-                    *counter += 1;
+                    *(u32 *)counter_ptr += 1;
                     *(u32 *)(ptr + 0xE8) += 1;
                 }
             }
         }
-        if (lbl_80367814 != NULL) {
-            fn_800C4588((s32)lbl_80367814);
-        }
-        *(u32 *)((u8 *)counter + *(u32 *)(base + 0xE0) * 4) = 0;
     }
+    if (lbl_80367814 != NULL) {
+        fn_800C4588((s32)lbl_80367814);
+    }
+    *(u32 *)((u8 *)counter_ptr + *(u32 *)(base + 0xE0) * 4) = 0;
     return 1;
 }
 #pragma use_lmw_stmw reset
@@ -4906,19 +4906,19 @@ s32 fn_800C30DC(s32 arg0, s32 arg1, void *arg2) {
 }
 
 void fn_800C3220(s32 arg0, s32 arg1) {
-    void *temp_r3;
-    
-    temp_r3 = (void *)(arg0 + (arg1 * 0x18));
-    *(s8*)((char*)temp_r3 - 0x18) = 0;
-    *(s8*)((char*)temp_r3 - 0x17) = 0;
-    *(s8*)((char*)temp_r3 - 0x5) = 0;
-    *(s8*)((char*)temp_r3 - 0x6) = 0;
-    *(s8*)((char*)temp_r3 - 0x7) = 0;
-    *(s8*)((char*)temp_r3 - 0x8) = 0;
-    *(s8*)((char*)temp_r3 - 0x2) = (s8)0x80;
-    *(s8*)((char*)temp_r3 - 0x3) = (s8)0x80;
-    *(s8*)((char*)temp_r3 - 0x4) = (s8)0x80;
-    *(s8*)((char*)temp_r3 - 0x1) = (s8)-1;
+    u8 *temp_r3;
+
+    temp_r3 = (u8 *)(arg0 + (arg1 * 0x18));
+    *(temp_r3 - 0x18) = 0;
+    *(temp_r3 - 0x17) = 0;
+    *(temp_r3 - 0x5) = 0;
+    *(temp_r3 - 0x6) = 0;
+    *(temp_r3 - 0x7) = 0;
+    *(temp_r3 - 0x8) = 0;
+    *(temp_r3 - 0x2) = 0x80;
+    *(temp_r3 - 0x3) = 0x80;
+    *(temp_r3 - 0x4) = 0x80;
+    *(temp_r3 - 0x1) = 0xFF;
 }
 
 s32 fn_800C3260(u8* arg0) {
