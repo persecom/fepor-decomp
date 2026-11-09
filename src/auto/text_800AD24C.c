@@ -4464,8 +4464,10 @@ void fn_800C0980(void) {
 }
 
 void fn_800C09A0(void) {
+    M2C_UNK fn_80089634(void);
+    M2C_UNK fn_80089650(M2C_UNK, M2C_UNK);
     M2C_UNK fn_8008A290(M2C_UNK, M2C_UNK);
-    if (fn_80089634() == 6) {
+    if ((u16)fn_80089634() == 6) {
         fn_80089650(2, 0x85);
         fn_8008A290(0, 0);
     }
