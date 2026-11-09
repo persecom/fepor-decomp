@@ -117,8 +117,11 @@ void fn_800289D0(void *arg0) {
 }
 
 void fn_80028B4C(s32 arg0) {
-    extern M2C_UNK lbl_802EF4C8;
-    if (*(u8 *)((u8 *)&lbl_802EF4C8 + 8) == 0x35) {
+    void fn_8018DC18(void);
+    void fn_8000C60C(s32);
+    extern u8 lbl_802EF4C8[];
+
+    if (lbl_802EF4C8[8] == 0x35) {
         fn_8018DC18();
         fn_8000C60C(arg0);
     }
