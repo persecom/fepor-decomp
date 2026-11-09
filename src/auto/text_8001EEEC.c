@@ -1415,6 +1415,13 @@ void fn_800264BC(s32 *arg0, s32 arg1) {
     fn_8019C110(arg1, &fn_80026544);
 }
 
+extern u8 lbl_802847C8[16];
+void fn_80026544(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_802847C8[16];
+    fn_8000CAA0(lbl_802847C8, arg0);
+}
+
 void fn_8002666C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x60) = 0;
 }
