@@ -432,21 +432,23 @@ s32 fn_802287B8(void) {
 
 s32 fn_802287C0(s32 arg0) {
     s32 fn_80226A2C(s32 *, s32 *);
-    s32 fn_802283A8(s32, s32 *, M2C_UNK, M2C_UNK, M2C_UNK);
-    M2C_UNK fn_802291A4(s32);
-    M2C_UNK fn_80229228(s32);
+    s32 fn_802283A8(s32, s32 *, s32, s32, s32);
+    void fn_802291A4(s32);
+    void fn_80229228(s32);
+    void fn_8022699C(s32);
     s32 sp10;
     s32 spC;
     s32 sp8;
-    s32 temp_cr0_eq;
     s32 var_r31;
 
     var_r31 = fn_80226A2C(&spC, &sp8);
     if (var_r31 == 0) {
-        if (arg0 == 0x90) {
-            fn_80229228(sp8);
-        } else {
-            fn_802291A4(sp8);
+        if (var_r31 == 0) {
+            if (arg0 == 0x90) {
+                fn_80229228(sp8);
+            } else {
+                fn_802291A4(sp8);
+            }
         }
         var_r31 = fn_802283A8(sp8, &sp10, 2, 3, 1);
         if (var_r31 == 0) {
