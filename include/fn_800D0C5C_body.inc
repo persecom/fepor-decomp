@@ -1,5 +1,3 @@
-/* temporary body used for one compile_and_diff; safe to delete */
-#if 0
     struct H {
         u8 pad[0x40];
         virtual void v0() = 0;
