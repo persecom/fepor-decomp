@@ -528,11 +528,14 @@ void fn_80123BE8(void) {
 }
 
 void fn_80123BEC(void *arg0) {
-    u32 *ptr = (u32 *) ((char *) arg0 + 0x30);
-    if (*ptr != 0) {
-        fn_8000C60C();
+    void fn_8000C60C(void *);
+    void *ptr;
+
+    ptr = *(void **)((u8 *)arg0 + 0x30);
+    if (ptr != NULL) {
+        fn_8000C60C(ptr);
     }
-    *ptr = 0;
+    *(void **)((u8 *)arg0 + 0x30) = NULL;
 }
 
 void fn_80123C2C(void *arg0) {
