@@ -130,4 +130,100 @@
     r30 = 0;
     if (state <= 0x39U) {
         switch (state) {
+        case 0:
+            if (lbl_8036788C != 0) {
+                *(u32 *)((u8 *)self + 0xC) = 0x31;
+                *(s32 *)((u8 *)self + 0x17C) = -1;
+                return 0;
+            }
+            fn_800C9ABC(str0, lbl_802704F8 + 0x5BE, &sc0);
+            fn_800CF588(self, str0);
+            fn_800C9A60(str0, -1);
+            *(u32 *)((u8 *)self + 0x180) = 0;
+            *(u32 *)((u8 *)self + 0x17C) = 0;
+            fn_800CAE38(self);
+            fn_8011631C(*(void **)((u8 *)self + 0x90), 0);
+            fn_8011631C(*(void **)((u8 *)self + 0x94), 0);
+            obj = *(H **)((u8 *)self + 0x90);
+            obj->setTex((u8 *)lbl_80368278 + 0xC);
+            fn_80116944(*(void **)((u8 *)self + 0x90));
+            obj = *(H **)((u8 *)self + 0x94);
+            obj->setTex((u8 *)lbl_80368278 + 0x18);
+            fn_80116944(*(void **)((u8 *)self + 0x94));
+            obj = *(H **)((u8 *)self + 0x90);
+            f1 = lbl_80369DC8;
+            obj->setPos(f1, lbl_80369E0C, f1);
+            obj = *(H **)((u8 *)self + 0x94);
+            f1 = lbl_80369DC8;
+            obj->setPos(f1, lbl_80369E10, f1);
+            if (*(s32 *)((u8 *)self + 0x228) == 1) {
+                if (*(s32 *)((u8 *)self + 0x270) != 0) {
+                    if ((u8)fn_80112F3C(*(void **)((u8 *)self + 0x94)) == 0)
+                        fn_80116988(*(void **)((u8 *)self + 0x94), 0, lbl_80369DD4);
+                    else
+                        fn_80116988(*(void **)((u8 *)self + 0x90), 0, lbl_80369E14);
+                } else if ((u8)fn_80112F3C(*(void **)((u8 *)self + 0x90)) == 0) {
+                    fn_80116988(*(void **)((u8 *)self + 0x90), 0, lbl_80369E14);
+                } else {
+                    fn_80116988(*(void **)((u8 *)self + 0x94), 0, lbl_80369DD4);
+                }
+            }
+            obj = *(H **)((u8 *)self + 0x98);
+            if (obj != NULL) {
+                if (*(s32 *)((u8 *)self + 0x274) == 0) {
+                    f1 = lbl_80369DC8;
+                    obj->setPos(f1, lbl_80369E0C, f1);
+                    fn_80116988(*(void **)((u8 *)self + 0x98), 1, lbl_80369E14);
+                } else {
+                    f1 = lbl_80369DC8;
+                    obj->setPos(f1, lbl_80369E10, f1);
+                    fn_80116988(*(void **)((u8 *)self + 0x98), 1, lbl_80369DD4);
+                }
+                fn_8011631C(*(void **)((u8 *)self + 0x98), 0);
+            }
+            *(u8 *)((u8 *)self + 0x184) = 0;
+            fn_800CF3E0(self);
+            {
+                f32 t = *(f32 *)((u8 *)lbl_80368278 + 0x148);
+                *(s32 *)((u8 *)self + 0x1AC) = (s32)t;
+            }
+            *(u32 *)((u8 *)self + 0x10) = *(u32 *)((u8 *)lbl_80368278 + 0x34);
+            (*(u32 *)((u8 *)self + 0xC))++;
+            break;
+        case 1:
+            if (--(*(s32 *)((u8 *)self + 0x10)) <= 0)
+                (*(u32 *)((u8 *)self + 0xC))++;
+            break;
+        case 2:
+            if ((u8)fn_800BED64()) {
+                fn_800C9ABC(str1, lbl_802704F8 + 0x563, &sc1);
+                fn_800E7C94(*(void **)((u8 *)self + 4), str1, 4, *(f32 *)((u8 *)lbl_80368278 + 0x60));
+                fn_800C9A60(str1, -1);
+                fn_800C9ABC(str2, lbl_802704F8 + 0x56A, &sc2);
+                fn_800E7C94(*(void **)((u8 *)self + 4), str2, 4, *(f32 *)((u8 *)lbl_80368278 + 0x60));
+                fn_800C9A60(str2, -1);
+                r30 = 1;
+            }
+            fn_800BEEF4(lbl_80367884);
+            (*(u32 *)((u8 *)self + 0xC))++;
+            break;
+        case 3:
+            if (lbl_80367878 == 0) {
+                fn_800C9ABC(str3, lbl_802704F8 + 0x563, &sc3);
+                fn_800E7C94(*(void **)((u8 *)self + 4), str3, 1, *(f32 *)((u8 *)lbl_80368278 + 0x64));
+                fn_800C9A60(str3, -1);
+                fn_800C9ABC(str4, lbl_802704F8 + 0x56A, &sc4);
+                fn_800E7C94(*(void **)((u8 *)self + 4), str4, 1, *(f32 *)((u8 *)lbl_80368278 + 0x64));
+                fn_800C9A60(str4, -1);
+            }
+            (*(u32 *)((u8 *)self + 0xC))++;
+            break;
+        case 4:
+            fn_800CDEB0(self);
+            if (*(s32 *)((u8 *)self + 0x214) == 0 && *(s32 *)((u8 *)self + 0x20C) > 1)
+                *(u32 *)((u8 *)self + 0x10) = *(u32 *)((u8 *)lbl_80368278 + 0x44);
+            else
+                *(u32 *)((u8 *)self + 0x10) = 0;
+            (*(u32 *)((u8 *)self + 0xC))++;
+            break;
         /*CHUNK*/
