@@ -2738,6 +2738,92 @@ void fn_80175CA0(void) {
     }
 }
 
+#pragma cplusplus on
+extern "C" void fn_80175E3C(void *arg0) {
+    void fn_8000C070(void *, s32);
+    void fn_8002833C(void *, u32);
+    void fn_80138808(void *, u32);
+    u32 fn_8013AC54(void *);
+    void fn_8013FDA0(void *);
+    void fn_80140210(void *, void *, s32);
+    void fn_80140258(void *, void *, s16 *, s32);
+    void fn_801475FC(void *, s32);
+    void fn_801694AC(u32, void *);
+    void fn_801695BC(u32, void *, s32);
+    extern u16 lbl_80278080[];
+    extern u32 lbl_802EF4C8[];
+    extern u32 lbl_80367110;
+    extern void *lbl_80367240;
+
+    struct VObj {
+        virtual void v0();
+        virtual void v1();
+        virtual void v2();
+        virtual void v3();
+        virtual void v4();
+        virtual void v5();
+        virtual void v6();
+        virtual void v7();
+        virtual void v8();
+        virtual void v9();
+        virtual void v10();
+        virtual void v11(u32);
+    };
+
+    s16 sp8[2];
+    s16 tmp;
+    u32 var_r30;
+    u32 flags;
+    u32 btn;
+    u8 gate;
+    void *obj4c;
+    void *obj44;
+
+    var_r30 = fn_8013AC54(*(void **)((u8 *)arg0 + 0x40));
+    fn_8013FDA0(arg0);
+    if (var_r30 != fn_8013AC54(*(void **)((u8 *)arg0 + 0x40))) {
+        var_r30 = fn_8013AC54(*(void **)((u8 *)arg0 + 0x40));
+        obj4c = *(void **)((u8 *)arg0 + 0x4C);
+        ((VObj *)obj4c)->v11(var_r30);
+        fn_80138808(*(void **)((u8 *)arg0 + 0x44), var_r30);
+    }
+    flags = lbl_80367110;
+    gate = 0;
+    if ((flags & 0x10) && !(flags & 0x20)) {
+        gate = 1;
+    }
+    if (gate == 0) {
+        btn = *(s32 *)((u8 *)lbl_80367240 + 4);
+        btn = btn & (*(s32 *)((u8 *)lbl_80367240 + 8) ^ btn);
+        if ((btn & 0x100) && (var_r30 != 0)) {
+            fn_8002833C(lbl_802EF4C8, var_r30);
+            obj4c = *(void **)((u8 *)arg0 + 0x4C);
+            *(u8 *)((u8 *)obj4c + 0x78) = 1;
+            *(u8 *)((u8 *)*(void **)((u8 *)arg0 + 0x4C) + 0x4A) = 0;
+            obj44 = *(void **)((u8 *)arg0 + 0x44);
+            tmp = *(s16 *)((u8 *)obj44 + 0xC);
+            sp8[0] = 0x260;
+            sp8[1] = tmp;
+            fn_80140258(arg0, obj44, sp8, 1);
+            fn_80140210(arg0, *(void **)((u8 *)arg0 + 0x48), 0);
+            fn_8000C070(arg0, 6);
+            fn_801475FC((u8 *)lbl_80278080 + 0x1DD, 0x64);
+        } else if ((btn & 0x800) && (var_r30 != 0)) {
+            fn_801695BC(var_r30, arg0, 0x1000000);
+            *(u8 *)((u8 *)arg0 + 0x65) = 5;
+            fn_8000C070(arg0, 0x31);
+        } else if ((btn & 0x400) && (var_r30 != 0)) {
+            fn_801694AC(var_r30, arg0);
+            *(u8 *)((u8 *)arg0 + 0x65) = 5;
+            fn_8000C070(arg0, 0x32);
+        } else if (btn & 0x200) {
+            fn_8000C070(arg0, 0x35);
+            fn_801475FC((u8 *)lbl_80278080 + 0x1ED, 0x64);
+        }
+    }
+}
+#pragma cplusplus reset
+
 void fn_801766C0(s32 param_1, s32 param_2, s32 param_3, s32 param_4)
 {
     u32 *puVar1;
@@ -3134,6 +3220,32 @@ u16 fn_80177C78(void) {
 void *fn_80177CA4(void) {
     extern u16 lbl_80278080[];
     return (u8 *)lbl_80278080 + 0x516;
+}
+
+u8 fn_80177CB4(void) {
+    u32 fn_80037C20(s32);
+    u32 fn_80037D54(s32);
+    u8 fn_80105BC0(s32, s32);
+    u32 var_r31;
+    s32 temp_r30;
+    s32 var_r3;
+    u32 temp;
+
+    temp_r30 = *(s32 *)lbl_802EF4C8;
+    if (fn_80105BC0(temp_r30 + 0x1BC, 8) != 0) {
+        temp = fn_80037C20(temp_r30);
+        var_r31 = (u32)(-(s32)temp | temp) >> 31;
+    } else {
+        var_r31 = 0;
+        if (fn_80037D54(temp_r30) != 0 || fn_80037C20(temp_r30) != 0) {
+            var_r31 = 1;
+        }
+    }
+    var_r3 = 2;
+    if ((u8)var_r31 != 0) {
+        var_r3 = 0;
+    }
+    return var_r3;
 }
 
 void fn_80177E48(void) {
