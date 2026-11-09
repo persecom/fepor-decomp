@@ -1185,15 +1185,9 @@ void fn_8013A9F4(void *arg0) {
     fn_80155F20(0, 0, (s16) (M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA)), (s16) (M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC)), 0xFF, 0x10);
 }
 
-void fn_8013AA60(s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
+void fn_8013AA60(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
     void fn_8008AB7C(s32, s32, s32, s32, s32, s32, s32);
-    s32 temp_r3 = arg1 + (arg3 >> 1);
-    s32 temp_r4 = arg2 + (arg4 >> 1);
-    s32 temp_r5 = (s32)arg3;
-    s32 temp_r6 = 0x18;
-    s32 temp_r7 = 0x19;
-    s32 temp_r8 = 0x4C;
-    fn_8008AB7C(temp_r3, temp_r4, temp_r5, temp_r6, temp_r7, temp_r8, arg5);
+    fn_8008AB7C(arg1 + (arg3 >> 1), arg2 + (arg4 >> 1), arg3, 0x18, 0x19, 0x4C, arg5);
 }
 
 void fn_8013AAB4(void *arg0, s32 arg1, s16 arg2, void *arg4, u8 arg5) {
