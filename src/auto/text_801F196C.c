@@ -23,7 +23,7 @@ extern f32 lbl_8036B938;
 extern f32 lbl_8036B93C;
 extern f32 lbl_8036B940;
 extern f32 lbl_8036B944;
-extern f32 lbl_8036B948;
+extern f64 lbl_8036B948;
 extern void* lbl_8029A8C8[];
 extern void fn_80050E80(void);
 extern void fn_8005C7C8(void*);
@@ -842,6 +842,62 @@ void fn_801F66D4(void *arg0) {
         }
         break;
     }
+}
+
+void fn_801F676C(void *arg0) {
+    void fn_800075D8(void);
+    void fn_80007818(f32, f32, f32, f32);
+    void fn_80007838(f32, f32, f32, f32);
+    void fn_80007884(void);
+    void fn_80007898(s32);
+    void fn_80009C0C(f32);
+    void fn_80009D74(f32, f32, f32, f32);
+    void fn_80009F90(s32, s32, s32);
+    void fn_8000A174(s32, s32);
+    void fn_8000A248(void);
+    void fn_8000A258(void);
+    void *fn_8000E0E4(void *);
+    void fn_8001003C(s32, s32, s32, s32, s32, void *, ...);
+    s32 fn_80010B78(void *, s32, f32);
+    void fn_801F690C(void *, f32, f32);
+    extern u8 lbl_80280D38[];
+    void *temp_r30;
+    void *temp_r31;
+    s32 width;
+
+    temp_r30 = *(void **)((u8 *)arg0 + 0x30);
+    fn_8000A258();
+    fn_80009D74(lbl_8036B910, lbl_8036B910, lbl_8036B914, lbl_8036B918);
+    fn_8000A248();
+    fn_8000A258();
+    fn_80009C0C(lbl_8036B91C);
+    fn_8000A248();
+    fn_8000A258();
+    fn_80009F90(*(s32 *)((u8 *)temp_r30 + 0x10), 1, 0x11);
+    fn_8000A248();
+    fn_80007898(1);
+    fn_80007838(lbl_8036B920, lbl_8036B924, lbl_8036B910, lbl_8036B910);
+    fn_80007818(lbl_8036B928, lbl_8036B92C, lbl_8036B920, lbl_8036B930);
+    fn_800075D8();
+    fn_80007884();
+    fn_80007898(1);
+    fn_80007838(lbl_8036B910, lbl_8036B924, lbl_8036B920, lbl_8036B910);
+    fn_80007818(lbl_8036B920, lbl_8036B92C, lbl_8036B910, lbl_8036B930);
+    fn_800075D8();
+    fn_80007884();
+    fn_8000A258();
+    fn_80009C0C(lbl_8036B91C);
+    fn_8000A248();
+    fn_8000A258();
+    fn_8000A174(0, 0x13);
+    fn_8000A248();
+    temp_r31 = fn_8000E0E4(lbl_80280D38 + 0x6B);
+    width = fn_80010B78(temp_r31, -1, lbl_8036B934);
+    fn_8001003C((s32)(lbl_8036B920 - lbl_8036B938 * (f32)width), 0x1E, 2, 0, 0, temp_r31, lbl_8036B934, lbl_8036B910);
+    fn_8000A258();
+    fn_80009C0C(lbl_8036B93C);
+    fn_8000A248();
+    fn_801F690C(temp_r30, lbl_8036B940, lbl_8036B944);
 }
 
 void fn_801F7194(void *arg0) {
