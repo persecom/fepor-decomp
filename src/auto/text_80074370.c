@@ -1275,8 +1275,8 @@ s32 fn_80077994(void) {
 }
 
 s32 fn_80077A18(void) {
-    extern M2C_UNK lbl_802EF4C8;
-    M2C_FIELD(&lbl_802EF4C8, s8 *, 8) = 0x1C;
+    extern u8 lbl_802EF4C8[24];
+    lbl_802EF4C8[8] = 0x1C;
     return 5;
 }
 
