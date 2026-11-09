@@ -1710,6 +1710,27 @@ void fn_8018F338(void **arg0) {
     fn_80154004(0, 0, 0x10);
 }
 
+void *fn_8018FFB4(void *arg0, s16 arg1) {
+    void fn_800C428C(void *);
+    extern void *lbl_80296150[];
+    extern void *lbl_80292230[];
+    extern void *lbl_8028FDB0[];
+
+    if (arg0 != NULL) {
+        *(void **)arg0 = lbl_80296150;
+        if (arg0 != NULL) {
+            *(void **)arg0 = lbl_80292230;
+            if (arg0 != NULL) {
+                *(void **)arg0 = lbl_8028FDB0;
+            }
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_80190020(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x44) = 8;
     M2C_FIELD(arg0, s16 *, 0x46) = 0;
