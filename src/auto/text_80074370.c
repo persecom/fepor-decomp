@@ -1032,7 +1032,7 @@ void fn_800773E0(void) {
 
 void fn_8007740C(void) {
     extern u16 lbl_8026C0B8[];
-    fn_8000E0E4(&lbl_8026C0B8[0xE50]);
+    fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x394);
 }
 
 void fn_8007749C(void) {
