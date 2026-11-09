@@ -320,6 +320,12 @@ s32 fn_8007551C(void) {
     return 1;
 }
 
+s32 fn_80075524(void) {
+    extern u8 lbl_802EF4C8[24];
+    lbl_802EF4C8[8] = 0;
+    return 9;
+}
+
 void fn_8007553C(void) {
     extern u16 lbl_8026C0B8[];
     fn_8000E0E4(&lbl_8026C0B8[0x212 / sizeof(u16)]);
