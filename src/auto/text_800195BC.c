@@ -322,15 +322,17 @@ s32 fn_8001B95C(void *arg0) {
 
 extern u8 lbl_802842A4[];
 void *fn_8001B964(void *arg0, s16 arg1) {
+    void fn_800C428C(void *);
+    void fn_800C4588(s32);
+    extern u8 lbl_802842A4[];
+
     if (arg0 != NULL) {
-        *(void **)((char*)arg0 + 0x10) = lbl_802842A4;
-        
-        if (*(u8*)((char*)arg0 + 0xC) != 0) {
-            fn_800C4588(*(s32*)((char*)arg0));
-            *(s32*)((char*)arg0) = 0;
-            *(u8*)((char*)arg0 + 0xC) = 0U;
+        *(void **)((char *)arg0 + 0x10) = lbl_802842A4;
+        if (*(u8 *)((char *)arg0 + 0xC) != 0) {
+            fn_800C4588(*(s32 *)arg0);
+            *(s32 *)arg0 = 0;
+            *(u8 *)((char *)arg0 + 0xC) = 0;
         }
-        
         if (arg1 > 0) {
             fn_800C428C(arg0);
         }
