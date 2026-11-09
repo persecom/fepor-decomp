@@ -223,7 +223,7 @@ s32 fn_800A9B0C(void) {
 
 void *fn_800A9C5C(void) {
     extern u16 lbl_8026E470[];
-    return &lbl_8026E470[0x0D88];
+    return (u8 *)lbl_8026E470 + 0x1b1;
 }
 
 s32 fn_800A9C6C(void *arg1) {
