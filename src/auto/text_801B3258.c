@@ -5158,24 +5158,20 @@ loop_1:
 }
 
 void fn_801DE074(void) {
-    M2C_UNK fn_8000BF00(M2C_UNK *);
-    M2C_UNK fn_8006EDA0(void *);
-    extern M2C_UNK lbl_80299A78;
-    extern M2C_UNK lbl_80299C58;
-    M2C_UNK *var_r30;
-    s32 var_r29;
-
-    fn_8000BF00(&lbl_80299C58);
-    var_r29 = 0;
-    var_r30 = &lbl_80299A78;
+    void fn_8000BF00(void *);
+    void fn_8006EDA0(void *);
+    extern u8 lbl_80299C58[];
+    extern u8 lbl_80299A78[];
+    s32 i;
+    fn_8000BF00(lbl_80299C58);
+    i = 0;
     do {
-        if ((u32) M2C_FIELD(var_r30, u32 *, 8) != 0U) {
-            fn_8006EDA0(var_r30 + 8);
+        if (*(u32 *)(lbl_80299A78 + i * 0xC + 8) != 0) {
+            fn_8006EDA0(lbl_80299A78 + i * 0xC + 8);
         }
-        var_r29 += 1;
-        M2C_FIELD(var_r30, u32 *, 8) = 0U;
-        var_r30 += 0xC;
-    } while (var_r29 < 0x28);
+        *(u32 *)(lbl_80299A78 + i * 0xC + 8) = 0;
+        i++;
+    } while (i < 0x28);
 }
 
 #pragma use_lmw_stmw reset
