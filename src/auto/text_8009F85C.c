@@ -1435,12 +1435,10 @@ void *fn_800A30E8(void) {
 
 extern void *fn_800241C8(s32);
 extern void fn_8014DE70(s32);
-s32 fn_800A30F8(s32 arg1)
-{
-    void *temp_r3;
-    
-    temp_r3 = fn_800241C8(arg1);
-    fn_8014DE70(*(s32*)((u8*)temp_r3 + 0x18));
+s32 fn_800A30F8(s32 arg0, s32 arg1) {
+    void *fn_800241C8(s32);
+    M2C_UNK fn_8014DE70(s32);
+    fn_8014DE70(M2C_FIELD(fn_800241C8(arg1), s32 *, 0x18));
     return 6;
 }
 
