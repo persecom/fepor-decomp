@@ -6450,6 +6450,17 @@ void fn_800FB9F8(void) {
     return;
 }
 
+s32 fn_800FBAB8(void *arg0) {
+    void fn_8012923C(void *);
+    extern u8 lbl_8032B3C0[];
+
+    if ((lbl_8032B3C0[1] & 4) != 0) {
+        return 0;
+    }
+    fn_8012923C(arg0);
+    return 1;
+}
+
 s32 fn_800FBB68(void) {
     u8 fn_800FB6FC();
     M2C_UNK fn_800FB868();
