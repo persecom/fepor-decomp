@@ -945,6 +945,32 @@ void fn_801AE1B0(s32 *arg0, void *arg1) {
     *arg0 = *(s32 *)fn_8013F748(arg1, &spC, sp8);
 }
 
+s32 fn_801AE24C(void *arg0) {
+    extern u16 lbl_80297590[];
+    return *(s32*)((char*)lbl_80297590 + ((u32)*(u16*)((char*)arg0 + 0x3E) << 2));
+}
+
+void *fn_801AE264(void *arg0, s16 arg1) {
+    void fn_800C428C(void *);
+    extern void *lbl_8029759C[];
+    extern void *lbl_80292230[];
+    extern void *lbl_8028FDB0[];
+
+    if (arg0 != NULL) {
+        *(void **)arg0 = lbl_8029759C;
+        if (arg0 != NULL) {
+            *(void **)arg0 = lbl_80292230;
+            if (arg0 != NULL) {
+                *(void **)arg0 = lbl_8028FDB0;
+            }
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_801AE2D0(void) {
 
 }
