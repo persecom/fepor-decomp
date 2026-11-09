@@ -410,3 +410,6 @@ void fn_801A7CDC(void *arg0)
 
 #include "global.h"
 extern u16 lbl_802EF4E0;
+#include "common.h"
+
+extern u16 lbl_802EF4E0;
