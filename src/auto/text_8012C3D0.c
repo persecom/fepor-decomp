@@ -853,64 +853,59 @@ void *fn_801317B0(s32 arg0, s32 arg1) {
     }
 }
 
-void fn_80131854(s32 arg0, s32 arg1, s32 arg2, s32* arg3)
+void fn_80131854(s32 unused, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5)
 {
-    switch (arg0)
-    {
-        case 0:
-            *(u32*)arg1 = 0;
-            *(u32*)arg2 = 0x30;
-            *(u32*)arg3 = 0;
-            *(u32*)(arg3 + 1) = 0x14;
-            break;
+  switch (arg1)
+  {
+    case 0:
+      *arg2 = 0;
+      *arg3 = 0;
+      *arg4 = 0x30;
+      *arg5 = 0x14;
+      return;
 
-        case 1:
-            *(u32*)arg1 = 0;
-            *(u32*)arg2 = 0x30;
-            *(u32*)arg3 = 0x154;
-            *(u32*)(arg3 + 1) = 0x168;
-            break;
+    case 1:
+      *arg2 = 0;
+      *arg3 = 0x154;
+      *arg4 = 0x30;
+      *arg5 = 0x168;
+      return;
 
-        case 2:
-            *(u32*)arg1 = 0;
-            *(u32*)arg2 = 0x30;
-            *(u32*)arg3 = 0x168;
-            *(u32*)(arg3 + 1) = 0x17c;
-            break;
+    case 2:
+      *arg2 = 0;
+      *arg3 = 0x168;
+      *arg4 = 0x30;
+      *arg5 = 0x17c;
+      return;
 
-        case 3:
-            *(u32*)arg1 = 0;
-            *(u32*)arg2 = 0x30;
-            *(u32*)arg3 = 0x17c;
-            *(u32*)(arg3 + 1) = 0x190;
-            break;
+    case 3:
+      *arg2 = 0;
+      *arg3 = 0x17c;
+      *arg4 = 0x30;
+      *arg5 = 0x190;
+      return;
 
-        case 4:
-            *(u32*)arg1 = 0;
-            *(u32*)arg2 = 0x30;
-            *(u32*)arg3 = 0x190;
-            *(u32*)(arg3 + 1) = 0x1a4;
-            break;
+    case 4:
+      *arg2 = 0;
+      *arg3 = 0x190;
+      *arg4 = 0x30;
+      *arg5 = 0x1a4;
+      return;
 
-        case 5:
-            *(u32*)arg1 = 0;
-            *(u32*)arg2 = 0x30;
-            *(u32*)arg3 = 0x1a4;
-            *(u32*)(arg3 + 1) = 0x1b8;
-            break;
+    case 5:
+      *arg2 = 0;
+      *arg3 = 0x1a4;
+      *arg4 = 0x30;
+      *arg5 = 0x1b8;
+      return;
 
-        case 6:
-            *(u32*)arg1 = 0;
-            *(u32*)arg2 = 0x30;
-            *(u32*)arg3 = 0x1b8;
-            *(u32*)(arg3 + 1) = 0x1cc;
-            break;
-
-        default:
-            break;
-    }
-
-    return;
+    case 6:
+      *arg2 = 0;
+      *arg3 = 0x1b8;
+      *arg4 = 0x30;
+      *arg5 = 0x1cc;
+      return;
+  }
 }
 
 u16 fn_80131AA8(void *arg1, s32 arg2) {
