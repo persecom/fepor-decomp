@@ -405,10 +405,9 @@ loop_2:
 }
 
 void fn_800C4728(s32 arg0) {
-    extern u16 lbl_80320B88[];
+    extern s32 lbl_80320B88[];
     extern s32 lbl_80367870;
-    s32 temp = (arg0 * 2);
-    lbl_80367870 = (s32)lbl_80320B88[temp];
+    lbl_80367870 = lbl_80320B88[arg0];
 }
 
 void fn_800C47E8(void) {
