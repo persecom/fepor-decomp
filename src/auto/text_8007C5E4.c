@@ -61,7 +61,7 @@ s32 fn_8007C71C(void) {
 
 void *fn_8007C73C(void) {
     extern u16 lbl_8026C640[];
-    return &lbl_8026C640[0x312];
+    return (u8 *)lbl_8026C640 + 0x189;
 }
 
 s32 fn_8007C74C(void) {
