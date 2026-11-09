@@ -1600,6 +1600,17 @@ void fn_8016B60C(void) {
     }
 }
 
+void fn_8016B64C(void) {
+    void *fn_8000BCA4(void *);
+    extern u16 lbl_80277EA0[40];
+    void *temp_r3;
+
+    temp_r3 = fn_8000BCA4((u8 *)lbl_80277EA0 + 0x59);
+    if (temp_r3 != NULL) {
+        *(u32 *)((u8 *)temp_r3 + 0x30) = *(u32 *)((u8 *)temp_r3 + 0x30) | 1;
+    }
+}
+
 void fn_8016B68C(void) {
     void *fn_8000BCA4(void *);
     extern u16 lbl_80277EA0[40]; // 80 bytes / 2 bytes per u16 = 40
