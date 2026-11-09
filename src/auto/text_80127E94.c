@@ -84,9 +84,8 @@ void fn_80128108(void) {
 }
 
 void fn_80128134(void) {
-    M2C_UNK fn_8000E0E4(void *);
-    extern M2C_UNK lbl_80275048;
-    fn_8000E0E4(&lbl_80275048 + 0x5CD);
+    extern u16 lbl_80275048[];
+    fn_8000E0E4((u8 *)lbl_80275048 + 0x5CD);
 }
 
 void fn_80128160(s32 arg1, s32 arg2) {
