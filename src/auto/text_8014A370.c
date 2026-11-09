@@ -454,6 +454,12 @@ s32 fn_8014B2CC(s32 arg0) {
     return *(u16*)((u8*)lbl_80367B14 + arg0);
 }
 
+void fn_8014B2D8(u8 arg0, u8 arg1) {
+    extern u8 *lbl_80367B14;
+
+    lbl_80367B14[0x7] = arg1;
+}
+
 s32 fn_8014B2E4(void) {
     return 0;
 }
