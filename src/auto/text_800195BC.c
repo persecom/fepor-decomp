@@ -741,6 +741,36 @@ s32 fn_8001C284(void *arg0, u8 arg1, s8 arg2, s8 arg3, s8 arg4, s8 arg5) {
     return (s32)(var_f0 * lbl_80368D60);
 }
 
+void *fn_8001C5F8(void *arg0, s16 arg1) {
+    void fn_800C3220(void *, s32);
+    void fn_800C428C(void *);
+    extern u8 lbl_803206EC[];
+    typedef struct {
+        u8 pad : 1;
+        u8 flag : 1;
+        u8 rest : 6;
+    } Bit6;
+    Bit6 *bf;
+    s32 mask;
+
+    if (arg0 != NULL) {
+        *(s32 *)arg0 = 0;
+        *((u8 *)arg0 + 4) = 0;
+        bf = (Bit6 *)((u8 *)arg0 + 5);
+        bf->pad = 0;
+        bf->flag = 0;
+        mask = *((u8 *)arg0 + 5) & 0x3F;
+        if (mask != 0) {
+            fn_800C3220(lbl_803206EC, mask);
+            bf->rest = 0;
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void *fn_8001C690(void *arg0, void *arg1) {
     s32 fn_800C30CC(void *, s32);
     s32 fn_800C30DC(void *, s32, s32);
