@@ -2,16 +2,22 @@
 #include "common.h"
 
 static inline void *map_find_xy(s32 *arg0, s8 arg1, s8 arg2) {
+    s32 *base = arg0;
     s32 *var_r6;
     s32 var_r5;
     s32 n;
 
-    var_r6 = arg0;
     n = *arg0;
-    for (var_r5 = 0; var_r5 < n; var_r5++, var_r6 = (s32 *)((char *)var_r6 + 0x14)) {
-        if (arg1 == *(s8 *)((char *)var_r6 + 8) && arg2 == *(s8 *)((char *)var_r6 + 9)) {
-            return (void *)((char *)arg0 + var_r5 * 0x14 + 8);
-        }
+    var_r6 = base;
+    var_r5 = 0;
+    if (n > 0) {
+        do {
+            if (arg1 == *(s8 *)((char *)var_r6 + 8) && arg2 == *(s8 *)((char *)var_r6 + 9)) {
+                return (void *)((char *)base + var_r5 * 0x14 + 8);
+            }
+            var_r6 = (s32 *)((char *)var_r6 + 0x14);
+            var_r5++;
+        } while (--n);
     }
     return NULL;
 }
@@ -929,7 +935,7 @@ extern "C" void fn_8002F0D0(void *arg0, void *arg1) {
     void fn_801475FC(void *, s32);
     extern s32 *lbl_80367240;
     extern u8 lbl_80330708[];
-    extern u8 lbl_802EF4E0[];
+    extern s32 lbl_802EF4E0[];
     extern f32 lbl_80368E08;
     extern u8 lbl_802694B8[];
     struct Obj {
@@ -942,15 +948,10 @@ extern "C" void fn_8002F0D0(void *arg0, void *arg1) {
         virtual void v5(void *) = 0;
     };
     void *found;
-    u8 *p;
-    s32 i;
-    s32 n;
     void *var_r31;
     void *cur;
     s32 flags;
     u8 changed;
-    s8 x;
-    s8 y;
     f32 fa;
     f32 fb;
     u8 t0;
@@ -970,18 +971,7 @@ extern "C" void fn_8002F0D0(void *arg0, void *arg1) {
         ((u8 *)arg1)[0x3F] = (u8)(s32)*(f32 *)((u8 *)arg1 + 0x38);
         if ((s8)((u8 *)arg1)[0x3C] != (s8)((u8 *)arg1)[0x3E] ||
             (s8)((u8 *)arg1)[0x3D] != (s8)((u8 *)arg1)[0x3F]) {
-            x = (s8)((u8 *)arg1)[0x3E];
-            y = (s8)((u8 *)arg1)[0x3F];
-            p = lbl_802EF4E0;
-            n = *(s32 *)p;
-            for (i = 0; i < n; i++, p += 0x14) {
-                if (x == (s8)p[8] && y == (s8)p[9]) {
-                    found = lbl_802EF4E0 + i * 0x14 + 8;
-                    goto store1;
-                }
-            }
-            found = NULL;
-        store1:
+            found = map_find_xy(lbl_802EF4E0, ((u8 *)arg1)[0x3E], ((u8 *)arg1)[0x3F]);
             *(void **)((u8 *)arg1 + 0x40) = found;
             if (found != NULL) {
                 *(void **)((u8 *)arg1 + 0x44) = found;
@@ -1017,18 +1007,7 @@ extern "C" void fn_8002F0D0(void *arg0, void *arg1) {
         ((u8 *)arg1)[0x3F] = (u8)(s32)*(f32 *)((u8 *)arg1 + 0x38);
         if ((s8)((u8 *)arg1)[0x3C] != (s8)((u8 *)arg1)[0x3E] ||
             (s8)((u8 *)arg1)[0x3D] != (s8)((u8 *)arg1)[0x3F]) {
-            x = (s8)((u8 *)arg1)[0x3E];
-            y = (s8)((u8 *)arg1)[0x3F];
-            p = lbl_802EF4E0;
-            n = *(s32 *)p;
-            for (i = 0; i < n; i++, p += 0x14) {
-                if (x == (s8)p[8] && y == (s8)p[9]) {
-                    found = lbl_802EF4E0 + i * 0x14 + 8;
-                    goto store2;
-                }
-            }
-            found = NULL;
-        store2:
+            found = map_find_xy(lbl_802EF4E0, ((u8 *)arg1)[0x3E], ((u8 *)arg1)[0x3F]);
             *(void **)((u8 *)arg1 + 0x40) = found;
             if (found != NULL) {
                 *(void **)((u8 *)arg1 + 0x44) = found;
