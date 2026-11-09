@@ -864,12 +864,10 @@ s32 fn_801F1644(void *arg0, s32 unused, s8 arg2) {
 }
 
 void fn_801F16A0(void *arg0) {
-    extern u16 lbl_8029A710[];
-    void fn_8000E0E4(s32);
-    u8 val = *(u8*)((uintptr_t)arg0 + 4);
-    s32 index = val * 4;
-    s32 ptr = (s32)&lbl_8029A710[index];
-    fn_8000E0E4(ptr);
+    extern void *lbl_8029A710[];
+    void fn_8000E0E4(void *);
+
+    fn_8000E0E4(lbl_8029A710[*(u8 *)((u8 *)arg0 + 4)]);
 }
 
 s32 fn_801F16D4(void *arg2) {
