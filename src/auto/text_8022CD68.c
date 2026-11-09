@@ -828,17 +828,20 @@ loop_2:
     return var_r3;
 }
 
-s32 fn_80234278(register u8 *str1, register u8 *str2, register u32 n) {
+s32 fn_80234278(u8 *arg0, u8 *arg1, u32 arg2) {
+    register u8 *s1 = arg0 - 1;
+    register u8 *s2 = arg1 - 1;
     register u32 c1;
     register u32 c2;
+    register u32 n = arg2 + 1;
 
-    str1--;
-    str2--;
-    n++;
     while (--n != 0) {
-        if ((c1 = *++str1) != (c2 = *++str2)) {
+        c1 = *++s1;
+        c2 = *++s2;
+        if (c1 != c2) {
             return c1 - c2;
-        } else if (c1 == 0) {
+        }
+        if (c1 == 0) {
             break;
         }
     }
