@@ -1162,8 +1162,8 @@ void fn_8011BBA4(s32 arg0, s32 arg1, s32 arg2, void *arg3) {
 }
 
 void *fn_8011BD34(void) {
-    extern u8 lbl_80274508;
-    return &lbl_80274508 + 0x3C6;
+    extern u16 lbl_80274508[];
+    return (u8 *)lbl_80274508 + 0x3C6;
 }
 
 u8 fn_8011BD44(void) {
