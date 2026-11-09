@@ -3287,55 +3287,70 @@ extern "C" void fn_80144000(void *arg0) {
 }
 #pragma cplusplus reset
 
-void fn_8014402C(void *arg0) {
-    M2C_UNK fn_801475FC(void *, M2C_UNK);
-    extern M2C_UNK lbl_80276B3C;
+#pragma cplusplus on
+extern "C" void fn_8014402C(void *arg0, s32 arg1) {
+    s32 fn_801475FC(u8 *, s32);
+    extern u8 lbl_80276B3C[];
     extern s32 lbl_80367110;
     extern void *lbl_80367240;
-    s32 temp_r6;
-    s32 temp_r7;
-    s32 var_r5_2;
-    s32 var_r5_3;
-    u8 var_r5;
-    void **temp_r3;
-    void **temp_r3_2;
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18(s32, s32, s32) = 0;
+    };
+    u8 skip = 0;
+    s32 buttons;
+    s32 cursor;
+    s32 next;
 
-    var_r5 = 0;
-    if ((lbl_80367110 & 0x10) && !(lbl_80367110 & 0x20)) {
-        var_r5 = 1;
+    if ((lbl_80367110 & 0x10) != 0 && (lbl_80367110 & 0x20) == 0) {
+        skip = 1;
     }
-    if (var_r5 == 0) {
-        temp_r7 = M2C_FIELD(arg0, s32 *, 0x3C);
-        temp_r6 = M2C_FIELD(lbl_80367240, s32 *, 0xC);
-        if (temp_r6 & 0x01000001) {
-            var_r5_2 = temp_r7 - 1;
-            if (temp_r7 == 0) {
-                var_r5_2 = 0xA;
-            }
-            if (temp_r7 != var_r5_2) {
-                M2C_FIELD(arg0, s16 *, 0x9E) = 1;
-                M2C_FIELD(arg0, s8 *, 0x95) = 1;
-                temp_r3 = M2C_FIELD(arg0, void ***, 0x38);
-                M2C_FIELD(*temp_r3, M2C_UNK (**)(void **, M2C_UNK), 0x50)(temp_r3, 1);
-                fn_801475FC(&lbl_80276B3C + 0x46, 0x64);
-            }
-        } else if (temp_r6 & 0x02000002) {
-            var_r5_3 = temp_r7 + 1;
-            if (temp_r7 == 0xA) {
-                var_r5_3 = 0;
-            }
-            if (temp_r7 != var_r5_3) {
-                M2C_FIELD(arg0, s16 *, 0xC6) = 1;
-                M2C_FIELD(arg0, s8 *, 0xBD) = 1;
-                temp_r3_2 = M2C_FIELD(arg0, void ***, 0x38);
-                M2C_FIELD(*temp_r3_2, M2C_UNK (**)(void **, M2C_UNK), 0x50)(temp_r3_2, 0);
-                fn_801475FC(&lbl_80276B3C + 0x46, 0x64);
-            }
+    if (skip != 0) {
+        return;
+    }
+    cursor = *(s32 *)((u8 *)arg0 + 0x3C);
+    buttons = *(s32 *)((u8 *)lbl_80367240 + 0xC);
+    if (buttons & 0x01000001) {
+        next = cursor - 1;
+        if (cursor == 0) {
+            next = 0xA;
+        }
+        if (cursor != next) {
+            *(s16 *)((u8 *)arg0 + 0x9E) = 1;
+            *(u8 *)((u8 *)arg0 + 0x95) = 1;
+            (*(Obj **)((u8 *)arg0 + 0x38))->v18(arg1, next, 1);
+            fn_801475FC(lbl_80276B3C + 0x46, 0x64);
+        }
+    } else if (buttons & 0x02000002) {
+        next = cursor + 1;
+        if (cursor == 0xA) {
+            next = 0;
+        }
+        if (cursor != next) {
+            *(s16 *)((u8 *)arg0 + 0xC6) = 1;
+            *(u8 *)((u8 *)arg0 + 0xBD) = 1;
+            (*(Obj **)((u8 *)arg0 + 0x38))->v18(arg1, next, 0);
+            fn_801475FC(lbl_80276B3C + 0x46, 0x64);
         }
     }
 }
-
-#pragma cplusplus on
 extern "C" void fn_801441A4(void *arg0) {
     extern f32 lbl_8036A75C;
     typedef struct {
