@@ -591,32 +591,60 @@ void fn_80023ED0(void) {
     lbl_8036723C += 1;
 }
 
-f32 fn_80023EE0(void *arg0) {
+#pragma cplusplus on
+extern "C" f32 fn_80023EE0(void *arg0) {
+    struct Model {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual void v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual s32 v23() = 0;
+        virtual s32 v24() = 0;
+    };
     extern f32 lbl_80368DA8;
     extern f32 lbl_80368DAC;
-    s32 temp_r0;
-    s32 temp_r31;
-    u8 temp_r0_2;
-    void *temp_r3;
-    void *temp_r3_2;
+    s32 n;
+    s32 t;
+    u8 mode;
+    f32 fn;
 
-    temp_r0_2 = M2C_FIELD(arg0, u8 *, 0x61);
-    temp_r31 = M2C_FIELD(arg0, s16 *, 0x28) + 1;
-    switch ((s32) temp_r0_2) {                      /* irregular */
-    case 1:
-        temp_r3_2 = M2C_FIELD(arg0, void **, 0x3C);
-        temp_r0 = M2C_FIELD(M2C_FIELD(temp_r3_2, void **, 4), s32 (**)(void *), 0x64)(temp_r3_2) + 1;
-        return (lbl_80368DA8 / (f32) temp_r0) * (f32) (temp_r0 - temp_r31);
-    case 2:
-        temp_r3 = M2C_FIELD(arg0, void **, 0x3C);
-        return (lbl_80368DA8 / (f32) (M2C_FIELD(M2C_FIELD(temp_r3, void **, 4), s32 (**)(void *), 0x68)(temp_r3) + 1)) * (f32) temp_r31;
+    mode = *(u8 *)((char *)arg0 + 0x61);
+    t = *(s16 *)((char *)arg0 + 0x28) + 1;
+    switch (mode) {
     case 0:
         return lbl_80368DA8;
+    case 1:
+        n = ((Model *)*(void **)((char *)arg0 + 0x3C))->v23() + 1;
+        return (lbl_80368DA8 / (f32)n) * (f32)(n - t);
+    case 2:
+        n = ((Model *)*(void **)((char *)arg0 + 0x3C))->v24() + 1;
+        fn = (f32)n;
+        return (lbl_80368DA8 / fn) * (f32)t;
     default:
         return lbl_80368DAC;
     }
 }
-
+#pragma cplusplus reset
 void fn_80023FF4(void* arg0, s32 arg1, s32 arg2) {
     s32 r3;
     s32 r4;
@@ -1095,11 +1123,17 @@ void *fn_80025614(void) {
 }
 
 void fn_80025624(void *arg0, s8 arg1) {
-    M2C_UNK fn_80212CC0(u8, M2C_UNK);
-    extern M2C_UNK lbl_80330708;
-    if ((u32) (((u8) M2C_FIELD(&lbl_80330708, u8 *, 0x9E) >> 1U) & 1) != 1) {
-        fn_80212CC0(M2C_FIELD(arg0, u8 *, 0x1C), 1);
-        M2C_FIELD(arg0, s8 *, 0x20) = arg1;
+    void fn_80212CC0(u8, s32);
+    extern u8 lbl_80330708[];
+    struct Bits {
+        u8 hi : 6;
+        u8 mid : 1;
+        u8 lo : 1;
+    };
+
+    if (((struct Bits *)&lbl_80330708[0x9E])->mid != 1) {
+        fn_80212CC0(*(u8 *)((u8 *)arg0 + 0x1C), 1);
+        *(s8 *)((u8 *)arg0 + 0x20) = arg1;
     }
 }
 
@@ -1754,6 +1788,30 @@ void fn_8002833C(void *arg0, void *arg1) {
     M2C_FIELD(arg0, s8 *, 0x12) = 0;
 }
 
+#pragma peephole off
+void fn_800283C8(void *arg0, void *arg1) {
+    s8 fn_8003A398(void *);
+    u8 *map;
+
+    M2C_FIELD(arg0, void **, 0) = arg1;
+    M2C_FIELD(arg0, u8 *, 0xB) = (u8)M2C_FIELD(arg1, u8 *, 0x19E);
+    M2C_FIELD(arg0, u8 *, 0xC) = (u8)M2C_FIELD(arg1, u8 *, 0x19F);
+    M2C_FIELD(arg0, s8 *, 0x11) = fn_8003A398(arg1);
+    map = (u8 *)&lbl_802CA518;
+    M2C_FIELD(arg0, s32 *, 4) = 0;
+    M2C_FIELD(arg0, s8 *, 8) = 0;
+    M2C_FIELD(arg0, s8 *, 0xA) = -1;
+    M2C_FIELD(arg0, s8 *, 0xD) = -1;
+    M2C_FIELD(arg0, s8 *, 0xE) = -1;
+    M2C_FIELD(arg0, s8 *, 0xF) = -1;
+    M2C_FIELD(arg0, s8 *, 0x10) = -1;
+    M2C_FIELD(arg0, s8 *, 0x14) = 0;
+    M2C_FIELD(arg0, s8 *, 0x15) = 0;
+    M2C_FIELD(arg0, s8 *, 0x12) = 0;
+    M2C_FIELD(arg0, s8 *, 0x16) = 0;
+    map[(s8)M2C_FIELD(arg0, u8 *, 0xB) + ((s8)M2C_FIELD(arg0, u8 *, 0xC) << 6) + 0xD] = 0;
+}
+#pragma peephole reset
 void fn_8002846C(void *arg0) {
     /* Initialize a struct to 0 with some special values. */
     M2C_FIELD(arg0, s32 *, 0) = 0;
