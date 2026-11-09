@@ -128,6 +128,14 @@ s32 fn_800AD310(s32 arg0) {
     }
     return 1;
 }
+
+extern u8 lbl_8028D064[16];
+void fn_800AD64C(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_8028D064[16];
+    fn_8000CAA0(lbl_8028D064, arg0);
+}
+
 #pragma optimization_level reset
 void fn_800AD678(void) {
     M2C_UNK fn_801A4BE0(M2C_UNK *);
