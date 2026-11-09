@@ -4,9 +4,8 @@
 extern s32 lbl_80367788;
 extern u8 lbl_80367704;
 void *fn_8009F85C(void) {
-    extern u16 lbl_8026D8D8;
-    u16 *addr = &lbl_8026D8D8;
-    return (void *)((u32)(addr + 0x277));
+    extern u16 lbl_8026D8D8[];
+    return (u8 *)lbl_8026D8D8 + 0x277;
 }
 
 void *fn_8009F86C(void) {
