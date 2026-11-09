@@ -811,12 +811,12 @@ block_7:
 
 s32 TRKInitializeTarget(void) {
     extern u8 gTRKState[];
-    extern u16 lbl_8033CFC8[];
-    
+    extern u32 lbl_8033CFC8[];
+
     M2C_FIELD(gTRKState, s32 *, 0x98) = 1;
     M2C_FIELD(gTRKState, s32 *, 0x8C) = fn_80228948(gTRKState);
-    lbl_8033CFC8[0] = 0xE000;
-    
+    lbl_8033CFC8[0] = 0xE0000000;
+
     return 0;
 }
 
