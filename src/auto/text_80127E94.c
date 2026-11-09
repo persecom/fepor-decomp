@@ -18,8 +18,7 @@ void fn_80127E94(void *arg0) {
 
 s32 fn_80127EC0(void) {
     extern u16 lbl_80275048[];
-    s32 var = (u32)(&lbl_80275048[0x521]);
-    fn_801475FC((u16*)var, 0x64);
+    fn_801475FC((u16 *)((u8 *)lbl_80275048 + 0x521), 0x64);
     return 9;
 }
 
@@ -475,6 +474,21 @@ loop_2:
         var_r6 += 1;
         *(u8 *)((char *)temp_r4 + 0x2) &= 0xFC;
         goto loop_2;
+    }
+}
+
+void fn_80129AF8(void *arg0) {
+    if (fn_80040824() != 0) {
+        s32 i;
+        void *temp = arg0;
+        s32 count = *(s32 *)((char *)arg0 + 0x50);
+        for (i = 0; i < count; i++) {
+            if (i == count - 1) {
+                fn_80049C30(1);
+            } else {
+                fn_80049C30(0);
+            }
+        }
     }
 }
 
