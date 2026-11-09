@@ -2495,7 +2495,7 @@ s32 fn_801781DC(void *arg0, void *arg1, void *arg2) {
 
 void fn_80178350(void) {
     extern u16 lbl_80278080[];
-    fn_8000E0E4(&lbl_80278080[0x1634]);
+    fn_8000E0E4((u8 *)lbl_80278080 + 0x58d);
 }
 
 void *fn_8017837C(void) {
