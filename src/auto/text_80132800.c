@@ -1522,10 +1522,13 @@ loop_7:
     *arg0 = temp_r0;
 }
 
-void fn_8013BBF8(void *arg0) {
-    *(s32 *) arg0 = 0;
-    *(s32 **) ((char *) arg0 + 4) = (s32 *) ((char *) arg0 + 4);
-    *(s32 **) ((char *) arg0 + 4) = (s32 *) ((char *) arg0 + 4);
+int fn_8013BBF8(void *arg0) {
+    u32 *ptr;
+
+    ptr = (u32 *)((u8 *)arg0 + 0x4);
+    *(u32 *)arg0 = 0;
+    ptr[1] = (u32)ptr;
+    ptr[0] = (u32)ptr;
 }
 
 void *fn_8013BC10(void *arg0, void *arg1) {
