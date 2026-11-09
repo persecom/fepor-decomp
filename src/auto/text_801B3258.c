@@ -883,6 +883,20 @@ void fn_801B9500(struct Unit *unit, s32 arg1) {
 
 void fn_801B9748(void*a){void*fn_8013FF94(void*,s32,s32);s32 fn_80019DF0(u8,void*);void fn_8017A9F0(void*,s32,void*,void*);extern u8 lbl_802EF4C8[];extern f32 lbl_8036B2DC;void*p;void*q;s32 x;p=fn_8013FF94(a,0x82,0);*(f32*)((char*)p+0x30)=lbl_8036B2DC;p=fn_8013FF94(a,0x108,0);*(f32*)((char*)p+0x30)=lbl_8036B2DC;q=((void**)a)[0x60/4];x=fn_80019DF0(*(u8*)(lbl_802EF4C8+0x14),lbl_802EF4C8);*(u8*)((char*)q+0x3c)=0;fn_8017A9F0(q,x,a,q);}
 
+void fn_801B97C8(void) {
+    extern u8 lbl_802EF4C8[24];
+    
+    u8 temp_r0 = *(u8*)((u32)&lbl_802EF4C8 + 8);
+    switch ((s32)temp_r0) {
+        case 0x81:
+            fn_8000C188();
+            return;
+        case 0x80:
+            fn_8000C070(0x18);
+            return;
+    }
+}
+
 #pragma cplusplus on
 extern "C" void fn_801B9D94(void *arg0) {
     void *fn_800C42D8(s32);
@@ -4535,12 +4549,18 @@ void fn_801DE3D8(void *arg0) {
  if((flags&0x08000008) && *(u8*)((char*)arg0+0x5C)) *(f32*)((char*)arg0+0x44)=lbl_8036B6BC;
 }
 
-void fn_801DF468(void **arg0) {
-    void (**func)(void) = (void (**)(void))(*arg0);
-    func[4]();
+#pragma cplusplus on
+extern "C" void fn_801DF468(void *arg0) {
+    void fn_80151EDC(s32, s32, s32);
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    ((Obj *)arg0)->v2();
     fn_80151EDC(0, 0, 0x10);
 }
-
+#pragma cplusplus reset
 void fn_801DF4A4(void *arg0, s32 arg1) {
     struct Color {
         u8 r, g, b, a;
