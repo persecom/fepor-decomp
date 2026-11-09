@@ -27,7 +27,7 @@ extern f32 lbl_8036B948;
 extern void* lbl_8029A8C8[];
 extern void fn_80050E80(void);
 extern void fn_8005C7C8(void*);
-extern void fn_8003F670(void);
+extern void fn_8003F670();
 extern void fn_80013D4C(void);
 extern void fn_8005BCAC(void);
 extern void fn_800C4B8C(void);
