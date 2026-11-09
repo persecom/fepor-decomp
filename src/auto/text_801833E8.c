@@ -5939,10 +5939,9 @@ s32 fn_801A25FC(s8 arg0) {
 
 u8 fn_801A2690(void) {
     void *fn_8000C0C0(u16 *);
-    extern u16 lbl_80296F90;
+    extern u8 lbl_80296F90[];
     void *temp_r3;
-
-    temp_r3 = fn_8000C0C0(&lbl_80296F90);
+    temp_r3 = fn_8000C0C0((u16 *)lbl_80296F90);
     if (temp_r3 == NULL) {
         return 0U;
     }
