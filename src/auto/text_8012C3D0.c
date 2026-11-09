@@ -320,41 +320,36 @@ void fn_8012CE34(void *arg0) {
     s32 fn_8000E0E4(void *);
     void fn_80056AE0(s32, s32);
     extern u8 lbl_80275AC0[];
-
     u8 temp_r0;
-    u8 temp_r0_2;
 
-    M2C_FIELD(arg0, u8 *, 0x62) = 0U;
-
-    if ((s8) M2C_FIELD(arg0, u8 *, 0x62) < 0) {
-        temp_r0 = M2C_FIELD(arg0, u8 *, 0x6C);
+    *(u8 *)((char *)arg0 + 0x62) = 0;
+    if ((s8)*(u8 *)((char *)arg0 + 0x62) < 0) {
+        temp_r0 = *(u8 *)((char *)arg0 + 0x6C);
         switch (temp_r0) {
-        case 0:
-            fn_80056AE0(M2C_FIELD(arg0, s32 *, 0x50), fn_8000E0E4((void *) (lbl_80275AC0 + 0x5A)));
-            return;
         case 1:
-            fn_80056AE0(M2C_FIELD(arg0, s32 *, 0x50), fn_8000E0E4((void *) (lbl_80275AC0 + 0x6B)));
-            return;
         case 2:
-            fn_80056AE0(M2C_FIELD(arg0, s32 *, 0x50), fn_8000E0E4((void *) (lbl_80275AC0 + 0x7B)));
-            return;
+            fn_80056AE0(*(s32 *)((char *)arg0 + 0x50), fn_8000E0E4(lbl_80275AC0 + 0x5A));
+            break;
+        case 4:
+            fn_80056AE0(*(s32 *)((char *)arg0 + 0x50), fn_8000E0E4(lbl_80275AC0 + 0x6B));
+            break;
         default:
-            return;
+            fn_80056AE0(*(s32 *)((char *)arg0 + 0x50), fn_8000E0E4(lbl_80275AC0 + 0x7B));
+            break;
         }
     } else {
-        temp_r0_2 = M2C_FIELD(arg0, u8 *, 0x6C);
-        switch (temp_r0_2) {
-        case 0:
-            fn_80056AE0(M2C_FIELD(arg0, s32 *, 0x50), fn_8000E0E4((void *) (lbl_80275AC0 + 0x8A)));
-            return;
+        temp_r0 = *(u8 *)((char *)arg0 + 0x6C);
+        switch (temp_r0) {
         case 1:
-            fn_80056AE0(M2C_FIELD(arg0, s32 *, 0x50), fn_8000E0E4((void *) (lbl_80275AC0 + 0x9B)));
-            return;
         case 2:
-            fn_80056AE0(M2C_FIELD(arg0, s32 *, 0x50), fn_8000E0E4((void *) (lbl_80275AC0 + 0xAB)));
-            return;
+            fn_80056AE0(*(s32 *)((char *)arg0 + 0x50), fn_8000E0E4(lbl_80275AC0 + 0x8A));
+            break;
+        case 4:
+            fn_80056AE0(*(s32 *)((char *)arg0 + 0x50), fn_8000E0E4(lbl_80275AC0 + 0x9B));
+            break;
         default:
-            return;
+            fn_80056AE0(*(s32 *)((char *)arg0 + 0x50), fn_8000E0E4(lbl_80275AC0 + 0xAB));
+            break;
         }
     }
 }
