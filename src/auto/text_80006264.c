@@ -435,6 +435,19 @@ void fn_800076EC(void) {
     *(f32 *)(ptr + 0x28) = temp;
 }
 
+void fn_80007858(f32 arg0, f32 arg1) {
+    extern void *lbl_80367140;
+
+    u8 *ptr;
+
+    ptr = (u8 *)lbl_80367140;
+    ptr = *(u8 **)(ptr + 0xC);
+    ptr = *(u8 **)(ptr + 0x4);
+
+    *(f32 *)(ptr + 0x10) = arg0;
+    *(f32 *)(ptr + 0x14) = arg1;
+}
+
 void fn_80007884(void *arg0, u32 arg1) {
     *(void**)0x80367140 = arg0;
     *(u16*)(0x80367140 + 0x28) = (u16)arg1;
