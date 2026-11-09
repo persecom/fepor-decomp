@@ -3854,14 +3854,13 @@ void fn_80262F98(s32 unused, s32 arg1, void *arg2) {
     *(s32 *)((u8 *)arg2 + 8) = *(s32 *)((u8 *)arg2 + 8) - ((arg1 + 0x1F) & ~0x1F);
 }
 
-s32 fn_802631AC(s32 arg0, s32 *arg1) {
-    extern u16 lbl_80364430[];
-    s32 tmp;
+s32 fn_802631AC(u8 arg0, s32 *arg1) {
+    extern struct { s32 unk00; s32 unk04; s32 unk08; s32 unk0C; } lbl_80364430[];
+
     if (arg1 != NULL) {
-        tmp = *(u16*)((u8*)lbl_80364430 + ((arg0 << 4) & 0xFF0) + 8);
-        *arg1 = tmp;
+        *arg1 = lbl_80364430[arg0].unk08;
     }
-    return *(u16*)((u8*)lbl_80364430 + ((arg0 << 4) & 0xFF0) + 4);
+    return lbl_80364430[arg0].unk04;
 }
 
 void fn_80263384(void) {
