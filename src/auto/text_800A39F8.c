@@ -555,6 +555,12 @@ void fn_800A6B1C(void) {
     fn_8000BF00(&lbl_8028C750);
 }
 
+void fn_800A6B44(s32 arg0) {
+    void fn_8000CAF0(void *, s32);
+    extern u8 lbl_8028C750[16];
+    fn_8000CAF0(lbl_8028C750, arg0);
+}
+
 void fn_800A6D78(void *arg0) {
     extern f32 lbl_80330708[];
     extern u8 lbl_802CA518[];
