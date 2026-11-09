@@ -7459,9 +7459,9 @@ s32 fn_80102EA8(void *arg0) {
 void fn_80102F18(void *arg0, s32 arg1, s32 arg2) {
     M2C_UNK fn_8002F6E8(M2C_UNK *, s32, s32, M2C_UNK, u8);
     u8 fn_800BE968(u8);
-    extern M2C_UNK lbl_802EF4E0;
+    extern u8 lbl_802EF4E0[];
     if (fn_800BE968((u8) M2C_FIELD(arg0, s32 *, 4)) != 0) {
-        fn_8002F6E8(&lbl_802EF4E0, arg1, arg2, 0, (u8) M2C_FIELD(arg0, s32 *, 4));
+        fn_8002F6E8((M2C_UNK *)lbl_802EF4E0, arg1, arg2, 0, (u8) M2C_FIELD(arg0, s32 *, 4));
     }
 }
 
