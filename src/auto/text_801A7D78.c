@@ -666,13 +666,14 @@ void fn_801AA1B0(void *arg0) {
 void fn_801AAD74(void *arg0) {
     void fn_801AA228(void *);
 
-    switch (*(s16 *)((char *)arg0 + 0x32)) {
-    case 0:
-        break;
-    default:
-        fn_801AA228(arg0);
-        break;
+    if (*(s16 *)((char *)arg0 + 0x32) == 0) {
+        goto end;
     }
+    goto body;
+body:
+    fn_801AA228(arg0);
+end:
+    ;
 }
 
 #pragma optimization_level 4
@@ -1041,8 +1042,8 @@ void fn_801AE1B0(s32 *arg0, void *arg1) {
 }
 
 s32 fn_801AE24C(void *arg0) {
-    extern u16 lbl_80297590[];
-    return *(s32*)((char*)lbl_80297590 + ((u32)*(u16*)((char*)arg0 + 0x3E) << 2));
+    extern s32 lbl_80297590[];
+    return lbl_80297590[M2C_FIELD(arg0, s16 *, 0x3E)];
 }
 
 void *fn_801AE264(void *arg0, s16 arg1) {
