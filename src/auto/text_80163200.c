@@ -830,6 +830,17 @@ void fn_801695BC(s32 arg0, s32 arg1, s32 arg2) {
     *(s32 *)((u8 *)temp_r3 + 0x34) = arg2;
 }
 
+void fn_80169604(void) {
+    extern u8 lbl_80277BC0[];
+    u32 fn_8000BCA4(void *);
+    void fn_8000A3F8(void);
+    void fn_8013FEE0(void);
+    fn_8013FEE0();
+    if (fn_8000BCA4(lbl_80277BC0 + 0xBE) != 0) {
+        fn_8000A3F8();
+    }
+}
+
 void fn_80169640(void) {
     return;
 }
