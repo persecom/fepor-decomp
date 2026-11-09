@@ -18,8 +18,7 @@ void *fn_80103750(void) {
 
 void *fn_801037A0(void) {
     extern u16 lbl_802734D0[];
-    u16 *ptr = &lbl_802734D0[0xA3];
-    return ptr;
+    return (u8 *)lbl_802734D0 + 0xa3;
 }
 
 s32 fn_801037B0(void) {
