@@ -130,7 +130,10 @@ auto/text_8007F844.c:
 	.text       start:0x8007F844 end:0x80081CB0
 
 auto/text_80081CB0.c:
-	.text       start:0x80081CB0 end:0x8009F0BC
+	.text       start:0x80081CB0 end:0x80081CF4
+
+auto/text_80081CF4.c:
+	.text       start:0x80081CF4 end:0x8009F0BC
 
 auto/text_8009F0BC.c:
 	.text       start:0x8009F0BC end:0x8009F85C
