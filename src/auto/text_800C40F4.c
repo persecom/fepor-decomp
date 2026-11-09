@@ -2088,6 +2088,13 @@ s32 fn_800DA5FC(void) {
     return M2C_FIELD(lbl_803678B8, s32 *, 0x10);
 }
 
+void fn_800DAA38(void *arg0) {
+    extern void *lbl_803678B8;
+    extern void fn_800D9188(void *, void *);
+
+    fn_800D9188(lbl_803678B8, arg0);
+}
+
 extern s32 lbl_803678B8;
 String fn_800DAA60(s32 arg1) {
     String fn_800DAA94(s32, s32);
@@ -7238,7 +7245,6 @@ void fn_801007A0(void *arg0) {
     u64 *fn_8001CB64(void **);
     s32 i;
     void **item;
-    void *cur;
 
     M2C_FIELD(arg0, u32 *, 0x254) &= 0xFEFF80EB;
     fn_8010C504(arg0);
@@ -7279,6 +7285,8 @@ void fn_801007A0(void *arg0) {
     }
 
     for (i = 0; i < 4; i++) {
+        void *cur;
+
         item = fn_80037BBC(arg0, i);
         if (*item == NULL) {
             break;
