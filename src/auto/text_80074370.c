@@ -950,7 +950,7 @@ s32 fn_8007703C(s32 arg1) {
 
 void fn_80077074(void) {
     extern u16 lbl_8026C0B8[];
-    fn_8000E0E4(&lbl_8026C0B8[0x1A9]);
+    fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x353);
 }
 
 void fn_800770A0(void) {
