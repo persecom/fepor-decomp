@@ -163,19 +163,23 @@ void fn_8014AA18(void) {
     return;
 }
 
+#pragma opt_strength_reduction off
 s32 fn_8014AC68(void) {
     extern void *lbl_80367240;
     extern u8 lbl_80367B0D;
     extern u8 lbl_80367B0E;
-    if (M2C_FIELD(lbl_80367240, s32 *, 0x10) & 0x01000001) {
-        lbl_80367B0D = ((s8) lbl_80367B0D + ((s8) lbl_80367B0E - 1)) % (s8) lbl_80367B0E;
+    s32 e;
+
+    if (*(u32 *)((u8 *)lbl_80367240 + 0x10) & 0x1000001) {
+        e = (s8)lbl_80367B0E;
+        lbl_80367B0D = ((s8)lbl_80367B0D + (e - 1)) % e;
     }
-    if (M2C_FIELD(lbl_80367240, s32 *, 0x10) & 0x02000002) {
-        lbl_80367B0D = ((s8) lbl_80367B0D + 1) % (s8) lbl_80367B0E;
+    if (*(u32 *)((u8 *)lbl_80367240 + 0x10) & 0x2000002) {
+        lbl_80367B0D = ((s8)lbl_80367B0D + 1) % (s8)lbl_80367B0E;
     }
     return 0;
 }
-
+#pragma opt_strength_reduction reset
 s32 fn_8014ACE8(u8 arg2) {
     extern u8 lbl_80367B08;
     extern u8 lbl_80367B0B;
@@ -863,3 +867,4 @@ extern u8 lbl_80330708[];
 extern u8 lbl_80277060[];
 extern u8 lbl_8032BB58[];
 #include "global.h"
+extern u8 lbl_80330708[];
