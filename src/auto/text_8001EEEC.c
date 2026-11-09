@@ -582,6 +582,14 @@ void fn_80023DC0(void) {
     fn_8002297C(&lbl_802CA518);
 }
 
+void fn_80023DE8(void) {
+    extern u8 lbl_80284548[];
+    extern void fn_80023E18(void);
+    extern void fn_8000BF6C(void *, void *);
+
+    fn_8000BF6C(lbl_80284548, fn_80023E18);
+}
+
 void fn_80023E18(void) {
     fn_8000C188();
 }
