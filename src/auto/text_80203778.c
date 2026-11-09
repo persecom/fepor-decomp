@@ -211,6 +211,17 @@ void PPCMtpmc3(void) {
     M2C_ERROR(/* unknown instruction: mtspr PMC3, $r3 */);
 }
 
+u32 PPCMffpscr(void) {
+    f64 value;
+    u32 result;
+
+    value = __mffs();
+    result = *(u32 *)((u8 *)&value + 4);
+    value = 0.0;
+
+    return result;
+}
+
 s32 PPCMfhid2(void) {
     return 0x392;
 }
@@ -233,6 +244,17 @@ void PPCDisableSpeculation(void) {
 
 void PPCSetFpNonIEEEMode(void) {
     M2C_ERROR(/* unknown instruction: mtfsb1 cr7gt */);
+}
+
+void DBInit(void) {
+    extern u8 __DBExceptionDestination[];
+    extern u32 __DBInterface;
+    extern u32 DBVerbose;
+
+    __DBInterface = 0x80000040;
+    *(u32 *)0x80000048 =
+        (u32)__DBExceptionDestination + 0x80000000;
+    DBVerbose = 1;
 }
 
 void fn_802038C0(void) {
@@ -273,6 +295,17 @@ void InquiryCallback(void *arg1) {
     } else {
         *(u16 *)0x800030E6 = 1;
     }
+}
+
+void __OSDBIntegrator(void) {
+    volatile u32 *ptr;
+    u32 value;
+
+    ptr = (volatile u32 *)0x40;
+    ptr[3] = (u32)__builtin_return_address(0);
+    value = ptr[2];
+    value |= 0x80000000;
+    __builtin_mtmsr(0x30);
 }
 
 void fn_80204294(void) {
