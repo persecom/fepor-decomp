@@ -154,21 +154,20 @@ void fn_801EB23C(void *arg0) {
     fn_8016E9DC(arg0);
 }
 
-void fn_801EB72C(s32 arg0) {
-    M2C_UNK fn_80018AE4();
-    M2C_UNK fn_800A8478();
-    u32 fn_8013FF94(s32, M2C_UNK, M2C_UNK);
-    M2C_UNK fn_80140210(s32, u32, M2C_UNK);
-    M2C_UNK fn_8018DB4C();
+void fn_801EB72C(void *arg0) {
+    void fn_80018AE4(void);
+    void fn_800A8478(void);
+    void fn_8018DB4C(void);
+    void *fn_8013FF94(void *, s32, s32);
+    void fn_80140210(void *, void *, s32);
     extern u8 lbl_803671C0;
-loop_2:
-    if ((u8) lbl_803671C0 != 0) {
+
+    while (lbl_803671C0 != 0) {
         fn_80018AE4();
-        goto loop_2;
     }
     fn_800A8478();
     fn_8018DB4C();
-    if (fn_8013FF94(arg0, 0x40, 0) != 0U) {
+    if (fn_8013FF94(arg0, 0x40, 0) != NULL) {
         fn_80140210(arg0, fn_8013FF94(arg0, 0x40, 0), 1);
     }
 }
