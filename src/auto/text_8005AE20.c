@@ -816,11 +816,11 @@ void fn_8005E070(s32 arg0, void *arg1) {
 }
 
 void fn_8005E0F0(void) {
-    M2C_UNK fn_8020A824(M2C_UNK *);
-    extern M2C_UNK lbl_8030F7E0;
+    void fn_8020A824(void *);
+    extern u8 lbl_8030F7E0[];
     extern u8 lbl_803672E9;
-    if ((u8) lbl_803672E9 != 0) {
-        fn_8020A824(&lbl_8030F7E0);
+    if (lbl_803672E9 != 0) {
+        fn_8020A824(lbl_8030F7E0);
         lbl_803672E9 = 0;
     }
 }
