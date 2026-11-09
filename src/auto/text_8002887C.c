@@ -774,17 +774,14 @@ void fn_8002D854(s32 arg0) {
 }
 
 void fn_8002DEB4(s32 arg0) {
-    extern u16 lbl_80269210[257];
-    u16* base;
-    
-    base = &lbl_80269210[0x0];
-    
-    fn_801481CC(&base[0x1E3], arg0);
-    fn_801481CC(&base[0x1F1], arg0);
-    fn_801481CC(&base[0x1FF], arg0);
-    fn_801481CC(&base[0x20D], arg0);
-    fn_801481CC(&base[0x21B], arg0);
-    fn_801481CC(&base[0x22B], arg0);
+    extern u16 lbl_80269210[];
+
+    fn_801481CC((u8 *)lbl_80269210 + 0x1e3, arg0);
+    fn_801481CC((u8 *)lbl_80269210 + 0x1f1, arg0);
+    fn_801481CC((u8 *)lbl_80269210 + 0x1ff, arg0);
+    fn_801481CC((u8 *)lbl_80269210 + 0x20d, arg0);
+    fn_801481CC((u8 *)lbl_80269210 + 0x21b, arg0);
+    fn_801481CC((u8 *)lbl_80269210 + 0x22b, arg0);
 }
 
 void fn_8002DF54(void) {
@@ -935,11 +932,9 @@ extern "C" void *fn_8002EB54(void *arg0, u32 arg1) {
     };
     void *obj;
     s32 *base;
-    s32 *walk;
     s32 i;
+    s32 *walk;
     s32 n;
-    s32 prev;
-    s32 next;
     s32 pm;
     s32 qm;
     u8 *p;
@@ -957,32 +952,24 @@ extern "C" void *fn_8002EB54(void *arg0, u32 arg1) {
     } else {
         obj = fn_8000CAF0(lbl_80285028, 3);
     }
+    ((u8 *)obj)[0x48] = (u8)(s32)*(f32 *)(lbl_80330708 + 0x524);
     base = lbl_802EF4E0;
     i = 0;
-    next = 0;
     walk = base;
-    ((u8 *)obj)[0x48] = (u8)(s32)*(f32 *)(lbl_80330708 + 0x524);
     ((u8 *)obj)[0x49] = (u8)(s32)*(f32 *)(lbl_80330708 + 0x528);
-    goto cond;
-body:
-    next = i + 1;
-    prev = i + n - 1;
-    i += 1;
-    pm = prev % n;
-    qm = next % n;
-    tmp = pm * 0x14;
-    tmp = (u32)base + tmp;
-    tmp = tmp + 8;
-    *(void **)((u8 *)walk + 0xC) = (void *)tmp;
-    tmp = qm * 0x14;
-    tmp = (u32)base + tmp;
-    tmp = tmp + 8;
-    *(void **)((u8 *)walk + 0x10) = (void *)tmp;
-    walk = (s32 *)((u8 *)walk + 0x14);
-cond:
-    n = base[0];
-    if (i < n) {
-        goto body;
+    for (n = base[0]; i < n; n = base[0]) {
+        pm = (i + n - 1) % n;
+        qm = (i + 1) % n;
+        i += 1;
+        tmp = pm * 0x14;
+        tmp = (u32)base + tmp;
+        tmp = tmp + 8;
+        *(void **)((u8 *)walk + 0xC) = (void *)tmp;
+        tmp = qm * 0x14;
+        tmp = (u32)base + tmp;
+        tmp = tmp + 8;
+        *(void **)((u8 *)walk + 0x10) = (void *)tmp;
+        walk = (s32 *)((u8 *)walk + 0x14);
     }
     *(void **)((u8 *)obj + 0x30) = arg0;
     p = (u8 *)lbl_802EF4E0 + 8;
