@@ -1097,7 +1097,7 @@ void fn_8016A888(void) {
 
 void *fn_8016A8B4(void) {
     extern u16 lbl_80277BC0[];
-    return (void *)&lbl_80277BC0[0x1A5];
+    return (u8 *)lbl_80277BC0 + 0x1a5;
 }
 
 void *fn_8016A918(void *arg0, s16 arg1) {
