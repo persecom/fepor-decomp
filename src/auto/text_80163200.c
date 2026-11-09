@@ -2443,7 +2443,8 @@ void *fn_80177E74(void) {
 }
 
 void fn_8017807C(void) {
-    fn_8000E0E4(&lbl_80278080[0x1534]);
+    extern u16 lbl_80278080[];
+    fn_8000E0E4((u8 *)lbl_80278080 + 0x54d);
 }
 
 void *fn_801780A8(void) {
