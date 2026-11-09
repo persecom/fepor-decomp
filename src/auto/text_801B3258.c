@@ -2799,16 +2799,15 @@ void fn_801CFE80(s32 arg0, s32 arg1) {
 }
 
 void fn_801CFEA4(s32 arg0, s32 arg1) {
-    u8 *ptr;
-    s32 temp_r3;
+    void fn_801CFEF4(void);
     s32 temp_r4;
+    s32 temp_r3;
 
     fn_801CFEF4();
     temp_r3 = arg1 * 0xE;
-    ptr = (u8 *)arg0 + temp_r3;
     temp_r4 = 3;
-    ptr[0x61] = temp_r4;
-    ptr[0x63] = 0x96;
+    *(u8 *)(arg0 + temp_r3 + 0x61) = temp_r4;
+    *(u8 *)(arg0 + temp_r3 + 0x63) = 0x96;
 }
 
 void fn_801D0200(s8 *arg0) {
