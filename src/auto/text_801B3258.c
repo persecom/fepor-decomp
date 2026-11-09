@@ -124,18 +124,17 @@ static inline s32 MsgBoxPadHeight(s32 h, s32 pad) {
     return h + pad;
 }
 
-void fn_801B3258(s32 arg0) {
-    void *fn_8000CAA0(void *, void *);
+void fn_801B3258(s32 arg0, s32 arg1) {
+    void *fn_8000CAA0(void *, s32);
     void *fn_800C4638(s32, void *, s32);
-    extern u16 lbl_802979C8[];
+    extern u8 lbl_802979C8[];
     extern u8 lbl_8027C128[];
-
     void *temp_r31;
 
-    temp_r31 = fn_8000CAA0(lbl_802979C8, lbl_802979C8);
-    M2C_FIELD(temp_r31, void **, 0x30) = fn_800C4638(0x114, lbl_8027C128 + 0x68, 0);
-    M2C_FIELD(M2C_FIELD(temp_r31, void **, 0x30), s32 *, 0x14) = arg0;
-    M2C_FIELD(M2C_FIELD(temp_r31, void **, 0x30), s32 *, 0x10) = 1;
+    temp_r31 = fn_8000CAA0(lbl_802979C8, arg1);
+    *(void **)((u8 *)temp_r31 + 0x30) = fn_800C4638(0x114, lbl_8027C128 + 0x68, 0);
+    *(s32 *)((u8 *)*(void **)((u8 *)temp_r31 + 0x30) + 0x14) = arg0;
+    *(s32 *)((u8 *)*(void **)((u8 *)temp_r31 + 0x30) + 0x10) = 1;
 }
 
 void fn_801B3338(void *arg0) {
