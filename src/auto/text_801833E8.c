@@ -1,6 +1,9 @@
 /* Functions from 0x801833E8 to 0x801A2AB4, found by decomp-toolkit. */
 #include "common.h"
 #include "global.h"
+
+extern u16 gUnkGlobalVar_803306E0[];
+
 #pragma optimization_level 4
 #pragma inline auto
 
