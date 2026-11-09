@@ -411,28 +411,24 @@ void fn_801AF1C8(void *arg0) {
     fn_8011D79C(M2C_FIELD(M2C_FIELD(arg0, void **, 0x6C), s32 *, 0x34));
 }
 
-int fn_801B04F8(int arg0, int arg1) {
-    int v0;
-    int *v1;
-    int v2;
-    
-    v1 = (int *)arg0;
-    v0 = v1[0x5];
-    v2 = v0 & 0xFFFF;
-    
-    if (arg1 < 0) {
-        return 0;
-    }
-    
-    if (v2 == 0) {
-        return 0;
-    }
-    
-    if (v2 != arg1) {
-        return 0;
-    }
-    
-    return 1;
+void fn_801B04F8(void *arg0) {
+    void fn_80140258(void *, void *, s16 *, s32);
+    s16 spC[2];
+    s16 sp8[2];
+    void *p50;
+    void *p58;
+    s16 r7;
+
+    p50 = *(void **)((u8 *)arg0 + 0x50);
+    r7 = *(s16 *)((u8 *)p50 + 0xC);
+    spC[0] = 0x260;
+    spC[1] = r7;
+    fn_80140258(arg0, p50, spC, 0);
+    p58 = *(void **)((u8 *)arg0 + 0x58);
+    r7 = *(s16 *)((u8 *)p58 + 0xC);
+    sp8[0] = 0x260;
+    sp8[1] = r7;
+    fn_80140258(arg0, p58, sp8, 0);
 }
 
 void fn_801B0F60(void *arg0) {
