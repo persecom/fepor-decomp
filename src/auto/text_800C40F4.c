@@ -2952,9 +2952,8 @@ void fn_800DF6DC(s32 arg0, s32 arg1) {
     fn_800C9B6C(arg0, arg1 + 0x10);
 }
 
-void fn_800DF700(s32 arg1) {
-    s32 temp = arg1 + 4;
-    fn_800C9B6C(temp);
+void fn_800DF700(s32 arg0, s32 arg1) {
+    fn_800C9B6C(arg0, arg1 + 4);
 }
 
 #pragma cplusplus on
