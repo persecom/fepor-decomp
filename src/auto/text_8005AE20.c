@@ -107,6 +107,12 @@ s32 fn_8005AE60(void) {
     return 0x20;
 }
 
+void *fn_8005AE68(void) {
+    extern u8 lbl_8026AE88[];
+
+    return lbl_8026AE88 + 9;
+}
+
 void fn_8005AE78(void) {
     void OSResetSystem(s32, s32, s32);
     u8 fn_80014E70(void);
