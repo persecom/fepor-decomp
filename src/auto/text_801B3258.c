@@ -1669,14 +1669,14 @@ void fn_801C0A28(void *arg0) {
     fn_800BE658(fn_801D2AAC(temp_r31), arg0);
 }
 
-void fn_801C0A9C(void)
-{
-    extern u8 lbl_802EF4C8[0x18];
-    
-    if (lbl_802EF4C8[8] >= 0x81) {
-        if (lbl_802EF4C8[8] == 0x81) {
-            fn_8000C070(4);
-        }
+void fn_801C0A9C(void *arg0) {
+    extern u8 lbl_802EF4C8[];
+    switch ((s32)lbl_802EF4C8[8]) {
+    case 0x80:
+        break;
+    case 0x81:
+        fn_8000C070(arg0, 4);
+        break;
     }
 }
 
