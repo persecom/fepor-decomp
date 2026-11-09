@@ -7052,17 +7052,8 @@ void fn_80101448(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32
 }
 
 void fn_801014BC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
-    s32 temp_r3 = arg0;
-    s32 temp_r4 = arg1;
-    s32 temp_r5 = arg2;
-    s32 temp_r6 = arg3;
-    s32 temp_r7 = arg4;
-    s32 temp_r8 = arg5;
-    s32 temp_r9 = arg6;
-    s32 temp_r10 = arg7;
-
-    fn_800FE2A0(5, temp_r10);
-    fn_80101960(temp_r3, temp_r4, temp_r5, temp_r6, temp_r7, temp_r8, temp_r9, temp_r10);
+    fn_800FE2A0(arg0, 5, arg7);
+    fn_80101960(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 }
 
 #pragma use_lmw_stmw on
