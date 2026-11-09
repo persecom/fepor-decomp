@@ -163,17 +163,17 @@ void fn_80085360(void *arg0) {
 }
 
 void fn_80088CC4(void *arg0) {
-    M2C_UNK fn_80088300();
-    M2C_UNK fn_800888A4();
+    M2C_UNK fn_80088300(void *);
+    M2C_UNK fn_800888A4(void *);
     s16 temp_r0;
 
-    temp_r0 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s16 *, 4);
-    switch (temp_r0) {                              /* irregular */
+    temp_r0 = *(s16 *)((char *)*(void **)((char *)arg0 + 0x30) + 4);
+    switch (temp_r0) {
     case 0:
-        fn_800888A4();
+        fn_800888A4(arg0);
         return;
     case 1:
-        fn_80088300();
+        fn_80088300(arg0);
         return;
     }
 }
@@ -684,14 +684,19 @@ void fn_8008BD90(s32 arg0, s32 arg1, u8 arg2) {
 }
 
 void fn_8008BE84(s32 arg0,s32 arg1) {
- s32 fn_8006ECCC(s32,void *,s32); u16 fn_80222A80(void *); u16 fn_80222A90(void *);
- void fn_8000A258(void); void fn_8000A174(void *,s32); void fn_8000A248(void); void fn_80007898(s32);
- void fn_800077D8(s32,f32,f32,f32,f32); void fn_80007884(void);
- extern s32 lbl_803674F0; extern f64 lbl_803696E8; extern f64 lbl_803696F0;
- struct { u8 buf[0x20]; volatile u16 x,y; } sp;
- fn_8006ECCC(lbl_803674F0,sp.buf,0x13); sp.x=fn_80222A80(sp.buf); sp.y=fn_80222A90(sp.buf);
- fn_8000A258(); fn_8000A174(sp.buf,16); fn_8000A248(); fn_80007898(1);
- fn_800077D8(sp.x,(f32)(arg0-0x20),(f32)(arg1+12),(f32)sp.x,(f32)sp.y); fn_80007884();
+    s32 fn_8006ECCC(s32,void *,s32); u16 fn_80222A80(void *); u16 fn_80222A90(void *);
+    void fn_8000A258(void); void fn_8000A174(void *,s32); void fn_8000A248(void); void fn_80007898(s32);
+    void fn_800077D8(s32,f32,f32,f32,f32); void fn_80007884(void);
+    extern s32 lbl_803674F0; extern f64 lbl_803696E8; extern f64 lbl_803696F0;
+    struct { u8 buf[0x20]; volatile u16 x,y; } sp;
+    s32 temp_y, temp_x;
+    fn_8006ECCC(lbl_803674F0,sp.buf,0x13);
+    sp.x=fn_80222A80(sp.buf); sp.y=fn_80222A90(sp.buf);
+    fn_8000A258(); fn_8000A174(sp.buf,0x10); fn_8000A248(); fn_80007898(1);
+    temp_x = arg0 - 0x20;
+    temp_y = arg1 + 0xc;
+    fn_800077D8(sp.x,(f32)temp_x,(f32)temp_y,(f32)sp.x,(f32)sp.y);
+    fn_80007884();
 }
 
 void fn_8008BF68(s32 arg0, s32 arg1, u8 arg2) {
