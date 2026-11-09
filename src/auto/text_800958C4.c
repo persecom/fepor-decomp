@@ -46,7 +46,7 @@ extern f32 lbl_803697E4;
 #pragma scheduling reset
 
 s32 fn_800958C4(s32 arg0) {
-    s32 fn_80095FF8(M2C_UNK);
+    s32 fn_80095FF8(s32);
     if (arg0 & 0x80) {
         return fn_80095FF8(0x80);
     }
