@@ -3550,13 +3550,34 @@ s32 fn_80178A74(void) {
     return 0x1C;
 }
 
-s16 fn_80178A7C(void *arg0) {
-    s32 temp_r31;
-
-    temp_r31 = M2C_FIELD(M2C_FIELD(arg0, void **, 4), s32 (**)(), 0x50)();
-    return (s16) ((temp_r31 - (M2C_FIELD(M2C_FIELD(arg0, void **, 4), s16 (**)(void *), 0x48)(arg0) * 2)) / 3);
+#pragma cplusplus on
+extern "C" s16 fn_80178A7C(void *arg0) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual s16 v16() = 0;
+        virtual void v17() = 0;
+        virtual s32 v18() = 0;
+    };
+    s16 t = ((Obj *)arg0)->v18() - ((Obj *)arg0)->v16() * 2;
+    return t / 3;
 }
-
+#pragma cplusplus reset
 void fn_80178B98(void *arg0, s16 arg1) {
     s32 temp_r3;
     s32 var_r29;
