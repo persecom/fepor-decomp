@@ -1597,12 +1597,12 @@ void fn_80161F7C(void) {
     }
 }
 
+s32 fn_8005BA10(char *name);
 u8 fn_80161FB8(void) {
-    extern u16 lbl_80293AD8[];
+    extern u32 lbl_80293AD8[];
     s32 var_r31;
-
     var_r31 = 0;
-    if ((fn_8005BA10((s32)lbl_80293AD8[1]) != 0) && (fn_8005BA10((s32)lbl_80293AD8[2]) != 0)) {
+    if (((u8)fn_8005BA10((char *)lbl_80293AD8[2]) != 0) && ((u8)fn_8005BA10((char *)lbl_80293AD8[3]) != 0)) {
         var_r31 = 1;
     }
     return (u8)var_r31;
