@@ -2438,7 +2438,8 @@ u16 fn_80177C78(void) {
 }
 
 void *fn_80177CA4(void) {
-    return (void *)&lbl_80278080[0x516];
+    extern u16 lbl_80278080[];
+    return (u8 *)lbl_80278080 + 0x516;
 }
 
 void fn_80177E48(void) {
