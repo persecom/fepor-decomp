@@ -3103,20 +3103,20 @@ s32 fn_800BC760(u8 arg0, s8 arg1) {
     return 1;
 }
 
-s32 fn_800BC7C8(u8 arg0) {
-    M2C_UNK fn_80094A54();
-    extern M2C_UNK lbl_802B14E4;
-    void *var_r3;
+s32 fn_800BC7C8(u8 arg0, s32 arg1) {
+    void fn_80094A54(void *, s32);
+    extern u8 lbl_802B14E4[];
+    void *unit;
 
     if (arg0 != 0) {
-        var_r3 = &lbl_802B14E4 + ((arg0 - 1) * 0x280);
+        unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
     } else {
-        var_r3 = NULL;
+        unit = NULL;
     }
-    if ((var_r3 == NULL) || ((u32) M2C_FIELD(var_r3, u32 *, 0x188) == 0U)) {
+    if (unit == NULL || *(u32 *)((u8 *)unit + 0x188) == 0) {
         return 0;
     }
-    fn_80094A54();
+    fn_80094A54(unit, arg1);
     return 1;
 }
 
