@@ -1737,6 +1737,7 @@ s32 fn_8003DD20(s32 arg0, s32 arg1) {
 
 s32 fn_8003DD7C(s32 arg0, s32 arg1) {
     s8 fn_8003A1E0(s32);
+    u8 fn_80105BC0(s32, s32);
     s32 temp_r31;
     s32 temp_r4;
 
@@ -1745,10 +1746,7 @@ s32 fn_8003DD7C(s32 arg0, s32 arg1) {
     }
     temp_r31 = fn_8003A1E0(arg1);
     temp_r4 = fn_8003A1E0(arg0);
-    if (temp_r31 <= (temp_r4 - 2)) {
-        return 1;
-    }
-    return 0;
+    return (temp_r31 <= (temp_r4 - 2));
 }
 
 void fn_8003E8DC(void *arg0, void *arg1) {
