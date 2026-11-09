@@ -3928,6 +3928,28 @@ void fn_8019CA6C(s32 arg0, s32 arg1) {
     fn_8019D51C(fn_8000CAA0(lbl_80296938, arg0), temp, 0);
 }
 
+s32 fn_8019CC04(void *arg0) {
+    u8 fn_8005F9B8(void *, s32);
+    void *temp_r4;
+    void *temp_r31;
+    void *temp_r3;
+    u8 temp_r3_flags;
+
+    temp_r4 = *(void **)((u8 *)arg0 + 0x30);
+    temp_r3 = *(void **)((u8 *)temp_r4 + 0x5C);
+    temp_r31 = *(void **)((u8 *)temp_r4 + 0x4C);
+    if (temp_r3 != NULL && fn_8005F9B8(temp_r3, 0) != 0) {
+        if (*(void **)((u8 *)temp_r31 + 0x58) != NULL) {
+            temp_r3_flags = *(u8 *)((u8 *)temp_r31 + 0x40);
+            if (!(temp_r3_flags & 4)) {
+                *(u8 *)((u8 *)temp_r31 + 0x40) = (u8)(temp_r3_flags | 4);
+                (*(void (**)(void *))((u8 *)temp_r31 + 0x58))(temp_r31);
+            }
+        }
+    }
+    return 0;
+}
+
 s32 fn_8019CC80(void *arg0) {
     M2C_UNK fn_8002297C(M2C_UNK *);
     M2C_UNK fn_80054C14(void *);
