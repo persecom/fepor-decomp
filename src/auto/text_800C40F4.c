@@ -2041,6 +2041,12 @@ void fn_800DA340(s8 arg0) {
     lbl_803678BD = arg0;
 }
 
+void fn_800DA358(void) {
+    extern u8 *lbl_803678B8;
+
+    lbl_803678B8[0x89] = 1;
+}
+
 void fn_800DA368(void* arg0, void* arg1) {
     if (arg0 != NULL && arg1 != NULL) {
         int* data = (int*)arg1;
