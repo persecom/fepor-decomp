@@ -545,6 +545,7 @@ void fn_8012A45C(void *arg0) {
         fn_8000C070(1);
         return;
     }
+    
     fn_80183E3C(temp_r0, &fn_8012AA68, 
                (s32)*(f32 *)((char *)temp_r4 + 0x10), 
                (s32)*(f32 *)((char *)temp_r4 + 0x14), 0);
@@ -689,12 +690,10 @@ void fn_8012B394(void) {
 }
 
 void fn_8012B3C0(s32 arg0, s32 arg1, s32 arg2) {
-    M2C_UNK fn_80040844();
-    u32 fn_8004721C(s32, s32, M2C_UNK, M2C_UNK);
-    M2C_UNK fn_800498A4(s32, M2C_UNK);
-    fn_80040844();
-    if (fn_8004721C(arg0, arg1, 0x4200, 0) != 0U) {
-        fn_800498A4(arg2, 0);
+    s32 r = fn_80040844();
+    r = fn_8004721C(r, arg0, arg1, 0x4200, 0);
+    if ((u32)r != 0U) {
+        fn_800498A4(r, arg2, 0);
     }
 }
 
