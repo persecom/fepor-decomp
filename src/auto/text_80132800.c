@@ -1871,11 +1871,12 @@ extern "C" void fn_8013E218(void *arg0, void *arg1) {
     };
     s32 i;
     void *p;
+    u8 *arg1_bytes = (u8 *)arg1;
 
-    for (i = 0; i < M2C_FIELD(arg1, s8 *, 0x60); i++) {
-        p = fn_8000B908(*(u8 *)((u32)arg1 + (i + 0x40)));
-        M2C_FIELD(p, s16 *, 0x30) += ((Obj *)arg0)->v31();
-        M2C_FIELD(p, s16 *, 0x32) += ((Obj *)arg0)->v32();
+    for (i = 0; i < *(s8 *)&arg1_bytes[0x60]; i++) {
+        p = fn_8000B908(arg1_bytes[0x40 + i]);
+        *(s16 *)((u32)p + 0x30) += ((Obj *)arg0)->v31();
+        *(s16 *)((u32)p + 0x32) += ((Obj *)arg0)->v32();
     }
 }
 #pragma cplusplus reset
