@@ -104,7 +104,7 @@ extern u32 __SPR_392;
 extern u16 InterruptHandlerTable_803684C8[];
 
 extern s32 StopAtNextInt_80368530;
-extern u16 lbl_80368550;
+extern s32 lbl_80368550;
 
 extern u32 lbl_80368514;
 extern u32 lbl_80368510;
