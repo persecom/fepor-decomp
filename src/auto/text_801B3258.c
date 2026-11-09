@@ -1693,12 +1693,17 @@ void fn_801C2A3C(void *arg0) {
 }
 
 void fn_801C32D4(s32 arg0) {
-    s32 fn_8005C6A0(void *, M2C_UNK *);
-    s32 fn_80161FB8();
-    extern M2C_UNK lbl_8027D030;
-    if ((fn_8005C6A0(&lbl_8027D030 + 0x402, &lbl_8027D030) & 0x2000) && (fn_80161FB8() != 0)) {
-        fn_80162054();
-        fn_8000C188(arg0);
+    extern u8 lbl_8027D030[];
+    s32 fn_8005C6A0(void *);
+    s32 fn_80161FB8(void);
+    void fn_80162054(void);
+    void fn_8000C188(s32);
+
+    if (fn_8005C6A0(lbl_8027D030 + 0x402) & 0x2000) {
+        if (fn_80161FB8() != 0) {
+            fn_80162054();
+            fn_8000C188(arg0);
+        }
     }
 }
 
