@@ -3395,6 +3395,12 @@ void *fn_800723A4(void) {
     return (char *)&lbl_8026BB84 + 0xC2;
 }
 
+void *fn_800723B4(void) {
+    extern u8 lbl_8026BB84[];
+
+    return lbl_8026BB84 + 0xD7;
+}
+
 s32 fn_800723C4(void) {
     return 0;
 }
