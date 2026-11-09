@@ -3112,9 +3112,8 @@ s32 fn_80199310(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x124);
 }
 
-void fn_80199318(s32 arg0) {
-    s32 temp_r3 = arg0 + 0x118;
-    fn_800C9B6C(temp_r3);
+void fn_80199318(s32 arg0, s32 arg1) {
+    fn_800C9B6C(arg0, arg1 + 0x118);
 }
 
 extern s32 fn_8005F7B0(u32, u8);                         /* extern */
@@ -3358,10 +3357,8 @@ s32 fn_8019A7A8(void *arg0) {
 }
 
 void fn_8019A7E8(s32 arg0) {
-    M2C_UNK fn_8000CAA0(M2C_UNK *, s32, M2C_UNK *);
-    M2C_UNK fn_8019D51C(M2C_UNK, M2C_UNK);
-    extern M2C_UNK lbl_80296DF0;
-    fn_8000CAA0(&lbl_80296DF0, arg0, &lbl_80296DF0);
+    extern u16 lbl_80296DF0[];
+    fn_8000CAA0(lbl_80296DF0, arg0, (u16*)lbl_80296DF0);
     fn_8019D51C(0, 0);
 }
 
