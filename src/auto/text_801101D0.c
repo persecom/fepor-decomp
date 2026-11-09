@@ -1704,19 +1704,22 @@ void fn_8011E4B8(void) {
 }
 
 void fn_8012075C(void *arg0) {
+    void fn_80122AA8(void *);
+    extern s32 lbl_80367110;
     s32 i;
-    void **ptr_array;
-    s32 r3 = (s32)arg0;
-    
-    if (!(lbl_80367110 & 3)) {
-        i = 0; // This is likely what the extra instruction is for
-        ptr_array = (void**)arg0;
+    void *p;
+    void *obj;
+
+    if ((lbl_80367110 & 3) == 0) {
+        i = 0;
+        p = arg0;
         do {
-            if (*ptr_array != NULL) {
-                fn_80122AA8(*ptr_array);
+            obj = *(void **)((u8 *)p + 0x34);
+            if (obj != NULL) {
+                fn_80122AA8(obj);
             }
             i += 1;
-            ptr_array++;
+            p = (u8 *)p + 4;
         } while (i < 4);
     }
 }
