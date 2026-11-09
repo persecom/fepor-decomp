@@ -861,9 +861,9 @@ void fn_801F676C(void *arg0) {
     s32 fn_80010B78(void *, s32, f32);
     void fn_801F690C(void *, f32, f32);
     extern u8 lbl_80280D38[];
-    void *temp_r30;
     void *temp_r31;
-    s32 width;
+    void *temp_r30;
+    f32 fw;
 
     temp_r30 = *(void **)((u8 *)arg0 + 0x30);
     fn_8000A258();
@@ -892,8 +892,8 @@ void fn_801F676C(void *arg0) {
     fn_8000A174(0, 0x13);
     fn_8000A248();
     temp_r31 = fn_8000E0E4(lbl_80280D38 + 0x6B);
-    width = fn_80010B78(temp_r31, -1, lbl_8036B934);
-    fn_8001003C((s32)(lbl_8036B920 - lbl_8036B938 * (f32)width), 0x1E, 2, 0, 0, temp_r31, lbl_8036B934, lbl_8036B910);
+    fw = (f32)fn_80010B78(temp_r31, -1, lbl_8036B934);
+    fn_8001003C((s32)(lbl_8036B920 - lbl_8036B938 * fw), 0x1E, 2, 0, 0, temp_r31, lbl_8036B934, lbl_8036B910);
     fn_8000A258();
     fn_80009C0C(lbl_8036B93C);
     fn_8000A248();
