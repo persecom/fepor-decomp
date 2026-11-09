@@ -1,6 +1,12 @@
 /* Functions from 0x80074370 to 0x8007C534, found by decomp-toolkit. */
 #include "common.h"
 #include "structs.h"
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    u16 unk4;
+} Entry_80079300;
 extern u8 D_802EF4C8[24];
 extern u8 lbl_8036723A;
 s32 fn_80024398();
@@ -1853,6 +1859,19 @@ void fn_800791F0(s32 arg0, s32 arg1) {
 }
 
 void fn_80079248(void*p){f32 fn_800067BC(s32,f32,f32,f32,f32);*(s32*)((u8*)p+0x34)+=1;*(s8*)((u8*)*(void**)((u8*)p+0x30)+0x42)=fn_800067BC(0,(f32)*(s32*)((u8*)p+0x3c),(f32)*(s32*)((u8*)p+0x40),(f32)*(s32*)((u8*)p+0x34),(f32)*(s32*)((u8*)p+0x38));}
+
+void fn_80079300(void *arg0, s8 arg1) {
+    extern s16 lbl_80312060[];
+    f32 temp_f1;
+
+    if (arg1 >= 0) {
+        M2C_FIELD(arg0, s8 *, 0x43) = arg1;
+        temp_f1 = (f32) lbl_80312060[arg1 * 3];
+        M2C_FIELD(arg0, f32 *, 0x38) = temp_f1;
+        M2C_FIELD(arg0, f32 *, 0x3C) = (f32) *(s16 *)((u8 *)lbl_80312060 + arg1 * 6 + 2);
+        M2C_FIELD(arg0, u16 *, 0x46) = (u16) (M2C_FIELD(arg0, u16 *, 0x46) | (s16) *(u16 *)((u8 *)lbl_80312060 + arg1 * 6 + 4));
+    }
+}
 
 void *fn_80079380(s8 arg0) {
     extern void *lbl_80312040;
