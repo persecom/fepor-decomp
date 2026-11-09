@@ -281,7 +281,7 @@ s32 fn_8014B234(void) {
 
 void *fn_8014B23C(void) {
     extern u16 lbl_80276F00[];
-    return (u16*)((uintptr_t)lbl_80276F00 + 0x113 * sizeof(u16));
+    return (u8 *)lbl_80276F00 + 0x113;
 }
 
 extern u16 *g_AccessoryArray;
