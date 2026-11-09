@@ -877,6 +877,19 @@ String *fn_800C9874(String *arg0, u32 arg1, char arg2) {
     return arg0;
 }
 
+void *fn_800C992C(void *arg0, const char *arg1, u32 arg2) {
+    void fn_800CA7F4(void *, u32, s32);
+    void *memcpy(void *, const void *, u32);
+    u32 size;
+
+    if (arg2 != 0) {
+        size = ((String *)arg0)->size;
+        fn_800CA7F4(arg0, size + arg2, 1);
+        memcpy(((String *)arg0)->data + size, arg1, arg2);
+    }
+    return arg0;
+}
+
 #pragma auto_inline off
 void *fn_800C9A60(void *arg0, s16 arg1) {
     void fn_800C428C(void *);
