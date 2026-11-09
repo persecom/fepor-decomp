@@ -109,13 +109,13 @@ s32 fn_8014A920(void) {
     return 0x130;
 }
 
-s32 fn_8014A928(void *arg2) {
-    if ((s8) lbl_80367B08 == 0) {
+s32 fn_8014A928(s32 unused0, s32 unused1, void *arg2) {
+    if ((s8)lbl_80367B08 == 0) {
         lbl_80367B09 = lbl_80367B0D;
-        lbl_80367B0B = *(u8 *) (((u8 *) arg2) + 0x3A);
+        lbl_80367B0B = *(u8 *)((u8 *)arg2 + 0x3A);
     } else {
         lbl_80367B0A = lbl_80367B0D;
-        lbl_80367B0C = *(u8 *) (((u8 *) arg2) + 0x3A);
+        lbl_80367B0C = *(u8 *)((u8 *)arg2 + 0x3A);
     }
     return 9;
 }
