@@ -337,6 +337,12 @@ void *fn_801EC584(void) {
     return &lbl_8027EE08[0xAD0];
 }
 
+s32 fn_801EC5A8(void) {
+    extern u8 lbl_802EF4C8[24];
+    lbl_802EF4C8[8] = 0x84;
+    return 5;
+}
+
 void fn_801EC5C0(void) {
     extern u16 lbl_8027EE08[];
     fn_8000E0E4(&lbl_8027EE08[0xAF4]);
