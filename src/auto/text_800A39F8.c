@@ -1019,8 +1019,8 @@ void fn_800A82B0(void *arg0) {
 
 s32 fn_800A83C8(void) {
     extern u16 lbl_8026E3C0[8];
-    s32 result = fn_8000BCA4(&lbl_8026E3C0[0x38 / 2]);
-    return result != 0;
+    s32 fn_8000BCA4(void *);
+    return fn_8000BCA4((u8 *)lbl_8026E3C0 + 0x39) != 0;
 }
 
 void fn_800A8400(void) {
