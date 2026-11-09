@@ -2012,8 +2012,25 @@ void fn_8007A368(void *arg0) {
     }
 }
 
-void fn_8007A46C(void*p){u32 fn_8000CD60(s32);s32 t; s32 v;*(s32*)((u8*)p+0x30)=*(s32*)((u8*)p+0x18);*(s16*)((u8*)p+0x34)=1;t=fn_8000CD60(*(s32*)((u8*)p+0x30))>>16;switch(*(s16*)((u8*)p+0x34)){case 3:v=(t>>7)+300;break;case 1:v=(t>>7)+30;break;case 2:v=(t>>10)+1;break;case 4:v=1;break;case 5:v=0x7fffffff;break;default:v=1;}*(s32*)((u8*)p+0x3c)=v;*(s16*)((u8*)p+0x36)=1;}
-
+#pragma dont_inline on
+void fn_8007A46C(void* p) {
+    u32 fn_8000CD60(s32);
+    s32 t; 
+    s32 v;
+    *(s32*)((u8*)p+0x30)=*(s32*)((u8*)p+0x18);
+    *(s16*)((u8*)p+0x34)=1;
+    t=fn_8000CD60(*(s32*)((u8*)p+0x30))>>16;
+    switch(*(s16*)((u8*)p+0x34)){
+        case 3: v=(t>>7)+300; break;
+        case 1: v=(t>>7)+30; break;
+        case 2: v=(t>>10)+1; break;
+        case 4: v=1; break;
+        case 5: v=0x7fffffff; break;
+        default: v=1;
+    }
+    *(s32*)((u8*)p+0x3c)=v;
+    *(s16*)((u8*)p+0x36)=1;
+}
 void fn_8007ACCC(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x30) = (s32) M2C_FIELD(arg0, s32 *, 0x18);
     M2C_FIELD(arg0, s16 *, 0x36) = 1;
@@ -2227,14 +2244,12 @@ void fn_8007C484(void *arg0) {
     void fn_80234450(void *, void *);
     void fn_802343E0(void *, s32);
     void fn_8005BA10(void *);
-
     extern u16 lbl_8026C640[];
+    char sp8[0x40];
 
-    s32 *sp8;
-    
-    fn_80234450(&sp8, &lbl_8026C640[0x122]);
-    fn_802343E0(&sp8, *(s32 *) ((char *) arg0 + 8));
-    fn_8005BA10(&sp8);
+    fn_80234450(sp8, (u8 *)lbl_8026C640 + 0x122);
+    fn_802343E0(sp8, *(s32 *)((char *)arg0 + 8));
+    fn_8005BA10(sp8);
 }
 
 void fn_8007C4D4(void *arg0, s32 arg1) {
