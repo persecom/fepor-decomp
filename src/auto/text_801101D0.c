@@ -459,16 +459,15 @@ void fn_801181D0(void) {
     fn_80006198();
 }
 
-void fn_801181F8(void) {
+void fn_801181F8(s32 arg0) {
     extern u8 lbl_802EF4C8[];
-    u8* addr = (u8*)((u32)lbl_802EF4C8);
-    switch ((s32)addr[8]) {
-        case 0x81:
-            fn_8000C070(0x12);
-            return;
-        case 0x80:
-            fn_8000C070(1);
-            return;
+    switch ((s32)lbl_802EF4C8[8]) {
+    case 0x81:
+        fn_8000C070(arg0, 0x12);
+        return;
+    case 0x80:
+        fn_8000C070(arg0, 1);
+        return;
     }
 }
 
