@@ -319,14 +319,11 @@ void fn_80089FA8(void *arg0) {
     void fn_80224E1C(s32);
     void fn_80224FEC(f32, f32, f32, f32, f32, f32);
     extern s32 lbl_80367110;
-    extern f32 lbl_80369690;
     extern f32 lbl_80369694;
     extern f32 lbl_80369698;
     extern f32 lbl_8036969C;
     extern f32 lbl_803696A0;
     extern f32 lbl_803696A4;
-    extern f32 lbl_803696A8;
-    extern f64 lbl_803696C0;
     u8 spC[0x44];
     s32 sp8;
     f32 a;
@@ -345,26 +342,24 @@ void fn_80089FA8(void *arg0) {
         break;
     case 1:
         *(u16 *)((u8 *)arg0 + 0x38) = *(u16 *)((u8 *)arg0 + 0x38) + 1;
-        a = lbl_80369690;
-        b = lbl_803696A8;
+        a = 0.0f;
+        b = 255.0f;
         *(u8 *)((u8 *)arg0 + 0x37) =
             (u8)(s32)fn_800067BC(0, a, b,
                                  (f32)*(u16 *)((u8 *)arg0 + 0x38),
                                  (f32)*(u16 *)((u8 *)arg0 + 0x3A));
-        (void)lbl_803696C0;
         if (*(u16 *)((u8 *)arg0 + 0x38) >= *(u16 *)((u8 *)arg0 + 0x3A)) {
             *(u16 *)((u8 *)arg0 + 0x32) = 2;
         }
         break;
     case 2:
         *(u16 *)((u8 *)arg0 + 0x3C) = *(u16 *)((u8 *)arg0 + 0x3C) + 1;
-        a = lbl_803696A8;
-        b = lbl_80369690;
+        a = 255.0f;
+        b = 0.0f;
         *(u8 *)((u8 *)arg0 + 0x37) =
             (u8)(s32)fn_800067BC(0, a, b,
                                  (f32)*(u16 *)((u8 *)arg0 + 0x3C),
                                  (f32)*(u16 *)((u8 *)arg0 + 0x3E));
-        (void)lbl_803696C0;
         if (*(u16 *)((u8 *)arg0 + 0x3C) >= *(u16 *)((u8 *)arg0 + 0x3E)) {
             *(u16 *)((u8 *)arg0 + 0x32) = 0;
         }
