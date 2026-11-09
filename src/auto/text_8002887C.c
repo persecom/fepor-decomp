@@ -1928,6 +1928,36 @@ void fn_80032F50(void) {
     fn_80037D54(*(void **)lbl_802EF4C8);
 }
 
+s32 fn_80032F7C(s32 arg0, void *arg1) {
+    s32 fn_8002F480(s32, void *);
+    u32 fn_8002F740(void *);
+    extern u8 lbl_802EF4C8[];
+    void *temp_r31;
+    u8 b0;
+    u8 b1;
+    u8 *p;
+    s32 ret;
+
+    temp_r31 = *(void **)((u8 *)arg1 + 0x40);
+    if (temp_r31 == NULL) {
+        return 0x10;
+    }
+    if (fn_8002F740(temp_r31) != 0U) {
+        return fn_8002F480(arg0, arg1);
+    }
+    if (*(u8 *)((u8 *)temp_r31 + 3) != 0) {
+        b1 = *(u8 *)((u8 *)temp_r31 + 1);
+        b0 = *(u8 *)((u8 *)temp_r31 + 0);
+        p = lbl_802EF4C8;
+        ret = 5;
+        p[0xF] = b0;
+        p[0x10] = b1;
+        *(s32 *)(p + 4) = 0;
+        return ret;
+    }
+    return 0;
+}
+
 void fn_80033024(void) {
     M2C_UNK fn_8004A224();
     fn_8004A224();
