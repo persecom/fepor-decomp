@@ -1,5 +1,6 @@
 /* Functions from 0x801B3258 to 0x801E4380, found by decomp-toolkit. */
 #include "common.h"
+void fn_801E00EC(void *arg0, void *arg1);
 extern s32 lbl_8032FF08;
 extern u16 lbl_80331D00[];
 extern f32 lbl_8036B4A8;
