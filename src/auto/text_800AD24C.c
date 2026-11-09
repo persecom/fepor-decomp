@@ -3117,6 +3117,40 @@ s32 fn_800BC0A4(u8 arg0, s32 arg1) {
     return fn_8001CA2C(temp);
 }
 
+s32 fn_800BC11C(u8 arg0, s32 arg1) {
+    u8 *fn_80037BD0(void *, s32);
+    extern u8 lbl_802B14E4[];
+    typedef struct {
+        u8 pad:1;
+        u8 flag:1;
+        u8 rest:6;
+    } Bit6;
+    void *var_r31;
+    s32 i;
+    u8 *temp;
+
+    if (arg0 != 0) {
+        var_r31 = lbl_802B14E4 + ((arg0 - 1) * 0x280);
+    } else {
+        var_r31 = NULL;
+    }
+    if ((var_r31 == NULL) || (*(u32 *)((u8 *)var_r31 + 0x188) == 0U)) {
+        return 0;
+    }
+    for (i = 0; i < 8; i++) {
+        temp = fn_80037BD0(var_r31, i);
+        if (*(u32 *)temp != 0U && ((Bit6 *)&temp[5])->flag) {
+            return 0;
+        }
+    }
+    temp = fn_80037BD0(var_r31, arg1);
+    if (*(u32 *)temp == 0U) {
+        return 0;
+    }
+    ((Bit6 *)&temp[5])->flag = 1;
+    return 1;
+}
+
 s32 fn_800BC204(void *arg0) {
     u8 temp;
     u32 temp2;
