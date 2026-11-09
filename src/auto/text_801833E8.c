@@ -746,11 +746,12 @@ void fn_80186318(void *arg0) {
 
 void fn_801863BC(void *arg0) {
     extern u16 lbl_80278E24[];
+    void fn_800558D8(void *);
     void *var_r3;
-    
-    var_r3 = &lbl_80278E24[0x1AA];
-    if (M2C_FIELD(arg0, u16 *, 0x38) & 0x20) {
-        var_r3 = &lbl_80278E24[0x1A6];
+
+    var_r3 = (u8 *)lbl_80278E24 + 0x357;
+    if (*(u16 *)((u8 *)arg0 + 0x38) & 0x20) {
+        var_r3 = (u8 *)lbl_80278E24 + 0x34C;
     }
     fn_800558D8(var_r3);
 }
