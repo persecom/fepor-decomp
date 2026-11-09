@@ -4813,18 +4813,17 @@ s32 fn_800C1730(void) {
 }
 #pragma optimization_level 4
 void fn_800C1984(void) {
-    void fn_80040844(void);
-    void fn_800462FC(s32, s32, s32 (*)(void));
-    void fn_80046360(s32, s32 (*)(void), s32, s32, s32);
-    s32 fn_800C1730(void);
+    s32 fn_80040844(void);
+    void fn_800462FC(s32, s32, void *);
+    void fn_80046360(s32, s32, void *, s32, s32, s32);
+    void fn_800C1730(void);
     extern u8 lbl_80367289;
-    if ((u8) lbl_80367289 == 0) {
-        fn_80040844();
-        fn_800462FC(0, 0, fn_800C1730);
+
+    if (lbl_80367289 == 0) {
+        fn_800462FC(fn_80040844(), 0, fn_800C1730);
         return;
     }
-    fn_80040844();
-    fn_80046360(0, fn_800C1730, 0, 0, 0x8000);
+    fn_80046360(fn_80040844(), 0, fn_800C1730, 0, 0, 0x8000);
 }
 
 s32 fn_800C1F1C(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
