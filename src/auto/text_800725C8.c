@@ -113,6 +113,16 @@ void fn_80072A2C(void) {
     lbl_80311D50[0x3A] = -0x20;
 }
 
+void fn_80072A94(void) {
+    M2C_UNK fn_8000BD98(void *);
+    M2C_UNK fn_8008A290(M2C_UNK, M2C_UNK);
+    M2C_UNK fn_801480D8(M2C_UNK);
+    extern u8 lbl_8026BE40[];
+    fn_801480D8(0xBB8);
+    fn_8008A290(3, 0x7D0);
+    fn_8000BD98(lbl_8026BE40 + 0x10C);
+}
+
 void fn_80072AD4(void *arg0) {
     void fn_8000C188(void *);
     extern void *lbl_80367240;
