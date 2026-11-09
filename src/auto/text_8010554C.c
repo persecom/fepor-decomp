@@ -551,9 +551,19 @@ s32 fn_8010866C(void) {
 }
 
 s32 fn_80108694(void) {
+    M2C_UNK **fn_800D758C(s32);
     extern s32 lbl_803679C8;
-    fn_800D758C(lbl_803679C8);
-    fn_800DC3B0(lbl_803679C8);
+    M2C_UNK fn_800DC3B0(s32);
+    M2C_UNK fn_800DAA38(void);
+    s32 *global;
+    s32 *object;
+
+    global = &lbl_803679C8;
+    fn_800D758C(*global);
+
+    object = (s32 *)*global;
+    fn_800DC3B0(*(s32 *)((u8 *)object + 0x424));
+
     fn_800DAA38();
     return 0;
 }
