@@ -5255,6 +5255,24 @@ s32 fn_801A01D8(s8 arg0) {
     return 1;
 }
 
+s32 fn_801A0258(void) {
+    void fn_80048A70(void);
+    void fn_8002297C(void *);
+    void fn_80040844(void);
+    void fn_80040DA4(void);
+    void fn_80016180(void);
+    void fn_80013864(void);
+    extern u8 lbl_802CA518[];
+
+    fn_80048A70();
+    fn_8002297C(lbl_802CA518);
+    fn_80040844();
+    fn_80040DA4();
+    fn_80016180();
+    fn_80013864();
+    return 1;
+}
+
 s32 fn_801A0298(s32 arg0) {
     void *fn_8000C0C0(void *);
     void *fn_8000CAF0(void *, s32);
