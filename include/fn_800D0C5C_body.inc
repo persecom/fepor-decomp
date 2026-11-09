@@ -226,4 +226,72 @@
                 *(u32 *)((u8 *)self + 0x10) = 0;
             (*(u32 *)((u8 *)self + 0xC))++;
             break;
+        case 5:
+            if (--(*(s32 *)((u8 *)self + 0x10)) <= 0) {
+                fn_800E76E0(*(void **)((u8 *)self + 4), *(f32 *)((u8 *)lbl_80368278 + 0x98));
+                sub = *(u32 *)((u8 *)self + 0x210);
+                if (sub <= 0xDU) {
+                    switch (sub) {
+                    case 0:
+                        *(u32 *)((u8 *)self + 0xC) = (*(s32 *)((u8 *)self + 0x228) == 1) ? 9 : 0x16;
+                        break;
+                    case 1:
+                        *(u32 *)((u8 *)self + 0xC) = (*(s32 *)((u8 *)self + 0x228) == 1) ? 0xE : 0x16;
+                        break;
+                    case 8:
+                        *(u32 *)((u8 *)self + 0xC) = (*(s32 *)((u8 *)self + 0x228) == 1) ? 0x12 : 0x16;
+                        break;
+                    case 2: case 3: case 4:
+                        *(u32 *)((u8 *)self + 0xC) = 0x19;
+                        break;
+                    case 5: case 6: case 7:
+                        *(u32 *)((u8 *)self + 0xC) = 0x1D;
+                        break;
+                    case 9: case 10:
+                        *(u32 *)((u8 *)self + 0xC) = 0x21;
+                        break;
+                    case 11:
+                        *(u32 *)((u8 *)self + 0xC) = 0x25;
+                        break;
+                    case 12:
+                        fn_8011631C(*(void **)((u8 *)self + 0x90), 1);
+                        fn_8011631C(*(void **)((u8 *)self + 0x94), 1);
+                        *(u32 *)((u8 *)self + 0x10) = *(u32 *)((u8 *)lbl_80368278 + 0x38);
+                        *(u32 *)((u8 *)self + 0xC) = 0x2C;
+                        break;
+                    case 13:
+                        *(u32 *)((u8 *)self + 0xC) = 4;
+                        fn_800CAD4C(self, 0, 1);
+                        break;
+                    }
+                }
+            }
+            break;
+        case 6:
+            fn_800CA990(self);
+            r30 = 1;
+            (*(u32 *)((u8 *)self + 0xC))++;
+            break;
+        case 7:
+            if ((u8)fn_800CD590(self)) {
+                *(s32 *)((u8 *)self + 0x10) = fn_800CD53C(self);
+                if (*(s32 *)((u8 *)self + 0x25C) != 0 && *(s32 *)((u8 *)self + 0x26C) == 0)
+                    *(s32 *)((u8 *)self + 0x10) -= *(s32 *)((u8 *)lbl_80368278 + 0x1B4);
+                r30 = 1;
+                (*(u32 *)((u8 *)self + 0xC))++;
+            }
+            break;
+        case 8:
+            if (--(*(s32 *)((u8 *)self + 0x10)) <= 0) {
+                if (*(s32 *)((u8 *)self + 0x25C) != 0) {
+                    *(s32 *)((u8 *)self + 0x10) = r28;
+                    *(u32 *)((u8 *)self + 0xC) = *(u32 *)((u8 *)self + 0x14);
+                    *(u8 *)((u8 *)self + 0x1A5) = (u8)r28;
+                    fn_800CF27C(self, 0xA, 1);
+                } else {
+                    *(s32 *)((u8 *)self + 0x10) = r28;
+                    *(u32 *)((u8 *)self + 0xC) = 6;
+                }
+            }
+            break;
         /*CHUNK*/
