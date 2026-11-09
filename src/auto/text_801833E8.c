@@ -338,15 +338,13 @@ void *fn_80183BE4(void *arg0, void *arg1) {
 }
 
 void fn_80183DEC(s32 arg0, s32 arg1, s32 arg2) {
-    void *fn_8000CA64(void *, s32, void *);
-    extern u16 lbl_80295CAC[28]; // 56 bytes = 28 * 2-byte words
+    void *fn_8000CA64(void *, s32);
+    extern u8 lbl_80295CAC[];
+    void *proc;
 
-    void *temp_r3;
-
-    // Use explicit register assignments to match the original
-    temp_r3 = fn_8000CA64(&lbl_80295CAC, arg2, &lbl_80295CAC);
-    M2C_FIELD(temp_r3, s32 *, 0x30) = arg0;
-    M2C_FIELD(temp_r3, s32 *, 0x34) = arg1;
+    proc = fn_8000CA64(lbl_80295CAC, arg2);
+    M2C_FIELD(proc, s32 *, 0x30) = arg0;
+    M2C_FIELD(proc, s32 *, 0x34) = arg1;
 }
 
 void fn_80183E3C(s32 arg0, s32 arg1, s32 arg2, s8 arg3, s8 arg4, s32 arg5) {
