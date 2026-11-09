@@ -364,21 +364,31 @@ s32 fn_801B6BE4(struct efUnit* arg0) {
 }
 
 void fn_801B6F44(void) {
-    extern void fn_80013AE8(void *, void *, int, void *);
+    void fn_80013AE8(void *, void *, s32);
     extern u8 lbl_8027C370[];
-    
-    // Explicitly call the functions with proper addresses to see if that changes anything
-    fn_80013AE8(&lbl_8027C370[0xCE], (void*)0x801B7818, 2, &lbl_8027C370);
-    fn_80013AE8(&lbl_8027C370[0xD9], (void*)0x801B7638, 0, &lbl_8027C370);
-    fn_80013AE8(&lbl_8027C370[0xE9], (void*)0x801B75F4, 0, &lbl_8027C370);
-    fn_80013AE8(&lbl_8027C370[0xF8], (void*)0x801B7564, 1, &lbl_8027C370);
-    fn_80013AE8(&lbl_8027C370[0x10C], (void*)0x801B7488, 0, &lbl_8027C370);
-    fn_80013AE8(&lbl_8027C370[0x11B], (void*)0x801B73DC, 0, &lbl_8027C370);
-    fn_80013AE8(&lbl_8027C370[0x131], (void*)0x801B7330, 0, &lbl_8027C370);
-    fn_80013AE8(&lbl_8027C370[0x141], (void*)0x801B7260, 0, &lbl_8027C370);
-    fn_80013AE8(&lbl_8027C370[0x153], (void*)0x801B7188, 0, &lbl_8027C370);
-    fn_80013AE8(&lbl_8027C370[0x165], (void*)0x801B70C8, 0, &lbl_8027C370);
-    fn_80013AE8(&lbl_8027C370[0x178], (void*)0x801B7094, 0, &lbl_8027C370);
+    void fn_801B7818(void);
+    void fn_801B7638(void);
+    void fn_801B75F4(void);
+    void fn_801B7564(void);
+    void fn_801B7488(void);
+    void fn_801B73DC(void);
+    void fn_801B7330(void);
+    void fn_801B7260(void);
+    void fn_801B7188(void);
+    void fn_801B70C8(void);
+    void fn_801B7094(void);
+
+    fn_80013AE8(lbl_8027C370 + 0xCE, fn_801B7818, 2);
+    fn_80013AE8(lbl_8027C370 + 0xD9, fn_801B7638, 0);
+    fn_80013AE8(lbl_8027C370 + 0xE9, fn_801B75F4, 0);
+    fn_80013AE8(lbl_8027C370 + 0xF8, fn_801B7564, 1);
+    fn_80013AE8(lbl_8027C370 + 0x10C, fn_801B7488, 0);
+    fn_80013AE8(lbl_8027C370 + 0x11B, fn_801B73DC, 0);
+    fn_80013AE8(lbl_8027C370 + 0x131, fn_801B7330, 0);
+    fn_80013AE8(lbl_8027C370 + 0x141, fn_801B7260, 0);
+    fn_80013AE8(lbl_8027C370 + 0x153, fn_801B7188, 0);
+    fn_80013AE8(lbl_8027C370 + 0x165, fn_801B70C8, 0);
+    fn_80013AE8(lbl_8027C370 + 0x178, fn_801B7094, 0);
 }
 
 s32 fn_801B7094(void) {
