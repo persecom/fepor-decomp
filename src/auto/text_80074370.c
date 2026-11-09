@@ -1832,6 +1832,80 @@ loop_3:
     goto loop_3;
 }
 
+void fn_8007947C(void *arg0) {
+    void fn_80007124(void *);
+    void fn_8000727C(f32);
+    void fn_80007858(f32, f32);
+    void fn_80007884(void);
+    void fn_80007898(s32);
+    void fn_80009D74(f32, f32, f32, f32);
+    void fn_8000A174(s32, s32);
+    void fn_8000A248(void);
+    void fn_8000A258(void);
+    void fn_8000C60C(void *);
+    void fn_8000C188(void *);
+    void fn_8007B4D8(s32, s32, s32, void *);
+    void fn_80231D94(void *, void *, ...);
+    extern u8 lbl_8026C640[];
+    extern void *lbl_80312040[];
+    extern void *lbl_80367240;
+    extern f32 lbl_803693D0;
+    extern f32 lbl_803693D4;
+    extern f32 lbl_803693D8;
+    extern f32 lbl_803693DC;
+    extern f32 lbl_803693E0;
+    extern f32 lbl_803693E4;
+    extern f32 lbl_803693E8;
+    char sp8[0x100];
+    s32 buttons;
+    s32 prev;
+    f32 temp_f2;
+    void *temp_r3;
+    s32 index;
+    void *entry;
+
+    buttons = *(s32 *)((u8 *)lbl_80367240 + 4);
+    prev = *(s32 *)((u8 *)lbl_80367240 + 8);
+    if (buttons & (prev ^ buttons) & 0x08000008) {
+        *(f32 *)((u8 *)arg0 + 0x34) = *(f32 *)((u8 *)arg0 + 0x34) + lbl_803693D0;
+    }
+    buttons = *(s32 *)((u8 *)lbl_80367240 + 4);
+    prev = *(s32 *)((u8 *)lbl_80367240 + 8);
+    if (buttons & (prev ^ buttons) & 0x04000004) {
+        *(f32 *)((u8 *)arg0 + 0x34) = *(f32 *)((u8 *)arg0 + 0x34) - lbl_803693D0;
+    }
+    fn_80231D94(sp8, lbl_8026C640 + 0xF9, *(f32 *)((u8 *)arg0 + 0x34));
+    fn_8000A258();
+    fn_80009D74(lbl_803693D4, lbl_803693D4, lbl_803693D4, lbl_803693D8);
+    fn_8000A174(0, 3);
+    fn_8000A248();
+    fn_80007898(5);
+    fn_80007858(lbl_803693DC, lbl_803693E0);
+    fn_80007124(sp8);
+    fn_8000727C(lbl_803693E4);
+    fn_80007884();
+    fn_8000A258();
+    fn_80009D74(lbl_803693D4, lbl_803693D4, lbl_803693D4, *(f32 *)((u8 *)arg0 + 0x34));
+    fn_8000A248();
+    temp_f2 = *(f32 *)((u8 *)arg0 + 0x34);
+    fn_8007B4D8((s32)(lbl_803693E0 / temp_f2), (s32)(lbl_803693E8 / temp_f2), 0xFF,
+                *(void **)((u8 *)arg0 + 0x30));
+    buttons = *(s32 *)((u8 *)lbl_80367240 + 4);
+    prev = *(s32 *)((u8 *)lbl_80367240 + 8);
+    if (buttons & (prev ^ buttons) & 0x200) {
+        temp_r3 = *(void **)((u8 *)arg0 + 0x30);
+        if (temp_r3 != NULL) {
+            index = *(u8 *)((u8 *)temp_r3 + 0x40);
+            entry = lbl_80312040[index];
+            if (entry != NULL) {
+                fn_8000C60C(entry);
+            }
+            lbl_80312040[index] = NULL;
+        }
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_80079B9C(void *arg1, void *arg2) {
     // Placeholder function to examine structure; we'll need exact matching later
     
