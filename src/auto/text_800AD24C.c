@@ -2941,21 +2941,20 @@ s32 fn_800BB9E0(void) {
 }
 
 s32 fn_800BB9E8(u8 arg0) {
-    extern u16 lbl_802B14E4[];
+    extern u8 lbl_802B14E4[];
+    u8 *var_r4;
     s32 temp_r3;
-    void *var_r4;
 
     if (arg0 != 0) {
-        var_r4 = &lbl_802B14E4[(arg0 - 1) * 0x140];
+        var_r4 = lbl_802B14E4 + (arg0 - 1) * 0x280;
     } else {
         var_r4 = NULL;
     }
-    if ((var_r4 == NULL) || (*(u32 *)((u8 *)var_r4 + 0x188) == 0U)) {
+    if ((var_r4 == NULL) || (*(u32 *)(var_r4 + 0x188) == 0U)) {
         return 0;
     }
-    
-    temp_r3 = *(s32 *)((u8 *)var_r4 + 0x254) & 0xFCFFFFFF;
-    *(s32 *)((u8 *)var_r4 + 0x254) = temp_r3;
+    temp_r3 = *(s32 *)(var_r4 + 0x254) & 0xFCFFFFFF;
+    *(s32 *)(var_r4 + 0x254) = temp_r3;
     return temp_r3;
 }
 
