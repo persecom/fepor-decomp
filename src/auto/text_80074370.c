@@ -1653,11 +1653,11 @@ void fn_80078B98(void) {
     fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x545);
 }
 
-s32 fn_80078C28(void) {
-    extern u16 lbl_802EF4C8[];
-    extern u16 lbl_80311F99[];
-    lbl_802EF4C8[4] = 0x29;
-    fn_80024398(lbl_80311F99, 0);
+s32 fn_80078C28(s32 arg0, s32 arg1) {
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_80311F98[];
+    lbl_802EF4C8[8] = 0x29;
+    fn_80024398(lbl_80311F98, arg1, 0);
     return 4;
 }
 
