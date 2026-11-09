@@ -4088,7 +4088,7 @@ void fn_800E59BC(void *arg0) {
     }
 }
 
-int fn_800E5A4C(void *arg0) {
+void fn_800E5A4C(void *arg0) {
     void fn_800609DC(void *);
     void fn_8006CAD4(void *);
     void *fn_80067440(s32);
@@ -4107,7 +4107,7 @@ int fn_800E5A4C(void *arg0) {
         e0 = *(void **)((u8 *)arg0 + 0xE0);
         temp_r31 = ((u8 *)e0)[0xB];
         p = (u8 *)fn_80067440(0);
-        alpha = ((((p[6] + p[5]) + p[4]) / 3) * (0xFF - (((p[2] + p[1]) + p[0]) / 3))) / 255;
+        alpha = (((p[4] + (p[6] + p[5])) / 3) * (0xFF - ((p[0] + (p[2] + p[1])) / 3))) / 255;
         if (alpha < 0) {
             alpha = 0;
         }
@@ -4117,7 +4117,6 @@ int fn_800E5A4C(void *arg0) {
         fn_8005F7B0(*(void **)((u8 *)arg0 + 0xE4), (u8)((temp_r31 * (u8)alpha) / 255));
         fn_8006CAD4(*(void **)((u8 *)arg0 + 0xE4));
     }
-    return 0;
 }
 
 void fn_800E5CF8(void *arg0) {
