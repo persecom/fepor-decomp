@@ -3853,9 +3853,9 @@ s32 fn_80263504(void) {
 }
 
 u32 fn_8026367C(void) {
-    s32 OSGetTick();
+    u32 OSGetTick(void);
     extern s32 lbl_80368B0C;
-    return (u32) ((OSGetTick() - lbl_80368B0C) * 8) / (u32) (*(u32 *)0x800000F8 / 500000);
+    return ((OSGetTick() - lbl_80368B0C) * 8) / ((*(u32 *)0x800000F8 >> 2) / 125000);
 }
 
 void fn_802636C8(void) {
