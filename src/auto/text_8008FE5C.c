@@ -275,33 +275,35 @@ void fn_80090990(void *arg0) {
 }
 
 void fn_8009127C(void *arg0, s32 arg1) {
+    s32 fn_8000E0E4(void *);
+    void fn_801B79A0(s32, void *, s32, s8);
     extern u8 lbl_8026CD60[];
-    void *var_r3;
-    
-    var_r3 = arg0;
-    if ((s8) *(u8 *)((u8 *)arg0 + 0x1F) != 0) {
-        var_r3 = &lbl_8026CD60[0x1BD];
-    } else if ((s8) *(u8 *)((u8 *)arg0 + 0x20) != 0) {
-        var_r3 = &lbl_8026CD60[0x1C4];
-    } else if ((s8) *(u8 *)((u8 *)arg0 + 0x21) != 0) {
-        var_r3 = &lbl_8026CD60[0x1CC];
-    } else if ((s8) *(u8 *)((u8 *)arg0 + 0x22) != 0) {
-        var_r3 = &lbl_8026CD60[0x1D5];
-    } else if ((s8) *(u8 *)((u8 *)arg0 + 0x23) != 0) {
-        var_r3 = &lbl_8026CD60[0x1DE];
-    } else if ((s8) *(u8 *)((u8 *)arg0 + 0x24) != 0) {
-        var_r3 = &lbl_8026CD60[0x1E8];
-    } else if ((s8) *(u8 *)((u8 *)arg0 + 0x25) != 0) {
-        var_r3 = &lbl_8026CD60[0x1F1];
-    } else if ((s8) *(u8 *)((u8 *)arg0 + 0x26) != 0) {
-        var_r3 = &lbl_8026CD60[0x1F9];
-    } else if ((s8) *(u8 *)((u8 *)arg0 + 0x28) != 0) {
-        var_r3 = &lbl_8026CD60[0x202];
-    } else if ((s8) *(u8 *)((u8 *)arg0 + 0x27) != 0) {
-        var_r3 = &lbl_8026CD60[0x20C];
+    void *msg;
+
+    if ((s8)*(u8 *)((u8 *)arg0 + 0x1F) != 0) {
+        msg = lbl_8026CD60 + 0x1BD;
+    } else if ((s8)*(u8 *)((u8 *)arg0 + 0x20) != 0) {
+        msg = lbl_8026CD60 + 0x1C4;
+    } else if ((s8)*(u8 *)((u8 *)arg0 + 0x21) != 0) {
+        msg = lbl_8026CD60 + 0x1CC;
+    } else if ((s8)*(u8 *)((u8 *)arg0 + 0x22) != 0) {
+        msg = lbl_8026CD60 + 0x1D5;
+    } else if ((s8)*(u8 *)((u8 *)arg0 + 0x23) != 0) {
+        msg = lbl_8026CD60 + 0x1DE;
+    } else if ((s8)*(u8 *)((u8 *)arg0 + 0x24) != 0) {
+        msg = lbl_8026CD60 + 0x1E8;
+    } else if ((s8)*(u8 *)((u8 *)arg0 + 0x25) != 0) {
+        msg = lbl_8026CD60 + 0x1F1;
+    } else if ((s8)*(u8 *)((u8 *)arg0 + 0x26) != 0) {
+        msg = lbl_8026CD60 + 0x1F9;
+    } else if ((s8)*(u8 *)((u8 *)arg0 + 0x28) != 0) {
+        msg = lbl_8026CD60 + 0x202;
+    } else if ((s8)*(u8 *)((u8 *)arg0 + 0x27) != 0) {
+        msg = lbl_8026CD60 + 0x20C;
+    } else {
+        msg = arg0;
     }
-    fn_8000E0E4(var_r3);
-    fn_801B79A0(&lbl_8026CD60[0x1AC], arg1, 1);
+    fn_801B79A0(fn_8000E0E4(msg), lbl_8026CD60 + 0x1AC, arg1, 1);
 }
 
 void fn_800913D4(void **arg0, s32 arg1, s32 arg2) {
