@@ -302,25 +302,18 @@ u16 fn_80217AD8(void) {
 }
 
 void fn_80217AE0(void *arg0) {
-    extern u16 lbl_8033A200[];
-    void **var_r4;
-    void *var_r0;
-    void *var_r3;
+    extern u8 lbl_8033A200[];
+    u8 *base = lbl_8033A200;
+    void *r0;
 
-    var_r3 = arg0;
-    var_r4 = (void**)&lbl_8033A200;
-    if (var_r3 != NULL) {
-        var_r0 = var_r3;
+    if (arg0 != (void *)0) {
+        r0 = arg0;
     } else {
-        var_r0 = &lbl_8033A200[0x220 / sizeof(u16)];
+        r0 = (void *)(base + 0x220);
     }
-    M2C_FIELD(var_r4, void **, 0x10C) = var_r0;
-    if (var_r3 != NULL) {
-
-    } else {
-        var_r3 = &lbl_8033A200[0x220 / sizeof(u16)];
-    }
-    M2C_FIELD(var_r4, void **, 0x21C) = var_r3;
+    *(void **)(base + 0x10C) = r0;
+    arg0 = (arg0 != (void *)0) ? arg0 : (void *)(base + 0x220);
+    *(void **)(base + 0x21C) = arg0;
 }
 
 s32 fn_80217BD0(void *arg0, s32 arg1) {
