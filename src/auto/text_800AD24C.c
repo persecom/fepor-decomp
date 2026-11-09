@@ -320,6 +320,16 @@ void fn_800AE1FC(void) {
     fn_8002F61C(&lbl_802EF4E0);
 }
 
+void fn_800AE238(s32 arg0) {
+    void *fn_8002F62C(void *);
+    void *fn_8002F740(void);
+    void fn_80183BE4(void *, s32);
+    extern u8 lbl_802EF4E0[];
+
+    fn_8002F62C(lbl_802EF4E0);
+    fn_80183BE4(fn_8002F740(), arg0);
+}
+
 void fn_800AE278(s32 arg0) {
     void fn_8000C070(s32, s32);
     void *fn_8002F62C(void *);
@@ -4997,36 +5007,32 @@ s8 fn_800C2ACC(Unk800C2ACC *arg0, s32 arg1) {
     return (s8)arg0[arg1 - 1].unk13;
 }
 
-s32 fn_800C2AE0(s32 arg0, s32 arg1, u8 arg2) {
-    s32 temp_r7;
-    s32 var_r4;
-    u8 var_r6;
-    void *temp_r5;
-    void *temp_r8;
+s32 fn_800C2AE0(Unk800C2ACC *arr, s32 idx, u8 val) {
+    u8 flag = 0;
+    s32 off = idx * 0x18;
+    Unk800C2ACC *p = &arr[idx];
 
-    var_r4 = arg1;
-    temp_r7 = var_r4 * 0x18;
-    var_r6 = 0;
-    temp_r8 = (void*)((uintptr_t)arg0 + temp_r7);
-    *(u8*)((uintptr_t)temp_r8 - 5) = arg2;
-    if (((s8)*(u8*)((uintptr_t)temp_r8 - 0x17) == 0) && ((s8)*(u8*)((uintptr_t)temp_r8 - 8) == 0) && ((s8)*(u8*)((uintptr_t)temp_r8 - 7) == 0) && ((s8)*(u8*)((uintptr_t)temp_r8 - 6) == 0) && ((s8)*(u8*)((uintptr_t)temp_r8 - 5) == 0) && ((u8)*(u8*)((uintptr_t)temp_r8 - 4) == 0x80) && ((u8)*(u8*)((uintptr_t)temp_r8 - 3) == 0x80) && ((u8)*(u8*)((uintptr_t)temp_r8 - 2) == 0x80) && ((u8)*(u8*)((uintptr_t)temp_r8 - 1) == 0xFF)) {
-        var_r6 = 1;
+    ((u8 *)p)[-5] = val;
+    if ((s8)((u8 *)p)[-0x17] == 0 && (s8)((u8 *)p)[-8] == 0 && (s8)((u8 *)p)[-7] == 0 &&
+        (s8)((u8 *)p)[-6] == 0 && (s8)((u8 *)p)[-5] == 0 && ((u8 *)p)[-4] == 0x80 &&
+        ((u8 *)p)[-3] == 0x80 && ((u8 *)p)[-2] == 0x80 && ((u8 *)p)[-1] == 0xFF) {
+        flag = 1;
     }
-    if (var_r6 != 0) {
-        temp_r5 = (void*)((uintptr_t)arg0 + temp_r7);
-        var_r4 = 0;
-        *(u8*)((uintptr_t)temp_r5 - 0x18) = 0;
-        *(u8*)((uintptr_t)temp_r8 - 0x17) = 0U;
-        *(u8*)((uintptr_t)temp_r8 - 5) = 0U;
-        *(u8*)((uintptr_t)temp_r5 - 6) = 0;
-        *(u8*)((uintptr_t)temp_r5 - 7) = 0;
-        *(u8*)((uintptr_t)temp_r5 - 8) = 0;
-        *(u8*)((uintptr_t)temp_r5 - 2) = 0x80;
-        *(u8*)((uintptr_t)temp_r5 - 3) = 0x80;
-        *(u8*)((uintptr_t)temp_r5 - 4) = 0x80;
-        *(u8*)((uintptr_t)temp_r5 - 1) = 0xFF;
+    if (flag) {
+        u8 *q = (u8 *)arr + off;
+        idx = 0;
+        q[-0x18] = (u8)idx;
+        ((u8 *)p)[-0x17] = (u8)idx;
+        ((u8 *)p)[-5] = (u8)idx;
+        q[-6] = (u8)idx;
+        q[-7] = (u8)idx;
+        q[-8] = (u8)idx;
+        q[-2] = 0x80;
+        q[-3] = 0x80;
+        q[-4] = 0x80;
+        q[-1] = 0xFF;
     }
-    return var_r4;
+    return idx;
 }
 
 s8 fn_800C2BA8(s32 arg0, s32 arg1) {
@@ -5110,46 +5116,54 @@ s8 fn_800C2C84(s32 arg0, s32 arg1) {
     return ptr[(arg1 * 0x18) - 7];
 }
 
-s32 fn_800C2C98(s32 arg0, s32 arg1, u8 arg2) {
-    s32 temp_r7;
-    s32 var_r4;
-    u8 var_r6;
-    void *temp_r5;
-    void *temp_r8;
+#pragma optimization_level 2
+s32 fn_800C2C98(Unk800C2ACC *arr, s32 idx, u8 val) {
+    s32 off;
+    u8 flag;
+    Unk800C2ACC *p;
+    u8 *q;
 
-    var_r4 = arg1;
-    temp_r7 = var_r4 * 0x18;
-    var_r6 = 0;
-    temp_r8 = (u8*)arg0 + temp_r7;
-    *(u8*)((u8*)temp_r8 - 0x7) = arg2;
-    if (((s8) *(u8*)((u8*)temp_r8 - 0x17) == 0) && 
-        ((s8) *(u8*)((u8*)temp_r8 - 0x8) == 0) && 
-        ((s8) *(u8*)((u8*)temp_r8 - 0x7) == 0) && 
-        ((s8) *(u8*)((u8*)temp_r8 - 0x6) == 0) && 
-        ((s8) *(u8*)((u8*)temp_r8 - 0x5) == 0) && 
-        ((u8) *(u8*)((u8*)temp_r8 - 0x4) == 0x80) && 
-        ((u8) *(u8*)((u8*)temp_r8 - 0x3) == 0x80) && 
-        ((u8) *(u8*)((u8*)temp_r8 - 0x2) == 0x80) && 
-        ((u8) *(u8*)((u8*)temp_r8 - 0x1) == 0xFF)) {
-        var_r6 = 1;
+    off = idx * 0x18;
+    flag = 0;
+    p = &arr[idx];
+    ((u8 *)p)[-7] = val;
+    if ((s8)((u8 *)p)[-0x17] != 0)
+        goto done;
+    if ((s8)((u8 *)p)[-8] != 0)
+        goto done;
+    if ((s8)((u8 *)p)[-7] != 0)
+        goto done;
+    if ((s8)((u8 *)p)[-6] != 0)
+        goto done;
+    if ((s8)((u8 *)p)[-5] != 0)
+        goto done;
+    if (((u8 *)p)[-4] != 0x80)
+        goto done;
+    if (((u8 *)p)[-3] != 0x80)
+        goto done;
+    if (((u8 *)p)[-2] != 0x80)
+        goto done;
+    if (((u8 *)p)[-1] != 0xFF)
+        goto done;
+    flag = 1;
+done:
+    if (flag) {
+        q = (u8 *)arr + off;
+        idx = 0;
+        q[-0x18] = (u8)idx;
+        ((u8 *)p)[-0x17] = (u8)idx;
+        q[-5] = (u8)idx;
+        q[-6] = (u8)idx;
+        ((u8 *)p)[-7] = (u8)idx;
+        q[-8] = (u8)idx;
+        q[-2] = 0x80;
+        q[-3] = 0x80;
+        q[-4] = 0x80;
+        q[-1] = 0xFF;
     }
-    if (var_r6 != 0) {
-        temp_r5 = (u8*)arg0 + temp_r7;
-        var_r4 = 0;
-        *(u8*)((u8*)temp_r5 - 0x18) = 0;
-        *(u8*)((u8*)temp_r8 - 0x17) = 0U;
-        *(u8*)((u8*)temp_r5 - 0x5) = 0;
-        *(u8*)((u8*)temp_r5 - 0x6) = 0;
-        *(u8*)((u8*)temp_r8 - 0x7) = 0U;
-        *(u8*)((u8*)temp_r5 - 0x8) = 0;
-        *(u8*)((u8*)temp_r5 - 0x2) = 0x80;
-        *(u8*)((u8*)temp_r5 - 0x3) = 0x80;
-        *(u8*)((u8*)temp_r5 - 0x4) = 0x80;
-        *(u8*)((u8*)temp_r5 - 0x1) = 0xFF;
-    }
-    return var_r4;
+    return idx;
 }
-
+#pragma optimization_level reset
 s8 fn_800C2D60(s32 arg0, s32 arg1) {
     u8 *ptr = (u8 *)arg0;
     return ptr[(arg1 * 0x18) - 8];
