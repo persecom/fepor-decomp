@@ -345,10 +345,11 @@ s32 fn_80217BD0(void *arg0, s32 arg1) {
 
 extern u16 lbl_8033A200[];
 s32 fn_80217C34(s32 arg0) {
+    extern u16 lbl_8033A200[];
     if (arg0 < 0 || arg0 >= 2) {
         return -0x80;
     }
-    return ((u16*)(&lbl_8033A200[arg0 * 0x110]))[0];
+    return *(s32 *)((u8 *)lbl_8033A200 + arg0 * 0x110 + 4);
 }
 
 s32 fn_80217CFC(s32 arg0) {
@@ -951,13 +952,13 @@ s32 fn_8021D004(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 void fn_8021D28C(s32 arg0) {
-    M2C_UNK fn_80217C64(s32);
-    s32 fn_8021D118(M2C_UNK *);
-    extern M2C_UNK fn_80216998;
-    if (fn_8021D118(&fn_80216998) < 0) {
-        return;
+    s32 fn_8021D118(void *);
+    void fn_80217C64(s32);
+    extern u32 lbl_80216998;
+
+    if (fn_8021D118(&lbl_80216998) >= 0) {
+        fn_80217C64(arg0);
     }
-    fn_80217C64(arg0);
 }
 
 s32 fn_8021D2D4(s32 arg0, s32 index, void *dst) {
