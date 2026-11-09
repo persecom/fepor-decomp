@@ -110,11 +110,13 @@ s32 fn_800A3D2C(void) {
     return 0;
 }
 
-s32 fn_800A3D74(void) {
-    extern u16 lbl_803123A0[208]; // 416 bytes = 208 * 2-byte words
-    
-    if (lbl_803123A0[0x50] != 0) { // 0xA0/2 = 0x50, since it's u16*
-        memcpy(&lbl_803123A0[0x40], &lbl_803123A0[0x40], 0xC); // 0x80/2 = 0x40, size 0xC in words
+s32 fn_800A3D74(void *dst) {
+    extern u8 lbl_803123A0[];
+    u8 *p;
+
+    p = lbl_803123A0;
+    if (*(s32 *)(p + 0xA0) != 0) {
+        memcpy(dst, p + 0x80, 0xC);
         return 1;
     }
     return 0;
