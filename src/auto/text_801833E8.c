@@ -4954,3 +4954,9 @@ void fn_80198910(void) {
 
     return;
 }
+#include "common.h"
+#include "global.h"
+
+extern f32 lbl_8036ADF0;
+extern f32 lbl_8036ADF4;
+extern u8 lbl_80279C40[];
