@@ -3288,6 +3288,12 @@ f32 fn_80072238(void) {
     return lbl_80369360;
 }
 
+void *fn_80072240(void) {
+    extern u8 lbl_8026BB84[];
+
+    return lbl_8026BB84 + 0x6F;
+}
+
 void *fn_80072250(void) {
     extern u16 lbl_8026BB84[];
     return (u8 *)lbl_8026BB84 + 0x88;
