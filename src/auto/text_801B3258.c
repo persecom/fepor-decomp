@@ -2149,6 +2149,21 @@ void fn_801CEC28(s32 arg0) {
     fn_8013FF00(arg0, fn_8013FF94(0, 0));
 }
 
+#pragma cplusplus on
+extern "C" void fn_801CF018(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+    };
+    ((Obj *)arg0)->v6();
+}
+#pragma cplusplus reset
+
 void fn_801CF5A4(s32 *arg0, void *arg1) {
     s32 *fn_8013F748(void *, M2C_UNK *, s16 *, s32);
     M2C_UNK spC;
