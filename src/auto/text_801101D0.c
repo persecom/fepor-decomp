@@ -1482,14 +1482,14 @@ s32 fn_8011C9EC(s32 arg0) {
 
 M2C_UNK *fn_8011C9F4(void *arg0) {
     M2C_UNK *fn_800C93EC(s32);
-    extern M2C_UNK lbl_80274A88;
+    extern u8 lbl_80274A88[];
     u32 temp_r4;
 
     temp_r4 = M2C_FIELD(arg0, u32 *, 0xEC);
     if (temp_r4 < (u32) M2C_FIELD(arg0, u32 *, 0xB0)) {
         return fn_800C93EC(M2C_FIELD(arg0, s32 *, 0xB4) + (temp_r4 * 0xC));
     }
-    return &lbl_80274A88;
+    return (M2C_UNK *)lbl_80274A88;
 }
 
 extern void fn_800CA91C(void *arg0);
