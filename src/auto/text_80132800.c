@@ -203,7 +203,7 @@ s32 fn_80132A34(void) {
 
 void *fn_80132A3C(void) {
     extern u16 lbl_80276008[];
-    return &lbl_80276008[0x3C4];
+    return (u8 *)lbl_80276008 + 0x1e2;
 }
 
 void *fn_80132A4C(void) {
