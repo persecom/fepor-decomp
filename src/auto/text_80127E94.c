@@ -11,11 +11,21 @@ extern f32 lbl_8036A3C0;
 extern f32 lbl_8036A3C4;
 extern f32 lbl_8036A3C8;
 
-void fn_80127E94(void *arg0) {
-    void (**vtable)(void) = (void (**)(void))(*(int **)((char *)arg0 + 4));
-    ((void (**)(void))vtable)[8]();
+#pragma cplusplus on
+extern "C" void fn_80127E94(void *arg0) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+    };
+    ((Obj *)arg0)->v6();
 }
-
+#pragma cplusplus reset
 s32 fn_80127EC0(void) {
     extern u16 lbl_80275048[];
     fn_801475FC((u16 *)((u8 *)lbl_80275048 + 0x521), 0x64);
@@ -560,6 +570,7 @@ void fn_8012A4CC(void *arg0) {
 }
 
 s32 fn_8012AA68(void) {
+    M2C_UNK fn_8000C070(M2C_UNK);
     fn_8000C070(1);
     return 1;
 }
