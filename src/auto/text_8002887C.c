@@ -1045,13 +1045,24 @@ extern "C" void *fn_8002EB54(void *arg0, u32 arg1) {
 }
 #pragma cplusplus reset
 
-void fn_8002EEA8(void *arg0) {
-    void *temp_r3;
-
-    temp_r3 = M2C_FIELD(arg0, void **, 0x30);
-    M2C_FIELD(M2C_FIELD(temp_r3, void **, 4), M2C_UNK (**)(void *, void *), 0x2C)(arg0, temp_r3);
+#pragma cplusplus on
+extern "C" void fn_8002EEA8(void *arg0) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0(void *) = 0;
+        virtual void v1(void *) = 0;
+        virtual void v2(void *) = 0;
+        virtual void v3(void *) = 0;
+        virtual void v4(void *) = 0;
+        virtual void v5(void *) = 0;
+        virtual void v6(void *) = 0;
+        virtual void v7(void *) = 0;
+        virtual void v8(void *) = 0;
+        virtual void v9(void *) = 0;
+    };
+    ((Obj *)*(void **)((u8 *)arg0 + 0x30))->v9(arg0);
 }
-
+#pragma cplusplus reset
 void fn_8002EEDC(void *arg0) {
     void **temp_r3;
     
