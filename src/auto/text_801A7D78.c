@@ -685,66 +685,72 @@ void fn_801AADA4(void *arg0) {
     }
 }
 
-void fn_801AB358(void *arg0) {
+void fn_801AB358(u8 *arg0) {
     extern u8 lbl_80330708[];
-    u16 *var_r3 = (u16 *)arg0;
-    u8 *var_r4 = &lbl_80330708[0];
-    var_r3[0x2E/2] = 0;
-    var_r3[0x2F/2] = (u8)((var_r4[0x9C] >> 6) & 3);
-    if ((var_r4[0x9F] >> 4) & 1) {
-        var_r3[0x2E/2] |= 0x4000;
+    u8 *src = lbl_80330708;
+    struct {
+        u8 hi : 6;
+        u8 mid : 1;
+        u8 lo : 1;
+    } *bf;
+
+    *(u16 *)(arg0 + 0x5C) = 0;
+    arg0[0x5E] = (u8)((src[0x9C] >> 6) & 3);
+    if (!((src[0x9F] >> 4) & 1)) {
+        *(u16 *)(arg0 + 0x5C) |= 0x4000;
     }
-    var_r3[0x30/2] = (u8)((var_r4[0x9C] >> 5) & 1);
-    var_r3[0x31/2] = (u8)((var_r4[0x9C] >> 3) & 3);
-    var_r3[0x32/2] = var_r4[0xA0];
-    if ((var_r4[0x9C] >> 2) & 1) {
-        var_r3[0x2E/2] |= 1;
+    arg0[0x5F] = (u8)((src[0x9C] >> 5) & 1);
+    arg0[0x60] = (u8)((src[0x9C] >> 3) & 3);
+    arg0[0x61] = src[0xA0];
+    if (!((src[0x9C] >> 2) & 1)) {
+        *(u16 *)(arg0 + 0x5C) |= 1;
     }
-    if ((var_r4[0x9C] >> 1) & 1) {
-        var_r3[0x2E/2] |= 2;
+    if (!((src[0x9C] >> 1) & 1)) {
+        *(u16 *)(arg0 + 0x5C) |= 2;
     }
-    if (var_r4[0x9C] & 1) {
-        var_r3[0x2E/2] |= 4;
+    if (!(src[0x9C] & 1)) {
+        *(u16 *)(arg0 + 0x5C) |= 4;
     }
-    var_r3[0x33/2] = (u8)((var_r4[0x9D] >> 6) & 3);
-    if ((var_r4[0x9D] >> 5) & 1) {
-        var_r3[0x2E/2] |= 8;
+    arg0[0x62] = (u8)((src[0x9D] >> 6) & 3);
+    if (!((src[0x9D] >> 5) & 1)) {
+        *(u16 *)(arg0 + 0x5C) |= 8;
     }
-    if ((var_r4[0x9D] >> 4) & 1) {
-        var_r3[0x2E/2] |= 0x10;
+    if (!((src[0x9D] >> 4) & 1)) {
+        *(u16 *)(arg0 + 0x5C) |= 0x10;
     }
-    var_r3[0x34/2] = (u8)((var_r4[0x9D] >> 2) & 3);
-    if ((var_r4[0x9D] >> 1) & 1) {
-        var_r3[0x2E/2] |= 0x20;
+    arg0[0x63] = (u8)((src[0x9D] >> 2) & 3);
+    if (!((src[0x9D] >> 1) & 1)) {
+        *(u16 *)(arg0 + 0x5C) |= 0x20;
     }
-    if (var_r4[0x9D] & 1) {
-        var_r3[0x2E/2] |= 0x40;
+    if (!(src[0x9D] & 1)) {
+        *(u16 *)(arg0 + 0x5C) |= 0x40;
     }
-    if ((var_r4[0x9E] >> 7) & 1) {
-        var_r3[0x2E/2] |= 0x80;
+    if (!((src[0x9E] >> 7) & 1)) {
+        *(u16 *)(arg0 + 0x5C) |= 0x80;
     }
-    if ((var_r4[0x9E] >> 6) & 1) {
-        var_r3[0x2E/2] |= 0x100;
+    if (!((src[0x9E] >> 6) & 1)) {
+        *(u16 *)(arg0 + 0x5C) |= 0x100;
     }
-    if ((var_r4[0x9E] >> 5) & 1) {
-        var_r3[0x2E/2] |= 0x200;
+    if (!((src[0x9E] >> 5) & 1)) {
+        *(u16 *)(arg0 + 0x5C) |= 0x200;
     }
-    if ((var_r4[0x9E] >> 4) & 1) {
-        var_r3[0x2E/2] |= 0x400;
+    if (!((src[0x9E] >> 4) & 1)) {
+        *(u16 *)(arg0 + 0x5C) |= 0x400;
     }
-    if ((var_r4[0x9F] >> 5) & 1) {
-        var_r3[0x2E/2] |= 0x2000;
+    if (!((src[0x9F] >> 5) & 1)) {
+        *(u16 *)(arg0 + 0x5C) |= 0x2000;
     }
-    var_r3[0x36/2] = (u8)((var_r4[0x9E] >> 2) & 3);
-    var_r3[0x37/2] = var_r4[0xA4];
-    var_r3[0x38/2] = var_r4[0xA5];
-    if ((var_r4[0x9E] >> 1) & 1) {
-        var_r3[0x2E/2] |= 0x800;
+    arg0[0x66] = (u8)((src[0x9E] >> 2) & 3);
+    arg0[0x67] = src[0xA4];
+    arg0[0x68] = src[0xA5];
+    if (!((src[0x9E] >> 1) & 1)) {
+        *(u16 *)(arg0 + 0x5C) |= 0x800;
     }
-    if (var_r4[0x9E] & 1) {
-        var_r3[0x2E/2] |= 0x1000;
+    if (!(src[0x9E] & 1)) {
+        *(u16 *)(arg0 + 0x5C) |= 0x1000;
     }
-    var_r4[0x9E] = (var_r4[0x9E] & ~2);
+    bf = (void *)&src[0x9E];
+    bf->mid = 0;
 }
 
 void fn_801ACF4C(void *arg0) {
