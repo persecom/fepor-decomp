@@ -677,6 +677,68 @@ void fn_801AADA4(void *arg0) {
     }
 }
 
+void fn_801AB358(void *arg0) {
+    extern u8 lbl_80330708[];
+    u16 *var_r3 = (u16 *)arg0;
+    u8 *var_r4 = &lbl_80330708[0];
+    var_r3[0x2E/2] = 0;
+    var_r3[0x2F/2] = (u8)((var_r4[0x9C] >> 6) & 3);
+    if ((var_r4[0x9F] >> 4) & 1) {
+        var_r3[0x2E/2] |= 0x4000;
+    }
+    var_r3[0x30/2] = (u8)((var_r4[0x9C] >> 5) & 1);
+    var_r3[0x31/2] = (u8)((var_r4[0x9C] >> 3) & 3);
+    var_r3[0x32/2] = var_r4[0xA0];
+    if ((var_r4[0x9C] >> 2) & 1) {
+        var_r3[0x2E/2] |= 1;
+    }
+    if ((var_r4[0x9C] >> 1) & 1) {
+        var_r3[0x2E/2] |= 2;
+    }
+    if (var_r4[0x9C] & 1) {
+        var_r3[0x2E/2] |= 4;
+    }
+    var_r3[0x33/2] = (u8)((var_r4[0x9D] >> 6) & 3);
+    if ((var_r4[0x9D] >> 5) & 1) {
+        var_r3[0x2E/2] |= 8;
+    }
+    if ((var_r4[0x9D] >> 4) & 1) {
+        var_r3[0x2E/2] |= 0x10;
+    }
+    var_r3[0x34/2] = (u8)((var_r4[0x9D] >> 2) & 3);
+    if ((var_r4[0x9D] >> 1) & 1) {
+        var_r3[0x2E/2] |= 0x20;
+    }
+    if (var_r4[0x9D] & 1) {
+        var_r3[0x2E/2] |= 0x40;
+    }
+    if ((var_r4[0x9E] >> 7) & 1) {
+        var_r3[0x2E/2] |= 0x80;
+    }
+    if ((var_r4[0x9E] >> 6) & 1) {
+        var_r3[0x2E/2] |= 0x100;
+    }
+    if ((var_r4[0x9E] >> 5) & 1) {
+        var_r3[0x2E/2] |= 0x200;
+    }
+    if ((var_r4[0x9E] >> 4) & 1) {
+        var_r3[0x2E/2] |= 0x400;
+    }
+    if ((var_r4[0x9F] >> 5) & 1) {
+        var_r3[0x2E/2] |= 0x2000;
+    }
+    var_r3[0x36/2] = (u8)((var_r4[0x9E] >> 2) & 3);
+    var_r3[0x37/2] = var_r4[0xA4];
+    var_r3[0x38/2] = var_r4[0xA5];
+    if ((var_r4[0x9E] >> 1) & 1) {
+        var_r3[0x2E/2] |= 0x800;
+    }
+    if (var_r4[0x9E] & 1) {
+        var_r3[0x2E/2] |= 0x1000;
+    }
+    var_r4[0x9E] = (var_r4[0x9E] & ~2);
+}
+
 void fn_801ACF4C(void *arg0) {
     extern u8 lbl_80368220;
     extern u16 lbl_80368224[];
@@ -734,6 +796,20 @@ void fn_801ACF4C(void *arg0) {
     fn_8000A248();
 }
 
+#pragma cplusplus on
+extern "C" void fn_801ADD8C(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+    };
+    ((Obj *)arg0)->v6();
+}
+#pragma cplusplus reset
 void fn_801ADFCC(void *arg0, void *arg1) {
     s32 temp_r29;
     s32 temp_r28;
