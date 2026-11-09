@@ -3002,6 +3002,15 @@ void fn_8014203C(void *arg0, Vec2s *size) {
     *(s16 *)((u8 *)arg0 + 0x10) = (*(s16 *)((u8 *)arg0 + 0xC) + h);
 }
 
+int fn_80142060(void *arg0) {
+    u32 *ptr;
+
+    ptr = (u32 *)((u8 *)arg0 + 0x4);
+    *(u32 *)arg0 = 0;
+    ptr[1] = (u32)ptr;
+    ptr[0] = (u32)ptr;
+}
+
 void fn_80142078(void *arg0) {
     f32 fn_800067BC(M2C_UNK, f32, f32, f32, f32);
     extern f32 lbl_8036A75C;
