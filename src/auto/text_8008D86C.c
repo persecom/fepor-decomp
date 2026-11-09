@@ -51,9 +51,8 @@ void fn_8008D86C(void *arg0) {
 }
 
 s32 fn_8008D988(void) {
-    extern u8 lbl_8026CD60[];
-    s32 arg = 0x1C6;
-    fn_8000BD98(&lbl_8026CD60[arg]);
+    extern u16 lbl_8026CD60[];
+    fn_8000BD98((u8 *)lbl_8026CD60 + 0xE3);
     return 0;
 }
 
