@@ -641,6 +641,22 @@ loop_2:
     }
 }
 
+#pragma cplusplus on
+extern "C" void fn_801360FC(void *arg0) {
+    void fn_8015BA88(s32, s32, s16, s16, s32, s32);
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    ((Obj *)arg0)->v2();
+    fn_8015BA88(0, 0,
+        (s16)(*(s16 *)((u8 *)arg0 + 0xE) - *(s16 *)((u8 *)arg0 + 0xA)),
+        (s16)(*(s16 *)((u8 *)arg0 + 0x10) - *(s16 *)((u8 *)arg0 + 0xC)),
+        0xB3, 0x10);
+}
+#pragma cplusplus reset
+
 void fn_80136168(void *arg0, s16 arg1, s16 arg2, void *arg4, u8 arg5) {
     M2C_UNK fn_8000A258(u8);
     M2C_UNK fn_8000A174(s32, u16);
