@@ -4286,12 +4286,20 @@ void fn_801812CC(void *arg0) {
     }
 }
 
-void fn_80181328(void **arg0) {
-    void (**func_ptr)(void) = (void (**)(void))(*arg0);
-    func_ptr[0x20 / sizeof(void*)]();
+#pragma cplusplus on
+extern "C" void fn_80181328(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+    };
+    ((Obj *)arg0)->v6();
 }
-
-#pragma opt_common_subs reset
+#pragma cplusplus reset
 
 #pragma cplusplus on
 extern "C" s32 fn_80036A24(s32, s16);
