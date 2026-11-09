@@ -1763,41 +1763,64 @@ void fn_8016BA5C(void *arg0) {
 }
 
 void fn_8016BADC(void *arg0) {
-    void *temp_r30;
-    void *temp_r31;
-    void *var_r3;
+    void fn_80040844(void);
+    void fn_8004327C(void);
+    void fn_8007B990(void *);
+    void *fn_8003A114(void *);
+    void *fn_8007BA4C(void *, s32);
+    void fn_800C4588(void *);
+    void fn_8000C60C(void *);
+    void fn_8006EDA0(void *);
+    void fn_801DE074(void);
+    void fn_801457B4(void);
+    void fn_8005376C(void);
+    typedef struct {
+        u8 pad[0x34];
+        u8 flag;
+        u8 pad35[3];
+        void *unk38;
+        void *unk3C;
+        void *unk40;
+        u8 pad44[0x10];
+        void *unk54;
+        u8 pad58[8];
+        void *unk60;
+    } Obj;
+    Obj *obj;
+    void *node;
+    void *next;
+    void *obj40;
+    void *tmp;
 
-    if ((u8) *(u8 *) ((char *) arg0 + 0x34) == 0) {
+    obj = (Obj *)arg0;
+    if (obj->flag == 0) {
         fn_80040844();
         fn_8004327C();
-        temp_r30 = *(void **) ((char *) arg0 + 0x40);
-        if (temp_r30 != NULL) {
-            *(u32 *) ((char *) temp_r30 + 0x2C) = 0U;
-            if (*(u32 *) ((char *) arg0 + 0x54) != 0U) {
-                fn_8007B990();
-                *(u32 *) ((char *) arg0 + 0x54) = 0U;
+        obj40 = obj->unk40;
+        if (obj40 != NULL) {
+            *(u32 *)((char *)obj40 + 0x2C) = 0;
+            tmp = obj->unk54;
+            if (tmp != NULL) {
+                fn_8007B990(tmp);
+                obj->unk54 = NULL;
             }
-            if (*(u32 *) ((char *) temp_r30 + 0x2C) != 0U) {
-                fn_8003A114();
-                *(u32 *) ((char *) arg0 + 0x54) = fn_8007BA4C(0);
+            tmp = *(void **)((char *)obj->unk40 + 0x2C);
+            if (tmp != NULL) {
+                obj->unk54 = fn_8007BA4C(fn_8003A114(tmp), 0);
             }
         }
-        var_r3 = *(void **) ((char *) arg0 + 0x3C);
-loop_8:
-        if (var_r3 != NULL) {
-            temp_r31 = *(void **) ((char *) var_r3 + 0x38);
-            fn_800C4588();
-            var_r3 = temp_r31;
-            goto loop_8;
+        for (node = obj->unk3C; node != NULL; node = next) {
+            next = *(void **)((char *)node + 0x38);
+            fn_800C4588(node);
         }
-        fn_8000C60C(*(u32 *) ((char *) arg0 + 0x60));
-        if (*(u32 *) ((char *) arg0 + 0x38) != 0U) {
-            fn_8006EDA0((char *) arg0 + 0x38);
+        fn_8000C60C(obj->unk60);
+        if (obj->unk38 != NULL) {
+            fn_8006EDA0(&obj->unk38);
         }
         fn_801DE074();
         fn_801457B4();
         fn_8005376C();
-        *(u8 *) ((char *) arg0 + 0x34) = 1U;
+        obj->flag = 1;
     }
 }
 
@@ -4096,9 +4119,10 @@ void fn_8017A810(void *arg0, s32 arg1, s32 arg2) {
 }
 
 s32 fn_8017A950(void *arg0) {
-    u8 *temp_r4;
     u8 *temp_r5;
+    u8 *temp_r4;
     u8 val1, val2, val3, val4;
+    s32 result;
 
     temp_r5 = (u8 *)M2C_FIELD(arg0, u8 **, 4);
     M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r5 + 1);
@@ -4116,7 +4140,11 @@ s32 fn_8017A950(void *arg0) {
     M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r4 + 1);
     val4 = *temp_r4;
     
-    return ((s32)(val1 << 0x18)) + ((s32)(val2 << 0x10) & 0xFF0000) + ((s32)(val3 << 8) & 0xFF00) + (s32)val4;
+    result = (s32)val1 << 24;
+    result = result + (((s32)val2 << 16) & 0x00FF0000);
+    result = result + (((s32)val3 << 8) & 0x0000FF00);
+    result = result + (s32)val4;
+    return result;
 }
 
 u8 fn_8017A9DC(void *arg0) {
