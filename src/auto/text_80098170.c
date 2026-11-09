@@ -53,17 +53,17 @@ s32 fn_80098170(void **arg0) {
 
     temp_r3 = *arg0;
     if (temp_r3 != NULL) {
-        var_r0 = M2C_FIELD(temp_r3, void **, 0x280);
+        var_r0 = *(void **)((char *)temp_r3 + 0x280);
     } else {
         var_r0 = NULL;
     }
     if (var_r0 != NULL) {
         if (temp_r3 != NULL) {
-            var_r3 = M2C_FIELD(temp_r3, void **, 0x280);
+            var_r3 = *(void **)((char *)temp_r3 + 0x280);
         } else {
             var_r3 = NULL;
         }
-        return fn_800A8A88(M2C_FIELD(var_r3, s32 *, 0x188));
+        return fn_800A8A88(*(s32 *)((char *)var_r3 + 0x188));
     }
     return 0;
 }
