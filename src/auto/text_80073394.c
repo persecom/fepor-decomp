@@ -2,6 +2,7 @@
 #include "common.h"
 extern void fn_80006220(s32);
 extern void fn_8002D780(s32);
+extern void* (*fn_80024398_ptr)(void*, s32, s32);
 extern void fn_8000BD98(void *);
 s32 fn_8000E0E4(void *);
 
@@ -249,6 +250,18 @@ extern s32 lbl_80312000;
 extern s32 lbl_802EF4C8;
 void fn_80073BE4(s32 arg0) {
     fn_80024398(&lbl_80311FD8, arg0, 0);
+}
+
+void fn_80073C44(s32 arg0) {
+    extern u16 lbl_80311FBC;
+    s32 temp_r5 = (s32)&lbl_80311FBC;
+    *(u16*)temp_r5 = (u16)arg0;
+    fn_80024398((u16*)temp_r5, arg0, 0);
+}
+
+void fn_80073C74(s32 arg0) {
+    extern u16 lbl_80311F70;
+    fn_80024398((u16 *)&lbl_80311F70, arg0, 0);
 }
 
 void fn_80073CA4(void) {
