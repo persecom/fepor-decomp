@@ -512,15 +512,15 @@ s32 fn_800A02F4(void *arg2) {
     return 0;
 }
 
-u8 fn_800A031C(void) {
+u32 fn_800A031C(void) {
     extern u8 lbl_80367707;
-    u8 r3;
+    u32 var_r3;
 
-    r3 = 2;
+    var_r3 = 2;
     if (lbl_80367707 != 0) {
-        r3 = 0;
+        var_r3 = 0;
     }
-    return r3;
+    return (u8)var_r3;
 }
 
 void *fn_800A0338(void) {
