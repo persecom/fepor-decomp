@@ -394,26 +394,30 @@ loop_22:
     return var_r8;
 }
 
-s32 fn_80036EAC(void *arg0,s32 arg1) {
-    s32 var_r7=3;
+s32 fn_80036EAC(void *arg0, s32 arg1) {
+    s32 result;
     u8 value;
-    void *temp_r5;
-    temp_r5=M2C_FIELD(M2C_FIELD(arg0,void**,0x188),void**,0x50);
-    temp_r5=(u8*)temp_r5+arg1*8+8;
-    if (temp_r5==NULL) value=0;
-    else {
-        value=M2C_FIELD((s32)arg0+arg1,u8*,0x214);
-        if (value<=M2C_FIELD(temp_r5,u8*,4)) value=0;
-        else if (value<=M2C_FIELD(temp_r5,u8*,5)) value=1;
-        else if (value<=M2C_FIELD(temp_r5,u8*,6)) value=2;
-        else value=3;
+    void *unit;
+    void *table;
+    result = 3;
+    table = M2C_FIELD(M2C_FIELD(arg0, void **, 0x188), void **, 0x50);
+    table = (u8 *)table + arg1 * 8 + 8;
+    if (table == NULL) {
+        value = 0;
+    } else {
+        unit = (u8 *)arg0 + arg1;
+        value = M2C_FIELD(unit, u8 *, 0x214);
+        if (value <= M2C_FIELD(table, u8 *, 4)) value = 0;
+        else if (value <= M2C_FIELD(table, u8 *, 5)) value = 1;
+        else if (value <= M2C_FIELD(table, u8 *, 6)) value = 2;
+        else value = 3;
     }
-    switch(value) {
-    case 0: var_r7=1; break;
-    case 1: var_r7=2; break;
-    case 2: var_r7=3; break;
+    switch (value) {
+    case 0: result = 1; break;
+    case 1: result = 2; break;
+    case 2: result = 3; break;
     }
-    return var_r7;
+    return result;
 }
 
 s32 fn_80036F5C(void *arg0, s32 arg1) {
@@ -1784,9 +1788,7 @@ void fn_8003EA24(void *arg0) {
 }
 
 void fn_8003EA84(void *arg0, void *arg1) {
-    u8 val1 = *(u8*)((u8*)arg0 + 0x19F);
-    u8 val2 = *(u8*)((u8*)arg0 + 0x19E);
-    fn_8003816C(arg1, val1, val2);
+    fn_8003816C(arg1, *(u8*)((u8*)arg0 + 0x19F), *(u8*)((u8*)arg0 + 0x19E));
     *(s32*)((u8*)arg0 + 0x1A0) |= 2;
     *(s32*)((u8*)arg1 + 0x1A0) |= 4;
     *(void**)((u8*)arg0 + 0x194) = arg1;
@@ -4311,8 +4313,9 @@ void fn_80054C14(void* arg0)
     __builtin_unreachable();
 }
 
-void fn_800558D8(void) {
-    fn_800555EC(0);
+void fn_800558D8(s32 arg0) {
+    void fn_800555EC(s32, s32);
+    fn_800555EC(arg0, 0);
 }
 
 extern u32 lbl_80369058;
