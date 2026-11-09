@@ -391,10 +391,12 @@ void fn_80129374(void) {
     }
 }
 
-void fn_8012942C(s32 arg0) {
-    void *fn_8000CAA0(M2C_UNK *, M2C_UNK *);
-    extern M2C_UNK lbl_80290BFC;
-    M2C_FIELD(fn_8000CAA0(&lbl_80290BFC, &lbl_80290BFC), s32 *, 0x30) = arg0;
+void fn_8012942C(s32 arg0, s32 arg1) {
+    extern u8 lbl_80290BFC[];
+    void *fn_8000CAA0(u8 *, s32);
+    s32 *obj;
+    obj = (s32 *)fn_8000CAA0(lbl_80290BFC, arg1);
+    obj[0x30 / 4] = arg0;
 }
 
 void fn_8012955C(void) {
