@@ -577,9 +577,10 @@ void fn_801ED848(void *arg0, void *arg1, void *arg2, void *arg3) {
 }
 
 void fn_801ED940(s32 arg0) {
-    extern u16 lbl_803392B8;
-    s32 temp_r5 = (s32)&lbl_803392B8;
-    fn_80024398(temp_r5, arg0, 0);
+    M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
+    extern u8 lbl_803392B8[];
+
+    fn_80024398((M2C_UNK *)lbl_803392B8, arg0, 0);
 }
 
 void fn_801ED9DC(void *arg0) {
