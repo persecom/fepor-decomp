@@ -1345,7 +1345,7 @@ u8 fn_800B719C(u8 arg0) {
 }
 
 u8 fn_800B7200(void) {
-    extern u8 lbl_8031FFC0;
+    extern u16 lbl_8031FFC0;
     return M2C_FIELD(&lbl_8031FFC0, u8 *, 0xA);
 }
 
@@ -2991,7 +2991,9 @@ s32 fn_800BB018(s32 arg0) {
 u8 fn_800BB04C(s32 arg0) {
     u8 fn_800BDD08(void *, s32, M2C_UNK *);
     extern u16 lbl_80330708[];
-    return fn_800BDD08(&lbl_80330708[0xB4], arg0, (M2C_UNK *)&lbl_80330708);
+    
+    void *ptr = (void *)&lbl_80330708[0xB4];
+    return fn_800BDD08(ptr, arg0, (M2C_UNK *)&lbl_80330708);
 }
 
 s32 fn_800BB080(s32 arg0) {
