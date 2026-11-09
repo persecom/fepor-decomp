@@ -3539,9 +3539,8 @@ u16 *fn_8004B110(void *arg0) {
 }
 
 s32 fn_8004B1A0(s32 arg0) {
-    extern M2C_UNK lbl_802858C4;
-    s32* ptr = &lbl_802858C4;
-    return ptr[arg0];
+    extern s32 lbl_802858C4[];
+    return lbl_802858C4[arg0];
 }
 
 void fn_8004B1B4(s32 arg0, s32 arg1) {
