@@ -1167,19 +1167,20 @@ s32 fn_8010B60C(void *arg1) {
 }
 
 u8 fn_8010BDE0(s32 arg0) {
-    extern u16 lbl_8032B3C0[];
-    extern u16 lbl_802EF4C8[];
+    u8 fn_80102334(s32, s32, s16 *, s16 *);
+    extern u8 lbl_8032B3C0[];
+    extern u8 lbl_802EF4C8[];
     s16 spA;
     s16 sp8;
 
-    if (fn_80102334(0, &spA, &sp8) != 0) {
+    if (fn_80102334(arg0, 0, &spA, &sp8) != 0) {
         fn_801014BC(arg0, spA, sp8, 1, 0xFFFF, 1, 0, -1);
-        if ((lbl_8032B3C0[0x21C / 2] != 0)) {
-            if ((spA == (s8) lbl_802EF4C8[0xD / 2]) && (sp8 == (s8) lbl_802EF4C8[0xE / 2])) {
+        if ((lbl_8032B3C0[0x21C] != 0)) {
+            if ((spA == (s8) lbl_802EF4C8[0xD]) && (sp8 == (s8) lbl_802EF4C8[0xE])) {
                 fn_800FB9C0(0x2C, 0, (s8) spA, (s8) sp8, -1, 0, 0);
             }
         }
-        return lbl_8032B3C0[0x21C / 2];
+        return lbl_8032B3C0[0x21C];
     }
     return 0U;
 }
