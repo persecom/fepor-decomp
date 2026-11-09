@@ -2149,16 +2149,13 @@ void fn_801766C0(s32 param_1, s32 param_2, s32 param_3, s32 param_4)
     puVar1[0x4c] = param_4;
 }
 
-void fn_80176888(s32 arg0, f32 farg0, f32 farg1) {
-    void *fn_8000CAA0(void *, void *);
-    extern u16 lbl_80294580[16];
-
-    void *temp_r3;
-
-    temp_r3 = fn_8000CAA0(&lbl_80294580, &lbl_80294580);
-    *(f32*)((u8*)temp_r3 + 0x30) = farg0;
-    *(f32*)((u8*)temp_r3 + 0x34) = farg1;
-    *(s32*)((u8*)temp_r3 + 0x54) = arg0;
+void fn_80176888(s32 arg0, s32 arg1, f32 farg0, f32 farg1) {
+    void *fn_8000CAA0(void *, s32);
+    extern u8 lbl_80294580[];
+    void *temp_r3 = fn_8000CAA0(lbl_80294580, arg1);
+    *(f32 *)((u8 *)temp_r3 + 0x30) = farg0;
+    *(f32 *)((u8 *)temp_r3 + 0x34) = farg1;
+    *(s32 *)((u8 *)temp_r3 + 0x54) = arg0;
 }
 
 void fn_801768E4(s32 arg0) {
