@@ -3463,6 +3463,11 @@ void fn_802622B0(void) {
     fn_802631E4();
 }
 
+void fn_802622D0(s32 arg0) {
+    void fn_802631AC(s32, s32);
+    fn_802631AC(arg0, 0);
+}
+
 void fn_802622F4(void) {
 
 }
