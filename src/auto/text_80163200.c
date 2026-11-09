@@ -1636,6 +1636,27 @@ extern "C" void fn_8016B348(void **arg0, void *arg1, void *arg2) {
     fn_8000A248();
     fn_801533F8((s32)temp_f31, (s32)temp_f30, M2C_FIELD(var_r29, u8 *, 0x38), 0x10);
 }
+
+#pragma cplusplus reset
+s32 fn_8016B538(void *arg0, void *arg1, void *arg2) {
+    void fn_8000C070(s32);
+    void *fn_8000C0C0(void *);
+    void fn_80176888(s32, s32, f32, f32);
+    extern u8 lbl_80277BC0[];
+    extern u8 lbl_80293D8C[];
+    extern f64 lbl_8036A9B8;
+
+    if (*(u8 *)((u8 *)arg2 + 0x39) == 2) {
+        s32 h = *(s16 *)((u8 *)arg1 + 0x30) + *(s16 *)((u8 *)arg2 + 0x30);
+        s32 w = *(s16 *)((u8 *)arg1 + 0x32) + *(s16 *)((u8 *)arg2 + 0x32);
+        fn_80176888((s32)(lbl_80277BC0 + 0x242), (s32)arg1, (f32)h, (f32)w);
+        return 0;
+    }
+    *(void **)((u8 *)fn_8000C0C0(lbl_80293D8C) + 0x50) = arg1;
+    fn_8000C070(9);
+    return 4;
+}
+
 #pragma cplusplus reset
 void fn_8016B5E8(void) {
     M2C_UNK fn_8004327C();
@@ -4909,6 +4930,33 @@ void fn_8017E394(void *arg0, void *arg1, void *arg2, void *arg3) {
     extern u8 lbl_80295550[];
 
     fn_8017E5B0(fn_8000CAF0(lbl_80295550, arg2), arg0, arg1, arg3);
+}
+
+void fn_8017E3F8(void *arg0) {
+    f32 fn_80059F64(u8, f32, f32, f32, f32);
+    void fn_8000C188(void);
+    extern f64 lbl_8036AC50;
+    extern f32 lbl_8036AC2C;
+    extern f32 lbl_8036AC30;
+    extern f32 lbl_8036AC4C;
+    u8 tmp;
+    u8 val;
+    s8 result;
+
+    tmp = *(u8 *)((u8 *)arg0 + 0x31);
+    *(u8 *)((u8 *)arg0 + 0x31) = tmp + 1;
+    if (*(u8 *)((u8 *)arg0 + 0x31) == 0x10) {
+        *(u8 *)((u8 *)arg0 + 0x31) = 0x10;
+        fn_8000C188();
+    }
+    val = *(u8 *)((u8 *)arg0 + 0x31);
+    result = (s8)fn_80059F64(val, lbl_8036AC2C, lbl_8036AC30, lbl_8036AC4C, (f32)(u32)val);
+    if (*(void **)((u8 *)arg0 + 0x38) != NULL) {
+        *(s8 *)(*(u8 **)((u8 *)arg0 + 0x38) + 0x40) = result;
+    }
+    if (*(void **)((u8 *)arg0 + 0x3C) != NULL) {
+        *(s8 *)(*(u8 **)((u8 *)arg0 + 0x3C) + 0x40) = result;
+    }
 }
 
 void fn_8017E540(u8 *arg0) {
