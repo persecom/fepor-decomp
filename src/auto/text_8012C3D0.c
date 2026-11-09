@@ -1241,22 +1241,23 @@ void *fn_801325A8(void **arg1, s32 arg2) {
     }
 }
 
-s32 fn_80132624(void **arg1, s32 arg2) {
+#pragma peephole off
+s32 fn_80132624(s32 unused, void **arg1, s32 arg2) {
     void *temp_r3;
 
     temp_r3 = *arg1;
-    switch (arg2) {                                 /* irregular */
+    switch (arg2) {
     case 0:
-        return -(s32) M2C_FIELD(M2C_FIELD(temp_r3, void **, 0x188), u16 *, 0x5A);
+        return -*(u16 *)((u8 *)*(void **)((u8 *)temp_r3 + 0x188) + 0x5A);
     case 1:
-        return -(s32) M2C_FIELD(M2C_FIELD(temp_r3, void **, 0x18C), u16 *, 0x38);
+        return -*(u16 *)((u8 *)*(void **)((u8 *)temp_r3 + 0x18C) + 0x38);
     case 2:
-        return (M2C_FIELD(temp_r3, s32 *, 0x1A0) & 0x80000000) == 0;
+        return (*(u32 *)((u8 *)temp_r3 + 0x1A0) & 0x80000000U) == 0;
     default:
         return 0;
     }
 }
-
+#pragma peephole reset
 void *fn_80132688(void *unused, s32 arg1) {
     extern u16 lbl_80275AC0[];
 
