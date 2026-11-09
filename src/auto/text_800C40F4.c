@@ -297,17 +297,17 @@ static inline u8 GetItemDD54(void *item, void *unit) {
     return 0;
 }
 
-void fn_800C40F4(void *arg0) {
-    M2C_FIELD(arg0, s8 *, 0) = 0;
-    M2C_FIELD(arg0, s8 *, 1) = 0;
-    M2C_FIELD(arg0, s8 *, 0x13) = 0;
-    M2C_FIELD(arg0, s8 *, 0x12) = 0;
-    M2C_FIELD(arg0, s8 *, 0x11) = 0;
-    M2C_FIELD(arg0, s8 *, 0x10) = 0;
-    M2C_FIELD(arg0, s8 *, 0x16) = 0x80;
-    M2C_FIELD(arg0, s8 *, 0x15) = 0x80;
-    M2C_FIELD(arg0, s8 *, 0x14) = 0x80;
-    M2C_FIELD(arg0, s8 *, 0x17) = 0xFF;
+void fn_800C40F4(u8 *arg0) {
+    *(u8 *)arg0 = 0;
+    *(u8 *)(arg0 + 1) = 0;
+    *(u8 *)(arg0 + 0x13) = 0;
+    *(u8 *)(arg0 + 0x12) = 0;
+    *(u8 *)(arg0 + 0x11) = 0;
+    *(u8 *)(arg0 + 0x10) = 0;
+    *(u8 *)(arg0 + 0x16) = 0x80;
+    *(u8 *)(arg0 + 0x15) = 0x80;
+    *(u8 *)(arg0 + 0x14) = 0x80;
+    *(u8 *)(arg0 + 0x17) = 0xFF;
 }
 
 s32 fn_800C4240(s32 arg0) {
