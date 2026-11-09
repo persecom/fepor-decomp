@@ -526,19 +526,21 @@ void fn_80123634(void *arg0) {
 }
 
 void fn_8012391C(void *arg0) {
-    void *fn_8000C0C0(M2C_UNK *, M2C_UNK *);
-    M2C_UNK fn_8000C60C();
-    M2C_UNK fn_80123988(void *);
-    extern M2C_UNK lbl_80290408;
+    void *fn_8000C0C0(void *);
+    void fn_8000C60C(void *);
+    void fn_80123988(void *);
+    extern u8 lbl_80290408[];
     extern u8 lbl_8036728A;
     void *temp_r3;
+    void *ptr;
 
-    temp_r3 = fn_8000C0C0(&lbl_80290408, &lbl_80290408);
-    if ((temp_r3 == NULL) || ((s32) M2C_FIELD(temp_r3, s32 *, 0x34) != (s32) lbl_8036728A)) {
-        if ((u32) M2C_FIELD(arg0, u32 *, 0x30) != 0U) {
-            fn_8000C60C();
+    temp_r3 = fn_8000C0C0(lbl_80290408);
+    if (temp_r3 == NULL || *(s32 *)((u8 *)temp_r3 + 0x34) != lbl_8036728A) {
+        ptr = *(void **)((u8 *)arg0 + 0x30);
+        if (ptr != NULL) {
+            fn_8000C60C(ptr);
         }
-        M2C_FIELD(arg0, u32 *, 0x30) = 0U;
+        *(void **)((u8 *)arg0 + 0x30) = NULL;
         fn_80123988(arg0);
     }
 }
