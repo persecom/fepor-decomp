@@ -762,8 +762,8 @@ u8 fn_8000A268(void) {
     return *(u8 *)(*(u8 **)&lbl_80367140 + 0xA9);
 }
 
-void fn_8000A274(s8 arg0) {
-    *(u16*)(&lbl_80367140) = (u16)arg0;
+void fn_8000A274(u8 arg0) {
+    *(u8 *)(*(u8 **)&lbl_80367140 + 0xa9) = arg0;
 }
 
 void fn_8000A280(void) {
