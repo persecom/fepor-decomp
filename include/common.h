@@ -72,6 +72,19 @@ struct efUnit {
     s32 field_0x48;
 };
 
-  #endif
-  
-  #endif
+      struct UnitEntry {
+        u8 unk0[4];
+        u8 unk4;
+        u8 unk5;
+        u8 unk6;
+        u8 unk7;
+    };
+
+    struct UnitTable {
+        u8 unk0[8];
+        struct UnitEntry entries[256];
+    };
+
+    #endif
+    
+    #endif
