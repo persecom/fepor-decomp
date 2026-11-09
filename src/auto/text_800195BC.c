@@ -376,6 +376,16 @@ void fn_8001BDC8(void *arg0, s32 arg1) {
     ((u8 *)arg0)[5] = (u8)((((u8 *)arg0)[5] & ~0x3F) | (fn_800C2AE0(lbl_803206EC, ((u8 *)arg0)[5] & 0x3F, arg1) & 0x3F));
 }
 
+void fn_8001BE44(void *arg0, s32 arg1) {
+    s32 fn_800C2BBC(u8 *, s32, s32);
+    s32 fn_800C3260(u8 *);
+    extern u8 lbl_803206EC[];
+    if (!(((u8 *)arg0)[5] & 0x3F)) {
+        ((u8 *)arg0)[5] = (u8)((((u8 *)arg0)[5] & ~0x3F) | (fn_800C3260(lbl_803206EC) & 0x3F));
+    }
+    ((u8 *)arg0)[5] = (u8)((((u8 *)arg0)[5] & ~0x3F) | (fn_800C2BBC(lbl_803206EC, ((u8 *)arg0)[5] & 0x3F, arg1) & 0x3F));
+}
+
 void fn_8001BEC0(void *arg0, s32 arg1) {
     s32 fn_800C2C98(u8 *, s32, s32);
     s32 fn_800C3260(u8 *);
