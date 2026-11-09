@@ -2144,6 +2144,27 @@ s16 fn_8013EEEC(void *arg0) {
     return (s16) (M2C_FIELD(arg0, s16 *, 0x18) - M2C_FIELD(arg0, s16 *, 0x14));
 }
 
+void *fn_8013EFCC(void *arg0, s16 arg1) {
+    void fn_800C428C(void *);
+    extern void *lbl_802921E0[];
+    extern void *lbl_80292230[];
+    extern void *lbl_8028FDB0[];
+
+    if (arg0 != NULL) {
+        *(void **)arg0 = lbl_802921E0;
+        if (arg0 != NULL) {
+            *(void **)arg0 = lbl_80292230;
+            if (arg0 != NULL) {
+                *(void **)arg0 = lbl_8028FDB0;
+            }
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 #pragma cplusplus on
 extern "C" void *fn_8013F038(void *arg0, s16 arg1, u8 arg2) {
     struct Item {
