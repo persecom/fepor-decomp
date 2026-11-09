@@ -503,20 +503,20 @@ void fn_80130920(void) {
     fn_80225058(0xF8, 0x60, 0x120, 0x120);
 }
 
-void fn_80130B10(s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5) {
-    switch (arg1) {                                 /* irregular */
+void fn_80130B10(s32 unused, s32 kind, s32 *a, s32 *b, s32 *c, s32 *d) {
+    switch (kind) {
     case 0:
-        *arg2 = 0;
-        *arg3 = 0;
-        *arg4 = 0x30;
-        *arg5 = 0x14;
-        return;
+        *a = 0;
+        *b = 0;
+        *c = 0x30;
+        *d = 0x14;
+        break;
     case 1:
-        *arg2 = 0;
-        *arg3 = 0x2A8;
-        *arg4 = 0x30;
-        *arg5 = 0x2BC;
-        return;
+        *a = 0;
+        *b = 0x2A8;
+        *c = 0x30;
+        *d = 0x2BC;
+        break;
     }
 }
 
