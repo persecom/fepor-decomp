@@ -2139,8 +2139,9 @@ void fn_8006CA68(void *arg0) {
     fn_8006C2A4(arg0, 2);
 }
 
-void fn_8006CA8C(void) {
-    fn_8006C2A4(0x1);
+void fn_8006CA8C(void *arg0) {
+    M2C_UNK fn_8006C2A4(void *, M2C_UNK);
+    fn_8006C2A4(arg0, 1);
 }
 
 void fn_8006CAB0(s32 arg0) {
