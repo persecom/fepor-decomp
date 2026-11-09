@@ -99,12 +99,13 @@ s32 fn_800A3D08(void) {
     return 0;
 }
 
-s32 fn_800A3D2C(void) {
-    extern u16 lbl_803123A0[208];
-    
-    if (lbl_803123A0[0xA0/2] != 0) {
-        u16* src = &lbl_803123A0[0x8C/2]; 
-        memcpy(src, src, 0x10);
+s32 fn_800A3D2C(void *dst) {
+    extern u8 lbl_803123A0[];
+    u8 *p;
+
+    p = lbl_803123A0;
+    if (*(s32 *)(p + 0xA0) != 0) {
+        memcpy(dst, p + 0x8C, 0x10);
         return 1;
     }
     return 0;
