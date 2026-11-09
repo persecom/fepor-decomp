@@ -1278,6 +1278,13 @@ void fn_8016B68C(void) {
     }
 }
 
+extern u8 lbl_80294514[16];
+void fn_8016B6D4(s32 arg0) {
+    void fn_8000CAF0(void *, s32);
+    extern u8 lbl_80294514[16];
+    fn_8000CAF0(lbl_80294514, arg0);
+}
+
 void fn_8016B700(void) {
     extern u16 lbl_80294550[];
     fn_8000CAA0(lbl_80294550, fn_800C0658(), lbl_80294550);
