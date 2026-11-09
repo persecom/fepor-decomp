@@ -1147,31 +1147,29 @@ s32 fn_800A883C(void *arg0, s32 arg1) {
     return r0 << 0x18;
 }
 
-s32 fn_800A886C(u8 arg0, u8 arg1) {
-    switch (arg0) {
+s32 fn_800A886C(u8 *arg0) {
+    switch (*arg0) {
     case 0:
-    case 8:
-        return 0x10;
+        return 0;
     case 1:
-        return 0x11;
+        return 0x4E;
     case 2:
-        return 0x12;
+        return 0x47;
     case 3:
-        return 0x13;
+        return 0x48;
     case 4:
-        return 0x15;
+        return 0x49;
     case 5:
-        return 0x17;
+        return 0x4A;
     case 6:
-        return 0x16;
+        return 0x4B;
     case 7:
-        if (arg1) {
-            return 0x18;
-        } else {
-            return 0x14;
-        }
+        return 0x4C;
+    case 8:
+        return 0x4D;
+    default:
+        return 0;
     }
-    return 0;
 }
 
 u8 *fn_800A88E0(void *arg0) {
