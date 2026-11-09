@@ -856,17 +856,26 @@ end:
 }
 
 void *fn_80105334(void *arg0, s16 arg1) {
-    M2C_UNK fn_8005C7E8();
-    M2C_UNK fn_800C428C(void *);
-    M2C_UNK fn_800C4588();
+    void fn_8005C7E8(void *);
+    void fn_800C428C(void *);
+    void fn_800C4588(void *);
+    void *p;
+
     if (arg0 != NULL) {
-        if (((s32) M2C_FIELD(arg0, s32 *, 0) != 0) && ((u32) M2C_FIELD(arg0, u32 *, 4) != 0U)) {
-            fn_800C4588();
-            M2C_FIELD(arg0, u32 *, 4) = 0U;
-        } else if ((u32) M2C_FIELD(arg0, u32 *, 4) != 0U) {
-            fn_8005C7E8();
+        if (M2C_FIELD(arg0, s32 *, 0) != 0) {
+            p = M2C_FIELD(arg0, void **, 4);
+            if (p != NULL) {
+                fn_800C4588(p);
+                M2C_FIELD(arg0, void **, 4) = NULL;
+                goto clear;
+            }
         }
-        M2C_FIELD(arg0, u32 *, 4) = 0U;
+        p = M2C_FIELD(arg0, void **, 4);
+        if (p != NULL) {
+            fn_8005C7E8(p);
+        }
+    clear:
+        M2C_FIELD(arg0, void **, 4) = NULL;
         M2C_FIELD(arg0, s32 *, 0) = 0;
         M2C_FIELD(arg0, s32 *, 8) = 0;
         M2C_FIELD(arg0, s32 *, 0xC) = 0;
