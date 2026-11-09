@@ -47,18 +47,14 @@ extern f32 lbl_803697E4;
 
 s32 fn_80095614(s32 arg0) {
     u32 *fn_80037BBC(s32, s32);
-    s32 var_r31;
+    s32 i;
 
-    var_r31 = 0;
-loop_1:
-    if ((u32) *fn_80037BBC(arg0, var_r31) == 0U) {
-        return var_r31;
+    for (i = 0; i < 4; i++) {
+        if (*fn_80037BBC(arg0, i) == 0) {
+            return i;
+        }
     }
-    var_r31 += 1;
-    if (var_r31 >= 4) {
-        return -1;
-    }
-    goto loop_1;
+    return -1;
 }
 
 void fn_80095678(void) {
