@@ -4746,13 +4746,15 @@ void fn_801A0CA8(void *arg0) {
 }
 
 void fn_801A0D20(void *arg0) {
-    M2C_UNK fn_8004BF24(s32);
-    M2C_UNK fn_8004FE98(s32);
-    s32 temp_r31;
+    void fn_8004BF24(void *);
+    void fn_8004FE98(void *, s32);
+    void *temp_r31;
+    s32 temp;
 
-    temp_r31 = M2C_FIELD(arg0, s32 *, 0x54);
-    if ((s32) M2C_FIELD(arg0, s32 *, 0x60) >= 0) {
-        fn_8004FE98(temp_r31);
+    temp = *(s32 *)((u8 *)arg0 + 0x60);
+    temp_r31 = *(void **)((u8 *)arg0 + 0x54);
+    if (temp >= 0) {
+        fn_8004FE98(temp_r31, temp);
         fn_8004BF24(temp_r31);
     }
 }
