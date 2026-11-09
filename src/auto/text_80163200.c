@@ -4770,22 +4770,26 @@ void fn_8017E394(void *arg0, void *arg1, void *arg2, void *arg3) {
     fn_8017E5B0(fn_8000CAF0(lbl_80295550, arg2), arg0, arg1, arg3);
 }
 
-void fn_8017E540(void* arg0) {
+void fn_8017E540(u8 *arg0) {
+    void fn_8000C60C(void *);
+    void fn_8006D8E8(void *);
     s32 i;
-    void** ptr;
+    u8 *p;
+    void *tmp;
 
     i = 0;
-    ptr = (void**)arg0;
+    p = arg0;
     do {
-        if (ptr[0xE] != NULL) {
-            fn_8000C60C();
+        tmp = *(void **)(p + 0x38);
+        if (tmp != NULL) {
+            fn_8000C60C(tmp);
         }
         i += 1;
-        ptr += 1;  
+        p += 4;
     } while (i < 2);
-    
-    fn_8006D8E8(ptr[-1]);  
-    ptr[-1] = 0;           
+
+    fn_8006D8E8(*(void **)(arg0 + 0x34));
+    *(void **)(arg0 + 0x34) = NULL;
 }
 
 void fn_8017E8A0(void) {
