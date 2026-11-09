@@ -402,6 +402,18 @@ void fn_80007668(s32 arg0, s32 arg1) {
     ptr[arg0] = arg1;
 }
 
+void fn_80007698(u8 arg0) {
+    extern void *lbl_80367140;
+
+    u8 *ptr;
+
+    ptr = (u8 *)lbl_80367140;
+    ptr = *(u8 **)(ptr + 0xC);
+    ptr = *(u8 **)(ptr + 0x4);
+
+    *(u8 *)(ptr + 0xF) = arg0;
+}
+
 f32 fn_800076CC(void* arg0) {
     f32 val = *(f32*)((char*)arg0 + 0x1C);
     *(f32*)((char*)arg0 + 0x2C) = val;
