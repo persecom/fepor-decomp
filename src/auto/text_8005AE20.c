@@ -2295,26 +2295,24 @@ void fn_8006C748(void *arg0, s32 arg1) {
     }
 }
 
-void fn_8006C944(void *arg0) {
-    M2C_UNK fn_8006C2A4(void *, M2C_UNK);
-    M2C_UNK fn_80223E5C(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
-    M2C_UNK fn_802246B8(M2C_UNK, s32);
-    unsigned temp_r4;
-    register unsigned temp_r31;
-    register u8 temp_r30;
+void fn_8006C944(u32 *arg0) {
+    void fn_8006C2A4(void *, s32);
+    void fn_80223E5C(s32, s32, s32, s32, s32);
+    void fn_802246B8(s32);
+    u32 saved_w;
+    u8 saved_b;
 
-    temp_r30 = M2C_FIELD(arg0, u8 *, 0xB);
-    temp_r31 = M2C_FIELD(arg0, s32 *, 0);
-    if (temp_r30) {
-        M2C_FIELD(arg0, s32 *, 0) = (s32) ((unsigned short)temp_r31 & 0x8FFF7FDF);
-        temp_r4 = M2C_FIELD(arg0, s32 *, 0) | 0x50000000 | 0x4000;
-        M2C_FIELD(arg0, s32 *, 0) = temp_r4;
-        M2C_FIELD(arg0, u8 *, 0xB) = 0xFFU;
-        fn_802246B8(0, temp_r4);
+    saved_b = *((u8 *)arg0 + 0xB);
+    saved_w = *arg0;
+    if (saved_b != 0) {
+        *arg0 = saved_w & 0x8FFF7FDF;
+        *arg0 = *arg0 | 0x50004000;
+        *((u8 *)arg0 + 0xB) = 0xFF;
+        fn_802246B8(0);
         fn_80223E5C(6, 0x80, 1, 0, 0);
         fn_8006C2A4(arg0, 1);
-        M2C_FIELD(arg0, u8 *, 0xB) = temp_r30;
-        M2C_FIELD(arg0, s32 *, 0) = temp_r31;
+        *((u8 *)arg0 + 0xB) = saved_b;
+        *arg0 = saved_w;
     }
 }
 
