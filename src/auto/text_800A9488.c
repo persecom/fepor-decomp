@@ -103,6 +103,112 @@ void fn_800A9710(void) {
     *ptr = 0x2;
 }
 
+#pragma cplusplus on
+extern "C" M2C_UNK fn_800072B0(s32 *, s32 *, s32 *, s32 *, s32, s32, s32);
+extern "C" M2C_UNK fn_800075D8();
+extern "C" M2C_UNK fn_800077D8(f32, f32, f32, f32);
+extern "C" M2C_UNK fn_80007884();
+extern "C" M2C_UNK fn_80007898(M2C_UNK);
+extern "C" M2C_UNK fn_80009B8C(M2C_UNK);
+extern "C" M2C_UNK fn_80009D74(f32, f32, f32, f32);
+extern "C" M2C_UNK fn_8000A174(M2C_UNK, M2C_UNK);
+extern "C" M2C_UNK fn_8000A248();
+extern "C" M2C_UNK fn_8000A258();
+extern "C" void fn_8001019C(s32, s32, s32, void *, ...);
+extern "C" void fn_800A9728(M2C_UNK arg0, void *arg1) {
+    struct Model {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual void v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual f32 v25() = 0;
+    };
+    extern u8 lbl_8026E470[];
+    extern u8 lbl_802832E0[];
+    extern u8 lbl_80330708[];
+    extern s32 lbl_80369B98;
+    extern s32 lbl_80369B9C;
+    extern s32 lbl_80369BA0;
+    extern s32 lbl_80369BA4;
+    extern f32 lbl_80369BA8;
+    extern f32 lbl_80369BB0;
+    extern f64 lbl_80369C00;
+    extern f32 lbl_80369C1C;
+    s32 sp14;
+    s32 sp10;
+    s32 spC;
+    s32 sp8;
+    u8 var_r3;
+    void *var_r7;
+
+    fn_8000A258();
+    fn_80009D74((f32) M2C_FIELD(arg1, s16 *, 0x30), (f32) M2C_FIELD(arg1, s16 *, 0x32), M2C_FIELD(arg1, Model **, 0x3C)->v25(), lbl_80369BB0);
+    fn_8000A174(0, 0x12);
+    var_r3 = 0;
+    if (((u8) M2C_FIELD(arg1, u8 *, 0x2D) == 0) && ((u8) M2C_FIELD(arg1, u8 *, 0x2E) == 0)) {
+        var_r3 = 1;
+    }
+    if (var_r3 == 0) {
+        fn_80009B8C(0x80);
+    }
+    fn_8000A248();
+    fn_80007898(3);
+    fn_800077D8(lbl_80369BA8, lbl_80369C1C, (f32) M2C_FIELD(arg1, s16 *, 0x34), (f32) (M2C_FIELD(arg1, s16 *, 0x36) + 0x10));
+    fn_800075D8();
+    sp8 = lbl_80369BA4;
+    spC = lbl_80369BA0;
+    sp10 = lbl_80369B9C;
+    sp14 = lbl_80369B98;
+    fn_800072B0(&sp14, &sp10, &spC, &sp8, lbl_80369B9C, lbl_80369BA0, lbl_80369BA4);
+    fn_80007884();
+
+    fn_8000A258();
+    fn_8000A174(0, 0x13);
+    fn_8000A248();
+    switch (lbl_80330708[0xA6]) {
+    case 0:
+        var_r7 = lbl_8026E470 + 0x150;
+        break;
+    case 1:
+        var_r7 = lbl_8026E470 + 0x157;
+        break;
+    case 2:
+        var_r7 = lbl_8026E470 + 0x15C;
+        break;
+    case 3:
+        var_r7 = lbl_8026E470 + 0x163;
+        break;
+    default:
+        var_r7 = NULL;
+        break;
+    }
+    fn_8001019C(0x160, 0, 1, lbl_8026E470 + 0x168, var_r7);
+    fn_8001019C(0x148, 0x18, 1, lbl_8026E470 + 0x177, *(void **)(lbl_802832E0 + 4));
+}
+#pragma cplusplus reset
+
 void *fn_800A9AFC(void) {
     extern char lbl_8026E470[];
     return &lbl_8026E470[0x19B];
