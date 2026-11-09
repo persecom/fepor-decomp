@@ -1880,17 +1880,15 @@ void fn_80067480(void)
     *(u8*)lbl_80366DD4 = 0;
 }
 
+#pragma peephole off
 void fn_800675C8(void *arg0) {
     extern u8 lbl_80311AF8[];
     extern void *lbl_80366DD4;
-    void *ptr;
-
     if (arg0 == NULL) {
-        ptr = lbl_80311AF8;
-        lbl_80366DD4 = ptr;
+        lbl_80366DD4 = lbl_80311AF8;
     }
 }
-
+#pragma peephole reset
 s32 fn_800675E0(void) {
     extern s32 lbl_80366DD4;
     return lbl_80366DD4;
@@ -1985,6 +1983,15 @@ void fn_8006805C(f32 arg0, f32 arg1) {
 
     *(f32 *)(lbl_803672F8 + 0x180) = arg0;
     *(f32 *)(lbl_803672F8 + 0x184) = arg1;
+}
+
+void fn_800680AC(u16 arg0, u16 arg1, u16 arg2, u16 arg3) {
+    extern u8 *lbl_803672F8;
+
+    *(u16 *)(lbl_803672F8 + 0x1C) = arg0;
+    *(u16 *)(lbl_803672F8 + 0x1E) = arg1;
+    *(u16 *)(lbl_803672F8 + 0x20) = arg2;
+    *(u16 *)(lbl_803672F8 + 0x22) = arg3;
 }
 
 s32 fn_80068124(char *name) {
@@ -2960,17 +2967,18 @@ s32 fn_800704F0(s32 arg0, s32 arg1, s32 arg2)
 }
 
 extern u16 lbl_80286860[];
-void fn_800708B0(void* arg1) {
-    s32 temp_r31;
-    
-    // Correct access to the value at offset 0x18
-    temp_r31 = *(s32*)((u8*)arg1 + 0x18);
-    
-    if (temp_r31 == fn_8000C0C0(lbl_80286860)) {
+void fn_800708B0(s32 arg0, void *arg1) {
+    void *fn_8000C0C0(void *);
+    void fn_8018DC58(void);
+    extern u16 lbl_80286860[];
+    extern u8 lbl_80366DE9;
+    u32 temp;
+
+    temp = *(u32 *)((u8 *)arg1 + 0x18);
+    if (temp == (u32)fn_8000C0C0(&lbl_80286860)) {
         fn_8018DC58();
+        *(s8 *)&lbl_80366DE9 = -1;
     }
-    
-    lbl_80366DE9 = -1;
 }
 
 #pragma cplusplus on
