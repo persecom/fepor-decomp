@@ -131,7 +131,7 @@ void *fn_800984FC(void **arg0) {
     if (temp_r3 == NULL) {
         return NULL;
     }
-    if (*(int *)((char *)temp_r3 + 0x28C) == 0) {
+    if (*(u32 *)((char *)temp_r3 + 0x28C) == 0) {
         return NULL;
     }
     return (char *)temp_r3 + 0x28C;
