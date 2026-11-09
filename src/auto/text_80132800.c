@@ -2078,6 +2078,27 @@ void *fn_8013E898(void *arg0, s16 arg1) {
     return arg0;
 }
 
+void *fn_8013E8F4(void *arg0, s16 arg1) {
+    void fn_800C428C(void *);
+    extern void *lbl_80292178[];
+    extern void *lbl_80292230[];
+    extern void *lbl_8028FDB0[];
+
+    if (arg0 != NULL) {
+        *(void **)arg0 = lbl_80292178;
+        if (arg0 != NULL) {
+            *(void **)arg0 = lbl_80292230;
+            if (arg0 != NULL) {
+                *(void **)arg0 = lbl_8028FDB0;
+            }
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_8013EB6C(void **arg0) {
     void (**func_ptr)(void);
     
