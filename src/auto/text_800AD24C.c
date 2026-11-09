@@ -895,8 +895,8 @@ s32 fn_800B34B0(u8 *arg0) {
     s32 size;
     u32 value;
     s32 i;
-    u8 *counter_ptr;
-
+    u32 *counter_ptr;
+    
     base = lbl_80317338;
     if (*(u32 *)(base + 0xE0) >= 8) {
         return 0;
@@ -942,7 +942,7 @@ stored:
     }
     {
         u8 *ptr = lbl_80317338;
-        counter_ptr = (u8 *)(ptr + 0xC0);
+        counter_ptr = (u32 *)(ptr + 0xC0);
         *(u32 *)(ptr + 0xC0) = 0;
         if (arg0 != NULL) {
             while (*arg0 != 0xFF) {
@@ -5076,13 +5076,11 @@ s32 fn_800C39A4(s32 arg0, s32 arg1, s32 arg2)
 
 s32 fn_800C3D48(void *arg0) {
     s32 i;
-    void **ptr = (void **)arg0;
 
-    for (i = 0; i < 0x14; i++) {
-        if (*ptr == NULL) {
+    for (i = 0; i < 200; i++) {
+        if (*(void **)((char *)arg0 + i * 8) == NULL) {
             return i;
         }
-        ptr++;
     }
 
     return -1;
