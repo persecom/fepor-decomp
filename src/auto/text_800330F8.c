@@ -3719,10 +3719,10 @@ void fn_8004DC54(s8 arg0) {
     lbl_803672BC = arg0;
 }
 
-void fn_8004DC5C(void) {
-    extern void fn_80067708(s32, void *, s32);
-    extern char fn_8004DC8C[];
-    fn_80067708(1, &fn_8004DC8C[0], 0);
+void fn_8004DC5C(void *arg0) {
+    void fn_80067708(void *, s32, void *, s32);
+    extern void fn_8004DC8C(void);
+    fn_80067708(arg0, 1, fn_8004DC8C, 0);
 }
 
 void fn_8004DDB8(s32 arg0) {
