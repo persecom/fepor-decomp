@@ -597,6 +597,22 @@ s32 fn_8013507C(void) {
     return 0;
 }
 
+#pragma cplusplus on
+extern "C" void fn_8013547C(void *arg0) {
+    void fn_80154BE4(s32, s32, s16, s16, s32, s32);
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    ((Obj *)arg0)->v2();
+    fn_80154BE4(0, 0,
+        (s16)(*(s16 *)((u8 *)arg0 + 0xE) - *(s16 *)((u8 *)arg0 + 0xA)),
+        (s16)(*(s16 *)((u8 *)arg0 + 0x10) - *(s16 *)((u8 *)arg0 + 0xC)),
+        0xB3, 0x10);
+}
+#pragma cplusplus reset
+
 s32 fn_80135664(void *arg0, void *arg1) {
     u8 fn_80105BC0(s32, u8);
     u8 (*temp_r12)(void *, s32);
