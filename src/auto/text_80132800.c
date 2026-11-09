@@ -2923,15 +2923,17 @@ void fn_80144584(void *arg0, s16 arg1) {
     }
 }
 
+void fn_80144D84(ListIter *ret, List *list, ListIter *start, ListIter *end);
+
 void *fn_80144610(void *arg0, s16 arg1) {
-    char *sp10;
-    s32 spC;
-    s32 sp8;
-    
-    if (arg0 != NULL) {
-        sp10 = (char *)arg0 + 4;
-        spC = *(s32 *)((char *)arg0 + 0x8);
-        fn_80144D84(&sp8, arg0, &spC, &sp10);
+      ListIter sp10;
+      ListIter spC;
+      ListIter sp8;
+      
+      if (arg0 != NULL) {
+          sp10.node = (ListNode *)((char *)arg0 + 4);
+          spC.node = *(ListNode **)((char *)arg0 + 0x8);
+          fn_80144D84(&sp8, (List *)arg0, &spC, &sp10);
         if (arg1 > 0) {
             fn_800C428C(arg0);
         }
@@ -3434,15 +3436,61 @@ void fn_80148980(void *arg0, s16 arg1) {
 extern u8 lbl_80367AEA;
 extern u8 lbl_80367AEB;
 s32 fn_8014953C(void);
-void fn_80148A28(void *arg0, s32 arg1) {
+#pragma cplusplus on
+extern "C" void fn_80148A28(void *arg0, s32 arg1) {
+    struct Obj {
+        u8 pad0[8];
+        virtual u8 v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual u8 v19() = 0;
+        u8 flags;
+        u8 unk_d;
+        u8 unk_e;
+        u8 pad_f;
+        u8 unk_10;
+        u8 delay;
+        s16 unk_12;
+        u8 pad14[2];
+        u8 cur;
+        u8 prev;
+        u8 pad18[0x10];
+        u8 start;
+        u8 end;
+        u8 pad2A[2];
+        u16 frame;
+        u16 frames;
+    };
+    struct DrawIface {
+        u8 pad0[0x18];
+        virtual void Set(u8, u8, u8, u16) = 0;
+        virtual void Draw() = 0;
+    };
     s32 rate;
-    Anim *self = (Anim *)arg0;
+    Obj *self = (Obj *)arg0;
     u8 level;
     u8 alive;
 
     rate = 0x64;
     if (self->flags & 1) {
-        if (self->delay == 0) {
+        register u8 delay = self->delay;
+        if (delay == 0) {
             if (self->flags & 2) {
                 rate = fn_8014953C();
             }
@@ -3450,42 +3498,42 @@ void fn_80148A28(void *arg0, s32 arg1) {
                 self->cur = (u8)((f32)self->start + (f32)self->frame * ((f32)self->end - (f32)self->start) / (f32)self->frames);
                 self->frame++;
                 if (self->frame > self->frames && (self->flags & 4)) {
-                    (*(void (**)(void *))(*(void ***)((char *)self + 8) + 5))(self);
+                    self->v3();
                     self->flags &= ~4;
                 }
                 if (self->frame > self->frames && (self->flags & 8)) {
-                    (*(void (**)(void *))(*(void ***)((char *)self + 8) + 4))(self);
+                    self->v2();
                     self->flags &= ~8;
                 }
             }
             if (self->cur != self->prev || lbl_80367AEA != lbl_80367AEB || (self->flags & 2)) {
                 level = (u8)(lbl_80367AEA * rate / 100);
-                self->unk_d = (u8)(level * (self->cur * (*(u8 (**)(void *))(*(void ***)((char *)self + 8) + 0x15))(self)) / 10000);
+                self->unk_d = (u8)(level * (self->cur * self->v19()) / 10000);
                 self->prev = self->cur;
             }
-            (*(void (**)(void *))(*(void ***)((char *)self + 0x18) + 3))(self);
+            ((DrawIface *)self)->Draw();
             alive = 0;
-            if ((self->flags & 1) && (*(u8 (**)(void *))(*(void ***)((char *)self + 8) + 2))(self)) {
+            if ((self->flags & 1) && self->v0()) {
                 alive = 1;
             }
             if (alive == 0) {
                 self->flags &= ~1;
             }
         } else {
-            self->delay--;
+            self->delay = delay - 1;
             if (self->delay == 0) {
                 if (self->flags & 2) {
                     rate = fn_8014953C();
                 }
                 level = (u8)(lbl_80367AEA * rate / 100);
-                self->unk_d = (u8)(level * (self->cur * (*(u8 (**)(void *))(*(void ***)((char *)self + 8) + 0x15))(self)) / 10000);
-                (*(void (**)(void *, u8, u8, u8, u16))(*(void ***)((char *)self + 0x18) + 2))(self, self->unk_d, self->unk_e, self->unk_10, (u16)self->unk_12);
-                (*(void (**)(void *))(*(void ***)((char *)self + 0x18) + 3))(self);
+                self->unk_d = (u8)(level * (self->cur * self->v19()) / 10000);
+                ((DrawIface *)self)->Set(self->unk_d, self->unk_e, self->unk_10, (u16)self->unk_12);
+                ((DrawIface *)self)->Draw();
             }
         }
     }
 }
-
+#pragma cplusplus reset
 s8 fn_80149734(void) {
     s32 fn_800AF704(s8);
     s8 var_r31;
