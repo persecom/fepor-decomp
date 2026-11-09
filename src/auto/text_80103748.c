@@ -309,20 +309,21 @@ s32 fn_80103E48(void) {
     return 0;
 }
 
-s32 fn_80103EA4(void *arg1) {
-    extern u32 *lbl_80367240;
-    extern f64 lbl_8036A0E0;
+s32 fn_80103EA4(s32 arg0, void *arg1) {
+    extern void *lbl_80367240;
+    u16 temp_r5;
     void *temp_r6;
 
     temp_r6 = M2C_FIELD(arg1, void **, 0x3C);
-    if ((M2C_FIELD(temp_r6, u16 *, 0x10) != 0) && ((u16) M2C_FIELD(temp_r6, u16 *, 0x12) < 0xFCU) && (M2C_FIELD(lbl_80367240, s32 *, 0xC) & 0x01000001)) {
-        M2C_FIELD(temp_r6, u16 *, 0x10) = (u16) (M2C_FIELD(temp_r6, u16 *, 0x10) - 1);
+    temp_r5 = M2C_FIELD(temp_r6, u16 *, 0x10);
+    if ((temp_r5 != 0) && ((u16) M2C_FIELD(temp_r6, u16 *, 0x12) < 0xFCU) && (M2C_FIELD(lbl_80367240, s32 *, 0xC) & 0x01000001)) {
+        M2C_FIELD(temp_r6, u16 *, 0x10) = (u16) (temp_r5 - 1);
         M2C_FIELD(temp_r6, u16 *, 0x12) = (u16) (M2C_FIELD(temp_r6, u16 *, 0x12) + 1);
         M2C_FIELD(temp_r6, f32 *, 0xC) = (f32) ((f32) M2C_FIELD(temp_r6, u16 *, 0x10) / M2C_FIELD(temp_r6, f32 *, 8));
         M2C_FIELD(temp_r6, s8 *, 0x1B) = 1;
-    } else if ((M2C_FIELD(temp_r6, u16 *, 0x10) < 0xC0U) && ((u16) M2C_FIELD(temp_r6, u16 *, 0x12) != 0) && (M2C_FIELD(lbl_80367240, s32 *, 0xC) & 0x02000002)) {
-        M2C_FIELD(temp_r6, u16 *, 0x10) = (u16) (M2C_FIELD(temp_r6, u16 *, 0x10) + 1);
-        M2C_FIELD(temp_r6, u16 *, 0x12) = (u16) (M2C_FIELD(temp_r6, u16 *, 0x12) - 1);
+    } else if ((temp_r5 < 0xC0U) && ((u16) M2C_FIELD(temp_r6, u16 *, 0x12) != 0) && (M2C_FIELD(lbl_80367240, s32 *, 0xC) & 0x02000002)) {
+        M2C_FIELD(temp_r6, u16 *, 0x10) += 1;
+        M2C_FIELD(temp_r6, u16 *, 0x12) -= 1;
         M2C_FIELD(temp_r6, f32 *, 0xC) = (f32) ((f32) M2C_FIELD(temp_r6, u16 *, 0x10) / M2C_FIELD(temp_r6, f32 *, 8));
         M2C_FIELD(temp_r6, s8 *, 0x1B) = 1;
     }
@@ -790,7 +791,7 @@ void fn_80104BF4(void* arg0, void* arg1) {
 
 extern void *lbl_803679C0;
 u16 fn_80104E58(void) {
-    return *(u16 *)((char *)lbl_803679C0 + 0x4);
+    return *(u16 *)((char *)lbl_803679C0 + 0xC);
 }
 
 extern u16 lbl_80366E80;
