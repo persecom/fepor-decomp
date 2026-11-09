@@ -23,7 +23,7 @@ s32 fn_8014E414(void) {
     return 0;
 }
 
-extern u16 lbl_80367B7C;
+extern s32 lbl_80367B7C;
 extern u32 lbl_80367B78;
 extern u8 lbl_80277238[];
 extern u32 lbl_80367B70;
