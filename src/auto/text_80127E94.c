@@ -187,18 +187,18 @@ void fn_801282E8(s32 arg1, s32 arg2) {
     }
 }
 
-void fn_8012835C(s32 arg1, s32 arg2) {
-    void *fn_8000CAF0(M2C_UNK *, u32, M2C_UNK *);
-    u32 fn_801090C0();
-    extern M2C_UNK lbl_80290598;
+void fn_8012835C(s32 arg0, s32 arg1, s32 arg2) {
+    void *fn_8000CAF0(void *, u32);
+    u32 fn_801090C0(s32);
+    extern u8 lbl_80290598[];
     u32 temp_r3;
     void *temp_r3_2;
 
-    temp_r3 = fn_801090C0();
+    temp_r3 = fn_801090C0(arg0);
     if (temp_r3 != 0U) {
-        temp_r3_2 = fn_8000CAF0(&lbl_80290598, temp_r3, &lbl_80290598);
+        temp_r3_2 = fn_8000CAF0(lbl_80290598, temp_r3);
         M2C_FIELD(temp_r3_2, s32 *, 0x38) = arg1;
-        M2C_FIELD(temp_r3_2, f32 *, 0x3C) = (f32) -arg2;
+        M2C_FIELD(temp_r3_2, f32 *, 0x3C) = (f32)-arg2;
     }
 }
 
@@ -391,6 +391,19 @@ void fn_80129374(void) {
     }
 }
 
+void fn_801293C0(void) {
+    M2C_UNK fn_8000BF00(void *);
+    extern M2C_UNK lbl_80290A40;
+    fn_8000BF00(&lbl_80290A40 + 0x1BC);
+    fn_8000BF00(&lbl_80290A40 + 0x190);
+    fn_8000BF00(&lbl_80290A40 + 0x164);
+    fn_8000BF00(&lbl_80290A40 + 0x130);
+    fn_8000BF00(&lbl_80290A40 + 0xFC);
+    fn_8000BF00(&lbl_80290A40 + 0xA0);
+    fn_8000BF00(&lbl_80290A40 + 0x18);
+    fn_8000BF00(&lbl_80290A40 + 0x60);
+}
+
 void fn_8012942C(s32 arg0, s32 arg1) {
     extern u8 lbl_80290BFC[];
     void *fn_8000CAA0(u8 *, s32);
@@ -518,20 +531,14 @@ void fn_80129984(s32 arg0, s32 arg1) {
 }
 
 void fn_80129A48(void *arg0) {
-    s32 var_r6;
-    void *temp_r4;
-    void *var_r5;
+    s32 i;
+    void **temp_r4;
 
-    var_r5 = arg0;
     *(s32 *)((char *)arg0 + 0x54) = 0;
-    var_r6 = 0;
-loop_2:
-    if (var_r6 < *(s32 *)((char *)arg0 + 0x50)) {
-        temp_r4 = *(void **)((char *)var_r5 + 0x30);
-        var_r5 = (char *)var_r5 + 4;
-        var_r6 += 1;
-        *(u8 *)((char *)temp_r4 + 0x2) &= 0xFC;
-        goto loop_2;
+    for (i = 0; i < *(s32 *)((char *)arg0 + 0x50); i++) {
+        temp_r4 = (void **)((char *)arg0 + 0x30);
+        *temp_r4 = (void *)((char *)*temp_r4 + 4);
+        *(u8 *)((char *)*temp_r4 + 0x2) &= 0xFC;
     }
 }
 
