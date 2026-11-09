@@ -5298,6 +5298,12 @@ void fn_800EB578(void) {
     fn_800056CC(lbl_802725D8 + 0x26B, var_r4);
 }
 
+void fn_800EB760(void *arg0) {
+    extern u8 lbl_80320C20[];
+
+    *(void **)(lbl_80320C20 + 0xA004) = arg0;
+}
+
 s32 fn_800EB774(void) {
     extern u32 lbl_80320C20[];
     return *(u32*)((u8*)lbl_80320C20 + 0xA004);
