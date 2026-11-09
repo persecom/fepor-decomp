@@ -1466,12 +1466,42 @@ void fn_801C4468(s32 arg0) {
 }
 
 void fn_801C44A4(void *arg0) {
- void fn_800616A0(void *, void *); void fn_800C426C(void *); void fn_800C428C(void *);
- u32 i=0, offset=0; u8 *obj=(u8 *)arg0; u8 *work; u8 *data;
- do { work=*(u8 **)(obj+0x44); data=*(u8 **)work; fn_800616A0(data+offset+8,work); i++; offset+=0xa8; } while(i<0x10);
- fn_800616A0(*(void **)(obj+0x40),0); work=*(u8 **)(obj+0x44);
- if(work) { u32 a=*(u32 *)(work+0); if(a){fn_800C426C((void *)(a-0x10));*(u32 *)work=0;} a=*(u32 *)(work+4);if(a){fn_800C426C((void *)a);*(u32 *)(work+4)=0;}fn_800C428C(work);}
- *(u32 *)(obj+0x44)=0; return;
+    void fn_800616A0(void *, void *);
+    void fn_800C426C(void *);
+    void fn_800C428C(void *);
+
+    u32 i = 0;
+    u32 offset = 0;
+    u8 *obj = (u8 *)arg0;
+    u8 *work;
+    u8 *data;
+
+    do {
+        work = *(u8 **)(obj + 0x44);
+        data = *(u8 **)work;
+        fn_800616A0(data + offset + 8, work);
+        i++;
+        offset += 0xa8;
+    } while (i < 0x10);
+
+    fn_800616A0(*(void **)(obj + 0x40), NULL);
+
+    work = *(u8 **)(obj + 0x44);
+    if (work != NULL) {
+        u32 a = *(u32 *)(work + 0x0);
+        if (a != 0) {
+            fn_800C426C((void *)(a - 0x10));
+            *(u32 *)work = 0;
+        }
+        a = *(u32 *)(work + 0x4);
+        if (a != 0) {
+            fn_800C426C((void *)a);
+            *(u32 *)(work + 0x4) = 0;
+        }
+        fn_800C428C(work);
+    }
+
+    *(u32 *)(obj + 0x44) = 0;
 }
 
 void fn_801C4564(void) { M2C_UNK fn_801C45A4(); fn_801C45A4(); }
@@ -1928,9 +1958,9 @@ void fn_801C9D58(void) {
     fn_801C9EE0(lbl_803682B8, temp_r3);
 }
 
-void fn_801CA1B8(void) {
-    fn_801C9EE0(0);
-    return;
+void fn_801CA1B8(s32 arg0) {
+    void fn_801C9EE0(s32, s32);
+    fn_801C9EE0(arg0, 0);
 }
 
 void fn_801CA1DC(void *arg0, s32 arg1) {
@@ -2488,9 +2518,9 @@ void fn_801CE744(s32 arg0) {
     void *fn_8013F6B8(void *, s32 *);
     void fn_8013F748(void *, s32 *, s32 *);
     void fn_8013FF00(s32, void *);
-    s32 tmp;
     void *base;
     void *obj;
+    s32 tmp;
     base = fn_8013FF94(arg0, 0, 0);
     obj = fn_8013FF94(arg0, 2, 0);
     tmp = *(s32 *)((u8 *)base + 0x3E);
