@@ -104,7 +104,7 @@ s32 fn_800735B4(s32 arg0, s32 arg1) {
 
 void fn_800735E4(void) {
     extern u16 lbl_8026BE40[];
-    fn_8000E0E4(&lbl_8026BE40[0x22f]);
+    fn_8000E0E4((u8 *)lbl_8026BE40 + 0x22f);
 }
 
 void fn_80073610(void) {
