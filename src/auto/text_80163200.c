@@ -2331,8 +2331,8 @@ void fn_801774A8(void) {
 }
 
 void *fn_801774D4(void) {
-    u16* temp = &lbl_80278080[0x4AF];
-    return (void*)temp;
+    extern u16 lbl_80278080[];
+    return (u8 *)lbl_80278080 + 0x4af;
 }
 
 void fn_8017754C(void) {
