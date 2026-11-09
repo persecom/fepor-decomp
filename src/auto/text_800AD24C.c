@@ -1673,8 +1673,9 @@ extern "C" s32 fn_800B7A80(void) {
         u8 pad[8];
         virtual u8 v0() = 0;
         u8 flag;
+        u8 pad2[0x23];
     };
-    extern u8 lbl_8032FF08[];
+    extern Obj lbl_8032FF08;
     void fn_801457B4(void);
     void fn_801487D0(void *, s32);
     void fn_80146AF0(void);
@@ -1687,8 +1688,8 @@ extern "C" s32 fn_800B7A80(void) {
     fn_801457B4();
 
     ok = 0;
-    obj = (Obj *)lbl_8032FF08;
-    if (*(u8 *)(lbl_8032FF08 + 0xC) & 1) {
+    obj = &lbl_8032FF08;
+    if (obj->flag & 1) {
         if (obj->v0()) {
             ok = 1;
         }
@@ -1700,8 +1701,8 @@ extern "C" s32 fn_800B7A80(void) {
     fn_8014876C(obj, 0x64, 0xC8);
 
     ok = 0;
-    obj = (Obj *)(lbl_8032FF08 + 0x30);
-    if (*(u8 *)(lbl_8032FF08 + 0x3C) & 1) {
+    obj = (Obj *)((u8 *)&lbl_8032FF08 + 0x30);
+    if (*((u8 *)&lbl_8032FF08 + 0x3C) & 1) {
         if (obj->v0()) {
             ok = 1;
         }
@@ -1711,8 +1712,8 @@ extern "C" s32 fn_800B7A80(void) {
     }
 
     ok = 0;
-    obj = (Obj *)(lbl_8032FF08 + 0x60);
-    if (*(u8 *)(lbl_8032FF08 + 0x6C) & 1) {
+    obj = (Obj *)((u8 *)&lbl_8032FF08 + 0x60);
+    if (*((u8 *)&lbl_8032FF08 + 0x6C) & 1) {
         if (obj->v0()) {
             ok = 1;
         }
@@ -1722,8 +1723,8 @@ extern "C" s32 fn_800B7A80(void) {
     }
 
     ok = 0;
-    obj = (Obj *)(lbl_8032FF08 + 0x90);
-    if (*(u8 *)(lbl_8032FF08 + 0x9C) & 1) {
+    obj = (Obj *)((u8 *)&lbl_8032FF08 + 0x90);
+    if (*((u8 *)&lbl_8032FF08 + 0x9C) & 1) {
         if (obj->v0()) {
             ok = 1;
         }
@@ -3559,9 +3560,10 @@ void fn_800BCC34(s16 arg0) {
     *(u16*)((char*)lbl_80330708 + 0x12) = arg0;
 }
 
+#pragma peephole off
 s32 fn_800BCC44(void) {
-    void *fn_80016B7C();
-    M2C_UNK fn_80019E8C();
+    void *fn_80016B7C(void);
+    void fn_80019E8C(void);
     void *temp_r3;
 
     fn_80019E8C();
@@ -3569,9 +3571,9 @@ s32 fn_800BCC44(void) {
     if (temp_r3 == NULL) {
         return 0;
     }
-    return (M2C_FIELD(temp_r3, s32 *, 0x1A0) & 8) == 0;
+    return (*(s32 *)((u8 *)temp_r3 + 0x1A0) & 8) == 0;
 }
-
+#pragma peephole reset
 extern u8 lbl_802EF4C8[24];
 u8 fn_800BCD24(void) {
     return lbl_802EF4C8[9];
