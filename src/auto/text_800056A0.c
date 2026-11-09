@@ -123,9 +123,8 @@ void fn_80005EB4(void) {
 }
 
 void fn_80005ED4(void) {
-    M2C_UNK fn_800C50FC(void *, M2C_UNK);
-    extern M2C_UNK lbl_80267B80;
-    fn_800C50FC(&lbl_80267B80 + 0xDF, 0xB00000);
+    extern u16 lbl_80267B80[];
+    fn_800C50FC((u8 *)lbl_80267B80 + 0xDF, 0xB00000);
 }
 
 void fn_800060F8(void) {
