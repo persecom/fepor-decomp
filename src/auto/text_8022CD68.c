@@ -417,6 +417,152 @@ void __kill_critical_regions(void) {
 
 }
 
+int fn_80231178(void *arg0) {
+    s32 __flush_buffer(void *, s32 *);
+    s32 fn_8022D4C8();
+    s32 fn_80231748(void *);
+    typedef struct {
+        u8 pad[4];
+        u16 pre:7;
+        u16 mode:3;
+        u16 rest:6;
+    } S4;
+    typedef struct {
+        u8 pad[4];
+        u8 pre:2;
+        u8 modeB:3;
+        u8 rest:3;
+    } B4;
+    typedef struct {
+        u8 pad[8];
+        u8 mode:3;
+        u8 rest:4;
+        u8 flag:1;
+    } B8;
+    S4 *s4 = (S4 *)arg0;
+    B4 *b4 = (B4 *)arg0;
+    B8 *b8 = (B8 *)arg0;
+    s32 var_r30;
+
+    if (arg0 == NULL) {
+        return fn_8022D4C8();
+    }
+    if (((u8) M2C_FIELD(arg0, u8 *, 0xA) != 0) || (s4->mode == 0)) {
+        return -1;
+    }
+    if (b4->modeB == 1) {
+        return 0;
+    }
+    if (b8->mode >= 3U) {
+        b8->mode = 2;
+    }
+    if (b8->mode == 2) {
+        M2C_FIELD(arg0, s32 *, 0x28) = 0;
+    }
+    if (b8->mode != 1) {
+        b8->mode = 0;
+        return 0;
+    }
+    if (s4->mode != 1) {
+        var_r30 = 0;
+    } else {
+        var_r30 = fn_80231748(arg0);
+    }
+    if (__flush_buffer(arg0, 0) != 0) {
+        M2C_FIELD(arg0, u8 *, 0xA) = 1U;
+        M2C_FIELD(arg0, s32 *, 0x28) = 0;
+        return -1;
+    }
+    b8->mode = 0;
+    M2C_FIELD(arg0, s32 *, 0x18) = var_r30;
+    M2C_FIELD(arg0, s32 *, 0x28) = 0;
+    return 0;
+}
+
+s32 fn_802312B0(void *arg0) {
+    s32 __flush_buffer(void *, s32 *);
+    M2C_UNK fn_8022D014(s32);
+    s32 fn_8022D4C8();
+    s32 fn_80231748(void *);
+    typedef struct {
+        u8 pad[4];
+        u16 pre:7;
+        u16 mode:3;
+        u16 rest:6;
+    } S4;
+    typedef struct {
+        u8 pad[4];
+        u8 pre:2;
+        u8 modeB:3;
+        u8 rest:3;
+    } B4;
+    typedef struct {
+        u8 pad[8];
+        u8 mode:3;
+        u8 flag:1;
+        u8 rest:4;
+    } B8;
+    S4 *s4 = (S4 *)arg0;
+    B4 *b4 = (B4 *)arg0;
+    B8 *b8 = (B8 *)arg0;
+    s32 temp_r30;
+    register s32 var_r29;
+    s32 var_r30;
+    s32 var_r3;
+
+    if (arg0 == NULL) {
+        return -1;
+    }
+    if (s4->mode == 0) {
+        return 0;
+    }
+    if (arg0 == NULL) {
+        var_r29 = fn_8022D4C8();
+    } else if (((u8) M2C_FIELD(arg0, u8 *, 0xA) != 0) || (s4->mode == 0)) {
+        var_r29 = -1;
+    } else if (b4->modeB == 1) {
+        var_r29 = 0;
+    } else {
+        if (b8->mode >= 3U) {
+            b8->mode = 2;
+        }
+        if (b8->mode == 2) {
+            M2C_FIELD(arg0, s32 *, 0x28) = 0;
+        }
+        if (b8->mode != 1) {
+            var_r29 = 0;
+            b8->mode = var_r29;
+        } else {
+            if (s4->mode != 1) {
+                var_r30 = 0;
+            } else {
+                var_r30 = fn_80231748(arg0);
+            }
+            if (__flush_buffer(arg0, 0) != 0) {
+                M2C_FIELD(arg0, u8 *, 0xA) = 1U;
+                var_r29 = -1;
+                M2C_FIELD(arg0, s32 *, 0x28) = 0;
+            } else {
+                var_r29 = 0;
+                b8->mode = var_r29;
+                M2C_FIELD(arg0, s32 *, 0x18) = var_r30;
+                M2C_FIELD(arg0, s32 *, 0x28) = var_r29;
+            }
+        }
+    }
+    temp_r30 = M2C_FIELD(arg0, s32 (**)(s32), 0x44)(M2C_FIELD(arg0, s32 *, 0));
+    s4->mode = 0;
+    M2C_FIELD(arg0, s32 *, 0) = 0;
+    if (b8->flag) {
+        fn_8022D014(M2C_FIELD(arg0, s32 *, 0x1C));
+    }
+    var_r3 = 0;
+    if ((var_r29 != 0) || (temp_r30 != 0)) {
+        var_r3 = 1;
+    }
+    return (s32) (-var_r3 | var_r3) >> 0x1F;
+}
+
 extern s32 fn_802314D8(s32, s32, s32);
 s32 fseek(s32 arg0, s32 arg1, s32 arg2) {
     return fn_802314D8(arg0, arg1, arg2);
@@ -465,6 +611,14 @@ s32 fn_80231F48(char *s, const char *fmt, va_list args) {
         s[idx] = 0;
     }
     return n;
+}
+
+s32 __FileWrite(s32 arg0, s32 arg1, u32 arg2) {
+    u32 fwrite(s32 arg1, s32 arg2, s32 arg0);
+    if (arg2 == fwrite(arg1, 1, arg0)) {
+        return arg0;
+    }
+    return -1;
 }
 
 void fn_80233174(void *arg0, s32 arg1) {
