@@ -1075,9 +1075,9 @@ void fn_8016A738(void) {
 }
 
 void fn_8016A7F8(void) {
-      extern u16 lbl_80277BC0[0x1F6 + 1];
-      fn_8000E0E4(&lbl_80277BC0[0x5AC]);
-  }
+    extern u16 lbl_80277BC0[];
+    fn_8000E0E4((u8 *)lbl_80277BC0 + 0x16b);
+}
 
 void *fn_8016A824(void) {
     extern u16 lbl_80277BC0;
