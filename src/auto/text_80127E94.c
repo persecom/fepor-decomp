@@ -37,6 +37,55 @@ void fn_80127EF4(void) {
     fn_8000E0E4(&lbl_80275048[0x580 / sizeof(u16)]);
 }
 
+#pragma cplusplus on
+extern "C" s32 fn_80127F20(void *arg0, void *arg1, void *arg2) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0();
+        virtual void v1();
+        virtual void v2();
+        virtual void v3();
+        virtual void v4();
+        virtual void v5();
+        virtual void v6();
+        virtual void v7();
+        virtual void v8();
+        virtual void v9();
+        virtual void v10();
+        virtual void v11();
+        virtual void v12();
+        virtual void v13();
+        virtual void v14();
+        virtual void v15();
+        virtual void v16();
+        virtual void v17();
+        virtual void v18();
+        virtual void v19();
+        virtual void v20();
+        virtual void v21();
+        virtual void v22();
+        virtual void v23();
+        virtual void v24();
+        virtual void v25();
+        virtual void v26();
+        virtual void v27();
+        virtual u32 v28();
+    };
+    extern u8 lbl_80367A6C;
+    s32 fn_801475FC(u32, s32);
+    Obj *obj;
+
+    (void)arg0;
+    lbl_80367A6C = *(u8 *)((u8 *)arg2 + 0x3A);
+    obj = *(Obj **)((u8 *)arg1 + 0x3C);
+    if (obj->v28() != 0U) {
+        obj = *(Obj **)((u8 *)arg1 + 0x3C);
+        fn_801475FC(obj->v28(), 0x64);
+    }
+    return 5;
+}
+#pragma cplusplus reset
+
 void fn_80127F8C(void **arg0, void *arg1, void *arg2) {
     M2C_UNK fn_80007124();
     M2C_UNK fn_800076AC(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
