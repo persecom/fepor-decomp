@@ -1491,13 +1491,13 @@ u8 fn_8003C114(void *arg0) {
 }
 
 void fn_8003C15C(void *arg0) {
-    s32 temp_r3;
+    u8 fn_80105BC0(s32, M2C_UNK);
+    M2C_UNK fn_80091CD8(void *);
 
-    temp_r3 = fn_80105BC0((s32)((char*)arg0 + 0x1BC), 9);
-    if (temp_r3 != 0) {
-        *(u8*)((char*)arg0 + 0x19C) = 0x14;
+    if (fn_80105BC0((s32)((char *)arg0 + 0x1BC), 9) != 0) {
+        *(u8 *)((char *)arg0 + 0x19C) = 0x14;
     } else {
-        *(u8*)((char*)arg0 + 0x19C) = 0;
+        *(u8 *)((char *)arg0 + 0x19C) = 0;
     }
     fn_80091CD8(arg0);
 }
