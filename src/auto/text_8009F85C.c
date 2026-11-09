@@ -672,6 +672,17 @@ s32 fn_800A04EC(s32 a, s32 b, void *arg2) {
     return 0;
 }
 
+u32 fn_800A0514(void) {
+    extern u8 lbl_80367701;
+    u32 var_r3;
+
+    var_r3 = 2;
+    if (lbl_80367701 != 0) {
+        var_r3 = 0;
+    }
+    return (u8)var_r3;
+}
+
 void *fn_800A0530(void) {
     extern u16 lbl_8026D8D8[];
     return (char *)&lbl_8026D8D8 + 0x437;
