@@ -832,9 +832,10 @@ void fn_801F1110(void) {
     }
 }
 
-s32 fn_801F1644(void *arg0, s8 arg2) {
+s32 fn_801F1644(void *arg0, s32 unused, s8 arg2) {
     u8 fn_800A8504(s32, s8);
     extern void *lbl_803683D8;
+
     if (fn_800A8504(M2C_FIELD(lbl_803683D8, s32 *, 0x18C), arg2) == 0) {
         return 3;
     }
