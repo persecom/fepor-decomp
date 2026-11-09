@@ -4912,25 +4912,18 @@ void fn_800C3220(s32 arg0, s32 arg1) {
     *(s8*)((char*)temp_r3 - 0x1) = (s8)-1;
 }
 
-s32 fn_800C3260(u8 *arg0) {
+s32 fn_800C3260(u8* arg0) {
     s32 i;
-    u8 *ptr;
-    u8 *base;
+    u8* p;
 
-    base = arg0;
-    ptr = arg0;
-    i = 0x30;
-
-    do {
-        if (*ptr == 0) {
-            *(base + (i * 0x18)) = 1;
+    p = arg0;
+    for (i = 0; i < 0x30; i++) {
+        if (*arg0 == 0) {
+            p[i * 0x18] = 1;
             return i + 1;
         }
-        ptr += 0x18;
-        i++;
-        i &= 0x3F;
-    } while (i != 0);
-
+        arg0 = arg0 + 0x18;
+    }
     return 0;
 }
 
