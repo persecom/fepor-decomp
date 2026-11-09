@@ -1101,8 +1101,8 @@ s32 fn_800A17A8(void) {
 }
 
 void *fn_800A1814(void) {
-    extern M2C_UNK lbl_8026D8D8;
-    return &lbl_8026D8D8 + 0x640;
+    extern u16 lbl_8026D8D8[];
+    return (u8 *)lbl_8026D8D8 + 0x640;
 }
 
 #pragma dont_inline on
