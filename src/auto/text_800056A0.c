@@ -173,9 +173,11 @@ s32 fn_800061F4(void) {
 }
 
 void fn_80006220(s32 arg0) {
-    void *fn_8000C0C0(M2C_UNK *, M2C_UNK *);
-    extern M2C_UNK lbl_802832FC;
-    M2C_FIELD(fn_8000C0C0(&lbl_802832FC, &lbl_802832FC), s32 *, 0x60) = arg0;
+    extern u16 lbl_802832FC[];
+    void *fn_8000C0C0(u16 *);
+    s32 *obj;
+    obj = (s32 *)fn_8000C0C0(lbl_802832FC);
+    obj[0x60 / 4] = arg0;
 }
 #include <common.h>
 extern u8 lbl_803682F0[8];
