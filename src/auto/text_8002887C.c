@@ -170,11 +170,15 @@ void fn_80028DBC(s32 arg0) {
 }
 
 void fn_80028EC8(s32 arg0) {
-    extern u8 lbl_80269070[206];
-    extern M2C_UNK lbl_802EF4C8;
-    
-    if (((u8*)lbl_802EF4C8)[8] != 0x24 && ((u8*)lbl_802EF4C8)[8] != 0x2D) {
-        fn_801475FC(&lbl_80269070[0xF0], 0x64);
+    void fn_801475FC(void *, s32);
+    void fn_800725F8(s32);
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_80269070[];
+    u8 temp_r0;
+
+    temp_r0 = lbl_802EF4C8[8];
+    if (temp_r0 != 0x24 && temp_r0 != 0x2D) {
+        fn_801475FC(lbl_80269070 + 0xF0, 0x64);
         fn_800725F8(arg0);
     }
 }
