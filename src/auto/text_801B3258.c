@@ -919,6 +919,7 @@ extern "C" void fn_801B9D94(void *arg0) {
     void fn_801658DC(void *, void *, s32, s32);
     s32 fn_8017B908(void *);
     void fn_8017BB94(void *);
+
     extern u8 lbl_8027C698[];
     extern void *lbl_8028FDB0[];
     extern void *lbl_8029186C[];
@@ -926,19 +927,9 @@ extern "C" void fn_801B9D94(void *arg0) {
     extern void *lbl_80293C2C[];
     extern void *lbl_80293C84[];
     extern f32 lbl_8036B2D8;
-    struct Obj {
-        virtual void v0() = 0;
-        virtual void v1() = 0;
-        virtual void v2() = 0;
-        virtual void v3() = 0;
-        virtual void v4() = 0;
-        virtual void v5() = 0;
-        virtual void v6() = 0;
-        virtual void v7() = 0;
-        virtual void v8() = 0;
-    };
-    s16 sp8[2];
-    s16 spC[2];
+
+    s16 pairC[2];
+    s16 pair8[2];
     void *temp;
     void *obj1;
     void *obj2;
@@ -947,20 +938,22 @@ extern "C" void fn_801B9D94(void *arg0) {
     s16 t1;
     s16 w;
 
+    #pragma use_lmw_stmw on
+
     temp = fn_8013FF94(arg0, 0x100, 0);
-    t0 = M2C_FIELD(temp, s16 *, 0xC);
-    t1 = M2C_FIELD(temp, s16 *, 0x10);
+    t0 = *(s16 *)((u8 *)temp + 0xC);
+    t1 = *(s16 *)((u8 *)temp + 0x10);
     w = (s16)(t1 - t0);
-    spC[0] = M2C_FIELD(temp, s16 *, 0xA);
-    spC[1] = -w;
-    fn_80140258(arg0, temp, spC, 0);
-    child = M2C_FIELD(arg0, void **, 0x60);
+    pairC[0] = *(s16 *)((u8 *)temp + 0xA);
+    pairC[1] = -w;
+    fn_80140258(arg0, temp, pairC, 0);
+    child = *(void **)((u8 *)arg0 + 0x60);
     fn_8017BB94(child);
-    M2C_FIELD(child, u8 *, 0x3C) = 1;
-    if (M2C_FIELD(child, s16 *, 0xC) != 0x7C) {
-        sp8[0] = M2C_FIELD(child, s16 *, 0xA);
-        sp8[1] = 0x7C;
-        fn_801402A0(arg0, child, sp8, 0);
+    *(u8 *)((u8 *)child + 0x3C) = 1;
+    if (*(s16 *)((u8 *)child + 0xC) != 0x7C) {
+        pair8[0] = *(s16 *)((u8 *)child + 0xA);
+        pair8[1] = 0x7C;
+        fn_801402A0(arg0, child, pair8, 0);
     }
     obj1 = fn_800C42D8(0x4C);
     if (obj1 != NULL) {
@@ -993,7 +986,7 @@ extern "C" void fn_801B9D94(void *arg0) {
         *(s32 *)((u8 *)obj1 + 0x3C) = 0;
         *(s16 *)((u8 *)obj1 + 0x40) = 0x14;
         *(s16 *)((u8 *)obj1 + 0x42) = 8;
-        ((Obj *)obj1)->v8();
+        ((void (*)(void *))*(u32 *)(((u8 *)obj1) + 0x28))(obj1);
         *(s16 *)((u8 *)obj1 + 8) = 0x108;
         *(s16 *)((u8 *)obj1 + 0x24) = 8;
         *(s32 *)((u8 *)obj1 + 0x34) |= 0x10;
@@ -1438,13 +1431,17 @@ void fn_801C1970(s8 arg0, s32 arg1) {
     fn_8000A388(&lbl_80297FF8, &fn_801C19E4, &lbl_80368280, &lbl_80368280, temp_f1);
 }
 
-void fn_801C19E4(void *arg0, void *arg1) {
-    u8 temp_r6;
+void fn_801C19E4(u8 *arg0, u8 *arg1) {
+    s32 a;
+    s32 b;
 
-    temp_r6 = M2C_FIELD(arg1, u8 *, 0);
-    if (((s8) M2C_FIELD(arg0, u8 *, 0x30) == (s8) temp_r6) || ((s8) temp_r6 == -1)) {
-        M2C_FIELD(arg0, s8 *, 0x31) = 0xA;
-        M2C_FIELD(arg0, s16 *, 0x3A) = (s16) M2C_FIELD(arg1, s32 *, 4);
+    a = arg0[0x30];
+    b = arg1[0];
+    a = (s8)a;
+    b = (s8)b;
+    if (a == b || b == -1) {
+        arg0[0x31] = 0xA;
+        *(s16 *)(arg0 + 0x3A) = *(s32 *)(arg1 + 4);
     }
 }
 
