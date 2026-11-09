@@ -2617,6 +2617,19 @@ s32 fn_80178664(void) {
     return 0;
 }
 
+#pragma cplusplus on
+extern "C" void fn_8017873C(void *arg0) {
+    void fn_80152414(s32, s32, s32);
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    ((Obj *)arg0)->v2();
+    fn_80152414(0, 0, 0x10);
+}
+#pragma cplusplus reset
+
 s32 fn_801788A0(struct unit* arg0, s32 arg1, s32 arg2) {
     u32 temp_r3;
     s32 temp_r4;
