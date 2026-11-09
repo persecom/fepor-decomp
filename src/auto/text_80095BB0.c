@@ -145,8 +145,13 @@ void fn_800975C4(void *arg0) {
     *(u16*)((char*)arg0 + 0x30) = 0;
 }
 
+typedef struct {
+    u8 pad[0x8A0];
+    s16 value;
+} lbl_80330EAC_t;
+
 s16 fn_80097740(void) {
-    extern u8 lbl_80330EAC[];
+    extern lbl_80330EAC_t lbl_80330EAC;
     extern u8 lbl_803120C0[];
     extern void *lbl_80367500;
     extern void *lbl_80367504;
@@ -159,8 +164,8 @@ s16 fn_80097740(void) {
     u32 v;
     s32 init;
 
-    idx = (s16 *)(lbl_80330EAC + 0x8a0);
-    init = *idx;
+    idx = &lbl_80330EAC.value;
+    init = lbl_80330EAC.value;
     if (init != 0) {
         *idx = init + 1;
     }
@@ -168,6 +173,14 @@ s16 fn_80097740(void) {
         n = *idx;
         c = ((u8 *)idx)[(n << 2) + 4];
         switch (c) {
+        case 0x00:
+        case 0x50:
+        case 0x51:
+        case 0x52:
+            return result;
+        case 0x54:
+            result = n;
+            break;
         case 0x20:
             p = (void *)lbl_803120C0;
             if (p != NULL) {
@@ -246,13 +259,6 @@ s16 fn_80097740(void) {
         case 0x24:
             result = n;
             break;
-        case 0x00:
-            return result;
-        case 0x50:
-        case 0x51:
-        case 0x52:
-        case 0x54:
-            return result;
         }
         *idx = *idx + 1;
     }
