@@ -63,6 +63,7 @@ void fn_8001980C(void *arg0) {
     f32 temp_f1_2;
     f32 scale;
     f32 zero;
+    f32 one;
     s32 temp_r5;
     void *temp_r6;
 
@@ -80,7 +81,11 @@ void fn_8001980C(void *arg0) {
         }
     } else {
         temp_r6 = M2C_FIELD(lbl_80367240, void **, 0);
-        M2C_FIELD(arg0, f32 *, 0x18) = (f32) (M2C_FIELD(arg0, f32 *, 0x18) * ((lbl_80368C8C - ((f32) M2C_FIELD(temp_r6, u8 *, 7) / lbl_80368D08)) + ((f32) M2C_FIELD(temp_r6, u8 *, 6) / lbl_80368D08)));
+        scale = lbl_80368D08;
+        one = lbl_80368C8C;
+        one = one - ((f32)M2C_FIELD(temp_r6, u8 *, 7) / scale);
+        one = one + ((f32)M2C_FIELD(temp_r6, u8 *, 6) / scale);
+        M2C_FIELD(arg0, f32 *, 0x18) = M2C_FIELD(arg0, f32 *, 0x18) * one;
     }
     zero = lbl_80368C88;
     M2C_FIELD(arg0, f32 *, 0x14) =
@@ -1249,8 +1254,8 @@ extern void *lbl_80367204;
 extern s32 lbl_80367208;
 #include "common.h"
 extern void *lbl_80367240;
-f64 lbl_80368C98 = 4503601774854144.0;
-f64 lbl_80368D18 = 4503599627370496.0;
+const f64 lbl_80368C98 = 4503601774854144.0;
+const f64 lbl_80368D18 = 4503599627370496.0;
 extern f32 lbl_80368C88;
 extern f32 lbl_80368C8C;
 extern f32 lbl_80368CA4;
