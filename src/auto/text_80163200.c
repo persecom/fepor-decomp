@@ -699,6 +699,11 @@ void fn_801694AC(s32 arg0) {
     M2C_FIELD(fn_8000CAA0(&lbl_80294060, &lbl_80294060), s32 *, 0x30) = arg0;
 }
 
+void fn_801694E4(void) {
+    extern u16 lbl_80277BC0[];
+    fn_801475FC((u8 *)&lbl_80277BC0 + 0xAE, 0x64);
+}
+
 void fn_801695BC(s32 arg0, s32 arg2) {
     void *fn_8000CAA0(u16 *, u16 *);
     extern u16 lbl_80294030[24];
