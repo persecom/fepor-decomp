@@ -1020,7 +1020,7 @@ void fn_800772EC(void) {
 
 void fn_80077318(void) {
     extern u16 lbl_8026C0B8[];
-    fn_8000E0E4(&lbl_8026C0B8[0x702]);
+    fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x381);
 }
 
 s32 fn_800773C8(void) {
