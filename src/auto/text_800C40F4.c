@@ -6821,9 +6821,9 @@ s32 fn_800FFEFC(s32 arg1, s16 *arg2, s16 *arg3) {
     return 0;
 }
 
-void fn_80100104(s32 arg2, s32 arg3) {
-    extern void fn_80102810(s32, s32, s32);
-    fn_80102810(0x25, arg2, arg3);
+void fn_80100104(s32 a0, s32 a1, s32 a2, s32 a3) {
+    extern void fn_80102810(s32, s32, s32, s32, s32);
+    fn_80102810(a0, a1, 0x25, a2, a3);
 }
 
 s32 fn_80100130(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
