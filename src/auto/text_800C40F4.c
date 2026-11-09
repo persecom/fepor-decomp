@@ -3835,6 +3835,16 @@ void fn_800E56CC(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0xD0) = 0;
 }
 
+void fn_800E56D8(void *arg0, s8 arg1) {
+    M2C_UNK fn_8005FEE8(void *, f32);
+
+    if ((u32) M2C_FIELD(M2C_FIELD(arg0, void **, 0xE0), u32 *, 0x44) != 0U) {
+        fn_8005FEE8(M2C_FIELD(arg0, void **, 0xE0), (f32) M2C_FIELD(arg0, s32 *, 0xCC));
+        M2C_FIELD(arg0, s8 *, 0xD0) = 1;
+        M2C_FIELD(arg0, s8 *, 0xD1) = arg1;
+    }
+}
+
 u32 fn_800E574C(void *arg0, u32 arg1, u32 arg2, u8 arg3) {
     extern s32 lbl_80369F38;
     u32 temp_r3;
