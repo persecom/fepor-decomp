@@ -1315,12 +1315,15 @@ void fn_8001E71C(void *arg0) {
 }
 
 void *fn_8001ED1C(void *arg0) {
-    void *fn_8000E0E4();
-    extern u32 lbl_80268820;
-    if (M2C_FIELD(arg0, u32 *, 8) == 0U) {
-        return (void *) ((u32) &lbl_80268820 + 0x4BE);
+    void *fn_8000E0E4(void *);
+    extern u8 lbl_80268820[];
+    void *v;
+
+    v = *(void **)((char *)arg0 + 8);
+    if (v == NULL) {
+        return lbl_80268820 + 0x4BE;
     }
-    return fn_8000E0E4();
+    return fn_8000E0E4(v);
 }
 
 s32 fn_8001ED58(void *arg0) {
