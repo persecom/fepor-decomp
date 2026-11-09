@@ -165,12 +165,16 @@ void fn_801B3D30(void *arg0) {
 }
 
 void fn_801B3D68(void *arg0) {
+    void fn_8005C7E8(void *);
+    void fn_800C4588(void *);
     void *temp_r31;
+    void *ptr;
 
     temp_r31 = M2C_FIELD(arg0, void **, 0x30);
     fn_8014876C(lbl_8032FF08 + (M2C_FIELD(temp_r31, u8 *, 0x10C) * 0x30), 0x64, 0x3E8);
-    if ((u32) M2C_FIELD(temp_r31, u32 *, 0x18) != 0U) {
-        fn_8005C7E8();
+    ptr = M2C_FIELD(temp_r31, void **, 0x18);
+    if (ptr != NULL) {
+        fn_8005C7E8(ptr);
     }
     fn_800C4588(temp_r31);
 }
@@ -2310,12 +2314,37 @@ s32 fn_801C9C5C(void) {
 }
 
 s32 fn_801C9CBC(void) {
- extern u8 lbl_803682B8[];
- void fn_800C9758(void *,void *,s32,s32),fn_800C9A60(void *,s32),fn_801C9D94(void *,void *),fn_801CAF58(s32,void *);
- s32 fn_8011C984(s32,s32),fn_8011C9E4(s32);
- s32 a[2]={0,0}, b[2]={0,0}, *obj=(s32 *)lbl_803682B8, t;
- t=fn_8011C984(obj[0x430/4],fn_8011C9E4(obj[0x430/4]));
- fn_801C9D94(a,lbl_803682B8); fn_800C9758(b,a,0,-1); fn_800C9A60(a,-1); fn_801CAF58(t,b); fn_800C9A60(b,-1); return 0;
+    extern u16 lbl_803682B8[];
+    void fn_800C9758(void *,void *,s32,s32);
+    void fn_800C9A60(void *,s32);
+    void fn_801C9D94(void *,void *);
+    void fn_801CAF58(s32,void *);
+    s32 fn_8011C984(s32,s32);
+    s32 fn_8011C9E4(s32);
+    
+    // The function properly handles the stack frame with its exact offsets
+    s32 a[2];
+    s32 b[2];
+    s32 temp_r3;
+    
+    // Initialize arrays
+    a[0] = 0;
+    a[1] = 0;
+    b[0] = 0;
+    b[1] = 0;
+    
+    // Load memory from global with offset and use properly
+    temp_r3 = fn_8011C9E4(*(s32 *)((char *)lbl_803682B8 + 0x430));
+    temp_r3 = fn_8011C984(*(s32 *)((char *)lbl_803682B8 + 0x430), temp_r3);
+    
+    // Call functions with array addresses
+    fn_801C9D94((void *)a, (void *)lbl_803682B8);  // a[2], lbl_803682B8  
+    fn_800C9758((void *)b, (void *)a, 0, -1);       // b[2], a[2], 0, -1
+    fn_800C9A60((void *)a, -1);                     // a[2], -1
+    fn_801CAF58(temp_r3, (void *)b);                // temp_r3, b[2]
+    fn_800C9A60((void *)b, -1);                    // b[2], -1
+    
+    return 0;
 }
 
 s32 fn_801C9D58(void) {
@@ -3086,7 +3115,17 @@ void fn_801CFC80(void *arg0, s32 arg1) {
     *(u32 *)((u8 *)arg0 + 8) |= 2;
 }
 
-void fn_801CFCB4(void*a){u8*p=(u8*)a; s8 x; x=(s8)p[0xec];if(x)p[0xec]=3;x=(s8)p[0xf4];if(x)p[0xf4]=3;p+=16;x=(s8)p[0xec];if(x)p[0xec]=3;x=(s8)p[0xf4];if(x)p[0xf4]=3;x=(s8)p[0xfc];if(x)p[0xfc]=3;x=(s8)p[0x104];if(x)p[0x104]=3;x=(s8)p[0x10c];if(x)p[0x10c]=3;x=(s8)p[0x114];if(x)p[0x114]=3;}
+extern void *lbl_80367140;
+void fn_801CFCB4(void *a){ u8 *p=(u8*)a; s8 x;
+x=(s8)p[0xec]; if(x) p[0xec]=3;
+x=(s8)p[0xf4]; if(x) p[0xf4]=3;
+p+=0x10;
+x=(s8)p[0xec]; if(x) p[0xec]=3;
+x=(s8)p[0xf4]; if(x) p[0xf4]=3;
+x=(s8)p[0xfc]; if(x) p[0xfc]=3;
+x=(s8)p[0x104]; if(x) p[0x104]=3;
+x=(s8)p[0x10c]; if(x) p[0x10c]=3;
+x=(s8)p[0x114]; if(x) p[0x114]=3; }
 
 void fn_801CFD60(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s8 arg4) {
     s32 temp_r8;
@@ -5114,10 +5153,12 @@ void fn_801DF4A4(void *arg0, s32 arg1) {
         u8 r, g, b, a;
     };
     void fn_80161AA8(s32, s32, s16, s32, s32, struct Color *);
+    s16 *arg0_s16;
     s16 h;
     struct Color col;
 
-    h = M2C_FIELD(arg0, s16 *, 0x16) - M2C_FIELD(arg0, s16 *, 0x12);
+    arg0_s16 = (s16 *)arg0;
+    h = arg0_s16[0x16/2] - arg0_s16[0x12/2];
     col.r = 0x80;
     col.g = 0x78;
     col.b = 0x50;
