@@ -222,6 +222,11 @@ void fn_801FEFF8(void *arg0) {
     }
 }
 
+s32 fn_801FF04C(void) {
+    extern u32 lbl_803682A4;
+    return !(lbl_803682A4 & 0x20);
+}
+
 void fn_801FF060(void *arg0) {
     s32 temp_r3;
 
