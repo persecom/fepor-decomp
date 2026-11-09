@@ -363,7 +363,7 @@ void fn_8023B804(s32 arg0, s32 arg1) {
 }
 
 void fn_8023B818(void) {
-    *(s32 *)0xCC006438 = 0x80000000;
+    __SIRegs[14] = 0x80000000;
 }
 
 s32 fn_8023B930(u32 arg0) {
@@ -399,6 +399,27 @@ void fn_8023BB34(void *alarm, void *context) {
         if (fn_8023B57C(packet->chan, packet->output, packet->outputBytes, packet->input, packet->inputBytes, packet->callback)) {
             packet->chan = -1;
         }
+    }
+}
+
+s32 SIGetType(void)
+{
+    return __OSGetSystemTime();
+}
+
+extern u16 lbl_802822F0[200];
+extern s32 SIEnablePolling(s32 param_1);
+extern s32 SIDisablePolling(s32 param_1);
+void fn_8023C188(s32 arg0)
+{
+    u16* ptr;
+    ptr = &lbl_802822F0[arg0 * 2];
+    if (*ptr & 0x400) {
+        *ptr = *ptr & 0xFBFF;
+        SIEnablePolling(arg0);
+    }
+    else {
+        SIDisablePolling(arg0);
     }
 }
 
