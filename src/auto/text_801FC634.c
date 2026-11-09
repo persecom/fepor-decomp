@@ -642,7 +642,7 @@ void fn_80201228(void *arg0) {
 }
 
 s32 fn_8020127C(void) {
-    extern s16 lbl_803682A4;
+    extern u32 lbl_803682A4;
     return !(lbl_803682A4 & 0x20);
 }
 
