@@ -3358,7 +3358,7 @@ s32 fn_8019A7A8(void *arg0) {
 
 void fn_8019A7E8(s32 arg0) {
     extern u16 lbl_80296DF0[];
-    fn_8000CAA0(lbl_80296DF0, arg0, (u16*)lbl_80296DF0);
+    fn_8000CAA0((u16*)lbl_80296DF0, arg0, (u16*)lbl_80296DF0);
     fn_8019D51C(0, 0);
 }
 
@@ -4103,6 +4103,28 @@ void fn_8019D150(void *arg0) {
         var_r3_2 = 0;
     }
     fn_80184C7C(var_r3_2, 0, 0x18, 0);
+}
+
+void fn_8019D1DC(void *arg0) {
+    void *tmp;
+    u8 flags;
+
+    tmp = *(void **)((u8 *)arg0 + 0x38);
+    if (tmp != NULL) {
+        fn_80050BA8(tmp, 0, 0);
+    }
+    tmp = *(void **)((u8 *)arg0 + 0x3C);
+    if (tmp != NULL) {
+        fn_80050BA8(tmp, 0, 0);
+    }
+    fn_8005376C();
+    if (*(void **)((u8 *)arg0 + 0x58) != NULL) {
+        flags = *(u8 *)((u8 *)arg0 + 0x40);
+        if (!(flags & 4)) {
+            *(u8 *)((u8 *)arg0 + 0x40) = (u8)(flags | 4);
+            (*(void (**)(void *))((u8 *)arg0 + 0x58))(arg0);
+        }
+    }
 }
 
 s32 fn_8019D268(void) {
