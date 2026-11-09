@@ -634,6 +634,22 @@ void fn_80168D68(s32 arg0) {
         fn_8000C188(arg0);
     }
 }
+
+s32 fn_80168E90(s32 arg0) {
+    s32 fn_8000CAA0(u16 *, s32, u16 *);
+    void fn_8016A6A4(void);
+    extern u16 lbl_80277B10[];
+
+    s32 temp_r3;
+
+    temp_r3 = fn_8000CAA0(lbl_80277B10, arg0, lbl_80277B10);
+    // The 'mr r5, r3' seems to be an optimization; it's not needed.
+    if (temp_r3 != 0) {
+        fn_8016A6A4();
+    }
+    return temp_r3;
+}
+
 #pragma opt_common_subs reset
 void fn_80168ED4(void *arg0) {
     M2C_UNK fn_8003F670(s32);
@@ -1445,11 +1461,13 @@ void fn_8016B730(s32 arg0) {
 }
 
 void fn_8016B75C(void) {
+    s32 fn_800C0658(void);
+    s32 fn_80040844(void);
+    void fn_80043A00(s32, s32, s32, s32);
     s32 temp_r31;
-    
+
     temp_r31 = fn_800C0658();
-    fn_80040844();
-    fn_80043A00(0x168, 0x10E, temp_r31);
+    fn_80043A00(fn_80040844(), 0x168, 0x10E, temp_r31);
 }
 
 extern void fn_8005376C(void);
