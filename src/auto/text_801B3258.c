@@ -3260,13 +3260,12 @@ s16 fn_801D2FDC(void *arg0) {
 }
 
 void *fn_801D322C(s32 arg0) {
-    void *fn_8000CAA0(void *, s32, void *);
+    void *fn_8000CAA0(void *, s32);
     void fn_801403F0(void);
-    extern u16 lbl_802999D0[105];
-
+    extern u16 lbl_802999D0[];
     void *temp_r3;
 
-    temp_r3 = fn_8000CAA0(lbl_802999D0, arg0, lbl_802999D0);
+    temp_r3 = fn_8000CAA0(lbl_802999D0, arg0);
     if (temp_r3 != NULL) {
         fn_801403F0();
         *(s32 *)((char *)temp_r3 + 0x40) = 0;
