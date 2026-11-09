@@ -202,6 +202,37 @@ extern f64 lbl_8036C140;
 
 extern f64 lbl_8036C148;
 
+#pragma scheduling off
+void SetExiInterruptMask(s32 arg0, void *arg1) {
+    void __OSMaskInterrupts(u32);
+    void __OSUnmaskInterrupts(u32);
+    u32 fn_80207BAC(u32);
+    u32 *ecb2 = (u32 *)((u8 *)Ecb_8033E188 + 0x80);
+    switch (arg0) {
+    case 0:
+        if (((u32)M2C_FIELD(arg1, u32 *, 0) == 0U && *ecb2 == 0U) || (M2C_FIELD(arg1, s32 *, 0xC) & 0x10)) {
+            __OSMaskInterrupts(0x410000);
+            return;
+        }
+        __OSUnmaskInterrupts(0x410000);
+        return;
+    case 1:
+        if (((u32)M2C_FIELD(arg1, u32 *, 0) == 0U) || (M2C_FIELD(arg1, s32 *, 0xC) & 0x10)) {
+            __OSMaskInterrupts(0x80000);
+            return;
+        }
+        __OSUnmaskInterrupts(0x80000);
+        return;
+    case 2:
+        if ((fn_80207BAC(0x19) == 0U) || (M2C_FIELD(arg1, s32 *, 0xC) & 0x10)) {
+            __OSMaskInterrupts(0x40);
+            return;
+        }
+        __OSUnmaskInterrupts(0x40);
+        return;
+    }
+}
+#pragma scheduling reset
 s32 fn_80238E78(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 EXIImm(s32, s32, s32, s32, s32);
     s32 EXISync(s32);
@@ -521,3 +552,164 @@ block_10:
         *arg2 = temp_r5;
     }
 }
+
+s32 fn_8023A61C(s32 arg0, u32 arg1, s32 *arg2) {
+    s32 EXIDeselect(s32);
+    s32 EXIImm(s32, s32 *, M2C_UNK, M2C_UNK, M2C_UNK);
+    s32 EXILock(s32, u32, M2C_UNK);
+    s32 EXISelect(s32, u32, M2C_UNK);
+    s32 EXISync(s32);
+    M2C_UNK EXIUnlock(s32);
+    s32 fn_802395BC(s32, M2C_UNK);
+    M2C_UNK fn_802396C8(s32);
+    s32 r28;
+    s32 r30; 
+    s32 r31;
+
+    if ((arg0 != 2) && (arg1 == 0U) && (fn_802395BC(arg0, 0) == 0)) {
+        return 0;
+    }
+    r30 = EXILock(arg0, arg1, 0);
+    if (r30 != 0) {
+        goto block_10;
+    }
+    r30 = EXISelect(arg0, arg1, 0);
+    if (r30 != 0) {
+        goto block_10;
+    }
+    *(u32 *)&r31 = 0x20011300;
+    r30 = EXIImm(arg0, &r31, 4, 1, 0);
+    if (r30 != 0) {
+        goto block_10;
+    }
+    r30 = EXISync(arg0);
+    if (r30 != 0) {
+        goto block_10;
+    }
+    r30 = EXIImm(arg0, arg2, 4, 0, 0);
+    if (r30 != 0) {
+        goto block_10;
+    }
+    r30 = EXISync(arg0);
+    if (r30 != 0) {
+        goto block_10;
+    }
+    r30 = EXIDeselect(arg0);
+    if (r30 != 0) {
+        goto block_10;
+    }
+    EXIUnlock(arg0);
+    if ((arg0 != 2) && (arg1 == 0U)) {
+        fn_802396C8(arg0);
+    }
+    return 0;
+block_10:
+    EXIUnlock(arg0);
+    if ((arg0 != 2) && (arg1 == 0U)) {
+        fn_802396C8(arg0);
+    }
+    r28 = 0;
+    if ((u32) (*arg2 + 0x10000) != -1U) {
+        r28 = 1;
+    }
+    return r28;
+}
+
+void __OSEnableBarnacle(s32 arg0, s32 arg1) {
+    s32 EXIGetID(s32 *);
+    s32 fn_8023A61C(s32, s32, s32 *);
+    extern u16 lbl_80368808;
+    extern u16 lbl_8036880C;
+    extern u16 lbl_80368810;
+    extern u16 lbl_80368814;
+    s32 sp10;
+
+    if ((EXIGetID(&sp10) != 0) && (sp10 != 0x01020000)) {
+        if (sp10 < 0x01020000) {
+            if (sp10 != 4) {
+                if (sp10 < 4) {
+                    if (sp10 != 0x80000010) {
+                        if (sp10 < 0x80000010) {
+                            if (sp10 != 0x80000008) {
+                                if (sp10 < 0x80000008) {
+                                    if (sp10 != 0x80000004) {
+                                        goto block_42;
+                                    }
+                                } else {
+                                    goto block_42;
+                                }
+                            }
+                        } else if (sp10 != -1) {
+                            if (sp10 < -1) {
+                                if (sp10 != 0x80000020) {
+                                    goto block_42;
+                                }
+                            } else {
+                                goto block_42;
+                            }
+                        }
+                    }
+                } else if (sp10 != 0x20) {
+                    if (sp10 < 0x20) {
+                        if (sp10 != 0x10) {
+                            if (sp10 < 0x10) {
+                                if (sp10 != 8) {
+                                    goto block_42;
+                                }
+                            } else {
+                                goto block_42;
+                            }
+                        }
+                    } else if (sp10 != 0x01010000) {
+                        goto block_42;
+                    }
+                }
+            }
+        } else if (sp10 != 0x04040404) {
+            if (sp10 < 0x04040404) {
+                if (sp10 != 0x04020100) {
+                    if (sp10 < 0x04020100) {
+                        if (sp10 != 0x03010000) {
+                            if (sp10 < 0x03010000) {
+                                if (sp10 != 0x02020000) {
+                                    goto block_42;
+                                }
+                            } else {
+                                goto block_42;
+                            }
+                        }
+                    } else if (sp10 != 0x04020300) {
+                        if (sp10 < 0x04020300) {
+                            if (sp10 != 0x04020200) {
+                                goto block_42;
+                            }
+                        } else {
+                            goto block_42;
+                        }
+                    }
+                }
+            } else if (sp10 != 0x04130000) {
+                if (sp10 < 0x04130000) {
+                    if (sp10 != 0x04120000) {
+                        if (sp10 < 0x04120000) {
+                            if (sp10 != 0x04060000) {
+                                goto block_42;
+                            }
+                        } else {
+                            goto block_42;
+                        }
+                    }
+                } else if (sp10 != 0x04220000) {
+block_42:
+                    if (fn_8023A61C(arg0, arg1, &sp10) != 0) {
+                        lbl_80368808 = arg0;
+                        lbl_8036880C = arg1;
+                        lbl_80368814 = 0xA5FF005A;
+                        lbl_80368810 = 0xA5FF005A;
+                    }
+                }
+            }
+        }
+    }
+}
+
