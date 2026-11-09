@@ -1461,6 +1461,10 @@ M2C_UNK fn_80232058(void *, const char *, ...);
 extern char __files[];
 
 void fn_800D5D04(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3) {
+    extern char __files[];
+    extern char lbl_802704F8[];
+    M2C_UNK fn_8022CF78(void);
+    void fn_800D6898(u32 *, u32 *, u32, u32, void *);
     u32 rem;
     u32 alloc;
     const u32 *n;
@@ -1519,7 +1523,7 @@ void fn_800D6878(void *arg0) {
 
 #pragma use_lmw_stmw on
 u32 *fn_800D6898(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3, void *arg4) {
-    struct Tag { u8 b; } tag = { 0 };
+    struct Tag { u8 b; } tag;
     M2C_UNK fn_800CA728(u32 *, char *, char *, void *, struct Tag);
     M2C_UNK fn_8022CF78(void);
     M2C_UNK fn_80232058(void *, const char *, ...);
@@ -2017,12 +2021,8 @@ void *fn_800DB18C(void *arg0, s16 arg1) {
     return arg0;
 }
 
-void fn_800DB1FC(s32 arg0) {
-    M2C_UNK fn_800C9758(s32, s32, s32);
-    s32 r3arg = arg0 + 0xAC;
-    s32 r5arg = 0;
-    s32 r6arg = -1;
-    fn_800C9758(r3arg, r5arg, r6arg);
+void fn_800DB1FC(void *arg0, void *arg1) {
+    fn_800C9758((void *)((char *)arg0 + 0xAC), arg1, 0, -1);
 }
 
 void fn_800DB520(void) {
