@@ -672,14 +672,14 @@ u8 fn_80038128(void *arg0, void *arg1) {
 
 u8 fn_80038570(s32 arg0) {
     u8 fn_80105BC0(s32, s32);
-    u8 fn_801F1B44(void);
+    s32 fn_801F1B44(void);
     u8 fn_801F1AB8(void);
 
     u8 var_r31;
 
     var_r31 = 0;
     if (fn_80105BC0(arg0 + 0x1BC, 6) != 0) {
-        var_r31 = fn_801F1B44();
+        var_r31 = (u8)fn_801F1B44();
     }
     if (fn_80105BC0(arg0 + 0x1BC, 0x3C) != 0) {
         var_r31 += fn_801F1AB8();
