@@ -345,6 +345,11 @@ void fn_80133EA4(s32 *arg0, void *arg1) {
     *arg0 = *fn_8013F748(arg1, &spC, &sp8);
 }
 
+s32 fn_80133FA4(void *arg0) {
+    extern s32 lbl_80291744[];
+    return lbl_80291744[M2C_FIELD(arg0, s16 *, 0x3E)];
+}
+
 s16 fn_8013432C(void *arg0) {
     s16 count;
     u8 *ptr;
