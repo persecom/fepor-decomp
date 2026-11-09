@@ -5024,6 +5024,25 @@ void fn_8019E5B0(void) {
     fn_8000A274(0);
 }
 
+s32 fn_8019E5D4(u8 arg0, s32 arg1) {
+    extern u8 lbl_802B14E4[];
+    u8 *var_r3;
+    if (arg0 != 0) {
+        var_r3 = &lbl_802B14E4[(arg0 - 1) * 0x280];
+    } else {
+        var_r3 = NULL;
+    }
+    if ((var_r3 == NULL) || (*(u32 *)(var_r3 + 0x188) == 0)) {
+        return 0;
+    }
+    if (arg1 != 0) {
+        *(s32 *)(var_r3 + 0x1A0) = *(s32 *)(var_r3 + 0x1A0) | 1;
+    } else {
+        *(s32 *)(var_r3 + 0x1A0) = *(s32 *)(var_r3 + 0x1A0) & ~1;
+    }
+    return 1;
+}
+
 s32 fn_8019E640(s32 arg0) {
     u8 var_r0;
     
