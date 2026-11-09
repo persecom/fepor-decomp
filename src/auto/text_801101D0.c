@@ -9,6 +9,7 @@ extern s32 lbl_80367110;
 extern s32 lbl_80330708[];
 extern f32 lbl_8036A184;
 extern f32 lbl_8036A1BC;
+#define VCALL(ptr, offset) (((void(**)(void *, void *))((u8*)(ptr) + (offset)))[0])
 
 typedef struct {
     void *unk0;
