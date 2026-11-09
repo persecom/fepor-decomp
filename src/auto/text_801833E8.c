@@ -5492,6 +5492,16 @@ void fn_80198910(void) {
 
     return;
 }
+
+s32 fn_80199028(void *arg0) {
+    s32 fn_801518D0(void *, s32);
+    void *p = *(void **)((u8 *)arg0 + 0x144);
+    if (p != NULL && (u8)fn_801518D0(p, 0x37) != 0) {
+        return 1;
+    }
+    return 0;
+}
+
 #include "common.h"
 #include "global.h"
 
