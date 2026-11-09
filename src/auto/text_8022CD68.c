@@ -4,6 +4,8 @@
 extern s32 lbl_80366F28;
 extern char lbl_80282AE8[];
 extern char lbl_80282B20[];
+extern void (*__stdio_exit)(void);
+extern void *__close_all;
 extern u8 lbl_8034C110[];
 extern f64 lbl_8036C368;
 extern u16 Ecb_8033E188[192];u16 *D_80256B30;
@@ -206,6 +208,54 @@ loop_5:
         goto loop_5;
     }
     return var_r31;
+}
+
+void fn_8022E660(void* arg0, void* arg1, int arg2) {
+    void** v1;
+    int v2;
+    int v5;
+    int v6 = 0x40;
+    int v7 = 0x20;
+    int i;
+
+    if (arg2 >= 0) {
+        v2 = arg2 * 8;
+    } else {
+        v2 = arg2 * -8;
+    }
+    
+    v1 = (void**)arg0;
+    v1[0] = arg1;
+    v1[1] = arg1;
+    v1[2] = arg1;
+    v1[3] = arg1;
+
+    if (v2 >= 0) {
+        v5 = v2 >> 3;
+    } else {
+        v5 = v2 / 8;
+    }
+    
+    i = 0;
+    while (i < v5) {
+        v1[i + 4] = arg1;
+        i++;
+    }
+
+    if (v6 >= 0) {
+        v7 = v6 >> 5;
+    } else {
+        v7 = v6 / 32;
+    }
+    
+    i = 0;
+    while (i < v7) {
+        v1[i + 4 + v5] = arg1;
+        i++;
+    }
+
+    v1[4 + v5 + v7] = arg1;
+    v1[5 + v5 + v7] = arg1;
 }
 
 extern s32 D_8022EF64;
@@ -493,6 +543,206 @@ block_3:
     ((u8*)arg0)[3] = 0x30;
 }
 
+char* long2str_802338EC(s32 value, char* buffer, u32 flags) {
+    char* result = buffer;
+    s32 absValue = value;
+    s32 sign = 0;
+    int digitCount = 0;
+    char* ptr = buffer;
+    s32 base = (flags & 0x10) ? 16 : ((flags & 0x8) ? 8 : 10);
+    u32 tempFlags = flags;
+
+    // Handle special case of zero
+    if (value == 0) {
+        *buffer = '0';
+        *(buffer + 1) = '\0';
+        return buffer;
+    }
+
+    // Handle negative numbers
+    if (value < 0) {
+        absValue = -value;
+        sign = 1;
+    }
+
+    ptr = buffer;
+
+    // Convert digits to buffer in reverse order
+    while (absValue > 0) {
+        char digit = absValue % base;
+        if (digit > 9) {
+            digit += 'a' - 10;
+        } else {
+            digit += '0';
+        }
+        *(ptr++) = digit;
+        absValue /= base;
+        digitCount++;
+    }
+
+    // Add minus sign if needed
+    if (sign) {
+        *(ptr++) = '-';
+    }
+    
+    *(ptr--) = '\0';  // Null terminate
+
+    // Reverse the string
+    while (ptr > buffer) {
+        char temp = *ptr;
+        *buffer = temp;
+        ptr--;
+        buffer++;
+    }
+
+    return result;
+}
+
+int parse_format_80233B44(char* format, char* buffer, int arg1, int arg2)
+{
+    int result = 0;
+    int var_10 = 0;
+    int var_14 = 0;
+    int var_18 = 0;
+    int var_1C = 0;
+    unsigned char var_8 = 0;
+    unsigned char var_9 = 0; 
+    unsigned char var_A = 0; 
+    unsigned char var_B = 0; 
+    unsigned char var_C = 0; 
+    unsigned char var_D = 0; 
+    int i = 0;
+    
+    // Initialize locals
+    *(unsigned char*)(buffer + 0x8) = 0;
+    *(unsigned char*)(buffer + 0x9) = 1;
+    *(unsigned char*)(buffer + 0xA) = 0;
+    *(unsigned char*)(buffer + 0xB) = 0;
+    *(unsigned char*)(buffer + 0xC) = 0;
+    *(int*)(buffer + 0x10) = 0;
+    *(int*)(buffer + 0x14) = 0;
+
+    while (i < 256) // Max format length?
+    {
+        unsigned char c = *format++;
+        
+        if (c == '%')
+        {
+            *(unsigned char*)(buffer + 0xD) = 0;
+            break;
+        }
+
+        switch (c)
+        {
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5': 
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                // Decimal numbers
+                if (*(unsigned char*)(buffer + 0x9) == 1 && *(unsigned char*)(buffer + 0x8) == 0)
+                {
+                    var_14 = (var_14 * 10) + (c - '0');
+                }
+                else if (*(unsigned char*)(buffer + 0xA) == 1 && *(unsigned char*)(buffer + 0x8) == 0) 
+                {
+                    var_18 = (var_18 * 10) + (c - '0');
+                }
+                break;
+            case '*':
+                // Variable length
+                if (*(unsigned char*)(buffer + 0x9) == 1 && *(unsigned char*)(buffer + 0x8) == 0)
+                {
+                    var_14 = *(int*)arg2; // va_arg(arg2, int);
+                }
+                else if (*(unsigned char*)(buffer + 0xA) == 1 && *(unsigned char*)(buffer + 0x8) == 0)
+                {
+                    var_18 = *(int*)arg2; // va_arg(arg2, int);
+                }
+                break;
+            case 'h':
+                // Short format
+                if (*(unsigned char*)(buffer + 0x8) == 0)
+                {
+                    *(unsigned char*)(buffer + 0xC) = 2;
+                }
+                else 
+                {
+                    *(unsigned char*)(buffer + 0xC) = 4;
+                }
+                break;
+            case 'l':
+                // Long format
+                if (*(unsigned char*)(buffer + 0x8) == 0)
+                {
+                    *(unsigned char*)(buffer + 0xC) = 1; 
+                }
+                else 
+                {
+                    *(unsigned char*)(buffer + 0xC) = 3;
+                }
+                break;
+            case 'd':
+            case 'i':
+                // Signed decimal
+                if (*(unsigned char*)(buffer + 0x8) == 2)
+                {
+                    *(unsigned char*)(buffer + 0x8) = 1;
+                }
+                
+                var_10 = *(int*)arg2; // va_arg(arg2, int);
+                if (var_10 < 0)
+                {
+                    // Negative number handling
+                    var_10 = -var_10;
+                    *(unsigned char*)(buffer + 0x8) = 1; 
+                }
+                var_1C = var_10;
+                break;
+            case 'f':
+            case 'F':
+            case 'e':
+            case 'E':
+                // Float handling 
+                if (*(unsigned char*)(buffer + 0xA) == 0)
+                {
+                    *(unsigned char*)(buffer + 0xA) = 1;
+                }
+                
+                var_14 = *(int*)arg2; // va_arg(arg2, double); assuming double
+                if (var_14 < 0)
+                {
+                    var_14 = -var_14;
+                    *(unsigned char*)(buffer + 0x8) = 1; 
+                }
+                break;
+            default:
+                // Unrecognized character
+                *(unsigned char*)(buffer + 0xD) = 0xFF;
+                break;
+        }
+
+        if (*(unsigned char*)(buffer + 0xD) == 0xFF)
+        {
+            // Error in parsing
+            break;
+        }
+    }
+
+    // Final results
+    *(int*)(buffer + 0x0) = var_10;
+    *(int*)(buffer + 0x4) = var_14;
+    *(int*)(buffer + 0x8) = var_18;
+    *(int*)(buffer + 0xC) = var_1C;
+
+    return result;
+}
+
 s32 fn_802340D8(s32 arg0) {
     extern void (*lbl_8033E170[])(s32);
     extern s32 __begin_critical_region(s32);
@@ -578,30 +828,19 @@ loop_2:
     return var_r3;
 }
 
-s32 fn_80234278(s32 arg0, s32 arg1, s32 arg2) {
-    s32 var_r6;
-    u8 temp_r0;
-    u8 temp_r5;
-    void *var_r3;
-    void *var_r4;
+s32 fn_80234278(register u8 *str1, register u8 *str2, register u32 n) {
+    register u32 c1;
+    register u32 c2;
 
-    var_r3 = (void *)(arg0 - 1);
-    var_r4 = (void *)(arg1 - 1);
-    var_r6 = arg2 + 1;
-loop_4:
-    var_r6 -= 1;
-    if (var_r6 == 0) {
-        return 0;
-    }
-    temp_r0 = *(u8*)var_r3;
-    var_r3 = (void*)((s32)var_r3 + 1);
-    temp_r5 = *(u8*)var_r4;
-    var_r4 = (void*)((s32)var_r4 + 1);
-    if (temp_r0 != temp_r5) {
-        return temp_r0 - temp_r5;
-    }
-    if (temp_r0 != 0) {
-        goto loop_4;
+    str1--;
+    str2--;
+    n++;
+    while (--n != 0) {
+        if ((c1 = *++str1) != (c2 = *++str2)) {
+            return c1 - c2;
+        } else if (c1 == 0) {
+            break;
+        }
     }
     return 0;
 }
@@ -809,6 +1048,161 @@ s32 fn_802355BC(char *str) {
     return value;
 }
 
+#pragma use_lmw_stmw on
+extern u8 lbl_8029E8A8[];
+extern u8 lbl_8029EAA8[];
+#pragma use_lmw_stmw on
+u32 fn_8023567C(s32 base, s32 max_width, s32 (*ReadProc)(void *, s32, s32), void *ReadProcArg,
+                s32 *chars_scanned, s32 *negative, s32 *overflow) {
+    u32 limit;
+    u32 value;
+    s32 spaces;
+    s32 state;
+    s32 *csp;
+    s32 *negp;
+    s32 *ovfp;
+    void *rpa;
+    s32 (*rp)(void *, s32, s32);
+    s32 mw;
+    s32 b;
+    s32 count;
+    s32 c;
+    s32 dig;
+    u8 cls;
+
+    b = base;
+    mw = max_width;
+    rp = ReadProc;
+    rpa = ReadProcArg;
+    csp = chars_scanned;
+    negp = negative;
+    ovfp = overflow;
+
+    *ovfp = 0;
+    *negp = 0;
+    state = 1;
+    count = 0;
+    spaces = 0;
+    value = 0;
+    limit = 0;
+    c = 0;
+
+    if (b >= 0 && b != 1 && b <= 36) {
+        if (mw >= 1) {
+            c = (*rp)(rpa, 0, 0);
+            count = 1;
+            if (b != 0) {
+                limit = 0xFFFFFFFFu / (u32)b;
+            }
+            goto check;
+        }
+    }
+    state = 0x40;
+    goto check;
+
+loop:
+    switch (state) {
+    case 1:
+        if ((lbl_8029E8A8[c & 0xFF] & 6) != 0) {
+            c = (*rp)(rpa, 0, 0);
+            spaces++;
+            break;
+        }
+        if (c == '+') {
+            count++;
+            c = (*rp)(rpa, 0, 0);
+        } else if (c == '-') {
+            count++;
+            c = (*rp)(rpa, 0, 0);
+            *negp = 1;
+        }
+        state = 2;
+        break;
+    case 2:
+        if (b == 0 || b == 16) {
+            if (c == '0') {
+                state = 4;
+                count++;
+                c = (*rp)(rpa, 0, 0);
+                break;
+            }
+        }
+        state = 8;
+        break;
+    case 4:
+        if (c == 'X' || c == 'x') {
+            b = 16;
+            state = 8;
+            count++;
+            c = (*rp)(rpa, 0, 0);
+            break;
+        }
+        if (b == 0) {
+            b = 8;
+        }
+        state = 0x10;
+        break;
+    case 8:
+        if (b == 0) {
+            b = 10;
+        }
+        if (limit == 0) {
+            limit = 0xFFFFFFFFu / (u32)b;
+        }
+        state = 0x10;
+        break;
+    case 0x10:
+        cls = lbl_8029E8A8[c & 0xFF];
+        if (cls & 0x10) {
+            dig = c - '0';
+            if (dig >= b) {
+                state = (state == 0x10) ? 0x20 : 0x40;
+                break;
+            }
+        } else if (cls & 0xC0) {
+            dig = (c == -1) ? -1 : (s32)lbl_8029EAA8[c & 0xFF];
+            dig -= 0x37;
+            if (dig >= b) {
+                state = (state == 0x10) ? 0x20 : 0x40;
+                break;
+            }
+        } else {
+            dig = (c == -1) ? -1 : (s32)lbl_8029EAA8[c & 0xFF];
+            dig -= 0x37;
+            /* fall through to accumulate — matches target */
+        }
+        if (value > limit) {
+            *ovfp = 1;
+        }
+        value *= b;
+        if ((u32)dig > 0xFFFFFFFFu - value) {
+            *ovfp = 1;
+        }
+        value += dig;
+        state = 0x10;
+        count++;
+        c = (*rp)(rpa, 0, 0);
+        break;
+    default:
+        break;
+    }
+
+check:
+    if (count <= mw && c != -1 && (state & 0x60) == 0) {
+        if (state <= 0x10) {
+            goto loop;
+        }
+    }
+
+    if ((state & 0x34) == 0) {
+        value = 0;
+        *csp = 0;
+    } else {
+        *csp = count + spaces - 1;
+    }
+    (*rp)(rpa, c, 1);
+    return value;
+}
 s32 fn_80235A7C(s32 arg0, s32 arg1, s32 *arg2, s32 arg3) {
     s32 fn_80203AAC();
     M2C_UNK fn_8022B530(s32, s32, s32 *, s32);
@@ -956,6 +1350,92 @@ f64 fn_802382EC(s32 *arg0, f64 farg0) {
     var_r5 = (var_r4 >> 0x14) + *arg0;
     *arg0 = var_r5 - 0x3FE;
     return (f64)var_r0;
+}
+
+extern f64 lbl_8036C150;
+extern f64 lbl_8036C158;
+extern f64 lbl_8036C160;
+extern f64 lbl_8036C168;
+extern f64 lbl_8036C170;
+f64 fn_80238378(s32 arg0, f64 farg0) {
+    f64 sp10;
+    f64 sp8;
+    s32 temp_r5;
+    s32 temp_r4;
+    s32 temp_r4_2;
+    s32 temp_r5_2;
+    s32 var_r0;
+    s32 var_r4;
+    u32 temp_r5_3;
+    f64 temp_f1;
+    f64 var_f1;
+
+    var_f1 = farg0;
+    sp10 = var_f1;
+    temp_r5 = *(s32*)(&sp10); // 0x10(r1) 
+    temp_r4 = temp_r5 & 0x7FF00000;
+    sp8 = var_f1; // 0x8(r1)
+
+    switch (temp_r4) {
+        case 0x7FF00000:
+            if ((temp_r5 & 0xFFFFF) || (*((u32*)0x8036A14C) != 0)) {
+                var_r0 = 1;
+            } else {
+                var_r0 = 2;
+            }
+            break;
+        case 0x0:
+            if ((temp_r5 & 0xFFFFF) || (*((u32*)0x8036A14C) != 0)) {
+                var_r0 = 5;
+            } else {
+                var_r0 = 3;
+            }
+            break;
+        default:
+            var_r0 = 4;
+            break;
+    }
+
+    if (var_r0 > 2) {
+        temp_f1 = lbl_8036C150;
+        if (temp_f1 == var_f1) {
+            return var_f1;
+        }
+        temp_r5_2 = *(u32*)(&sp8);
+        var_r4 = (temp_r5_2 >> 0x14U) & 0x7FF;
+        if (var_r4 == 0) {
+            if ((*((u32*)0x8036A120)) == 0) {
+                return var_f1;
+            }
+            temp_f1 = sp8 * lbl_8036C158;
+            sp8 = temp_f1;
+            var_r4 = (((*(u32*)(&sp8)) >> 0x14U) & 0x7FF) - 0x36;
+            if ((arg0 < 0xFFFF3CB0)) {
+                return lbl_8036C160 * temp_f1;
+            }
+        }
+        if (var_r4 == 0x7FF) {
+            return 2.0 * sp8;
+        }
+        temp_r4_2 = var_r4 + arg0;
+        if (temp_r4_2 > 0x7FE) {
+            return lbl_8036C168 * fn_802380A8(lbl_8036C168, sp8);
+        }
+        if (temp_r4_2 > 0) {
+            temp_r5_3 = ((*(u32*)(&sp8) & 0x800FFFFF) | (temp_r4_2 << 0x14));
+            return (f64)(temp_r5_3);
+        }
+        if (temp_r4_2 <= -0x36) {
+            if (arg0 > 0xC350) {
+                return lbl_8036C168 * fn_802380A8(lbl_8036C168, (f64)(sp8));
+            }
+            return lbl_8036C160 * fn_802380A8(lbl_8036C160, (f64)(sp8));
+        }
+        temp_r5_3 = ((*(u32*)(&sp8) & 0x800FFFFF) | ((temp_r4_2 + 0x36) << 0x14));
+        return lbl_8036C170 * (f64)(temp_r5_3);
+    }
+
+    return var_f1;
 }
 
 f64 fn_80238638(f64 farg0) {
