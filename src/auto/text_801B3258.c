@@ -3253,10 +3253,11 @@ void fn_801CE744(s32 arg0) {
     fn_8013FF00(arg0, fn_8013FF94(arg0, 2, 0));
 }
 
-void fn_801CEC28(s32 arg0) {
-    M2C_UNK fn_8013FF00(s32, s32);
-    s32 fn_8013FF94(M2C_UNK, M2C_UNK);
-    fn_8013FF00(arg0, fn_8013FF94(0, 0));
+void fn_801CEC28(void *arg0) {
+    void fn_8013FF00(void *, void *);
+    void *fn_8013FF94(void *, s32, s32);
+
+    fn_8013FF00(arg0, fn_8013FF94(arg0, 0, 0));
 }
 
 #pragma cplusplus on
