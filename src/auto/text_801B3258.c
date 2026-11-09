@@ -4712,16 +4712,16 @@ void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     fn_801DC588(w);
 }
 
-void fn_801DDDE8(s32 arg0) {
-    void *fn_8000CAA0(M2C_UNK *, M2C_UNK *);
-    extern M2C_UNK lbl_80299C74;
+void fn_801DDDE8(s32 arg0, s32 arg1) {
+    void *fn_8000CAA0(void *lbl, s32 arg);
+    extern u8 lbl_80299C74[];
     extern f32 lbl_8036B634;
     extern f64 lbl_8036B670;
     void *temp_r3;
 
-    temp_r3 = fn_8000CAA0(&lbl_80299C74, &lbl_80299C74);
-    M2C_FIELD(temp_r3, f32 *, 0x30) = lbl_8036B634;
-    *(f32*)((char*) temp_r3 + 0x34) = (f32) arg0;
+    temp_r3 = fn_8000CAA0(lbl_80299C74, arg1);
+    *(f32 *)((u8 *)temp_r3 + 0x30) = lbl_8036B634;
+    *(f32 *)((u8 *)temp_r3 + 0x34) = (f32)arg0;
 }
 
 void fn_801DDE44(void *arg0) {
