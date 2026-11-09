@@ -292,6 +292,13 @@ void *fn_8009FEF4(void) {
     return (void*)((u32)addr + 0x34B * 2);
 }
 
+s32 fn_8009FF04(void) {
+    void fn_8000CAA0(void *);
+    extern u8 lbl_8028A2B0[];
+    fn_8000CAA0(lbl_8028A2B0);
+    return 0;
+}
+
 void *fn_8009FF30(void) {
     extern u16 lbl_8026D8D8;
     return &((u16 *)&lbl_8026D8D8)[0x354];
