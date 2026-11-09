@@ -718,38 +718,27 @@ void *fn_801314DC(void *unused, s32 arg1) {
     }
 }
 
-void fn_80131524(s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5)
-{
-  s32 *new_var;
-  s32 *new_var2;
-  switch (arg1)
-  {
+void fn_80131524(s32 unused, s32 kind, s32 *a, s32 *b, s32 *c, s32 *d) {
+    switch (kind) {
     case 0:
-      *arg2 = 0;
-      *arg3 = 0;
-      *arg4 = 0x30;
-      *arg5 = 0x14;
-      return;
-
-    new_var2 = arg2;
+        *a = 0;
+        *b = 0;
+        *c = 0x30;
+        *d = 0x14;
+        break;
     case 1:
-      new_var = new_var2;
-      *new_var = 0;
-      arg2 += 0;
-      *arg3 = 0x1CC;
-      *arg4 = (float) 0x30;
-      *arg5 = 0x1E0;
-      return;
-
+        *a = 0;
+        *b = 0x1CC;
+        *c = 0x30;
+        *d = 0x1E0;
+        break;
     case 2:
-      *arg2 = 0;
-      *arg3 = 0x1E0;
-      *arg4 = 0x30;
-      *arg5 = 0x1F4;
-      return;
-
-  }
-
+        *a = 0;
+        *b = 0x1E0;
+        *c = 0x30;
+        *d = 0x1F4;
+        break;
+    }
 }
 
 void fn_801315B0(void* arg0, s32 arg1) {
