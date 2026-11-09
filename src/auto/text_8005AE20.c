@@ -614,6 +614,10 @@ void fn_8005C890(void) {
     fn_8005D330(0xC);
 }
 
+void fn_8005C8B4(void) {
+    fn_8005D330(0);
+}
+
 void fn_8005CBC8(void) {
     extern u8 lbl_803672E9;
     if (lbl_803672E9 != 0) {
@@ -2121,8 +2125,16 @@ void fn_8006C9E8(void *arg0) {
     }
 }
 
+void fn_8006CA68(void) {
+    fn_8006C2A4(2);
+}
+
 void fn_8006CA8C(void) {
     fn_8006C2A4(0x1);
+}
+
+void fn_8006CAB0(void) {
+    fn_8006C2A4(0);
 }
 
 int fn_8006CAD4(void *arg0, int arg1, int arg2) {
@@ -3174,3 +3186,9 @@ extern char lbl_8026B990[];
 extern f32 lbl_803691E0;
 extern f32 lbl_80369200;
 extern f32 lbl_80369208;
+#include "common.h"
+#include "structs.h"
+
+extern f32 lbl_80369218;
+extern f32 lbl_8036921C;
+extern u8 lbl_8026B6E8[];
