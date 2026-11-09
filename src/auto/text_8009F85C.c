@@ -304,6 +304,13 @@ void *fn_8009FF30(void) {
     return &((u16 *)&lbl_8026D8D8)[0x354];
 }
 
+s32 fn_8009FF40(void) {
+    void fn_8000CAA0(void *);
+    extern u8 lbl_8028A298[];
+    fn_8000CAA0(lbl_8028A298);
+    return 0;
+}
+
 void *fn_8009FF6C(void) {
     extern void *lbl_8026D8D8;
     return (char*)&lbl_8026D8D8 + 0x365;
