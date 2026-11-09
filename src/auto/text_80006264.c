@@ -1019,8 +1019,8 @@ f32 fn_80009C00(void) {
 }
 
 void fn_80009C0C(f32 farg0) {
-    f32 *ptr = (f32 *)lbl_80367140;
-    *ptr = *ptr + farg0;
+    extern u16 lbl_80367140;
+    *(f32 *)(*(u8 **)&lbl_80367140 + 0x28) += farg0;
 }
 
 void fn_80009D74(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
