@@ -22,7 +22,7 @@ s32 fn_800733F4(void) {
 
 void *fn_800733FC(void) {
     extern u16 lbl_8026BE40[];
-    return &lbl_8026BE40[0x3C0];
+    return (u8 *)lbl_8026BE40 + 0x1E0;
 }
 
 s32 fn_8007340C(s32 arg0, s32 arg1) {
