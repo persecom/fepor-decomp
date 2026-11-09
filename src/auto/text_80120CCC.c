@@ -627,6 +627,17 @@ void fn_80123CFC(void) {
     fn_801246FC();
 }
 
+void fn_801255D4(void *arg0) {
+    void fn_8006D8E8(s32);
+    void fn_801479C4(u8 *, s32);
+    extern u8 lbl_80274F74[];
+
+    if (*(u8 *)((u8 *)arg0 + 0x4C) == 0) {
+        fn_801479C4(lbl_80274F74 + 0xBB, 0xFA);
+    }
+    fn_8006D8E8(*(s32 *)((u8 *)arg0 + 0x6C));
+}
+
 void fn_80125624(void *arg0) {
     typedef struct {
         f32 x, y, z;
@@ -752,33 +763,39 @@ void fn_801258E4(void* arg0, void* arg1, void* arg2) {
 }
 
 void fn_80125AE0(void *arg0) {
-    void *fn_80040844(f64, f32, f32);
-    M2C_UNK fn_80059F64(f32, f32, f32, f32);
-    f64 fn_80238638();
+    u8 fn_800AA188(void);
+    void fn_80059F64(f32, f32, f32, f32);
+    f64 fn_80238638(void);
+    void *fn_80040844(void);
     extern f32 lbl_8036A30C;
     extern f32 lbl_8036A398;
     extern f32 lbl_8036A39C;
     extern f64 lbl_8036A3A0;
     extern f64 lbl_8036A3A8;
-    f32 temp_f1;
-    f32 temp_f2;
     f32 temp_f31;
-    f32 temp_f3;
-    f64 temp_f1_2;
+    f32 a;
+    f32 b;
+    f32 limit;
+    f32 x;
+    f64 t;
 
     if (fn_800AA188() != 0) {
-        M2C_FIELD(arg0, f32 *, 0x4C) = (f32) (M2C_FIELD(arg0, f32 *, 0x4C) + M2C_FIELD(arg0, f32 *, 0x34));
-        temp_f1 = M2C_FIELD(arg0, f32 *, 0x4C);
-        M2C_ERROR(/* unknown instruction: cror eq, gt, eq */);
-        if (temp_f1 == lbl_8036A398) {
-            M2C_FIELD(arg0, f32 *, 0x4C) = (f32) (temp_f1 - lbl_8036A398);
+        limit = lbl_8036A398;
+        a = *(f32 *)((char *)arg0 + 0x4C);
+        b = *(f32 *)((char *)arg0 + 0x34);
+        *(f32 *)((char *)arg0 + 0x4C) = a + b;
+        a = *(f32 *)((char *)arg0 + 0x4C);
+        if (a >= limit) {
+            *(f32 *)((char *)arg0 + 0x4C) = a - limit;
         }
-        fn_80059F64(lbl_8036A30C, lbl_8036A39C, lbl_8036A398, M2C_FIELD(arg0, f32 *, 0x4C));
-        temp_f3 = (f32) fn_80238638();
-        temp_f2 = M2C_FIELD(arg0, f32 *, 0x30);
-        temp_f1_2 = (f64) temp_f2 * (lbl_8036A3A0 + (f64) temp_f3);
-        temp_f31 = (f32) (temp_f1_2 * lbl_8036A3A8);
-        M2C_FIELD(M2C_FIELD(fn_80040844(temp_f1_2, temp_f2, temp_f3), void **, 0x30), f32 *, 0x48) = temp_f31;
+        fn_80059F64(lbl_8036A30C, lbl_8036A39C, lbl_8036A398,
+                    *(f32 *)((char *)arg0 + 0x4C));
+        x = (f32)fn_80238638();
+        t = lbl_8036A3A0 + x;
+        t = *(f32 *)((char *)arg0 + 0x30) * t;
+        temp_f31 = (f32)(t * lbl_8036A3A8);
+        *(f32 *)((char *)(*(void **)((char *)fn_80040844() + 0x30)) + 0x48) =
+            temp_f31;
     }
 }
 
