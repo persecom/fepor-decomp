@@ -282,9 +282,11 @@ void fn_8009E774(void) {
 }
 
 void fn_8009E7A0(void) {
-    s32 OSGetTick(M2C_UNK *);
-    extern M2C_UNK lbl_80312100;
-    M2C_FIELD(&lbl_80312100, s32 *, 8) = (s32) (OSGetTick(&lbl_80312100) - M2C_FIELD(&lbl_80312100, s32 *, 8));
+    u32 OSGetTick(void);
+    extern u8 lbl_80312100[];
+    u8 *p = lbl_80312100;
+
+    *(u32 *)(p + 8) = OSGetTick() - *(u32 *)(p + 8);
 }
 
 void fn_8009E7DC(void) {
