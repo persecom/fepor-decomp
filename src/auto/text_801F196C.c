@@ -1615,11 +1615,11 @@ s32 fn_801FBC30(s32 arg0) {
 }
 
 void fn_801FBC48(void) {
-    extern u16 lbl_80368410;
-    u16* ptr = (u16*)&lbl_80368410;
-    if (*ptr == 0) {
-        *ptr = 0;
-        *(ptr + 2) = 0;
+    extern u32 lbl_80368410[2];
+    u32 *p = lbl_80368410;
+    if (p[0] == 0) {
+        p[0] = 0;
+        p[1] = 0;
         fn_801FBC84();
     }
 }
