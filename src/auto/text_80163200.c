@@ -151,6 +151,10 @@ void fn_80164940(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
     fn_8008AB7C(arg1 + (arg3 >> 1), arg2 + (arg4 >> 1), arg3, 0x18, 0x19, 0x4C, arg5);
 }
 
+void fn_80164994(s16 arg1, s16 arg2, s32 arg4, s32 arg5) {
+    fn_8008D510(arg4, arg5, arg1, arg2);
+}
+
 s32 fn_801649C8(void *arg0, s32 *arg1) {
     u8 (*temp_r12)(s32 *, s32);
 
@@ -1259,6 +1263,21 @@ void fn_8016ADAC(void) {
 void *fn_8016ADD8(void) {
     extern u16 lbl_80277BC0[];
     return (u8 *)lbl_80277BC0 + 0x1ed;
+}
+
+s32 fn_8016ADE8(s32 arg0, s32 arg1, void *arg2) {
+    void *fn_8000C0C0(void *);
+    void fn_8000C070(void *, s32);
+    extern u8 lbl_80293D8C[];
+    void *temp;
+
+    if (*(u8 *)((u8 *)arg2 + 0x39) == 2) {
+        return 0;
+    }
+    temp = fn_8000C0C0(lbl_80293D8C);
+    *(s32 *)((u8 *)temp + 0x50) = arg1;
+    fn_8000C070(temp, 0xD);
+    return 4;
 }
 
 void *fn_8016AE6C(void) {
