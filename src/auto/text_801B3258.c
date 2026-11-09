@@ -1675,6 +1675,11 @@ void fn_801C9D58(void) {
     fn_801C9EE0(lbl_803682B8, temp_r3);
 }
 
+void fn_801CA1B8(void) {
+    fn_801C9EE0(0);
+    return;
+}
+
 void fn_801CA1DC(void *arg0, s32 arg1) {
     M2C_UNK fn_800C9A60(M2C_UNK *, M2C_UNK);
     M2C_UNK fn_8011CAAC(s32, M2C_UNK *, s32);
@@ -2341,6 +2346,20 @@ void fn_801D0460(void *arg0, s32 arg1) {
     }
 }
 
+#pragma cplusplus on
+extern "C" void fn_801D1C80(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+    };
+    ((Obj *)arg0)->v6();
+}
+#pragma cplusplus reset
 s32 fn_801D28A8(s32 arg0, s32 arg1)
 {
     if (arg0 < 0) {
@@ -4028,6 +4047,12 @@ void fn_801DE3D8(void *arg0) {
  if((s16)*(f32*)((char*)arg0+0x44)!=0) return;
  if((flags&0x04000004) && *(u8*)((char*)arg0+0x84)) { *(f32*)((char*)arg0+0x44)=lbl_8036B6B8; return; }
  if((flags&0x08000008) && *(u8*)((char*)arg0+0x5C)) *(f32*)((char*)arg0+0x44)=lbl_8036B6BC;
+}
+
+void fn_801DF468(void **arg0) {
+    void (**func)(void) = (void (**)(void))(*arg0);
+    func[4]();
+    fn_80151EDC(0, 0, 0x10);
 }
 
 void fn_801DF4A4(void *arg0, s32 arg1) {
