@@ -4169,8 +4169,7 @@ void fn_800E7970(void *arg0) {
     for (i = 0; i < *(s32 *)((char *)arg0 + 4); i++) {
         temp_r12 = *(void***)((char*)arg0 + 0x10);
         temp_r12 = *(void***)((char*)temp_r12 + 0x18);
-        ((void(*)(void*, s32))temp_r12)(arg0, i);
-        fn_800DF5E0();
+        fn_800DF5E0(((void *(*)(void *, s32))temp_r12)(arg0, i));
     }
 }
 
