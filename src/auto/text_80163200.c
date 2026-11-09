@@ -3943,7 +3943,7 @@ void fn_8017F8EC(void *arg0) {
 
 void fn_8017F9A8(void) {
     extern u16 lbl_802788B8[];
-    fn_8005C8B4(&lbl_802788B8[0x244]);
+    fn_8005C8B4((u8 *)lbl_802788B8 + 0x122);
 }
 
 void *fn_8017FB80(u32 arg0) {
