@@ -1171,10 +1171,11 @@ void fn_801F894C(s32 arg0) {
 }
 
 void fn_801F897C(void) {
-    extern u16 lbl_80330708[];
-    u8* ptr = (u8 *)lbl_80330708;
-    
-    fn_8014D2B0(ptr + 0x24D, 0x1F);
+    void fn_8014D2B0(void *, s32);
+    void fn_8002D548(void);
+    extern u8 lbl_80330708[];
+
+    fn_8014D2B0(lbl_80330708, 0x1F);
     fn_8002D548();
 }
 
