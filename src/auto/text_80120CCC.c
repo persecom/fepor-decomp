@@ -1090,12 +1090,14 @@ void fn_80126944(void) {
 }
 
 extern u16 lbl_80290564[];
-s32 fn_80126A60(void) {
-    s32 fn_800C0658();
-    void fn_8000CAA0(u16*, s32, u16*);
-    void fn_80013864();
-    
-    fn_8000CAA0(lbl_80290564, fn_800C0658(), lbl_80290564);
+s32 fn_80126A60(void)
+{
+    s32 fn_800C0658(void);
+    void fn_8000CAA0(u16 *, s32);
+    void fn_80013864(void);
+    extern u16 lbl_80290564[];
+
+    fn_8000CAA0(lbl_80290564, fn_800C0658());
     fn_80013864();
     return 1;
 }
