@@ -803,39 +803,31 @@ void fn_801F661C(s32 arg0) {
 extern s32 lbl_80368400;
 extern u8 lbl_80368404;
 void fn_801F66D4(void *arg0) {
-    s32 temp_r5;
-    void *temp_r6;
-    s32 temp_r0;
-    s32 temp_r5_2;
+    void fn_8000C188(void *);
+    s32 held;
+    s32 pressed;
+    void *obj;
+    s32 state;
 
-    temp_r5 = *(s32*)((char*)lbl_80367240 + 4);
-    temp_r6 = (void*)((char*)arg0 + 0x30);
-    temp_r5_2 = temp_r5 & (*(s32*)((char*)lbl_80367240 + 8) ^ temp_r5);
-    
-    if ((u8)*(char*)&lbl_80368404 == 0) {
+    held = M2C_FIELD(lbl_80367240, s32 *, 4);
+    pressed = held & (M2C_FIELD(lbl_80367240, s32 *, 8) ^ held);
+    obj = M2C_FIELD(arg0, void **, 0x30);
+    if ((s8)lbl_80368404 == 0) {
         lbl_80368400 = 0;
         lbl_80368404 = 1;
     }
-    
-    temp_r0 = *(s32*)temp_r6;
-    switch (temp_r0) {
+    state = M2C_FIELD(obj, s32 *, 0);
+    switch (state) {
     case 0:
-        *(s32*)temp_r6 = 1;
-        *(s32*)((char*)temp_r6 + 4) = 0;
+        M2C_FIELD(obj, s32 *, 0) = 1;
+        M2C_FIELD(obj, s32 *, 4) = 0;
         lbl_80368400 = 0;
-        return;
+        break;
     case 1:
-        if ((temp_r5_2 & 0x100) || (temp_r5_2 & 0x200)) {
-            fn_8000C188();
+        if ((pressed & 0x100) || (pressed & 0x200)) {
+            fn_8000C188(arg0);
         }
-        return;
-    default:
-        if ((temp_r5_2 & 0x80000) == 0) {
-            if ((temp_r5_2 & 0x40000) != 0) {
-                fn_8000C188();
-            }
-        }
-        return;
+        break;
     }
 }
 
