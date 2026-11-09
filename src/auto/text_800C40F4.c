@@ -4250,9 +4250,8 @@ loop_4:
 #pragma dont_inline reset
 #pragma cplusplus reset
 
-void fn_800E788C(s32 arg1) {
-    s32 temp = arg1 + 0x30;
-    fn_800C9B6C(temp);
+void fn_800E788C(s32 arg0, s32 arg1) {
+    fn_800C9B6C(arg0, arg1 + 0x30);
 }
 
 void fn_800E78B0(void *arg0, String *arg1) {
