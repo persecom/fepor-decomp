@@ -759,6 +759,19 @@ void fn_801F64C8(void) {
     fn_80109020((u8 *)lbl_80280CF0 + 0x20);
 }
 
+void fn_801F64F4(s32 arg0) {
+    void fn_8000C188(s32);
+    void fn_801480D8(s32);
+    extern void *lbl_80367240;
+    s32 temp_r5;
+
+    temp_r5 = M2C_FIELD(lbl_80367240, s32 *, 4);
+    if (temp_r5 & (M2C_FIELD(lbl_80367240, s32 *, 8) ^ temp_r5) & 0x300) {
+        fn_8000C188(arg0);
+        fn_801480D8(0x1388);
+    }
+}
+
 void fn_801F6538(void) {
     extern u16 lbl_80280CF0[];
     fn_80147188(0xFA);
