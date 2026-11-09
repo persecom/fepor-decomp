@@ -1480,7 +1480,7 @@ void fn_801FB548(void *arg0) {
 }
 
 u32 fn_801FB9CC(void *arg0, u16 arg1) {
-    return (u32) (M2C_FIELD(arg0, u16 *, 0x120) - arg1) >> 0x1FU;
+    return *(u16 *)((u8 *)arg0 + 0x120) < arg1;
 }
 
 s32 fn_801FB9E0(u8 *arg0) {
