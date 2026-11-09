@@ -4649,16 +4649,18 @@ loop_18:
     M2C_FIELD(arg0, s16 *, 0x4C) = var_r3;
 }
 
-void fn_8017FE84(s32 arg0) {
-    M2C_UNK fn_8000C070(s32, M2C_UNK);
-    fn_8013FF94(0x81, 0);
+void fn_8017FE84(void *arg0) {
+    void fn_8013FF94(void *, s32, s32);
+    void fn_8000C070(void *, s32);
+
+    fn_8013FF94(arg0, 0x81, 0);
     fn_8013FF94(arg0, 0x82, 0);
-    switch ((s32) M2C_FIELD(&lbl_802EF4C8, u8 *, 8)) { /* irregular */
+    switch ((s32)((u8 *)lbl_802EF4C8)[8]) {
     case 0x80:
         fn_8000C070(arg0, 5);
-        /* fallthrough */
+        break;
     case 0x81:
-        return;
+        break;
     }
 }
 
