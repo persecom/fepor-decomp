@@ -1961,6 +1961,22 @@ void fn_801903D8(void *arg0, s32 arg1) {
     M2C_FIELD(M2C_FIELD(arg0, void **, 0), M2C_UNK (**)(void *, s32), 0x30)(arg0, arg1);
 }
 
+#pragma cplusplus on
+extern "C" void fn_80190590(void *arg0) {
+    void fn_80159898(s32, s32, s16, s16, s32, s32);
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    ((Obj *)arg0)->v2();
+    fn_80159898(0, 0,
+        (s16)(*(s16 *)((u8 *)arg0 + 0xE) - *(s16 *)((u8 *)arg0 + 0xA)),
+        (s16)(*(s16 *)((u8 *)arg0 + 0x10) - *(s16 *)((u8 *)arg0 + 0xC)),
+        0xB3, 0x10);
+}
+#pragma cplusplus reset
+
 void *fn_80190818(void *arg0, s16 arg1) {
     extern void *lbl_80296228;
     extern void *lbl_80292230;
@@ -3306,8 +3322,10 @@ void fn_8019AB90(void *arg0) {
 }
 
 void fn_8019ABBC(void *arg0) {
-    M2C_UNK fn_8000C188();
-    if ((s16) M2C_FIELD(arg0, s16 *, 0x68) >= (s32) (M2C_FIELD(arg0, s16 *, 0x6A) - 4)) {
+    s16 r4_val = *(s16 *)((char *)arg0 + 0x6A);
+    s16 r5_val = *(s16 *)((char *)arg0 + 0x68);
+    
+    if (r5_val >= (r4_val - 4)) {
         fn_8000C188();
     }
 }
