@@ -464,6 +464,20 @@ s32 fn_801518D0(void *arg0, s32 arg1) {
     return 0;
 }
 
+s32 fn_80151948(void *arg0, s32 arg1) {
+    void *fn_800536FC(u16);
+    s32 fn_8005F894(void *, s32);
+
+    *(void **)((u8 *)arg0 + 0xB0) = fn_800536FC((u16)*(u32 *)((u8 *)arg0 + 0xAC));
+    if (*(void **)((u8 *)arg0 + 0xB0) != NULL) {
+        if (*(void **)((u8 *)*(void **)((u8 *)*(void **)((u8 *)arg0 + 0xB0) + 0x30) + 0x5C) != NULL) {
+            return fn_8005F894(*(void **)((u8 *)*(void **)((u8 *)*(void **)((u8 *)arg0 + 0xB0) + 0x30) + 0x5C), arg1);
+        }
+        return -1;
+    }
+    return -1;
+}
+
 s32 fn_801519C0(void *arg0) {
     void **r4;
 
