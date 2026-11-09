@@ -1175,7 +1175,7 @@ void *fn_80132414(s32 arg0, s32 arg1) {
     }
 }
 
-void fn_801324A0(s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5)
+void fn_801324A0(s32 unused, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5)
 {
   switch (arg1)
   {
@@ -1191,8 +1191,8 @@ void fn_801324A0(s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5)
       *arg3 = 0x14;
       *arg4 = 0x30;
       *arg5 = 0x28;
+      return;
 
-    return;
     case 2:
       *arg2 = 0;
       *arg3 = 0x28;
@@ -1201,9 +1201,9 @@ void fn_801324A0(s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5)
       return;
 
     case 3:
+      *arg2 = 0;
       *arg3 = 0x3C;
       *arg4 = 0x30;
-      *arg2 = 0;
       *arg5 = 0x50;
       return;
 
@@ -1220,9 +1220,7 @@ void fn_801324A0(s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5)
       *arg4 = 0x30;
       *arg5 = 0x78;
       return;
-
   }
-
 }
 
 void *fn_801325A8(void **arg1, s32 arg2) {
