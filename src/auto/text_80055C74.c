@@ -885,9 +885,12 @@ void fn_80058A0C(void* arg0, s32 arg1, s32 arg2, s32 arg3) {
 }
 
 void fn_8005902C(s32 arg0, s16 arg1) {
-    void *fn_8000CAA0(void *, s32, void *);
-    extern void lbl_80285B34;
-    *(s16*)((char*)fn_8000CAA0(&lbl_80285B34, arg0, &lbl_80285B34) + 0x32) = arg1;
+    void *fn_8000CAA0(void *, s32);
+    extern u8 lbl_80285B34[];
+    void *temp;
+
+    temp = fn_8000CAA0(lbl_80285B34, arg0);
+    *(s16 *)((u8 *)temp + 0x32) = arg1;
 }
 
 void fn_8005906C(void *arg0) {
