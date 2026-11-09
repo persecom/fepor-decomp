@@ -769,13 +769,13 @@ s32 fn_8024B518(s32 arg0, s32 arg1, s32 arg2, s32 arg3, M2C_UNK arg_sp0) {
     s32 fn_8025F534(s32, s32, u8, s32);
     s32 fn_802636F4(void);
     s32 var_r31;
-    u8 temp_r3;
+    s32 temp_r3;
 
     var_r31 = 0;
     fn_8026372C();
     temp_r3 = fn_80243F50(arg0);
-    if ((u32) ((temp_r3 + 0x10000)) != -1U) {
-        fn_8025F534(arg2, arg1, temp_r3, arg3);
+    if ((u32) (temp_r3 + 0x10000) != 0xFFFFU) {
+        fn_8025F534(arg2, arg1, (u8) temp_r3, arg3);
         var_r31 = 1;
     }
     fn_802636F4();
