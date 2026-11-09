@@ -1152,6 +1152,23 @@ block_12:
     return var_r31;
 }
 
+void *__OSSetInterruptHandler(s32 arg0, void *arg1) {
+    extern void *InterruptHandlerTable_803684C8;
+    void **table;
+    void **entry;
+    void *oldHandler;
+    s32 index;
+
+    index = (s16)arg0;
+    table = (void **)InterruptHandlerTable_803684C8;
+    entry = table + index;
+
+    oldHandler = *entry;
+    *entry = arg1;
+
+    return oldHandler;
+}
+
 extern u16 InterruptHandlerTable_803684C8[32];
 s32 fn_80207BAC(s16 arg0) {
     return InterruptHandlerTable_803684C8[arg0];
