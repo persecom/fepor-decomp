@@ -354,6 +354,172 @@ void fn_80212F4C(s32 chan, PADStatus *status, u32 *data) {
     status->substickY -= 128;
 }
 
+static void ClampS8(s8* p, s8 o) {
+    if (0 < o) {
+        if (*p < (s8)(o - 128)) {
+            *p = (s8)(o - 128);
+        }
+    } else if (o < 0) {
+        if ((s8)(o + 127) < *p) {
+            *p = (s8)(o + 127);
+        }
+    }
+    *p -= o;
+}
+
+static void ClampU8(u8* p, u8 o) {
+    if (*p < o) {
+        *p = o;
+    }
+    *p -= o;
+}
+
+void fn_802130C0(s32 chan, PADStatus* status, u32* data) {
+    extern u32 lbl_80366FAC;
+    extern u32 lbl_8033A1B0[];
+    extern u32 lbl_80368684;
+    extern u8 lbl_8033A1C0[];
+    u8* origin;
+    s8 o;
+    s8 s;
+    u8 to;
+    u8 t;
+
+    status->button = (u16)((data[0] >> 16) & 0x3fff);
+    status->stickX = (s8)(data[0] >> 8);
+    status->stickY = (s8)(data[0] >> 0);
+
+    switch (lbl_80366FAC & 0x700) {
+    case 0x000:
+    case 0x500:
+    case 0x600:
+    case 0x700:
+        status->substickX = (s8)(data[1] >> 24);
+        status->substickY = (s8)(data[1] >> 16);
+        status->triggerLeft = (u8)((data[1] >> 8) & 0xf0);
+        status->triggerRight = (u8)((data[1] >> 4) & 0xf0);
+        status->analogA = (u8)(data[1] & 0xf0);
+        status->analogB = (u8)((data[1] << 4) & 0xf0);
+        break;
+    case 0x100:
+        status->substickX = (s8)(s32)((data[1] >> 24) & 0xf0);
+        status->substickY = (s8)(s32)((data[1] >> 20) & 0xf0);
+        status->triggerLeft = (u8)(data[1] >> 16);
+        status->triggerRight = (u8)(data[1] >> 8);
+        status->analogA = (u8)(data[1] & 0xf0);
+        status->analogB = (u8)((data[1] << 4) & 0xf0);
+        break;
+    case 0x200:
+        status->substickX = (s8)(s32)((data[1] >> 24) & 0xf0);
+        status->substickY = (s8)(s32)((data[1] >> 20) & 0xf0);
+        status->triggerLeft = (u8)((data[1] >> 16) & 0xf0);
+        status->triggerRight = (u8)((data[1] >> 12) & 0xf0);
+        status->analogA = (u8)(data[1] >> 8);
+        status->analogB = (u8)(data[1] >> 0);
+        break;
+    case 0x300:
+        status->substickX = (s8)(data[1] >> 24);
+        status->substickY = (s8)(data[1] >> 16);
+        status->triggerLeft = (u8)(data[1] >> 8);
+        status->triggerRight = (u8)(data[1] >> 0);
+        status->analogA = 0;
+        status->analogB = 0;
+        break;
+    case 0x400:
+        status->substickX = (s8)(data[1] >> 24);
+        status->substickY = (s8)(data[1] >> 16);
+        status->triggerLeft = 0;
+        status->triggerRight = 0;
+        status->analogA = (u8)(data[1] >> 8);
+        status->analogB = (u8)(data[1] >> 0);
+        break;
+    }
+
+    status->stickX -= 128;
+    status->stickY -= 128;
+    status->substickX -= 128;
+    status->substickY -= 128;
+
+    if (((lbl_8033A1B0[chan] & 0xffff0000) == 0x09000000) &&
+        ((status->button & 0x0080) ^ 0x0080)) {
+        lbl_80368684 |= 0x80000000U >> chan;
+        status->stickX = 0;
+        status->stickY = 0;
+        status->substickX = 0;
+        status->substickY = 0;
+        return;
+    }
+
+    lbl_80368684 &= ~(0x80000000U >> chan);
+
+    s = status->stickX;
+    origin = &lbl_8033A1C0[chan * 12];
+    o = origin[2];
+    if (0 < (s8)o) {
+        if ((s8)s < (s8)((s8)o - 128)) {
+            s = (s8)((s8)o - 128);
+        }
+    } else if ((s8)o < 0) {
+        if ((s8)((s8)o + 127) < (s8)s) {
+            s = (s8)((s8)o + 127);
+        }
+    }
+    status->stickX = (s8)((s8)s - (s8)o);
+
+    o = origin[3];
+    s = status->stickY;
+    if (0 < (s8)o) {
+        if ((s8)s < (s8)((s8)o - 128)) {
+            s = (s8)((s8)o - 128);
+        }
+    } else if ((s8)o < 0) {
+        if ((s8)((s8)o + 127) < (s8)s) {
+            s = (s8)((s8)o + 127);
+        }
+    }
+    status->stickY = (s8)((s8)s - (s8)o);
+
+    o = origin[4];
+    s = status->substickX;
+    if (0 < (s8)o) {
+        if ((s8)s < (s8)((s8)o - 128)) {
+            s = (s8)((s8)o - 128);
+        }
+    } else if ((s8)o < 0) {
+        if ((s8)((s8)o + 127) < (s8)s) {
+            s = (s8)((s8)o + 127);
+        }
+    }
+    status->substickX = (s8)((s8)s - (s8)o);
+
+    o = origin[5];
+    s = status->substickY;
+    if (0 < (s8)o) {
+        if ((s8)s < (s8)((s8)o - 128)) {
+            s = (s8)((s8)o - 128);
+        }
+    } else if ((s8)o < 0) {
+        if ((s8)((s8)o + 127) < (s8)s) {
+            s = (s8)((s8)o + 127);
+        }
+    }
+    status->substickY = (s8)((s8)s - (s8)o);
+
+    to = origin[6];
+    t = status->triggerLeft;
+    if (t < to) {
+        t = to;
+    }
+    status->triggerLeft = t - to;
+
+    to = origin[7];
+    t = status->triggerRight;
+    if (t < to) {
+        t = to;
+    }
+    status->triggerRight = t - to;
+}
+
 s32 fn_80213530(s32 arg0) {
     s32 fn_8021275C(M2C_UNK);
     M2C_UNK fn_8021364C(M2C_UNK);
