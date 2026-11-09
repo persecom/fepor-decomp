@@ -1743,10 +1743,12 @@ void fn_8003DCDC(void *arg0, void *arg1, s32 arg2, s8 *arg3, s8 *arg4) {
 
 s32 fn_8003DD20(s32 arg0, s32 arg1) {
     s8 fn_8003A1E0(s32);
-    s8 temp_r31;
+    s32 temp_r31;
+    s32 temp_r4;
 
-    temp_r31 = fn_8003A1E0(arg1);
-    return temp_r31 <= (fn_8003A1E0(arg0) + 2);
+    temp_r31 = (s8)fn_8003A1E0(arg1);
+    temp_r4 = (s8)fn_8003A1E0(arg0);
+    return temp_r31 <= (temp_r4 + 2);
 }
 
 s32 fn_8003DD7C(s32 arg0, s32 arg1) {
