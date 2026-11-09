@@ -589,12 +589,14 @@ void fn_801ED9DC(void *arg0) {
     }
 }
 
-void fn_801EDA88(s32 arg0) {
-    void *fn_8000CAA0(void *, void *);
-    
-    void *temp_r3 = fn_8000CAA0(0, 0);
-    *(s32 *)(((u8 *) temp_r3) + 0x30) = arg0;
-    *(u8 *)(((u8 *) temp_r3) + 0x38) = 0;
+void fn_801EDA88(s32 arg0, s32 arg1) {
+    void *fn_8000CAA0(void *, s32);
+    extern u8 lbl_8029A5FC[];
+    void *temp_r3;
+
+    temp_r3 = fn_8000CAA0(lbl_8029A5FC, arg1);
+    *(s32 *)((u8 *)temp_r3 + 0x30) = arg0;
+    *(u8 *)((u8 *)temp_r3 + 0x38) = 0;
 }
 
 void fn_801EDAC8(void *arg0) {
