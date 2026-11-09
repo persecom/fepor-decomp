@@ -402,6 +402,12 @@ s16 fn_8014B24C(void) {
     return *(u16*)((char*)g_AccessoryArray + 0x10);
 }
 
+void fn_8014B258(u16 arg0, u16 arg1) {
+    extern u8 *lbl_80367B14;
+
+    *(u16 *)(lbl_80367B14 + 0x10) = arg1;
+}
+
 s32 fn_8014B264(void) {
     return 0xFF;
 }
