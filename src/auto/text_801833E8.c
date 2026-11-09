@@ -5193,24 +5193,25 @@ s32 fn_801A1934(void *arg0) {
 }
 
 s32 fn_801A1960(s32 arg0) {
-    u32 fn_8000C0C0(u16 *, u16 *);
-    u32 fn_8000CAF0(u16 *, u32, u16 *);
-    u32 fn_80105F0C(s32, u32, u16);
-    u32 fn_80127C48();
-    extern u16 lbl_80296FA8[18];
-    u32 temp_r3;
+    void *fn_8000C0C0(void *);
+    void *fn_8000CAF0(void *, s32);
+    void fn_80105F0C(s32, void *, s32);
+    u32 fn_80127C48(void);
+    s32 fn_800C0658(void);
+    extern u8 lbl_80296FA8[];
+    void *var_r4;
     u32 var_r3;
-    u32 var_r4;
+    void *temp;
 
-    temp_r3 = fn_8000C0C0(lbl_80296FA8, lbl_80296FA8);
-    if (temp_r3 != 0U) {
-        var_r4 = temp_r3;
+    temp = fn_8000C0C0(lbl_80296FA8);
+    if (temp != NULL) {
+        var_r4 = temp;
     } else {
         var_r3 = fn_80127C48();
         if (var_r3 == 0U) {
             var_r3 = fn_800C0658();
         }
-        var_r4 = fn_8000CAF0(lbl_80296FA8, var_r3, lbl_80296FA8);
+        var_r4 = fn_8000CAF0(lbl_80296FA8, var_r3);
     }
     fn_80105F0C(arg0, var_r4, 0);
     return 1;
