@@ -200,23 +200,35 @@ void fn_801AE878(void *arg0) {
     fn_8000C070(arg0, M2C_FIELD(arg0, u8 *, 0x68));
 }
 
-void fn_801AE908(void *arg0) {
+#pragma cplusplus on
+extern "C" void fn_801AE908(void *arg0) {
+    struct VObj {
+        virtual void v0();
+        virtual void v1();
+        virtual void v2();
+        virtual void v3();
+        virtual void v4();
+        virtual void v5();
+        virtual void v6();
+        virtual void v7();
+        virtual void v8();
+        virtual void v9();
+        virtual void v10();
+        virtual void v11(s32);
+    };
     s32 fn_8013AC54(s32);
-    M2C_UNK fn_8013AD70(s32, s32);
-    void **fn_8013FF94(M2C_UNK, M2C_UNK);
-    extern u16 lbl_80330708[700]; // 1400 bytes / 2 = 700 u16 elements
-    
+    void fn_8013AD70(s32, s32);
+    VObj *fn_8013FF94(void *, s32, s32);
+    extern u8 lbl_80330708[];
     s32 temp_r31;
-    void **temp_r30;
+    VObj *temp_r30;
 
-    temp_r31 = M2C_FIELD(arg0, s32 *, 0x54);
-    temp_r30 = fn_8013FF94(0xA, 0);
-
-    fn_8013AD70(temp_r31, M2C_FIELD(&lbl_80330708, s32 *, 0xAC));
-    temp_r31 = fn_8013AC54(temp_r31);
-    M2C_FIELD(*temp_r30, M2C_UNK (**)(void **, s32), 0x34)(temp_r30, temp_r31);
+    temp_r31 = *(s32 *)((u8 *)arg0 + 0x54);
+    temp_r30 = fn_8013FF94(arg0, 0xA, 0);
+    fn_8013AD70(temp_r31, *(s32 *)(lbl_80330708 + 0xAC));
+    temp_r30->v11(fn_8013AC54(temp_r31));
 }
-
+#pragma cplusplus reset
 void fn_801AE980(void *arg0) {
     M2C_UNK fn_8000C070(void *, u8);
     fn_8000C070(arg0, *(u8 *)((char *)arg0 + 0x68));
