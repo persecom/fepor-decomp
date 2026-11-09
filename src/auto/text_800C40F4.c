@@ -2806,11 +2806,8 @@ void fn_800DF670(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x2C) = 1;
 }
 
-void fn_800DF67C(s32 arg0) {
-    M2C_UNK fn_800C9758(s32, M2C_UNK, M2C_UNK);
-    s32 temp_r4 = 0;
-    s32 temp_r5 = -1;
-    fn_800C9758(arg0 + 0x10, temp_r4, temp_r5);
+void fn_800DF67C(void *arg0, void *arg1) {
+    fn_800C9758((void *)((char *)arg0 + 0x10), arg1, 0, -1);
 }
 
 u8 fn_800DF6A8(void *arg0) {
