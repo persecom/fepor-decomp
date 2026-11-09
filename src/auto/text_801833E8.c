@@ -1375,17 +1375,11 @@ loop_2:
 }
 
 void fn_8018CC3C(void *arg0) {
-    M2C_UNK fn_800673E4(s32);
+    M2C_UNK fn_800673E4(s32, s32);
     s32 fn_80067440(M2C_UNK);
-    s32 temp_r31;
-    s32 temp_r31_2;
 
-    temp_r31 = fn_80067440(1);
-    fn_80067440(0);
-    fn_800673E4(temp_r31);
-    temp_r31_2 = fn_80067440(3);
-    fn_80067440(2);
-    fn_800673E4(temp_r31_2);
+    fn_800673E4(fn_80067440(0), fn_80067440(1));
+    fn_800673E4(fn_80067440(2), fn_80067440(3));
     M2C_FIELD(arg0, s32 *, 0x30) = 0x64;
     M2C_FIELD(arg0, s32 *, 0x34) = 0x64;
     M2C_FIELD(arg0, s32 *, 0x44) = 0;
