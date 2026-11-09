@@ -1,5 +1,7 @@
 /* Functions from 0x801FC634 to 0x8022C1E8, found by decomp-toolkit. */
 #include "common.h"
+
+typedef struct { f32 x, y; } FPair;
 #include <dolphin/os.h>
 extern s32 lbl_803682F0;
 extern s32 fn_80013E50(s32);
@@ -101,14 +103,21 @@ extern f32 lbl_8036BAE0;
 void fn_80202540(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
     extern f32 lbl_8036BC38;
     extern f32 lbl_8036BC3C;
-    M2C_FIELD(arg0, f32 *, 0xC) = farg0;
-    M2C_FIELD(arg0, f32 *, 0x1C) = farg1;
-    M2C_FIELD(arg0, f32 *, 0x10) = (f32) lbl_8036BC3C;
-    M2C_FIELD(arg0, f32 *, 0x14) = (f32) lbl_8036BC38;
-    M2C_FIELD(arg0, f32 *, 0x18) = (f32) lbl_8036BC3C;
-    M2C_FIELD(arg0, f32 *, 0x28) = (f32) lbl_8036BC38;
-    M2C_FIELD(arg0, f32 *, 0x2C) = farg2;
-    M2C_FIELD(arg0, f32 *, 0) = (f32) lbl_8036BC38;
+    f64 zero;
+    f32 one;
+
+    zero = lbl_8036BC3C;
+    one = lbl_8036BC38;
+    *(f32 *)((u8 *)arg0 + 0xC) = farg0;
+    *(f32 *)((u8 *)arg0 + 0x1C) = farg1;
+    *(f64 *)((u8 *)arg0 + 0x4) = zero;
+    *(f64 *)((u8 *)arg0 + 0x20) = zero;
+    *(f32 *)((u8 *)arg0 + 0x10) = (f32)zero;
+    *(f32 *)((u8 *)arg0 + 0x14) = one;
+    *(f32 *)((u8 *)arg0 + 0x18) = (f32)zero;
+    *(f32 *)((u8 *)arg0 + 0x28) = one;
+    *(f32 *)((u8 *)arg0 + 0x2C) = farg2;
+    *(f32 *)((u8 *)arg0 + 0x0) = one;
 }
 
 f32 fn_80202574(f64 farg0, f64 farg1, f64 farg2) {
