@@ -1260,7 +1260,7 @@ void fn_8016AFC4(void) {
 
 void *fn_8016AFF0(void) {
     extern u16 lbl_80277BC0[];
-    return &lbl_80277BC0[0x438];
+    return (u8 *)lbl_80277BC0 + 0x21c;
 }
 
 u8 fn_8016B000(void *arg0) {
