@@ -62,7 +62,9 @@ loop_1:
 }
 
 void fn_80095678(void) {
-    fn_8000BF00(&lbl_80289B00);
+    void fn_8000BF00(void *);
+    extern u8 lbl_80289B00[16];
+    fn_8000BF00(lbl_80289B00);
 }
 
 void fn_800956A0(s32 arg0) {
