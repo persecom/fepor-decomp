@@ -438,11 +438,11 @@ s32 fn_800C52C8(void) {
 }
 
 void fn_800C5EF8(s32 arg0) {
-    extern u16 lbl_8028D908[];
+    void fn_8000CAA0(void *, s32);
+    void fn_8000CAF0(void *, s32);
+    extern u8 lbl_8028D908[];
     extern u8 lbl_8028D7A4[];
-    s32 r3 = arg0;
-    r3 = (s32)lbl_8028D908;
-    fn_8000CAA0((u16*)r3, arg0, lbl_8028D908);
+    fn_8000CAA0(lbl_8028D908, arg0);
     fn_8000CAF0(lbl_8028D7A4, 5);
 }
 
