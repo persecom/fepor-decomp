@@ -3710,10 +3710,8 @@ void fn_80262B1C(s32 arg0, s32 arg1) {
     lbl_80368AE8 = arg0;
 }
 
-void fn_80262F98(s32 arg1, void *arg2) {
-    s32 val = ((s32 *)arg2)[2];
-    s32 tmp = (arg1 + 0x1F);
-    ((s32 *)arg2)[2] = val - (tmp & 0xFFFFFFE0);
+void fn_80262F98(s32 unused, s32 arg1, void *arg2) {
+    *(s32 *)((u8 *)arg2 + 8) = *(s32 *)((u8 *)arg2 + 8) - ((arg1 + 0x1F) & ~0x1F);
 }
 
 s32 fn_802631AC(s32 arg0, s32 *arg1) {
