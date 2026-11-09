@@ -3086,10 +3086,12 @@ s32 fn_801990DC(void *arg0) {
 }
 
 s32 fn_80199114(void *arg0) {
-    s32 fn_80151948(s32);
-    u32 var = *(u32*)((char*)arg0 + 0x144);
-    if (var != 0U) {
-        return fn_80151948(0x11);
+    s32 fn_80151948(void *, s32);
+    void *v;
+
+    v = *(void **)((u8 *)arg0 + 0x144);
+    if (v != NULL) {
+        return fn_80151948(v, 0x11);
     }
     return -1;
 }
