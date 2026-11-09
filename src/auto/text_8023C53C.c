@@ -1987,6 +1987,102 @@ s32 fn_80257820(u16 arg0) {
     return (s32) (lbl_8036C268 * (f32) arg0);
 }
 
+s32 fn_80257998(u8 *arg0) {
+    extern u16 lbl_8029F9F8[];
+    s32 ret;
+    u32 tmp;
+    s32 x;
+    s32 y;
+
+    ret = 0;
+    switch (arg0[0]) {
+    case 0:
+        switch (arg0[1]) {
+        case 0:
+            tmp = *(u32 *)(arg0 + 0x14);
+            *(u32 *)(arg0 + 4) = tmp;
+            if (tmp != 0) {
+                arg0[1] = 1;
+                *(u32 *)(arg0 + 8) = 0;
+                *(u32 *)(arg0 + 0x10) = 0x7FFF0000U / *(u32 *)(arg0 + 0x14);
+                break;
+            }
+        case 1:
+            tmp = *(u32 *)(arg0 + 0x18);
+            *(u32 *)(arg0 + 4) = tmp;
+            if (tmp != 0) {
+                arg0[1] = 2;
+                *(u32 *)(arg0 + 8) = 0x7FFF0000;
+                *(u32 *)(arg0 + 0x10) =
+                    (u32)(-(s32)((0x7FFF0000U - ((u32)*(u16 *)(arg0 + 0x1C) << 16)) /
+                                 *(u32 *)(arg0 + 0x18)));
+                break;
+            }
+        case 2:
+            if (*(u16 *)(arg0 + 0x1C) != 0) {
+                arg0[1] = 3;
+                *(u32 *)(arg0 + 8) = (u32)*(u16 *)(arg0 + 0x1C) << 16;
+                *(u32 *)(arg0 + 0x10) = 0;
+                break;
+            }
+        case 4:
+            ret = 1;
+            *(u32 *)(arg0 + 8) = 0;
+            break;
+        }
+        break;
+    case 1:
+        switch (arg0[1]) {
+        case 0:
+            tmp = *(u32 *)(arg0 + 0x14);
+            *(u32 *)(arg0 + 4) = tmp;
+            if (tmp != 0) {
+                arg0[1] = 1;
+                if (arg0[0x26] == 0) {
+                    *(u32 *)(arg0 + 8) = 0;
+                    *(u32 *)(arg0 + 0x10) = 0x7FFF0000U / *(u32 *)(arg0 + 4);
+                } else {
+                    *(u32 *)(arg0 + 0xC) = 0;
+                    *(u32 *)(arg0 + 8) = 0;
+                    *(u32 *)(arg0 + 0x10) = 0xC10000U / *(u32 *)(arg0 + 4);
+                }
+                break;
+            }
+        case 1:
+            *(u32 *)(arg0 + 4) =
+                (*(u32 *)(arg0 + 0x18) *
+                 (((0xC1U - *(u16 *)(arg0 + 0x1C)) << 16) / 193U)) >>
+                16;
+            if (*(u32 *)(arg0 + 4) != 0) {
+                arg0[1] = 2;
+                *(u32 *)(arg0 + 8) = 0x7FFF0000;
+                *(u32 *)(arg0 + 0xC) = 0xC10000;
+                *(u32 *)(arg0 + 0x10) =
+                    (u32)(-(s32)(((0xC1U - *(u16 *)(arg0 + 0x1C)) << 16) /
+                                 *(u32 *)(arg0 + 4)));
+                break;
+            }
+        case 2:
+            if (*(u16 *)(arg0 + 0x1C) != 0) {
+                arg0[1] = 3;
+                *(u32 *)(arg0 + 0xC) = (u32)*(u16 *)(arg0 + 0x1C) << 16;
+                x = (s32)(*(u32 *)(arg0 + 0xC) + 0x8000) >> 16;
+                y = 0xC1 - x;
+                x = y & ~(y >> 31);
+                *(u32 *)(arg0 + 8) = (u32)lbl_8029F9F8[x] << 16;
+                *(u32 *)(arg0 + 0x10) = 0;
+                break;
+            }
+        case 4:
+            ret = 1;
+            *(u32 *)(arg0 + 8) = 0;
+            break;
+        }
+        break;
+    }
+    return ret;
+}
+
 void fn_80257C04(void *arg0) {
     M2C_UNK fn_80257998();
     M2C_FIELD(arg0, s8 *, 1) = 0;
