@@ -558,20 +558,19 @@ void fn_80247F94(void *arg0) {
     }
 }
 
-void fn_80249D6C(void *arg0)
-{
+void fn_80249D6C(void *arg0) {
+    void fn_80249C1C(void *, s32, s32);
     extern s32 lbl_803689B8;
     extern s32 lbl_803689BC;
-    
-    s32 r0 = (s32) lbl_803689B8;
-    s32 r6 = (s32) lbl_803689BC;
+    s32 t;
 
-    M2C_FIELD(arg0, s32 *, 0x28) = r6;
-    M2C_FIELD(arg0, s32 *, 0x24) = r0;
-    M2C_FIELD(arg0, s32 *, 0x30) = r6;
-    M2C_FIELD(arg0, s32 *, 0x2C) = r0;
-
-    fn_80249C1C(NULL, 0, 0);
+    t = lbl_803689B8;
+    M2C_FIELD(arg0, s32 *, 0x28) = lbl_803689BC;
+    M2C_FIELD(arg0, s32 *, 0x24) = t;
+    t = lbl_803689B8;
+    M2C_FIELD(arg0, s32 *, 0x30) = lbl_803689BC;
+    M2C_FIELD(arg0, s32 *, 0x2C) = t;
+    fn_80249C1C(arg0, 0, 0);
     fn_80249C1C(arg0, 1, 0);
 }
 
@@ -3087,12 +3086,10 @@ void fn_8025EE34(f32 *arg0) {
 }
 
 void fn_8025EEE8(s32 arg0, s32 arg1, s32 arg2) {
-    s32 temp_r3;
-    void *temp_r4;
+    u8 *temp_r4;
 
-    temp_r3 = (arg0 << 2) & 0x3FC;
-    temp_r4 = lbl_8035D118 + ((arg1 << 6) & 0x3FC0);
-    *(u16*)((char*)temp_r4 + temp_r3) |= arg2;
+    temp_r4 = (u8 *) lbl_8035D118 + ((arg1 & 0xFF) << 6);
+    *(u32 *) (temp_r4 + ((arg0 & 0xFF) << 2)) |= arg2;
 }
 
 void *fn_8025FF28(u8 arg0, u8 arg1) {
@@ -4051,6 +4048,33 @@ void fn_802636C8(void) {
     extern s16 lbl_80368AFC;
     lbl_80368AF8 = OSDisableInterrupts();
     lbl_80368AFC = 1;
+}
+
+int fn_802636F4(void) {
+    extern u16 lbl_80368AFC;
+    extern u32 lbl_80368AF8;
+    int count;
+
+    count = lbl_80368AFC;
+    count--;
+    lbl_80368AFC = count;
+
+    if ((count & 0xFFFF) == 0) {
+        OSRestoreInterrupts(lbl_80368AF8);
+    }
+}
+
+int fn_8026372C(void) {
+    extern u16 lbl_80368AFC;
+    extern u32 lbl_80368AF8;
+    u16 count;
+
+    count = lbl_80368AFC;
+    lbl_80368AFC = count + 1;
+
+    if (count == 0) {
+        lbl_80368AF8 = OSDisableInterrupts();
+    }
 }
 
 void fn_80263764(void) {
