@@ -1769,8 +1769,11 @@ s32 fn_800B8198(void) {
 }
 
 void fn_800B8208(s32 arg0) {
-    extern M2C_UNK lbl_8026ECB8;
-    if (fn_8000BCA4(&lbl_8026ECB8 + 0xA29, &lbl_8026ECB8) == 0U) {
+    extern u8 lbl_8026ECB8[];
+    u32 fn_8000BCA4(void *);
+    void fn_8000C188(s32);
+
+    if (fn_8000BCA4(lbl_8026ECB8 + 0xA29) == 0U) {
         fn_8000C188(arg0);
     }
 }
