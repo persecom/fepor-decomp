@@ -357,14 +357,29 @@ s32 fn_80011264(void **arg0) {
     return M2C_FIELD(*arg0, s32 (**)(void **), 0x30)(arg0) / var_r31;
 }
 
-s32 fn_800112C0(void **arg0) {
-    s32 temp_r31;
-    void **temp_r30;
-
-    temp_r30 = arg0;
-    temp_r31 = M2C_FIELD(*arg0, s32 (**)(), 0x3C)();
-    return M2C_FIELD(*temp_r30, s32 (**)(void **), 0x2C)(arg0) / temp_r31;
+#pragma cplusplus on
+extern "C" s32 fn_800112C0(void **arg0) {
+    struct Obj {
+        virtual s32 v0() = 0;
+        virtual s32 v1() = 0;
+        virtual s32 v2() = 0;
+        virtual s32 v3() = 0;
+        virtual s32 v4() = 0;
+        virtual s32 v5() = 0;
+        virtual s32 v6() = 0;
+        virtual s32 v7() = 0;
+        virtual s32 v8() = 0;
+        virtual s32 v9() = 0;
+        virtual s32 v10() = 0;
+        virtual s32 v11() = 0;
+        virtual s32 v12() = 0;
+        virtual s32 v13() = 0;
+        virtual s32 v14() = 0;
+        virtual s32 v15() = 0;
+    };
+    return ((Obj *)arg0)->v11() / ((Obj *)arg0)->v15();
 }
+#pragma cplusplus reset
 
 #pragma cplusplus on
 extern "C" u16 fn_8001131C(void *arg0) {
