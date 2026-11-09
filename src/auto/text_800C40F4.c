@@ -6991,4 +6991,6 @@ extern s32 lbl_8036A110;
 // Let's just use a minimal definition for now as we don't know the full layout yet
 
 extern void *D_8036A150; // The struct 0E60 is likely a pointer to data, or a large structure with many members
+#include "global.h"
 
+extern char lbl_802704F8[];
