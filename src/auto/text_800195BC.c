@@ -748,18 +748,37 @@ s32 fn_8001CA2C(void *arg0) {
     return var_r4;
 }
 
-s32 fn_8001CBA0(void *arg0) {
-    u8* ptr = (u8*)arg0;
-    s32 i;
-    
-    for (i = 0; i < 8; i++) {
-        if (ptr[i] < 0xFB) {
-            return i;
-        }
+#pragma peephole off
+#pragma scheduling off
+s32 fn_8001CBA0(u8 *arg0) {
+    if (arg0[0] >= 0xFB) {
+        return 0;
+    }
+    if (arg0[1] >= 0xFB) {
+        return 1;
+    }
+    if (arg0[2] >= 0xFB) {
+        return 2;
+    }
+    if (arg0[3] >= 0xFB) {
+        return 3;
+    }
+    if (arg0[4] >= 0xFB) {
+        return 4;
+    }
+    if (arg0[5] >= 0xFB) {
+        return 5;
+    }
+    if (arg0[6] >= 0xFB) {
+        return 6;
+    }
+    if (arg0[7] >= 0xFB) {
+        return 7;
     }
     return -1;
 }
-
+#pragma peephole reset
+#pragma scheduling reset
 void fn_8001CC48(void *arg0, void *arg1) {
     u32* r3 = (u32*)arg0;
     u32* r4 = (u32*)arg1;
