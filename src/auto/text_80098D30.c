@@ -60,19 +60,19 @@ void fn_80098D30(void *arg0) {
 
 void fn_80098E1C(s32 arg0) {
     s32 fn_800980E8(s32);
-    void fn_80050BF4(s32);
+    void fn_80050BF4(s32, s32);
     void fn_800980D4(s32);
     u8 fn_80098568(void);
     void fn_80183B24(s32, s32);
-    
-    register s32 var_r31;
-    register s32 temp_r3;
-    
+
+    s32 var_r31;
+    s32 temp_r3;
+
     var_r31 = 0;
     do {
         temp_r3 = fn_800980E8(var_r31);
         if (temp_r3 != 0) {
-            fn_80050BF4(0);
+            fn_80050BF4(temp_r3, 0);
             fn_800980D4(var_r31);
             if (fn_80098568() != 0) {
                 fn_80183B24(temp_r3, arg0);
@@ -269,9 +269,15 @@ void fn_8009A514(void) {
     }
 }
 
+void fn_8009A584(void) {
+    if (fn_8000C0C0(lbl_80289EB8) != 0U) {
+        fn_8000C070(0x2);
+    }
+}
+
 void fn_8009A5BC(void) {
     if (fn_8000C0C0(&lbl_80289EB8) != 0U) {
-        fn_8000C070(1);
+        fn_8000C070(0x1);
     }
 }
 
