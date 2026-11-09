@@ -1940,9 +1940,9 @@ loop_2:
     goto loop_2;
 }
 
-s32 fn_80067FD0(s32 arg0)
-{
-    return 0x64;
+void *fn_80067FD0(void) {
+    extern void *lbl_803672F8;
+    return (u8 *)lbl_803672F8 + 0x64;
 }
 
 s32 fn_80067FDC(void) {
