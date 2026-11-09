@@ -934,39 +934,45 @@ u16 fn_80131AA8(void *arg1, s32 arg2) {
     }
 }
 
-void fn_80131B9C(s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5) {
-    switch (arg1) {                                 /* irregular */
+void fn_80131B9C(s32 unused, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5)
+{
+  switch (arg1)
+  {
     case 0:
-        *arg2 = 0;
-        *arg3 = 0;
-        *arg4 = 0x30;
-        *arg5 = 0x14;
-        return;
+      *arg2 = 0;
+      *arg3 = 0;
+      *arg4 = 0x30;
+      *arg5 = 0x14;
+      return;
+
     case 1:
-        *arg2 = 0;
-        *arg3 = 0x104;
-        *arg4 = 0x30;
-        *arg5 = 0x118;
-        return;
+      *arg2 = 0;
+      *arg3 = 0x104;
+      *arg4 = 0x30;
+      *arg5 = 0x118;
+      return;
+
     case 2:
-        *arg2 = 0;
-        *arg3 = 0x118;
-        *arg4 = 0x30;
-        *arg5 = 0x12C;
-        return;
+      *arg2 = 0;
+      *arg3 = 0x118;
+      *arg4 = 0x30;
+      *arg5 = 0x12C;
+      return;
+
     case 3:
-        *arg2 = 0;
-        *arg3 = 0x12C;
-        *arg4 = 0x30;
-        *arg5 = 0x140;
-        return;
+      *arg2 = 0;
+      *arg3 = 0x12C;
+      *arg4 = 0x30;
+      *arg5 = 0x140;
+      return;
+
     case 4:
-        *arg2 = 0;
-        *arg3 = 0x140;
-        *arg4 = 0x30;
-        *arg5 = 0x154;
-        return;
-    }
+      *arg2 = 0;
+      *arg3 = 0x140;
+      *arg4 = 0x30;
+      *arg5 = 0x154;
+      return;
+  }
 }
 
 s32 fn_80131C78(s32 param_1, s32 param_2, s32 param_3, s32 param_4, s32 param_5) {
