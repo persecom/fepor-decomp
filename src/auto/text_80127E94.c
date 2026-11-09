@@ -762,17 +762,21 @@ void fn_8012B458(void *arg0) {
 }
 
 void fn_8012C2CC(void *arg0) {
+    void fn_80109020(void *);
+    void fn_8000C070(void *, s32);
+    extern s32 lbl_80367A88;
     s32 temp_r0;
-    
-    temp_r0 = *(s32*)((u8*)arg0 + 0x30);
-    fn_80109020(*(s32**)((u8*)arg0 + 0x3C) + (temp_r0 << 2));
+    void **table;
+
+    table = *(void ***)((u8 *)arg0 + 0x3C);
+    fn_80109020(table[*(s32 *)((u8 *)arg0 + 0x30)]);
     lbl_80367A88 = 0;
-    temp_r0 = *(s32*)((u8*)arg0 + 0x34);
+    temp_r0 = *(s32 *)((u8 *)arg0 + 0x34);
     if (temp_r0 == 0x270F) {
         fn_8000C070(arg0, 0x63);
         return;
     }
-    *(s32*)((u8*)arg0 + 0x30) = temp_r0;
+    *(s32 *)((u8 *)arg0 + 0x30) = temp_r0;
 }
 
 void fn_8012C330(void *arg0) {
