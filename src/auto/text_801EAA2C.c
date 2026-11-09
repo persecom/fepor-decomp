@@ -814,12 +814,12 @@ s32 fn_801F16D4(void *arg2) {
     return 5;
 }
 
-void fn_801F1848(void *arg1) {
-    s32 *fn_8018D900(s32);
+void fn_801F1848(void *arg0, void *arg1) {
     void fn_80007668(s32 *);
+    s32 *fn_8018D900(s32);
+    s32 sp8;
 
-    if (((u8 *) arg1)[0x38] != 0) {
-        s32 sp8;
+    if (*(u8 *)((u8 *)arg1 + 0x38) != 0) {
         sp8 = *fn_8018D900(7);
         fn_80007668(&sp8);
     }
