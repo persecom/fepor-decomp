@@ -3605,6 +3605,28 @@ void fn_8019BD8C(s32 arg0, s32 arg1) {
     fn_8019D51C(fn_8000CAA0(lbl_80296CAC, arg0), temp, 0);
 }
 
+void fn_8019BDD4(void *arg0) {
+    void fn_80184688(s32, s32, s32, void *);
+    s32 var_r3;
+    u8 temp_r4;
+    void *temp_r3;
+
+    if (M2C_FIELD(arg0, void **, 0x58) != NULL) {
+        temp_r4 = M2C_FIELD(arg0, u8 *, 0x40);
+        if (!(temp_r4 & 4)) {
+            M2C_FIELD(arg0, u8 *, 0x40) = (u8)(temp_r4 | 4);
+            ((void (*)(void *))M2C_FIELD(arg0, void **, 0x58))(arg0);
+        }
+    }
+    temp_r3 = *M2C_FIELD(arg0, void ***, 0x34);
+    if (temp_r3 != NULL) {
+        var_r3 = M2C_FIELD(temp_r3, s32 *, 0x280);
+    } else {
+        var_r3 = 0;
+    }
+    fn_80184688(var_r3, 1, 0x20, arg0);
+}
+
 void fn_8019BEA4(s32 arg0) {
     M2C_UNK fn_8002F658(s32 *, s32);
     s32 fn_8002F740();
