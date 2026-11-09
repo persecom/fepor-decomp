@@ -3264,25 +3264,24 @@ u8 fn_800BC4FC(u8 arg0, s32 arg1) {
 }
 
 s32 fn_800BC5FC(u8 arg0) {
-    u8 fn_80092F38(void *);
-    u8 fn_80092F9C(void *);
-    extern u16 lbl_802B14E4[];
+    s32 fn_80092F38(void *);
+    s32 fn_80092F9C(void *);
+    extern u8 lbl_802B14E4[];
     u8 temp_r31;
+    u8 temp_r0;
     void *var_r30;
 
     if (arg0 != 0) {
-        u32 temp = arg0 - 1;
-        var_r30 = &lbl_802B14E4[temp * 0x280];
+        var_r30 = lbl_802B14E4 + ((arg0 - 1) * 0x280);
     } else {
         var_r30 = NULL;
     }
-    
-    if ((var_r30 == NULL) || (M2C_FIELD(var_r30, u32 *, 0x188) == 0U)) {
+    if ((var_r30 == NULL) || (*(u32 *)((u8 *)var_r30 + 0x188) == 0U)) {
         return 0;
     }
-    
-    temp_r31 = fn_80092F38(var_r30);
-    return fn_80092F9C(var_r30) + (u32)temp_r31;
+    temp_r31 = (u8)fn_80092F38(var_r30);
+    temp_r0 = (u8)fn_80092F9C(var_r30);
+    return temp_r0 + temp_r31;
 }
 
 s32 fn_800BC6E8(u8 arg0, s32 arg2) {
