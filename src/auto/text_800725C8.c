@@ -13,6 +13,13 @@ void fn_800725C8(M2C_UNK **arg0) {
     *arg0 = &lbl_80285FE8 + 0xC;
 }
 
+extern u8 lbl_80286860[16];
+void fn_800725F8(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_80286860[16];
+    fn_8000CAA0(lbl_80286860, arg0);
+}
+
 void fn_80072624(void) {
     M2C_UNK fn_8003BE50(void *);
     u8 fn_80091D74();
