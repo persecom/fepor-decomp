@@ -271,6 +271,13 @@ void fn_801F52A8(s32 unused, s16 *p) {
     fn_80225058(p[0], p[1], p[2], p[3]);
 }
 
+extern u8 lbl_8029B0E0[16];
+void fn_801F52DC(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_8029B0E0[16];
+    fn_8000CAA0(lbl_8029B0E0, arg0);
+}
+
 void fn_801F5308(void* arg0) {
     s32 temp_r3;
     void* temp_r4;
