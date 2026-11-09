@@ -1610,6 +1610,21 @@ extern "C" void fn_801C1044(void *arg0) {
     };
     ((Obj *) arg0)->m08(-1);
 }
+
+extern "C" void *fn_801C1074(void *arg0, s16 arg1) {
+    void fn_80140304(void *, s16);
+    void fn_800C428C(void *);
+    extern u8 lbl_80297FEC[];
+    if (arg0 != NULL) {
+        *(void **)((char *)arg0 + 0x40) = lbl_80297FEC;
+        fn_80140304(arg0, 0);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 #pragma cplusplus reset
 
 s32 fn_801C13F0(void) {
