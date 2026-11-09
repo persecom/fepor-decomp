@@ -3879,6 +3879,7 @@ void fn_802637A4(s32 arg0) {
 }
 
 void fn_80263800(s32 arg0) {
+    extern u8 lbl_80363F18[16];
     ((void (*)(s32))*(void **)(lbl_80363F18 + 8))(arg0);
 }
 
