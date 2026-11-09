@@ -4093,8 +4093,7 @@ s32 fn_80149940(void *arg0) {
 }
 
 s32 fn_80149974(void *arg0) {
-    u8 temp = *(u8 *)((u8 *)arg0 + 4);
-    return (fn_800AF704((s8)temp) >> 1U) & 1;
+    return (fn_800AF704(*(s8 *)((u8 *)arg0 + 4)) >> 1) & 1;
 }
 
 s8 fn_801499A0(void) {
