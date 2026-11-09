@@ -320,6 +320,12 @@ void *fn_801EC51C(void) {
     return ptr;
 }
 
+s32 fn_801EC540(void) {
+    extern u8 lbl_802EF4C8[24];
+    lbl_802EF4C8[8] = 0x85;
+    return 5;
+}
+
 void fn_801EC558(void) {
     extern u16 lbl_8027EE08;
     u16* tmp = &lbl_8027EE08;
