@@ -208,7 +208,7 @@ void *fn_80132A3C(void) {
 
 void *fn_80132A4C(void) {
     extern u16 lbl_80276008[];
-    return &lbl_80276008[0x1FA];
+    return (u8 *)lbl_80276008 + 0x1fa;
 }
 
 s32 fn_80132A5C(void) {
