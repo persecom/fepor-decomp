@@ -2381,19 +2381,25 @@ void fn_800B9C14(void) {
     fn_800B9CD4(var);
 }
 
-void fn_800B9C38(s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
-    M2C_UNK fn_800B9CD4(s32, s32, s32, s32, f32, f32, f32);
+void fn_800B9C38(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    void fn_800B9CD4(s32, s32, s32, s32, s32);
     extern f32 lbl_80369D08;
     extern f32 lbl_80369D0C;
     extern f32 lbl_80369D10;
-    f32 temp_f1;
-    f32 temp_f3;
-    f32 temp_f4;
+    f32 a2;
+    f32 a1;
+    f32 s;
+    f32 d10;
+    f32 d0c;
+    f32 d08;
 
-    temp_f1 = (f32) arg3 / lbl_80369D08;
-    temp_f4 = (f32) arg1;
-    temp_f3 = -((temp_f4 * temp_f1) - lbl_80369D0C);
-    fn_800B9CD4((s32) temp_f3, (s32) -(((f32) arg2 * temp_f1) - lbl_80369D10), arg4, arg5, temp_f1, temp_f3, temp_f4);
+    d08 = lbl_80369D08;
+    d0c = lbl_80369D0C;
+    s = (f32) arg3 / d08;
+    a1 = (f32) arg1;
+    d10 = lbl_80369D10;
+    a2 = (f32) arg2;
+    fn_800B9CD4(arg0, (s32) -(a1 * s - d0c), (s32) -(a2 * s - d10), arg4, arg5);
 }
 
 s32 fn_800B9EA8(u8* arg0, u8* arg1, s32 arg2)
@@ -3552,6 +3558,32 @@ s32 fn_800BD10C(s32 arg0, s32 arg1) {
     }
     
     return -1;
+}
+
+s32 fn_800BD284(u8 arg0) {
+    void fn_8003EA24(void *, u8, u8);
+    extern u16 lbl_802B14E4[];
+    void *temp_r31;
+    void *var_r30;
+    void *var_r3;
+
+    if (arg0 != 0) {
+        var_r3 = (u8 *)lbl_802B14E4 + ((arg0 - 1) * 0x280);
+    } else {
+        var_r3 = NULL;
+    }
+    var_r30 = var_r3;
+    if ((var_r3 == NULL) || (*(u32 *)((u8 *)var_r3 + 0x188) == 0U)) {
+        return 0;
+    }
+    if (*(s32 *)((u8 *)var_r3 + 0x1A0) & 4) {
+        var_r30 = *(void **)((u8 *)var_r3 + 0x194);
+    }
+    temp_r31 = *(void **)((u8 *)var_r30 + 0x194);
+    fn_8003EA24(var_r30, *(u8 *)((u8 *)var_r30 + 0x19E), *(u8 *)((u8 *)var_r30 + 0x19F));
+    *(s32 *)((u8 *)var_r30 + 0x1A0) = *(s32 *)((u8 *)var_r30 + 0x1A0) & ~1;
+    *(s32 *)((u8 *)temp_r31 + 0x1A0) = *(s32 *)((u8 *)temp_r31 + 0x1A0) & ~1;
+    return 1;
 }
 
 s32 fn_800BD334(u8 arg0, s32 arg1)
