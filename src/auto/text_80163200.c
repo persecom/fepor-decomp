@@ -2765,6 +2765,57 @@ extern "C" void fn_80178C5C(void *arg0, void *arg1) {
     fn_80009B80(flag ? 0x80 : 0x40);
     fn_8000A248();
 }
+
+#pragma cplusplus on
+extern "C" void fn_80178D88(void *arg0) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual void v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual void v25() = 0;
+        virtual void v26() = 0;
+        virtual void v27() = 0;
+        virtual void v28() = 0;
+        virtual void v29() = 0;
+        virtual void v30() = 0;
+    };
+    void fn_8000A258(void);
+    void fn_80009C0C(f32);
+    void fn_80009B80(u8);
+    void fn_8000A248(void);
+    extern f32 lbl_8036AB80;
+
+    ((Obj *)arg0)->v30();
+    fn_8000A258();
+    fn_80009C0C(lbl_8036AB80);
+    fn_80009B80(0x80);
+    fn_8000A248();
+}
+#pragma cplusplus reset
+
 #pragma cplusplus reset
 
 void fn_80179248(void) {
@@ -3113,11 +3164,6 @@ extern "C" void fn_8017B4A8(void *arg0, s32 arg1) {
         virtual void v0() = 0;
         virtual void v1() = 0;
         virtual void v2(s32) = 0;
-        u8 pad4[6];
-        s16 x0;
-        s16 y0;
-        s16 x1;
-        s16 y1;
     };
     extern u8 lbl_80278780[];
     extern f32 lbl_8036ABA8;
@@ -3144,9 +3190,16 @@ extern "C" void fn_8017B4A8(void *arg0, s32 arg1) {
         fn_801475FC(lbl_80278780 + 0x9E, 0x64);
     }
     ((Obj *)arg0)->v2(arg1);
-    fn_801547E4(0, 0, ((Obj *)arg0)->x1 - ((Obj *)arg0)->x0, ((Obj *)arg0)->y1 - ((Obj *)arg0)->y0,
-                M2C_FIELD(M2C_FIELD(unit, u8 **, 0x18C), u8 *, 0x40), 0xCC, 0x10,
-                M2C_FIELD(arg0, f32 *, 0x50));
+    fn_801547E4(
+        0,
+        0,
+        M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA),
+        M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC),
+        M2C_FIELD(M2C_FIELD(unit, u8 **, 0x18C), u8 *, 0x40),
+        0xCC,
+        0x10,
+        M2C_FIELD(arg0, f32 *, 0x50)
+    );
 }
 #pragma cplusplus reset
 
