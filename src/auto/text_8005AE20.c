@@ -1880,6 +1880,17 @@ void fn_80067480(void)
     *(u8*)lbl_80366DD4 = 0;
 }
 
+void fn_800675C8(void *arg0) {
+    extern u8 lbl_80311AF8[];
+    extern void *lbl_80366DD4;
+    void *ptr;
+
+    if (arg0 == NULL) {
+        ptr = lbl_80311AF8;
+        lbl_80366DD4 = ptr;
+    }
+}
+
 s32 fn_800675E0(void) {
     extern s32 lbl_80366DD4;
     return lbl_80366DD4;
@@ -2052,6 +2063,20 @@ void fn_80069010(s32 *arg0, void *arg1) {
             return;
         }
     }
+}
+
+void fn_80069C7C(void) {
+    extern u8 lbl_80367300;
+    extern u8 lbl_80367301;
+    extern u8 lbl_80367302;
+    extern u8 lbl_80367303;
+    extern u8 lbl_80367304;
+
+    lbl_80367300 = 0;
+    lbl_80367301 = 0;
+    lbl_80367302 = 0;
+    lbl_80367303 = 0;
+    lbl_80367304 = 0;
 }
 
 void fn_80069C98(void) {
