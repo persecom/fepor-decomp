@@ -1913,6 +1913,12 @@ void fn_80193E58(void) {
 
 }
 
+void fn_80193E5C(void) {
+    void fn_8003BE50(void *);
+    extern u8 lbl_802EF4C8[];
+    fn_8003BE50(*(void **)(lbl_802EF4C8 + 4));
+}
+
 void fn_80193F3C(void) {
     M2C_UNK fn_8013FE0C();
     fn_8013FE0C();
