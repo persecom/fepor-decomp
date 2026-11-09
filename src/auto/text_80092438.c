@@ -281,9 +281,9 @@ void fn_80093154(s32 arg0, u8 arg1, s32 arg2) {
     fn_8001C4FC(r0, arg2);
 }
 
-void fn_800931B0(s32 arg0, s32 arg1, s32 arg2) {
+void fn_800931B0(s32 arg0, u8 arg1, s32 arg2) {
     M2C_UNK fn_8001C4FC(s32, s32);
-    fn_8001C4FC(arg0 + ((arg1 << 3) & 0x7F8) + 0x1EC, arg2);
+    fn_8001C4FC(arg0 + (arg1 << 3) + 0x1EC, arg2);
 }
 
 void fn_800931E4(s32 arg0, s32 arg1, s32 arg2) {
