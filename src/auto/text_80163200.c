@@ -3447,6 +3447,27 @@ void fn_8017C304(void *arg0) {
     fn_80105CEC(temp_r5 + 0x1BC, M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), u8 *, 0x18), temp_r5);
 }
 
+void fn_8017C338(void *arg0) {
+    f32 fn_800067BC(s32, s32, f32, f32, f32, f32);
+    void fn_8000C188(void *);
+    s32 temp_r0;
+    s32 temp_r4;
+    void *temp_obj;
+
+    temp_r0 = *(s32 *)((u8 *)arg0 + 0x34) + 1;
+    *(s32 *)((u8 *)arg0 + 0x34) = temp_r0;
+    if (temp_r0 >= 0x20) {
+        *(s32 *)((u8 *)arg0 + 0x34) = 0;
+        temp_obj = *(void **)((u8 *)arg0 + 0x30);
+        *(s32 *)((u8 *)temp_obj + 0x58) = 0;
+        fn_8000C188(arg0);
+        return;
+    }
+    temp_r4 = *(s32 *)((u8 *)arg0 + 0x34);
+    *(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x60) =
+        fn_800067BC(5, temp_r4, lbl_8036AB94, lbl_8036ABBC, (f32)temp_r4, lbl_8036ABA0);
+}
+
 void fn_8017C3C8(void *arg0, void *arg1, s32 arg2) {
     extern f32 lbl_8036ABA0;
     s32 *temp_r3;
