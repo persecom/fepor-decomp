@@ -4540,18 +4540,18 @@ s32 fn_800C1360(s32 arg0, s32 arg1, s32 arg2)
 }
 
 void fn_800C1984(void) {
-    M2C_UNK fn_80040844();
-    M2C_UNK fn_800462FC(M2C_UNK, M2C_UNK *);
-    M2C_UNK fn_80046360(M2C_UNK, M2C_UNK *, M2C_UNK, M2C_UNK, M2C_UNK);
-    extern M2C_UNK fn_800C1730;
+    void fn_80040844(void);
+    void fn_800462FC(s32, s32, s32 (*)(void));
+    void fn_80046360(s32, s32 (*)(void), s32, s32, s32);
+    s32 fn_800C1730(void);
     extern u8 lbl_80367289;
     if ((u8) lbl_80367289 == 0) {
         fn_80040844();
-        fn_800462FC(0, &fn_800C1730);
+        fn_800462FC(0, 0, fn_800C1730);
         return;
     }
     fn_80040844();
-    fn_80046360(0, &fn_800C1730, 0, 0, 0x8000);
+    fn_80046360(0, fn_800C1730, 0, 0, 0x8000);
 }
 
 s32 fn_800C1F1C(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
