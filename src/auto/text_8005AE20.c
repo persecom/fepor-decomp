@@ -982,17 +982,19 @@ void fn_8005F410(void* arg0) {
 
 extern u32 fn_80065E88(s32, s32);
 extern void fn_80065E68(void);
-void fn_8005F4F4(void* arg0, s32 arg1) {
-    u32 saved_r31;
-    u32 temp_r3;
+void fn_8005F4F4(void *arg0, s32 arg1) {
+    void *fn_80065E88(s32, s32);
+    void fn_80065E68(void *);
+    void *saved;
+    void *temp;
 
-    saved_r31 = *(u32*)((char*)arg0 + 0x40);
-    temp_r3 = fn_80065E88(arg1, 0);
-    if (temp_r3 != *(u32*)((char*)arg0 + 0x40)) {
-        *(u32*)((char*)arg0 + 0x40) = temp_r3;
+    saved = *(void **)((u8 *)arg0 + 0x40);
+    temp = fn_80065E88(arg1, 0);
+    if (temp != *(void **)((u8 *)arg0 + 0x40)) {
+        *(void **)((u8 *)arg0 + 0x40) = temp;
     }
-    if (saved_r31 != 0U) {
-        fn_80065E68();
+    if (saved != NULL) {
+        fn_80065E68(saved);
     }
 }
 
