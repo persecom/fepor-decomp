@@ -61,23 +61,23 @@ void fn_80105624(s32 arg0) {
 }
 
 s32 fn_8010568C(s32 arg0) {
-    M2C_UNK fn_8001EDA0(u8 *);
-    M2C_UNK fn_8001EDB8(u8 *);
-    M2C_UNK fn_8002A784(s32, u8 *);
-    u8 fn_80105BC0(s32, M2C_UNK);
-    extern s32 lbl_802EF4E0;
-    u8 sp10;
-    u8 spC;
-    u8 sp8;
+    void fn_8001EDA0(u8 *);
+    void fn_8001EDB8(u8 *);
+    void fn_8002A784(s32, u8 *);
+    u8 fn_80105BC0(s32, s32);
+    extern s32 lbl_802EF4E0[];
+    u32 sp10;
+    u32 spC;
+    u32 sp8;
 
-    fn_8001EDB8(&spC);
-    sp10 = spC;
+    fn_8001EDB8((u8 *)&spC);
+    *(u8 *)&sp10 = *(u8 *)&spC;
     if (fn_80105BC0(arg0 + 0x1BC, 0x3C) != 0) {
-        fn_8001EDA0(&sp10);
+        fn_8001EDA0((u8 *)&sp10);
     }
-    sp8 = sp10;
-    fn_8002A784(arg0, &sp8);
-    if ((s32) lbl_802EF4E0 != 0) {
+    *(u8 *)&sp8 = *(u8 *)&sp10;
+    fn_8002A784(arg0, (u8 *)&sp8);
+    if (lbl_802EF4E0[0] != 0) {
         return 1;
     }
     return 0;
