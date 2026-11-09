@@ -668,7 +668,7 @@ loop_1:
 }
 
 extern u16 lbl_8028D0FC[];
-void fn_800B4A84(void* arg0, void* arg1) {
+s32 fn_800B4A84(void* arg0, s32 arg1, s32 arg2) {
     s32 r31_2 = (s32)arg1;
     s32 r31_3 = (r31_2 & 0x7F);
     s32 r31_5 = r31_2 >> 7;
@@ -4079,6 +4079,15 @@ char *fn_800C2048(s8 arg0, s8 arg1) {
         }
     }
     return NULL;
+}
+
+int fn_800C221C(void* arg0, void* arg1, u32 arg2)
+{
+    void** r3 = (void**)arg0;
+    if (*r3 == NULL) {
+        return 0;
+    }
+    return 1;
 }
 
 s32 fn_800C273C(void *arg0, u16 arg1) {
