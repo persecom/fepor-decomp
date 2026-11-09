@@ -4102,6 +4102,28 @@ void fn_80052B54(void *arg0) {
     *(s32 *)((char *)*temp_r31 + 0x8) |= 0x2000;
 }
 
+void fn_80052EBC(u8 *arg0) {
+    f32 fn_80059F64(f32, f32, f32, f32);
+    void fn_8000C188(void *);
+    extern f32 lbl_8036908C;
+    f32 temp_f30;
+    f32 temp_f31;
+    f32 temp_f1;
+    u8 *temp_r4;
+
+    *(f32 *)(arg0 + 0x50) = *(f32 *)(arg0 + 0x50) + lbl_8036908C;
+    temp_f30 = fn_80059F64(*(f32 *)(arg0 + 0x34), *(f32 *)(arg0 + 0x40), *(f32 *)(arg0 + 0x4C), *(f32 *)(arg0 + 0x50));
+    temp_f31 = fn_80059F64(*(f32 *)(arg0 + 0x38), *(f32 *)(arg0 + 0x44), *(f32 *)(arg0 + 0x4C), *(f32 *)(arg0 + 0x50));
+    temp_f1 = fn_80059F64(*(f32 *)(arg0 + 0x3C), *(f32 *)(arg0 + 0x48), *(f32 *)(arg0 + 0x4C), *(f32 *)(arg0 + 0x50));
+    temp_r4 = *(u8 **)(arg0 + 0x30);
+    *(f32 *)(*(u8 **)(temp_r4 + 0x30) + 0xC) = temp_f30;
+    *(f32 *)(*(u8 **)(temp_r4 + 0x30) + 0x10) = temp_f31;
+    *(f32 *)(*(u8 **)(temp_r4 + 0x30) + 0x14) = temp_f1;
+    if (*(f32 *)(arg0 + 0x50) >= *(f32 *)(arg0 + 0x4C)) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_80052F90(void *arg0) {
     extern f32 lbl_80369084;
     M2C_FIELD(arg0, f32 *, 0x50) = (f32) lbl_80369084;
