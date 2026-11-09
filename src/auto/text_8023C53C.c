@@ -867,11 +867,13 @@ s32 fn_8024B714(s32 arg0) {
 
 s32 fn_8024B7DC(s32 arg0) {
     s32 fn_80255FB0(s32);
+    void fn_8026372C(void);
+    void fn_802636F4(void);
     s32 var_r31;
 
     var_r31 = arg0;
     fn_8026372C();
-    if ((u32) (fn_80255FB0(var_r31) + 0x10000) == -1U) {
+    if ((u32)(fn_80255FB0(var_r31) + 0x10000) == 0xFFFFU) {
         var_r31 = -1;
     }
     fn_802636F4();
