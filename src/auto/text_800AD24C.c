@@ -2442,6 +2442,32 @@ s32 fn_800BA230(u32 arg0, s32 arg1) {
     return 1;
 }
 
+s32 fn_800BA38C(u32 arg0, s32 arg1, s32 arg2) {
+    u32 fn_801090C0(void);
+    void fn_80109A54(u32, u8, f32);
+    extern f32 lbl_80369D00;
+    u32 tmp;
+    f32 var_f1;
+
+    if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
+        return 0;
+    }
+    tmp = fn_801090C0();
+    if (tmp == 0U) {
+        return 0;
+    }
+    var_f1 = (f32) arg2;
+    switch (arg1) {
+    case 5:
+    case 6:
+    case 7:
+        var_f1 *= lbl_80369D00;
+        break;
+    }
+    fn_80109A54(tmp, (u8) arg1, var_f1);
+    return 1;
+}
+
 s32 fn_800BA438(u32 arg0, s32 arg1)
 {
   u32 fn_801090C0(void);
