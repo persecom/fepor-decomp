@@ -109,6 +109,84 @@ s32 fn_8007CB08(void) {
     return v != 0;
 }
 
+void fn_8007CB3C(void *arg0, u8 arg1) {
+    void fn_800072B0(s32 *, s32 *, s32 *, s32 *);
+    void fn_800075D8(void);
+    void fn_80007818(f32, f32, f32, f32);
+    void fn_80007838(f32, f32, f32, f32);
+    void fn_80007884(void);
+    void fn_80007898(s32);
+    void fn_80009C0C(f32);
+    void fn_8000A174(s32, s32);
+    void fn_8000A248(void);
+    void fn_8000A258(void);
+    void fn_8001003C(s16, s32, s32, s32, s32, void *, ...);
+    s32 fn_80010B78(void *, s32, f32);
+    extern s32 lbl_80369400;
+    extern s32 lbl_80369404;
+    extern s32 lbl_80369408;
+    extern s32 lbl_8036940C;
+    extern f32 lbl_80369418;
+    extern f32 lbl_8036941C;
+    extern f32 lbl_80369420;
+    extern f32 lbl_80369424;
+    extern f32 lbl_80369428;
+    extern f32 lbl_8036942C;
+    extern f32 lbl_80369430;
+    extern s32 lbl_8036C460;
+    extern s32 lbl_8036C464;
+    extern s32 lbl_8036C468;
+    extern s32 lbl_8036C46C;
+    s32 sp24;
+    s32 sp20;
+    s32 sp1C;
+    s32 sp18;
+    s32 sp14;
+    s32 sp10;
+    s32 spC;
+    s32 sp8;
+    s16 var_r3;
+
+    fn_8000A258();
+    fn_8000A174(0, 0x12);
+    fn_8000A248();
+    fn_80007898(3);
+    fn_80007838(lbl_80369418, lbl_8036941C, lbl_80369418, lbl_80369418);
+    fn_80007818(lbl_80369420, lbl_80369424, lbl_80369418, lbl_80369418);
+    sp14 = lbl_80369404;
+    sp10 = lbl_80369400;
+    spC = lbl_8036C464;
+    sp8 = lbl_8036C460;
+    fn_800072B0(&sp8, &spC, &sp10, &sp14);
+    fn_800075D8();
+    fn_80007884();
+    fn_80007898(3);
+    fn_80007838(lbl_80369418, lbl_80369424, lbl_80369418, lbl_80369418);
+    fn_80007818(lbl_80369420, lbl_80369428, lbl_80369418, lbl_80369418);
+    sp24 = lbl_8036C46C;
+    sp20 = lbl_8036C468;
+    sp1C = lbl_8036940C;
+    sp18 = lbl_80369408;
+    fn_800072B0(&sp18, &sp1C, &sp20, &sp24);
+    fn_800075D8();
+    fn_80007884();
+    fn_8000A258();
+    fn_80009C0C(lbl_8036942C);
+    fn_8000A248();
+    fn_8000A258();
+    fn_8000A174(0, 0x13);
+    fn_8000A248();
+    if (arg1 != 0) {
+        var_r3 = 0x18;
+    } else {
+        var_r3 = 0x130 - (fn_80010B78(arg0, -1, lbl_80369430) / 2);
+    }
+    fn_8001003C(var_r3, 0x197, 1, 1, 0, arg0, lbl_80369430, lbl_80369418);
+    fn_8000A258();
+    fn_80009C0C(lbl_80369430);
+    fn_8000A248();
+}
+
 void fn_8007CCE8(void) {
     M2C_UNK fn_80087F50();
     fn_80087F50();
