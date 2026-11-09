@@ -531,6 +531,45 @@ void fn_8016746C(void *arg0, s32 arg1, s32 arg2, f32 farg0, f32 farg1) {
     fn_80166DD0(arg0, arg2, farg0, farg1);
 }
 
+void fn_8016758C(void *arg0, s32 arg1, s32 arg2, f32 farg0, f32 farg1) {
+    void *fn_8000C0C0(void *, void *);
+    void fn_8000CAF0(void *, s32);
+    void fn_8005C8B4(void *);
+    void fn_801475FC(void *, s32);
+    void fn_80167190(void *, s32, f32, f32);
+    void *memset(void *, int, s32);
+
+    extern u8 lbl_80293D20[32];
+    extern u8 lbl_80330D68[296];
+    extern u8 lbl_80277A20[59];
+    extern f32 lbl_8036A92C;
+
+    void *temp_r3;
+    u8 var_r0;
+
+    temp_r3 = fn_8000C0C0(lbl_80293D20, lbl_80293D20);
+    if (temp_r3 == NULL) {
+        var_r0 = 0;
+    } else if (*(u8 *)((uintptr_t)temp_r3 + 0x2E) != 0) {
+        var_r0 = 0;
+    } else {
+        var_r0 = 1;
+    }
+    if (var_r0 == 0) {
+        fn_8000CAF0(lbl_80293D20, arg1);
+        memset(lbl_80330D68, 0, 0x124);
+        *(f32 *)((uintptr_t)arg0 + 0xDC) = farg0;
+        *(f32 *)((uintptr_t)arg0 + 0xE0) = farg1;
+        *(f32 *)((uintptr_t)arg0 + 0xF4) = farg0;
+        *(f32 *)((uintptr_t)arg0 + 0xF8) = farg1;
+        *(f32 *)((uintptr_t)arg0 + 0x10C) = lbl_8036A92C;
+        *(f32 *)((uintptr_t)arg0 + 0x110) = lbl_8036A92C;
+        fn_8005C8B4(lbl_80277A20 + 0x42);
+        fn_801475FC(lbl_80277A20 + 0x52, 0x64);
+        fn_80167190(arg0, arg2, farg0, farg1);
+    }
+}
+
 void fn_80168D3C(s32 arg0) {
     void fn_801676AC(void *, s32);
     extern u8 lbl_80330D68[16];
@@ -995,6 +1034,22 @@ void *fn_8016A6A4(void *arg0) {
     M2C_UNK fn_801403F0(void *);
     fn_801403F0(arg0);
     M2C_FIELD(arg0, s32 *, 0x40) = 0;
+    return arg0;
+}
+
+void *fn_8016A6DC(void *arg0, s16 arg1) {
+    extern u16 lbl_802940AC[76];
+    extern u16 lbl_802920E0[76];
+    
+    if (arg0 != NULL) {
+        *(u16**)((char*)arg0 + 4) = lbl_802940AC;
+        if (arg0 != NULL) {
+            *(u16**)((char*)arg0 + 4) = lbl_802920E0;
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
     return arg0;
 }
 
