@@ -46,6 +46,7 @@ extern f32 lbl_803697E4;
 #pragma scheduling reset
 
 void fn_8008CD9C(void) {
+    void fn_8006EEFC(void *, void *);
     extern u16 lbl_803674F0;
     extern u16 lbl_803674F4;
     extern u8 lbl_8026CC88[];
