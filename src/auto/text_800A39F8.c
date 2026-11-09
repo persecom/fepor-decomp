@@ -19,9 +19,9 @@ void *fn_800A3A30(void) {
     return &lbl_8026E168[0x2E];
 }
 
-s32 fn_800A3A40(s32 arg1) {
-    s32 temp_r3 = arg1;
-    fn_8007982C(temp_r3);
+s32 fn_800A3A40(s32 arg0, s32 arg1) {
+    M2C_UNK fn_8007982C(s32);
+    fn_8007982C(arg1);
     return 0;
 }
 
