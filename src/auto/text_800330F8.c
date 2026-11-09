@@ -1809,18 +1809,19 @@ void fn_8003E8DC(void *arg0, void *arg1) {
     M2C_FIELD(arg0, s8 *, 0x1AA) = (s8) (0x14 - M2C_FIELD(M2C_FIELD(arg0, void **, 0x18C), u8 *, 0x3E));
 }
 
-void fn_8003EA24(void *arg0) {
-    void *temp_r31;
-    s32 temp_r6;
+void fn_8003EA24(void *arg0, s32 arg1, s32 arg2) {
+    void fn_8003816C(void *);
+    s32 flags;
+    void *partner;
 
-    temp_r31 = M2C_FIELD(arg0, void **, 0x194);
-    M2C_FIELD(arg0, s32 *, 0x1A0) = (s32) (M2C_FIELD(arg0, s32 *, 0x1A0) & 0xFFFFFFFD);
-    temp_r6 = M2C_FIELD(temp_r31, s32 *, 0x1A0) & 0xFFFFFFFB;
-    M2C_FIELD(temp_r31, s32 *, 0x1A0) = temp_r6;
-    M2C_FIELD(arg0, void **, 0x194) = NULL;
-    M2C_FIELD(temp_r31, s32 *, 0x194) = 0;
-    fn_8003816C(temp_r31, temp_r6);
-    M2C_FIELD(temp_r31, s32 *, 0x1A0) = (s32) (M2C_FIELD(temp_r31, s32 *, 0x1A0) | 1);
+    flags = *(s32 *)((u8 *)arg0 + 0x1A0);
+    partner = *(void **)((u8 *)arg0 + 0x194);
+    *(s32 *)((u8 *)arg0 + 0x1A0) = flags & ~2;
+    *(s32 *)((u8 *)partner + 0x1A0) = *(s32 *)((u8 *)partner + 0x1A0) & ~4;
+    *(void **)((u8 *)arg0 + 0x194) = NULL;
+    *(void **)((u8 *)partner + 0x194) = NULL;
+    fn_8003816C(partner);
+    *(s32 *)((u8 *)partner + 0x1A0) |= 1;
 }
 
 void fn_8003EA84(void *arg0, void *arg1) {
@@ -4305,6 +4306,34 @@ void fn_80054808(void *arg0) {
     u8 fn_80055248(s32);
     if (fn_80055248(*M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), s32 **, 0x2C)) != 0) {
         fn_8000C188(arg0);
+    }
+}
+
+void fn_80054850(void *arg0) {
+    s64 OSGetTime(void);
+    void fn_8000C070(void *, s32);
+    void fn_800555EC(s32, s32);
+    u8 fn_80055248(s32);
+    s32 temp_r31;
+    u32 flags;
+    void *temp_r3;
+    s32 var_r4;
+
+    *(s64 *)((u8 *)arg0 + 0x38) = OSGetTime();
+    temp_r3 = *(void **)((u8 *)arg0 + 0x30);
+    flags = *(u32 *)((u8 *)temp_r3 + 8);
+    temp_r31 = **(s32 **)((u8 *)temp_r3 + 0x2C);
+    if ((flags >> 28) & 1) {
+        fn_8000C070(arg0, 0);
+        return;
+    }
+    var_r4 = 0;
+    if (flags & 0x100) {
+        var_r4 = 8;
+    }
+    fn_800555EC(temp_r31, var_r4);
+    if (fn_80055248(temp_r31) != 0) {
+        fn_8000C070(arg0, 0);
     }
 }
 
