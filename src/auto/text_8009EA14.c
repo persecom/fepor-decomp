@@ -52,7 +52,7 @@ void fn_8009EA14(void) {
 }
 
 void fn_8009EA90(void) {
-    M2C_UNK fn_801E2594(M2C_UNK *);
+    void fn_801E2594(void *);
     extern s32 lbl_803682F0;
     fn_801E2594(&lbl_803682F0);
 }
