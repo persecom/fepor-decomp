@@ -786,3 +786,6 @@ extern u8 lbl_80368430;
 extern u8 lbl_80368431;
 extern f32 lbl_8036BADC;
 extern f32 lbl_8036BAE0;
+#include "global.h"
+
+extern u16 lbl_803682A4;
