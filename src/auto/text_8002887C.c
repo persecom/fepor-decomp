@@ -764,12 +764,18 @@ void fn_8002D548(void) {
     }
 }
 
-void fn_8002D72C(void) {
+void fn_8002D72C(void *arg0) {
     extern u16 lbl_80284E30[];
     extern u16 lbl_80284E5C[];
     extern u16 lbl_80284E78[];
-    
-    fn_8000CAA0(lbl_80284E5C, fn_8000CAF0(lbl_80284E30, fn_8000CAA0(lbl_80284E78, 0, lbl_80284E78), lbl_80284E30), lbl_80284E5C);
+    void *fn_8000CAA0(void *, void *);
+    void *fn_8000CAF0(void *, void *);
+    void fn_80006220(s32);
+    void *r;
+
+    r = fn_8000CAA0(lbl_80284E78, arg0);
+    r = fn_8000CAF0(lbl_80284E30, r);
+    r = fn_8000CAA0(lbl_80284E5C, r);
     fn_80006220(0x10);
 }
 
