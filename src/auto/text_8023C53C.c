@@ -4864,4 +4864,3 @@ extern u16 lbl_80366F28;
 extern char lbl_80282AE8[];
 extern s32 lbl_80368960;
 extern s32 lbl_80368964;
-extern s32 lbl_80368968;
