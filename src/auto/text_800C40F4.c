@@ -5845,69 +5845,7 @@ void fn_800F0774(void) {
     }
 }
 
-static void fn_800F07C0_a(void *unit, u8 *data) {
-    f32 fn_80023430(void *, f32, f32);
-    void fn_800536B0(void *, f32, f32, f32);
-    extern u8 lbl_802CA518[];
-    extern f32 lbl_8036A010;
-    extern f32 lbl_8036A014;
-    void *obj;
-    f32 f30;
-    f32 f31;
-
-    if (data[0] != 3) {
-        obj = *(void **)((u8 *)unit + 0x30);
-        *(u32 *)((u8 *)obj + 8) |= 0x10;
-    } else {
-        obj = *(void **)((u8 *)unit + 0x30);
-        *(u32 *)((u8 *)obj + 8) &= ~0x10U;
-        f30 = lbl_8036A010 + (f32)(s8)data[2];
-        f31 = lbl_8036A010 + (f32)(s8)data[3];
-        fn_800536B0(unit, f30, f31, fn_80023430(lbl_802CA518, f30, f31) - lbl_8036A014);
-    }
-}
-
-static void fn_800F07C0_b(void *unit, u8 *data) {
-    f32 fn_80023430(void *, f32, f32);
-    void fn_800536B0(void *, f32, f32, f32);
-    extern u8 lbl_802CA518[];
-    extern f32 lbl_8036A010;
-    extern f32 lbl_8036A014;
-    void *obj;
-    f32 f31;
-    f32 f30;
-
-    if (data[0] != 3) {
-        obj = *(void **)((u8 *)unit + 0x30);
-        *(u32 *)((u8 *)obj + 8) |= 0x10;
-    } else {
-        obj = *(void **)((u8 *)unit + 0x30);
-        *(u32 *)((u8 *)obj + 8) &= ~0x10U;
-        f30 = lbl_8036A010 + (f32)(s8)data[2];
-        f31 = lbl_8036A010 + (f32)(s8)data[3];
-        fn_800536B0(unit, f30, f31, fn_80023430(lbl_802CA518, f30, f31) - lbl_8036A014);
-    }
-}
-
-void fn_800F07C0(void) {
-    void *fn_8014C5A8(void *, s32);
-    u8 fn_8014D8BC(void *);
-    extern u8 lbl_80330708[];
-    extern void *lbl_803678E8;
-    extern void *lbl_803678EC;
-    void *r31;
-
-    if (fn_8014D8BC(lbl_80330708) != 0) {
-        if (lbl_803678E8 != NULL) {
-            r31 = lbl_803678E8;
-            fn_800F07C0_a(r31, fn_8014C5A8(lbl_80330708, 0));
-        }
-        if (lbl_803678EC != NULL) {
-            r31 = lbl_803678EC;
-            fn_800F07C0_b(r31, fn_8014C5A8(lbl_80330708, 3));
-        }
-    }
-}
+void fn_800F07C0(void);
 
 void fn_800F09A8(s32 arg0) {
     void *fn_80052B54(char *, s32);
