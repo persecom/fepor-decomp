@@ -6,6 +6,7 @@
 typedef void (*OSErrorHandler)(u8, void *, ...);
 extern OSErrorHandler __OSErrorTable[];
 extern u32 lbl_80366F38;
+extern void PPCMtfpscr(u32);
 
 int OSReport(void *msg, ...);
 
