@@ -108,6 +108,129 @@ void fn_80006314(void) {
     fn_8020A9E0(&lbl_802A53C0);
 }
 
+void fn_80006388(void) {
+    s32 OSDisableInterrupts(void);
+    void OSDisableScheduler(void);
+    void OSEnableScheduler(void);
+    void OSRestoreInterrupts(s32);
+    void fn_8020ADD8(void *);
+    void fn_8020AEC4(void *);
+    extern u8 lbl_802A51C0[];
+    extern u8 lbl_80367130;
+    extern u8 lbl_80367131;
+    extern s32 lbl_80367138;
+
+    s32 temp_r30;
+    s32 bitCount;
+    s8 bitFlags;
+    s32 copyLen;
+    s32 copied;
+    s32 left;
+    u8 *src;
+    u8 *dst;
+    u8 *dstStart;
+    u8 *back;
+    u8 *slot;
+    s32 t7;
+    s32 t6;
+    s32 t8;
+    s32 uncompSize;
+    u8 idxByte;
+    void (*cb)(s32, void *, void *);
+    u32 var_ctr;
+    s32 var_ctr_2;
+
+    goto loop_cond;
+loop_body:
+    bitCount = 0;
+    slot = lbl_802A51C0 + ((s8)idxByte * 0x10);
+    src = *(u8 **)slot;
+    dst = *(u8 **)(slot + 4);
+    dstStart = dst;
+    if ((u8)*src == 0x10) {
+        t7 = src[2];
+        t6 = src[3];
+        t8 = src[1];
+        src += 4;
+        uncompSize = t8 + ((t7 << 8) & 0xFF00) + ((t6 << 16) & 0xFF0000);
+    loop_inner:
+        if (uncompSize != (s32)(dst - dstStart)) {
+            if ((s8)bitCount == 0) {
+                bitFlags = (s8)*src;
+                bitCount = 8;
+                src += 1;
+            }
+            if (bitFlags >= 0) {
+                *dst = *src;
+                src += 1;
+                dst += 1;
+            } else {
+                t8 = src[0];
+                t6 = src[1];
+                src += 2;
+                copyLen = ((t8 >> 4) & 0xF) + 3;
+                back = (dst - (((t8 << 8) & 0xF00) + t6)) - 1;
+                copied = 0;
+                if (copyLen > 0) {
+                    left = copyLen - 8;
+                    if (copyLen > 8) {
+                        var_ctr = (u32)(left + 7) >> 3U;
+                        if (left > 0) {
+                            do {
+                                copied += 8;
+                                dst[0] = back[0];
+                                dst[1] = back[1];
+                                dst[2] = back[2];
+                                dst[3] = back[3];
+                                dst[4] = back[4];
+                                dst[5] = back[5];
+                                dst[6] = back[6];
+                                dst[7] = back[7];
+                                back += 8;
+                                dst += 8;
+                                var_ctr -= 1;
+                            } while (var_ctr != 0);
+                        }
+                    }
+                    var_ctr_2 = copyLen - copied;
+                    if (copied < copyLen) {
+                        do {
+                            t6 = *back;
+                            copied += 1;
+                            back += 1;
+                            *dst = t6;
+                            dst += 1;
+                            var_ctr_2 -= 1;
+                        } while (var_ctr_2 != 0);
+                    }
+                }
+            }
+            bitCount -= 1;
+            bitFlags = (s8)(bitFlags * 2);
+            goto loop_inner;
+        }
+    }
+    slot = lbl_802A51C0 + ((s8)lbl_80367130 * 0x10);
+    if (*(u32 *)(slot + 8) != 0U) {
+        temp_r30 = OSDisableInterrupts();
+        OSDisableScheduler();
+        slot = lbl_802A51C0 + ((s8)lbl_80367130 * 0x10);
+        cb = *(void (**)(s32, void *, void *))(slot + 8);
+        cb(*(s32 *)(slot + 0xC), *(void **)slot, *(void **)(slot + 4));
+        OSEnableScheduler();
+        OSRestoreInterrupts(temp_r30);
+    }
+    lbl_80367130 = (lbl_80367130 + 1) & 0x1F;
+loop_cond:
+    idxByte = lbl_80367130;
+    if ((s8)idxByte != (s8)lbl_80367131) {
+        goto loop_body;
+    }
+    fn_8020AEC4(&lbl_80367138);
+    fn_8020ADD8(&lbl_80367138);
+    goto loop_cond;
+}
+
 void fn_800065B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     extern u8 lbl_80367131;
     extern u8 lbl_802A51C0[];
@@ -197,11 +320,16 @@ void fn_800067BC(s32 arg0, void *arg1) {
     }
 }
 
-s32 fn_80006AC0(void *arg0) {
-    if ((u8) M2C_FIELD(arg0, u8 *, 0) != 0x10) {
+s32 fn_80006AC0(u8 *arg0) {
+    s32 t;
+
+    if (arg0[0] != 0x10) {
         return 0;
     }
-    return M2C_FIELD(arg0, u8 *, 1) + ((M2C_FIELD(arg0, u8 *, 2) << 8) & 0xFF00) + ((M2C_FIELD(arg0, u8 *, 3) << 0x10) & 0xFF0000);
+    t = (arg0[2] << 8) & 0xFF00;
+    t = arg0[1] + t;
+    t = t + ((arg0[3] << 16) & 0xFF0000);
+    return t;
 }
 
 s32 fn_80006AF4(s32 arg0) {
@@ -340,6 +468,46 @@ s32 fn_800070C8(s32 arg0) {
 
 void fn_80007124(u8 *arg0,u8*a,u8*b,u8*c){u32*g=(u32*)0x80367140;u32*ctx=*(u32**)((u8*)g+0xc);u8*dst=(u8*)ctx[1];u8*s=arg0;u32 n=1,len;u8*out,*src;if(!s)s=(u8*)0x80366da4;while((s8)*s++){n++;}len=(n+3)&0xfc;if(len>0xd4)len=0xd4;out=(u8*)*(u32*)((u8*)g+8);*(u32*)((u8*)g+8)=(u32)(out+len);src=arg0;while((s8)*src){*out++=*src++;}*out=0;dst[5]+=len;dst[0x18]=dst[0xc];dst[0x19]=dst[0xd];dst[0x1a]=dst[0xe];dst[0x1b]=dst[0xf];}
 
+void fn_800071D8(u32 arg0, f32 arg1)
+{
+    extern f32 lbl_80368B90;
+    extern void *lbl_80367140;
+
+    u32 flag;
+    int value;
+    void *object;
+
+    flag = (arg0 & 0xFF) != 0;
+    value = (int)(lbl_80368B90 * arg1);
+    object = *(void **)((u8 *)*(void **)lbl_80367140 + 0xC);
+    object = *(void **)((u8 *)object + 4);
+
+    value = (s16)value;
+    value &= -(int)flag;
+
+    *(s16 *)((u8 *)object + 0x26) = value;
+}
+
+void fn_80007220(u32 arg0, f32 arg1)
+{
+    extern f32 lbl_80368B90;
+    extern void *lbl_80367140;
+
+    u32 flag;
+    int value;
+    void *object;
+
+    flag = (arg0 & 0xFF) != 0;
+    value = (int)(lbl_80368B90 * arg1);
+    object = *(void **)((u8 *)*(void **)lbl_80367140 + 0xC);
+    object = *(void **)((u8 *)object + 4);
+
+    value = (s16)value;
+    value &= -(int)flag;
+
+    *(s16 *)((u8 *)object + 0x24) = value;
+}
+
 void fn_80007268(f32 arg0) {
     extern void *lbl_80367140;
 
@@ -411,6 +579,33 @@ void fn_80007358(f32 arg0, f32 arg1) {
 
     *(f32 *)(ptr + 0x30) = arg0;
     *(f32 *)(ptr + 0x34) = arg1;
+}
+
+void fn_80007538(void)
+{
+    extern void *lbl_80367140;
+
+    void *object;
+    f32 x;
+    f32 y;
+
+    object = *(void **)((u8 *)lbl_80367140 + 0xC);
+    object = *(void **)((u8 *)object + 4);
+
+    x = *(f32 *)((u8 *)object + 0x18);
+    y = *(f32 *)((u8 *)object + 0x1C);
+
+    *(f32 *)((u8 *)object + 0x18) = *(f32 *)((u8 *)object + 0x48);
+    *(f32 *)((u8 *)object + 0x1C) = *(f32 *)((u8 *)object + 0x4C);
+
+    *(f32 *)((u8 *)object + 0x48) = *(f32 *)((u8 *)object + 0x28);
+    *(f32 *)((u8 *)object + 0x4C) = *(f32 *)((u8 *)object + 0x2C);
+
+    *(f32 *)((u8 *)object + 0x28) = *(f32 *)((u8 *)object + 0x38);
+    *(f32 *)((u8 *)object + 0x2C) = *(f32 *)((u8 *)object + 0x3C);
+
+    *(f32 *)((u8 *)object + 0x38) = x;
+    *(f32 *)((u8 *)object + 0x3C) = y;
 }
 
 void fn_800075D8(void) {
@@ -1315,6 +1510,18 @@ s32 fn_8000AFB4(void **arg0) {
     arg0[4] = temp;       // Store it in arg0[4] (field16)
     arg0[1] = (void *)((u8 *)temp + 8);  // Add 8 and store back in arg0[1]
     return 0;
+}
+
+void fn_8000AFD4(void *arg0)
+{
+    u32 *data = *(u32 **)((u8 *)arg0 + 4);
+    s32 value = (s16)(data[0] >> 16);
+    void (*callback)(s32, u32) = (void (*)(s32, u32))data[1];
+    u32 arg1 = data[2];
+
+    *(u32 *)((u8 *)arg0 + 4) = (u32)(data + 3);
+
+    callback(value, arg1);
 }
 
 void fn_8000B018(void *arg0) {
