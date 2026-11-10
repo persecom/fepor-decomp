@@ -4258,7 +4258,42 @@ u32 fn_802614C4(u32 arg0) {
     return arg0 >> 8U;
 }
 
-void fn_802616E4(s8 arg0) {
+s32 fn_80261620(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    extern u8 lbl_80368AD4;
+    extern u8 lbl_80368AD3;
+    extern u32 lbl_80368AA4;
+    extern void fn_802614CC(void);
+
+    fn_802636C8();
+
+    lbl_80368AD4 = 0;
+    lbl_80368AD3 = 0;
+    lbl_80368AA4 = 0;
+
+    if (fn_8026341C(fn_802614CC, arg3, arg0) == 0) {
+        return -1;
+    }
+
+    if (fn_802596A8(arg1 & 0xFF, arg2 & 0xFF, arg3 & 1) == 0) {
+        return -1;
+    }
+
+    if ((arg3 & 8) != 0) {
+        fn_80262504();
+    }
+
+    if (fn_80263534(arg3) == 0) {
+        return -1;
+    }
+
+    fn_802636F4();
+    fn_802634E4();
+
+    return 0;
+}
+
+int fn_802616E4(s8 arg0) {
     extern s8 lbl_80368AD0;
     lbl_80368AD0 = arg0;
 }
