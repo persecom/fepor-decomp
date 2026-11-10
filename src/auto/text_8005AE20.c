@@ -2859,9 +2859,9 @@ s32 fn_8006F2B8(s32 arg0, s32 arg1) {
     return 0;
 }
 
-s32 fn_8006F2E0(void *arg2) {
+s32 fn_8006F2E0(void *arg0, void *arg1, void *arg2) {
     extern u8 lbl_80366DE8;
-    *(u8 *)&lbl_80366DE8 = *(u8 *)((u8 *)arg2 + 0x3A);
+    lbl_80366DE8 = *(u8 *)((u8 *)arg2 + 0x3A);
     return 5;
 }
 
