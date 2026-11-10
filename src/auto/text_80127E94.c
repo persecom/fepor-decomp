@@ -414,6 +414,32 @@ void fn_8012942C(s32 arg0, s32 arg1) {
     obj[0x30 / 4] = arg0;
 }
 
+void fn_80129464(void *arg0) {
+    f32 fn_80023068(void *, void *, f32, f32, f32);
+    M2C_UNK fn_800498A4(void *, void *, M2C_UNK);
+    M2C_UNK fn_800536B0(s32, f32, f32, f32);
+    s32 fn_80053C30(void *, void *);
+    extern u8 lbl_80275740[0x200];
+    extern u8 lbl_802CA518[0x100000];
+    extern f32 lbl_8036A410;
+    extern f64 lbl_8036A418;
+    f32 temp_f31;
+    f32 temp_f30;
+    s32 temp_r30_2;
+    s32 temp_r30;
+    s32 temp_r31;
+    void *temp_r3;
+
+    temp_r3 = *(void **)((char *)arg0 + 0x30);
+    temp_r31 = (s8)*(u8 *)temp_r3;
+    temp_r30 = (s8)*((u8 *)temp_r3 + 1);
+    fn_800498A4(temp_r3, arg0, 0);
+    temp_r30_2 = fn_80053C30(lbl_80275740 + 0x15B, arg0);
+    temp_f31 = lbl_8036A410 + (f32)temp_r30;
+    temp_f30 = lbl_8036A410 + (f32)temp_r31;
+    fn_800536B0(temp_r30_2, temp_f30, temp_f31, fn_80023068(lbl_802CA518, lbl_802CA518, temp_f30, temp_f31, lbl_8036A410));
+}
+
 void fn_8012955C(void) {
     extern u16 lbl_80275740[];
     fn_800558D8((u8 *)lbl_80275740 + 0x15B);
@@ -736,9 +762,8 @@ void fn_8012AEC4(void *arg0) {
 }
 
 void fn_8012B394(void) {
-    extern u16 lbl_80275740;
-    s32 addr = (s32)&lbl_80275740 + 0x1A7;
-    fn_800558D8((u16*)addr);
+    extern u16 lbl_80275740[];
+    fn_800558D8((u8 *)lbl_80275740 + 0x1a7);
 }
 
 void fn_8012B3C0(s32 arg0, s32 arg1, s32 arg2) {
