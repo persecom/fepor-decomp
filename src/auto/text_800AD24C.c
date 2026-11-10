@@ -1117,12 +1117,12 @@ s32 fn_800B4A84(void* arg0, s32 arg1, s32 arg2) {
     }
 }
 
-extern u16 lbl_80367820;
+extern u8 *lbl_80367820;
 s32 fn_800B4FF8(u8 *arg0, u8 *arg1) {
-    s32 temp_r4;
-    u16 temp_r3;
-    u16 temp_r0_2;
-    
+    u8 *temp_r4;
+    u8 temp_r3;
+    u8 temp_r0_2;
+
     temp_r4 = lbl_80367820 + 0x92;
     temp_r3 = *(u16*)(temp_r4 + (*arg0 * 0x98));
     temp_r0_2 = *(u16*)(temp_r4 + (*arg1 * 0x98));
@@ -4122,23 +4122,28 @@ void fn_800BDED8(void *arg0) {
     u32 *ptr;
     u8 *byte_ptr;
 
+    // First loop: clear 10 fields starting at arg0 + 0x17C
     ptr = (u32*)((char*)arg0 + 0x17C);
-    for (i = 9; i >= 0; i--) {
+    for (i = 0; i < 10; i++) {
         if (*ptr != 0) {
             *ptr = 0;
-            *(ptr + 0x60) = 0;
+            *(ptr + 0x60) = 0; // offset 0x180
         }
-        ptr -= 0x8;
+        ptr -= 0x8; // move to next field
     }
 
+    // Second loop: clear bits in a bitset
     byte_ptr = (u8*)arg0;
     for (i = 0; i < 0x18; i++) {
         if (*(u32*)((char*)arg0 + i * 0x4) != 0) {
-            u32 index = i >> 3;
-            u32 mask = 1 << (i & 7);
+            s32 index = i >> 3;
+            s32 bit = i & 7;
+            u32 mask = (1 << bit);
             byte_ptr[index + 0x300] &= ~mask;
         }
     }
+
+    // This function is complete - no additional work needed
 }
 
 void fn_800BE068(void *arg0) {
