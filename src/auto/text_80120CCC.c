@@ -8,6 +8,36 @@ typedef struct {
 extern f32 lbl_8036A30C;
 volatile f32 GXRegs_8036A30C[0x800] : 0xCC010000;
 
+static void fn_80121D60_append(void *arg0, u8 *s) {
+    extern u32 lbl_80367110;
+    u8 c;
+    s32 pos;
+    s32 off;
+
+    switch (lbl_80367110 & 0x800) {
+    case 0:
+        do {
+            c = *s;
+            s += 1;
+            if (!(lbl_80367110 & 0x800)) {
+                *(u8 *)((u8 *)arg0 + 0x400C) = 0;
+                pos = *(s32 *)((u8 *)arg0 + 0x4004);
+                if (pos <= 0x3E) {
+                    off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+                    off = (off & 0x3FC0) + pos;
+                    M2C_FIELD(arg0, u8 *, off) = c;
+                    pos = *(s32 *)((u8 *)arg0 + 0x4004);
+                    *(s32 *)((u8 *)arg0 + 0x4004) = pos + 1;
+                    off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+                    off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
+                    M2C_FIELD(arg0, u8 *, off) = 0;
+                }
+            }
+        } while ((s8)*s != 0);
+        break;
+    }
+}
+
 void fn_80120CCC(u16 *arg0) {
     *arg0 &= ~0x130;
 }
@@ -298,6 +328,130 @@ void fn_80121D30(void) {
     fn_80225058(0, 0x33, 0x260, 0x177);
 }
 
+void fn_80121D60(void *arg0, u8 *arg1) {
+    u8 *fn_8007C378(u8 *);
+    extern u8 lbl_80274D20[];
+    extern u32 lbl_80367110;
+    u8 *s;
+    u8 c;
+    s32 pos;
+    s32 off;
+
+    if (arg1 == *(u8 **)((u8 *)arg0 + 0x4008)) {
+        return;
+    }
+    *(u8 **)((u8 *)arg0 + 0x4008) = arg1;
+    if (arg1 == NULL) {
+        return;
+    }
+    if ((s32)*arg1 == 0x47) {
+        s = lbl_80274D20 + 0x31;
+        switch (lbl_80367110 & 0x800) {
+        case 0:
+            goto body1;
+        default:
+            goto after1;
+        }
+    body1:
+        do {
+            c = *s;
+            s += 1;
+            if (!(lbl_80367110 & 0x800)) {
+                *(u8 *)((u8 *)arg0 + 0x400C) = 0;
+                pos = *(s32 *)((u8 *)arg0 + 0x4004);
+                if (pos <= 0x3E) {
+                    off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+                    off = (off & 0x3FC0) + pos;
+                    M2C_FIELD(arg0, u8 *, off) = c;
+                    pos = *(s32 *)((u8 *)arg0 + 0x4004);
+                    *(s32 *)((u8 *)arg0 + 0x4004) = pos + 1;
+                    off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+                    off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
+                    M2C_FIELD(arg0, u8 *, off) = 0;
+                }
+            }
+        } while ((s8)*s != 0);
+    after1:
+        if (*(u8 *)((u8 *)arg0 + 0x400C) == 0) {
+            off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+            off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
+            M2C_FIELD(arg0, u8 *, off) = 0;
+            *(s32 *)((u8 *)arg0 + 0x4004) = 0;
+            *(s32 *)((u8 *)arg0 + 0x4000) = *(s32 *)((u8 *)arg0 + 0x4000) + 1;
+            off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+            off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
+            M2C_FIELD(arg0, u8 *, off) = 0;
+            *(u8 *)((u8 *)arg0 + 0x400C) = 1;
+        }
+    } else {
+        s = lbl_80274D20 + 0x37;
+        switch (lbl_80367110 & 0x800) {
+        case 0:
+            goto body2;
+        default:
+            goto after2;
+        }
+    body2:
+        do {
+            c = *s;
+            s += 1;
+            if (!(lbl_80367110 & 0x800)) {
+                *(u8 *)((u8 *)arg0 + 0x400C) = 0;
+                pos = *(s32 *)((u8 *)arg0 + 0x4004);
+                if (pos <= 0x3E) {
+                    off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+                    off = (off & 0x3FC0) + pos;
+                    M2C_FIELD(arg0, u8 *, off) = c;
+                    pos = *(s32 *)((u8 *)arg0 + 0x4004);
+                    *(s32 *)((u8 *)arg0 + 0x4004) = pos + 1;
+                    off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+                    off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
+                    M2C_FIELD(arg0, u8 *, off) = 0;
+                }
+            }
+        } while ((s8)*s != 0);
+    after2:
+        s = fn_8007C378(arg1);
+        switch (lbl_80367110 & 0x800) {
+        case 0:
+            goto body3;
+        default:
+            goto after3;
+        }
+    body3:
+        do {
+            c = *s;
+            s += 1;
+            if (!(lbl_80367110 & 0x800)) {
+                *(u8 *)((u8 *)arg0 + 0x400C) = 0;
+                pos = *(s32 *)((u8 *)arg0 + 0x4004);
+                if (pos <= 0x3E) {
+                    off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+                    off = (off & 0x3FC0) + pos;
+                    M2C_FIELD(arg0, u8 *, off) = c;
+                    pos = *(s32 *)((u8 *)arg0 + 0x4004);
+                    *(s32 *)((u8 *)arg0 + 0x4004) = pos + 1;
+                    off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+                    off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
+                    M2C_FIELD(arg0, u8 *, off) = 0;
+                }
+            }
+        } while ((s8)*s != 0);
+    after3:
+        if (*(u8 *)((u8 *)arg0 + 0x400C) == 0) {
+            off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+            off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
+            M2C_FIELD(arg0, u8 *, off) = 0;
+            *(s32 *)((u8 *)arg0 + 0x4004) = 0;
+            *(s32 *)((u8 *)arg0 + 0x4000) = *(s32 *)((u8 *)arg0 + 0x4000) + 1;
+            off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+            off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
+            M2C_FIELD(arg0, u8 *, off) = 0;
+            *(u8 *)((u8 *)arg0 + 0x400C) = 1;
+        }
+    }
+}
+
 void fn_80122000(void *arg0) {
     if ((u8) M2C_FIELD(arg0, u8 *, 0x400C) == 0) {
         s32 temp_r4;
@@ -332,6 +486,20 @@ void fn_80122170(u32 *arg0) {
     // Direct read of the 16-bit value at offset 0x4000
     if ((*(u16 *)((u8 *)arg0 + 0x4000) & 0x4000) == 0) {
         *(u32 *)((u8 *)arg0 + 0x4000) = (*(u32 *)((u8 *)arg0 + 0x4000) | 0x40000000);
+    }
+}
+
+void fn_801221E4(void *arg0)
+{
+    extern unsigned short lbl_80367A58;
+    extern unsigned short lbl_80367110;
+
+    fn_80120CFC(lbl_80367A58);
+    fn_80120C2C();
+
+    if ((lbl_80367A58 & 0x0200) == 0 &&
+        (lbl_80367110 & 3) != 0) {
+        fn_8000C188(arg0);
     }
 }
 
