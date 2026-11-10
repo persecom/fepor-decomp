@@ -14,6 +14,7 @@ typedef struct Self801CAF94 {
 } Self801CAF94;
 
 void *fn_8000CAF0(void *, s32);
+void *fn_801BEB9C(void *arg0, s16 *arg1, s16 *arg2, s16 arg3);
 
 typedef struct ListNode {
     struct ListNode *prev;
