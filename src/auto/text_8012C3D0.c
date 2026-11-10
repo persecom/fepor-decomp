@@ -1205,26 +1205,25 @@ void fn_801324A0(s32 unused, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg
   }
 }
 
-void *fn_801325A8(void **arg1, s32 arg2) {
+void *fn_801325A8(s32 unused, void **arg1, s32 arg2) {
     void *fn_800A8978(s32);
-    extern u16 lbl_80275AC0[29];
+    extern u8 lbl_80275AC0[];
     void *temp_r3;
-    
+    void *var_r3;
+
     temp_r3 = *arg1;
-    
     switch (arg2) {
     case 0:
         return NULL;
     case 1:
-        return fn_800A8978(M2C_FIELD(temp_r3, s32 *, 0x18C));
+        return fn_800A8978(*(s32 *)((u8 *)temp_r3 + 0x18C));
     case 2:
-        if (M2C_FIELD(temp_r3, s32 *, 0x1A0) & 0x80000000) {
-            return &lbl_80275AC0 + 0x523;
+        var_r3 = (u8 *)lbl_80275AC0 + 0x527;
+        if (*(s32 *)((u8 *)temp_r3 + 0x1A0) & 0x80000000) {
+            var_r3 = (u8 *)lbl_80275AC0 + 0x523;
         }
-        return &lbl_80275AC0 + 0x527;
+        return var_r3;
     default:
-        return NULL;
-    case 3:
         return NULL;
     }
 }
