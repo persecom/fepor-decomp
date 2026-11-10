@@ -3,6 +3,7 @@
 #include <dolphin/os.h>
 #include "global.h"
 extern u16 Scb_80339420[];
+extern volatile u32 __DIRegs[16];
 extern s32 PauseFlag_803685A4;
 extern s32 PausingFlag_803685A8;
 extern void* executing_80368598;
