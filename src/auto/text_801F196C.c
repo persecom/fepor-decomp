@@ -1847,8 +1847,6 @@ void fn_801FA508(void *arg0) {
     }
 }
 
-__declspec(section ".rodata") static const char staff_fmt[] = "#F04%s";
-
 void fn_801FA5DC(void *arg0) {
     void fn_8000A258(void);
     void fn_80009D74(f32, f32, f32, f32);
@@ -1887,6 +1885,7 @@ void fn_801FA5DC(void *arg0) {
     s16 w;
     Entry *ent;
     u32 i;
+    u8 *base;
 
     if (lbl_80367110 & 1) {
         fn_8000C070(arg0, 1);
@@ -1924,7 +1923,8 @@ void fn_801FA5DC(void *arg0) {
             }
             if (ent->str8 != NULL) {
                 fn_80010B78(ent->str8, -1, lbl_8036BA20);
-                fn_8001019C((s32)lbl_8036BAB0, (s32)scroll, 1, (void *)staff_fmt, ent->str8);
+                base = lbl_80281028;
+                fn_8001019C((s32)lbl_8036BAB0, (s32)scroll, 1, base + 0x39A, ent->str8);
             }
         }
         scroll += step;
