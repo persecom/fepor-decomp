@@ -612,6 +612,27 @@ void fn_8002CF50(void *arg0, void *arg1) {
     }
 }
 
+void fn_8002CFB0(void *arg0, void *arg1) {
+    u8 fn_80015610(s32, s32);
+    void fn_8002F6E8(void *, u8, u8, u8, int);
+    int fn_8003CFF0(void *, void *);
+    extern u8 lbl_802EF4E0[];
+    void *self;
+    void *other;
+    u8 v198;
+    u8 v19f;
+    u8 v19e;
+
+    self = arg0;
+    other = arg1;
+    if (fn_80015610(*(s32 *)((u8 *)*(void **)((u8 *)self + 4) + 0x190), *(s32 *)((u8 *)other + 0x190)) != 1) {
+        v198 = *(u8 *)((u8 *)other + 0x198);
+        v19f = *(u8 *)((u8 *)other + 0x19F);
+        v19e = *(u8 *)((u8 *)other + 0x19E);
+        fn_8002F6E8(lbl_802EF4E0, v19e, v19f, v198, fn_8003CFF0(*(void **)((u8 *)self + 4), other));
+    }
+}
+
 void fn_8002D044(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 {
     if (arg0 != 0)
