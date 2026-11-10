@@ -74,87 +74,79 @@ void fn_80092438(void *arg0) {
     }
 }
 
-u8 fn_80092ADC(void *arg0, u8 arg1) {
-    u8 var_r31;
-    s32 r30;
-    void *r29;
-    void *r28;
-    
-    r30 = (s32) arg1;
-    r29 = arg0;
-    r28 = arg0;
-    
-    // Load value at r28 + 0x20c
-    var_r31 = *(u8 *)((u8 *)r28 + 0x20C);
-    
-    // Check if arg1 != 7
-    if ((r30 & 0xFF) != 7) {
-        // Call fn_80105BC0 with r28 + 0x1BC and 0x28
-        if (fn_80105BC0((u8 *)r28 + 0x1BC, 0x28) == 0) {
-            // Load address at r28 + 0x18C
-            u32 temp = *(u32 *)((u8 *)r28 + 0x18C);
-            // Add index to get the address to check
-            u8 *addr = (u8 *)temp + r30;
-            if (*(u8 *)(addr + 0x2C) != 0) {
-                // Fall through to return 0, which is already set
-                goto end;
-            }
-        } else {
-            // Fall through to return 0, which is already set
-            goto end;
+u8 fn_80092ADC(void *arg0, s32 arg1) {
+    u8 fn_80105BC0(void *, s32);
+    u8 result;
+    u32 idx;
+    s32 a1;
+    void *self;
+    u8 *row;
+
+    result = 0;
+    idx = (u8)arg1;
+    a1 = arg1;
+    self = arg0;
+    result = *((u8 *)self + idx + 0x20C);
+
+    if (idx == 7) {
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x28) != 0) {
+            goto clamp79;
         }
     }
-    
-    // Check arg1 value with switches
-    switch (r30) {
-        case 0:
-            if (fn_80105BC0((u8 *)r28 + 0x1BC, 0x24) != 0) {
-                goto block_21;
-            }
-            var_r31 = 0;
-            break;
-        case 1:
-            if (fn_80105BC0((u8 *)r28 + 0x1BC, 0x25) != 0) {
-                goto block_21;
-            }
-            var_r31 = 0;
-            break;
-        case 2:
-            if (fn_80105BC0((u8 *)r28 + 0x1BC, 0x26) != 0) {
-                goto block_21;
-            }
-            var_r31 = 0;
-            break;
-        case 3:
-            if (fn_80105BC0((u8 *)r28 + 0x1BC, 0x27) != 0) {
-                goto block_21;
-            }
-            var_r31 = 0;
-            break;
-        case 7:
-            if (fn_80105BC0((u8 *)r28 + 0x1BC, 0x28) != 0) {
-                goto block_21;
-            }
-            var_r31 = 0;
-            break;
-        default:
-block_21:
-            if (fn_80105BC0((u8 *)r28 + 0x1BC, 2) == 0) {
-                // Fall through to end
-                goto end;
-            }
-            if ((s32)var_r31 > 0xFB) {
-                var_r31 = 0xFB;
-            }
-            break;
+
+    row = *(u8 **)((u8 *)self + 0x18C);
+    if (*(row + idx + 0x2C) != 0) {
+        goto block_default;
     }
 
-end:
-    if (var_r31 > 0x79U) {
-        var_r31 = 0x79;
+    switch ((u8)a1) {
+    case 0:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x24) != 0) {
+            goto block_default;
+        }
+        result = 0;
+        goto done;
+    case 1:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x25) != 0) {
+            goto block_default;
+        }
+        result = 0;
+        goto done;
+    case 2:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x26) != 0) {
+            goto block_default;
+        }
+        result = 0;
+        goto done;
+    case 3:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x27) != 0) {
+            goto block_default;
+        }
+        result = 0;
+        goto done;
+    case 7:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x28) != 0) {
+            goto block_default;
+        }
+        result = 0;
+        goto done;
     }
-    
-    return var_r31;
+
+block_default:
+    if (fn_80105BC0((u8 *)self + 0x1BC, 2) == 0) {
+        goto clamp79;
+    }
+    if (result > 0xFB) {
+        result = 0xFB;
+    }
+    goto done;
+
+clamp79:
+    if (result > 0x79) {
+        result = 0x79;
+    }
+done:
+    return result;
 }
 
 u8 fn_80092C50(void *arg0, u8 arg1, u8 arg2) {
@@ -322,31 +314,30 @@ u8 fn_8009326C(void *arg0, void *arg1) {
     u8 fn_800940B0(void *, void *);
     u8 fn_80105BC0(void *, s32);
     u64 flags;
-    u8 ok;
+    u8 var_r6;
 
-    ok = 0;
     flags = M2C_FIELD(arg1, u64 *, 0x38);
-    if (!(flags & 4)) {
+    if ((flags & 4) == 0) {
         return 0;
     }
-    if (flags & 0x200) {
+    if ((flags & 0x200) != 0) {
         if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9)) {
-            ok = 1;
+            var_r6 = 1;
         } else {
-            ok = 0;
+            var_r6 = 0;
         }
     } else if (((M2C_FIELD(arg0, u8 *, 0x1A5) >> 4) & 7) == 0) {
-        ok = 1;
-    } else if (flags & 2) {
-        ok = 0;
-    } else if (flags & 4) {
-        ok = 0;
-    } else if (flags & 0x40) {
-        ok = 1;
+        var_r6 = 1;
+    } else if ((flags & 2) != 0) {
+        var_r6 = 0;
+    } else if ((flags & 4) != 0) {
+        var_r6 = 0;
+    } else if ((flags & 0x40) != 0) {
+        var_r6 = 1;
     } else {
-        ok = 1;
+        var_r6 = 1;
     }
-    if (ok == 0) {
+    if (var_r6 == 0) {
         return 0;
     }
     return fn_800940B0(arg0, arg1) != 0;
@@ -618,6 +609,29 @@ s32 fn_80094A54(s32 arg0, s32 arg1)
   temp_r31 = fn_80094ABC(arg0, new_var);
   fn_8001C5F8(&sp8, -1);
   return temp_r31;
+}
+
+s32 fn_80094C10(s32 arg0, void *arg1) {
+    u64 *fn_8001CB64(void *);
+    s8 fn_80037E00(s32);
+    u8 fn_80093708(s32, u32);
+    struct { u8 pad[5]; u8 bit7 : 1; u8 rest : 7; } *p;
+
+    if (arg1 == NULL || *(u32 *)arg1 == 0) {
+        return 0;
+    }
+    if ((*fn_8001CB64(arg1) & 1ULL) == 0) {
+        return 0;
+    }
+    if (fn_80037E00(arg0) >= 0) {
+        return 0;
+    }
+    if (fn_80093708(arg0, *(u32 *)arg1) == 0) {
+        return 0;
+    }
+    p = arg1;
+    p->bit7 = 1;
+    return 1;
 }
 
 void fn_80095070(void* arg0, void* arg1, s32 arg2) {
