@@ -183,58 +183,73 @@ static void PADDisable(s32 chan) {
     OSRestoreInterrupts(enabled);
 }
 
-void fn_80211F78(s32 arg1) {
+void fn_80211F78(s32 arg0, s32 arg1) {
     extern s32 lbl_80366FA4;
     extern s32 lbl_80366FAC;
     extern s32 lbl_8036866C;
     extern s32 lbl_80368670;
-    extern char lbl_8033A1C0[64];
-    extern void *fn_802121E0;
-    
+    extern char lbl_8033A1C0[];
+    extern void fn_802121E0(void);
+    void fn_80211DD4(s32);
+    void fn_8023BA70(s32, void *);
+    void fn_8023B804(s32, s32);
+    void fn_8023B894(s32);
+    void fn_8023C188(s32, void *);
+    void *memset(void *, int, unsigned int);
+    s32 r31;
+    char buf[24];
+
     if (!(arg1 & 0xF)) {
         fn_80211DD4(lbl_80366FA4);
-        lbl_8036866C |= 0x80000000U >> lbl_80366FA4;
-        fn_8023BA70(lbl_80366FA4, &lbl_80366FA4);
-        fn_8023B804(lbl_80366FA4, lbl_80366FAC | 0x400000);
+        r31 = lbl_80366FA4;
+        lbl_8036866C |= 0x80000000U >> r31;
+        fn_8023BA70(r31, buf);
+        fn_8023B804(r31, lbl_80366FAC | 0x400000);
         fn_8023B894(lbl_8036866C);
     }
     lbl_80366FA4 = __cntlzw(lbl_80368670);
     if (lbl_80366FA4 != 0x20) {
         lbl_80368670 &= ~(0x80000000U >> lbl_80366FA4);
-        memset(&lbl_8033A1C0 + (lbl_80366FA4 * 0xC), 0, 0xC);
-        fn_8023C188(lbl_80366FA4, &fn_802121E0);
+        memset(lbl_8033A1C0 + (lbl_80366FA4 * 0xC), 0, 0xC);
+        fn_8023C188(lbl_80366FA4, fn_802121E0);
     }
 }
 
-void fn_80212108(s32 arg1) {
-    M2C_UNK fn_8023B804(s32, s32);
-    M2C_UNK fn_8023B894(s32);
-    M2C_UNK fn_8023BA70(s32, M2C_UNK *);
-    M2C_UNK fn_8023C188(s32, M2C_UNK *);
-    M2C_UNK memset(void *, M2C_UNK, M2C_UNK);
-    extern M2C_UNK fn_802121E0;
-    extern M2C_UNK lbl_8033A1C0;
+void fn_80212108(s32 chan, u32 type) {
+    void fn_8023B804(s32, u32);
+    void fn_8023B894(u32);
+    void fn_8023BA70(s32, u32 *);
+    void fn_8023C188(s32, void (*)(s32, u32));
+    void memset(void *, int, u32);
+    extern void fn_802121E0(s32, u32);
+    extern u8 lbl_8033A1C0[];
     extern s32 lbl_80366FA4;
-    extern s32 lbl_80366FAC;
-    extern s32 lbl_8036866C;
-    extern s32 lbl_80368670;
-    extern s32 lbl_80368678;
-    M2C_UNK sp1C;
-    s32 temp_r30;
+    extern u32 lbl_80366FAC;
+    extern u32 lbl_8036866C;
+    extern u32 lbl_80368670;
+    extern u32 lbl_80368678;
+    u32 sr;
+    u32 pad[4];
+    s32 chanBit;
+    u32 bit;
+    u32 bitConst;
 
-    if (!(arg1 & 0xF)) {
-        temp_r30 = lbl_80366FA4;
-        lbl_8036866C |= 0x80000000U >> temp_r30;
-        fn_8023BA70(temp_r30, &sp1C);
-        fn_8023B804(temp_r30, lbl_80366FAC | 0x400000);
+    (void)pad;
+    if (!(type & 0xF)) {
+        bitConst = 0x80000000U;
+        chanBit = lbl_80366FA4;
+        lbl_8036866C |= bitConst >> chanBit;
+        fn_8023BA70(chanBit, &sr);
+        fn_8023B804(chanBit, lbl_80366FAC | 0x400000);
         fn_8023B894(lbl_8036866C);
-        lbl_80368678 |= 0x80000000U >> lbl_80366FA4;
+        lbl_80368678 |= bitConst >> lbl_80366FA4;
     }
-    lbl_80366FA4 = CLZ(lbl_80368670);
-    if ((s32) lbl_80366FA4 != 0x20) {
-        lbl_80368670 &= ~(0x80000000U >> lbl_80366FA4);
-        memset(&lbl_8033A1C0 + (lbl_80366FA4 * 0xC), 0, 0xC);
-        fn_8023C188(lbl_80366FA4, &fn_802121E0);
+    bit = lbl_80368670;
+    lbl_80366FA4 = __cntlzw(bit);
+    if (lbl_80366FA4 != 0x20) {
+        lbl_80368670 = bit & ~(0x80000000U >> lbl_80366FA4);
+        memset(&lbl_8033A1C0[lbl_80366FA4 * 12], 0, 12);
+        fn_8023C188(lbl_80366FA4, fn_802121E0);
     }
 }
 
@@ -507,20 +522,20 @@ s32 fn_80213530(s32 arg0)
 }
 
 u32 fn_8021364C(u32 arg0) {
-    M2C_UNK fn_8023B308(M2C_UNK *);
-    M2C_UNK fn_8023B3D4(M2C_UNK *);
-    extern M2C_UNK fn_802135EC;
+    void fn_8023B308(void (*)(void));
+    void fn_8023B3D4(void (*)(void));
+    void fn_802135EC(void);
     extern u32 lbl_80368688;
-    u32 temp_r31;
+    u32 prev;
 
-    temp_r31 = lbl_80368688;
+    prev = lbl_80368688;
     lbl_80368688 = arg0;
-    if (arg0 != 0U) {
-        fn_8023B308(&fn_802135EC);
+    if (arg0 != 0) {
+        fn_8023B308(fn_802135EC);
     } else {
-        fn_8023B3D4(&fn_802135EC);
+        fn_8023B3D4(fn_802135EC);
     }
-    return temp_r31;
+    return prev;
 }
 
 s32 __PADDisableRecalibration(s32 disable) {
@@ -602,7 +617,7 @@ s32 fn_80213ADC(void) {
 }
 
 void fn_80213AEC(s32 arg0) {
-    u32 *ptr = (u32 *)0xCC006C00;
+    u32 *ptr = (u32 *)0xCC000000 + 0x1B00;
     u32 temp = ptr[1];
     temp = (temp & 0xFFFFFF00) | ((u32)arg0 & 0xFF);
     ptr[1] = temp;
@@ -613,7 +628,10 @@ u8 fn_80213B08(void) {
 }
 
 void fn_80213B18(s32 arg0) {
-    M2C_FIELD((void *)0xCC006C00, s32 *, 4) = (s32) ((M2C_FIELD((void *)0xCC006C00, s32 *, 4) & 0xFFFF00FF & ~0xFF00) | ((arg0 << 8) & 0xFF00));
+    struct R { u32 a; u32 b; } *p = (struct R *)0xCC006C00;
+    u32 t = p->b;
+    t = (t & 0xFFFF00FF) | ((arg0 << 8) & 0xFF00);
+    p->b = t;
 }
 
 u8 fn_80213B34(void) {
@@ -671,11 +689,11 @@ BOOL fn_802142C0(void)
 }
 
 void fn_80214338(void) {
-    u16* addr = (u16*)0xCC005000;
-    u16 val = addr[0x5];  // offset 0xA / 2 = 0x5
-    val &= ~0x88;
-    val |= 0x20;
-    addr[0x5] = val;
+    typedef struct { u8 pad[0xA]; u16 val; } PadReg;
+    volatile PadReg *p = (volatile PadReg *)0xCC005000;
+    u16 v = p->val;
+    u16 r = (v & -0x89) | 0x20;
+    p->val = r;
 }
 
 s32 fn_80214358(void) {
