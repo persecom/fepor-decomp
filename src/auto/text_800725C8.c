@@ -44,6 +44,22 @@ void fn_800726A8(s32 arg0) {
     }
 }
 
+void fn_80072740(s32 arg0) {
+    s32 *fn_800285C0(void *);
+    void fn_8001C878(s32, s32, s32);
+    extern struct {
+        s32 unk0;
+        s32 unk4;
+        u8 unk8;
+        u8 unk9;
+        s8 unkA;
+    } lbl_802EF4C8;
+    s32 *temp;
+
+    temp = fn_800285C0(&lbl_802EF4C8);
+    fn_8001C878(lbl_802EF4C8.unk0, *temp, arg0);
+}
+
 void fn_8007278C(void) {
     extern u8 lbl_8026BC88[];
     extern u8 lbl_802EF4C8[];
