@@ -2,6 +2,10 @@
 #include "common.h"
 #include "dolphin/os.h"
 
+static inline s32 mul_ss(s32 a, s32 b) {
+    return a * b;
+}
+
 extern u16 lbl_80331FB8[36]; // 72 bytes 
 extern f32 lbl_8036A6D0;
 extern f32 lbl_8036A6C4;
