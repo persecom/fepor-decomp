@@ -1242,6 +1242,19 @@ void *fn_8002F680(s32 *arg0, s8 arg1, s8 arg2) {
     return NULL;
 }
 
+void fn_8002F6E8(void *arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4) {
+    s32 *m = (s32 *)arg0;
+    s32 idx = *m;
+    u8 *p;
+    *m = idx + 1;
+    p = (u8 *)arg0 + (idx * 0x14) + 8;
+    p[0] = arg1;
+    p[1] = arg2;
+    p[2] = arg3;
+    p[3] = arg4;
+    *((s8 *)((u8 *)arg0 + (*m * 0x14) + 8)) = -1;
+}
+
 void fn_8002F728(void *arg0) {
     *(s32*)((char*)arg0 + 0x0) = 0;
     *(s32*)((char*)arg0 + 0x4) = 0;
