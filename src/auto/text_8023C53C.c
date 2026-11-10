@@ -729,7 +729,7 @@ s32 fn_8024AD2C(s32 arg0, s32 arg1) {
             base = (u8 *)lbl_803689A8;
             base += offset;
             if ((u32)arg1 == *(u32 *)&base[0xf4]) {
-                fn_80255054();
+                fn_80255054(base);
             }
         }
         break;
@@ -1237,6 +1237,30 @@ s32 fn_802509C8(u16 *arg0, u16 *arg1) {
     return *arg0 - *arg1;
 }
 
+void fn_80250A74(s32 arg0, s32 arg1) {
+    void fn_80262354(void);
+    extern u16 lbl_80368A18;
+    extern u16 lbl_80368A10;
+    extern u16 lbl_80368A0E;
+    extern u16 lbl_80368A0C;
+    extern u16 lbl_80368A08;
+    extern u16 lbl_80368A0A;
+    extern u16 lbl_80354EB8[];
+    s32 i;
+
+    lbl_80368A18 = 0;
+    lbl_80368A10 = 0;
+    lbl_80368A0E = 0;
+    lbl_80368A0C = 0;
+    lbl_80368A08 = 0;
+    lbl_80368A0A = 0;
+    for (i = 0; i < 0x200; i++) {
+        lbl_80354EB8[i * 2] = 0;
+        lbl_80354EB8[i * 2 + 1] = 0;
+    }
+    fn_80262354();
+}
+
 void fn_802511F8(void *arg0, u32 *arg1) {
     M2C_UNK fn_80250B58(void *, u32 *);
     u32 fn_802575A0(void *);
@@ -1512,21 +1536,20 @@ void fn_80253694(unsigned char arg0, unsigned char arg1, unsigned char arg2, int
 s16 fn_802537F8(s32 arg0, u32 arg1, s32 arg2) {
     u16 fn_80260F18(s32);
     extern u16 lbl_8034CB74[];
+    u16 var_r0;
     u32 temp_r0;
-    u16 var_r3;
 
     if (arg1 != 0U) {
-        var_r3 = fn_80260F18(arg2);
+        var_r0 = fn_80260F18(arg2);
     } else {
         temp_r0 = arg2 & 0x1F;
         if (temp_r0 < 0x10U) {
-            u32 addr = arg0 + ((temp_r0 * 4) & 0x3FC) + 0xAC;
-            var_r3 = *(u16*) addr;
+            var_r0 = *(u16*) (arg0 + ((temp_r0 * 4) & 0x3FC) + 0xAC);
         } else {
-            var_r3 = *(u16*) (lbl_8034CB74 + ((temp_r0 * 4) & 0x3FC) - 0x40);
+            var_r0 = *(u16*) (lbl_8034CB74 + ((temp_r0 * 4) & 0x3FC) - 0x40);
         }
     }
-    return (s16) var_r3;
+    return (s16) var_r0;
 }
 
 void fn_80253E10(void *arg0, u32 *arg1) {
