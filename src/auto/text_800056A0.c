@@ -167,9 +167,10 @@ void fn_800061CC(void *arg0) {
 }
 
 s32 fn_800061F4(void) {
-    void *fn_8000C0C0(M2C_UNK *);
-    extern M2C_UNK lbl_802832FC;
-    return M2C_FIELD(fn_8000C0C0(&lbl_802832FC), s32 *, 0x60);
+    extern u16 lbl_802832FC[];
+    void *fn_8000C0C0(u16 *);
+    void *arg0 = fn_8000C0C0(lbl_802832FC);
+    return *(u32 *)((u8 *)arg0 + 0x60);
 }
 
 void fn_80006220(s32 arg0) {
