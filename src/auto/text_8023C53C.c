@@ -4293,7 +4293,7 @@ s32 fn_80261620(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
     return 0;
 }
 
-int fn_802616E4(s8 arg0) {
+int fn_802616E4(int arg0) {
     extern s8 lbl_80368AD0;
     lbl_80368AD0 = arg0;
 }
