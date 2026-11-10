@@ -110,13 +110,14 @@ extern "C" void fn_8005A79C(void *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4) 
         virtual s32 v14() = 0;
         virtual s32 v15() = 0;
     };
-    Obj *obj = (Obj *)arg0;
-    s32 src;
-    s32 temp;
     s32 nbytes;
+    u8 *color;
+    s32 a3;
+    s32 a2;
+    s32 a1;
     s32 count;
     s32 off;
-    u16 *buf;
+    s32 src;
     u16 pix;
     u16 r, g, b;
     s32 w;
@@ -124,39 +125,42 @@ extern "C" void fn_8005A79C(void *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4) 
     s32 h;
     f32 fx, fy, fw;
 
-    if (arg3 != 0) {
+    a3 = arg3;
+    a1 = arg1;
+    a2 = arg2;
+    color = arg4;
+    if (a3 != 0) {
         fn_8000A258();
         if (((u8 *)arg0)[0x40] != 0) {
-            if (arg4[0] == 0 && arg4[1] == 0 && arg4[2] == 0) {
+            if (color[0] == 0 && color[1] == 0 && color[2] == 0) {
                 fn_8000A03C((u8 *)arg0 + 4, (u8 *)arg0 + 0x24, 0, 0x11);
             } else {
                 src = fn_80222CDC((u8 *)arg0 + 0x24);
-                temp = fn_80222CE8((u8 *)arg0 + 0x24);
-                nbytes = ((u16)temp) << 1;
-                count = (u16)temp;
+                count = fn_80222CE8((u8 *)arg0 + 0x24);
+                nbytes = (count << 1) & 0x1FFFE;
+                count = (u16)count;
                 memcpy(*(void **)((u8 *)arg0 + 0x3C), (void *)(src + 0x80000000), nbytes);
-                off = 0;
-                if (count > 0) {
-                    do {
-                        buf = *(u16 **)((u8 *)arg0 + 0x3C);
-                        pix = *(u16 *)((u8 *)buf + off);
-                        if (pix & 0x8000) {
-                            r = (u16)(((s32)(pix & 0x7C00) >> 10) + ((s32)arg4[0] >> 3));
-                            if (r > 0x1F) {
-                                r = 0x1F;
-                            }
-                            g = (u16)(((s32)(pix & 0x3E0) >> 5) + ((s32)arg4[1] >> 3));
-                            if (g > 0x1F) {
-                                g = 0x1F;
-                            }
-                            b = (u16)((pix & 0x1F) + ((s32)arg4[2] >> 3));
-                            if (b > 0x1F) {
-                                b = 0x1F;
-                            }
-                            *(u16 *)((u8 *)buf + off) = (u16)(0x8000 | (r << 10) | (g << 5) | b);
+                for (off = 0; count > 0; off += 2) {
+                    pix = *(u16 *)(*(u8 **)((u8 *)arg0 + 0x3C) + off);
+                    if (pix & 0x8000) {
+                        r = (pix & 0x7C00) >> 10;
+                        g = (pix & 0x3E0) >> 5;
+                        b = pix & 0x1F;
+                        r += color[0] >> 3;
+                        if (r > 0x1F) {
+                            r = 0x1F;
                         }
-                        off += 2;
-                    } while (--count != 0);
+                        g += color[1] >> 3;
+                        if (g > 0x1F) {
+                            g = 0x1F;
+                        }
+                        b += color[2] >> 3;
+                        if (b > 0x1F) {
+                            b = 0x1F;
+                        }
+                        *(u16 *)(*(u8 **)((u8 *)arg0 + 0x3C) + off) = 0x8000 | (r << 10) | (g << 5) | b;
+                    }
+                    count--;
                 }
                 DCFlushRange(*(void **)((u8 *)arg0 + 0x3C), nbytes);
                 fn_8000A03C((u8 *)arg0 + 4, (u8 *)arg0 + 0x30, 0, 0x11);
@@ -165,19 +169,21 @@ extern "C" void fn_8005A79C(void *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4) 
             fn_8000A174((u8 *)arg0 + 4, 0x11);
         }
         fn_8000A248();
-        w = obj->v14();
-        cols = obj->v12();
-        fx = (f32)(((arg3 - 1) % cols) * w);
-        h = obj->v15();
-        cols = obj->v12();
-        fy = (f32)(((arg3 - 1) / cols) * h);
+        w = ((Obj *)arg0)->v14();
+        cols = ((Obj *)arg0)->v12();
+        fx = (f32)(((a3 - 1) % cols) * w);
+        h = ((Obj *)arg0)->v15();
+        cols = ((Obj *)arg0)->v12();
+        fy = (f32)(((a3 - 1) / cols) * h);
         fn_80007898(1);
-        fw = (f32)obj->v15();
-        fn_8000770C((f32)arg1, (f32)arg2, fx, fy, (f32)obj->v14(), fw);
+        fw = (f32)((Obj *)arg0)->v15();
+        w = ((Obj *)arg0)->v14();
+        fn_8000770C((f32)a1, (f32)a2, fx, fy, (f32)w, fw);
         fn_80007884();
     }
 }
 #pragma cplusplus reset
+#pragma scheduling reset
 #pragma global_optimizer reset
 #pragma use_lmw_stmw reset
 
