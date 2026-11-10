@@ -1574,6 +1574,25 @@ void fn_80253E90(void) {
     _restgpr_26();
 }
 
+void fn_80255054(void *arg0) {
+    void fn_8025539C(void *);
+    u32 var_r0;
+
+    if (*(s32 *)((u8 *)arg0 + 0x4C) == 1) {
+        if (*(u8 *)((u8 *)arg0 + 0x68) != 0 && *(void **)((u8 *)arg0 + 0x54) != NULL) {
+            *(s32 *)((u8 *)arg0 + 0x38) = *(s32 *)((u8 *)arg0 + 0x60);
+            *(void **)((u8 *)arg0 + 0x34) = *(void **)((u8 *)arg0 + 0x54);
+            *(void **)((u8 *)arg0 + 0x54) = NULL;
+            fn_8025539C(arg0);
+            var_r0 = 1;
+        } else {
+            var_r0 = 0;
+        }
+        if (var_r0 == 0 && (*(u64 *)((u8 *)arg0 + 0x114) & 0x40000ULL)) {
+            fn_8025539C(arg0);
+        }
+    }
+}
 
 s32 fn_80255100(s32 arg0, s32 arg1) {
     if (arg0 == 0) {
