@@ -5848,6 +5848,7 @@ s32 fn_8019F688(s32 arg0, s32 arg1) {
     fn_80016180();
     return 1;
 }
+#pragma use_lmw_stmw on
 s32 fn_8019F7CC(s32 arg0, s32 arg1) {
     s32 fn_80040844(void);
     void *fn_8004721C(void *, s32, s32, u32, s32);
@@ -5866,42 +5867,43 @@ s32 fn_8019F7CC(s32 arg0, s32 arg1) {
     s32 i;
     s32 v;
     s32 *p;
-    void *temp1;
     s32 sp8[10];
 
-    temp1 = fn_8004721C((void *)fn_80040844(), arg0, arg1, 0x1000, 0x10);
-    if (temp1 == NULL) {
-        fn_800056A0(0);
-        return 0;
-    }
-    fn_8010FEEC(lbl_8032BB58, (s8)arg0, (s8)arg1, 0x21, 0);
     {
-        void *temp2 = fn_8010FF24(lbl_8032BB58, (char)arg0, (char)arg1, 4);
-        if (temp2 != NULL) {
-            ((u8 *)temp2)[4] = 0;
+        void *temp1 = fn_8004721C((void *)fn_80040844(), arg0, arg1, 0x1000, 0x10);
+        if (temp1 == NULL) {
+            fn_800056A0(0);
+            return 0;
         }
-    }
-    fn_80049B78(temp1, 0);
-    count = 0;
-    temp1 = fn_80046F14((void *)fn_80040844(), arg0, arg1, 0x800, 0);
-    if (temp1 != NULL) {
-        count = fn_80046400((void *)fn_80040844(), temp1, sp8);
-        p = sp8;
-        i = 0;
-        while (i < count) {
-            v = *p;
-            if ((u8)fn_80049D6C((void *)v) == 0) {
-                fn_80049C30((void *)v, 0);
+        fn_8010FEEC(lbl_8032BB58, (s8)arg0, (s8)arg1, 0x21, 0);
+        {
+            void *temp2 = fn_8010FF24(lbl_8032BB58, (char)arg0, (char)arg1, 4);
+            if (temp2 != NULL) {
+                ((u8 *)temp2)[4] = 0;
             }
-            p++;
-            i++;
+        }
+        fn_80049B78(temp1, 0);
+    }
+    {
+        void *temp1 = fn_80046F14((void *)fn_80040844(), arg0, arg1, 0x800, 0);
+        if (temp1 != NULL) {
+            count = fn_80046400((void *)fn_80040844(), temp1, sp8);
+            p = sp8;
+            i = 0;
+            while (i < count) {
+                v = *p;
+                if ((u8)fn_80049D6C((void *)v) == 0) {
+                    fn_80049C30((void *)v, 0);
+                }
+                p++;
+                i++;
+            }
         }
     }
     fn_80044450(fn_80040844(), 1);
     fn_80016180();
     return 1;
 }
-
 s32 fn_8019F914(s32 arg0, s32 arg1) {
     s32 fn_80040844(void);
     void *fn_8004721C(s32, s32, s32, s32, s32);
