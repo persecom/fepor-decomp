@@ -440,7 +440,7 @@ void fn_802283A8(void) {
     }
 }
 
-s32 fn_802287A8(void) {
+int fn_802287A8(void) {
     return 0;
 }
 
