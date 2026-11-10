@@ -588,14 +588,19 @@ void fn_8001BF3C(void *arg0, s32 arg1) {
     ((u8 *)arg0)[5] = (u8)((((u8 *)arg0)[5] & ~0x3F) | (fn_800C2D74(lbl_803206EC, ((u8 *)arg0)[5] & 0x3F, arg1) & 0x3F));
 }
 
-s8 fn_8001BFB8(void *arg0) {
-    s8 fn_800C2ACC(M2C_UNK *);
-    extern M2C_UNK lbl_803206EC;
-    
-    if (!(M2C_FIELD(arg0, u8 *, 5) & 0x3F)) {
-        return 0;
+s8 fn_8001BFB8(u8 *arg0) {
+    s32 fn_800C2ACC(void *, s32);
+    extern u8 lbl_803206EC[];
+    s32 result;
+    s32 mask;
+
+    mask = arg0[5] & 0x3F;
+    if (mask == 0) {
+        result = 0;
+    } else {
+        result = (s8)fn_800C2ACC(lbl_803206EC, mask);
     }
-    return fn_800C2ACC(&lbl_803206EC);
+    return (s8)result;
 }
 
 s8 fn_8001BFFC(u8 *arg0) {
