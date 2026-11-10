@@ -1402,42 +1402,34 @@ void fn_800315F8(void) {
     fn_8014CB14(lbl_80330708, *(s32*)(lbl_802EF4C8 + 0x0), lbl_80330708);
 }
 
-void fn_80031668(s32 arg0) {
-    extern s32 *lbl_80367240;
+void fn_80031668(void *arg0) {
+    void fn_801475FC(void *, s32);
+    void fn_8000C070(void *, s32);
+    extern void *lbl_80367240;
     extern f32 lbl_80330708[];
-    extern s16 lbl_802CA518[];
+    extern u8 lbl_802CA518[];
     extern u8 lbl_802695F0[];
     extern u8 lbl_8036723A;
-    
     s32 temp_r3;
-    s32 temp_r5;
-    f32 fvar0;
-    f32 fvar1;
-    s16 svar0;
-    
-    temp_r3 = lbl_80367240[1];
-    temp_r5 = temp_r3 & (lbl_80367240[2] ^ temp_r3);
-    
-    if ((temp_r5 & 0x800000) != 0) {
-        // Load f32 values from lbl_80330708 with exact addressing
-        fvar0 = lbl_80330708[0x524 / 4];
-        fvar1 = lbl_80330708[0x528 / 4];
-        
-        // Convert to integers with correct shifts and masks  
-        svar0 = (s16) fvar0;
-        svar0 += ((s16) fvar1 << 6);
-        svar0 <<= 1;
-        
-        // Access lbl_802CA518 with exact offset
-        if (lbl_802CA518[(svar0 / 2) + 0x610E] >= 0) {
-            fn_801475FC((void *)(lbl_802695F0 + 0xFC), 0x64);
+    s32 pressed;
+    f32 f0;
+    f32 f1;
+    s16 *cell;
+
+    temp_r3 = *(s32 *)((u8 *)lbl_80367240 + 4);
+    pressed = temp_r3 & (*(s32 *)((u8 *)lbl_80367240 + 8) ^ temp_r3);
+    if (pressed & 0x100) {
+        f0 = lbl_80330708[0x528 / 4];
+        f1 = lbl_80330708[0x524 / 4];
+        cell = (s16 *)(lbl_802CA518 + 0x610e);
+        if (cell[(s8)(s32)f1 + ((s8)(s32)f0 << 6)] >= 0) {
+            fn_801475FC(lbl_802695F0 + 0xFC, 0x64);
             lbl_8036723A = 5;
             fn_8000C070(arg0, 0x63);
             return;
         }
     }
-    
-    if ((temp_r5 & 0x1000000) != 0) {
+    if (pressed & 0x200) {
         lbl_8036723A = 9;
         fn_8000C070(arg0, 0x63);
     }
@@ -1988,6 +1980,7 @@ void *fn_80032D4C(void) {
     return (u8 *)lbl_802695F0 + 0x14F;
 }
 
+#pragma cplusplus on
 void fn_80032DB4(void *arg0, void *arg1) {
     M2C_UNK fn_8002FC64(s32, s32, s32);
     s32 sp10;
@@ -2000,7 +1993,7 @@ void fn_80032DB4(void *arg0, void *arg1) {
         fn_8002FC64(sp10, spC, sp8);
     }
 }
-
+#pragma cplusplus reset
 void fn_80032F50(void) {
     void fn_80037D54(void *);
     extern u8 lbl_802EF4C8[24];
