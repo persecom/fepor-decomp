@@ -1,7 +1,9 @@
 /* Functions from 0x801FC634 to 0x8022C1E8, found by decomp-toolkit. */
 #include "common.h"
-#include <dolphin/os.h>
 #include "global.h"
+
+BOOL OSDisableInterrupts(void);
+BOOL OSRestoreInterrupts(BOOL level);
 
 typedef void (*OSErrorHandler)(u8, void *, ...);
 extern OSErrorHandler __OSErrorTable[];
