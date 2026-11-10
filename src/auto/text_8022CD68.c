@@ -1703,12 +1703,87 @@ f64 fn_80238638(f64 farg0) {
   extern f64 lbl_8036C0F0;
   extern f64 lbl_8036C0F8;
   extern f64 lbl_8036C100;
+extern f64 lbl_80282F40[];
+extern f64 lbl_8036C108;
+extern f64 lbl_8036C110;
+extern f64 lbl_8036C118;
+extern f64 lbl_8036C120;
+extern f64 lbl_8036C128;
 
-  f64 fn_80237C7C(s32 arg0, f64 farg0, f64 farg1) {
-      (void)arg0;
-      (void)farg1;
-      return farg0;
-  }
+f64 fn_80237C7C(s32 arg0, f64 farg0, f64 farg1) {
+    f64 st[5];
+    f64 z;
+    f64 w;
+    f64 r;
+    f64 v;
+    f64 s;
+    f64 a;
+    f64 y;
+    f64 *T;
+    s32 ix;
+    s32 hx;
+    s32 sf;
+
+    y = farg1;
+    st[0] = farg0;
+    hx = ((s32 *)&st[0])[0];
+    ix = hx & 0x7FFFFFFF;
+    if (ix < 0x3E300000 && (s32)farg0 == 0) {
+        if (((arg0 + 1) | (ix | ((s32 *)&st[0])[1])) == 0) {
+            farg0 = __fabs(farg0);
+            return lbl_8036C0D0 / farg0;
+        }
+        if (arg0 == 1) {
+            return farg0;
+        }
+        return lbl_8036C0D8 / farg0;
+    }
+    if (ix >= 0x3FE59428) {
+        if (hx < 0) {
+            y = -y;
+            st[0] = -st[0];
+        }
+        z = lbl_8036C0E0 - st[0];
+        a = lbl_8036C0E8 - y;
+        y = lbl_8036C0F0;
+        st[2] = z;
+        st[0] = z + a;
+    }
+    T = lbl_80282ED8;
+    z = st[0] * st[0];
+    w = z * z;
+    r = T[1] + w * (T[3] + w * (T[5] + w * (T[7] + w * (T[9] + w * T[11]))));
+    v = z * (T[2] + w * (T[4] + w * (T[6] + w * (T[8] + w * (T[10] + w * T[12])))));
+    s = z * st[0];
+    st[2] = z;
+    r = y + z * (s * (r + v) + y);
+    r += T[0] * s;
+    w = st[0] + r;
+    if (ix >= 0x3FE59428) {
+        sf = 1 - ((s32)((u32)hx >> 30) & 2);
+        ((s32 *)&st[3])[1] = arg0 ^ 0x80000000;
+        ((s32 *)&st[3])[0] = 0x43300000;
+        ((s32 *)&st[4])[1] = sf ^ 0x80000000;
+        ((s32 *)&st[4])[0] = 0x43300000;
+        v = st[3] - lbl_8036C100;
+        a = st[4] - lbl_8036C100;
+        s = w * w;
+        z = w + v;
+        s = s / z - r;
+        return a * (v - lbl_8036C0F8 * (st[0] - s));
+    }
+    if (arg0 == 1) {
+        return w;
+    }
+    st[2] = w;
+    ((s32 *)&st[2])[1] = 0;
+    v = r - (st[2] - st[0]);
+    a = lbl_8036C0D8 / w;
+    st[1] = a;
+    ((s32 *)&st[1])[1] = 0;
+    s = lbl_8036C0D0 + st[1] * st[2];
+    return st[1] + a * (s + st[1] * v);
+}
 
   f64 fn_80238710(f64 farg0) {
       f64 sp10[2];
