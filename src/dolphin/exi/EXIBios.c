@@ -191,6 +191,10 @@ extern s32 D_8022EF64;
 volatile u32 __EXIRegs[16] : 0xCC006800;
 s32 __EXIProbeStartTime[2] : 0x800030C0;
 
+typedef struct OSContext {
+    u8 data[0x2C8];
+} OSContext;
+
 extern s32 fn_802314D8(s32, s32, s32);
 
 #pragma use_lmw_stmw on
@@ -411,6 +415,52 @@ restore_interrupts:
     OSRestoreInterrupts(enabled);
 }
 
+void OSClearContext(void *);
+void OSSetCurrentContext(void *);
+void TCIntrruptHandler(s16 interrupt, void *context)
+{
+    EXIControl *exi;
+    s32 chan;
+    void (*callback)(s32, void *);
+    u8 exceptionContext[0x2C8];
+    u32 cpr;
+    s32 len;
+    u8 *buf;
+    u32 data;
+    s32 i;
+
+    chan = (interrupt - 0xA) / 3;
+    exi = &Ecb_8033E188[chan];
+    __OSMaskInterrupts(0x80000000U >> interrupt);
+    cpr = __EXIRegs[chan * 5];
+    cpr = (cpr & 0x7F5) | 8;
+    __EXIRegs[chan * 5] = cpr;
+    callback = exi->tcCallback;
+    if (callback) {
+        exi->tcCallback = 0;
+        if (exi->state & 3) {
+            if (exi->state & 2) {
+                len = exi->immLen;
+                if (len != 0) {
+                    buf = exi->immBuf;
+                    data = __EXIRegs[chan * 5 + 4];
+                    if (len > 0) {
+                        for (i = 0; i < len; i++) {
+                            *buf++ = (u8)(data >> ((3 - i) * 8));
+                        }
+                    }
+                }
+            }
+            exi->state &= ~3;
+        }
+        OSClearContext(exceptionContext);
+        OSSetCurrentContext(exceptionContext);
+        callback(chan, context);
+        OSClearContext(exceptionContext);
+        OSSetCurrentContext(context);
+    }
+}
+
 s32 EXILock(s32 arg0, u32 arg1, u32 arg2) {
     s32 temp_r29;
     s32 temp_r4;
@@ -462,9 +512,7 @@ s32 EXIUnlock(s32 arg0) {
 }
 
 s32 fn_8023A114(s32 arg0) {
-    s32 r4 = arg0 << 6;
-    u16* base = (u16*)Ecb_8033E188;
-    return *(s32*)((u8*)base + r4 + 0xC);
+    return M2C_FIELD((&Ecb_8033E188 + (arg0 << 6)), s32 *, 0xC);
 }
 
 void UnlockedHandler(void) {
