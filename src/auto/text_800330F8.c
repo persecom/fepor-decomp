@@ -561,6 +561,11 @@ f32 fn_80037818(void *arg0,u8 arg1) {
     return result + lbl_80368EB4;
 }
 
+typedef struct {
+    s32 unk0;
+    u8 unk4;
+} UnkRet800378CC;
+
 s32 fn_800378CC(s32 arg0) {
     M2C_UNK fn_80165E90(s32 *, s32);
     s32 sp8;
@@ -831,60 +836,50 @@ s32 fn_800386E0(s32 arg0) {
 }
 
 s8 fn_80038748(void *arg0) {
-    s8 var_r5;
-    s8 var_r4;
-    void **var_r4_2;
+    s8 result;
+    s8 index;
+    void *ptr;
 
-    var_r5 = 0;
-    // First branch check
-    if ((*(u8*)((char*)arg0 + 0x1d1) & 0x08) && (*(u32*)((char*)arg0 + 0x1cc) != 0)) {
-        var_r4 = 0;
-    } else if ((*(u8*)((char*)arg0 + 0x1d9) & 0x08) && (*(u32*)((char*)arg0 + 0x1d4) != 0)) {
-        var_r4 = 1;
-    } else if ((*(u8*)((char*)arg0 + 0x1e1) & 0x08) && (*(u32*)((char*)arg0 + 0x1dc) != 0)) {
-        var_r4 = 2;
-    } else if ((*(u8*)((char*)arg0 + 0x1e9) & 0x08) && (*(u32*)((char*)arg0 + 0x1e4) != 0)) {
-        var_r4 = 3;
+    result = 0;
+    if ((((*(u8 *)((u8 *)arg0 + 0x1D1) >> 7) & 1) != 0) && (*(u32 *)((u8 *)arg0 + 0x1CC) != 0)) {
+        index = 0;
+    } else if ((((*(u8 *)((u8 *)arg0 + 0x1D9) >> 7) & 1) != 0) && (*(u32 *)((u8 *)arg0 + 0x1D4) != 0)) {
+        index = 1;
+    } else if ((((*(u8 *)((u8 *)arg0 + 0x1E1) >> 7) & 1) != 0) && (*(u32 *)((u8 *)arg0 + 0x1DC) != 0)) {
+        index = 2;
+    } else if ((((*(u8 *)((u8 *)arg0 + 0x1E9) >> 7) & 1) != 0) && (*(u32 *)((u8 *)arg0 + 0x1E4) != 0)) {
+        index = 3;
     } else {
-        var_r4 = -1;
+        index = -1;
     }
-    
-    // Check for valid offset and load value
-    if (var_r4 < 0) {
-        var_r4_2 = NULL;
+    if (index < 0) {
+        ptr = NULL;
     } else {
-        var_r4_2 = (void**)((char*)arg0 + ((var_r4 * 8) + 0x1cc));
+        ptr = (u8 *)arg0 + (index * 8 + 0x1CC);
     }
-    
-    if (var_r4_2 != NULL) {
-        var_r5 = *(s8*)(((s32*)*var_r4_2)[0x27/4]);
+    if (ptr != NULL) {
+        result = *(s8 *)((u8 *)*(void **)ptr + 0x27);
     }
-    
-    // Second branch check
-    if ((*(u8*)((char*)arg0 + 0x1f1) & 0x08) && (*(u32*)((char*)arg0 + 0x1ec) != 0)) {
-        var_r4 = 0;
-    } else if ((*(u8*)((char*)arg0 + 0x1f9) & 0x08) && (*(u32*)((char*)arg0 + 0x1f4) != 0)) {
-        var_r4 = 1;
-    } else if ((*(u8*)((char*)arg0 + 0x201) & 0x08) && (*(u32*)((char*)arg0 + 0x1fc) != 0)) {
-        var_r4 = 2;
-    } else if ((*(u8*)((char*)arg0 + 0x209) & 0x08) && (*(u32*)((char*)arg0 + 0x204) != 0)) {
-        var_r4 = 3;
+    if ((((*(u8 *)((u8 *)arg0 + 0x1F1) >> 7) & 1) != 0) && (*(u32 *)((u8 *)arg0 + 0x1EC) != 0)) {
+        index = 0;
+    } else if ((((*(u8 *)((u8 *)arg0 + 0x1F9) >> 7) & 1) != 0) && (*(u32 *)((u8 *)arg0 + 0x1F4) != 0)) {
+        index = 1;
+    } else if ((((*(u8 *)((u8 *)arg0 + 0x201) >> 7) & 1) != 0) && (*(u32 *)((u8 *)arg0 + 0x1FC) != 0)) {
+        index = 2;
+    } else if ((((*(u8 *)((u8 *)arg0 + 0x209) >> 7) & 1) != 0) && (*(u32 *)((u8 *)arg0 + 0x204) != 0)) {
+        index = 3;
     } else {
-        var_r4 = -1;
+        index = -1;
     }
-    
-    // Check for valid offset and load value
-    if (var_r4 < 0) {
-        var_r4_2 = NULL;
+    if (index < 0) {
+        ptr = NULL;
     } else {
-        var_r4_2 = (void**)((char*)arg0 + ((var_r4 * 8) + 0x1ec));
+        ptr = (u8 *)arg0 + (index * 8 + 0x1EC);
     }
-    
-    if (var_r4_2 != NULL) {
-        var_r5 += *(s8*)(((s32*)*var_r4_2)[0x27/4]);
+    if (ptr != NULL) {
+        result = (s8)(result + *(s8 *)((u8 *)*(void **)ptr + 0x27));
     }
-    
-    return var_r5;
+    return result;
 }
 
 s8 fn_800388C8(void *arg0) {
@@ -3667,7 +3662,7 @@ s32 fn_8004BAC4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 }
 
 void fn_8004BC48(void *arg0, s32 arg1) {
-    s16 fn_8017A9B0(s32, M2C_UNK);
+    s16 fn_8017A9B0(s32);
     M2C_UNK fn_8017A9DC(s32);
     extern f32 lbl_80368FCC;
     M2C_FIELD(arg0, s8 *, 3) = 0;
@@ -3680,7 +3675,7 @@ void fn_8004BC48(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, f32 *, 0x174) = (f32) lbl_80368FCC;
     M2C_FIELD(arg0, f32 *, 0x178) = (f32) lbl_80368FCC;
     M2C_FIELD(arg0, s32 *, 0x17C) = 0;
-    M2C_FIELD(arg0, s16 *, 0x15C) = fn_8017A9B0(arg1, 0);
+    M2C_FIELD(arg0, s16 *, 0x15C) = fn_8017A9B0(arg1);
     fn_8017A9DC(arg1);
     fn_8017A9DC(arg1);
 }
