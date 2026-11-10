@@ -97,12 +97,9 @@ typedef struct StreamVoice {
 
 typedef struct StreamState {
     u8 pad0[0x124];
-    StreamSeqChan seqChans[16]; /* 0x124 */
-    u8 pad164[0x364 - 0x164];
-    StreamChannel channels[16]; /* 0x364 */
-    u8 pad3B4[0xF04 - 0x3B4];
-    StreamMsg msgs[16]; /* 0xF04 */
-    u8 padF64[0x1504 - 0xF64];
+    StreamSeqChan seqChans[72]; /* 0x124 */
+    StreamChannel channels[68]; /* 0x364 */
+    StreamMsg msgs[64]; /* 0xF04 */
     u8 *voices; /* 0x1504 */
     u8 pad1508[0x153E - 0x1508];
     StreamVoice voiceFlags[1]; /* 0x153E */
@@ -564,6 +561,98 @@ void fn_80245290(u32 arg0, s32 arg1, s32 arg2) {
             lbl_8033F990[id & 0x7FFFFFFF].unkEF0 = arg1;
             lbl_8033F990[id & 0x7FFFFFFF].unkEF4 = arg2;
         }
+    }
+}
+
+void *fn_80246070(u8 arg0) {
+    StreamState *base = (StreamState *) lbl_80368968;
+    StreamSeqChan *chanSeq = &base->seqChans[arg0];
+    StreamChannel *chan = &base->channels[arg0];
+    StreamMsg *msg;
+    StreamSeqEvent *entry;
+    StreamVoice *voices;
+    u32 temp_r10;
+    u32 temp_r11;
+    u32 temp_r9;
+    u32 temp_r3;
+    u8 temp_r7;
+    u8 *p;
+    u16 ev;
+
+    if (chanSeq->unk4 == NULL) {
+        return NULL;
+    }
+    msg = &base->msgs[arg0];
+    msg->unk15 = arg0;
+    msg->unk10 = chan;
+    if (chan->unk8 == NULL) {
+        entry = chanSeq->unk4;
+        ev = entry->unk8;
+        if (ev == 0xFFFF) {
+            chanSeq->unk4 = NULL;
+            return NULL;
+        }
+        if (ev == 0xFFFE) {
+            voices = (StreamVoice *) base->voices;
+            if (voices == NULL) {
+                if (base->voiceFlags[0].unk0 != 0) {
+                    chanSeq->unk4 = NULL;
+                    return NULL;
+                }
+            } else if (base->voiceFlags[voices[arg0].unk0].unk0 != 0) {
+                chanSeq->unk4 = NULL;
+                return NULL;
+            }
+            msg->unk14 = 3;
+            msg->unk8 = entry->unk0;
+            chanSeq->unk4 = (StreamSeqEvent *) (chanSeq->unk0 + entry->unkA * 0xC);
+            return msg;
+        }
+        msg->unk14 = 4;
+        msg->unk8 = entry->unk0;
+        msg->unkC = chanSeq->unk4;
+        chanSeq->unk4 = (StreamSeqEvent *) ((u8 *) entry + 0xC);
+        return msg;
+    }
+    for (;;) {
+        temp_r10 = chan->unk18;
+        temp_r11 = chan->unk24;
+        p = chan->unk8;
+        temp_r9 = *(u16 *) p + chan->unk0;
+        if (temp_r9 >= temp_r10) {
+            if (temp_r10 < temp_r11) {
+                msg->unk8 = temp_r10 + chan->unk4;
+                msg->unk14 = 2;
+            } else {
+                msg->unk8 = temp_r11 + chan->unk4;
+                msg->unk14 = 1;
+            }
+            return msg;
+        }
+        if (temp_r9 >= temp_r11) {
+            msg->unk8 = temp_r11 + chan->unk4;
+            msg->unk14 = 1;
+            return msg;
+        }
+        if ((p[2] == 0xFF) && (p[3] == 0xFF)) {
+            chan->unk8 = NULL;
+            break;
+        }
+        msg->unkC = p;
+        chan->unk0 = temp_r9;
+        temp_r3 = (u32) chan->unk8;
+        temp_r7 = ((u8 *) temp_r3)[2];
+        if (temp_r7 & 0x80) {
+            chan->unk8 = (u8 *) temp_r3 + 4;
+        } else if ((temp_r7 | ((u8 *) temp_r3)[3]) != 0) {
+            chan->unk8 = (u8 *) temp_r3 + 6;
+        } else {
+            chan->unk8 = (u8 *) temp_r3 + 4;
+            continue;
+        }
+        msg->unk14 = 0;
+        msg->unk8 = temp_r9 + chan->unk4;
+        return msg;
     }
 }
 
