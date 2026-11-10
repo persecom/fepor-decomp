@@ -1,7 +1,7 @@
 /* Functions from 0x8022CD68 to 0x80267A7C, found by decomp-toolkit. */
 #include "common.h"
 
-typedef u8 Fn80256FF0Arg;
+typedef s32 Fn80256FF0Arg;
 
 extern u16 lbl_80366F28;
 extern char lbl_80282AE8[];
