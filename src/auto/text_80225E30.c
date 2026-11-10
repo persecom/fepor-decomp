@@ -7,13 +7,15 @@ extern u8 *gTRKInputPendingPtr;
 
 extern u16 lbl_802822F0[200]; // 400 bytes = 200 u16 values
 
-extern struct {
-    u8 unk0;
-    u8 unk4;
-    u8 pad5[3];
-    u8 unk8;
-    u8 pad9[0x37];
-} lbl_8033B048;
+typedef struct TRKEventQueue {
+    u8 unk0[4];
+    s32 unk4; /* count */
+    s32 unk8; /* next index */
+    u8 events[0x18];
+    u8 pad24[0xC];
+    u32 unk24;
+} TRKEventQueue;
+extern TRKEventQueue lbl_8033B048;
 extern u8 lbl_8033B078[];
 extern s32 lbl_803682F0;
 extern s32 fn_80013E50(s32);
