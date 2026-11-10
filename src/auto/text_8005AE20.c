@@ -457,6 +457,69 @@ void fn_8005BCF0(void) {
     }
 }
 
+void fn_8005BE48(void) {
+    void DCFlushRange(s32, s32);
+    void fn_8005BF8C(void *, s32);
+    void fn_8005BFE4(void *, s32);
+    void fn_8005D9A8(void *);
+    void fn_800C4588(s32);
+    void fn_8020ADD8(u8 *);
+    extern u8 lbl_8030F4E0[];
+    extern volatile u8 lbl_803672EA;
+    extern volatile u8 lbl_803672EB;
+    extern u8 lbl_803672EC[8];
+    void *obj;
+    s32 val;
+    u8 type;
+
+    goto check;
+loop:
+    obj = lbl_8030F4E0 + lbl_803672EA * 0xC;
+    type = *(u8 *)obj;
+    switch (type) {
+    case 0:
+        fn_8005BFE4(*(void **)((u8 *)obj + 4), *(s32 *)((u8 *)obj + 8));
+        break;
+    case 1:
+        fn_8005BF8C(*(void **)((u8 *)obj + 4), *(s32 *)((u8 *)obj + 8));
+        break;
+    case 2:
+        val = *(s32 *)((u8 *)obj + 8);
+        obj = *(void **)((u8 *)obj + 4);
+        if (*(volatile u16 *)((u8 *)obj + 0x30) & 0x400) {
+            if (*(volatile u16 *)((u8 *)obj + 0x30) & 0x2000) {
+                fn_800C4588(val);
+            }
+        } else {
+            if (*(volatile u16 *)((u8 *)obj + 0x30) & 0x800) {
+                fn_8005D9A8(obj);
+            }
+            *(volatile u16 *)((u8 *)obj + 0x30) |= 0x2000;
+        }
+        *(volatile u16 *)((u8 *)obj + 0x30) &= ~0x80;
+        break;
+    case 3:
+        val = *(s32 *)((u8 *)obj + 8);
+        obj = *(void **)((u8 *)obj + 4);
+        DCFlushRange(*(s32 *)((u8 *)obj + 0x38), *(s32 *)((u8 *)obj + 0x3C));
+        if (!(*(u16 *)((u8 *)obj + 0x30) & 0x80)) {
+            fn_800C4588(val);
+        }
+        if (*(u16 *)((u8 *)obj + 0x30) & 0x800) {
+            fn_8005D9A8(obj);
+        }
+        *(u16 *)((u8 *)obj + 0x30) |= 0x2000;
+        break;
+    }
+    lbl_803672EA = (lbl_803672EA + 1) & 0x3F;
+check:
+    if (lbl_803672EA != lbl_803672EB) {
+        goto loop;
+    }
+    fn_8020ADD8(lbl_803672EC);
+    goto check;
+}
+
 void fn_8005BF8C(void *arg0) {
     u16 *ptr = (u16 *)((u8 *)arg0 + 0x30);
 
