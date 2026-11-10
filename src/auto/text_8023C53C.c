@@ -4258,39 +4258,56 @@ u32 fn_802614C4(u32 arg0) {
     return arg0 >> 8U;
 }
 
-s32 fn_80261620(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
-{
+s32 fn_80261620(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 fn_802636C8(void);
+    s32 fn_8026341C(void (*)(void), s32, s32);
+    s32 fn_802596A8(u32, u32, u32);
+    void fn_80262504(void);
+    s32 fn_80263534(s32);
+    void fn_802636F4(void);
+    void fn_802634E4(void);
+    extern void fn_802614CC(void);
     extern u8 lbl_80368AD4;
     extern u8 lbl_80368AD3;
     extern u32 lbl_80368AA4;
-    extern void fn_802614CC(void);
+    s32 a0;
+    s32 a1;
+    s32 a2;
+    s32 a3;
+    u32 t5;
+    u32 t3;
+    u32 t4;
+
+    a0 = arg0;
+    a1 = arg1;
+    a2 = arg2;
+    a3 = arg3;
 
     fn_802636C8();
-
     lbl_80368AD4 = 0;
     lbl_80368AD3 = 0;
     lbl_80368AA4 = 0;
 
-    if (fn_8026341C(fn_802614CC, arg3, arg0) == 0) {
-        return -1;
+    if (fn_8026341C(fn_802614CC, a3, a0) == 0U) {
+        goto error;
     }
-
-    if (fn_802596A8(arg1 & 0xFF, arg2 & 0xFF, arg3 & 1) == 0) {
-        return -1;
+    t5 = a3 & 1;
+    t3 = (u8)a1;
+    t4 = (u8)a2;
+    if (fn_802596A8(t3, t4, t5) == 0U) {
+        goto error;
     }
-
-    if ((arg3 & 8) != 0) {
+    if (a3 & 8) {
         fn_80262504();
     }
-
-    if (fn_80263534(arg3) == 0) {
-        return -1;
+    if (fn_80263534(a3) == 0U) {
+        goto error;
     }
-
     fn_802636F4();
     fn_802634E4();
-
     return 0;
+error:
+    return -1;
 }
 
 int fn_802616E4(int arg0) {
@@ -4747,7 +4764,7 @@ int fn_802634E4(void) {
     fn_802137E8();
 }
 
-s32 fn_80263504(void) {
+int fn_80263504(void) {
     extern s32 lbl_80368B1C;
     extern u8 lbl_80368B20;
     s32 x;
