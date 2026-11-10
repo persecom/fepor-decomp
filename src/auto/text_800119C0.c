@@ -447,30 +447,28 @@ void fn_8001520C(void *arg0, u8 arg1) {
 }
 
 void fn_80015234(void **arg0) {
-    M2C_UNK fn_80036998(void *, s32);
+    void fn_80036998(void *, s32);
     s32 fn_80036A24(void *);
     void *fn_80036FD0(void *, s32);
     u8 fn_8003701C(void *);
+    void *temp_r31;
+    void *var_r30;
+    s32 var_r29;
 
-    void *var_r31 = *arg0;
-    if (var_r31 != NULL) {
-        do {
-            if ((u32) M2C_FIELD(var_r31, u32 *, 0x188) != 0U) {
-                s32 var_r30 = 0;
-                s32 temp_r3 = fn_8003701C(var_r31);
-                do {
-                    void *temp_r28 = fn_80036FD0(var_r31, var_r30);
-                    if ((temp_r28 != NULL) && 
-                        ((u32) M2C_FIELD(temp_r28, u32 *, 0x190) == (u32) M2C_FIELD(var_r31, u32 *, 0x190)) &&
-                        (fn_80036A24(var_r31) < 5) && 
-                        (fn_80036A24(temp_r28) < 5)) {
-                        fn_80036998(var_r31, var_r30);
-                    }
-                    var_r30 += 1;
-                } while (var_r30 < temp_r3);
+    var_r30 = *arg0;
+    while (var_r30 != NULL) {
+        if (*(u32 *)((u8 *)var_r30 + 0x188) != 0) {
+            for (var_r29 = 0; var_r29 < (s32)fn_8003701C(var_r30); var_r29++) {
+                temp_r31 = fn_80036FD0(var_r30, var_r29);
+                if (temp_r31 != NULL &&
+                    *(u32 *)((u8 *)temp_r31 + 0x190) == *(u32 *)((u8 *)var_r30 + 0x190) &&
+                    fn_80036A24(var_r30) < 5 &&
+                    fn_80036A24(temp_r31) < 5) {
+                    fn_80036998(var_r30, var_r29);
+                }
             }
-            var_r31 = M2C_FIELD(var_r31, void **, 0x184);
-        } while (var_r31 != NULL);
+        }
+        var_r30 = *(void **)((u8 *)var_r30 + 0x184);
     }
 }
 
