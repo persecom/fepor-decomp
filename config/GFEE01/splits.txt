@@ -447,7 +447,10 @@ dolphin/os/OSResetSW.c:
 	.text       start:0x80208C24 end:0x80208D18
 
 dolphin/os/OSResetSW_state.c:
-	.text       start:0x80208D18 end:0x8020A2C4
+	.text       start:0x80208D18 end:0x80208FB0
+
+dolphin/os/OSSram.c:
+	.text       start:0x80208FB0 end:0x8020A2C4
 
 dolphin/os/OSThread.c:
 	.text       start:0x8020A2C4 end:0x8020A4EC
