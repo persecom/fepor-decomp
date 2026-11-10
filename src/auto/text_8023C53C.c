@@ -1530,7 +1530,7 @@ s32 fn_80250414(u16 id) {
  extern AudioTableRange lbl_80354EB8[];
  extern AudioTableEntry lbl_803556B8[];
  extern u16 lbl_80368A0A;
- s32 i,j,index; u32 bucket; u16 count,start; AudioTableRange *range; AudioTableEntry *moving;
+ s32 total,index,j; u32 bucket; u16 count,start; s32 i; AudioTableRange *range; AudioTableEntry *moving;
  fn_8026372C();
  bucket=(id>>6)&1023;
  count=lbl_80354EB8[bucket].count;
@@ -1540,8 +1540,9 @@ s32 fn_80250414(u16 id) {
   if(i<(s32)count) {
    index=start+i;
    if(--lbl_803556B8[index].ref==0) {
-    for(j=index+1,moving=&lbl_803556B8[j];j<(s32)lbl_80368A0A;j++,moving++) moving[-1]=moving[0];
-    for(j=0,range=lbl_80354EB8;j<512;j++,range++) {
+    total=lbl_80368A0A;
+    for(j=index+1,moving=&lbl_803556B8[j];j<total;j++,moving++) moving[-1]=moving[0];
+    for(j=0,range=lbl_80354EB8;j<512;range++,j++) {
      if((s32)range->start>(s32)start) range->start--;
     }
     lbl_80354EB8[bucket].count--;
@@ -2248,9 +2249,9 @@ s16 fn_802537F8(s32 arg0, u32 arg1, s32 arg2) {
     return (s16) var_r0;
 }
 
-void fn_80253860(s32 arg0, u32 *arg1, u8 op) {
-    u16 fn_80260F18(s32);
-    void fn_80261014(s32, s32, s16);
+void fn_80253860(SynthVmState *arg0, u32 *arg1, u8 op) {
+    u16 fn_80260F18(SynthVmState *);
+    void fn_80261014(SynthVmState *, s32, s16);
     extern s32 lbl_8034CB74[];
     s32 res;
     s32 lhs;
@@ -2271,7 +2272,7 @@ void fn_80253860(s32 arg0, u32 *arg1, u8 op) {
     } else {
         idx = b0 & 0x1F;
         if (idx < 16) {
-            v1 = ((s32*)arg0)[idx + 0x2B];
+            v1 = arg0->regs[idx];
         } else {
             v1 = lbl_8034CB74[idx - 16];
         }
@@ -2287,7 +2288,7 @@ void fn_80253860(s32 arg0, u32 *arg1, u8 op) {
         } else {
             idx = b1 & 0x1F;
             if (idx < 16) {
-                raw = ((s32*)arg0)[idx + 0x2B];
+                raw = arg0->regs[idx];
             } else {
                 raw = lbl_8034CB74[idx - 16];
             }
@@ -2323,7 +2324,7 @@ void fn_80253860(s32 arg0, u32 *arg1, u8 op) {
         idx = b2 & 0x1F;
         c = res < -0x8000 ? -0x8000 : (res > 0x7FFF ? 0x7FFF : res);
         if (idx < 16) {
-            ((s32*)arg0)[idx + 0x2B] = (s16)c;
+            arg0->regs[idx] = (s16)c;
         } else {
             lbl_8034CB74[idx - 16] = (s16)c;
         }
@@ -4874,11 +4875,14 @@ u16 fn_802601EC(void *arg0, void *arg1, u8 arg2, u8 arg3) {
     extern s32 lbl_803689B8;
     extern s32 lbl_803689BC;
 
-    u8 *entry;
-    u8 *base;
-    s32 acc;
-    u32 i;
+    void *obj;
+    u8 *list;
+    u8 a2;
+    u8 a3;
     u32 signed_mode;
+    u32 i;
+    s32 acc;
+    u8 *entry;
     s32 val;
     s32 tmp;
     s32 scaled;
@@ -4887,17 +4891,21 @@ u16 fn_802601EC(void *arg0, void *arg1, u8 arg2, u8 arg3) {
     s32 r5;
     u32 diff_lo;
     u32 diff_hi;
+    s32 off;
 
-    base = (u8 *)arg1;
-    entry = base;
+    list = (u8 *)arg1;
+    obj = arg0;
+    a2 = arg2;
+    a3 = arg3;
+    entry = list;
     acc = 0;
     i = 0;
     signed_mode = 0;
 
-    while (i < base[0x22]) {
+    while (i < list[0x22]) {
         if ((entry[1] & 0x10) != 0) {
-            if (arg0 != 0) {
-                val = fn_802537F8(arg0, 0, entry[0]);
+            if (obj != 0) {
+                val = fn_802537F8(obj, 0, entry[0]);
             } else {
                 val = 0;
             }
@@ -4906,17 +4914,21 @@ u16 fn_802601EC(void *arg0, void *arg1, u8 arg2, u8 arg3) {
 
         op = entry[0];
         if (op == 0x80 || op == 1 || op == 0xA || (u8)(op - 0xA0) <= 1 || op == 0x83) {
-            if ((s32)op >= 0xA2) {
-                val = (s16)(fn_8025FC64(arg2, arg3) - 0x2000);
-            } else if ((s32)op >= 0xA0) {
-                if (arg0 != 0) {
-                    ((u8 *)arg0)[op + 0x138] = 1;
-                    val = *(s16 *)((u8 *)arg0 + (op * 0xC - 0x5B8)) * 2;
+            if ((s32)op < 0xA2) {
+                if ((s32)op >= 0xA0) {
+                    if (obj != 0) {
+                        off = op * 0xC - 0x5B8;
+                        ((u8 *)obj)[op + 0x138] = 1;
+                        val = *(s16 *)((u8 *)obj + off) << 1;
+                    } else {
+                        val = 0;
+                    }
                 } else {
-                    val = 0;
+                    goto call_fc64_signed;
                 }
             } else {
-                val = (s16)(fn_8025FC64(arg2, arg3) - 0x2000);
+call_fc64_signed:
+                val = (s16)(fn_8025FC64(a2, a3) - 0x2000);
             }
 
 apply_signed:
@@ -4995,37 +5007,37 @@ apply_signed:
         } else {
             switch ((s32)op) {
             case 0xA2:
-                if (arg0 != 0) {
-                    r5 = ((u8 *)arg0)[0x131] << 7;
+                if (obj != 0) {
+                    r5 = ((u8 *)obj)[0x131] << 7;
                 } else {
                     r5 = 0;
                 }
                 break;
             case 0xA3:
-                if (arg0 != 0) {
-                    r5 = (s32)(*(u32 *)((u8 *)arg0 + 0x15C) >> 9);
+                if (obj != 0) {
+                    r5 = (s32)(*(u32 *)((u8 *)obj + 0x15C) >> 9);
                 } else {
                     r5 = 0;
                 }
                 break;
             case 0xA4:
-                if (arg0 != 0) {
-                    diff_lo = (u32)lbl_803689BC - *(u32 *)((u8 *)arg0 + 0x94);
-                    diff_hi = (u32)lbl_803689B8 - *(u32 *)((u8 *)arg0 + 0x90);
-                    if (*(u32 *)((u8 *)arg0 + 0x94) > (u32)lbl_803689BC) {
+                if (obj != 0) {
+                    diff_lo = (u32)lbl_803689BC - *(u32 *)((u8 *)obj + 0x94);
+                    diff_hi = (u32)lbl_803689B8 - *(u32 *)((u8 *)obj + 0x90);
+                    if (*(u32 *)((u8 *)obj + 0x94) > (u32)lbl_803689BC) {
                         diff_hi -= 1;
                     }
                     r5 = (s32)((diff_lo >> 8) | (diff_hi << 24));
                     if (r5 > 0x3FFF) {
                         r5 = 0x3FFF;
                     }
-                    ((u8 *)arg0)[0xA8] = 1;
+                    ((u8 *)obj)[0xA8] = 1;
                 } else {
                     r5 = 0;
                 }
                 break;
             default:
-                r5 = (s32)fn_8025FC64(arg2, arg3);
+                r5 = (s32)fn_8025FC64(a2, a3);
                 break;
             }
 
@@ -5109,7 +5121,7 @@ apply_signed:
         i += 1;
     }
 
-    *(s16 *)(base + 0x20) = (s16)acc;
+    *(s16 *)(list + 0x20) = (s16)acc;
     return (u16)acc;
 }
 
