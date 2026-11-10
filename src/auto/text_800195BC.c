@@ -598,15 +598,19 @@ s8 fn_8001BFB8(void *arg0) {
     return fn_800C2ACC(&lbl_803206EC);
 }
 
-s8 fn_8001BFFC(void *arg0) {
-    s8 fn_800C2BA8(u8 *);
+s8 fn_8001BFFC(u8 *arg0) {
+    s32 fn_800C2BA8(void *, s32);
     extern u8 lbl_803206EC[];
-    
-    u8 r0 = *(u8 *)((u8 *)arg0 + 5);
-    if ((r0 & 0x3F) == 0) {
-        return 0;
+    s32 result;
+    s32 mask;
+
+    mask = arg0[5] & 0x3F;
+    if (mask == 0) {
+        result = 0;
+    } else {
+        result = (s8)fn_800C2BA8(lbl_803206EC, mask);
     }
-    return fn_800C2BA8(lbl_803206EC);
+    return (s8)result;
 }
 
 s8 fn_8001C040(void *arg0) {
