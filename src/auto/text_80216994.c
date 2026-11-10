@@ -374,14 +374,21 @@ s32 fn_80217D4C(void) {
 }
 
 s32 fn_80217D68(u32 arg0) {
-    u32 var_ctr = 8;
-    u32 temp_r6 = arg0 >> 31;
-    u32 var_r9 = 0;
-    u32 var_r10 = 1;
-    u32 var_r7 = 0;
-    u32 var_r8 = 0;
+    u32 var_ctr;
+    u32 temp_r6;
+    u32 var_r9;
+    u32 var_r10;
+    u32 var_r7;
+    u32 var_r8;
 
-    do {
+    var_ctr = 8;
+    temp_r6 = arg0 >> 0x1FU;
+    var_r9 = 0;
+    var_r10 = 1;
+    var_r7 = 0;
+    var_r8 = 0;
+
+    for (var_ctr = 8; var_ctr; --var_ctr) {
         if (var_r8 > 0xF) {
             if (var_r8 == 0x1F) {
                 var_r7 |= temp_r6;
@@ -394,8 +401,8 @@ s32 fn_80217D68(u32 arg0) {
             var_r9 += 1;
         }
 
-        if ((var_r8 + 1) > 0xF) {
-            if ((var_r8 + 1) == 0x1F) {
+        if (var_r8 + 1 > 0xF) {
+            if (var_r8 + 1 == 0x1F) {
                 var_r7 |= temp_r6;
             } else {
                 var_r7 |= (arg0 & (1U << (var_r8 + 1))) >> var_r10;
@@ -406,8 +413,8 @@ s32 fn_80217D68(u32 arg0) {
             var_r9 += 1;
         }
 
-        if ((var_r8 + 2) > 0xF) {
-            if ((var_r8 + 2) == 0x1F) {
+        if (var_r8 + 2 > 0xF) {
+            if (var_r8 + 2 == 0x1F) {
                 var_r7 |= temp_r6;
             } else {
                 var_r7 |= (arg0 & (1U << (var_r8 + 2))) >> var_r10;
@@ -418,8 +425,8 @@ s32 fn_80217D68(u32 arg0) {
             var_r9 += 1;
         }
 
-        if ((var_r8 + 3) > 0xF) {
-            if ((var_r8 + 3) == 0x1F) {
+        if (var_r8 + 3 > 0xF) {
+            if (var_r8 + 3 == 0x1F) {
                 var_r7 |= temp_r6;
             } else {
                 var_r7 |= (arg0 & (1U << (var_r8 + 3))) >> var_r10;
@@ -431,8 +438,7 @@ s32 fn_80217D68(u32 arg0) {
         }
 
         var_r8 += 4;
-        var_ctr -= 1;
-    } while (var_ctr != 0);
+    }
 
     return var_r7;
 }
@@ -624,7 +630,7 @@ s32 fn_8021965C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x84);
 }
 
-s32 fn_802198C0(void *, s32, void *, void *);
+s32 fn_802198C0(u16 *arg0, s32 arg1, u16 *arg2, u16 *arg3);
 s32 fn_80205110(void *, s32);
 void fn_80219734(void);
 s32 fn_802197FC(s32 arg0, s32 arg1) {
@@ -639,10 +645,69 @@ s32 fn_802197FC(s32 arg0, s32 arg1) {
     temp_r31 = *(u8 **)(temp_r30 + 0x84);
     temp_r6 = temp_r31 + 0x1FC0;
     *(u16 *)(temp_r31 + 0x1FFA) = (u16)(*(s16 *)(temp_r31 + 0x1FFA) + 1);
-    fn_802198C0(temp_r31, 0x1FFC, (u8 *)temp_r6 + 0x3C, (u8 *)temp_r6 + 0x3E);
+    fn_802198C0((u16 *)temp_r31, 0x1FFC, (u16 *)((u8 *)temp_r6 + 0x3C), (u16 *)((u8 *)temp_r6 + 0x3E));
     fn_80205110(temp_r31, 0x2000);
     *(s32 *)(temp_r30 + 0xD8) = arg1;
     return fn_8021791C(arg0, *(s32 *)(temp_r30 + 0x0C) * ((u32)(temp_r31 - *(u8 **)(temp_r30 + 0x80)) >> 13), (void *)fn_80219734);
+}
+
+s32 fn_802198C0(u16 *arg0, s32 arg1, u16 *arg2, u16 *arg3) {
+    u16 *var_r3;
+    s32 var_r4;
+    s32 var_ctr;
+    u16 temp;
+
+    *arg3 = 0;
+    var_r4 = arg1 / 2;
+    *arg2 = 0;
+    var_r3 = arg0;
+    if (var_r4 > 0) {
+        var_ctr = (u32)var_r4 >> 3;
+        if (var_ctr != 0) {
+            do {
+                *arg2 += var_r3[0];
+                temp = var_r3[0];
+                *arg3 += ~temp;
+                *arg2 += var_r3[1];
+                temp = var_r3[1];
+                *arg3 += ~temp;
+                *arg2 += var_r3[2];
+                temp = var_r3[2];
+                *arg3 += ~temp;
+                *arg2 += var_r3[3];
+                temp = var_r3[3];
+                *arg3 += ~temp;
+                *arg2 += var_r3[4];
+                temp = var_r3[4];
+                *arg3 += ~temp;
+                *arg2 += var_r3[5];
+                temp = var_r3[5];
+                *arg3 += ~temp;
+                *arg2 += var_r3[6];
+                temp = var_r3[6];
+                *arg3 += ~temp;
+                *arg2 += var_r3[7];
+                temp = var_r3[7];
+                var_r3 += 8;
+                *arg3 += ~temp;
+            } while (--var_ctr);
+        }
+        var_r4 &= 7;
+        if (var_r4 != 0) {
+            do {
+                *arg2 += *var_r3;
+                temp = *var_r3;
+                var_r3 += 1;
+                *arg3 += ~temp;
+            } while (--var_r4);
+        }
+    }
+    if (*arg2 == 0xFFFF) {
+        *arg2 = 0;
+    }
+    if (*arg3 == 0xFFFF) {
+        *arg3 = 0;
+    }
 }
 
 s32 fn_8021A1B8(s32 arg0) {
