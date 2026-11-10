@@ -21,6 +21,16 @@ typedef unsigned long uintptr_t;
 #define NULL ((void*)0)
 #endif
 
+/* 0x18-byte record used by fn_800C29D0 / fn_800C2ACC / fn_800C30CC (1-based index) */
+#ifndef UNK800C2ACC_TYPE
+#define UNK800C2ACC_TYPE
+typedef struct Unk800C2ACC {
+    u8 unk0[0x13];
+    u8 unk13;
+    u8 unk14[4];
+} Unk800C2ACC;
+#endif
+
 /* Global variables from the original game code */
 extern u8 lbl_803671C0;
 extern u8 lbl_80366DB0;
