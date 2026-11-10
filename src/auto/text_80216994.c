@@ -3,6 +3,21 @@
 #include <dolphin/os.h>
 #include "global.h"
 #include "ef.h"
+
+typedef struct CardDirEntry {
+    u8 unk0[4];
+    u8 unk4[2];
+    u8 unk7;
+    u8 unk8[0x20];
+    s32 unk28;
+    s32 unk2C;
+    u16 unk30;
+    u16 unk32;
+    u8 unk34;
+    u8 unk35;
+    u8 pad36[6];
+    s32 unk3C;
+} CardDirEntry;
 extern s32 lbl_803682F0;
 extern s32 fn_80013E50(s32);
 extern s32 fn_80013E60(s32, s32);
