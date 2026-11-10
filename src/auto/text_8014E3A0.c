@@ -1,6 +1,7 @@
 /* Functions from 0x8014E3A0 to 0x801620BC, found by decomp-toolkit. */
 #include "common.h"
 extern u32 *lbl_80367140;
+typedef struct { u8 r, g, b, a; } Color;
 
 s32 fn_8014E3A0(void) {
     return 0;
@@ -432,6 +433,120 @@ void fn_8014EFB8(void) {
                 }
             }
         }
+    }
+}
+
+void fn_801502EC(void *arg0, void *arg1, void *arg2, void *arg3) {
+    void fn_8022100C(s32);
+    void fn_8021FBB8(void);
+    void fn_8021F4E4(s32, s32);
+    void fn_8021FBF0(s32, s32, s32, s32, s32);
+    void fn_8006ECCC(void *, void *, u16);
+    void fn_80222C50(void *, s32);
+    void fn_80220428(s32);
+    void fn_802240C8(s32);
+    void fn_802201A8(s32, s32, s32, s32, s32, s32);
+    void fn_80223F2C(s32, s32, s32, s32);
+    void fn_802239D0(s32, s32);
+    void fn_80220FC4(s32, s32, s32);
+    void fn_80220F84(s32, s32);
+    void fn_80220DEC(s32, s32, s32);
+    extern f32 lbl_8036A820;
+    extern f32 lbl_8036A838;
+    u8 sp8[0x20];
+    void *var_r31;
+    void *var_r30;
+    void *var_r29;
+    void *var_r28;
+    f32 f3, f2, f1, f0;
+    u8 r5b, r4b, r3b, r0b;
+    s32 ctr;
+
+    var_r31 = arg1;
+    var_r30 = arg0;
+    var_r29 = arg2;
+    var_r28 = arg3;
+    fn_8022100C(0);
+    fn_8021FBB8();
+    fn_8021F4E4(9, 1);
+    fn_8021F4E4(0xB, 1);
+    fn_8021FBF0(0, 9, 1, 4, 0);
+    fn_8021FBF0(0, 0xB, 1, 5, 0);
+    if (*(u8 *)((u8 *)var_r29 + 6) != 0) {
+        fn_8021F4E4(0xD, 1);
+        fn_8021FBF0(0, 0xD, 1, 4, 0);
+        fn_8006ECCC(var_r28, sp8, *(u16 *)(*(u8 **)((u8 *)var_r29 + 0x14) + 4));
+        fn_80222C50(sp8, 0);
+        fn_80220428(1);
+        fn_802240C8(1);
+        fn_802201A8(0, 1, 4, 0x3C, 0, 0x7D);
+        fn_80223F2C(0, 0, 0, 4);
+        fn_802239D0(0, 0);
+        fn_80220FC4(0, 0, 1);
+        ctr = 0;
+        goto check1;
+        do {
+            r0b = *(u8 *)((u8 *)var_r31 + 0x28);
+            var_r28 = var_r31;
+            var_r31 = (u8 *)var_r31 + 0x2C;
+            if (r0b != 0) {
+                fn_80220F84((s32)(lbl_8036A820 * *(f32 *)((u8 *)var_r28 + 0x1C)), 5);
+                fn_80220DEC(0xB8, 0, 1);
+                f3 = *(f32 *)((u8 *)var_r28 + 8);
+                f2 = *(f32 *)((u8 *)var_r28 + 4);
+                f1 = *(f32 *)((u8 *)var_r28 + 0);
+                f0 = lbl_8036A838;
+                *(volatile f32 *)0xCC008000 = f1;
+                *(volatile f32 *)0xCC008000 = f2;
+                *(volatile f32 *)0xCC008000 = f3;
+                r5b = *(u8 *)((u8 *)var_r28 + 0x28);
+                r4b = *(u8 *)((u8 *)var_r28 + 0x2B);
+                r3b = *(u8 *)((u8 *)var_r28 + 0x2A);
+                r0b = *(u8 *)((u8 *)var_r28 + 0x29);
+                *(volatile u8 *)0xCC008000 = r0b;
+                *(volatile u8 *)0xCC008000 = r3b;
+                *(volatile u8 *)0xCC008000 = r4b;
+                *(volatile u8 *)0xCC008000 = r5b;
+                *(volatile f32 *)0xCC008000 = f0;
+                *(volatile f32 *)0xCC008000 = f0;
+            }
+            ctr += 1;
+        check1:
+            ;
+        } while (ctr < (s32)*(u16 *)((u8 *)var_r30 + 0x1E));
+    } else {
+        fn_80220428(0);
+        fn_802240C8(1);
+        fn_80223F2C(0, 0xFF, 0xFF, 4);
+        fn_802239D0(0, 4);
+        ctr = 0;
+        goto check2;
+        do {
+            r0b = *(u8 *)((u8 *)var_r31 + 0x28);
+            var_r29 = var_r31;
+            var_r31 = (u8 *)var_r31 + 0x2C;
+            if (r0b != 0) {
+                fn_80220F84((s32)(lbl_8036A820 * *(f32 *)((u8 *)var_r29 + 0x1C)), 5);
+                fn_80220DEC(0xB8, 0, 1);
+                f2 = *(f32 *)((u8 *)var_r29 + 8);
+                f1 = *(f32 *)((u8 *)var_r29 + 4);
+                f0 = *(f32 *)((u8 *)var_r29 + 0);
+                *(volatile f32 *)0xCC008000 = f0;
+                *(volatile f32 *)0xCC008000 = f1;
+                *(volatile f32 *)0xCC008000 = f2;
+                r5b = *(u8 *)((u8 *)var_r29 + 0x28);
+                r4b = *(u8 *)((u8 *)var_r29 + 0x2B);
+                r3b = *(u8 *)((u8 *)var_r29 + 0x2A);
+                r0b = *(u8 *)((u8 *)var_r29 + 0x29);
+                *(volatile u8 *)0xCC008000 = r0b;
+                *(volatile u8 *)0xCC008000 = r3b;
+                *(volatile u8 *)0xCC008000 = r4b;
+                *(volatile u8 *)0xCC008000 = r5b;
+            }
+            ctr += 1;
+        check2:
+            ;
+        } while (ctr < (s32)*(u16 *)((u8 *)var_r30 + 0x1E));
     }
 }
 
