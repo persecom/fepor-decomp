@@ -264,6 +264,15 @@ void fn_80073A60(void) {
     }
 }
 
+void fn_80073B74(s32 arg0)
+{
+    extern u32 lbl_80367468;
+    extern u8 lbl_80312000[];
+
+    fn_80091CD8(lbl_80367468);
+    fn_80024398(lbl_80312000, arg0, 0);
+}
+
 void fn_80073BB8(void *arg0) {
     extern void *lbl_8036746C;
     extern void *lbl_80367468;
