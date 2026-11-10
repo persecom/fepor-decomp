@@ -1695,6 +1695,14 @@ f64 fn_80238638(f64 farg0) {
 }
 
 extern f64 lbl_8036C180;
+extern f64 lbl_80282ED8[];
+extern f64 lbl_8036C0D0;
+extern f64 lbl_8036C0D8;
+extern f64 lbl_8036C0E0;
+extern f64 lbl_8036C0E8;
+extern f64 lbl_8036C0F0;
+extern f64 lbl_8036C0F8;
+extern f64 lbl_8036C100;
 f64 fn_80238710(f64 farg0) {
     f64 sp10;
     f64 sp8;
