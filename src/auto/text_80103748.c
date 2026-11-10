@@ -6,6 +6,7 @@
 extern u32 lbl_802A66D8[];
 extern f64 lbl_8036A100;
 extern f32 lbl_8036A0F8;
+extern u16 lbl_80366E80;
 
 void fn_80105D4C(void *, u8);
 
