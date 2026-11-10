@@ -136,52 +136,60 @@ extern void* RunQueue_80339478[];
 extern s32 RunQueueBits_80368518;
 extern s32 RunQueueHint_8036851C;
 
+typedef struct OSCalendarTime {
+    s32 sec;
+    s32 min;
+    s32 hour;
+    s32 mday;
+    s32 mon;
+    s32 year;
+    s32 wday;
+    s32 yday;
+    s32 msec;
+    s32 usec;
+} OSCalendarTime;
+
+#pragma use_lmw_stmw on
 void fn_8020B294(s64 ticks, void *td) {
     s64 fn_8022C9FC(s64, s64);
     s64 __div2i(s64, s64);
     void fn_8020B0F8(s32, void *);
+    void *cal;
     s64 d;
     s64 tmp;
     s32 days;
     s32 secs;
     s32 hours;
-    s32 eight;
-    u32 *hw;
-    u32 timer;
-    u32 msDiv;
-    u32 usDiv;
+    s32 tickHi;
+    u32 tickLo;
 
-    eight = 8;
-    hw = (u32 *)0x80000000;
-    timer = hw[0x3E] >> 2;
-    d = fn_8022C9FC(ticks, (s64)timer);
+    cal = td;
+    tickHi = (s32)(ticks >> 32);
+    tickLo = (u32)ticks;
+    d = fn_8022C9FC(((s64)tickHi << 32) | tickLo, (s64)(*(u32 *)0x800000F8 >> 2));
     if (d < 0) {
-        d += (s64)(hw[0x3E] >> 2);
+        d += (s64)(*(u32 *)0x800000F8 >> 2);
     }
-    timer = hw[0x3E] >> 2;
-    msDiv = (u32)((((u64)0x431BDE83ULL * timer) >> 32) >> 15);
-    tmp = __div2i(d * eight, (s64)msDiv);
-    *(s32 *)((u8 *)td + 0x24) = (s32)fn_8022C9FC(tmp, 1000);
-    timer = hw[0x3E] >> 2;
-    usDiv = (u32)((((u64)0x10624DD3ULL * timer) >> 32) >> 6);
-    tmp = __div2i(d, (s64)usDiv);
-    *(s32 *)((u8 *)td + 0x20) = (s32)fn_8022C9FC(tmp, 1000);
-    ticks -= d;
-    timer = hw[0x3E] >> 2;
-    tmp = __div2i(ticks, (s64)timer);
+    tmp = __div2i(d * 8, (s64)(u32)((((u64)0x431BDE83ULL * (*(u32 *)0x800000F8 >> 2)) >> 32) >> 15));
+    *(s32 *)((u8 *)cal + 0x24) = (s32)fn_8022C9FC(tmp, 1000);
+    tmp = __div2i(d, (s64)(u32)((((u64)0x10624DD3ULL * (*(u32 *)0x800000F8 >> 2)) >> 32) >> 6));
+    *(s32 *)((u8 *)cal + 0x20) = (s32)fn_8022C9FC(tmp, 1000);
+    ticks = ((s64)tickHi << 32) | tickLo;
+    ticks = ticks - d;
+    tmp = __div2i(ticks, (s64)(*(u32 *)0x800000F8 >> 2));
     days = (s32)(__div2i(tmp, 86400) + 0xB2575);
-    secs = (s32)fn_8022C9FC(__div2i(ticks, (s64)timer), 86400);
+    secs = (s32)fn_8022C9FC(__div2i(ticks, (s64)(*(u32 *)0x800000F8 >> 2)), 86400);
     if (secs < 0) {
         days -= 1;
         secs += 86400;
     }
-    fn_8020B0F8(days, td);
+    fn_8020B0F8(days, cal);
     hours = secs / 60;
-    *(s32 *)((u8 *)td + 0x8) = hours / 60;
-    *(s32 *)((u8 *)td + 0x4) = hours % 60;
-    *(s32 *)((u8 *)td + 0x0) = secs % 60;
+    *(s32 *)((u8 *)cal + 0x8) = hours / 60;
+    *(s32 *)((u8 *)cal + 0x4) = hours % 60;
+    *(s32 *)((u8 *)cal + 0x0) = secs % 60;
 }
-
+#pragma use_lmw_stmw reset
 void __init_user(void) {
     __init_cpp();
 }
