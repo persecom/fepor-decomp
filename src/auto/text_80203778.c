@@ -272,11 +272,7 @@ s32 __DBIsExceptionMarked(u8 arg0) {
     return M2C_FIELD(__DBInterface, s32 *, 4) & (1 << arg0);
 }
 
-void DBPrintf(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, f64 farg0, f64 farg1, f64 farg2, f64 farg3, f64 farg4, f64 farg5, f64 farg6, f64 farg7) {
-    if (arg0 != 0) {
-        return;
-    }
-    // This function only does a stack frame setup and returns
+void DBPrintf(u8 level, char *fmt, ...) {
 }
 
 u32 fn_80203AAC(void) {
@@ -347,9 +343,8 @@ s32 __OSPSInit(void) {
 
 volatile u32 __PIRegs[64] : 0xCC006000;
 u8 fn_80204410(void) {
-    volatile u32 *regs;
-    regs = __PIRegs;
-    return (u8)regs[9];
+    volatile u32 *di = __PIRegs;
+    return (u8)di[9];
 }
 
 void OSRegisterVersion(s32 arg0) {
