@@ -20,6 +20,7 @@ static inline u8 *FindAudioResource(void *data, u16 id, u32 offset) {
 }
 typedef struct SynthStateLink { u8 pad[0xEC]; s32 next; u8 padF0[0x458 - 0xF0]; } SynthStateLink;
 typedef s32 Fn80256FF0Arg;
+typedef struct SynthFreeNode { u8 prev, next; u16 active; } SynthFreeNode;
 
 extern u16 lbl_80366F28;
 extern char lbl_80282AE8[];
@@ -2003,6 +2004,84 @@ int fn_80250E48(void *arg0, u32 *arg1)
     return 1;
 }
 
+int fn_80250F18(void *arg0, u32 *arg1)
+{
+    u16 fn_802611F8(void);
+    s32 fn_802616F4(s32);
+
+    u8 *voice;
+    u32 flags;
+    u32 value;
+    u32 count;
+    u32 status;
+    u32 status2;
+
+    voice = (u8 *)arg0;
+
+    count = *(u16 *)(voice + 0xAA);
+
+    if (count == 0) {
+        flags = arg1[0];
+
+        if (flags & 0x10000) {
+            value = fn_802611F8();
+            count = arg1[1] >> 16;
+
+            count = value % count;
+            *(u16 *)(voice + 0xAA) = count;
+        } else {
+            count = arg1[1] >> 16;
+            *(u16 *)(voice + 0xAA) = count;
+        }
+
+        count = *(u16 *)(voice + 0xAA);
+
+        if (count != 0xFFFF) {
+            *(u16 *)(voice + 0xAA) = count + 1;
+        }
+    } else {
+        if (count != 0xFFFF) {
+            count = *(u16 *)(voice + 0xAA) - 1;
+            *(u16 *)(voice + 0xAA) = count;
+
+            if ((count & 0xFFFF) == 0) {
+                return 0;
+            }
+        }
+    }
+
+    flags = arg1[0];
+
+    if (flags & 0x100) {
+        status = *(u32 *)(voice + 0x114);
+        status2 = *(u32 *)(voice + 0x118);
+
+        if (((status & 0x100) |
+             ((status2 & 8) ^ 8)) == 0) {
+            *(u16 *)(voice + 0xAA) = 0;
+            return 0;
+        }
+    }
+
+    if (flags & 0x1000000) {
+        status = *(u32 *)(voice + 0x118);
+
+        if ((status & 0x20) == 0) {
+            if (fn_802616F4(*(u8 *)(voice + 0xF4)) == 0) {
+                *(u16 *)(voice + 0xAA) = 0;
+                return 0;
+            }
+        }
+    }
+
+    value = (arg1[1] & 0xFFFF) << 3;
+
+    *(u32 *)(voice + 0x38) =
+        *(u32 *)(voice + 0x34) + value;
+
+    return 0;
+}
+
 void fn_802511F8(void *arg0, u32 *arg1) {
     M2C_UNK fn_80250B58(void *, u32 *);
     u32 fn_802575A0(void *);
@@ -2070,7 +2149,7 @@ void fn_80251A44(SynthVoice *sv, u32 *arg1) {
     M2C_FIELD(sv, u32 *, 0x118) |= 0x100;
 }
 
-void fn_80251B70(void *sv, u32 *arg1) {
+void fn_80251B70(void *arg0, u32 *arg1) {
     s32 fn_80250884(u16);
     s32 fn_80257940(s32);
     void fn_80257C04(void *);
@@ -2078,7 +2157,8 @@ void fn_80251B70(void *sv, u32 *arg1) {
     extern f32 lbl_8036C248;
     extern u8 lbl_8029FB7C[];
 
-    u8 *p;
+    void *sv;
+    u8 *data;
     s16 pitch;
     s32 v0;
     s32 v4;
@@ -2087,11 +2167,13 @@ void fn_80251B70(void *sv, u32 *arg1) {
     u16 h8;
     u16 hA;
     u32 idx;
-    u16 t;
+    u8 *p;
 
-    p = (u8 *)fn_80250884((u16)(arg1[0] >> 8));
-    if (p != 0) {
-        *(s16 *)((u8 *)sv + 0x210) = (s8)arg1[1] << 8;
+    sv = arg0;
+    data = (u8 *)fn_80250884((u16)(arg1[0] >> 8));
+    if (data != NULL) {
+        pitch = (s8)arg1[1] << 8;
+        *(s16 *)((u8 *)sv + 0x210) = pitch;
         pitch = *(s16 *)((u8 *)sv + 0x210);
         if (pitch >= 0) {
             *(s16 *)((u8 *)sv + 0x210) = (s16)(pitch + ((((s8)(arg1[1] >> 8)) << 8) / 100));
@@ -2099,19 +2181,18 @@ void fn_80251B70(void *sv, u32 *arg1) {
             *(s16 *)((u8 *)sv + 0x210) = (s16)(pitch - ((((s8)(arg1[1] >> 8)) << 8) / 100));
         }
 
+        p = data;
         vC = p[0xC] | (p[0xD] << 8) | (p[0xE] << 16) | (p[0xF] << 24);
         v0 = p[0x0] | (p[0x1] << 8) | (p[0x2] << 16) | (p[0x3] << 24);
-        t = *(u16 *)(p + 8);
-        h8 = (u16)((t >> 8) | (t << 8));
+        h8 = (u16)((*(u16 *)(p + 8) >> 8) | (*(u16 *)(p + 8) << 8));
         v4 = p[0x4] | (p[0x5] << 8) | (p[0x6] << 16) | (p[0x7] << 24);
-        t = *(u16 *)(p + 0xA);
-        hA = (u16)((t >> 8) | (t << 8));
+        hA = (u16)((*(u16 *)(p + 0xA) >> 8) | (*(u16 *)(p + 0xA) << 8));
         v10 = p[0x10] | (p[0x11] << 8) | (p[0x12] << 16) | (p[0x13] << 24);
 
-        if (vC != (s32)0x80000000) {
+        if ((u32)(vC + 0x80000000) != 0) {
             v0 += (s32)(lbl_8036C244 * (f32)*(u32 *)((u8 *)sv + 0x15C) * (f32)vC);
         }
-        if (v10 != (s32)0x80000000) {
+        if ((u32)(v10 + 0x80000000) != 0) {
             v4 += (s32)(lbl_8036C248 * (f32)*(u8 *)((u8 *)sv + 0x131) * (f32)v10);
         }
 
@@ -2120,11 +2201,11 @@ void fn_80251B70(void *sv, u32 *arg1) {
         *(s32 *)((u8 *)sv + 0x1FC) = fn_80257940(v0);
         *(s32 *)((u8 *)sv + 0x200) = fn_80257940(v4);
 
-        idx = (u32)(h8 >> 2);
+        idx = (h8 >> 2) & 0x3FFF;
         if (idx > 0x3FF) {
             idx = 0x3FF;
         }
-        *(s16 *)((u8 *)sv + 0x204) = (s16)(0xC1 - lbl_8029FB7C[idx]);
+        *(s16 *)((u8 *)sv + 0x204) = 0xC1 - lbl_8029FB7C[idx];
         *(u32 *)((u8 *)sv + 0x208) = hA;
         fn_80257C04((u8 *)sv + 0x1E8);
         *(u32 *)((u8 *)sv + 0x114) |= 0x200;
@@ -2365,14 +2446,14 @@ void fn_80253860(SynthVmState *arg0, u32 *arg1, u8 op) {
     u32 v1;
     u32 raw;
     u32 a;
+    u32 w;
     u8 idx;
     u8 b0;
     u8 b1;
     u8 b2;
-    s32 c;
 
-    a = arg1[0];
     b0 = arg1[1];
+    a = arg1[0];
     if (a >> 24) {
         v1 = fn_80260F18(arg0);
     } else {
@@ -2388,8 +2469,9 @@ void fn_80253860(SynthVmState *arg0, u32 *arg1, u8 op) {
     if (op == 4) {
         rhs = (s16)(arg1[1] >> 8);
     } else {
-        b1 = (arg1[1] >> 16) & 0xFF;
-        if ((arg1[1] >> 8) & 0xFF) {
+        w = arg1[1];
+        b1 = (w >> 16) & 0xFF;
+        if ((w >> 8) & 0xFF) {
             raw = fn_80260F18(arg0);
         } else {
             idx = b1 & 0x1F;
@@ -2424,14 +2506,15 @@ void fn_80253860(SynthVmState *arg0, u32 *arg1, u8 op) {
 
     b2 = (arg1[0] >> 16) & 0xFF;
     if ((arg1[0] >> 8) & 0xFF) {
-        c = res < -0x8000 ? -0x8000 : (res > 0x7FFF ? 0x7FFF : res);
+        s32 c = res < -0x8000 ? -0x8000 : (res > 0x7FFF ? 0x7FFF : res);
         fn_80261014(arg0, b2, (s16)c);
     } else {
         idx = b2 & 0x1F;
-        c = res < -0x8000 ? -0x8000 : (res > 0x7FFF ? 0x7FFF : res);
         if (idx < 16) {
+            s32 c = res < -0x8000 ? -0x8000 : (res > 0x7FFF ? 0x7FFF : res);
             arg0->regs[idx] = (s16)c;
         } else {
+            s32 c = res < -0x8000 ? -0x8000 : (res > 0x7FFF ? 0x7FFF : res);
             lbl_8034CB74[idx - 16] = (s16)c;
         }
     }
@@ -3083,6 +3166,26 @@ void fn_802567B0(void *arg0) {
     }
     
     *(s32*)((char*)arg0 + 0xF4) = -1;
+}
+
+void fn_80256974(void) {
+extern u8 lbl_80359710[3584];
+extern u16 lbl_80368A4C;
+extern u8 lbl_80368A4E,lbl_80368A4F,lbl_80368A50,lbl_80368A51;
+u32 i;
+u32 n=lbl_8034C110[0x210];
+for(i=0;i<n;i++){
+lbl_80359710[0xE00+i*4]=i-1;
+lbl_80359710[0xE01+i*4]=i+1;
+*(u16*)(lbl_80359710+0xE02+i*4)=1;
+}
+lbl_80359710[0xE00]=255;
+lbl_80368A51=0;
+lbl_80359710[0xE00+lbl_8034C110[0x210]*4-3]=255;
+lbl_80368A50=lbl_8034C110[0x210]-1;
+for(i=0;i<n;i++) *(u16*)(lbl_80359710+0x802+i*4)=0;
+for(i=0;i<256;i++) lbl_80359710[0x900+i]=255;
+lbl_80368A4F=0;lbl_80368A4C=65535;lbl_80368A4E=0;
 }
 
 int fn_80256DD8(int arg0) {
@@ -5021,27 +5124,26 @@ u8 fn_802601B0(u8 arg0, u8 arg1) {
 
 u16 fn_802601EC(void *arg0, void *arg1, u8 arg2, u8 arg3) {
     s16 fn_802537F8(void *, s32, u8);
-    u16 fn_8025FC64(u8, u8);
+    u16 fn_8025FC64(u8, u8, u8);
     extern s32 lbl_803689B8;
     extern s32 lbl_803689BC;
 
+    u8 *entry;
+    s32 acc;
+    u32 i;
+    u32 signed_mode;
     void *obj;
     u8 *list;
     u8 a2;
     u8 a3;
-    u32 signed_mode;
-    u32 i;
-    s32 acc;
-    u8 *entry;
     s32 val;
     s32 tmp;
     s32 scaled;
     u8 op;
     u8 mode;
     s32 r5;
-    u32 diff_lo;
-    u32 diff_hi;
-    s32 off;
+    u64 diff;
+    s32 mul;
 
     list = (u8 *)arg1;
     obj = arg0;
@@ -5050,12 +5152,11 @@ u16 fn_802601EC(void *arg0, void *arg1, u8 arg2, u8 arg3) {
     entry = list;
     acc = 0;
     i = 0;
-    signed_mode = 0;
 
     while (i < list[0x22]) {
         if ((entry[1] & 0x10) != 0) {
             if (obj != 0) {
-                val = fn_802537F8(obj, 0, entry[0]);
+                val = (s16)fn_802537F8(obj, 0, entry[0]);
             } else {
                 val = 0;
             }
@@ -5064,31 +5165,32 @@ u16 fn_802601EC(void *arg0, void *arg1, u8 arg2, u8 arg3) {
 
         op = entry[0];
         if (op == 0x80 || op == 1 || op == 0xA || (u8)(op - 0xA0) <= 1 || op == 0x83) {
-            if ((s32)op < 0xA2) {
-                if ((s32)op >= 0xA0) {
-                    if (obj != 0) {
-                        off = op * 0xC - 0x5B8;
-                        ((u8 *)obj)[op + 0x138] = 1;
-                        val = *(s16 *)((u8 *)obj + off) << 1;
-                    } else {
-                        val = 0;
-                    }
+            if ((s32)op >= 0xA2) {
+                goto call_fc64_signed;
+            } else if ((s32)op >= 0xA0) {
+                if (obj != 0) {
+                    mul = op * 0xC;
+                    mul -= 0x5B8;
+                    val = *(s16 *)((u8 *)obj + mul);
+                    ((u8 *)obj)[op + 0x138] = 1;
+                    val <<= 1;
                 } else {
-                    goto call_fc64_signed;
+                    val = 0;
                 }
             } else {
 call_fc64_signed:
-                val = (s16)(fn_8025FC64(a2, a3) - 0x2000);
+                val = (u16)fn_8025FC64(op, a2, a3) - 0x2000;
             }
 
 apply_signed:
             scaled = (val * (*(s32 *)(entry + 4) >> 1)) >> 15;
             if (scaled < -0x2000) {
                 val = -0x2000;
-            } else if (scaled > 0x1FFF) {
-                val = 0x1FFF;
             } else {
-                val = scaled;
+                val = 0x1FFF;
+                if (scaled <= 0x1FFF) {
+                    val = scaled;
+                }
             }
 
             mode = (u8)(entry[1] & 0xF);
@@ -5099,13 +5201,15 @@ apply_signed:
                 break;
             case 1:
                 if (signed_mode != 0) {
-                    tmp = (acc + val) - 0x2000;
+                    tmp = acc + val;
+                    tmp -= 0x2000;
                     if (tmp < -0x2000) {
                         val = -0x2000;
-                    } else if (tmp > 0x1FFF) {
-                        val = 0x1FFF;
                     } else {
-                        val = tmp;
+                        val = 0x1FFF;
+                        if (tmp <= 0x1FFF) {
+                            val = tmp;
+                        }
                     }
                     acc = val + 0x2000;
                 } else {
@@ -5126,10 +5230,11 @@ apply_signed:
                 }
                 if (scaled < -0x2000) {
                     val = -0x2000;
-                } else if (scaled > 0x1FFF) {
-                    val = 0x1FFF;
                 } else {
-                    val = scaled;
+                    val = 0x1FFF;
+                    if (scaled <= 0x1FFF) {
+                        val = scaled;
+                    }
                 }
                 acc = val + 0x2000;
                 break;
@@ -5138,10 +5243,11 @@ apply_signed:
                     tmp = (acc - 0x2000) - val;
                     if (tmp < -0x2000) {
                         val = -0x2000;
-                    } else if (tmp > 0x1FFF) {
-                        val = 0x1FFF;
                     } else {
-                        val = tmp;
+                        val = 0x1FFF;
+                        if (tmp <= 0x1FFF) {
+                            val = tmp;
+                        }
                     }
                     acc = val + 0x2000;
                 } else {
@@ -5172,12 +5278,9 @@ apply_signed:
                 break;
             case 0xA4:
                 if (obj != 0) {
-                    diff_lo = (u32)lbl_803689BC - *(u32 *)((u8 *)obj + 0x94);
-                    diff_hi = (u32)lbl_803689B8 - *(u32 *)((u8 *)obj + 0x90);
-                    if (*(u32 *)((u8 *)obj + 0x94) > (u32)lbl_803689BC) {
-                        diff_hi -= 1;
-                    }
-                    r5 = (s32)((diff_lo >> 8) | (diff_hi << 24));
+                    diff = (((u64)(u32)lbl_803689B8 << 32) | (u32)lbl_803689BC)
+                         - (((u64)*(u32 *)((u8 *)obj + 0x90) << 32) | *(u32 *)((u8 *)obj + 0x94));
+                    r5 = (s32)(diff >> 8);
                     if (r5 > 0x3FFF) {
                         r5 = 0x3FFF;
                     }
@@ -5187,7 +5290,7 @@ apply_signed:
                 }
                 break;
             default:
-                r5 = (s32)fn_8025FC64(a2, a3);
+                r5 = (u16)fn_8025FC64(op, a2, a3);
                 break;
             }
 
@@ -5206,22 +5309,24 @@ apply_signed:
                 break;
             case 1:
                 if (signed_mode != 0) {
-                    tmp = (acc + val) - 0x2000;
+                    tmp = acc + val;
+                    tmp -= 0x2000;
                     if (tmp < -0x2000) {
                         val = -0x2000;
-                    } else if (tmp > 0x1FFF) {
-                        val = 0x1FFF;
                     } else {
-                        val = tmp;
+                        val = 0x1FFF;
+                        if (tmp <= 0x1FFF) {
+                            val = tmp;
+                        }
                     }
                     acc = val + 0x2000;
                 } else {
-                    tmp = acc + val;
-                    if ((u32)tmp > 0x3FFFU) {
-                        acc = 0x3FFF;
-                    } else {
-                        acc = tmp;
+                    acc += val;
+                    tmp = 0x3FFF;
+                    if ((u32)acc <= 0x3FFFU) {
+                        tmp = acc;
                     }
+                    acc = tmp;
                 }
                 break;
             case 2:
@@ -5229,17 +5334,17 @@ apply_signed:
                     scaled = (val * (acc - 0x2000)) >> 14;
                     if (scaled < -0x2000) {
                         val = -0x2000;
-                    } else if (scaled > 0x1FFF) {
-                        val = 0x1FFF;
                     } else {
-                        val = scaled;
+                        val = 0x1FFF;
+                        if (scaled <= 0x1FFF) {
+                            val = scaled;
+                        }
                     }
                     acc = val + 0x2000;
                 } else {
                     scaled = (s32)((u32)(acc * val) >> 14);
-                    if ((u32)scaled > 0x3FFFU) {
-                        acc = 0x3FFF;
-                    } else {
+                    acc = 0x3FFF;
+                    if ((u32)scaled <= 0x3FFFU) {
                         acc = scaled;
                     }
                 }
@@ -5249,10 +5354,11 @@ apply_signed:
                     tmp = (acc - 0x2000) - val;
                     if (tmp < -0x2000) {
                         val = -0x2000;
-                    } else if (tmp > 0x1FFF) {
-                        val = 0x1FFF;
                     } else {
-                        val = tmp;
+                        val = 0x1FFF;
+                        if (tmp <= 0x1FFF) {
+                            val = tmp;
+                        }
                     }
                     acc = val + 0x2000;
                 } else {
