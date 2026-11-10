@@ -6444,41 +6444,66 @@ void fn_80147FA8(s16 arg0) {
 }
 
 #pragma use_lmw_stmw on
-s8 fn_8014832C(u8 arg0, void *arg1, s8 arg2, s16 arg3) {
+#pragma cplusplus on
+extern "C" s8 fn_8014832C(u8 arg0, void *arg1, s8 arg2, s16 arg3) {
     void *fn_8000D2BC(void *);
-    extern u8 lbl_8032FF08[];
     extern u8 lbl_8029275C[];
     extern u8 lbl_802926EC[];
     extern u8 lbl_8029267C[];
     extern u8 lbl_8029260C[];
     extern f32 lbl_8036A7A0;
 
-    s8 slot;
-    u8 *found;
-    u8 *src;
+    struct Entry {
+        void **names;
+        u8 pad4[4];
+        virtual u8 v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        u8 flags;
+        u8 unk_d;
+        u8 unk_e;
+        u8 unk_f;
+        u8 unk_10;
+        u8 unk_11;
+        s16 unk_12;
+        u16 unk_14;
+        u8 unk_16;
+        u8 unk_17;
+        u8 pad_18[0x10];
+        u8 unk_28;
+        u8 unk_29;
+        u8 pad_2a[2];
+        s16 unk_2c;
+        s16 unk_2e;
+    };
+    extern Entry lbl_8032FF08[];
+
+    u8 active;
     s32 i;
-    u8 *entry;
+    Entry *entry;
+    Entry *found;
+    Entry *base;
+    s8 slot;
+    void *src;
     s32 kind;
     s32 tmp;
     u8 val;
-    u8 active;
+    s32 temp;
     s16 n;
     void *h1;
-    void *h2;
 
-    found = lbl_8032FF08 + (arg0 * 0x30);
+    base = lbl_8032FF08;
+    found = (Entry *)((u8 *)base + (arg0 * 0x30));
     i = 0;
     do {
         active = 0;
-        entry = lbl_8032FF08 + ((u8)i * 0x30);
-        if ((entry[0xc] & 1) &&
-            ((u8 (*)(u8 *))(*(void ***)(entry + 8))[2])(entry) != 0) {
+        entry = (Entry *)((u8 *)base + ((u8)i * 0x30));
+        if ((entry->flags & 1) && entry->v0() != 0) {
             active = 1;
         }
         if (active != 0) {
             h1 = fn_8000D2BC(arg1);
-            h2 = fn_8000D2BC(*(void **)(*(void **)entry));
-            if (h1 == h2) {
+            if (h1 == fn_8000D2BC(*entry->names)) {
                 slot = i;
                 goto after_search;
             }
@@ -6492,67 +6517,66 @@ after_search:
     }
 
     active = 0;
-    if ((found[0xc] & 1) &&
-        ((u8 (*)(u8 *))(*(void ***)(found + 8))[2])(found) != 0) {
+    if ((found->flags & 1) && found->v0() != 0) {
         active = 1;
     }
     if (active != 0) {
-        ((void (*)(u8 *))(*(void ***)(found + 8))[4])(found);
+        found->v2();
     }
 
     src = fn_8000D2BC(arg1);
-    kind = src[5] & 3;
+    kind = *((u8 *)src + 5) & 3;
     switch (kind) {
     case 0:
         if (found != NULL) {
-            *(void **)(found + 8) = lbl_8029275C;
-            *(void **)found = src;
-            *(void **)(found + 8) = lbl_802926EC;
+            *(void **)((u8 *)found + 8) = lbl_8029275C;
+            found->names = (void **)src;
+            *(void **)((u8 *)found + 8) = lbl_802926EC;
         }
         break;
     case 1:
         if (found != NULL) {
-            *(void **)(found + 8) = lbl_8029275C;
-            *(void **)found = src;
-            *(void **)(found + 8) = lbl_8029267C;
+            *(void **)((u8 *)found + 8) = lbl_8029275C;
+            found->names = (void **)src;
+            *(void **)((u8 *)found + 8) = lbl_8029267C;
         }
         break;
     case 2:
         if (found != NULL) {
-            *(void **)(found + 8) = lbl_8029275C;
-            *(void **)found = src;
-            *(void **)(found + 8) = lbl_8029260C;
+            *(void **)((u8 *)found + 8) = lbl_8029275C;
+            found->names = (void **)src;
+            *(void **)((u8 *)found + 8) = lbl_8029260C;
         }
         break;
     }
-    found[0xc] = 1;
-    found[0xd] = src[6];
-    found[0xe] = src[7];
-    found[0xf] = 0;
-    if (src[5] & 4) {
+    found->flags = 1;
+    found->unk_d = *((u8 *)src + 6);
+    found->unk_e = *((u8 *)src + 7);
+    found->unk_f = 0;
+    if (*((u8 *)src + 5) & 4) {
         val = 0;
     } else {
-        val = src[0xc];
+        val = *((u8 *)src + 0xc);
     }
-    found[0x10] = val;
-    if (src[5] & 4) {
+    found->unk_10 = val;
+    if (*((u8 *)src + 5) & 4) {
         tmp = 0;
     } else {
-        tmp = *(s16 *)(src + 0x10);
+        tmp = *(s16 *)((u8 *)src + 0x10);
     }
-    *(s16 *)(found + 0x12) = tmp;
-    if (src[5] & 4) {
+    found->unk_12 = tmp;
+    if (*((u8 *)src + 5) & 4) {
         tmp = 0x3e8;
     } else {
-        tmp = *(u16 *)(src + 0x12);
+        tmp = *(u16 *)((u8 *)src + 0x12);
     }
-    *(u16 *)(found + 0x14) = tmp;
-    found[0x16] = 0x64;
-    found[0x17] = 0;
-    if (src[5] & 4) {
+    found->unk_14 = tmp;
+    found->unk_16 = 0x64;
+    found->unk_17 = 0;
+    if (*((u8 *)src + 5) & 4) {
         val = 0;
     } else {
-        val = src[0xf];
+        val = *((u8 *)src + 0xf);
     }
     tmp = (u8)val + 1;
     if (tmp > 0xff) {
@@ -6561,18 +6585,20 @@ after_search:
     if (tmp == 0) {
         tmp = 1;
     }
-    found[0x11] = tmp;
-    found[0x16] = 0;
-    n = (s16)((f32)arg3 / lbl_8036A7A0);
+    found->unk_11 = tmp;
+    found->unk_16 = 0;
+    temp = (s32)((f32)arg3 / lbl_8036A7A0);
+    n = (s16)temp;
     if (n <= 0) {
         n = 1;
     }
-    found[0x28] = found[0x16];
-    found[0x29] = arg2;
-    *(s16 *)(found + 0x2e) = n;
-    *(s16 *)(found + 0x2c) = 0;
+    found->unk_28 = found->unk_16;
+    found->unk_29 = arg2;
+    found->unk_2e = n;
+    found->unk_2c = 0;
     return arg0;
 }
+#pragma cplusplus reset
 #pragma use_lmw_stmw reset
 
 void fn_8014876C(void *arg0, s8 arg1, s16 arg2) {
