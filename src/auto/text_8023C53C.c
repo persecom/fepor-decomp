@@ -4496,7 +4496,7 @@ void fn_802624F8(void) {
     lbl_80368A90 = 0;
 }
 
-void fn_80262504(void) {
+int fn_80262504(void) {
     extern s32 lbl_80368A8C;
     lbl_80368A8C = 1;
 }
