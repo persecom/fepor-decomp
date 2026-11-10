@@ -1692,32 +1692,39 @@ f64 fn_80238638(f64 farg0) {
     default:
         return -fn_80236C94(sp10, 0.0);
     }
-}
+  }
 
-extern f64 lbl_8036C180;
-extern f64 lbl_80282ED8[];
-extern f64 lbl_8036C0D0;
-extern f64 lbl_8036C0D8;
-extern f64 lbl_8036C0E0;
-extern f64 lbl_8036C0E8;
-extern f64 lbl_8036C0F0;
-extern f64 lbl_8036C0F8;
-extern f64 lbl_8036C100;
-f64 fn_80238710(f64 farg0) {
-    f64 sp10;
-    f64 sp8;
-    s32 temp_r3;
+  extern f64 lbl_8036C180;
+  extern f64 lbl_80282ED8[];
+  extern f64 lbl_8036C0D0;
+  extern f64 lbl_8036C0D8;
+  extern f64 lbl_8036C0E0;
+  extern f64 lbl_8036C0E8;
+  extern f64 lbl_8036C0F0;
+  extern f64 lbl_8036C0F8;
+  extern f64 lbl_8036C100;
 
-    sp8 = farg0;
-    temp_r3 = (s32)(sp8) & 0x7FFFFFFF;
-    if (temp_r3 <= 0x3FE921FB) {
-        return fn_80237C7C(1, lbl_8036C180);
-    }
-    if (temp_r3 >= 0x7FF00000) {
-        return farg0 - farg0;
-    }
-    return fn_80237C7C(1 - ((fn_802368F4(&sp10) * 2) & 2), sp10, sp10 + 8);
-}
+  f64 fn_80237C7C(s32 arg0, f64 farg0, f64 farg1) {
+      (void)arg0;
+      (void)farg1;
+      return farg0;
+  }
+
+  f64 fn_80238710(f64 farg0) {
+      f64 sp10[2];
+      f64 sp8;
+      s32 temp_r3;
+
+      sp8 = farg0;
+      temp_r3 = *(s32 *)&sp8 & 0x7FFFFFFF;
+      if (temp_r3 <= 0x3FE921FB) {
+          return fn_80237C7C(1, farg0, lbl_8036C180);
+      }
+      if (temp_r3 >= 0x7FF00000) {
+          return farg0 - farg0;
+      }
+      return fn_80237C7C(1 - ((fn_802368F4(sp10) * 2) & 2), sp10[0], sp10[1]);
+  }
 
 void fn_80238788(void) {
     M2C_UNK fn_80235B4C();
