@@ -126,10 +126,10 @@ void fn_801A2E3C(s32 arg0) {
 }
 
 s32 fn_801A2E68(void) {
-    M2C_UNK fn_8002A084();
-    extern s32 lbl_802EF4E0;
+    void fn_8002A084(void);
+    extern s32 lbl_802EF4E0[];
     fn_8002A084();
-    return lbl_802EF4E0 != 0;
+    return lbl_802EF4E0[0] != 0;
 }
 
 void fn_801A2EA0(s32 arg0) {
