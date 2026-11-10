@@ -253,6 +253,113 @@ void fn_801EBB00(s32 arg0) {
     fn_80024398(&lbl_80368208, r31, 0);
 }
 
+#pragma use_lmw_stmw on
+void fn_801EBBB8(void *arg0) {
+    extern s32 lbl_80367110;
+    extern s8 lbl_803683B8;
+    extern f32 lbl_8036B780;
+    extern u8 lbl_8027EE08[];
+    extern u8 lbl_8029A128[];
+    extern u8 lbl_8028FDB0[];
+    extern u8 lbl_80292230[];
+    extern u8 lbl_80293C84[];
+    extern u8 lbl_80293C58[];
+    extern u8 lbl_802EF4E0[];
+    extern u8 lbl_80330708[];
+    void fn_800C93EC(void *, s32);
+    s32 fn_80106DC8(void *);
+    void fn_8002F728(void *, void *);
+    void fn_8002F6E8(void *, u8, u8, s32, s32);
+    void *fn_8000CAF0(void *, void *);
+    void *fn_800C42D8(s32, void *);
+    void fn_800C96F8(void *, void *, s32);
+    void fn_801400F4(void *, void *, s32);
+    void *fn_8013FF94(void *, s32, s32);
+    void fn_80018B18(void *);
+    s32 strlen(void *);
+    u8 sp8[128];
+    s32 count;
+    s32 i;
+    u8 *p;
+    void *temp_r4;
+    s32 temp_r5;
+    void *temp_r3_2;
+    Unk5C *temp_r3;
+
+    lbl_803683B8 = 0;
+    lbl_80367110 &= 0xFFFFFFFE;
+    fn_800C93EC((u8 *)arg0 + 0x40, 0);
+    count = fn_80106DC8(sp8);
+    fn_8002F728(lbl_802EF4E0, lbl_802EF4E0);
+    p = sp8;
+    for (i = 0; i < count; i++) {
+        fn_8002F6E8(lbl_802EF4E0, p[0], p[1], 0, 0);
+        p += 2;
+    }
+
+    M2C_FIELD(arg0, void **, 0x50) = fn_8000CAF0(lbl_8029A128, arg0);
+    temp_r4 = M2C_FIELD(arg0, void **, 0x50);
+    M2C_FIELD(temp_r4, u8 *, 0x2c) |= 4;
+    temp_r3 = (Unk5C *)fn_800C42D8(0x5c, temp_r4);
+    if (temp_r3 != NULL) {
+        temp_r3->unk0 = lbl_8028FDB0;
+        temp_r3->unk4 = NULL;
+        temp_r3->unk8 = -1;
+        temp_r3->unkA = 0;
+        temp_r3->unkC = 0x190;
+        temp_r3->unkE = 0x260;
+        temp_r3->unk10 = 0x1c0;
+        temp_r3->unk12 = 0;
+        temp_r3->unk14 = 0;
+        temp_r3->unk16 = 0x260;
+        temp_r3->unk18 = 0x30;
+        temp_r3->unk1A = 0;
+        temp_r3->unk1C = 0;
+        temp_r3->unk1E = 0xff;
+        temp_r3->unk1F = 0xff;
+        temp_r3->unk20 = 0xff;
+        temp_r3->unk21 = 0xff;
+        temp_r3->unk22 = 0x316;
+        temp_r3->unk24 = 0;
+        temp_r3->unk28 = lbl_8036B780;
+        temp_r3->unk2C = lbl_8036B780;
+        temp_r3->unk30 = lbl_8036B780;
+        temp_r3->unk34 = 0;
+        temp_r3->unk38 = 0;
+        temp_r3->unk0 = lbl_80292230;
+        temp_r3->unk3C = 0;
+        temp_r3->unk40 = 0;
+        temp_r3->unk44 = 0;
+        temp_r3->unk40 = 0;
+        temp_r3->unk48 = 0;
+        temp_r3->unk4C = 1;
+        temp_r3->unk4E = 0;
+        temp_r3->unk50 = 0;
+        temp_r3->unk52 = 0;
+        temp_r3->unk54 = 0;
+        temp_r3->unk0 = lbl_80293C84;
+        temp_r3->unk58 = 1;
+        temp_r3->unk4E = 0x30;
+        temp_r3->unk52 = 0x30;
+        temp_r3->unk0 = lbl_80293C58;
+        temp_r3->unk8 = -0x1000;
+        temp_r3->unk48 = 1;
+        fn_800C96F8((u8 *)temp_r3 + 0x3c, lbl_8027EE08 + 0x147, strlen(lbl_8027EE08 + 0x147));
+        temp_r5 = temp_r3->unk34 | 0x10;
+        temp_r3->unk34 = temp_r5;
+        temp_r3->unk58 = 1;
+        fn_801400F4(arg0, temp_r3, temp_r5);
+    }
+    temp_r3_2 = fn_8013FF94(arg0, -0x1000, 0);
+    if (temp_r3_2 != NULL) {
+        M2C_FIELD(temp_r3_2, s32 *, 0x58) = 0;
+    }
+    lbl_80330708[0xa9] = 0;
+    lbl_80330708[0xaa] = 0;
+    *(u32 *)((u8 *)lbl_80330708 + 0xb0) = 0;
+    fn_80018B18(lbl_80330708);
+}
+#pragma use_lmw_stmw reset
 void fn_801EBE00(void *arg0) {
     s32 fn_8003FCCC();
     u8 fn_8005BA10();
@@ -585,8 +692,8 @@ s32 fn_801ECECC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 flag;
     s32 size;
     s32 i;
-    u8 *p;
     u8 *slot;
+    u8 *p;
     u8 *node;
     void *next;
     void *prev;
@@ -602,8 +709,7 @@ s32 fn_801ECECC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
         return 0;
     }
     i = 0xFF;
-    p = lbl_80332270;
-    for (; i >= 0; p += 0x6C, i--) {
+    for (p = lbl_80332270; i >= 0; p += 0x6C, i--) {
         if (*(s32 *)(p + 0x64) == 0) {
             slot = p;
             goto found;
