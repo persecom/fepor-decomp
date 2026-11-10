@@ -61,14 +61,27 @@ s32 fn_801055B0(s32 arg0) {
 }
 
 void fn_80105624(s32 arg0) {
-    extern u16 lbl_802EF4C8[12]; // 24 bytes = 12 * 2-byte units
-    
-    // Directly set the value at index 4
-    lbl_802EF4C8[4] = 0xA;
-    
-    // Call functions with direct arguments  
-    fn_8001EDB8(&lbl_802EF4C8, fn_800285C0(&lbl_802EF4C8, &lbl_802EF4C8));
-    fn_80026770(&lbl_802EF4C8, &lbl_802EF4C8);
+    void *fn_800285C0(void *);
+    void fn_8001EDB8(void *, s32);
+    void fn_80026770(void *, void *);
+    void fn_800319E8(s32);
+    extern struct {
+        s32 unk0;
+        s32 unk4;
+        u8 unk8;
+        u8 unk9;
+        s8 unkA;
+        u8 padB[4];
+        u8 unkF;
+        u8 unk10;
+    } lbl_802EF4C8;
+    u8 sp8;
+    void *temp;
+
+    lbl_802EF4C8.unk8 = 0xA;
+    temp = fn_800285C0(&lbl_802EF4C8);
+    fn_8001EDB8(&sp8, *(s32 *)temp);
+    fn_80026770(&lbl_802EF4C8, &sp8);
     fn_800319E8(arg0);
 }
 
