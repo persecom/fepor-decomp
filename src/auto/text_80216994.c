@@ -309,6 +309,32 @@ void fn_80217AE0(void *arg0) {
     *(void **)(base + 0x21C) = arg0;
 }
 
+s32 fn_80217B18(s32 arg0, s32 *arg1) {
+    void OSDisableInterrupts(void);
+    void OSRestoreInterrupts(void);
+    extern u8 lbl_8033A200[];
+    s32 result;
+    u8 *ptr;
+
+    ptr = lbl_8033A200 + arg0 * 0x110;
+    if (arg0 < 0 || arg0 >= 2 || *(u32 *)(ptr + 0x10C) == 0) {
+        return -0x80;
+    }
+    OSDisableInterrupts();
+    if (*(s32 *)ptr == 0) {
+        result = -3;
+    } else if (*(s32 *)(ptr + 4) == -1) {
+        result = -1;
+    } else {
+        *(s32 *)(ptr + 4) = -1;
+        result = 0;
+        *(s32 *)(ptr + 0xD0) = 0;
+        *arg1 = (s32)ptr;
+    }
+    OSRestoreInterrupts();
+    return result;
+}
+
 s32 fn_80217BD0(void *arg0, s32 arg1) {
     M2C_UNK OSRestoreInterrupts();
     M2C_UNK OSDisableInterrupts();
