@@ -19,20 +19,22 @@ void *fn_800119E0(void *arg0, s16 arg1) {
     void fn_800C428C(void *);
     extern u16 lbl_80283EFC[];
     extern u16 lbl_80283948[];
+    typedef struct { void *vt; u32 unk4; } Obj;
+    Obj *obj = (Obj *)arg0;
 
-    if (arg0 != NULL) {
-        *(void **)arg0 = lbl_80283EFC;
-        if (arg0 != NULL) {
-            *(void **)arg0 = lbl_80283948;
-            if (*(u32 *)((u8 *)arg0 + 4) != 0) {
-                fn_8006EDA0((u8 *)arg0 + 4);
+    if (obj != NULL) {
+        obj->vt = lbl_80283EFC;
+        if (obj != NULL) {
+            obj->vt = lbl_80283948;
+            if (obj->unk4 != 0) {
+                fn_8006EDA0(&obj->unk4);
             }
         }
         if (arg1 > 0) {
-            fn_800C428C(arg0);
+            fn_800C428C(obj);
         }
     }
-    return arg0;
+    return obj;
 }
 
 s32 fn_80011EDC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
@@ -365,55 +367,54 @@ void *fn_80014FF8(void *arg0) {
     void *var_r3;
 
     temp_r0 = *(u8 *)((u8 *)arg0 + 1);
-    switch ((s32) temp_r0) {                        /* switch 1; irregular */
-    case 0:                                         /* switch 1 */
+    switch ((s32) temp_r0) {
+    case 0:
         var_r4 = 1;
-block_7:
-        temp_r0_2 = *(u8 *)arg0;
-        switch ((s32) temp_r0_2) {                  /* switch 2; irregular */
-        case 0:                                     /* switch 2 */
-            if (var_r4 != 0) {
-                var_r3 = &lbl_80268018[0x1D];
-            } else {
-                var_r3 = &lbl_80268018[0x22];
-            }
-            return fn_8000E0E4(var_r3);
-        case 1:                                     /* switch 2 */
-            if (var_r4 != 0) {
-                var_r3 = &lbl_80268018[0x28];
-            } else {
-                var_r3 = &lbl_80268018[0x2E];
-            }
-            return fn_8000E0E4(var_r3);
-        case 2:                                     /* switch 2 */
-            if (var_r4 != 0) {
-                var_r3 = &lbl_80268018[0x34];
-            } else {
-                var_r3 = &lbl_80268018[0x3A];
-            }
-            return fn_8000E0E4(var_r3);
-        case 3:                                     /* switch 2 */
-            if (var_r4 != 0) {
-                var_r3 = &lbl_80268018[0x40];
-            } else {
-                var_r3 = &lbl_80268018[0x46];
-            }
-            return fn_8000E0E4(var_r3);
-        case 4:                                     /* switch 2 */
-            if (var_r4 != 0) {
-                var_r3 = &lbl_80268018[0x4C];
-            } else {
-                var_r3 = &lbl_80268018[0x52];
-            }
-            return fn_8000E0E4(var_r3);
-        default:                                    /* switch 2 */
-            return &lbl_80268018[0x1D];
-        }
         break;
-    case 3:                                         /* switch 1 */
+    case 3:
         var_r4 = 0;
-        goto block_7;
-    default:                                        /* switch 1 */
+        break;
+    default:
+        return &lbl_80268018[0x1D];
+    }
+    temp_r0_2 = *(u8 *)arg0;
+    switch ((s32) temp_r0_2) {
+    case 0:
+        if (var_r4 != 0) {
+            var_r3 = &lbl_80268018[0x1D];
+        } else {
+            var_r3 = &lbl_80268018[0x22];
+        }
+        return fn_8000E0E4(var_r3);
+    case 1:
+        if (var_r4 != 0) {
+            var_r3 = &lbl_80268018[0x28];
+        } else {
+            var_r3 = &lbl_80268018[0x2E];
+        }
+        return fn_8000E0E4(var_r3);
+    case 2:
+        if (var_r4 != 0) {
+            var_r3 = &lbl_80268018[0x34];
+        } else {
+            var_r3 = &lbl_80268018[0x3A];
+        }
+        return fn_8000E0E4(var_r3);
+    case 3:
+        if (var_r4 != 0) {
+            var_r3 = &lbl_80268018[0x40];
+        } else {
+            var_r3 = &lbl_80268018[0x46];
+        }
+        return fn_8000E0E4(var_r3);
+    case 4:
+        if (var_r4 != 0) {
+            var_r3 = &lbl_80268018[0x4C];
+        } else {
+            var_r3 = &lbl_80268018[0x52];
+        }
+        return fn_8000E0E4(var_r3);
+    default:
         return &lbl_80268018[0x1D];
     }
 }
