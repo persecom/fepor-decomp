@@ -261,6 +261,182 @@ extern u16 lbl_803688EC[10];
 extern s32 lbl_8036894C;
 extern s32 lbl_8033E578[];
 
+void fn_8026649C(s32 arg0, s32 arg1)
+{
+    extern u8 lbl_803669A0[];
+    extern u32 OSGetTick(void);
+    extern s32 fn_80265544(s32 channel, void *callback);
+    extern s32 fn_80266D70(s32 channel, s32 arg1, u32 ticks);
+    extern s32 fn_802667D4(s32 channel, void *input, void *callback,
+                           void *outputCallback);
+    extern void fn_802665F8(s32 channel, s32 result);
+
+    u8 *entry;
+    u8 *queue;
+    u32 tickRate;
+    u32 elapsed;
+    u32 timeout;
+    s32 result;
+    void (*callback)(s32, s32);
+
+    entry = lbl_803669A0 + (arg0 << 8);
+    queue = entry + 0x40;
+
+    if (arg1 != 0) {
+        return;
+    }
+
+    elapsed = OSGetTick() - *(u32 *)(queue + 0x24);
+    tickRate = *(u32 *)0x800000F8 >> 2;
+    timeout = tickRate * 10;
+
+    if (timeout <= elapsed) {
+        result = 3;
+    } else {
+        u8 status;
+
+        status = **(u8 **)(queue + 0x10);
+
+        if ((status & 0x32) != 0) {
+            result = 3;
+        } else if (status != 8) {
+            result = fn_80265544(arg0, fn_8026649C);
+        } else {
+            u32 ticks;
+            u32 frequency;
+
+            frequency = *(u32 *)0x800000F8 >> 2;
+            ticks = (frequency * 60) / 1000;
+
+            fn_80266D70(arg0, 0, ticks);
+
+            result = fn_802667D4(
+                arg0,
+                queue + 0x18,
+                *(void **)(queue + 0x10),
+                fn_802665F8
+            );
+
+            frequency = *(u32 *)0x800000F8 >> 2;
+            ticks = (frequency * 1000) / 60;
+
+            fn_80266D70(arg0, 0, ticks);
+        }
+    }
+
+    if (result != 0) {
+        *(u32 *)(queue + 0x2C) = 0;
+        *(u32 *)(queue + 0x28) = 0;
+
+        callback = *(void (**)(s32, s32))(queue + 0x14);
+        if (callback != 0) {
+            *(u32 *)(queue + 0x14) = 0;
+            callback(arg0, result);
+        }
+    }
+
+    *(s32 *)(entry + 0x20) = result;
+}
+
+void fn_802665F8(s32 arg0, s32 arg1)
+{
+    extern u8 lbl_803669A0[];
+    extern int fn_80266904(s32 channel, void *input, void *callback,
+                           void *outputCallback);
+    extern void fn_802666F4(s32 channel, void *arg1);
+
+    u8 *entry;
+    u8 *queue;
+    u32 value;
+    u32 checksum;
+    s32 result;
+    void (*callback)(s32, s32);
+
+    entry = lbl_803669A0 + (arg0 << 8);
+    queue = entry + 0x40;
+
+    if (arg1 == 0) {
+        value = *(u32 *)(queue + 0x60);
+
+        checksum = ((u32)queue[0x18] ^ value)
+                 | ((u32)queue[0x19] ^ (value >> 8))
+                 | ((u32)queue[0x1A] ^ (value >> 16))
+                 | ((u32)queue[0x1B] ^ (value >> 24));
+
+        if ((checksum << 24) != 0) {
+            result = 3;
+        } else {
+            result = fn_80266904(
+                arg0,
+                queue + 0x18,
+                *(void **)(queue + 0x10),
+                fn_802666F4
+            );
+        }
+
+        if (result != 0) {
+            *(u32 *)(queue + 0x2C) = 0;
+            *(u32 *)(queue + 0x28) = 0;
+
+            callback = *(void (**)(s32, s32))(queue + 0x14);
+            if (callback != 0) {
+                *(u32 *)(queue + 0x14) = 0;
+                callback(arg0, result);
+            }
+        }
+
+        *(s32 *)(entry + 0x20) = result;
+    }
+}
+
+void fn_802666F4(s32 arg0, void *arg1)
+{
+    extern u8 lbl_803669A0[];
+
+    u8 *entry;
+    u8 *queue;
+    void (*callback)(void *);
+
+    entry = lbl_803669A0 + (arg0 << 8);
+    queue = entry + 0x40;
+
+    if (arg1 == 0) {
+        *(u8 **)(queue + 0x10);
+        **(u8 **)(queue + 0x10) = 0;
+
+        *(u32 *)(queue + 0x2C) = 0;
+        *(u32 *)(queue + 0x28) = 0;
+
+        callback = *(void (**)(void *))(queue + 0x14);
+        if (callback != 0) {
+            *(u32 *)(queue + 0x14) = 0;
+            callback(arg1);
+        }
+    }
+
+    *(void **)(entry + 0x20) = arg1;
+}
+
+void fn_80266774(s32 arg0)
+{
+    extern u8 lbl_803669A0[];
+    extern void *memcpy(void *dest, const void *src, u32 size);
+
+    u8 *entry;
+    u8 *destination;
+
+    entry = lbl_803669A0 + (arg0 << 8);
+
+    if (*(s32 *)(entry + 0x20) != 0) {
+        return;
+    }
+
+    memcpy(entry + 0x18, entry + 0x5, 4);
+
+    destination = *(u8 **)(entry + 0x14);
+    *destination = entry[0x9] & 0x3A;
+}
+
 void fn_802668D4(s32 arg0) {
     extern u8 lbl_803669A0[];
     u8 *temp_r3 = lbl_803669A0 + (arg0 << 8);
@@ -268,6 +444,79 @@ void fn_802668D4(s32 arg0) {
     if (*(s32 *)(temp_r3 + 0x20) == 0) {
         *(u8 *)(*(void **)(temp_r3 + 0x14)) = temp_r3[5] & 0x3A;
     }
+}
+
+int fn_80266904(int arg0, u32 arg1, void *arg2, void *arg3)
+{
+    extern u8 lbl_803669A0[];
+    extern void *memcpy(void *dest, const void *src, u32 size);
+    extern int fn_80266CFC(int channel, int command, int inputLength,
+                           void *callback, void *outputCallback);
+
+    u8 *entry;
+
+    entry = lbl_803669A0 + (arg0 << 8);
+
+    if (*(u32 *)(entry + 0x1C) != 0) {
+        return 2;
+    }
+
+    entry[0] = 0x15;
+    memcpy(entry + 1, &arg1, 4);
+
+    *(u32 *)(entry + 0x18) = arg1;
+    *(void **)(entry + 0x14) = arg2;
+    *(void **)(entry + 0x1C) = arg3;
+
+    return fn_80266CFC(
+        arg0,
+        5,
+        1,
+        fn_802668D4,
+        0
+    );
+}
+
+int fn_80266998(int arg0, u32 arg1, void *arg2)
+{
+    extern u8 lbl_803669A0[];
+
+    extern void *memcpy(void *dest, const void *src, u32 size);
+    extern int fn_80266CFC(int channel, int command, int inputLength,
+                            void *callback, void *outputCallback);
+    extern int fn_80266B6C(int channel);
+    extern void fn_80266B38(void);
+    extern void fn_802668D4(void);
+
+    u8 *entry;
+    int result;
+
+    entry = lbl_803669A0 + (arg0 << 8);
+
+    if (*(u32 *)(entry + 0x1C) != 0) {
+        return 2;
+    }
+
+    entry[0] = 0x15;
+    memcpy(entry + 1, &arg1, 4);
+
+    *(u32 *)(entry + 0x18) = arg1;
+    *(void **)(entry + 0x14) = arg2;
+    *(void (**)(void))(entry + 0x1C) = fn_80266B38;
+
+    result = fn_80266CFC(
+        arg0,
+        5,
+        1,
+        fn_802668D4,
+        fn_80266B38
+    );
+
+    if (result != 0) {
+        return result;
+    }
+
+    return fn_80266B6C(arg0);
 }
 
 void fn_80266A5C(s32 arg0, s32 arg1, M2C_UNK *arg2) {
@@ -311,6 +560,102 @@ void fn_80266B38(s32 arg0) {
     fn_8020AEC4(ptr);
 }
 
+u32 fn_80266B6C(s32 arg0)
+{
+    extern u8 lbl_803669A0[];
+    extern u32 OSDisableInterrupts(void);
+    extern void OSRestoreInterrupts(u32 level);
+    extern void fn_8020ADD8(void *arg0);
+
+    u8 *entry;
+    u32 interruptState;
+    u32 result;
+
+    entry = lbl_803669A0 + (arg0 << 8);
+
+    interruptState = OSDisableInterrupts();
+
+    do {
+        fn_8020ADD8(entry + 0x24);
+    } while (*(u32 *)(entry + 0x1C) != 0);
+
+    result = *(u32 *)(entry + 0x20);
+
+    OSRestoreInterrupts(interruptState);
+
+    return result;
+}
+
+void fn_80266BD8(s32 arg0, u32 arg1)
+{
+    extern u8 lbl_803669A0[];
+    extern s32 lbl_80368B2C;
+
+    extern s32 SITransfer(
+        s32 channel,
+        void *output,
+        void *input,
+        s32 outputLength,
+        s32 inputLength,
+        void *callback,
+        s32 delay
+    );
+
+    extern void fn_80266A5C(void);
+    extern void OSClearContext(void *context);
+    extern void OSSetCurrentContext(void *context);
+    extern void *__OSReschedule(void);
+    extern void *fn_802059EC(void);
+
+    u8 *entry;
+    void *oldContext;
+    void (*callback)(s32);
+    void (*completion)(s32, s32);
+
+    entry = lbl_803669A0 + arg0 * 0x100;
+
+    if (lbl_80368B2C == 0) {
+        if ((arg1 & 0xFF) == 0) {
+            if ((arg1 & 0xFFFF0000) != 0x00040000) {
+                *(u32 *)(entry + 0x20) = 1;
+                return;
+            }
+        }
+
+        if (SITransfer(
+                arg0,
+                entry,
+                entry + 5,
+                *(u32 *)(entry + 0x0C),
+                *(u32 *)(entry + 0x10),
+                fn_80266A5C,
+                *(u32 *)(entry + 0x30)) == 0) {
+            *(u32 *)(entry + 0x20) = 2;
+
+            callback = *(void (**)(s32))(entry + 0x38);
+            if (callback != 0) {
+                *(u32 *)(entry + 0x38) = 0;
+                callback(arg0);
+            }
+        }
+    }
+
+    if (*(u32 *)(entry + 0x1C) != 0) {
+        oldContext = fn_802059EC();
+
+        OSClearContext((u8 *)&oldContext + 0x10);
+        OSSetCurrentContext((u8 *)&oldContext + 0x10);
+
+        completion = *(void (**)(s32, s32))(entry + 0x1C);
+        *(u32 *)(entry + 0x1C) = 0;
+        completion(arg0, *(s32 *)(entry + 0x20));
+
+        OSClearContext((u8 *)&oldContext + 0x10);
+        OSSetCurrentContext(oldContext);
+        __OSReschedule();
+    }
+}
+
 s64 fn_80266D70(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     extern u8 lbl_803669A0[];
     u8 *p;
@@ -323,6 +668,52 @@ s64 fn_80266D70(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     *(s32 *)(p + 0x34) = arg3;
     *(s32 *)(p + 0x30) = arg2;
     return ((s64)old30 << 32) | (u32)old34;
+}
+
+int fn_80266D94(void *arg0)
+{
+    extern u8 lbl_803669A0[];
+    extern u8 lbl_802A5198[];
+    extern u8 lbl_802A51A4[];
+
+    extern void fn_8020602C(const char *, int, const char *);
+    extern void fn_80215F78(int);
+    extern int fn_80215F40(void);
+
+    u8 *base;
+    u8 *entry;
+    int index;
+
+    base = lbl_803669A0;
+
+    if ((u8 *)arg0 == base + 0xA8) {
+        index = 0;
+    } else if ((u8 *)arg0 == base + 0x1A8) {
+        index = 1;
+    } else if ((u8 *)arg0 == base + 0x3A8) {
+        index = 2;
+    } else if ((u8 *)arg0 == base + 0x4A8) {
+        index = 3;
+    } else {
+        fn_8020602C(
+            (const char *)lbl_802A5198,
+            0xA9,
+            (const char *)lbl_802A51A4
+        );
+
+        entry = base - 0x100;
+
+        fn_80215F78(0xABBA);
+
+        if (fn_80215F40() == 0) {
+            fn_80215F78(*(int *)(entry + 0xF8));
+            fn_80215F40();
+        }
+
+        return -1;
+    }
+
+    return index;
 }
 
 void fn_80266E70(u32 arg0) {
@@ -453,3 +844,41 @@ s32 fn_80267738(s32 *arg0) {
     M2C_FIELD((void *)0xCC006800, s32 *, 0x28) = (s32) (M2C_FIELD((void *)0xCC006800, s32 *, 0x28) & 0x405);
     return temp_r3 == 0;
 }
+
+int fn_802677E4(u8 *arg0, int arg1, int arg2)
+{
+    volatile u32 *exi_data;
+    volatile u32 *exi_control;
+    u32 value;
+    int i;
+
+    if (arg2 == 0) {
+        return 0;
+    }
+
+    value = 0;
+    i = 0;
+
+    for (; i < arg1; i++) {
+        value |= (u32)arg0[i] << ((3 - i) * 8);
+    }
+
+    exi_data = (volatile u32 *)0xCC006838;
+    *exi_data = value;
+
+    exi_control = (volatile u32 *)0xCC006834;
+    *exi_control =
+        ((arg2 << 2) | 1) | ((arg1 - 1) << 4);
+
+    if ((*exi_control & 1) != 0) {
+        value = *exi_data;
+        i = 0;
+
+        for (; i < arg1; i++) {
+            arg0[i] = (u8)(value >> ((3 - i) * 8));
+        }
+    }
+
+    return 1;
+}
+

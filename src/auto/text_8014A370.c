@@ -124,7 +124,8 @@ s32 fn_8014A4F8(s32 arg0, s32 arg1)
     lbl_80367B00 = 0;
     var_ctr = 0x60;
     lbl_80367B00 = fn_800C42AC(0x1800);
-    for (var_r11 = 0; var_ctr != 0; var_ctr--) {
+    var_r11 = 0;
+    for (; var_ctr != 0; var_ctr--) {
         *(s32 *)(lbl_80367B00 + var_r11) = 0;
         *(s32 *)(lbl_80367B00 + (var_r11 + 4)) = 0;
         temp_r9 = var_r11 + 0x24;

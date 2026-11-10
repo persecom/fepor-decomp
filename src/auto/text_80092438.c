@@ -74,6 +74,303 @@ void fn_80092438(void *arg0) {
     }
 }
 
+#pragma use_lmw_stmw on
+s32 fn_80092528(void *arg0, s32 arg1) {
+    u8 fn_80105BC0(void *, s32);
+    s32 fn_8001CCE4(u8);
+    u32 fn_8001CFA8(u8);
+    register void *self;
+    register s32 a1;
+    register u32 idx;
+    register u8 result;
+    register s32 result2;
+    u32 a;
+    u32 b;
+
+    idx = (u8)arg1;
+    self = arg0;
+    a1 = arg1;
+    result = ((u8 *)self)[idx + 0x20C];
+
+    if (idx == 7) {
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x28) != 0) {
+            goto clamp79;
+        }
+    }
+
+    if ((*(u8 **)((u8 *)self + 0x18C))[idx + 0x2C] != 0) {
+        goto block_default;
+    }
+
+    switch ((u8)a1) {
+    case 0:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x24) != 0) {
+            goto block_default;
+        }
+        result = 0;
+        goto done1;
+    case 1:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x25) != 0) {
+            goto block_default;
+        }
+        result = 0;
+        goto done1;
+    case 2:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x26) != 0) {
+            goto block_default;
+        }
+        result = 0;
+        goto done1;
+    case 3:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x27) != 0) {
+            goto block_default;
+        }
+        result = 0;
+        goto done1;
+    case 7:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x28) != 0) {
+            goto block_default;
+        }
+        result = 0;
+        goto done1;
+    }
+
+block_default:
+    if (fn_80105BC0((u8 *)self + 0x1BC, 2) == 0) {
+        goto clamp79;
+    }
+    if (result > 0xFB) {
+        result = 0xFB;
+    }
+    goto done1;
+
+clamp79:
+    if (result > 0x79) {
+        result = 0x79;
+    }
+done1:
+    result2 = fn_8001CCE4(result);
+
+    if ((u8)a1 == 7) {
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x28) != 0) {
+            goto clamp79_2;
+        }
+    }
+
+    if ((*(u8 **)((u8 *)self + 0x18C))[idx + 0x2C] != 0) {
+        goto block_default2;
+    }
+
+    switch ((u8)a1) {
+    case 0:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x24) != 0) {
+            goto block_default2;
+        }
+        result2 = 0;
+        goto done2;
+    case 1:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x25) != 0) {
+            goto block_default2;
+        }
+        result2 = 0;
+        goto done2;
+    case 2:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x26) != 0) {
+            goto block_default2;
+        }
+        result2 = 0;
+        goto done2;
+    case 3:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x27) != 0) {
+            goto block_default2;
+        }
+        result2 = 0;
+        goto done2;
+    case 7:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x28) != 0) {
+            goto block_default2;
+        }
+        result2 = 0;
+        goto done2;
+    }
+
+block_default2:
+    if (fn_80105BC0((u8 *)self + 0x1BC, 2) == 0) {
+        goto clamp79_2;
+    }
+    if ((u8)result2 > 0xFB) {
+        result2 = 0xFB;
+    }
+    goto done2;
+
+clamp79_2:
+    if ((u8)result2 > 0x79) {
+        result2 = 0x79;
+    }
+done2:
+    ((u8 *)self + 0x20C)[idx] = (u8)result2;
+    a = fn_8001CFA8(result);
+    b = fn_8001CFA8(result2);
+    return (u8)a != (u8)b;
+}
+
+#pragma use_lmw_stmw on
+s32 fn_800927EC(void *arg0, void *arg1) {
+    u8 fn_80105BC0(void *, s32);
+    s8 fn_8001CBA0(void *);
+    u32 fn_8001CFA8(u8);
+    s32 other;
+    s32 result;
+    void *self;
+    u32 idx;
+    s32 kept;
+
+    kept = 0;
+    self = arg0;
+    other = (s32)arg1;
+    idx = *((u8 *)other + 0x12);
+    result = ((u8 *)self)[idx + 0x20C];
+
+    if (idx != 7) {
+        goto after_first7;
+    }
+    if (fn_80105BC0((u8 *)self + 0x1BC, 0x28) != 0) {
+        goto clamp79;
+    }
+after_first7:
+    if ((*(u8 **)((u8 *)self + 0x18C))[idx + 0x2C] != 0) {
+        goto block_default;
+    }
+
+    switch ((s32)idx) {
+    case 0:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x24) != 0) {
+            goto block_default;
+        }
+        result = 0;
+        goto done1;
+    case 1:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x25) != 0) {
+            goto block_default;
+        }
+        result = 0;
+        goto done1;
+    case 2:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x26) != 0) {
+            goto block_default;
+        }
+        result = 0;
+        goto done1;
+    case 3:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x27) != 0) {
+            goto block_default;
+        }
+        result = 0;
+        goto done1;
+    case 7:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x28) != 0) {
+            goto block_default;
+        }
+        result = 0;
+        goto done1;
+    }
+
+block_default:
+    if (fn_80105BC0((u8 *)self + 0x1BC, 2) == 0) {
+        goto clamp79;
+    }
+    if ((u8)result > 0xFB) {
+        result = 0xFB;
+    }
+    goto done1;
+
+clamp79:
+    if ((u8)result > 0x79) {
+        result = 0x79;
+    }
+done1:
+    kept = (u8)result;
+    if (kept >= 0xFB) {
+        return 0;
+    }
+    {
+        s32 t = kept + *((u8 *)other + 0x17);
+        if (t > 0xFB) {
+            t = 0xFB;
+        }
+        result = (u8)t;
+    }
+
+    if (idx != 7) {
+        goto after_second7;
+    }
+    if (fn_80105BC0((u8 *)self + 0x1BC, 0x28) != 0) {
+        goto clamp79_2;
+    }
+after_second7:
+    if ((*(u8 **)((u8 *)self + 0x18C))[idx + 0x2C] != 0) {
+        goto block_default2;
+    }
+
+    switch ((s32)idx) {
+    case 0:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x24) != 0) {
+            goto block_default2;
+        }
+        result = 0;
+        goto done2;
+    case 1:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x25) != 0) {
+            goto block_default2;
+        }
+        result = 0;
+        goto done2;
+    case 2:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x26) != 0) {
+            goto block_default2;
+        }
+        result = 0;
+        goto done2;
+    case 3:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x27) != 0) {
+            goto block_default2;
+        }
+        result = 0;
+        goto done2;
+    case 7:
+        if (fn_80105BC0((u8 *)self + 0x1BC, 0x28) != 0) {
+            goto block_default2;
+        }
+        result = 0;
+        goto done2;
+    }
+
+block_default2:
+    if (fn_80105BC0((u8 *)self + 0x1BC, 2) == 0) {
+        goto clamp79_2;
+    }
+    if ((u8)result > 0xFB) {
+        result = 0xFB;
+    }
+    goto done2;
+
+clamp79_2:
+    if ((u8)result > 0x79) {
+        result = 0x79;
+    }
+done2:
+    other = (u8)result;
+    if (other >= 0xFB) {
+        if (fn_8001CBA0((u8 *)self + 0x20C) >= 0) {
+            return 0;
+        }
+    }
+    ((u8 *)self + 0x20C)[idx] = (u8)other;
+    {
+        u32 a = fn_8001CFA8((u8)kept);
+        return (u8)a != (u8)fn_8001CFA8((u8)other);
+    }
+}
 u8 fn_80092ADC(void *arg0, s32 arg1) {
     u8 fn_80105BC0(void *, s32);
     u8 result;
@@ -312,33 +609,41 @@ s32 fn_80093218(void *arg1) {
 
 u8 fn_8009326C(void *arg0, void *arg1) {
     u8 fn_800940B0(void *, void *);
-    u8 fn_80105BC0(void *, s32);
+    u8 tmp;
+    struct { unsigned ok : 8; } t;
+    u32 lsw;
+    u32 msw;
+    u32 lo_z;
     u64 flags;
-    u8 var_r6;
 
-    flags = M2C_FIELD(arg1, u64 *, 0x38);
-    if ((flags & 4) == 0) {
+    t.ok = 0;
+    lsw = *(u32 *)((u8 *)arg1 + 0x3C);
+    msw = *(u32 *)((u8 *)arg1 + 0x38);
+    lo_z = msw & t.ok;
+    flags = ((u64)msw << 32) | lsw;
+    if (!(flags & 4)) {
         return 0;
     }
-    if ((flags & 0x200) != 0) {
-        if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9)) {
-            var_r6 = 1;
+    if (flags & 0x200) {
+        tmp = fn_80105BC0((u8 *)arg0 + 0x1BC, 9);
+        if (tmp) {
+            t.ok = 1;
         } else {
-            var_r6 = 0;
+            t.ok = 0;
         }
-    } else if (((M2C_FIELD(arg0, u8 *, 0x1A5) >> 4) & 7) == 0) {
-        var_r6 = 1;
-    } else if ((flags & 2) != 0) {
-        var_r6 = 0;
-    } else if ((flags & 4) != 0) {
-        var_r6 = 0;
-    } else if ((flags & 0x40) != 0) {
-        var_r6 = 1;
+    } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
+        t.ok = 1;
+    } else if (flags & 2) {
+        t.ok = 0;
+    } else if (flags & 4) {
+        t.ok = 0;
+    } else if (flags & 0x40) {
+        t.ok = 1;
     } else {
-        var_r6 = 1;
+        t.ok = 1;
     }
-    if (var_r6 == 0) {
-        return 0;
+    if (t.ok == 0) {
+        return (u8)lo_z;
     }
     return fn_800940B0(arg0, arg1) != 0;
 }
@@ -439,6 +744,99 @@ u8 fn_800934CC(void *arg0, void *arg1) {
             }
         }
         return result;
+    }
+    return 0;
+}
+
+u8 fn_80093708(void *arg0, void *arg1) {
+    u8 fn_800940B0(void *, void *);
+    u8 fn_80105BC0(void *, s32);
+    struct { unsigned ok : 8; unsigned result : 8; } t;
+    u64 flags;
+    u64 flags2;
+    u8 tmp;
+    u32 m;
+
+    t.result = 0;
+    flags = *(u64 *)((u8 *)arg1 + 0x38);
+    flags2 = flags;
+    m = 5;
+
+    if (flags & m) {
+        t.ok = 1;
+        if (flags & 1) {
+            if (!(flags2 & 1)) {
+            } else {
+                if (flags & 0x200) {
+                    if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
+                        t.ok = 1;
+                    } else {
+                        t.ok = 0;
+                    }
+                } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
+                } else if (flags & 2) {
+                    t.ok = t.result;
+                } else if (flags & 4) {
+                    t.ok = t.result;
+                } else if (flags & 0x40) {
+                    t.ok = 1;
+                }
+                if (t.ok == 0) {
+                    t.result = 0;
+                } else if (fn_800940B0(arg0, arg1) == 0) {
+                    t.result = 0;
+                } else {
+                    t.result = 1;
+                }
+            }
+        } else {
+            if (flags & 4) {
+                if (!(flags2 & 4)) {
+                } else {
+                    if (flags & 0x200) {
+                        if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
+                            t.ok = 1;
+                        } else {
+                            t.ok = 0;
+                        }
+                    } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
+                    } else if (flags & 2) {
+                        t.ok = t.result;
+                    } else if (flags & 4) {
+                        t.ok = t.result;
+                    } else if (flags & 0x40) {
+                        t.ok = 1;
+                    }
+                    if (t.ok == 0) {
+                        t.result = 0;
+                    } else if (fn_800940B0(arg0, arg1) == 0) {
+                        t.result = 0;
+                    } else {
+                        t.result = 1;
+                    }
+                }
+            }
+        }
+        return t.result;
+    }
+    if (flags & 0x18) {
+        if (flags & 8) {
+            if (!(flags2 & 8)) {
+            } else if (flags & ((u64)0x100 << 32)) {
+            } else {
+                t.result = 1;
+            }
+        } else {
+            if (flags & 0x10) {
+                if (!(flags2 & 0x10)) {
+                    tmp = t.result;
+                } else {
+                    tmp = fn_800940B0(arg0, arg1);
+                }
+                t.result = tmp;
+            }
+        }
+        return t.result;
     }
     return 0;
 }

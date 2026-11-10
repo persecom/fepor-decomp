@@ -376,28 +376,18 @@ s32 TRKInitializeSerialHandler(void) {
     void MWTRACE(u8 level, char *fmt, ...);
     extern u16 lbl_802822F0[200];
     extern u16 lbl_8033CA28[12];
-    struct Msgs {
-        char s0[0x24];
-        char s1[0x24];
-        char s2[0x24];
-        char s3[0x20];
-        char s4[0x20];
-        char s5[0x40];
-    };
-    struct Msgs *msgs;
-    u8 *g;
+    u8 *g = (u8 *)lbl_8033CA28;
+    char *msgs = (char *)lbl_802822F0;
 
-    g = (u8 *)lbl_8033CA28;
-    msgs = (struct Msgs *)lbl_802822F0;
     *(s32 *)(g + 0) = -1;
     *(s32 *)(g + 8) = 0;
     *(s32 *)(g + 0xc) = 0;
-    MWTRACE(1, msgs->s0, 0x40);
-    MWTRACE(1, msgs->s1, 0x40);
-    MWTRACE(1, msgs->s2, 0x40);
-    MWTRACE(1, msgs->s3, 0x40);
-    MWTRACE(1, msgs->s4, 0x40);
-    MWTRACE(1, msgs->s5, 0x40);
+    MWTRACE(1, msgs + 0x00, 0x40);
+    MWTRACE(1, msgs + 0x24, 0x40);
+    MWTRACE(1, msgs + 0x48, 0x40);
+    MWTRACE(1, msgs + 0x6c, 0x40);
+    MWTRACE(1, msgs + 0x8c, 0x40);
+    MWTRACE(1, msgs + 0xac, 0x40);
     return 0;
 }
 
@@ -805,6 +795,10 @@ void fn_80228858(s32 arg0, s32 arg1) {
         var_r4 -= 8;
     } while (var_r4 >= 0);
     M2C_SYNC();
+}
+
+s32 fn_80228950(void) {
+    return 0;
 }
 
 void fn_80228958(s32 arg0, s32 arg1, s32 arg2) {

@@ -603,6 +603,142 @@ s32 fn_801506AC(void* arg0) {
     return 0;
 }
 
+#pragma use_lmw_stmw on
+void fn_80150FEC(void *arg0) {
+    void *fn_80060664(void *);
+    void *fn_800C4638(s32, u8 *, s32);
+    void fn_80201FC4(void *);
+    extern u8 lbl_80277320[];
+    extern f64 lbl_8036A828;
+    extern f32 lbl_8036A81C;
+    extern f32 lbl_8036A838;
+    extern f32 lbl_8036A848;
+    extern f32 lbl_8036A844;
+
+    void *base;
+    void *inner;
+    void *hdr;
+    s32 i;
+    u8 *entry;
+    void *obj;
+    s32 off;
+    void *zero;
+    u8 *tag;
+    void *block;
+    u8 *src;
+    u8 *out;
+    s32 j;
+    s32 off2;
+    s32 off3;
+    u16 count;
+    void *p;
+    f32 scale;
+    f32 f838;
+    f32 f848;
+    f32 f844;
+
+    base = fn_80060664(arg0);
+    if (base == NULL) {
+        return;
+    }
+    inner = *(void **)base;
+    if (inner == NULL) {
+        return;
+    }
+    hdr = *(void **)((u8 *)inner + 0x20);
+    if (hdr == NULL) {
+        return;
+    }
+    if (*(u32 *)hdr != 0x12345678U) {
+        return;
+    }
+    if ((*(u16 *)((u8 *)hdr + 4) & 1) == 0) {
+        entry = (u8 *)hdr + 8;
+        for (i = 0; i < (s32)*(u16 *)((u8 *)hdr + 6); i++, entry += 0x34) {
+            if (*(void **)entry != NULL) {
+                *(void **)entry = (u8 *)*(void **)entry + (u32)base;
+            }
+            if (*(void **)(entry + 0x20) != NULL) {
+                *(void **)(entry + 0x20) = (u8 *)*(void **)(entry + 0x20) + (u32)base;
+            }
+            if (*(void **)(entry + 0x24) != NULL) {
+                *(void **)(entry + 0x24) = (u8 *)*(void **)(entry + 0x24) + (u32)base;
+            }
+            if (*(void **)(entry + 0x28) != NULL) {
+                *(void **)(entry + 0x28) = (u8 *)*(void **)(entry + 0x28) + (u32)base;
+            }
+            if (*(void **)(entry + 0x2C) != NULL) {
+                *(void **)(entry + 0x2C) = (u8 *)*(void **)(entry + 0x2C) + (u32)base;
+            }
+        }
+        *(u16 *)((u8 *)hdr + 4) = *(u16 *)((u8 *)hdr + 4) | 1;
+    }
+    if ((u16)*(u16 *)((u8 *)hdr + 6) == 0) {
+        return;
+    }
+    *(void **)((u8 *)arg0 + 0x54) = fn_800C4638(0x40, lbl_80277320 + 0x5E, 0);
+    tag = lbl_80277320;
+    entry = (u8 *)hdr + 8;
+    obj = *(void **)((u8 *)arg0 + 0x54);
+    *(void **)((u8 *)obj + 0x38) =
+        fn_800C4638((s32)*(u16 *)((u8 *)hdr + 6) * 4, tag + 0x5E, 0);
+    zero = 0;
+    off = 0;
+    for (i = 0; i < (s32)*(u16 *)((u8 *)hdr + 6); i++, entry += 0x34) {
+        count = *(u16 *)(entry + 0x1E);
+        if (count == 0) {
+            *(void **)((u8 *)*(void **)((u8 *)obj + 0x38) + off) = zero;
+        } else {
+            *(void **)((u8 *)*(void **)((u8 *)obj + 0x38) + off) =
+                fn_800C4638((s32)count * 0x2C, tag + 0x5E, 0);
+        }
+        off += 4;
+    }
+    *(void **)((u8 *)obj + 0x34) = hdr;
+    fn_80201FC4(obj);
+    base = fn_80060664(arg0);
+    if (base == NULL) {
+        return;
+    }
+    block = *(void **)((u8 *)arg0 + 0x54);
+    if (block == NULL) {
+        return;
+    }
+    i = 0;
+    off = i;
+    scale = lbl_8036A81C;
+    f838 = lbl_8036A838;
+    f848 = lbl_8036A848;
+    f844 = lbl_8036A844;
+    *(f32 *)((u8 *)block + 0x30) = (f32)*(s32 *)((u8 *)base + 0x14);
+    hdr = *(void **)((u8 *)block + 0x34);
+    entry = (u8 *)hdr + 8;
+    while (i < (s32)*(u16 *)((u8 *)hdr + 6)) {
+        j = 0;
+        off2 = j;
+        off3 = j;
+        while (j < (s32)*(u16 *)(entry + 0x1E)) {
+            src = (u8 *)*(void **)(entry + 0x20) + off3;
+            out = (u8 *)(*(void **)((u8 *)*(void **)((u8 *)block + 0x38) + off)) + off2;
+            j += 1;
+            off3 += 0xC;
+            off2 += 0x2C;
+            *(f32 *)(out + 0) = scale * (f32)*(s16 *)(src + 6);
+            *(f32 *)(out + 4) = scale * (f32)*(s16 *)(src + 8);
+            *(f32 *)(out + 8) = scale * (f32)*(s16 *)(src + 0xA);
+            *(f32 *)(out + 0xC) = f838;
+            *(f32 *)(out + 0x10) = f838;
+            *(f32 *)(out + 0x14) = f838;
+            *(f32 *)(out + 0x18) = f848;
+            *(f32 *)(out + 0x1C) = f844;
+            *(f32 *)(out + 0x20) = f844;
+            out[0x28] = 0;
+        }
+        off += 4;
+        i += 1;
+        entry += 0x34;
+    }
+}
 s32 fn_801512D8(void) {
     M2C_UNK fn_800D758C(s32);
     extern s32 lbl_80367BA0;
@@ -2422,10 +2558,10 @@ void fn_80161B98(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s16 *arg5, s3
             c1 = arg6[1];
             c2 = arg6[2];
             c3 = arg6[3];
-            *(s32 *)&sp20 = c3;
-            *(s32 *)&sp24 = c2;
-            *(s32 *)&sp28 = c1;
             *(s32 *)&sp2C = c0;
+            *(s32 *)&sp28 = c1;
+            *(s32 *)&sp24 = c2;
+            *(s32 *)&sp20 = c3;
             fn_80007898(3);
             fn_800077D8((f32)arg0, (f32)arg1, (f32)w, (f32)h);
             t1 = arg5[1];

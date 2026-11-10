@@ -57,22 +57,13 @@ void fn_801035C8(void) {
     extern struct Entry lbl_8036795C;
     extern struct ObjB4 lbl_803679B4;
 
-    struct Entry *e[4];
-    void *p1;
-    void *p2;
+    void *p1 = lbl_8028459C;
+    void *p2 = lbl_8028F0DC;
 
-    e[0] = &lbl_8036792C;
-    e[1] = &lbl_80367934;
-    e[2] = &lbl_8036793C;
-    e[3] = &lbl_80367944;
-
-    p1 = lbl_8028459C;
-    p2 = lbl_8028F0DC;
-
-    e[0]->ptr = p1;
-    e[1]->ptr = p1;
-    e[2]->ptr = p1;
-    e[3]->ptr = p1;
+    lbl_8036792C.ptr = p1;
+    lbl_80367934.ptr = p1;
+    lbl_8036793C.ptr = p1;
+    lbl_80367944.ptr = p1;
     lbl_8036794C.ptr = p1;
     lbl_80367954.ptr = p1;
     lbl_8036795C.ptr = p1;
@@ -83,10 +74,10 @@ void fn_801035C8(void) {
     lbl_8036794C.id = 4;
     lbl_80367954.id = 5;
 
-    e[0]->ptr = p2;
-    e[1]->ptr = p2;
-    e[2]->ptr = p2;
-    e[3]->ptr = p2;
+    lbl_8036792C.ptr = p2;
+    lbl_80367934.ptr = p2;
+    lbl_8036793C.ptr = p2;
+    lbl_80367944.ptr = p2;
     lbl_8036794C.ptr = p2;
     lbl_80367954.ptr = p2;
     lbl_8036795C.ptr = p2;
@@ -94,10 +85,10 @@ void fn_801035C8(void) {
     lbl_80367924 = lbl_8028F174;
     lbl_80367928 = lbl_8028F128;
 
-    e[0]->id = 0;
-    e[1]->id = 1;
-    e[2]->id = 2;
-    e[3]->id = 3;
+    lbl_8036792C.id = 0;
+    lbl_80367934.id = 1;
+    lbl_8036793C.id = 2;
+    lbl_80367944.id = 3;
     lbl_8036795C.id = 6;
 
     lbl_80367988 = lbl_8028F090;

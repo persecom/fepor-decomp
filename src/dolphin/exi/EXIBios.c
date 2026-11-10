@@ -272,6 +272,51 @@ void SetExiInterruptMask(s32 arg0, void *arg1) {
         return;
     }
 }
+
+#pragma scheduling off
+#pragma use_lmw_stmw on
+BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void (*callback)(s32, void *))
+{
+    BOOL enabled;
+    EXIControl *exi;
+    u32 data;
+    s32 i;
+
+    exi = &Ecb_8033E188[chan];
+    enabled = OSDisableInterrupts();
+    if ((exi->state & 3) || !(exi->state & 4)) {
+        OSRestoreInterrupts(enabled);
+        return FALSE;
+    }
+
+    exi->tcCallback = callback;
+    if (exi->tcCallback) {
+        EXIClearInterrupts(chan, FALSE, TRUE, FALSE);
+        __OSUnmaskInterrupts(0x200000U >> (chan * 3));
+    }
+
+    exi->state |= 2;
+
+    if (type != 0) {
+        data = 0;
+        i = (s32)data;
+        for (; i < len; i++) {
+            data |= ((u8 *)buf)[i] << (8 * (3 - i));
+        }
+        __EXIRegs[chan * 5 + 4] = data;
+    }
+
+    exi->immBuf = buf;
+    exi->immLen = (type != 1) ? len : 0;
+
+    __EXIRegs[chan * 5 + 3] = ((type << 2) | 1) | ((len - 1) << 4);
+
+    OSRestoreInterrupts(enabled);
+    return TRUE;
+}
+#pragma use_lmw_stmw reset
+#pragma scheduling reset
+
 #pragma scheduling reset
 s32 fn_80238E78(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 EXIImm(s32, s32, s32, s32, s32);
@@ -301,6 +346,83 @@ loop_9:
     var_r28 += var_r27;
     var_r29 -= var_r27;
     goto loop_9;
+}
+
+s32 fn_80204410(void);
+u32 fn_80203AAC(void);
+s32 EXISync(s32 arg0) {
+    EXIControl *exi;
+    s32 ret;
+    u32 data;
+    u8 *buf;
+    s32 len;
+    s32 temp;
+    u32 ctr;
+    s32 i;
+    s32 ctr2;
+    s32 enabled;
+
+    exi = &Ecb_8033E188[arg0];
+    ret = 0;
+
+wait:
+    while (__EXIRegs[arg0 * 5 + 3] & 1) {
+    }
+
+    enabled = OSDisableInterrupts();
+    if (exi->state & 2) {
+        if (exi->state & 1) {
+            len = exi->immLen;
+            if (len != 0) {
+                buf = exi->immBuf;
+                data = __EXIRegs[arg0 * 5 + 4];
+                if ((s32)data > 0) {
+                    temp = len - 8;
+                    if (len > 8) {
+                        ctr = (u32)(temp + 7) >> 3;
+                        if (temp > 0) {
+                            i = 0;
+                            do {
+                                buf[0] = (s8)(data >> ((3 - i) * 8));
+                                buf[1] = (s8)(data >> ((3 - (i + 1)) * 8));
+                                buf[2] = (s8)(data >> ((3 - (i + 2)) * 8));
+                                buf[3] = (s8)(data >> ((3 - (i + 3)) * 8));
+                                buf[4] = (s8)(data >> ((3 - (i + 4)) * 8));
+                                buf[5] = (s8)(data >> ((3 - (i + 5)) * 8));
+                                buf[6] = (s8)(data >> ((3 - (i + 6)) * 8));
+                                buf[7] = (s8)(data >> ((3 - (i + 7)) * 8));
+                                buf += 8;
+                                i += 8;
+                                ctr -= 1;
+                            } while (ctr != 0);
+                        }
+                        ctr2 = len - i;
+                        if (i < len) {
+                            do {
+                                *buf = (s8)(data >> ((3 - i) * 8));
+                                buf += 1;
+                                i += 1;
+                                ctr2 -= 1;
+                            } while (ctr2 != 0);
+                        }
+                    }
+                }
+                exi->state &= ~3;
+            }
+        }
+        if (fn_80204410() == 0xFF &&
+            (fn_80203AAC() & 0xF0000000) != 0x20000000 &&
+            exi->immLen == 4 &&
+            (__EXIRegs[arg0 * 5] & 0x0E000000) == 0 &&
+            *(u16 *)0x800030E6 == 0x8200) {
+            ret = 1;
+        }
+    }
+    OSRestoreInterrupts(enabled);
+    if (exi->state & 2) {
+        goto wait;
+    }
+    return ret;
 }
 
 BOOL EXIClearInterrupts(s32 chan, BOOL exi, BOOL tc, BOOL ext) {
@@ -456,15 +578,13 @@ void OSSetCurrentContext(void *);
 #pragma scheduling off
 void TCIntrruptHandler(s16 interrupt, OSContext *context)
 {
+    u8 filler[8];
     EXIControl *exi;
     s32 chan;
     void (*callback)(s32, void *);
     OSContext exceptionContext;
-    s32 len;
-    u8 *buf;
-    u32 data;
-    s32 i;
 
+    (void)filler;
     chan = (interrupt - 10) / 3;
     exi = &Ecb_8033E188[chan];
     __OSMaskInterrupts(0x80000000U >> interrupt);
@@ -472,18 +592,7 @@ void TCIntrruptHandler(s16 interrupt, OSContext *context)
     callback = exi->tcCallback;
     if (callback) {
         exi->tcCallback = 0;
-        if (exi->state & 3) {
-            if (exi->state & 2) {
-                if ((len = exi->immLen) != 0) {
-                    buf = exi->immBuf;
-                    data = __EXIRegs[chan * 5 + 4];
-                    for (i = 0; i < len; i++) {
-                        *buf++ = (u8)(data >> (8 * (3 - i)));
-                    }
-                }
-            }
-            exi->state &= ~3;
-        }
+        CompleteTransfer(chan);
         OSClearContext(&exceptionContext);
         OSSetCurrentContext(&exceptionContext);
         callback(chan, context);

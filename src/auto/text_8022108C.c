@@ -174,6 +174,108 @@ u32 fn_8022142C(void) {
     return lbl_80368770 + (lbl_80368738 * 2);
 }
 
+#pragma use_lmw_stmw on
+extern f64 lbl_8036BCD8;
+extern f32 lbl_8036BCD0;
+s32 fn_8022C568(f32);
+#pragma use_lmw_stmw on
+f32 fn_802214A8(u16 efbHeight, u16 xfbHeight) {
+    f64 bias;
+    f32 f256;
+    f32 best;
+    f32 ratio;
+    u32 efb;
+    u32 fixed;
+    u32 xfbOrig;
+    u32 yScale;
+    u32 save0;
+    u32 efbOrig;
+    u32 save1;
+    u32 denom;
+    u32 lines;
+    u32 cmp;
+    f32 tmp;
+    f32 inv;
+
+    yScale = xfbHeight;
+    efb = efbHeight;
+    save0 = efbHeight;
+    save1 = xfbHeight;
+    tmp = (f32)yScale / (f32)efb;
+    inv = lbl_8036BCD0 / tmp;
+    ratio = tmp;
+    denom = (u32)fn_8022C568(inv) & 0x1FF;
+    fixed = (efb - 1) << 8;
+    lines = (fixed / denom) + 1;
+    if (denom > 0x80U && denom < 0x100U) {
+        while ((denom & 1) == 0) {
+            denom >>= 1;
+        }
+        if ((efb % denom) == 0) {
+            lines += 1;
+        }
+    }
+    if (lines > 0x400U) {
+        lines = 0x400U;
+    }
+    cmp = lines;
+
+    bias = lbl_8036BCD8;
+    f256 = lbl_8036BCD0;
+    xfbOrig = save1;
+    efbOrig = save0;
+
+    while (cmp > xfbOrig) {
+        yScale -= 1;
+        tmp = (f32)yScale / (f32)efbOrig;
+        inv = f256 / tmp;
+        ratio = tmp;
+        denom = (u32)fn_8022C568(inv) & 0x1FF;
+        lines = (fixed / denom) + 1;
+        if (denom > 0x80U && denom < 0x100U) {
+            while ((denom & 1) == 0) {
+                denom >>= 1;
+            }
+            if ((efb % denom) == 0) {
+                lines += 1;
+            }
+        }
+        if (lines > 0x400U) {
+            lines = 0x400U;
+        }
+        cmp = lines;
+    }
+
+    best = ratio;
+    bias = lbl_8036BCD8;
+    f256 = lbl_8036BCD0;
+    efbOrig = save0;
+
+    while (cmp < xfbOrig) {
+        yScale += 1;
+        best = ratio;
+        tmp = (f32)yScale / (f32)efbOrig;
+        inv = f256 / tmp;
+        ratio = tmp;
+        denom = (u32)fn_8022C568(inv) & 0x1FF;
+        lines = (fixed / denom) + 1;
+        if (denom > 0x80U && denom < 0x100U) {
+            while ((denom & 1) == 0) {
+                denom >>= 1;
+            }
+            if ((efb % denom) == 0) {
+                lines += 1;
+            }
+        }
+        if (lines > 0x400U) {
+            lines = 0x400U;
+        }
+        cmp = lines;
+    }
+    return best;
+}
+#pragma use_lmw_stmw reset
+
 s32 fn_802216E0(s32 arg0) {
     u16 *ptr;
     s32 ret;
@@ -182,6 +284,140 @@ s32 fn_802216E0(s32 arg0) {
     ret = *ptr;
     return (ret - *(ptr + 7)) + 0x4000;
 }
+
+#pragma use_lmw_stmw on
+void fn_80221824(u8 aa, const u8 sample_pattern[12][2], u8 vf, const u8 vfilter[7]) {
+    u32 reg2;
+    u32 reg1;
+    u32 reg3;
+    u32 reg4;
+    u32 reg53;
+    u32 reg54;
+    u32 t0;
+    u32 t1;
+    u32 t2;
+    u32 t3;
+    u32 t4;
+    u32 t5;
+    u32 t6;
+    u32 t7;
+    u32 t8;
+    u32 t9;
+    u32 t10;
+    u32 t11;
+    u32 t12;
+    u32 t13;
+    u32 t14;
+    u32 t15;
+    u32 t16;
+    u32 t17;
+    u32 t18;
+    u32 t19;
+    u32 t20;
+    u32 t21;
+    u32 t22;
+    u32 t23;
+
+    if (aa) {
+        t6 = sample_pattern[3][0];
+        reg2 = 0;
+        t0 = sample_pattern[0][0];
+        reg1 = 0;
+        reg2 = __rlwimi(reg2, t6, 0, 28, 31);
+        t12 = sample_pattern[6][0];
+        reg1 = __rlwimi(reg1, t0, 0, 28, 31);
+        reg3 = 0;
+        t18 = sample_pattern[9][0];
+        reg3 = __rlwimi(reg3, t12, 0, 28, 31);
+        reg4 = 0;
+        t1 = sample_pattern[0][1];
+        reg4 = __rlwimi(reg4, t18, 0, 28, 31);
+        t19 = sample_pattern[9][1];
+        t13 = sample_pattern[6][1];
+        reg1 = __rlwimi(reg1, t1, 4, 24, 27);
+        t2 = sample_pattern[1][0];
+        reg4 = __rlwimi(reg4, t19, 4, 24, 27);
+        t7 = sample_pattern[3][1];
+        t20 = sample_pattern[10][0];
+        reg3 = __rlwimi(reg3, t13, 4, 24, 27);
+        t14 = sample_pattern[7][0];
+        reg1 = __rlwimi(reg1, t2, 8, 20, 23);
+        t3 = sample_pattern[1][1];
+        reg3 = __rlwimi(reg3, t14, 8, 20, 23);
+        t4 = sample_pattern[2][0];
+        reg1 = __rlwimi(reg1, t3, 12, 16, 19);
+        t5 = sample_pattern[2][1];
+        reg1 = __rlwimi(reg1, t4, 16, 12, 15);
+        t8 = sample_pattern[4][0];
+        reg2 = __rlwimi(reg2, t7, 4, 24, 27);
+        t15 = sample_pattern[7][1];
+        reg1 = __rlwimi(reg1, t5, 20, 8, 11);
+        t9 = sample_pattern[4][1];
+        t10 = sample_pattern[5][0];
+        reg4 = __rlwimi(reg4, t20, 8, 20, 23);
+        reg1 = __rlwimi(reg1, 1, 24, 0, 7);
+        t21 = sample_pattern[10][1];
+        reg2 = __rlwimi(reg2, t8, 8, 20, 23);
+        t11 = sample_pattern[5][1];
+        reg2 = __rlwimi(reg2, t9, 12, 16, 19);
+        t16 = sample_pattern[8][0];
+        reg2 = __rlwimi(reg2, t10, 16, 12, 15);
+        reg3 = __rlwimi(reg3, t15, 12, 16, 19);
+        t17 = sample_pattern[8][1];
+        t22 = sample_pattern[11][0];
+        reg3 = __rlwimi(reg3, t16, 16, 12, 15);
+        reg4 = __rlwimi(reg4, t21, 12, 16, 19);
+        reg4 = __rlwimi(reg4, t22, 16, 12, 15);
+        t23 = sample_pattern[11][1];
+        reg2 = __rlwimi(reg2, t11, 20, 8, 11);
+        reg2 = __rlwimi(reg2, 2, 24, 0, 7);
+        reg3 = __rlwimi(reg3, t17, 20, 8, 11);
+        reg3 = __rlwimi(reg3, 3, 24, 0, 7);
+        reg4 = __rlwimi(reg4, t23, 20, 8, 11);
+        reg4 = __rlwimi(reg4, 4, 24, 0, 7);
+    } else {
+        reg1 = 0x01666666;
+        reg2 = 0x02666666;
+        reg3 = 0x03666666;
+        reg4 = 0x04666666;
+    }
+
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = reg1;
+    reg53 = __rlwimi(0, 0x53, 24, 0, 7);
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = reg2;
+    reg54 = __rlwimi(0, 0x54, 24, 0, 7);
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = reg3;
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = reg4;
+
+    if (vf) {
+        reg53 = __rlwimi(reg53, vfilter[0], 0, 26, 31);
+        reg54 = __rlwimi(reg54, vfilter[4], 0, 26, 31);
+        reg53 = __rlwimi(reg53, vfilter[1], 6, 20, 25);
+        reg53 = __rlwimi(reg53, vfilter[2], 12, 14, 19);
+        reg54 = __rlwimi(reg54, vfilter[5], 6, 20, 25);
+        reg53 = __rlwimi(reg53, vfilter[3], 18, 8, 13);
+        reg54 = __rlwimi(reg54, vfilter[6], 12, 14, 19);
+    } else {
+        reg53 = __rlwimi(reg53, 0, 0, 26, 31);
+        reg53 = __rlwimi(reg53, 0, 6, 20, 25);
+        reg54 = __rlwimi(reg54, 0x15, 0, 26, 31);
+        reg53 = __rlwimi(reg53, 0x15, 12, 14, 19);
+        reg54 = __rlwimi(reg54, 0, 6, 20, 25);
+        reg54 = __rlwimi(reg54, 0, 12, 14, 19);
+        reg53 = __rlwimi(reg53, 0x16, 18, 8, 13);
+    }
+
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = reg53;
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = reg54;
+    __GXData[1] = 0;
+}
+#pragma use_lmw_stmw reset
 
 void fn_80221A2C(s32 arg0) {
     M2C_FIELD(__GXData, u32 *, 0x1EC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1EC), arg0, 7, 23, 24);
@@ -267,6 +503,18 @@ void fn_80221BA8(void *dest, u8 clear) {
     M2C_FIELD(__GXData, u16 *, 0x2) = 0;
 }
 
+void fn_80221D34(void) {
+    register unsigned short *gx_data = __GXData;
+    register volatile u8 *fifo8 = (volatile u8 *)0xCC008000;
+    register volatile u32 *fifo32 = (volatile u32 *)0xCC008000;
+
+    *fifo8 = 0x61;
+    *fifo32 = 0x550003FF;
+    *fifo8 = 0x61;
+    *fifo32 = 0x560003FF;
+    *(volatile u16 *)((u8 *)gx_data + 2) = 0;
+}
+
 void fn_80221D6C(void *arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 farg4, f32 farg5) {
     M2C_FIELD(arg0, f32 *, 0x10) = farg0;
     M2C_FIELD(arg0, f32 *, 0x14) = farg1;
@@ -305,44 +553,51 @@ void fn_80221F18(void *arg0, s32 arg1, f32 farg0, f32 farg1) {
     extern f32 lbl_8036BCE0;
     extern f32 lbl_8036BCF8;
     extern f32 lbl_8036BD0C;
+    f32 temp_f0;
     f32 temp_f1;
     f32 temp_f4;
     f32 var_f3;
     f32 var_f4;
+    f32 var_f5;
     s32 var_r4;
 
     var_r4 = arg1;
     if (farg0 < lbl_8036BCE0) {
         var_r4 = 0;
     }
-    M2C_ERROR(/* unknown instruction: cror eq, lt, eq */);
-    if ((farg1 == lbl_8036BCE0) || (M2C_ERROR(/* unknown instruction: cror eq, gt, eq */), ((farg1 == lbl_8036BCF8) != 0))) {
+    if (farg1 <= lbl_8036BCE0 || farg1 >= lbl_8036BCF8) {
         var_r4 = 0;
     }
-    switch (var_r4) {                               /* irregular */
+    switch (var_r4) {
     case 1:
+        var_f5 = lbl_8036BCF8;
+        temp_f0 = farg1 * farg0;
         var_f4 = lbl_8036BCE0;
-        var_f3 = (lbl_8036BCF8 - farg1) / (farg1 * farg0);
+        var_f3 = (var_f5 - farg1) / temp_f0;
         break;
     case 2:
+        var_f5 = lbl_8036BCF8;
         temp_f4 = farg1 * farg0;
-        temp_f1 = lbl_8036BD0C * (lbl_8036BCF8 - farg1);
+        temp_f1 = lbl_8036BD0C * (var_f5 - farg1);
         var_f3 = temp_f1 / temp_f4;
         var_f4 = temp_f1 / (farg0 * temp_f4);
         break;
     case 3:
+        temp_f0 = farg1 * farg0;
+        var_f5 = lbl_8036BCF8;
         var_f3 = lbl_8036BCE0;
-        var_f4 = (lbl_8036BCF8 - farg1) / (farg0 * (farg1 * farg0));
+        var_f4 = (var_f5 - farg1) / (farg0 * temp_f0);
         break;
     default:
     case 0:
         var_f3 = lbl_8036BCE0;
+        var_f5 = lbl_8036BCF8;
         var_f4 = var_f3;
         break;
     }
-    M2C_FIELD(arg0, f32 *, 0x1C) = lbl_8036BCF8;
-    M2C_FIELD(arg0, f32 *, 0x20) = var_f3;
-    M2C_FIELD(arg0, f32 *, 0x24) = var_f4;
+    *(f32 *)((u8 *)arg0 + 0x1C) = var_f5;
+    *(f32 *)((u8 *)arg0 + 0x20) = var_f3;
+    *(f32 *)((u8 *)arg0 + 0x24) = var_f4;
 }
 
 void fn_80221FE8(void *arg0, f32 farg0, f32 farg1, f32 farg2) {

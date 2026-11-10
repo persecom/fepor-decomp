@@ -179,6 +179,30 @@ void fn_8020B84C(void) {
     }
 }
 
+void AlarmHandlerForTimeout(void *arg0, void *arg1)
+{
+    extern void (*Callback_80368538)(int);
+
+    void (*callback)(int);
+    OSContext context;
+
+    callback = Callback_80368538;
+
+    __OSMaskInterrupts(0x400);
+
+    OSClearContext(&context);
+    OSSetCurrentContext(&context);
+
+    Callback_80368538 = 0;
+
+    if (callback != 0) {
+        callback(0x10);
+    }
+
+    OSClearContext(&context);
+    OSSetCurrentContext((OSContext *)arg1);
+}
+
 void fn_8020BA50(void *addr, u32 length, u32 offset, void *callback) {
     extern s32 NextCommandNumber_80368574;
     extern u32 WorkAroundSeekLocation_80368558;

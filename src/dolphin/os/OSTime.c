@@ -194,6 +194,22 @@ void __init_user(void) {
     __init_cpp();
 }
 
+int __init_cpp(void)
+{
+    extern void (*_ctors[])(void);
+
+    void (**ctor)(void);
+
+    ctor = _ctors;
+
+    while (*ctor != 0) {
+        (*ctor)();
+        ctor++;
+    }
+
+    return 0;
+}
+
 void _ExitProcess(void) {
     M2C_UNK PPCHalt();
     PPCHalt();

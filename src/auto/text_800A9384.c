@@ -43,14 +43,17 @@ extern u16 lbl_802863BC[];
 extern void *lbl_803677C8_arr[13] : 0x803677C8;
 #pragma use_lmw_stmw on
 void fn_800A9384(void) {
-    void **b = (void **)&lbl_803677C8;
+    void **a = (void**)&lbl_80312AB0;
+    void **b = (void**)&lbl_803677C8;
+    void **c = (void**)&lbl_803677EC;
 
-    M2C_FIELD(lbl_80312AB0, void **, 4) = lbl_802845E8;
+    // Direct memory assignments as in the target assembly
+    a[1] = lbl_802845E8;
     b[0] = lbl_8028459C;
-    M2C_FIELD(lbl_80312AB0, void **, 4) = lbl_80286664;
+    a[1] = lbl_80286664;
     b[0] = lbl_8028CDA4;
-    M2C_FIELD(&lbl_803677EC, void **, 4) = lbl_802845E8;
-    M2C_FIELD(lbl_80312AB0, void **, 4) = lbl_802863BC;
+    c[1] = lbl_802845E8;
+    a[1] = lbl_802863BC;
     b[0] = lbl_8028CD58;
     lbl_803677D0 = lbl_8028CD0C;
     lbl_803677D4 = lbl_8028CCC0;
@@ -59,11 +62,11 @@ void fn_800A9384(void) {
     lbl_803677E0 = lbl_8028CBDC;
     lbl_803677E4 = lbl_8028CB90;
     lbl_803677E8 = lbl_8028CB44;
-    M2C_FIELD(&lbl_803677EC, void **, 0) = lbl_8028C850;
-    M2C_FIELD(&lbl_803677EC, void **, 4) = lbl_8028CAC8;
+    c[0] = lbl_8028C850;
+    c[1] = lbl_8028CAC8;
     lbl_803677F4 = lbl_8028CA74;
     lbl_803677F8 = lbl_8028CA20;
-    M2C_FIELD(lbl_80312AB0, void **, 4) = lbl_8028C9A0;
-    M2C_FIELD(lbl_80312AB0, void **, 0) = &lbl_80366E30;
+    a[1] = lbl_8028C9A0;
+    a[0] = &lbl_80366E30;
 }
 #pragma use_lmw_stmw reset

@@ -145,12 +145,12 @@ void fn_80099094(void *arg0) {
     s32 sp20[3];
     s32 sp14[3];
     s32 sp8[3];
-    s32 temp_r30;
+    void *self;
     s16 temp_r29;
     void *temp_r29_2;
     void *temp_r3;
     void *var_r0;
-    void *self;
+    s32 temp_r30;
 
     self = arg0;
     temp_r29 = *(s16 *)((u8 *)self + 0x46);
@@ -177,12 +177,8 @@ void fn_80099094(void *arg0) {
         }
     } else {
         fn_800983E0(sp2C, *(void **)((u8 *)self + 0x38));
-        sp20[0] = sp2C[0];
-        sp20[1] = sp2C[1];
-        sp20[2] = sp2C[2];
-        sp38[0] = sp2C[0];
-        sp38[1] = sp2C[1];
-        sp38[2] = sp2C[2];
+        *(Word3 *)sp20 = *(Word3 *)sp2C;
+        *(Word3 *)sp38 = *(Word3 *)sp2C;
         fn_80147548(lbl_8026D230 + 0x104, sp38, 0x64);
         var_r0 = get_280((void **)*(void **)((u8 *)self + 0x38));
         if (var_r0 != NULL) {

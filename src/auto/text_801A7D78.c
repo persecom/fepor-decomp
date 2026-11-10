@@ -593,8 +593,9 @@ s32 fn_801A9FD0(void) {
 }
 
 s32 fn_801A9FD8(void *arg0) {
-    u32 temp = M2C_FIELD(arg0, u32 *, 0x1A0);
-    return -((temp >> 0xC) & 1) & ~((temp >> 0xC) & 1);
+    u32 temp = *(u32 *)((u8 *)arg0 + 0x1A0);
+    s32 bit = (s32)((temp >> 12) & 1);
+    return -bit & ~bit;
 }
 
 s32 fn_801A9FF0(void) {

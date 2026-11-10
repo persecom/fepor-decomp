@@ -99,6 +99,78 @@ void fn_8014CF10(s8* arg0, s8 arg1, s8 arg2) {
     *arg0 = temp + 1;
 }
 
+#pragma opt_strength_reduction off
+s8 fn_8014CF48(Obj *arg0, s32 arg1) {
+    s32 fn_80106DC8(s32, void *);
+    Entry sp8[0x40];
+    s32 i;
+    Entry *p;
+    Entry *q;
+    s32 n;
+    s32 count;
+    s32 ctr;
+    u8 b;
+    u8 a;
+
+    arg0->count = 0;
+    count = fn_80106DC8(arg1, sp8);
+    i = 0;
+    if (count > 0) {
+        n = count - 8;
+        if (count > 8) {
+            p = sp8;
+            for (ctr = (u32)(n + 7) >> 3; ctr != 0; ctr--) {
+                if (n <= 0) break;
+                b = p->b; a = p->a;
+                arg0->entries[(s8)arg0->count].a = a;
+                arg0->entries[(s8)arg0->count].b = b;
+                arg0->count++;
+                b = p[1].b; a = p[1].a;
+                arg0->entries[(s8)arg0->count].a = a;
+                arg0->entries[(s8)arg0->count].b = b;
+                arg0->count++;
+                b = p[2].b; a = p[2].a;
+                arg0->entries[(s8)arg0->count].a = a;
+                arg0->entries[(s8)arg0->count].b = b;
+                arg0->count++;
+                b = p[3].b; a = p[3].a;
+                arg0->entries[(s8)arg0->count].a = a;
+                arg0->entries[(s8)arg0->count].b = b;
+                arg0->count++;
+                b = p[4].b; a = p[4].a;
+                arg0->entries[(s8)arg0->count].a = a;
+                arg0->entries[(s8)arg0->count].b = b;
+                arg0->count++;
+                b = p[5].b; a = p[5].a;
+                arg0->entries[(s8)arg0->count].a = a;
+                arg0->entries[(s8)arg0->count].b = b;
+                arg0->count++;
+                b = p[6].b; a = p[6].a;
+                arg0->entries[(s8)arg0->count].a = a;
+                arg0->entries[(s8)arg0->count].b = b;
+                i += 8;
+                arg0->count++;
+                b = p[7].b; a = p[7].a;
+                p += 8;
+                arg0->entries[(s8)arg0->count].a = a;
+                arg0->entries[(s8)arg0->count].b = b;
+                arg0->count++;
+            }
+        }
+        q = &sp8[i];
+        for (ctr = count - i; ctr != 0; ctr--) {
+            if (i >= count) break;
+            b = q->b; a = q->a;
+            q++;
+            arg0->entries[(s8)arg0->count].a = a;
+            arg0->entries[(s8)arg0->count].b = b;
+            arg0->count++;
+        }
+    }
+    return (s8)count;
+}
+#pragma opt_strength_reduction reset
+
 void fn_8014D204(Obj *arg0, s8 arg1, s8 arg2) {
     arg0->count = 0;
     {

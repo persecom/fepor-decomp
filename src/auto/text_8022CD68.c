@@ -395,29 +395,21 @@ void fn_8022F0B4(void) {
 #pragma use_lmw_stmw on
 void fn_80230944(u8 *dest, u8 *a, u8 *b) {
     u8 sp8[0x54];
-    u8 *end;
     u8 *out;
-    u8 *pa;
-    u8 *pb;
-    s32 dig_a;
-    s32 dig_b;
-    s32 pos;
-    s32 i;
-    s32 j;
-    s32 k;
-    s32 n;
-    s32 n8;
-    u32 acc;
-    u32 q;
-    u8 digit;
-    u8 *p;
-    u8 *digits;
+    u8 *end;
+    u8 dig_b = b[4];
+    u8 dig_a = a[4];
+    s32 pos = dig_a + (dig_b - 1);
+    u32 acc = 0;
+    s32 i, j, n, n8;
+    u8 *pa, *pb;
+    u32 prod;
+    u8 t0, t1;
+    s32 c;
+    u8 *p, *base;
+    u8 d;
 
-    dig_b = b[4];
-    dig_a = a[4];
-    acc = 0;
-    pos = dig_a + (dig_b - 1);
-    out = &sp8[pos + 1];
+    out = sp8 + (pos + 1);
     dest[0] = 0;
     end = out;
 
@@ -429,40 +421,46 @@ void fn_80230944(u8 *dest, u8 *a, u8 *b) {
             j = pos - 1;
         }
         n = j + 1;
-        k = dig_a - i;
-        pa = a + (i + 5);
-        pb = b + (j + 5);
-        if (n > k) {
-            n = k;
+        {
+            s32 lim = dig_a - i;
+            pa = a + i + 5;
+            pb = b + j + 5;
+            if (n > lim) {
+                n = lim;
+            }
         }
         if (n > 0) {
             n8 = (u32)n >> 3;
             if (n8 != 0) {
                 do {
-                    acc += pa[0] * pb[0];
-                    acc += pa[1] * pb[-1];
-                    acc += pa[2] * pb[-2];
-                    acc += pa[3] * pb[-3];
-                    acc += pa[4] * pb[-4];
-                    acc += pa[5] * pb[-5];
-                    acc += pa[6] * pb[-6];
-                    acc += pa[7] * pb[-7];
-                    pa += 8;
-                    pb -= 8;
+                    t0 = pa[0]; t1 = pb[0]; prod = t0 * t1; acc += prod;
+                    t0 = pa[1]; t1 = pb[-1]; prod = t0 * t1; acc += prod;
+                    t0 = pa[2]; t1 = pb[-2]; prod = t0 * t1; acc += prod;
+                    t0 = pa[3]; t1 = pb[-3]; prod = t0 * t1; acc += prod;
+                    t0 = pa[4]; t1 = pb[-4]; prod = t0 * t1; acc += prod;
+                    t0 = pa[5]; t1 = pb[-5]; prod = t0 * t1; acc += prod;
+                    t0 = pa[6]; t1 = pb[-6]; prod = t0 * t1; acc += prod;
+                    t0 = pa[7]; t1 = pb[-7];
+                    pa += 8; pb -= 8;
+                    prod = t0 * t1; acc += prod;
                 } while (--n8);
-                n &= 7;
             }
+            n &= 7;
             if (n != 0) {
                 do {
-                    acc += (*pa++) * (*pb--);
+                    t0 = *pa; pa++;
+                    t1 = *pb; pb--;
+                    acc += t0 * t1;
                 } while (--n);
             }
         }
-        pos -= 1;
-        q = (acc * 0xCCCCCCCDU) >> 3;
-        digit = (u8)(acc - q * 10);
-        acc = (acc * 0xCCCCCCCDU) >> 3;
-        *--out = digit;
+        {
+            u32 magic = acc * 0xCCCCCCCDU;
+            pos--;
+            d = (u8)(acc - ((magic >> 3) * 10));
+            acc = magic >> 3;
+            *--out = d;
+        }
     }
 
     *(s16 *)(dest + 2) = *(s16 *)(a + 2) + *(s16 *)(b + 2);
@@ -471,41 +469,39 @@ void fn_80230944(u8 *dest, u8 *a, u8 *b) {
         (*(s16 *)(dest + 2))++;
     }
 
-    i = 0;
-    while (i < 0x24 && out < end) {
-        dest[i + 5] = *out;
-        i++;
-        out++;
+    for (c = 0; c < 0x24 && out < end; c++, out++) {
+        dest[c + 5] = *out;
     }
-    dest[4] = (u8)i;
+    dest[4] = (u8)c;
 
     if (out < end) {
-        digit = *out;
-        if (digit >= 5) {
-            if (digit == 5) {
-                p = out + 1;
-                n = end - p;
-                if (p < end) {
-                    do {
-                        if (*p != 0) {
-                            goto round_up;
-                        }
-                        p++;
-                    } while (--n);
-                }
-                if ((out[-1] & 1) == 0) {
-                    goto done;
-                }
+        d = *out;
+        if (d >= 5) {
+            if (d != 5) {
+                goto round_up;
+            }
+            p = out + 1;
+            n = (s32)(end - p);
+            if (p < end) {
+                do {
+                    if (*p != 0) {
+                        goto round_up;
+                    }
+                    p++;
+                } while (--n);
+            }
+            if ((out[-1] & 1) == 0) {
+                goto done;
             }
         round_up:
-            digits = dest + 5;
-            p = digits + (dest[4] - 1);
+            base = dest + 5;
+            p = base + dest[4] - 1;
             for (;;) {
                 if (*p < 9) {
                     (*p)++;
                     break;
                 }
-                if (p == digits) {
+                if (p == base) {
                     *p = 1;
                     (*(s16 *)(dest + 2))++;
                     break;
@@ -848,6 +844,25 @@ s32 fn_802314D8(s32 arg0, s32 arg1, s32 arg2) {
         M2C_FIELD(arg0, s32 *, 0x18) = offset;
         M2C_FIELD(arg0, s32 *, 0x28) = 0;
     }
+    return 0;
+}
+
+int fn_80231944(const char *str1, const char *str2, int count)
+{
+    str1--;
+    str2--;
+
+    count++;
+
+    while (--count != 0) {
+        u8 c1 = (u8)*++str1;
+        u8 c2 = (u8)*++str2;
+
+        if (c1 != c2) {
+            return c1 >= c2 ? 1 : -1;
+        }
+    }
+
     return 0;
 }
 
@@ -1435,6 +1450,26 @@ void fn_802343E0(u8 *dest, u8 *src) {
     }
 }
 
+void fn_8023440C(char *dest, const char *src, s32 count)
+{
+    char *dst = dest - 1;
+    const char *srcPtr = src - 1;
+
+    count++;
+
+    while (--count != 0) {
+        char value = *++srcPtr;
+        *++dst = value;
+
+        if (value == '\0') {
+            while (--count != 0) {
+                *++dst = '\0';
+            }
+            return;
+        }
+    }
+}
+
 void fn_80234450(s32 arg0, s32 arg1) {
     u32 r3_r4_diff;
     u32 temp_r5;
@@ -1725,6 +1760,71 @@ s32 fn_80235A7C(s32 arg0, s32 arg1, s32 *arg2, s32 arg3) {
 block_8:
     fn_8022B530(arg0, arg1, arg2, arg3);
     return 0;
+}
+
+f64 fn_80235B4C(f64 farg0) {
+    f64 sp8;
+    f64 f10;
+    f64 y;
+    f64 N;
+    f64 D;
+    f64 f2;
+    f64 f0;
+    f64 z;
+    f64 h;
+    f64 Nz;
+    f64 Dz;
+    f64 sp10;
+    s32 unksp14;
+    union { f64 d; u32 w[2]; } cv;
+    s32 temp_r4;
+    s32 temp_r3;
+    u32 temp_r0;
+    u32 chk;
+
+    sp8 = farg0;
+    cv.d = sp8;
+    temp_r4 = (s32)cv.w[0];
+    temp_r3 = temp_r4 & 0x7FFFFFFF;
+    temp_r0 = cv.w[1];
+
+    if (temp_r3 >= 0x3FF00000) {
+        chk = (u32)temp_r3 - 0x3FF00000u;
+        if ((chk | temp_r0) == 0) {
+            if (temp_r4 > 0) {
+                return lbl_8036BE20;
+            }
+            return lbl_8036BE28;
+        }
+        return (f64)lbl_80367068;
+    }
+    if (temp_r3 < 0x3FE00000) {
+        if (temp_r3 <= 0x3C600000) {
+            return lbl_8036BE30;
+        }
+        f10 = farg0 * farg0;
+        y = f10;
+        N = ((((lbl_8036BE68 * y + lbl_8036BE60) * y + lbl_8036BE58) * y + lbl_8036BE48) * y + lbl_8036BE70) * y + lbl_8036BE80;
+        D = ((((lbl_8036BE90 * y + lbl_8036BE88) * y + lbl_8036BE40) * y + lbl_8036BE50) * y + lbl_8036BE90);
+        f2 = y * N / D;
+        f0 = lbl_8036BE38 - farg0 * f2;
+        f0 = farg0 - f0;
+        return lbl_8036BE30 - f0;
+    }
+    if (temp_r4 < 0) {
+        z = lbl_8036BE98 * (lbl_8036BE70 + farg0);
+        h = fn_80238A9C(z, lbl_8036BE98);
+        Nz = ((((lbl_8036BE68 * z + lbl_8036BE60) * z + lbl_8036BE58) * z + lbl_8036BE48) * z + lbl_8036BE70) * z + lbl_8036BE80;
+        Dz = ((((lbl_8036BE90 * z + lbl_8036BE88) * z + lbl_8036BE40) * z + lbl_8036BE50) * z + lbl_8036BE90);
+        return -((lbl_8036BEA0 * (h + (Nz / Dz * h - lbl_8036BE38))) - lbl_8036BE28);
+    }
+    z = lbl_8036BE98 * (lbl_8036BE70 - farg0);
+    h = fn_80238A9C(z, lbl_8036BE98);
+    sp10 = h;
+    unksp14 = 0;
+    Nz = ((((lbl_8036BE68 * z + lbl_8036BE60) * z + lbl_8036BE58) * z + lbl_8036BE48) * z + lbl_8036BE70) * z + lbl_8036BE80;
+    Dz = ((((lbl_8036BE90 * z + lbl_8036BE88) * z + lbl_8036BE40) * z + lbl_8036BE50) * z + lbl_8036BE90);
+    return lbl_8036BEA0 * (sp10 + (Nz / Dz * h + (-((sp10 * sp10) - z) / (h + sp10))));
 }
 
 f64 fn_802380A8(f64 farg0, f64 farg1) {

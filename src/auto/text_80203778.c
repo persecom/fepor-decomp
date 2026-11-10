@@ -150,7 +150,7 @@ s32 __OSSyncSram(void);
 
 #pragma dont_inline on
 s32 PPCMfmsr(void) {
-    return 0;
+    return M2C_ERROR(/* unknown instruction: mfmsr $r3 */);
 }
 #pragma dont_inline reset
 
@@ -159,10 +159,8 @@ void PPCMtmsr(register u32 msr) {
     (void)msr; /* mtmsr: not expressible in C */
 }
 
-u32 PPCMfhid0(void) {
-    register u32 hid0;
-    hid0 = *(volatile u32 *)0;
-    return hid0;
+s32 PPCMfhid0(void) {
+    return M2C_ERROR(/* unknown instruction: mfspr $r3, HID0 */);
 }
 
 #pragma dont_inline reset
@@ -172,23 +170,7 @@ void fn_80203790(u32 arg0) {
 }
 
 s32 PPCMfl2cr(void) {
-    // mfspr r3, 0x392 - read the L2CR register (special purpose register)
-    // The goal here is to have this function perform a real hardware access.
-    // Without inline assembly, it's impossible to directly emit this instruction.
-    // If there's no way we can match it exactly without inline asm, we'll have to assume:
-    // 1. This may require a compiler-specific built-in or macro
-    // 2. Or it requires manual assembly, which decomp doesn't allow
-
-    #if defined(__powerpc__)
-        // Try to see if compiler provides mfspr for this special register.
-        // However, typical compiler-builtins don't support L2CR directly,
-        // so the function must either return a value based on known behavior 
-        // of the hardware (which won't match) or it needs special handling.
-        // Placeholder implementation.
-        return 0;
-    #else
-        return 0;
-    #endif
+    return M2C_ERROR(/* unknown instruction: mfspr $r3, L2CR */);
 }
 
 void PPCMtl2cr(void) {
@@ -300,6 +282,120 @@ void InquiryCallback(void *arg1) {
     }
 }
 
+#pragma use_lmw_stmw on
+void OSExceptionInit(void) {
+    extern u32 __OSEVSetNumber[];
+    extern u8 __OSEVStart[];
+    extern u8 __OSEVEnd[];
+    extern u8 __OSDBINTSTART[];
+    extern u8 __OSDBINTEND[];
+    extern u8 __OSDBJUMPEND[];
+    extern u8 __DBVECTOR[];
+    extern u8 lbl_8029B928[];
+    extern u32 *BI2DebugFlag_8036845C;
+    extern void *OSExceptionTable_8036847C;
+    extern void OSDefaultExceptionHandler[];
+    extern void DBPrintf(char *, ...);
+    extern void *memcpy(void *, const void *, u32);
+    extern void DCFlushRangeNoSync(void *, u32);
+    extern void ICInvalidateRange(void *, u32);
+    extern s32 __DBIsExceptionMarked(u8);
+    extern void *__OSSetExceptionHandler(u8, void *);
+    u32 *base;
+    u32 flag;
+    u32 *osevSetNumber;
+    u32 setNumber;
+    u8 *osevStart;
+    u8 *osevEnd;
+    u8 *strings;
+    u32 size;
+    u32 *codeAddr;
+    u32 *entry;
+    u8 *dbIntEnd;
+    u32 dbJumpSize;
+    u8 *dbVec;
+    u32 nop;
+    u8 i;
+    u32 *p;
+    u32 nops;
+    u32 *dest;
+    u8 j;
+    u32 dbSize;
+
+    base = (u32 *)0x80000000;
+    flag = base[0x60 / 4];
+    osevSetNumber = __OSEVSetNumber;
+    osevStart = __OSEVStart;
+    setNumber = osevSetNumber[0];
+    osevEnd = __OSEVEnd;
+    strings = lbl_8029B928;
+    size = osevEnd - osevStart;
+    codeAddr = base + (0x60 / 4);
+
+    if (flag == 0) {
+        DBPrintf((char *)(strings + 0x160));
+        dbSize = __OSDBINTEND - __OSDBINTSTART;
+        memcpy(codeAddr, __OSDBINTSTART, dbSize);
+        DCFlushRangeNoSync(codeAddr, dbSize);
+        __sync();
+        ICInvalidateRange(codeAddr, dbSize);
+    }
+
+    dbIntEnd = __OSDBINTEND;
+    entry = (u32 *)(strings + 0x124);
+    dbJumpSize = __OSDBJUMPEND - dbIntEnd;
+    i = 0;
+    dbVec = __DBVECTOR;
+    nop = 0x60000000;
+
+    while (i < 15) {
+        if (BI2DebugFlag_8036845C != NULL && *BI2DebugFlag_8036845C >= 2 && __DBIsExceptionMarked(i)) {
+            DBPrintf((char *)(strings + 0x17C), i);
+        } else {
+            osevSetNumber[0] = setNumber | i;
+            if (__DBIsExceptionMarked(i)) {
+                DBPrintf((char *)(strings + 0x1AC), i);
+                memcpy(dbVec, dbIntEnd, dbJumpSize);
+            } else {
+                p = (u32 *)dbVec;
+                if (dbJumpSize > 0) {
+                    nops = (dbJumpSize + 3) >> 2;
+                    for (; nops >= 8; nops -= 8) {
+                        *p++ = nop;
+                        *p++ = nop;
+                        *p++ = nop;
+                        *p++ = nop;
+                        *p++ = nop;
+                        *p++ = nop;
+                        *p++ = nop;
+                        *p++ = nop;
+                    }
+                    for (; nops != 0; nops--) {
+                        *p++ = nop;
+                    }
+                }
+            }
+            dest = (u32 *)((u8 *)base + *entry);
+            memcpy(dest, osevStart, size);
+            DCFlushRangeNoSync(dest, size);
+            __sync();
+            ICInvalidateRange(dest, size);
+        }
+        entry++;
+        i++;
+    }
+
+    OSExceptionTable_8036847C = (void *)0x80003000;
+    j = 0;
+    while (j < 15) {
+        __OSSetExceptionHandler(j, OSDefaultExceptionHandler);
+        j++;
+    }
+    osevSetNumber[0] = setNumber;
+    DBPrintf((char *)(strings + 0x1DC));
+}
+#pragma use_lmw_stmw reset
+
 void __OSDBIntegrator(void) {
     volatile u32 *ptr;
     u32 value;
@@ -383,6 +479,184 @@ void OSCreateAlarm(void *arg0) {
     M2C_FIELD(arg0, s32 *, 4) = 0;
 }
 
+#pragma use_lmw_stmw on
+void InsertAlarm(void *alarm_p, s64 fire, void (*handler)(void *, OSContext *)) {
+    struct AlarmQueue {
+        struct OSAlarm *head;
+        struct OSAlarm *tail;
+    };
+    struct OSAlarm {
+        void (*handler)(void *, OSContext *);
+        u32 tag;
+        s64 fire;
+        struct OSAlarm *prev;
+        struct OSAlarm *next;
+        s64 period;
+        s64 start;
+    };
+    extern struct AlarmQueue AlarmQueue_80368490;
+    extern s64 __OSGetSystemTime(void);
+    extern void PPCMtdec(u32);
+    extern s64 __div2i(s64, s64);
+    struct OSAlarm *next;
+    struct OSAlarm *prev;
+    s64 time;
+    s64 remain;
+    s64 quot;
+    s64 period;
+    s64 start;
+    struct OSAlarm *alarm;
+
+    alarm = (struct OSAlarm *)alarm_p;
+
+    if (0 < alarm->period) {
+        time = __OSGetSystemTime();
+        fire = alarm->start;
+        if (alarm->start < time) {
+            start = alarm->start;
+            period = alarm->period;
+            quot = __div2i(time - start, period);
+            fire = start + period * (quot + 1);
+        }
+    }
+
+    alarm->handler = handler;
+    alarm->fire = fire;
+
+    for (next = AlarmQueue_80368490.head; next != 0; next = next->next) {
+        if (fire < next->fire) {
+            alarm->prev = next->prev;
+            next->prev = alarm;
+            alarm->next = next;
+            prev = alarm->prev;
+            if (prev != 0) {
+                prev->next = alarm;
+                return;
+            }
+            AlarmQueue_80368490.head = alarm;
+            time = __OSGetSystemTime();
+            remain = alarm->fire - time;
+            if (remain < 0) {
+                PPCMtdec(0);
+            } else if (remain < 0x80000000LL) {
+                PPCMtdec((u32)remain);
+            } else {
+                PPCMtdec(0x7FFFFFFF);
+            }
+            return;
+        }
+    }
+
+    alarm->next = 0;
+    prev = AlarmQueue_80368490.tail;
+    AlarmQueue_80368490.tail = alarm;
+    alarm->prev = prev;
+    if (prev != 0) {
+        prev->next = alarm;
+        return;
+    }
+    AlarmQueue_80368490.tail = alarm;
+    AlarmQueue_80368490.head = alarm;
+    time = __OSGetSystemTime();
+    remain = alarm->fire - time;
+    if (remain < 0) {
+        PPCMtdec(0);
+    } else if (remain < 0x80000000LL) {
+        PPCMtdec((u32)remain);
+    } else {
+        PPCMtdec(0x7FFFFFFF);
+    }
+}
+#pragma use_lmw_stmw reset
+
+#pragma use_lmw_stmw on
+void DecrementerExceptionCallback(u8 type, OSContext *context) {
+    struct AlarmQueue {
+        void *head;
+        void *tail;
+    };
+    struct OSAlarm {
+        void (*handler)(void *, OSContext *);
+        u32 tag;
+        s64 fire;
+        struct OSAlarm *prev;
+        struct OSAlarm *next;
+        s64 period;
+    };
+    extern struct AlarmQueue AlarmQueue_80368490;
+    extern s64 __OSGetSystemTime(void);
+    extern void PPCMtdec(u32);
+    extern void OSLoadContext(OSContext *);
+    extern void InsertAlarm(struct OSAlarm *, s64, void (*)(void *, OSContext *));
+    extern void OSDisableScheduler(void);
+    extern void OSEnableScheduler(void);
+    extern void __OSReschedule(void);
+    OSContext exceptionContext;
+    u8 pad[8];
+    struct OSAlarm *alarm;
+    struct OSAlarm *next;
+    void (*handler)(void *, OSContext *);
+    s64 now;
+    s64 remain;
+    u32 ticks;
+    struct OSAlarm *head;
+
+    (void)type;
+    (void)pad[0];
+    now = __OSGetSystemTime();
+    alarm = AlarmQueue_80368490.head;
+    if (alarm == NULL) {
+        OSLoadContext(context);
+    }
+    if (now < alarm->fire) {
+        now = __OSGetSystemTime();
+        remain = alarm->fire - now;
+        ticks = (u32)remain;
+        if (remain < 0) {
+            PPCMtdec(0);
+        } else if (remain < 0x80000000LL) {
+            PPCMtdec(ticks);
+        } else {
+            PPCMtdec(0x7FFFFFFF);
+        }
+        OSLoadContext(context);
+    }
+    next = alarm->next;
+    AlarmQueue_80368490.head = next;
+    if (next == NULL) {
+        AlarmQueue_80368490.tail = NULL;
+    } else {
+        next->prev = NULL;
+    }
+    handler = alarm->handler;
+    alarm->handler = NULL;
+    if (0 < alarm->period) {
+        InsertAlarm(alarm, 0, handler);
+    }
+    head = AlarmQueue_80368490.head;
+    if (head != NULL) {
+        now = __OSGetSystemTime();
+        remain = head->fire - now;
+        ticks = (u32)remain;
+        if (remain < 0) {
+            PPCMtdec(0);
+        } else if (remain < 0x80000000LL) {
+            PPCMtdec(ticks);
+        } else {
+            PPCMtdec(0x7FFFFFFF);
+        }
+    }
+    OSDisableScheduler();
+    OSClearContext(&exceptionContext);
+    OSSetCurrentContext(&exceptionContext);
+    handler(alarm, context);
+    OSClearContext(&exceptionContext);
+    OSSetCurrentContext(context);
+    OSEnableScheduler();
+    __OSReschedule();
+    OSLoadContext(context);
+}
+#pragma use_lmw_stmw reset
 void DecrementerExceptionCallback(u8 type, OSContext *context);
 void DecrementerExceptionHandler(u8 type, OSContext *context) {
     /* SDK asm: OS_EXCEPTION_SAVE_GPRS then b DecrementerExceptionCallback */

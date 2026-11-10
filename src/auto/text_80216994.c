@@ -720,7 +720,116 @@ s32 fn_802198C0(u16 *arg0, s32 arg1, u16 *arg2, u16 *arg3) {
         *arg3 = 0;
     }
 }
-#pragma opt_strength_reduction reset
+
+#pragma opt_strength_reduction off
+#pragma opt_common_subs off
+s32 fn_80219CF4(s32 card, s32 *alternative) {
+    void *memcpy(void *, const void *, u32);
+    u8 *block[2];
+    u8 *check[2];
+    s32 cBlock;
+    s32 cCheck;
+    s32 *alt;
+    s32 i;
+    u8 **bp;
+    u8 **cp;
+    s32 n;
+    u16 *p;
+    u32 sum;
+    u32 inv;
+    u16 temp;
+
+    bp = &block[0];
+    cp = &check[0];
+    cBlock = 0;
+    cCheck = 0;
+    alt = alternative;
+    i = 0;
+    do {
+        *bp = *(u8 **)((u8 *)card + 0x80) + ((i + 1) << 13);
+        n = 0x1FFC;
+        n = n / 2;
+        inv = 0;
+        *cp = *bp + 0x1FC0;
+        sum = 0;
+        p = (u16 *)*bp;
+        if (n > 0) {
+            s32 n8 = (u32)n >> 3;
+            if (n8 != 0) {
+                do {
+                    sum += p[0];
+                    temp = p[0];
+                    inv += ~temp;
+                    sum += p[1];
+                    temp = p[1];
+                    inv += ~temp;
+                    sum += p[2];
+                    temp = p[2];
+                    inv += ~temp;
+                    sum += p[3];
+                    temp = p[3];
+                    inv += ~temp;
+                    sum += p[4];
+                    temp = p[4];
+                    inv += ~temp;
+                    sum += p[5];
+                    temp = p[5];
+                    inv += ~temp;
+                    sum += p[6];
+                    temp = p[6];
+                    inv += ~temp;
+                    sum += p[7];
+                    temp = p[7];
+                    p += 8;
+                    inv += ~temp;
+                } while (--n8);
+            }
+            n &= 7;
+            if (n != 0) {
+                do {
+                    sum += *p;
+                    temp = *p;
+                    p += 1;
+                    inv += ~temp;
+                } while (--n);
+            }
+        }
+        if ((u16)sum == 0xFFFF) {
+            sum = 0;
+        }
+        if ((u16)inv == 0xFFFF) {
+            inv = 0;
+        }
+        if ((u16)sum != *(u16 *)(*cp + 0x3C) || (u16)inv != *(u16 *)(*cp + 0x3E)) {
+            *(u8 **)((u8 *)card + 0x84) = 0;
+            cCheck = i;
+            cBlock += 1;
+        }
+        i += 1;
+        bp += 1;
+        cp += 1;
+    } while (i < 2);
+    if (cBlock == 0) {
+        if (*(u8 **)((u8 *)card + 0x84) == 0) {
+            if (*(s16 *)(check[0] + 0x3A) - *(s16 *)(check[1] + 0x3A) < 0) {
+                cCheck = 0;
+            } else {
+                cCheck = 1;
+            }
+            *(u8 **)((u8 *)card + 0x84) = block[cCheck];
+            memcpy(block[cCheck], block[cCheck ^ 1], 0x2000);
+        } else if (*(u8 **)((u8 *)card + 0x84) == block[0]) {
+            cCheck = 0;
+        } else {
+            cCheck = 1;
+        }
+    }
+    if (alt != 0) {
+        *alt = cCheck;
+    }
+    return cBlock;
+}
+#pragma opt_common_subs reset
 s32 fn_8021A1B8(s32 arg0) {
     s32 temp_r31;
     s32 temp_r0;
@@ -942,7 +1051,7 @@ s32 fn_8021C1B8(s32 chan, char *name, u32 size, void *fileInfo, void *callback) 
     s32 fn_80217BD0(void *, s32);
     void *fn_80219258(void *);
     s32 fn_802193FC(s32, u32, void *);
-    u8 *fn_8021965C(void *);
+    u8 *fn_8021965C(s32);
     s32 fn_8021BA9C(u8 *, char *);
     s32 fn_80231944(u8 *, void *, s32);
     void fn_8023440C(u8 *, char *, s32);
@@ -950,7 +1059,7 @@ s32 fn_8021C1B8(s32 chan, char *name, u32 size, void *fileInfo, void *callback) 
     extern void fn_80216994(void);
     extern void fn_8021C088(void);
 
-    void *card;
+    s32 card;
     u8 *dir;
     u8 *ent;
     u16 freeIdx;
@@ -963,7 +1072,7 @@ s32 fn_8021C1B8(s32 chan, char *name, u32 size, void *fileInfo, void *callback) 
     if (strlen(name) > 0x20) {
         return -0xC;
     }
-    result = fn_80217B18(chan, (s32 *)&card);
+    result = fn_80217B18(chan, &card);
     if (result < 0) {
         return result;
     }
@@ -971,9 +1080,7 @@ s32 fn_8021C1B8(s32 chan, char *name, u32 size, void *fileInfo, void *callback) 
         if ((size % *(u32 *)((u8 *)card + 0xC)) != 0) {
             return -0x80;
         }
-        goto setup;
     }
-    setup:
     freeIdx = 0xFFFF;
     dir = fn_8021965C(card);
     ent = dir;
@@ -985,15 +1092,15 @@ s32 fn_8021C1B8(s32 chan, char *name, u32 size, void *fileInfo, void *callback) 
         } else if (fn_80231944(ent, *(void **)((u8 *)card + 0x10C), 4) == 0
             && fn_80231944(ent + 4, (u8 *)*(void **)((u8 *)card + 0x10C) + 4, 2) == 0
             && fn_8021BA9C(ent, name) != 0) {
-            return fn_80217BD0(card, -7);
+            return fn_80217BD0((void *)card, -7);
         }
     }
     if (freeIdx == 0xFFFF) {
-        return fn_80217BD0(card, -8);
+        return fn_80217BD0((void *)card, -8);
     }
-    stat = fn_80219258(card);
+    stat = fn_80219258((void *)card);
     if ((u32)(*(u32 *)((u8 *)card + 0xC) * *(u16 *)((u8 *)stat + 6)) < size) {
-        return fn_80217BD0(card, -9);
+        return fn_80217BD0((void *)card, -9);
     }
     if (callback != NULL) {
         cb = callback;
@@ -1010,7 +1117,7 @@ s32 fn_8021C1B8(s32 chan, char *name, u32 size, void *fileInfo, void *callback) 
     *(u32 *)((u8 *)fileInfo + 4) = freeIdx;
     result = fn_802193FC(chan, size / *(u32 *)((u8 *)card + 0xC), fn_8021C088);
     if (result < 0) {
-        return fn_80217BD0(card, result);
+        return fn_80217BD0((void *)card, result);
     }
     return result;
 }
@@ -1284,6 +1391,47 @@ s32 fn_8021D2D4(s32 arg0, s32 index, void *dst) {
     }
     
     return fn_80217BD0(stack[0], ret);
+}
+
+s32 fn_8021D614(s32 arg0, u32 *arg1) {
+    s32 fn_80217B18(s32, s32 *);
+    s32 fn_80217BD0(s32, s32);
+    s32 sp10;
+    s32 result;
+    u32 *p;
+    u32 acc0;
+    u32 acc1;
+    u32 t;
+
+    if (arg0 < 0 || arg0 >= 2) {
+        return -0x80;
+    }
+    result = fn_80217B18(arg0, &sp10);
+    if (result < 0) {
+        return result;
+    }
+    p = *(u32 **)(sp10 + 0x80);
+    acc1 = 0;
+    acc0 = 0;
+    t = p[1];
+    acc1 ^= t;
+    t = p[0];
+    acc0 ^= t;
+    t = p[2];
+    acc0 ^= t;
+    t = p[3];
+    acc1 ^= t;
+    t = p[4];
+    acc0 ^= t;
+    t = p[5];
+    acc1 ^= t;
+    t = p[6];
+    acc0 ^= t;
+    t = p[7];
+    acc1 ^= t;
+    arg1[1] = acc1;
+    arg1[0] = acc0;
+    return fn_80217BD0(sp10, 0);
 }
 
 #pragma dont_inline on

@@ -348,6 +348,117 @@ s32 fn_8020D1C8(u32 arg0) {
     return 3;
 }
 
+void fn_8020D27C(u32 arg0) {
+    void __DVDStoreErrorCode(u32);
+    void DVDReset(void);
+    void cbForStateError(u32);
+    void DVDLowStopMotor(void (*)(u32));
+    u32 fn_8020D1C8(u32);
+    void stateReady(void);
+    void fn_8020D5BC(void);
+    void fn_8020BD68(u32, void *, void *);
+    void fn_8020DD7C(void);
+    void fn_8020DC14(void);
+    extern void *executing_80368598;
+    extern u32 lbl_803685B8;
+    extern s32 ResumeFromHere_803685C0;
+    extern u8 DummyCommandBlock_80339F80[];
+    extern void (*lbl_803685BC)(void *, void *);
+    extern void (*lbl_803685E0)(void *);
+    extern void fn_8020D4E0(u32);
+
+    void *temp_r30;
+    void *dummy;
+    u32 temp_r29;
+    u32 temp_r28;
+    u32 temp_r31;
+    s32 var_r4;
+    s32 var_r0;
+    void (*cb)(s32, void *);
+
+    if (arg0 == 0x10) {
+        __DVDStoreErrorCode(0x01234568);
+        DVDReset();
+        cbForStateError(0);
+        return;
+    }
+    if (arg0 & 2) {
+        __DVDStoreErrorCode(0x01234567);
+        DVDLowStopMotor(cbForStateError);
+        return;
+    }
+    temp_r29 = *(u32 *)0xCC006020;
+    temp_r28 = temp_r29 & 0xFF000000;
+    temp_r31 = fn_8020D1C8(temp_r29);
+    if (temp_r31 == 1) {
+        __DVDStoreErrorCode(temp_r29);
+        DVDLowStopMotor(cbForStateError);
+        return;
+    }
+    if ((u32)(temp_r31 - 2) <= 1) {
+        var_r4 = 0;
+    } else if ((u32)(temp_r28 + 0xFF000000) == 0) {
+        var_r4 = 4;
+    } else if ((u32)(temp_r28 + 0xFE000000) == 0) {
+        var_r4 = 6;
+    } else if ((u32)(temp_r28 + 0xFD000000) == 0) {
+        var_r4 = 3;
+    } else {
+        var_r4 = 5;
+    }
+    if (lbl_803685B8 != 0) {
+        dummy = DummyCommandBlock_80339F80;
+        ResumeFromHere_803685C0 = var_r4;
+        temp_r30 = executing_80368598;
+        lbl_803685B8 = 0;
+        executing_80368598 = dummy;
+        *(u32 *)((u8 *)temp_r30 + 0xC) = 0xA;
+        cb = *(void (**)(s32, void *))((u8 *)temp_r30 + 0x28);
+        if (cb != NULL) {
+            cb(-3, temp_r30);
+        }
+        if (lbl_803685BC != NULL) {
+            lbl_803685BC((void *)0, temp_r30);
+        }
+        stateReady();
+        var_r0 = 1;
+    } else {
+        var_r0 = 0;
+    }
+    if (var_r0 == 0) {
+        if (temp_r31 == 2) {
+            __DVDStoreErrorCode(temp_r29);
+            fn_8020D5BC();
+            return;
+        }
+        if (temp_r31 == 3) {
+            if ((u32)((temp_r29 & 0xFFFFFF) + 0xFFFD0000) == 0x1100) {
+                fn_8020BD68(*(u32 *)((u8 *)executing_80368598 + 0x10), (void *)fn_8020D4E0, executing_80368598);
+                return;
+            }
+            lbl_803685E0(executing_80368598);
+            return;
+        }
+        if ((u32)(temp_r28 + 0xFF000000) == 0) {
+            *(u32 *)((u8 *)executing_80368598 + 0xC) = 5;
+            fn_8020DD7C();
+            return;
+        }
+        if ((u32)(temp_r28 + 0xFE000000) == 0) {
+            *(u32 *)((u8 *)executing_80368598 + 0xC) = 3;
+            fn_8020DC14();
+            return;
+        }
+        if ((u32)(temp_r28 + 0xFD000000) == 0) {
+            *(u32 *)((u8 *)executing_80368598 + 0xC) = 4;
+            fn_8020DD7C();
+            return;
+        }
+        __DVDStoreErrorCode(0x01234567);
+        DVDLowStopMotor(cbForStateError);
+    }
+}
+
 void fn_8020D4E0(u32 arg0) {
     void DVDReset(void);
     void __DVDStoreErrorCode(u32);
@@ -660,6 +771,120 @@ void __fstLoad(void) {
     // A simple placeholder to test the compilation process
 }
 
+#pragma use_lmw_stmw on
+void fn_8020FD50(s32 unused, OSContext *arg1) {
+    void fn_80211B30(s32, s32);
+    u32 fn_802116D4(void);
+    u32 fn_8022CB2C(u32, u32, s32);
+    u32 fn_8022CB08(u32, u32, s32, s32);
+    void fn_8023C518(void);
+    void fn_8020AEC4(s32 *);
+    extern u8 lbl_8033A068[];
+    extern u32 lbl_80368604;
+    extern u32 lbl_80368608;
+    extern s32 lbl_8036860C;
+
+    s16 sp16;
+    s16 sp14;
+    OSContext ctx;
+    volatile u16 *r5;
+    volatile u16 *rp;
+    u16 val;
+    s32 regMask;
+    s32 didFlush;
+    s32 bit;
+    u32 lo;
+    u32 tmp;
+    u32 tmp2;
+    u8 *regsBase;
+    OSContext *ctxArg;
+    u8 *timing;
+    u32 t27;
+
+    ctxArg = arg1;
+    timing = lbl_8033A068;
+    regMask = 0;
+    r5 = (volatile u16 *)0xCC002000;
+    val = *(r5 += 0x18);
+    if (val & 0x8000) {
+        *r5 = (u16)(val & ~0x8000);
+        regMask |= 1;
+    }
+    rp = (volatile u16 *)0xCC000000;
+    val = *(rp += 0x101A);
+    if (val & 0x8000) {
+        *rp = (u16)(val & ~0x8000);
+        regMask |= 2;
+    }
+    rp = (volatile u16 *)0xCC000000;
+    val = *(rp += 0x101C);
+    if (val & 0x8000) {
+        *rp = (u16)(val & ~0x8000);
+        regMask |= 4;
+    }
+    rp = (volatile u16 *)0xCC000000;
+    val = *(rp += 0x101E);
+    if (val & 0x8000) {
+        *rp = (u16)(val & ~0x8000);
+        regMask |= 8;
+    }
+    if ((regMask & 4) || (regMask & 8)) {
+        OSClearContext(&ctx);
+        OSSetCurrentContext(&ctx);
+        if (lbl_8036861C != NULL) {
+            fn_80211B30((s32)&sp16, (s32)&sp14);
+            ((void (*)(s16, s16))lbl_8036861C)(sp16, sp14);
+        }
+        OSClearContext(&ctx);
+        OSSetCurrentContext(ctxArg);
+        return;
+    }
+    lbl_80368604 += 1;
+    OSClearContext(&ctx);
+    OSSetCurrentContext(&ctx);
+    if (lbl_80368614 != 0) {
+        ((void (*)(u32))lbl_80368614)(lbl_80368604);
+    }
+    if (lbl_80368608 != 0) {
+        if ((u32)lbl_80368638 != 1 || fn_802116D4() != 0) {
+            regsBase = (u8 *)0xCC002000;
+            while (((u32)lbl_80368640 | (u32)lbl_80368644) != 0) {
+                t27 = (u32)lbl_80368644;
+                tmp = fn_8022CB2C((u32)lbl_80368640, t27, 0x20);
+                bit = __cntlzw(tmp);
+                if (bit >= 0x20) {
+                    bit = __cntlzw(t27) + 0x20;
+                }
+                *(volatile u16 *)(regsBase + (bit << 1)) = *(u16 *)(timing + 0x78 + (bit << 1));
+                tmp = 0;
+                tmp2 = 1;
+                tmp2 = fn_8022CB08(tmp, tmp2, 0x3F - bit, bit << 1);
+                lbl_80368640 = (void *)((u32)lbl_80368640 & ~(tmp | tmp));
+                lbl_80368644 = (void *)((u32)lbl_80368644 & ~(tmp2 | tmp2));
+            }
+            lbl_80368638 = (void *)0;
+            didFlush = 1;
+            lbl_80368648 = (u16 *)*(u32 *)(timing + 0x144);
+            lbl_8036864C = *(void **)(timing + 0x118);
+            lbl_80368654 = lbl_80368650;
+        } else {
+            didFlush = 0;
+        }
+        if (didFlush != 0) {
+            lbl_80368608 = 0;
+            fn_8023C518();
+        }
+    }
+    if (lbl_80368618 != NULL) {
+        OSClearContext(&ctx);
+        ((void (*)(u32))lbl_80368618)(lbl_80368604);
+    }
+    fn_8020AEC4(&lbl_8036860C);
+    OSClearContext(&ctx);
+    OSSetCurrentContext(ctxArg);
+}
+#pragma use_lmw_stmw reset
+
 s32 fn_8020FFC4(s32 arg0) {
     extern s32 lbl_80368614;
     s32 temp_r31;
@@ -682,6 +907,84 @@ void* fn_80210008(void* arg0) {
 }
 
 void fn_8021004C(s32 arg0) {
+}
+
+void fn_802100F4(u32 arg0) {
+    VITiming *fn_8021004C(u32);
+    volatile u16 *regs;
+    VITiming *tm;
+    u32 tv;
+    u32 mode;
+    u32 val;
+    u32 pad0;
+    u32 pad1;
+    u32 pad2;
+    volatile u32 grit;
+    u8 lo;
+    u8 hi;
+    u16 tmp;
+    u16 tmp2;
+
+    mode = arg0 >> 2;
+    tv = arg0 & 3;
+    *(u32 *)0x800000CC = mode;
+    tm = fn_8021004C(arg0);
+    regs = (volatile u16 *)0xCC002000;
+    *++regs = 2;
+    grit = 0;
+    if (grit < 1000) {
+        while (grit < 1000) {
+            grit += 8;
+        }
+    }
+    *regs = 0;
+    tmp = tm->unk1A;
+    *(volatile u16 *)0xCC002006 = tmp;
+    hi = tm->unk1D;
+    lo = tm->unk1E;
+    *(volatile u16 *)0xCC002004 = lo | (hi << 8);
+    hi = tm->unk1F;
+    lo = tm->unk1C;
+    *(volatile u16 *)0xCC00200A = lo | (hi << 7);
+    tmp = tm->unk20;
+    *(volatile u16 *)0xCC002008 = (tmp & 0x7FFF) << 1;
+    tmp = tm->unk2;
+    lo = tm->unk0;
+    tmp = (tmp * 2) - 2;
+    *(volatile u16 *)0xCC002000 = lo;
+    *(volatile u16 *)0xCC00200E = tm->unk4 + tmp;
+    *(volatile u16 *)0xCC00200C = tm->unk8 + 2;
+    tmp = tm->unk2;
+    tmp = (tmp * 2) - 2;
+    *(volatile u16 *)0xCC002012 = tm->unk6 + tmp;
+    *(volatile u16 *)0xCC002010 = tm->unkA + 2;
+    *(volatile u16 *)0xCC002016 = tm->unkC | (tm->unk10 << 5);
+    *(volatile u16 *)0xCC002014 = tm->unkE | (tm->unk14 << 5);
+    *(volatile u16 *)0xCC00201A = tm->unkD | (tm->unk12 << 5);
+    *(volatile u16 *)0xCC002018 = tm->unkF | (tm->unk16 << 5);
+    *(volatile u16 *)0xCC002048 = 0x2828;
+    *(volatile u16 *)0xCC002036 = 1;
+    *(volatile u16 *)0xCC002034 = 0x1001;
+    tmp = tm->unk18;
+    tmp2 = tm->unk1A;
+    *(volatile u16 *)0xCC002032 = tmp2 + 1;
+    *(volatile u16 *)0xCC002030 = ((s16)tmp / 2 + 1) | 0x1000;
+    if ((s32)mode < 4) {
+        if ((s32)mode >= 1) {
+            val = mode;
+        } else {
+            val = 0;
+        }
+    } else {
+        val = 0;
+    }
+    if (tv <= 1) {
+        *regs = (u16)((((tv & 1) << 2) | 1) | (val << 8));
+        *(volatile u16 *)0xCC00206C = 0;
+    } else {
+        *regs = (u16)((val << 8) | 5);
+        *(volatile u16 *)0xCC00206C = 1;
+    }
 }
 
 s32 fn_80211690(void) {

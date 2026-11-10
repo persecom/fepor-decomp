@@ -6148,6 +6148,147 @@ void fn_800AFE0C(s32 arg0) {
     }
 }
 
+#pragma use_lmw_stmw on
+#pragma opt_strength_reduction off
+void fn_800B080C(s32 arg0, s32 arg1, s32 arg2) {
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    void fn_800B49D0(void *);
+    void fn_800B49E0(void *, s32, s32, s32, void *);
+    void *fn_800B4A84(void *, s32, s32);
+    void fn_80231D94(void *, void *, ...);
+    void fn_8024DA2C(void *);
+    extern f32 lbl_80369CB0;
+    extern f32 lbl_80369CD4;
+    extern u8 lbl_80319AA8[];
+    extern u8 lbl_8026EB70[];
+    extern u8 fn_800AFF28[];
+
+    u8 *buf;
+    u16 flags;
+    u32 nest;
+    s32 i;
+    u8 *p;
+    s32 ctr;
+    void *h;
+    u16 *slot;
+    f32 f0;
+    f32 f1;
+    u8 *entry;
+
+    buf = (u8 *)lbl_80317338;
+    entry = *(u8 **)(buf + 0xF8) + arg0 * 0x13C;
+    flags = *(u16 *)entry;
+    if (flags != 0) {
+        if (flags != 0) {
+            if (!(flags & 8)) {
+                *(u16 *)entry = (u16)(flags | 4);
+            } else {
+                if (flags & 0x400) {
+                    slot = (u16 *)(buf + 0x13E);
+                    slot[*(u16 *)(entry + 2)] = 0;
+                }
+                *(u16 *)entry = 0;
+                buf = (u8 *)lbl_80317338;
+                if (*(u16 *)(buf + 0x124) == 0) {
+                    *(s32 *)((u8 *)lbl_80317338 + 0x128) = OSDisableInterrupts();
+                }
+                *(u16 *)(buf + 0x124) = (u16)(*(u16 *)(buf + 0x124) + 1);
+                fn_800B49D0(*(void **)(entry + 0x2C));
+                fn_800B49D0(*(void **)(entry + 0xB4));
+                fn_8024DA2C(*(void **)(entry + 0x50));
+                if (*(u16 *)(entry + 0x1E) == 2) {
+                    fn_8024DA2C(*(void **)(entry + 0xD8));
+                }
+                nest = *(u16 *)(buf + 0x124);
+                if (nest != 0) {
+                    nest -= 1;
+                    *(u16 *)(buf + 0x124) = nest;
+                    if ((u16)nest == 0) {
+                        OSRestoreInterrupts(*(s32 *)((u8 *)lbl_80317338 + 0x128));
+                    }
+                }
+                *(s32 *)((u8 *)lbl_80317338 + 0xFC) = -1;
+            }
+        }
+    }
+
+    if (arg2 != 0) {
+        buf = (u8 *)lbl_80317338;
+        p = buf;
+        ctr = *(u16 *)(buf + 0x13C);
+        for (i = 0; i < ctr; i++) {
+            if (*(u16 *)(p + 0x13E) == 0) {
+                slot = (u16 *)((u8 *)lbl_80317338 + 0x13E);
+                slot[i] = 1;
+                *(u16 *)(entry + 2) = (u16)i;
+                break;
+            }
+            p += 2;
+        }
+        if (i >= *(u16 *)(buf + 0x13C)) {
+            return;
+        }
+    }
+
+    {
+        s32 zero;
+        s32 forty;
+        s32 one;
+
+        buf = (u8 *)lbl_80317338;
+        zero = 0;
+        forty = 0x40;
+        one = 1;
+        *(s32 *)(buf + 0xFC) = arg0;
+        if (arg2 != 0) {
+        }
+        f0 = 0.0f;
+        *(u16 *)(entry + 0x78) = zero;
+        f1 = lbl_80369CD4;
+        *(s32 *)(entry + 0x70) = zero;
+        *(s32 *)(entry + 0x60) = zero;
+        *(s32 *)(entry + 0x64) = zero;
+        *(u16 *)(entry + 0x80) = zero;
+        *(u16 *)(entry + 0x82) = zero;
+        *(u16 *)(entry + 0x84) = zero;
+        *(u16 *)(entry + 0x86) = zero;
+        *(u16 *)(entry + 0x88) = zero;
+        *(u16 *)(entry + 0x100) = zero;
+        *(s32 *)(entry + 0xF8) = zero;
+        *(s32 *)(entry + 0xE8) = zero;
+        *(s32 *)(entry + 0xEC) = zero;
+        *(u16 *)(entry + 0x108) = zero;
+        *(u16 *)(entry + 0x10A) = zero;
+        *(u16 *)(entry + 0x10C) = zero;
+        *(u16 *)(entry + 0x10E) = zero;
+        *(u16 *)(entry + 0x110) = zero;
+        *(u16 *)(entry + 6) = forty;
+        *(u16 *)(entry + 8) = zero;
+        *(f32 *)(entry + 0x10) = f0;
+        *(f32 *)(entry + 0xC) = f1;
+        *(f32 *)(entry + 0x14) = f1;
+        *(u16 *)entry = one;
+        if (arg2 != 0) {
+            *(u16 *)entry = (u16)(*(u16 *)entry | 0x400);
+        }
+    }
+    fn_80231D94(lbl_80319AA8, lbl_8026EB70 + 0x1E, arg1, lbl_8026EB70 + 0x23);
+    buf = lbl_80319AA8;
+    h = fn_800B4A84(buf, 0, 0);
+    *(void **)(entry + 0x2C) = h;
+    if (h == NULL) {
+        *(u16 *)entry = 0;
+        return;
+    }
+    h = fn_800B4A84(buf, 0, 0);
+    *(void **)(entry + 0xB4) = h;
+    if (h == NULL) {
+        *(u16 *)entry = 0;
+        return;
+    }
+    fn_800B49E0(*(void **)(entry + 0x2C), *(s32 *)(entry + 0x54), 0x100, 0, fn_800AFF28);
+}
 void fn_800B0AC8(void *arg0, void *arg1) {
     M2C_UNK fn_800B080C(void *, void *, M2C_UNK);
     fn_800B080C(arg0, arg1, 0);

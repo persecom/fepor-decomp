@@ -1494,6 +1494,102 @@ void fn_801EFB2C(void *arg0, char *arg1) {
     fn_800C9A60(&sp54, -1);
 }
 
+void fn_801F0718(void *arg0) {
+    f32 fn_80059500(f32, f32, f32, f32, f32);
+    void *fn_80068548(void);
+    void fn_80202300(void *, s32, f32);
+    void fn_802029C4(void *, void *, void *);
+    void fn_80203184(void *, void *, void *);
+    void fn_80067FE8(void *, void *, void *);
+    void fn_8000C188(void *);
+    extern f32 lbl_8036B7C8;
+    extern f32 lbl_8036B7D4;
+    extern f64 lbl_8036B7D8;
+    extern u8 lbl_8027F250[];
+
+    struct Cam {
+        u8 pad[0xD4];
+        f32 at[3];
+        f32 eye[3];
+        f32 unkEC;
+    };
+
+    f32 vec[3];
+    u8 mtx44[0x30];
+    u8 mtx14[0x30];
+    struct Cam *cam;
+    f32 t;
+    f32 f27, f28, f29, f30, f31, ftmp;
+    f32 angle;
+    u32 *src;
+    void *mtx;
+    u16 n;
+
+    cam = (struct Cam *)fn_80068548();
+    t = lbl_8036B7C8;
+    n = *(u16 *)((u8 *)arg0 + 0x4C);
+    if (n != 0) {
+        t = (f32)*(u16 *)((u8 *)arg0 + 0x4E) / (f32)n;
+    }
+    f27 = fn_80059500(
+        (*(f32 **)((u8 *)arg0 + 0x38))[0],
+        (*(f32 **)((u8 *)arg0 + 0x3C))[0],
+        (*(f32 **)((u8 *)arg0 + 0x40))[0],
+        (*(f32 **)((u8 *)arg0 + 0x44))[0], t);
+    f28 = fn_80059500(
+        (*(f32 **)((u8 *)arg0 + 0x38))[1],
+        (*(f32 **)((u8 *)arg0 + 0x3C))[1],
+        (*(f32 **)((u8 *)arg0 + 0x40))[1],
+        (*(f32 **)((u8 *)arg0 + 0x44))[1], t);
+    f29 = fn_80059500(
+        (*(f32 **)((u8 *)arg0 + 0x38))[2],
+        (*(f32 **)((u8 *)arg0 + 0x3C))[2],
+        (*(f32 **)((u8 *)arg0 + 0x40))[2],
+        (*(f32 **)((u8 *)arg0 + 0x44))[2], t);
+    f30 = fn_80059500(
+        (*(f32 **)((u8 *)arg0 + 0x38))[3],
+        (*(f32 **)((u8 *)arg0 + 0x3C))[3],
+        (*(f32 **)((u8 *)arg0 + 0x40))[3],
+        (*(f32 **)((u8 *)arg0 + 0x44))[3], t);
+    f31 = fn_80059500(
+        (*(f32 **)((u8 *)arg0 + 0x38))[4],
+        (*(f32 **)((u8 *)arg0 + 0x3C))[4],
+        (*(f32 **)((u8 *)arg0 + 0x40))[4],
+        (*(f32 **)((u8 *)arg0 + 0x44))[4], t);
+    fn_80059500(
+        (*(f32 **)((u8 *)arg0 + 0x38))[5],
+        (*(f32 **)((u8 *)arg0 + 0x3C))[5],
+        (*(f32 **)((u8 *)arg0 + 0x40))[5],
+        (*(f32 **)((u8 *)arg0 + 0x44))[5], t);
+    ftmp = fn_80059500(
+        (*(f32 **)((u8 *)arg0 + 0x38))[6],
+        (*(f32 **)((u8 *)arg0 + 0x3C))[6],
+        (*(f32 **)((u8 *)arg0 + 0x40))[6],
+        (*(f32 **)((u8 *)arg0 + 0x44))[6], t);
+    cam->eye[0] = f27;
+    src = (u32 *)lbl_8027F250;
+    ftmp = -ftmp;
+    cam->eye[1] = f28;
+    mtx = mtx14;
+    angle = lbl_8036B7D4 * f30;
+    cam->eye[2] = f29;
+    ((u32 *)vec)[2] = src[2];
+    ((u32 *)vec)[0] = src[0];
+    ((u32 *)vec)[1] = src[1];
+    vec[2] = ftmp;
+    fn_80202300(mtx, 0x58, angle);
+    fn_80202300(mtx44, 0x59, lbl_8036B7D4 * f31);
+    fn_802029C4(mtx14, vec, vec);
+    fn_802029C4(mtx44, vec, vec);
+    fn_80203184(cam->eye, vec, cam->at);
+    fn_80067FE8(cam->at, &cam->unkEC, cam->eye);
+    (*(u16 *)((u8 *)arg0 + 0x4E))++;
+    if (*(u16 *)((u8 *)arg0 + 0x4E) >= *(u16 *)((u8 *)arg0 + 0x4C)) {
+        (*(u16 *)((u8 *)arg0 + 0x48))++;
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_801F09E8(void) {
     M2C_UNK fn_801F0BC4();
     fn_801F0BC4();

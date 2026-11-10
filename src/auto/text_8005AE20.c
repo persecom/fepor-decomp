@@ -1461,7 +1461,7 @@ M2C_UNK fn_80063954(char *arg0) {
 #pragma inline_depth(0)
 M2C_UNK fn_800639B4(char *arg0) {
     M2C_UNK fn_80063A14(M2C_UNK);
-    M2C_UNK temp_r31;
+    register M2C_UNK temp_r31;
 
     temp_r31 = fn_8005C82C(arg0, 0);
     if (!(fn_8005C6A0(arg0) & 0x4000)) {

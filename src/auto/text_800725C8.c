@@ -186,6 +186,24 @@ void fn_80072B04(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x34) = fn_8000E0E4(lbl_8026BE40 + 0x127);
 }
 
+void fn_80072C64(void *arg0)
+{
+    extern void *lbl_803682F0;
+    extern u8 lbl_8026BE40[];
+    extern u8 lbl_80311D50[];
+
+    fn_801E047C(lbl_803682F0, arg0);
+
+    fn_801DDBA8(
+        lbl_80311D50,
+        lbl_8026BE40 + 0x14D,
+        0,
+        0,
+        0,
+        0
+    );
+}
+
 void fn_80072CB0(s32 arg0) {
     M2C_UNK fn_801E3118(M2C_UNK *, s32, M2C_UNK);
     extern M2C_UNK lbl_803682F0;

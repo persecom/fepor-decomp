@@ -151,18 +151,17 @@ void *SelectThread_8020A2C4(s32 arg0) {
     extern s32 RunQueueHint_8036851C;
     extern void *RunQueue_80339478[];
     extern void (*SwitchThreadCallback_80366F50)(void *, void *);
-    void **queue;
+    void **queue = RunQueue_80339478;
+    s32 yield = arg0 + 0;
     void *thread;
     void *next;
     void *tail;
     void *pred;
     s32 prio;
     void **q;
-    s32 yield;
     s32 cur;
+    s32 one;
 
-    queue = RunQueue_80339478;
-    yield = arg0;
     if (Reschedule_80368520 > 0) {
         return NULL;
     }
@@ -173,14 +172,11 @@ void *SelectThread_8020A2C4(s32 arg0) {
     }
     if (thread != NULL) {
         if (*(u16 *)((u8 *)thread + 0x2C8) == 2) {
-            if (yield == 0) {
-                s32 bits = RunQueueBits_80368518;
-                if (*(s32 *)((u8 *)thread + 0x2D0) <= (s32)__cntlzw((u32)bits)) {
-                    return NULL;
-                }
+            if (yield == 0 && *(s32 *)((u8 *)thread + 0x2D0) <= (s32)__cntlzw((u32)RunQueueBits_80368518)) {
+                return NULL;
             }
             *(u16 *)((u8 *)thread + 0x2C8) = 1;
-            *(void **)((u8 *)thread + 0x2DC) = (void *)((u8 *)queue + (*(s32 *)((u8 *)thread + 0x2D0) * 8));
+            *(void **)((u8 *)thread + 0x2DC) = (void *)((u8 *)queue + (*(s32 *)((u8 *)thread + 0x2D0) << 3));
             q = *(void ***)((u8 *)thread + 0x2DC);
             tail = q[1];
             if (tail == NULL) {
@@ -189,18 +185,15 @@ void *SelectThread_8020A2C4(s32 arg0) {
                 *(void **)((u8 *)tail + 0x2E0) = thread;
             }
             *(void **)((u8 *)thread + 0x2E4) = tail;
-            *(void **)((u8 *)thread + 0x2E0) = NULL;
+            one = 0;
+            *(void **)((u8 *)thread + 0x2E0) = (void *)one;
+            one = 1;
             (*(void ***)((u8 *)thread + 0x2DC))[1] = thread;
-            {
-                s32 one = 1;
-                RunQueueBits_80368518 |= one << (0x1F - *(s32 *)((u8 *)thread + 0x2D0));
-                RunQueueHint_8036851C = one;
-            }
+            RunQueueBits_80368518 |= one << (0x1F - *(s32 *)((u8 *)thread + 0x2D0));
+            RunQueueHint_8036851C = one;
         }
-        if ((*(u16 *)((u8 *)thread + 0x1A2) & 2) == 0) {
-            if (fn_802059F8(thread) != 0) {
-                return NULL;
-            }
+        if ((*(u16 *)((u8 *)thread + 0x1A2) & 2) == 0 && fn_802059F8(thread) != 0) {
+            return NULL;
         }
     }
     if ((u32)RunQueueBits_80368518 == 0) {
@@ -217,7 +210,7 @@ void *SelectThread_8020A2C4(s32 arg0) {
     }
     RunQueueHint_8036851C = 0;
     prio = __cntlzw((u32)RunQueueBits_80368518);
-    q = (void **)((u8 *)queue + (prio * 8));
+    q = (void **)((u8 *)queue + (prio << 3));
     next = q[0];
     pred = *(void **)((u8 *)next + 0x2E0);
     if (pred == NULL) {
@@ -227,7 +220,7 @@ void *SelectThread_8020A2C4(s32 arg0) {
     }
     q[0] = pred;
     if (q[0] == NULL) {
-        s32 one = 1;
+        one = 1;
         RunQueueBits_80368518 &= ~(one << (0x1F - prio));
     }
     *(void **)((u8 *)next + 0x2DC) = NULL;

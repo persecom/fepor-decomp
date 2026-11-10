@@ -1,5 +1,6 @@
 /* Functions from 0x80149FB8 to 0x8014A25C, found by decomp-toolkit. */
 #include "common.h"
+#include "global.h"
 
 void fn_80149FB8(void *arg0) {
     extern u8 lbl_8029275C[];
@@ -78,5 +79,35 @@ void fn_8014A0D4(void *arg0) {
     fn_80024398(&lbl_80367B60, arg0, 0);
     fn_80146B00();
     *(s32*)((char*)arg0 + 0x30) = 0;
+}
+
+void fn_8014A160(void *arg0) {
+    extern f32 lbl_8036A7B8;
+    extern f32 lbl_8036A7BC;
+    extern u8 lbl_80276F00[];
+    extern void fn_8000A258(void);
+    extern double fn_80009D74(f32, f32, f32, f32);
+    extern void fn_8000A174(s32, s32);
+    extern void fn_8000A248(void);
+    extern void fn_8001019C(s32, s32, s32, void *);
+    extern void *fn_801090C0(void *);
+    extern void fn_80109C1C(void *, s32);
+    extern void fn_80109C80(void *, s32);
+
+    fn_8000A258();
+    fn_80009D74(lbl_8036A7B8, lbl_8036A7B8, lbl_8036A7B8, lbl_8036A7BC);
+    fn_8000A174(0, 0x13);
+    fn_8000A248();
+    fn_8001019C(0x20, 0x1A4, 1, lbl_80276F00 + 0x2B);
+    *(s32 *)((u8 *)arg0 + 0x30) = *(s32 *)((u8 *)arg0 + 0x30) + 1;
+    if (*(s32 *)((u8 *)arg0 + 0x30) == 0xE10) {
+        fn_80109C1C(fn_801090C0(lbl_80276F00 + 0xD), 0xFF);
+        fn_80109C80(fn_801090C0(lbl_80276F00 + 0x16), 0xFF);
+    }
+    if (*(s32 *)((u8 *)arg0 + 0x30) == 0x1C20) {
+        fn_80109C80(fn_801090C0(lbl_80276F00 + 0xD), 0xFF);
+        fn_80109C1C(fn_801090C0(lbl_80276F00 + 0x16), 0xFF);
+        *(s32 *)((u8 *)arg0 + 0x30) = 0;
+    }
 }
 

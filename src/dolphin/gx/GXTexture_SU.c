@@ -198,8 +198,8 @@ void fn_802240F0(u32 arg0, u32 *arg1, f32 a, f32 b, f32 c, f32 d) {
     extern f32 lbl_8036BD70;
     extern f64 lbl_8036BD78;
     extern f32 lbl_8036BD80;
-    volatile f32 sp24;
-    volatile f32 sp20;
+    f32 sp24;
+    f32 sp20;
     f32 f31, f3, f4, half, two, z;
     f64 one, halfd;
     s32 exp;
@@ -211,7 +211,6 @@ void fn_802240F0(u32 arg0, u32 *arg1, f32 a, f32 b, f32 c, f32 d) {
     s32 f0r;
     s32 ef;
     s32 flag;
-    s32 cnt;
 
     ef = 0;
     flag = (arg0 >> 3) & 1;
@@ -242,15 +241,23 @@ void fn_802240F0(u32 arg0, u32 *arg1, f32 a, f32 b, f32 c, f32 d) {
             f31 = a / t1;
             f3 = (d * c) / (t0 * t1);
         }
-        cnt = 0;
+        for (exp = 0; f4 > one;) {
+            one = lbl_8036BD68;
+            half = lbl_8036BD60;
+            break;
+        }
         half = lbl_8036BD60;
         one = lbl_8036BD68;
-        while (f4 > one) { f4 *= half; cnt++; }
+        for (exp = 0; f4 > one; exp++) {
+            f4 *= half;
+        }
         halfd = lbl_8036BD78;
         two = lbl_8036BD70;
         z = lbl_8036BD58;
-        while (f4 > z && f4 < halfd) { f4 *= two; cnt--; }
-        exp = cnt + 1;
+        for (; f4 > z && f4 < halfd; exp--) {
+            f4 *= two;
+        }
+        exp += 1;
         sp24 = f3 / (f32)(1 << exp);
         ef = __rlwimi(ef, fn_8022C568(lbl_8036BD80 * f4), 0, 8, 31);
         sp20 = f31;
@@ -271,29 +278,29 @@ void fn_802240F0(u32 arg0, u32 *arg1, f32 a, f32 b, f32 c, f32 d) {
         u32 w20;
         acc0 = __rlwimi(acc0, w24, 20, 21, 31);
         reg = acc0;
-        *(volatile u8 *)0xCC008000 = 0x61;
+        GXWGFifo.u8 = 0x61;
         reg = __rlwimi(reg, w24, 20, 13, 20);
         w20 = *(u32 *)&sp20;
         reg = __rlwimi(reg, w24, 20, 12, 12);
         reg = __rlwimi(reg, 0xee, 24, 0, 7);
-        *(volatile u32 *)0xCC008000 = reg;
+        GXWGFifo.u32 = reg;
         slot_r25 = __rlwimi(slot_r25, w20, 20, 21, 31);
         reg = slot_r25;
-        *(volatile u8 *)0xCC008000 = 0x61;
+        GXWGFifo.u8 = 0x61;
         reg = __rlwimi(reg, w20, 20, 13, 20);
         reg = __rlwimi(reg, w20, 20, 12, 12);
-        *(volatile u32 *)0xCC008000 = (u32)ef;
+        GXWGFifo.u32 = (u32)ef;
         reg = __rlwimi(reg, flag, 20, 11, 11);
-        *(volatile u8 *)0xCC008000 = 0x61;
+        GXWGFifo.u8 = 0x61;
         reg = __rlwimi(reg, slot_r28, 21, 8, 10);
         reg = __rlwimi(reg, 0xf1, 24, 0, 7);
-        *(volatile u32 *)0xCC008000 = (u32)f0r;
+        GXWGFifo.u32 = (u32)f0r;
         slot_r26 = __rlwimi(slot_r26, t, 24, 8, 31);
-        *(volatile u8 *)0xCC008000 = 0x61;
-        *(volatile u32 *)0xCC008000 = reg;
+        GXWGFifo.u8 = 0x61;
+        GXWGFifo.u32 = reg;
         reg = __rlwimi(slot_r26, 0xf2, 24, 0, 7);
-        *(volatile u8 *)0xCC008000 = 0x61;
-        *(volatile u32 *)0xCC008000 = reg;
+        GXWGFifo.u8 = 0x61;
+        GXWGFifo.u32 = reg;
         __GXData[1] = 0;
     }
 }

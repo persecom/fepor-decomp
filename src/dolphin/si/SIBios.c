@@ -350,6 +350,65 @@ void SIInit(void) {
     SIGetType(3);
 }
 
+BOOL fn_8023B57C(s32 chan, void *output, u32 outputBytes, void *input, u32 inputBytes, void *callback) {
+    BOOL enabled;
+    u32 i;
+    u32 rlen;
+    u32 comcsr;
+    u32 bit;
+    u32 sr;
+    SIControl *si;
+
+    si = &lbl_8029EF68;
+    enabled = OSDisableInterrupts();
+    if (si->chan != -1) {
+        OSRestoreInterrupts(enabled);
+        return FALSE;
+    }
+
+    sr = ((volatile u32 *)0xCC000000)[0x6438 / 4];
+    sr &= (u32)((s32)0x0F000000 >> (chan * 8));
+    ((volatile u32 *)0xCC000000)[0x6438 / 4] = sr;
+
+    rlen = (outputBytes + 3) / 4;
+    si->chan = chan;
+    si->callback = callback;
+    si->inputBytes = inputBytes;
+    si->input = input;
+
+    for (i = 0; i < rlen; i++) {
+        __SIRegs[32 + i] = ((u32 *)output)[i];
+    }
+
+    comcsr = __SIRegs[13];
+    bit = 1;
+    ((u8 *)&comcsr)[0] = (u8)((((u8 *)&comcsr)[0] & ~0x80) | (bit << 7));
+    if (callback) {
+    } else {
+        bit = 0;
+    }
+    ((u8 *)&comcsr)[0] = (u8)((((u8 *)&comcsr)[0] & ~0x40) | (bit << 6));
+    if (outputBytes == 0x80) {
+        bit = 0;
+    } else {
+        bit = outputBytes;
+    }
+    ((u8 *)&comcsr)[1] = (u8)((((u8 *)&comcsr)[1] & ~0x7F) | (bit & 0x7F));
+    if (inputBytes == 0x80) {
+        bit = 0;
+    } else {
+        bit = inputBytes;
+    }
+    ((u8 *)&comcsr)[2] = (u8)((((u8 *)&comcsr)[2] & ~0x7F) | (bit & 0x7F));
+    bit = 1;
+    ((u8 *)&comcsr)[3] = (u8)((((u8 *)&comcsr)[3] & ~6) | ((chan << 1) & 6));
+    ((u8 *)&comcsr)[3] = (u8)(((u8 *)&comcsr)[3] | bit);
+    __SIRegs[13] = comcsr;
+
+    OSRestoreInterrupts(enabled);
+    return TRUE;
+}
+
 u32 fn_8023B788(s32 chan) {
     extern u32 Type_8029EFC0[4];
     BOOL enabled;

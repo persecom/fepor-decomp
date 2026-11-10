@@ -809,6 +809,82 @@ void* fn_80104970(void* arg0) {
     return (u8*)arg0 + 1;
 }
 
+#pragma use_lmw_stmw on
+void *fn_801049E0(u8 *arg0, void **arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5)
+{
+    u16 sp8;
+    void **ctx = lbl_803679C0;
+    u8 is_double;
+    u8 *next;
+    u16 code;
+    void *base;
+    void *end;
+    void *start;
+    void *entry;
+    f32 width;
+    s32 fn_801053E4(s32, s32, u16 *, void *);
+    s32 fn_80105474(s32, s32, void *, void *);
+
+    if (((arg0[0] >= 0x81U && arg0[0] <= 0x9FU) || (arg0[0] >= 0xE0U && arg0[0] <= 0xFCU))
+        && ((arg0[1] >= 0x40U && arg0[1] <= 0x7EU) || (arg0[1] >= 0x80U && arg0[1] <= 0xFCU))) {
+        is_double = 1;
+    } else {
+        is_double = 0;
+    }
+
+    if (is_double != 0) {
+        next = arg0 + 2;
+        code = arg0[1];
+        code = (u16)(code | (((s32)(s8)*(u8 *)arg0 << 8) & 0xFF00));
+    } else {
+        code = *(u8 *)arg0;
+        next = arg0 + 1;
+    }
+    sp8 = code;
+
+    if (*(u16 *)ctx[3] != code) {
+        base = ctx[1];
+        start = (u8 *)base + *(u16 *)((u8 *)base + 0x22);
+        end = (u8 *)start + ((s32)ctx[2] << 4);
+        ctx[3] = (void *)fn_801053E4((s32)start, (s32)end, &sp8, fn_80104930);
+        entry = ctx[3];
+        if (end == entry || *(u16 *)entry != sp8) {
+            ctx[3] = (void *)fn_80105474((s32)start, (s32)end, &lbl_80366E80, fn_80104930);
+            entry = ctx[3];
+            if (end == entry || *(u16 *)entry != 0x8199U) {
+                ctx[3] = start;
+            }
+        }
+    }
+
+    {
+        u8 *temp_r5;
+        u8 *temp_r6;
+        s32 idx;
+        s32 stride;
+        s32 off;
+
+        temp_r5 = ctx[3];
+        *arg4 = (s8)temp_r5[0xC];
+        temp_r6 = ctx[1];
+        idx = *(u16 *)(temp_r5 + 2);
+        stride = *(s32 *)(temp_r6 + 0x14);
+        off = *(s32 *)(temp_r6 + 0x24);
+        *arg1 = (void *)(off + idx * stride + (s32)temp_r6);
+        *arg2 = *(u16 *)(temp_r5 + 4);
+        *arg3 = *(u16 *)(temp_r5 + 6);
+    }
+
+    if (*(u16 *)((void **)lbl_803679C0)[3] & 0xFF00) {
+        width = (f32)*arg4;
+    } else {
+        width = lbl_8036A0F8 * (f32)(s32)*(u16 *)((u8 *)((void **)lbl_803679C0)[1] + 0xC);
+    }
+    *arg5 = (s32)width;
+    return next;
+}
+#pragma use_lmw_stmw reset
+
 void fn_80104BF4(void* arg0, void* arg1) {
     if (arg0 != NULL && arg1 != NULL) {
         char* ptr0 = (char*)arg0;

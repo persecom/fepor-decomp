@@ -303,6 +303,122 @@ void fn_80132CDC(void) {
     fn_8000C188();
 }
 
+#pragma cplusplus on
+extern "C" void fn_80132CFC(void *arg0) {
+    s8 fn_801475FC(void *, s32);
+    extern u8 lbl_802764BC[];
+    extern s32 lbl_80367110;
+    extern void *lbl_80367240;
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+    };
+    s32 state;
+    u8 blocked;
+    s32 flags;
+    s16 dir;
+    s32 pad;
+    u8 *p;
+    s32 canDec;
+    u8 lt;
+    u8 v;
+    u8 lim;
+    u8 other;
+
+    state = *(s32 *)((u8 *)arg0 + 0x4C);
+    if (state == 0) {
+        ((Obj *)arg0)->v6();
+        return;
+    }
+    if (state != 1) {
+        return;
+    }
+    flags = lbl_80367110;
+    blocked = 0;
+    if ((flags & 0x10) != 0 && (flags & 0x20) == 0) {
+        blocked = 1;
+    }
+    if (blocked != 0) {
+        return;
+    }
+    dir = *(s16 *)((u8 *)arg0 + 0x3E);
+    p = (u8 *)0;
+    pad = *(s32 *)((u8 *)lbl_80367240 + 0xC);
+    switch (dir) {
+    case 0:
+        p = (u8 *)arg0 + 0x51;
+        lim = p[8];
+        v = p[0];
+        canDec = 0;
+        other = p[4];
+        if ((s8)lim < (s8)v && (*(u8 *)((u8 *)*(void **)((u8 *)arg0 + 0x60) + 0x19) + (s8)v) > 1) {
+            canDec = 1;
+        }
+        lt = (s8)v < (s8)other;
+        break;
+    case 1:
+        p = (u8 *)arg0 + 0x52;
+        lim = p[8];
+        v = p[0];
+        canDec = 0;
+        other = p[4];
+        if ((s8)lim < (s8)v && (*(u8 *)((u8 *)*(void **)((u8 *)arg0 + 0x60) + 0x1A) + (s8)(v * 5)) > 1) {
+            canDec = 1;
+        }
+        lt = (s8)v < (s8)other;
+        break;
+    case 2:
+        p = (u8 *)arg0 + 0x53;
+        lim = p[8];
+        v = p[0];
+        canDec = 0;
+        other = p[4];
+        if ((s8)lim < (s8)v && (*(u8 *)((u8 *)*(void **)((u8 *)arg0 + 0x60) + 0x1C) + (s8)(v * 3)) > 0) {
+            canDec = 1;
+        }
+        lt = (s8)v < (s8)other;
+        break;
+    case 3:
+        p = (u8 *)arg0 + 0x54;
+        lim = p[4];
+        v = p[0];
+        canDec = 0;
+        other = p[8];
+        if ((s8)v < (s8)lim && (*(u8 *)((u8 *)*(void **)((u8 *)arg0 + 0x60) + 0x1B) - (s8)v) > 1) {
+            canDec = 1;
+        }
+        lt = (s8)other < (s8)v;
+        break;
+    }
+    if (lt != 0) {
+        if ((pad & 0x08000008) != 0) {
+            if ((s16)dir != 3) {
+                *p = (u8)(*p + 1);
+            } else {
+                *p = (u8)(*p - 1);
+            }
+            fn_801475FC(lbl_802764BC + 0x1C3, 0x64);
+            return;
+        }
+    }
+    if ((u8)canDec != 0) {
+        if ((pad & 0x04000004) != 0) {
+            if ((s16)dir != 3) {
+                *p = (u8)(*p - 1);
+            } else {
+                *p = (u8)(*p + 1);
+            }
+            fn_801475FC(lbl_802764BC + 0x1C3, 0x64);
+        }
+    }
+}
+#pragma cplusplus reset
+
 void fn_80133E50(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
     void fn_8008AB7C(s32, s32, s32, s32, s32, s32, s32);
     fn_8008AB7C(arg1 + (arg3 >> 1), arg2 + (arg4 >> 1), arg3, 0x18, 0x19, 0x4C, arg5);

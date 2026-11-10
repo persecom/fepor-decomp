@@ -17,6 +17,90 @@ s32 fn_800056CC(const char *fmt, ...) {
     return 0;
 }
 
+void fn_80005720(u32 arg0, s8 arg1)
+{
+    extern u8 lbl_80367100[];
+
+    u8 *state;
+    u32 flags;
+    s32 delta;
+    s32 position;
+    s32 limit;
+    s32 i;
+
+    state = lbl_80367100;
+    flags = arg0;
+    delta = arg1;
+
+    if ((flags & 0x10) != 0) {
+        state[0x18] = (state[0x18] == 0);
+    }
+
+    if (state[0x16] != 0) {
+        delta /= 8;
+
+        *(s16 *)(state + 0x10) -= delta;
+
+        if (*(s16 *)(state + 0x10) < 0x10) {
+            *(s16 *)(state + 0x10) = 0x10;
+        }
+
+        limit = *(s16 *)(state + 0x0E) - 0x10;
+
+        if (*(s16 *)(state + 0x10) > limit) {
+            *(s16 *)(state + 0x10) = limit;
+        }
+    }
+
+    if ((flags & 0x0F) == 0) {
+        return;
+    }
+
+    if (state[0x16] != 0) {
+        position = *(s16 *)(state + 0x3A) - *(s16 *)(state + 0x14);
+        limit = *(s16 *)(state + 0x38) - *(s16 *)(state + 0x06);
+
+        if (position < 0) {
+            position = 0;
+        }
+
+        if ((flags & 0x08) != 0) {
+            if (position > 0 && position > limit) {
+                (*(s16 *)(state + 0x3A))--;
+            }
+        }
+
+        if ((flags & 0x04) != 0) {
+            (*(s16 *)(state + 0x3A))++;
+
+            if (*(s16 *)(state + 0x3A) == *(s16 *)(state + 0x38)) {
+                state[0x16] = 0;
+            }
+        }
+
+        if ((flags & 0x01) != 0) {
+            for (i = 0; i < 8; i++) {
+                if (position > 0 && position > limit) {
+                    (*(s16 *)(state + 0x3A))--;
+                }
+            }
+        }
+
+        if ((flags & 0x02) != 0) {
+            for (i = 0; i < 8; i++) {
+                (*(s16 *)(state + 0x3A))++;
+
+                if (*(s16 *)(state + 0x3A) == *(s16 *)(state + 0x38)) {
+                    state[0x16] = 0;
+                }
+            }
+        }
+    } else if ((flags & 0x08) != 0) {
+        state[0x16] = 1;
+        *(s16 *)(state + 0x3A) = *(s16 *)(state + 0x38) - 1;
+    }
+}
+
 void fn_800059B0(void) {
 
 }

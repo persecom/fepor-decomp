@@ -4009,6 +4009,117 @@ void fn_80193540(void* unit) {
     // Implementation to be written
 }
 
+void fn_80193668(void *arg0) {
+    void *fn_800C42D8(s32);
+    void fn_800C96F8(void *, char *, u32);
+    void fn_801400F4(void *, void *);
+    void *fn_8013FF94(void *, s32, s32);
+    void fn_801658DC(u32, s32);
+    s32 fn_80019E04(void *);
+    void fn_80015320(s32, void *);
+    s8 fn_80091DE0(void *, s32);
+    s32 fn_800C39A4(void *, s32);
+    extern u8 lbl_8028FDB0[];
+    extern u8 lbl_80292230[];
+    extern u8 lbl_80293C84[];
+    extern u8 lbl_80279DF0[];
+    extern u8 lbl_80293C58[];
+    extern u8 lbl_802B14E4[];
+    extern u8 lbl_803200AC[];
+    extern f32 lbl_8036AE20;
+    extern f32 lbl_8036AE30;
+    u8 sp8[8];
+    void *unit;
+    s32 i;
+    s32 temp;
+    u8 found;
+    void *obj;
+    void *self;
+
+    self = arg0;
+    obj = fn_800C42D8(0x5C);
+    if (obj != (s32)NULL) {
+        *(void **)obj = lbl_8028FDB0;
+        *(s32 *)((u8 *)obj + 4) = 0;
+        *(void **)obj = lbl_80292230;
+        *(s16 *)((u8 *)obj + 8) = -1;
+        *(s16 *)((u8 *)obj + 0xA) = 0;
+        *(s16 *)((u8 *)obj + 0xC) = 0x190;
+        *(s16 *)((u8 *)obj + 0xE) = 0x260;
+        *(s16 *)((u8 *)obj + 0x10) = 0x1C0;
+        *(s16 *)((u8 *)obj + 0x12) = 0;
+        *(s16 *)((u8 *)obj + 0x14) = 0;
+        *(s16 *)((u8 *)obj + 0x16) = 0x260;
+        *(s16 *)((u8 *)obj + 0x18) = 0x30;
+        *(s16 *)((u8 *)obj + 0x1A) = 0;
+        *(s16 *)((u8 *)obj + 0x1C) = 0;
+        *(u8 *)((u8 *)obj + 0x1E) = 0xFF;
+        *(u8 *)((u8 *)obj + 0x1F) = 0xFF;
+        *(u8 *)((u8 *)obj + 0x20) = 0xFF;
+        *(u8 *)((u8 *)obj + 0x21) = 0xFF;
+        *(s16 *)((u8 *)obj + 0x22) = 0x5A;
+        *(s16 *)((u8 *)obj + 0x24) = 0;
+        *(f32 *)((u8 *)obj + 0x28) = 1.0f;
+        *(f32 *)((u8 *)obj + 0x2C) = 1.0f;
+        *(f32 *)((u8 *)obj + 0x30) = 1.0f;
+        *(s32 *)((u8 *)obj + 0x34) = 0;
+        *(s32 *)((u8 *)obj + 0x38) = 0;
+        *(void **)obj = lbl_80293C84;
+        *(s32 *)((u8 *)obj + 0x3C) = 0;
+        *(s32 *)((u8 *)obj + 0x40) = 0;
+        *(s32 *)((u8 *)obj + 0x44) = 0;
+        *(s32 *)((u8 *)obj + 0x40) = 0;
+        *(s32 *)((u8 *)obj + 0x48) = 0;
+        *(u8 *)((u8 *)obj + 0x4C) = 1;
+        *(s16 *)((u8 *)obj + 0x4E) = 0;
+        *(s16 *)((u8 *)obj + 0x50) = 0;
+        *(s16 *)((u8 *)obj + 0x52) = 0;
+        *(s16 *)((u8 *)obj + 0x54) = 0;
+        *(void **)obj = lbl_80293C58;
+        *(s32 *)((u8 *)obj + 0x58) = 1;
+        *(s16 *)((u8 *)obj + 0x4E) = 0x30;
+        *(s16 *)((u8 *)obj + 0x52) = 0x30;
+    }
+    *(s16 *)((u8 *)obj + 8) = -0x1000;
+    *(s32 *)((u8 *)obj + 0x48) = 1;
+    fn_800C96F8((u8 *)obj + 0x3C, (char *)(lbl_80279DF0 + 0x50F), strlen((char *)((u8 *)lbl_80279DF0 + 0x50F)));
+    *(s32 *)((u8 *)obj + 0x34) |= 0x10;
+    *(s32 *)((u8 *)obj + 0x58) = 1;
+    fn_801400F4(self, obj);
+    temp = *(s32 *)((u8 *)*(void **)((u8 *)self + 0x68) + 0x50);
+    obj = fn_8013FF94(self, -0x1000, 0);
+    if (obj != NULL) {
+        fn_801658DC((u32)obj, temp);
+    }
+    found = 0;
+    *(f32 *)((u8 *)self + 0x64) = lbl_8036AE20;
+    temp = fn_80019E04(lbl_80279DF0 + 0x510);
+    fn_80015320(4, sp8);
+    i = 1;
+    do {
+        if ((u8)i != 0) {
+            unit = lbl_802B14E4 + ((u8)i - 1) * 0x280;
+        } else {
+            unit = NULL;
+        }
+        if (*(u32 *)((u8 *)unit + 0x188) != 0 &&
+            sp8[*(u8 *)(*(u8 **)((u8 *)unit + 0x190) + 8)] != 0 &&
+            (s8)fn_80091DE0(unit, temp) >= 0) {
+            found = 1;
+            break;
+        }
+        i += 1;
+    } while (i <= 0x9F);
+    if (found == 0) {
+        if (fn_800C39A4(lbl_803200AC, temp) >= 0) {
+            found = 1;
+        }
+    }
+    if (found != 0) {
+        *(f32 *)((u8 *)self + 0x64) *= lbl_8036AE30;
+    }
+}
+
 #pragma cplusplus on
 extern "C" void *fn_801938F8(void *arg0) {
     struct Obj {

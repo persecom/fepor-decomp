@@ -899,22 +899,21 @@ void fn_800AB75C(void *arg0) {
     extern u8 lbl_80312ACC[];
 
     u8 sp8[8];
-    u8 *entry;
     u8 *var_r3;
+    u8 *var_r7;
+    u8 *var_r8;
     void *self;
     u8 temp_x;
+    s8 y;
     s32 i;
     s32 j;
-    s32 y;
 
     self = arg0;
     *(u8 *)((u8 *)self + 0x43) = 1;
-    entry = lbl_80312ACC + ((s8)*(u8 *)((u8 *)self + 0x3C) << 7)
-                          + ((s8)*(u8 *)((u8 *)self + 0x3D) << 4);
-    ((Entry9Bits *)(entry + 9))->flag = 0;
-    entry = lbl_80312ACC + ((s8)*(u8 *)((u8 *)self + 0x3E) << 7)
-                          + ((s8)*(u8 *)((u8 *)self + 0x3F) << 4);
-    ((Entry9Bits *)(entry + 9))->flag = 0;
+    ((Entry9Bits *)(lbl_80312ACC + ((s8)*(u8 *)((u8 *)self + 0x3C) << 7)
+                                  + ((s8)*(u8 *)((u8 *)self + 0x3D) << 4) + 9))->flag = 0;
+    ((Entry9Bits *)(lbl_80312ACC + ((s8)*(u8 *)((u8 *)self + 0x3E) << 7)
+                                  + ((s8)*(u8 *)((u8 *)self + 0x3F) << 4) + 9))->flag = 0;
     fn_8001C76C(sp8);
     fn_8001C4FC(sp8, lbl_80312ACC + ((s8)*(u8 *)((u8 *)self + 0x3C) << 7)
                                  + ((s8)*(u8 *)((u8 *)self + 0x3D) << 4) + 4);
@@ -925,18 +924,18 @@ void fn_800AB75C(void *arg0) {
     fn_8001C4FC(lbl_80312ACC + ((s8)*(u8 *)((u8 *)self + 0x3E) << 7)
                            + ((s8)*(u8 *)((u8 *)self + 0x3F) << 4) + 4, sp8);
     fn_800ABA3C(self);
-    for (i = 0; i < 2; i++) {
-        for (j = 0; j < 8; j++) {
-            entry = lbl_80312ACC + (i << 7) + (j << 4);
+    var_r8 = lbl_80312ACC;
+    for (i = 0; i < 2; i++, var_r8 += 0x80) {
+        for (var_r7 = var_r8, j = 0; j < 8; j++, var_r7 += 0x10) {
             if (j < 4 && *(u8 *)((u8 *)self + 0x44) != 0) {
-                *(u8 *)(entry + 0xC) = 0;
+                *(u8 *)(var_r7 + 0xC) = 0;
             } else {
-                *(u8 *)(entry + 0xC) = (*(s32 *)(entry + 4) != 0);
+                *(u8 *)(var_r7 + 0xC) = (*(s32 *)(var_r7 + 4) != 0);
             }
         }
     }
     temp_x = *(u8 *)((u8 *)self + 0x3E);
-    y = (s8)*(u8 *)((u8 *)self + 0x3F);
+    y = *(u8 *)((u8 *)self + 0x3F);
     var_r3 = lbl_80312ACC + ((s8)*(u8 *)((u8 *)self + 0x3E) << 7) + (y << 4);
     if (y >= 0) {
         while (1) {

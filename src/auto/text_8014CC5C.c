@@ -92,6 +92,7 @@ extern u8 lbl_8032BB58[];
 #include "global.h"
 extern u8 lbl_80330708[];
 
+#pragma opt_strength_reduction off
 s8 fn_8014CC5C(Obj *arg0, s32 arg1) {
     s32 fn_80106DC8(s32, void *);
     u8 sp8[0x80];
@@ -100,7 +101,8 @@ s8 fn_8014CC5C(Obj *arg0, s32 arg1) {
     s32 temp_r6;
     s32 var_r5;
     s32 temp_r3;
-    s32 ctr;
+    register s32 ctr1;
+    register s32 ctr2;
     u8 b;
     u8 a;
 
@@ -109,68 +111,68 @@ s8 fn_8014CC5C(Obj *arg0, s32 arg1) {
     if (temp_r3 > 0) {
         temp_r6 = temp_r3 - 8;
         if (temp_r3 > 8) {
-            ctr = (u32)(temp_r6 + 7) >> 3;
+            ctr1 = (u32)(temp_r6 + 7) >> 3;
             var_r4 = sp8;
             if (temp_r6 > 0) {
                 do {
                     b = var_r4[1];
                     a = var_r4[0];
-                    arg0->entries[(s8)arg0->count].a = a;
-                    arg0->entries[(s8)arg0->count].b = b;
-                    ((u8 *)arg0)[0x544] = ((u8 *)arg0)[0x544] + 1;
+                    arg0->entries[(s8)((u8 *)arg0)[0x544]].a = a;
+                    arg0->entries[(s8)((u8 *)arg0)[0x544]].b = b;
+                    ((u8 *)arg0)[0x544]++;
                     b = var_r4[3];
                     a = var_r4[2];
-                    arg0->entries[(s8)arg0->count].a = a;
-                    arg0->entries[(s8)arg0->count].b = b;
-                    ((u8 *)arg0)[0x544] = ((u8 *)arg0)[0x544] + 1;
+                    arg0->entries[(s8)((u8 *)arg0)[0x544]].a = a;
+                    arg0->entries[(s8)((u8 *)arg0)[0x544]].b = b;
+                    ((u8 *)arg0)[0x544]++;
                     b = var_r4[5];
                     a = var_r4[4];
-                    arg0->entries[(s8)arg0->count].a = a;
-                    arg0->entries[(s8)arg0->count].b = b;
-                    ((u8 *)arg0)[0x544] = ((u8 *)arg0)[0x544] + 1;
+                    arg0->entries[(s8)((u8 *)arg0)[0x544]].a = a;
+                    arg0->entries[(s8)((u8 *)arg0)[0x544]].b = b;
+                    ((u8 *)arg0)[0x544]++;
                     b = var_r4[7];
                     a = var_r4[6];
-                    arg0->entries[(s8)arg0->count].a = a;
-                    arg0->entries[(s8)arg0->count].b = b;
-                    ((u8 *)arg0)[0x544] = ((u8 *)arg0)[0x544] + 1;
+                    arg0->entries[(s8)((u8 *)arg0)[0x544]].a = a;
+                    arg0->entries[(s8)((u8 *)arg0)[0x544]].b = b;
+                    ((u8 *)arg0)[0x544]++;
                     b = var_r4[9];
                     a = var_r4[8];
-                    arg0->entries[(s8)arg0->count].a = a;
-                    arg0->entries[(s8)arg0->count].b = b;
-                    ((u8 *)arg0)[0x544] = ((u8 *)arg0)[0x544] + 1;
+                    arg0->entries[(s8)((u8 *)arg0)[0x544]].a = a;
+                    arg0->entries[(s8)((u8 *)arg0)[0x544]].b = b;
+                    ((u8 *)arg0)[0x544]++;
                     b = var_r4[11];
                     a = var_r4[10];
-                    arg0->entries[(s8)arg0->count].a = a;
-                    arg0->entries[(s8)arg0->count].b = b;
-                    ((u8 *)arg0)[0x544] = ((u8 *)arg0)[0x544] + 1;
+                    arg0->entries[(s8)((u8 *)arg0)[0x544]].a = a;
+                    arg0->entries[(s8)((u8 *)arg0)[0x544]].b = b;
+                    ((u8 *)arg0)[0x544]++;
                     b = var_r4[13];
                     a = var_r4[12];
-                    arg0->entries[(s8)arg0->count].a = a;
-                    arg0->entries[(s8)arg0->count].b = b;
+                    arg0->entries[(s8)((u8 *)arg0)[0x544]].a = a;
+                    arg0->entries[(s8)((u8 *)arg0)[0x544]].b = b;
                     var_r5 += 8;
-                    ((u8 *)arg0)[0x544] = ((u8 *)arg0)[0x544] + 1;
+                    ((u8 *)arg0)[0x544]++;
                     b = var_r4[15];
                     a = var_r4[14];
                     var_r4 += 0x10;
-                    arg0->entries[(s8)arg0->count].a = a;
-                    arg0->entries[(s8)arg0->count].b = b;
-                    ((u8 *)arg0)[0x544] = ((u8 *)arg0)[0x544] + 1;
-                } while (--ctr);
+                    arg0->entries[(s8)((u8 *)arg0)[0x544]].a = a;
+                    arg0->entries[(s8)((u8 *)arg0)[0x544]].b = b;
+                    ((u8 *)arg0)[0x544]++;
+                } while (--ctr1 != 0);
             }
         }
-        var_r6 = sp8 + var_r5 * 2;
-        ctr = temp_r3 - var_r5;
+        var_r6 = &sp8[var_r5 * 2];
+        ctr2 = temp_r3 - var_r5;
         if (var_r5 < temp_r3) {
             do {
                 b = var_r6[1];
                 a = var_r6[0];
                 var_r6 += 2;
-                arg0->entries[(s8)arg0->count].a = a;
-                arg0->entries[(s8)arg0->count].b = b;
-                ((u8 *)arg0)[0x544] = ((u8 *)arg0)[0x544] + 1;
-            } while (--ctr);
+                arg0->entries[(s8)((u8 *)arg0)[0x544]].a = a;
+                arg0->entries[(s8)((u8 *)arg0)[0x544]].b = b;
+                ((u8 *)arg0)[0x544]++;
+            } while (--ctr2 != 0);
         }
     }
     return temp_r3;
 }
-
+#pragma opt_strength_reduction reset
