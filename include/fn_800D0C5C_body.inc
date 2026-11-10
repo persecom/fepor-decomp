@@ -114,7 +114,7 @@
     u8 strZ[12];
     s32 sc0, sc1, sc2, sc3, sc4, sc5, sc6, sc7, sc8, sc9;
     s32 scA, scB, scC, scD, scE, scF, scG, scH, scI, scJ;
-    s32 scK, scL, scM, scN, scO, scW, scX, scY, scZ;
+    s32 scK, scL, scM, scN, scO, scW, scX, scY, scZ, scPad;
     H *obj;
     f32 f1;
     s32 sub;
