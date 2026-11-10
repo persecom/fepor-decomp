@@ -261,6 +261,17 @@ void fn_8022695C(void *arg0, s32 arg1) {
     }
 }
 
+void *TRKGetBuffer(s32 arg0) {
+    extern u8 lbl_8033B078[];
+    void *ret;
+
+    ret = NULL;
+    if (arg0 >= 0 && arg0 < 3) {
+        ret = lbl_8033B078 + arg0 * 0x890;
+    }
+    return ret;
+}
+
 s32 fn_80226A2C(void) {
     return 0;
 }
@@ -1099,6 +1110,28 @@ s32 gdev_cc_initinterrupts(void) {
     M2C_UNK fn_8026738C();
     fn_8026738C();
     return 0;
+}
+
+s32 gdev_cc_peek(void) {
+    s32 fn_802672F0(void);
+    s32 fn_80267264(void *, s32);
+    void fn_8022BB3C(void *, void *, s32);
+    extern u8 lbl_8033DD08[];
+    u8 sp8[0x500];
+    s32 size;
+    s32 result;
+
+    size = fn_802672F0();
+    if (size <= 0) {
+        return 0;
+    }
+    if (fn_80267264(sp8, size) == 0) {
+        fn_8022BB3C(lbl_8033DD08, sp8, size);
+        result = size;
+    } else {
+        result = -0x2719;
+    }
+    return result;
 }
 
 s32 gdev_cc_post_stop(void) {
