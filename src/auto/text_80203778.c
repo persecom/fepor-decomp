@@ -858,8 +858,6 @@ extern s16 __OSLastInterrupt;
 extern u32 __OSLastInterruptSrr0;
 extern s64 __OSLastInterruptTime;
 extern s64 OSGetTime(void);
-extern u32 PPCMffpscr(void);
-extern void PPCMtfpscr(u32);
 extern void OSDisableScheduler(void);
 extern void OSEnableScheduler(void);
 extern void __OSReschedule(void);
