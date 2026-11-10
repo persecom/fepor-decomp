@@ -847,7 +847,7 @@ s32 fn_8024800C(u8 key, u8 group, u8 channel, s32 arg3, s32 *status) {
      result=fn_80255E9C((u8*)lbl_803689A8+offset,arg3);
      previous=*(s32*)(voice+0xF4);
     } else {
-     *(s32*)((u8*)lbl_803689A8+((u8)previous*0x458+0xEC))=*(s32*)(voice+0xF4);
+     ((SynthStateLink*)lbl_803689A8)[(u8)previous].next=*(s32*)(voice+0xF4);
      *(s32*)(voice+0xF0)=previous;
      previous=*(s32*)(voice+0xF4);
      fn_80255E9C((u8*)lbl_803689A8+offset,0);
