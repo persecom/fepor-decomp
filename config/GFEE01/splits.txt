@@ -72,7 +72,10 @@ auto/text_800330F8.c:
 	.text       start:0x800330F8 end:0x800548E8
 
 auto/text_800548E8.c:
-	.text       start:0x800548E8 end:0x80055B64
+	.text       start:0x800548E8 end:0x80054C14
+
+auto/text_80054C14.c:
+	.text       start:0x80054C14 end:0x80055B64
 
 auto/text_80055B64.c:
 	.text       start:0x80055B64 end:0x80055C70
