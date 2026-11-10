@@ -3609,6 +3609,22 @@ void *fn_80177578(void) {
     return (u8 *)lbl_80278080 + 0x4c3;
 }
 
+s32 fn_80177588(s32 arg0, s32 arg1) {
+    void *fn_8000C0C0(void *);
+    void fn_8000C070(void *, s32);
+    void fn_8000C5B8(s32);
+    extern u16 lbl_80294604[];
+    extern u32 lbl_802EF4C8[];
+    void *temp;
+
+    temp = fn_8000C0C0(lbl_80294604);
+    *(s32 *)((u8 *)temp + 0x60) = arg1;
+    *((u8 *)lbl_802EF4C8 + 8) = 0x88;
+    fn_8000C070(temp, 0x2D);
+    fn_8000C5B8(*(s32 *)((u8 *)temp + 0x5C));
+    return 4;
+}
+
 void fn_801775F0(void) {
     extern u16 lbl_80278080[];
     fn_8000E0E4((u8 *)lbl_80278080 + 0x4cd);
