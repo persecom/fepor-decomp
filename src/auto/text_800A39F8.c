@@ -1354,15 +1354,13 @@ u8 *fn_800A88E0(void *arg0) {
 }
 
 void *fn_800A893C(void *arg0) {
-    void *result;
+    void *fn_8000E0E4(void *);
+    u32 field = *(u32 *)((u8 *)arg0 + 0x8);
 
-    if (arg0 == NULL) {
-        result = &lbl_8026E408[0x5F];
-    } else {
-        result = (void *)fn_8000E0E4();
+    if (field == 0) {
+        return (void *)((u8 *)lbl_8026E408 + 0x5f);
     }
-    
-    return result;
+    return fn_8000E0E4((void *)field);
 }
 
 s32 fn_800A8978(void *arg0) {
