@@ -5114,6 +5114,12 @@ void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     s32 h;
     s32 t;
     s32 pad;
+    s32 x;
+    u16 *tex;
+    void *str;
+    void *obj;
+    s32 id;
+    s32 width2;
 
     memset(w, 0, sizeof(MsgBox));
     w->state = 0;
@@ -5161,8 +5167,8 @@ void fn_801DDBA8(MsgBox *w, s32 arg1, u8 arg2, u8 arg3, s16 arg4) {
     h = w->numLines * 20;
     h = h + t;
     pad = (w->flags & 4) ? 40 : 0;
-    h = h + pad;
-    w->height = (h - pad) + pad + 32;
+    x = h + pad;
+    w->height = x + 32;
     if (w->type == 1 || w->type == 2) {
         w->height += 0x88;
     }
