@@ -82,6 +82,13 @@ void fn_801FCC68(s32 arg0) {
     }
 }
 
+void fn_801FDA08(void *arg0) {
+    extern u8 lbl_80368418;
+
+    fn_8006EDA0(&lbl_80368418);
+    fn_800C426C(*(void **)((u8 *)arg0 + 0x30));
+}
+
 extern s32 lbl_803679F0;
 void fn_801FDA40(void) {
     void fn_8006EEFC(void *, void *);
