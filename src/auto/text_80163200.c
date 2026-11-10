@@ -4869,6 +4869,79 @@ u32 fn_8017D6D8(void *arg0) {
     return var_r3;
 }
 
+#pragma cplusplus on
+extern "C" void fn_8017D9D8(void *arg0, s32 arg1, s32 arg2, f32 farg0, f32 farg1, f32 farg2) {
+    void fn_80007538(void);
+    void fn_80007588(void);
+    void fn_800075D8(void);
+    void fn_80007668(s32 *);
+    void fn_800077B0(f32, f32, f32, f32);
+    void fn_800077D8(f32, f32, f32, f32);
+    void fn_80007870(f32);
+    void fn_80007884(void);
+    void fn_80007898(s32);
+    void fn_80009C0C(f32);
+    void fn_80009F90(s32, s32, u16);
+    void fn_8000A248(void);
+    void fn_8000A258(void);
+    extern f32 lbl_8036AC08;
+    struct Obj {
+        virtual void m08() = 0;
+        virtual void m0C() = 0;
+        virtual void m10() = 0;
+        virtual s32 m14() = 0;
+        virtual s16 m18() = 0;
+        virtual s16 m1C() = 0;
+        virtual s16 m20() = 0;
+        virtual s16 m24() = 0;
+    };
+    Obj *obj;
+    s32 sp8;
+    f32 temp_f31;
+    f32 temp_f30;
+    f32 temp_f29;
+    f32 temp_f28;
+    s32 temp_r0;
+
+    obj = (Obj *)arg0;
+    fn_8000A258();
+    fn_80009F90(*(s32 *)((u8 *)arg0 + 4), obj->m14(), (u16)(arg1 | 1));
+    fn_80009C0C(*(f32 *)((u8 *)arg0 + 0x24));
+    fn_8000A248();
+    temp_f31 = (f32)obj->m20();
+    temp_f30 = (f32)obj->m24();
+    temp_f29 = (f32)obj->m18();
+    temp_f28 = (f32)obj->m1C();
+    fn_80007898(2);
+    fn_80007870(farg2);
+    fn_800077D8(farg0, farg1, temp_f31, temp_f30);
+    fn_800077B0((f32)arg2 * temp_f29, lbl_8036AC08, temp_f29, temp_f28);
+    fn_800075D8();
+    sp8 = *(s32 *)((u8 *)arg0 + 0x20);
+    fn_80007668(&sp8);
+    temp_r0 = *(s32 *)((u8 *)arg0 + 8);
+    switch (temp_r0) {
+    case 3:
+        fn_80007588();
+        break;
+    case 1:
+        fn_80007538();
+        fn_80007538();
+        break;
+    case 2:
+        fn_80007538();
+        break;
+    case 0:
+        break;
+    }
+    fn_80007884();
+    temp_f31 = -*(f32 *)((u8 *)arg0 + 0x24);
+    fn_8000A258();
+    fn_80009C0C(temp_f31);
+    fn_8000A248();
+}
+#pragma cplusplus reset
+
 void fn_8017DEE8(void *arg0) {
     void *x = *(void **)((u8 *)arg0 + 4);
     if (x != NULL) {
