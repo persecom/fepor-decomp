@@ -985,6 +985,19 @@ void fn_80126184(void) {
     fn_8000BF00(&lbl_80290480);
 }
 
+void fn_801261AC(s32 arg0) {
+    s32 fn_8000C0C0(void *);
+    M2C_UNK fn_8014C718(void *, s32);
+    M2C_UNK fn_8019DB28();
+    M2C_UNK fn_80234450(s32, s32);
+    extern u8 lbl_80290480[16];
+    extern u8 lbl_80330708[1400];
+
+    fn_8019DB28();
+    fn_80234450(arg0 + 0x30, fn_8000C0C0(lbl_80290480) + 0x30);
+    fn_8014C718(lbl_80330708, arg0);
+}
+
 void fn_80126204(u16 *arg0) {
     *arg0 &= 0xEDFF;
 }
