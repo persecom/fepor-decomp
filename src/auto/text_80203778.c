@@ -1140,7 +1140,7 @@ hw:
 set0:
     lbl_80366F48 = 0;
 after:
-    lbl_803684C0 = fn_80207768;
+    lbl_803684C0 = (void (*)(void))fn_80207768;
     return lbl_80366F48;
 }
 
