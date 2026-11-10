@@ -712,36 +712,39 @@ void fn_8024AD04(u8 arg0, u8 arg1) {
     ptr[0x2D] = arg1;
 }
 
-s32 fn_8024AD2C(s32 arg0, u8 arg1) {
-    s32 temp_r31;
-    s32 var_r30;
-    s32 r3;
+s32 fn_8024AD2C(s32 arg0, s32 arg1) {
+    s32 offset;
+    s32 ret;
+    u8 *base;
 
-    var_r30 = 0;
-    switch (arg0) {                                 /* irregular */
+    ret = 0;
+    switch (arg0) {
     case 0:
-        temp_r31 = arg1 * 0x458;
-        if ((u8) (*(u8**)(lbl_803689A8 + temp_r31 + 0x11C)) == 0) {
-            fn_80262510(arg1);
+        offset = (u8)arg1 * 0x458;
+        base = (u8 *)lbl_803689A8;
+        base += offset;
+        if (base[0x11c] == 0) {
+            fn_80262510((u8)arg1);
             fn_80258488();
-            r3 = *(u32*)(lbl_803689A8 + temp_r31 + 0xF4);
-            if (arg1 == r3) {
+            base = (u8 *)lbl_803689A8;
+            base += offset;
+            if ((u32)arg1 == *(u32 *)&base[0xf4]) {
                 fn_80255054();
             }
         }
         break;
     case 1:
-        fn_80256FF0(arg1);
+        fn_80256FF0((u8)arg1);
         break;
     case 2:
-        var_r30 = fn_802581BC(arg1);
+        ret = fn_802581BC(arg1);
         break;
     case 3:
-        fn_80262510(arg1);
+        fn_80262510((u8)arg1);
         fn_80258488();
         break;
     }
-    return var_r30;
+    return ret;
 }
 
 u32 fn_8024B370(void) {
@@ -3380,28 +3383,28 @@ void fn_802609EC(struct unit* param_1)
         param_1->unk_0xC = param_1->unk_0xC & 0xFFFF7FFF;
 }
 
-s32 fn_80260EA8(u8 arg0) {
-    switch (arg0) {
-    case 0:
-        return 0;
-    case 1:
-        return 0x7;
-    case 2:
-        return 0x9;
-    case 3:
-        return 0x8;
-    case 4:
-        return 0x4;
-    case 5:
-        return 0x6;
-    case 6:
-        return 0x5;
-    case 7:
-        return 0x2;
-    case 8:
-        return 0x3;
+s32 fn_80260EA8(s32 arg0) {
+    switch ((u8)arg0) {
+    case 0x80:
+        return 0x80;
+    case 0x81:
+        return 0x82;
+    case 0x82:
+        return 0xA0;
+    case 0x83:
+        return 0xA1;
+    case 0x84:
+        return 0x83;
+    case 0x85:
+        return 0x84;
+    case 0x86:
+        return 0xA2;
+    case 0x87:
+        return 0xA3;
+    case 0x88:
+        return 0xA4;
     default:
-        return 0;
+        return arg0;
     }
 }
 
