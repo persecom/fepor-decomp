@@ -3,6 +3,8 @@
 #include <dolphin/os.h>
 #include "global.h"
 
+volatile u32 __PIRegs[64] : 0xCC006000;
+
 int OSReport(void *msg, ...);
 
 extern u32 lbl_803682F0;
@@ -346,7 +348,10 @@ s32 __OSPSInit(void) {
 }
 
 u8 fn_80204410(void) {
-    return (u8) M2C_FIELD((void *)0xCC006000, s32 *, 0x24);
+    volatile u32 *pi;
+
+    pi = (volatile u32 *)0xCC006000;
+    return (u8)pi[0x24 / 4];
 }
 
 void OSRegisterVersion(s32 arg0) {
