@@ -175,13 +175,16 @@ extern s32 lbl_80368588;
 #define stringOff(i) (FstStart_8036857C[i].isDirAndStringOff & ~0xFF000000)
 #define parentDir(i) (FstStart_8036857C[i].parentOrPosition)
 
-static inline BOOL DVDComparePathComponent(char *name, char *path) {
+static inline BOOL DVDComparePathComponent(char *nameArg, char *pathArg) {
     s32 fn_80230CE0(s32);
+    char *path = pathArg;
+    char *name = nameArg;
     while (*name) {
         s32 first = fn_80230CE0(*name++);
-        if (fn_80230CE0(*path++) != first) return FALSE;
+        if (first != fn_80230CE0(*path++)) return FALSE;
     }
-    return (*path == '/' || *path == 0) ? TRUE : FALSE;
+    if (*path == '/' || *path == 0) return TRUE;
+    return FALSE;
 }
 
 static u32 myStrncpy(char *dest, char *src, u32 maxlen) {
@@ -219,7 +222,7 @@ void fn_8020602C(void*,s32,char*,...);
 s32 fn_80230CE0(s32);
 char *original=path; u32 entry=lbl_80368588;
 char *end,*extension,*name,*component;
-s32 dotted,invalid,more,length,equal,first;
+s32 invalid,dotted,more,length,equal,first;
 u32 parent;
 for(;;){
 if(*path==0) return entry;
@@ -245,17 +248,11 @@ end++;
 if(dotted==1 && end-extension>3)invalid=1;
 if(invalid)fn_8020602C(&lbl_80366F60,0x183,lbl_8029CEE8,original);
 }else {for(end=path;*end && *end!='/';end++);}
-more=*end ? 1:0;
+if(*end==0) more=0; else more=1;
 parent=entry; length=end-path;
 for(entry++;entry<FstStart_8036857C[parent].nextEntryOrLength;){
 if(entryIsDir(entry) || more!=1){
-name=FstStringStart_80368580+stringOff(entry); component=path;
-while(*name){
-first=fn_80230CE0(*name++);
-if(fn_80230CE0(*component++)!=first){equal=0;goto compared;}
-}
-equal=(*component=='/' || *component==0)?1:0;
-compared:
+equal=DVDComparePathComponent(FstStringStart_80368580+stringOff(entry),path);
 if(equal==1)goto found;
 }
 entry=entryIsDir(entry)?FstStart_8036857C[entry].nextEntryOrLength:entry+1;
@@ -263,7 +260,7 @@ entry=entryIsDir(entry)?FstStart_8036857C[entry].nextEntryOrLength:entry+1;
 return -1;
 found:
 if(!more)return entry;
-path=path+length+1;
+path+=length;path++;
 }
 }
 
