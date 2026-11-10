@@ -7072,7 +7072,7 @@ void fn_800FF178(void) {
     void **fn_80037BBC(void *, s32);
     s32 fn_8001D500(void **);
     s32 fn_8001DD54(void *, void *);
-    s32 fn_8009339C(void *);
+    s32 fn_8009339C(void *, void *);
     void fn_800951D0(void *, s32);
     void *unit;
     s8 best;
@@ -7117,7 +7117,7 @@ L_one:
             if (*item == NULL) {
                 break;
             }
-            if ((u8)fn_8009339C(unit) != 0) {
+            if ((u8)fn_8009339C(unit, *item) != 0) {
                 obj = *item;
                 if (obj != NULL) {
                     v = *(u8 *)((u8 *)obj + 0x1D);
