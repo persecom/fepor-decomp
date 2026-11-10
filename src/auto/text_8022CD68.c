@@ -1,6 +1,25 @@
 /* Functions from 0x8022CD68 to 0x80267A7C, found by decomp-toolkit. */
 #include "common.h"
 
+extern f32 lbl_80367068;
+extern f64 lbl_8036BE20;
+extern f64 lbl_8036BE28;
+extern f64 lbl_8036BE30;
+extern f64 lbl_8036BE38;
+extern f64 lbl_8036BE40;
+extern f64 lbl_8036BE48;
+extern f64 lbl_8036BE50;
+extern f64 lbl_8036BE58;
+extern f64 lbl_8036BE60;
+extern f64 lbl_8036BE68;
+extern f64 lbl_8036BE70;
+extern f64 lbl_8036BE78;
+extern f64 lbl_8036BE80;
+extern f64 lbl_8036BE88;
+extern f64 lbl_8036BE90;
+extern f64 lbl_8036BE98;
+extern f64 lbl_8036BEA0;
+
 extern s32 lbl_80366F28;
 extern char lbl_80282AE8[];
 extern char lbl_80282B20[];
@@ -592,6 +611,122 @@ s32 fn_802312B0(void *arg0) {
 extern s32 fn_802314D8(s32, s32, s32);
 s32 fseek(s32 arg0, s32 arg1, s32 arg2) {
     return fn_802314D8(arg0, arg1, arg2);
+}
+
+s32 fn_802314D8(s32 arg0, s32 arg1, s32 arg2) {
+    extern s32 lbl_803687F0;
+    s32 __flush_buffer(void *, s32 *);
+    typedef struct {
+        u8 pad[4];
+        u16 pre:7;
+        u16 mode:3;
+        u16 rest:6;
+    } S4;
+    typedef struct {
+        u8 pad[4];
+        u8 pre:2;
+        u8 modeB:3;
+        u8 rest:3;
+    } B4;
+    typedef struct {
+        u8 pad[8];
+        u8 mode:3;
+        u8 rest:5;
+    } B8;
+    S4 *s4 = (S4 *)arg0;
+    B4 *b4 = (B4 *)arg0;
+    B8 *b8 = (B8 *)arg0;
+    s32 offset;
+    s32 whence;
+    s32 adj;
+    s32 result;
+    u8 *p;
+    s32 n;
+    s32 i;
+    s32 (*seek_proc)(s32, s32 *, s32, s32);
+
+    whence = arg2;
+    offset = arg1;
+
+    if (s4->mode != 1 || M2C_FIELD(arg0, u8 *, 0xA) != 0) {
+        lbl_803687F0 = 0x28;
+        return -1;
+    }
+
+    if (b8->mode == 1) {
+        if (__flush_buffer((void *)arg0, 0) != 0) {
+            M2C_FIELD(arg0, u8 *, 0xA) = 1;
+            M2C_FIELD(arg0, s32 *, 0x28) = 0;
+            lbl_803687F0 = 0x28;
+            return -1;
+        }
+    }
+
+    if (whence == 1) {
+        whence = 0;
+        adj = 0;
+        if ((s4->mode != 1 && s4->mode != 2) || M2C_FIELD(arg0, u8 *, 0xA) != 0) {
+            result = -1;
+            lbl_803687F0 = 0x28;
+        } else {
+            if (b8->mode == 0) {
+                result = M2C_FIELD(arg0, s32 *, 0x18);
+            } else {
+                p = M2C_FIELD(arg0, u8 **, 0x1C);
+                n = M2C_FIELD(arg0, s32 *, 0x24) - (s32)p;
+                result = M2C_FIELD(arg0, s32 *, 0x34) + n;
+                if (b8->mode >= 3) {
+                    adj = b8->mode - 2;
+                    result -= adj;
+                }
+                if (!((*((u8 *)arg0 + 5) >> 3) & 1)) {
+                    i = n - adj;
+                    if (i != 0) {
+                        do {
+                            if (*p++ == '\n') {
+                                result++;
+                            }
+                        } while (--i != 0);
+                    }
+                }
+            }
+        }
+        offset += result;
+    }
+
+    if (whence != 2 && b4->modeB != 3) {
+        if (b8->mode == 2 || b8->mode == 3) {
+            if ((u32)offset < (u32)M2C_FIELD(arg0, s32 *, 0x18) ||
+                (u32)offset < (u32)M2C_FIELD(arg0, s32 *, 0x34)) {
+                b8->mode = 0;
+            } else {
+                M2C_FIELD(arg0, s32 *, 0x24) =
+                    M2C_FIELD(arg0, s32 *, 0x1C) + (offset - M2C_FIELD(arg0, s32 *, 0x34));
+                M2C_FIELD(arg0, s32 *, 0x28) = M2C_FIELD(arg0, s32 *, 0x18) - offset;
+                b8->mode = 2;
+            }
+        } else {
+            b8->mode = 0;
+        }
+    } else {
+        b8->mode = 0;
+    }
+
+    if (b8->mode == 0) {
+        seek_proc = (s32 (*)(s32, s32 *, s32, s32))M2C_FIELD(arg0, s32 *, 0x38);
+        if (seek_proc != NULL) {
+            if (seek_proc(M2C_FIELD(arg0, s32 *, 0), &offset, whence, M2C_FIELD(arg0, s32 *, 0x48)) != 0) {
+                M2C_FIELD(arg0, u8 *, 0xA) = 1;
+                M2C_FIELD(arg0, s32 *, 0x28) = 0;
+                lbl_803687F0 = 0x28;
+                return -1;
+            }
+        }
+        M2C_FIELD(arg0, u8 *, 0x9) = 0;
+        M2C_FIELD(arg0, s32 *, 0x18) = offset;
+        M2C_FIELD(arg0, s32 *, 0x28) = 0;
+    }
+    return 0;
 }
 
 void *__memrchr(void *arg0, int arg1, u32 arg2) {
@@ -1785,6 +1920,73 @@ f64 fn_80237C7C(s32 arg0, f64 farg0, f64 farg1) {
     return st[1] + a * (s + st[1] * v);
 }
 
+f64 fn_80237E90(f64 farg0) {
+    f64 sp8;
+    f64 z;
+    f64 w;
+    f64 s1;
+    f64 s2;
+    f64 a;
+    f64 *aT;
+    f64 *atanhi;
+    f64 *atanlo;
+    s32 hx;
+    s32 ix;
+    s32 id;
+
+    sp8 = farg0;
+    hx = ((s32 *)&sp8)[0];
+    ix = hx & 0x7FFFFFFF;
+    if (ix >= 0x44100000) {
+        if (ix > 0x7FF00000 || (ix == 0x7FF00000 && ((s32 *)&sp8)[1] != 0)) {
+            return sp8 + sp8;
+        }
+        if (hx > 0) {
+            return lbl_80282F40[3] + lbl_80282F40[3 + 4];
+        }
+        return -lbl_80282F40[3] - lbl_80282F40[3 + 4];
+    }
+    if (ix < 0x3FDC0000) {
+        if (ix < 0x3E200000 && (lbl_8036C108 + farg0) > lbl_8036C110) {
+            return farg0;
+        }
+        id = -1;
+    } else {
+        a = __fabs(farg0);
+        sp8 = a;
+        if (ix < 0x3FF30000) {
+            if (ix < 0x3FE60000) {
+                id = 0;
+                sp8 = ((lbl_8036C118 * a) - lbl_8036C110) / (lbl_8036C118 + a);
+            } else {
+                id = 1;
+                sp8 = (a - lbl_8036C110) / (lbl_8036C110 + a);
+            }
+        } else if (ix < 0x40038000) {
+            id = 2;
+            sp8 = (a - lbl_8036C120) / ((lbl_8036C120 * a) + lbl_8036C110);
+        } else {
+            id = 3;
+            sp8 = lbl_8036C128 / a;
+        }
+    }
+    aT = lbl_80282F40 + 8;
+    atanhi = lbl_80282F40;
+    atanlo = lbl_80282F40 + 4;
+    z = sp8 * sp8;
+    w = z * z;
+    s1 = z * (aT[0] + w * (aT[2] + w * (aT[4] + w * (aT[6] + w * (aT[8] + w * aT[10])))));
+    s2 = w * (aT[1] + w * (aT[3] + w * (aT[5] + w * (aT[7] + w * (aT[9] + w * aT[11])))));
+    if (id < 0) {
+        return sp8 - (sp8 * (s1 + s2));
+    }
+    z = atanhi[id] - ((sp8 * (s1 + s2) - atanlo[id]) - sp8);
+    if (hx < 0) {
+        z = -z;
+    }
+    return z;
+}
+
   f64 fn_80238710(f64 farg0) {
       f64 sp10[2];
       f64 sp8;
@@ -1814,6 +2016,167 @@ void fn_802387A8(void) {
 void fn_802387C8(void) {
     M2C_UNK fn_802360C4();
     fn_802360C4();
+}
+
+f64 fn_802387E8(f64 x) {
+    extern s32 lbl_803687F0;
+    extern f64 lbl_8036C188;
+    u32 r;
+    u32 s1;
+    u32 q1;
+    u32 q0;
+    u32 s0;
+    u32 t1;
+    u32 t;
+    u32 t2;
+    s32 m;
+    s32 ix0;
+    s32 pad;
+    s32 i;
+    u32 ix1;
+    f64 z;
+
+    ix0 = ((s32 *)&x)[0];
+    ix1 = ((u32 *)&x)[1];
+    pad = 0;
+
+    if ((u32)((ix0 & 0x7FF00000) + 0x80100000) == 0U) {
+        lbl_803687F0 = 0x21;
+        return x * x + x;
+    }
+    if (ix0 <= 0) {
+        if ((ix1 | (ix0 & 0x7FFFFFFF)) == 0) {
+            return x;
+        }
+        if (ix0 < 0) {
+            f32 *nanp = (f32 *)0x80367068;
+            lbl_803687F0 = 0x21;
+            return *nanp;
+        }
+    }
+
+    m = ix0 >> 20;
+    if (m == 0) {
+        goto denorm_check;
+    denorm_shift:
+        t = ix1 >> 11;
+        ix1 <<= 21;
+        ix0 |= (s32)t;
+        m -= 0x15;
+    denorm_check:
+        if (ix0 == 0) {
+            goto denorm_shift;
+        }
+        i = 0;
+        goto denorm_bit_check;
+    denorm_bit_shift:
+        ix0 <<= 1;
+        i += 1;
+    denorm_bit_check:
+        if ((ix0 & 0x100000) == 0) {
+            goto denorm_bit_shift;
+        }
+        t = ix1 >> (32 - i);
+        ix1 <<= i;
+        m -= i - 1;
+        ix0 |= (s32)t;
+    }
+
+    t = (u32)(m - 0x3FF);
+    r = (u32)(ix0 & 0xFFFFF) | 0x100000;
+    if (t & 1) {
+        t = ix1 >> 31;
+        ix1 += ix1;
+        t = t + r;
+        r = r + t;
+    }
+    t = ix1 >> 31;
+    ix1 += ix1;
+    t = t + r;
+    s1 = 0;
+    r = r + t;
+    s0 = 0;
+    q1 = 0;
+    q0 = 0;
+    t1 = 0x200000;
+    goto loop1_check;
+ loop1:
+    t = s0 + t1;
+    if ((s32)t <= (s32)r) {
+        s0 = t + t1;
+        r = r - t;
+        q0 = q0 + t1;
+    }
+    t = ix1 >> 31;
+    ix1 += ix1;
+    t = t + r;
+    t1 >>= 1;
+    r = r + t;
+ loop1_check:
+    if (t1 != 0) {
+        goto loop1;
+    }
+
+    t1 = 0x80000000;
+    goto loop2_check;
+ loop2:
+    t = s0;
+    t2 = s1 + t1;
+    if ((s32)s0 < (s32)r) {
+        goto loop2_take;
+    }
+    if (s0 != r) {
+        goto loop2_skip;
+    }
+    if (t2 > ix1) {
+        goto loop2_skip;
+    }
+ loop2_take:
+    s1 = t2 + t1;
+    if ((u32)((t2 & 0x80000000) + 0x80000000) == 0U && (s1 & 0x80000000) == 0) {
+        s0 = s0 + 1;
+    }
+    r = r - t;
+    if (ix1 < t2) {
+        r = r - 1;
+    }
+    ix1 = ix1 - t2;
+    q1 = q1 + t1;
+ loop2_skip:
+    t = ix1 >> 31;
+    ix1 += ix1;
+    t = t + r;
+    t1 >>= 1;
+    r = r + t;
+ loop2_check:
+    if (t1 != 0) {
+        goto loop2;
+    }
+
+    if ((r | ix1) != 0) {
+        z = lbl_8036C188;
+        z = lbl_8036C188;
+        if ((u32)(q1 + 0x10000) == 0xFFFFU) {
+            q1 = 0;
+            q0 = q0 + 1;
+        } else {
+            q1 = q1 + (q1 & 1);
+        }
+    }
+
+    {
+        s32 q0_odd = (s32)(q0 & 1);
+        s32 hi = (s32)(q0 >> 1);
+        u32 lo = q1 >> 1;
+        hi += 0x3FE00000;
+        if (q0_odd == 1) {
+            lo |= 0x80000000;
+        }
+        ((u32 *)&z)[1] = lo;
+        hi += ((m - 0x3FF) >> 1) << 20;
+        ((s32 *)&z)[0] = hi + pad;
+    }
+    return z;
 }
 
 f32 fn_80238A0C(void) {
