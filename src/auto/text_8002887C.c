@@ -1307,6 +1307,17 @@ void fn_8002F728(void *arg0) {
     *(s8*)((char*)arg0 + 0x8) = -1;
 }
 
+#pragma dont_inline on
+u32 fn_8002F740(u32 arg0) {
+    extern u8 lbl_802B14E4[101760];
+    u8 id = ((u8 *)arg0)[2];
+    if (id != 0) {
+        return (u32)&lbl_802B14E4[(id - 1) * 0x280];
+    }
+    return 0;
+}
+#pragma dont_inline reset
+
 void fn_8002F76C(void) {
 
 }
