@@ -342,7 +342,9 @@ void fn_8020D4E0(u32 arg0) {
 }
 
 void fn_8020D5BC(void) {
-    DVDLowStopMotor();
+    void DVDLowStopMotor(void (*)(void));
+    extern void fn_8020D5E4(void);
+    DVDLowStopMotor(fn_8020D5E4);
 }
 
 void fn_8020D724(void) {
