@@ -568,12 +568,11 @@ void fn_80245290(u32 arg0, s32 arg1, s32 arg2) {
 }
 
 void *fn_80246070(u8 arg0) {
-    StreamSeqChan *chanSeq = &((StreamState *) lbl_80368968)->seqChans[arg0];
-    StreamChannel *chan = &((StreamState *) lbl_80368968)->channels[arg0];
-    u8 *voices;
+    StreamSeqChan *chanSeq = &lbl_80368968->seqChans[arg0];
+    StreamChannel *chan = &lbl_80368968->channels[arg0];
+    u8 *voiceState;
     StreamMsg *msg;
     u32 temp_r3;
-    u8 temp_r7;
     u8 *p;
     u32 temp_r9;
     u32 temp_r10;
@@ -581,7 +580,7 @@ void *fn_80246070(u8 arg0) {
     u16 ev;
 
     if (chanSeq->unk4 != NULL) {
-        msg = &((StreamState *) lbl_80368968)->msgs[arg0];
+        msg = &lbl_80368968->msgs[arg0];
         msg->unk15 = arg0;
         msg->unk10 = chan;
         if (chan->unk8 != NULL) {
@@ -594,21 +593,19 @@ seq:
             return NULL;
         }
         if (ev == 0xFFFE) {
-            voices = ((StreamState *) lbl_80368968)->voices;
-            if (voices != NULL) {
-                goto voices_chk;
+            if (lbl_80368968->voices == NULL) {
+                if (lbl_80368968->unk153E != 0) {
+                    chanSeq->unk4 = NULL;
+                    return NULL;
+                }
+            } else {
+                voiceState = (u8 *) lbl_80368968;
+                voiceState += lbl_80368968->voices[arg0] * 0x38;
+                if (*(u8 *) (voiceState + 0x153E) != 0) {
+                    chanSeq->unk4 = NULL;
+                    return NULL;
+                }
             }
-            if (((StreamState *) lbl_80368968)->unk153E != 0) {
-                chanSeq->unk4 = NULL;
-                return NULL;
-            }
-            goto voice_done;
-voices_chk:
-            if (((StreamState *) ((u8 *) lbl_80368968 + voices[arg0] * 0x38))->unk153E != 0) {
-                chanSeq->unk4 = NULL;
-                return NULL;
-            }
-voice_done:
             msg->unk14 = 3;
             msg->unk8 = chanSeq->unk4->unk0;
             chanSeq->unk4 = (StreamSeqEvent *) (chanSeq->unk0 + chanSeq->unk4->unkA * 0xC);
@@ -638,11 +635,10 @@ stream:
             msg->unkC = p;
             chan->unk0 = temp_r9;
             temp_r3 = (u32) chan->unk8;
-            temp_r7 = ((u8 *) temp_r3)[2];
-            if (temp_r7 & 0x80) {
+            if (((u8 *) temp_r3)[2] & 0x80) {
                 chan->unk8 = (u8 *) temp_r3 + 4;
             } else {
-                if ((temp_r7 | ((u8 *) temp_r3)[3]) == 0) {
+                if ((((u8 *) temp_r3)[2] | ((u8 *) temp_r3)[3]) == 0) {
                     chan->unk8 = (u8 *) temp_r3 + 4;
                     continue;
                 }
@@ -4462,8 +4458,8 @@ start:
     enabled = OSDisableInterrupts();
     if (q->count < 0x10) {
         next = q->next;
-        flag = arg3 ? 1 : 0;
         q->slots[next].code = 0x2A;
+        flag = arg3 ? 1 : 0;
         q->slots[q->next].unk08 = 0;
         q->slots[q->next].flag = flag;
         q->slots[q->next].a0 = arg0;
