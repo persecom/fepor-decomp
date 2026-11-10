@@ -476,9 +476,9 @@ s8 fn_801E8920(void *arg0, u8 arg1) {
         }
         return (s8)(count - 1);
     }
-    return *(s8 *)data;
+          return *(s8 *)data;
 }
-#pragma cplusplus reset
+
 s32 fn_801E8B38(void *arg0, u8 *arg1, s8 arg2) {
     return 0;
 }
