@@ -73,6 +73,19 @@ extern void fn_8020C1A4(u8, u32, void *);
 
 extern u8 lbl_80289EB8[16];
 
+typedef struct CardCtrl {
+    u8 unk0[0xC];
+    u32 sectorSize;
+    u8 unk10[0xAC];
+    u16 fileNo;
+    u8 unkBE[2];
+    void *apiFd;
+    u8 unkC4[0xC];
+    void *apiCb;
+    u8 unkD4[0x38];
+    void *diskID;
+} CardCtrl;
+
 void fn_80216994(void) {
 
 }
@@ -651,55 +664,53 @@ s32 fn_802197FC(s32 arg0, s32 arg1) {
     return fn_8021791C(arg0, *(s32 *)(temp_r30 + 0x0C) * ((u32)(temp_r31 - *(u8 **)(temp_r30 + 0x80)) >> 13), (void *)fn_80219734);
 }
 
+#pragma opt_strength_reduction off
 s32 fn_802198C0(u16 *arg0, s32 arg1, u16 *arg2, u16 *arg3) {
-    u16 *var_r3;
-    s32 var_r4;
-    s32 var_ctr;
+    s32 n;
     u16 temp;
 
     *arg3 = 0;
-    var_r4 = arg1 / 2;
+    arg1 = arg1 / 2;
     *arg2 = 0;
-    var_r3 = arg0;
-    if (var_r4 > 0) {
-        var_ctr = (u32)var_r4 >> 3;
-        if (var_ctr != 0) {
+    if (arg1 > 0) {
+        n = (u32)arg1 >> 3;
+        if (n != 0) {
             do {
-                *arg2 += var_r3[0];
-                temp = var_r3[0];
+                *arg2 += arg0[0];
+                temp = arg0[0];
                 *arg3 += ~temp;
-                *arg2 += var_r3[1];
-                temp = var_r3[1];
+                *arg2 += arg0[1];
+                temp = arg0[1];
                 *arg3 += ~temp;
-                *arg2 += var_r3[2];
-                temp = var_r3[2];
+                *arg2 += arg0[2];
+                temp = arg0[2];
                 *arg3 += ~temp;
-                *arg2 += var_r3[3];
-                temp = var_r3[3];
+                *arg2 += arg0[3];
+                temp = arg0[3];
                 *arg3 += ~temp;
-                *arg2 += var_r3[4];
-                temp = var_r3[4];
+                *arg2 += arg0[4];
+                temp = arg0[4];
                 *arg3 += ~temp;
-                *arg2 += var_r3[5];
-                temp = var_r3[5];
+                *arg2 += arg0[5];
+                temp = arg0[5];
                 *arg3 += ~temp;
-                *arg2 += var_r3[6];
-                temp = var_r3[6];
+                *arg2 += arg0[6];
+                temp = arg0[6];
                 *arg3 += ~temp;
-                *arg2 += var_r3[7];
-                temp = var_r3[7];
-                var_r3 += 8;
+                *arg2 += arg0[7];
+                temp = arg0[7];
+                arg0 += 8;
                 *arg3 += ~temp;
-            } while (--var_ctr);
+            } while (--n);
         }
-        var_r4 &= 7;
-        if (var_r4 != 0) {
+        arg1 &= 7;
+        if (arg1 != 0) {
             do {
-                *arg2 += *var_r3;
-                temp = *var_r3;
-                var_r3 += 1;
+                *arg2 += *arg0;
+                temp = *arg0;
+                arg0 += 1;
                 *arg3 += ~temp;
-            } while (--var_r4);
+            } while (--arg1);
         }
     }
     if (*arg2 == 0xFFFF) {
@@ -709,7 +720,7 @@ s32 fn_802198C0(u16 *arg0, s32 arg1, u16 *arg2, u16 *arg3) {
         *arg3 = 0;
     }
 }
-
+#pragma opt_strength_reduction reset
 s32 fn_8021A1B8(s32 arg0) {
     s32 temp_r31;
     s32 temp_r0;
@@ -924,6 +935,86 @@ void fn_8021C02C(s32 *arg0) {
 s32 fn_8021C080(void) {
     return 0;
 }
+
+#pragma use_lmw_stmw on
+s32 fn_8021C1B8(s32 chan, char *name, u32 size, void *fileInfo, void *callback) {
+    s32 fn_80217B18(s32, s32 *);
+    s32 fn_80217BD0(void *, s32);
+    void *fn_80219258(void *);
+    s32 fn_802193FC(s32, u32, void *);
+    u8 *fn_8021965C(void *);
+    s32 fn_8021BA9C(u8 *, char *);
+    s32 fn_80231944(u8 *, void *, s32);
+    void fn_8023440C(u8 *, char *, s32);
+    u32 strlen(char *);
+    extern void fn_80216994(void);
+    extern void fn_8021C088(void);
+
+    void *card;
+    u8 *dir;
+    u8 *ent;
+    u16 freeIdx;
+    u16 i;
+    s32 result;
+    void *cb;
+    u8 *slot;
+    void *stat;
+
+    if (strlen(name) > 0x20) {
+        return -0xC;
+    }
+    result = fn_80217B18(chan, (s32 *)&card);
+    if (result < 0) {
+        return result;
+    }
+    if (size != 0) {
+        if ((size % *(u32 *)((u8 *)card + 0xC)) != 0) {
+            return -0x80;
+        }
+        goto setup;
+    }
+    setup:
+    freeIdx = 0xFFFF;
+    dir = fn_8021965C(card);
+    ent = dir;
+    for (i = 0; i < 0x7F; ent += 0x40, i += 1) {
+        if (*ent == 0xFF) {
+            if (freeIdx == 0xFFFF) {
+                freeIdx = i;
+            }
+        } else if (fn_80231944(ent, *(void **)((u8 *)card + 0x10C), 4) == 0
+            && fn_80231944(ent + 4, (u8 *)*(void **)((u8 *)card + 0x10C) + 4, 2) == 0
+            && fn_8021BA9C(ent, name) != 0) {
+            return fn_80217BD0(card, -7);
+        }
+    }
+    if (freeIdx == 0xFFFF) {
+        return fn_80217BD0(card, -8);
+    }
+    stat = fn_80219258(card);
+    if ((u32)(*(u32 *)((u8 *)card + 0xC) * *(u16 *)((u8 *)stat + 6)) < size) {
+        return fn_80217BD0(card, -9);
+    }
+    if (callback != NULL) {
+        cb = callback;
+    } else {
+        cb = fn_80216994;
+    }
+    *(void **)((u8 *)card + 0xD0) = cb;
+    slot = dir + (freeIdx << 6);
+    *(u16 *)((u8 *)card + 0xBC) = freeIdx;
+    *(u16 *)(slot + 0x38) = (u16)(size / *(u32 *)((u8 *)card + 0xC));
+    fn_8023440C(slot + 8, name, 0x20);
+    *(void **)((u8 *)card + 0xC0) = fileInfo;
+    *(s32 *)fileInfo = chan;
+    *(u32 *)((u8 *)fileInfo + 4) = freeIdx;
+    result = fn_802193FC(chan, size / *(u32 *)((u8 *)card + 0xC), fn_8021C088);
+    if (result < 0) {
+        return fn_80217BD0(card, result);
+    }
+    return result;
+}
+#pragma use_lmw_stmw reset
 
 void fn_8021C3D8(s32 arg0) {
     s32 fn_8021C1B8(void *arg0);
