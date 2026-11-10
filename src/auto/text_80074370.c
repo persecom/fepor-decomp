@@ -1731,6 +1731,20 @@ void fn_80078B98(void) {
     fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x545);
 }
 
+s32 fn_80078BC4(void) {
+    u8 fn_800BE968(s32, u8, u8);
+    extern u8 lbl_802EF4C8[];
+    u8 *p;
+    u8 *obj;
+
+    p = lbl_802EF4C8;
+    if ((s8)p[0x12] != 0) {
+        return 3;
+    }
+    obj = *(u8 **)p;
+    return (fn_800BE968(0x29, obj[0x19E], obj[0x19F]) == 0) ? 3 : 0;
+}
+
 s32 fn_80078C28(s32 arg0, s32 arg1) {
     extern u8 lbl_802EF4C8[];
     extern u8 lbl_80311F98[];
@@ -2194,51 +2208,51 @@ void fn_80079F50(void *arg0) {
 
 void fn_8007A024(void *arg0) {
     M2C_UNK var_r31;
-    s16 temp_r0;
-    s16 temp_r0_2;
+    s32 temp_r0;
     s32 var_r0;
     u32 temp_r3;
+    u32 temp_r3_hi;
 
     temp_r0 = M2C_FIELD(arg0, s16 *, 0x38);
     if (temp_r0 <= 2) {
         var_r31 = 0;
-        if (temp_r0 != 9) {
-            if (temp_r0 < 9) {
-                if (temp_r0 < 3) {
-                    if (temp_r0 < 0) {
-
-                    } else {
-                        var_r31 = 1;
-                    }
-                } else if (temp_r0 < 6) {
-                    var_r31 = 2;
+        if (temp_r0 == 9) {
+        } else if (temp_r0 < 9) {
+            if (temp_r0 >= 3) {
+                if (temp_r0 >= 6) {
+                    var_r31 = 1;
                 } else {
+                    var_r31 = 2;
+                }
+            } else {
+                if (temp_r0 >= 0) {
                     var_r31 = 1;
                 }
-            } else if (temp_r0 < 0xB) {
-                fn_8000C070((void *)1);
             }
+        } else if (temp_r0 < 0xB) {
+            var_r31 = 1;
         }
+        fn_8000C070(arg0, 1);
         fn_8007A524(arg0, var_r31, 7);
         fn_8007A524(arg0, var_r31, 0xA);
-        M2C_FIELD(arg0, s16 *, 0x38) = (s16) (M2C_FIELD(arg0, s16 *, 0x38) + 1);
+        M2C_FIELD(arg0, s16 *, 0x38) = (s16)(M2C_FIELD(arg0, s16 *, 0x38) + 1);
         return;
     }
-    fn_8007A524((void *)1, 7);
+    fn_8007A524(arg0, 1, 7);
     fn_8007A524(arg0, 1, 0xA);
-    if ((s16) M2C_FIELD(arg0, s16 *, 0x36) != 4) {
+    if ((s16)M2C_FIELD(arg0, s16 *, 0x36) != 4) {
         fn_8000C070(arg0, 1);
-        temp_r0_2 = M2C_FIELD(arg0, s16 *, 0x34);
-        temp_r3 = fn_8000CD60() >> 0x10U;
-        switch (temp_r0_2) {                        /* irregular */
+        temp_r3 = fn_8000CD60();
+        temp_r3_hi = temp_r3 >> 0x10U;
+        switch ((s16)M2C_FIELD(arg0, s16 *, 0x34)) {
         case 3:
-            var_r0 = ((s32) temp_r3 >> 7) + 0x12C;
+            var_r0 = ((s32)temp_r3_hi >> 7) + 0x12C;
             break;
         case 1:
-            var_r0 = ((s32) temp_r3 >> 7) + 0x1E;
+            var_r0 = ((s32)temp_r3_hi >> 7) + 0x1E;
             break;
         case 2:
-            var_r0 = ((s32) temp_r3 >> 0xA) + 1;
+            var_r0 = ((s32)temp_r3_hi >> 0xA) + 1;
             break;
         case 4:
             var_r0 = 1;
@@ -2259,34 +2273,46 @@ void fn_8007A198(void *arg0) {
 }
 
 void fn_8007A1A4(void *arg0) {
-    s16 temp_r30;
-    temp_r30 = ((s16*)arg0)[0x38/2];
-    if (temp_r30 <= 5) {
-        s16 var_r31 = 0;
-        if (temp_r30 != 9) {
-            if (temp_r30 < 9) {
-                if (temp_r30 >= 3) {
-                    if (temp_r30 < 6) {
-                        var_r31 = 2;
-                    } else {
-                        var_r31 = 1;
-                    }
-                } else {
-                    var_r31 = 1;
-                }
-            } else if (temp_r30 < 0xB) {
-                fn_8000C070((void *)1);
-            }
-        }
-        fn_8007A524(arg0, var_r31, 7);
-        fn_8007A524(arg0, var_r31, 0xA);
-        ((s16*)arg0)[0x38/2] = (s16) (temp_r30 + 1);
-        return;
-    }
-    fn_8007A524((void *)2, 7);
-    fn_8007A524(arg0, 2, 0xA);
-    if ((s16) ((s16*)arg0)[0x36/2] != 3) {
-        fn_8000C070((void *)arg0, 2);
+    s32 r31;
+    s32 v;
+
+    if (*(s16 *)((u8 *)arg0 + 0x38) > 5) goto A;
+    v = *(s16 *)((u8 *)arg0 + 0x38);
+    r31 = 0;
+    if (v == 9) goto B;
+    if (v >= 9) goto C;
+    if (v >= 3) goto D;
+    if (v >= 0) goto E;
+    goto B;
+D:
+    if (v >= 6) goto F;
+    goto G;
+C:
+    if (v >= 0xB) goto B;
+    goto H;
+F:
+    r31 = 1;
+    goto B;
+G:
+    r31 = 2;
+    goto B;
+E:
+    r31 = 1;
+    goto B;
+H:
+    r31 = 1;
+    goto B;
+B:
+    fn_8000C070(arg0, 1);
+    fn_8007A524(arg0, r31, 7);
+    fn_8007A524(arg0, r31, 10);
+    *(s16 *)((u8 *)arg0 + 0x38) = *(s16 *)((u8 *)arg0 + 0x38) + 1;
+    return;
+A:
+    fn_8007A524(arg0, 2, 7);
+    fn_8007A524(arg0, 2, 10);
+    if (*(s16 *)((u8 *)arg0 + 0x36) != 3) {
+        fn_8000C070(arg0, 2);
     }
 }
 
