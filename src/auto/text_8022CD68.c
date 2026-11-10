@@ -2199,7 +2199,7 @@ f32 fn_80238A78(void) {
     return (f32) fn_80238788();
 }
 
-void fn_80238A9C(void) {
+f64 fn_80238A9C(f64, f64) {
     M2C_UNK fn_802387E8();
     fn_802387E8();
 }
