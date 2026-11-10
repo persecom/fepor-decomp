@@ -2,6 +2,18 @@
 extern u32 lbl_802EF4C8[];
 extern u16 lbl_80278080[];
 extern u16 lbl_80294604[];
+
+typedef struct Unk8016F694_Inner {
+    u8 pad0[0x4C];
+    s16 field4C;
+} Unk8016F694_Inner;
+
+typedef struct Unk8016F694_Outer {
+    u8 pad0[0x44];
+    void *ptr44;
+    u8 pad1[0x4C - 0x44 - 4];
+    Unk8016F694_Inner *inner;
+} Unk8016F694_Outer;
 extern u8 lbl_80330708[];
 extern u16 lbl_803680E8;
 extern f32 lbl_8036AC2C;
