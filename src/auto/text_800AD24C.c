@@ -931,9 +931,9 @@ s32 fn_800B33FC(s32 arg0, s32 arg1) {
 
 void fn_800B3490(void) {
     extern u16 lbl_80317338[];
-    u32 index = 0x222;
-    if (lbl_80317338[index] != 0) {
-        lbl_80317338[index] = 0;
+    u32 *p = (u32 *)((u8 *)lbl_80317338 + 0x444);
+    if (*p != 0) {
+        *p = 0;
     }
 }
 
