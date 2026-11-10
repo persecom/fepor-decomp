@@ -2525,7 +2525,7 @@ void fn_8016F628(void *arg0) {
 }
 
 #pragma cplusplus on
-extern "C" void fn_8016F694(void *arg0) {
+void fn_8016F694(void *arg0) {
     void fn_8000C070(void *, s32);
     s8 fn_80037E00(void *);
     void fn_800951D0(void *, s32);
@@ -4040,15 +4040,16 @@ void *fn_8017837C(void) {
     return (char *)&lbl_80278080 + 0x596;
 }
 
+#pragma opt_strength_reduction off
 s32 fn_8017838C(void) {
-    u8 fn_8014D8DC(u8 *);
+    u8 fn_8014D8DC(void *);
     extern u8 lbl_80330708[];
-    u8 temp_r3;
-    
-    temp_r3 = fn_8014D8DC(lbl_80330708);
-    return 2 & ~((temp_r3 | -temp_r3) >> 31);
-}
+    u8 temp_r4;
 
+    temp_r4 = fn_8014D8DC(lbl_80330708);
+    return temp_r4 ? 0 : 2;
+}
+#pragma opt_strength_reduction reset
 void fn_8017849C(void) {
     extern u16 lbl_80278080[];
     fn_8000E0E4((u8 *)lbl_80278080 + 0x59e);
