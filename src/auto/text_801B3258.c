@@ -3331,6 +3331,17 @@ void *fn_801CF6F4(void *arg0, s16 arg1) {
     return arg0;
 }
 
+void fn_801CF8E4(void *arg0)
+{
+    void *record;
+
+    record = (u8 *)lbl_80331D00 +
+        (*(u8 *)((u8 *)arg0 + 0x30) * 0x15C);
+
+    fn_8006EDA0(record);
+    fn_8006EDA0((u8 *)record + 4);
+}
+
 void fn_801CF92C(void *arg0) {
     void fn_8000C188(void);
     void fn_801D15D4(void *);
@@ -5618,6 +5629,23 @@ void fn_801E1440(s32 arg0, s32 arg1, s32 arg2) {
     ((u8 *) lbl_80331FB8)[0x44] = 1;
 }
 
+void fn_801E14F4(void *arg0)
+{
+    extern void *lbl_803682F0;
+
+    if ((u8)fn_800EB788() != 0) {
+        return;
+    }
+
+    fn_801E1540(
+        lbl_803682F0,
+        arg0,
+        *(u32 *)((u8 *)arg0 + 0x60),
+        *(u32 *)((u8 *)arg0 + 0x64),
+        *(u32 *)((u8 *)arg0 + 0x68)
+    );
+}
+
 void fn_801E204C(void *arg0) {
     extern u8 lbl_80330708[];
     u8 *temp_r5;
@@ -5848,6 +5876,24 @@ void fn_801E3118(s32 *arg0,s32 arg1,u8 arg2) {
         // Store arg2 to (p + 0x60) - use proper bit extraction
         *(u32*)((u8*)p + 0x60) = (u32)arg2;
     }
+}
+
+void fn_801E31C8(void *arg0)
+{
+    extern void *lbl_803682F0;
+
+    u32 value;
+
+    if ((u8)fn_800EB788() != 0) {
+        return;
+    }
+
+    value = *(u32 *)((u8 *)arg0 + 0x60);
+
+    fn_801E2620(
+        lbl_803682F0,
+        (value != 0)
+    );
 }
 
 void fn_801E3214(void *arg0) {
