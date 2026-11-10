@@ -3715,6 +3715,15 @@ u8 fn_800BCD24(void) {
     return lbl_802EF4C8[9];
 }
 
+u8 fn_800BCD34(void) {
+    extern u8 lbl_802EF4C8[24];
+    u8 *p = *(u8 **)(lbl_802EF4C8 + 4);
+    if (p != NULL) {
+        return p[0x198];
+    }
+    return 0;
+}
+
 u8 fn_800BCD58(void) {
     extern u8 lbl_802EF4C8[24];
     if (lbl_802EF4C8 != NULL) {
