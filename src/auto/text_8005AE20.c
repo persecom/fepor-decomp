@@ -2164,7 +2164,7 @@ void fn_80069C7C(void) {
 void fn_80069C98(void) {
     void fn_802238A8(s32);
     void fn_802238CC(s32);
-    extern s32 lbl_80285E88[];
+    extern u16 lbl_80285E88[0x20];
     extern u8 lbl_80367304;
     s32 var_r31;
     s32 var_r30;
