@@ -5677,6 +5677,20 @@ void fn_8017F70C(s32 arg0, s32 arg1) {
     obj[0x30 / 4] = arg0;
 }
 
+void fn_8017F744(void *arg0) {
+    f32 fn_80059F64(s32, f32, f32, f32, f32);
+    void fn_8000C188(void *);
+    s32 old;
+
+    old = *(s32 *)((u8 *)arg0 + 0x3C);
+    *(s32 *)((u8 *)arg0 + 0x3C) = old + 1;
+    *(s32 *)((u8 *)arg0 + 0x40) = (s32)fn_80059F64(old, 255.0f, 0.0f, 5.0f, (f32)*(s32 *)((u8 *)arg0 + 0x3C));
+    if (*(s32 *)((u8 *)arg0 + 0x3C) >= 5) {
+        *(s32 *)((u8 *)arg0 + 0x3C) = 0;
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_8017F7D4(void *arg0) {
     f32 fn_8005A028(M2C_UNK, s32, f32, f32, f32, f32);
     void fn_8000C188(void *);
