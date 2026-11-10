@@ -5324,14 +5324,14 @@ void fn_800EB258(void) {
 }
 
 void fn_800EB288(void) {
-    extern M2C_UNK lbl_80320C20;
-    switch ((s32) M2C_FIELD(&lbl_80320C20, s32 *, 0xA004)) { /* irregular */
+    extern u8 lbl_80320C20[];
+    switch (*(s32 *)(lbl_80320C20 + 0xA004)) {
     case 0:
-        M2C_FIELD(&lbl_80320C20, s8 *, 0xA018) = 1;
+        lbl_80320C20[0xA018] = 1;
         return;
     case -6:
     case -13:
-        M2C_FIELD(&lbl_80320C20, s8 *, 0xA018) = 1;
+        lbl_80320C20[0xA018] = 1;
         return;
     }
 }
@@ -5842,6 +5842,55 @@ void fn_800F0774(void) {
     if (ptr != NULL) {
         fn_8000C60C(ptr);
         lbl_803678EC = NULL;
+    }
+}
+
+void fn_800F07C0(void) {
+    f32 fn_80023430(void *, f32, f32);
+    void fn_800536B0(void *, f32, f32, f32);
+    void *fn_8014C5A8(void *, s32);
+    u8 fn_8014D8BC(void *);
+    extern u8 lbl_80330708[];
+    extern u8 lbl_802CA518[];
+    extern void *lbl_803678E8;
+    extern void *lbl_803678EC;
+    extern f32 lbl_8036A010;
+    extern f32 lbl_8036A014;
+    void *r31;
+    u8 *data;
+    void *obj;
+    f32 f30;
+    f32 f31;
+
+    if (fn_8014D8BC(lbl_80330708) != 0) {
+        if (lbl_803678E8 != NULL) {
+            r31 = lbl_803678E8;
+            data = fn_8014C5A8(lbl_80330708, 0);
+            if (data[0] != 3) {
+                obj = *(void **)((u8 *)r31 + 0x30);
+                *(u32 *)((u8 *)obj + 8) |= 0x10;
+            } else {
+                obj = *(void **)((u8 *)r31 + 0x30);
+                *(u32 *)((u8 *)obj + 8) &= ~0x10U;
+                f30 = lbl_8036A010 + (f32)(s8)data[2];
+                f31 = lbl_8036A010 + (f32)(s8)data[3];
+                fn_800536B0(r31, f30, f31, fn_80023430(lbl_802CA518, f30, f31) - lbl_8036A014);
+            }
+        }
+        if (lbl_803678EC != NULL) {
+            r31 = lbl_803678EC;
+            data = fn_8014C5A8(lbl_80330708, 3);
+            if (data[0] != 3) {
+                obj = *(void **)((u8 *)r31 + 0x30);
+                *(u32 *)((u8 *)obj + 8) |= 0x10;
+            } else {
+                obj = *(void **)((u8 *)r31 + 0x30);
+                *(u32 *)((u8 *)obj + 8) &= ~0x10U;
+                f31 = lbl_8036A010 + (f32)(s8)data[2];
+                f30 = lbl_8036A010 + (f32)(s8)data[3];
+                fn_800536B0(r31, f31, f30, fn_80023430(lbl_802CA518, f31, f30) - lbl_8036A014);
+            }
+        }
     }
 }
 
