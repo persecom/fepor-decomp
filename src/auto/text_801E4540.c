@@ -399,13 +399,13 @@ void fn_801E9958(void) {
 }
 
 void fn_801E9C24(void) {
-    extern u16 lbl_80299FA8[14];
-    extern u16 lbl_80299FC4[14];
-    extern u8 lbl_8027EB78[80];
-    
-    fn_8005C8B4((void*)&lbl_80299FA8[2]);
-    fn_8005C8B4((void*)&lbl_80299FC4[2]);
-    fn_8005C8B4((void*)&lbl_8027EB78[0x22F]);
+    extern u32 lbl_80299FA8[];
+    extern u32 lbl_80299FC4[];
+    extern u8 lbl_8027EB78[];
+
+    fn_8005C8B4((void *)lbl_80299FA8[1]);
+    fn_8005C8B4((void *)lbl_80299FC4[1]);
+    fn_8005C8B4(&lbl_8027EB78[0x22f]);
 }
 
 void fn_801E9C70(void *arg0) {
