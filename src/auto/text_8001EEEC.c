@@ -550,6 +550,17 @@ void fn_80023068(u16 *a0, u16 *a1, f32 a2, f32 a3) {
     *(f32*)((u8*)a1 + 0x538) = a3;
 }
 
+typedef struct {
+    s32 width;
+    s32 height;
+    u8 pad8[5];
+    u8 unitMap[0x6100];
+    u8 pad1;
+    s16 costMap[0x4040];
+    s8 fogMap[64];
+} Map_802CA518;
+extern Map_802CA518 lbl_802CA518;
+
 f32 fn_800233D0(void *arg0, s8 arg1, s8 arg2, u8 arg3) {
     f32 var_f1;
     f32 var_f2;
@@ -571,16 +582,6 @@ f32 fn_800233D0(void *arg0, s8 arg1, s8 arg2, u8 arg3) {
     return var_f1;
 }
 
-typedef struct {
-    s32 width;
-    s32 height;
-    u8 pad8[5];
-    u8 unitMap[0x6100];
-    u8 pad1;
-    s16 costMap[0x4040];
-    s8 fogMap[64];
-} Map_802CA518;
-extern Map_802CA518 lbl_802CA518;
 void fn_80023DC0(void) {
     fn_8002297C(&lbl_802CA518);
 }
