@@ -213,6 +213,13 @@ void fn_801A372C(void) {
     fn_80104480((u8 *)*(void **)(temp_r31 + 0x560) + 0x1A4);
 }
 
+s32 fn_801A3B08(void) {
+    void fn_8002AD04(void);
+    extern s32 lbl_802EF4E0[];
+    fn_8002AD04();
+    return lbl_802EF4E0[0] != 0;
+}
+
 s32 fn_801A3E24(s32 arg0)
 {
     s32 temp_r3;
