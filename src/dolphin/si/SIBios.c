@@ -207,6 +207,7 @@ static u32 lbl_8033E3E8[4];
 static BOOL InputBufferValid[4];
 static u32 InputBuffer[4][2];
 static volatile u32 InputBufferVcount[4];
+static u32 cmdTypeAndStatus[4];
 
 s32 fn_8023ABD4(void) {
     extern s32 Si_8029EFAC[];
