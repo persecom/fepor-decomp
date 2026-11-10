@@ -420,18 +420,16 @@ void fn_800A57D8(void) {
 }
 
 void fn_800A58F0(s32 arg0) {
-    u32 fn_8000BCA4(void *, M2C_UNK *);
-    void *fn_8000CAF0(M2C_UNK *, u32, M2C_UNK *);
-    extern M2C_UNK lbl_8026E1B0;
-    extern M2C_UNK lbl_8028C6A8;
+    void *fn_8000BCA4(void *);
+    void *fn_8000CAF0(void *, void *);
+    extern u8 lbl_8026E1B0[];
+    extern u8 lbl_8028C6A8[];
+    void *temp;
 
-    u32 temp_r3;
-    void *temp_r4;
-
-    temp_r3 = fn_8000BCA4(&lbl_8026E1B0 + 0x15, &lbl_8026E1B0);
-    if (temp_r3 != 0U) {
-        temp_r4 = fn_8000CAF0(&lbl_8028C6A8, temp_r3, &lbl_8028C6A8);
-        *(s32 *)((char *)temp_r4 + 0x30) = arg0;
+    temp = fn_8000BCA4(lbl_8026E1B0 + 0x15);
+    if (temp != NULL) {
+        temp = fn_8000CAF0(lbl_8028C6A8, temp);
+        *(s32 *)((u8 *)temp + 0x30) = arg0;
     }
 }
 
