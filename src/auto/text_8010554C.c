@@ -1277,11 +1277,12 @@ void fn_8010AEC8(void) {
     return;
 }
 
-s32 fn_8010B60C(void *arg1) {
-    if (fn_80105BC0((u8*)arg1 + 0x1BC, 0x18) != 0) {
+s32 fn_8010B60C(void *arg0, void *arg1) {
+    u8 fn_80105BC0(void *, s32);
+    if (fn_80105BC0((u8 *)arg1 + 0x1BC, 0x18) != 0) {
         return 0;
     }
-    return *(u32*)((u8*)arg1 + 0x1A0) & 1;
+    return *(u32 *)((u8 *)arg1 + 0x1A0) & 1;
 }
 
 u8 fn_8010BDE0(s32 arg0) {
