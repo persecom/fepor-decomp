@@ -2572,10 +2572,10 @@ void fn_801C797C(void *arg0, void *arg1, void *arg2, s32 arg3, s16 arg4, u8 arg5
 
     obj = arg2;
     *(void **)arg1 = obj;
-    *(s16 *)((u8 *)arg1 + 6) = arg4;
-    *(s16 *)((u8 *)arg1 + 4) = 0;
-    out = arg0;
     dst = arg1;
+    out = arg0;
+    *(s16 *)((u8 *)dst + 6) = arg4;
+    *(s16 *)((u8 *)dst + 4) = 0;
     param = arg3;
     flag = arg5;
 
@@ -2615,10 +2615,10 @@ void fn_801C797C(void *arg0, void *arg1, void *arg2, s32 arg3, s16 arg4, u8 arg5
         if (id2 != -1) {
             base = fn_80060690(obj);
             if (flag != 0) {
-                entry = (u8 *)*(void **)((u8 *)base + 0xC) + id2 * 0xF4;
+                entry = (u8 *)(*(void **)((u8 *)base + 0xC)) + id2 * 0xF4;
                 *(u32 *)((u8 *)entry + 0xC) |= 0x40000000;
             } else {
-                entry = (u8 *)*(void **)((u8 *)base + 0xC) + id2 * 0xF4;
+                entry = (u8 *)(*(void **)((u8 *)base + 0xC)) + id2 * 0xF4;
                 *(u32 *)((u8 *)entry + 0xC) &= ~0x40000000;
             }
         }
@@ -6157,6 +6157,7 @@ void fn_801DF7C8(void *arg0) {
 }
 
 #pragma use_lmw_stmw on
+#pragma optimization_level 2
 s32 fn_801DFBE4(s32 arg0) {
     extern void *lbl_803682F0;
     extern u8 lbl_8027E980[];
@@ -6168,14 +6169,14 @@ s32 fn_801DFBE4(s32 arg0) {
     void fn_800E9B80(void *, s32, s32, s32, s32);
     void *memset(void *, s32, s32);
 
-    s32 i;
-    s32 off;
-    u8 *slot;
     void *buf;
     u32 sum;
+    s32 self;
+    s32 i;
+    u8 *slot;
+    s32 off;
     u8 hdrOk;
     u8 chkOk;
-    s32 self;
 
     self = arg0;
     if (fn_800EB788() != 0) {
@@ -6199,9 +6200,7 @@ s32 fn_801DFBE4(s32 arg0) {
             } else if (*(u8 *)(slot + 0x60) == 1) {
                 chkOk = 1;
             } else {
-                void *path;
-                path = lbl_8027E980 + 0x14E;
-                buf = fn_800C4638(0x400, path, 0);
+                buf = fn_800C4638(0x400, lbl_8027E980 + 0x14E, 0);
                 fn_800EC1F8();
                 sum = fn_800EC0A4(buf, slot + 0x70, *(s32 *)(slot + 0x4C) - 0x70);
                 fn_800C4588(buf);
@@ -6213,7 +6212,7 @@ s32 fn_801DFBE4(s32 arg0) {
             }
             if (chkOk == 0) {
                 memset(slot, 0, 0x2000);
-                fn_800E9B80(slot, 0x2000, (s32)((u8 *)slot - (u8 *)lbl_803682F0), -1, self);
+                fn_800E9B80(slot, 0x2000, (s32)(slot - (u8 *)lbl_803682F0), -1, self);
                 return 1;
             }
         }
@@ -6238,9 +6237,7 @@ s32 fn_801DFBE4(s32 arg0) {
             } else if (*(u8 *)(slot + 0x60) == 1) {
                 chkOk = 1;
             } else {
-                void *path;
-                path = lbl_8027E980 + 0x14E;
-                buf = fn_800C4638(0x400, path, 0);
+                buf = fn_800C4638(0x400, lbl_8027E980 + 0x14E, 0);
                 fn_800EC1F8();
                 sum = fn_800EC0A4(buf, slot + 0x70, *(s32 *)(slot + 0x4C) - 0x70);
                 fn_800C4588(buf);
@@ -6252,7 +6249,7 @@ s32 fn_801DFBE4(s32 arg0) {
             }
             if (chkOk == 0) {
                 memset(slot, 0, 0x2000);
-                fn_800E9B80(slot, 0x2000, (s32)((u8 *)slot - (u8 *)lbl_803682F0), -1, self);
+                fn_800E9B80(slot, 0x2000, (s32)(slot - (u8 *)lbl_803682F0), -1, self);
                 return 1;
             }
         }
@@ -6262,6 +6259,7 @@ s32 fn_801DFBE4(s32 arg0) {
 
     return 0;
 }
+#pragma optimization_level reset
 extern u8 lbl_80299F1C[];
 void fn_801E00EC(void *arg0, void *arg1) { void fn_8000CAA0(void *); extern u8 lbl_80299F1C[]; (void)arg0; (void)arg1; fn_8000CAA0(lbl_80299F1C); }
 
