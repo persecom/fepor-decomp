@@ -835,7 +835,7 @@ s32 fn_8021A1B8(s32 arg0) {
     s32 temp_r0;
     s32 temp_r3;
 
-    temp_r3 = fn_80219A70();
+    temp_r3 = fn_80219A70((void *)arg0);
     if (temp_r3 < 0) {
         return temp_r3;
     }
