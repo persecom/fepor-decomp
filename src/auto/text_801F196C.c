@@ -1847,6 +1847,8 @@ void fn_801FA508(void *arg0) {
     }
 }
 
+__declspec(section ".rodata") static const char staff_fmt[] = "#F04%s";
+
 void fn_801FA5DC(void *arg0) {
     void fn_8000A258(void);
     void fn_80009D74(f32, f32, f32, f32);
