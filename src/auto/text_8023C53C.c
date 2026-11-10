@@ -339,6 +339,11 @@ void fn_8023F130(void) {
     (void)lbl_8033E460;
 }
 
+void fn_80240BBC(void) {
+    void fn_8020543C(s32);
+    fn_8020543C(3);
+}
+
 s32 fn_80243E84(void *arg0) {
     register u8 *temp_r5;
     s32 var_r5;
@@ -1020,6 +1025,58 @@ s32 fn_8024CE1C(s32 arg0, s32 arg1) {
         return (((((u32) ((arg0 + 0xD) - temp_r3) >> 1U) + temp_r3) & 0xFFFFFFF8) + 0x1F) & 0xFFFFFFE0;
     }
     return ((arg0 * 2) + 0x1F) & 0xFFFFFFE0;
+}
+
+s32 fn_8024F5E4(u16 id, s32 data) {
+    struct Key {
+        s32 data;
+        u16 id;
+        u16 ref;
+    };
+    void fn_8026372C(void);
+    void fn_802636F4(void);
+    extern struct Key lbl_803502B8[];
+    extern u16 lbl_80368A10;
+
+    s32 i;
+    s32 j;
+    u16 count;
+
+    fn_8026372C();
+    count = lbl_80368A10;
+    for (i = 0; i < (s32)count && lbl_803502B8[i].id < id; i++) {
+    }
+
+    if (i < (s32)count) {
+        if (id != lbl_803502B8[i].id) {
+            if (count < 0x800U) {
+                for (j = (s32)count - 1; j >= i; j--) {
+                    lbl_803502B8[j + 1] = lbl_803502B8[j];
+                }
+                lbl_80368A10++;
+                goto insert;
+            }
+            fn_802636F4();
+            return 0;
+        }
+        fn_802636F4();
+        lbl_803502B8[i].ref++;
+        return 0;
+    }
+
+    if (count < 0x800U) {
+        lbl_80368A10++;
+        goto insert;
+    }
+    fn_802636F4();
+    return 0;
+
+insert:
+    lbl_803502B8[i].id = id;
+    lbl_803502B8[i].data = data;
+    lbl_803502B8[i].ref = 1;
+    fn_802636F4();
+    return 1;
 }
 
 s32 fn_8024FD80(u16 id, s32 arg1) {
@@ -4017,50 +4074,43 @@ void fn_802625F8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
         volatile u8 next;
         volatile u8 count;
     } Queue;
-    u8 *base;
+    Queue *q;
     BOOL enabled;
+    s32 flag;
 
-    if (arg3 != 0) {
-        base = lbl_803641AC;
-    } else {
-        base = lbl_80363F28;
-    }
+    q = arg3 != 0 ? (Queue *)lbl_803641AC : (Queue *)lbl_80363F28;
 
 start:
     enabled = OSDisableInterrupts();
-    {
-        Queue *q = (Queue *)base;
-        if (q->count < 0x10) {
-            q->slots[q->next].code = 0x2A;
-            q->slots[q->next].unk08 = 0;
-            q->slots[q->next].flag = (arg3 != 0);
-            q->slots[q->next].a0 = arg0;
-            q->slots[q->next].a1 = arg1;
-            q->slots[q->next].a2 = arg2;
-            q->slots[q->next].cb = (void *)fn_80262558;
-            q->slots[q->next].a4 = arg4;
-            q->slots[q->next].a5 = arg5;
+    if (q->count < 0x10) {
+        flag = arg3 ? 1 : 0;
+        q->slots[q->next].code = 0x2A;
+        q->slots[q->next].unk08 = 0;
+        q->slots[q->next].flag = flag;
+        q->slots[q->next].a0 = arg0;
+        q->slots[q->next].a1 = arg1;
+        q->slots[q->next].a2 = arg2;
+        q->slots[q->next].cb = (void *)fn_80262558;
+        q->slots[q->next].a4 = arg4;
+        q->slots[q->next].a5 = arg5;
 
-            fn_80215D9C(
-                &q->slots[q->next],
-                q->slots[q->next].code,
-                q->slots[q->next].unk08,
-                q->slots[q->next].flag,
-                q->slots[q->next].a0,
-                (void *)q->slots[q->next].a1,
-                q->slots[q->next].a2,
-                q->slots[q->next].cb);
+        fn_80215D9C(
+            &q->slots[q->next],
+            q->slots[q->next].code,
+            q->slots[q->next].unk08,
+            q->slots[q->next].flag,
+            q->slots[q->next].a0,
+            (void *)q->slots[q->next].a1,
+            q->slots[q->next].a2,
+            q->slots[q->next].cb);
 
-            q->count = (u8)(q->count + 1);
-            q->next = (u8)(((s32)q->next + 1) % 16);
-            OSRestoreInterrupts(enabled);
-            goto end;
-        }
+        q->count = (u8)(q->count + 1);
+        q->next = (u8)(((s32)q->next + 1) % 16);
+        OSRestoreInterrupts(enabled);
+        return;
     }
     OSRestoreInterrupts(enabled);
     goto start;
-end:
-    ;
 }
 
 void fn_802627D4(void) {
