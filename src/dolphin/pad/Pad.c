@@ -758,10 +758,7 @@ s32 fn_80215F50(void) {
 }
 
 s32 fn_80215F60(void) {
-    u16 *ptr = (u16 *)0xCC005000;
-    u16 r0 = ptr[1];
-    u16 r3 = ptr[2];
-    return (r3 & ~0xFFFF0000) | (r0 << 0x10);
+    return (__PADRegs[2] << 16) | __PADRegs[3];
 }
 
 void fn_80215F78(u16 arg0) {
