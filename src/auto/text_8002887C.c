@@ -1351,7 +1351,7 @@ void fn_8002F788(s32 arg0) {
 s32 *fn_8002FA54(void) {
     M2C_UNK fn_8002BD44(s32, M2C_UNK);
     M2C_UNK fn_8002F658(M2C_UNK);
-    s32 fn_8002F740();
+    u32 fn_8002F740(u32);
     s32 *fn_8014CB14(M2C_UNK *, s32, M2C_UNK *);
     extern s32 lbl_802EF4C8;
     extern s32 lbl_802EF4E0;
@@ -1362,7 +1362,7 @@ s32 *fn_8002FA54(void) {
     var_r3 = &lbl_802EF4E0;
     if ((s32) lbl_802EF4E0 != 0) {
         fn_8002F658(0);
-        var_r3 = fn_8014CB14(&lbl_80330708, fn_8002F740(), &lbl_80330708);
+        var_r3 = fn_8014CB14(&lbl_80330708, fn_8002F740(0), &lbl_80330708);
     }
     return var_r3;
 }
