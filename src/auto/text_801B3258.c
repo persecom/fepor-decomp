@@ -3059,7 +3059,7 @@ extern "C" void fn_801CC5C4(void *arg0, void *arg1) {
     u8 color[4];
     s16 w;
     s16 h;
-    s16 x0;
+    s32 x0;
     void *arg;
     void *self;
     s16 y0;
@@ -3076,7 +3076,7 @@ extern "C" void fn_801CC5C4(void *arg0, void *arg1) {
         s16 t5;
         s16 old4c;
 
-        t3 = (s16)(x0 * w);
+        t3 = (s16)((s16)x0 * w);
         old4c = *(s16 *)((u8 *)self + 0x4C);
         t5 = (s16)(y0 * h);
         if (old4c == -1 && *(s16 *)((u8 *)self + 0x4E) == -1) {
@@ -3091,7 +3091,7 @@ extern "C" void fn_801CC5C4(void *arg0, void *arg1) {
     {
         s16 py;
         void *ptr;
-        s32 eq;
+        struct { unsigned b : 8; } eq;
 
         py = *(s16 *)((u8 *)self + 0x4E);
         if (*(u32 *)((u8 *)arg + 0x34) != 0) {
@@ -3099,8 +3099,8 @@ extern "C" void fn_801CC5C4(void *arg0, void *arg1) {
         } else {
             ptr = 0;
         }
-        eq = ptr == self;
-        if (eq != 0) {
+        eq.b = (ptr == self);
+        if (eq.b) {
             s32 x1;
             s32 y1;
             s32 x2;
@@ -3111,14 +3111,14 @@ extern "C" void fn_801CC5C4(void *arg0, void *arg1) {
             fn_80009C0C(lbl_8036B4C8);
             fn_8000A248();
             color[0] = 0x9C;
-            x1 = (s16)(x0 + ((w - 0x30) >> 1));
+            x1 = (s16)((s16)x0 + ((w - 0x30) >> 1));
             y1 = (s16)(py + ((h - 0x30) >> 1));
             color[1] = 0x2F;
             x2 = (s16)(x1 + 0x30);
             alpha = 0x80;
             y2 = (s16)(y1 + 0x30);
             color[2] = 0x12;
-            if ((u8)eq != 0) {
+            if (eq.b == 1) {
                 alpha = 0xFF;
             }
             color[3] = alpha;
@@ -6501,7 +6501,7 @@ s32 fn_801DFBE4(s32 arg0) {
   }
   
   #pragma opt_strength_reduction off
-  void fn_801DFE60(u8 **arg0, s32 arg1) {
+void fn_801DFE60(u8 **arg0, s32 arg1) {
     void fn_800062CC(void *, void *, s32);
     void fn_801E3CA8(void *);
     void fn_800E9B80(void *, s32, s32, s32, s32);
@@ -6518,7 +6518,6 @@ s32 fn_801DFBE4(s32 arg0) {
     u32 clamped;
     u8 *found;
     s32 diff;
-    u32 base;
 
     minSize = (u32)-1;
     off = 0x2000;
@@ -6526,11 +6525,8 @@ s32 fn_801DFBE4(s32 arg0) {
     i = 0;
     self = arg1;
 
-    ctr = 3;
-    mtctr_loop1:
-    {
-        base = *(u32 *)arg0;
-        slot = (u8 *)(base + off);
+    for (ctr = 3; ctr != 0; ctr--) {
+        slot = *arg0 + off;
         if (*(u32 *)(slot + 0x40) != 0x4645384AU) {
             hdrOk = 0;
         } else if (*(u32 *)(slot + 0x44) != 0x20050201U) {
@@ -6546,8 +6542,7 @@ s32 fn_801DFBE4(s32 arg0) {
             }
         }
         off += 0x4000;
-        base = *(u32 *)arg0;
-        slot = (u8 *)(base + off);
+        slot = *arg0 + off;
         if (*(u32 *)(slot + 0x40) != 0x4645384AU) {
             hdrOk = 0;
         } else if (*(u32 *)(slot + 0x44) != 0x20050201U) {
@@ -6564,16 +6559,12 @@ s32 fn_801DFBE4(s32 arg0) {
         }
         off += 0x4000;
         i += 1;
-        if (--ctr != 0) goto mtctr_loop1;
     }
 
     i = 0;
     off = 0x2000;
-    ctr = 2;
-    mtctr_loop2:
-    {
-        base = *(u32 *)arg0;
-        found = (u8 *)(base + off);
+    for (ctr = 2; ctr != 0; ctr--) {
+        found = *arg0 + off;
         if (*(u32 *)(found + 0x40) != 0x4645384AU) {
             hdrOk = 0;
         } else if (*(u32 *)(found + 0x44) != 0x20050201U) {
@@ -6585,8 +6576,7 @@ s32 fn_801DFBE4(s32 arg0) {
             goto found_slot;
         }
         off += 0x4000;
-        base = *(u32 *)arg0;
-        found = (u8 *)(base + off);
+        found = *arg0 + off;
         if (*(u32 *)(found + 0x40) != 0x4645384AU) {
             hdrOk = 0;
         } else if (*(u32 *)(found + 0x44) != 0x20050201U) {
@@ -6598,8 +6588,7 @@ s32 fn_801DFBE4(s32 arg0) {
             goto found_slot;
         }
         off += 0x4000;
-        base = *(u32 *)arg0;
-        found = (u8 *)(base + off);
+        found = *arg0 + off;
         if (*(u32 *)(found + 0x40) != 0x4645384AU) {
             hdrOk = 0;
         } else if (*(u32 *)(found + 0x44) != 0x20050201U) {
@@ -6612,26 +6601,24 @@ s32 fn_801DFBE4(s32 arg0) {
         }
         off += 0x4000;
         i += 2;
-        if (--ctr != 0) goto mtctr_loop2;
     }
 
     found = NULL;
 
 found_slot:
     if (found == NULL) {
-        base = *(u32 *)arg0;
-        found = (u8 *)(base + 0x2000);
+        found = *arg0 + 0x2000;
         if (found == best) {
-            found = (u8 *)(base + 0x6000);
+            found = *arg0 + 0x6000;
         }
     }
 
     fn_800062CC(best, found, *(s32 *)(found + 0x4C));
     fn_801E3CA8(best);
     diff = (s32)best - (s32)lbl_803682F0;
-          fn_800E9B80(best, *(s32 *)(best + 0x4C), diff, diff, self);
-  }
-  #pragma opt_strength_reduction on
+    fn_800E9B80(best, *(s32 *)(best + 0x4C), diff, diff, self);
+}
+  #pragma opt_strength_reduction reset
   
   extern u8 lbl_80299F1C[];
 void fn_801E00EC(void *arg0, void *arg1) { void fn_8000CAA0(void *); extern u8 lbl_80299F1C[]; (void)arg0; (void)arg1; fn_8000CAA0(lbl_80299F1C); }
