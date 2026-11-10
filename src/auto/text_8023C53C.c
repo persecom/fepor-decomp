@@ -55,6 +55,8 @@ extern u32 lbl_800000F8;
 
 #include "musyx/select_source.h"
 
+extern s32 lbl_80368968;
+
 typedef struct StreamMsg {
     u32 unk0;   /* 0x0 */
     u32 unk4;   /* 0x4 */
