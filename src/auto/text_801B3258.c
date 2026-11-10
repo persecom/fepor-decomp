@@ -6629,11 +6629,11 @@ found_slot:
     fn_800062CC(best, found, *(s32 *)(found + 0x4C));
     fn_801E3CA8(best);
     diff = (s32)best - (s32)lbl_803682F0;
-    fn_800E9B80(best, *(s32 *)(best + 0x4C), diff, diff, self);
-}
-
-#pragma optimization_level reset
-extern u8 lbl_80299F1C[];
+          fn_800E9B80(best, *(s32 *)(best + 0x4C), diff, diff, self);
+  }
+  #pragma opt_strength_reduction on
+  
+  extern u8 lbl_80299F1C[];
 void fn_801E00EC(void *arg0, void *arg1) { void fn_8000CAA0(void *); extern u8 lbl_80299F1C[]; (void)arg0; (void)arg1; fn_8000CAA0(lbl_80299F1C); }
 
 void fn_801E0114(s32 arg0) {
