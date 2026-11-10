@@ -7,16 +7,6 @@ extern s32 fn_80010710(u8* arg0);
   void fn_800AE904(void *);
   void fn_800AEA74(void *);
 
-/* 0x18-byte record used by fn_800C29D0 / fn_800C2ACC / fn_800C30CC (1-based index) */
-#ifndef UNK800C2ACC_TYPE
-#define UNK800C2ACC_TYPE
-typedef struct Unk800C2ACC {
-    u8 unk0[0x13];
-    u8 unk13;
-    u8 unk14[4];
-} Unk800C2ACC;
-#endif
-
 void fn_800AD24C(void) {
     extern u16 lbl_80312ACC[];
     extern void fn_800AD284(void);
