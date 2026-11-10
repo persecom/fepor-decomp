@@ -587,10 +587,9 @@ void fn_80213760(u16 arg0, u32 arg1) {
     OSRestoreInterrupts();
 }
 
+volatile u16 __PADRegs[32] : 0xCC005000;
 void fn_802137E8(void) {
-    u16 *ptr = (u16 *)0xCC005000;
-    u16 val = ptr[0x1B];
-    ptr[0x1B] = val | 0x8000;
+    __PADRegs[0x1B] |= 0x8000;
 }
 
 s32 fn_80213800(void) {
