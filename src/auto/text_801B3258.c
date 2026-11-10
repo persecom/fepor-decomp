@@ -1764,7 +1764,6 @@ extern "C" void fn_801BD8B4(void *arg0) {
     void fn_8014027C(void *, void *, s16 *, s32);
     void fn_801658DC(u32, s32);
     extern u8 lbl_8027C698[];
-    extern f32 lbl_8036B2D8;
 
     struct Obj {
         virtual void v0();
@@ -1787,7 +1786,6 @@ extern "C" void fn_801BD8B4(void *arg0) {
     void *var_r29;
     u32 res;
     s16 temp_r7;
-    f32 one;
 
     var_r30 = arg0;
     if ((var_r31 = fn_8013FF94(arg0, 0x100, 0)) == 0) {
@@ -1800,8 +1798,7 @@ extern "C" void fn_801BD8B4(void *arg0) {
         fn_8014027C(var_r30, var_r31, sp14, 0);
     }
     *(u8 *)((u8 *)var_r31 + 0x4D) = 0;
-    one = lbl_8036B2D8;
-    *(f32 *)((u8 *)var_r31 + 0x30) = one;
+    *(f32 *)((u8 *)var_r31 + 0x30) = 1.0f;
     if ((var_r29 = fn_8013FF94(var_r30, 0x101, 0)) == 0) {
         var_r29 = *(void **)((u8 *)var_r30 + 0x4C);
         fn_801400F4(var_r30, var_r29);
@@ -1818,7 +1815,7 @@ extern "C" void fn_801BD8B4(void *arg0) {
         var_r29 = *(void **)((u8 *)var_r30 + 0x50);
         fn_801400F4(var_r30, var_r29);
     }
-    if (fn_8013893C(var_r29) < lbl_8036B2D8) {
+    if (fn_8013893C(var_r29) < 1.0f) {
         fn_80140234(var_r30, var_r29, 0);
     }
     if ((var_r29 = fn_8013FF94(var_r30, 0x103, 0)) == 0) {
