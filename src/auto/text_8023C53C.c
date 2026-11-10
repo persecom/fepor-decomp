@@ -2541,7 +2541,7 @@ int fn_80256DD8(int arg0) {
     return 0;
 }
 
-void fn_80256FF0(u8 arg0) {
+void fn_80256FF0(Fn80256FF0Arg arg0) {
     void fn_80255B20(void *);
     void fn_802554A4(void *, s32);
     void fn_8024C5CC(s32);
