@@ -103,8 +103,6 @@ s32 TRKGetNextEvent(void *event) {
     void fn_80003488(void *, void *, s32);
     s32 result;
     TRKEventQueue *queue;
-    s32 newNext;
-    s32 newCount;
     u8 *src;
 
     result = 0;
@@ -114,11 +112,8 @@ s32 TRKGetNextEvent(void *event) {
         src = (u8 *)queue + (queue->unk8 * 0xC);
         src = (u8 *)((s32)src + 0xC);
         fn_80003488(event, src, 0xC);
-        newNext = queue->unk8 + 1;
-        newCount = queue->unk4 - 1;
-        queue->unk8 = newNext;
-        queue->unk4 = newCount;
-        if (newNext == 2) {
+        queue->unk4--;
+        if (++queue->unk8 == 2) {
             queue->unk8 = 0;
         }
         result = 1;
@@ -383,10 +378,96 @@ s32 TRKInitializeDispatcher(void) {
 }
 
 s32 TRKTargetStopped(void);
+s32 TRKTargetStopper(void);
+u32 fn_80229030(void);
+s32 fn_80229040(u32, u32, s32);
+s32 fn_802290F8(u32, s32);
+s32 fn_8022B078(s32, s32);
+#pragma use_lmw_stmw on
 s32 fn_80227174(void *arg0) {
-    return TRKTargetStopped();
-}
+    void *a = arg0;
+    u8 unk18 = *(u8 *)((u8 *)a + 0x18);
+    u32 unk1C;
+    u32 unk20 = *(u32 *)((u8 *)a + 0x20);
+    u32 unk24 = *(u32 *)((u8 *)a + 0x24);
+    fn_8022692C(a, 0);
 
+    switch (unk18) {
+    case 16:
+    case 0: {
+        unk1C = *(u8 *)((u8 *)a + 0x1c);
+        if (unk1C < 1) {
+            u8 buf[0x40];
+            memset(buf, 0, 0x40);
+            buf[4] = 0x80;
+            *(s32 *)buf = 0x40;
+            buf[8] = 0x11;
+            fn_8022B078((s32)(void *)buf, 0x40);
+            return 0;
+        }
+        for (;;) {
+            u32 v = fn_80229030();
+            if (v < unk20) {
+                break;
+            }
+            if (v > unk24) {
+                break;
+            }
+        }
+        {
+            u8 buf[0x40];
+            memset(buf, 0, 0x40);
+            buf[4] = 0x80;
+            *(s32 *)buf = 0x40;
+            buf[8] = 0x11;
+            fn_8022B078((s32)(void *)buf, 0x40);
+            return 0;
+        }
+    }
+    case 1:
+    case 17: {
+        if (TRKTargetStopper() == 0) {
+            u8 buf[0x40];
+            memset(buf, 0, 0x40);
+            buf[4] = 0x80;
+            *(s32 *)buf = 0x40;
+            buf[8] = 0x16;
+            fn_8022B078((s32)(void *)buf, 0x40);
+            return 0;
+        }
+        {
+            u8 buf[0x40];
+            memset(buf, 0, 0x40);
+            buf[4] = 0x80;
+            *(s32 *)buf = 0x40;
+            buf[8] = 0x0;
+            fn_8022B078((s32)(void *)buf, 0x40);
+            break;
+        }
+    }
+    default: {
+        u8 buf[0x40];
+        memset(buf, 0, 0x40);
+        buf[4] = 0x80;
+        *(s32 *)buf = 0x40;
+        buf[8] = 0x12;
+        fn_8022B078((s32)(void *)buf, 0x40);
+        return 0;
+    }
+    }
+    switch (unk18) {
+    case 0:
+    case 16:
+        return fn_802290F8(unk1C, unk18 == 16);
+    case 1:
+    case 17:
+        return fn_80229040(unk20, unk24, unk18 == 17);
+    default:
+        return 0;
+    }
+    return 0;
+}
+#pragma use_lmw_stmw reset
 void fn_80227BF0(void) {
     OSReport("Error: Unknown unit type for %s\n", "null");
 }
@@ -517,6 +598,103 @@ void fn_802283A8(void) {
         }
     }
 }
+
+#pragma use_lmw_stmw on
+s32 fn_80228588(u32 arg0, u8 *arg1, u32 *arg2, s32 *arg3, s32 arg4, s32 arg5) {
+    void *TRKGetBuffer(s32);
+    s32 fn_802262E8(s32);
+    s32 fn_8022641C(void *, u8 *, u32);
+    s32 fn_80226698(s32, void *, u32);
+    void fn_8022692C(void *, u32);
+    void fn_8022699C(s32);
+    s32 fn_80226A2C(s32 *, s32 *);
+    s32 fn_802283A8(s32, s32 *, s32, s32, s32);
+    void *memset(void *, int, u32);
+
+    u8 msg[0x40];
+    s32 sp10;
+    s32 spC;
+    s32 sp8;
+    s32 var_r31;
+    u32 var_r30;
+    s32 var_r29;
+    s32 temp_r19;
+    s32 temp_r20;
+    s32 var_r21;
+    void *var_r22;
+
+    if (arg1 == NULL || *arg2 == 0) {
+        return 2;
+    }
+    var_r29 = 0;
+    *arg3 = 0;
+    var_r30 = 0;
+    var_r21 = 0;
+    while (var_r29 == 0 && var_r30 < *arg2 && var_r21 == 0 && *arg3 == 0) {
+        s32 cmd;
+        s32 len_field;
+        s32 flag;
+        u32 remain;
+
+        memset(msg, 0, 0x40);
+        remain = 0x800;
+        if (*arg2 - var_r30 <= 0x800U) {
+            remain = *arg2 - var_r30;
+        }
+        var_r31 = remain;
+        cmd = 0xD0;
+        if (arg5 != 0) {
+            cmd = 0xD1;
+        }
+        msg[4] = cmd;
+        len_field = 0x40;
+        if (arg5 == 0) {
+            len_field = var_r31 + 0x40;
+        }
+        *(s32 *)msg = len_field;
+        *(u32 *)(msg + 8) = arg0;
+        *(u16 *)(msg + 0xC) = (u16)var_r31;
+        fn_80226A2C(&spC, &sp8);
+        var_r21 = fn_80226698(sp8, msg, 0x40U);
+        if ((arg5 == 0) && (var_r21 == 0)) {
+            var_r21 = fn_80226698(sp8, arg1 + var_r30, var_r31);
+        }
+        if (var_r21 == 0) {
+            if (arg4 != 0) {
+                flag = 0;
+                if ((arg5 != 0) && (arg0 == 0U)) {
+                    flag = 1;
+                }
+                var_r21 = fn_802283A8(sp8, &sp10, 5, 3, flag == 0);
+                if (var_r21 == 0) {
+                    var_r22 = TRKGetBuffer(sp10);
+                }
+                temp_r20 = (u8)*(u32 *)((u8 *)var_r22 + 0x20);
+                temp_r19 = *(u16 *)((u8 *)var_r22 + 0x24);
+                if ((arg5 != 0) && (var_r21 == 0) && ((u32)temp_r19 <= (u32)var_r31)) {
+                    fn_8022692C(var_r22, 0x40);
+                    var_r21 = fn_8022641C(var_r22, arg1 + var_r30, temp_r19);
+                    if (var_r21 == 0x302) {
+                        var_r21 = 0;
+                    }
+                }
+                if ((u32)temp_r19 != (u32)var_r31) {
+                    var_r31 = temp_r19;
+                    var_r29 = 1;
+                }
+                *arg3 = temp_r20;
+                fn_8022699C(sp10);
+            } else {
+                var_r21 = fn_802262E8(sp8);
+            }
+        }
+        fn_8022699C(spC);
+        var_r30 += var_r31;
+    }
+    *arg2 = var_r30;
+    return var_r21;
+}
+#pragma use_lmw_stmw reset
 
 int fn_802287A8(void) {
     return 0;
