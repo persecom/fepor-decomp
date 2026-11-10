@@ -345,9 +345,9 @@ s32 __OSPSInit(void) {
     return 0;
 }
 
-volatile u32 __PIRegs[64] : 0xCC006000;
+volatile u8 __PIRegs[0x40] : 0xCC006000;
 u8 fn_80204410(void) {
-    return (u8)__PIRegs[9];
+    return (u8)*(volatile u32 *)(__PIRegs + 0x24);
 }
 
 void OSRegisterVersion(s32 arg0) {
