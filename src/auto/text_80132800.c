@@ -5034,15 +5034,17 @@ u8 fn_80149EE0(void **arg0) {
     return M2C_FIELD(*arg0, u8 *, 7);
 }
 
-u8 fn_80149EEC(void **arg0) {
+s32 fn_80149EEC(void **arg0) {
+    u8 var_r0;
     void *temp_r3;
-    
+
     temp_r3 = *arg0;
-    if ((M2C_FIELD(temp_r3, u8 *, 5)) & 4) {
-        return 0;
+    if (*(u8 *)((u8 *)temp_r3 + 5) & 4) {
+        var_r0 = 0;
     } else {
-        return M2C_FIELD(temp_r3, u8 *, 0xF);
+        var_r0 = *(u8 *)((u8 *)temp_r3 + 0xF);
     }
+    return var_r0;
 }
 
 s32 fn_80149F10(void **arg0) {
