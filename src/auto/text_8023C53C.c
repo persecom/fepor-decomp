@@ -1,6 +1,8 @@
 /* Functions from 0x8022CD68 to 0x80267A7C, found by decomp-toolkit. */
 #include "common.h"
 
+typedef u8 Fn80256FF0Arg;
+
 extern u16 lbl_80366F28;
 extern char lbl_80282AE8[];
 extern u8 lbl_80368978;
@@ -1822,6 +1824,100 @@ s16 fn_802537F8(s32 arg0, u32 arg1, s32 arg2) {
     return (s16) var_r0;
 }
 
+void fn_80253860(s32 arg0, u32 *arg1, u8 op) {
+    u16 fn_80260F18(s32);
+    void fn_80261014(s32, s16);
+    extern s32 lbl_8034CB74[];
+    s32 res;
+    s32 lhs;
+    s16 rhs;
+    u32 v1;
+    u32 raw;
+    u32 idx;
+    u32 a;
+    u8 b0;
+    u8 b1;
+    u8 b2;
+    s32 c;
+
+    a = arg1[0];
+    b0 = arg1[1];
+    if (a >> 24) {
+        v1 = fn_80260F18(arg0);
+    } else {
+        idx = b0 & 0x1F;
+        if (idx < 16) {
+            v1 = *(s32*)((u8*)arg0 + 0xAC + idx * 4);
+        } else {
+            v1 = lbl_8034CB74[idx - 16];
+        }
+    }
+    lhs = (s16)v1;
+
+    if (op == 4) {
+        rhs = (s16)(arg1[1] >> 8);
+    } else {
+        if ((arg1[1] >> 16) & 0xFF) {
+            raw = fn_80260F18(arg0);
+        } else {
+            b1 = (arg1[1] >> 8) & 0xFF;
+            idx = b1 & 0x1F;
+            if (idx < 16) {
+                raw = *(s32*)((u8*)arg0 + 0xAC + idx * 4);
+            } else {
+                raw = lbl_8034CB74[idx - 16];
+            }
+        }
+        rhs = (s16)raw;
+    }
+
+    switch (op) {
+    case 0:
+    case 4:
+        res = lhs + rhs;
+        break;
+    case 1:
+        res = lhs - rhs;
+        break;
+    case 2:
+        res = lhs * rhs;
+        break;
+    case 3:
+        if (rhs != 0) {
+            res = lhs / rhs;
+        } else {
+            res = 0;
+        }
+        break;
+    }
+
+    if ((arg1[0] >> 16) & 0xFF) {
+        if (res < -0x8000) {
+            c = -0x8000;
+        } else if (res > 0x7FFF) {
+            c = 0x7FFF;
+        } else {
+            c = res;
+        }
+        fn_80261014(arg0, (s16)c);
+    } else {
+        b2 = (arg1[0] >> 8) & 0xFF;
+        idx = b2 & 0x1F;
+        if (res < -0x8000) {
+            c = -0x8000;
+        } else if (res > 0x7FFF) {
+            c = 0x7FFF;
+        } else {
+            c = res;
+        }
+        if (idx < 16) {
+            *(s32*)((u8*)arg0 + 0xAC + idx * 4) = (s16)c;
+        } else {
+            lbl_8034CB74[idx - 16] = (s16)c;
+        }
+    }
+}
+
 void fn_80253E10(void *arg0, u32 *arg1) {
     u32 temp_r4;
     s32 temp_r4_2;
@@ -2443,6 +2539,119 @@ int fn_80256DD8(int arg0) {
         ((u8 *)lbl_803689A8 + off)[0x11C] = 0;
     }
     return 0;
+}
+
+void fn_80256FF0(u8 arg0) {
+    void fn_80255B20(void *);
+    void fn_802554A4(void *, s32);
+    void fn_8024C5CC(s32);
+    void fn_802618E4(s32);
+    extern u8 lbl_80359710[];
+    extern s32 lbl_803689A8;
+    extern u16 lbl_80368A4C;
+    extern u8 lbl_80368A4E;
+    extern u8 lbl_80368A4F;
+    extern u8 lbl_80368A50;
+    extern u8 lbl_80368A51;
+
+    u8 *base;
+    u8 *voice;
+    u8 *node;
+    u8 *n2;
+    u8 *tbl;
+    u8 prev;
+    u8 next;
+    u16 p2;
+    u16 n2v;
+    s32 id;
+    u8 *freeNode;
+    u8 id8;
+    s32 idx;
+
+    base = lbl_80359710;
+    idx = arg0;
+    voice = (u8 *)lbl_803689A8 + idx * 0x458;
+    if (*(u32 *)(voice + 0x34) != 0) {
+        fn_80255B20(voice);
+        *(s32 *)(voice + 0x118) = *(s32 *)(voice + 0x118) & -4;
+        *(s32 *)(voice + 0x114) = *(s32 *)(voice + 0x114) & -1;
+        *(s32 *)(voice + 0x110) = 0;
+        fn_802554A4(voice, 2);
+
+        id = *(s32 *)(voice + 0xF4);
+        node = base + 0x800;
+        node += ((u8)id << 2);
+        if (*(u16 *)(node + 2) == 1) {
+            if (node[0] != 0xFF) {
+                prev = node[0];
+                tbl = base + 0x800;
+                tbl += (prev << 2);
+                tbl[1] = node[1];
+            } else {
+                next = node[1];
+                tbl = base + 0x900;
+                tbl += voice[0x10C];
+                *tbl = next;
+            }
+            if (node[1] != 0xFF) {
+                next = node[1];
+                prev = node[0];
+                tbl = base + 0x800;
+                tbl += next << 2;
+                *tbl = prev;
+            } else if (node[0] == 0xFF) {
+                n2 = base + 0xA00;
+                n2 += (voice[0x10C] << 2);
+                if (*(u16 *)(n2 + 2) != 0xFFFF) {
+                    p2 = *(u16 *)(n2 + 2);
+                    tbl = base + 0xA00;
+                    tbl += p2 << 2;
+                    *(u16 *)tbl = *(u16 *)n2;
+                } else {
+                    lbl_80368A4C = *(u16 *)n2;
+                }
+                if (*(u16 *)n2 != 0xFFFF) {
+                    n2v = *(u16 *)n2;
+                    tbl = base + 0xA00;
+                    tbl += n2v << 2;
+                    *(u16 *)(tbl + 2) = *(u16 *)(n2 + 2);
+                }
+            }
+            *(u16 *)(node + 2) = 0;
+        }
+
+        *(s32 *)(voice + 0x34) = 0;
+        voice[0x10C] = 0;
+        id = *(s32 *)(voice + 0xF4);
+        id8 = (u8)id;
+        freeNode = base + 0xE00;
+        freeNode += (id8 << 2);
+        if (*(u16 *)(freeNode + 2) == 0) {
+            *(u16 *)(freeNode + 2) = 1;
+            if (lbl_80368A51 != 0xFF) {
+                freeNode[1] = 0xFF;
+                freeNode[0] = lbl_80368A50;
+                tbl = base + 0xE00;
+                tbl += (lbl_80368A50 << 2);
+                tbl[1] = id8;
+            } else {
+                lbl_80368A51 = id8;
+                freeNode[1] = 0xFF;
+                freeNode[0] = 0xFF;
+            }
+            lbl_80368A50 = id8;
+            if (voice[0x11D] != 0) {
+                lbl_80368A4F -= 1;
+            } else {
+                lbl_80368A4E -= 1;
+            }
+        }
+        *(s32 *)(voice + 0xF4) = -1;
+    }
+    if (voice[0x11C] != 0) {
+        fn_8024C5CC(idx);
+    }
+    fn_802618E4(idx);
 }
 
 void fn_80257224(void) {
@@ -3681,8 +3890,12 @@ void fn_8025F0EC(u8 arg0, u8 arg1) {
     u8 a0;
     u8 a1;
     s32 idx;
+    s32 t0;
+    s32 t1;
 
-    cell = lbl_8035D318 + (arg0 * 0x860) + (arg1 * 0x86);
+    t0 = arg0 * 0x860;
+    t1 = arg1 * 0x86;
+    cell = lbl_8035D318 + t0 + t1;
     code = (u16)(cell[0x64] | (cell[0x65] << 8));
     switch ((s32)code) {
     case 0:
@@ -4178,19 +4391,20 @@ s32 fn_80260A7C(u32 arg0, u32 arg1, u32 arg2, u32 arg3)
 
     s32 fn_802601EC(void *, void *, u32, u32);
 
+    u8 *row;
     u32 *entry;
     u32 mask;
     u32 value;
-    u32 index;
+    u8 index;
     u32 result;
 
     index = arg1 & 0xFF;
 
+    row = (u8 *)lbl_8035D118 + ((arg3 & 0xFF) << 6);
+
     mask = lbl_802A1E00[index];
 
-    entry = (u32 *)((u8 *)lbl_8035D118
-        + ((arg3 & 0xFF) << 6)
-        + ((arg2 & 0xFF) << 2));
+    entry = (u32 *)(row + ((arg2 & 0xFF) << 2));
 
     value = *entry;
 
