@@ -110,18 +110,18 @@ extern "C" void fn_8005A79C(void *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4) 
         virtual s32 v15() = 0;
     };
     Obj *obj = (Obj *)arg0;
+    s32 src;
+    s32 temp;
+    s32 nbytes;
+    s32 count;
+    s32 off;
+    u16 *buf;
+    u16 pix;
+    u16 r, g, b;
     s32 w;
     s32 cols;
     s32 h;
-    s32 idx;
-    s32 src;
-    u32 count;
-    u32 nbytes;
-    u16 *buf;
-    u32 i;
-    u16 pix;
-    u16 r, g, b;
-    f32 f30, f29, f31;
+    f32 fx, fy, fw;
 
     if (arg3 != 0) {
         fn_8000A258();
@@ -130,22 +130,32 @@ extern "C" void fn_8005A79C(void *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4) 
                 fn_8000A03C((u8 *)arg0 + 4, (u8 *)arg0 + 0x24, 0, 0x11);
             } else {
                 src = fn_80222CDC((u8 *)arg0 + 0x24);
-                count = fn_80222CE8((u8 *)arg0 + 0x24);
-                count = (u16)count;
-                nbytes = count * 2;
-                buf = *(u16 **)((u8 *)arg0 + 0x3C);
-                memcpy(buf, (void *)(src + 0x80000000), nbytes);
-                for (i = 0; i < count; i++) {
-                    pix = buf[i];
-                    if (pix & 0x8000) {
-                        r = ((pix & 0x7C00) >> 10) + (arg4[0] >> 3);
-                        if (r > 0x1F) r = 0x1F;
-                        g = ((pix & 0x3E0) >> 5) + (arg4[1] >> 3);
-                        if (g > 0x1F) g = 0x1F;
-                        b = (pix & 0x1F) + (arg4[2] >> 3);
-                        if (b > 0x1F) b = 0x1F;
-                        buf[i] = 0x8000 | (r << 10) | (g << 5) | b;
-                    }
+                temp = fn_80222CE8((u8 *)arg0 + 0x24);
+                nbytes = ((u16)temp) << 1;
+                count = (u16)temp;
+                memcpy(*(void **)((u8 *)arg0 + 0x3C), (void *)(src + 0x80000000), nbytes);
+                off = 0;
+                if (count > 0) {
+                    do {
+                        buf = *(u16 **)((u8 *)arg0 + 0x3C);
+                        pix = *(u16 *)((u8 *)buf + off);
+                        if (pix & 0x8000) {
+                            r = (u16)(((s32)(pix & 0x7C00) >> 10) + ((s32)arg4[0] >> 3));
+                            if (r > 0x1F) {
+                                r = 0x1F;
+                            }
+                            g = (u16)(((s32)(pix & 0x3E0) >> 5) + ((s32)arg4[1] >> 3));
+                            if (g > 0x1F) {
+                                g = 0x1F;
+                            }
+                            b = (u16)((pix & 0x1F) + ((s32)arg4[2] >> 3));
+                            if (b > 0x1F) {
+                                b = 0x1F;
+                            }
+                            *(u16 *)((u8 *)buf + off) = (u16)(0x8000 | (r << 10) | (g << 5) | b);
+                        }
+                        off += 2;
+                    } while (--count != 0);
                 }
                 DCFlushRange(*(void **)((u8 *)arg0 + 0x3C), nbytes);
                 fn_8000A03C((u8 *)arg0 + 4, (u8 *)arg0 + 0x30, 0, 0x11);
@@ -156,15 +166,13 @@ extern "C" void fn_8005A79C(void *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4) 
         fn_8000A248();
         w = obj->v14();
         cols = obj->v12();
-        idx = arg3 - 1;
-        f30 = (f32)((idx % cols) * w);
+        fx = (f32)(((arg3 - 1) % cols) * w);
         h = obj->v15();
         cols = obj->v12();
-        f29 = (f32)((idx / cols) * h);
+        fy = (f32)(((arg3 - 1) / cols) * h);
         fn_80007898(1);
-        f31 = (f32)obj->v15();
-        w = obj->v14();
-        fn_8000770C((f32)arg1, (f32)arg2, f30, f29, (f32)w, f31);
+        fw = (f32)obj->v15();
+        fn_8000770C((f32)arg1, (f32)arg2, fx, fy, (f32)obj->v14(), fw);
         fn_80007884();
     }
 }
