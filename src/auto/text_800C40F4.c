@@ -6976,12 +6976,11 @@ void fn_800FC150(void) {
 }
 
 void fn_800FC2C4(s32 arg0) {
-    extern u16 lbl_802EF4C8;
-    u8 fn_800FCF74(s32, s32);
+    extern u32 lbl_802EF4C8[];
+    u32 fn_800FCF74(u32, s32);
     void fn_8000C188(s32);
-    
-    u16 temp_r3 = lbl_802EF4C8;
-    if (fn_800FCF74(temp_r3, 2) != 0) {
+
+    if ((u8)fn_800FCF74(*lbl_802EF4C8, 2)) {
         fn_8000C188(arg0);
     }
 }
