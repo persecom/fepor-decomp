@@ -622,6 +622,58 @@ s32 fn_80227444(void *arg0) {
     return err;
 }
 
+s32 fn_802276D4(void *arg0) {
+void fn_8022695C(void*,u32);
+s32 fn_80226698(void*,void*,s32);
+s32 fn_80229FA4(u16,u16,void*,s32*,s32);
+s32 fn_80229A98(u16,u16,void*,s32*,s32);
+s32 fn_80229928(u16,u16,void*,s32*,s32);
+s32 fn_802294F0(u16,u16,void*,s32*,s32);
+s32 fn_8022B078(void*,s32);
+s32 fn_802262E8(void*);
+void MWTRACE(u8,char*,...);
+void *memset(void*,s32,s32);
+extern char lbl_802824C0[];
+s32 result, err; s8 code; char *strings=lbl_802824C0;
+u8 request[0x40], invalid[0x40], reply[0x40];
+s32 outLen;
+if(*(u16*)((u8*)arg0+0x1c)>*(u16*)((u8*)arg0+0x20)){
+memset(invalid,0,0x40); invalid[4]=0x80; *(s32*)invalid=0x40; invalid[8]=0x14;
+fn_8022B078(invalid,0x40);return 0;
+}
+request[4]=0x80; *(s32*)request=0x468;
+fn_8022695C(arg0,0);
+MWTRACE(4,strings+0x98,*(s32*)((u8*)arg0+8));
+fn_80226698(arg0,request,0x40);
+MWTRACE(4,strings+0x98,*(s32*)((u8*)arg0+8));
+err=fn_80229FA4(0,0x24,arg0,&outLen,1);
+MWTRACE(4,strings+0xc0,err);
+MWTRACE(4,strings+0x98,*(s32*)((u8*)arg0+8));
+if(!err) err=fn_80229A98(0,0x21,arg0,&outLen,1);
+MWTRACE(4,strings+0xf8,err);
+MWTRACE(4,strings+0x98,*(s32*)((u8*)arg0+8));
+if(!err) err=fn_80229928(0,0x60,arg0,&outLen,1);
+MWTRACE(4,strings+0x120,err);
+MWTRACE(4,strings+0x98,*(s32*)((u8*)arg0+8));
+if(!err) err=fn_802294F0(0,0x1f,arg0,&outLen,1);
+MWTRACE(4,strings+0x150,err);
+MWTRACE(4,strings+0x98,*(s32*)((u8*)arg0+8));
+if(err){
+switch(err){
+case 0x703:code=0x12;break;
+case 0x701:code=0x14;break;
+case 0x702:code=0x15;break;
+case 0x704:code=0x21;break;
+case 0x705:code=0x22;break;
+case 0x706:code=0x20;break;
+default:code=3;break;
+}
+memset(reply,0,0x40);reply[4]=0x80;*(s32*)reply=0x40;reply[8]=code;fn_8022B078(reply,0x40);return 0;
+}
+MWTRACE(1,strings+0x60);
+result=fn_802262E8(arg0);MWTRACE(1,strings+0x80,result);return result;
+}
+
 #pragma use_lmw_stmw reset
 void fn_80227BF0(void) {
     OSReport("Error: Unknown unit type for %s\n", "null");
@@ -1151,6 +1203,95 @@ s32 fn_8022A0E4(void *arg0, void *arg1) {
     }
     return var_r3;
 }
+
+#pragma use_lmw_stmw on
+#pragma global_optimizer off
+s32 fn_8022A230(u32 start, s32 length, s32 mode) {
+    typedef struct {
+        u32 start;
+        u32 end;
+        s32 readable;
+        s32 writable;
+    } MemRange;
+    extern MemRange lbl_80282750[];
+    u32 end;
+    s32 result;
+    s32 sub;
+    u32 subEnd;
+    s32 i;
+    s32 j;
+    u32 entryEnd;
+
+    end = start + length - 1;
+    result = 0x700;
+    if (end < start) {
+        return 0x700;
+    }
+    i = 0;
+    if (start <= lbl_80282750[0].end && end >= lbl_80282750[0].start) {
+        if ((mode == 0 && lbl_80282750[i].readable == 0) ||
+            (mode == 1 && lbl_80282750[i].writable == 0)) {
+            result = 0x700;
+        } else {
+            result = 0;
+            if (start < lbl_80282750[i].start) {
+                sub = 0x700;
+                subEnd = (lbl_80282750[i].start - start) + start - 1;
+                if (subEnd >= start) {
+                    j = 0;
+                    if (start <= lbl_80282750[0].end && subEnd >= lbl_80282750[0].start) {
+                        if ((mode == 0 && lbl_80282750[j].readable == 0) ||
+                            (mode == 1 && lbl_80282750[j].writable == 0)) {
+                            sub = 0x700;
+                        } else {
+                            sub = 0;
+                            if (start < lbl_80282750[j].start) {
+                                sub = fn_8022A230(start, lbl_80282750[j].start - start, mode);
+                            }
+                            if (sub == 0) {
+                                entryEnd = lbl_80282750[j].end;
+                                if (subEnd > entryEnd) {
+                                    sub = fn_8022A230(entryEnd, subEnd - entryEnd, mode);
+                                }
+                            }
+                        }
+                    }
+                }
+                result = sub;
+            }
+            if (result == 0) {
+                entryEnd = lbl_80282750[i].end;
+                if (end > entryEnd) {
+                    sub = 0x700;
+                    subEnd = (end - entryEnd) + entryEnd - 1;
+                    if (subEnd >= entryEnd) {
+                        j = 0;
+                        if (entryEnd <= lbl_80282750[0].end && subEnd >= lbl_80282750[0].start) {
+                            if ((mode == 0 && lbl_80282750[j].readable == 0) ||
+                                (mode == 1 && lbl_80282750[j].writable == 0)) {
+                                sub = 0x700;
+                            } else {
+                                sub = 0;
+                                if (entryEnd < lbl_80282750[j].start) {
+                                    sub = fn_8022A230(entryEnd, lbl_80282750[j].start - entryEnd, mode);
+                                }
+                                if (sub == 0) {
+                                    if (subEnd > lbl_80282750[j].end) {
+                                        sub = fn_8022A230(lbl_80282750[j].end, subEnd - lbl_80282750[j].end, mode);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    result = sub;
+                }
+            }
+        }
+    }
+    return result;
+}
+#pragma global_optimizer reset
+#pragma use_lmw_stmw reset
 
 u8 fn_8022A4E0(s32 command, s32 file_handle, s32 *length_ptr, s32 buffer_ptr) {
     __builtin_trap();
