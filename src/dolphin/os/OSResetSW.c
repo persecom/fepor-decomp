@@ -326,6 +326,107 @@ loop_5:
     return var_r4;
 }
 
+void *SelectThread(s32 arg0) {
+    s32 fn_802059EC(void);
+    s32 fn_802059F8(void *);
+    void OSSetCurrentContext(void *);
+    void OSClearContext(void *);
+    void OSLoadContext(void *);
+    void OSEnableInterrupts(void);
+    void OSDisableInterrupts(void);
+    extern s32 Reschedule_80368520;
+    extern s32 RunQueueBits_80368518;
+    extern s32 RunQueueHint_8036851C;
+    extern void *RunQueue_80339478[];
+    extern void (*SwitchThreadCallback_80366F50)(void *, void *);
+    void **queue;
+    void *thread;
+    void *next;
+    void *tail;
+    void *pred;
+    s32 prio;
+    void **q;
+    s32 yield;
+    s32 cur;
+
+    queue = RunQueue_80339478;
+    yield = arg0;
+    if (Reschedule_80368520 > 0) {
+        return NULL;
+    }
+    cur = fn_802059EC();
+    thread = *(void **)0x800000E4;
+    if ((u32)cur != (u32)thread) {
+        return NULL;
+    }
+    if (thread != NULL) {
+        if (*(u16 *)((u8 *)thread + 0x2C8) == 2) {
+            if (yield == 0) {
+                s32 bits = RunQueueBits_80368518;
+                if (*(s32 *)((u8 *)thread + 0x2D0) <= (s32)__cntlzw((u32)bits)) {
+                    return NULL;
+                }
+            }
+            *(u16 *)((u8 *)thread + 0x2C8) = 1;
+            *(void **)((u8 *)thread + 0x2DC) = (void *)((u8 *)queue + (*(s32 *)((u8 *)thread + 0x2D0) * 8));
+            q = *(void ***)((u8 *)thread + 0x2DC);
+            tail = q[1];
+            if (tail == NULL) {
+                q[0] = thread;
+            } else {
+                *(void **)((u8 *)tail + 0x2E0) = thread;
+            }
+            *(void **)((u8 *)thread + 0x2E4) = tail;
+            *(void **)((u8 *)thread + 0x2E0) = NULL;
+            (*(void ***)((u8 *)thread + 0x2DC))[1] = thread;
+            {
+                s32 one = 1;
+                RunQueueBits_80368518 |= one << (0x1F - *(s32 *)((u8 *)thread + 0x2D0));
+                RunQueueHint_8036851C = one;
+            }
+        }
+        if ((*(u16 *)((u8 *)thread + 0x1A2) & 2) == 0) {
+            if (fn_802059F8(thread) != 0) {
+                return NULL;
+            }
+        }
+    }
+    if ((u32)RunQueueBits_80368518 == 0) {
+        SwitchThreadCallback_80366F50(*(void **)0x800000E4, NULL);
+        *(void **)0x800000E4 = NULL;
+        OSSetCurrentContext((u8 *)queue + 0x730);
+        do {
+            OSEnableInterrupts();
+            while ((u32)RunQueueBits_80368518 == 0) {
+            }
+            OSDisableInterrupts();
+        } while ((u32)RunQueueBits_80368518 == 0);
+        OSClearContext((u8 *)queue + 0x730);
+    }
+    RunQueueHint_8036851C = 0;
+    prio = __cntlzw((u32)RunQueueBits_80368518);
+    q = (void **)((u8 *)queue + (prio * 8));
+    next = q[0];
+    pred = *(void **)((u8 *)next + 0x2E0);
+    if (pred == NULL) {
+        q[1] = NULL;
+    } else {
+        *(void **)((u8 *)pred + 0x2E4) = NULL;
+    }
+    q[0] = pred;
+    if (q[0] == NULL) {
+        s32 one = 1;
+        RunQueueBits_80368518 &= ~(one << (0x1F - prio));
+    }
+    *(void **)((u8 *)next + 0x2DC) = NULL;
+    *(u16 *)((u8 *)next + 0x2C8) = 2;
+    SwitchThreadCallback_80366F50(*(void **)0x800000E4, next);
+    *(void **)0x800000E4 = next;
+    OSSetCurrentContext(next);
+    OSLoadContext(next);
+    return next;
+}
+
 void __OSReschedule(void) {
     extern s32 RunQueueHint_8036851C;
     if (RunQueueHint_8036851C != 0) {
@@ -352,7 +453,7 @@ void fn_8020A740(void *arg0) {
     }
 
     if ((void *)M2C_FIELD(r4, void **, 0) == NULL) {
-        extern u16 RunQueueBits_80368518;
+        extern s32 RunQueueBits_80368518;
         s32 shift = 0x1F - M2C_FIELD(arg0, s32 *, 0x2D0);
         RunQueueBits_80368518 &= ~(1 << shift);
     }
