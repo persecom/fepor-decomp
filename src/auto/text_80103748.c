@@ -203,16 +203,12 @@ s32 fn_80103B30(void) {
 
 s32 fn_80103B38(void) {
     s32 fn_8000BCA4(void *);
-    M2C_UNK fn_8000C070(s32, M2C_UNK);
-    M2C_UNK fn_800A8400();
-    M2C_UNK fn_8011AC78(s32);
-    extern u16 lbl_802734D0;
+    void fn_800A8400(void);
+    void fn_8000C070(s32, s32);
+    void fn_8011AC78(s32);
+    extern char lbl_802734D0[];
 
-    s32 temp_r31;
-    void *temp_r3;
-
-    temp_r3 = &lbl_802734D0 + 0x188;
-    temp_r31 = fn_8000BCA4(temp_r3);
+    s32 temp_r31 = fn_8000BCA4(lbl_802734D0 + 0xC4);
     fn_800A8400();
     fn_8000C070(temp_r31, 0);
     fn_8011AC78(temp_r31);
