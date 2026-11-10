@@ -1,6 +1,12 @@
 /* Functions from 0x801EAA2C to 0x801F18D4, found by decomp-toolkit. */
 #include "common.h"
 
+typedef struct String {
+    u32 size;
+    u32 cap;
+    char *data;
+} String;
+
 typedef struct Unk5C {
     void *unk0;
     void *unk4;
@@ -1390,6 +1396,92 @@ void fn_801EED74(void) {
 void fn_801EED94(void) {
     M2C_UNK fn_801EE76C();
     fn_801EE76C();
+}
+
+void fn_801EFB2C(void *arg0, char *arg1) {
+    void *fn_80040844(void);
+    s32 fn_8005C84C(void);
+    void fn_8006140C(void *);
+    void *fn_80061870(void);
+    s32 fn_800639B4(void);
+    s32 fn_80065EE8(void);
+    s32 fn_8006CE14(void);
+    s32 fn_8006D948(void);
+    void fn_800C93EC(void *);
+    void fn_800C9758(void *, void *, s32, s32);
+    void fn_800C992C(void *, char *, s32);
+    void fn_800C9A60(void *, s32);
+    void fn_800C9ABC(void *, char *, void *);
+    void fn_800CB90C(void *, void *, char *);
+    s32 strlen(char *);
+    extern char lbl_8027F26C[];
+    extern f32 lbl_8036B7D0;
+
+    s32 sp5C;
+    s32 sp58;
+    s32 sp54;
+    s32 sp48[3];
+    s32 sp3C[3];
+    s32 sp30[3];
+    s32 sp24[3];
+    s32 sp18[3];
+    s32 spC[3];
+    s32 sp8;
+    void *temp;
+    void *obj;
+
+    if (arg1 == NULL || *(s32 *)((u8 *)arg0 + 0xA8) != 0) {
+        *(s32 *)((u8 *)arg0 + 0xD0) = 0;
+        return;
+    }
+
+    sp58 = 0;
+    sp54 = 0;
+    sp5C = 0;
+    sp58 = 0;
+    fn_800C9ABC(&sp48, lbl_8027F26C + 0x1D6, &sp8);
+    fn_800C992C(&sp48, arg1, strlen(arg1));
+    fn_800C992C(&sp48, lbl_8027F26C + 0x1BF, strlen(lbl_8027F26C + 0x1BF));
+    fn_800C992C(&sp48, arg1, strlen(arg1));
+    fn_800CB90C(&sp3C, &sp48, lbl_8027F26C + 0x229);
+    fn_800C9758(&sp54, &sp3C, 0, -1);
+    fn_800C9A60(&sp3C, -1);
+    fn_800C93EC(&sp54);
+    *(s32 *)((u8 *)arg0 + 0xCC) = fn_8005C84C();
+    *(void **)((u8 *)arg0 + 0xD0) = fn_80061870();
+    fn_800CB90C(&sp30, &sp48, lbl_8027F26C + 0x208);
+    fn_800C9758(&sp54, &sp30, 0, -1);
+    fn_800C9A60(&sp30, -1);
+    fn_800C93EC(&sp54);
+    obj = *(void **)((u8 *)arg0 + 0xD0);
+    *(s32 *)((u8 *)obj + 0x48) = fn_8006CE14();
+    fn_800CB90C(&sp24, &sp48, lbl_8027F26C + 0x20C);
+    fn_800C9758(&sp54, &sp24, 0, -1);
+    fn_800C9A60(&sp24, -1);
+    fn_800C93EC(&sp54);
+    obj = *(void **)((u8 *)arg0 + 0xD0);
+    *(s32 *)((u8 *)obj + 0x40) = fn_80065EE8();
+    fn_800CB90C(&sp18, &sp48, lbl_8027F26C + 0x1C9);
+    fn_800C9758(&sp54, &sp18, 0, -1);
+    fn_800C9A60(&sp18, -1);
+    fn_800C93EC(&sp54);
+    obj = *(void **)((u8 *)arg0 + 0xD0);
+    *(s32 *)((u8 *)obj + 0x4C) = fn_8006D948();
+    fn_800CB90C(&spC, &sp48, lbl_8027F26C + 0x20F);
+    fn_800C9758(&sp54, &spC, 0, -1);
+    fn_800C9A60(&spC, -1);
+    fn_800C93EC(&sp54);
+    obj = *(void **)((u8 *)arg0 + 0xD0);
+    *(s32 *)((u8 *)obj + 0x44) = fn_800639B4();
+    fn_8006140C(*(void **)((u8 *)arg0 + 0xD0));
+    temp = *(void **)((u8 *)arg0 + 0xD0);
+    *(s32 *)temp |= 0x01040000;
+    obj = *(void **)((u8 *)arg0 + 0xD0);
+    *(f32 *)((u8 *)obj + 0x5C) = lbl_8036B7D0;
+    temp = fn_80040844();
+    *(void **)((u8 *)temp + 0x34) = *(void **)((u8 *)arg0 + 0xD0);
+    fn_800C9A60(&sp48, -1);
+    fn_800C9A60(&sp54, -1);
 }
 
 void fn_801F09E8(void) {
