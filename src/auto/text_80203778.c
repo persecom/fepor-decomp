@@ -1116,8 +1116,7 @@ void fn_8020712C(u8 *s, u8 *d) {
 u16 fn_802072A0(void) {
     extern u16 lbl_80366F48;
     extern void (*lbl_803684C0)(void);
-    void fn_80207768(void);
-    s32 temp;
+          s32 temp;
     u16 val;
 
     if (lbl_80366F48 != 0xFFFF) {
