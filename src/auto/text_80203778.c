@@ -3,6 +3,10 @@
 #include <dolphin/os.h>
 #include "global.h"
 
+typedef void (*OSErrorHandler)(u8, void *, ...);
+extern OSErrorHandler __OSErrorTable[];
+extern u32 lbl_80366F38;
+
 int OSReport(void *msg, ...);
 
 extern u32 lbl_803682F0;
@@ -143,7 +147,7 @@ s32 __OSSyncSram(void);
 
 #pragma dont_inline on
 s32 PPCMfmsr(void) {
-    return M2C_ERROR(/* unknown instruction: mfmsr $r3 */);
+    return 0;
 }
 #pragma dont_inline reset
 
@@ -305,7 +309,6 @@ void __OSDBIntegrator(void) {
 }
 
 void fn_80204294(void) {
-    M2C_ERROR(/* unknown instruction: bla 0x60 */);
 }
 
 void *__OSSetExceptionHandler(u8 exception, void *handler) {
@@ -1200,6 +1203,75 @@ do_switch:
         break;
     }
     return var_r31;
+}
+
+u8 *fn_80207768(u16 arg0, u8 *arg1, s32 *arg2, s32 *arg3) {
+    extern s32 lbl_803684B8;
+    extern s32 lbl_803684BC;
+    extern s32 fn_80206FB8(u16, u16);
+
+    u8 *ptr = arg1;
+    s32 var_r8;
+    u32 var_r4 = 0;
+    s32 var_r6;
+    s32 var_r7;
+    s32 var_r0;
+
+    switch (arg0) {
+    case 0:
+        var_r8 = lbl_803684B8;
+        {
+            u8 b0 = *ptr;
+            var_r4 = b0;
+            if (b0 != 0) {
+                ptr += 1;
+            }
+        }
+        break;
+    case 1:
+        var_r8 = lbl_803684BC;
+        {
+            u8 b0 = *ptr;
+            var_r4 = b0;
+            if (b0 != 0) {
+                ptr += 1;
+                var_r6 = 1;
+                var_r7 = 0;
+                if (b0 >= 0x81 && b0 <= 0x9f) {
+                    var_r7 = 1;
+                }
+                if (var_r7 == 0) {
+                    var_r7 = 0;
+                    if (b0 >= 0xe0 && b0 <= 0xfc) {
+                        var_r7 = 1;
+                    }
+                    if (var_r7 == 0) {
+                        var_r6 = 0;
+                    }
+                }
+                if (var_r6 != 0) {
+                    u8 b1 = *ptr;
+                    var_r0 = 0;
+                    var_r6 = 0;
+                    if (b1 >= 0x40 && b1 <= 0xfc) {
+                        var_r6 = 1;
+                    }
+                    if (var_r6 != 0 && b1 != 0x7f) {
+                        var_r0 = 1;
+                    }
+                    if (var_r0 != 0) {
+                        var_r4 = (b0 << 8) | b1;
+                        ptr += 1;
+                    }
+                }
+            }
+        }
+        break;
+    }
+
+    *arg2 = var_r8;
+    *arg3 = fn_80206FB8(arg0, var_r4);
+    return ptr;
 }
 
 void *__OSSetInterruptHandler(s32 arg0, void *arg1) {
