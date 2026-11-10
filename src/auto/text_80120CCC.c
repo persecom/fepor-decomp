@@ -1002,6 +1002,18 @@ void fn_80126204(u16 *arg0) {
     *arg0 &= 0xEDFF;
 }
 
+void fn_801262A8(s32 arg0) {
+    void fn_8000BF00(void *);
+    void fn_8014C718(void *, s32);
+    void fn_8019DB28(void);
+    extern u8 lbl_80290480[16];
+    extern u8 lbl_80330708[1400];
+
+    fn_8019DB28();
+    fn_8000BF00(lbl_80290480);
+    fn_8014C718(lbl_80330708, arg0);
+}
+
 u8 fn_80126830(void) {
     extern u8 lbl_80330708[];
     u8 temp = lbl_80330708[0x9D];
