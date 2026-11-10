@@ -35,6 +35,28 @@ typedef struct {
 
 
 extern s8 *lbl_80366DC0;
+
+typedef struct {
+    u8 pad[0x18];
+    s8 c0;
+    s8 c1;
+    s8 c2;
+    s8 c3;
+    s8 c4;
+    s8 c5;
+    s8 c6;
+} NameCmpObj;
+
+typedef struct {
+    s8 c0;
+    s8 c1;
+    s8 c2;
+    s8 c3;
+    s8 c4;
+    s8 c5;
+    s8 c6;
+} NameCmpRef;
+
 extern void* lbl_803672A8;
 extern f64 lbl_80368EF8;
 extern f32 lbl_80368FC0;
@@ -1907,6 +1929,59 @@ u8 fn_8003F214(void *arg0) {
 
 s32 fn_8003F21C(s32 arg0) {
     return arg0 + 0x1A0;
+}
+
+void fn_8005C7E8(void *);
+void fn_8003F670(void *arg0) {
+    s8 *ref;
+    void *ptr;
+    u8 ok;
+
+    ptr = arg0;
+    ref = lbl_80366DC0;
+    if ((s8)((u8 *)ptr)[0x18] != ref[0]) {
+        ok = 0;
+    } else if ((s8)((u8 *)ptr)[0x19] != ref[1]) {
+        ok = 0;
+    } else if ((s8)((u8 *)ptr)[0x1A] != ref[2]) {
+        ok = 0;
+    } else if ((s8)((u8 *)ptr)[0x1B] != ref[3]) {
+        ok = 0;
+    } else if ((s8)((u8 *)ptr)[0x1C] != ref[4]) {
+        ok = 0;
+    } else if ((s8)((u8 *)ptr)[0x1D] != ref[5]) {
+        ok = 0;
+    } else if ((s8)((u8 *)ptr)[0x1E] != ref[6]) {
+        ok = 0;
+    } else {
+        ok = 1;
+    }
+    if (ok) {
+    } else {
+        ptr = (u8 *)ptr - 0x20;
+        if ((s8)((u8 *)ptr)[0x18] != ref[0]) {
+            ok = 0;
+        } else if ((s8)((u8 *)ptr)[0x19] != ref[1]) {
+            ok = 0;
+        } else if ((s8)((u8 *)ptr)[0x1A] != ref[2]) {
+            ok = 0;
+        } else if ((s8)((u8 *)ptr)[0x1B] != ref[3]) {
+            ok = 0;
+        } else if ((s8)((u8 *)ptr)[0x1C] != ref[4]) {
+            ok = 0;
+        } else if ((s8)((u8 *)ptr)[0x1D] != ref[5]) {
+            ok = 0;
+        } else if ((s8)((u8 *)ptr)[0x1E] != ref[6]) {
+            ok = 0;
+        } else {
+            ok = 1;
+        }
+        if (ok) {
+        } else {
+            ptr = 0;
+        }
+    }
+    fn_8005C7E8(ptr);
 }
 
 void fn_8003FCCC(s32 arg0) {
