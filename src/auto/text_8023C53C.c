@@ -20,6 +20,7 @@ static inline u8 *FindAudioResource(void *data, u16 id, u32 offset) {
 }
 typedef struct SynthStateLink { u8 pad[0xEC]; s32 next; u8 padF0[0x458 - 0xF0]; } SynthStateLink;
 typedef s32 Fn80256FF0Arg;
+typedef struct ThpDecodeState { u8 pad[0x698]; u16 count; u16 pad69A; u8 *cursor; u32 pad6A0; u32 bits; } ThpDecodeState;
 static inline u8 SynthAllocateStream(void) {
 extern u8 lbl_8035A6D0[];
 u8 i;
@@ -292,6 +293,68 @@ void fn_8023C560(void) {
 s32 AMC_IsStub(void) {
     return 1;
 }
+
+#pragma scheduling off
+#pragma use_lmw_stmw on
+#pragma global_optimizer off
+#pragma inline_depth(0)
+u8 fn_8023C56C(u8 *arg0,u32 arg1,u32 arg2,u32 arg3,u32 arg4) {
+extern u8 *lbl_80368950;extern s32 lbl_8036894C,lbl_80368954;
+s32 PPCMfhid2(void);void fn_80205198(void*,u32);
+s32 fn_8023C7F4(void);s32 fn_8023C930(void);
+u8 fn_8023CA4C(void);u8 fn_8023CE08(void);
+void fn_8023D2FC(void);void fn_8023C7B0(void);void fn_8023D59C(u32,u32,u32);
+u8 done;u8 result;u8 marker;
+u8 **cursor;
+if(!arg0) goto noInput;
+if(!arg1 || !arg2 || !arg3) goto noOutput;
+if(!arg4) goto noWork;
+if(!(PPCMfhid2()&0x10000000)) goto badHid;
+if(!lbl_80368954) goto notInit;
+lbl_8036894C=arg4;
+lbl_80368950=(u8*)((lbl_8036894C+31)&~31);
+lbl_8036894C=(u32)lbl_80368950+0x6bc;
+fn_80205198(lbl_80368950,0x6bc);
+*(u32*)(lbl_80368950+0x6a4)=0x21;
+done=0;
+*(u16*)(lbl_80368950+0x698)=0;
+*(u8**)(lbl_80368950+0x69c)=arg0;
+do{
+if(*(*(u8**)(lbl_80368950+0x69c))++!=255) goto badPrefix;
+while(**(cursor=(u8**)(lbl_80368950+0x69c))==255) (*cursor)++;
+marker=*(*cursor)++;
+if(marker<=0xd7U){
+if(marker==0xc4){result=fn_8023CE08();if(result) goto error;}
+else if(marker==0xc0){result=fn_8023C7F4();if(result) goto error;}
+else goto badMarker;
+}else if(marker>=0xd8U && marker<=0xdfU){
+if(marker==0xdd)fn_8023D2FC();
+else if(marker==0xdb){result=fn_8023CA4C();if(result)goto error;}
+else if(marker==0xda){result=fn_8023C930();if(result)goto error;done=1;}
+else if(marker!=0xd8) goto badMarker;
+}else if(marker>=0xe0U){
+if((marker>=0xe0U && marker<=0xefU)||marker==0xfe){
+u8 *p=*(u8**)(lbl_80368950+0x69c);
+*(u8**)(lbl_80368950+0x69c)=p+((p[0]<<8)|p[1]);
+}else goto badMarker;
+}
+}while(!done);
+fn_8023C7B0();
+fn_8023D59C(arg1,arg2,arg3);
+return 0;
+noInput:return 0x19;
+noOutput:return 0x1b;
+noWork:return 0x1a;
+badMarker:return 11;
+badPrefix:return 3;
+error:return result;
+badHid:return 0x1c;
+notInit:return 0x1d;
+}
+#pragma inline_depth(8)
+#pragma global_optimizer reset
+#pragma use_lmw_stmw reset
+#pragma scheduling reset
 
 void fn_8023C7B0(void) {
     extern M2C_UNK lbl_8033E578;
@@ -654,7 +717,7 @@ found:
                     goto loop_a;
                 }
                 off = (s32)lbl_8033F990 + off;
-                listpp = &((SynthVoice *)off)->listE6C;
+                listpp = (VidList **)(off + 0xE6C);
                 node = *listpp;
                 goto loop_b_test;
             loop_b:
@@ -5915,11 +5978,10 @@ a0_path:
             if (obj != 0) {
                 mul = op * 0xC;
                 idx = op + 0x138;
-                tmp = 1;
                 mul -= 0x5B8;
-                val = *(s16 *)((s32)obj + mul);
-                *((u8 *)obj + idx) = tmp;
-                val <<= 1;
+                tmp = *(s16 *)((s32)obj + mul);
+                *((u8 *)obj + idx) = 1;
+                val = tmp << 1;
             } else {
                 val = 0;
             }
@@ -6309,10 +6371,8 @@ s32 fn_80260A34(void *arg0)
 
 s32 fn_80260A7C(u32 arg0, u32 arg1, u32 arg2, u32 arg3)
 {
-    extern u16 lbl_8035D118[256];
     extern u32 lbl_802A1E00[];
     extern u8 lbl_8034D034[];
-
     s32 fn_802601EC(void *, void *, u32, u32);
 
     u8 *row;
@@ -6321,40 +6381,27 @@ s32 fn_80260A7C(u32 arg0, u32 arg1, u32 arg2, u32 arg3)
     u32 value;
     u8 index;
     u32 result;
+    u8 *p;
 
     index = arg1 & 0xFF;
-
     row = (u8 *)lbl_8035D118 + ((arg3 & 0xFF) << 6);
-
-    mask = lbl_802A1E00[index];
-
+    mask = lbl_802A1E00[arg1 & 0xFF];
     entry = (u32 *)(row + ((arg2 & 0xFF) << 2));
-
     value = *entry;
-
     result = (mask & value) != 0;
-
     if (result != 0) {
         *entry = value & ~mask;
     }
-
     if (result != 0) {
         return fn_802601EC(
             0,
-            lbl_8034D034
-                + (arg0 & 0xFF) * 0x90
-                + index * 0x24,
+            lbl_8034D034 + (arg0 & 0xFF) * 0x90 + index * 0x24,
             arg2,
             arg3
         );
     }
-
-    return *(u16 *)(
-        lbl_8034D034
-        + (arg0 & 0xFF) * 0x90
-        + index * 0x24
-        + 0x20
-    );
+    p = lbl_8034D034 + (arg0 & 0xFF) * 0x90 + index * 0x24;
+    return *(u16 *)(p + 0x20);
 }
 
 s32 fn_80260B30(u32 arg0, u32 arg1, u32 arg2, u32 arg3, u32 arg4, u32 arg5)
