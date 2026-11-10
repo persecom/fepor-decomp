@@ -2047,6 +2047,17 @@ void fn_8018DAD4(void) {
     }
 }
 
+void fn_8018DB10(void) {
+    register unsigned int object;
+    extern u8 lbl_80296128[];
+
+    object = fn_8000C0C0(lbl_80296128);
+
+    if (object != 0) {
+        *(u16 *)((u8 *)object + 0x30) |= 2;
+    }
+}
+
 void fn_8018DB4C(void) {
     void *fn_8000C0C0(M2C_UNK *);
     extern u16 lbl_80296128[20];
@@ -6348,7 +6359,7 @@ void fn_801A27A0(void *arg0) {
 }
 
 void fn_801A27F8(void *arg0) {
-    M2C_UNK fn_80066D00(M2C_UNK, M2C_UNK, f32, f32, f32);
+    M2C_UNK fn_80066D00(M2C_UNK, void *, f32, f32, f32);
     M2C_UNK fn_80067490(M2C_UNK);
     M2C_UNK fn_80067984(M2C_UNK);
     M2C_UNK fn_80067EDC(M2C_UNK);
@@ -6434,7 +6445,7 @@ void fn_801A27F8(void *arg0) {
         *(f32 *)0xCC008000 = 0.0f;
         *(f32 *)0xCC008000 = 0.0f;
         *(f32 *)0xCC008000 = 1.0f;
-        fn_80066D00(-1, 0xCC010000, 1.0f, 608.0f, 0.0f);
+        fn_80066D00(-1, (void *)0xCC010000, 1.0f, 608.0f, 0.0f);
         fn_80067984(0);
     }
 }
