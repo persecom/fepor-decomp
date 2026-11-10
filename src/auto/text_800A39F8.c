@@ -8,6 +8,11 @@ extern u8 lbl_80312A80[0x30];
 
 
 extern s32 lbl_803677A4;
+void *fn_800A39F8(void) {
+    extern u8 lbl_8026E168[];
+    return lbl_8026E168;
+}
+
 s32 fn_800A3A04(s32 arg0, s32 arg1) {
     M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
     fn_80024398(&lbl_803677A4, arg1, 0);
