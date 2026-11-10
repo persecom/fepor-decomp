@@ -175,10 +175,8 @@ extern s32 lbl_80368588;
 #define stringOff(i) (FstStart_8036857C[i].isDirAndStringOff & ~0xFF000000)
 #define parentDir(i) (FstStart_8036857C[i].parentOrPosition)
 
-static inline BOOL DVDComparePathComponent(char *nameArg, char *pathArg) {
+static inline BOOL DVDComparePathComponent(char *path, char *name) {
     s32 fn_80230CE0(s32);
-    char *path = pathArg;
-    char *name = nameArg;
     while (*name) {
         s32 first = fn_80230CE0(*name++);
         if (first != fn_80230CE0(*path++)) return FALSE;
