@@ -1039,6 +1039,23 @@ void *fn_800A101C(void) {
     return &lbl_80312270;
 }
 
+s32 fn_800A1078(void) {
+    extern void *lbl_80367240;
+    extern u8 lbl_80330708[];
+    s32 temp_r5;
+    struct {
+        u8 flag : 1;
+        u8 rest : 7;
+    } *b;
+
+    temp_r5 = *(s32 *)((u8 *)lbl_80367240 + 4);
+    if (temp_r5 & (*(s32 *)((u8 *)lbl_80367240 + 8) ^ temp_r5) & 0x03000003) {
+        b = (void *)&lbl_80330708[0x9F];
+        b->flag ^= 1;
+    }
+    return 0;
+}
+
 s32 fn_800A13A0(void) {
     extern M2C_UNK lbl_80330708;
     extern void *lbl_80367240;
