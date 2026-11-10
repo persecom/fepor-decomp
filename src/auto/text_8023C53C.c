@@ -3,6 +3,7 @@
 
 typedef struct SynthMessageSlots { u8 pad[0xAC]; u32 slots[32]; } SynthMessageSlots;
 typedef struct SynthMessageQueue { u8 pad[0x444]; u32 slots[4]; } SynthMessageQueue;
+typedef struct SampleKey { s32 data; u16 id; u16 type; u16 ref; u16 pad; } SampleKey;
 typedef s32 Fn80256FF0Arg;
 
 extern u16 lbl_80366F28;
@@ -1921,15 +1922,16 @@ void fn_80253860(s32 arg0, u32 *arg1, u8 op) {
 }
 
 extern void (*lbl_803689AC)(u32,u32);
+#pragma opt_strength_reduction off
 void fn_80253BCC(void *arg0, void *arg1) {
  s32 fn_80255FB0();
  extern s32 lbl_8034CB74[];
  extern void (*lbl_803689AC)(u32,u32);
  void fn_8025539C(void *);
- u32 id; u32 value; u8 i; u8 *state; u32 bits, index, raw; s32 result;
+ u32 id; u32 value; u8 i; u8 *state; u32 bits, raw; u8 index; s32 result;
  bits = *(u32*)((u8*)arg1+4);
  index = (bits >> 8) & 31;
- if(index < 16) value=((u32*)((u8*)arg0+(u8)index*4))[0x2B];
+ if(index < 16) value=((SynthMessageSlots*)((u8*)arg0+(u8)index*4))->slots[0];
  else value=*(u32*)((u8*)lbl_8034CB74+(u8)index*4-0x40);
  raw=*(u32*)arg1;
  if((u8)(raw>>8)==0) {
@@ -1943,7 +1945,7 @@ void fn_80253BCC(void *arg0, void *arg1) {
       state=(u8*)lbl_803689A8+(u8)result*0x458;
       if(state[0x440]<4) {
  state[0x440]++;
- *(u32*)((u8*)((u32)state+(state[0x442]*4+0x444)))=value;
+ *(u32*)(state+(state[0x442]*4+0x444))=value;
  state[0x442]=(state[0x442]+1)&3;
  if(state[0x68]!=0 && *(u32*)(state+0x58)!=0) {
  *(u32*)(state+0x38)=*(u32*)(state+0x64);
@@ -1958,14 +1960,14 @@ void fn_80253BCC(void *arg0, void *arg1) {
   } else if(lbl_803689AC) lbl_803689AC(*(u32*)(*(u8**)((u8*)arg0+0xF8)+8),value);
  } else {
   index=bits&31;
-  if(index<16) result=((s32*)((u8*)arg0+(u8)index*4))[0x2B];
+  if(index<16) result=((SynthMessageSlots*)((u8*)arg0+(u8)index*4))->slots[0];
   else result=*(s32*)((u8*)lbl_8034CB74+(u8)index*4-0x40);
   result=fn_80255FB0(result);
   if((u32)result!=0xFFFFFFFF) {
    state=(u8*)lbl_803689A8+(u8)result*0x458;
    if(state[0x440]<4) {
  state[0x440]++;
- *(u32*)(state+state[0x442]*4+0x444)=value;
+ ((SynthMessageQueue*)(state+state[0x442]*4))->slots[0]=value;
  state[0x442]=(state[0x442]+1)&3;
  if(state[0x68]!=0 && *(u32*)(state+0x58)!=0) {
  *(u32*)(state+0x38)=*(u32*)(state+0x64);
@@ -1977,7 +1979,7 @@ void fn_80253BCC(void *arg0, void *arg1) {
   }
  }
 }
-
+#pragma opt_strength_reduction on
 void fn_80253E10(void *arg0, u32 *arg1) {
     u32 temp_r4;
     s32 temp_r4_2;
@@ -6124,8 +6126,7 @@ void fn_80262F98(s32 unused, s32 arg1, void *arg2) {
     *(s32 *)((u8 *)arg2 + 8) = *(s32 *)((u8 *)arg2 + 8) - ((arg1 + 0x1F) & ~0x1F);
 }
 
-void fn_80262FB0(void)
-{
+void fn_80262FB0(void) {
     extern u8 lbl_80364430[];
     extern void *lbl_80368AE0;
     extern void *lbl_80368ADC;
@@ -6134,38 +6135,42 @@ void fn_80262FB0(void)
     extern u32 lbl_80368AEC;
 
     u8 *base;
-    u8 *entry;
-    u32 index;
+    u8 *p;
+    u32 i;
+    u32 ctr;
 
     base = lbl_80364430;
-
     lbl_80368AE0 = 0;
     lbl_80368ADC = 0;
     lbl_80368AD8 = base;
 
-    entry = base + 0x10;
+    p = base + 0x10;
+    i = 1;
+    ctr = 7;
+    do {
+        *(u8 **)(p - 0x10) = p;
+        *(u8 **)(p + 0x00) = p + 0x10;
+        *(u8 **)(p + 0x10) = p + 0x20;
+        *(u8 **)(p + 0x20) = p + 0x30;
+        *(u8 **)(p + 0x30) = p + 0x40;
+        *(u8 **)(p + 0x40) = p + 0x50;
+        *(u8 **)(p + 0x50) = p + 0x60;
+        *(u8 **)(p + 0x60) = p + 0x70;
+        p += 0x80;
+        i += 8;
+    } while (--ctr);
 
-    for (index = 0; index < 7; index++) {
-        *(void **)(entry - 0x10) = entry;
-        *(void **)(entry + 0x00) = entry + 0x10;
-        *(void **)(entry + 0x10) = entry + 0x20;
-        *(void **)(entry + 0x20) = entry + 0x30;
-        *(void **)(entry + 0x30) = entry + 0x40;
-        *(void **)(entry + 0x40) = entry + 0x50;
-        *(void **)(entry + 0x50) = entry + 0x60;
-        *(void **)(entry + 0x60) = entry + 0x70;
-
-        entry += 0x80;
+    p = base + (i << 4);
+    ctr = 0x40 - i;
+    if (i < 0x40) {
+        do {
+            *(u8 **)(p - 0x10) = p;
+            p += 0x10;
+            i += 1;
+        } while (--ctr);
     }
 
-    entry = base + 0x390;
-
-    for (index = 0x39; index < 0x40; index++) {
-        *(void **)(entry - 0x10) = entry;
-        entry += 0x10;
-    }
-
-    *(void **)(entry - 0x10) = 0;
+    *(u8 **)(p - 0x10) = 0;
     lbl_80368AEC = lbl_80368AF0;
 }
 
