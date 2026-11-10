@@ -379,6 +379,19 @@ void fn_801B66F4(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x3C) = 0;
 }
 
+void fn_801B6700(void *arg0) {
+    f32 fn_80059F64(s32, f32, f32, f32, f32);
+    void fn_8000C188(void *);
+    u16 old;
+
+    old = *(u16 *)((u8 *)arg0 + 0x3C);
+    *(u16 *)((u8 *)arg0 + 0x3C) = (u16)(old + 1);
+    *(u8 *)((u8 *)arg0 + 0x39) = (u8)(s32)fn_80059F64(old, 0.0f, 255.0f, 8.0f, (f32)*(u16 *)((u8 *)arg0 + 0x3C));
+    if (*(u16 *)((u8 *)arg0 + 0x3C) == 8) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_801B6784(void *arg0) {
     s32 fn_8006D948(void *);
     void fn_80059208(void *, void *);
