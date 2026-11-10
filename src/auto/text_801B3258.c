@@ -2046,13 +2046,8 @@ void fn_801C4564(void) { M2C_UNK fn_801C45A4(); fn_801C45A4(); }
 void fn_801C4584(void){ fn_801C5B80(); /*try*/ }
 
 void fn_801C6008(s32 arg0) {
-    extern u16 lbl_80298224[20];
-    void *temp_r3;
-    s32 temp_r4;
-
-    temp_r4 = (s32)&lbl_80298224;
-    temp_r3 = (void *)fn_8000CAF0(&temp_r4, 4);
-    *(s32 *)((char *)temp_r3 + 0x30) = arg0;
+    extern u8 lbl_80298224[];
+    M2C_FIELD(fn_8000CAF0(&lbl_80298224, 4), s32 *, 0x30) = arg0;
 }
 
 void fn_801C6044(void *arg0) {
