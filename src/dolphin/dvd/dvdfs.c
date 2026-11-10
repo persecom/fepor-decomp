@@ -504,19 +504,19 @@ int fn_8020F620(void *arg0) {
 }
 
 void __DVDClearWaitingQueue(void) {
-    extern u16 WaitingQueue_80339FD8[16];
-    u32 *base;
-    
-    base = (u32 *)&WaitingQueue_80339FD8[0];
-    
-    base[0] = (u32)(base);
-    base[1] = (u32)(base);
-    base[2] = (u32)(base + 4);
-    base[3] = (u32)(base + 4);
-    base[4] = (u32)(base + 8);
-    base[5] = (u32)(base + 8);
-    base[6] = (u32)(base);
-    base[7] = (u32)(base);
+    struct DVDQueue {
+        struct DVDQueue *next;
+        struct DVDQueue *prev;
+    };
+    extern struct DVDQueue WaitingQueue_80339FD8[4];
+    struct DVDQueue *ptr;
+    u32 i;
+
+    for (i = 0; i < 4; i++) {
+        ptr = &WaitingQueue_80339FD8[i];
+        ptr->next = ptr;
+        ptr->prev = ptr;
+    }
 }
 
 s32 fn_8020F7F0(void *arg0) {
