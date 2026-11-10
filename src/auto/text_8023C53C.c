@@ -3324,15 +3324,16 @@ u16 fn_80260884(void *arg0) {
     return (u16)result;
 }
 
-s32 fn_802608CC(struct { u8 pad[0x220]; s32 flags; u8 pad2[0x164]; u16 cached; } *arg0) {
+s32 fn_802608CC(void *arg0) {
+    s32 fn_802601EC(void *, void *, u8, u8);
     s32 temp_r4;
 
-    temp_r4 = arg0->flags;
+    temp_r4 = *(s32 *)((u8 *)arg0 + 0x220);
     if (!(temp_r4 & 0x200)) {
-        return arg0->cached;
+        return *(u16 *)((u8 *)arg0 + 0x388);
     }
-    arg0->flags = temp_r4 & 0xFFFFFDFF;
-    return fn_802601EC((char *)arg0 + 0x368, *((u8 *)arg0 + 0x121), *((u8 *)arg0 + 0x122));
+    *(s32 *)((u8 *)arg0 + 0x220) = temp_r4 & 0xFFFFFDFF;
+    return fn_802601EC(arg0, (u8 *)arg0 + 0x368, *(u8 *)((u8 *)arg0 + 0x121), *(u8 *)((u8 *)arg0 + 0x122));
 }
 
 u16 fn_80260914(void *arg0) {
