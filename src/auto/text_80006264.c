@@ -1102,7 +1102,8 @@ void fn_80009F90(s32 arg0, s32 arg1) {
 void fn_8000A174(void *arg0,u16 arg1){void fn_80006298(void*,s32,u32);u16 var_r31;var_r31=arg1;if(arg0){M2C_FIELD(lbl_80367140,s32*,52)=M2C_FIELD(arg0,s32*,0);M2C_FIELD(lbl_80367140,s32*,56)=M2C_FIELD(arg0,s32*,4);M2C_FIELD(lbl_80367140,s32*,60)=M2C_FIELD(arg0,s32*,8);M2C_FIELD(lbl_80367140,s32*,64)=M2C_FIELD(arg0,s32*,12);M2C_FIELD(lbl_80367140,s32*,68)=M2C_FIELD(arg0,s32*,16);M2C_FIELD(lbl_80367140,s32*,72)=M2C_FIELD(arg0,s32*,20);M2C_FIELD(lbl_80367140,s32*,76)=M2C_FIELD(arg0,s32*,24);M2C_FIELD(lbl_80367140,s32*,80)=M2C_FIELD(arg0,s32*,28);}else{fn_80006298((u8*)lbl_80367140+52,0,44);if((var_r31&3)==0)var_r31=(var_r31&0xFFFC)|2;}M2C_FIELD(lbl_80367140,s8*,34)=0xFF;M2C_FIELD(lbl_80367140,u16*,32)=M2C_FIELD(lbl_80367140,u16*,32)&0xFFFF7B0C;M2C_FIELD(lbl_80367140,u16*,32)=M2C_FIELD(lbl_80367140,u16*,32)|var_r31;}
 
 void fn_8000A248(void) {
-    lbl_80367140 = 2;
+    extern u16 lbl_80367140;
+    *(u8 *)(*(u8 **)&lbl_80367140 + 0xa8) = 2;
 }
 
 u16 fn_8000A258(u16 arg0, u16 arg1) {
@@ -1207,6 +1208,50 @@ void fn_8000A430(void *arg0) {
 void fn_8000A440(s32 arg0, s32 arg1) {
     extern s32 lbl_802ADAFC[];
     lbl_802ADAFC[arg0] = arg1;
+}
+
+void fn_8000A860(void) {
+    void fn_8000A258(s32);
+    void fn_80009D74(f32, f32, f32, f32);
+    void fn_8000A248(void);
+    void fn_8014BB58(s32, s32, s32 *, s32);
+    void fn_8000A454(u32, s32 *, s32 *, s32);
+    extern f32 lbl_80368BCC;
+    extern f32 lbl_80368BD0;
+    extern f32 lbl_80368BD4;
+    extern s32 lbl_80368BC8;
+    extern u32 lbl_802ADADC[];
+    extern s32 lbl_802838C8[];
+
+    s32 sp10 = 1;
+    s32 spC = 0;
+    s32 sp8;
+    u32 *var_r31;
+    s32 *var_r30;
+    s32 var_r29;
+
+    fn_8000A258(1);
+    fn_80009D74(lbl_80368BCC, lbl_80368BCC, lbl_80368BD0, lbl_80368BD4);
+    fn_8000A248();
+    var_r31 = lbl_802ADADC;
+    var_r29 = 0;
+    var_r30 = lbl_802838C8;
+    while (*var_r31 != 0) {
+        sp8 = lbl_80368BC8;
+        fn_8014BB58(0, spC * 8, &sp8, *var_r30);
+        {
+            s32 old = spC;
+            spC = old + 1;
+            fn_8000A454(*var_r31, &sp10, &spC, old);
+        }
+        var_r29++;
+        var_r30++;
+        if (var_r29 >= 8) {
+            var_r31++;
+            break;
+        }
+        var_r31++;
+    }
 }
 
 s32 fn_8000A930(void *arg0) {
