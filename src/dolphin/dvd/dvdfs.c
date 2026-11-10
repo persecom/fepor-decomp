@@ -4,6 +4,31 @@
 #include "global.h"
 extern u16 Scb_80339420[];
 extern volatile u32 __DIRegs[16];
+
+typedef struct {
+    u8 unk0;
+    u8 pad1;
+    u16 unk2;
+    u16 unk4;
+    u16 unk6;
+    u16 unk8;
+    u16 unkA;
+    u8 unkC;
+    u8 unkD;
+    u8 unkE;
+    u8 unkF;
+    u16 unk10;
+    u16 unk12;
+    u16 unk14;
+    u16 unk16;
+    u16 unk18;
+    u16 unk1A;
+    u8 unk1C;
+    u8 unk1D;
+    u8 unk1E;
+    u8 unk1F;
+    u16 unk20;
+} VITiming;
 extern s32 PauseFlag_803685A4;
 extern s32 PausingFlag_803685A8;
 extern s32 FatalErrorFlag_803685B0;
@@ -558,6 +583,27 @@ void __DVDClearWaitingQueue(void) {
     }
 }
 
+s32 __DVDCheckWaitingQueue(void) {
+    extern u32 WaitingQueue_80339FD8[];
+
+    s32 i;
+    u32 *queue;
+
+    OSDisableInterrupts();
+
+    queue = WaitingQueue_80339FD8;
+
+    for (i = 0; i < 4; i++) {
+        if (queue[i * 2] != (u32)&queue[i * 2]) {
+            OSRestoreInterrupts();
+            return 1;
+        }
+    }
+
+    OSRestoreInterrupts();
+    return 0;
+}
+
 s32 fn_8020F7F0(void *arg0) {
     s32 OSDisableInterrupts(void);
     void OSRestoreInterrupts(s32);
@@ -719,6 +765,86 @@ s32 fn_802118D8(void) {
     temp_r31 = *(u16 *)0xCC00206E & 3;
     OSRestoreInterrupts(enabled);
     return temp_r31 & 1;
+}
+
+void fn_80211914(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    extern u16 *lbl_80368648;
+    extern u8 lbl_8033A158[];
+    s32 temp_r7;
+    u16 temp_r8;
+    u32 temp_r10;
+    u32 mode;
+    u32 var_r0;
+    u16 *r9;
+
+    r9 = lbl_80368648;
+    var_r0 = ((u32)(arg1 - 1) * 2) + ((u32)(arg0 - 1) / (u32)*(u16 *)((u8 *)r9 + 0x1a));
+    mode = *(u32 *)(lbl_8033A158 + 0x24);
+
+    if (mode == 0) {
+        temp_r10 = *(u16 *)((u8 *)r9 + 0x18);
+        if (var_r0 < temp_r10) {
+            temp_r8 = *(u16 *)((u8 *)r9 + 4);
+            temp_r7 = *(u8 *)r9 * 3;
+            if (var_r0 < (u32)temp_r8 + temp_r7) {
+                *(s16 *)arg3 = -1;
+            } else if (var_r0 >= temp_r10 - *(u16 *)((u8 *)r9 + 8)) {
+                *(s16 *)arg3 = -1;
+            } else {
+                *(s16 *)arg3 = (var_r0 - temp_r7 - temp_r8) & ~1;
+            }
+        } else {
+            var_r0 = var_r0 - temp_r10;
+            temp_r8 = *(u16 *)((u8 *)r9 + 6);
+            temp_r7 = *(u8 *)r9 * 3;
+            if (var_r0 < (u32)temp_r8 + temp_r7) {
+                *(s16 *)arg3 = -1;
+            } else if (var_r0 >= temp_r10 - *(u16 *)((u8 *)r9 + 0xa)) {
+                *(s16 *)arg3 = -1;
+            } else {
+                *(s16 *)arg3 = ((var_r0 - temp_r7 - temp_r8) & ~1) + 1;
+            }
+        }
+    } else if (mode == 1) {
+        temp_r10 = *(u16 *)((u8 *)r9 + 0x18);
+        if (var_r0 >= temp_r10) {
+            var_r0 = var_r0 - temp_r10;
+        }
+        temp_r8 = *(u16 *)((u8 *)r9 + 4);
+        temp_r7 = *(u8 *)r9 * 3;
+        if (var_r0 < (u32)temp_r8 + temp_r7) {
+            *(s16 *)arg3 = -1;
+        } else if (var_r0 >= temp_r10 - *(u16 *)((u8 *)r9 + 8)) {
+            *(s16 *)arg3 = -1;
+        } else {
+            *(s16 *)arg3 = (var_r0 - temp_r7 - temp_r8) & ~1;
+        }
+    } else if (mode == 2) {
+        temp_r10 = *(u16 *)((u8 *)r9 + 0x18);
+        if (var_r0 < temp_r10) {
+            temp_r8 = *(u16 *)((u8 *)r9 + 4);
+            temp_r7 = *(u8 *)r9 * 3;
+            if (var_r0 < (u32)temp_r8 + temp_r7) {
+                *(s16 *)arg3 = -1;
+            } else if (var_r0 >= temp_r10 - *(u16 *)((u8 *)r9 + 8)) {
+                *(s16 *)arg3 = -1;
+            } else {
+                *(s16 *)arg3 = var_r0 - temp_r7 - temp_r8;
+            }
+        } else {
+            var_r0 = var_r0 - temp_r10;
+            temp_r8 = *(u16 *)((u8 *)r9 + 6);
+            temp_r7 = *(u8 *)r9 * 3;
+            if (var_r0 < (u32)temp_r8 + temp_r7) {
+                *(s16 *)arg3 = -1;
+            } else if (var_r0 >= temp_r10 - *(u16 *)((u8 *)r9 + 0xa)) {
+                *(s16 *)arg3 = -1;
+            } else {
+                *(s16 *)arg3 = (var_r0 - temp_r7 - temp_r8) & ~1;
+            }
+        }
+    }
+    *(s16 *)arg2 = arg0 - 1;
 }
 
 void fn_80211B30(s32 arg0, s32 arg1) {
