@@ -1,6 +1,6 @@
 /* Functions from 0x8007C5E4 to 0x8009F0BC, found by decomp-toolkit. */
 #include "common.h"
-#include "global.h"
+extern u8 lbl_8026D8D8[];
 extern void* lbl_803674E8;
 extern f32 lbl_803696C8;
 
@@ -47,6 +47,70 @@ extern f32 lbl_803697E4;
 
 void fn_8009ECF4(s32 arg0) {
     fn_801E32C4(&lbl_803682F0, arg0);
+}
+
+void fn_8009ED1C(void) {
+    s32 fn_800056CC(const char *, ...);
+    s32 fn_800EB774(void);
+    void *fn_801E2324(void *, s32);
+    s32 fn_801E2458(void *);
+    void *fn_801E2568(void *, s32);
+    void *fn_801E2580(void *, s32);
+    void fn_801E2594(void *);
+    void *fn_801E417C(void *);
+    u8 fn_801E434C(void *);
+    extern s32 lbl_803682F0;
+    s32 i;
+    void *obj;
+    u8 b;
+    u8 *str = (u8 *)&lbl_8026D8D8;
+
+    if (fn_800EB774() == 0 || fn_800EB774() == -0x42) {
+        fn_800056CC((const char *)(str + 0x198));
+        for (i = 0; i < 6; i++) {
+            fn_800056CC((const char *)(str + 0x1C6), i);
+            obj = fn_801E2580(&lbl_803682F0, i);
+            if (fn_801E434C(obj) == 0) {
+                b = *(u8 *)((u8 *)obj + 0x62);
+                fn_800056CC((const char *)(str + 0x1CD), b, fn_801E417C(obj), str);
+            } else if (*(u8 *)((u8 *)obj + 0x60) == 1) {
+                b = *(u8 *)((u8 *)obj + 0x62);
+                fn_800056CC((const char *)(str + 0x1EC), b, fn_801E417C(obj), str);
+            } else {
+                b = *(u8 *)((u8 *)obj + 0x62);
+                fn_800056CC((const char *)(str + 0x209), b, fn_801E417C(obj), str);
+            }
+        }
+        fn_800056CC((const char *)(str + 0x198));
+        for (i = 0; i < 5; i++) {
+            fn_800056CC((const char *)(str + 0x220), i);
+            obj = fn_801E2324(&lbl_803682F0, i);
+            if (obj == NULL) {
+                fn_800056CC((const char *)(str + 0x227));
+            } else {
+                b = *(u8 *)((u8 *)obj + 0x62);
+                fn_800056CC((const char *)(str + 0x209), b, fn_801E417C(obj), str);
+            }
+        }
+        fn_800056CC((const char *)(str + 0x198));
+        for (i = 0; i < 2; i++) {
+            fn_800056CC((const char *)(str + 0x23D), i);
+            obj = fn_801E2568(&lbl_803682F0, i);
+            if (fn_801E434C(obj) == 0) {
+                b = *(u8 *)((u8 *)obj + 0x63);
+                fn_800056CC((const char *)(str + 0x1CD), b, fn_801E417C(obj), str);
+            } else if (*(u8 *)((u8 *)obj + 0x60) == 1) {
+                b = *(u8 *)((u8 *)obj + 0x63);
+                fn_800056CC((const char *)(str + 0x1EC), b, fn_801E417C(obj), str);
+            } else {
+                b = *(u8 *)((u8 *)obj + 0x63);
+                fn_800056CC((const char *)(str + 0x244), b, fn_801E417C(obj), str);
+            }
+        }
+        fn_800056CC((const char *)(str + 0x198));
+        fn_800056CC((const char *)(str + 0x25B), fn_801E2458(&lbl_803682F0), str);
+    }
+    fn_801E2594(&lbl_803682F0);
 }
 
 void fn_8009F000(s32 arg0) {
