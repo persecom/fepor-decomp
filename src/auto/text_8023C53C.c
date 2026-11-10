@@ -55,6 +55,57 @@ extern u32 lbl_800000F8;
 
 #include "musyx/select_source.h"
 
+typedef struct StreamMsg {
+    u32 unk0;   /* 0x0 */
+    u32 unk4;   /* 0x4 */
+    u32 unk8;   /* 0x8 */
+    void *unkC; /* 0xC */
+    void *unk10; /* 0x10 */
+    u8 unk14;   /* 0x14 */
+    u8 unk15;   /* 0x15 */
+    u8 pad16[2];
+} StreamMsg; /* 0x18 */
+
+typedef struct StreamSeqEvent {
+    u32 unk0; /* 0x0 */
+    u8 pad4[4];
+    u16 unk8; /* 0x8 */
+    u16 unkA; /* 0xA */
+} StreamSeqEvent; /* 0xC */
+
+typedef struct StreamSeqChan {
+    u32 unk0; /* 0x0 */
+    StreamSeqEvent *unk4; /* 0x4 */
+} StreamSeqChan; /* 0x8 */
+
+typedef struct StreamChannel {
+    u32 unk0; /* 0x0 */
+    u32 unk4; /* 0x4 */
+    u8 *unk8; /* 0x8 */
+    u8 padC[0xC];
+    u32 unk18; /* 0x18 */
+    u8 pad1C[8];
+    u32 unk24; /* 0x24 */
+} StreamChannel; /* 0x2C */
+
+typedef struct StreamVoice {
+    u8 unk0;
+    u8 pad1[0x37];
+} StreamVoice;
+
+typedef struct StreamState {
+    u8 pad0[0x124];
+    StreamSeqChan seqChans[16]; /* 0x124 */
+    u8 pad164[0x364 - 0x164];
+    StreamChannel channels[16]; /* 0x364 */
+    u8 pad3B4[0xF04 - 0x3B4];
+    StreamMsg msgs[16]; /* 0xF04 */
+    u8 padF64[0x1504 - 0xF64];
+    u8 *voices; /* 0x1504 */
+    u8 pad1508[0x153E - 0x1508];
+    StreamVoice voiceFlags[1]; /* 0x153E */
+} StreamState;
+
 typedef struct Voice {
     u8 pad0[0x110];
     u64 flags;
