@@ -45,17 +45,14 @@ void fn_800726A8(s32 arg0) {
 }
 
 void fn_8007278C(void) {
-    M2C_UNK fn_8000E0E4(void *);
-    M2C_UNK fn_80091A1C();
-    M2C_UNK fn_800A8A88(s32);
-    extern M2C_UNK lbl_8026BC88;
-    extern M2C_UNK lbl_802EF4C8;
+    extern u8 lbl_8026BC88[];
+    extern u8 lbl_802EF4C8[];
     if ((void *) M2C_FIELD(&lbl_802EF4C8, void **, 4) != NULL) {
         fn_800A8A88(M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 4), s32 *, 0x188));
         fn_80091A1C();
         return;
     }
-    fn_8000E0E4(&lbl_8026BC88 + 0x1A5);
+    fn_8000E0E4(lbl_8026BC88 + 0x1A5);
     fn_80091A1C();
 }
 
