@@ -793,58 +793,29 @@ void fn_800A6CC4(void *arg0) {
 }
 
 void fn_800A6D78(void *arg0) {
-    extern f32 lbl_80330708[];
+    extern u8 lbl_80330708[];
     extern u8 lbl_802CA518[];
     extern u8 lbl_802B14E4[];
-    
-    s32 temp_r0;
-    s32 temp_r4;
-    s32 temp_r5;
-    f32 temp_f0;
-    f32 temp_f1;
-    void *var_r0;
-    u8 temp_r4_2;
-    
-    // Load floating point values from lbl_80330708
-    temp_f1 = lbl_80330708[0x524 / 4];
-    temp_f0 = lbl_80330708[0x528 / 4];
-    
-    // Convert to integers and store in stack
-    *(s32*)((char*)arg0 + 0x8) = (s32)temp_f1;
-    *(s32*)((char*)arg0 + 0x10) = (s32)temp_f0;
-    
-    // Load bytes from lbl_802CA518
-    temp_r4_2 = lbl_802CA518[0xC];
-    temp_r0 = lbl_802CA518[0x10];
-    
-    // Sign extend the bytes (convert to signed 32-bit)
-    temp_r4_2 = (s8)temp_r4_2;
-    temp_r0 = (s8)temp_r0;
-    
-    // Calculate address
-    temp_r4 = (s32)&lbl_802CA518;
-    temp_r5 = (s32)&lbl_802B14E4;
-    
-    // Add the base address with the byte values (as offsets)
-    temp_r4 += temp_r4_2;
-    temp_r0 <<= 6;  // Shift left by 6 bits (multiply by 64)
-    temp_r4 += temp_r0;
-    
-    // Load byte from calculated address + offset 0xD
-    temp_r4_2 = *(u8*)((char*)temp_r4 + 0xD);
-    
-    if (temp_r4_2 != 0) {
-        temp_r0 = (temp_r4_2 - 1) * 0x280;
-        var_r0 = (void*)((char*)&lbl_802B14E4 + temp_r0);
+    void fn_8000C070(void *, s32);
+    s8 sx;
+    s8 sy;
+    u8 id;
+    void *unit;
+
+    sx = (s8)*(f32 *)(lbl_80330708 + 0x524);
+    sy = (s8)*(f32 *)(lbl_80330708 + 0x528);
+    id = lbl_802CA518[sx + (sy << 6) + 0xD];
+    if (id != 0) {
+        unit = &lbl_802B14E4[(id - 1) * 0x280];
     } else {
-        var_r0 = NULL;
+        unit = NULL;
     }
-    
-    *(void**)((char*)arg0 + 0x30) = var_r0;
-    *(s16*)((char*)arg0 + 0x36) = -1;
-    
-    if (var_r0 == NULL) {
-        fn_8000C070(6);
+
+    *(void **)((u8 *)arg0 + 0x30) = unit;
+    *(s16 *)((u8 *)arg0 + 0x36) = -1;
+
+    if (*(void **)((u8 *)arg0 + 0x30) == NULL) {
+        fn_8000C070(arg0, 6);
     }
 }
 
