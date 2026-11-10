@@ -571,13 +571,16 @@ f32 fn_800233D0(void *arg0, s8 arg1, s8 arg2, u8 arg3) {
     return var_f1;
 }
 
-extern struct {
-    u8 pad0[0xD];
+typedef struct {
+    s32 width;
+    s32 height;
+    u8 pad8[5];
     u8 unitMap[0x6100];
     u8 pad1;
     s16 costMap[0x4040];
     s8 fogMap[64];
-} lbl_802CA518;
+} Map_802CA518;
+extern Map_802CA518 lbl_802CA518;
 void fn_80023DC0(void) {
     fn_8002297C(&lbl_802CA518);
 }
@@ -1084,6 +1087,108 @@ void fn_80024D74(void *arg0) {
     // Call virtual function via pointer (ptr at r5 + 0x38)  
     ((void (*)(void))*(u32*)(*(u32*)r5 + 0x38))();
 }
+
+#pragma cplusplus on
+extern "C" void fn_80024DE4(s32 unused, void *arg1) {
+    void *fn_8000B908(u8);
+    void fn_801475FC(void *, s32);
+    u8 fn_80166D8C(void *);
+    void fn_80166DD0(void *, void *, f32, f32);
+    void fn_80167190(void *, f32, f32);
+    extern u8 lbl_80268D90[];
+    extern u8 lbl_80330D68[];
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void *v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14(void *, void *) = 0;
+        virtual void v15(void *, void *) = 0;
+        virtual void *v16(void *) = 0;
+    };
+    struct Node {
+        u8 pad30[0x30];
+        s16 x;
+        s16 y;
+        Obj *obj;
+    };
+    u32 *pad;
+    u32 trig;
+    u32 held;
+    u32 pressed;
+    u8 sel;
+    Node *node;
+    Node *node2;
+    void *ret;
+    f32 f31;
+    f32 f30;
+    u8 *p;
+
+    pad = *(u32 **)&lbl_80367240;
+    trig = pad[3];
+    sel = *(u8 *)((u8 *)arg1 + 0x62);
+    held = pad[1];
+    pressed = held & (pad[2] ^ held);
+    *(u8 *)((u8 *)arg1 + 0x63) = sel;
+    if (trig & 0x08000008) {
+        if (*(s8 *)((u8 *)arg1 + 0x62) == 0) {
+            if (pressed != trig) {
+                goto end;
+            }
+            *(u8 *)((u8 *)arg1 + 0x62) = *(u8 *)((u8 *)arg1 + 0x60);
+        }
+        (*(u8 *)((u8 *)arg1 + 0x62))--;
+    }
+    if (trig & 0x04000004) {
+        if ((s8)*(u8 *)((u8 *)arg1 + 0x62) == (s8)*(u8 *)((u8 *)arg1 + 0x60) - 1) {
+            if (pressed != trig) {
+                goto end;
+            }
+            *(s8 *)((u8 *)arg1 + 0x62) = -1;
+        }
+        (*(u8 *)((u8 *)arg1 + 0x62))++;
+    }
+    if ((s8)*(u8 *)((u8 *)arg1 + 0x62) != (s8)*(u8 *)((u8 *)arg1 + 0x63)) {
+        p = (u8 *)arg1 + (s8)*(u8 *)((u8 *)arg1 + 0x63);
+        node = (Node *)fn_8000B908(p[0x40]);
+        node->obj->v15(arg1, node);
+        p = (u8 *)arg1 + *(s8 *)((u8 *)arg1 + 0x62);
+        node = (Node *)fn_8000B908(p[0x40]);
+        node->obj->v14(arg1, node);
+        if (fn_80166D8C(lbl_80330D68) != 0) {
+            p = (u8 *)arg1 + *(s8 *)((u8 *)arg1 + 0x62);
+            node = (Node *)fn_8000B908(p[0x40]);
+            f31 = (f32)(*(s16 *)((u8 *)arg1 + 0x30) + node->x);
+            p = (u8 *)arg1 + *(s8 *)((u8 *)arg1 + 0x62);
+            node = (Node *)fn_8000B908(p[0x40]);
+            f30 = (f32)(*(s16 *)((u8 *)arg1 + 0x32) + node->y);
+            p = (u8 *)arg1 + *(s8 *)((u8 *)arg1 + 0x62);
+            node = (Node *)fn_8000B908(p[0x40]);
+            ret = node->obj->v2();
+            if (ret != NULL) {
+                fn_80167190(lbl_80330D68, f31, f30);
+            } else {
+                p = (u8 *)arg1 + *(s8 *)((u8 *)arg1 + 0x62);
+                node2 = (Node *)fn_8000B908(p[0x40]);
+                fn_80166DD0(lbl_80330D68, node2->obj->v16(node2), f31, f30);
+            }
+        }
+        fn_801475FC(lbl_80268D90 + 0x71, 0x64);
+    }
+end:
+    ;
+}
+#pragma cplusplus reset
 
 #pragma cplusplus on
 extern "C" void fn_800251EC(s32 unused, void *arg1) {
