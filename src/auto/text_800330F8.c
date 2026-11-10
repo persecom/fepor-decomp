@@ -1914,7 +1914,6 @@ void fn_8003FCCC(s32 arg0) {
     fn_8003F87C(arg0, 0);
 }
 
-extern s8 *lbl_80366DC0;
 int fn_8003FCF0(void *arg0) {
     int i;
     char* ptr;
