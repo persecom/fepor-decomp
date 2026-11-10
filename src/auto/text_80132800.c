@@ -3275,9 +3275,8 @@ void fn_8013CD90(void) {
     return;
 }
 
-int fn_801475FC(void *, int);
-
 s32 fn_8013CDCC(void) {
+    s8 fn_801475FC(void *, int);
     extern u8 lbl_802EF4C8[24];
     extern u8 lbl_80276908[];
     u8 *ptr1 = (u8 *)&lbl_802EF4C8;
