@@ -3261,16 +3261,15 @@ u16 fn_802606D4(void *arg0) {
 }
 
 u16 fn_8026071C(void *arg0) {
+    u16 fn_802601EC(void *, void *, u8, u8);
     s32 temp_r4;
-    u16 ret;
 
-    temp_r4 = *(s32 *)((char *)arg0 + 0x220);
+    temp_r4 = *(s32 *)((u8 *)arg0 + 0x220);
     if (!(temp_r4 & 4)) {
-        return *(u16 *)((char *)arg0 + 0x28C);
+        return *(u16 *)((u8 *)arg0 + 0x28C);
     }
-    *(u32 *)((char *)arg0 + 0x220) = temp_r4 & 0xFFFFFFFB;
-    ret = fn_802601EC((char *)arg0 + 0x26C, *(u8 *)((char *)arg0 + 0x121), *(u8 *)((char *)arg0 + 0x122));
-    return ret;
+    *(s32 *)((u8 *)arg0 + 0x220) = temp_r4 & ~4;
+    return fn_802601EC(arg0, (u8 *)arg0 + 0x26C, *(u8 *)((u8 *)arg0 + 0x121), *(u8 *)((u8 *)arg0 + 0x122));
 }
 
 u16 fn_802607AC(void *arg0) {
@@ -3326,15 +3325,15 @@ u16 fn_80260884(void *arg0) {
     return (u16)result;
 }
 
-s32 fn_802608CC(char *arg0) {
+s32 fn_802608CC(struct { u8 pad[0x220]; s32 flags; u8 pad2[0x164]; u16 cached; } *arg0) {
     s32 temp_r4;
 
-    temp_r4 = *(s32 *)(arg0 + 0x220);
+    temp_r4 = arg0->flags;
     if (!(temp_r4 & 0x200)) {
-        return *(u16 *)(arg0 + 0x388);
+        return arg0->cached;
     }
-    *(s32 *)(arg0 + 0x220) = temp_r4 & 0xFFFFFDFF;
-    return fn_802601EC(arg0 + 0x368, *(u8 *)(arg0 + 0x121), *(u8 *)(arg0 + 0x122));
+    arg0->flags = temp_r4 & 0xFFFFFDFF;
+    return fn_802601EC((char *)arg0 + 0x368, *((u8 *)arg0 + 0x121), *((u8 *)arg0 + 0x122));
 }
 
 u16 fn_80260914(void *arg0) {
