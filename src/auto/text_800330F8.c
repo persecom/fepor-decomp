@@ -475,12 +475,12 @@ s32 fn_80036F5C(void *arg0, s32 arg1) {
     return temp_r4 - *(u8 *)((char *)temp_r5 + 0x6) + 3;
 }
 
-#pragma opt_strength_reduction off
+#pragma peephole off
 u8 fn_80036FC4(u8 *arg0, s32 arg1) {
-    u8 *p = arg0 + arg1;
-    return *(u8 *)(p + 0x214);
+    u8 *unit = &arg0[arg1];
+    return unit[0x214];
 }
-#pragma opt_strength_reduction on
+#pragma peephole on
 void fn_80036FD0(void *arg0, s32 arg1) {
     void **temp_r3;
     void *temp_r3_2;
@@ -4506,8 +4506,9 @@ void fn_8005376C(void) {
     void *fn_8000BF00(u32 *);
     void *fn_8000CAF0(void *, s32);
     s32 fn_801451BC(void);
-    s32 fn_80145308(void);
-    void fn_800056CC(void *);
+    u8 fn_80145308(void);
+    void fn_800056CC(const char *, ...);
+    void *temp_r3;
 
     extern u32 lbl_80285990[];
     extern u8 lbl_8026AC0C[];
@@ -4516,12 +4517,13 @@ void fn_8005376C(void) {
     fn_8000BF00(lbl_80285990);
     if ((fn_8000C0C0(lbl_80285990) == 0U) && (fn_80145308() == 0)) {
         fn_801451BC();
-        fn_800056CC((u8 *)&lbl_8026AC0C + 0x12E);
+        fn_800056CC((const char *)((u8 *) &lbl_8026AC0C + 0x12E));
         return;
     }
-    *(s32 *)((u8 *)fn_8000CAF0(lbl_80285968, 4) + 0x60) = 0;
+    temp_r3 = fn_8000CAF0(lbl_80285968, 4);
+    *(s32 *)((u8 *) temp_r3 + 0x60) = 0;
 }
-
+#pragma cplusplus reset
 s32 fn_800537E8(void) {
     extern u16 lbl_80285990[];
     s32 v = fn_8000C0C0(lbl_80285990);
