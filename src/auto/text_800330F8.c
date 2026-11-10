@@ -5774,51 +5774,11 @@ void fn_80054850(void *arg0) {
     }
 }
 
+#pragma use_lmw_stmw on
+
+#pragma use_lmw_stmw reset
+
 extern void* jumptable_80285A50;
-void fn_80054C14(void* arg0)
-{
-    void* r27;
-    int r3, r28;
-    int r0;
-    
-    r27 = (void*)arg0;
-    r3 = *(u32*)((char*)arg0 + 0x30);
-    r28 = *(u32*)((char*)r3 + 0x5c);
-    r3 = r28;
-    fn_8005F7F0(r3);
-    r0 = (r3 & 0xFFFFFF00) >> 24;
-    if (r0 == 0)
-        return;
-
-    /* Loading data from lbl_8026ABF0 */
-    r3 = *(u32*)((char*)r28 + 0x5c);
-    
-    // Direct copy of the memory
-    *(u32*)((char*)r27 + 0x50) = *(u32*)((char*)r3 + 0x0);
-    *(u32*)((char*)r27 + 0x54) = *(u32*)((char*)r3 + 0x4);
-    *(u32*)((char*)r27 + 0x58) = *(u32*)((char*)r3 + 0x8);
-    *(u32*)((char*)r27 + 0x5C) = *(u32*)((char*)r3 + 0xC);
-    *(u32*)((char*)r27 + 0x60) = *(u32*)((char*)r3 + 0x10);
-    *(u32*)((char*)r27 + 0x64) = *(u32*)((char*)r3 + 0x14);
-    *(u32*)((char*)r27 + 0x68) = *(u32*)((char*)r3 + 0x18);
-
-    fn_8005F92C(r3);
-
-    r0 = (r3 & 0xFFFF0000) >> 16;
-    r0 -= 0x9;
-    if ((r0 > 0x1E))
-        return;
-
-    // Jump table handling
-    r3 = *(u32*)((char*)jumptable_80285A50 + (r0 << 2));
-    
-    __builtin_unreachable();
-}
-
-void fn_800558D8(s32 arg0) {
-    void fn_800555EC(s32, s32);
-    fn_800555EC(arg0, 0);
-}
 
 extern u32 lbl_80369058;
 extern u32 lbl_8036905C;
@@ -5831,75 +5791,6 @@ extern u32 lbl_80369074;
 extern u32 lbl_80369078;
 extern u32 lbl_8036907C;
 extern u32 jumptable_80285ACC[];
-void fn_800558FC(void* arg0)
-{
-    // Load byte and compare with 0x8
-    u8 val = *(u8*)((char*)arg0 + 0x6);
-    
-    if (val >= 0x8) {
-        // Use jump table for cases >= 8
-        void (*func)(void) = (void (*)(void))jumptable_80285ACC[val];
-        
-        // Make the call
-        func();
-    } else {
-        // Switch to handle cases 0-7
-        
-        switch(val) {
-            case 0:
-                *(u32*)(((char*)arg0) + 0x28) = lbl_8036905C;
-                break;
-            case 1:
-                *(u32*)(((char*)arg0) + 0x28) = lbl_80369060;
-                break;
-            case 2:
-                *(u32*)(((char*)arg0) + 0x28) = lbl_80369064;
-                break;
-            case 3:
-                *(u32*)(((char*)arg0) + 0x28) = lbl_80369068;
-                break;
-            case 4:
-                *(u32*)(((char*)arg0) + 0x28) = lbl_8036906C;
-                break;
-            case 5:
-                *(u32*)(((char*)arg0) + 0x28) = lbl_80369070;
-                break;
-            case 6:
-                *(u32*)(((char*)arg0) + 0x28) = lbl_80369074;
-                break;
-            case 7:
-                *(u32*)(((char*)arg0) + 0x28) = lbl_80369078;
-                break;
-        }
-
-        // After switch, just do one final assignment
-        *(u32*)(((char*)arg0) + 0x28) = lbl_8036907C;
-    }
-}
-
-s32 fn_80055AC0(s32 *arg0, s32 arg1) {
-    void fn_80231D94(s32, void *, void *, ...);
-    extern u8 lbl_8026AC0C[];
-
-    fn_80231D94(arg1, lbl_8026AC0C + 0x120, lbl_8026AC0C + 0x129, *arg0);
-    return arg1;
-}
-
-void fn_80055B0C(s32 arg0) {
-    void fn_800056A0(s32);
-    void fn_801451BC(void);
-    void fn_801452A8(u8);
-    u8 fn_801452C8(u8);
-    s32 fn_801452E8(void);
-
-    if (fn_801452C8((u8)arg0) == 0) {
-        if (fn_801452E8() >= 0x10) {
-            fn_800056A0(0);
-            fn_801451BC();
-        }
-        fn_801452A8((u8)arg0);
-    }
-}
 
 extern u16 *lbl_803672AC;
 #include "common.h"
