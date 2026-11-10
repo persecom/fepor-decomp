@@ -4020,8 +4020,8 @@ void fn_802625F8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
         volatile u8 next;
         volatile u8 count;
     } Queue;
-    u8 *base;
     BOOL enabled;
+    u8 *base;
 
     if (arg3 != 0) {
         base = lbl_803641AC;
