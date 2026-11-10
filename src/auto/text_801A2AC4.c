@@ -202,6 +202,13 @@ s32 fn_801A32C0(void) {
     return lbl_802EF4E0[0] != 0;
 }
 
+s32 fn_801A3668(void) {
+    void fn_8002AA34(void);
+    extern s32 lbl_802EF4E0[];
+    fn_8002AA34();
+    return lbl_802EF4E0[0] != 0;
+}
+
 extern u16 lbl_80330EAC[];
 void fn_801A372C(void) {
     void fn_80104480(void *);
