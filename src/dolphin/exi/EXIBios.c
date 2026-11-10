@@ -215,6 +215,28 @@ extern s32 fn_802314D8(s32, s32, s32);
 
 #pragma use_lmw_stmw reset
 
+static void CompleteTransfer(s32 chan)
+{
+    EXIControl *exi = &Ecb_8033E188[chan];
+    u8 *buf;
+    u32 data;
+    s32 i;
+    s32 len;
+
+    if (exi->state & 3) {
+        if (exi->state & 2) {
+            if ((len = exi->immLen) != 0) {
+                buf = exi->immBuf;
+                data = __EXIRegs[(chan * 5) + 4];
+                for (i = 0; i < len; i++) {
+                    *buf++ = (u8)(data >> (8 * (3 - i)));
+                }
+            }
+        }
+        exi->state &= ~3;
+    }
+}
+
 extern f64 lbl_8036C138;
 extern f64 lbl_8036C140;
 
