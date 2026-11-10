@@ -96,6 +96,7 @@ void fn_801A2AC4(void) {
           fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
   }
   
+  #pragma peephole off
   static inline s32 fn_801A5008_check(void *p) {
       s32 a;
       s32 m0;
@@ -113,6 +114,7 @@ void fn_801A2AC4(void) {
       a = a ^ m0;
       return (b | a) != 0;
   }
+  #pragma peephole reset
   
   s32 fn_801A2CC0(void) {
     s32 fn_801044E0(s32);
@@ -454,17 +456,12 @@ void fn_801A5008(s32 arg0) {
     void fn_801A64F8(s32, s32, s32);
     extern u8 lbl_802EFDB8[];
     extern u8 lbl_80330708[];
-    s32 temp_r4;
-    u8 *var_r5;
     u8 *var_r3;
+    u8 *var_r5;
     s32 temp_r0;
     s32 i;
     void *temp_r3;
     u32 var_r4;
-    s32 w0;
-    s32 w1;
-    s32 mask80;
-    s32 mask400;
 
     fn_801A601C(arg0, arg0, 0, 0);
     fn_80034068(arg0 + 0x8A0, 0xF, fn_8003B2D0(arg0 + 0x2E0));
@@ -475,10 +472,10 @@ void fn_801A5008(s32 arg0) {
     fn_801A64F8(arg0, arg0, arg0 + 0x2E0);
 
     var_r3 = lbl_802EFDB8;
-    temp_r4 = 0;
-    var_r3[0x61] = (u8)temp_r4;
+    temp_r0 = 0;
+    var_r3[0x61] = (u8)temp_r0;
     var_r5 = var_r3;
-    var_r3[0x60] = (u8)temp_r4;
+    var_r3[0x60] = (u8)temp_r0;
     for (i = 0; i < 2; i++) {
         var_r3[0] = 0;
         *(u16 *)(var_r5 + 0x20) = 0;
@@ -526,16 +523,7 @@ void fn_801A5008(s32 arg0) {
     }
     if (*(u32 *)(arg0 + 0x28C) != 0) {
         temp_r3 = fn_8001CB64(arg0 + 0x28C);
-        w0 = *(s32 *)temp_r3;
-        mask80 = 0x80;
-        w1 = *((s32 *)temp_r3 + 1);
-        mask400 = 0x400;
-        w0 &= mask80;
-        temp_r0 = 0;
-        w1 &= mask400;
-        w1 ^= temp_r0;
-        w0 ^= temp_r0;
-        if ((w1 | w0) != 0) {
+        if (fn_801A5008_check(temp_r3)) {
             goto block_18;
         }
     }
