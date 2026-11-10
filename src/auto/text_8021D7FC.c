@@ -306,6 +306,51 @@ void* fn_8021F260(void* arg0) {
     return temp_r31;
 }
 
+void __GXFifoInit(void)
+{
+    extern void fn_8021EB88(void);
+    extern u32 lbl_80368778;
+    extern u32 lbl_80368780;
+    extern u32 lbl_80368770;
+    extern u32 lbl_80368774;
+
+    __OSSetInterruptHandler(0x11, fn_8021EB88);
+    __OSUnmaskInterrupts(0x4000);
+
+    lbl_80368778 = fn_80209FD4();
+    lbl_80368780 = 0;
+    lbl_80368770 = 0;
+    lbl_80368774 = 0;
+}
+
+void fn_8021F2F0(void) {
+    extern u8 *__GXData;
+    extern u8 *__cpReg;
+    u32 value;
+
+    value = *(u32 *)(__GXData + 0x8);
+    value = (value & 0xFFFFFFFE) | 1;
+    *(u32 *)(__GXData + 0x8) = value;
+
+    value = *(u32 *)(__GXData + 0x8);
+    *(u16 *)(__cpReg + 0x2) = (u16)value;
+}
+
+void fn_8021F314(void) {
+    extern u8 *__GXData;
+    extern u8 *__cpReg;
+    volatile u32 *ptr;
+    u32 value;
+
+    ptr = (volatile u32 *)(__GXData + 0x8);
+    value = *ptr;
+    value &= 0xFFFFFFFE;
+    *ptr = value;
+
+    value = *ptr;
+    *(u16 *)(__cpReg + 0x2) = (u16)value;
+}
+
 void fn_8021F338(u8 en) {
     extern u16* const __GXData;
     extern u16* __cpReg;
@@ -318,6 +363,22 @@ void fn_8021F338(u8 en) {
     }
     M2C_FIELD(__GXData, u32 *, 0x8) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x8), b, 4, 27, 27);
     __cpReg[1] = (u16) M2C_FIELD(__GXData, u32 *, 0x8);
+}
+
+void fn_8021F36C(u32 arg0, u8 arg1) {
+    extern u32 __GXData[];
+    extern u8 *__cpReg;
+    u32 value;
+
+    value = __GXData[2];
+    value = (value & 0xFFFFFFFB) | ((arg0 << 2) & 0x4);
+    __GXData[2] = value;
+
+    value = __GXData[2];
+    value = (value & 0xFFFFFFF7) | ((arg1 << 3) & 0x8);
+    __GXData[2] = value;
+
+    *(u16 *)(__cpReg + 2) = (u16)__GXData[2];
 }
 
 s32 fn_8021F4CC(void) {
@@ -473,6 +534,24 @@ void fn_802201A8(void) {
     osSync();
 }
 
+void fn_80220428(u32 arg0) {
+    extern unsigned short *__GXData;
+    register unsigned short *gx_data = __GXData;
+    register volatile u32 *fifo = (volatile u32 *)0xCC008000;
+    u32 value;
+
+    value = *(u32 *)((u8 *)gx_data + 0x204);
+    value = (value & 0xFFFFFFF0) | (arg0 & 0xF);
+    *(u32 *)((u8 *)gx_data + 0x204) = value;
+
+    *(volatile u8 *)fifo = 0x10;
+    *fifo = 0x103F;
+    *fifo = arg0 & 0xFF;
+
+    value = *(u32 *)((u8 *)gx_data + 0x5AC);
+    *(u32 *)((u8 *)gx_data + 0x5AC) = value | 4;
+}
+
 void fn_802206F4(void) {
     OSGetTime();
 }
@@ -482,10 +561,37 @@ u16 fn_80220970(void) {
     return M2C_FIELD(__peReg, u16 *, 0xE);
 }
 
+void fn_802209FC(void) {
+    extern void *__GXData;
+    volatile u8 *fifo;
+    u8 *gx;
+
+    fifo = (volatile u8 *)0xCC008000;
+    gx = (u8 *)__GXData;
+
+    *fifo = 0x61;
+    *(volatile u32 *)fifo = *(u32 *)(gx + 0x1DC);
+    *(volatile u16 *)(gx + 2) = 0;
+}
+
 void fn_80220A20(s32 arg0, u8 arg1) {
     void *__peReg;
     u16 val = (arg1 << 8) | (arg0 & 0xFFFFFF00);
     M2C_FIELD(__peReg, u16 *, 0x0) = val;
+}
+
+void fn_80220A34(u32 arg0) {
+    extern u8 *__peReg;
+    u32 value;
+    u32 one;
+
+    value = 0;
+    value |= (u32)__peReg & 3;
+    one = 1;
+    value |= (one << 2) & 4;
+    value |= arg0 & 3;
+
+    *(u16 *)(__peReg + 0x8) = (u16)value;
 }
 
 extern u16 *__peReg;
