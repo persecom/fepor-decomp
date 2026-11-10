@@ -8,6 +8,16 @@ typedef struct SoundKeyEntry { u16 id; s8 key; u8 pan; s16 volume; u16 pad; } So
 typedef struct AudioTableRange { u16 count; u16 start; } AudioTableRange;
 typedef struct AudioTableEntry { s32 data; u16 id; u16 ref; } AudioTableEntry;
 typedef struct SynthVmState { u8 pad[0xAC]; s32 regs[16]; } SynthVmState;
+typedef struct SynthInsn {
+    u32 flagA : 8;
+    u32 storeReg : 8;
+    u32 storeMode : 8;
+    u32 pad0 : 8;
+    union {
+        struct { u32 pad1 : 8; s32 imm : 16; u32 regA : 8; } f;
+        struct { u32 pad1 : 8; u32 regB : 8; u32 modeB : 8; u32 regA : 8; } b;
+    } u;
+} SynthInsn;
 static inline u8 *FindAudioResource(void *data, u16 id, u32 offset) {
     u8 *node;
     if (data == NULL) return NULL;
@@ -312,10 +322,10 @@ if(!(PPCMfhid2()&0x10000000)) goto badHid;
 if(!lbl_80368954) goto notInit;
 lbl_8036894C=arg4;
 lbl_80368950=(u8*)((lbl_8036894C+31)&~31);
-lbl_8036894C=(u32)lbl_80368950+0x6bc;
+lbl_8036894C=(u32)lbl_80368950;lbl_8036894C+=0x6bc;
 fn_80205198(lbl_80368950,0x6bc);
-*(u32*)(lbl_80368950+0x6a4)=0x21;
 done=0;
+*(u32*)(lbl_80368950+0x6a4)=0x21;
 *(u16*)(lbl_80368950+0x698)=0;
 *(u8**)(lbl_80368950+0x69c)=arg0;
 do{
@@ -416,6 +426,132 @@ void fn_8023D2FC(void) {
     ptr[0x1A6] = temp_r3 + 2;
     ptr[0x1A9] = ptr[0x1A7];
 }
+
+#pragma use_lmw_stmw on
+void fn_8023D350(void)
+{
+    extern u8 *lbl_80368950;
+    extern u8 *lbl_80368840;
+    extern u8 *lbl_80368860;
+    extern u8 *lbl_80368880;
+    extern u8 *lbl_803688A0;
+    extern u8 *lbl_803688C0;
+    extern u8 *lbl_803688E0;
+
+    u32 j;
+    u8 *base;
+    u8 *ptr;
+    u32 *pBit;
+    u32 bitpos;
+    u32 low;
+    u8 *aligned;
+    u32 i;
+    u32 off;
+    u32 ctr;
+    u32 idx;
+    u32 slot;
+    u8 *p;
+    u8 *q;
+    u8 *table;
+    s32 code;
+    u8 b682, b688, b68e, b687, b68d, b681;
+    u32 t681, t687, t68d, t682, t688, t68e;
+    u32 unused1, unused2;
+
+    base = lbl_80368950;
+    ptr = *(u8 **)(base + 0x69c);
+    pBit = (u32 *)(base + 0x6a4);
+    bitpos = *pBit;
+    aligned = (u8 *)((u32)ptr & ~3);
+    low = (u32)ptr & 3;
+    if (bitpos != 0x21) {
+        *pBit = bitpos - ((3 - low) * 8);
+    } else {
+        *pBit = (low * 8) + 1;
+    }
+
+    i = 0;
+    off = 0;
+    unused1 = 0;
+    unused2 = 0;
+    *(u8 **)(lbl_80368950 + 0x69c) = aligned;
+    *(u32 *)(lbl_80368950 + 0x6a0) = *(u32 *)aligned;
+
+    do {
+        if (lbl_80368950[0x6a8] & (1 << i)) {
+            for (ctr = 0x10, slot = off, idx = 0; ctr != 0; ctr--) {
+                lbl_80368950[off + idx + 0x300] = 0xFF;
+                for (j = 0; j < 5; j++) {
+                    p = (u8 *)(off + (u32)lbl_80368950);
+                    q = p + (j * 4);
+                    code = (s32)(idx >> (4 - j));
+                    if (code <= *(s32 *)(q + 0x348)) {
+                        table = (u8 *)(*(u32 *)(q + 0x390) + *(u32 *)(p + 0x340));
+                        lbl_80368950[slot + 0x300] = table[code];
+                        lbl_80368950[slot + 0x320] = j + 1;
+                        j = 0x63;
+                    }
+                }
+                idx += 1;
+                lbl_80368950[off + idx + 0x300] = 0xFF;
+                j = 0;
+                slot += 1;
+                for (; j < 5; j++) {
+                    p = (u8 *)(off + (u32)lbl_80368950);
+                    q = p + (j * 4);
+                    code = (s32)(idx >> (4 - j));
+                    if (code <= *(s32 *)(q + 0x348)) {
+                        table = (u8 *)(*(u32 *)(q + 0x390) + *(u32 *)(p + 0x340));
+                        lbl_80368950[slot + 0x300] = table[code];
+                        lbl_80368950[slot + 0x320] = j + 1;
+                        j = 0x63;
+                    }
+                }
+                slot += 1;
+                idx += 1;
+            }
+        }
+        i += 1;
+        off += 0xe0;
+    } while (i < 4);
+
+    base = lbl_80368950;
+    b682 = base[0x682];
+    b688 = base[0x688];
+    b68e = base[0x68e];
+    b687 = base[0x687];
+    b68d = base[0x68d];
+    b681 = base[0x681];
+
+    t682 = (b682 << 1) + 1;
+    t688 = (b688 << 1) + 1;
+    t68e = (b68e << 1) + 1;
+    t687 = b687 << 1;
+    t68d = b68d << 1;
+    t681 = b681 << 1;
+
+    t681 *= 0xe0;
+    t687 *= 0xe0;
+    t68d *= 0xe0;
+    t682 *= 0xe0;
+    t688 *= 0xe0;
+    t68e *= 0xe0;
+
+    t681 += 0x300;
+    t687 += 0x300;
+    t68d += 0x300;
+    t682 += 0x300;
+    t688 += 0x300;
+    t68e += 0x300;
+
+    lbl_80368840 = base + t681;
+    lbl_80368860 = base + t687;
+    lbl_80368880 = base + t68d;
+    lbl_803688A0 = base + t682;
+    lbl_803688C0 = base + t688;
+    lbl_803688E0 = base + t68e;
+}
+#pragma use_lmw_stmw reset
 
 void fn_8023D59C(s32 arg0, s32 arg1, s32 arg2) {
     M2C_UNK fn_8023D350(M2C_UNK, s32, void *);
@@ -2998,8 +3134,265 @@ void fn_80252460(void *arg0, u32 *arg1) {
     SelectSource(arg0, (u8 *)arg0 + 0x224, arg1, 0x80000, 1);
 }
 
+void fn_80252564(void *arg0, u32 *arg1)
+{
+    void fn_8025FFC8(void *, u8, s32, u8, u8, u8);
+
+    u8 *voice;
+    u32 flags114;
+    u32 flags118;
+    u32 word0;
+    u32 word1;
+    u8 combine;
+    u8 inverse;
+    s32 scale;
+    s32 adjustment;
+
+    voice = (u8 *)arg0;
+
+    flags114 = *(u32 *)(voice + 0x114);
+    flags118 = *(u32 *)(voice + 0x118);
+
+    combine = 0;
+
+    if ((flags118 & 0x00100000) == 0) {
+        *(u32 *)(voice + 0x118) = flags118 | 0x00100000;
+        *(u32 *)(voice + 0x114) = flags114;
+    } else {
+        combine = (u8)arg1[1];
+    }
+
+    word0 = arg1[0];
+    word1 = arg1[1];
+
+    scale = (s32)(word0 & 0xFFFF0000) / 100;
+
+    adjustment = ((s32)(s8)(word1 >> 16) << 8) / 100;
+
+    if (scale < 0) {
+        scale -= adjustment;
+    } else {
+        scale += adjustment;
+    }
+
+    inverse = (u8)(word1 >> 8);
+
+    fn_8025FFC8(
+        voice + 0x248,
+        (u8)(word0 >> 8),
+        scale,
+        combine,
+        inverse != 0,
+        inverse
+    );
+
+    *(u32 *)(voice + 0x220) |= 0x2;
+}
+
 void fn_80252668(void *arg0, u32 *arg1) {
     SelectSource(arg0, (u8 *)arg0 + 0x290, arg1, 0x200000, 8);
+}
+
+void fn_8025276C(void *arg0, u32 *arg1)
+{
+    void fn_8025FFC8(void *, u8, s32, u8, u8, u8);
+
+    u8 *voice;
+    u32 flags114;
+    u32 flags118;
+    u32 word0;
+    u32 word1;
+    u8 value;
+    s32 scale;
+    s32 adjustment;
+
+    voice = (u8 *)arg0;
+
+    flags114 = *(u32 *)(voice + 0x114);
+    flags118 = *(u32 *)(voice + 0x118);
+
+    if ((flags118 & 0x00400000) == 0) {
+        *(u32 *)(voice + 0x118) = flags118 | 0x00400000;
+        *(u32 *)(voice + 0x114) = flags114;
+    } else {
+        word0 = arg1[0];
+        word1 = arg1[1];
+
+        scale = (s32)(word0 & 0xFFFF0000) / 100;
+
+        adjustment = ((s32)(s8)(word1 >> 16) << 8) / 100;
+
+        if (scale < 0) {
+            scale -= adjustment;
+        } else {
+            scale += adjustment;
+        }
+
+        value = (u8)(word1 >> 8);
+
+        fn_8025FFC8(
+            voice + 0x2D8,
+            (u8)(word0 >> 8),
+            scale,
+            (u8)word1,
+            value != 0,
+            value
+        );
+    }
+
+    *(u32 *)(voice + 0x220) |= 0x20;
+}
+
+void fn_80252870(void *arg0, u32 *arg1)
+{
+    void fn_8025FFC8(void *, u8, s32, u8, u8, u8);
+
+    u8 *voice;
+    u32 flags114;
+    u32 flags118;
+    u32 word0;
+    u32 word1;
+    u8 value;
+    s32 scale;
+    s32 adjustment;
+
+    voice = (u8 *)arg0;
+
+    flags114 = *(u32 *)(voice + 0x114);
+    flags118 = *(u32 *)(voice + 0x118);
+
+    if ((flags118 & 0x02000000) == 0) {
+        *(u32 *)(voice + 0x118) = flags118 | 0x02000000;
+        *(u32 *)(voice + 0x114) = flags114;
+    } else {
+        word0 = arg1[0];
+        word1 = arg1[1];
+
+        scale = (s32)(word0 & 0xFFFF0000) / 100;
+
+        adjustment =
+            ((s32)(s8)(word1 >> 16) << 8) / 100;
+
+        if (scale < 0) {
+            scale -= adjustment;
+        } else {
+            scale += adjustment;
+        }
+
+        value = (u8)(word1 >> 8);
+
+        fn_8025FFC8(
+            voice + 0x2FC,
+            (u8)(word0 >> 8),
+            scale,
+            (u8)word1,
+            value != 0,
+            value
+        );
+    }
+
+    *(u32 *)(voice + 0x220) |= 0x40;
+}
+
+void fn_80252974(void *arg0, u32 *arg1)
+{
+    u8 *voice;
+    u32 flags114;
+    u32 flags118;
+    u32 word0;
+    u32 word1;
+    u8 combine;
+    u8 inverse;
+    s32 scale;
+    s32 adjustment;
+
+    voice = (u8 *)arg0;
+
+    flags114 = *(u32 *)(voice + 0x114);
+    flags118 = *(u32 *)(voice + 0x118);
+
+    combine = 0;
+
+    if ((flags118 & 0x01000000) == 0) {
+        *(u32 *)(voice + 0x118) = flags118 | 0x01000000;
+        *(u32 *)(voice + 0x114) = flags114;
+    } else {
+        combine = (u8)arg1[1];
+    }
+
+    word0 = arg1[0];
+    word1 = arg1[1];
+
+    scale = (s32)(word0 & 0xFFFF0000) / 100;
+    adjustment = ((s32)(s8)(word1 >> 16) << 8) / 100;
+
+    if (scale < 0) {
+        scale -= adjustment;
+    } else {
+        scale += adjustment;
+    }
+
+    inverse = (u8)(word1 >> 8);
+
+    fn_8025FFC8(
+        voice + 0x320,
+        (u8)(word0 >> 8),
+        scale,
+        combine,
+        inverse != 0,
+        inverse
+    );
+
+    *(u32 *)(voice + 0x220) |= 0x80;
+}
+
+void fn_80252A78(void *arg0, u32 *arg1)
+{
+    u8 *voice;
+    u32 flags114;
+    u32 flags118;
+    u32 word0;
+    u32 word1;
+    u8 value;
+    s32 scale;
+    s32 adjustment;
+
+    voice = (u8 *)arg0;
+
+    flags114 = *(u32 *)(voice + 0x114);
+    flags118 = *(u32 *)(voice + 0x118);
+
+    if ((flags118 & 0x00800000) == 0) {
+        *(u32 *)(voice + 0x118) = flags118 | 0x00800000;
+        *(u32 *)(voice + 0x114) = flags114;
+    } else {
+        word0 = arg1[0];
+        word1 = arg1[1];
+
+        scale = (s32)(word0 & 0xFFFF0000) / 100;
+
+        adjustment =
+            ((s32)(s8)(word1 >> 16) << 8) / 100;
+
+        if (scale < 0) {
+            scale -= adjustment;
+        } else {
+            scale += adjustment;
+        }
+
+        value = (u8)(word1 >> 8);
+
+        fn_8025FFC8(
+            voice + 0x368,
+            (u8)(word0 >> 8),
+            scale,
+            (u8)word1,
+            value != 0,
+            value
+        );
+    }
+
+    *(u32 *)(voice + 0x220) |= 0x200;
 }
 
 void fn_80252B7C(void *arg0, void *arg1) {
@@ -5940,10 +6333,10 @@ u16 fn_802601EC(void *arg0, void *arg1, u8 arg2, u8 arg3) {
     void *obj;
     s32 val;
     s32 tmp;
+    s32 r5;
     s32 scaled;
     u8 op;
     u8 mode;
-    s32 r5;
     u64 diff;
     s32 mul;
     s32 idx;
@@ -5976,9 +6369,10 @@ a0_path:
             if (obj != 0) {
                 mul = op * 0xC;
                 idx = op + 0x138;
+                val = 1;
                 mul -= 0x5B8;
                 tmp = *(s16 *)((s32)obj + mul);
-                *((u8 *)obj + idx) = 1;
+                *((u8 *)obj + idx) = val;
                 val = tmp << 1;
             } else {
                 val = 0;
