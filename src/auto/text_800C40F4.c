@@ -1629,6 +1629,22 @@ void fn_800D5D04(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3) {
     fn_800D6898(arg0, arg1, arg2, *n, &alloc);
 }
 
+void *fn_800D6314(void *arg0, s16 arg1) {
+    void fn_800C428C(void *);
+    void fn_800D6940(void *);
+
+    if (arg0 != NULL) {
+        fn_800D6940(arg0);
+        if (M2C_FIELD(arg0, void **, 8) != NULL) {
+            fn_800C428C(M2C_FIELD(arg0, void **, 8));
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_800D67E4(void) {
 
 }
