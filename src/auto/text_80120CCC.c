@@ -6,7 +6,7 @@ typedef struct {
 } SomeStruct;
 
 extern f32 lbl_8036A30C;
-volatile u8 GXRegs_8036A30C[0x2000] : 0xCC010000;
+volatile f32 GXRegs_8036A30C[0x800] : 0xCC010000;
 
 void fn_80120CCC(u16 *arg0) {
     *arg0 &= ~0x130;
@@ -628,6 +628,137 @@ void fn_80123634(void *arg0) {
     }
 }
 
+void *fn_801236CC(void *arg0, void *arg1, void *arg2) {
+    void fn_800E2CF4(void *);
+    void fn_800C9ABC(void *, void *, void *);
+    void fn_800C8DCC(void *, void *, void *);
+    void fn_800C96F8(void *, void *, u32);
+    void fn_800C9A60(void *, s32);
+    s32 fn_800C9400(void *, u32, u32, char *, u32);
+    s32 fn_800E7FB4(void *, void *);
+    u32 strlen(const char *);
+    extern u8 lbl_802902E8[];
+    extern u8 lbl_80274DB0[];
+    extern f32 lbl_8036A2F8;
+    extern f32 lbl_8036A2E8;
+
+    typedef struct {
+        u32 size;
+        u32 cap;
+        char *data;
+    } String;
+
+    typedef struct {
+        void *unk00;
+        u8 pad04[0x3C];
+        void *vtable;
+        u8 pad44[0x10];
+        String str54;
+        s32 unk60;
+        s32 unk64;
+        s32 unk68;
+        f32 unk6C;
+        f32 unk70;
+        f32 unk74;
+        f32 unk78;
+        f32 unk7C;
+        f32 unk80;
+        f32 unk84;
+        f32 unk88;
+        f32 unk8C;
+        s32 unk90;
+        s32 unk94;
+    } Obj;
+
+    char spC0[0x20];
+    char spA0[0x20];
+    char sp80[0x20];
+    char sp60[0x20];
+    String sp54;
+    String sp48;
+    String sp3C;
+    String sp30;
+    String sp24;
+    String sp18;
+    u8 sp14[4];
+    u8 sp10[4];
+    u8 spC[4];
+    u8 sp8[4];
+    void *saved;
+    Obj *path;
+    Obj *self;
+    Obj *buf;
+    f32 t1;
+    f32 t0;
+
+    path = (Obj *)arg2;
+    self = (Obj *)arg0;
+    fn_800E2CF4(arg0);
+    self->vtable = lbl_802902E8;
+
+    self->str54.size = 0;
+    self->str54.cap = 0;
+    self->str54.data = 0;
+    self->str54.cap = 0;
+
+    saved = self->unk00;
+
+    sp54.cap = 0;
+    sp48.cap = 0;
+    sp54.size = 0;
+    sp54.data = 0;
+    sp54.cap = 0;
+    sp48.size = 0;
+    sp48.data = 0;
+    sp48.cap = 0;
+
+    fn_800C9ABC(&sp3C, lbl_80274DB0 + 0x12, &sp14);
+    fn_800C8DCC(spC0, path, &sp3C);
+    buf = (Obj *)spC0;
+    fn_800C96F8(&self->str54, buf, strlen((char *)buf));
+    fn_800C9A60(&sp3C, -1);
+
+    fn_800C9ABC(&sp30, lbl_80274DB0 + 0x1A, &sp10);
+    fn_800C8DCC(spA0, path, &sp30);
+    buf = (Obj *)spA0;
+    fn_800C96F8(&sp48, buf, strlen((char *)buf));
+    fn_800C9A60(&sp30, -1);
+
+    fn_800C9ABC(&sp24, lbl_80274DB0 + 0x1F, &spC);
+    fn_800C8DCC(sp80, path, &sp24);
+    self->unk68 = *(s32 *)sp80;
+    fn_800C9A60(&sp24, -1);
+
+    t1 = lbl_8036A2F8;
+    self->unk6C = t1;
+    self->unk70 = t1;
+    t0 = lbl_8036A2E8;
+    self->unk74 = t0;
+    self->unk78 = t0;
+    self->unk80 = t0;
+    self->unk7C = t0;
+    self->unk84 = t0;
+    self->unk88 = t0;
+    self->unk8C = t0;
+    self->unk90 = 0;
+
+    fn_800C9ABC(&sp18, lbl_80274DB0 + 0x23, &sp8);
+    fn_800C8DCC(sp60, path, &sp18);
+    self->unk94 = *(s32 *)sp60;
+    fn_800C9A60(&sp18, -1);
+
+    buf = (Obj *)(lbl_80274DB0 + 0x2B);
+    if (fn_800C9400(&sp48, 0, sp48.size, (char *)buf, strlen((char *)buf)) == 0) {
+        self->unk64 = 1;
+    } else {
+        self->unk64 = 0;
+    }
+    self->unk60 = fn_800E7FB4(saved, &self->str54);
+    fn_800C9A60(&sp48, -1);
+    fn_800C9A60(&sp54, -1);
+    return self;
+}
+
 void fn_8012391C(void *arg0) {
     void *fn_8000C0C0(void *);
     void fn_8000C60C(void *);
@@ -707,6 +838,114 @@ void fn_80123CA0(void *arg0) {
 void fn_80123CFC(void) {
     M2C_UNK fn_801246FC();
     fn_801246FC();
+}
+
+void fn_80125388(void *arg0) {
+    typedef struct Node {
+        struct Node *next;   // 0x00
+        u8 pad0[0x08];
+        u8 unkC;             // 0x0C
+        u8 pad1[0x07];
+        f32 unk14;           // 0x14
+        f32 unk18;           // 0x18
+        f32 unk1C;           // 0x1C
+    } Node;
+    typedef struct ListCtrl {
+        u8 pad[0x0C];
+        Node *head;          // 0x0C
+    } ListCtrl;
+    typedef struct Arg0 {
+        u8 pad0[0x54];
+        s32 unk54;           // 0x54
+        ListCtrl *unk58;     // 0x58
+    } Arg0;
+    extern f32 lbl_8036A30C;
+    void fn_8006ECCC(s32, void *, s32);
+    void fn_80222C50(void *, s32);
+    void fn_8021FBB8(void);
+    void fn_8021F4E4(s32, s32);
+    void fn_8021FBF0(s32, s32, s32, s32, s32);
+    void fn_80220428(s32);
+    void fn_802201A8(s32, s32, s32, s32, s32, s32);
+    void fn_80222334(s32);
+    void fn_80222370(s32, s32, s32, s32, s32, s32, s32);
+    void fn_802240C8(s32);
+    void fn_80223F2C(s32, s32, s32, s32);
+    void fn_802239D0(s32, s32);
+    void fn_802245D8(s32, s32, s32, s32);
+    void fn_80224684(s32, s32, s32);
+    void fn_8022100C(s32);
+    s32 fn_80040844(void);
+    void *fn_80067FDC(void);
+    void fn_80202024(void *, void *, void *);
+    void fn_80224D7C(void *, s32);
+    void fn_80224E1C(s32);
+    void fn_80220FC4(s32, s32, s32);
+    void fn_80220F84(s32, s32);
+    void fn_80220DEC(s32, s32, s32);
+    void fn_80066D00(s32);
+    Arg0 *a = (Arg0 *)arg0;
+    u8 sp8[0x20];
+    u8 sp28[0x40];
+    s32 temp_r31;
+    f32 temp_f31;
+    Node *var_r30;
+    f32 t0;
+    f32 t1;
+    f32 t2;
+    u8 uc;
+
+    fn_8006ECCC(a->unk54, sp8, 7);
+    fn_80222C50(sp8, 0);
+    fn_8021FBB8();
+    fn_8021F4E4(9, 1);
+    fn_8021F4E4(0xB, 1);
+    fn_8021F4E4(0xD, 1);
+    fn_8021FBF0(0, 9, 1, 4, 0);
+    fn_8021FBF0(0, 0xB, 1, 5, 0);
+    fn_8021FBF0(0, 0xD, 1, 4, 0);
+    fn_80220428(1);
+    fn_802201A8(0, 1, 4, 0x3C, 0, 0x7D);
+    fn_80222334(1);
+    fn_80222370(4, 0, 1, 1, 0, 0, 2);
+    fn_802240C8(1);
+    fn_80223F2C(0, 0, 0, 4);
+    fn_802239D0(0, 0);
+    fn_802245D8(1, 4, 5, 0);
+    fn_80224684(1, 3, 0);
+    fn_8022100C(2);
+    temp_r31 = fn_80040844();
+    fn_80202024(fn_80067FDC(), (void *)(u32)(temp_r31 + 0x70), sp28);
+    fn_80224D7C(sp28, 0);
+    fn_80224E1C(0);
+    fn_80220FC4(0, 0, 1);
+    fn_80220F84(0x30, 5);
+    temp_f31 = lbl_8036A30C;
+    var_r30 = NULL;
+    goto loop_test;
+loop_body:
+    fn_80220DEC(0xB8, 0, 1);
+    t0 = var_r30->unk14;
+    t1 = var_r30->unk18;
+    t2 = var_r30->unk1C;
+    uc = var_r30->unkC;
+    GXRegs_8036A30C[-0x8000] = t0;
+    GXRegs_8036A30C[-0x8000] = t1;
+    GXRegs_8036A30C[-0x8000] = t2;
+    GXRegs_8036A30C[-0x8000] = 0xFF;
+    GXRegs_8036A30C[-0x8000] = 0xFF;
+    GXRegs_8036A30C[-0x8000] = 0xFF;
+    GXRegs_8036A30C[-0x8000] = uc;
+    GXRegs_8036A30C[-0x8000] = temp_f31;
+    GXRegs_8036A30C[-0x8000] = temp_f31;
+    goto loop_test;
+loop_test:
+    var_r30 = (var_r30 != NULL) ? var_r30->next : a->unk58->head;
+    if (var_r30 != NULL) {
+        goto loop_body;
+    }
+    fn_80220FC4(0, 0, 0);
+    fn_80066D00(-1);
 }
 
 void fn_801255D4(void *arg0) {
