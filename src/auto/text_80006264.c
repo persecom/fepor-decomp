@@ -1168,6 +1168,22 @@ void fn_8000A358(s32 arg0) {
     fn_800C4638(arg0, lbl_80267C70 + 0x3A, 0);
 }
 
+void fn_8000A388(u32 arg0, void (*arg1)(void *, s32), s32 arg2) {
+    extern u8 lbl_802A66D8[];
+    u8 *var_r31;
+    s32 var_r30;
+
+    var_r31 = lbl_802A66D8;
+    var_r30 = 0;
+    do {
+        if (*(u32 *)var_r31 == arg0) {
+            arg1(var_r31, arg2);
+        }
+        var_r30 += 1;
+        var_r31 += 0x70;
+    } while (var_r30 < 0x100);
+}
+
 void fn_8000A3F8(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x2E) = (u8) (M2C_FIELD(arg0, u8 *, 0x2E) - 1);
 }
