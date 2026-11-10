@@ -1,6 +1,8 @@
 /* Functions from 0x8002887C to 0x80033080, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_8002F6E8(void *arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4);
+
 static inline void *map_find_xy(s32 *arg0, s8 arg1, s8 arg2) {
     s32 *p;
     s32 i;
