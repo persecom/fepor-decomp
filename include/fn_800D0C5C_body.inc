@@ -232,15 +232,24 @@
                 sub = *(u32 *)((u8 *)self + 0x210);
                 if (sub <= 0xDU) {
                     switch (sub) {
-                    case 0:
-                        *(u32 *)((u8 *)self + 0xC) = (*(s32 *)((u8 *)self + 0x228) == 1) ? 9 : 0x16;
-                        break;
-                    case 1:
-                        *(u32 *)((u8 *)self + 0xC) = (*(s32 *)((u8 *)self + 0x228) == 1) ? 0xE : 0x16;
-                        break;
-                    case 8:
-                        *(u32 *)((u8 *)self + 0xC) = (*(s32 *)((u8 *)self + 0x228) == 1) ? 0x12 : 0x16;
-                        break;
+                                          case 0:
+                          if (*(s32 *)((u8 *)self + 0x228) == 1)
+                              *(u32 *)((u8 *)self + 0xC) = 9;
+                          else
+                              *(u32 *)((u8 *)self + 0xC) = 0x16;
+                          break;
+                      case 1:
+                          if (*(s32 *)((u8 *)self + 0x228) == 1)
+                              *(u32 *)((u8 *)self + 0xC) = 0xE;
+                          else
+                              *(u32 *)((u8 *)self + 0xC) = 0x16;
+                          break;
+                      case 8:
+                          if (*(s32 *)((u8 *)self + 0x228) == 1)
+                              *(u32 *)((u8 *)self + 0xC) = 0x12;
+                          else
+                              *(u32 *)((u8 *)self + 0xC) = 0x16;
+                          break;
                     case 2: case 3: case 4:
                         *(u32 *)((u8 *)self + 0xC) = 0x19;
                         break;
