@@ -1870,11 +1870,11 @@ s32 fn_800D77D4(void) {
 }
 
 s32 fn_800D7834(void) {
-    M2C_UNK fn_800D75C4(s32);
-    M2C_UNK fn_800DA2CC(s32);
+    void fn_800D75C4(void *);
+    void fn_800DA2CC(void *);
     extern s32 lbl_80367A50;
-    fn_800D75C4(lbl_80367A50);
-    fn_800DA2CC(lbl_80367A50);
+    fn_800D75C4((void *)lbl_80367A50);
+    fn_800DA2CC((void *)lbl_80367A50);
     return 0;
 }
 
