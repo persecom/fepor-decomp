@@ -207,6 +207,10 @@ static u32 lbl_8033E3E8[4];
 static BOOL InputBufferValid[4];
 static u32 InputBuffer[4][2];
 static volatile u32 InputBufferVcount[4];
+
+static s32 SI_Identity(s32 x) {
+    return x;
+}
 static u32 cmdTypeAndStatus[4];
 
 s32 fn_8023ABD4(void) {
@@ -475,6 +479,120 @@ void fn_8023BB34(void *alarm, void *context) {
         }
     }
 }
+
+#pragma use_lmw_stmw on
+#pragma global_optimizer off
+void GetTypeCallback(s32 chan, u32 type) {
+    s32 SITransfer(s32, void *, u32, void *, u32, void *, s64);
+    s64 __OSGetSystemTime(void);
+    void fn_80209C10(s32, u16);
+    s32 fn_80209B8C(s32);
+    extern u32 Type_8029EFC0[4];
+    extern u32 lbl_80368820;
+    extern SIPacket Packet_8033E248[4];
+    s64 pad;
+    s32 clear;
+    s32 i;
+    u32 typeVal;
+    void **cbs;
+    void (*cb)(s32, u32);
+    u32 *typep;
+    s32 chan4;
+    u32 typeArg;
+    u32 cmd;
+    s32 needFix;
+    u32 poll;
+    u32 chanBit;
+    u32 t;
+    u32 *cmdBase;
+    u8 *packet;
+    u8 *timep;
+    s64 time;
+    s64 *padp;
+
+    padp = &pad;
+    packet = (u8 *)Packet_8033E248;
+    typeArg = type;
+    chan4 = chan * 4;
+    typep = (u32 *)((u8 *)Type_8029EFC0 + chan4);
+    *typep &= ~0x80;
+    *typep |= typeArg;
+    time = __OSGetSystemTime();
+    timep = packet + (chan << 3);
+    *(s64 *)(timep + 0x120) = time;
+    chanBit = 0x80000000U >> chan;
+    poll = lbl_80368820;
+    t = *typep;
+    lbl_80368820 = poll & ~chanBit;
+    needFix = (s32)(poll & chanBit);
+    if ((typeArg & 0xF) || ((t & 0x18000000) != 0x08000000) || !(t & 0x80000000) || (t & 0x04000000)) {
+        fn_80209C10(chan, 0);
+        typeVal = *typep;
+        cbs = (void **)(packet + (chan << 4));
+        i = 0;
+        clear = i;
+        cbs = (void **)((u8 *)cbs + 0x160);
+        do {
+            cb = (void (*)(s32, u32))*cbs;
+            if (cb != 0) {
+                *cbs = (void *)clear;
+                (*cb)(chan, typeVal);
+            }
+            i += 1;
+            cbs += 1;
+        } while (i < 4);
+        return;
+    }
+    cmd = ((u32)fn_80209B8C(chan) << 8) & 0xFFFF00;
+    if (needFix != 0 && (cmd & 0x100000)) {
+        cmdBase = (u32 *)(packet + chan4);
+        *(u32 *)((u8 *)cmdBase + 0x1F0) = (cmd & 0xCFFF00) | 0x4E100000;
+        *typep = 0x80;
+        SITransfer(chan, (u8 *)cmdBase + 0x1F0, 3, typep, 3, GetTypeCallback, 0);
+        return;
+    }
+    if (t & 0x100000) {
+        if ((cmd & 0xCFFF00) != (t & 0xCFFF00)) {
+            if (!(cmd & 0x100000)) {
+                cmd = (t & 0xCFFF00) | 0x100000;
+                fn_80209C10(chan, (u16)(cmd >> 8));
+            }
+            cmdBase = (u32 *)(packet + chan4);
+            *(u32 *)((u8 *)cmdBase + 0x1F0) = cmd | 0x4E000000;
+            *typep = 0x80;
+            SITransfer(chan, (u8 *)cmdBase + 0x1F0, 3, typep, 3, GetTypeCallback, 0);
+            return;
+        }
+    } else if (t & 0x40000000) {
+        t &= 0xCFFF00;
+        t |= 0x100000;
+        fn_80209C10(chan, (u16)(t >> 8));
+        cmdBase = (u32 *)(packet + chan4);
+        *(u32 *)((u8 *)cmdBase + 0x1F0) = t | 0x4E000000;
+        *typep = 0x80;
+        SITransfer(chan, (u8 *)cmdBase + 0x1F0, 3, typep, 3, GetTypeCallback, 0);
+        return;
+    } else {
+        fn_80209C10(chan, 0);
+    }
+    typeVal = *typep;
+    cbs = (void **)(packet + (chan << 4));
+    i = 0;
+    clear = i;
+    cbs = (void **)((u8 *)cbs + 0x160);
+    do {
+        cb = (void (*)(s32, u32))*cbs;
+        if (cb != 0) {
+            *cbs = (void *)clear;
+            (*cb)(chan, typeVal);
+        }
+        i += 1;
+        cbs += 1;
+    } while (i < 4);
+    (void)padp;
+}
+#pragma global_optimizer reset
+#pragma use_lmw_stmw reset
 
 s32 SIGetType(void)
 {
