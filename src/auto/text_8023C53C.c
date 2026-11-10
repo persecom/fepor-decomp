@@ -3132,7 +3132,7 @@ void fn_80258888(void) {
     u32 fn_80262538(void);
     void fn_802618E4(u8);
     void fn_80255054(void *);
-    void fn_80256FF0(u8);
+    void fn_80256FF0(Fn80256FF0Arg);
     extern u8 lbl_8035A6D0[];
     extern s32 lbl_803689A8;
 
