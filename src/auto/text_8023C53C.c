@@ -100,7 +100,7 @@ typedef struct StreamState {
     u8 pad0[0x124];
     StreamSeqChan seqChans[72]; /* 0x124 */
     StreamChannel channels[67]; /* 0x364 */
-    u8 padE70[0x94];
+    u8 padEE8[0x1C];
     StreamMsg msgs[64]; /* 0xF04 */
     u8 padF64[0x40];
     u8 *voices; /* 0x1504 */
@@ -573,7 +573,7 @@ void *fn_80246070(u8 arg0) {
     StreamChannel *chan = &base->channels[arg0];
     StreamMsg *msg;
     StreamSeqEvent *entry;
-    StreamVoice *voices;
+    u8 *voices;
     u32 temp_r10;
     u32 temp_r11;
     u32 temp_r9;
@@ -588,35 +588,38 @@ void *fn_80246070(u8 arg0) {
     msg = &base->msgs[arg0];
     msg->unk15 = arg0;
     msg->unk10 = chan;
-    if (chan->unk8 == NULL) {
-        entry = chanSeq->unk4;
-        ev = entry->unk8;
-        if (ev == 0xFFFF) {
-            chanSeq->unk4 = NULL;
-            return NULL;
-        }
-        if (ev == 0xFFFE) {
-            voices = (StreamVoice *) base->voices;
-            if (voices == NULL) {
-                if (base->voiceFlags[0].unk0 != 0) {
-                    chanSeq->unk4 = NULL;
-                    return NULL;
-                }
-            } else if (base->voiceFlags[voices[arg0].unk0].unk0 != 0) {
+    if (chan->unk8 != NULL) {
+        goto stream;
+    }
+seq:
+    entry = chanSeq->unk4;
+    ev = entry->unk8;
+    if (ev == 0xFFFF) {
+        chanSeq->unk4 = NULL;
+        return NULL;
+    }
+    if (ev == 0xFFFE) {
+        voices = base->voices;
+        if (voices == NULL) {
+            if (base->voiceFlags[0].unk0 != 0) {
                 chanSeq->unk4 = NULL;
                 return NULL;
             }
-            msg->unk14 = 3;
-            msg->unk8 = entry->unk0;
-            chanSeq->unk4 = (StreamSeqEvent *) (chanSeq->unk0 + entry->unkA * 0xC);
-            return msg;
+        } else if (base->voiceFlags[voices[arg0]].unk0 != 0) {
+            chanSeq->unk4 = NULL;
+            return NULL;
         }
-        msg->unk14 = 4;
+        msg->unk14 = 3;
         msg->unk8 = entry->unk0;
-        msg->unkC = chanSeq->unk4;
-        chanSeq->unk4 = (StreamSeqEvent *) ((u8 *) entry + 0xC);
+        chanSeq->unk4 = (StreamSeqEvent *) (chanSeq->unk0 + entry->unkA * 0xC);
         return msg;
     }
+    msg->unk14 = 4;
+    msg->unk8 = entry->unk0;
+    msg->unkC = chanSeq->unk4;
+    chanSeq->unk4 = (StreamSeqEvent *) ((u8 *) entry + 0xC);
+    return msg;
+stream:
     for (;;) {
         temp_r10 = chan->unk18;
         temp_r11 = chan->unk24;
@@ -639,7 +642,7 @@ void *fn_80246070(u8 arg0) {
         }
         if ((p[2] == 0xFF) && (p[3] == 0xFF)) {
             chan->unk8 = NULL;
-            break;
+            goto seq;
         }
         msg->unkC = p;
         chan->unk0 = temp_r9;
