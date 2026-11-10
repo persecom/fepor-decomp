@@ -1243,6 +1243,35 @@ s32 fn_8024CE1C(s32 arg0, s32 arg1) {
     return ((arg0 * 2) + 0x1F) & 0xFFFFFFE0;
 }
 
+s32 fn_8024F1D8(u16 id, s32 data, s16 type) {
+ void fn_8026372C(void); void fn_802636F4(void);
+ extern SampleKey lbl_8034F6B8[]; extern u16 lbl_80368A0C;
+ s32 i; s32 j; u16 count;
+ fn_8026372C();
+ count=lbl_80368A0C;
+ for(i=0;i<(s32)count && lbl_8034F6B8[i].id<id;i++) {}
+ if(i<(s32)count) {
+  if(id!=lbl_8034F6B8[i].id) {
+   if(count<0x100U) {
+    for(j=(s32)count-1;j>=i;j--) lbl_8034F6B8[j+1]=lbl_8034F6B8[j];
+    lbl_80368A0C++;
+    goto insert;
+   }
+   fn_802636F4(); return 0;
+  }
+  lbl_8034F6B8[i].ref++;
+  fn_802636F4(); return 0;
+ }
+ if(count<0x100U) {lbl_80368A0C++; goto insert;}
+ fn_802636F4(); return 0;
+insert:
+ lbl_8034F6B8[i].id=id;
+ lbl_8034F6B8[i].data=data;
+ lbl_8034F6B8[i].type=type;
+ lbl_8034F6B8[i].ref=1;
+ fn_802636F4(); return 1;
+}
+
 s32 fn_8024F5E4(u16 id, s32 data) {
     struct Key {
         s32 data;
