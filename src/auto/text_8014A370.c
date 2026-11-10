@@ -1,6 +1,11 @@
 /* Functions from 0x8014A370 to 0x8014E350, found by decomp-toolkit. */
 #include "common.h"
 
+extern s32 lbl_80367B00;
+extern s32 lbl_80367B04;
+extern u8 lbl_80367B0E;
+extern u8 lbl_80367B44;
+
 typedef struct { u8 a; u8 b; } Entry;
 typedef struct { u8 pad[0x544]; s8 count; Entry entries[256]; } Obj;
 extern u8 lbl_80367B08;
