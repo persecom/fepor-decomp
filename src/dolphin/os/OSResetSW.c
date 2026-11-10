@@ -360,6 +360,20 @@ void fn_8020A740(void *arg0) {
     M2C_FIELD(arg0, void **, 0x2DC) = NULL;
 }
 
+s64 OSGetTime(void) {
+    u32 hi;
+    u32 lo;
+    u32 hi2;
+
+    do {
+        hi = __mftbu();
+        lo = __mftb();
+        hi2 = __mftbu();
+    } while (hi != hi2);
+
+    return ((s64)hi << 32) | lo;
+}
+
 s32 OSGetTick(void) {
     return M2C_ERROR(/* unknown instruction: mftb $r3, 0x10c */);
 }
@@ -434,9 +448,9 @@ loop_4:
     M2C_FIELD(arg1, s32 *, 0xC) = (s32) ((temp_r0_2 - *(u16 *) (r6 + r3)) + 1); // Store day
 }
 
-void __init_user(void) {
-    __init_cpp();
-}
+#pragma use_lmw_stmw on
+
+#pragma use_lmw_stmw reset
 
 extern s32* FstStart_8036857C;
 extern s32 lbl_80368588;
