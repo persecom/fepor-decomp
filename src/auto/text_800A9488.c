@@ -4,8 +4,8 @@
 #pragma use_lmw_stmw on
 
 typedef struct {
-    u8 unk : 7;
     u8 flag : 1;
+    u8 unk : 7;
 } Entry9Bits;
 
 static inline void *fn_800AA794_helper(void) {
@@ -898,7 +898,7 @@ void fn_800AB75C(void *arg0) {
     void fn_800ABA3C(void *);
     extern u8 lbl_80312ACC[];
 
-    u8 sp8[0x14];
+    u8 sp8[8];
     u8 *entry;
     u8 *var_r3;
     void *self;
@@ -911,10 +911,10 @@ void fn_800AB75C(void *arg0) {
     *(u8 *)((u8 *)self + 0x43) = 1;
     entry = lbl_80312ACC + ((s8)*(u8 *)((u8 *)self + 0x3C) << 7)
                           + ((s8)*(u8 *)((u8 *)self + 0x3D) << 4);
-    *(u8 *)(entry + 9) &= 0x7F;
+    ((Entry9Bits *)(entry + 9))->flag = 0;
     entry = lbl_80312ACC + ((s8)*(u8 *)((u8 *)self + 0x3E) << 7)
                           + ((s8)*(u8 *)((u8 *)self + 0x3F) << 4);
-    *(u8 *)(entry + 9) &= 0x7F;
+    ((Entry9Bits *)(entry + 9))->flag = 0;
     fn_8001C76C(sp8);
     fn_8001C4FC(sp8, lbl_80312ACC + ((s8)*(u8 *)((u8 *)self + 0x3C) << 7)
                                  + ((s8)*(u8 *)((u8 *)self + 0x3D) << 4) + 4);
@@ -939,7 +939,10 @@ void fn_800AB75C(void *arg0) {
     y = (s8)*(u8 *)((u8 *)self + 0x3F);
     var_r3 = lbl_80312ACC + ((s8)*(u8 *)((u8 *)self + 0x3E) << 7) + (y << 4);
     if (y >= 0) {
-        while (*(u8 *)(var_r3 + 0xC) == 0) {
+        while (1) {
+            if (*(u8 *)(var_r3 + 0xC) != 0) {
+                break;
+            }
             var_r3 -= 0x10;
             y -= 1;
         }
