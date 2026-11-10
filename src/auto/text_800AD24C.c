@@ -3264,6 +3264,38 @@ s32 fn_800BBF04(u8 arg0, s32 arg1) {
     return 1;
 }
 
+s32 fn_800BBFD0(u8 arg0) {
+    u32 *fn_80037BD0(void *, s32);
+    void fn_800947E0(void *);
+    void fn_800C35C4(void *, u32 *);
+    void fn_8001D580(u32 *);
+    extern u8 lbl_802B14E4[];
+    extern u8 lbl_803200AC[];
+    void *var_r30;
+    u32 *temp_r3;
+    s32 var_r28;
+
+    if (arg0 != 0) {
+        var_r30 = lbl_802B14E4 + ((arg0 - 1) * 0x280);
+    } else {
+        var_r30 = NULL;
+    }
+    if ((var_r30 == NULL) || (*(u32 *)((u8 *)var_r30 + 0x188) == 0U)) {
+        return 0;
+    }
+    var_r28 = 0;
+    do {
+        temp_r3 = fn_80037BD0(var_r30, var_r28);
+        if ((temp_r3 != NULL) && (*temp_r3 != 0U)) {
+            fn_800C35C4(lbl_803200AC, temp_r3);
+            fn_8001D580(temp_r3);
+        }
+        var_r28 += 1;
+    } while (var_r28 < 8);
+    fn_800947E0(var_r30);
+    return 1;
+}
+
 s32 fn_800BC0A4(u8 arg0, s32 arg1) {
     s32 fn_8001CA2C(void *);
     u32 *fn_80037BD0(void *, s32);
@@ -3403,6 +3435,25 @@ u8 fn_800BC4FC(u8 arg0, s32 arg1) {
         return fn_800939FC(var_r31, temp_r4);
     }
     return 0U;
+}
+
+s32 fn_800BC588(u8 arg0) {
+    void *fn_80037BD0(void);
+    extern u8 lbl_802B14E4[];
+
+    void *unit;
+    if (arg0 != 0) {
+        unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
+    } else {
+        unit = 0;
+    }
+    if (unit == 0 || *(u32 *)((u8 *)unit + 0x188) == 0) {
+        return 0;
+    }
+    {
+        char *p = fn_80037BD0();
+        return !!(p[5] & 0x80);
+    }
 }
 
 s32 fn_800BC5FC(u8 arg0) {
@@ -5582,49 +5633,50 @@ s32 fn_800C3260(u8* arg0) {
 
 void fn_800C32A4(void *ptr) {
     u8 *p = (u8 *)ptr;
+    u8 z, m, f;
     int i;
-    
-    for (i = 0; i < 12; i++) {
-        p[0] = 0;
-        p[1] = 0;
-        p[0x13] = 0;
-        p[0x12] = 0;
-        p[0x11] = 0;
-        p[0x10] = 0;
-        p[0x16] = 0x80;
-        p[0x15] = 0x80;
-        p[0x14] = 0x80;
-        p[0x17] = 0xFF;
-        p[0x18] = 0;
-        p[0x19] = 0;
-        p[0x2B] = 0;
-        p[0x2A] = 0;
-        p[0x29] = 0;
-        p[0x28] = 0;
-        p[0x2E] = 0x80;
-        p[0x2D] = 0x80;
-        p[0x2C] = 0x80;
-        p[0x2F] = 0xFF;
-        p[0x30] = 0;
-        p[0x31] = 0;
-        p[0x43] = 0;
-        p[0x42] = 0;
-        p[0x41] = 0;
-        p[0x40] = 0;
-        p[0x46] = 0x80;
-        p[0x45] = 0x80;
-        p[0x44] = 0x80;
-        p[0x47] = 0xFF;
-        p[0x48] = 0;
-        p[0x49] = 0;
-        p[0x5B] = 0;
-        p[0x5A] = 0;
-        p[0x59] = 0;
-        p[0x58] = 0;
-        p[0x5E] = 0x80;
-        p[0x5D] = 0x80;
-        p[0x5C] = 0x80;
-        p[0x5F] = 0xFF;
+
+    for (i = 0, z = 0, m = 0x80, f = 0xFF; i < 12; i++) {
+        p[0] = z;
+        p[1] = z;
+        p[0x13] = z;
+        p[0x12] = z;
+        p[0x11] = z;
+        p[0x10] = z;
+        p[0x16] = m;
+        p[0x15] = m;
+        p[0x14] = m;
+        p[0x17] = f;
+        p[0x18] = z;
+        p[0x19] = z;
+        p[0x2B] = z;
+        p[0x2A] = z;
+        p[0x29] = z;
+        p[0x28] = z;
+        p[0x2E] = m;
+        p[0x2D] = m;
+        p[0x2C] = m;
+        p[0x2F] = f;
+        p[0x30] = z;
+        p[0x31] = z;
+        p[0x43] = z;
+        p[0x42] = z;
+        p[0x41] = z;
+        p[0x40] = z;
+        p[0x46] = m;
+        p[0x45] = m;
+        p[0x44] = m;
+        p[0x47] = f;
+        p[0x48] = z;
+        p[0x49] = z;
+        p[0x5B] = z;
+        p[0x5A] = z;
+        p[0x59] = z;
+        p[0x58] = z;
+        p[0x5E] = m;
+        p[0x5D] = m;
+        p[0x5C] = m;
+        p[0x5F] = f;
         p += 0x60;
     }
 }
