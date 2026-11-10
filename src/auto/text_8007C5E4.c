@@ -138,6 +138,24 @@ void fn_8007C968(void *arg0, void *arg1, void *arg2) {
     fn_80007884();
 }
 
+s32 fn_8007CAC4(void) {
+    extern void *lbl_80367488;
+    u8 *base;
+    s32 flag;
+    u16 val;
+
+    base = lbl_80367488;
+    flag = 2;
+    if ((*(u16 *)(base + 0x46) & 2) != 0) {
+        flag = 0;
+    }
+    val = *(u16 *)((u8 *)lbl_80367488 + 0x46);
+    *(u16 *)(base + 0x46) = val & -0x203;
+    base = lbl_80367488;
+    *(u16 *)(base + 0x46) = *(u16 *)(base + 0x46) | (u16)flag;
+    return 0;
+}
+
 s32 fn_8007CB08(void) {
     extern u16 lbl_80289894[];
     s32 v = fn_8000C0C0(lbl_80289894);
@@ -260,19 +278,16 @@ void fn_8007D044(void) {
     fn_800875B4();
 }
 
-void fn_8007D064(s32 arg0, s32 arg2) {
-    void *fn_8000CAA0(void *, void *);
+void fn_8007D064(s32 arg0, s32 arg1, s32 arg2) {
+    void *fn_8000CAA0(void *, s32);
     void fn_801475FC(void *, s32, void *);
-
-    extern u16 lbl_80289894[];
+    extern u8 lbl_80289894[];
     extern u8 lbl_8026C86C[];
-
     void *temp_r3;
 
-    temp_r3 = fn_8000CAA0(lbl_80289894, lbl_80289894);
+    temp_r3 = fn_8000CAA0(lbl_80289894, arg1);
     *(s32 *)((u8 *)temp_r3 + 0x34) = arg0;
-    *(s32 *)((u8 *)temp_r3 + 0x38) = arg2;
-    fn_801475FC(lbl_8026C86C + 0x140, 0x64, lbl_8026C86C);
+    fn_801475FC((*(s32 *)((u8 *)temp_r3 + 0x38) = arg2, lbl_8026C86C + 0x140), 0x64, lbl_8026C86C);
 }
 
 void fn_8007D0C0(void *arg0) {
@@ -408,7 +423,6 @@ void fn_8007DD78(void *arg0) {
     void *temp_r30;
     void *temp_r31;
     
-    // Clear initial fields
     *(u32*)((uintptr_t)arg0 + 0x38) = 0;
     *(u32*)((uintptr_t)arg0 + 0x3C) = 0;
     *(u32*)((uintptr_t)arg0 + 0x40) = 0;
@@ -418,27 +432,26 @@ void fn_8007DD78(void *arg0) {
     *(u32*)((uintptr_t)arg0 + 0x50) = 0;
     *(u32*)((uintptr_t)arg0 + 0x54) = 0;
     
-    // First loop
     for (i = 0; i < 0x62; i++) {
-        temp_r3 = (void**)fn_80105C5C(*(u32*)((uintptr_t)arg0 + 0x58) + 0x18C, i);
+        temp_r3 = (void**)fn_80105C5C(*(u32*)((uintptr_t)*(u32*)((uintptr_t)arg0 + 0x58) + 0x18C) + 0x1C, (u8)i);
         if ((temp_r3 != NULL) && (*(u8*)((uintptr_t)temp_r3 + 0x19) != 0)) {
             *(u32*)((uintptr_t)arg0 + 0x38) = (u32)temp_r3;
             arg0 = (void*)((uintptr_t)arg0 + 4);
+        } else {
+            break;
         }
     }
     
-    // Second loop
     ptr_array1 = (void**)arg0;
     i = 0;
     j = 0;
     while (j < 0x62) {
-        temp_r3 = (void**)fn_80105C5C(*(u32*)((uintptr_t)arg0 + 0x58) + 0x1BC, j);
+        temp_r3 = (void**)fn_80105C5C(*(u32*)((uintptr_t)arg0 + 0x58) + 0x1BC, (u8)j);
         if ((temp_r3 != NULL) && (*(u8*)((uintptr_t)temp_r3 + 0x19) != 0)) {
             k = 0;
 loop_1:
-            temp_r30 = (void**)fn_80105C5C(*(u32*)((uintptr_t)arg0 + 0x58) + 0x18C, k);
+            temp_r30 = (void**)fn_80105C5C(*(u32*)((uintptr_t)*(u32*)((uintptr_t)arg0 + 0x58) + 0x18C) + 0x1C, (u8)k);
             if (temp_r30 != NULL) {
-                // Check for equality between the elements
                 if (*(u32*)((uintptr_t)temp_r3 + 0x0) != *(u32*)((uintptr_t)temp_r30 + 0x0)) {
                     i = 0;
                     if ((*(u8*)((uintptr_t)temp_r3 + 0x19) != 0) && (*(u8*)((uintptr_t)temp_r3 + 0x1A) == 0)) {
@@ -447,6 +460,8 @@ loop_1:
                     if (i != 0) {
                         goto block_2;
                     }
+                } else {
+                    goto block_3;
                 }
             } else {
 block_2:
@@ -455,6 +470,7 @@ block_2:
                     goto loop_1;
                 }
             }
+block_3:
             if (k == 0x62) {
                 *ptr_array1 = temp_r3;
                 ptr_array1 += 1;
@@ -464,15 +480,14 @@ block_2:
         j++;
     }
     
-    // Third loop
     j = 0;
     ptr_array2 = (void**)((uintptr_t)arg0 + (i << 2));
     while (j < 0x62) {
-        temp_r3 = (void**)fn_80105C5C(*(u32*)((uintptr_t)arg0 + 0x58) + 0x1BC, j);
+        temp_r3 = (void**)fn_80105C5C(*(u32*)((uintptr_t)arg0 + 0x58) + 0x1BC, (u8)j);
         if ((temp_r3 != NULL) && (*(u8*)((uintptr_t)temp_r3 + 0x19) != 0)) {
             k = 0;
 loop_3:
-            temp_r30 = (void**)fn_80105C5C(*(u32*)((uintptr_t)arg0 + 0x58) + 0x18C, k);
+            temp_r30 = (void**)fn_80105C5C(*(u32*)((uintptr_t)*(u32*)((uintptr_t)arg0 + 0x58) + 0x18C) + 0x1C, (u8)k);
             if (temp_r30 != NULL) {
                 if (*(u32*)((uintptr_t)temp_r3 + 0x0) != *(u32*)((uintptr_t)temp_r30 + 0x0)) {
                     i = 0;
@@ -482,6 +497,8 @@ loop_3:
                     if (i == 0) {
                         goto block_4;
                     }
+                } else {
+                    goto block_5;
                 }
             } else {
 block_4:
@@ -490,6 +507,7 @@ block_4:
                     goto loop_3;
                 }
             }
+block_5:
             if (k == 0x62) {
                 *ptr_array2 = temp_r3;
                 ptr_array2 += 1;
