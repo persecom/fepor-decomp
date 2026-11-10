@@ -2088,13 +2088,13 @@ s32 fn_80068124(char *name) {
 }
 
 s32 fn_80068548(void) {
-    extern u32* lbl_803672F8;
+    extern void *lbl_803672F8;
     return (s32)lbl_803672F8;
 }
 
 void fn_80068550(s32 arg0) {
-    extern u32* lbl_803672F8;
-    lbl_803672F8 = (u32*)arg0;
+    extern void *lbl_803672F8;
+    lbl_803672F8 = (void *)arg0;
 }
 
 s32 fn_80068CFC(void* arg0, s32 arg1) {
