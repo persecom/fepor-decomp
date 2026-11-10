@@ -5566,19 +5566,14 @@ void fn_8017F474(s32 arg0) {
 
 void fn_8017F4B0(void *arg0) {
     f32 fn_80059F64(s32, f32, f32, f32, f32);
-    extern f32 lbl_8036AC2C;
-    extern f32 lbl_8036AC30;
-    extern f32 lbl_8036AC84;
-    extern f64 lbl_8036AC38;
+    void fn_8000C188(void *);
+    s32 old;
 
-    s32 *temp_r31 = (s32 *) arg0;
-    s32 temp_r3 = M2C_FIELD(temp_r31, s32 *, 0x3c);
-    M2C_FIELD(temp_r31, s32 *, 0x3c) = temp_r3 + 1;
-
-    M2C_FIELD(temp_r31, s32 *, 0x40) = (s32) fn_80059F64(temp_r3, lbl_8036AC2C, lbl_8036AC30, lbl_8036AC84, (f32) M2C_FIELD(temp_r31, s32 *, 0x3c));
-    
-    if ((s32) M2C_FIELD(temp_r31, s32 *, 0x3c) >= 5) {
-        M2C_FIELD(temp_r31, s32 *, 0x3c) = 0;
+    old = *(s32 *)((u8 *)arg0 + 0x3C);
+    *(s32 *)((u8 *)arg0 + 0x3C) = old + 1;
+    *(s32 *)((u8 *)arg0 + 0x40) = (s32)fn_80059F64(old, 255.0f, 0.0f, 5.0f, (f32)*(s32 *)((u8 *)arg0 + 0x3C));
+    if (*(s32 *)((u8 *)arg0 + 0x3C) >= 5) {
+        *(s32 *)((u8 *)arg0 + 0x3C) = 0;
         fn_8000C188(arg0);
     }
 }
