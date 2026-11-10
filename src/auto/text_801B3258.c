@@ -45,6 +45,11 @@ extern f32 lbl_8036B4A8;
 extern f32 lbl_8027D528[3];
 extern f32 lbl_8027D534[3];
 
+typedef struct {
+    u8 pad[0xC];
+    u32 flags;
+} Fn801C797CEnt;
+
 struct Unit {
     u16 unk0;
     u16 unk2;
@@ -3024,6 +3029,105 @@ extern "C" void fn_801CC068(void *arg0) {
     };
     ((Obj *)arg0)->v6();
 }
+
+#pragma use_lmw_stmw on
+#pragma cplusplus on
+extern "C" void fn_801CC5C4(void *arg0, void *arg1) {
+    void fn_8000A258(void);
+    void fn_80009C0C(f32);
+    void fn_8000A248(void);
+    void fn_80161AA8(s16, s16, s16, s16, s32, u8 *);
+    extern f32 lbl_8036B4C8;
+
+    struct Obj {
+        virtual void v0() {}
+        virtual void v1() {}
+        virtual void v2() {}
+        virtual void v3() {}
+        virtual void v4() {}
+        virtual void v5() {}
+        virtual void v6() {}
+        virtual void v7() {}
+        virtual void v8() {}
+        virtual s16 v9() { return 0; }
+        virtual s16 v10() { return 0; }
+        virtual s16 v11() { return 0; }
+        virtual void v12() {}
+        virtual void v13() {}
+    };
+
+    u8 color[4];
+    void *self;
+    void *arg;
+    s16 x0;
+    s16 y0;
+    s16 w;
+    s16 h;
+    s16 px;
+    s16 py;
+    s16 x1;
+    s16 y1;
+    s16 x2;
+    s16 y2;
+    s32 tmp;
+    s32 eq;
+    u8 alpha;
+    s16 t3;
+    s16 t5;
+
+    self = arg0;
+    arg = arg1;
+    ((Obj *)self)->v3();
+    x0 = *(s16 *)((u8 *)self + 0x48);
+    t3 = ((Obj *)self)->v11();
+    y0 = (s16)(*(s16 *)((u8 *)self + 0x4A) - t3);
+    w = ((Obj *)self)->v9();
+    h = ((Obj *)self)->v10();
+    t3 = (s16)(x0 * w);
+    t5 = (s16)(y0 * h);
+    if (*(s16 *)((u8 *)self + 0x4C) == -1 && *(s16 *)((u8 *)self + 0x4E) == -1) {
+        *(s16 *)((u8 *)self + 0x4C) = t3;
+        *(s16 *)((u8 *)self + 0x4E) = t5;
+    } else {
+        *(s16 *)((u8 *)self + 0x4C) = (s16)((*(s16 *)((u8 *)self + 0x4C) + (t3 + 1)) >> 1);
+        *(s16 *)((u8 *)self + 0x4E) = (s16)((*(s16 *)((u8 *)self + 0x4E) + (t5 + 1)) >> 1);
+    }
+    px = *(s16 *)((u8 *)self + 0x4C);
+    py = *(s16 *)((u8 *)self + 0x4E);
+    if (*(u32 *)((u8 *)arg + 0x34) != 0) {
+        tmp = *(s32 *)(*(u8 **)((u8 *)arg + 0x38) + 8);
+    } else {
+        tmp = 0;
+    }
+    eq = (tmp == (s32)self);
+    if (eq != 0) {
+        fn_8000A258();
+        fn_80009C0C(lbl_8036B4C8);
+        fn_8000A248();
+        color[0] = 0x9C;
+        x1 = (s16)(px + ((w - 0x30) >> 1));
+        y1 = (s16)(py + ((h - 0x30) >> 1));
+        color[1] = 0x2F;
+        x2 = (s16)(x1 + 0x30);
+        alpha = 0x80;
+        y2 = (s16)(y1 + 0x30);
+        color[2] = 0x12;
+        if (eq != 0) {
+            alpha = 0xFF;
+        }
+        color[3] = alpha;
+        fn_80161AA8(x1, (s16)(y1 - 1), x2, (s16)(y1 - 1), *(s32 *)((u8 *)self + 0x34), color);
+        fn_80161AA8(x1, y2, x2, y2, *(s32 *)((u8 *)self + 0x34), color);
+        fn_80161AA8((s16)(x1 - 1), y1, (s16)(x1 - 1), y2, *(s32 *)((u8 *)self + 0x34), color);
+        fn_80161AA8(x2, y1, x2, y2, *(s32 *)((u8 *)self + 0x34), color);
+        fn_80161AA8(x1, y1, x2, y1, *(s32 *)((u8 *)self + 0x34), color);
+        fn_80161AA8(x1, (s16)(y2 - 1), x2, (s16)(y2 - 1), *(s32 *)((u8 *)self + 0x34), color);
+        fn_80161AA8(x1, y1, x1, y2, *(s32 *)((u8 *)self + 0x34), color);
+        fn_80161AA8((s16)(x2 - 1), y1, (s16)(x2 - 1), y2, *(s32 *)((u8 *)self + 0x34), color);
+    }
+}
+#pragma cplusplus reset
+
 #pragma cplusplus reset
 
 #pragma cplusplus on
