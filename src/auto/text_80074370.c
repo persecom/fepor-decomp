@@ -463,6 +463,22 @@ extern "C" s32 fn_80075784(void *arg0, void *arg1, s32 arg2) {
     }
     return (fn_800939FC(lbl_802EF4C8[0]) == 0) ? 2 : 0;
 }
+
+extern "C" s32 fn_80075814(s32 arg0, s32 arg1, void *arg2) {
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_8036743C[8];
+    void fn_80091CD8(s32);
+    void *fn_80024398(void *, s32, s32);
+    void *tmp;
+
+    lbl_802EF4C8[0xA] = *((u8 *)arg2 + 0x3A);
+    fn_80091CD8(*(s32 *)lbl_802EF4C8);
+    tmp = fn_80024398(lbl_8036743C, arg1, 0);
+    *(s16 *)((u8 *)tmp + 0x30) = 0x180;
+    *(s16 *)((u8 *)tmp + 0x32) = 0x46;
+    return 4;
+}
+
 #pragma cplusplus off
 void fn_80075878(void) {
     extern u16 lbl_8026C0B8[];
