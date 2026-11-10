@@ -608,6 +608,33 @@ void fn_80007538(void)
     *(f32 *)((u8 *)object + 0x3C) = y;
 }
 
+void fn_80007588(void)
+{
+    extern void *lbl_80367140;
+
+    void *object;
+    f32 x;
+    f32 y;
+
+    object = *(void **)((u8 *)lbl_80367140 + 0xC);
+    object = *(void **)((u8 *)object + 4);
+
+    x = *(f32 *)((u8 *)object + 0x18);
+    y = *(f32 *)((u8 *)object + 0x1C);
+
+    *(f32 *)((u8 *)object + 0x18) = *(f32 *)((u8 *)object + 0x38);
+    *(f32 *)((u8 *)object + 0x1C) = *(f32 *)((u8 *)object + 0x3C);
+
+    *(f32 *)((u8 *)object + 0x38) = *(f32 *)((u8 *)object + 0x28);
+    *(f32 *)((u8 *)object + 0x3C) = *(f32 *)((u8 *)object + 0x2C);
+
+    *(f32 *)((u8 *)object + 0x28) = *(f32 *)((u8 *)object + 0x48);
+    *(f32 *)((u8 *)object + 0x2C) = *(f32 *)((u8 *)object + 0x4C);
+
+    *(f32 *)((u8 *)object + 0x48) = x;
+    *(f32 *)((u8 *)object + 0x4C) = y;
+}
+
 void fn_800075D8(void) {
     void *temp_r3;
 
