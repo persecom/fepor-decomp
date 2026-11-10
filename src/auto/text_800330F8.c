@@ -1913,14 +1913,16 @@ void fn_8003FCCC(s32 arg0) {
     fn_8003F87C(arg0, 0);
 }
 
-extern u8 lbl_80366DC0[7];
+extern s8 *lbl_80366DC0;
 int fn_8003FCF0(void *arg0) {
     int i;
     char* ptr;
-    
+    s8 *ref;
+
+    ref = lbl_80366DC0;
     ptr = (char*)arg0 + 0x18;
     for (i = 0; i < 7; i++) {
-        if (((u8*)ptr)[i] != lbl_80366DC0[i]) {
+        if (((s8*)ptr)[i] != ref[i]) {
             goto label_1;
         }
     }
@@ -1930,7 +1932,7 @@ int fn_8003FCF0(void *arg0) {
 label_1:
     ptr = (char*)arg0 - 0x20 + 0x18;
     for (i = 0; i < 7; i++) {
-        if (((u8*)ptr)[i] != lbl_80366DC0[i]) {
+        if (((s8*)ptr)[i] != ref[i]) {
             return 0;
         }
     }
