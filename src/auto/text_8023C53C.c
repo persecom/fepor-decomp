@@ -900,7 +900,7 @@ void fn_8024AD04(u8 arg0, u8 arg1) {
 
 void fn_80255054(void *arg0);
 
-void fn_80256FF0(u8 arg0);
+void fn_80256FF0(Fn80256FF0Arg arg0);
 
 s32 fn_8024AD2C(s32 arg0, s32 arg1) {
     s32 offset;
