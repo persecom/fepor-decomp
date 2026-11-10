@@ -12,6 +12,12 @@ typedef struct String {
 extern f32 lbl_8036A1DC;
 extern f32 lbl_8036A1A4;
 extern f32 lbl_8036A1C8;
+extern u16 lbl_8028F6C8[];
+void fn_800C9ABC(void *, char *, void *);
+void fn_800C9A60(void *, s32);
+void fn_800E6418(void *, s32, void *, s32, s32, void *);
+void fn_800D6878(void *, void *, void *);
+void fn_800C96F8(void *, char *, u32);
 extern u16 lbl_80367A58;
 
 extern s32 lbl_80367110;
