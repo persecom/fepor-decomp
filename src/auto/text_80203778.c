@@ -149,6 +149,7 @@ BOOL __OSCallResetFunctions(BOOL final);
 void __OSReboot(u32 resetCode, u32 bootDol);
 void OSClearContext(OSContext *context);
 void OSSetCurrentContext(OSContext *context);
+void OSDumpContext(OSContext *context);
 void fn_80206E1C(u32 bootDol, u32 resetCode, char **argv);
 s32 __OSSyncSram(void);
 
@@ -1632,8 +1633,14 @@ for(row=0;row<h->height;row++){
 srcY=(y+row)/8; srcSubY=((y+row)%8)*2; dstY=(row/8)*stride; dstSubY=(row%8)*4;
 for(col=0;col<h->width;col++){
 sx=x+col; sy=arg2+col;
-src=&base[((((s32)h->sheetWidth/8)<<5)/2)*srcY+(sx/8)*16+srcSubY+(sx%8)/4];
-dst=(u8*)arg1+dstY+(sy/8)*32+dstSubY+(sy%8)/2;
+src=base+((((s32)h->sheetWidth/8)<<5)/2)*srcY;
+src+=(sx/8)*16;
+src+=srcSubY;
+src+=(sx%8)/4;
+dst=(u8*)arg1+dstY;
+dst+=(sy/8)*32;
+dst+=dstSubY;
+dst+=(sy%8)/2;
 if(sy%2) mask=15; else mask=240;
 pixel=*dst; color=palette[((*src>>(6-(sx%4)*2))&3)];
 *dst=pixel | (color & mask);
