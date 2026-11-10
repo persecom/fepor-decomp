@@ -556,9 +556,9 @@ void TRKTargetSetStopped(s32 arg0) {
     *(s32 *)((u8 *)gTRKState + 0x98) = arg0;
 }
 
-u16 TRKTargetStopped(void) {
+s32 TRKTargetStopped(void) {
     extern u16 gTRKState[];
-    return (u16)gTRKState[0x98 / sizeof(u16)];
+    return *(s32 *)((u8 *)gTRKState + 0x98);
 }
 
 s32 TRKTargetSupportRequest(void) {
