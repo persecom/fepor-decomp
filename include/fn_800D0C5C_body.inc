@@ -129,6 +129,7 @@
     state = *(u32 *)((u8 *)self + 0xC);
     r28 = 0;
     r30 = 0;
+    stack_pad[0] = 0;
     if (1) {
         switch (state) {
         case 0:
