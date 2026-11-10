@@ -3842,13 +3842,13 @@ void fn_802624D8(void) {
 }
 
 void fn_802624DC(void *arg0) {
-    extern M2C_UNK lbl_80363F18;
+    extern s32 lbl_80363F18[];
     s32 temp_r0;
 
-    temp_r0 = M2C_FIELD(arg0, s32 *, 0);
-    M2C_FIELD(&lbl_80363F18, s32 *, 0) = temp_r0;
-    M2C_FIELD(&lbl_80363F18, s32 *, 4) = temp_r0;
-    M2C_FIELD(&lbl_80363F18, s32 *, 8) = (s32) M2C_FIELD(arg0, s32 *, 4);
+    temp_r0 = *(s32 *)arg0;
+    lbl_80363F18[0] = temp_r0;
+    lbl_80363F18[1] = temp_r0;
+    lbl_80363F18[2] = *(s32 *)((u8 *)arg0 + 4);
 }
 
 void fn_802624F8(void) {
