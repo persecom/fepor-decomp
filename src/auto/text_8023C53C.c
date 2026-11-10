@@ -3886,31 +3886,28 @@ void fn_80262354(void *arg0, void *arg1) {
     fn_802627EC(arg1);
 }
 
-void fn_80262378(void **arg0, s32 *arg1) {
-    s32 fn_80262B74(s32, s32);
+void fn_80262378(void **arg0, s32 *arg1, void *arg2) {
+    s32 fn_80262B74(s32, s32, void *);
     u32 temp_r3;
     u32 temp_r0;
     u32 var_r4;
 
-    temp_r3 = M2C_FIELD(*arg0, u32 *, 4);
-    temp_r0 = temp_r3 >> 0x18U;
+    temp_r3 = *(u32 *)((u8 *)*arg0 + 4);
+    temp_r0 = temp_r3 >> 24;
     var_r4 = temp_r3 & 0xFFFFFF;
-    switch ((s32) temp_r0) {                        /* irregular */
-    case 3:
+    switch ((s32)temp_r0) {
+    case 0:
+    case 1:
+    case 4:
+    case 5:
+        var_r4 = (((var_r4 + 0xD) / 7u) << 2) & ~7u;
         break;
-    default:
-        {
-            u32 temp_r3_2;
-            temp_r3_2 = (var_r4 + 0xD) / 7;
-            var_r4 = (((u32) ((var_r4 + 0xD) - temp_r3_2) >> 1U) + temp_r3_2) & 0xFFFFFFF8;
-        }
-        break;
-    case 6:
     case 2:
+    case 6:
         var_r4 *= 2;
         break;
     }
-    *arg1 = fn_80262B74(*arg1, var_r4);
+    *arg1 = fn_80262B74(*arg1, (s32)var_r4, arg2);
 }
 
 void fn_80262410(void) {
