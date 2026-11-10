@@ -3273,16 +3273,15 @@ u16 fn_8026071C(void *arg0) {
 }
 
 u16 fn_802607AC(void *arg0) {
+    u16 fn_802601EC(void *, void *, u8, u8);
     s32 temp_r4;
-    u16 temp_r3;
 
-    temp_r4 = *(s32*)((char*)arg0 + 0x220);
+    temp_r4 = *(s32 *)((u8 *)arg0 + 0x220);
     if (!(temp_r4 & 0x10)) {
-        return *(u16*)((char*)arg0 + 0x2D4);
+        return *(u16 *)((u8 *)arg0 + 0x2D4);
     }
-    *(u32*)((char*)arg0 + 0x220) = (s32) (temp_r4 & 0xFFFFFFEF);
-    temp_r3 = fn_802601EC((char*)arg0 + 0x2B4, *(u8*)((char*)arg0 + 0x121), *(u8*)((char*)arg0 + 0x122));
-    return (u16)temp_r3;
+    *(s32 *)((u8 *)arg0 + 0x220) = temp_r4 & ~0x10;
+    return fn_802601EC(arg0, (u8 *)arg0 + 0x2B4, *(u8 *)((u8 *)arg0 + 0x121), *(u8 *)((u8 *)arg0 + 0x122));
 }
 
 u16 fn_802607F4(void *arg0) {
