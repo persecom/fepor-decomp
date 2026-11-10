@@ -283,6 +283,34 @@ void fn_8021250C(s32 chan, u32 type) {
     }
 }
 
+void fn_80212CC0(s32 arg0, u32 arg1) {
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    s32 SIGetType(s32);
+    void fn_8023B804(s32, u32);
+    void fn_8023B818(void);
+    extern s32 lbl_8036866C;
+    extern u32 lbl_80366FB0;
+    extern u32 lbl_80366FAC;
+    s32 enabled;
+    u32 var_r30;
+    s32 pad;
+
+    var_r30 = arg1;
+    enabled = OSDisableInterrupts();
+    if ((lbl_8036866C & (0x80000000U >> arg0)) && (SIGetType(arg0) & 0x20000000) == 0) {
+        if (lbl_80366FB0 < 2U && var_r30 == 2) {
+            var_r30 = 0;
+        }
+        if (*(u8 *)0x800030E3 & 0x20) {
+            var_r30 = 0;
+        }
+        fn_8023B804(arg0, lbl_80366FAC | 0x400000 | (var_r30 & 3));
+        fn_8023B818();
+    }
+    OSRestoreInterrupts(enabled);
+}
+
 void fn_80212D78(s32 arg0) {
     extern s32 __PADSpec;
     extern M2C_UNK fn_80212DD8;
