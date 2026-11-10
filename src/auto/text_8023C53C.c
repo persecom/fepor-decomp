@@ -88,6 +88,7 @@ typedef struct StreamChannel {
     u32 unk18; /* 0x18 */
     u8 pad1C[8];
     u32 unk24; /* 0x24 */
+    u8 pad28[4];
 } StreamChannel; /* 0x2C */
 
 typedef struct StreamVoice {
