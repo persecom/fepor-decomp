@@ -1657,6 +1657,43 @@ void fn_80026850(s32 arg0) {
     fn_800913D4(arg0, temp_r31);
 }
 
+s32 fn_800268A8(s32 arg0) {
+    void *fn_8003DDF8(void *, u8 *, u8 *, void *, u8);
+    void fn_8003EA24(void *, u8, u8);
+    void fn_80183C6C(void *, s8, s8, s8, s8, s32);
+    void *fn_801A4624(void *);
+    void *fn_801A46BC(void *);
+    extern M2C_UNK lbl_80330EAC[];
+    u8 sp9;
+    u8 sp8;
+    u8 temp_r7;
+    void *temp_r30;
+    void *temp_r3;
+    void *temp_r3_2;
+    void *temp_r3_3;
+    s8 idx1;
+    s8 idx2;
+
+    temp_r3 = fn_801A46BC(lbl_80330EAC);
+    if (temp_r3 == 0) {
+        return 0;
+    }
+    if (!(M2C_FIELD(temp_r3, s32 *, 0x1A0) & 2)) {
+        return 0;
+    }
+    temp_r3_2 = fn_801A4624(lbl_80330EAC);
+    temp_r7 = M2C_FIELD(temp_r3_2, u8 *, 0x198);
+    idx1 = (s8) M2C_FIELD(temp_r3_2, u8 *, 0x19E);
+    idx2 = (s8) M2C_FIELD(temp_r3_2, u8 *, 0x19F);
+    lbl_802CA518.unitMap[idx1 + (idx2 << 6)] = temp_r7;
+    temp_r30 = M2C_FIELD(temp_r3, void **, 0x280);
+    fn_8003DDF8(temp_r30, &sp9, &sp8, &lbl_802CA518, temp_r7);
+    temp_r3_3 = M2C_FIELD(temp_r30, void **, 0x194);
+    fn_80183C6C(temp_r3_3, (s8) M2C_FIELD(temp_r3_3, u8 *, 0x19E), (s8) M2C_FIELD(temp_r3_3, u8 *, 0x19F), sp9, sp8, arg0);
+    fn_8003EA24(temp_r30, sp9, sp8);
+    return 1;
+}
+
 void fn_80026994(void) {
     void fn_8003BE50(void *);
     extern u8 lbl_802EF4C8[];
@@ -1812,11 +1849,60 @@ void fn_80026F5C(void *arg0) {
 }
 
 void fn_80026FA0(void *arg0) {
-    M2C_UNK fn_8003816C(s32, s32, s32);
-    M2C_UNK fn_80183EAC(s32, s32, s32, s32, void *);
-    extern M2C_UNK lbl_802EF4C8;
-    fn_8003816C(M2C_FIELD(&lbl_802EF4C8, s32 *, 4), (s32) M2C_FIELD(arg0, f32 *, 0x30), (s32) M2C_FIELD(arg0, f32 *, 0x34));
-    fn_80183EAC(M2C_FIELD(&lbl_802EF4C8, s32 *, 0), M2C_FIELD(&lbl_802EF4C8, s32 *, 4), (s32) M2C_FIELD(arg0, f32 *, 0x30), (s32) M2C_FIELD(arg0, f32 *, 0x34), arg0);
+    void fn_8003816C(s32, s32, s32);
+    void fn_80183EAC(s32, s32, s32, s32, void *);
+    extern u8 lbl_802EF4C8[];
+    u8 *p;
+    s32 x;
+    s32 y;
+
+    p = lbl_802EF4C8;
+    x = (s32)*(f32 *)((u8 *)arg0 + 0x30);
+    y = (s32)*(f32 *)((u8 *)arg0 + 0x34);
+    fn_8003816C(*(s32 *)(p + 4), x, y);
+    x = (s32)*(f32 *)((u8 *)arg0 + 0x30);
+    y = (s32)*(f32 *)((u8 *)arg0 + 0x34);
+    fn_80183EAC(*(s32 *)lbl_802EF4C8, *(s32 *)(p + 4), x, y, arg0);
+}
+
+void fn_80027F98(void *arg0, u8 arg1) {
+    s8 fn_8003A398(void);
+    void fn_800C1060(s32);
+    extern u8 lbl_80367289;
+    s32 temp;
+    s32 one;
+    s32 t;
+    s32 u;
+    u8 var_r4;
+    void *p;
+    s8 v;
+
+    if ((s8)*(u8 *)((u8 *)arg0 + 0x12) == 0) {
+        *(u8 *)((u8 *)arg0 + 9) = *(u8 *)((u8 *)arg0 + 8);
+    }
+    *(u8 *)((u8 *)arg0 + 0x12) = 0;
+    fn_8002297C(&lbl_802CA518);
+    one = 1;
+    var_r4 = one;
+    temp = (u8)(lbl_80367289 - 1);
+    t = ~temp | one;
+    u = (u32)(one - temp) >> 1;
+    if (((u32)(t - u) >> 31) == 0) {
+        var_r4 = 0;
+    }
+    if (var_r4 != 0) {
+        fn_800C1060(0);
+    }
+    if ((s8)*(u8 *)((u8 *)*(void **)arg0 + 0x1A8) != 0) {
+        v = fn_8003A398();
+        p = *(void **)arg0;
+        *(u16 *)((u8 *)p + 0x22E) =
+            *(u16 *)((u8 *)p + 0x22E) + (u16)(v - *(u8 *)((u8 *)arg0 + 0x11));
+        if (arg1 == 0) {
+            p = *(void **)arg0;
+            *(s32 *)((u8 *)p + 0x1A0) |= 1;
+        }
+    }
 }
 
 void fn_8002807C(void *arg0) {
@@ -1997,6 +2083,25 @@ void fn_80028674(void) {
 void fn_80028694(void) {
     extern u16 lbl_80268E40[];
     fn_800C50FC(&lbl_80268E40[0x212 / sizeof(u16)], fn_800C52C8(), lbl_80268E40);
+}
+
+void fn_800286C8(void *arg0) {
+    extern u8 lbl_80330EAC[];
+    void fn_8000C070(void *, s32);
+    void *fn_801A46BC(void *);
+    void fn_8004B1B4(s32);
+    u32 v;
+    void *p;
+    v = *(u32 *)((u8 *)lbl_80330EAC + 0xcac);
+    if (!(v & 0x10)) goto done;
+    if (!(v & 0x10000000)) goto done;
+    fn_8000C070(arg0, 0x63);
+    p = fn_801A46BC(lbl_80330EAC);
+    if (p != 0) {
+        fn_8004B1B4(*(s32 *)((u8 *)p + 0x280));
+    }
+done:
+    return;
 }
 
 void fn_80028724(void) {
