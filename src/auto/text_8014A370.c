@@ -1,5 +1,8 @@
 /* Functions from 0x8014A370 to 0x8014E350, found by decomp-toolkit. */
 #include "common.h"
+
+typedef struct { u8 a; u8 b; } Entry;
+typedef struct { u8 pad[0x544]; s8 count; Entry entries[256]; } Obj;
 extern u8 lbl_80367B08;
 extern u8 lbl_80367B09;
 extern u8 lbl_80367B0A;
@@ -717,16 +720,16 @@ void fn_8014CF10(s8* arg0, s8 arg1, s8 arg2) {
 }
 
 void fn_8014D204(void* arg0, s8 arg1, s8 arg2) {
-    s32 temp_r0;
-    u8* temp_r6;
-    
+    s8 temp_r0;
+    volatile u8 *temp_r6;
+
     *(u8*)((uintptr_t)arg0 + 0x544) = 0;
     temp_r0 = *(s8*)((uintptr_t)arg0 + 0x544);
-    temp_r6 = (u8*)((uintptr_t)arg0 + (temp_r0 * 2));
-    *(u8*)((uintptr_t)temp_r6 + 0x545) = arg1;
+    temp_r6 = (volatile u8 *)((uintptr_t)arg0 + (temp_r0 * 2));
+    temp_r6[0x545] = (u8)arg1;
     temp_r0 = *(s8*)((uintptr_t)arg0 + 0x544);
-    temp_r6 = (u8*)((uintptr_t)arg0 + (temp_r0 * 2));
-    *(u8*)((uintptr_t)temp_r6 + 0x546) = arg2;
+    temp_r6 = (volatile u8 *)((uintptr_t)arg0 + (temp_r0 * 2));
+    temp_r6[0x546] = (u8)arg2;
     *(u8*)((uintptr_t)arg0 + 0x544) = *(u8*)((uintptr_t)arg0 + 0x544) + 1;
 }
 
