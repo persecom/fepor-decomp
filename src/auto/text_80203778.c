@@ -383,42 +383,10 @@ void OSCreateAlarm(void *arg0) {
     M2C_FIELD(arg0, s32 *, 4) = 0;
 }
 
-extern void DecrementerExceptionCallback(void);
-void DecrementerExceptionHandler(void *arg1) {
-    s32 *regs = (s32 *) arg1;
-    regs[0] = 0; // r0
-    regs[1] = (s32) regs + 4; // r1
-    regs[2] = 0;
-    regs[3] = 0;
-    regs[4] = 0;
-    regs[5] = 0;
-    regs[6] = 0; // r6
-    regs[7] = 0; // r7
-    regs[8] = 0; // r8
-    regs[9] = 0; // r9
-    regs[10] = 0; // r10
-    regs[11] = 0; // r11
-    regs[12] = 0; // r12
-    regs[13] = 0; // r13
-    regs[14] = 0; // r14
-    regs[15] = 0; // r15
-    regs[16] = 0; // r16
-    regs[17] = 0; // r17
-    regs[18] = 0; // r18
-    regs[19] = 0; // r19
-    regs[20] = 0; // r20
-    regs[21] = 0; // r21
-    regs[22] = 0; // r22
-    regs[23] = 0; // r23
-    regs[24] = 0; // r24
-    regs[25] = 0; // r25
-    regs[26] = 0; // r26
-    regs[27] = 0; // r27
-    regs[28] = 0; // r28
-    regs[29] = 0; // r29
-    regs[30] = 0; // r30
-    regs[31] = 0; // r31
-    DecrementerExceptionCallback();
+void DecrementerExceptionCallback(u8 type, OSContext *context);
+void DecrementerExceptionHandler(u8 type, OSContext *context) {
+    /* SDK asm: OS_EXCEPTION_SAVE_GPRS then b DecrementerExceptionCallback */
+    DecrementerExceptionCallback(type, context);
 }
 
 #pragma peephole off
@@ -853,15 +821,17 @@ void fn_8020602C(void) {
     }
 }
 
+#pragma use_lmw_stmw on
 OSErrorHandler OSSetErrorHandler(u16 error, OSErrorHandler handler)
 {
-    BOOL enabled;
-    OSErrorHandler oldHandler;
     u32 msr;
+    OSErrorHandler oldHandler;
+    BOOL enabled;
     u32 fpscr;
     OSContext *context;
+    s32 i;
 
-    enabled = ((BOOL (*)(void))OSDisableInterrupts)();
+    enabled = OSDisableInterrupts();
     oldHandler = __OSErrorTable[error];
     __OSErrorTable[error] = handler;
 
@@ -869,21 +839,53 @@ OSErrorHandler OSSetErrorHandler(u16 error, OSErrorHandler handler)
         msr = PPCMfmsr();
         PPCMtmsr(msr | 0x2000);
         fpscr = PPCMffpscr();
-        if (handler) {
+        if (handler != 0) {
             for (context = *(OSContext **)0x800000DC; context;
                  context = *(OSContext **)((u8 *)context + 0x2FC)) {
                 context->srr1 |= 0x900;
                 if (!(context->state & 1)) {
-                    s32 i;
+                    u32 *p;
                     context->state |= 1;
-                    for (i = 0; i < 32; i++) {
-                        *(u64 *)&context->fpr[i] = 0xFFFFFFFFFFFFFFFFULL;
-                        *(u64 *)&context->psf[i] = 0xFFFFFFFFFFFFFFFFULL;
+                    p = (u32 *)context;
+                    for (i = 4; i > 0; i--) {
+                        p[0x25] = -1;
+                        p[0x24] = -1;
+                        p[0x73] = -1;
+                        p[0x72] = -1;
+                        p[0x27] = -1;
+                        p[0x26] = -1;
+                        p[0x75] = -1;
+                        p[0x74] = -1;
+                        p[0x29] = -1;
+                        p[0x28] = -1;
+                        p[0x77] = -1;
+                        p[0x76] = -1;
+                        p[0x2B] = -1;
+                        p[0x2A] = -1;
+                        p[0x79] = -1;
+                        p[0x78] = -1;
+                        p[0x2D] = -1;
+                        p[0x2C] = -1;
+                        p[0x7B] = -1;
+                        p[0x7A] = -1;
+                        p[0x2F] = -1;
+                        p[0x2E] = -1;
+                        p[0x7D] = -1;
+                        p[0x7C] = -1;
+                        p[0x31] = -1;
+                        p[0x30] = -1;
+                        p[0x7F] = -1;
+                        p[0x7E] = -1;
+                        p[0x33] = -1;
+                        p[0x32] = -1;
+                        p[0x81] = -1;
+                        p[0x80] = -1;
+                        p += 0x10;
                     }
                     context->fpscr = 4;
                 }
                 context->fpscr |= (lbl_80366F38 & 0xF8);
-                context->fpscr &= 0x6005F8FF;
+                context->fpscr &= (0x60060000 - 0x701);
             }
             fpscr |= (lbl_80366F38 & 0xF8);
             msr |= 0x900;
@@ -892,19 +894,18 @@ OSErrorHandler OSSetErrorHandler(u16 error, OSErrorHandler handler)
                  context = *(OSContext **)((u8 *)context + 0x2FC)) {
                 context->srr1 &= ~0x900;
                 context->fpscr &= ~0xF8;
-                context->fpscr &= 0x6005F8FF;
+                context->fpscr &= (0x60060000 - 0x701);
             }
             fpscr &= ~0xF8;
             msr &= ~0x900;
         }
-        PPCMtfpscr(fpscr & 0x6005F8FF);
+        PPCMtfpscr(fpscr & (0x60060000 - 0x701));
         PPCMtmsr(msr);
     }
-    ((void (*)(BOOL))OSRestoreInterrupts)(enabled);
+    OSRestoreInterrupts(enabled);
     return oldHandler;
 }
-
-#pragma use_lmw_stmw on
+#pragma use_lmw_stmw reset
 extern char lbl_8029BFB8[];
 extern char lbl_80366F3C;
 extern s16 __OSLastInterrupt;
