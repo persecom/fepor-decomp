@@ -336,17 +336,14 @@ s32 fn_801B6414(u32 arg0) {
 }
 
 void fn_801B657C(void *arg0) {
-    f32 fn_80059F64(u16, f32, f32, f32, f32);
-    extern f32 lbl_8036B1B8;
-    extern f32 lbl_8036B1BC;
-    extern f32 lbl_8036B1C0;
-    extern f32 lbl_8036B1C8;
-    u16 temp_r3;
+    f32 fn_80059F64(s32, f32, f32, f32, f32);
+    void fn_8000C188(void *);
+    u16 old;
 
-    temp_r3 = M2C_FIELD(arg0, u16 *, 0x3C);
-    M2C_FIELD(arg0, u16 *, 0x3C) = (u16) (temp_r3 + 1);
-    M2C_FIELD(arg0, s8 *, 0x39) = (s8) fn_80059F64(temp_r3, lbl_8036B1BC, lbl_8036B1B8, lbl_8036B1C0, (f32) M2C_FIELD(arg0, u16 *, 0x3C));
-    if ((u16) M2C_FIELD(arg0, u16 *, 0x3C) == 8) {
+    old = *(u16 *)((u8 *)arg0 + 0x3C);
+    *(u16 *)((u8 *)arg0 + 0x3C) = (u16)(old + 1);
+    *(u8 *)((u8 *)arg0 + 0x39) = (u8)(s32)fn_80059F64(old, 0.0f, 255.0f, 8.0f, (f32)*(u16 *)((u8 *)arg0 + 0x3C));
+    if (*(u16 *)((u8 *)arg0 + 0x3C) == 8) {
         fn_8000C188(arg0);
     }
 }
