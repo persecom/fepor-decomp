@@ -294,7 +294,6 @@ s32 AMC_IsStub(void) {
     return 1;
 }
 
-#pragma scheduling off
 #pragma use_lmw_stmw on
 #pragma global_optimizer off
 #pragma inline_depth(0)
@@ -304,7 +303,7 @@ s32 PPCMfhid2(void);void fn_80205198(void*,u32);
 s32 fn_8023C7F4(void);s32 fn_8023C930(void);
 u8 fn_8023CA4C(void);u8 fn_8023CE08(void);
 void fn_8023D2FC(void);void fn_8023C7B0(void);void fn_8023D59C(u32,u32,u32);
-u8 done;u8 result;u8 marker;
+u8 done;u32 result;u8 marker;
 u8 **cursor;
 if(!arg0) goto noInput;
 if(!arg1 || !arg2 || !arg3) goto noOutput;
@@ -324,13 +323,13 @@ if(*(*(u8**)(lbl_80368950+0x69c))++!=255) goto badPrefix;
 while(**(cursor=(u8**)(lbl_80368950+0x69c))==255) (*cursor)++;
 marker=*(*cursor)++;
 if(marker<=0xd7U){
-if(marker==0xc4){result=fn_8023CE08();if(result) goto error;}
-else if(marker==0xc0){result=fn_8023C7F4();if(result) goto error;}
+if(marker==0xc4){result=fn_8023CE08();if((u8)result) goto error;}
+else if(marker==0xc0){result=fn_8023C7F4();if((u8)result) goto error;}
 else goto badMarker;
 }else if(marker>=0xd8U && marker<=0xdfU){
 if(marker==0xdd)fn_8023D2FC();
-else if(marker==0xdb){result=fn_8023CA4C();if(result)goto error;}
-else if(marker==0xda){result=fn_8023C930();if(result)goto error;done=1;}
+else if(marker==0xdb){result=fn_8023CA4C();if((u8)result)goto error;}
+else if(marker==0xda){result=fn_8023C930();if((u8)result)goto error;done=1;}
 else if(marker!=0xd8) goto badMarker;
 }else if(marker>=0xe0U){
 if((marker>=0xe0U && marker<=0xefU)||marker==0xfe){
@@ -347,14 +346,13 @@ noOutput:return 0x1b;
 noWork:return 0x1a;
 badMarker:return 11;
 badPrefix:return 3;
-error:return result;
+error:return (u8)result;
 badHid:return 0x1c;
 notInit:return 0x1d;
 }
 #pragma inline_depth(8)
 #pragma global_optimizer reset
 #pragma use_lmw_stmw reset
-#pragma scheduling reset
 
 void fn_8023C7B0(void) {
     extern M2C_UNK lbl_8033E578;
@@ -10058,7 +10056,6 @@ extern u16 lbl_80368A0C;
 extern u16 lbl_80368AFC;
 extern u16 lbl_8034F6B8[];
 extern u16 lbl_803596F0[16];
-extern u32* lbl_80368950;
 extern u8* lbl_803688E4;
 extern u16* lbl_803688EC;
 #include "common.h"
