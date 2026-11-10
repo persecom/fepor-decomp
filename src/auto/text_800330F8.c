@@ -4516,7 +4516,11 @@ loop_6:
 }
 
 void fn_80053658(void *arg0, s32 arg1, s32 arg2) {
-    *(s32 *)((u8 *)arg0 + 0x30 + (arg1 << 2)) = arg2;
+    u8 *p;
+
+    p = *(u8 **)((u8 *)arg0 + 0x30);
+    p = p + (arg1 << 2);
+    *(s32 *)(p + 0x4C) = arg2;
 }
 
 void fn_8005366C(void *arg0, s32 arg1, s32 arg2) {
