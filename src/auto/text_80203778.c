@@ -1432,14 +1432,6 @@ void fn_802086A0(void* arg0) {
 
 extern u16 StopAtNextInt_80368530;
 extern u16 lbl_80368550;
-#include "global.h"
-#include "common.h"
-#include <dolphin/os.h>
-#include "global.h"
-
 extern void OSSwitchFPUContext(void);
 extern void **OSExceptionTable_8036847C;
-#include "common.h"
-#include <dolphin/os.h>
-
 extern u16 lbl_8029BBB0[20];
