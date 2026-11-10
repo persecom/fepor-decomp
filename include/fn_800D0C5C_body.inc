@@ -976,9 +976,9 @@
                 (*(u32 *)((u8 *)self + 0xC))++;
             }
             break;
-        case 53:
-            fn_800C9ABC(strPad, lbl_802704F8 + 0x655, &scPad);
-            fn_800C9A60(strPad, -1);
+                  case 53:
+              fn_800C9ABC(str0, lbl_802704F8 + 0x655, &sc0);
+              fn_800C9A60(str0, -1);
             (*(u32 *)((u8 *)self + 0xC))++;
             break;
         case 54:
