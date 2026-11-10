@@ -2,6 +2,10 @@
 #include "common.h"
 #include "global.h"
 
+typedef struct FontImageHeader {
+ u8 pad[0x10]; u16 width, height; s32 sheetSize; u16 pad18, columns, rows, sheetWidth, sheetHeight, widthOffset; u32 imageOffset; u32 pad28; u8 palette[4];
+} FontImageHeader;
+
 BOOL OSDisableInterrupts(void);
 BOOL OSRestoreInterrupts(BOOL level);
 
@@ -1597,6 +1601,40 @@ u8 *fn_80207768(u16 arg0, u8 *arg1, s32 *arg2, s32 *arg3) {
     *arg2 = var_r8;
     *arg3 = fn_80206FB8(arg0, var_r4);
     return ptr;
+}
+
+s32 fn_802078A4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4) {
+extern u16 lbl_80366F48;
+extern void (*lbl_803684C0)(void);
+u8 *h; s32 index;
+s32 cells, x, y, row, col, mask, result;
+u8 *base, *dst; s32 sx, sy, stride;
+u16 val; s32 mode;
+if (lbl_80366F48 != 0xffff) {mode=lbl_80366F48; goto ready;} {
+switch (*(s32*)0x800000cc) {
+case 0: if (*(u16*)0xcc00206e & 2) val=1; else val=0; lbl_80366F48=val; break;
+default: lbl_80366F48=0; break;
+}
+mode=lbl_80366F48;
+lbl_803684C0=(void(*)(void))fn_80207768;
+}
+ready:
+arg0=((s32(*)(u16,s32,u8**,s32*))lbl_803684C0)(mode,arg0,&h,&index);
+cells=*(u16*)(h+0x1a)**(u16*)(h+0x1c);
+x=(index%cells % *(u16*)(h+0x1a))**(u16*)(h+0x10);
+y=(index%cells / *(u16*)(h+0x1a))**(u16*)(h+0x12);
+base=h+*(u32*)(h+0x24)+((u32)((index/cells)**(s32*)(h+0x14))>>1);
+stride=((arg3*4)/8)<<5;
+for(row=0;row<*(u16*)(h+0x12);row++){
+for(col=0;col<*(u16*)(h+0x10);col++){
+sx=x+col; sy=arg2+col;
+dst=(u8*)arg1+(row/8)*stride+(sy/8)*32+(row%8)*4+(sy%8)/2;
+mask=sy%2 ? 15:240;
+*dst |= h[0x2c+((base[((((s32)*(u16*)(h+0x1e)/8)<<5)/2)*((y+row)/8)+(sx/8)*16+((y+row)%8)*2+(sx%8)/4]>>(6-(sx%4)*2))&3)] & mask;
+}
+}
+if(arg4) *arg4=h[*(u16*)(h+0x22)+index];
+return arg0;
 }
 
 void *__OSSetInterruptHandler(s32 arg0, void *arg1) {
