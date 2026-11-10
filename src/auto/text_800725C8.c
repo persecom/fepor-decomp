@@ -110,6 +110,18 @@ void fn_80072A2C(void) {
     lbl_80311D50[0x3A] = -0x20;
 }
 
+void fn_80072A48(void) {
+    M2C_UNK fn_80006220(M2C_UNK);
+    M2C_UNK fn_8000BD98(void *);
+    M2C_UNK fn_8002D780(M2C_UNK);
+    extern u8 lbl_8026BE40[];
+    extern u8 lbl_80311D50[];
+    fn_80006220(3);
+    fn_8002D780(6);
+    fn_8000BD98(lbl_8026BE40 + 0x101);
+    *(u16 *)(lbl_80311D50 + 2) = 0xC8;
+}
+
 void fn_80072A94(void) {
     M2C_UNK fn_8000BD98(void *);
     M2C_UNK fn_8008A290(M2C_UNK, M2C_UNK);
