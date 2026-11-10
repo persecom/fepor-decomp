@@ -192,7 +192,21 @@ volatile u32 __EXIRegs[16] : 0xCC006800;
 s32 __EXIProbeStartTime[2] : 0x800030C0;
 
 typedef struct OSContext {
-    u8 data[0x2C8];
+    u32 gpr[32];
+    u32 cr;
+    u32 lr;
+    u32 ctr;
+    u32 xer;
+    f64 fpr[32];
+    u32 fpscr_pad;
+    u32 fpscr;
+    u32 srr0;
+    u32 srr1;
+    u16 mode;
+    u16 state;
+    u32 gqr[8];
+    u32 psf_pad;
+    f64 psf[32];
 } OSContext;
 
 extern s32 fn_802314D8(s32, s32, s32);
@@ -417,50 +431,45 @@ restore_interrupts:
 
 void OSClearContext(void *);
 void OSSetCurrentContext(void *);
-void TCIntrruptHandler(s16 interrupt, void *context)
+#pragma scheduling off
+void TCIntrruptHandler(s16 interrupt, OSContext *context)
 {
     EXIControl *exi;
     s32 chan;
     void (*callback)(s32, void *);
-    u8 exceptionContext[0x2C8];
-    u32 cpr;
+    OSContext exceptionContext;
     s32 len;
     u8 *buf;
     u32 data;
     s32 i;
 
-    chan = (interrupt - 0xA) / 3;
+    chan = (interrupt - 10) / 3;
     exi = &Ecb_8033E188[chan];
     __OSMaskInterrupts(0x80000000U >> interrupt);
-    cpr = __EXIRegs[chan * 5];
-    cpr = (cpr & 0x7F5) | 8;
-    __EXIRegs[chan * 5] = cpr;
+    __EXIRegs[chan * 5] = (__EXIRegs[chan * 5] & 0x7F5) | 8;
     callback = exi->tcCallback;
     if (callback) {
         exi->tcCallback = 0;
         if (exi->state & 3) {
             if (exi->state & 2) {
-                len = exi->immLen;
-                if (len != 0) {
+                if ((len = exi->immLen) != 0) {
                     buf = exi->immBuf;
                     data = __EXIRegs[chan * 5 + 4];
-                    if (len > 0) {
-                        for (i = 0; i < len; i++) {
-                            *buf++ = (u8)(data >> ((3 - i) * 8));
-                        }
+                    for (i = 0; i < len; i++) {
+                        *buf++ = (u8)(data >> (8 * (3 - i)));
                     }
                 }
             }
             exi->state &= ~3;
         }
-        OSClearContext(exceptionContext);
-        OSSetCurrentContext(exceptionContext);
+        OSClearContext(&exceptionContext);
+        OSSetCurrentContext(&exceptionContext);
         callback(chan, context);
-        OSClearContext(exceptionContext);
+        OSClearContext(&exceptionContext);
         OSSetCurrentContext(context);
     }
 }
-
+#pragma scheduling reset
 s32 EXILock(s32 arg0, u32 arg1, u32 arg2) {
     s32 temp_r29;
     s32 temp_r4;
