@@ -99,6 +99,16 @@ void fn_80072810(void) {
     fn_80091A1C();
 }
 
+void fn_8007285C(void) {
+    void fn_8001D2C8(void);
+    void fn_80037D54(void *);
+    void fn_80091A1C(void);
+    extern u8 lbl_802EF4C8[];
+    fn_80037D54(*(void **)lbl_802EF4C8);
+    fn_8001D2C8();
+    fn_80091A1C();
+}
+
 void fn_80072890(void) {
     M2C_UNK fn_80184C7C(s32, M2C_UNK, M2C_UNK, M2C_UNK);
     extern M2C_UNK lbl_802EF4C8;
