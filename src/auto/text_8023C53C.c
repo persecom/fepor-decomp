@@ -6369,8 +6369,10 @@ s32 fn_80260A34(void *arg0)
 
 s32 fn_80260A7C(u32 arg0, u32 arg1, u32 arg2, u32 arg3)
 {
+    extern u16 lbl_8035D118[256];
     extern u32 lbl_802A1E00[];
     extern u8 lbl_8034D034[];
+
     s32 fn_802601EC(void *, void *, u32, u32);
 
     u8 *row;
@@ -6379,27 +6381,40 @@ s32 fn_80260A7C(u32 arg0, u32 arg1, u32 arg2, u32 arg3)
     u32 value;
     u8 index;
     u32 result;
-    u8 *p;
 
     index = arg1 & 0xFF;
+
     row = (u8 *)lbl_8035D118 + ((arg3 & 0xFF) << 6);
-    mask = lbl_802A1E00[arg1 & 0xFF];
+
+    mask = lbl_802A1E00[index];
+
     entry = (u32 *)(row + ((arg2 & 0xFF) << 2));
+
     value = *entry;
+
     result = (mask & value) != 0;
+
     if (result != 0) {
         *entry = value & ~mask;
     }
+
     if (result != 0) {
         return fn_802601EC(
             0,
-            lbl_8034D034 + (arg0 & 0xFF) * 0x90 + index * 0x24,
+            lbl_8034D034
+                + (arg0 & 0xFF) * 0x90
+                + index * 0x24,
             arg2,
             arg3
         );
     }
-    p = lbl_8034D034 + (arg0 & 0xFF) * 0x90 + index * 0x24;
-    return *(u16 *)(p + 0x20);
+
+    return *(u16 *)(
+        lbl_8034D034
+        + (arg0 & 0xFF) * 0x90
+        + index * 0x24
+        + 0x20
+    );
 }
 
 s32 fn_80260B30(u32 arg0, u32 arg1, u32 arg2, u32 arg3, u32 arg4, u32 arg5)
@@ -10056,6 +10071,7 @@ extern u16 lbl_80368A0C;
 extern u16 lbl_80368AFC;
 extern u16 lbl_8034F6B8[];
 extern u16 lbl_803596F0[16];
+extern u32* lbl_80368950;
 extern u8* lbl_803688E4;
 extern u16* lbl_803688EC;
 #include "common.h"
