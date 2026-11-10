@@ -1529,16 +1529,14 @@ void fn_8003C15C(void *arg0) {
     fn_80091CD8(arg0);
 }
 
-void fn_8003C1B4(void *arg0) {
-    s32 temp_r3;
+void fn_8003C1B4(s32 arg0) {
+    u8 fn_80105BC0(s32, s32);
 
-    temp_r3 = fn_80105BC0((s32)((char*)arg0 + 0x1BC), 8);
-    if (temp_r3 != 0) {
-        temp_r3 = fn_80105BC0((s32)((char*)arg0 + 0x1BC), 9);
-        if (temp_r3 != 0) {
-            *(u8*)((char*)arg0 + 0x19C) = 0x14;
+    if (fn_80105BC0(arg0 + 0x1BC, 8) != 0) {
+        if (fn_80105BC0(arg0 + 0x1BC, 9) != 0) {
+            *(u8 *)(arg0 + 0x19C) = 0x14;
         } else {
-            *(u8*)((char*)arg0 + 0x19C) = *(u8*)((char*)*(void**)((char*)arg0 + 0x188) + 0x56);
+            *(u8 *)(arg0 + 0x19C) = *(u8 *)(*(s32 *)(arg0 + 0x188) + 0x56);
         }
     }
 }
