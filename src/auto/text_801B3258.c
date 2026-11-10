@@ -20,6 +20,17 @@ typedef struct List {
     s32 size;
 } List;
 
+typedef struct UIListObj {
+    u8 unk00[0x4E];
+    s16 field4E;
+    u8 unk50[4];
+    s16 field54;
+    u8 unk56[0x16];
+    u32 count;
+    u8 unk70[4];
+    void *field74;
+} UIListObj;
+
 static inline s32 MsgBoxAddPad(s32 h, s32 pad) {
     return h + pad;
 }
@@ -3989,12 +4000,12 @@ extern "C" void fn_801D2C30(void *arg0) {
         void *node;
         u32 unit;
     } row;
-    s32 item;
     u32 unit;
-    Self *self;
-    s32 idx;
-    void *endPtr;
+    s32 item;
     s16 cur;
+    void *endPtr;
+    s32 idx;
+    Self *self;
     s32 total;
     void **p14;
     void **p18;
@@ -4052,10 +4063,11 @@ extern "C" void fn_801D2C30(void *arg0) {
     }
     {
         u32 count = self->count;
-        u32 last = count - 1;
+        u32 last;
         s16 v;
         s16 scroll;
-        if ((u32)cur > last) {
+        last = count - 1;
+        if ((u32)(s32)cur > last) {
             cur = (s16)last;
         }
         if (cur < 0) {
