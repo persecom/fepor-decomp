@@ -5630,12 +5630,14 @@ void fn_801E218C(void) {
 }
 
 void fn_801E21B0(void *arg0) {
+    void fn_800E9B80(void *, s32, s32, s32, void *);
+    extern s32 lbl_803682F0;
     void *temp_r6;
     s32 temp_r5;
 
-    temp_r6 = *(void **)((char *)arg0 + 0x54);
-    temp_r5 = *(s32 *)((char *)arg0 + 0x4C);
-    fn_800E9B80(temp_r6, temp_r6, temp_r5, temp_r5, arg0);
+    temp_r6 = *(void **)((u8 *)arg0 + 0x54);
+    temp_r5 = (s32)temp_r6 - lbl_803682F0;
+    fn_800E9B80(temp_r6, *(s32 *)((u8 *)temp_r6 + 0x4C), temp_r5, temp_r5, arg0);
 }
 
 extern u8 lbl_80331FB8[72];
