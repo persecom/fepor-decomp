@@ -6598,6 +6598,22 @@ void fn_8025A3A4(void *arg0, u32 arg1) {
     (void)pad0;
     (void)tick;
 }
+
+s32 fn_8025C99C(void *arg0, s32 arg1)
+{
+    extern u32 lbl_80368AA4;
+
+    s32 (*callback)(s32, s32);
+
+    callback = (s32 (*)(s32, s32))lbl_80368AA4;
+
+    if (callback == 0) {
+        return 0;
+    }
+
+    return callback(arg1, *(s32 *)((u8 *)arg0 + 0x18));
+}
+
 #pragma use_lmw_stmw reset
 void fn_8025C9E0(void *arg0, u8 arg1) {
     void fn_8025CA80(void);
