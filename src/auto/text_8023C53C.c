@@ -996,6 +996,36 @@ void fn_8024C7F8(void *arg0, s8 arg1, s8 arg2, s8 arg3) {
     M2C_FIELD(arg0, s8 *, 0x5D) = arg3;
 }
 
+void fn_8024C808(void *arg0, u8 arg1, u8 arg2, u8 arg3,
+                 u8 arg4, u8 arg5, u8 arg6)
+{
+    extern u32 lbl_803689A4;
+
+    u32 flags;
+    u8 value5;
+    u8 value6;
+
+    *(u8 *)((u8 *)arg0 + 0x59) = arg1;
+    *(u8 *)((u8 *)arg0 + 0x5C) = arg4;
+    *(u8 *)((u8 *)arg0 + 0x5D) = arg5;
+    *(u8 *)((u8 *)arg0 + 0x5E) = arg2;
+    *(u8 *)((u8 *)arg0 + 0x5F) = arg3;
+
+    flags = lbl_803689A4;
+    value5 = 0x40;
+    value6 = 0;
+
+    if ((flags & 1) != 0) {
+        value5 = 0x40;
+        value6 = 0;
+    } else if ((flags & 2) == 0) {
+        value6 = 0;
+    }
+
+    *(u8 *)((u8 *)arg0 + 0x5A) = value5;
+    *(u8 *)((u8 *)arg0 + 0x5B) = value6;
+}
+
 void fn_8024C84C(u32 arg0) {
     extern u16 *lbl_8034D4B8;
     s32 i;
@@ -2095,6 +2125,112 @@ void fn_802567B0(void *arg0) {
     *(s32*)((char*)arg0 + 0xF4) = -1;
 }
 
+int fn_80256DD8(int arg0) {
+    u32 fn_802616F4(void);
+    void fn_802618E4(s32);
+    void fn_802554A4(void *, s32);
+    extern u8 lbl_80359710[];
+    extern s32 lbl_803689A8;
+    extern u16 lbl_80368A4C;
+    extern u8 lbl_80368A4E;
+    extern u8 lbl_80368A4F;
+    extern u8 lbl_80368A50;
+    extern u8 lbl_80368A51;
+
+    u8 *base;
+    u8 *voice;
+    u8 *node;
+    u8 *n2;
+    u8 *tbl;
+    s32 off;
+    u8 prev;
+    u8 next;
+    u16 p2;
+    u16 n2v;
+    s32 id;
+    u8 *freeNode;
+    u8 id8;
+
+    base = lbl_80359710;
+    if ((u32)(arg0 + 0x10000) != 0xFFFFU) {
+        if (fn_802616F4() != 0) {
+            fn_802618E4(arg0);
+        }
+        off = arg0 * 0x458;
+        tbl = (u8 *)lbl_803689A8;
+        *(s32 *)(tbl + off + 0xF4) = arg0;
+        voice = (u8 *)lbl_803689A8 + off;
+        fn_802554A4(voice, 2);
+
+        id = *(s32 *)(voice + 0xF4);
+        node = base + 0x800;
+        node += ((u8)id << 2);
+        if (*(u16 *)(node + 2) == 1) {
+            prev = node[0];
+            if (prev != 0xFF) {
+                tbl = base + 0x800;
+                tbl += (prev << 2);
+                tbl[1] = node[1];
+            } else {
+                tbl = base + 0x900;
+                tbl[voice[0x10C]] = node[1];
+            }
+            next = node[1];
+            if (next != 0xFF) {
+                tbl = base + 0x800;
+                tbl[next << 2] = node[0];
+            } else if (node[0] == 0xFF) {
+                n2 = base + 0xA00;
+                n2 += (voice[0x10C] << 2);
+                p2 = *(u16 *)(n2 + 2);
+                if (p2 != 0xFFFF) {
+                    tbl = base + 0xA00;
+                    *(u16 *)(tbl + (p2 << 2)) = *(u16 *)n2;
+                } else {
+                    lbl_80368A4C = *(u16 *)n2;
+                }
+                n2v = *(u16 *)n2;
+                if (n2v != 0xFFFF) {
+                    tbl = base + 0xA00;
+                    tbl += (n2v << 2);
+                    *(u16 *)(tbl + 2) = *(u16 *)(n2 + 2);
+                }
+            }
+            *(u16 *)(node + 2) = 0;
+        }
+
+        *(s32 *)(voice + 0x34) = 0;
+        voice[0x10C] = 0;
+        id = *(s32 *)(voice + 0xF4);
+        id8 = (u8)id;
+        freeNode = base + 0xE00;
+        freeNode += (id8 << 2);
+        if (*(u16 *)(freeNode + 2) == 0) {
+            *(u16 *)(freeNode + 2) = 1;
+            if (lbl_80368A51 != 0xFF) {
+                freeNode[1] = 0xFF;
+                freeNode[0] = lbl_80368A50;
+                tbl = base + 0xE00;
+                tbl += (lbl_80368A50 << 2);
+                tbl[1] = id8;
+            } else {
+                lbl_80368A51 = id8;
+                freeNode[1] = 0xFF;
+                freeNode[0] = 0xFF;
+            }
+            lbl_80368A50 = id8;
+            if (voice[0x11D] != 0) {
+                lbl_80368A4F -= 1;
+            } else {
+                lbl_80368A4E -= 1;
+            }
+        }
+        *(s32 *)(voice + 0xF4) = -1;
+        ((u8 *)lbl_803689A8)[off + 0x11C] = 0;
+    }
+    return 0;
+}
+
 void fn_80257224(void) {
     if (lbl_8036C368 < 0.0) {
         lbl_8036C368 = 0.0;
@@ -2563,6 +2699,89 @@ void fn_80258100(void) {
     } while (var_ctr != 0);
     M2C_FIELD(&lbl_8035A6D0, s16 *, 0xB48) = 0;
     M2C_FIELD(&lbl_8035A6D0, s32 *, 0xB4C) = 0;
+}
+
+void fn_80258888(void) {
+    u32 fn_80261B00(u32);
+    u32 fn_80262154(u32, void *);
+    void fn_80258530(void *, u32);
+    u32 fn_80262510(u8);
+    u32 fn_80262538(void);
+    void fn_802618E4(u8);
+    void fn_80255054(void *);
+    void fn_80256FF0(u8);
+    extern u8 lbl_8035A6D0[];
+    extern s32 lbl_803689A8;
+
+    u8 *ctrl;
+    u8 *walk;
+    u32 i;
+    u32 pos;
+    u8 *e;
+    u32 adj;
+    s32 thresh;
+    u8 state;
+
+    ctrl = lbl_8035A6D0;
+    if (*(u32 *)(ctrl + 0xB4C) == 0) {
+        return;
+    }
+
+    i = 0;
+    walk = ctrl;
+    do {
+        if (walk[0xB08] != 0xFF && fn_80261B00(i) != 0) {
+            e = lbl_8035A6D0 + walk[0xB08] * 0x2C + 8;
+            pos = fn_80262154(i, e - 8);
+            if (e[2] == 5) {
+                adj = pos / 7;
+                adj *= 14;
+            } else {
+                adj = pos;
+            }
+            state = e[0];
+            switch (state) {
+            case 1:
+                fn_80258530(e, adj);
+                break;
+            case 2:
+            case 3:
+                if (((*(u16 *)(e + 0x12) << 8) | e[3]) == fn_80262510(e[3])) {
+                    fn_80258530(e, adj);
+                    if (pos >= *(u32 *)(e + 0xC)) {
+                        *(u32 *)(e + 8) = *(u32 *)(e + 8) - (pos - *(u32 *)(e + 0xC));
+                    } else {
+                        *(u32 *)(e + 8) = *(u32 *)(e + 8) - (*(u32 *)(ctrl + 4) - (*(u32 *)(e + 0xC) - pos));
+                    }
+                    *(u32 *)(e + 0xC) = pos;
+                    {
+                        u8 id = e[3];
+                        u8 *sb = (u8 *)lbl_803689A8;
+                        s32 t = *(u16 *)(sb + id * 0x458 + 0x212);
+                        thresh = (t * 0xA0 + 0xFFF) / 4096;
+                    }
+                    if (thresh > (s32)*(u32 *)(e + 8)) {
+                        if (fn_80262538() == 0) {
+                            if (e[0] == 2) {
+                                fn_802618E4(e[3]);
+                                fn_80255054((u8 *)lbl_803689A8 + e[3] * 0x458);
+                            } else {
+                                fn_80256FF0(e[3]);
+                            }
+                        }
+                        e[0] = 0;
+                        lbl_8035A6D0[0xB08 + e[3]] = 0xFF;
+                    }
+                } else {
+                    e[0] = 0;
+                    lbl_8035A6D0[0xB08 + e[3]] = 0xFF;
+                }
+                break;
+            }
+        }
+        i += 1;
+        walk += 1;
+    } while (i < 0x40);
 }
 
 void fn_80258A98(s32 arg0, s32 arg1) {
@@ -4077,14 +4296,16 @@ void fn_802625F8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     Queue *q;
     BOOL enabled;
     s32 flag;
+    s32 next;
 
     q = arg3 != 0 ? (Queue *)lbl_803641AC : (Queue *)lbl_80363F28;
 
 start:
     enabled = OSDisableInterrupts();
     if (q->count < 0x10) {
+        next = q->next;
         flag = arg3 ? 1 : 0;
-        q->slots[q->next].code = 0x2A;
+        q->slots[next].code = 0x2A;
         q->slots[q->next].unk08 = 0;
         q->slots[q->next].flag = flag;
         q->slots[q->next].a0 = arg0;
@@ -4591,3 +4812,54 @@ extern char lbl_80282AE8[];
 extern s32 lbl_80368960;
 extern s32 lbl_80368964;
 extern s32 lbl_80368968;
+
+typedef struct StreamMsg {
+    u32 unk0;   /* 0x0 */
+    u32 unk4;   /* 0x4 */
+    u32 unk8;   /* 0x8 */
+    void *unkC; /* 0xC */
+    void *unk10; /* 0x10 */
+    u8 unk14;   /* 0x14 */
+    u8 unk15;   /* 0x15 */
+    u8 pad16[2];
+} StreamMsg; /* 0x18 */
+
+typedef struct StreamSeqEvent {
+    u32 unk0; /* 0x0 */
+    u8 pad4[4];
+    u16 unk8; /* 0x8 */
+    u16 unkA; /* 0xA */
+} StreamSeqEvent; /* 0xC */
+
+typedef struct StreamSeqChan {
+    u32 unk0; /* 0x0 */
+    StreamSeqEvent *unk4; /* 0x4 */
+} StreamSeqChan; /* 0x8 */
+
+typedef struct StreamChannel {
+    u32 unk0; /* 0x0 */
+    u32 unk4; /* 0x4 */
+    u8 *unk8; /* 0x8 */
+    u8 padC[0xC];
+    u32 unk18; /* 0x18 */
+    u8 pad1C[8];
+    u32 unk24; /* 0x24 */
+} StreamChannel; /* 0x2C */
+
+typedef struct StreamVoice {
+    u8 unk0;
+    u8 pad1[0x37];
+} StreamVoice;
+
+typedef struct StreamState {
+    u8 pad0[0x124];
+    StreamSeqChan seqChans[16]; /* 0x124 */
+    u8 pad164[0x364 - 0x164];
+    StreamChannel channels[16]; /* 0x364 */
+    u8 pad3B4[0xF04 - 0x3B4];
+    StreamMsg msgs[16]; /* 0xF04 */
+    u8 padF64[0x1504 - 0xF64];
+    u8 *voices; /* 0x1504 */
+    u8 pad1508[0x153E - 0x1508];
+    StreamVoice voiceFlags[1]; /* 0x153E */
+} StreamState;
