@@ -1064,20 +1064,7 @@ s32 fn_8021D004(s32 arg0, s32 arg1, s32 arg2) {
         return -0x80;
     }
     
-    // This function appears to be setting up stack and calling
-    // fn_80217B18 with r1+0x14, then doing various memcpy operations
-    
-    fn_80217B18(arg0, arg1, (u8 *)stack);
-    
-    if (stack[0] < 0) {
-        return 0;
-    }
-    
-    // The rest looks like a complex data copying operation, 
-    // probably setting up parameters for fn_8021965C or related
-    // We'll simplify until we can understand the full structure
-    
-    return fn_802210A4(arg0, arg1, arg2);
+          return -0x80;
 }
 
 void fn_8021D28C(s32 arg0) {
