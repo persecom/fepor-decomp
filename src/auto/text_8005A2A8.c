@@ -78,6 +78,7 @@ s32 fn_8005A310(void *arg0, u8 arg1, u8 arg2) {
 
 #pragma use_lmw_stmw on
 #pragma global_optimizer off
+#pragma scheduling off
 #pragma cplusplus on
 extern "C" void DCFlushRange(void *, u32);
 extern "C" void fn_8000770C(f32, f32, f32, f32, f32, f32);
