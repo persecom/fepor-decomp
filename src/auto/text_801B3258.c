@@ -11,6 +11,11 @@ typedef struct ListIter {
     ListNode *node;
 } ListIter;
 
+typedef struct Arg801C838C {
+    u8 pad0[0x30];
+    u32 field30;
+} Arg801C838C;
+
 typedef struct List {
     s32 size;
 } List;
@@ -277,25 +282,27 @@ s32 fn_801B6164(u32 arg0) {
 }
 
 s32 fn_801B61CC(u32 arg0) {
-    M2C_UNK fn_8000CAA0(M2C_UNK *, u32, M2C_UNK *);
-    M2C_UNK fn_8000CAF0(M2C_UNK *, M2C_UNK);
-    extern M2C_UNK lbl_80297B3C;
-    extern M2C_UNK lbl_80330EAC;
+    void *fn_8000CAA0(void *, u32, void *);
+    void *fn_8000CAF0(void *, s32);
+    extern u8 lbl_80297B3C[];
+    extern u8 lbl_80330EAC[];
+    u32 temp_r4;
     u8 var_r0;
     u8 var_r0_2;
 
-    if (((u32) M2C_FIELD(&lbl_80330EAC, u32 *, 0xCAC) >> 4U) & 1) {
+    temp_r4 = *(u32 *)((u8 *)lbl_80330EAC + 0xCAC);
+    if ((temp_r4 >> 4) & 1) {
         var_r0 = 0;
-    } else if (M2C_FIELD(&lbl_80330EAC, u32 *, 0xCAC) & 0x800) {
+    } else if (temp_r4 & 0x800) {
         var_r0 = 1;
     } else {
         var_r0 = 0;
     }
     if (var_r0 != 0) {
         var_r0_2 = 1;
-    } else if (M2C_FIELD(&lbl_80330EAC, u32 *, 0xCAC) & 0x400) {
+    } else if (temp_r4 & 0x400) {
         var_r0_2 = 1;
-    } else if ((u32) (M2C_FIELD(&lbl_80330EAC, u32 *, 0xCAC) & 0x10) != 0) {
+    } else if (temp_r4 & 0x10) {
         var_r0_2 = 1;
     } else {
         var_r0_2 = 0;
@@ -303,10 +310,10 @@ s32 fn_801B61CC(u32 arg0) {
     if (var_r0_2 == 0) {
         return 0;
     }
-    if (arg0 == 0U) {
-        fn_8000CAF0(&lbl_80297B3C, 3);
+    if (arg0 == 0) {
+        fn_8000CAF0(lbl_80297B3C, 3);
     } else {
-        fn_8000CAA0(&lbl_80297B3C, arg0, &lbl_80297B3C);
+        fn_8000CAA0(lbl_80297B3C, arg0, lbl_80297B3C);
     }
     return 1;
 }
@@ -2329,60 +2336,47 @@ void fn_801C7FC0(u32 arg0) {
     return;
 }
 
-void fn_801C838C(void *arg0) {
-    void **vtable_entry;
-    
-    // Check if arg0 is null (this is checking r31 not null)
+#pragma cplusplus on
+extern "C" void fn_801C838C(void *arg0) {
+    void fn_8006EDA0(void *);
+    struct Obj {
+        virtual void v0(s32) = 0;
+    };
+    Obj *temp;
+    u32 v;
+
+    v = M2C_FIELD(arg0, u32 *, 0x30);
+    if (v != 0) {
+        fn_8006EDA0((u8 *)arg0 + 0x30);
+    }
     if (arg0 != NULL) {
-        // First check at offset 0x30
-        if (*(u32*)((char*)arg0 + 0x30) != 0) {
-            fn_8006EDA0((char*)arg0 + 0x30);
+        temp = M2C_FIELD(arg0, Obj **, 0x40);
+        if (temp != NULL) {
+            temp->v0(1);
         }
-        
-        // Check and call vtable entry at offset 0x40  
-        vtable_entry = *(void***)((char*)arg0 + 0x40);
-        if (vtable_entry != NULL) {
-            void (*func)(s32) = (void (*)(s32))(*(u32*)((char*)vtable_entry + 0x8));
-            func(1);
+        temp = M2C_FIELD(arg0, Obj **, 0x44);
+        if (temp != NULL) {
+            temp->v0(1);
         }
-        
-        // Check and call vtable entry at offset 0x44
-        vtable_entry = *(void***)((char*)arg0 + 0x44);
-        if (vtable_entry != NULL) {
-            void (*func)(s32) = (void (*)(s32))(*(u32*)((char*)vtable_entry + 0x8));
-            func(1);
+        temp = M2C_FIELD(arg0, Obj **, 0x38);
+        if (temp != NULL) {
+            temp->v0(1);
         }
-        
-        // Check and call vtable entry at offset 0x38
-        vtable_entry = *(void***)((char*)arg0 + 0x38);
-        if (vtable_entry != NULL) {
-            void (*func)(s32) = (void (*)(s32))(*(u32*)((char*)vtable_entry + 0x8));
-            func(1);
+        temp = M2C_FIELD(arg0, Obj **, 0x3C);
+        if (temp != NULL) {
+            temp->v0(1);
         }
-        
-        // Check and call vtable entry at offset 0x3C
-        vtable_entry = *(void***)((char*)arg0 + 0x3C);
-        if (vtable_entry != NULL) {
-            void (*func)(s32) = (void (*)(s32))(*(u32*)((char*)vtable_entry + 0x8));
-            func(1);
+        temp = M2C_FIELD(arg0, Obj **, 0x48);
+        if (temp != NULL) {
+            temp->v0(1);
         }
-        
-        // Check and call vtable entry at offset 0x48
-        vtable_entry = *(void***)((char*)arg0 + 0x48);
-        if (vtable_entry != NULL) {
-            void (*func)(s32) = (void (*)(s32))(*(u32*)((char*)vtable_entry + 0x8));
-            func(1);
-        }
-        
-        // Check and call vtable entry at offset 0x4C
-        vtable_entry = *(void***)((char*)arg0 + 0x4C);
-        if (vtable_entry != NULL) {
-            void (*func)(s32) = (void (*)(s32))(*(u32*)((char*)vtable_entry + 0x8));
-            func(1);
+        temp = M2C_FIELD(arg0, Obj **, 0x4C);
+        if (temp != NULL) {
+            temp->v0(1);
         }
     }
 }
-
+#pragma cplusplus reset
 void fn_801C8490(void) {
     void fn_8005C8B4(void *);
     extern u8 lbl_802983A4[];
