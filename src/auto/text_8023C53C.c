@@ -4727,7 +4727,7 @@ u32 fn_8026367C(void) {
     return ((OSGetTick() - lbl_80368B0C) * 8) / ((*(u32 *)0x800000F8 >> 2) / 125000);
 }
 
-void fn_802636C8(void) {
+int fn_802636C8(void) {
     extern s32 lbl_80368AF8;
     extern s16 lbl_80368AFC;
     lbl_80368AF8 = OSDisableInterrupts();
