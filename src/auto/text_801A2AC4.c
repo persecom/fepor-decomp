@@ -96,26 +96,6 @@ void fn_801A2AC4(void) {
           fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
   }
   
-  #pragma peephole off
-  static inline s32 fn_801A5008_check(void *p) {
-      s32 a;
-      s32 m0;
-      s32 b;
-      s32 m1;
-  
-      a = *(s32 *)p;
-      m0 = 0x80;
-      b = *((s32 *)p + 1);
-      m1 = 0x400;
-      a = a & m0;
-      m0 = 0;
-      b = b & m1;
-      b = b ^ m0;
-      a = a ^ m0;
-      return (b | a) != 0;
-  }
-  #pragma peephole reset
-  
   s32 fn_801A2CC0(void) {
     s32 fn_801044E0(s32);
     extern s32 lbl_802EF4C8;
@@ -448,8 +428,9 @@ void fn_801A4BE0(void *arg0) {
     }
 }
 
+#pragma opt_strength_reduction off
 void fn_801A5008(s32 arg0) {
-    void *fn_8001CB64(s32);
+    s32 *fn_8001CB64(s32);
     void fn_80034068(s32, s32, s32);
     s32 fn_8003B2D0(s32);
     void fn_801A601C(s32, s32, s32, s32);
@@ -460,7 +441,7 @@ void fn_801A5008(s32 arg0) {
     u8 *var_r5;
     s32 temp_r0;
     s32 i;
-    void *temp_r3;
+    s32 *temp_r3;
     u32 var_r4;
 
     fn_801A601C(arg0, arg0, 0, 0);
@@ -523,7 +504,7 @@ void fn_801A5008(s32 arg0) {
     }
     if (*(u32 *)(arg0 + 0x28C) != 0) {
         temp_r3 = fn_8001CB64(arg0 + 0x28C);
-        if (fn_801A5008_check(temp_r3)) {
+        if (((((temp_r3[0] & 0x80) ^ 0) | ((temp_r3[1] & 0x400) ^ 0)) == 0) == 0) {
             goto block_18;
         }
     }
@@ -563,7 +544,7 @@ block_19:
     }
     *(u32 *)(arg0 + 0xCAC) &= 0x7FFFFFFF;
 }
-
+#pragma opt_strength_reduction reset
 void fn_801A7CDC(void *arg0)
 {
     fn_801A9EB8(arg0);
