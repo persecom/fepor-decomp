@@ -3275,6 +3275,8 @@ void fn_8013CD90(void) {
     return;
 }
 
+int fn_801475FC(void *, int);
+
 s32 fn_8013CDCC(void) {
     extern u8 lbl_802EF4C8[24];
     extern u8 lbl_80276908[];
@@ -6042,6 +6044,154 @@ void fn_8014716C(u8 arg0) {
     }
 }
 
+#pragma use_lmw_stmw on
+#pragma cplusplus on
+extern "C" void fn_80147188(s32 arg0) {
+    void fn_800B3194(void);
+    extern f32 lbl_8036A7A0;
+    extern u8 lbl_80276BC8[];
+
+    struct Entry {
+        char **names;
+        u8 pad4[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        u8 flags;
+        u8 pad_d[9];
+        u8 unk_16;
+        u8 pad_17[0x11];
+        u8 unk_28;
+        u8 unk_29;
+        u8 pad_2a[2];
+        s16 unk_2c;
+        s16 unk_2e;
+    };
+    extern Entry lbl_8032FF08[];
+
+    Entry *p;
+    s32 i;
+    s32 arg_save;
+    Entry *base;
+    s16 ext;
+    Entry *w;
+    s8 idx;
+    s8 *str;
+    s8 *a;
+    s8 *b;
+    s8 ca;
+
+    arg_save = arg0;
+    base = lbl_8032FF08;
+    i = 0;
+    p = base + 0;
+    ext = arg_save;
+    do {
+        if (p->flags & 1) {
+            if ((s16)arg_save <= 0) {
+                p->v2();
+            } else if (!(p->flags & 8)) {
+                s16 n = (s16)((f32)ext / lbl_8036A7A0);
+                if (n <= 0) {
+                    n = 1;
+                }
+                p->unk_28 = p->unk_16;
+                p->unk_29 = 0;
+                p->unk_2e = n;
+                p->unk_2c = 0;
+                p->flags |= 8;
+            }
+        }
+        i += 1;
+        p += 1;
+    } while (i < 4);
+
+    i = 0;
+    p = (Entry *)((u8 *)base + 0xc0);
+    do {
+        if (p->flags & 1) {
+            if ((s16)arg_save <= 0) {
+                p->v2();
+            } else if (!(p->flags & 8)) {
+                s16 n = (s16)((f32)ext / lbl_8036A7A0);
+                if (n <= 0) {
+                    n = 1;
+                }
+                p->unk_28 = p->unk_16;
+                p->unk_29 = 0;
+                p->unk_2e = n;
+                p->unk_2c = 0;
+                p->flags |= 8;
+            }
+        }
+        i += 1;
+        p += 1;
+    } while (i < 0xa);
+
+    p = (Entry *)((u8 *)base + 0x2a0);
+    i = 0;
+    w = p;
+    do {
+        if (w->flags & 1) {
+            if ((s16)arg_save <= 0) {
+                w->v2();
+            } else if (!(w->flags & 8)) {
+                s16 n = (s16)((f32)ext / lbl_8036A7A0);
+                if (n <= 0) {
+                    n = 1;
+                }
+                w->unk_28 = w->unk_16;
+                w->unk_29 = 0;
+                w->unk_2e = n;
+                w->unk_2c = 0;
+                w->flags |= 8;
+            }
+        }
+        i += 1;
+        w += 1;
+    } while (i < 0x1c);
+
+    idx = 0;
+    str = (s8 *)((u8 *)lbl_80276BC8 + 0x8a);
+    do {
+        if (p->flags & 1) {
+            a = str;
+            b = (s8 *)*p->names;
+            goto check_b;
+        loop:
+            ca = *a;
+            if (ca == 0) {
+                if (idx >= 0) {
+                    Entry *hit = (Entry *)((u8 *)base + 0x2a0 + (idx * 0x30));
+                    if (hit->flags & 1) {
+                        hit->v2();
+                    }
+                }
+                goto next;
+            }
+            {
+                s8 cb = *b;
+                a += 1;
+                b += 1;
+                if (ca != cb) {
+                    goto next;
+                }
+            }
+        check_b:
+            if (*b != 0) {
+                goto loop;
+            }
+        }
+    next:
+        idx += 1;
+        p += 1;
+    } while (idx < 0x1c);
+
+    fn_800B3194();
+}
+#pragma cplusplus reset
+#pragma use_lmw_stmw reset
+
 s32 fn_80147578(void *, s32, f32, f32, f32);
 
 void fn_80147548(void *arg0, void *arg1, s32 arg2) {
@@ -6064,6 +6214,111 @@ s32 fn_80147578(void *arg0, s32 arg1, f32 farg0, f32 farg1, f32 farg2) {
     *(f32 *)(temp_r4 + 0x24) = farg2;
     temp_r4[0xC] |= 2;
     return temp_r3;
+}
+
+int fn_801475FC(void *arg0, int arg1) {
+    void *fn_8000D2BC(void *);
+    extern u8 lbl_803301A8[1344];
+    extern s32 lbl_80367110;
+    extern u8 lbl_8029275C[];
+    extern u8 lbl_802926EC[];
+    extern u8 lbl_8029267C[];
+    extern u8 lbl_8029260C[];
+
+    s8 slot;
+    u8 *found;
+    u8 *src;
+    s32 i;
+    u8 *entry;
+    s32 kind;
+    s32 tmp;
+    u8 val;
+
+    entry = lbl_803301A8;
+    for (i = 0; i < 0x1C; i++) {
+        if (!(entry[0xC] & 1)) {
+            slot = i;
+            goto found;
+        }
+        entry += 0x30;
+    }
+    slot = -1;
+found:
+    if (slot == -1) {
+        return -1;
+    }
+    if (lbl_80367110 & 1) {
+        return -1;
+    }
+    found = lbl_803301A8 + ((u8)slot * 0x30);
+    src = fn_8000D2BC(arg0);
+    kind = src[5] & 3;
+    switch (kind) {
+    case 0:
+        if (found != NULL) {
+            *(void **)(found + 8) = lbl_8029275C;
+            *(void **)found = src;
+            *(void **)(found + 8) = lbl_802926EC;
+        }
+        break;
+    case 1:
+        if (found != NULL) {
+            *(void **)(found + 8) = lbl_8029275C;
+            *(void **)found = src;
+            *(void **)(found + 8) = lbl_8029267C;
+        }
+        break;
+    case 2:
+        if (found != NULL) {
+            *(void **)(found + 8) = lbl_8029275C;
+            *(void **)found = src;
+            *(void **)(found + 8) = lbl_8029260C;
+        }
+        break;
+    }
+    found[0xC] = 1;
+    found[0xD] = src[6];
+    found[0xE] = src[7];
+    found[0xF] = 0;
+    if (src[5] & 4) {
+        val = 0;
+    } else {
+        val = src[0xC];
+    }
+    found[0x10] = val;
+    if (src[5] & 4) {
+        tmp = 0;
+    } else {
+        tmp = *(s16 *)(src + 0x10);
+    }
+    *(s16 *)(found + 0x12) = tmp;
+    if (src[5] & 4) {
+        tmp = 0x3E8;
+    } else {
+        tmp = *(u16 *)(src + 0x12);
+    }
+    *(u16 *)(found + 0x14) = tmp;
+    found[0x16] = 0x64;
+    found[0x17] = 0;
+    if (src[5] & 4) {
+        val = 0;
+    } else {
+        val = src[0xF];
+    }
+    tmp = (u8)val + 1;
+    if (tmp > 0xFF) {
+        tmp = 0xFF;
+    }
+    if (tmp == 0) {
+        tmp = 1;
+    }
+    found[0x11] = tmp;
+    found[0x16] = arg1;
+    found[0x28] = found[0x16];
+    found[0x29] = arg1;
+    *(s16 *)(found + 0x2E) = 1;
+    *(s16 *)(found + 0x2C) = 0;
+    return slot | 0;
 }
 
 void fn_801478D0(s16 arg0) {
