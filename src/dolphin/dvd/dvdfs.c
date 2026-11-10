@@ -482,6 +482,38 @@ s32 fn_8020EF60(void *arg0) {
     return var_r31;
 }
 
+s32 DVDGetDriveStatus(void) {
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    s32 enabled;
+    s32 ret;
+    s32 level[2];
+    void *exec;
+
+    enabled = OSDisableInterrupts();
+    if (FatalErrorFlag_803685B0 != 0) {
+        ret = -1;
+    } else if (PausingFlag_803685A8 != 0) {
+        ret = 8;
+    } else {
+        exec = executing_80368598;
+        if (exec == NULL) {
+            ret = 0;
+        } else if (exec == DummyCommandBlock_80339F80) {
+            ret = 0;
+        } else {
+            level[0] = OSDisableInterrupts();
+            ret = *(s32 *)((u8 *)exec + 0xC);
+            if (ret == 3) {
+                ret = 1;
+            }
+            OSRestoreInterrupts(level[0]);
+        }
+    }
+    OSRestoreInterrupts(enabled);
+    return ret;
+}
+
 s32 fn_8020F058(s32 arg0) {
     extern s32 autoInvalidation_80366F6C;
     s32 temp_r0;
