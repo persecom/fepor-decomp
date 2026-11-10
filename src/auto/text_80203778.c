@@ -1750,7 +1750,6 @@ volatile u32 OS_EXIRegs[16] : 0xCC006800;
 #pragma peephole off
 u32 fn_80207C34(u32 mask, u32 current) {
     u32 reg;
-    u32 addr;
 
     switch (__cntlzw(mask)) {
     case 0:
@@ -1774,16 +1773,13 @@ u32 fn_80207C34(u32 mask, u32 current) {
         if (!(current & 0x08000000)) {
             reg |= 0x10;
         }
-        addr = 0xCC004000;
-        *(volatile u16 *)(addr + 0x1C) = (u16)reg;
+        OS_MEMRegs[0x1C / 2] = (u16)reg;
         mask &= 0x07FFFFFF;
         break;
     case 5:
     case 6:
     case 7:
-        addr = 0xCC005000;
-        addr = addr + 0xA;
-        reg = *(volatile u16 *)addr;
+        reg = OS_DSPRegs[0xA / 2];
         reg &= ~0x1F8;
         if (!(current & 0x04000000)) {
             reg |= 0x10;
@@ -1794,22 +1790,22 @@ u32 fn_80207C34(u32 mask, u32 current) {
         if (!(current & 0x01000000)) {
             reg |= 0x100;
         }
-        *(volatile u16 *)addr = (u16)reg;
+        OS_DSPRegs[0xA / 2] = (u16)reg;
         mask &= 0xF8FFFFFF;
         break;
     case 8:
-        reg = *(volatile u32 *)0xCC006C00;
+        reg = OS_AIRegs[0];
         reg &= ~0x2C;
         if (!(current & 0x00800000)) {
             reg |= 0x4;
         }
-        *(volatile u32 *)0xCC006C00 = reg;
+        OS_AIRegs[0] = reg;
         mask &= 0xFF7FFFFF;
         break;
     case 9:
     case 10:
     case 11:
-        reg = *(volatile u32 *)0xCC006800;
+        reg = OS_EXIRegs[0];
         reg &= ~0x2C0F;
         if (!(current & 0x00400000)) {
             reg |= 0x1;
@@ -1820,15 +1816,13 @@ u32 fn_80207C34(u32 mask, u32 current) {
         if (!(current & 0x00100000)) {
             reg |= 0x400;
         }
-        *(volatile u32 *)0xCC006800 = reg;
+        OS_EXIRegs[0] = reg;
         mask &= 0xFF8FFFFF;
         break;
     case 12:
     case 13:
     case 14:
-        addr = 0xCC006800;
-        addr = addr + 0x14;
-        reg = *(volatile u32 *)addr;
+        reg = OS_EXIRegs[0x14 / 4];
         reg &= ~0xC0F;
         if (!(current & 0x00080000)) {
             reg |= 0x1;
@@ -1839,14 +1833,12 @@ u32 fn_80207C34(u32 mask, u32 current) {
         if (!(current & 0x00020000)) {
             reg |= 0x400;
         }
-        *(volatile u32 *)addr = reg;
+        OS_EXIRegs[0x14 / 4] = reg;
         mask &= 0xFFF1FFFF;
         break;
     case 15:
     case 16:
-        addr = 0xCC006800;
-        addr = addr + 0x28;
-        reg = *(volatile u32 *)addr;
+        reg = OS_EXIRegs[0x28 / 4];
         reg &= ~0xF;
         if (!(current & 0x00010000)) {
             reg |= 0x1;
@@ -1854,7 +1846,7 @@ u32 fn_80207C34(u32 mask, u32 current) {
         if (!(current & 0x00008000)) {
             reg |= 0x4;
         }
-        *(volatile u32 *)addr = reg;
+        OS_EXIRegs[0x28 / 4] = reg;
         mask &= 0xFFFE7FFF;
         break;
     case 17:
@@ -1898,8 +1890,7 @@ u32 fn_80207C34(u32 mask, u32 current) {
         if (!(current & 0x00000020)) {
             reg |= 0x2000;
         }
-        addr = 0xCC003000;
-        *(volatile u32 *)(addr + 4) = reg;
+        OS_PIRegs[1] = reg;
         mask &= 0xFFFF801F;
         break;
     }
