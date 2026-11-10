@@ -420,26 +420,29 @@ s32 fn_8010418C(void *arg0, s32 arg1) {
 }
 
 s32 fn_8010424C(void *arg0) {
-    s32 var_r4;
-    u8* ptr = (u8*)arg0;
+    s32 count;
+    u8 *p;
 
-    var_r4 = 0;
-    if ((ptr[0] >> 5) & 7) {
-        var_r4 = 1;
+    p = (u8 *)arg0;
+    count = 0;
+    if ((p[0] >> 5) & 7) {
+        count = 1;
     }
-    if ((ptr[0] >> 7) & 7) {
-        var_r4 += 1;
+    if ((*(u16 *)p >> 7) & 7) {
+        count += 1;
     }
-    if ((ptr[1] >> 4) & 7) {
-        var_r4 += 1;
+    if ((p[1] >> 4) & 7) {
+        count += 1;
     }
-    if ((ptr[0] >> 2) & 7) {
-        var_r4 += 1;
+    p = (u8 *)arg0;
+    if ((p[0] >> 2) & 7) {
+        count += 1;
     }
-    if (ptr[1] & 7) {
-        var_r4 += 1;
+    p = (u8 *)arg0;
+    if (p[1] & 7) {
+        count += 1;
     }
-    return var_r4;
+    return count;
 }
 
 void fn_801042A8(s32 arg0, s32 arg1, u8 arg2)
