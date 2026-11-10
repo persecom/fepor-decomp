@@ -1828,6 +1828,12 @@ void fn_800D7588(void) {
 
 }
 
+void fn_800D75C4(void *arg0) {
+    void fn_800DF670(void *);
+    fn_800DF670(M2C_FIELD(arg0, void **, 0x10));
+    M2C_FIELD(arg0, u8 *, 0x420) = 1;
+}
+
 s32 fn_800D75FC(s32 arg0) {
     s32 fn_800E4454(s32, void *);
     void fn_800C9B6C(void *);
