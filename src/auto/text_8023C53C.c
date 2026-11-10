@@ -1574,6 +1574,8 @@ void fn_80253E90(void) {
     _restgpr_26();
 }
 
+void fn_8025539C(void *arg0);
+
 void fn_80255054(void *arg0) {
     void fn_8025539C(void *);
     u32 var_r0;
@@ -3955,9 +3957,74 @@ void fn_80262558(void *arg0) {
     *(u8 *)(base + 0x281) -= 1;
 }
 
-void fn_802625F8(void)
-{
-    // Initial stub for the function - will be filled in
+void fn_802625F8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    BOOL OSDisableInterrupts(void);
+    void OSRestoreInterrupts(BOOL);
+    void fn_80215D9C(void *, s32, s32, s32, s32, void *, s32, void *);
+    void fn_80262558(void *);
+    extern u8 lbl_80363F28[];
+    extern u8 lbl_803641AC[];
+    typedef struct {
+        s32 pad;
+        s32 code;
+        s32 unk08;
+        s32 flag;
+        s32 a0;
+        s32 a1;
+        s32 a2;
+        void *cb;
+        s32 a4;
+        s32 a5;
+    } Slot;
+    typedef struct {
+        Slot slots[16];
+        volatile u8 next;
+        volatile u8 count;
+    } Queue;
+    u8 *base;
+    BOOL enabled;
+
+    if (arg3 != 0) {
+        base = lbl_803641AC;
+    } else {
+        base = lbl_80363F28;
+    }
+
+start:
+    enabled = OSDisableInterrupts();
+    {
+        Queue *q = (Queue *)base;
+        if (q->count < 0x10) {
+            q->slots[q->next].code = 0x2A;
+            q->slots[q->next].unk08 = 0;
+            q->slots[q->next].flag = (arg3 != 0);
+            q->slots[q->next].a0 = arg0;
+            q->slots[q->next].a1 = arg1;
+            q->slots[q->next].a2 = arg2;
+            q->slots[q->next].cb = (void *)fn_80262558;
+            q->slots[q->next].a4 = arg4;
+            q->slots[q->next].a5 = arg5;
+
+            fn_80215D9C(
+                &q->slots[q->next],
+                q->slots[q->next].code,
+                q->slots[q->next].unk08,
+                q->slots[q->next].flag,
+                q->slots[q->next].a0,
+                (void *)q->slots[q->next].a1,
+                q->slots[q->next].a2,
+                q->slots[q->next].cb);
+
+            q->count = (u8)(q->count + 1);
+            q->next = (u8)(((s32)q->next + 1) % 16);
+            OSRestoreInterrupts(enabled);
+            goto end;
+        }
+    }
+    OSRestoreInterrupts(enabled);
+    goto start;
+end:
+    ;
 }
 
 void fn_802627D4(void) {
