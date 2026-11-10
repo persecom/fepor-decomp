@@ -2051,26 +2051,27 @@ void fn_8018CF48(s32 arg0) {
     }
 }
 
+#pragma use_lmw_stmw on
 void fn_8018CFA4(s32 arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4) {
-    u32 fn_8000C0C0(M2C_UNK *);
-    void *fn_8000CAF0(M2C_UNK *, s32);
-    extern M2C_UNK lbl_80296018;
+    u32 fn_8000C0C0(void *);
+    void *fn_8000CAF0(void *, s32);
+    u32 fn_80018ADC(void);
+    extern u8 lbl_80296018[];
     s32 var_r0;
     void *temp_r3;
 
-    if ((fn_80018ADC() != 0U) && ((arg3 != 0) || (fn_8000C0C0(&lbl_80296018) == 0U))) {
-        temp_r3 = fn_8000CAF0(&lbl_80296018, arg4);
+    if (fn_80018ADC() != 0U && (arg3 != 0 || fn_8000C0C0(lbl_80296018) == 0U)) {
+        temp_r3 = fn_8000CAF0(lbl_80296018, arg4);
         var_r0 = 1;
         if (arg1 != 0) {
             var_r0 = arg1;
         }
-        M2C_FIELD(temp_r3, s32 *, 0x38) = var_r0;
-        M2C_FIELD(temp_r3, s32 *, 0x34) = arg0;
-        M2C_FIELD(temp_r3, s32 *, 0x40) = arg0;
-        M2C_FIELD(temp_r3, s32 *, 0x3C) = arg2;
+        *(s32 *)((u8 *)temp_r3 + 0x38) = var_r0;
+        *(s32 *)((u8 *)temp_r3 + 0x34) = arg0;
+        *(s32 *)((u8 *)temp_r3 + 0x40) = arg0;
+        *(s32 *)((u8 *)temp_r3 + 0x3C) = arg2;
     }
 }
-
 void fn_8018D218(void *arg0) {
     extern u16 lbl_802797C0[6];
     void *temp_r5;
