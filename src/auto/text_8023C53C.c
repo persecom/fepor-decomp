@@ -20,6 +20,17 @@ static inline u8 *FindAudioResource(void *data, u16 id, u32 offset) {
 }
 typedef struct SynthStateLink { u8 pad[0xEC]; s32 next; u8 padF0[0x458 - 0xF0]; } SynthStateLink;
 typedef s32 Fn80256FF0Arg;
+static inline u8 SynthAllocateStream(void) {
+extern u8 lbl_8035A6D0[];
+u8 i;
+for(i=0;i<lbl_8035A6D0[0];i++){
+if(lbl_8035A6D0[i*0x2c+8]==0){
+u8 *p=lbl_8035A6D0+i*0x2c;
+p[8]=1;*(u32*)(p+12)=0;return i;
+}
+}
+return 255;
+}
 typedef struct SynthFreeNode { u8 prev, next; u16 active; } SynthFreeNode;
 
 extern u16 lbl_80366F28;
@@ -576,89 +587,149 @@ void fn_80244D64(s32 arg0) {
     extern SynthVoice lbl_8033F990[];
     extern VidList *lbl_80368964;
     void fn_80257224(s32);
+    s32 off;
+    SynthVoice *sv;
+    u32 i;
+    SynthVoice *walk;
+    VidList *node;
+    VidList *tail;
+    VidList **listpp;
     u32 id;
     u32 vid;
     SynthVoice *p;
-    SynthVoice *sv;
-    VidList *tail;
-    u32 i;
-    VidList *node;
-    SynthVoice *walk;
-    s32 off;
-    VidList **listpp;
 
     vid = arg0 & 0x7FFFFFFF;
-    for (p = lbl_80368974; p != NULL; p = p->next) {
-        if (p->vid == vid) {
-            id = p->id | (arg0 & 0x80000000);
-            goto found;
-        }
+    p = lbl_80368974;
+    goto loop1_test;
+loop1:
+    if (p->vid == vid) {
+        id = p->id | (arg0 & 0x80000000);
+        goto found;
     }
-    for (p = lbl_80368970; p != NULL; p = p->next) {
-        if (p->vid == vid) {
-            id = p->id | (arg0 & 0x80000000);
-            goto found;
-        }
+    p = p->next;
+loop1_test:
+    if (p != NULL) {
+        goto loop1;
+    }
+    p = lbl_80368970;
+    goto loop2_test;
+loop2:
+    if (p->vid == vid) {
+        id = p->id | (arg0 & 0x80000000);
+        goto found;
+    }
+    p = p->next;
+loop2_test:
+    if (p != NULL) {
+        goto loop2;
     }
     id = -1;
 found:
     if ((u32)(id + 0x10000) != 0xFFFF) {
         if (!(id & 0x80000000)) {
-            off = (s32)id * 0x1888;
-            id = 0;
+            off = id * 0x1888;
             sv = (SynthVoice *)((u8 *)lbl_8033F990 + off);
-            switch (sv->state) {
-            case 1:
-                if (sv->prev != NULL) {
-                    sv->prev->next = sv->next;
-                } else {
-                    lbl_80368974 = sv->next;
+            if (sv->state == 2) {
+                goto case2;
+            } else if (sv->state >= 2) {
+                goto after_switch;
+            } else if (sv->state >= 1) {
+                goto case1;
+            } else {
+                goto after_switch;
+            }
+        case1:
+            if (sv->prev != NULL) {
+                sv->prev->next = sv->next;
+            } else {
+                lbl_80368974 = sv->next;
+            }
+            i = 0;
+            walk = sv;
+        loop_a:
+            node = walk->lists[0];
+            goto loop_a_inner_test;
+        loop_a_inner:
+            fn_80257224(node->vid);
+            node = node->next;
+        loop_a_inner_test:
+            if (node != NULL) {
+                goto loop_a_inner;
+            }
+            i += 1;
+            walk = (SynthVoice *)((u8 *)walk + 4);
+            if (i < 2) {
+                goto loop_a;
+            }
+            listpp = (VidList **)((u8 *)((u8 *)lbl_8033F990 + off) + 0xE6C);
+            node = *listpp;
+            goto loop_b_test;
+        loop_b:
+            fn_80257224(node->vid);
+            node = node->next;
+        loop_b_test:
+            if (node != NULL) {
+                goto loop_b;
+            }
+            tail = sv->lists[0];
+            if (tail != NULL) {
+                goto find_tail1_test;
+            find_tail1:
+                tail = tail->next;
+            find_tail1_test:
+                if (tail->next != NULL) {
+                    goto find_tail1;
                 }
-                for (i = 0, walk = sv; i < 2; i++, walk = (SynthVoice *)((u8 *)walk + 4)) {
-                    for (node = walk->lists[0]; node != NULL; node = node->next) {
-                        fn_80257224(node->vid);
-                    }
+                if (lbl_80368964 != NULL) {
+                    tail->next = lbl_80368964;
+                    lbl_80368964->prev = tail;
                 }
-                walk = (SynthVoice *)((u8 *)lbl_8033F990 + off);
-                listpp = &walk->listE6C;
-                for (node = *listpp; node != NULL; node = node->next) {
-                    fn_80257224(node->vid);
-                }
-                for (i = 0, walk = sv; i < 2; i++, walk = (SynthVoice *)((u8 *)walk + 4)) {
-                    tail = walk->lists[0];
-                    if (tail != NULL) {
-                        while (tail->next != NULL) {
-                            tail = tail->next;
-                        }
-                        if (lbl_80368964 != NULL) {
-                            tail->next = lbl_80368964;
-                            lbl_80368964->prev = tail;
-                        }
-                        lbl_80368964 = walk->lists[0];
-                        walk->lists[0] = NULL;
-                    }
-                }
-                tail = *listpp;
+                lbl_80368964 = sv->lists[0];
+                sv->lists[0] = NULL;
+            }
+            {
+                SynthVoice *sv4 = (SynthVoice *)((u8 *)sv + 4);
+                tail = sv4->lists[0];
                 if (tail != NULL) {
-                    while (tail->next != NULL) {
-                        tail = tail->next;
+                    goto find_tail2_test;
+                find_tail2:
+                    tail = tail->next;
+                find_tail2_test:
+                    if (tail->next != NULL) {
+                        goto find_tail2;
                     }
                     if (lbl_80368964 != NULL) {
                         tail->next = lbl_80368964;
                         lbl_80368964->prev = tail;
                     }
-                    lbl_80368964 = *listpp;
-                    *listpp = NULL;
+                    lbl_80368964 = sv4->lists[0];
+                    sv4->lists[0] = NULL;
                 }
-                break;
-            case 2:
-                if (sv->prev != NULL) {
-                    sv->prev->next = sv->next;
-                } else {
-                    lbl_80368970 = sv->next;
-                }
-                break;
             }
+            tail = *listpp;
+            if (tail != NULL) {
+                goto find_tail3_test;
+            find_tail3:
+                tail = tail->next;
+            find_tail3_test:
+                if (tail->next != NULL) {
+                    goto find_tail3;
+                }
+                if (lbl_80368964 != NULL) {
+                    tail->next = lbl_80368964;
+                    lbl_80368964->prev = tail;
+                }
+                lbl_80368964 = *listpp;
+                *listpp = NULL;
+            }
+            goto after_switch;
+        case2:
+            if (sv->prev != NULL) {
+                sv->prev->next = sv->next;
+            } else {
+                lbl_80368970 = sv->next;
+            }
+        after_switch:
             if (sv->next != NULL) {
                 sv->next->prev = sv->prev;
             }
@@ -2556,6 +2627,81 @@ void fn_80251E88(Voice *arg0, u32 *arg1) {
     arg0->flags |= 0x2000;
 }
 
+void fn_80251F24(void *arg0, u32 *arg1)
+{
+    s32 fn_80250884(u16);
+
+    u8 *data;
+    u32 word0;
+    u32 word1;
+    u32 value;
+    u32 factor;
+    u32 mode;
+    u32 tableId;
+    u32 index;
+    u32 fraction;
+    u32 result;
+    u8 *table;
+
+    data = (u8 *)arg0;
+
+    word0 = arg1[0];
+    word1 = arg1[1];
+
+    factor = (word0 >> 8) & 0xFF;
+    mode = (word1 >> 8) & 0xFF;
+
+    if (mode == 0) {
+        value = *(u32 *)(data + 0x158);
+    } else {
+        value = *(u32 *)(data + 0x15C);
+    }
+
+    value = (value * factor) / 127;
+
+    *(u32 *)(data + 0x158) = value;
+
+    if (mode != 0) {
+        value = *(u32 *)(data + 0x158);
+        value += word0 & 0x00FF0000;
+        *(u32 *)(data + 0x158) = value;
+    }
+
+    if (*(u32 *)(data + 0x158) > 0x7F0000) {
+        *(u32 *)(data + 0x158) = 0x7F0000;
+    }
+
+    tableId = (word0 >> 24) | ((word1 & 0xFF) << 8);
+
+    result = *(u32 *)(data + 0x158);
+
+    if (tableId != 0xFFFF) {
+        table = (u8 *)fn_80250884((u16)tableId);
+
+        if (table != 0) {
+            index = result >> 16;
+            fraction = result & 0xFFFF;
+
+            if (index < 0x7F) {
+                u32 current;
+                u32 next;
+
+                current = table[index];
+                next = table[index + 1];
+
+                result = (current << 16) +
+                         fraction * (next - current);
+            } else {
+                result = table[index] << 16;
+            }
+        }
+    }
+
+    *(u32 *)(data + 0x158) = result;
+
+    *(u32 *)(data + 0x114) |= 0x1000;
+}
+
 s32 fn_80252058(s32 arg0) {
     s32 var_r3;
     s32 var_r4;
@@ -4192,6 +4338,65 @@ void fn_80258100(void) {
     } while (var_ctr != 0);
     M2C_FIELD(&lbl_8035A6D0, s16 *, 0xB48) = 0;
     M2C_FIELD(&lbl_8035A6D0, s32 *, 0xB4C) = 0;
+}
+
+int fn_802581BC(u32 arg0) {
+extern u8 lbl_8035A6D0[];
+s32 fn_802631AC(u8,s32*);
+void fn_80261AE0(s32,s32,s32);
+u16 fn_80261B28(s32);
+s32 fn_80261B3C(s32);
+u8 fn_80261B14(s32);
+u8 i, slot, j;
+u16 serial;
+s32 offset;
+u8 *map;
+u16 *serialPtr;
+u8 *idPtr;
+u8 id=arg0;
+for(i=0;i<lbl_8035A6D0[0];i++){
+u8 *p=lbl_8035A6D0+i*0x2c;
+if(p[8]!=0 && p[11]==id){p[8]=0;lbl_8035A6D0[0xb08+p[11]]=255;}
+}
+for(slot=0;slot<lbl_8035A6D0[0];slot++){
+if(lbl_8035A6D0[slot*0x2c+8]==0){
+lbl_8035A6D0[slot*0x2c+8]=1;
+*(u32*)(lbl_8035A6D0+slot*0x2c+12)=0;
+break;
+}
+}
+if(slot==lbl_8035A6D0[0]) slot=255;
+map=lbl_8035A6D0+0xb08;
+map[id]=slot;
+if(slot!=255){
+fn_80261AE0(id,fn_802631AC(map[id],0),*(s32*)(lbl_8035A6D0+4));
+offset=slot*0x2c;
+*(u16*)(lbl_8035A6D0+offset+0x18)=fn_80261B28(id);
+do {
+serial=*(u16*)(lbl_8035A6D0+0xb48);
+*(u16*)(lbl_8035A6D0+0xb48)=serial+1;
+for(j=0;j<lbl_8035A6D0[0];j++){
+u8 *p=lbl_8035A6D0+j*0x2c;
+if(p[8]!=0 && *(u16*)(p+0x1a)==serial) break;
+}
+}while(j!=lbl_8035A6D0[0]);
+serialPtr=(u16*)(lbl_8035A6D0+offset+0x1a);
+*serialPtr=serial;
+*(s32*)(lbl_8035A6D0+offset+0x1c)=fn_80256000(arg0);
+if(*(u32*)(lbl_8035A6D0+offset+0x1c)!=0xffffffff)
+*(s32*)(lbl_8035A6D0+offset+0x20)=fn_8024B5B0(*(u32*)(lbl_8035A6D0+offset+0x1c));
+else *(s32*)(lbl_8035A6D0+offset+0x20)=-1;
+*(s32*)(lbl_8035A6D0+offset+0x24)=fn_80261B3C(id);
+lbl_8035A6D0[offset+10]=fn_80261B14(id);
+idPtr=lbl_8035A6D0+offset+11;
+*idPtr=id;
+if(*(u32*)(lbl_8035A6D0+0xb4c)!=0 && (*(u32(**)(s32,void*))(lbl_8035A6D0+0xb4c))(0,lbl_8035A6D0+offset+0x18)==0) return (id&~0xffff00)|((*serialPtr<<8)&0xffff00);
+fn_80261AE0(id,0,0);
+lbl_8035A6D0[offset+8]=0;
+map[*idPtr]=255;
+}
+else fn_80261AE0(id,0,0);
+return -1;
 }
 
 void fn_80258888(void) {
