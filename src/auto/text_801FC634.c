@@ -444,6 +444,21 @@ void fn_802003FC(void) {
         }
     }
 }
+
+M2C_UNK fn_8000CAF0(s32 *, s32, s16 *, s16 *, s32 *, s32 *);
+void fn_80200494(void) {
+    extern s32 lbl_8029B780[];
+    s32 i;
+
+    for (i = 0; i < 8; i++) {
+        lbl_803392E8[i] = 0;
+        lbl_80339308[i] = 0;
+        lbl_80339328[i] = 0;
+        lbl_80339338[i] = 0;
+    }
+    fn_8000CAF0(lbl_8029B780, 2, lbl_80339338, lbl_80339328, (s32 *)lbl_80339308, (s32 *)lbl_803392E8);
+}
+
 #pragma use_lmw_stmw reset
 
 extern u16 lbl_8029B7FC[10];
