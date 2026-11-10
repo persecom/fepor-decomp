@@ -8,6 +8,16 @@ typedef struct SoundKeyEntry { u16 id; s8 key; u8 pan; s16 volume; u16 pad; } So
 typedef struct AudioTableRange { u16 count; u16 start; } AudioTableRange;
 typedef struct AudioTableEntry { s32 data; u16 id; u16 ref; } AudioTableEntry;
 typedef struct SynthVmState { u8 pad[0xAC]; s32 regs[16]; } SynthVmState;
+static inline u8 *FindAudioResource(void *data, u16 id, u32 offset) {
+    u8 *node;
+    if (data == NULL) return NULL;
+    node = (u8 *)data + *(u32 *)((u8 *)data + offset);
+    while (*(u32 *)node != 0xFFFFFFFF) {
+        if (*(u16 *)(node + 4) == id) return node;
+        node += *(u32 *)node;
+    }
+    return NULL;
+}
 typedef s32 Fn80256FF0Arg;
 
 extern u16 lbl_80366F28;
@@ -3781,6 +3791,86 @@ void fn_80258A98(s32 arg0, s32 arg1) {
 void *fn_80258AD8(void) {
     extern u16 lbl_8035B220[];
     return (u8 *)lbl_8035B220 + 0x60c;
+}
+
+void fn_80258AE8(u16 id, void *data, u8 type, u32 remove) {
+ void fn_80250128(u16,s32); s32 fn_80250414(u16);
+ void fn_8024EE6C(u16,s32); void fn_8024F05C(u16);
+ s32 fn_8024F1D8(u16,s32,s16); void fn_8024F420(u16);
+ s32 fn_8024F5E4(u16,s32); void fn_8024F7E8(u16);
+ void fn_8024FCA8(u16,s32); s32 fn_8024FD80(u16,s32);
+ extern s32 *lbl_80368A5C;
+ u8 *node;
+ switch(type) {
+ case 0:
+  if(remove==0) {
+   if(data==NULL) node=NULL;
+   else {
+    node=(u8*)data+*(u32*)data;
+    while(*(u32*)node!=0xFFFFFFFF) {
+     if(*(u16*)(node+4)==id) goto found0;
+     node+=*(u32*)node;
+    }
+    node=NULL;
+   }
+found0:
+   if(node!=NULL) fn_80250128(id,(s32)(node+8));
+   else fn_80250128(id,0);
+  } else fn_80250414(id);
+  break;
+ case 2:
+  if(remove==0) {
+   if(data==NULL) node=NULL;
+   else {
+    node=(u8*)data+*(u32*)((u8*)data+8);
+    while(*(u32*)node!=0xFFFFFFFF) {
+     if(*(u16*)(node+4)==(u16)(id|0x4000)) goto found2;
+     node+=*(u32*)node;
+    }
+    node=NULL;
+   }
+found2:
+   if(node!=NULL) fn_8024EE6C(id|0x4000,(s32)(node+8));
+   else fn_8024EE6C(id|0x4000,0);
+  } else fn_8024F05C(id|0x4000);
+  break;
+ case 3:
+  if(remove==0) {
+   if(data==NULL) node=NULL;
+   else {
+    node=(u8*)data+*(u32*)((u8*)data+12);
+    while(*(u32*)node!=0xFFFFFFFF) {
+     if(*(u16*)(node+4)==(u16)(id|0x8000)) goto found3;
+     node+=*(u32*)node;
+    }
+    node=NULL;
+   }
+found3:
+   if(node!=NULL) fn_8024F1D8(id|0x8000,(s32)(node+12),(u16)*(u32*)(node+8));
+   else fn_8024F1D8(id|0x8000,0,0);
+  } else fn_8024F420(id|0x8000);
+  break;
+ case 4:
+  if(remove==0) {
+   if(data==NULL) node=NULL;
+   else {
+    node=(u8*)data+*(u32*)((u8*)data+4);
+    while(*(u32*)node!=0xFFFFFFFF) {
+     if(*(u16*)(node+4)==id) goto found4;
+     node+=*(u32*)node;
+    }
+    node=NULL;
+   }
+found4:
+   if(node!=NULL) fn_8024F5E4(id,(s32)(node+8));
+   else fn_8024F5E4(id,0);
+  } else fn_8024F7E8(id);
+  break;
+ case 1:
+  if(remove==0) fn_8024FCA8(id,(s32)((u8*)lbl_80368A5C+0x60C));
+  else fn_8024FD80(id,(s32)((u8*)lbl_80368A5C+0x60C));
+  break;
+ }
 }
 
 void fn_80258D74(void) {
