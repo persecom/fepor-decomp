@@ -1579,6 +1579,16 @@ void fn_8003C56C(void *arg0, s32 arg1) {
     }
 }
 
+void fn_8003C5AC(void *arg0, s32 arg1) {
+    s32 *fn_8000D354(s32);
+    s32 *temp_r3;
+
+    temp_r3 = fn_8000D354(arg1);
+    if (temp_r3 != NULL) {
+        M2C_FIELD(arg0, s32 *, 0x240) = (s32)*temp_r3;
+    }
+}
+
 void *fn_8000D354(s32);
 void fn_8003C5EC(void *arg0, s32 arg1) {
     void *temp_r3;
