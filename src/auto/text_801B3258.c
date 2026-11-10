@@ -33,6 +33,54 @@ typedef struct UIListObj {
     void *field74;
 } UIListObj;
 
+/* Returns 1 if slot cleared (caller should return 1), 0 to continue. */
+static s32 ClearBadSaveSlot(u8 *slot, s32 arg0) {
+    extern void *lbl_803682F0;
+    extern u8 lbl_8027E980[];
+    void *fn_800C4638(s32, void *, s32);
+    void fn_800C4588(void *);
+    void fn_800EC1F8(void);
+    u32 fn_800EC0A4(void *, void *, s32);
+    void fn_800E9B80(void *, s32, s32, s32, s32);
+    void *memset(void *, s32, s32);
+    void *buf;
+    u32 sum;
+    u8 hdrOk;
+    u8 chkOk;
+
+    if (*(u32 *)(slot + 0x40) != 0x4645384AU) {
+        hdrOk = 0;
+    } else if (*(u32 *)(slot + 0x44) != 0x20050201U) {
+        hdrOk = 0;
+    } else {
+        hdrOk = 1;
+    }
+    if (hdrOk == 0) {
+        return 0;
+    }
+    if (*(u32 *)(slot + 0x50) == 0x12345678U) {
+        chkOk = 1;
+    } else if (*(u8 *)(slot + 0x60) == 1) {
+        chkOk = 1;
+    } else {
+        buf = fn_800C4638(0x400, lbl_8027E980 + 0x14E, 0);
+        fn_800EC1F8();
+        sum = fn_800EC0A4(buf, slot + 0x70, *(s32 *)(slot + 0x4C) - 0x70);
+        fn_800C4588(buf);
+        if (*(u32 *)(slot + 0x50) != sum) {
+            chkOk = 0;
+        } else {
+            chkOk = 1;
+        }
+    }
+    if (chkOk != 0) {
+        return 0;
+    }
+    memset(slot, 0, 0x2000);
+    fn_800E9B80(slot, 0x2000, (s32)(slot - (u8 *)lbl_803682F0), -1, arg0);
+    return 1;
+}
+
 static inline s32 MsgBoxAddPad(s32 h, s32 pad) {
     return h + pad;
 }
@@ -2536,6 +2584,111 @@ void fn_801C7880(void *arg0) {
     fn_8005376C();
 }
 
+#pragma use_lmw_stmw on
+void fn_801C797C(void *arg0, void *arg1, void *arg2, s32 arg3, s16 arg4, u8 arg5) {
+    s32 fn_8006135C(void *, void *);
+    s32 fn_80060440(void *);
+    void fn_8005FA14(void *, s32);
+    void fn_800608AC(void *);
+    void fn_80060F70(void *, s32, f32 *);
+    void *fn_80060690(void *);
+    void fn_8005FC74(void *, s32, s32);
+    void fn_8005FEE8(void *, f32);
+    void fn_802031A8(f32 *, f32 *, f32 *);
+    extern f32 lbl_8027D528[3];
+    extern f32 lbl_8027D534[3];
+    extern u16 lbl_8027D594[];
+    extern f32 lbl_8036B424;
+    extern f32 lbl_8036B434;
+    void *obj;
+    void *dst;
+    void *out;
+    s32 param;
+    u8 flag;
+    s32 id1;
+    s32 id2;
+    s32 kind;
+    f32 save;
+    void *base;
+    void *entry;
+    u32 sp38[3];
+    u32 sp2c[3];
+    f32 sp20[3];
+    f32 sp14[3];
+    f32 sp8[3];
+
+    obj = arg2;
+    *(void **)arg1 = obj;
+    *(s16 *)((u8 *)arg1 + 6) = arg4;
+    *(s16 *)((u8 *)arg1 + 4) = 0;
+    out = arg0;
+    dst = arg1;
+    param = arg3;
+    flag = arg5;
+
+    sp38[0] = ((u32 *)lbl_8027D528)[0];
+    sp38[1] = ((u32 *)lbl_8027D528)[1];
+    sp38[2] = ((u32 *)lbl_8027D528)[2];
+    sp2c[0] = ((u32 *)lbl_8027D534)[0];
+    sp2c[1] = ((u32 *)lbl_8027D534)[1];
+    sp2c[2] = ((u32 *)lbl_8027D534)[2];
+
+    id1 = fn_8006135C(obj, (u8 *)lbl_8027D594 + 0x127);
+    id2 = fn_8006135C(obj, (u8 *)lbl_8027D594 + 0x1A4);
+
+    if (id1 != -1) {
+        kind = fn_80060440(obj);
+        if (kind == 4) {
+            fn_8005FA14(obj, 0);
+            fn_800608AC(obj);
+            fn_80060F70(obj, id1, sp14);
+            sp20[0] = sp14[0];
+            sp20[1] = sp14[1];
+            sp20[2] = sp14[2];
+        } else if (kind > 1) {
+            fn_80060F70(obj, id1, sp14);
+            save = *(f32 *)((u8 *)obj + 0x78);
+            *(f32 *)((u8 *)obj + 0x78) = lbl_8036B434;
+            fn_800608AC(obj);
+            *(f32 *)((u8 *)obj + 0x78) = save;
+            fn_80060F70(obj, id1, sp20);
+        } else {
+            fn_80060F70(obj, id1, sp14);
+            sp20[0] = sp14[0];
+            sp20[1] = sp14[1];
+            sp20[2] = sp14[2];
+        }
+
+        if (id2 != -1) {
+            base = fn_80060690(obj);
+            if (flag != 0) {
+                entry = (u8 *)*(void **)((u8 *)base + 0xC) + id2 * 0xF4;
+                *(u32 *)((u8 *)entry + 0xC) |= 0x40000000;
+            } else {
+                entry = (u8 *)*(void **)((u8 *)base + 0xC) + id2 * 0xF4;
+                *(u32 *)((u8 *)entry + 0xC) &= ~0x40000000;
+            }
+        }
+
+        fn_8005FC74(obj, param, 0);
+        fn_8005FEE8(obj, lbl_8036B424);
+        *(f32 *)((u8 *)obj + 0x78) = lbl_8036B434;
+        fn_800608AC(obj);
+        *(f32 *)((u8 *)obj + 0x78) = lbl_8036B424;
+        fn_80060F70(obj, id1, sp8);
+        fn_802031A8(sp20, sp8, (f32 *)sp38);
+        fn_802031A8(sp14, sp8, (f32 *)sp2c);
+        ((f32 *)sp2c)[1] = lbl_8036B424;
+        ((f32 *)sp38)[1] = lbl_8036B424;
+        *(f32 *)((u8 *)dst + 8) = ((f32 *)sp2c)[0];
+        *(f32 *)((u8 *)dst + 0xC) = ((f32 *)sp2c)[1];
+        *(f32 *)((u8 *)dst + 0x10) = ((f32 *)sp2c)[2];
+    }
+
+    *(u32 *)((u8 *)out + 0) = sp38[0];
+    *(u32 *)((u8 *)out + 4) = sp38[1];
+    *(u32 *)((u8 *)out + 8) = sp38[2];
+}
 void fn_801C7BF8(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0) = 0;
     M2C_FIELD(arg0, s32 *, 4) = 0;
@@ -6050,6 +6203,112 @@ void fn_801DF7C8(void *arg0) {
     *(u32*)((char*)arg0 + 0x48) = 1;
 }
 
+#pragma use_lmw_stmw on
+s32 fn_801DFBE4(s32 arg0) {
+    extern void *lbl_803682F0;
+    extern u8 lbl_8027E980[];
+    u8 fn_800EB788(void);
+    void *fn_800C4638(s32, void *, s32);
+    void fn_800C4588(void *);
+    void fn_800EC1F8(void);
+    u32 fn_800EC0A4(void *, void *, s32);
+    void fn_800E9B80(void *, s32, s32, s32, s32);
+    void *memset(void *, s32, s32);
+
+    s32 i;
+    s32 off;
+    u8 *slot;
+    void *buf;
+    u32 sum;
+    u8 hdrOk;
+    u8 chkOk;
+    s32 self;
+
+    self = arg0;
+    if (fn_800EB788() != 0) {
+        return 0;
+    }
+
+    i = 0;
+    off = 0x2000;
+    do {
+        slot = (u8 *)lbl_803682F0 + off;
+        if (*(u32 *)(slot + 0x40) != 0x4645384AU) {
+            hdrOk = 0;
+        } else if (*(u32 *)(slot + 0x44) != 0x20050201U) {
+            hdrOk = 0;
+        } else {
+            hdrOk = 1;
+        }
+        if (hdrOk != 0) {
+            if (*(u32 *)(slot + 0x50) == 0x12345678U) {
+                chkOk = 1;
+            } else if (*(u8 *)(slot + 0x60) == 1) {
+                chkOk = 1;
+            } else {
+                void *path;
+                path = lbl_8027E980 + 0x14E;
+                buf = fn_800C4638(0x400, path, 0);
+                fn_800EC1F8();
+                sum = fn_800EC0A4(buf, slot + 0x70, *(s32 *)(slot + 0x4C) - 0x70);
+                fn_800C4588(buf);
+                if (*(u32 *)(slot + 0x50) != sum) {
+                    chkOk = 0;
+                } else {
+                    chkOk = 1;
+                }
+            }
+            if (chkOk == 0) {
+                memset(slot, 0, 0x2000);
+                fn_800E9B80(slot, 0x2000, (s32)((u8 *)slot - (u8 *)lbl_803682F0), -1, self);
+                return 1;
+            }
+        }
+        i += 1;
+        off += 0x4000;
+    } while (i < 6);
+
+    i = 0;
+    off = 0x1A000;
+    do {
+        slot = (u8 *)lbl_803682F0 + off;
+        if (*(u32 *)(slot + 0x40) != 0x4645384AU) {
+            hdrOk = 0;
+        } else if (*(u32 *)(slot + 0x44) != 0x20050201U) {
+            hdrOk = 0;
+        } else {
+            hdrOk = 1;
+        }
+        if (hdrOk != 0) {
+            if (*(u32 *)(slot + 0x50) == 0x12345678U) {
+                chkOk = 1;
+            } else if (*(u8 *)(slot + 0x60) == 1) {
+                chkOk = 1;
+            } else {
+                void *path;
+                path = lbl_8027E980 + 0x14E;
+                buf = fn_800C4638(0x400, path, 0);
+                fn_800EC1F8();
+                sum = fn_800EC0A4(buf, slot + 0x70, *(s32 *)(slot + 0x4C) - 0x70);
+                fn_800C4588(buf);
+                if (*(u32 *)(slot + 0x50) != sum) {
+                    chkOk = 0;
+                } else {
+                    chkOk = 1;
+                }
+            }
+            if (chkOk == 0) {
+                memset(slot, 0, 0x2000);
+                fn_800E9B80(slot, 0x2000, (s32)((u8 *)slot - (u8 *)lbl_803682F0), -1, self);
+                return 1;
+            }
+        }
+        i += 1;
+        off += 0x6000;
+    } while (i < 2);
+
+    return 0;
+}
 extern u8 lbl_80299F1C[];
 void fn_801E00EC(void *arg0, void *arg1) { void fn_8000CAA0(void *); extern u8 lbl_80299F1C[]; (void)arg0; (void)arg1; fn_8000CAA0(lbl_80299F1C); }
 
