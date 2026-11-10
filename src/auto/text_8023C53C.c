@@ -3659,6 +3659,94 @@ void fn_8025EEE8(s32 arg0, s32 arg1, s32 arg2) {
     *(u32 *) (temp_r4 + ((arg0 & 0xFF) << 2)) |= arg2;
 }
 
+void fn_8025F0EC(u8 arg0, u8 arg1) {
+    extern u8 lbl_8035D318[];
+    extern u8 lbl_80361618[];
+    extern u8 lbl_8034C110[];
+    extern s32 lbl_803689A8;
+
+    u8 *cell;
+    u16 code;
+    u8 *row;
+    u8 val;
+    u32 *wp;
+    u32 i;
+    s32 off;
+    u8 *p;
+    u8 a0;
+    u8 a1;
+    s32 mul90;
+    s32 mul9;
+
+    cell = lbl_8035D318 + (arg0 * 0x860) + (arg1 * 0x86);
+    code = (u16)((cell[0x65] << 8) | cell[0x64]);
+    switch ((s32)code) {
+    case 0:
+        mul90 = arg0 * 0x90;
+        mul9 = arg1 * 9;
+        row = lbl_80361618 + mul90;
+        val = row[mul9];
+        if (val != 0) {
+            val = (u8)(val - 1);
+        }
+        row[mul9] = val;
+        a0 = arg0;
+        a1 = arg1;
+        i = 0;
+        off = 0;
+        while (i < lbl_8034C110[0x210]) {
+            p = (u8 *)lbl_803689A8 + off;
+            if (a0 == p[0x122] && a1 == p[0x121]) {
+                p[0x1DB] = val;
+                *((u8 *)lbl_803689A8 + (off + 0x1DA)) = val;
+            }
+            off += 0x458;
+            i += 1;
+        }
+        return;
+    case 0x7F7D:
+        mul90 = arg0 * 0x90;
+        mul9 = arg1 * 9;
+        wp = (u32 *)(lbl_80361618 + mul90 + mul9 + 1);
+        if (*wp != 0) {
+            *wp = *wp - 1;
+        }
+        a0 = arg0;
+        a1 = arg1;
+        i = 0;
+        off = 0;
+        while (i < lbl_8034C110[0x210]) {
+            p = (u8 *)lbl_803689A8 + off;
+            if (a0 == p[0x122] && a1 == p[0x121]) {
+                *(u32 *)(p + 0x1E0) = *(u32 *)(lbl_80361618 + mul90 + mul9 + 1);
+            }
+            off += 0x458;
+            i += 1;
+        }
+        return;
+    case 0x7F7E:
+        mul90 = arg0 * 0x90;
+        mul9 = arg1 * 9;
+        wp = (u32 *)(lbl_80361618 + mul90 + mul9 + 5);
+        if (*wp != 0) {
+            *wp = *wp - 1;
+        }
+        a0 = arg0;
+        a1 = arg1;
+        i = 0;
+        off = 0;
+        while (i < lbl_8034C110[0x210]) {
+            p = (u8 *)lbl_803689A8 + off;
+            if (a0 == p[0x122] && a1 == p[0x121]) {
+                *(u32 *)(p + 0x1E4) = *(u32 *)(lbl_80361618 + mul90 + mul9 + 5);
+            }
+            off += 0x458;
+            i += 1;
+        }
+        return;
+    }
+}
+
 void *fn_8025FF28(u8 arg0, u8 arg1) {
     extern u16 lbl_80363C18;
     extern u16 lbl_80361618;
@@ -3961,24 +4049,24 @@ void fn_802609EC(struct unit* param_1)
 
 s32 fn_80260A34(void *arg0)
 {
+    s32 fn_802601EC(void *, void *, u8, u8);
     u32 flags;
 
     flags = *(u32 *)((u8 *)arg0 + 0x220);
 
-    if ((flags & 0x4000) != 0) {
+    if ((flags & 0x4000) == 0) {
         return *(u16 *)((u8 *)arg0 + 0x43C);
     }
 
     flags &= ~0x4000;
     *(u32 *)((u8 *)arg0 + 0x220) = flags;
 
-    fn_802601EC(
+    return fn_802601EC(
+        arg0,
         (u8 *)arg0 + 0x41C,
         *(u8 *)((u8 *)arg0 + 0x121),
         *(u8 *)((u8 *)arg0 + 0x122)
     );
-
-    return 0;
 }
 
 s32 fn_80260A7C(u32 arg0, u32 arg1, u32 arg2, u32 arg3)
