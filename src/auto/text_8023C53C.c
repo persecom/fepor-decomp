@@ -188,7 +188,10 @@ typedef struct SynthVoice {
     u8 pad100[0x11C - 0x100];
     s32 unk11C;              /* 0x11C */
     s32 unk120;              /* 0x120 */
-    u8 pad124[0xEF0 - 0x124];
+    u8 pad124[0xE64 - 0x124];
+    VidList *lists[2];
+    VidList *listE6C;
+    u8 padE70[0xEF0 - 0xE70];
     s32 unkEF0;              /* 0xEF0 */
     s32 unkEF4;              /* 0xEF4 */
     u16 unkEF8;              /* 0xEF8 */
@@ -752,8 +755,8 @@ void fn_80247F94(void *arg0) {
 s32 fn_8024866C(u16 id, s16 volume, s32 arg2, s32 arg3, s32 key, s32 arg5, u8 pan, s32 arg7, u8 a8, u8 a9, u16 a10, u16 a11, s32 a12, u8 a13, u8 a14, s32 a15) {
  s32 fn_802508E0(u16);
  s32 fn_8024800C(s32,s32,u8,s32,s32*);
- s32 fn_802482AC(u16,s16,s32,s32,u8,s32,u8,s32,s32,s32,s32,s32,u8,u8,u8,s32);
- s32 fn_802555A0(u16,u8,s32,s32,u8,s32,u8,s32,s32,s32,s32,s32,u8,u8,u8,s32);
+ s32 fn_802482AC(u16,s16,s32,s32,u8,s32,u8,s32,u8,u8,u16,u16,u8,u8,u8,s32);
+ s32 fn_802555A0(u16,u8,s32,s32,u8,s32,u8,s32,u8,u8,u16,u16,u8,u8,u8,s32);
  u32 offset, low; u8 *table; u8 *entry; u8 original; s32 note; s32 flags; s32 value; s32 result; u32 valid; s32 status; u16 sample; s16 v;
  table=(u8*)fn_802508E0(id);
  if(table!=0) {
@@ -1618,6 +1621,44 @@ s32 fn_8025094C(u16 arg0, u16 *arg1)
 
 s32 fn_802509C8(u16 *arg0, u16 *arg1) {
     return *arg0 - *arg1;
+}
+
+int fn_802509D8(int arg0)
+{
+    extern u16 lbl_803596E4;
+    extern u16 lbl_803548B8;
+    extern u16 lbl_80368A08;
+
+    void *fn_802612A0(void *, void *, s32, s32, s32 (*)(void *, void *));
+    s32 fn_802509C8(u16 *, u16 *);
+
+    u8 *entry;
+    void *result;
+    s32 i;
+
+    lbl_803596E4 = arg0;
+
+    entry = (u8 *)&lbl_803548B8;
+    i = 0;
+
+    while (i < lbl_80368A08) {
+        result = fn_802612A0(
+            &lbl_803596E4,
+            *(void **)(entry + 8),
+            *(u16 *)(entry + 2),
+            0xA,
+            (s32 (*)(void *, void *))fn_802509C8
+        );
+
+        if (result != 0) {
+            return (int)result;
+        }
+
+        entry += 0xC;
+        i++;
+    }
+
+    return 0;
 }
 
 void fn_80250A74(s32 arg0, s32 arg1) {
