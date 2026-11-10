@@ -719,18 +719,17 @@ void fn_8014CF10(s8* arg0, s8 arg1, s8 arg2) {
     *arg0 = temp + 1;
 }
 
-void fn_8014D204(void* arg0, s8 arg1, s8 arg2) {
-    s8 temp_r0;
-    volatile u8 *temp_r6;
-
-    *(u8*)((uintptr_t)arg0 + 0x544) = 0;
-    temp_r0 = *(s8*)((uintptr_t)arg0 + 0x544);
-    temp_r6 = (volatile u8 *)((uintptr_t)arg0 + (temp_r0 * 2));
-    temp_r6[0x545] = (u8)arg1;
-    temp_r0 = *(s8*)((uintptr_t)arg0 + 0x544);
-    temp_r6 = (volatile u8 *)((uintptr_t)arg0 + (temp_r0 * 2));
-    temp_r6[0x546] = (u8)arg2;
-    *(u8*)((uintptr_t)arg0 + 0x544) = *(u8*)((uintptr_t)arg0 + 0x544) + 1;
+void fn_8014D204(Obj *arg0, s8 arg1, s8 arg2) {
+    arg0->count = 0;
+    {
+        s8 idx = arg0->count;
+        arg0->entries[idx].a = arg1;
+    }
+    {
+        s8 idx = arg0->count;
+        arg0->entries[idx].b = arg2;
+    }
+    arg0->count = arg0->count + 1;
 }
 
 void fn_8014D244(s32 arg0, u8 arg1, s8 arg2) {
