@@ -1217,7 +1217,10 @@ s32 fn_801F8A18(s32 arg0) {
         return -1;
     }
     
-    fn_801FB220((void **)((s32)temp_r31 + 0x34), (s32 *)((s32)temp_r31 + 0x30), (void **)((u32)temp_r31 + 0xC), (void **)((u32)temp_r31 + 0xC));
+    {
+        void fn_801FB220(void **, s32 *, void **, void **);
+        fn_801FB220((void **)((s32)temp_r31 + 0x34), (s32 *)((s32)temp_r31 + 0x30), (void **)((u32)temp_r31 + 0xC), (void **)((u32)temp_r31 + 0xC));
+    }
     return 0;
 }
 
