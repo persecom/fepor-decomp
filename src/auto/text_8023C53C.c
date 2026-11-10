@@ -99,10 +99,12 @@ typedef struct StreamVoice {
 typedef struct StreamState {
     u8 pad0[0x124];
     StreamSeqChan seqChans[72]; /* 0x124 */
-    StreamChannel channels[68]; /* 0x364 */
+    StreamChannel channels[67]; /* 0x364 */
+    u8 padE70[0x94];
     StreamMsg msgs[64]; /* 0xF04 */
+    u8 padF64[0x40];
     u8 *voices; /* 0x1504 */
-    u8 pad1508[0x153E - 0x1508];
+    u8 pad1508[0x36];
     StreamVoice voiceFlags[1]; /* 0x153E */
 } StreamState;
 
@@ -2300,8 +2302,8 @@ int fn_80256DD8(int arg0) {
             fn_802618E4(arg0);
         }
         off = arg0 * 0x458;
-        tbl = (u8 *)lbl_803689A8;
-        *(s32 *)(tbl + off + 0xF4) = arg0;
+        voice = (u8 *)lbl_803689A8 + off;
+        *(s32 *)(voice + 0xF4) = arg0;
         voice = (u8 *)lbl_803689A8 + off;
         fn_802554A4(voice, 2);
 
@@ -2309,33 +2311,38 @@ int fn_80256DD8(int arg0) {
         node = base + 0x800;
         node += ((u8)id << 2);
         if (*(u16 *)(node + 2) == 1) {
-            prev = node[0];
-            if (prev != 0xFF) {
+            if (node[0] != 0xFF) {
+                prev = node[0];
                 tbl = base + 0x800;
                 tbl += (prev << 2);
                 tbl[1] = node[1];
             } else {
+                next = node[1];
                 tbl = base + 0x900;
-                tbl[voice[0x10C]] = node[1];
+                tbl += voice[0x10C];
+                *tbl = next;
             }
-            next = node[1];
-            if (next != 0xFF) {
+            if (node[1] != 0xFF) {
+                next = node[1];
+                prev = node[0];
                 tbl = base + 0x800;
-                tbl[next << 2] = node[0];
+                tbl += next << 2;
+                *tbl = prev;
             } else if (node[0] == 0xFF) {
                 n2 = base + 0xA00;
                 n2 += (voice[0x10C] << 2);
-                p2 = *(u16 *)(n2 + 2);
-                if (p2 != 0xFFFF) {
+                if (*(u16 *)(n2 + 2) != 0xFFFF) {
+                    p2 = *(u16 *)(n2 + 2);
                     tbl = base + 0xA00;
-                    *(u16 *)(tbl + (p2 << 2)) = *(u16 *)n2;
+                    tbl += p2 << 2;
+                    *(u16 *)tbl = *(u16 *)n2;
                 } else {
                     lbl_80368A4C = *(u16 *)n2;
                 }
-                n2v = *(u16 *)n2;
-                if (n2v != 0xFFFF) {
+                if (*(u16 *)n2 != 0xFFFF) {
+                    n2v = *(u16 *)n2;
                     tbl = base + 0xA00;
-                    tbl += (n2v << 2);
+                    tbl += n2v << 2;
                     *(u16 *)(tbl + 2) = *(u16 *)(n2 + 2);
                 }
             }
@@ -2369,7 +2376,7 @@ int fn_80256DD8(int arg0) {
             }
         }
         *(s32 *)(voice + 0xF4) = -1;
-        ((u8 *)lbl_803689A8)[off + 0x11C] = 0;
+        ((u8 *)lbl_803689A8 + off)[0x11C] = 0;
     }
     return 0;
 }
