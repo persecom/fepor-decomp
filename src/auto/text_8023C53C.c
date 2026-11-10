@@ -3335,18 +3335,16 @@ s32 fn_802608CC(void *arg0) {
     return fn_802601EC(arg0, (u8 *)arg0 + 0x368, *(u8 *)((u8 *)arg0 + 0x121), *(u8 *)((u8 *)arg0 + 0x122));
 }
 
-u16 fn_80260914(void *arg0) {
-    u32 temp_r4;
-    u16 result;
+s32 fn_80260914(void *arg0) {
+    s32 fn_802601EC(void *, void *, u8, u8);
+    s32 temp_r4;
 
-    temp_r4 = *(u32 *)((char *)arg0 + 0x220);
+    temp_r4 = *(s32 *)((u8 *)arg0 + 0x220);
     if (!(temp_r4 & 0x400)) {
-        return *(u16 *)((char *)arg0 + 0x3AC);
+        return *(u16 *)((u8 *)arg0 + 0x3AC);
     }
-    *(u32 *)((char *)arg0 + 0x220) = (u32)(temp_r4 & 0xFFFFFBFF);
-
-    result = fn_802601EC((char *)arg0 + 0x38C, *(u8 *)((char *)arg0 + 0x121), *(u8 *)((char *)arg0 + 0x122));
-    return result;
+    *(s32 *)((u8 *)arg0 + 0x220) = temp_r4 & 0xFFFFFBFF;
+    return fn_802601EC(arg0, (u8 *)arg0 + 0x38C, *(u8 *)((u8 *)arg0 + 0x121), *(u8 *)((u8 *)arg0 + 0x122));
 }
 
 void fn_8026095C(struct unit* param_1, s32 param_2, s32 param_3) {
