@@ -1470,17 +1470,16 @@ void fn_80077DA0(void) {
 }
 
 void fn_80077E00(void) {
-    u8 fn_80105BC0(s32, s32);
-    void fn_8000E0E4(void *);
-    extern u32 lbl_802EF4C8;
+    extern u32 lbl_802EF4C8[];
     extern u8 lbl_8026C0B8[];
-    
-    s32 r3_val = *(u32*)((u8*)&lbl_802EF4C8 + 0x1BC);
-    if (fn_80105BC0(r3_val, 0x16) != 0) {
-        fn_8000E0E4((void*)((u8*)&lbl_8026C0B8 + 0x464));
-        return;
+    u8 fn_80105BC0(void *, s32);
+    u8 *fn_8000E0E4(u8 *);
+
+    if (fn_80105BC0((void *)(lbl_802EF4C8[0] + 0x1BC), 0x16) != 0) {
+        fn_8000E0E4(lbl_8026C0B8 + 0x464);
+    } else {
+        fn_8000E0E4(lbl_8026C0B8 + 0x46E);
     }
-    fn_8000E0E4((void*)((u8*)&lbl_8026C0B8 + 0x46E));
 }
 
 s32 fn_80077ED0(void) {
