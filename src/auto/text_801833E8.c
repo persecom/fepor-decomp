@@ -5947,6 +5947,18 @@ s32 fn_8019F9B4(s32 arg0, s32 arg1) {
     return 1;
 }
 
+s32 fn_8019FC08(void) {
+    u8 fn_8001772C(void);
+    M2C_UNK fn_8000CAA0(void *, s32);
+    M2C_UNK fn_80013864(void);
+    extern u8 lbl_80297010[];
+    if (fn_8001772C() != 0) {
+        fn_8000CAA0(lbl_80297010, fn_800C0658());
+        fn_80013864();
+    }
+    return 1;
+}
+
 void fn_8019FC4C(s32 arg0) {
     M2C_UNK fn_8000C188(s32);
     u8 fn_8001772C();
