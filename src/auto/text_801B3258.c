@@ -2337,17 +2337,15 @@ void fn_801C7FC0(u32 arg0) {
 }
 
 #pragma cplusplus on
-extern "C" void fn_801C838C(void *arg0) {
+extern "C" void fn_801C838C(Arg801C838C *arg0) {
     void fn_8006EDA0(void *);
     struct Obj {
         virtual void v0(s32) = 0;
     };
     Obj *temp;
-    u32 v;
 
-    v = M2C_FIELD(arg0, u32 *, 0x30);
-    if (v != 0) {
-        fn_8006EDA0((u8 *)arg0 + 0x30);
+    if (arg0->field30 != 0) {
+        fn_8006EDA0(&arg0->field30);
     }
     if (arg0 != NULL) {
         temp = M2C_FIELD(arg0, Obj **, 0x40);
