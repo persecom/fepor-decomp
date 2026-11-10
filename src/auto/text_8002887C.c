@@ -644,69 +644,22 @@ void fn_8002D24C(void *arg0, void *arg1) {
     }
 }
 
-void fn_8002D2B4(void)
-{
-    u32 r31;
-    u32 r4;
-    u32 r3;
-    u32 r0;
-    u32 r5;
-    u32 r6;
-    u32 r7;
-    
-    // Function entry
-    r31 = (u32)r4;
-    
-    // Load r4 from offset 0x190 of r4, and then load r3 from 0x4 of r4.
-    r4 = *(u32*)(r4 + 0x190);
-    r3 = *(u32*)(r4 + 0x4);
+void fn_8002D2B4(void *arg0) {
+    u8 fn_80015610(s32, s32);
+    u8 fn_80105BC0(void *, s32);
+    void fn_8002F6E8(void *, u8, u8, u8, u8);
+    extern u8 lbl_802EF4E0[];
 
-    // Call fn_80015610 with r3 and r4
-    r0 = fn_80015610(r3, r4);
-
-    // Check result and branch if not equal to 0x1  
-    r0 = (r0 & 0xFFFFFF00) >> 24;
-    if (r0 != 0x1)
+    if (fn_80015610(*(s32 *)((u8 *)*(void **)((u8 *)arg0 + 4) + 0x190), *(s32 *)((u8 *)arg0 + 0x190)) != 1) {
         return;
-
-    // Load parameter with r31 + 0x1bc into r3, load 0x6 into r4 and call fn_80105BC0
-    r3 = r31 + 0x1bc;
-    r4 = 0x6;
-    r0 = fn_80105BC0(r3, r4);
-    
-    // Check result and branch if not equal to 0x1  
-    r0 = (r0 & 0xFFFFFF00) >> 24;
-    if (r0 != 0x1)
+    }
+    if (fn_80105BC0((u8 *)arg0 + 0x1BC, 6) != 1) {
         return;
-
-    // Load parameter with r31 + 0x1bc into r3, load 0x7 into r4 and call fn_80105BC0
-    r3 = r31 + 0x1bc;
-    r4 = 0x7;
-    r0 = fn_80105BC0(r3, r4);
-    
-    // Check result and branch if not equal to 0x1  
-    r0 = (r0 & 0xFFFFFF00) >> 24;
-    if (r0 != 0x1)
+    }
+    if (fn_80105BC0((u8 *)arg0 + 0x1BC, 7) != 1) {
         return;
-
-    // Load data from lbl_802EF4E0
-    r3 = *(u32*)(0x802EF4E0);  // Load address of lbl_802EF4E0
-    
-    // Read bytes from offsets 0x19e and 0x19f in r31 into r4 and r5
-    r4 = *(u8*)((r31 + 0x19e) & 0xFF);
-    r5 = *(u8*)((r31 + 0x19f) & 0xFF);
-    
-    // Read byte from offset 0x198 in r31 into r6
-    r6 = *(u8*)((r31 + 0x198) & 0xFF);
-    
-    // Load 0x0 into r7  
-    r7 = 0x0;
-    
-    // Call fn_8002F6E8 with r3, r4, r5, r6, and r7 
-    r0 = fn_8002F6E8(r3, r4, r5, r6, r7);
-    
-    // Return
-    return;
+    }
+    fn_8002F6E8(lbl_802EF4E0, *(u8 *)((u8 *)arg0 + 0x19E), *(u8 *)((u8 *)arg0 + 0x19F), *(u8 *)((u8 *)arg0 + 0x198), 0);
 }
 
 void fn_8002D33C(void *arg0, s8 arg1, s8 arg2) {
