@@ -6843,9 +6843,9 @@ void fn_800FB96C(s8 arg0, s8 arg1, s8 arg2, s32 arg3, s8 arg4, s8 arg5, s8 arg6,
 void fn_800FB9C0(s8 arg0, s32 arg1, s8 arg2, s8 arg3, s8 arg4, s8 arg5, s8 arg6) {
     extern u8 lbl_802EF4C8[24];
     extern u8 lbl_8032B3C0[544];
-    
+
     lbl_802EF4C8[8] = arg0;
-    lbl_802EF4C8[4] = arg1;
+    *(s32 *)&lbl_802EF4C8[4] = arg1;
     lbl_802EF4C8[0xF] = arg2;
     lbl_802EF4C8[0x10] = arg3;
     lbl_802EF4C8[0xA] = arg4;
