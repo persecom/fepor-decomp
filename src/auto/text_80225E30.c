@@ -274,7 +274,7 @@ void fn_8022695C(void *arg0, s32 arg1) {
     }
 }
 
-int *TRKGetBuffer(s32 arg0) {
+void *TRKGetBuffer(s32 arg0) {
     extern u8 lbl_8033B078[];
     void *ret;
 
