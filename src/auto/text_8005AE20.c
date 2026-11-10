@@ -2061,12 +2061,12 @@ void fn_80068070(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
 }
 
 void fn_800680AC(u16 arg0, u16 arg1, u16 arg2, u16 arg3) {
-    extern u8 *lbl_803672F8;
+    extern void *lbl_803672F8;
 
-    *(u16 *)(lbl_803672F8 + 0x1C) = arg0;
-    *(u16 *)(lbl_803672F8 + 0x1E) = arg1;
-    *(u16 *)(lbl_803672F8 + 0x20) = arg2;
-    *(u16 *)(lbl_803672F8 + 0x22) = arg3;
+    *(u16 *)((u8 *)lbl_803672F8 + 0x1C) = arg0;
+    *(u16 *)((u8 *)lbl_803672F8 + 0x1E) = arg1;
+    *(u16 *)((u8 *)lbl_803672F8 + 0x20) = arg2;
+    *(u16 *)((u8 *)lbl_803672F8 + 0x22) = arg3;
 }
 
 s32 fn_80068124(char *name) {
