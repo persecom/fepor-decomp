@@ -4216,66 +4216,59 @@ s32 fn_801C98EC(void) {
     return 0;
 }
 
-s32 fn_801C9940(void)
-{
+#pragma use_lmw_stmw on
+#pragma global_optimizer off
+s32 fn_801C9940(void) {
+    void *fn_800DC3B0(void *);
+    s32 fn_8011C9E4(s32);
+    s32 fn_8011C984(s32, s32);
+    void *fn_801CAF2C(void *, s32);
+    void *fn_801CAF8C(void *);
+    void fn_800E8FCC(f32 *, void *);
+    void fn_800DBB74(f32 *, void *);
+    f32 fn_800E9018(void *);
     extern void *lbl_803682B8;
-    extern void *fn_8011C984(void *arg0, u32 arg1);
-    extern s32 fn_801CAF2C(void *arg0, s32 arg1);
-    extern void *fn_801CAF8C(void *arg0);
-    extern void fn_800E8FCC(f32 *arg0, void *arg1);
-    extern void fn_800DBB74(f32 *arg0, void *arg1);
-    extern f32 fn_800E9018(void *arg0);
 
-    s32 index;
-    void *object;
-    void *result;
-    f32 values1[3];
-    f32 values2[3];
-    f32 x1;
-    f32 y1;
     f32 z1;
-    f32 x2;
-    f32 y2;
+    f32 y1;
+    f32 x1;
     f32 z2;
-    f32 value;
-    u32 tableValue;
+    f32 y2;
+    f32 x2;
+    void *result;
+    void *obj;
+    s32 index;
+    f32 sp14[3];
+    f32 sp8[3];
+    f32 f1;
+    u32 slot;
 
-    index = fn_800DC3B0(*(void **)((u8 *)lbl_803682B8 + 0x438));
-
-    object = *(void **)((u8 *)lbl_803682B8 + 0x430);
-    object = fn_8011C984(object, fn_8011C9E4(object));
-
-    result = (void *)fn_801CAF2C(object, index);
-
-    object = fn_801CAF8C(object);
-
-    fn_800E8FCC(values1, object);
-    x1 = values1[0];
-    y1 = values1[1];
-    z1 = values1[2];
-
-    fn_800DBB74(values2, object);
-    x2 = values2[0];
-    y2 = values2[1];
-    z2 = values2[2];
-
-    value = fn_800E9018(object);
-
-    tableValue =
-        *(u32 *)((u8 *)*(void **)((u8 *)lbl_803682B8 + 0x42C) + index * 4);
-
+    index = (s32)fn_800DC3B0(*(void **)((u8 *)lbl_803682B8 + 0x438));
+    obj = lbl_803682B8;
+    obj = (void *)fn_8011C984(*(s32 *)((u8 *)obj + 0x430), fn_8011C9E4(*(s32 *)((u8 *)obj + 0x430)));
+    result = fn_801CAF2C(obj, index);
+    fn_800E8FCC(sp14, obj = fn_801CAF8C(obj));
+    x1 = sp14[0];
+    y1 = sp14[1];
+    z1 = sp14[2];
+    fn_800DBB74(sp8, obj);
+    x2 = sp8[0];
+    y2 = sp8[1];
+    z2 = sp8[2];
+    f1 = fn_800E9018(obj);
+    slot = *(u32 *)((u8 *)*(void **)((u8 *)lbl_803682B8 + 0x42C) + (index << 2));
     *(f32 *)((u8 *)result + 0x00) = x1;
     *(f32 *)((u8 *)result + 0x04) = y1;
     *(f32 *)((u8 *)result + 0x08) = z1;
     *(f32 *)((u8 *)result + 0x0C) = x2;
     *(f32 *)((u8 *)result + 0x10) = y2;
     *(f32 *)((u8 *)result + 0x14) = z2;
-    *(f32 *)((u8 *)result + 0x18) = value;
-    *(u32 *)((u8 *)result + 0x1C) = tableValue;
-
+    *(f32 *)((u8 *)result + 0x18) = f1;
+    *(u32 *)((u8 *)result + 0x1C) = slot;
     return 0;
 }
-
+#pragma global_optimizer reset
+#pragma use_lmw_stmw reset
 s32 fn_801C9A88(void) {
     return 0;
 }
