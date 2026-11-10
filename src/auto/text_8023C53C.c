@@ -5,6 +5,8 @@ typedef struct SynthMessageSlots { u8 pad[0xAC]; u32 slots[32]; } SynthMessageSl
 typedef struct SynthMessageQueue { u8 pad[0x444]; u32 slots[4]; } SynthMessageQueue;
 typedef struct SampleKey { s32 data; u16 id; u16 type; u16 ref; u16 pad; } SampleKey;
 typedef struct SoundKeyEntry { u16 id; s8 key; u8 pan; s16 volume; u16 pad; } SoundKeyEntry;
+typedef struct AudioTableRange { u16 count; u16 start; } AudioTableRange;
+typedef struct AudioTableEntry { s32 data; u16 id; u16 ref; } AudioTableEntry;
 typedef s32 Fn80256FF0Arg;
 
 extern u16 lbl_80366F28;
@@ -503,6 +505,56 @@ void fn_80244A84(SynthVoice *sv) {
     sv->state = 2;
 }
 
+#pragma global_optimizer on
+void fn_80244AE8(s32 arg0) {
+ extern SynthVoice *lbl_80368970; extern SynthVoice *lbl_80368974;
+ extern SynthVoice lbl_8033F990[]; extern VidList *lbl_80368964;
+ void fn_80257224(s32);
+ u32 id, vid; SynthVoice *p, *sv; VidList *tail; u32 i; VidList *node; SynthVoice *walk;
+ vid=arg0&0x7FFFFFFF;
+ for(p=lbl_80368974;p!=NULL;p=p->next) {
+  if(p->vid==vid) {id=p->id|(arg0&0x80000000);goto found;}
+ }
+ for(p=lbl_80368970;p!=NULL;p=p->next) {
+  if(p->vid==vid) {id=p->id|(arg0&0x80000000);goto found;}
+ }
+ id=-1;
+found:
+ if((u32)(id+0x10000)!=0xFFFF) {
+  if(!(id&0x80000000)) {
+   sv=&lbl_8033F990[id];
+   if(sv->state==1) {
+    if(sv->prev!=NULL) sv->prev->next=sv->next;
+    else lbl_80368974=sv->next;
+    if(sv->next!=NULL) sv->next->prev=sv->prev;
+    sv->next=lbl_80368970;
+    if(lbl_80368970!=NULL) lbl_80368970->prev=sv;
+    sv->prev=NULL; lbl_80368970=sv; sv->state=2;
+    for(i=0,walk=sv;i<2;i++,walk=(SynthVoice*)((u8*)walk+4)) {
+     for(node=walk->lists[0];node!=NULL;node=node->next) fn_80257224(node->vid);
+    }
+    for(node=sv->listE6C;node!=NULL;node=node->next) fn_80257224(node->vid);
+    for(i=0,walk=sv;i<2;i++,walk=(SynthVoice*)((u8*)walk+4)) {
+     tail=walk->lists[0];
+     if(tail!=NULL) {
+      while(tail->next!=NULL) tail=tail->next;
+      if(lbl_80368964!=NULL) {tail->next=lbl_80368964;lbl_80368964->prev=tail;}
+      lbl_80368964=walk->lists[0]; walk->lists[0]=NULL;
+     }
+    }
+    tail=sv->listE6C;
+    if(tail!=NULL) {
+     while(tail->next!=NULL) tail=tail->next;
+     if(lbl_80368964!=NULL) {tail->next=lbl_80368964;lbl_80368964->prev=tail;}
+     lbl_80368964=sv->listE6C;sv->listE6C=NULL;
+    }
+   }
+  } else {
+   sv=&lbl_8033F990[id&0x7FFFFFFF];
+   if(sv->state!=0) sv->unkEFA|=8;
+  }
+ }
+}
 void fn_80245014(u16 arg0) {
     extern void *lbl_80368970;
     extern void *lbl_80368974;
@@ -1752,6 +1804,69 @@ void fn_80251A44(SynthVoice *sv, u32 *arg1) {
     M2C_FIELD(sv, u32 *, 0x118) |= 0x100;
 }
 
+void fn_80251B70(void *sv, u32 *arg1) {
+    s32 fn_80250884(u16);
+    s32 fn_80257940(s32);
+    void fn_80257C04(void *);
+    extern f32 lbl_8036C244;
+    extern f32 lbl_8036C248;
+    extern f64 lbl_8036C250;
+    extern f64 lbl_8036C258;
+    extern u8 lbl_8029FB7C[];
+
+    u8 *data;
+    s16 pitch;
+    s32 v0;
+    s32 v4;
+    s32 vC;
+    s32 v10;
+    u16 h8;
+    u16 hA;
+    u32 idx;
+    u8 *p;
+
+    data = (u8 *)fn_80250884((u16)(arg1[0] >> 8));
+    if (data != NULL) {
+        pitch = (s8)arg1[1] << 8;
+        *(s16 *)((u8 *)sv + 0x210) = pitch;
+        pitch = *(s16 *)((u8 *)sv + 0x210);
+        if (pitch >= 0) {
+            *(s16 *)((u8 *)sv + 0x210) = pitch + ((((s8)(arg1[1] >> 8)) << 8) / 100);
+        } else {
+            *(s16 *)((u8 *)sv + 0x210) = pitch - ((((s8)(arg1[1] >> 8)) << 8) / 100);
+        }
+
+        p = data;
+        vC = p[0xC] | (p[0xD] << 8) | (p[0xE] << 16) | (p[0xF] << 24);
+        v0 = p[0x0] | (p[0x1] << 8) | (p[0x2] << 16) | (p[0x3] << 24);
+        h8 = (u16)((*(u16 *)(p + 8) >> 8) | (*(u16 *)(p + 8) << 8));
+        v4 = p[0x4] | (p[0x5] << 8) | (p[0x6] << 16) | (p[0x7] << 24);
+        hA = (u16)((*(u16 *)(p + 0xA) >> 8) | (*(u16 *)(p + 0xA) << 8));
+        v10 = p[0x10] | (p[0x11] << 8) | (p[0x12] << 16) | (p[0x13] << 24);
+
+        if ((u32)(vC + 0x80000000) != 0) {
+            v0 += (s32)(lbl_8036C244 * (f32)*(u32 *)((u8 *)sv + 0x15C) * (f32)vC);
+        }
+        if ((u32)(v10 + 0x80000000) != 0) {
+            v4 += (s32)(lbl_8036C248 * (f32)*(u8 *)((u8 *)sv + 0x131) * (f32)v10);
+        }
+
+        *(u8 *)((u8 *)sv + 0x1E8) = 1;
+        *(u8 *)((u8 *)sv + 0x20E) = 0;
+        *(s32 *)((u8 *)sv + 0x1FC) = fn_80257940(v0);
+        *(s32 *)((u8 *)sv + 0x200) = fn_80257940(v4);
+
+        idx = (h8 >> 2) & 0x3FFF;
+        if (idx > 0x3FF) {
+            idx = 0x3FF;
+        }
+        *(s16 *)((u8 *)sv + 0x204) = 0xC1 - lbl_8029FB7C[idx];
+        *(u32 *)((u8 *)sv + 0x208) = hA;
+        fn_80257C04((u8 *)sv + 0x1E8);
+        *(u32 *)((u8 *)sv + 0x114) |= 0x200;
+    }
+}
+
 void fn_80251DEC(Voice *arg0, u32 *arg1) {
     u32 time;
     s32 delta;
@@ -1999,7 +2114,7 @@ void fn_80253860(s32 arg0, u32 *arg1, u8 op) {
     } else {
         idx = b0 & 0x1F;
         if (idx < 16) {
-            v1 = *(s32*)((u8*)arg0 + idx * 4 + 0xAC);
+            v1 = ((s32*)arg0)[idx + 0x2B];
         } else {
             v1 = lbl_8034CB74[idx - 16];
         }
@@ -2009,13 +2124,13 @@ void fn_80253860(s32 arg0, u32 *arg1, u8 op) {
     if (op == 4) {
         rhs = (s16)(arg1[1] >> 8);
     } else {
+        b1 = (arg1[1] >> 16) & 0xFF;
         if ((arg1[1] >> 8) & 0xFF) {
             raw = fn_80260F18(arg0);
         } else {
-            b1 = (arg1[1] >> 16) & 0xFF;
             idx = b1 & 0x1F;
             if (idx < 16) {
-                raw = *(s32*)((u8*)arg0 + idx * 4 + 0xAC);
+                raw = ((s32*)arg0)[idx + 0x2B];
             } else {
                 raw = lbl_8034CB74[idx - 16];
             }
@@ -2051,7 +2166,7 @@ void fn_80253860(s32 arg0, u32 *arg1, u8 op) {
         idx = b2 & 0x1F;
         c = res < -0x8000 ? -0x8000 : (res > 0x7FFF ? 0x7FFF : res);
         if (idx < 16) {
-            *(s32*)((u8*)arg0 + idx * 4 + 0xAC) = (s16)c;
+            ((s32*)arg0)[idx + 0x2B] = (s16)c;
         } else {
             lbl_8034CB74[idx - 16] = (s16)c;
         }
@@ -3872,114 +3987,117 @@ void fn_80259E40(void *arg0, void *arg1) {
 }
 
 void fn_8025A14C(void **arr, s32 lo, s32 hi) {
-    void **arr_r;
-    s32 hi_r;
-    s32 store;
-    s32 store4;
-    void **sp;
-    s32 idx;
     s32 mid;
+    s32 store;
     s32 j;
     s32 left_hi;
+    s32 right_lo;
+    s32 store4;
     void **p;
     void **q;
+    void **store_ptr;
     void *tmp;
     void *pivot;
     void *t;
+    void **arr_save;
+    s32 hi_save;
 
-    arr_r = arr;
-    hi_r = hi;
-    if (lo >= hi_r) {
+    arr_save = arr;
+    hi_save = hi;
+    if (lo >= hi_save) {
         return;
     }
 
-    mid = lo + hi_r;
+    mid = lo + hi_save;
     mid = (s32)((u32)mid + ((u32)mid >> 31)) >> 1;
-    p = &arr_r[lo];
+    p = &arr_save[lo];
     tmp = *p;
-    *p = arr_r[mid];
-    arr_r[mid] = tmp;
+    *p = arr_save[mid];
+    arr_save[mid] = tmp;
 
     store = lo;
     q = p;
-    for (j = lo + 1; j <= hi_r; j++) {
-        t = arr_r[j];
+    j = lo + 1;
+    for (; j <= hi_save; j++) {
+        t = arr_save[j];
         pivot = *p;
         if (*(u32 *)((u8 *)t + 0x1C) < *(u32 *)((u8 *)pivot + 0x1C)) {
             tmp = q[1];
             store += 1;
             q += 1;
             *q = t;
-            arr_r[j] = tmp;
+            arr_save[j] = tmp;
         }
     }
 
     left_hi = store - 1;
     store4 = store << 2;
-    sp = (void **)((u8 *)arr_r + store4);
+    store_ptr = (void **)((u8 *)arr_save + store4);
     tmp = *p;
-    *p = *sp;
-    *sp = tmp;
+    *p = *store_ptr;
+    *store_ptr = tmp;
 
     if (lo < left_hi) {
         mid = store + lo;
         mid = mid - 1;
         mid = (s32)((u32)mid + ((u32)mid >> 31)) >> 1;
         tmp = *p;
-        *p = arr_r[mid];
-        arr_r[mid] = tmp;
+        *p = arr_save[mid];
+        arr_save[mid] = tmp;
 
-        idx = lo;
+        right_lo = lo;
         q = p;
-        for (j = lo + 1; j <= left_hi; j++) {
-            t = arr_r[j];
+        j = lo + 1;
+        for (; j <= left_hi; j++) {
+            t = arr_save[j];
             pivot = *p;
             if (*(u32 *)((u8 *)t + 0x1C) < *(u32 *)((u8 *)pivot + 0x1C)) {
                 tmp = q[1];
-                idx += 1;
+                right_lo += 1;
                 q += 1;
                 *q = t;
-                arr_r[j] = tmp;
+                arr_save[j] = tmp;
             }
         }
 
         tmp = *p;
-        *p = arr_r[idx];
-        arr_r[idx] = tmp;
+        *p = arr_save[right_lo];
+        arr_save[right_lo] = tmp;
 
-        fn_8025A14C(arr_r, lo, idx - 1);
-        fn_8025A14C(arr_r, idx + 1, store - 1);
+        fn_8025A14C(arr_save, lo, right_lo - 1);
+        fn_8025A14C(arr_save, right_lo + 1, store - 1);
     }
 
-    idx = store + 1;
-    if (idx < hi_r) {
-        p = sp;
-        mid = store + hi_r;
+    right_lo = store + 1;
+    if (right_lo < hi_save) {
+        p = store_ptr;
+        mid = store + hi_save;
         mid = mid + 1;
         mid = (s32)((u32)mid + ((u32)mid >> 31)) >> 1;
         tmp = p[1];
-        p[1] = arr_r[mid];
-        arr_r[mid] = tmp;
+        p[1] = arr_save[mid];
+        arr_save[mid] = tmp;
 
-        q = &arr_r[idx];
-        for (j = store + 2; j <= hi_r; j++) {
-            t = arr_r[j];
+        q = &arr_save[right_lo];
+        j = store + 2;
+        for (; j <= hi_save; j++) {
+            t = arr_save[j];
             pivot = p[1];
             if (*(u32 *)((u8 *)t + 0x1C) < *(u32 *)((u8 *)pivot + 0x1C)) {
                 tmp = q[1];
-                idx += 1;
+                right_lo += 1;
                 q += 1;
                 *q = t;
-                arr_r[j] = tmp;
+                arr_save[j] = tmp;
             }
         }
 
         tmp = p[1];
-        p[1] = arr_r[idx];
-        arr_r[idx] = tmp;
+        p[1] = arr_save[right_lo];
+        arr_save[right_lo] = tmp;
 
-        fn_8025A14C(arr_r, store + 1, idx - 1);
-        fn_8025A14C(arr_r, idx + 1, hi_r);
+        fn_8025A14C(arr_save, store + 1, right_lo - 1);
+        fn_8025A14C(arr_save, right_lo + 1, hi_save);
     }
 }
 
