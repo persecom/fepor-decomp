@@ -840,13 +840,125 @@ void fn_80123CFC(void) {
     fn_801246FC();
 }
 
+void fn_80125130(void *arg0) {
+    void *fn_8000CAF0(void *, void *);
+    void *fn_80040844(void);
+    void *fn_8006D948(void *);
+    void *fn_800C42AC(s32);
+    void *fn_800C42D8(s32);
+    void fn_80147B9C(void *, s32, s32);
+    void fn_8012600C(void *, s32);
+    void fn_802031CC(void *, void *, f32);
+    void *fn_8022C414(void *, void (*)(void *, s32), void *, s32, s32);
+    void DCFlushRange(void *, u32);
+    extern u8 lbl_80274F74[];
+    extern u8 lbl_80290388[];
+    extern f32 lbl_8036A308;
+    extern f32 lbl_8036A30C;
+    extern f32 lbl_8036A364;
+    extern f32 lbl_8036A368;
+    extern f32 lbl_8036A36C;
+    extern f32 lbl_8036A370;
+    extern f32 lbl_8036A374;
+    extern f32 lbl_8036A378;
+    void *arr;
+    void *self;
+    s32 bytes;
+    s32 n;
+    void *obj;
+    void *tmp;
+    s32 i;
+    s32 off;
+    s32 idx;
+    f32 f0;
+    f32 f1;
+
+    self = arg0;
+    switch (M2C_FIELD(self, u8 *, 0x4C)) {
+    case 6:
+        f1 = lbl_8036A364;
+        M2C_FIELD(self, u8 *, 0x48) = 1;
+        f0 = lbl_8036A368;
+        M2C_FIELD(self, f32 *, 0x38) = f1;
+        M2C_FIELD(self, f32 *, 0x3C) = f0;
+        M2C_FIELD(self, f32 *, 0x40) = f1;
+        break;
+    case 5:
+        M2C_FIELD(self, u8 *, 0x48) = 2;
+        f1 = lbl_8036A36C;
+        f0 = lbl_8036A370;
+        M2C_FIELD(self, f32 *, 0x38) = f1;
+        M2C_FIELD(self, f32 *, 0x3C) = f0;
+        M2C_FIELD(self, f32 *, 0x40) = f1;
+        fn_80147B9C(lbl_80274F74 + 0x94, 0x32, 1);
+        break;
+    case 7:
+        M2C_FIELD(self, u8 *, 0x48) = 0x32;
+        f0 = lbl_8036A308;
+        f1 = lbl_8036A374;
+        M2C_FIELD(self, f32 *, 0x38) = f0;
+        f0 = lbl_8036A378;
+        M2C_FIELD(self, f32 *, 0x3C) = f1;
+        M2C_FIELD(self, f32 *, 0x40) = f0;
+        tmp = fn_8000CAF0(lbl_80290388, self);
+        M2C_FIELD(tmp, u8 *, 0x4C) = 1;
+        fn_80147B9C(lbl_80274F74 + 0xA6, 0x32, 1);
+        break;
+    }
+
+    tmp = fn_80040844();
+    M2C_FIELD(self, f32 *, 0x50) = M2C_FIELD(tmp, f32 *, 0x6C);
+    fn_802031CC((u8 *)self + 0x38, (u8 *)self + 0x38, M2C_FIELD(self, f32 *, 0x50));
+    M2C_FIELD(self, f32 *, 0x34) = lbl_8036A30C;
+    M2C_FIELD(self, u8 *, 0x49) = 0xC0;
+    M2C_FIELD(self, void **, 0x54) = fn_8006D948(lbl_80274F74 + 0x84);
+
+    obj = fn_800C42D8(0x1C);
+    if (obj != NULL) {
+        M2C_FIELD(obj, s32 *, 0) = 0;
+        M2C_FIELD(obj, s32 *, 4) = 0;
+        M2C_FIELD(obj, s32 *, 8) = 0;
+        M2C_FIELD(obj, s32 *, 0x14) = 0;
+        M2C_FIELD(obj, s32 *, 0xC) = 0;
+        M2C_FIELD(obj, s32 *, 0x10) = 0;
+    }
+    M2C_FIELD(self, void **, 0x58) = obj;
+
+    arr = M2C_FIELD(self, void **, 0x58);
+    M2C_FIELD(arr, s32 *, 0x18) = 0x7D0;
+    n = M2C_FIELD(arr, s32 *, 0x18);
+    bytes = n << 5;
+    M2C_FIELD(arr, void **, 0) = fn_8022C414(fn_800C42AC(bytes + 0x10), fn_8012600C, NULL, 0x20, n);
+    M2C_FIELD(arr, void **, 4) = fn_800C42AC((M2C_FIELD(arr, s32 *, 0x18) + 1) * 4);
+    DCFlushRange(M2C_FIELD(arr, void **, 0), bytes);
+    DCFlushRange(M2C_FIELD(arr, void **, 4), (M2C_FIELD(arr, s32 *, 0x18) + 1) * 4);
+
+    i = 0;
+    *(s32 *)((u8 *)arr + 0x14) = i;
+    off = i;
+    idx = i;
+    while (i < *(s32 *)((u8 *)arr + 0x18)) {
+        i += 1;
+        *(void **)((u8 *)*(void **)((u8 *)arr + 4) + idx) =
+            (u8 *)*(void **)arr + off;
+        off += 0x20;
+        idx += 4;
+    }
+    *(s32 *)((u8 *)*(void **)((u8 *)arr + 4) + (*(s32 *)((u8 *)arr + 0x18) << 2)) = 0;
+    *(void **)((u8 *)arr + 8) = *(void **)((u8 *)arr + 4);
+    *(s32 *)((u8 *)arr + 0xC) = 0;
+    *(s32 *)((u8 *)arr + 0x10) = 0;
+    M2C_FIELD(self, u8 *, 0x4E) = 1;
+    M2C_FIELD(self, u8 *, 0x4D) = 0x64;
+}
+
 void fn_80125388(void *arg0) {
     typedef struct Node {
         struct Node *next;   // 0x00
         u8 pad0[0x08];
         u8 unkC;             // 0x0C
         u8 pad1[0x07];
-        f32 unk14;           // 0x14
+        f32 unk14;           // 0.14
         f32 unk18;           // 0x18
         f32 unk1C;           // 0x1C
     } Node;
@@ -886,14 +998,15 @@ void fn_80125388(void *arg0) {
     void fn_80066D00(s32);
     Arg0 *a = (Arg0 *)arg0;
     u8 sp8[0x20];
-    u8 sp28[0x40];
+    u8 sp28[0x30];
     s32 temp_r31;
     f32 temp_f31;
     Node *var_r30;
-    f32 t0;
-    f32 t1;
-    f32 t2;
+    f32 vf0;
+    f32 vf1;
+    f32 vf2;
     u8 uc;
+    ListCtrl *lc;
 
     fn_8006ECCC(a->unk54, sp8, 7);
     fn_80222C50(sp8, 0);
@@ -925,22 +1038,27 @@ void fn_80125388(void *arg0) {
     goto loop_test;
 loop_body:
     fn_80220DEC(0xB8, 0, 1);
-    t0 = var_r30->unk14;
-    t1 = var_r30->unk18;
-    t2 = var_r30->unk1C;
+    vf2 = var_r30->unk1C;
+    vf1 = var_r30->unk18;
+    vf0 = var_r30->unk14;
+    GXRegs_8036A30C[-0x2000] = vf0;
+    GXRegs_8036A30C[-0x2000] = vf1;
+    GXRegs_8036A30C[-0x2000] = vf2;
     uc = var_r30->unkC;
-    GXRegs_8036A30C[-0x8000] = t0;
-    GXRegs_8036A30C[-0x8000] = t1;
-    GXRegs_8036A30C[-0x8000] = t2;
-    GXRegs_8036A30C[-0x8000] = 0xFF;
-    GXRegs_8036A30C[-0x8000] = 0xFF;
-    GXRegs_8036A30C[-0x8000] = 0xFF;
-    GXRegs_8036A30C[-0x8000] = uc;
-    GXRegs_8036A30C[-0x8000] = temp_f31;
-    GXRegs_8036A30C[-0x8000] = temp_f31;
+    *(volatile u8 *)&GXRegs_8036A30C[-0x2000] = 0xFF;
+    *(volatile u8 *)&GXRegs_8036A30C[-0x2000] = 0xFF;
+    *(volatile u8 *)&GXRegs_8036A30C[-0x2000] = 0xFF;
+    *(volatile u8 *)&GXRegs_8036A30C[-0x2000] = uc;
+    GXRegs_8036A30C[-0x2000] = temp_f31;
+    GXRegs_8036A30C[-0x2000] = temp_f31;
     goto loop_test;
 loop_test:
-    var_r30 = (var_r30 != NULL) ? var_r30->next : a->unk58->head;
+    lc = a->unk58;
+    if (var_r30 == NULL) {
+        var_r30 = lc->head;
+    } else {
+        var_r30 = var_r30->next;
+    }
     if (var_r30 != NULL) {
         goto loop_body;
     }
