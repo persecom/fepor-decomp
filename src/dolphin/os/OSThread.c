@@ -136,7 +136,9 @@ extern void* RunQueue_80339478[];
 extern s32 RunQueueBits_80368518;
 extern s32 RunQueueHint_8036851C;
 
-void *SelectThread(s32 arg0) {
+
+
+void *SelectThread_8020A2C4(s32 arg0) {
     s32 fn_802059EC(void);
     s32 fn_802059F8(void *);
     void OSSetCurrentContext(void *);
@@ -236,4 +238,3 @@ void *SelectThread(s32 arg0) {
     OSLoadContext(next);
     return next;
 }
-
