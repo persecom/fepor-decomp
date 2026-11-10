@@ -324,9 +324,8 @@ void fn_80163E9C(void *arg0) {
             fn_801475FC(lbl_802776F8 + 8, 0x64);
         }
     }
-}
+  }
 
-#pragma cplusplus reset
 void fn_80164940(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
     void fn_8008AB7C(s32, s32, s32, s32, s32, s32, s32);
     fn_8008AB7C(arg1 + (arg3 >> 1), arg2 + (arg4 >> 1), arg3, 0x18, 0x19, 0x4C, arg5);
