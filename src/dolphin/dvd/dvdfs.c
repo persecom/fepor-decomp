@@ -426,9 +426,9 @@ void fn_8020DCE8(void *block) {
 }
 
 void fn_8020DD7C(void) {
-    M2C_UNK DVDLowWaitCoverClose(M2C_UNK *);
-    extern M2C_UNK cbForStateMotorStopped;
-    DVDLowWaitCoverClose((M2C_UNK *)&cbForStateMotorStopped);
+    void DVDLowWaitCoverClose(void (*)(void));
+    extern void cbForStateMotorStopped(void);
+    DVDLowWaitCoverClose(cbForStateMotorStopped);
 }
 
 void stateBusy_8020E178(void) {
