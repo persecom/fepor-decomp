@@ -126,44 +126,30 @@ s32 fn_801A8688(s32 arg0) {
     return 1;
 }
 
-void fn_801A895C(void *arg0, void **arg1) {
-    M2C_UNK fn_800056CC(void *, u8, M2C_UNK *);
+void fn_801A895C(void *arg0, void *arg1) {
     s32 fn_800927EC(void *);
     u8 fn_80092ADC(void *, u8);
-    extern M2C_UNK lbl_8027B650;
-    s32 temp_cr0_eq;
-    u8 var_r0;
-    u8 var_r0_2;
-    u8 var_r0_3;
-    void *temp_r3;
-    void *temp_r4;
+    s32 fn_800056CC(const char *, ...);
+    extern u8 lbl_8027B650[];
+    void *slot;
+    void *p;
+    u8 kind;
 
-    temp_r4 = *arg1;
-    temp_cr0_eq = temp_r4 == NULL;
-    if (temp_cr0_eq == 0) {
-        if (temp_cr0_eq == 0) {
-            var_r0 = M2C_FIELD(temp_r4, u8 *, 0x12);
-        } else {
-            var_r0 = 0xC;
-        }
-        if (var_r0 != 8) {
-            if (temp_r4 != NULL) {
-                var_r0_2 = M2C_FIELD(temp_r4, u8 *, 0x12);
-            } else {
-                var_r0_2 = 0xC;
-            }
-            if (var_r0_2 != 9) {
-                M2C_FIELD(arg0, u8 *, 0x2C6) = (u8) (M2C_FIELD(arg0, u8 *, 0x2C6) | fn_800927EC(arg0));
-                temp_r3 = *arg1;
-                if (temp_r3 != NULL) {
-                    var_r0_3 = M2C_FIELD(temp_r3, u8 *, 0x12);
-                } else {
-                    var_r0_3 = 0xC;
-                }
-                fn_800056CC(&lbl_8027B650 + 0x16A, fn_80092ADC(arg0, var_r0_3), &lbl_8027B650);
-            }
-        }
+    slot = arg1;
+    if ((arg1 = *(void **)arg1) == NULL) {
+        return;
     }
+    kind = (arg1 != NULL) ? *(u8 *)((u8 *)arg1 + 0x12) : 0xC;
+    if (kind == 8) {
+        return;
+    }
+    kind = (arg1 != NULL) ? *(u8 *)((u8 *)arg1 + 0x12) : 0xC;
+    if (kind == 9) {
+        return;
+    }
+    *(u8 *)((u8 *)arg0 + 0x2C6) |= fn_800927EC(arg0);
+    fn_800056CC((const char *)(lbl_8027B650 + 0x16A),
+                fn_80092ADC(arg0, ((p = *(void **)slot) != NULL) ? *(u8 *)((u8 *)p + 0x12) : 0xC));
 }
 
 extern u8 lbl_802EFDB8[104];
@@ -763,7 +749,7 @@ void fn_801AB358(u8 *arg0) {
 
 void fn_801ACF4C(void *arg0) {
     extern u8 lbl_80368220;
-    extern u16 lbl_80368224[];
+    extern u16 lbl_80368224;
     extern f32 lbl_8036AFA0;
     extern f32 lbl_8036B028;
     extern u8 lbl_802972C0[];
@@ -774,39 +760,43 @@ void fn_801ACF4C(void *arg0) {
     extern void fn_801ADD58;
     
     s32 var_r30;
-    f32 temp_f2;
     f32 temp_f3;
-    s32 temp_r4;
+    f32 var_f1;
+    f32 var_f2;
     u16 *temp_r4_ptr;
+    s32 temp_r4;
     
-    if (lbl_80368220 == 0) {
+    if ((s8) lbl_80368220 == 0) {
         lbl_80368220 = 1;
     }
-    temp_r4_ptr = lbl_80368224;
-    temp_r4_ptr[0] = 0x30;
+    temp_r4_ptr = &lbl_80368224;
+    lbl_80368224 = 0x30;
     temp_r4_ptr[1] = 0x80;
     temp_r4_ptr[2] = 0x208;
     temp_r4_ptr[3] = 0xFE;
-    temp_f2 = *(f32*)((char*)arg0 + 0x38);
-    if (temp_f2 > lbl_8036AFA0) {
-        *(f32*)((char*)arg0 + 0x38) = temp_f2 - lbl_8036B028;
-        if (*(f32*)((char*)arg0 + 0x38) < lbl_8036AFA0) {
-            *(f32*)((char*)arg0 + 0x38) = lbl_8036AFA0;
+    var_f1 = lbl_8036AFA0;
+    var_f2 = *(f32*)((char*)arg0 + 0x38);
+    if (var_f2 > var_f1) {
+        *(f32*)((char*)arg0 + 0x38) = var_f2 - lbl_8036B028;
+        if (*(f32*)((char*)arg0 + 0x38) < var_f1) {
+            *(f32*)((char*)arg0 + 0x38) = var_f1;
         }
     }
-    temp_f2 = *(f32*)((char*)arg0 + 0x38);
-    if (temp_f2 < lbl_8036AFA0) {
-        *(f32*)((char*)arg0 + 0x38) = temp_f2 + lbl_8036B028;
-        if (*(f32*)((char*)arg0 + 0x38) > lbl_8036AFA0) {
-            *(f32*)((char*)arg0 + 0x38) = lbl_8036AFA0;
+    var_f2 = *(f32*)((char*)arg0 + 0x38);
+    var_f1 = lbl_8036AFA0;
+    if (var_f2 < var_f1) {
+        *(f32*)((char*)arg0 + 0x38) = var_f2 + lbl_8036B028;
+        if (*(f32*)((char*)arg0 + 0x38) > var_f1) {
+            *(f32*)((char*)arg0 + 0x38) = var_f1;
         }
     }
     fn_8000A258();
-    fn_80009BC0(&fn_801ADD58, (u16*)lbl_80368224);
+    fn_80009BC0(&fn_801ADD58, &lbl_80368224);
     fn_8000A248();
     var_r30 = 0;
     do {
-        temp_r4 = *(u8*)((char*)arg0 + 0x36) + (var_r30 - 1);
+        temp_r4 = var_r30 - 1;
+        temp_r4 = *(u8*)((char*)arg0 + 0x36) + temp_r4;
         if ((temp_r4 >= 0) && (temp_r4 < *(u8*)((char*)arg0 + 0x31)) && (*(u8*)(lbl_802972C0 + (temp_r4 * 0xC)) == 1)) {
             temp_f3 = *(f32*)((char*)arg0 + 0x38);
             fn_801AB8A8(arg0, lbl_8036B02C, (lbl_8036B030 * temp_f3) + ((lbl_8036B030 * (f32) var_r30) + lbl_8036B01C), temp_f3, lbl_8036B030);
