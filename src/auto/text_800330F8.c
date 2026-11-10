@@ -555,8 +555,9 @@ s32 fn_80036F5C(void *arg0, s32 arg1) {
 }
 
 #pragma peephole off
-u8 fn_80036FC4(u8 *arg0, s32 arg1) {
-    return *(u8 *)(arg0 + arg1 + 0x214);
+u8 fn_80036FC4(s32 arg0, s32 arg1) {
+    s32 p = arg0 + arg1;
+    return *(u8 *)(p + 0x214);
 }
 #pragma peephole on
 void fn_80036FD0(void *arg0, s32 arg1) {
@@ -808,6 +809,101 @@ s32 fn_80037E00(void *arg0) {
     }
     return -1;
 }
+
+#pragma use_lmw_stmw on
+void fn_80037E88(void *arg0, void *arg1) {
+    void fn_8001C4FC(void *, void *);
+    struct Pair { s32 x; s32 y; };
+    void *dst;
+    void *src;
+    void *q;
+    void *p;
+    s32 i;
+
+    dst = arg0;
+    src = arg1;
+    if (src != dst) {
+        *(s32 *)((u8 *)dst + 0x180) = 0;
+        q = src;
+        p = dst;
+        i = 0;
+        *(s32 *)((u8 *)dst + 0x184) = 0;
+        *(s32 *)((u8 *)dst + 0x188) = *(s32 *)((u8 *)src + 0x188);
+        *(s32 *)((u8 *)dst + 0x18C) = *(s32 *)((u8 *)src + 0x18C);
+        *(s32 *)((u8 *)dst + 0x190) = *(s32 *)((u8 *)src + 0x190);
+        *(s32 *)((u8 *)dst + 0x194) = *(s32 *)((u8 *)src + 0x194);
+        *(u8 *)((u8 *)dst + 0x198) = *(u8 *)((u8 *)src + 0x198);
+        *(u8 *)((u8 *)dst + 0x199) = *(u8 *)((u8 *)src + 0x199);
+        *(u8 *)((u8 *)dst + 0x19A) = *(u8 *)((u8 *)src + 0x19A);
+        *(u8 *)((u8 *)dst + 0x19B) = *(u8 *)((u8 *)src + 0x19B);
+        *(u8 *)((u8 *)dst + 0x19C) = *(u8 *)((u8 *)src + 0x19C);
+        *(u8 *)((u8 *)dst + 0x19D) = *(u8 *)((u8 *)src + 0x19D);
+        *(u8 *)((u8 *)dst + 0x19E) = *(u8 *)((u8 *)src + 0x19E);
+        *(u8 *)((u8 *)dst + 0x19F) = *(u8 *)((u8 *)src + 0x19F);
+        *(s32 *)((u8 *)dst + 0x1A0) = *(s32 *)((u8 *)src + 0x1A0);
+        *(u16 *)((u8 *)dst + 0x1A4) = *(u16 *)((u8 *)src + 0x1A4);
+        *(u16 *)((u8 *)dst + 0x1A6) = *(u16 *)((u8 *)src + 0x1A6);
+        *(u8 *)((u8 *)dst + 0x1A8) = *(u8 *)((u8 *)src + 0x1A8);
+        *(u8 *)((u8 *)dst + 0x1A9) = *(u8 *)((u8 *)src + 0x1A9);
+        *(u8 *)((u8 *)dst + 0x1AA) = *(u8 *)((u8 *)src + 0x1AA);
+        *(u8 *)((u8 *)dst + 0x1AB) = *(u8 *)((u8 *)src + 0x1AB);
+        *(u8 *)((u8 *)dst + 0x1AC) = *(u8 *)((u8 *)src + 0x1AC);
+        *(u8 *)((u8 *)dst + 0x1AD) = *(u8 *)((u8 *)src + 0x1AD);
+        *(u8 *)((u8 *)dst + 0x1AE) = *(u8 *)((u8 *)src + 0x1AE);
+        *(u8 *)((u8 *)dst + 0x1AF) = *(u8 *)((u8 *)src + 0x1AF);
+        *(u8 *)((u8 *)dst + 0x1B0) = *(u8 *)((u8 *)src + 0x1B0);
+        *(u8 *)((u8 *)dst + 0x1B1) = *(u8 *)((u8 *)src + 0x1B1);
+        *(u8 *)((u8 *)dst + 0x1B2) = *(u8 *)((u8 *)src + 0x1B2);
+        *(u8 *)((u8 *)dst + 0x1B4) = *(u8 *)((u8 *)src + 0x1B4);
+        *(u8 *)((u8 *)dst + 0x1B5) = *(u8 *)((u8 *)src + 0x1B5);
+        *(u8 *)((u8 *)dst + 0x1B6) = *(u8 *)((u8 *)src + 0x1B6);
+        *(u8 *)((u8 *)dst + 0x1B7) = *(u8 *)((u8 *)src + 0x1B7);
+        *(u8 *)((u8 *)dst + 0x1B8) = *(u8 *)((u8 *)src + 0x1B8);
+        *(u8 *)((u8 *)dst + 0x1B9) = *(u8 *)((u8 *)src + 0x1B9);
+        *(u8 *)((u8 *)dst + 0x1BA) = *(u8 *)((u8 *)src + 0x1BA);
+        *(u8 *)((u8 *)dst + 0x1BB) = *(u8 *)((u8 *)src + 0x1BB);
+        *(struct Pair *)((u8 *)dst + 0x1BC) = *(struct Pair *)((u8 *)src + 0x1BC);
+        *(struct Pair *)((u8 *)dst + 0x1C4) = *(struct Pair *)((u8 *)src + 0x1C4);
+        do {
+            fn_8001C4FC((u8 *)p + 0x1CC, (u8 *)q + 0x1CC);
+            fn_8001C4FC((u8 *)p + 0x1EC, (u8 *)q + 0x1EC);
+            i += 1;
+            q = (u8 *)q + 8;
+            p = (u8 *)p + 8;
+        } while (i < 4);
+        *(struct Pair *)((u8 *)dst + 0x20C) = *(struct Pair *)((u8 *)src + 0x20C);
+        *(u8 *)((u8 *)dst + 0x214) = *(u8 *)((u8 *)src + 0x214);
+        *(u8 *)((u8 *)dst + 0x21E) = *(u8 *)((u8 *)src + 0x21E);
+        *(u8 *)((u8 *)dst + 0x215) = *(u8 *)((u8 *)src + 0x215);
+        *(u8 *)((u8 *)dst + 0x21F) = *(u8 *)((u8 *)src + 0x21F);
+        *(u8 *)((u8 *)dst + 0x216) = *(u8 *)((u8 *)src + 0x216);
+        *(u8 *)((u8 *)dst + 0x220) = *(u8 *)((u8 *)src + 0x220);
+        *(u8 *)((u8 *)dst + 0x217) = *(u8 *)((u8 *)src + 0x217);
+        *(u8 *)((u8 *)dst + 0x221) = *(u8 *)((u8 *)src + 0x221);
+        *(u8 *)((u8 *)dst + 0x218) = *(u8 *)((u8 *)src + 0x218);
+        *(u8 *)((u8 *)dst + 0x222) = *(u8 *)((u8 *)src + 0x222);
+        *(u8 *)((u8 *)dst + 0x219) = *(u8 *)((u8 *)src + 0x219);
+        *(u8 *)((u8 *)dst + 0x223) = *(u8 *)((u8 *)src + 0x223);
+        *(u8 *)((u8 *)dst + 0x21A) = *(u8 *)((u8 *)src + 0x21A);
+        *(u8 *)((u8 *)dst + 0x224) = *(u8 *)((u8 *)src + 0x224);
+        *(u8 *)((u8 *)dst + 0x21B) = *(u8 *)((u8 *)src + 0x21B);
+        *(u8 *)((u8 *)dst + 0x225) = *(u8 *)((u8 *)src + 0x225);
+        *(u8 *)((u8 *)dst + 0x21C) = *(u8 *)((u8 *)src + 0x21C);
+        *(u8 *)((u8 *)dst + 0x226) = *(u8 *)((u8 *)src + 0x226);
+        *(u8 *)((u8 *)dst + 0x21D) = *(u8 *)((u8 *)src + 0x21D);
+        *(u8 *)((u8 *)dst + 0x227) = *(u8 *)((u8 *)src + 0x227);
+        *(u16 *)((u8 *)dst + 0x228) = *(u16 *)((u8 *)src + 0x228);
+        *(u16 *)((u8 *)dst + 0x22A) = *(u16 *)((u8 *)src + 0x22A);
+        *(u16 *)((u8 *)dst + 0x22C) = *(u16 *)((u8 *)src + 0x22C);
+        *(u16 *)((u8 *)dst + 0x22E) = *(u16 *)((u8 *)src + 0x22E);
+        *(u16 *)((u8 *)dst + 0x230) = *(u16 *)((u8 *)src + 0x230);
+        *(u16 *)((u8 *)dst + 0x232) = *(u16 *)((u8 *)src + 0x232);
+        *(u8 *)((u8 *)dst + 0x234) = *(u8 *)((u8 *)src + 0x234);
+        *(u8 *)((u8 *)dst + 0x235) = *(u8 *)((u8 *)src + 0x235);
+        *(u8 *)((u8 *)dst + 0x236) = *(u8 *)((u8 *)src + 0x236);
+    }
+}
+#pragma use_lmw_stmw reset
 
 u8 fn_80038128(void *arg0, void *arg1) {
     s32 var_r5;
@@ -1381,6 +1477,7 @@ s8 fn_8003B548(void *arg0) {
     return var;
 }
 
+#pragma opt_peephole off
 s8 fn_8003B58C(void *arg0) {
     void *p18c;
     s8 lim;
@@ -1394,13 +1491,12 @@ s8 fn_8003B58C(void *arg0) {
     if (var > lim) {
         var = lim;
     }
-    if (0 <= var) {
-        return var;
+    if (var < 0) {
+        return 0;
     }
-    return 0;
+    return var;
 }
-
-#pragma opt_peephole off
+#pragma opt_peephole reset
 s8 fn_8003B5D0(void *arg0) {
     void *p18c;
     s8 lim;
