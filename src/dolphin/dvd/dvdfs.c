@@ -395,6 +395,14 @@ void fn_8020D838(void) {
     fn_8020C1A4(M2C_FIELD(IDShouldBe_8036859C, u8 *, 8), 0xA, fn_8020D86C);
 }
 
+void fn_8020D8D4(void) {
+    extern u16 BB2_80339F40[16];
+    extern void *fn_8020DA08;
+    void fn_8020BAD0(u16 *, s32, s32, void **);
+    
+    fn_8020BAD0(BB2_80339F40, 0x20, 0x420, &fn_8020DA08);
+}
+
 void AlarmHandler(void *alarm, void *context) {
     void DVDReset(void);
     void DCInvalidateRange(void *, u32);
@@ -483,6 +491,16 @@ void fn_8020F3E0(void) {
 
 s32 fn_8020F404(void) {
     return 0x80000000;
+}
+
+int fn_8020F620(void *arg0) {
+    extern u8 lbl_80339FB0[];
+
+    if (arg0 == lbl_80339FB0) {
+        return 1;
+    }
+
+    return fn_8020C370(arg0);
 }
 
 void __DVDClearWaitingQueue(void) {
