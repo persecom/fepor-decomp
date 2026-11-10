@@ -3334,6 +3334,20 @@ void fn_800720C8(s32 unused, void *arg1) {
     }
 }
 
+void fn_80072100(void *arg0, void *arg1) {
+    void *fn_8000C0C0(void *);
+    void fn_8018DBD8(void);
+    void *temp_r31;
+    void *result;
+
+    *(u8 *)((u8 *)lbl_80330708 + 0x51D) = 0xF;
+    temp_r31 = *(void **)((u8 *)arg1 + 0x18);
+    result = fn_8000C0C0(lbl_80286860);
+    if (temp_r31 == result) {
+        fn_8018DBD8();
+    }
+}
+
 s32 fn_80072150(void) {
     extern s8 lbl_80366DE8;
     lbl_80366DE8 = 0;
