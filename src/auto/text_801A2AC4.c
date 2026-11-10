@@ -344,9 +344,11 @@ void fn_801A48A4(s32 arg0) {
 }
 
 void fn_801A4958(void *arg0) {
-    s32 *field_cac = (s32 *)((u8 *)arg0 + 0xCAC);
-    *field_cac = *field_cac | 4;
-    fn_801A601C(arg0, (u8 *)arg0 + 0x2E0, 0);
+    void fn_801A601C(void *, void *, void *, s32);
+    void fn_80034068(void *, s32, s32);
+
+    *(s32 *)((u8 *)arg0 + 0xCAC) |= 4;
+    fn_801A601C(arg0, arg0, (u8 *)arg0 + 0x2E0, 0);
     fn_80034068((u8 *)arg0 + 0x8A0, 0x54, 0);
 }
 
