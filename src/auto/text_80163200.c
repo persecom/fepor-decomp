@@ -5657,6 +5657,19 @@ void fn_8017F040(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
+void fn_8017F098(void *arg0) {
+    f32 fn_80059F64(s32, f32, f32, f32, f32);
+    void fn_8000C188(void *);
+    s32 old;
+
+    old = *(s32 *)((u8 *)arg0 + 0x38);
+    *(s32 *)((u8 *)arg0 + 0x38) = old + 1;
+    *(s32 *)((u8 *)arg0 + 0x44) = (s32)fn_80059F64(old, 255.0f, 0.0f, 5.0f, (f32)*(s32 *)((u8 *)arg0 + 0x38));
+    if (*(s32 *)((u8 *)arg0 + 0x38) == 8) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_8017F120(void *arg0) {
     f32 fn_80059EB8(s32, s32, f32, f32);
     f32 fn_80059F64(f32, f32, f32, f32);
