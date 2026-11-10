@@ -204,6 +204,31 @@ void fn_800291D8(void) {
     // Empty implementation for testing compilation only
 }
 
+void fn_800294E8(void) {
+    void *fn_800AA794(void);
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_80330708[];
+
+    if (fn_800AA794() != NULL) {
+        lbl_80330708[0x51D] = 0xB;
+    } else {
+        lbl_80330708[0x51D] = 9;
+    }
+    if ((s8)lbl_802EF4C8[0x12] != 0) {
+        switch (lbl_80330708[0x51D]) {
+        case 9:
+            lbl_80330708[0x51D] = 0xC;
+            break;
+        case 10:
+            lbl_80330708[0x51D] = 0xD;
+            break;
+        case 11:
+            lbl_80330708[0x51D] = 0xE;
+            break;
+        }
+    }
+}
+
 void fn_80029730(void) {
     void fn_800F214C(void);
     void fn_800F20E0(void);
