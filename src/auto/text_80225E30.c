@@ -97,27 +97,34 @@ void fn_80225F4C(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 8) = -1;
 }
 
-int TRKGetNextEvent(void) {
-    void *fn_802287B0(void *, void *);
+s32 TRKGetNextEvent(void *event) {
+    void fn_802287B0(void *);
     void fn_802287A8(void *);
-    s32 var_r3;
-    
-    var_r3 = 0;
+    void fn_80003488(void *, void *, s32);
+    s32 result;
+    TRKEventQueue *queue;
+    s32 newNext;
+    s32 newCount;
+    u8 *src;
 
-    fn_802287B0(&lbl_8033B048, &lbl_8033B048);
-    if (lbl_8033B048.unk4 > 0) {
-        u32 arg1 = lbl_8033B048.unk8 * 0xC;
-        fn_80003488(0, &lbl_8033B048 + arg1 + 0xC, 0xC);
-        lbl_8033B048.unk8 += 1;
-        lbl_8033B048.unk4 -= 1;
-        if (lbl_8033B048.unk8 == 2) {
-            lbl_8033B048.unk8 = 0;
+    result = 0;
+    fn_802287B0(&lbl_8033B048);
+    queue = &lbl_8033B048;
+    if (queue->unk4 > 0) {
+        src = (u8 *)queue + (queue->unk8 * 0xC);
+        src = (u8 *)((s32)src + 0xC);
+        fn_80003488(event, src, 0xC);
+        newNext = queue->unk8 + 1;
+        newCount = queue->unk4 - 1;
+        queue->unk8 = newNext;
+        queue->unk4 = newCount;
+        if (newNext == 2) {
+            queue->unk8 = 0;
         }
-        var_r3 = 1;
+        result = 1;
     }
-
     fn_802287A8(&lbl_8033B048);
-    return var_r3;
+    return result;
 }
 
 int TRKInitializeEventQueue(void) {
@@ -373,6 +380,11 @@ void usr_put_initialize(void) {
 
 s32 TRKInitializeDispatcher(void) {
     return 0;
+}
+
+s32 TRKTargetStopped(void);
+s32 fn_80227174(void *arg0) {
+    return TRKTargetStopped();
 }
 
 void fn_80227BF0(void) {
@@ -679,16 +691,16 @@ s32 TRKTargetSupportRequest(void) {
         *(u16*) (gTRKCPUState + 0x0C) = spC;
         *(u32*) (gTRKCPUState + 0x14) = sp8;
         break;
-    default:
-        temp_r28 = (s32) (gTRKCPUState + 0x14);
-        var_r30 = fn_80228588(*(u16*) (gTRKCPUState + 0x10), *(u16*) (gTRKCPUState + 0x18), temp_r28, &spC, 1, temp_r27 == 0xD1);
-        if ((spC == 0) && (var_r30 != 0)) {
-            spC = 1;
-        }
-        *(u16*) (gTRKCPUState + 0x0C) = spC;
-        if (temp_r27 == 0xD1) {
-            fn_80228858(*(u16*) (gTRKCPUState + 0x18), *(u32*) (gTRKCPUState + 0x14));
-        }
+            default:
+            temp_r28 = *(s32 *)(gTRKCPUState + 0x14);
+            var_r30 = fn_80228588(*(u32 *)(gTRKCPUState + 0x10), (u8 *)*(u32 *)(gTRKCPUState + 0x18), (u32 *)temp_r28, &spC, 1, temp_r27 == 0xD1);
+            if ((spC == 0) && (var_r30 != 0)) {
+                spC = 1;
+            }
+            *(u32 *)(gTRKCPUState + 0x0C) = spC;
+            if (temp_r27 == 0xD1) {
+                fn_80228858(*(u32 *)(gTRKCPUState + 0x18), *(u32 *)temp_r28);
+            }
         break;
     }
     *(u16*) (gTRKCPUState + 0x80) = *(u16*) (gTRKCPUState + 0x80) + 4;
