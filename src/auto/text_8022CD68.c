@@ -171,6 +171,22 @@ typedef struct {
 } SStructType;
 
 
+void __unregister_fragment(s32 arg0) {
+    extern u8 fragmentinfo_8033DD28[];
+    s32 *p;
+
+    if (arg0 < 0) {
+        return;
+    }
+    if (arg0 >= 1) {
+        return;
+    }
+    p = (s32 *)((u8 *)fragmentinfo_8033DD28 + arg0 * 12);
+    p[0] = 0;
+    p[1] = 0;
+    p[2] = 0;
+}
+
 void fn_8022D084(void *arg1) {
     u32 temp_r5;
     u32 var_r4;
