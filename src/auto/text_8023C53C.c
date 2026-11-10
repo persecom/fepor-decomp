@@ -712,6 +712,8 @@ void fn_8024AD04(u8 arg0, u8 arg1) {
     ptr[0x2D] = arg1;
 }
 
+void fn_80255054(void *arg0);
+
 s32 fn_8024AD2C(s32 arg0, s32 arg1) {
     s32 offset;
     s32 ret;
