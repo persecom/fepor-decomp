@@ -3098,8 +3098,8 @@ void fn_800DF430(void *arg0, void *arg1) {
 }
 
 void fn_800DF44C(f32 farg0, f32 farg1, f32 farg2) {
-    void fn_800DF110(void *, s32, f32, f32, f32, f32, f32, f32);
-    fn_800DF110((void *)0, 0, farg0, farg1, farg2, farg0, farg1, farg2);
+    void fn_800DF110(f32, f32, f32, f32, f32, f32);
+    fn_800DF110(farg0, farg1, farg2, farg0, farg1, farg2);
 }
 
 void fn_800DF478(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
