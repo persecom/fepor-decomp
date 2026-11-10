@@ -1476,7 +1476,7 @@ void fn_800CF588(void *arg0) {
 #pragma use_lmw_stmw on
 #pragma cplusplus on
 extern "C" s32 fn_800D0C5C(void *arg0) {
-#include "../include/fn_800D0C5C_body.inc"
+#include "fn_800D0C5C_body.inc"
 }
 #pragma cplusplus reset
 s32 fn_800D3534(s32 *arg0, s32 arg1) {
@@ -1690,13 +1690,12 @@ void fn_800D6878(void *arg0) {
 }
 
 #pragma use_lmw_stmw on
-#pragma cplusplus on
 u32 *fn_800D6898(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3, void *arg4) {
-    struct Tag { u8 b; } tag;
-    M2C_UNK fn_800CA728(u32 *, char *, char *, void *, struct Tag);
+    M2C_UNK fn_800CA728(u32 *, char *, char *, void *, void *);
     M2C_UNK fn_8022CF78(void);
     M2C_UNK fn_80232058(void *, const char *, ...);
     extern char __files[];
+    u8 sp[8];
     u32 size;
     u32 len;
     char *p;
@@ -1712,10 +1711,10 @@ u32 *fn_800D6898(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3, void *arg4) {
         len = arg3;
     }
     p = (char *)arg1[2] + arg2;
-    fn_800CA728(arg0, p, p + len, arg4, tag);
+    sp[0] = sp[4];
+    fn_800CA728(arg0, p, p + len, arg4, sp);
     return arg0;
 }
-#pragma cplusplus reset
 #pragma use_lmw_stmw reset
 
 void fn_800D6940(void *arg0) {
