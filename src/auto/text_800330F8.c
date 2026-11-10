@@ -34,6 +34,7 @@ typedef struct {
 } UnitStruct;
 
 
+extern s8 *lbl_80366DC0;
 extern void* lbl_803672A8;
 extern f64 lbl_80368EF8;
 extern f32 lbl_80368FC0;
