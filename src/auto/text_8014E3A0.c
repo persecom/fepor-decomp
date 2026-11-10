@@ -783,7 +783,7 @@ void fn_801527B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 }
 
 extern s32 lbl_803680C8;
-extern u8 lbl_80330D18[32];
+extern u8 lbl_80330D18[64];
 extern void *lbl_80367BE8;
 void fn_80152A18(s16 arg0, s16 arg1, s32 arg2) {
     s32 temp_r0 = *(s16*)((char*)lbl_80367BE8 + 0x4) - *(s16*)((char*)lbl_80367BE8 + 0x0);
