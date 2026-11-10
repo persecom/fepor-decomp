@@ -452,9 +452,9 @@ void *fn_8014B2BC(void) {
     return (u16*)((char*)&lbl_80276F00 + 0x126 * 2);
 }
 
-s32 fn_8014B2CC(s32 arg0) {
-    extern u16 *lbl_80367B14;
-    return *(u16*)((u8*)lbl_80367B14 + arg0);
+u8 fn_8014B2CC(void) {
+    extern u8 *lbl_80367B14;
+    return lbl_80367B14[0x7];
 }
 
 void fn_8014B2D8(u8 arg0, u8 arg1) {
