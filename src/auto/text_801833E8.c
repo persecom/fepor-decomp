@@ -6514,8 +6514,9 @@ void fn_801A25C4(void) {
 s32 fn_801A25FC(s8 arg0) {
     void *fn_8000C0C0(void *);
     void *fn_8000CAF0(void *, s32);
-    s32 fn_800C0658();
+    s32 fn_800C0658(void);
     extern u16 lbl_80296F90[];
+    extern u16 lbl_80330708[];
     void *p;
     void *v;
 
@@ -6535,11 +6536,7 @@ s32 fn_801A25FC(s8 arg0) {
         M2C_FIELD(p, s8 *, 0x38) = 0;
         v = p;
     }
-    if (arg0 != 0) {
-        M2C_FIELD(v, s8 *, 0x31) = 1;
-    } else {
-        M2C_FIELD(v, s8 *, 0x31) = 0;
-    }
+    M2C_FIELD(v, s8 *, 0x38) = arg0;
     return 1;
 }
 
