@@ -4015,14 +4015,10 @@ void fn_802634E4(void) {
 s32 fn_80263504(void) {
     extern s32 lbl_80368B1C;
     extern u8 lbl_80368B20;
-    u32 temp_r0;
-    u32 temp_r3;
-    u32 temp_r3_2;
+    s32 x;
 
-    temp_r3_2 = lbl_80368B20 + 2;
-    temp_r3 = temp_r3_2 >> 0x1FU;
-    temp_r0 = (temp_r3_2 << 0x1E) - temp_r3;
-    return lbl_80368B1C + ((u8) (((temp_r0 << 2) | (temp_r0 >> 0x1EU)) + temp_r3) * 0x280);
+    x = lbl_80368B20 + 2;
+    return lbl_80368B1C + (u8)(x % 4) * 0x280;
 }
 
 u32 fn_8026367C(void) {
