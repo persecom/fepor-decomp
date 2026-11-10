@@ -273,6 +273,20 @@ s32 fn_80103D04(void) {
     return 0;
 }
 
+s32 fn_80103D0C(void) {
+    s32 fn_8000BCA4(void *);
+    void fn_800A8400(void);
+    void fn_8000C070(s32, s32);
+    void fn_80132B00(s32, s32);
+    extern char lbl_802734D0[];
+
+    s32 temp_r31 = fn_8000BCA4(lbl_802734D0 + 0xC4);
+    fn_800A8400();
+    fn_8000C070(temp_r31, 0);
+    fn_80132B00(temp_r31, 1);
+    return 6;
+}
+
 void *fn_80103D64(void) {
     extern u16 lbl_802734D0[];
     return (u8 *)lbl_802734D0 + 0x1a4;
