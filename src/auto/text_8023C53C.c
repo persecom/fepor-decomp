@@ -654,7 +654,7 @@ found:
                     goto loop_a;
                 }
                 off = (s32)lbl_8033F990 + off;
-                listpp = (VidList **)(off + 0xE6C);
+                listpp = &((SynthVoice *)off)->listE6C;
                 node = *listpp;
                 goto loop_b_test;
             loop_b:
@@ -1757,6 +1757,45 @@ s32 fn_8024FE1C(u16 arg0, void *arg1, u16 arg2) {
     return 1;
 }
 
+#pragma opt_strength_reduction off
+s32 fn_80250128(u16 id,s32 data) {
+void fn_8026372C(void);void fn_802636F4(void);
+extern AudioTableRange lbl_80354EB8[];
+extern AudioTableEntry lbl_803556B8[];
+extern u16 lbl_80368A0A;
+u16 count;
+s32 start,i,j,index;
+AudioTableRange *range;
+AudioTableEntry *moving;
+u32 bucket;
+fn_8026372C();
+bucket=(id>>6)&1023;
+count=lbl_80354EB8[bucket].count;
+if(count==0){
+lbl_80354EB8[bucket].start=lbl_80368A0A;
+start=lbl_80368A0A;index=lbl_80368A0A;
+}else{
+start=lbl_80354EB8[bucket].start;
+for(i=0;i<(s32)count && lbl_803556B8[start+i].id<id;i++){}
+if(i<(s32)count){
+index=start+i;
+if(id==lbl_803556B8[index].id) {
+lbl_803556B8[index].ref++;
+fn_802636F4();return 0;
+}
+}else index=start+i;
+}
+for(j=0,range=lbl_80354EB8;j<512;range++,j++){
+if((s32)range->start>(s32)start) range->start++;
+}
+for(j=lbl_80368A0A-1,moving=&lbl_803556B8[j];j>=index;j--,moving--) moving[1]=moving[0];
+lbl_803556B8[index].id=id;
+lbl_803556B8[index].data=data;
+lbl_803556B8[index].ref=1;
+lbl_80354EB8[bucket].count++;
+lbl_80368A0A++;
+fn_802636F4();return 1;
+}
 #pragma opt_strength_reduction off
 s32 fn_80250414(u16 id) {
  void fn_8026372C(void); void fn_802636F4(void);
@@ -3059,15 +3098,14 @@ void fn_80253860(SynthVmState *arg0, u32 *arg1, u8 op) {
     u32 raw;
     u32 w;
     u8 idx;
-    u8 b0;
-    u8 b1;
+    u8 reg;
     u8 b2;
 
-    b0 = arg1[1];
+    reg = arg1[1];
     if (arg1[0] >> 24) {
         v1 = fn_80260F18(arg0);
     } else {
-        idx = b0 & 0x1F;
+        idx = reg & 0x1F;
         if (idx < 16) {
             v1 = arg0->regs[idx];
         } else {
@@ -3080,11 +3118,11 @@ void fn_80253860(SynthVmState *arg0, u32 *arg1, u8 op) {
         rhs = (s16)(arg1[1] >> 8);
     } else {
         w = arg1[1];
-        b1 = (w >> 16) & 0xFF;
+        reg = (w >> 16) & 0xFF;
         if ((w >> 8) & 0xFF) {
             raw = fn_80260F18(arg0);
         } else {
-            idx = b1 & 0x1F;
+            idx = reg & 0x1F;
             if (idx < 16) {
                 raw = arg0->regs[idx];
             } else {
