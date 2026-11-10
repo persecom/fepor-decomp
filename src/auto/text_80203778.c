@@ -3,8 +3,6 @@
 #include <dolphin/os.h>
 #include "global.h"
 
-volatile u32 __PIRegs[64] : 0xCC006000;
-
 int OSReport(void *msg, ...);
 
 extern u32 lbl_803682F0;
@@ -348,10 +346,7 @@ s32 __OSPSInit(void) {
 }
 
 u8 fn_80204410(void) {
-    volatile u32 *pi;
-
-    pi = (volatile u32 *)0xCC006000;
-    return (u8)pi[0x24 / 4];
+    return (u8)*(volatile u32 *)0xCC006024;
 }
 
 void OSRegisterVersion(s32 arg0) {
