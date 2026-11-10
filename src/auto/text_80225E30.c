@@ -3,6 +3,8 @@
 #include <dolphin/os.h>
 #include "global.h"
 
+extern u8 *gTRKInputPendingPtr;
+
 extern u16 lbl_802822F0[200]; // 400 bytes = 200 u16 values
 
 extern struct {
@@ -902,6 +904,47 @@ s32 TRKInitializeTarget(void) {
     lbl_8033CFC8[0] = 0xE0000000;
 
     return 0;
+}
+
+void fn_8022AD08(void) {
+    extern u32 lbl_8033CFC8;
+    extern u32 lbl_8029E598[];
+    extern u8 gTRKInterruptVectorTable[];
+    extern void fn_80003488(u32, void *, u32);
+    extern void fn_80228858(u32, u32);
+
+    u32 *var_r5;
+    u32 temp_r29;
+    u8 *var_r31;
+    s32 var_r30;
+    u32 temp_r6;
+    u32 var_r27;
+
+    if (lbl_8033CFC8 > 0x44 && lbl_8033CFC8 + 0x4000 > 0x44 &&
+        (*(u32 *)((u8 *)gTRKCPUState + 0x238) & 3)) {
+        var_r5 = (u32 *)0x44;
+    } else {
+        var_r5 = (u32 *)0x80000044;
+    }
+    temp_r29 = *var_r5;
+
+    var_r31 = (u8 *)lbl_8029E598;
+    for (var_r30 = 0; var_r30 <= 0xE; var_r30++, var_r31 += 4) {
+        if ((temp_r29 & (1 << var_r30)) && var_r30 != 4) {
+            temp_r6 = *(u32 *)var_r31;
+            if (temp_r6 >= lbl_8033CFC8 &&
+                temp_r6 < lbl_8033CFC8 + 0x4000 &&
+                (*(u32 *)((u8 *)gTRKCPUState + 0x238) & 3)) {
+                var_r27 = temp_r6;
+            } else if (temp_r6 >= 0x7e000000U && temp_r6 <= 0x80000000U) {
+                var_r27 = temp_r6;
+            } else {
+                var_r27 = (temp_r6 & 0x3FFFFFFF) | 0x80000000;
+            }
+            fn_80003488(var_r27, (void *)((u8 *)gTRKInterruptVectorTable + temp_r6), 0x100);
+            fn_80228858(var_r27, 0x100);
+        }
+    }
 }
 
 u32 fn_8022AE34(u32 arg0) {
