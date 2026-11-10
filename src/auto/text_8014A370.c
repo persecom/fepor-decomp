@@ -442,9 +442,9 @@ u8 fn_8014B2A4(void) {
     return *(u8 *)((char *) lbl_80367B14 + 0xC);
 }
 
-u16 fn_8014B2B0(void) {
-    extern void *lbl_80367B14;
-    return *(u16 *)lbl_80367B14;
+void fn_8014B2B0(u8 arg0, u8 arg1) {
+    extern u8 *lbl_80367B14;
+    lbl_80367B14[0xC] = arg1;
 }
 
 void *fn_8014B2BC(void) {
