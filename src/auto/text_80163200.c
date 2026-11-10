@@ -1190,6 +1190,33 @@ void fn_80169FC0(void* arg0) {
     *(void**)((char*)arg0 + 0x50) = temp_r31;
 }
 
+void fn_8016A028(void) {
+    char *fn_80234450(char *, char *);
+    void fn_8005C8B4(s32);
+    s32 fn_801620AC(void);
+    void fn_80162018(void);
+    extern u8 lbl_80277BC0[];
+    extern u8 lbl_80330708[];
+    char sp8[0x48];
+
+    fn_80162018();
+    fn_8005C8B4(fn_801620AC());
+    switch ((s32)lbl_80330708[0xA6]) {
+    case 3:
+        fn_80234450(sp8, (char *)lbl_80277BC0 + 0x103);
+        break;
+    case 0:
+        fn_80234450(sp8, (char *)lbl_80277BC0 + 0x117);
+        break;
+    case 1:
+        fn_80234450(sp8, (char *)lbl_80277BC0 + 0x12B);
+        /* fallthrough */
+    case 2:
+        fn_8005C8B4((s32)sp8);
+        break;
+    }
+}
+
 void fn_8016A57C(void *arg0) {
     s32 fn_801090C0(void *);
     void *p;
@@ -5684,27 +5711,14 @@ void fn_8017F4B0(void *arg0) {
 }
 
 void fn_8017F540(void *arg0) {
-    f32 fn_8005A028(M2C_UNK, s32, f32, f32, f32, f32);
+    f32 fn_8005A028(s32, s32, f32, f32, f32, f32);
     void fn_8000C188(void *);
-    extern f32 lbl_8036AC30;
-    extern f32 lbl_8036AC40;
-    extern f32 lbl_8036AC88;
-    extern f32 lbl_8036AC38;
+    s32 old;
 
-    f32 sp8;
-    f32 dummy;
-    s32 temp_r4 = *(s32 *)((u8 *)arg0 + 0x3C);
-
-    *(s32 *)((u8 *)arg0 + 0x3C) = temp_r4 + 1;
-    
-    // Load the floating point constants needed
-    sp8 = lbl_8036AC88;  // load f1
-    dummy = lbl_8036AC30;  // load f2  
-    dummy = lbl_8036AC40;  // load f3
-    
-    *(f32 *)((u8 *)arg0 + 0x38) = fn_8005A028(2, temp_r4, lbl_8036AC88, lbl_8036AC30, lbl_8036AC40, (f32) *(s32 *)((u8 *)arg0 + 0x3C));
-    
-    if (*(s32 *)((u8 *)arg0 + 0x3C) >= 0xA) {
+    old = *(s32 *)((u8 *)arg0 + 0x3C);
+    *(s32 *)((u8 *)arg0 + 0x3C) = old + 1;
+    *(f32 *)((u8 *)arg0 + 0x38) = fn_8005A028(2, old, -32.0f, 0.0f, 10.0f, (f32)*(s32 *)((u8 *)arg0 + 0x3C));
+    if (*(s32 *)((u8 *)arg0 + 0x3C) >= 10) {
         *(s32 *)((u8 *)arg0 + 0x3C) = 0;
         fn_8000C188(arg0);
     }
