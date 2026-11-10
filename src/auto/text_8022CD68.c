@@ -207,23 +207,18 @@ void fn_8022D084(void *arg1) {
 }
 
 s32 fn_8022D4C8(void) {
-    extern u16 __files[];
-    
-    u16 *var_r30;
-    s32 var_r31;
-    
-    var_r31 = 0;
-    var_r30 = __files;
-    
-loop_5:
-    if (var_r30 != NULL) {
-        if ((((u16) M2C_FIELD(var_r30, u16 *, 4) >> 6) & 7) && (fn_80231178(var_r30) != 0)) {
-            var_r31 = -1;
+    s32 fn_80231178(void *);
+    extern char __files[];
+    s32 ret;
+    char *p;
+
+    ret = 0;
+    for (p = __files; p != NULL; p = *(char **)(p + 0x4c)) {
+        if (((*(u16 *)(p + 4) >> 6) & 7) != 0 && fn_80231178(p) != 0) {
+            ret = -1;
         }
-        var_r30 = M2C_FIELD(var_r30, u16 **, 0x4C);
-        goto loop_5;
     }
-    return var_r31;
+    return ret;
 }
 
 void fn_8022E660(void* arg0, void* arg1, int arg2) {
