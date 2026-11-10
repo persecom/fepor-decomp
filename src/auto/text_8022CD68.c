@@ -1201,8 +1201,8 @@ s32 strlen(const char* str) {
 }
 
 void fn_80234524(s32 arg0) {
-    f32 fn_802345B0(M2C_UNK, M2C_UNK *, s32 *, M2C_UNK *, s32 *);
-    extern s32 fn_80234048;
+    f32 fn_802345B0(M2C_UNK, s32 (*)(), s32 *, M2C_UNK *, s32 *);
+    extern s32 fn_80234048();
     extern f64 lbl_80367070;
     extern f64 lbl_80367078;
     extern s32 lbl_803687F0;
@@ -1217,7 +1217,7 @@ void fn_80234524(s32 arg0) {
     sp10 = arg0;
     sp14 = 0;
 
-    temp_f1 = fn_802345B0(0x7FFFFFFF, &fn_80234048, &sp10, &temp_r0, &spC);
+    temp_f1 = fn_802345B0(0x7FFFFFFF, fn_80234048, &sp10, &temp_r0, &spC);
     temp_f2 = fabs(temp_f1);
 
     if ((spC != 0) || (temp_f1 != lbl_8036BE10 && ((temp_f2 < lbl_80367070) || (temp_f2 > lbl_80367078)))) {
