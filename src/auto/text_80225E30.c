@@ -86,6 +86,59 @@ extern void fn_8020C1A4(u8, u32, void *);
 
 extern u8 lbl_80289EB8[16];
 
+void TRKNubMainLoop(void);
+s32 TRKGetNextEvent(void *);
+void TRKNubMainLoop(void) {
+    void *TRKGetBuffer(s32);
+    void TRKDispatchMessage(void *);
+    void TRKTargetInterrupt(void *);
+    s32 TRKTargetSupportRequest(void);
+    void TRKGetInput(void);
+    s32 TRKTargetStopped(void);
+    s32 TRKTargetContinue(void);
+    s32 event[3];
+    s32 exitFlag;
+    s32 isIdle;
+    void *buf;
+    u8 *pending;
+
+    exitFlag = 0;
+    isIdle = 0;
+    while (exitFlag == 0) {
+        if (TRKGetNextEvent(event) != 0) {
+            isIdle = 0;
+            switch (event[0]) {
+            case 2:
+                buf = TRKGetBuffer(event[2]);
+                TRKDispatchMessage(buf);
+                break;
+            case 1:
+                exitFlag = 1;
+                break;
+            case 3:
+            case 4:
+                TRKTargetInterrupt(event);
+                break;
+            case 5:
+                TRKTargetSupportRequest();
+                break;
+            case 0:
+            default:
+                break;
+            }
+            TRKDestructEvent(event);
+        } else if (isIdle == 0 || (pending = *(u8 **)((u8 *)&gTRKInputPendingPtr + 0), *pending != 0)) {
+            isIdle = 1;
+            TRKGetInput();
+        } else {
+            if (TRKTargetStopped() == 0) {
+                TRKTargetContinue();
+            }
+            isIdle = 0;
+        }
+    }
+}
+
 int TRKDestructEvent(void *arg0) {
     M2C_UNK fn_8022699C(s32);
     fn_8022699C(M2C_FIELD(arg0, s32 *, 8));
@@ -1409,6 +1462,23 @@ void fn_8022BA34(void* arg0)
             *(s32*)((u8*)arg0 + 0x8) = 0;
         }
     }
+}
+
+void fn_8022BC44(void *arg0, s32 arg1, s32 arg2) {
+    void fn_8022C08C(void *, s32, s32);
+    void *self;
+    s32 t;
+
+    self = arg0;
+    *(s32 *)((u8 *)self + 8) = arg1;
+    *(s32 *)((u8 *)self + 0xC) = arg2;
+    t = *(s32 *)((u8 *)self + 8);
+    *(s32 *)((u8 *)self + 0) = t;
+    t = *(s32 *)((u8 *)self + 8);
+    *(s32 *)((u8 *)self + 4) = t;
+    *(s32 *)((u8 *)self + 0x10) = 0;
+    *(s32 *)((u8 *)self + 0x14) = *(s32 *)((u8 *)self + 0xC);
+    fn_8022C08C((u8 *)self + 0x18, t, arg2);
 }
 
 s32 fn_8022BC94(void *arg0) {
