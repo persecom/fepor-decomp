@@ -4700,14 +4700,14 @@ void fn_802633F8(void) {
     fn_8020AEC4(&lbl_80368B00);
 }
 
-s32 fn_8026341C(s32 arg0) {
+int fn_8026341C(s32 arg0) {
     s32 temp_r31;
     
     temp_r31 = lbl_8034C110[arg0];
     return temp_r31;
 }
 
-void fn_802634E4(void) {
+int fn_802634E4(void) {
     M2C_UNK fn_802137E8();
     fn_802137E8();
 }
