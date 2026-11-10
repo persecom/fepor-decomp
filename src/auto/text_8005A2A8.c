@@ -76,6 +76,101 @@ s32 fn_8005A310(void *arg0, u8 arg1, u8 arg2) {
     return 0;
 }
 
+#pragma use_lmw_stmw on
+#pragma cplusplus on
+extern "C" void DCFlushRange(void *, u32);
+extern "C" void fn_8000770C(f32, f32, f32, f32, f32, f32);
+extern "C" void fn_80007884(void);
+extern "C" void fn_80007898(s32);
+extern "C" void fn_8000A03C(void *, void *, s32, s32);
+extern "C" void fn_8000A174(void *, s32);
+extern "C" void fn_8000A248(void);
+extern "C" void fn_8000A258(void);
+extern "C" s32 fn_80222CDC(void *);
+extern "C" u32 fn_80222CE8(void *);
+extern "C" void *memcpy(void *, const void *, u32);
+extern "C" void fn_8005A79C(void *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4) {
+    struct Obj {
+        u8 pad[0x44];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual s32 v12() = 0;
+        virtual void v13() = 0;
+        virtual s32 v14() = 0;
+        virtual s32 v15() = 0;
+    };
+    Obj *obj = (Obj *)arg0;
+    s32 w;
+    s32 cols;
+    s32 h;
+    s32 idx;
+    s32 src;
+    u32 count;
+    u32 nbytes;
+    u16 *buf;
+    u32 i;
+    u16 pix;
+    u16 r, g, b;
+    f32 f30, f29, f31;
+
+    if (arg3 != 0) {
+        fn_8000A258();
+        if (((u8 *)arg0)[0x40] != 0) {
+            if (arg4[0] == 0 && arg4[1] == 0 && arg4[2] == 0) {
+                fn_8000A03C((u8 *)arg0 + 4, (u8 *)arg0 + 0x24, 0, 0x11);
+            } else {
+                src = fn_80222CDC((u8 *)arg0 + 0x24);
+                count = fn_80222CE8((u8 *)arg0 + 0x24);
+                count = (u16)count;
+                nbytes = count * 2;
+                buf = *(u16 **)((u8 *)arg0 + 0x3C);
+                memcpy(buf, (void *)(src + 0x80000000), nbytes);
+                for (i = 0; i < count; i++) {
+                    pix = buf[i];
+                    if (pix & 0x8000) {
+                        r = ((pix & 0x7C00) >> 10) + (arg4[0] >> 3);
+                        if (r > 0x1F) r = 0x1F;
+                        g = ((pix & 0x3E0) >> 5) + (arg4[1] >> 3);
+                        if (g > 0x1F) g = 0x1F;
+                        b = (pix & 0x1F) + (arg4[2] >> 3);
+                        if (b > 0x1F) b = 0x1F;
+                        buf[i] = 0x8000 | (r << 10) | (g << 5) | b;
+                    }
+                }
+                DCFlushRange(*(void **)((u8 *)arg0 + 0x3C), nbytes);
+                fn_8000A03C((u8 *)arg0 + 4, (u8 *)arg0 + 0x30, 0, 0x11);
+            }
+        } else {
+            fn_8000A174((u8 *)arg0 + 4, 0x11);
+        }
+        fn_8000A248();
+        w = obj->v14();
+        cols = obj->v12();
+        idx = arg3 - 1;
+        f30 = (f32)((idx % cols) * w);
+        h = obj->v15();
+        cols = obj->v12();
+        f29 = (f32)((idx / cols) * h);
+        fn_80007898(1);
+        f31 = (f32)obj->v15();
+        w = obj->v14();
+        fn_8000770C((f32)arg1, (f32)arg2, f30, f29, (f32)w, f31);
+        fn_80007884();
+    }
+}
+#pragma cplusplus reset
+#pragma use_lmw_stmw reset
+
 #pragma cplusplus on
 extern "C" void fn_8005AC24(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
     struct color {
@@ -168,7 +263,6 @@ extern f32 lbl_80369198;
 extern f32 lbl_8036919C;
 extern f32 lbl_803691A0;
 #include "global.h"
-#include "unit.h"
 
 extern f32 lbl_80369184;
 extern f64 lbl_80369190;
