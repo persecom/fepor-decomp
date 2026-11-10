@@ -526,16 +526,16 @@ void fn_80247F1C(s32 arg0, u8 arg1, s32 arg2) {
 }
 
 s32 fn_80247F60(void *arg0) {
-    extern M2C_UNK lbl_8034BED0;
+    extern u8 lbl_8034BED0[];
     u8 temp_r0;
-    u8 var_r4;
+    u32 var_r4;
 
     temp_r0 = M2C_FIELD(arg0, u8 *, 0x122);
     var_r4 = 8;
     if (temp_r0 != 0xFF) {
         var_r4 = temp_r0;
     }
-    return *(&lbl_8034BED0 + (var_r4 << 6) + (M2C_FIELD(arg0, u8 *, 0x123) * 4));
+    return *(s32 *)((u8 *) lbl_8034BED0 + (var_r4 << 6) + (M2C_FIELD(arg0, u8 *, 0x123) << 2));
 }
 
 void fn_80247F94(void *arg0) {
