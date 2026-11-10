@@ -1,6 +1,8 @@
 /* Functions from 0x801B3258 to 0x801E4380, found by decomp-toolkit. */
 #include "common.h"
 
+void *fn_8000CAF0(void *, s32);
+
 typedef struct ListNode {
     struct ListNode *prev;
     struct ListNode *next;
