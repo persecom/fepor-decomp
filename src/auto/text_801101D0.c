@@ -2,6 +2,16 @@
 #include "common.h"
 extern u16 lbl_80273DF8[];
 extern u16 lbl_80296128[];
+
+typedef struct String {
+    u32 size;
+    u32 cap;
+    char *data;
+} String;
+
+extern f32 lbl_8036A1DC;
+extern f32 lbl_8036A1A4;
+extern f32 lbl_8036A1C8;
 extern u16 lbl_80367A58;
 
 extern s32 lbl_80367110;
