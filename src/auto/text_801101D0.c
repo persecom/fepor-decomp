@@ -751,6 +751,35 @@ sound:
     }
     fn_802245D8(1, 4, 5, 0);
 }
+
+void fn_8011A0CC(void *arg0) {
+    void fn_80018AE4(void);
+    void fn_800A8478(void);
+    void fn_8018DB4C(void);
+    void fn_8000C060(void *, void *);
+    void fn_8000C070(void *, s32);
+    void *fn_8013FF94(void *, s32, s32);
+    void fn_80140210(void *, void *, s32);
+    void fn_80119738(void);
+    extern u8 lbl_803671C0;
+    extern s8 lbl_802EF4C8[];
+    void *temp_r31;
+
+    while (lbl_803671C0 != 0) {
+        fn_80018AE4();
+    }
+    fn_800A8478();
+    fn_8018DB4C();
+    temp_r31 = *(void **)((u8 *)arg0 + 0x44);
+    fn_8000C060(temp_r31, fn_80119738);
+    fn_8000C070(temp_r31, 1);
+    if (fn_8013FF94(arg0, 0x40, 0) != NULL) {
+        fn_80140210(arg0, fn_8013FF94(arg0, 0x40, 0), 1);
+    }
+    lbl_802EF4C8[0xD] = -1;
+    lbl_802EF4C8[0xE] = -1;
+}
+
 #pragma use_lmw_stmw reset
 void fn_8011A2FC(s32 arg0) {
     s32 temp_r3;
