@@ -8,11 +8,14 @@ extern s32 fn_80010710(u8* arg0);
   void fn_800AEA74(void *);
 
 /* 0x18-byte record used by fn_800C29D0 / fn_800C2ACC / fn_800C30CC (1-based index) */
+#ifndef UNK800C2ACC_TYPE
+#define UNK800C2ACC_TYPE
 typedef struct Unk800C2ACC {
     u8 unk0[0x13];
     u8 unk13;
     u8 unk14[4];
 } Unk800C2ACC;
+#endif
 
 void fn_800AD24C(void) {
     extern u16 lbl_80312ACC[];
@@ -4205,29 +4208,30 @@ s32 fn_800BDB9C(s32 arg0, s32 arg1) {
     return (byte & (1 << shift)) != 0;
 }
 
-void fn_800BDBC8(void *arg0, s32 arg1) {
-    s32 loop_counter;
+void fn_800BDBC8(s32 arg0, s32 arg1) {
+    s32 var_r30;
     u32 temp_r31;
-    void *temp_r5;
-    void *current_ptr;
+    s32 temp_r5;
+    s32 var_r29;
 
     temp_r31 = fn_8000D598(arg1);
-    current_ptr = arg0;
-    loop_counter = 0;
+    var_r29 = arg0;
+    var_r30 = 0;
 loop_1:
-    if ((temp_r31 == (u32) *(u32*)((char*)current_ptr + 0x180)) && (fn_802342B8(*(s32*)((char*)current_ptr), arg1) == 0)) {
-        loop_counter += 1;
-        current_ptr = (char*)current_ptr + 4;
-        if (loop_counter >= 0x60) {
-            loop_counter = -1;
+    if ((temp_r31 == *(u32 *)(var_r29 + 0x180)) && (fn_802342B8(*(s32 *)var_r29, arg1) == 0)) {
+
+    } else {
+        var_r30 += 1;
+        var_r29 += 4;
+        if (var_r30 >= 0x60) {
+            var_r30 = -1;
         } else {
             goto loop_1;
         }
     }
-    //else do nothing
-    if (loop_counter >= 0) {
-        temp_r5 = (char*)arg0 + (loop_counter >> 3);
-        *(u8*)((char*)temp_r5 + 0x300) = *(u8*)((char*)temp_r5 + 0x300) & ~(1 << (loop_counter & 7));
+    if (var_r30 >= 0) {
+        temp_r5 = arg0 + (var_r30 >> 3);
+        *(u8 *)(temp_r5 + 0x300) = *(u8 *)(temp_r5 + 0x300) & ~(1 << (var_r30 & 7));
     }
 }
 
