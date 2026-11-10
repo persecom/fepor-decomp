@@ -257,53 +257,25 @@ void fn_80105D4C(s32 *arg0, u8 arg1) {
 
 void fn_80105DAC(s32 *arg0, s32 arg1) {
     s32 *fn_80019DF0(u8);
-    u8 var_r31;
-    s32 var_r6;
-    s32 *var_r5;
-    u32 temp_r3;
-    u32 temp_r0;
-    u32 var_ctr;
-    u32 var_ctr_2;
-    u32 var_r4;
+    s32 fn_802342B8(s32, s32);
+    u8 i;
+    u32 *p;
+    s32 n;
 
     if (arg1 != 0) {
-        var_r31 = 0;
-loop_13:
-        if (var_r31 >= 0x62U) {
-
-        } else if (fn_802342B8(arg1, *fn_80019DF0(var_r31)) == 0) {
-            var_r6 = var_r31;
-            if (var_r6 >= 0) {
-                var_r5 = arg0;
-                var_r4 = var_r6 >> 5U;
-                if ((s32) var_r6 >= 0x20) {
-                    temp_r3 = var_r4 >> 3U;
-                    temp_r0 = -(var_r4 << 5);
-                    var_ctr = temp_r3;
-                    if (temp_r3 != 0) {
-                        do {
-                            var_r5 += 0x20;
-                            var_ctr -= 1;
-                        } while (var_ctr != 0);
-                        var_r4 &= 7;
-                        if (var_r4 != 0) {
-                            goto block_8;
-                        }
-                    } else {
-block_8:
-                        var_ctr_2 = var_r4;
-                        do {
-                            var_r5 += 4;
-                            var_ctr_2 -= 1;
-                        } while (var_ctr_2 != 0);
+        for (i = 0; i < 0x62; i++) {
+            if (fn_802342B8(arg1, *fn_80019DF0(i)) == 0) {
+                n = i;
+                if (n >= 0) {
+                    p = (u32 *)arg0;
+                    while (n >= 32) {
+                        p++;
+                        n -= 32;
                     }
-                    var_r6 += temp_r0;
+                    *p |= 1 << n;
                 }
-                *var_r5 |= 1 << var_r6;
+                break;
             }
-        } else {
-            var_r31 += 1;
-            goto loop_13;
         }
     }
 }
