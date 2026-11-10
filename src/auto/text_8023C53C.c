@@ -3354,17 +3354,16 @@ void fn_8026095C(struct unit* param_1, s32 param_2, s32 param_3) {
     lbl_80368B34(0);
 }
 
-u16 fn_802609A4(void *arg0) {
+s32 fn_802609A4(void *arg0) {
+    s32 fn_802601EC(void *, void *, u8, u8);
     s32 temp_r4;
-    u16 temp_r3;
 
-    temp_r4 = *(s32*)((char*)arg0 + 0x220);
+    temp_r4 = *(s32 *)((u8 *)arg0 + 0x220);
     if (!(temp_r4 & 0x1000)) {
-        return *(u16*)((char*)arg0 + 0x3F4);
+        return *(u16 *)((u8 *)arg0 + 0x3F4);
     }
-    *(s32*)((char*)arg0 + 0x220) = temp_r4 & 0xFFFFEFFF;
-    temp_r3 = fn_802601EC((char*)arg0 + 0x3D4, *(u8*)((char*)arg0 + 0x121), *(u8*)((char*)arg0 + 0x122));
-    return temp_r3;
+    *(s32 *)((u8 *)arg0 + 0x220) = temp_r4 & 0xFFFFEFFF;
+    return fn_802601EC(arg0, (u8 *)arg0 + 0x3D4, *(u8 *)((u8 *)arg0 + 0x121), *(u8 *)((u8 *)arg0 + 0x122));
 }
 
 void fn_802609EC(struct unit* param_1)
