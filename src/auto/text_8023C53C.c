@@ -898,6 +898,8 @@ void fn_8024AD04(u8 arg0, u8 arg1) {
 
 void fn_80255054(void *arg0);
 
+void fn_80256FF0(u8 arg0);
+
 s32 fn_8024AD2C(s32 arg0, s32 arg1) {
     s32 offset;
     s32 ret;
@@ -3659,6 +3661,7 @@ void fn_8025EEE8(s32 arg0, s32 arg1, s32 arg2) {
     *(u32 *) (temp_r4 + ((arg0 & 0xFF) << 2)) |= arg2;
 }
 
+#pragma global_optimizer off
 void fn_8025F0EC(u8 arg0, u8 arg1) {
     extern u8 lbl_8035D318[];
     extern u8 lbl_80361618[];
@@ -3667,38 +3670,40 @@ void fn_8025F0EC(u8 arg0, u8 arg1) {
 
     u8 *cell;
     u16 code;
-    u8 *row;
-    u8 val;
-    u32 *wp;
-    u32 i;
-    s32 off;
-    u8 *p;
-    u8 a0;
-    u8 a1;
     s32 mul90;
     s32 mul9;
+    u8 *row;
+    u8 *p;
+    s32 off;
+    u32 i;
+    u8 val;
+    u8 *vp;
+    u8 a0;
+    u8 a1;
+    s32 idx;
 
     cell = lbl_8035D318 + (arg0 * 0x860) + (arg1 * 0x86);
-    code = (u16)((cell[0x65] << 8) | cell[0x64]);
+    code = (u16)(cell[0x64] | (cell[0x65] << 8));
     switch ((s32)code) {
     case 0:
         mul90 = arg0 * 0x90;
         mul9 = arg1 * 9;
         row = lbl_80361618 + mul90;
-        val = row[mul9];
+        val = *(row + mul9);
         if (val != 0) {
             val = (u8)(val - 1);
         }
-        row[mul9] = val;
+        *(row + mul9) = val;
         a0 = arg0;
         a1 = arg1;
         i = 0;
         off = 0;
         while (i < lbl_8034C110[0x210]) {
-            p = (u8 *)lbl_803689A8 + off;
-            if (a0 == p[0x122] && a1 == p[0x121]) {
-                p[0x1DB] = val;
-                *((u8 *)lbl_803689A8 + (off + 0x1DA)) = val;
+            vp = (u8 *)lbl_803689A8 + off;
+            if (a0 == vp[0x122] && a1 == vp[0x121]) {
+                idx = off + 0x1DA;
+                vp[0x1DB] = val;
+                ((u8 *)lbl_803689A8)[idx] = val;
             }
             off += 0x458;
             i += 1;
@@ -3707,18 +3712,20 @@ void fn_8025F0EC(u8 arg0, u8 arg1) {
     case 0x7F7D:
         mul90 = arg0 * 0x90;
         mul9 = arg1 * 9;
-        wp = (u32 *)(lbl_80361618 + mul90 + mul9 + 1);
-        if (*wp != 0) {
-            *wp = *wp - 1;
+        p = lbl_80361618 + mul90 + mul9;
+        if (*(u32 *)(p += 1) != 0) {
+            *(u32 *)p = *(u32 *)p - 1;
         }
+        i = 0;
+        p = lbl_80361618 + mul90 + mul9;
+        off = i;
+        p += 1;
         a0 = arg0;
         a1 = arg1;
-        i = 0;
-        off = 0;
         while (i < lbl_8034C110[0x210]) {
-            p = (u8 *)lbl_803689A8 + off;
-            if (a0 == p[0x122] && a1 == p[0x121]) {
-                *(u32 *)(p + 0x1E0) = *(u32 *)(lbl_80361618 + mul90 + mul9 + 1);
+            vp = (u8 *)lbl_803689A8 + off;
+            if (a0 == vp[0x122] && a1 == vp[0x121]) {
+                *(u32 *)(vp + 0x1E0) = *(u32 *)p;
             }
             off += 0x458;
             i += 1;
@@ -3727,18 +3734,112 @@ void fn_8025F0EC(u8 arg0, u8 arg1) {
     case 0x7F7E:
         mul90 = arg0 * 0x90;
         mul9 = arg1 * 9;
-        wp = (u32 *)(lbl_80361618 + mul90 + mul9 + 5);
-        if (*wp != 0) {
-            *wp = *wp - 1;
+        p = lbl_80361618 + mul90 + mul9;
+        if (*(u32 *)(p += 5) != 0) {
+            *(u32 *)p = *(u32 *)p - 1;
         }
+        i = 0;
+        p = lbl_80361618 + mul90 + mul9;
+        off = i;
+        p += 5;
+        a0 = arg0;
+        a1 = arg1;
+        while (i < lbl_8034C110[0x210]) {
+            vp = (u8 *)lbl_803689A8 + off;
+            if (a0 == vp[0x122] && a1 == vp[0x121]) {
+                *(u32 *)(vp + 0x1E4) = *(u32 *)p;
+            }
+            off += 0x458;
+            i += 1;
+        }
+        return;
+    }
+}
+#pragma global_optimizer on
+void fn_8025F310(u8 arg0, u8 arg1) {
+    extern u8 lbl_8035D318[];
+    extern u8 lbl_80361618[];
+    extern u8 lbl_8034C110[];
+    extern s32 lbl_803689A8;
+
+    u8 *cell;
+    u16 code;
+    u8 *row;
+    u8 *p;
+    u8 val;
+    u32 i;
+    s32 off;
+    u8 *vp;
+    u8 a0;
+    u8 a1;
+    s32 mul90;
+    s32 mul9;
+    s32 idx;
+
+    cell = lbl_8035D318 + (arg0 * 0x860) + (arg1 * 0x86);
+    code = (u16)(cell[0x64] | (cell[0x65] << 8));
+    switch ((s32)code) {
+    case 0:
+        mul90 = arg0 * 0x90;
+        mul9 = arg1 * 9;
+        row = lbl_80361618 + mul90;
+        val = row[mul9];
+        if (val < 0x18U) {
+            val = (u8)(val + 1);
+        }
+        row[mul9] = val;
         a0 = arg0;
         a1 = arg1;
         i = 0;
         off = 0;
         while (i < lbl_8034C110[0x210]) {
-            p = (u8 *)lbl_803689A8 + off;
-            if (a0 == p[0x122] && a1 == p[0x121]) {
-                *(u32 *)(p + 0x1E4) = *(u32 *)(lbl_80361618 + mul90 + mul9 + 5);
+            vp = (u8 *)lbl_803689A8 + off;
+            if (a0 == vp[0x122] && a1 == vp[0x121]) {
+                idx = off + 0x1DA;
+                vp[0x1DB] = val;
+                ((u8 *)lbl_803689A8)[idx] = val;
+            }
+            off += 0x458;
+            i += 1;
+        }
+        return;
+    case 0x7F7D:
+        mul90 = arg0 * 0x90;
+        mul9 = arg1 * 9;
+        p = lbl_80361618 + mul90 + mul9;
+        if (*(u32 *)(p += 1) != 0x3FFFU) {
+            *(u32 *)p = *(u32 *)p + 1;
+        }
+        p = lbl_80361618 + mul90 + mul9 + 1;
+        a0 = arg0;
+        a1 = arg1;
+        i = 0;
+        off = i;
+        while (i < lbl_8034C110[0x210]) {
+            vp = (u8 *)lbl_803689A8 + off;
+            if (a0 == vp[0x122] && a1 == vp[0x121]) {
+                *(u32 *)(vp + 0x1E0) = *(u32 *)p;
+            }
+            off += 0x458;
+            i += 1;
+        }
+        return;
+    case 0x7F7E:
+        mul90 = arg0 * 0x90;
+        mul9 = arg1 * 9;
+        p = lbl_80361618 + mul90 + mul9;
+        if (*(u32 *)(p += 5) != 0x3FFFU) {
+            *(u32 *)p = *(u32 *)p + 1;
+        }
+        p = lbl_80361618 + mul90 + mul9 + 5;
+        a0 = arg0;
+        a1 = arg1;
+        i = 0;
+        off = i;
+        while (i < lbl_8034C110[0x210]) {
+            vp = (u8 *)lbl_803689A8 + off;
+            if (a0 == vp[0x122] && a1 == vp[0x121]) {
+                *(u32 *)(vp + 0x1E4) = *(u32 *)p;
             }
             off += 0x458;
             i += 1;
@@ -4075,28 +4176,38 @@ s32 fn_80260A7C(u32 arg0, u32 arg1, u32 arg2, u32 arg3)
     extern u32 lbl_802A1E00[];
     extern u8 lbl_8034D034[];
 
+    s32 fn_802601EC(void *, void *, u32, u32);
+
     u32 *entry;
     u32 mask;
     u32 value;
     u32 index;
+    u32 result;
 
     index = arg1 & 0xFF;
+
+    mask = lbl_802A1E00[index];
 
     entry = (u32 *)((u8 *)lbl_8035D118
         + ((arg3 & 0xFF) << 6)
         + ((arg2 & 0xFF) << 2));
 
-    mask = lbl_802A1E00[index];
     value = *entry;
 
-    if ((mask & value) != 0) {
-        *entry = value & ~mask;
+    result = (mask & value) != 0;
 
+    if (result != 0) {
+        *entry = value & ~mask;
+    }
+
+    if (result != 0) {
         return fn_802601EC(
             0,
             lbl_8034D034
                 + (arg0 & 0xFF) * 0x90
-                + index * 0x24
+                + index * 0x24,
+            arg2,
+            arg3
         );
     }
 
