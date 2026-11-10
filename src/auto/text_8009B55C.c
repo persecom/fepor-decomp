@@ -264,8 +264,8 @@ void fn_8009E6B4(void) {
 }
 
 void fn_8009E6F0(void) {
-    extern u16 lbl_80312100;
-    *(u32*)((char*)&lbl_80312100 + 0x10) = OSGetTick();
+    extern u16 lbl_80312100[];
+    *(u32 *)((u8 *)lbl_80312100 + 0x10) = OSGetTick();
 }
 
 void fn_8009E71C(void) {
