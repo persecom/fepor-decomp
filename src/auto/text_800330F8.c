@@ -562,16 +562,18 @@ f32 fn_80037818(void *arg0,u8 arg1) {
 }
 
 typedef struct {
-    s32 unk0;
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
     u8 unk4;
 } UnkRet800378CC;
 
-s32 fn_800378CC(s32 arg0) {
-    M2C_UNK fn_80165E90(s32 *, s32);
-    s32 sp8;
+UnkRet800378CC fn_800378CC(s32 arg0) {
+    UnkRet800378CC ret;
 
-    fn_80165E90(&sp8, arg0 + 0x1BC);
-    return sp8;
+    fn_80165E90(&ret.unk0, arg0 + 0x1BC);
+    return ret;
 }
 
 void fn_80037904(void *arg0, s32 arg1) {
@@ -836,50 +838,54 @@ s32 fn_800386E0(s32 arg0) {
 }
 
 s8 fn_80038748(void *arg0) {
-    s8 result;
-    s8 index;
-    void *ptr;
+    s32 result;
+    s32 temp;
 
     result = 0;
     if ((((*(u8 *)((u8 *)arg0 + 0x1D1) >> 7) & 1) != 0) && (*(u32 *)((u8 *)arg0 + 0x1CC) != 0)) {
-        index = 0;
+        temp = 0;
     } else if ((((*(u8 *)((u8 *)arg0 + 0x1D9) >> 7) & 1) != 0) && (*(u32 *)((u8 *)arg0 + 0x1D4) != 0)) {
-        index = 1;
+        temp = 1;
     } else if ((((*(u8 *)((u8 *)arg0 + 0x1E1) >> 7) & 1) != 0) && (*(u32 *)((u8 *)arg0 + 0x1DC) != 0)) {
-        index = 2;
+        temp = 2;
     } else if ((((*(u8 *)((u8 *)arg0 + 0x1E9) >> 7) & 1) != 0) && (*(u32 *)((u8 *)arg0 + 0x1E4) != 0)) {
-        index = 3;
+        temp = 3;
     } else {
-        index = -1;
+        temp = -1;
     }
-    if (index < 0) {
-        ptr = NULL;
+    if ((s8)temp < 0) {
+        temp = 0;
     } else {
-        ptr = (u8 *)arg0 + (index * 8 + 0x1CC);
+        temp = (s8)temp * 8;
+        temp = temp + 0x1CC;
+        temp = temp + (s32)arg0;
     }
-    if (ptr != NULL) {
-        result = *(s8 *)((u8 *)*(void **)ptr + 0x27);
+    if ((u32)temp != 0) {
+        result = *(s8 *)((u8 *)*(void **)temp + 0x27);
     }
     if ((((*(u8 *)((u8 *)arg0 + 0x1F1) >> 7) & 1) != 0) && (*(u32 *)((u8 *)arg0 + 0x1EC) != 0)) {
-        index = 0;
+        temp = 0;
     } else if ((((*(u8 *)((u8 *)arg0 + 0x1F9) >> 7) & 1) != 0) && (*(u32 *)((u8 *)arg0 + 0x1F4) != 0)) {
-        index = 1;
+        temp = 1;
     } else if ((((*(u8 *)((u8 *)arg0 + 0x201) >> 7) & 1) != 0) && (*(u32 *)((u8 *)arg0 + 0x1FC) != 0)) {
-        index = 2;
+        temp = 2;
     } else if ((((*(u8 *)((u8 *)arg0 + 0x209) >> 7) & 1) != 0) && (*(u32 *)((u8 *)arg0 + 0x204) != 0)) {
-        index = 3;
+        temp = 3;
     } else {
-        index = -1;
+        temp = -1;
     }
-    if (index < 0) {
-        ptr = NULL;
+    if ((s8)temp < 0) {
+        temp = 0;
     } else {
-        ptr = (u8 *)arg0 + (index * 8 + 0x1EC);
+        temp = (s8)temp * 8;
+        temp = temp + 0x1EC;
+        temp = temp + (s32)arg0;
     }
-    if (ptr != NULL) {
-        result = (s8)(result + *(s8 *)((u8 *)*(void **)ptr + 0x27));
+    if ((u32)temp != 0) {
+        result += *(u8 *)((u8 *)*(void **)temp + 0x27);
+        result = (s8)result;
     }
-    return result;
+    return (s8)result;
 }
 
 s8 fn_800388C8(void *arg0) {
