@@ -582,6 +582,107 @@ f32 fn_800233D0(void *arg0, s8 arg1, s8 arg2, u8 arg3) {
     return var_f1;
 }
 
+extern f32 lbl_80368D8C;
+#pragma global_optimizer off
+#pragma use_lmw_stmw on
+void fn_800237A0(void *arg0) {
+    void *row;
+    void *fp;
+    u16 flags;
+    f32 t;
+    register f32 scale;
+    int y;
+    void *p9;
+    void *p10;
+    void *p11;
+    void *p12;
+    void *p31;
+    register int x;
+
+    row = arg0;
+    y = 0;
+    goto outer_test;
+outer:
+    p9 = (u8 *)row + 0x10000;
+    p10 = (u8 *)p9 + 0x40D4;
+    p11 = (u8 *)p9 + 0x44D4;
+    p12 = (u8 *)p9 + 0x42CC;
+    p31 = (u8 *)p9 + 0x42DC;
+    p9 = (u8 *)p9 + 0x42D4;
+    x = 0;
+    goto inner_test;
+inner:
+    fp = (u8 *)&lbl_802CA518 + (((s8)x + ((s8)y << 6)) * 2);
+    flags = *(u16 *)((u8 *)fp + 0x408E);
+    fp = (u8 *)fp + 0x408E;
+    if (flags & 8) {
+        scale = *(f32 *)((u8 *)arg0 + 0x1C2D4);
+        t = scale * (f32)(*(s16 *)p9 - *(s16 *)((u8 *)p10 + 4));
+        if (t * t < lbl_80368D8C) {
+            t = scale * (f32)(*(s16 *)((u8 *)p9 + 2) - *(s16 *)((u8 *)p10 + 6));
+            if (t * t < lbl_80368D8C) {
+                goto skip8;
+            }
+        }
+        flags &= ~0x8;
+    }
+skip8:
+    if (flags & 4) {
+        scale = *(f32 *)((u8 *)arg0 + 0x1C2D4);
+        t = scale * (f32)(*(s16 *)((u8 *)p9 + 4) - *(s16 *)p11);
+        if (t * t < lbl_80368D8C) {
+            t = scale * (f32)(*(s16 *)((u8 *)p9 + 6) - *(s16 *)((u8 *)p11 + 2));
+            if (t * t < lbl_80368D8C) {
+                goto skip4;
+            }
+        }
+        flags &= ~0x4;
+    }
+skip4:
+    if (flags & 1) {
+        scale = *(f32 *)((u8 *)arg0 + 0x1C2D4);
+        t = scale * (f32)(*(s16 *)p9 - *(s16 *)((u8 *)p12 + 2));
+        if (t * t < lbl_80368D8C) {
+            t = scale * (f32)(*(s16 *)((u8 *)p9 + 4) - *(s16 *)((u8 *)p12 + 6));
+            if (t * t < lbl_80368D8C) {
+                goto skip1;
+            }
+        }
+        flags &= ~0x1;
+    }
+skip1:
+    if (flags & 2) {
+        scale = *(f32 *)((u8 *)arg0 + 0x1C2D4);
+        t = scale * (f32)(*(s16 *)((u8 *)p9 + 2) - *(s16 *)p31);
+        if (t * t < lbl_80368D8C) {
+            t = scale * (f32)(*(s16 *)((u8 *)p9 + 6) - *(s16 *)((u8 *)p31 + 4));
+            if (t * t < lbl_80368D8C) {
+                goto skip2;
+            }
+        }
+        flags &= ~0x2;
+    }
+skip2:
+    *(u16 *)fp = flags;
+    ++x;
+    p9 = (u8 *)p9 + 8;
+    p10 = (u8 *)p10 + 8;
+    p11 = (u8 *)p11 + 8;
+    p12 = (u8 *)p12 + 8;
+    p31 = (u8 *)p31 + 8;
+inner_test:
+    if (x < lbl_802CA518.width) {
+        goto inner;
+    }
+    row = (u8 *)row + 0x200;
+    ++y;
+outer_test:
+    if (y < lbl_802CA518.height) {
+        goto outer;
+    }
+}
+#pragma use_lmw_stmw reset
+#pragma global_optimizer on
 void fn_80023DC0(void) {
     fn_8002297C(&lbl_802CA518);
 }
