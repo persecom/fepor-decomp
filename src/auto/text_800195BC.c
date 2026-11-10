@@ -622,15 +622,19 @@ s8 fn_8001C040(void *arg0) {
     }
 }
 
-s8 fn_8001C084(void *arg0) {
-    extern u16 lbl_803206EC;
-    
-    if (!(M2C_FIELD(arg0, u8 *, 5) & 0x3F)) {
-        return 0;
+s8 fn_8001C084(u8 *arg0) {
+    s32 fn_800C2D60(void *, s32);
+    extern u8 lbl_803206EC[];
+    s32 result;
+    s32 mask;
+
+    mask = arg0[5] & 0x3F;
+    if (mask == 0) {
+        result = 0;
+    } else {
+        result = (s8)fn_800C2D60(lbl_803206EC, mask);
     }
-    
-    fn_800C2D60(&lbl_803206EC);
-    return 0;
+    return (s8)result;
 }
 
 extern u8 lbl_80367220;
