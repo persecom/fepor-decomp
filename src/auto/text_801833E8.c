@@ -574,6 +574,30 @@ void *fn_80184A00(void *arg0, u32 arg1, s32 arg2, s32 arg3) {
     return temp_r3;
 }
 
+void *fn_80184AFC(void *arg0, s32 arg1, s32 arg2, f32 farg0) {
+    void fn_8000A388(void *, void *, void *);
+    void *fn_8000CA64(void *, s32);
+    void fn_80185078(void *, void *);
+    extern u16 lbl_80295A78[36];
+    u8 sp8[0x34];
+    void *temp_r3;
+
+    M2C_FIELD(sp8, void **, 0x30) = arg0;
+    fn_8000A388(&lbl_80295A78, fn_80185078, sp8);
+    if (farg0 == ((f32)M2C_FIELD(arg0, s16 *, 0x15C) / 50.0f)) {
+        return NULL;
+    }
+    if (arg1 <= 0) {
+        M2C_FIELD(arg0, s16 *, 0x15C) = (s16)(50.0f * farg0);
+        return NULL;
+    }
+    temp_r3 = fn_8000CA64(&lbl_80295A78, arg2);
+    M2C_FIELD(temp_r3, void **, 0x30) = arg0;
+    M2C_FIELD(temp_r3, f32 *, 0x34) = farg0;
+    M2C_FIELD(temp_r3, s32 *, 0x38) = arg1;
+    return temp_r3;
+}
+
 void fn_80184BE8(s32 arg0, s32 arg1, s32 arg2, u32 arg3) {
     void fn_8000A388(void *, void *, void *);
     void *fn_8000CAF0(void *, u32);
