@@ -3631,6 +3631,29 @@ void fn_80196078(void) {
     fn_8000D3EC(&lbl_8027A688[0xE1], &lbl_80296700[0x64]);
 }
 
+s32 fn_80196194(s32 arg0) {
+    void **fn_80037D54(void *);
+    void fn_80092528(void *, u8);
+    void fn_80094A08(s32, s32);
+    void fn_800910D8(s8, s32, s32, s32, s32);
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_80330EAC[];
+    void *p;
+    void **slot;
+    void *obj;
+    u8 kind;
+
+    p = *(void **)lbl_802EF4C8;
+    slot = fn_80037D54(p);
+    kind = ((obj = *slot) != NULL) ? ((u8 *)obj)[0x12] : 0xC;
+    fn_80092528(p, kind);
+    fn_80094A08((s32)p, *(s8 *)&lbl_802EF4C8[0xA]);
+    *(u32 *)(lbl_80330EAC + 0xCAC) |= 0x2000;
+    kind = ((obj = *slot) != NULL) ? ((u8 *)obj)[0x12] : 0xC;
+    fn_800910D8((s8)kind, arg0, -1, -1, -1);
+    return 1;
+}
+
 s32 fn_80196268(void *arg0) {
     void *fn_80037D54(void *);
     s32 fn_80092ADC(void *, s32);
