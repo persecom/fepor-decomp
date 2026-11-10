@@ -96,20 +96,22 @@ s32 fn_8010568C(s32 arg0) {
 }
 
 void *fn_801057BC(void *arg0) {
-    void *fn_8000E0E4();
-    extern u16 lbl_802738A8;
-    void *temp_r31;
-    void *temp_r3;
+    extern u8 lbl_802738A8[];
+    void *fn_8000E0E4(u32);
+    u8 *base;
+    void *result;
+    u32 value;
 
-    temp_r31 = &lbl_802738A8 + 8;
-    if ((u32) M2C_FIELD(arg0, u32 *, 0x10) == 0U) {
-        return temp_r31;
+    base = lbl_802738A8 + 8;
+    value = M2C_FIELD(arg0, u32 *, 0x10);
+    if (value == 0) {
+        return base;
     }
-    temp_r3 = fn_8000E0E4();
-    if (temp_r3 != NULL) {
-        return temp_r3;
+    result = fn_8000E0E4(value);
+    if (result != NULL) {
+        return result;
     }
-    return temp_r31;
+    return base;
 }
 
 void *fn_80105814(void *arg0) {
