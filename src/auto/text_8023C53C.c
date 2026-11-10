@@ -1572,6 +1572,7 @@ void fn_80253E90(void) {
     _restgpr_26();
 }
 
+
 s32 fn_80255100(s32 arg0, s32 arg1) {
     if (arg0 == 0) {
         return 0;
