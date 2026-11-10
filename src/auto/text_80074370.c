@@ -930,6 +930,21 @@ s32 fn_800766B0(void) {
     return 0;
 }
 
+s32 fn_800766D4(void) {
+    u8 fn_800281F4(void *);
+    u8 fn_80166D8C(void *);
+    extern u8 lbl_80330D68[];
+    extern u8 lbl_802EF4C8[24];
+
+    if (fn_80166D8C(lbl_80330D68) != 0) {
+        return 0x40;
+    }
+    if (fn_800281F4(lbl_802EF4C8) == 0 && lbl_802EF4C8[0x16] != 0) {
+        return 0x10;
+    }
+    return 9;
+}
+
 void fn_80076740(void) {
     extern u16 lbl_8026C0B8[];
     fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x2C3);
