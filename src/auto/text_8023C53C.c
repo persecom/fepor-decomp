@@ -7,6 +7,7 @@ typedef struct SampleKey { s32 data; u16 id; u16 type; u16 ref; u16 pad; } Sampl
 typedef struct SoundKeyEntry { u16 id; s8 key; u8 pan; s16 volume; u16 pad; } SoundKeyEntry;
 typedef struct AudioTableRange { u16 count; u16 start; } AudioTableRange;
 typedef struct AudioTableEntry { s32 data; u16 id; u16 ref; } AudioTableEntry;
+typedef struct SynthVmState { u8 pad[0xAC]; s32 regs[16]; } SynthVmState;
 typedef s32 Fn80256FF0Arg;
 
 extern u16 lbl_80366F28;
@@ -1523,12 +1524,13 @@ s32 fn_8024FE1C(u16 arg0, void *arg1, u16 arg2) {
     return 1;
 }
 
+#pragma opt_strength_reduction off
 s32 fn_80250414(u16 id) {
  void fn_8026372C(void); void fn_802636F4(void);
  extern AudioTableRange lbl_80354EB8[];
  extern AudioTableEntry lbl_803556B8[];
  extern u16 lbl_80368A0A;
- s32 i,j,index; u32 bucket; u16 count,start; AudioTableRange *range;
+ s32 i,j,index; u32 bucket; u16 count,start; AudioTableRange *range; AudioTableEntry *moving;
  fn_8026372C();
  bucket=(id>>6)&1023;
  count=lbl_80354EB8[bucket].count;
@@ -1538,9 +1540,9 @@ s32 fn_80250414(u16 id) {
   if(i<(s32)count) {
    index=start+i;
    if(--lbl_803556B8[index].ref==0) {
-    for(j=index+1;j<(s32)lbl_80368A0A;j++) lbl_803556B8[j-1]=lbl_803556B8[j];
-    for(j=0;j<512;j++) {
-     if((s32)lbl_80354EB8[j].start>(s32)start) lbl_80354EB8[j].start--;
+    for(j=index+1,moving=&lbl_803556B8[j];j<(s32)lbl_80368A0A;j++,moving++) moving[-1]=moving[0];
+    for(j=0,range=lbl_80354EB8;j<512;j++,range++) {
+     if((s32)range->start>(s32)start) range->start--;
     }
     lbl_80354EB8[bucket].count--;
     lbl_80368A0A--;
@@ -1550,7 +1552,7 @@ s32 fn_80250414(u16 id) {
  fn_802636F4();
  return 0;
 }
-
+#pragma opt_strength_reduction on
 s32 fn_80250698(void *arg0, void *arg1) {
     return M2C_FIELD(arg0, u16 *, 4) - M2C_FIELD(arg1, u16 *, 4);
 }
@@ -4864,6 +4866,251 @@ u8 fn_802601B0(u8 arg0, u8 arg1) {
         return lbl_80363E58[arg1][arg0];
     }
     return lbl_80363ED8[arg0];
+}
+
+u16 fn_802601EC(void *arg0, void *arg1, u8 arg2, u8 arg3) {
+    s16 fn_802537F8(void *, s32, u8);
+    u16 fn_8025FC64(u8, u8);
+    extern s32 lbl_803689B8;
+    extern s32 lbl_803689BC;
+
+    u8 *entry;
+    u8 *base;
+    s32 acc;
+    u32 i;
+    u32 signed_mode;
+    s32 val;
+    s32 tmp;
+    s32 scaled;
+    u8 op;
+    u8 mode;
+    s32 r5;
+    u32 diff_lo;
+    u32 diff_hi;
+
+    base = (u8 *)arg1;
+    entry = base;
+    acc = 0;
+    i = 0;
+    signed_mode = 0;
+
+    while (i < base[0x22]) {
+        if ((entry[1] & 0x10) != 0) {
+            if (arg0 != 0) {
+                val = fn_802537F8(arg0, 0, entry[0]);
+            } else {
+                val = 0;
+            }
+            goto apply_signed;
+        }
+
+        op = entry[0];
+        if (op == 0x80 || op == 1 || op == 0xA || (u8)(op - 0xA0) <= 1 || op == 0x83) {
+            if ((s32)op >= 0xA2) {
+                val = (s16)(fn_8025FC64(arg2, arg3) - 0x2000);
+            } else if ((s32)op >= 0xA0) {
+                if (arg0 != 0) {
+                    ((u8 *)arg0)[op + 0x138] = 1;
+                    val = *(s16 *)((u8 *)arg0 + (op * 0xC - 0x5B8)) * 2;
+                } else {
+                    val = 0;
+                }
+            } else {
+                val = (s16)(fn_8025FC64(arg2, arg3) - 0x2000);
+            }
+
+apply_signed:
+            scaled = (val * (*(s32 *)(entry + 4) >> 1)) >> 15;
+            if (scaled < -0x2000) {
+                val = -0x2000;
+            } else if (scaled > 0x1FFF) {
+                val = 0x1FFF;
+            } else {
+                val = scaled;
+            }
+
+            mode = (u8)(entry[1] & 0xF);
+            switch (mode) {
+            case 0:
+                acc = val + 0x2000;
+                signed_mode = 1;
+                break;
+            case 1:
+                if (signed_mode != 0) {
+                    tmp = (acc + val) - 0x2000;
+                    if (tmp < -0x2000) {
+                        val = -0x2000;
+                    } else if (tmp > 0x1FFF) {
+                        val = 0x1FFF;
+                    } else {
+                        val = tmp;
+                    }
+                    acc = val + 0x2000;
+                } else {
+                    tmp = acc + val;
+                    if (tmp > 0x3FFF) {
+                        acc = 0x3FFF;
+                    } else {
+                        acc = tmp & ~(tmp >> 31);
+                    }
+                }
+                break;
+            case 2:
+                if (signed_mode != 0) {
+                    scaled = ((acc - 0x2000) * val) >> 13;
+                } else {
+                    signed_mode = 1;
+                    scaled = (s32)((u32)(val * acc) >> 13);
+                }
+                if (scaled < -0x2000) {
+                    val = -0x2000;
+                } else if (scaled > 0x1FFF) {
+                    val = 0x1FFF;
+                } else {
+                    val = scaled;
+                }
+                acc = val + 0x2000;
+                break;
+            case 3:
+                if (signed_mode != 0) {
+                    tmp = (acc - 0x2000) - val;
+                    if (tmp < -0x2000) {
+                        val = -0x2000;
+                    } else if (tmp > 0x1FFF) {
+                        val = 0x1FFF;
+                    } else {
+                        val = tmp;
+                    }
+                    acc = val + 0x2000;
+                } else {
+                    tmp = acc - val;
+                    if (tmp > 0x3FFF) {
+                        acc = 0x3FFF;
+                    } else {
+                        acc = tmp & ~(tmp >> 31);
+                    }
+                }
+                break;
+            }
+        } else {
+            switch ((s32)op) {
+            case 0xA2:
+                if (arg0 != 0) {
+                    r5 = ((u8 *)arg0)[0x131] << 7;
+                } else {
+                    r5 = 0;
+                }
+                break;
+            case 0xA3:
+                if (arg0 != 0) {
+                    r5 = (s32)(*(u32 *)((u8 *)arg0 + 0x15C) >> 9);
+                } else {
+                    r5 = 0;
+                }
+                break;
+            case 0xA4:
+                if (arg0 != 0) {
+                    diff_lo = (u32)lbl_803689BC - *(u32 *)((u8 *)arg0 + 0x94);
+                    diff_hi = (u32)lbl_803689B8 - *(u32 *)((u8 *)arg0 + 0x90);
+                    if (*(u32 *)((u8 *)arg0 + 0x94) > (u32)lbl_803689BC) {
+                        diff_hi -= 1;
+                    }
+                    r5 = (s32)((diff_lo >> 8) | (diff_hi << 24));
+                    if (r5 > 0x3FFF) {
+                        r5 = 0x3FFF;
+                    }
+                    ((u8 *)arg0)[0xA8] = 1;
+                } else {
+                    r5 = 0;
+                }
+                break;
+            default:
+                r5 = (s32)fn_8025FC64(arg2, arg3);
+                break;
+            }
+
+            scaled = (r5 * (*(s32 *)(entry + 4) >> 1)) >> 15;
+            if (scaled > 0x3FFF) {
+                val = 0x3FFF;
+            } else {
+                val = scaled;
+            }
+
+            mode = (u8)(entry[1] & 0xF);
+            switch (mode) {
+            case 0:
+                acc = val;
+                signed_mode = 0;
+                break;
+            case 1:
+                if (signed_mode != 0) {
+                    tmp = (acc + val) - 0x2000;
+                    if (tmp < -0x2000) {
+                        val = -0x2000;
+                    } else if (tmp > 0x1FFF) {
+                        val = 0x1FFF;
+                    } else {
+                        val = tmp;
+                    }
+                    acc = val + 0x2000;
+                } else {
+                    tmp = acc + val;
+                    if ((u32)tmp > 0x3FFFU) {
+                        acc = 0x3FFF;
+                    } else {
+                        acc = tmp;
+                    }
+                }
+                break;
+            case 2:
+                if (signed_mode != 0) {
+                    scaled = (val * (acc - 0x2000)) >> 14;
+                    if (scaled < -0x2000) {
+                        val = -0x2000;
+                    } else if (scaled > 0x1FFF) {
+                        val = 0x1FFF;
+                    } else {
+                        val = scaled;
+                    }
+                    acc = val + 0x2000;
+                } else {
+                    scaled = (s32)((u32)(acc * val) >> 14);
+                    if ((u32)scaled > 0x3FFFU) {
+                        acc = 0x3FFF;
+                    } else {
+                        acc = scaled;
+                    }
+                }
+                break;
+            case 3:
+                if (signed_mode != 0) {
+                    tmp = (acc - 0x2000) - val;
+                    if (tmp < -0x2000) {
+                        val = -0x2000;
+                    } else if (tmp > 0x1FFF) {
+                        val = 0x1FFF;
+                    } else {
+                        val = tmp;
+                    }
+                    acc = val + 0x2000;
+                } else {
+                    tmp = acc - val;
+                    if (tmp > 0x3FFF) {
+                        acc = 0x3FFF;
+                    } else {
+                        acc = tmp & ~(tmp >> 31);
+                    }
+                }
+                break;
+            }
+        }
+
+        entry += 8;
+        i += 1;
+    }
+
+    *(s16 *)(base + 0x20) = (s16)acc;
+    return (u16)acc;
 }
 
 u16 fn_8026068C(void *arg0) {
