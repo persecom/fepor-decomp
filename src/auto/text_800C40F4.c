@@ -5571,6 +5571,73 @@ s32 fn_800EB884(s32 arg0, s32 arg1, s32 arg2) {
     return arg0 + arg1 + arg2;
 }
 
+u8 fn_800EBF58(void) {
+    s32 OSGetTick(void);
+    void fn_80217A2C(void);
+    s32 fn_8021A8C8(s32, void *, void *);
+    s32 fn_8021AFD0(s32, void *, s32, s32);
+    s32 fn_80217C34(s32);
+    s32 fn_8021A7D4(s32, s32);
+    void fn_8021B20C(s32);
+    void fn_800056CC(void *, u32, u8, u32);
+    extern u8 lbl_80320C20[];
+    extern u8 lbl_802725D8[];
+    s32 spC;
+    s32 sp8;
+    u32 start;
+    u8 result;
+    s32 r;
+    u32 elapsed;
+    u32 tickRate;
+    u32 conv;
+    u32 divres;
+
+    start = OSGetTick();
+    result = 0;
+    fn_80217A2C();
+    r = fn_8021A8C8(0, &spC, &sp8);
+    if (r == -1) goto L_AFD0;
+    if (r < 0) goto END;
+L_AFD0:
+    r = fn_8021AFD0(0, lbl_80320C20, 0, 0);
+    if (r < 0) goto END;
+    r = fn_80217C34(0);
+    if (r == -1) goto L_A7D4;
+    if (r == 0) goto L_second;
+    if (r >= 0) goto END;
+    if (r == -6) goto L_second;
+    goto END;
+L_A7D4:
+    r = fn_8021A7D4(0, 0);
+    if (r >= 0) goto L_second2;
+    fn_8021B20C(0);
+    goto END;
+L_second:
+    r = fn_80217C34(0);
+    if (r == -1) goto L_second2;
+    if (r == -6) goto L_B20C;
+    if (r >= 0) goto L_check0;
+    if (r == -13) goto L_B20C;
+    goto END;
+L_check0:
+    if (r == 0) {
+        result = 1;
+    }
+    goto END;
+L_B20C:
+    fn_8021B20C(0);
+    goto END;
+L_second2:
+    goto END;
+END:
+    elapsed = OSGetTick() - start;
+    tickRate = *(volatile u32 *)0x800000F8;
+    conv = (u32)(((u64)0x10624dd3ULL * (tickRate >> 2)) >> 32) >> 6;
+    divres = elapsed / conv;
+    fn_800056CC(lbl_802725D8 + 0x293, divres, result, elapsed);
+    return result;
+}
+
 s32 fn_800EC0A4(s32 arg0, s32 arg1, s32 arg2) {
     s32 var_r6;
     s32 var_r9;
@@ -6726,6 +6793,13 @@ s32 fn_800FB5C8(void *arg0) {
     extern u8 lbl_802EF4C8[];
     return (u8) fn_80015610(*(s32*)((u8*)arg0 + 0x190),
                             *(s32*)((u8*)*(void**)&lbl_802EF4C8 + 0x190)) == 1;
+}
+
+s32 fn_800FB60C(void *arg0) {
+    s32 fn_80015610(s32, s32);
+    extern u8 lbl_802EF4C8[];
+    s32 r = fn_80015610(*(s32 *)((u8 *)arg0 + 0x190), *(s32 *)((u8 *)*(void **)lbl_802EF4C8 + 0x190));
+    return (r & 0xFF) == 0;
 }
 
 void fn_800FB918(void *arg0, s32 arg1, s32 *arg2) {
