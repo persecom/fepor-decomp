@@ -1892,7 +1892,7 @@ extern "C" void *fn_801C14B4(void *arg0, s16 arg1, s16 arg2, s16 arg3) {
     *(f32 *)((u8 *)self + 0xC4) = lbl_8036B31C;
     ((Sub *)((u8 *)self + 0xA0))->v1();
     ((Work *)self)->v8();
-    fn_801D2C30(self);
+    fn_801D2C30((UIListObj *)self);
     return self;
 }
 #pragma cplusplus reset
@@ -3981,17 +3981,6 @@ extern "C" void fn_801D2C30(void *arg0) {
         virtual s16 v12() { return 0; }
     };
 
-    struct Self {
-        u8 unk00[0x4E];
-        s16 field4E;
-        u8 unk50[4];
-        s16 field54;
-        u8 unk56[0x16];
-        u32 count;
-        u8 unk70[4];
-        void *field74;
-    };
-
     void *sp18;
     void *sp14;
     s32 sp10;
@@ -4007,16 +3996,16 @@ extern "C" void fn_801D2C30(void *arg0) {
     s16 cur;
     void *endPtr;
     s32 idx;
-    Self *self;
+    UIListObj *self;
     s32 total;
     void **p14;
     void **p18;
 
-    p14 = &sp14;
-    p18 = &sp18;
-    self = (Self *)arg0;
+    self = (UIListObj *)arg0;
     endPtr = (u8 *)self + 0x70;
     cur = self->field4E;
+    p14 = &sp14;
+    p18 = &sp18;
     *p18 = endPtr;
     *p14 = self->field74;
     fn_801C1824(&sp10, &self->count, p14, p18);
@@ -4065,12 +4054,11 @@ extern "C" void fn_801D2C30(void *arg0) {
     }
     {
         u32 count = self->count;
-        u32 last;
+        u32 t = (u32)(s32)(s16)cur;
         s16 v;
         s16 scroll;
-        last = count - 1;
-        if ((u32)(s32)cur > last) {
-            cur = (s16)last;
+        if (t > count - 1) {
+            cur = (s16)(count - 1);
         }
         if (cur < 0) {
             cur = 0;
@@ -5476,7 +5464,6 @@ void fn_801DC1F0(void *arg0) {
     s32 bonus;
     s32 buttons;
     s32 prev;
-    s32 bit;
     s32 mask;
     void *entry;
     s16 v340;
@@ -5496,8 +5483,9 @@ void fn_801DC1F0(void *arg0) {
     }
 
     bonus = 0x28;
-    bit = (*(s16 *)((u8 *)state + 0x330) >> 2) & 1;
-    mask = (s32)~((bit - 1) | (1 - bit)) >> 31;
+    mask = *(s16 *)((u8 *)state + 0x330);
+    mask = (mask >> 2) & 1;
+    mask = (s32)~((mask - 1) | (1 - mask)) >> 31;
     bonus &= mask;
 
     if ((pressed & 0x100) == 0) {
