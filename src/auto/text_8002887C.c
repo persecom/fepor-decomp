@@ -2001,7 +2001,7 @@ void fn_80032DB4(void *arg0, void *arg1) {
     s32 spC;
     s32 sp8;
 
-    if ((arg1 != NULL) && ((u32) M2C_FIELD(arg1, u32 *, 0x40) != 0U) && (fn_8002F740() != 0U)) {
+    if ((arg1 != NULL) && ((u32) M2C_FIELD(arg1, u32 *, 0x40) != 0U) && (fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40)) != 0U)) {
         M2C_FIELD(M2C_FIELD(arg0, void **, 4), M2C_UNK (**)(void *, s32 *, s32 *, s32 *), 8)(arg0, &sp10, &spC, &sp8);
         fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40));
         fn_8002FC64(sp10, spC, sp8);
