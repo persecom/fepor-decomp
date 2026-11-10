@@ -618,17 +618,19 @@ s8 fn_8001BFFC(u8 *arg0) {
     return (s8)result;
 }
 
-s8 fn_8001C040(void *arg0) {
-    s8 fn_800C2C84(M2C_UNK *);
-    extern M2C_UNK lbl_803206EC;
-    u8 temp;
+s8 fn_8001C040(u8 *arg0) {
+    s32 fn_800C2C84(void *, s32);
+    extern u8 lbl_803206EC[];
+    s32 result;
+    s32 mask;
 
-    temp = *(u8 *)((char *)arg0 + 5);
-    if (!(temp & 0x3F)) {
-        return 0;
+    mask = arg0[5] & 0x3F;
+    if (mask == 0) {
+        result = 0;
     } else {
-        return fn_800C2C84(&lbl_803206EC);
+        result = (s8)fn_800C2C84(lbl_803206EC, mask);
     }
+    return (s8)result;
 }
 
 s8 fn_8001C084(u8 *arg0) {
