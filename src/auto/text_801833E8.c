@@ -6706,6 +6706,24 @@ s32 fn_801A23D0(void) {
     return 1;
 }
 
+s32 fn_801A2464(void) {
+    void *fn_8000C0C0(void *);
+    void *fn_8000CAA0(void *, s32);
+    s32 fn_800C0658(void);
+    u8 fn_80183974(void);
+    void fn_80013864(void);
+    extern u8 lbl_80296FA8[];
+    extern u8 lbl_80296FCC[];
+    void *temp;
+
+    temp = fn_8000C0C0(lbl_80296FA8);
+    if ((((u32)(-(s32)temp | (s32)temp) >> 31) != 0) || (fn_80183974() != 0)) {
+        fn_80013864();
+        fn_8000CAA0(lbl_80296FCC, fn_800C0658());
+    }
+    return 1;
+}
+
 void fn_801A24C4(void *arg0) {
     s32 fn_8000C0C0(void *);
     u8 fn_80183974(void);
