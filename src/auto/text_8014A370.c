@@ -426,9 +426,9 @@ u8 fn_8014B27C(void) {
     return lbl_80367B14[0xF];
 }
 
-void fn_8014B288(s8 arg1) {
-    // This is a placeholder that at least avoids the compilation error by adding necessary include.
-    // But it will not match until we get the global declaration correct.
+void fn_8014B288(u8 arg0, u8 arg1) {
+    extern u8 *lbl_80367B14;
+    lbl_80367B14[0xF] = arg1;
 }
 
 void *fn_8014B294(void) {
