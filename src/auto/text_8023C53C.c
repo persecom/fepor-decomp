@@ -2547,44 +2547,34 @@ void fn_80259A5C(void) {
     DCFlushRangeNoSync(lbl_80368A94, 0x100);
 }
 
-s32 fn_80259BE4(s16 *arg0, s16 *arg1, u16 *arg2, u16 arg3, s32 arg4, s32 arg5) {
-    u16 temp_r9;
-    s16 temp_r0;
-    s32 temp_r0_2;
-    s32 temp_r0_3;
-    s32 temp_r3;
-    s32 temp_r3_2;
-    
-    temp_r9 = *arg2;
-    if (arg3 != temp_r9) {
-        temp_r0 = arg3 - temp_r9;
-        if ((temp_r0 >= 0x20) && (temp_r0 < 0xA0)) {
-            temp_r0_2 = temp_r0 >> 5;
-            if (temp_r0_2 < 5) {
-                temp_r3 = temp_r0_2 * 2;
-                ((u16*)arg4)[temp_r3] = ((u16*)arg4)[temp_r3] | arg5;
+s32 fn_80259BE4(s16 *arg0, u16 *arg1, u16 *arg2, u16 arg3, u16 *arg4, u16 arg5) {
+    s16 diff;
+    s16 idx;
+
+    if (arg3 != *arg2) {
+        diff = (s16)arg3 - (s16)*arg2;
+        if (diff >= 0x20 && diff < 0xA0) {
+            idx = (s16)(diff >> 5);
+            if (idx < 5) {
+                arg4[idx] |= arg5;
             }
             *arg1 = 1;
-            *arg2 += temp_r0_2 << 5;
+            *arg2 += idx << 5;
             return 1;
         }
-        if ((temp_r0 <= -0x20) && (temp_r0 > -0xA0)) {
-            temp_r0_3 = -temp_r0 >> 5;
-            if (temp_r0_3 < 5) {
-                temp_r3_2 = temp_r0_3 * 2;
-                ((u16*)arg4)[temp_r3_2] = ((u16*)arg4)[temp_r3_2] | arg5;
+        if (diff <= -0x20 && diff > -0xA0) {
+            idx = (s16)(-diff >> 5);
+            if (idx < 5) {
+                arg4[idx] |= arg5;
             }
             *arg1 = 0xFFFF;
-            *arg2 -= temp_r0_3 << 5;
+            *arg2 -= idx << 5;
             return 1;
         }
-        if ((arg3 == 0) && (temp_r0 > -0x20)) {
+        if (arg3 == 0 && diff > -0x20) {
             *arg2 = 0;
             *arg0 = 0;
         }
-        /* Duplicate return node #14. Try simplifying control flow for better match */
-        *arg1 = 0;
-        return 0;
     }
     *arg1 = 0;
     return 0;
