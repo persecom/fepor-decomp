@@ -528,6 +528,16 @@ void fn_8001BC5C(void) {
     *(u8*)0x80268330 = 0;
 }
 
+void fn_8001BCF4(void *arg0) {
+    s32 fn_800C2EF8(u8 *, s32, u8 *);
+    extern u8 lbl_803206EC[];
+    extern u8 lbl_80268820[];
+    if (((u8 *)arg0)[5] & 0x3F) {
+        s32 r = fn_800C2EF8(lbl_803206EC, ((u8 *)arg0)[5] & 0x3F, lbl_80268820 + 0x3B);
+        ((u8 *)arg0)[5] = (u8)(((u8 *)arg0)[5] & 0xC0) | (r & 0x3F);
+    }
+}
+
 void fn_8001BD4C(void *arg0, s32 arg1) {
     s32 fn_800C2EF8(u8 *, s32, s32);
     s32 fn_800C3260(u8 *);
@@ -860,20 +870,27 @@ void *fn_8001C690(void *arg0, void *arg1) {
 }
 
 void *fn_8001C76C(void *arg0) {
-    extern u16 lbl_803206EC[576];
-    u8 *temp = (u8 *)arg0;
-    
-    temp[5] = (u8)(temp[5] & ~0x3F);
-    *(s32 *)temp = 0;
-    temp[4] = 0;
-    temp[5] = (u8)(temp[5] & ~0x80);
-    temp[5] = (u8)(temp[5] & ~0x40);
-    
-    if ((temp[5] & 0x3F) != 0) {
-        fn_800C3220(&lbl_803206EC);
-        temp[5] = (u8)(temp[5] & ~0x3F);
+    void fn_800C3220(void *, s32);
+    extern u8 lbl_803206EC[];
+    typedef struct {
+        u8 pad : 1;
+        u8 flag : 1;
+        u8 rest : 6;
+    } Bit6;
+    Bit6 *bf;
+    s32 mask;
+
+    bf = (Bit6 *)((u8 *)arg0 + 5);
+    bf->rest = 0;
+    *(s32 *)arg0 = 0;
+    *((u8 *)arg0 + 4) = 0;
+    bf->pad = 0;
+    bf->flag = 0;
+    mask = *((u8 *)arg0 + 5) & 0x3F;
+    if (mask != 0) {
+        fn_800C3220(lbl_803206EC, mask);
+        bf->rest = 0;
     }
-    
     return arg0;
 }
 
