@@ -13,7 +13,7 @@ u32 OSGetTick(void);;;
 extern s32 fn_80013E50(s32);
 extern s32 fn_80013E60(s32, s32);
 extern s32 fn_80013E74(void*, s32);
-extern u32 *fn_80207768(void);
+extern u8 *fn_80207768(u16 arg0, u8 *arg1, s32 *arg2, s32 *arg3);
 
 static inline BOOL IsSjisTrailByte(u8 c) {
     return (0x40 <= c && c <= 0xFC) && c != 0x7F;
