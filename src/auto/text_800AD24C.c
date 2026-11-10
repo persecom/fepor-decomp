@@ -4074,13 +4074,14 @@ void fn_800BD5E0(s32 arg0) {
 
 extern u16 lbl_802CA264[50];
 u8 fn_800BD610(s32 arg0) {
-    u16 *temp_r3;
+    extern u16 lbl_802CA264[50];
+    void *temp_r3;
 
-    temp_r3 = &lbl_802CA264[arg0 * 0x18];
+    temp_r3 = *(void **)((u8 *)lbl_802CA264 + (arg0 * 0xC));
     if (temp_r3 == NULL) {
         return 0U;
     }
-    return temp_r3[0x198/2]; // offset 0x198 is 0x198/2 words into the array
+    return *(u8 *)((u8 *)temp_r3 + 0x198);
 }
 
 void fn_800BDB54(s32 arg0, s32 arg1) {
