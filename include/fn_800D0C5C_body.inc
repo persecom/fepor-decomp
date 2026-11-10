@@ -128,7 +128,7 @@
     state = *(u32 *)((u8 *)self + 0xC);
     r28 = 0;
     r30 = 0;
-    if (1) {
+    if (state <= 0x39U) {
         switch (state) {
         case 0:
             if (lbl_8036788C != 0) {
