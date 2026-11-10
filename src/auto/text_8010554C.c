@@ -133,6 +133,25 @@ void *fn_80105814(void *arg0) {
     return base;
 }
 
+void *fn_8010586C(void *arg0) {
+    extern u8 lbl_802738A8[];
+    void *fn_8000E0E4(u32);
+    u8 *base;
+    void *result;
+    u32 value;
+
+    base = lbl_802738A8 + 0x2D;
+    value = M2C_FIELD(arg0, u32 *, 8);
+    if (value == 0) {
+        return base;
+    }
+    result = fn_8000E0E4(value);
+    if (result != NULL) {
+        return result;
+    }
+    return base;
+}
+
 void fn_80105A04(s32 arg0, s32 arg1) {
     M2C_UNK fn_8017A810(s32, M2C_UNK, s32);
     fn_8017A810(arg1, 0x10, arg0);
