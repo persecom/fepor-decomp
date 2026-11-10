@@ -8,36 +8,6 @@ typedef struct {
 extern f32 lbl_8036A30C;
 volatile f32 GXRegs_8036A30C[0x800] : 0xCC010000;
 
-static void fn_80121D60_append(void *arg0, u8 *s) {
-    extern u32 lbl_80367110;
-    u8 c;
-    s32 pos;
-    s32 off;
-
-    switch (lbl_80367110 & 0x800) {
-    case 0:
-        do {
-            c = *s;
-            s += 1;
-            if (!(lbl_80367110 & 0x800)) {
-                *(u8 *)((u8 *)arg0 + 0x400C) = 0;
-                pos = *(s32 *)((u8 *)arg0 + 0x4004);
-                if (pos <= 0x3E) {
-                    off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
-                    off = (off & 0x3FC0) + pos;
-                    M2C_FIELD(arg0, u8 *, off) = c;
-                    pos = *(s32 *)((u8 *)arg0 + 0x4004);
-                    *(s32 *)((u8 *)arg0 + 0x4004) = pos + 1;
-                    off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
-                    off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
-                    M2C_FIELD(arg0, u8 *, off) = 0;
-                }
-            }
-        } while ((s8)*s != 0);
-        break;
-    }
-}
-
 void fn_80120CCC(u16 *arg0) {
     *arg0 &= ~0x130;
 }
@@ -336,6 +306,7 @@ void fn_80121D60(void *arg0, u8 *arg1) {
     u8 c;
     s32 pos;
     s32 off;
+    u32 bit;
 
     if (arg1 == *(u8 **)((u8 *)arg0 + 0x4008)) {
         return;
@@ -346,32 +317,29 @@ void fn_80121D60(void *arg0, u8 *arg1) {
     }
     if ((s32)*arg1 == 0x47) {
         s = lbl_80274D20 + 0x31;
-        switch (lbl_80367110 & 0x800) {
+        bit = lbl_80367110 & 0x800;
+        switch (bit) {
         case 0:
-            goto body1;
-        default:
-            goto after1;
-        }
-    body1:
-        do {
-            c = *s;
-            s += 1;
-            if (!(lbl_80367110 & 0x800)) {
-                *(u8 *)((u8 *)arg0 + 0x400C) = 0;
-                pos = *(s32 *)((u8 *)arg0 + 0x4004);
-                if (pos <= 0x3E) {
-                    off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
-                    off = (off & 0x3FC0) + pos;
-                    M2C_FIELD(arg0, u8 *, off) = c;
+            do {
+                c = *s;
+                s += 1;
+                if (!(lbl_80367110 & 0x800)) {
+                    *(u8 *)((u8 *)arg0 + 0x400C) = 0;
                     pos = *(s32 *)((u8 *)arg0 + 0x4004);
-                    *(s32 *)((u8 *)arg0 + 0x4004) = pos + 1;
-                    off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
-                    off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
-                    M2C_FIELD(arg0, u8 *, off) = 0;
+                    if (pos <= 0x3E) {
+                        off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+                        off = (off & 0x3FC0) + pos;
+                        M2C_FIELD(arg0, u8 *, off) = c;
+                        pos = *(s32 *)((u8 *)arg0 + 0x4004);
+                        *(s32 *)((u8 *)arg0 + 0x4004) = pos + 1;
+                        off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+                        off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
+                        M2C_FIELD(arg0, u8 *, off) = 0;
+                    }
                 }
-            }
-        } while ((s8)*s != 0);
-    after1:
+            } while ((s8)*s != 0);
+            break;
+        }
         if (*(u8 *)((u8 *)arg0 + 0x400C) == 0) {
             off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
             off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
@@ -385,59 +353,53 @@ void fn_80121D60(void *arg0, u8 *arg1) {
         }
     } else {
         s = lbl_80274D20 + 0x37;
-        switch (lbl_80367110 & 0x800) {
+        bit = lbl_80367110 & 0x800;
+        switch (bit) {
         case 0:
-            goto body2;
-        default:
-            goto after2;
-        }
-    body2:
-        do {
-            c = *s;
-            s += 1;
-            if (!(lbl_80367110 & 0x800)) {
-                *(u8 *)((u8 *)arg0 + 0x400C) = 0;
-                pos = *(s32 *)((u8 *)arg0 + 0x4004);
-                if (pos <= 0x3E) {
-                    off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
-                    off = (off & 0x3FC0) + pos;
-                    M2C_FIELD(arg0, u8 *, off) = c;
+            do {
+                c = *s;
+                s += 1;
+                if (!(lbl_80367110 & 0x800)) {
+                    *(u8 *)((u8 *)arg0 + 0x400C) = 0;
                     pos = *(s32 *)((u8 *)arg0 + 0x4004);
-                    *(s32 *)((u8 *)arg0 + 0x4004) = pos + 1;
-                    off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
-                    off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
-                    M2C_FIELD(arg0, u8 *, off) = 0;
+                    if (pos <= 0x3E) {
+                        off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+                        off = (off & 0x3FC0) + pos;
+                        M2C_FIELD(arg0, u8 *, off) = c;
+                        pos = *(s32 *)((u8 *)arg0 + 0x4004);
+                        *(s32 *)((u8 *)arg0 + 0x4004) = pos + 1;
+                        off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+                        off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
+                        M2C_FIELD(arg0, u8 *, off) = 0;
+                    }
                 }
-            }
-        } while ((s8)*s != 0);
-    after2:
+            } while ((s8)*s != 0);
+            break;
+        }
         s = fn_8007C378(arg1);
-        switch (lbl_80367110 & 0x800) {
+        bit = lbl_80367110 & 0x800;
+        switch (bit) {
         case 0:
-            goto body3;
-        default:
-            goto after3;
-        }
-    body3:
-        do {
-            c = *s;
-            s += 1;
-            if (!(lbl_80367110 & 0x800)) {
-                *(u8 *)((u8 *)arg0 + 0x400C) = 0;
-                pos = *(s32 *)((u8 *)arg0 + 0x4004);
-                if (pos <= 0x3E) {
-                    off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
-                    off = (off & 0x3FC0) + pos;
-                    M2C_FIELD(arg0, u8 *, off) = c;
+            do {
+                c = *s;
+                s += 1;
+                if (!(lbl_80367110 & 0x800)) {
+                    *(u8 *)((u8 *)arg0 + 0x400C) = 0;
                     pos = *(s32 *)((u8 *)arg0 + 0x4004);
-                    *(s32 *)((u8 *)arg0 + 0x4004) = pos + 1;
-                    off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
-                    off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
-                    M2C_FIELD(arg0, u8 *, off) = 0;
+                    if (pos <= 0x3E) {
+                        off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+                        off = (off & 0x3FC0) + pos;
+                        M2C_FIELD(arg0, u8 *, off) = c;
+                        pos = *(s32 *)((u8 *)arg0 + 0x4004);
+                        *(s32 *)((u8 *)arg0 + 0x4004) = pos + 1;
+                        off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
+                        off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
+                        M2C_FIELD(arg0, u8 *, off) = 0;
+                    }
                 }
-            }
-        } while ((s8)*s != 0);
-    after3:
+            } while ((s8)*s != 0);
+            break;
+        }
         if (*(u8 *)((u8 *)arg0 + 0x400C) == 0) {
             off = (*(s32 *)((u8 *)arg0 + 0x4000) + 0x100) << 6;
             off = (off & 0x3FC0) + *(s32 *)((u8 *)arg0 + 0x4004);
