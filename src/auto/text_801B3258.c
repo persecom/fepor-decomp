@@ -3473,12 +3473,12 @@ void fn_801CFDD4(void *a)
     }
 }
 
-void fn_801CFE80(s32 arg0, s32 arg1) {
-    u8 *temp_r4;
+void fn_801CFE80(void *arg0, s32 arg1) {
+    u8 *p;
 
-    temp_r4 = (u8 *)(arg0 + ((arg1 * 0xE) + 0x60));
-    if ((s8)(*temp_r4) != 0) {
-        *(temp_r4 + 1) = 0x63;
+    p = (u8 *)arg0 + arg1 * 0xE + 0x60;
+    if ((s8)p[1] != 0) {
+        p[1] = 0x63;
     }
 }
 
