@@ -187,22 +187,37 @@ void __unregister_fragment(s32 arg0) {
     p[2] = 0;
 }
 
-void fn_8022D084(void *arg1) {
-    u32 temp_r5;
-    u32 var_r4;
+s32 __register_fragment(s32 arg0, s32 arg1) {
+    extern u8 fragmentinfo_8033DD28[];
+    s32 *p = (s32 *)fragmentinfo_8033DD28;
 
-    if (arg1 != NULL) {
-        temp_r5 = M2C_FIELD(arg1, u32 *, -4);
-        if (!(temp_r5 & 1)) {
-            var_r4 = M2C_FIELD(temp_r5, u32 *, 8);
+    if (p[2] == 0) {
+        p[0] = arg0;
+        p[1] = arg1;
+        p[2] = 1;
+        return 0;
+    }
+    return -1;
+}
+
+void fn_8022D084(void *heap, void *ptr) {
+    void fn_8022D0DC(void *, void *, u32);
+    void fn_8022D234(void *, void *);
+    u32 header;
+    u32 size;
+
+    if (ptr != NULL) {
+        header = *(u32 *)((u8 *)ptr - 4);
+        if ((header & 1) == 0) {
+            size = *(u32 *)(header + 8);
         } else {
-            var_r4 = (M2C_FIELD(arg1, u32 *, -8) & 0xFFFFFFF8) - 8;
+            size = (*(u32 *)((u8 *)ptr - 8) & ~7u) - 8;
         }
-        if (var_r4 <= 0x44U) {
-            fn_8022D0DC();
-            return;
+        if (size <= 0x44u) {
+            fn_8022D0DC(heap, ptr, size);
+        } else {
+            fn_8022D234(heap, ptr);
         }
-        fn_8022D234();
     }
 }
 
@@ -1741,20 +1756,29 @@ void fn_80238ABC(void) {
     fn_8023108C();
 }
 
-void fn_80238ADC(u8 *arg0) {
+u8 *fn_80238ADC(u8 *arg0) {
     extern u16 lbl_8029E9A8[256];
-    u8 temp_r5;
-    u8 var_r0;
+    u8 *p;
+    s32 c;
+    s32 tmp;
+    u8 *table;
 
-    while ((s8) (temp_r5 = *arg0) != 0) {
-        if ((s8) temp_r5 == -1) {
-            var_r0 = -1U;
+    table = (u8 *)lbl_8029E9A8;
+    p = arg0;
+    goto check;
+    do {
+        tmp = (s8)c;
+        if (tmp == -1) {
+            tmp = -1;
         } else {
-            var_r0 = lbl_8029E9A8[(u8) (s8) temp_r5];
+            tmp = table[(u8)tmp];
         }
-        *arg0 = var_r0;
-        arg0 += 1;
-    }
+        *p = (u8)tmp;
+        p += 1;
+    check:
+        c = (u8)*p;
+    } while ((s8)c != 0);
+    return arg0;
 }
 
 s32 Hu_IsStub(void) {
