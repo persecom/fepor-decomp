@@ -15,8 +15,8 @@ struct UnkObject {
 #pragma cplusplus off
 
 struct UnkCycler {
-    s32 unk0;
-    s32 unk4;
+    u8 pad0[4];
+    u8 unk4;
     u8 unk5;
     u16 unk6;
     u8 pad8[0x14 - 8];
@@ -1165,6 +1165,47 @@ s32 fn_80109180(s32 arg0, u32 arg1) {
     return temp_r31;
 }
 
+void fn_80009B80(s8 arg0);
+void fn_80009B8C(s8 arg0);
+void fn_80009C20(void *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8);
+void fn_80109244(struct Arg0 *arg0) {
+    f32 temp_f4;
+    s32 temp_r31;
+    s32 i;
+    struct UnkCycler *outer;
+
+    arg0->unk3C = arg0->unk3C + arg0->unk38;
+    if (arg0->unk3C >= arg0->unk34) {
+        arg0->unk3C = arg0->unk3C - arg0->unk34;
+    }
+    fn_8000A258();
+    outer = arg0->unk30;
+    temp_f4 = arg0->unk3C;
+    fn_80009C20(outer, arg0->unk40, arg0->unk44, arg0->unk48 + (f32)arg0->unk30->unk6, arg0->unk4C, arg0->unk50, arg0->unk54, arg0->unk58, arg0->unk5C);
+    fn_80009B8C(arg0->unk60);
+    fn_80009B80(arg0->unk61);
+    fn_8000A248();
+    if (arg0->unk30->unk5 == 0) {
+        i = arg0->unk30->unk4 - 1;
+        do {
+            arg0->unk30->unk14[i]->v1(0xFF);
+            i--;
+        } while (i >= 0);
+    } else if (arg0->unk30->unk5 == 2) {
+        temp_r31 = (s32)temp_f4;
+        if (lbl_8036A134 * (temp_f4 - (f32)temp_r31) != lbl_8036A130) {
+            arg0->unk30->unk14[(temp_r31 + 1) % arg0->unk30->unk4]->v1((s32)(lbl_8036A134 * (temp_f4 - (f32)temp_r31)));
+        }
+        arg0->unk30->unk14[temp_r31]->v1(0xFF);
+    } else if (arg0->unk30->unk5 == 1) {
+        arg0->unk30->unk14[(s32)temp_f4]->v1(0xFF);
+    }
+    fn_8000A258();
+    fn_80009B8C(0xFF);
+    fn_80009B80(0x80);
+    fn_8000A248();
+}
+
 void fn_80109448(void *arg0, s32 arg1) {
     void *temp_r3;
     s32 temp_r5;
@@ -1681,7 +1722,6 @@ u8 fn_8010BB74(void *arg0) {
     s32 y0;
     s32 xShift;
     u8 *row;
-    u8 *row2;
     s32 t;
     s32 bestDist;
     u8 bestCost;
@@ -1694,12 +1734,16 @@ u8 fn_8010BB74(void *arg0) {
     s32 x;
     u8 *map;
     u8 *map2;
-    u8 flag;
+    s32 pad;
 
-    flag = lbl_8032B3C0[1];
-    if (!(flag & 2) && (*(u32 *)((u8 *)arg0 + 0x254) & 0x03000000)) {
-        return 0;
+    pad = 0;
+    {
+        u8 *p = lbl_8032B3C0;
+        if (!(p[1] & 2) && (*(u32 *)((u8 *)arg0 + 0x254) & 0x03000000)) {
+            return 0;
+        }
     }
+    (void)pad;
     map = lbl_802CA518;
     bestCost = 0xFF;
     bestDist = 0x7FFFFFFF;
@@ -1739,14 +1783,13 @@ outer:
     x = xMin;
     xShift = (s8)y << 6;
     row = map2 + xShift;
-    row2 = map + xShift;
     goto inner_cmp;
 inner:
     t = (s8)x + xShift;
     if (((s16 *)(map2 + 0x610E))[t] >= 0) {
         u8 *cell = row + (s8)x;
         if ((s8)cell[0xE18E] == 0 && fn_800FE84C((s8)x, (s8)y) == 0 && cell[0xD] == 0) {
-            void *tmp = fn_80019DBC(*(row2 + ((s8)x + 0x100D)));
+            void *tmp = fn_80019DBC(*(map + xShift + ((s8)x + 0x100D)));
             if (*(u8 *)(*(u8 **)((u8 *)tmp + 8) + 6) != 0) {
                 s32 dist = fn_8010067C((s16)x, (s16)y, fn_800FB5C8);
                 if (dist <= bestDist) {
@@ -1798,6 +1841,110 @@ u8 fn_8010BDE0(s32 arg0) {
     }
     return 0U;
 }
+
+#pragma use_lmw_stmw on
+#pragma optimization_level 2
+s32 fn_8010C244(void *arg0) {
+    void *fn_80019E04(void *);
+    void *fn_80037BD0(void *, s32);
+    s8 fn_8003B2D0(void *);
+    void fn_800FB96C(s32, s8, s8, void *, s8, s8, s8, s32, s32);
+    void fn_801025BC(void *, s16 *, s16 *);
+    s32 fn_80230BCC(s32);
+    extern u8 lbl_80273B40[];
+    extern u8 lbl_8032B3C0[];
+    s16 sp12;
+    s16 sp10;
+    s32 sp8;
+    void *best;
+    s32 i;
+    u8 *p;
+    void *slot;
+    void *item;
+    void *chosen;
+    void *key;
+    s8 valBest;
+    s8 valCur;
+    s8 temp;
+    s32 a;
+    s32 idx;
+
+    best = 0;
+    i = 0;
+    p = arg0;
+loop:
+    slot = p + 0x1EC;
+    item = *(void **)(p + 0x1EC);
+    if (item == 0) {
+        goto after_loop;
+    }
+    if (*(u8 *)((u8 *)item + 0x12) == 0xA && *(u8 *)((u8 *)item + 0x14) == 0x81) {
+        if (best == 0) {
+            best = slot;
+        } else {
+            key = *(void **)best;
+            chosen = best;
+            if (key == fn_80019E04(lbl_80273B40 + 0x1D)) {
+                valBest = 0xA;
+            } else if (key == fn_80019E04(lbl_80273B40 + 0x2B)) {
+                valBest = fn_8003B2D0(arg0);
+            } else {
+                valBest = 0;
+            }
+            key = *(void **)slot;
+            temp = valBest;
+            if (key == fn_80019E04(lbl_80273B40 + 0x1D)) {
+                valCur = 0xA;
+            } else if (key == fn_80019E04(lbl_80273B40 + 0x2B)) {
+                valCur = fn_8003B2D0(arg0);
+            } else {
+                valCur = 0;
+            }
+            if ((s8)valBest != (s8)valCur) {
+                if ((s8)valBest > (s8)valCur) {
+                    temp = valCur;
+                    valCur = valBest;
+                    chosen = slot;
+                    slot = best;
+                }
+                valBest = (s8)(fn_8003B2D0(arg0) - ((u8 *)arg0)[0x1A8]);
+                a = fn_80230BCC((s8)(valBest - (s8)valCur));
+                if (fn_80230BCC((s8)(valBest - (s8)temp)) > a) {
+                    chosen = slot;
+                }
+            } else if (*(u8 *)((u8 *)best + 4) > *(u8 *)((u8 *)slot + 4)) {
+                chosen = slot;
+            } else {
+                chosen = best;
+            }
+            best = chosen;
+        }
+    }
+    i += 1;
+    p += 8;
+    if (i < 4) {
+        goto loop;
+    }
+after_loop:
+    if (best == 0) {
+        return 0;
+    }
+    for (idx = 4; idx < 8; idx++) {
+        if (best == fn_80037BD0(arg0, idx)) {
+            break;
+        }
+    }
+    sp12 = (s8)((u8 *)arg0)[0x19E];
+    sp10 = (s8)((u8 *)arg0)[0x19F];
+    if (!(lbl_8032B3C0[1] & 2) && !(*(u32 *)((u8 *)arg0 + 0x254) & 0x03000000)) {
+        fn_801025BC(arg0, &sp12, &sp10);
+    }
+    sp8 = 0;
+    fn_800FB96C(4, (s8)sp12, (s8)sp10, arg0, (s8)sp12, (s8)sp10, (s8)idx, 0, 0);
+    return best != 0;
+}
+#pragma optimization_level reset
+#pragma use_lmw_stmw reset
 
 s32 fn_8010C4B0(void *arg0) {
     void *fn_8000D354(s32);
