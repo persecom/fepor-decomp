@@ -1066,6 +1066,20 @@ s32 fn_800CAD4C(void *arg0, s32 arg1, u8 arg2) {
     return 0;
 }
 
+void fn_800CADF8(void) {
+    extern u8 lbl_80367878;
+    extern void *lbl_8036787C;
+    void *object;
+
+    if (lbl_80367878 != 0) {
+        object = *(void **)((u8 *)lbl_8036787C + 0x440);
+
+        if (object != NULL) {
+            fn_801481CC(object, 0xFA);
+        }
+    }
+}
+
 void fn_800CAE38(void *arg0) {
     s8* ptr = (s8*)arg0;
     ptr[0] = 0;
@@ -7053,82 +7067,79 @@ sort:
 }
 
 void fn_800FF178(void) {
-    extern u8 lbl_802EF4C8[24];
-    extern u8 lbl_8032B3C0[544];
-    
-    void **fn_80037BBC(void *, s8);
-    u8 fn_8001D500(void **);
-    u8 fn_8001DD54(void *);
-    u8 fn_8009339C(void *);
-    void fn_800951D0(void *, s8);
-    
-    s8 var_r28;
-    s8 var_r29;
-    s8 var_r30;
-    u8 var_r0;
-    u8 var_r0_2;
-    u8 var_r0_3;
-    void **temp_r3;
-    void *temp_r31;
-    void *temp_r3_2;
-    
-    temp_r31 = (void **)lbl_802EF4C8;
-    
-    if ((s8) lbl_802EF4C8[0x12] != 0) {
-        var_r0 = 0;
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_8032B3C0[];
+    void **fn_80037BBC(void *, s32);
+    s32 fn_8001D500(void **);
+    s32 fn_8001DD54(void *, void *);
+    s32 fn_8009339C(void *);
+    void fn_800951D0(void *, s32);
+    void *unit;
+    s8 best;
+    s8 bestScore;
+    s8 i;
+    void **item;
+    void *obj;
+    u8 flag;
+    u8 v;
+    u8 w;
+    s32 val;
+
+    unit = *(void **)lbl_802EF4C8;
+    if ((s8)lbl_802EF4C8[0x12] != 0) {
+        flag = 0;
     } else if (lbl_8032B3C0[1] & 4) {
-        var_r0 = 0;
-    } else if (((s32 *)lbl_802EF4C8)[0x1A0 >> 2] & 0x18) {
-        var_r0 = 0;
+        flag = 0;
+    } else if (*(s32 *)((u8 *)unit + 0x1A0) & 0x18) {
+        flag = 0;
     } else {
-        u8 *unit = &lbl_802EF4C8[8];
-        if ((s32)*unit < 0x15) {
-            if ((s32)*unit != 0xF) {
-                goto block_11;
+        val = lbl_802EF4C8[8];
+        if (val < 0x15) {
+            if (val == 0xF) {
+                goto L_zero;
             }
-            goto block_10;
+            goto L_one;
         }
-        if ((s32)*unit < 0x17) {
-block_10:
-            var_r0 = 0;
+        if (val < 0x17) {
+L_zero:
+            flag = 0;
         } else {
-block_11:
-            var_r0 = 1;
+L_one:
+            flag = 1;
         }
     }
-    
-    if (var_r0 != 0) {
-        var_r30 = -1;
-        var_r29 = -0x80;
-        var_r28 = 0;
-loop_27:
-        if (var_r28 < 4) {
-            temp_r3 = fn_80037BBC(temp_r31, var_r28);
-            if ((void *) *temp_r3 != NULL) {
-                if (fn_8009339C(temp_r31) != 0) {
-                    temp_r3_2 = *temp_r3;
-                    if (temp_r3_2 != NULL) {
-                        var_r0_2 = *(u8 *)((u8 *)temp_r3_2 + 0x1D);
+
+    if (flag != 0) {
+        best = -1;
+        bestScore = -0x80;
+        for (i = 0; i < 4; i++) {
+            item = fn_80037BBC(unit, i);
+            if (*item == NULL) {
+                break;
+            }
+            if ((u8)fn_8009339C(unit) != 0) {
+                obj = *item;
+                if (obj != NULL) {
+                    v = *(u8 *)((u8 *)obj + 0x1D);
+                } else {
+                    v = 0;
+                }
+                if (v <= 1) {
+                    if (obj != NULL) {
+                        w = fn_8001DD54(obj, unit);
                     } else {
-                        var_r0_2 = 0;
+                        w = 0;
                     }
-                    if (var_r0_2 <= 1U) {
-                        if (temp_r3_2 != NULL) {
-                            var_r0_3 = fn_8001DD54(temp_r31);
-                        } else {
-                            var_r0_3 = 0;
-                        }
-                        if ((var_r0_3 > 1U) && (var_r29 < (s32) fn_8001D500(temp_r3))) {
-                            var_r29 = fn_8001D500(temp_r3);
-                            var_r30 = var_r28;
+                    if (w > 1) {
+                        if (bestScore < (s32)(u8)fn_8001D500(item)) {
+                            bestScore = fn_8001D500(item);
+                            best = i;
                         }
                     }
                 }
-                var_r28 += 1;
-                goto loop_27;
             }
         }
-        fn_800951D0(temp_r31, var_r30);
+        fn_800951D0(unit, best);
     }
 }
 
