@@ -388,9 +388,10 @@ s32 fn_801EC540(void) {
 }
 
 void fn_801EC558(void) {
-    extern u16 lbl_8027EE08;
-    u16* tmp = &lbl_8027EE08;
-    fn_8000E0E4(tmp + 0x2AB);
+    void fn_8000E0E4(void *);
+    extern u8 lbl_8027EE08[257];
+
+    fn_8000E0E4(lbl_8027EE08 + 0x2AB);
 }
 
 void *fn_801EC584(void) {
