@@ -1847,6 +1847,93 @@ void fn_801FA508(void *arg0) {
     }
 }
 
+#pragma optimization_level 3
+__declspec(section ".rodata") static const char unused_fmt_s[] = "%s";
+
+void fn_801FA5DC(void *arg0) {
+    void fn_8000A258(void);
+    void fn_80009D74(f32, f32, f32, f32);
+    void fn_80009B8C(s32);
+    void fn_80009B80(s32);
+    void fn_8000A248(void);
+    void fn_8000C070(void *, s32);
+    void *fn_8000D2BC(void *);
+    void fn_8000A174(s32, s32);
+    s16 fn_80010B78(void *, s32, f32);
+    void fn_8001019C(s32, s32, s32, void *, ...);
+    f64 fn_802387C8(f64, f64);
+    extern s32 lbl_80367110;
+    extern f32 lbl_8036BA18;
+    extern f32 lbl_8036BA1C;
+    extern f32 lbl_8036BA20;
+    extern f64 lbl_8036BA28;
+    extern f64 lbl_8036BA30;
+    extern f32 lbl_8036BA38;
+    extern f64 lbl_8036BA10;
+    extern f32 lbl_8036BA00;
+    extern f32 lbl_8036BAAC;
+    extern f32 lbl_8036BAB0;
+    extern u8 lbl_80281028[];
+
+    typedef struct {
+        void *str0;
+        void *str4;
+        void *str8;
+    } Entry;
+
+    static const char fmt[] = "%s";
+    f32 limit;
+    f32 scroll;
+    f32 step;
+    u8 flag;
+    s16 w;
+    Entry *ent;
+    u32 i;
+
+    if (lbl_80367110 & 1) {
+        fn_8000C070(arg0, 1);
+        return;
+    }
+    fn_8000A258();
+    fn_80009D74(lbl_8036BA18, lbl_8036BA18, lbl_8036BA1C, lbl_8036BA20);
+    fn_80009B8C(0xFF);
+    fn_80009B80(0x80);
+    fn_8000A248();
+    limit = *(f32 *)((u8 *)arg0 + 0x38);
+    scroll = (f32)fn_802387C8(lbl_8036BA28, lbl_8036BA30);
+    scroll = (f32)(s32)(scroll * (limit + lbl_8036BA38 / scroll)) / scroll;
+    ent = (Entry *)fn_8000D2BC(lbl_80281028 + 0x387);
+    limit = lbl_8036BA00;
+    step = lbl_8036BAAC;
+    for (i = 0; i < *(u32 *)((u8 *)arg0 + 0x34); i++) {
+        flag = 0;
+        if (scroll <= limit) {
+            if (lbl_8036BA18 < scroll + lbl_8036BAAC) {
+                flag = 1;
+            }
+        }
+        if (flag != 0) {
+            fn_8000A258();
+            fn_8000A174(0, 0x13);
+            fn_8000A248();
+            if (ent->str0 != NULL) {
+                w = fn_80010B78(ent->str0, -1, lbl_8036BA20);
+                fn_8001019C((s32)(f32)(0x120 - w), (s32)scroll, 1, ent->str0);
+            }
+            if (ent->str4 != NULL) {
+                w = fn_80010B78(ent->str4, -1, lbl_8036BA20);
+                fn_8001019C((s32)(f32)(0x130 - (w >> 1)), (s32)scroll, 1, ent->str4);
+            }
+            if (ent->str8 != NULL) {
+                fn_80010B78(ent->str8, -1, lbl_8036BA20);
+                fn_8001019C((s32)lbl_8036BAB0, (s32)scroll, 1, (char *)fmt, ent->str8);
+            }
+        }
+        scroll += step;
+        ent++;
+    }
+}
+#pragma optimization_level reset
 void fn_801FA874(void *arg0) {
     s32 temp_r0;
 
