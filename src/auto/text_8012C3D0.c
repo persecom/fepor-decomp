@@ -672,28 +672,20 @@ s32 fn_801311A4(void* arg0, void** arg1, s32 arg2) {
 }
 
 extern s32 fn_8010424C(void*);
-s32 fn_80131464(void** arg1, s32 arg2) {
-    void* temp_r3;
-    s32 result; 
-    
+s32 fn_80131464(s32 unused, void **arg1, s32 arg2) {
+    void *temp_r3;
+
     temp_r3 = *arg1;
-    
-    switch (arg2) {                                 /* irregular */
+    switch (arg2) {
     case 0:
-        result = -(s32)(*(u16*)((u8*)temp_r3 + 0x188 + 0x5a));
-        break;
+        return -*(u16 *)((u8 *)*(void **)((u8 *)temp_r3 + 0x188) + 0x5A);
     case 1:
-        result = (*(u16*)((u8*)temp_r3 + 0x194) < 0) ? 1 : 0;
-        break;
+        return *(s32 *)((u8 *)temp_r3 + 0x194) != 0;
     case 2:
-        result = fn_8010424C((u8*)temp_r3 + 0x1A4);
-        break;
+        return fn_8010424C((u8 *)temp_r3 + 0x1A4);
     default:
-        result = 0;
-        break;
+        return 0;
     }
-    
-    return result;
 }
 
 void *fn_801314DC(void *unused, s32 arg1) {
