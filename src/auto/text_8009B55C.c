@@ -289,9 +289,8 @@ void fn_8009E7A0(void) {
 }
 
 void fn_8009E7DC(void) {
-    extern u16 lbl_80312100[100];
-    s32 tick = OSGetTick();
-    lbl_80312100[0] = (u16)tick;
+    extern u16 lbl_80312100[];
+    *(u32 *)((u8 *)lbl_80312100 + 0x8) = OSGetTick();
 }
 
 void fn_8009E808(void) {
