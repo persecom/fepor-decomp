@@ -3057,12 +3057,12 @@ extern "C" void fn_801CC5C4(void *arg0, void *arg1) {
     };
 
     u8 color[4];
-    s16 y0;
-    void *self;
-    void *arg;
-    s16 x0;
-    s16 h;
     s16 w;
+    s16 h;
+    s16 x0;
+    void *arg;
+    void *self;
+    s16 y0;
 
     self = arg0;
     arg = arg1;
@@ -3087,13 +3087,12 @@ extern "C" void fn_801CC5C4(void *arg0, void *arg1) {
             *(s16 *)((u8 *)self + 0x4E) = (*(s16 *)((u8 *)self + 0x4E) + t5 + 1) >> 1;
         }
     }
+    x0 = *(s16 *)((u8 *)self + 0x4C);
     {
-        s16 px;
         s16 py;
         void *ptr;
         s32 eq;
 
-        px = *(s16 *)((u8 *)self + 0x4C);
         py = *(s16 *)((u8 *)self + 0x4E);
         if (*(u32 *)((u8 *)arg + 0x34) != 0) {
             ptr = (*(void ***)((u8 *)arg + 0x38))[2];
@@ -3112,7 +3111,7 @@ extern "C" void fn_801CC5C4(void *arg0, void *arg1) {
             fn_80009C0C(lbl_8036B4C8);
             fn_8000A248();
             color[0] = 0x9C;
-            x1 = (s16)(px + ((w - 0x30) >> 1));
+            x1 = (s16)(x0 + ((w - 0x30) >> 1));
             y1 = (s16)(py + ((h - 0x30) >> 1));
             color[1] = 0x2F;
             x2 = (s16)(x1 + 0x30);
@@ -6489,18 +6488,20 @@ s32 fn_801DFBE4(s32 arg0) {
         off += 0x6000;
     } while (i < 2);
 
-    return 0;
-}
-
-static inline u32 save_slot_size(u8 *slot) {
-    u32 size = *(u32 *)(slot + 0x48);
-    if (size > 0x100000U) {
-        return 0;
-    }
-    return size;
-}
-
-void fn_801DFE60(u8 **arg0, s32 arg1) {
+          return 0;
+  }
+  #pragma optimization_level reset
+  
+  static inline u32 save_slot_size(u8 *slot) {
+      u32 size = *(u32 *)(slot + 0x48);
+      if (size > 0x100000U) {
+          return 0;
+      }
+      return size;
+  }
+  
+  #pragma opt_strength_reduction off
+  void fn_801DFE60(u8 **arg0, s32 arg1) {
     void fn_800062CC(void *, void *, s32);
     void fn_801E3CA8(void *);
     void fn_800E9B80(void *, s32, s32, s32, s32);
@@ -6514,10 +6515,10 @@ void fn_801DFE60(u8 **arg0, s32 arg1) {
     s32 ctr;
     u8 *slot;
     u8 hdrOk;
-    u32 size;
     u32 clamped;
     u8 *found;
     s32 diff;
+    u32 base;
 
     minSize = (u32)-1;
     off = 0x2000;
@@ -6525,8 +6526,11 @@ void fn_801DFE60(u8 **arg0, s32 arg1) {
     i = 0;
     self = arg1;
 
-    for (ctr = 3; ctr != 0; ctr--) {
-        slot = *arg0 + off;
+    ctr = 3;
+    mtctr_loop1:
+    {
+        base = *(u32 *)arg0;
+        slot = (u8 *)(base + off);
         if (*(u32 *)(slot + 0x40) != 0x4645384AU) {
             hdrOk = 0;
         } else if (*(u32 *)(slot + 0x44) != 0x20050201U) {
@@ -6535,15 +6539,15 @@ void fn_801DFE60(u8 **arg0, s32 arg1) {
             hdrOk = 1;
         }
         if (hdrOk == 0) {
-            size = *(u32 *)(slot + 0x48);
-            clamped = size & (u32)-(size <= 0x100000U);
+            clamped = save_slot_size(slot);
             if (minSize > clamped) {
                 best = slot;
-                minSize = size & (u32)-(size <= 0x100000U);
+                minSize = save_slot_size(slot);
             }
         }
         off += 0x4000;
-        slot = *arg0 + off;
+        base = *(u32 *)arg0;
+        slot = (u8 *)(base + off);
         if (*(u32 *)(slot + 0x40) != 0x4645384AU) {
             hdrOk = 0;
         } else if (*(u32 *)(slot + 0x44) != 0x20050201U) {
@@ -6552,21 +6556,24 @@ void fn_801DFE60(u8 **arg0, s32 arg1) {
             hdrOk = 1;
         }
         if (hdrOk == 0) {
-            size = *(u32 *)(slot + 0x48);
-            clamped = size & (u32)-(size <= 0x100000U);
+            clamped = save_slot_size(slot);
             if (minSize > clamped) {
                 best = slot;
-                minSize = size & (u32)-(size <= 0x100000U);
+                minSize = save_slot_size(slot);
             }
         }
         off += 0x4000;
         i += 1;
+        if (--ctr != 0) goto mtctr_loop1;
     }
 
     i = 0;
     off = 0x2000;
-    for (ctr = 2; ctr != 0; ctr--) {
-        found = *arg0 + off;
+    ctr = 2;
+    mtctr_loop2:
+    {
+        base = *(u32 *)arg0;
+        found = (u8 *)(base + off);
         if (*(u32 *)(found + 0x40) != 0x4645384AU) {
             hdrOk = 0;
         } else if (*(u32 *)(found + 0x44) != 0x20050201U) {
@@ -6578,7 +6585,8 @@ void fn_801DFE60(u8 **arg0, s32 arg1) {
             goto found_slot;
         }
         off += 0x4000;
-        found = *arg0 + off;
+        base = *(u32 *)arg0;
+        found = (u8 *)(base + off);
         if (*(u32 *)(found + 0x40) != 0x4645384AU) {
             hdrOk = 0;
         } else if (*(u32 *)(found + 0x44) != 0x20050201U) {
@@ -6590,7 +6598,8 @@ void fn_801DFE60(u8 **arg0, s32 arg1) {
             goto found_slot;
         }
         off += 0x4000;
-        found = *arg0 + off;
+        base = *(u32 *)arg0;
+        found = (u8 *)(base + off);
         if (*(u32 *)(found + 0x40) != 0x4645384AU) {
             hdrOk = 0;
         } else if (*(u32 *)(found + 0x44) != 0x20050201U) {
@@ -6603,15 +6612,17 @@ void fn_801DFE60(u8 **arg0, s32 arg1) {
         }
         off += 0x4000;
         i += 2;
+        if (--ctr != 0) goto mtctr_loop2;
     }
 
     found = NULL;
 
 found_slot:
     if (found == NULL) {
-        found = *arg0 + 0x2000;
+        base = *(u32 *)arg0;
+        found = (u8 *)(base + 0x2000);
         if (found == best) {
-            found = *arg0 + 0x6000;
+            found = (u8 *)(base + 0x6000);
         }
     }
 
