@@ -112,6 +112,25 @@ void *fn_801057BC(void *arg0) {
     return temp_r31;
 }
 
+void *fn_80105814(void *arg0) {
+    extern u8 lbl_802738A8[];
+    void *fn_8000E0E4(u32);
+    u8 *base;
+    void *result;
+    u32 value;
+
+    base = lbl_802738A8 + 8;
+    value = M2C_FIELD(arg0, u32 *, 0xC);
+    if (value == 0) {
+        return base;
+    }
+    result = fn_8000E0E4(value);
+    if (result != NULL) {
+        return result;
+    }
+    return base;
+}
+
 void fn_80105A04(s32 arg0, s32 arg1) {
     M2C_UNK fn_8017A810(s32, M2C_UNK, s32);
     fn_8017A810(arg1, 0x10, arg0);
@@ -1054,6 +1073,35 @@ void fn_80109DC0(void) {
             }
         }
     }
+}
+
+void fn_80109EEC(void *arg0) {
+    extern f32 lbl_8036A130;
+    extern f32 lbl_8036A14C;
+    f32 zero;
+    f32 scale;
+    f32 *p;
+    void *temp_r4;
+    u8 *temp_r6;
+    s32 kind;
+
+    zero = lbl_8036A130;
+    temp_r4 = *(void **)((u8 *)arg0 + 0x30);
+    *(f32 *)((u8 *)arg0 + 0x50) = zero;
+    *(f32 *)((u8 *)arg0 + 0x4C) = zero;
+    temp_r6 = *(u8 **)((u8 *)temp_r4 + 0x14);
+    kind = temp_r6[0];
+    switch (kind) {
+    case 1:
+        *(f32 *)((u8 *)arg0 + 0x4C) = (f32)(s32)(*(u16 *)(temp_r6 + 0x20) - *(u16 *)(temp_r6 + 0x1C));
+        *(f32 *)((u8 *)arg0 + 0x50) = (f32)(s32)(*(u16 *)(temp_r6 + 0x22) - *(u16 *)(temp_r6 + 0x1E));
+        break;
+    }
+    scale = lbl_8036A14C;
+    p = (f32 *)((u8 *)arg0 + 0x4C);
+    *p = *p * scale;
+    p = (f32 *)((u8 *)arg0 + 0x50);
+    *p = *p * scale;
 }
 
 extern u16 lbl_80312060[32];
