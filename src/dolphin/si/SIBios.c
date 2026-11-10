@@ -208,8 +208,10 @@ static BOOL InputBufferValid[4];
 static u32 InputBuffer[4][2];
 static volatile u32 InputBufferVcount[4];
 
-static s32 SI_Identity(s32 x) {
-    return x;
+static s32 SI_CopyS32(s32 x) {
+    s32 y;
+    y = x;
+    return y;
 }
 static u32 cmdTypeAndStatus[4];
 
@@ -491,7 +493,7 @@ void GetTypeCallback(s32 chan, u32 type) {
     extern u32 lbl_80368820;
     extern SIPacket Packet_8033E248[4];
     s64 pad;
-    s32 clear;
+    void *clear;
     s32 i;
     u32 typeVal;
     void **cbs;
@@ -530,12 +532,12 @@ void GetTypeCallback(s32 chan, u32 type) {
         typeVal = *typep;
         cbs = (void **)(packet + (chan << 4));
         i = 0;
-        clear = i;
+        clear = (void *)i;
         cbs = (void **)((u8 *)cbs + 0x160);
         do {
             cb = (void (*)(s32, u32))*cbs;
             if (cb != 0) {
-                *cbs = (void *)clear;
+                *cbs = clear;
                 (*cb)(chan, typeVal);
             }
             i += 1;
@@ -578,12 +580,12 @@ void GetTypeCallback(s32 chan, u32 type) {
     typeVal = *typep;
     cbs = (void **)(packet + (chan << 4));
     i = 0;
-    clear = i;
+    clear = (void *)i;
     cbs = (void **)((u8 *)cbs + 0x160);
     do {
         cb = (void (*)(s32, u32))*cbs;
         if (cb != 0) {
-            *cbs = (void *)clear;
+            *cbs = clear;
             (*cb)(chan, typeVal);
         }
         i += 1;
