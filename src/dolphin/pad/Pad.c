@@ -798,25 +798,7 @@ void fn_80216050(void) {
     OSDisableInterrupts();
 }
 
-void fn_802160C0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, f64 farg0, f64 farg1, f64 farg2, f64 farg3, f64 farg4, f64 farg5, f64 farg6, f64 farg7) {
-    if (arg0 != 0) {
-        *(f64*)(0x28 + (s32)0x28) = farg0;
-        *(f64*)(0x30 + (s32)0x28) = farg1;
-        *(f64*)(0x38 + (s32)0x28) = farg2;
-        *(f64*)(0x40 + (s32)0x28) = farg3;
-        *(f64*)(0x48 + (s32)0x28) = farg4;
-        *(f64*)(0x50 + (s32)0x28) = farg5;
-        *(f64*)(0x58 + (s32)0x28) = farg6;
-        *(f64*)(0x60 + (s32)0x28) = farg7;
-    }
-    *(s32*)(0x8 + (s32)0x28) = arg0;
-    *(s32*)(0xc + (s32)0x28) = arg1;
-    *(s32*)(0x10 + (s32)0x28) = arg2;
-    *(s32*)(0x14 + (s32)0x28) = arg3;
-    *(s32*)(0x18 + (s32)0x28) = arg4;
-    *(s32*)(0x1c + (s32)0x28) = arg5;
-    *(s32*)(0x20 + (s32)0x28) = arg6;
-    *(s32*)(0x24 + (s32)0x28) = arg7;
+void fn_802160C0(u8 level, char *fmt, ...) {
 }
 
 void fn_80216534(void *arg0, void *arg1) {
