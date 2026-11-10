@@ -851,6 +851,57 @@ void fn_8020602C(void) {
     }
 }
 
+OSErrorHandler OSSetErrorHandler(u16 error, OSErrorHandler handler)
+{
+    BOOL enabled;
+    OSErrorHandler oldHandler;
+    u32 msr;
+    u32 fpscr;
+    OSContext *context;
+
+    enabled = ((BOOL (*)(void))OSDisableInterrupts)();
+    oldHandler = __OSErrorTable[error];
+    __OSErrorTable[error] = handler;
+
+    if (error == 16) {
+        msr = PPCMfmsr();
+        PPCMtmsr(msr | 0x2000);
+        fpscr = PPCMffpscr();
+        if (handler) {
+            for (context = *(OSContext **)0x800000DC; context;
+                 context = *(OSContext **)((u8 *)context + 0x2FC)) {
+                context->srr1 |= 0x900;
+                if (!(context->state & 1)) {
+                    s32 i;
+                    context->state |= 1;
+                    for (i = 0; i < 32; i++) {
+                        *(u64 *)&context->fpr[i] = 0xFFFFFFFFFFFFFFFFULL;
+                        *(u64 *)&context->psf[i] = 0xFFFFFFFFFFFFFFFFULL;
+                    }
+                    context->fpscr = 4;
+                }
+                context->fpscr |= (lbl_80366F38 & 0xF8);
+                context->fpscr &= 0x6005F8FF;
+            }
+            fpscr |= (lbl_80366F38 & 0xF8);
+            msr |= 0x900;
+        } else {
+            for (context = *(OSContext **)0x800000DC; context;
+                 context = *(OSContext **)((u8 *)context + 0x2FC)) {
+                context->srr1 &= ~0x900;
+                context->fpscr &= ~0xF8;
+                context->fpscr &= 0x6005F8FF;
+            }
+            fpscr &= ~0xF8;
+            msr &= ~0x900;
+        }
+        PPCMtfpscr(fpscr & 0x6005F8FF);
+        PPCMtmsr(msr);
+    }
+    ((void (*)(BOOL))OSRestoreInterrupts)(enabled);
+    return oldHandler;
+}
+
 #pragma use_lmw_stmw on
 extern char lbl_8029BFB8[];
 extern char lbl_80366F3C;
@@ -1301,7 +1352,7 @@ s32 __OSMaskInterrupts(s32 arg0) {
     u32 var_r3;
 
     temp_r29 = *(s32 *)0x800000C4;
-    OSDisableInterrupts();
+    temp_r30 = ((BOOL (*)(void))OSDisableInterrupts)();
     temp_r5 = *(s32 *)0x800000C8;
     var_r3 = arg0 & ~(temp_r29 | temp_r5);
     temp_r31 = arg0 | temp_r29;
@@ -1313,7 +1364,7 @@ s32 __OSMaskInterrupts(s32 arg0) {
             break;
         }
     } while(1);
-    OSRestoreInterrupts();
+    ((void (*)(BOOL))OSRestoreInterrupts)(temp_r30);
     return temp_r29;
 }
 
