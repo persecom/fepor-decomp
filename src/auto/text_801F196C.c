@@ -1406,6 +1406,38 @@ void fn_801F75D4(void* arg0) {
     *(u32*)((char*)arg0 + 0x198) = 0;
 }
 
+void fn_801F7750(void *arg0)
+{
+    extern u8 lbl_80280D38[];
+    extern void fn_80234450(s32 arg0, s32 arg1);
+    extern void *fn_8000E0E4(const char *arg0);
+    extern void fn_802343E0(void *arg0, const char *arg1);
+
+    u8 *object;
+    u8 *strings;
+
+    object = *(u8 **)((u8 *)arg0 + 0x30);
+    strings = lbl_80280D38;
+
+    object[0x88] = 0;
+    object[0x4] = 1;
+    object[0x5] = 1;
+    *(u16 *)(object + 0x8) = 0x31;
+    *(u16 *)(object + 0xA) =
+        (u16)(*(s16 *)(object + 0x6) * 0x18 + 0x78);
+    object[0x16] = 0;
+
+    fn_80234450((s32)(object + 0x28), (s32)(strings + 0x23E));
+
+    fn_802343E0(object + 0x28, fn_8000E0E4((const char *)(strings + 0x1F1)));
+    fn_802343E0(object + 0x28, (const char *)(strings + 0x1FC));
+
+    fn_802343E0(object + 0x28, fn_8000E0E4((const char *)(strings + 0x204)));
+    fn_802343E0(object + 0x28, (const char *)(strings + 0x20F));
+
+    fn_802343E0(object + 0x28, fn_8000E0E4((const char *)(strings + 0x244)));
+}
+
 void fn_801F7838(s32 arg0) {
     extern u8 lbl_80280D38[];
     s32 fn_8005C6A0(void *);
