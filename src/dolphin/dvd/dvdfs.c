@@ -6,7 +6,9 @@ extern u16 Scb_80339420[];
 extern volatile u32 __DIRegs[16];
 extern s32 PauseFlag_803685A4;
 extern s32 PausingFlag_803685A8;
+extern s32 FatalErrorFlag_803685B0;
 extern void* executing_80368598;
+extern u8 DummyCommandBlock_80339F80[48];
 extern u32 lbl_803685B8;
 extern void (*lbl_803685BC)(void*, void*);
 extern void stateReady(void);
@@ -456,11 +458,13 @@ u32 fn_8020ED90(void)
 }
 
 void DVDReset(void) {
+    extern s32 ResetRequired_803685D0;
+    extern s32 ResumeFromHere_803685C0;
     DVDLowReset();
-    *(volatile u32 *)0xCC006000 = 0x2A;
-    *(volatile u32 *)0xCC006004 = *(volatile u32 *)0xCC006000;
-    *(volatile u32 *)0xCC006000 = 0;
-    *(volatile u32 *)0xCC006004 = 0;
+    *(s32 *)0xCC006000 = 0x2A;
+    M2C_FIELD(((s32 *)0xCC000000 + 0x6000), s32 *, 4) = (s32) *(s32 *)0xCC006004;
+    ResetRequired_803685D0 = 0;
+    ResumeFromHere_803685C0 = 0;
 }
 
 s32 fn_8020EF60(void *arg0) {
