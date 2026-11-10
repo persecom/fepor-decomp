@@ -629,107 +629,101 @@ found:
         if (!(id & 0x80000000)) {
             off = id * 0x1888;
             sv = (SynthVoice *)((u8 *)lbl_8033F990 + off);
-            if (sv->state == 2) {
-                goto case2;
-            } else if (sv->state >= 2) {
-                goto after_switch;
-            } else if (sv->state >= 1) {
-                goto case1;
-            } else {
-                goto after_switch;
-            }
-        case1:
-            if (sv->prev != NULL) {
-                sv->prev->next = sv->next;
-            } else {
-                lbl_80368974 = sv->next;
-            }
-            i = 0;
-            walk = sv;
-        loop_a:
-            node = walk->lists[0];
-            goto loop_a_inner_test;
-        loop_a_inner:
-            fn_80257224(node->vid);
-            node = node->next;
-        loop_a_inner_test:
-            if (node != NULL) {
-                goto loop_a_inner;
-            }
-            i += 1;
-            walk = (SynthVoice *)((u8 *)walk + 4);
-            if (i < 2) {
-                goto loop_a;
-            }
-            listpp = (VidList **)((u8 *)((u8 *)lbl_8033F990 + off) + 0xE6C);
-            node = *listpp;
-            goto loop_b_test;
-        loop_b:
-            fn_80257224(node->vid);
-            node = node->next;
-        loop_b_test:
-            if (node != NULL) {
-                goto loop_b;
-            }
-            tail = sv->lists[0];
-            if (tail != NULL) {
-                goto find_tail1_test;
-            find_tail1:
-                tail = tail->next;
-            find_tail1_test:
-                if (tail->next != NULL) {
-                    goto find_tail1;
+            switch (sv->state) {
+            case 1:
+                if (sv->prev != NULL) {
+                    sv->prev->next = sv->next;
+                } else {
+                    lbl_80368974 = sv->next;
                 }
-                if (lbl_80368964 != NULL) {
-                    tail->next = lbl_80368964;
-                    lbl_80368964->prev = tail;
+                i = 0;
+                walk = sv;
+            loop_a:
+                node = walk->lists[0];
+                goto loop_a_inner_test;
+            loop_a_inner:
+                fn_80257224(node->vid);
+                node = node->next;
+            loop_a_inner_test:
+                if (node != NULL) {
+                    goto loop_a_inner;
                 }
-                lbl_80368964 = sv->lists[0];
-                sv->lists[0] = NULL;
-            }
-            {
-                SynthVoice *sv4 = (SynthVoice *)((u8 *)sv + 4);
-                tail = sv4->lists[0];
+                i += 1;
+                walk = (SynthVoice *)((u8 *)walk + 4);
+                if (i < 2) {
+                    goto loop_a;
+                }
+                off = (s32)lbl_8033F990 + off;
+                listpp = (VidList **)(off + 0xE6C);
+                node = *listpp;
+                goto loop_b_test;
+            loop_b:
+                fn_80257224(node->vid);
+                node = node->next;
+            loop_b_test:
+                if (node != NULL) {
+                    goto loop_b;
+                }
+                tail = sv->lists[0];
                 if (tail != NULL) {
-                    goto find_tail2_test;
-                find_tail2:
+                    goto find_tail1_test;
+                find_tail1:
                     tail = tail->next;
-                find_tail2_test:
+                find_tail1_test:
                     if (tail->next != NULL) {
-                        goto find_tail2;
+                        goto find_tail1;
                     }
                     if (lbl_80368964 != NULL) {
                         tail->next = lbl_80368964;
                         lbl_80368964->prev = tail;
                     }
-                    lbl_80368964 = sv4->lists[0];
-                    sv4->lists[0] = NULL;
+                    lbl_80368964 = sv->lists[0];
+                    sv->lists[0] = NULL;
                 }
-            }
-            tail = *listpp;
-            if (tail != NULL) {
-                goto find_tail3_test;
-            find_tail3:
-                tail = tail->next;
-            find_tail3_test:
-                if (tail->next != NULL) {
-                    goto find_tail3;
+                {
+                    SynthVoice *sv4 = (SynthVoice *)((u8 *)sv + 4);
+                    tail = sv4->lists[0];
+                    if (tail != NULL) {
+                        goto find_tail2_test;
+                    find_tail2:
+                        tail = tail->next;
+                    find_tail2_test:
+                        if (tail->next != NULL) {
+                            goto find_tail2;
+                        }
+                        if (lbl_80368964 != NULL) {
+                            tail->next = lbl_80368964;
+                            lbl_80368964->prev = tail;
+                        }
+                        lbl_80368964 = sv4->lists[0];
+                        sv4->lists[0] = NULL;
+                    }
                 }
-                if (lbl_80368964 != NULL) {
-                    tail->next = lbl_80368964;
-                    lbl_80368964->prev = tail;
+                tail = *listpp;
+                if (tail != NULL) {
+                    goto find_tail3_test;
+                find_tail3:
+                    tail = tail->next;
+                find_tail3_test:
+                    if (tail->next != NULL) {
+                        goto find_tail3;
+                    }
+                    if (lbl_80368964 != NULL) {
+                        tail->next = lbl_80368964;
+                        lbl_80368964->prev = tail;
+                    }
+                    lbl_80368964 = *listpp;
+                    *listpp = NULL;
                 }
-                lbl_80368964 = *listpp;
-                *listpp = NULL;
+                break;
+            case 2:
+                if (sv->prev != NULL) {
+                    sv->prev->next = sv->next;
+                } else {
+                    lbl_80368970 = sv->next;
+                }
+                break;
             }
-            goto after_switch;
-        case2:
-            if (sv->prev != NULL) {
-                sv->prev->next = sv->next;
-            } else {
-                lbl_80368970 = sv->next;
-            }
-        after_switch:
             if (sv->next != NULL) {
                 sv->next->prev = sv->prev;
             }
@@ -2736,6 +2730,170 @@ s32 fn_80252058(s32 arg0) {
     return 0x8034C120 + (var_r5 >> 4) + temp_r10;
 }
 
+void fn_80252188(void *arg0, u32 *arg1)
+{
+    void fn_8026146C(s32 *);
+    void fn_8026147C(u32 *, s32);
+    u32 fn_802614C4(u32);
+    s32 fn_80250884(u16);
+
+    u8 *voice;
+    u32 time;
+    u32 word0;
+    u32 word1;
+    u32 value;
+    u32 factor;
+    u32 tableId;
+    u32 index;
+    u32 fraction;
+    u32 current;
+    u32 next;
+    u32 duration;
+    u8 *table;
+
+    voice = (u8 *)arg0;
+
+    word0 = arg1[0];
+    word1 = arg1[1];
+
+    time = word1 >> 16;
+
+    if (word1 & 0x100) {
+        fn_8026146C((s32 *)&time);
+    } else {
+        fn_8026147C(&time, (s32)arg0);
+    }
+
+    duration = fn_802614C4(time);
+
+    if (duration == 0) {
+        duration = 1;
+    }
+
+    factor = (word0 >> 8) & 0xFF;
+
+    value = *(u32 *)(voice + 0x158);
+
+    value = ((value * factor) >> 7) +
+            (word0 & 0x00FF0000);
+
+    if (value > 0x7F0000) {
+        value = 0x7F0000;
+    }
+
+    tableId = (word0 >> 24) | ((word1 & 0xFF) << 8);
+
+    if (tableId != 0xFFFF) {
+        table = (u8 *)fn_80250884((u16)tableId);
+
+        if (table != 0) {
+            index = value >> 16;
+            fraction = value & 0xFFFF;
+
+            if (index < 0x7F) {
+                current = table[index];
+                next = table[index + 1];
+
+                value = (current << 16) +
+                        fraction * (next - current);
+            } else {
+                value = table[index] << 16;
+            }
+        }
+    }
+
+    *(u32 *)(voice + 0x19C) = value;
+    *(u32 *)(voice + 0x1A0) = 0;
+    *(s32 *)(voice + 0x198) = (s32)value / (s32)duration;
+    *(u32 *)(voice + 0x158) = 0;
+
+    *(u32 *)(voice + 0x118) |= 0x8000;
+}
+
+void fn_802522C4(void *arg0, u32 *arg1)
+{
+    u16 fn_802611F8(void);
+    s32 fn_802575A0(void *);
+    void fn_80260174(u8, u8, u8);
+    s32 fn_80250B58(void *, u32 *);
+
+    u8 *voice;
+    u32 word0;
+    u32 word1;
+    u32 minimum;
+    u32 maximum;
+    u32 randomValue;
+    u32 pitch;
+    u32 command;
+    s32 temp;
+
+    voice = (u8 *)arg0;
+    word0 = arg1[0];
+    word1 = arg1[1];
+
+    if (((word1 >> 8) & 0xFF) == 0) {
+        minimum = (word0 >> 8) & 0xFF;
+        maximum = word0 >> 24;
+
+        if (minimum > maximum) {
+            temp = minimum;
+            minimum = maximum;
+            maximum = temp;
+        }
+    } else {
+        temp = *(u16 *)(voice + 0x12E);
+        minimum = temp - ((word0 >> 8) & 0xFF);
+        maximum = temp + (word0 >> 24);
+
+        if ((s32)minimum < 0) {
+            minimum = 0;
+        } else if ((s32)minimum > 0x7F) {
+            minimum = 0x7F;
+        }
+
+        if ((s32)maximum < 0) {
+            maximum = 0;
+        } else if ((s32)maximum > 0x7F) {
+            maximum = 0x7F;
+        }
+    }
+
+    if ((word1 & 0xFF) != 0) {
+        randomValue = fn_802611F8();
+        pitch = (randomValue % 201) - 100;
+        pitch &= 0xFF;
+    } else {
+        pitch = (word0 >> 16) & 0xFF;
+    }
+
+    randomValue = fn_802611F8();
+
+    temp = (s32)maximum - (s32)minimum + 1;
+    randomValue = (s32)randomValue % temp;
+
+    randomValue += minimum;
+
+    command = (pitch << 16) | 0x19;
+    command |= randomValue << 8;
+
+    arg1[0] = command;
+    arg1[1] = 0;
+
+    *(u16 *)(voice + 0x12E) = (command >> 8) & 0x7F;
+    *(u8 *)(voice + 0x130) = command >> 16;
+
+    if (fn_802575A0(arg0) != 0) {
+        fn_80260174(
+            *(u8 *)(voice + 0x121),
+            *(u8 *)(voice + 0x122),
+            (u8)*(u16 *)(voice + 0x12E)
+        );
+    }
+
+    arg1[0] = 4;
+    fn_80250B58(arg0, arg1);
+}
+
 void fn_80252460(void *arg0, u32 *arg1) {
     SelectSource(arg0, (u8 *)arg0 + 0x224, arg1, 0x80000, 1);
 }
@@ -2899,7 +3057,6 @@ void fn_80253860(SynthVmState *arg0, u32 *arg1, u8 op) {
     s16 rhs;
     u32 v1;
     u32 raw;
-    u32 a;
     u32 w;
     u8 idx;
     u8 b0;
@@ -2907,8 +3064,7 @@ void fn_80253860(SynthVmState *arg0, u32 *arg1, u8 op) {
     u8 b2;
 
     b0 = arg1[1];
-    a = arg1[0];
-    if (a >> 24) {
+    if (arg1[0] >> 24) {
         v1 = fn_80260F18(arg0);
     } else {
         idx = b0 & 0x1F;
@@ -4340,6 +4496,8 @@ void fn_80258100(void) {
     M2C_FIELD(&lbl_8035A6D0, s32 *, 0xB4C) = 0;
 }
 
+#pragma global_optimizer off
+#pragma inline_depth(0)
 int fn_802581BC(u32 arg0) {
 extern u8 lbl_8035A6D0[];
 s32 fn_802631AC(u8,s32*);
@@ -4347,58 +4505,70 @@ void fn_80261AE0(s32,s32,s32);
 u16 fn_80261B28(s32);
 s32 fn_80261B3C(s32);
 u8 fn_80261B14(s32);
-u8 i, slot, j;
 u16 serial;
+u32 count;
+u8 i, slot, j;
 s32 offset;
-u8 *map;
+u8 callId;
 u16 *serialPtr;
+u8 *map;
+u32 id=(u8)arg0;
 u8 *idPtr;
-u8 id=arg0;
-for(i=0;i<lbl_8035A6D0[0];i++){
+s32 result;u32 *handle;
+u8 *scan;
+u32 limit;
+for(i=0;i<(count=lbl_8035A6D0[0]);i++){
 u8 *p=lbl_8035A6D0+i*0x2c;
-if(p[8]!=0 && p[11]==id){p[8]=0;lbl_8035A6D0[0xb08+p[11]]=255;}
+u8 *state=p+8;u8 *owner;
+if(*state!=0){ owner=p+11;
+if(*owner==(u8)arg0){*state=0;(*(lbl_8035A6D0+*owner+0xb08))=255;}}
 }
-for(slot=0;slot<lbl_8035A6D0[0];slot++){
-if(lbl_8035A6D0[slot*0x2c+8]==0){
-lbl_8035A6D0[slot*0x2c+8]=1;
-*(u32*)(lbl_8035A6D0+slot*0x2c+12)=0;
-break;
+for(slot=0;slot<count;slot++) {
+if((*(lbl_8035A6D0+slot*0x2c+8))==0) {
+u8 *p;u8 state=1;
+p=lbl_8035A6D0+slot*0x2c;
+p[8]=state;*(u32*)(p+12)=0;goto allocated;
 }
 }
-if(slot==lbl_8035A6D0[0]) slot=255;
+slot=255;
+allocated:
+callId=id;
 map=lbl_8035A6D0+0xb08;
-map[id]=slot;
+map[callId]=slot;
 if(slot!=255){
-fn_80261AE0(id,fn_802631AC(map[id],0),*(s32*)(lbl_8035A6D0+4));
-offset=slot*0x2c;
-*(u16*)(lbl_8035A6D0+offset+0x18)=fn_80261B28(id);
+{s32 value=fn_802631AC(map[callId],0);fn_80261AE0(callId,value,*(s32*)(lbl_8035A6D0+4));}
+{u16 value=fn_80261B28(callId);offset=slot*0x2c;
+*(u16*)(lbl_8035A6D0+offset+0x18)=value;}
+limit=lbl_8035A6D0[0];
 do {
-serial=*(u16*)(lbl_8035A6D0+0xb48);
-*(u16*)(lbl_8035A6D0+0xb48)=serial+1;
-for(j=0;j<lbl_8035A6D0[0];j++){
-u8 *p=lbl_8035A6D0+j*0x2c;
-if(p[8]!=0 && *(u16*)(p+0x1a)==serial) break;
+serial=(*(u16*)(lbl_8035A6D0+0xb48))++;
+for(j=0;j<limit;j++){
+scan=lbl_8035A6D0+j*0x2c;
+if(scan[8]!=0 && *(u16*)(scan+0x1a)==serial) break;
 }
-}while(j!=lbl_8035A6D0[0]);
-serialPtr=(u16*)(lbl_8035A6D0+offset+0x1a);
-*serialPtr=serial;
-*(s32*)(lbl_8035A6D0+offset+0x1c)=fn_80256000(arg0);
-if(*(u32*)(lbl_8035A6D0+offset+0x1c)!=0xffffffff)
-*(s32*)(lbl_8035A6D0+offset+0x20)=fn_8024B5B0(*(u32*)(lbl_8035A6D0+offset+0x1c));
+}while(j!=limit);
+serialPtr=(u16*)(lbl_8035A6D0+offset);
+*(serialPtr+=13)=serial;
+result=fn_80256000(arg0);
+handle=(u32*)(lbl_8035A6D0+offset);
+*(handle+=7)=result;
+if((u32)result+0x10000U!=0xffffU)
+*(s32*)(lbl_8035A6D0+offset+0x20)=fn_8024B5B0(*handle);
 else *(s32*)(lbl_8035A6D0+offset+0x20)=-1;
-*(s32*)(lbl_8035A6D0+offset+0x24)=fn_80261B3C(id);
-lbl_8035A6D0[offset+10]=fn_80261B14(id);
+*(s32*)(lbl_8035A6D0+offset+0x24)=fn_80261B3C(callId);
+*(lbl_8035A6D0+offset+10)=fn_80261B14(callId);
 idPtr=lbl_8035A6D0+offset+11;
 *idPtr=id;
 if(*(u32*)(lbl_8035A6D0+0xb4c)!=0 && (*(u32(**)(s32,void*))(lbl_8035A6D0+0xb4c))(0,lbl_8035A6D0+offset+0x18)==0) return (id&~0xffff00)|((*serialPtr<<8)&0xffff00);
-fn_80261AE0(id,0,0);
-lbl_8035A6D0[offset+8]=0;
+fn_80261AE0(callId,0,0);
+*(lbl_8035A6D0+offset+8)=0;
 map[*idPtr]=255;
 }
-else fn_80261AE0(id,0,0);
+else fn_80261AE0(callId,0,0);
 return -1;
 }
-
+#pragma inline_depth(8)
+#pragma global_optimizer reset
 void fn_80258888(void) {
     u32 fn_80261B00(u32);
     u32 fn_80262154(u32, void *);
@@ -5654,6 +5824,7 @@ u8 fn_802601B0(u8 arg0, u8 arg1) {
     return lbl_80363ED8[arg0];
 }
 
+#pragma global_optimizer off
 u16 fn_802601EC(void *arg0, void *arg1, u8 arg2, u8 arg3) {
     s16 fn_802537F8(void *, s32, u8);
     u16 fn_8025FC64(u8, u8, u8);
@@ -5664,10 +5835,10 @@ u16 fn_802601EC(void *arg0, void *arg1, u8 arg2, u8 arg3) {
     s32 acc;
     u32 i;
     u32 signed_mode;
-    void *obj;
-    u8 *list;
-    u8 a2;
     u8 a3;
+    u8 a2;
+    u8 *list;
+    void *obj;
     s32 val;
     s32 tmp;
     s32 scaled;
@@ -5676,6 +5847,7 @@ u16 fn_802601EC(void *arg0, void *arg1, u8 arg2, u8 arg3) {
     s32 r5;
     u64 diff;
     s32 mul;
+    s32 idx;
 
     list = (u8 *)arg1;
     obj = arg0;
@@ -5687,11 +5859,7 @@ u16 fn_802601EC(void *arg0, void *arg1, u8 arg2, u8 arg3) {
 
     while (i < list[0x22]) {
         if ((entry[1] & 0x10) != 0) {
-            if (obj != 0) {
-                val = (s16)fn_802537F8(obj, 0, entry[0]);
-            } else {
-                val = 0;
-            }
+            val = obj != 0 ? (s16)fn_802537F8(obj, 0, entry[0]) : 0;
             goto apply_signed;
         }
 
@@ -5699,20 +5867,28 @@ u16 fn_802601EC(void *arg0, void *arg1, u8 arg2, u8 arg3) {
         if (op == 0x80 || op == 1 || op == 0xA || (u8)(op - 0xA0) <= 1 || op == 0x83) {
             if ((s32)op >= 0xA2) {
                 goto call_fc64_signed;
-            } else if ((s32)op >= 0xA0) {
-                if (obj != 0) {
-                    mul = op * 0xC;
-                    mul -= 0x5B8;
-                    val = *(s16 *)((u8 *)obj + mul);
-                    ((u8 *)obj)[op + 0x138] = 1;
-                    val <<= 1;
-                } else {
-                    val = 0;
-                }
-            } else {
-call_fc64_signed:
-                val = (u16)fn_8025FC64(op, a2, a3) - 0x2000;
             }
+            if ((s32)op >= 0xA0) {
+                goto a0_path;
+            }
+            goto call_fc64_signed;
+
+a0_path:
+            if (obj != 0) {
+                mul = op * 0xC;
+                idx = op + 0x138;
+                tmp = 1;
+                mul -= 0x5B8;
+                val = *(s16 *)((s32)obj + mul);
+                *((u8 *)obj + idx) = tmp;
+                val <<= 1;
+            } else {
+                val = 0;
+            }
+            goto apply_signed;
+
+call_fc64_signed:
+            val = (u16)fn_8025FC64(op, a2, a3) - 0x2000;
 
 apply_signed:
             scaled = (val * (*(s32 *)(entry + 4) >> 1)) >> 15;
@@ -5745,11 +5921,11 @@ apply_signed:
                     }
                     acc = val + 0x2000;
                 } else {
-                    tmp = acc + val;
-                    if (tmp > 0x3FFF) {
+                    val = acc + val;
+                    if (val > 0x3FFF) {
                         acc = 0x3FFF;
                     } else {
-                        acc = tmp & ~(tmp >> 31);
+                        acc = val & ~(val >> 31);
                     }
                 }
                 break;
@@ -5783,11 +5959,11 @@ apply_signed:
                     }
                     acc = val + 0x2000;
                 } else {
-                    tmp = acc - val;
-                    if (tmp > 0x3FFF) {
+                    val = acc - val;
+                    if (val > 0x3FFF) {
                         acc = 0x3FFF;
                     } else {
-                        acc = tmp & ~(tmp >> 31);
+                        acc = val & ~(val >> 31);
                     }
                 }
                 break;
@@ -5826,11 +6002,9 @@ apply_signed:
                 break;
             }
 
-            scaled = (r5 * (*(s32 *)(entry + 4) >> 1)) >> 15;
-            if (scaled > 0x3FFF) {
+            val = (r5 * (*(s32 *)(entry + 4) >> 1)) >> 15;
+            if (val > 0x3FFF) {
                 val = 0x3FFF;
-            } else {
-                val = scaled;
             }
 
             mode = (u8)(entry[1] & 0xF);
@@ -5894,11 +6068,11 @@ apply_signed:
                     }
                     acc = val + 0x2000;
                 } else {
-                    tmp = acc - val;
-                    if (tmp > 0x3FFF) {
+                    val = acc - val;
+                    if (val > 0x3FFF) {
                         acc = 0x3FFF;
                     } else {
-                        acc = tmp & ~(tmp >> 31);
+                        acc = val & ~(val >> 31);
                     }
                 }
                 break;
@@ -5912,7 +6086,7 @@ apply_signed:
     *(s16 *)(list + 0x20) = (s16)acc;
     return (u16)acc;
 }
-
+#pragma global_optimizer reset
 u16 fn_8026068C(void *arg0) {
     u16 fn_802601EC(void *, void *, u8, u8);
     s32 temp_r4;
