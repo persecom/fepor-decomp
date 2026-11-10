@@ -1237,6 +1237,9 @@ s32 gdev_cc_shutdown(void) {
     return 0;
 }
 
+void MWTRACE(u8 level, char *fmt, ...) {
+}
+
 void fn_8022C038(s32 *arg0) {
     M2C_UNK OSRestoreInterrupts(s32);
     OSRestoreInterrupts(*arg0);
