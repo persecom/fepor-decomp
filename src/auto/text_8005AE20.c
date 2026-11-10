@@ -2038,10 +2038,10 @@ void fn_80067FE8(s32 arg0, s32 arg1, s32 arg2)
 }
 
 void fn_8006805C(f32 arg0, f32 arg1) {
-    extern u8 *lbl_803672F8;
+    extern void *lbl_803672F8;
 
-    *(f32 *)(lbl_803672F8 + 0x180) = arg0;
-    *(f32 *)(lbl_803672F8 + 0x184) = arg1;
+    *(f32 *)((u8 *)lbl_803672F8 + 0x180) = arg0;
+    *(f32 *)((u8 *)lbl_803672F8 + 0x184) = arg1;
 }
 
 void fn_80068070(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
