@@ -18,6 +18,7 @@ static inline u8 *FindAudioResource(void *data, u16 id, u32 offset) {
     }
     return NULL;
 }
+typedef struct SynthStateLink { u8 pad[0xEC]; s32 next; u8 padF0[0x458 - 0xF0]; } SynthStateLink;
 typedef s32 Fn80256FF0Arg;
 
 extern u16 lbl_80366F28;
@@ -814,7 +815,53 @@ void fn_80247F94(void *arg0) {
     }
 }
 
-#pragma global_optimizer off
+#pragma global_optimizer on
+s32 fn_8024800C(u8 key, u8 group, u8 channel, s32 arg3, s32 *status) {
+ void fn_80255B20(void*); s32 fn_80255E9C(void*,s32);
+ void fn_80257614(void*); void fn_80260174(u8,u8,u8); u32 fn_802616F4(u32);
+ s32 offset; u32 keyValue; u32 i; u32 result; s32 previous; u8 *voice; u8 *last; s32 found;
+ u64 flags;
+ keyValue=key;
+ voice=(u8*)lbl_803689A8;
+ found=0; result=-1; i=0; offset=0;
+ for(;i<lbl_8034C110[0x210];offset+=0x458,i++,voice+=0x458) {
+  if(voice[0x11C]==0 && (u32)(*(s32*)(voice+0xF4)+0x10000)!=0xFFFF && voice[0x121]==group && voice[0x122]==channel) {
+   flags=*(u64*)(voice+0x114);
+   if((flags&2ULL)!=0) found=1;
+   if((flags&0x10ULL)!=0 && (flags&0x10000000008ULL)!=8ULL && fn_802616F4(i)!=0) {
+    if(result==0xFFFFFFFF && (*(u64*)(voice+0x114)&0x20002ULL)==0x20002ULL) {
+     *status=1; return -1;
+    }
+    *(s32*)(voice+0x13C)=(*(u16*)(voice+0x12E)<<16)+(((s8)voice[0x130]<<16)/100);
+    last=voice;
+    voice[0x132]=*(u16*)(voice+0x12E);
+    *(u16*)(voice+0x12E)=keyValue+((u8)*(u16*)(voice+0x12E)-voice[0x131]);
+    voice[0x131]=key;
+    voice[0x130]=0;
+    *(s32*)(voice+0x140)=0;
+    *(u64*)(voice+0x114)|=0x20000ULL;
+    fn_80255B20((u8*)lbl_803689A8+offset);
+    if(result==0xFFFFFFFF) {
+     *(s32*)(voice+0xEC)=-1;
+     *(s32*)(voice+0xF0)=-1;
+     result=fn_80255E9C((u8*)lbl_803689A8+offset,arg3);
+     previous=*(s32*)(voice+0xF4);
+    } else {
+     *(s32*)((u8*)lbl_803689A8+((u8)previous*0x458+0xEC))=*(s32*)(voice+0xF4);
+     *(s32*)(voice+0xF0)=previous;
+     previous=*(s32*)(voice+0xF4);
+     fn_80255E9C((u8*)lbl_803689A8+offset,0);
+    }
+   }
+  }
+ }
+ if(result!=0xFFFFFFFF) {
+  fn_80257614(last);
+  fn_80260174(last[0x121],last[0x122],(u8)*(u16*)(last+0x12E));
+  *status=0;
+ } else *status=found;
+ return result;
+}
 s32 fn_8024866C(u16 id, s16 volume, s32 arg2, s32 arg3, s32 key, s32 arg5, u8 pan, s32 arg7, u8 a8, u8 a9, u16 a10, u16 a11, s32 a12, u8 a13, u8 a14, s32 a15) {
  s32 fn_802508E0(u16);
  s32 fn_8024800C(s32,s32,u8,s32,s32*);
@@ -1903,6 +1950,55 @@ int fn_80250B58(void *arg0, u32 *arg1)
 
     fn_802552F8(arg0);
     fn_802554A4(arg0, 1);
+
+    return 1;
+}
+
+int fn_80250E48(void *arg0, u32 *arg1)
+{
+    void *fn_802506A8(u32);
+    void fn_80255B20(void *);
+    void fn_802567B0(void *);
+
+    u8 *voice;
+    u8 *data;
+    u32 offset;
+    u32 index;
+    u32 count;
+
+    voice = (u8 *)arg0;
+
+    data = fn_802506A8(arg1[0] >> 16);
+
+    if (data != 0) {
+        index = (*(u8 *)(voice + 0x8D) + 1) & 3;
+        *(u8 *)(voice + 0x8D) = index;
+
+        *(u32 *)(voice + 0x6C + index * 8) =
+            *(u32 *)(voice + 0x34);
+
+        index = *(u8 *)(voice + 0x8D);
+
+        *(u32 *)(voice + 0x70 + index * 8) =
+            *(u32 *)(voice + 0x38);
+
+        count = *(u8 *)(voice + 0x8C) + 1;
+        *(u8 *)(voice + 0x8C) = count;
+
+        if ((count & 0xFF) > 4) {
+            *(u8 *)(voice + 0x8C) = 4;
+        }
+
+        *(void **)(voice + 0x34) = data;
+
+        offset = (arg1[1] & 0xFFFF) << 3;
+        *(u8 **)(voice + 0x38) = data + offset;
+
+        return 0;
+    }
+
+    fn_80255B20(arg0);
+    fn_802567B0(arg0);
 
     return 1;
 }
