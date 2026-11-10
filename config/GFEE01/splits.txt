@@ -471,7 +471,10 @@ dolphin/gx/GXTexture.c:
 	.text       start:0x80222420 end:0x802240F0
 
 dolphin/gx/GXTexture_SU.c:
-	.text       start:0x802240F0 end:0x80225E30
+	.text       start:0x802240F0 end:0x80224304
+
+dolphin/gx/GXTexture_rest.c:
+	.text       start:0x80224304 end:0x80225E30
 
 auto/text_80225E30.c:
 	.text       start:0x80225E30 end:0x8022C1E8
