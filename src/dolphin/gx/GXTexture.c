@@ -674,14 +674,9 @@ void fn_802238A8(u8 arg0) {
     gxData[0x2D6] = temp;
 }
 
-void fn_802238CC(void) {
-    M2C_UNK fn_80223494(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
-    s32 spC;
-    s32 sp8;
-
-    sp8 = 0;
-    spC = 0;
-    fn_80223494(0, 0, 0, 0, 0, 0, 0);
+void fn_802238CC(s32 arg0) {
+    void fn_80223494(s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
+    fn_80223494(arg0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 }
 
 void fn_80223914(s32 arg0, s32 arg1) {
@@ -1103,18 +1098,24 @@ void fn_80224684(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 void fn_802246B8(u8 arg0) {
-    u16 *temp_r6;
-    u16 temp_r5;
-    u16 temp_r4;
+    u32 *ptr;
+    u32 value;
+    u32 input;
+    u32 command;
 
-    temp_r6 = (u16*)__GXData;
-    temp_r5 = *(temp_r6 + 0x1DC/sizeof(u16));
-    temp_r4 = arg0;
-    temp_r5 = (temp_r5 & ~0x40) | ((temp_r4 << 6) & 0x40);
-    *(temp_r6 + 0x1DC/sizeof(u16)) = temp_r5;
-    *(u8*)0xCC008000 = 0x61;
-    *(u16*)0xCC008000 = temp_r5;
-    *(u16*)(temp_r6 + 1) = 0;
+    ptr = (u32 *)__GXData;
+    command = 0x61;
+    input = arg0;
+    value = ptr[0x1DC / 4];
+
+    value = (value & ~0x40) | ((input << 6) & 0x40);
+    ptr[0x1DC / 4] = value;
+
+    *(volatile u8 *)0xCC008000 = (u8)command;
+    value = ptr[0x1DC / 4];
+    *(volatile u32 *)0xCC008000 = value;
+
+    *(volatile u16 *)((u8 *)__GXData + 2) = 0;
 }
 
 void fn_802247C0(s32 arg0) {
@@ -1125,6 +1126,28 @@ void fn_802247C0(s32 arg0) {
     *(u16*)0xCC008000 = temp_r6;
     __GXData[0x1D0/2] = temp_r6;
     __GXData[0x2/2] = 0;
+}
+
+void fn_802247EC(u32 arg0, u32 arg1) {
+    extern unsigned short *__GXData;
+    register unsigned short *gx_data = __GXData;
+    register volatile u8 *fifo8 = (volatile u8 *)0xCC008000;
+    register volatile u32 *fifo32 = (volatile u32 *)0xCC008000;
+    u32 value;
+    u32 result;
+
+    value = *(u32 *)((u8 *)gx_data + 0x1D4);
+    value = (value & 0xFFFFFF00) | (arg1 & 0xFF);
+
+    *fifo8 = 0x61;
+
+    result = value;
+    result = (result & ~(1 << 8)) | ((arg0 & 1) << 8);
+
+    *fifo32 = result;
+
+    *(u32 *)((u8 *)gx_data + 0x1D4) = result;
+    *(volatile u16 *)((u8 *)gx_data + 2) = 0;
 }
 
 void fn_80224828(s32 arg0, u8 arg1) {
