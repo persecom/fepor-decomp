@@ -176,6 +176,62 @@ void fn_80074C30(void *arg0) {
     *(s32 *)((u8 *)arg0 + 0xC) = lbl_802EF4C8[1];
 }
 
+#pragma cplusplus on
+extern "C" void fn_80074C44(void *arg0, void *arg1) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual s16 v18() = 0;
+    };
+    f32 fn_80023EE0(void *);
+    void fn_8000A258(void);
+    void fn_80009B8C(s32);
+    void fn_8000A248(void);
+    void fn_80071740(void *, f32, f32, s32);
+    void fn_8007149C(void *, void *, f32, f32, s32, s32);
+    void fn_80009C0C(f32);
+    s32 fn_800102BC(s32, f32);
+    void fn_8008AB7C(s32, s32, s32, s32, s32, s32, s32);
+    f32 t;
+
+    t = fn_80023EE0(arg1);
+    *(s16 *)((u8 *)arg1 + 0x30) = 0;
+    *(s16 *)((u8 *)arg1 + 0x32) = 0;
+    fn_8000A258();
+    fn_80009B8C((s32)(255.0f * t));
+    fn_8000A248();
+    fn_80071740(arg0, 16.0f * t + 16.0f, 35.0f, *(s32 *)((u8 *)arg0 + 0xC));
+    fn_8007149C(arg0, arg1, 16.0f * t + 16.0f, 136.0f, *(s32 *)((u8 *)arg0 + 0xC), 1);
+    if (*(s16 *)((u8 *)arg1 + 0x3A) >= 5) {
+        fn_8000A258();
+        fn_80009C0C(-0.1f);
+        fn_8000A248();
+        fn_8008AB7C(((Obj *)arg0)->v18() / 2 + 0x28, *(s16 *)((u8 *)arg1 + 0x3A) + fn_800102BC(-1, 1.0f) / 2,
+                    (s32)(0.9f * ((Obj *)arg0)->v18()), 0x18, 0x19, 0x4B, 1);
+        fn_8000A258();
+        fn_80009C0C(0.1f);
+        fn_8000A248();
+    }
+}
+#pragma cplusplus reset
+
 void *fn_80074DDC(void) {
     extern u8 lbl_8026C0B8[];
     return &lbl_8026C0B8[0x191];
