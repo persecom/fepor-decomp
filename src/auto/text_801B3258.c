@@ -41,6 +41,8 @@ void fn_801E00EC(void *arg0, void *arg1);
 extern u8 lbl_8032FF08[];
 extern u16 lbl_80331D00[];
 extern f32 lbl_8036B4A8;
+extern f32 lbl_8027D528[3];
+extern f32 lbl_8027D534[3];
 
 struct Unit {
     u16 unk0;
@@ -3981,6 +3983,17 @@ extern "C" void fn_801D2C30(void *arg0) {
         virtual s16 v12() { return 0; }
     };
 
+    struct Self {
+        u8 unk00[0x4E];
+        s16 field4E;
+        u8 unk50[4];
+        s16 field54;
+        u8 unk56[0x16];
+        u32 count;
+        u8 unk70[4];
+        void *field74;
+    };
+
     void *sp18;
     void *sp14;
     s32 sp10;
@@ -3996,12 +4009,12 @@ extern "C" void fn_801D2C30(void *arg0) {
     s16 cur;
     void *endPtr;
     s32 idx;
-    UIListObj *self;
+    Self *self;
     s32 total;
     void **p14;
     void **p18;
 
-    self = (UIListObj *)arg0;
+    self = (Self *)arg0;
     endPtr = (u8 *)self + 0x70;
     cur = self->field4E;
     p14 = &sp14;
@@ -4054,11 +4067,12 @@ extern "C" void fn_801D2C30(void *arg0) {
     }
     {
         u32 count = self->count;
-        u32 t = (u32)(s32)(s16)cur;
+        s32 cur32 = cur;
+        u32 last = count - 1;
         s16 v;
         s16 scroll;
-        if (t > count - 1) {
-            cur = (s16)(count - 1);
+        if ((u32)cur32 > last) {
+            cur = (s16)last;
         }
         if (cur < 0) {
             cur = 0;
