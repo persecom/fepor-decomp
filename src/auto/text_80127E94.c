@@ -573,7 +573,6 @@ void fn_80129A48(void *arg0) {
 void fn_80129AF8(void *arg0) {
     if (fn_80040824() != 0) {
         s32 i;
-        void *temp = arg0;
         s32 count = *(s32 *)((char *)arg0 + 0x50);
         for (i = 0; i < count; i++) {
             if (i == count - 1) {
@@ -700,10 +699,10 @@ void fn_8012AD80(void) {
     fn_800558D8((u8 *)lbl_80275740 + 0x165);
 }
 
+#pragma use_lmw_stmw on
 void fn_8012ADAC(s32 arg0, s32 arg1, u32 arg2) {
     extern u8 lbl_80290A58[72];
     extern u8 lbl_80330708[1400];
-    extern f64 lbl_8036A418;
 
     void *fn_800056A0(void *);
     void *fn_8000CAA0(void *, u32);
@@ -713,37 +712,36 @@ void fn_8012ADAC(s32 arg0, s32 arg1, u32 arg2) {
     s32 fn_8004721C(s8, s8, u32, u32);
     void fn_8014CBD8(void *, f32, f32);
 
-    void *temp_r3;
-    s32 temp_r3_2;
-    s8 temp_r29;
-    s8 temp_r28;
+    s32 t31;
+    void *t30;
+    void *r6;
 
     fn_80040844();
-    temp_r3 = fn_80046F14(arg0, arg1, 0xA00, 0);
-    if (temp_r3 == NULL) {
+    t30 = fn_80046F14(arg0, arg1, 0xA00, 0);
+    if (t30 == NULL) {
         fn_800056A0(0);
         return;
     }
-    temp_r29 = *(u8 *)temp_r3;
-    temp_r28 = *((u8 *)temp_r3 + 1);
+    arg0 = *(s8 *)t30;
+    arg1 = *((s8 *)t30 + 1);
     fn_80040844();
-    temp_r3_2 = fn_8004721C(temp_r29, temp_r28, 0x20000, 0);
-    if (temp_r3_2 == 0) {
+    t31 = fn_8004721C((s8)arg0, (s8)arg1, 0x20000, 0);
+    if (t31 == 0) {
         fn_800056A0(0);
         return;
     }
     if (arg2 != 0) {
-        temp_r3 = fn_8000CAA0(&lbl_80290A58, arg2);
+        r6 = fn_8000CAA0(lbl_80290A58, arg2);
     } else {
-        temp_r3 = fn_8000CAF0(&lbl_80290A58, 3);
+        r6 = fn_8000CAF0(lbl_80290A58, 3);
     }
-    *(void **)((u8 *)temp_r3 + 0x38) = temp_r3;
-    *(s32 *)((u8 *)temp_r3 + 0x3c) = temp_r3_2;
-    *(s32 *)((u8 *)temp_r3 + 0x30) = (s32) temp_r29;
-    *(s32 *)((u8 *)temp_r3 + 0x34) = (s32) temp_r28;
-    fn_8014CBD8(&lbl_80330708, (f32) temp_r29, (f32) temp_r28);
+    *(void **)((u8 *)r6 + 0x38) = t30;
+    *(s32 *)((u8 *)r6 + 0x3c) = t31;
+    *(s32 *)((u8 *)r6 + 0x30) = arg0;
+    *(s32 *)((u8 *)r6 + 0x34) = arg1;
+    fn_8014CBD8(lbl_80330708, (f32)arg0, (f32)arg1);
 }
-
+#pragma use_lmw_stmw reset
 void fn_8012AEC4(void *arg0) {
     void *temp_r3;
     void *temp_r3_2;
@@ -808,13 +806,12 @@ void fn_8012C2CC(void *arg0) {
 }
 
 void fn_8012C330(void *arg0) {
-    s32 temp;
-    s32 *ptr;
-    
-    temp = *(u32 *)((u8 *)arg0 + 0x30);
-    ptr = (s32 *)((u8 *)arg0 + 0x3c);
-    temp = ptr[temp];
-    lbl_80367A88 = fn_80109180(temp, 0);
+    s32 idx;
+    s32 *arr;
+
+    idx = *(s32 *)((u8 *)arg0 + 0x30);
+    arr = *(s32 **)((u8 *)arg0 + 0x3c);
+    lbl_80367A88 = fn_80109180(arr[idx], 0);
 }
 #include "common.h"
 #include "structs.h"
