@@ -280,6 +280,36 @@ s32 fn_8023C930(void) {
     return 0;
 }
 
+void fn_8023D0D8(void)
+{
+    extern u8 *lbl_803688E8;
+    extern u16 *lbl_803688EC;
+
+    u32 index;
+    u32 count;
+    u32 value;
+    u32 current;
+    u32 shift;
+
+    index = 0;
+    count = 0;
+    current = lbl_803688E8[0];
+    shift = 1;
+
+    while (lbl_803688E8[index] != 0) {
+        value = lbl_803688E8[index];
+
+        if (current == value) {
+            lbl_803688EC[index] = count;
+            index++;
+            count++;
+        } else {
+            count <<= shift;
+            current++;
+        }
+    }
+}
+
 void fn_8023D2FC(void) {
     extern u16 *lbl_80368950;
     
@@ -2174,6 +2204,34 @@ restart:
     return isMaster ? vid : sv->unkF4;
 }
 
+int fn_80256000(u32 arg0)
+{
+    extern void *lbl_80368A44;
+
+    void *object;
+    u32 index;
+    u32 value;
+
+    object = lbl_80368A44;
+
+    while (object != 0) {
+        if (*(u32 *)((u8 *)object + 0xC) == arg0) {
+            return *(int *)((u8 *)object + 8);
+        }
+
+        index = *(u8 *)((u8 *)object + 0xC);
+        value = *(u32 *)((u8 *)&lbl_803689A8 + (index * 0x458) + 0xEC);
+
+        if ((value + 0x10000) == 0xFFFF) {
+            object = *(void **)object;
+        } else {
+            break;
+        }
+    }
+
+    return -1;
+}
+
 s32 fn_80256738(u8 arg0, u8 arg1, s32 arg2, u8 arg3, s32 *out) {
     s32 fn_802562A0(u8, u8, s32, u8);
     s32 idx;
@@ -3878,6 +3936,28 @@ void fn_802609EC(struct unit* param_1)
         param_1->unk_0xC = param_1->unk_0xC & 0xFFFF7FFF;
 }
 
+s32 fn_80260A34(void *arg0)
+{
+    u32 flags;
+
+    flags = *(u32 *)((u8 *)arg0 + 0x220);
+
+    if ((flags & 0x4000) != 0) {
+        return *(u16 *)((u8 *)arg0 + 0x43C);
+    }
+
+    flags &= ~0x4000;
+    *(u32 *)((u8 *)arg0 + 0x220) = flags;
+
+    fn_802601EC(
+        (u8 *)arg0 + 0x41C,
+        *(u8 *)((u8 *)arg0 + 0x121),
+        *(u8 *)((u8 *)arg0 + 0x122)
+    );
+
+    return 0;
+}
+
 s32 fn_80260EA8(s32 arg0) {
     switch ((u8)arg0) {
     case 0x80:
@@ -4203,6 +4283,34 @@ void fn_8026171C(s32 arg0, s32 arg1) {
       M2C_FIELD((lbl_80368AA0 + (arg0 * 0xF8)), s32 *, 0x1C) = arg1;
   }
 
+void fn_802618E4(int arg0)
+{
+    extern u8 *lbl_80368AA0;
+    extern u8 lbl_80368AD0;
+
+    u8 *object;
+    u8 index;
+    u32 value;
+
+    object = lbl_80368AA0 + (arg0 * 0xF8);
+
+    if (*(u8 *)(object + 0xF0) != 1) {
+        return;
+    }
+
+    if (lbl_80368AD0 != 0) {
+        return;
+    }
+
+    object[0xF2] = 1;
+
+    index = lbl_80368AD0;
+    value = *(u32 *)(lbl_80368AA0 + (arg0 * 0xF8) + (index * 4) + 0x24);
+    value |= 0x20;
+
+    *(u32 *)(lbl_80368AA0 + (arg0 * 0xF8) + (index * 4) + 0x24) = value;
+}
+
 void fn_80261AE0(s32 arg0, s32 arg1, s32 arg2) {
     extern u16 lbl_80368AA0;
     s32 temp_r6;
@@ -4290,6 +4398,25 @@ void fn_8026212C(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     *(s32 *)((char *)temp_r3 + 0xB4) = arg2;
     *(s32 *)((char *)temp_r3 + 0xB0) = arg3;
     *(s32 *)((char *)temp_r3 + 0xB8) = arg4;
+}
+
+void fn_80262200(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    void fn_80205110(s32, s32);
+    void fn_802625F8(s32, s32, s32, s32, s32, s32);
+    s32 fn_802631AC(s32, s32 *);
+    s32 sp8;
+    s32 fnResult;
+    s32 aligned;
+    s32 off;
+
+    fnResult = fn_802631AC(arg3, &sp8);
+    off = arg1;
+    aligned = off & ~0x1F;
+    arg2 += off & 0x1F;
+    off = arg0 + aligned;
+    arg2 = (arg2 + 0x1F) & ~0x1F;
+    fn_80205110(off, arg2);
+    fn_802625F8(off, fnResult + aligned, arg2, 1, arg4, arg5);
 }
 
 void fn_80262290(void) {
