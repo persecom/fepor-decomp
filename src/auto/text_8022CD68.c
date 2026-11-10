@@ -20,6 +20,8 @@ extern f64 lbl_8036BE90;
 extern f64 lbl_8036BE98;
 extern f64 lbl_8036BEA0;
 
+extern f64 fn_80238A9C(f64, f64);
+
 extern s32 lbl_80366F28;
 extern char lbl_80282AE8[];
 extern char lbl_80282B20[];
@@ -390,6 +392,134 @@ void fn_8022F0B4(void) {
     }
 }
 
+#pragma use_lmw_stmw on
+void fn_80230944(u8 *dest, u8 *a, u8 *b) {
+    u8 sp8[0x54];
+    u8 *end;
+    u8 *out;
+    u8 *pa;
+    u8 *pb;
+    s32 dig_a;
+    s32 dig_b;
+    s32 pos;
+    s32 i;
+    s32 j;
+    s32 k;
+    s32 n;
+    s32 n8;
+    u32 acc;
+    u32 q;
+    u8 digit;
+    u8 *p;
+    u8 *digits;
+
+    dig_b = b[4];
+    dig_a = a[4];
+    acc = 0;
+    pos = dig_a + (dig_b - 1);
+    out = &sp8[pos + 1];
+    dest[0] = 0;
+    end = out;
+
+    while (pos > 0) {
+        j = dig_b - 1;
+        i = (pos - j) - 1;
+        if (i < 0) {
+            i = 0;
+            j = pos - 1;
+        }
+        n = j + 1;
+        k = dig_a - i;
+        pa = a + (i + 5);
+        pb = b + (j + 5);
+        if (n > k) {
+            n = k;
+        }
+        if (n > 0) {
+            n8 = (u32)n >> 3;
+            if (n8 != 0) {
+                do {
+                    acc += pa[0] * pb[0];
+                    acc += pa[1] * pb[-1];
+                    acc += pa[2] * pb[-2];
+                    acc += pa[3] * pb[-3];
+                    acc += pa[4] * pb[-4];
+                    acc += pa[5] * pb[-5];
+                    acc += pa[6] * pb[-6];
+                    acc += pa[7] * pb[-7];
+                    pa += 8;
+                    pb -= 8;
+                } while (--n8);
+                n &= 7;
+            }
+            if (n != 0) {
+                do {
+                    acc += (*pa++) * (*pb--);
+                } while (--n);
+            }
+        }
+        pos -= 1;
+        q = (acc * 0xCCCCCCCDU) >> 3;
+        digit = (u8)(acc - q * 10);
+        acc = (acc * 0xCCCCCCCDU) >> 3;
+        *--out = digit;
+    }
+
+    *(s16 *)(dest + 2) = *(s16 *)(a + 2) + *(s16 *)(b + 2);
+    if (acc != 0) {
+        *--out = (u8)acc;
+        (*(s16 *)(dest + 2))++;
+    }
+
+    i = 0;
+    while (i < 0x24 && out < end) {
+        dest[i + 5] = *out;
+        i++;
+        out++;
+    }
+    dest[4] = (u8)i;
+
+    if (out < end) {
+        digit = *out;
+        if (digit >= 5) {
+            if (digit == 5) {
+                p = out + 1;
+                n = end - p;
+                if (p < end) {
+                    do {
+                        if (*p != 0) {
+                            goto round_up;
+                        }
+                        p++;
+                    } while (--n);
+                }
+                if ((out[-1] & 1) == 0) {
+                    goto done;
+                }
+            }
+        round_up:
+            digits = dest + 5;
+            p = digits + (dest[4] - 1);
+            for (;;) {
+                if (*p < 9) {
+                    (*p)++;
+                    break;
+                }
+                if (p == digits) {
+                    *p = 1;
+                    (*(s16 *)(dest + 2))++;
+                    break;
+                }
+                *p = 0;
+                p--;
+            }
+        }
+    }
+done:
+    ;
+}
+#pragma use_lmw_stmw reset
+
 s32 fn_80230BBC(s32 arg0) {
     s32 temp_r4;
 
@@ -638,10 +768,7 @@ s32 fn_802314D8(s32 arg0, s32 arg1, s32 arg2) {
     B8 *b8 = (B8 *)arg0;
     s32 offset;
     s32 whence;
-    s32 adj;
     s32 result;
-    u8 *p;
-    s32 n;
     s32 i;
     s32 (*seek_proc)(s32, s32 *, s32, s32);
 
@@ -663,30 +790,29 @@ s32 fn_802314D8(s32 arg0, s32 arg1, s32 arg2) {
     }
 
     if (whence == 1) {
+        register u8 *p;
+        register s32 adj;
+        register s32 n;
+
         whence = 0;
         adj = 0;
         if ((s4->mode != 1 && s4->mode != 2) || M2C_FIELD(arg0, u8 *, 0xA) != 0) {
             result = -1;
             lbl_803687F0 = 0x28;
+        } else if (b8->mode == 0) {
+            result = M2C_FIELD(arg0, s32 *, 0x18);
         } else {
-            if (b8->mode == 0) {
-                result = M2C_FIELD(arg0, s32 *, 0x18);
-            } else {
-                p = M2C_FIELD(arg0, u8 **, 0x1C);
-                n = M2C_FIELD(arg0, s32 *, 0x24) - (s32)p;
-                result = M2C_FIELD(arg0, s32 *, 0x34) + n;
-                if (b8->mode >= 3) {
-                    adj = b8->mode - 2;
-                    result -= adj;
-                }
-                if (!((*((u8 *)arg0 + 5) >> 3) & 1)) {
-                    i = n - adj;
-                    if (i != 0) {
-                        do {
-                            if (*p++ == '\n') {
-                                result++;
-                            }
-                        } while (--i != 0);
+            p = (u8 *)M2C_FIELD(arg0, void **, 0x1C);
+            n = (u8 *)M2C_FIELD(arg0, void **, 0x24) - p;
+            result = M2C_FIELD(arg0, s32 *, 0x34) + n;
+            if (b8->mode >= 3U) {
+                adj = (s32)b8->mode - 2;
+                result -= adj;
+            }
+            if (((*((u8 *)arg0 + 5) >> 3) & 1) == 0) {
+                for (i = n - adj; i != 0; i--) {
+                    if (*p++ == '\n') {
+                        result++;
                     }
                 }
             }
@@ -694,19 +820,15 @@ s32 fn_802314D8(s32 arg0, s32 arg1, s32 arg2) {
         offset += result;
     }
 
-    if (whence != 2 && b4->modeB != 3) {
-        if (b8->mode == 2 || b8->mode == 3) {
-            if ((u32)offset < (u32)M2C_FIELD(arg0, s32 *, 0x18) ||
-                (u32)offset < (u32)M2C_FIELD(arg0, s32 *, 0x34)) {
-                b8->mode = 0;
-            } else {
-                M2C_FIELD(arg0, s32 *, 0x24) =
-                    M2C_FIELD(arg0, s32 *, 0x1C) + (offset - M2C_FIELD(arg0, s32 *, 0x34));
-                M2C_FIELD(arg0, s32 *, 0x28) = M2C_FIELD(arg0, s32 *, 0x18) - offset;
-                b8->mode = 2;
-            }
-        } else {
+    if (whence != 2 && b4->modeB != 3 && (b8->mode == 2 || b8->mode == 3)) {
+        if ((u32)offset >= (u32)M2C_FIELD(arg0, s32 *, 0x18) ||
+            (u32)offset < (u32)M2C_FIELD(arg0, s32 *, 0x34)) {
             b8->mode = 0;
+        } else {
+            M2C_FIELD(arg0, void **, 0x24) =
+                (u8 *)M2C_FIELD(arg0, void **, 0x1C) + (offset - M2C_FIELD(arg0, s32 *, 0x34));
+            M2C_FIELD(arg0, s32 *, 0x28) = M2C_FIELD(arg0, s32 *, 0x18) - offset;
+            b8->mode = 2;
         }
     } else {
         b8->mode = 0;
