@@ -7,6 +7,7 @@
 typedef struct CardDirEntry {
     u8 unk0[4];
     u8 unk4[2];
+    u8 pad6[1];
     u8 unk7;
     u8 unk8[0x20];
     s32 unk28;
@@ -1556,6 +1557,97 @@ s32 fn_8021D2D4(s32 arg0, s32 index, void *dst) {
     }
     
     return fn_80217BD0(stack[0], ret);
+}
+
+s32 fn_8021D378(s32 arg0, s32 arg1, CardDirEntry *arg2, s32 arg3) {
+    s32 fn_80217B18(s32, s32 *);
+    s32 fn_80217BD0(void *, s32);
+    u8 *fn_8021965C(s32);
+    s32 fn_802197FC(s32, s32);
+    s32 fn_8021BB98(s32, CardDirEntry *);
+    s32 fn_80231944(void *, void *, u32);
+    void *memcpy(void *, const void *, u32);
+    void *memset(void *, int, u32);
+    u8 *base;
+    CardDirEntry *slot;
+    s32 i;
+    s32 sp18;
+    s32 ret;
+    u8 *p;
+    u8 *end;
+    s32 n;
+
+    if (arg1 < 0 || arg1 >= 0x7F || arg2->unk8[0] == 0xFF || arg2->unk8[0] == 0) {
+        return -0x80;
+    }
+    ret = fn_80217B18(arg0, &sp18);
+    if (ret < 0) {
+        return ret;
+    }
+    base = fn_8021965C(sp18);
+    slot = (CardDirEntry *)(base + (arg1 << 6));
+    ret = fn_8021BB98(sp18, slot);
+    if (ret < 0) {
+        return fn_80217BD0((void *)sp18, ret);
+    }
+    p = arg2->unk8;
+    end = arg2->unk8 + 0x20;
+    n = end - p;
+    if (p < end) {
+        for (;;) {
+            if (*p == 0) {
+                p++;
+                while (p < end) {
+                    *p++ = 0;
+                }
+                break;
+            }
+            p++;
+            if (--n == 0) {
+                break;
+            }
+        }
+    }
+    if (arg2->unk34 & 0x20) {
+        memset(arg2->unk0, 0, 4);
+        memset(arg2->unk4, 0, 2);
+    }
+    if (arg2->unk34 & 0x40) {
+        memset(arg2->unk0, 0, 4);
+    }
+    if (fn_80231944(slot->unk8, arg2->unk8, 0x20) != 0 ||
+        fn_80231944(slot->unk0, arg2->unk0, 4) != 0 ||
+        fn_80231944(slot->unk4, arg2->unk4, 2) != 0) {
+        for (i = 0; i < 0x7F; i++, base += 0x40) {
+            if (i == arg1) {
+                continue;
+            }
+            if (base[0] == 0xFF) {
+                continue;
+            }
+            if (fn_80231944(base, arg2->unk0, 4) == 0 &&
+                fn_80231944(base + 4, arg2->unk4, 2) == 0 &&
+                fn_80231944(base + 8, arg2->unk8, 0x20) == 0) {
+                return fn_80217BD0((void *)sp18, -7);
+            }
+        }
+    }
+    memcpy(slot->unk8, arg2->unk8, 0x20);
+    memcpy(slot->unk0, arg2->unk0, 4);
+    memcpy(slot->unk4, arg2->unk4, 2);
+    slot->unk28 = arg2->unk28;
+    slot->unk7 = arg2->unk7;
+    slot->unk2C = arg2->unk2C;
+    slot->unk30 = arg2->unk30;
+    slot->unk32 = arg2->unk32;
+    slot->unk3C = arg2->unk3C;
+    slot->unk34 = arg2->unk34;
+    slot->unk35 = arg2->unk35;
+    ret = fn_802197FC(arg0, arg3);
+    if (ret < 0) {
+        fn_80217BD0((void *)sp18, ret);
+    }
+    return ret;
 }
 
 s32 fn_8021D614(s32 arg0, u32 *arg1) {
