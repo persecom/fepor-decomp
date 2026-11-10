@@ -2,6 +2,10 @@
 #include "common.h"
 #include <dolphin/os.h>
 #include "global.h"
+
+typedef struct DVDReadyCommand {
+ u8 pad[8]; s32 command; s32 state; u8 pad10[0x18]; void (*callback)(s32, void*);
+} DVDReadyCommand;
 extern u16 Scb_80339420[];
 extern volatile u32 __DIRegs[16];
 
@@ -572,6 +576,49 @@ void fn_8020DD7C(void) {
     DVDLowWaitCoverClose(cbForStateMotorStopped);
 }
 
+#pragma global_optimizer off
+#pragma opt_common_subs off
+void stateReady(void){
+extern u16 BB2_80339F40[];
+extern s32 CurrCommand_803685B4, CancelLastError_803685C4;
+extern u32 ResumeFromHere_803685C0;
+extern u32 MotorState_803685D8;
+s32 __DVDCheckWaitingQueue(void);
+void stateBusy_8020E178(void*);
+void DVDLowWaitCoverClose(void(*)(void));
+void cbForStateMotorStopped(void);
+void DVDReset(void);
+void OSCreateAlarm(void*);
+void OSSetAlarm(void*,u64,void(*)(void*,void*));
+void __DVDStoreErrorCode(s32);
+void DVDLowStopMotor(void(*)(u32));
+void cbForStateError(u32);
+u8 *base=(u8*)BB2_80339F40;
+void *block; void(*cb)(s32,void*);
+if(!__DVDCheckWaitingQueue()){executing_80368598=0; return;}
+if(PauseFlag_803685A4){PausingFlag_803685A8=1; executing_80368598=0;return;}
+executing_80368598=(void*)__DVDPopWaitingQueue();
+if(FatalErrorFlag_803685B0){
+*(s32*)((u8*)executing_80368598+0xc)=-1;
+block=executing_80368598;executing_80368598=base+0x40;
+cb=*(void(**)(s32,void*))((u8*)block+0x28);if(cb) cb(-1,block);stateReady();return;
+}
+CurrCommand_803685B4=*(s32*)((u8*)executing_80368598+8);
+if((u32)ResumeFromHere_803685C0){
+switch((s32)ResumeFromHere_803685C0){
+case 2:*(s32*)((u8*)executing_80368598+0xc)=11;DVDLowWaitCoverClose(cbForStateMotorStopped);break;
+case 3:*(s32*)((u8*)executing_80368598+0xc)=4;DVDLowWaitCoverClose(cbForStateMotorStopped);break;
+case 4:*(s32*)((u8*)executing_80368598+0xc)=5;DVDLowWaitCoverClose(cbForStateMotorStopped);break;
+case 1:case 6:case 7:*(s32*)((u8*)executing_80368598+0xc)=3;switch(CurrCommand_803685B4){case 4:case 5:case 13:case 15: __DVDClearWaitingQueue(); block=executing_80368598; executing_80368598=base+0x40; cb=*(void(**)(s32,void*))((u8*)block+0x28); if(cb) cb(-4,block); stateReady(); break; default: MotorState_803685D8=0; DVDReset(); OSCreateAlarm(base+0x70); OSSetAlarm(base+0x70,(u64)(((*(u32*)0x800000f8/4)/1000)*1150),AlarmHandler); break;} break;
+case 5:__DVDStoreErrorCode(CancelLastError_803685C4);DVDLowStopMotor(cbForStateError);break;
+}
+ResumeFromHere_803685C0=0;return;
+}
+if(MotorState_803685D8==0){*(s32*)((u8*)executing_80368598+0xc)=1;stateBusy_8020E178(executing_80368598);return;}
+switch(CurrCommand_803685B4){case 4:case 5:case 13:case 15: __DVDClearWaitingQueue(); block=executing_80368598; executing_80368598=base+0x40; cb=*(void(**)(s32,void*))((u8*)block+0x28); if(cb) cb(-4,block); stateReady(); break; default: MotorState_803685D8=0; DVDReset(); OSCreateAlarm(base+0x70); OSSetAlarm(base+0x70,(u64)(((*(u32*)0x800000f8/4)/1000)*1150),AlarmHandler); break;}
+}
+#pragma opt_common_subs reset
+#pragma global_optimizer reset
 void stateBusy_8020E178(void) {
     // Implementation based on analysis of neighboring functions.
     // The exact structure is inferred from similar functions in the codebase.
