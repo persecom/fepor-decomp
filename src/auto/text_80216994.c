@@ -529,6 +529,39 @@ s32 fn_80219258(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x88);
 }
 
+void fn_80219260(s32 chan, s32 result) {
+    extern u16 lbl_8033A200[];
+    void *memcpy(void *, const void *, u32);
+    s32 fn_80217BD0(void *, s32);
+    u8 *card;
+    u8 *base;
+    u8 *p6000;
+    u8 *p8000;
+    void (*callback)(s32, s32);
+
+    card = (u8 *)lbl_8033A200 + chan * 0x110;
+    if (result >= 0) {
+        base = *(u8 **)(card + 0x80);
+        p6000 = base + 0x6000;
+        p8000 = base + 0x8000;
+        if (*(u8 **)(card + 0x88) == p6000) {
+            *(u8 **)(card + 0x88) = p8000;
+            memcpy(p8000, p6000, 0x2000);
+        } else {
+            *(u8 **)(card + 0x88) = p6000;
+            memcpy(p6000, p8000, 0x2000);
+        }
+    }
+    if (*(u32 *)(card + 0xD0) == 0) {
+        fn_80217BD0(card, result);
+    }
+    callback = *(void (**)(s32, s32))(card + 0xD8);
+    if (callback != NULL) {
+        *(void **)(card + 0xD8) = NULL;
+        callback(chan, result);
+    }
+}
+
 s32 fn_80219514(s32 arg0, u16 arg1) {
     u16* r9;
     u16* r8;
@@ -572,22 +605,25 @@ s32 fn_8021965C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x84);
 }
 
+s32 fn_802198C0(void *, s32, void *, void *);
+s32 fn_80205110(void *, s32);
+void fn_80219734(void);
 s32 fn_802197FC(s32 arg0, s32 arg1) {
-    u16 *temp_r30;
-    u16 *temp_r31;
+    u8 *temp_r31;
+    u8 *temp_r30;
     void *temp_r6;
 
-    temp_r30 = &lbl_8033A200[arg0 * 0x110];
-    if (temp_r30[0] == 0) {
+    temp_r30 = (u8 *)lbl_8033A200 + arg0 * 0x110;
+    if (*(s32 *)temp_r30 == 0) {
         return -3;
     }
-    temp_r31 = (u16 *)temp_r30[0x84 / 2];
+    temp_r31 = *(u8 **)(temp_r30 + 0x84);
     temp_r6 = temp_r31 + 0x1FC0;
-    temp_r31[0xFFD] = (u16)(temp_r31[0xFFD] + 1);
+    *(u16 *)(temp_r31 + 0x1FFA) = (u16)(*(s16 *)(temp_r31 + 0x1FFA) + 1);
     fn_802198C0(temp_r31, 0x1FFC, (u8 *)temp_r6 + 0x3C, (u8 *)temp_r6 + 0x3E);
     fn_80205110(temp_r31, 0x2000);
-    temp_r30[0x36] = arg1;
-    return fn_8021791C(arg0, temp_r30[0xC / 2] * ((u32)(temp_r31 - (u16 *)temp_r30[0x80 / 2]) >> 0xD), (void*)0x80219734);
+    *(s32 *)(temp_r30 + 0xD8) = arg1;
+    return fn_8021791C(arg0, *(s32 *)(temp_r30 + 0x0C) * ((u32)(temp_r31 - *(u8 **)(temp_r30 + 0x80)) >> 13), (void *)fn_80219734);
 }
 
 s32 fn_8021A1B8(s32 arg0) {
@@ -705,6 +741,48 @@ void fn_8021B170(s32 arg0, s32 arg1) {
     *(int*)((char*)lbl_8033A200 + r28 * 0x110 + 0x4) = 0;
     *(int*)((char*)lbl_8033A200 + r28 * 0x110 + 0x24) = 0;
 }
+
+#pragma dont_inline on
+void fn_8021B2B8(s32 arg0, s32 arg1) {
+    extern u16 lbl_8033A200[];
+    s32 fn_8021791C(s32, s32, void *);
+    s32 fn_802191F0(s32, s32, s32, s32, void *);
+    void *memcpy(void *, const void *, u32);
+    s32 fn_80217BD0(void *, s32);
+    u8 *card;
+    s32 chan;
+    void (*callback)(s32, s32);
+    s32 result;
+
+    chan = arg0;
+    card = (u8 *)lbl_8033A200 + chan * 0x110;
+    result = arg1;
+    if (result >= 0) {
+        *(s32 *)(card + 0x28) = *(s32 *)(card + 0x28) + 1;
+        if (*(s32 *)(card + 0x28) < 5) {
+            result = fn_8021791C(chan, *(s32 *)(card + 0xC) * *(s32 *)(card + 0x28), fn_8021B2B8);
+            if (result >= 0) {
+                return;
+            }
+        } else if (*(s32 *)(card + 0x28) < 10) {
+            result = fn_802191F0(chan, *(s32 *)(card + 0xC) * (*(s32 *)(card + 0x28) - 5), 0x2000,
+                                (s32)(*(u8 **)(card + 0x80) + ((*(s32 *)(card + 0x28) - 5) << 13)), fn_8021B2B8);
+            if (result >= 0) {
+                return;
+            }
+        } else {
+            *(u8 **)(card + 0x84) = *(u8 **)(card + 0x80) + 0x2000;
+            memcpy(*(void **)(card + 0x84), *(u8 **)(card + 0x80) + 0x4000, 0x2000);
+            *(u8 **)(card + 0x88) = *(u8 **)(card + 0x80) + 0x6000;
+            memcpy(*(void **)(card + 0x88), *(u8 **)(card + 0x80) + 0x8000, 0x2000);
+        }
+    }
+    callback = *(void (**)(s32, s32))(card + 0xD0);
+    *(void **)(card + 0xD0) = 0;
+    fn_80217BD0(card, result);
+    callback(chan, result);
+}
+#pragma dont_inline reset
 
 #pragma dont_inline on
 void fn_8021BA54(s32 arg0, s32 arg1) {
