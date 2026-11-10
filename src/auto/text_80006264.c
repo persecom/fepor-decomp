@@ -541,6 +541,34 @@ void fn_800077B0(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
     *(f32 *)(ptr + 0x2C) = arg1 + arg3;
 }
 
+void fn_800077D8(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
+    extern void *lbl_80367140;
+    extern f32 lbl_80368B98;
+    extern f32 lbl_80368B94;
+    void *object;
+    f32 sum_x;
+    f32 sum_y;
+    f32 constant1;
+    f32 constant2;
+
+    sum_x = arg0 + arg2;
+    sum_y = arg1 + arg3;
+    constant1 = lbl_80368B98;
+    constant2 = lbl_80368B94;
+
+    object = *(void **)((u8 *)lbl_80367140 + 0xC);
+    object = *(void **)((u8 *)object + 4);
+
+    *(f32 *)((u8 *)object + 0x10) = arg0;
+    *(f32 *)((u8 *)object + 0x20) = sum_x;
+    *(f32 *)((u8 *)object + 0x14) = arg1;
+    *(f32 *)((u8 *)object + 0x24) = sum_y;
+    *(f32 *)((u8 *)object + 0x1C) = constant1;
+    *(f32 *)((u8 *)object + 0x18) = constant1;
+    *(f32 *)((u8 *)object + 0x2C) = constant2;
+    *(f32 *)((u8 *)object + 0x28) = constant2;
+}
+
 void fn_80007818(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
     extern void *lbl_80367140;
     u8 *ptr;
@@ -1243,11 +1271,40 @@ void fn_8000B050(void *arg0) {
     ((void (*)(s16, s16))((char*)obj + 8))((s16) 0, (s16) 0);
 }
 
+void fn_8000B090(void *arg0) {
+    u32 *entry;
+    u32 value;
+    s16 argument;
+    void (*callback)(s16);
+
+    entry = *(u32 **)((u8 *)arg0 + 4);
+    value = entry[0];
+    callback = (void (*)(s16))entry[1];
+
+    argument = (s16)(value >> 16);
+    *(u32 **)((u8 *)arg0 + 4) = entry + 2;
+
+    callback(argument);
+}
+
+int fn_8000B180(void *arg0) {
+    void **callback_data;
+    int (*callback)(void *);
+
+    callback_data = *(void ***)((u8 *)arg0 + 4);
+    callback = (int (*)(void *))callback_data[1];
+
+    *(void **)((u8 *)arg0 + 4) = callback_data + 2;
+
+    return (u8)callback(callback_data[1]) == 0;
+}
+
 void fn_8000B1C0(void *arg0) {
-    void **vtable = (void**)((char*)arg0 + 4);
-    void *obj = *vtable;
-    *vtable = (void*)((char*)obj + 8);
-    (*(void(**)(void))((char*)obj + 4))();
+    void **p = (void **)((char *)arg0 + 4);
+    void *obj = *p;
+    void (*fn)(void) = *(void (**)(void))((char *)obj + 4);
+    *p = (void *)((char *)obj + 8);
+    fn();
 }
 
 s32 fn_8000B1F4(void *arg0) { u32 *temp_r4; u32 *var_r4; u32 temp_r5; temp_r4=M2C_FIELD(arg0,u32 **,4); if(M2C_FIELD(temp_r4,u8 (**)(u32 *),4)(temp_r4)==0){ var_r4=M2C_FIELD(arg0,u32 **,0); loop_6: temp_r5=*var_r4; if(temp_r5==0)goto done; if((temp_r5&0xFFF)==1&&(s16)(temp_r5>>16)==(s32)(u8)((u32)*M2C_FIELD(arg0,u32 **,4)>>16)){ M2C_FIELD(arg0,u32 **,4)=var_r4;M2C_FIELD(arg0,s32 *,0x10)=0;goto done;} var_r4=(u32*)((u8*)var_r4+((temp_r5>>10)&0x3C));temp_r5=*var_r4;if(temp_r5!=0)goto loop_6;done:;}else M2C_FIELD(arg0,u32 **,4)=(u32*)((u8*)M2C_FIELD(arg0,u32 **,4)+8);return 1;}
