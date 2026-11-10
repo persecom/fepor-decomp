@@ -285,9 +285,9 @@ void fn_8020CFAC(void)
 }
 
 void fn_8020D1A0(void) {
-    M2C_UNK fn_8020BF58(M2C_UNK *);
-    extern M2C_UNK fn_8020D27C;
-    fn_8020BF58(&fn_8020D27C);
+    void fn_8020BF58(void (*)(void));
+    extern void fn_8020D27C(void);
+    fn_8020BF58(fn_8020D27C);
 }
 
 s32 fn_8020D1C8(u32 arg0) {
