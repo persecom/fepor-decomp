@@ -1847,8 +1847,7 @@ void fn_801FA508(void *arg0) {
     }
 }
 
-#pragma optimization_level 3
-__declspec(section ".rodata") static const char unused_fmt_s[] = "%s";
+__declspec(section ".rodata") static const char staff_fmt[] = "#F04%s";
 
 void fn_801FA5DC(void *arg0) {
     void fn_8000A258(void);
@@ -1881,7 +1880,6 @@ void fn_801FA5DC(void *arg0) {
         void *str8;
     } Entry;
 
-    static const char fmt[] = "%s";
     f32 limit;
     f32 scroll;
     f32 step;
@@ -1926,14 +1924,13 @@ void fn_801FA5DC(void *arg0) {
             }
             if (ent->str8 != NULL) {
                 fn_80010B78(ent->str8, -1, lbl_8036BA20);
-                fn_8001019C((s32)lbl_8036BAB0, (s32)scroll, 1, (char *)fmt, ent->str8);
+                fn_8001019C((s32)lbl_8036BAB0, (s32)scroll, 1, (void *)staff_fmt, ent->str8);
             }
         }
         scroll += step;
         ent++;
     }
 }
-#pragma optimization_level reset
 void fn_801FA874(void *arg0) {
     s32 temp_r0;
 
