@@ -5,6 +5,9 @@ typedef struct {
     s32 field_0x84;
 } SomeStruct;
 
+extern f32 lbl_8036A30C;
+volatile u8 GXRegs_8036A30C[0x2000] : 0xCC010000;
+
 void fn_80120CCC(u16 *arg0) {
     *arg0 &= ~0x130;
 }
@@ -131,6 +134,33 @@ void fn_80121630(void* arg0)
         ((u32*)arg0)[4] = spC;
     }
 }
+
+#pragma cplusplus on
+extern "C" void fn_80121754(void) {
+    extern u8 lbl_8032BDE8[];
+    struct Obj {
+        u8 pad[0x2c];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6(s32) = 0;
+    };
+    Obj *obj;
+    Obj **slot;
+
+    slot = (Obj **)&lbl_8032BDE8[0x4018];
+    obj = *slot;
+    if (*slot != NULL) {
+        if (obj != NULL) {
+            obj->v6(1);
+        }
+        *slot = (Obj *)0;
+    }
+}
+#pragma cplusplus reset
 
 void fn_801217AC(void) {
     void fn_80057880(void *, s32);
@@ -492,6 +522,72 @@ loop_2:
         goto loop_2;
     }
 }
+
+#pragma use_lmw_stmw on
+void fn_80123034(void *arg0, void *arg1, s32 arg2, f32 farg0, f32 farg1) {
+    void *fn_8005397C(void *, s32);
+    void fn_800536B0(void *, f32, f32, f32);
+    void *fn_800C93EC(s32);
+    extern f32 lbl_8036A2D0;
+    extern f32 lbl_8036A2D4;
+    extern f32 lbl_8036A2D8;
+    extern f32 lbl_8036A2C0;
+    extern f32 lbl_8036A2C4;
+    extern f64 lbl_8036A2C8;
+    extern u8 lbl_80274DB0[];
+    void *obj;
+    s32 i;
+    void *list;
+    void *self;
+    s32 off;
+    f64 f29;
+    f32 f30;
+    f32 f31;
+    f32 a;
+    f32 b;
+
+    self = arg0;
+    list = arg1;
+    a = lbl_8036A2D0;
+    b = lbl_8036A2D4;
+    M2C_FIELD(arg0, f32 *, 0x78) = a * farg0;
+    M2C_FIELD(arg0, f32 *, 0x80) = b * farg0;
+    M2C_FIELD(arg0, f32 *, 0x7C) = farg1;
+    M2C_FIELD(arg0, s32 *, 0x90) = arg2;
+
+    if (M2C_FIELD(list, u32 *, 4) == 0) {
+        obj = fn_8005397C(lbl_80274DB0 + 8, 4);
+        fn_800536B0(obj,
+                    (f32)M2C_FIELD(self, s32 *, 0x48),
+                    (f32)M2C_FIELD(self, s32 *, 0x4C),
+                    (f32)(M2C_FIELD(self, s32 *, 0x44) + 1));
+        M2C_FIELD(M2C_FIELD(obj, void **, 0x30), f32 *, 0x1C) =
+            (f32)(s16)(M2C_FIELD(self, s32 *, 0x44) + 1);
+        M2C_FIELD(M2C_FIELD(obj, void **, 0x30), f32 *, 0x18) = lbl_8036A2D8;
+        return;
+    }
+
+    f29 = lbl_8036A2C8;
+    i = 0;
+    f30 = lbl_8036A2C0;
+    off = 0;
+    f31 = lbl_8036A2C4;
+    while (i < M2C_FIELD(list, s32 *, 4)) {
+        obj = fn_8005397C(fn_800C93EC(M2C_FIELD(list, s32 *, 8) + off), 4);
+        fn_800536B0(obj,
+                    (f32)M2C_FIELD(self, s32 *, 0x48),
+                    (f32)M2C_FIELD(self, s32 *, 0x4C),
+                    (f32)(M2C_FIELD(self, s32 *, 0x44) + 1));
+        i += 1;
+        off += 0xC;
+        M2C_FIELD(M2C_FIELD(obj, void **, 0x30), f32 *, 0x1C) =
+            (f32)(s16)(M2C_FIELD(self, s32 *, 0x44) + 1);
+        M2C_FIELD(M2C_FIELD(obj, void **, 0x30), f32 *, 0x18) = f30;
+        M2C_FIELD(M2C_FIELD(obj, void **, 0x30), f32 *, 0x20) = f31;
+    }
+    (void)f29;
+}
+#pragma use_lmw_stmw reset
 
 void fn_8012323C(void* arg0) {
     if (arg0 != NULL) {
