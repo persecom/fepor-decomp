@@ -594,6 +594,22 @@ void fn_80023E18(void) {
     fn_8000C188();
 }
 
+s16 fn_80023E84(void)
+{
+    extern u8 lbl_80284548[];
+    extern u32 lbl_8036723C;
+    extern void fn_80023ED0(void);
+
+    lbl_8036723C = 0;
+
+    fn_8000BF6C(
+        lbl_80284548,
+        fn_80023ED0
+    );
+
+    return (s16)((lbl_8036723C - 1) * 8 + 0x80);
+}
+
 void fn_80023ED0(void) {
     extern s32 lbl_8036723C;
     lbl_8036723C += 1;
@@ -793,6 +809,170 @@ void fn_80024364(void **arg0) {
 
 s32 fn_80024390(void) {
     return 0;
+}
+
+void *fn_80024398(void *arg0, void *arg1, u32 arg2) {
+    extern u8 lbl_80284548[];
+    extern u8 lbl_80284588[];
+
+    u8 *object;
+    u8 *entry;
+    void *item;
+    void *first;
+    void *second;
+    void *selected;
+    void **vtable;
+    s32 index;
+    s32 total;
+    s32 value;
+    s32 width;
+    s32 height;
+    s32 status;
+
+    object = (u8 *)fn_8000CA64(lbl_80284548);
+
+    if ((arg2 & 0xFF) != 0) {
+        object[0x2B] = (u8)arg2;
+        object[0x60] = 0;
+        object[0x62] = 0xFF;
+
+        index = 0;
+        total = 0;
+
+        while (1) {
+            vtable = *(void ***)((u8 *)arg0 + 4);
+            item = ((void *(*)(void *, s32))vtable[0x44 / 4])(
+                arg0, index
+            );
+
+            if (item == NULL) {
+                break;
+            }
+
+            vtable = *(void ***)item;
+            status = ((s32 (*)(void *, s32))vtable[0x24 / 4])(
+                item, index
+            );
+
+            if ((status & 0xFF) == 3) {
+                break;
+            }
+
+            if ((status & 0xFF) == 1 && (s8)object[0x62] < 0) {
+                object[0x62] = object[0x60];
+
+                entry = (u8 *)fn_8000CAF0(lbl_80284588, object);
+
+                *(void **)(entry + 0x34) = item;
+                entry[0x3A] = (u8)index;
+                entry[0x3B] = object[0x60];
+                entry[0x39] = 0;
+
+                vtable = *(void ***)((u8 *)arg0 + 4);
+                *(s16 *)(entry + 0x30) =
+                    ((s32 (*)(void *))vtable[0x48 / 4])(arg0);
+
+                vtable = *(void ***)((u8 *)arg0 + 4);
+                value = ((s32 (*)(void *))vtable[0x4C / 4])(arg0);
+                *(s16 *)(entry + 0x32) = total + value;
+
+                *(u32 *)(entry + 0x3C) = 0;
+
+                vtable = *(void ***)((u8 *)arg0 + 4);
+                value = ((s32 (*)(void *))vtable[0x58 / 4])(arg0);
+                total += value;
+
+                value = fn_8000B920(entry);
+
+                index = (s8)object[0x60];
+                object[0x60]++;
+
+                object[0x40 + index] = (u8)value;
+            }
+
+            index++;
+        }
+    }
+
+    if ((s8)object[0x62] < 0) {
+        object[0x62] = 0;
+        *(void **)(object + 0x3C) = arg0;
+
+        vtable = *(void ***)((u8 *)arg0 + 4);
+        *(s16 *)(object + 0x30) =
+            ((s32 (*)(void *))vtable[0x5C / 4])(arg0);
+
+        vtable = *(void ***)((u8 *)arg0 + 4);
+        *(s16 *)(object + 0x32) =
+            ((s32 (*)(void *))vtable[0x60 / 4])(arg0);
+
+        vtable = *(void ***)((u8 *)arg0 + 4);
+        *(s16 *)(object + 0x34) =
+            ((s32 (*)(void *))vtable[0x50 / 4])(arg0);
+
+        vtable = *(void ***)((u8 *)arg0 + 4);
+        value = ((s32 (*)(void *))vtable[0x54 / 4])(arg0);
+
+        if (value != 0) {
+            vtable = *(void ***)((u8 *)arg0 + 4);
+            *(s16 *)(object + 0x36) =
+                ((s32 (*)(void *))vtable[0x54 / 4])(arg0);
+        } else {
+            vtable = *(void ***)((u8 *)arg0 + 4);
+            width = ((s32 (*)(void *))vtable[0x58 / 4])(arg0);
+
+            vtable = *(void ***)((u8 *)arg0 + 4);
+            height = ((s32 (*)(void *))vtable[0x4C / 4])(arg0);
+
+            *(s16 *)(object + 0x36) =
+                height + width * (s8)object[0x60];
+        }
+    }
+
+    object[0x63] = object[0x62];
+    *(s16 *)(object + 0x38) = -1;
+    *(s16 *)(object + 0x3A) = -1;
+
+    vtable = *(void ***)((u8 *)arg0 + 4);
+    ((void (*)(void *, void *))vtable[0x14 / 4])(arg0, object);
+
+    vtable = *(void ***)((u8 *)arg0 + 4);
+    ((void (*)(void *, void *))vtable[0x1C / 4])(arg0, object);
+
+    first = (void *)fn_8000B908(
+        object[0x40 + (s8)object[0x62]]
+    );
+
+    second = (void *)fn_8000B908(
+        object[0x40 + (s8)object[0x62]]
+    );
+
+    selected = *(void **)((u8 *)second + 0x34);
+    vtable = *(void ***)selected;
+
+    ((void (*)(void *, void *, void *))vtable[0x40 / 4])(
+        selected, object, first
+    );
+
+    vtable = *(void ***)((u8 *)arg0 + 4);
+    *(s16 *)(object + 0x28) =
+        ((s32 (*)(void *))vtable[0x64 / 4])(arg0);
+
+    object[0x61] = 1;
+
+    vtable = *(void ***)((u8 *)arg0 + 4);
+    if (((s32 (*)(void *))vtable[0x70 / 4])(arg0) != 0) {
+        vtable = *(void ***)((u8 *)arg0 + 4);
+        value = ((s32 (*)(void *))vtable[0x70 / 4])(arg0);
+        fn_801475FC((void *)value, 0x64);
+    }
+
+    vtable = *(void ***)((u8 *)arg0 + 4);
+    if (((s32 (*)(void *))vtable[0x0C / 4])(arg0) != 0) {
+        object[0x62] = 0xFF;
+    }
+
+    return object;
 }
 
 #pragma cplusplus on
@@ -1819,9 +1999,22 @@ s32 fn_80026D24(s32 arg0) {
 }
 
 void fn_80026E2C(s32 arg0) {
-    extern M2C_UNK lbl_802EF4C8;
-    fn_8012AA90((s8) M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 4), u8 *, 0x19E), (s8) M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 4), u8 *, 0x19F), arg0);
-    M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 4), u8 *, 0x1A5) = (u8) ((M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 4), u8 *, 0x1A5) & ~7) | 1);
+    void fn_8012AA90(s32, s32, s32);
+    extern u8 lbl_802EF4C8[];
+    typedef struct {
+        u8 pad : 5;
+        u8 flags : 3;
+    } Bits;
+    u8 *base;
+    Bits *bits;
+
+    base = lbl_802EF4C8;
+    {
+        u8 *p = *(u8 **)(base + 4);
+        fn_8012AA90((s8)p[0x19E], (s8)p[0x19F], arg0);
+    }
+    bits = (Bits *)(*(u8 **)(base + 4) + 0x1A5);
+    bits->flags = 1;
 }
 
 void fn_80026E88(s32 arg0) {
