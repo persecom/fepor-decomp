@@ -510,6 +510,118 @@ s32 fn_80227174(void *arg0) {
     }
     return 0;
 }
+
+s32 fn_80227444(void *arg0) {
+    void fn_8022692C(void *, u32);
+    void fn_8022695C(void *, u32);
+    s32 fn_80229FA4(u16, u16, void *, s32 *, s32);
+    s32 fn_80229A98(u16, u16, void *, s32 *, s32);
+    s32 fn_80229928(u16, u16, void *, s32 *, s32);
+    s32 fn_802294F0(u16, u16, void *, s32 *, s32);
+    s32 fn_80226888(void *, void *, s32);
+    s32 fn_8022B078(void *, s32);
+    s32 fn_802262E8(void *);
+    void MWTRACE(u8, char *, ...);
+    void *memset(void *, s32, s32);
+    extern char lbl_80282520[];
+    extern char lbl_80282540[];
+
+    s32 err;
+    u16 start;
+    u16 end;
+    void *obj;
+    s32 outLen;
+    u8 reply2[0x40];
+    u8 reply1[0x40];
+    u8 reply3[0x40];
+
+    obj = arg0;
+    err = ((u8 *)arg0)[0x18];
+    start = *(u16 *)((u8 *)arg0 + 0x1C);
+    end = *(u16 *)((u8 *)arg0 + 0x20);
+    fn_8022692C(arg0, 0);
+
+    if (start > end) {
+        memset(reply1, 0, 0x40);
+        reply1[4] = 0x80;
+        *(s32 *)reply1 = 0x40;
+        reply1[8] = 0x14;
+        fn_8022B078(reply1, 0x40);
+        return 0;
+    }
+
+    fn_8022692C(obj, 0x40);
+
+    switch (err) {
+    case 0:
+        err = fn_80229FA4(start, end, obj, &outLen, 0);
+        break;
+    case 1:
+        err = fn_80229A98(start, end, obj, &outLen, 0);
+        break;
+    case 2:
+        err = fn_80229928(start, end, obj, &outLen, 0);
+        break;
+    case 3:
+        err = fn_802294F0(start, end, obj, &outLen, 0);
+        break;
+    default:
+        err = 0x703;
+        break;
+    }
+
+    fn_8022695C(obj, 0);
+
+    if (err == 0) {
+        memset(reply2, 0, 0x40);
+        *(s32 *)reply2 = 0x40;
+        reply2[4] = 0x80;
+        reply2[8] = (u8)err;
+        err = fn_80226888(obj, reply2, 0x40);
+    }
+
+    if (err != 0) {
+        switch (err) {
+        case 0x703:
+            err = 0x12;
+            break;
+        case 0x701:
+            err = 0x14;
+            break;
+        case 0x302:
+            err = 0x2;
+            break;
+        case 0x702:
+            err = 0x15;
+            break;
+        case 0x704:
+            err = 0x21;
+            break;
+        case 0x705:
+            err = 0x22;
+            break;
+        case 0x706:
+            err = 0x20;
+            break;
+        default:
+            err = 0x3;
+            break;
+        }
+
+        memset(reply3, 0, 0x40);
+        reply3[4] = 0x80;
+        *(s32 *)reply3 = 0x40;
+        reply3[8] = (u8)err;
+        fn_8022B078(reply3, 0x40);
+        return 0;
+    }
+
+    MWTRACE(1, lbl_80282520);
+    err = fn_802262E8(obj);
+    MWTRACE(1, lbl_80282540, err);
+    return err;
+}
+
 #pragma use_lmw_stmw reset
 void fn_80227BF0(void) {
     OSReport("Error: Unknown unit type for %s\n", "null");
