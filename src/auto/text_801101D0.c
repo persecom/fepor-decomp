@@ -18,6 +18,13 @@ void fn_800C9A60(void *, s32);
 void fn_800E6418(void *, s32, void *, s32, s32, void *);
 void fn_800D6878(void *, void *, void *);
 void fn_800C96F8(void *, char *, u32);
+s32 fn_800C9400(void *, s32, void *, char *, s32);
+s32 fn_800D5948(void *, char *, s32, s32);
+u8 fn_800E56C4(void *);
+void fn_80113298(void *, void *, s32, s32, s32);
+void fn_801134EC(void *, void *, void *);
+void fn_800C9758(void *, void *, s32, s32);
+void *fn_800C93EC(void *);
 extern u16 lbl_80367A58;
 
 extern s32 lbl_80367110;
