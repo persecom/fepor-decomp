@@ -851,8 +851,6 @@ void fn_8020602C(void) {
 }
 
 #pragma use_lmw_stmw on
-typedef void (*OSErrorHandler)(u8, void *, ...);
-extern OSErrorHandler __OSErrorTable[];
 extern char lbl_8029BFB8[];
 extern char lbl_80366F3C;
 extern s16 __OSLastInterrupt;
