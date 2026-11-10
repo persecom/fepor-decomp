@@ -759,6 +759,44 @@ s32 fn_8001C284(void *arg0, u8 arg1, s8 arg2, s8 arg3, s8 arg4, s8 arg5) {
     return (s32)(var_f0 * lbl_80368D60);
 }
 
+void *fn_8001C4FC(void *arg0, void *arg1) {
+    s32 fn_800C30CC(void *, s32);
+    s32 fn_800C30DC(void *, s32, s32);
+    s32 fn_800C3260(void *);
+    void fn_800C3220(void *, s32);
+    extern u8 lbl_803206EC[];
+    typedef struct {
+        u8 pad : 1;
+        u8 flag : 1;
+        u8 rest : 6;
+    } Bit6;
+    Bit6 *dst;
+    Bit6 *src;
+    s32 mask;
+    s32 temp;
+
+    dst = (Bit6 *)((u8 *)arg0 + 5);
+    src = (Bit6 *)((u8 *)arg1 + 5);
+    if (arg0 != arg1) {
+        *(s32 *)arg0 = *(s32 *)arg1;
+        *((u8 *)arg0 + 4) = *((u8 *)arg1 + 4);
+        dst->pad = src->pad;
+        dst->flag = src->flag;
+        mask = src->rest;
+        if (mask != 0) {
+            temp = fn_800C30CC(lbl_803206EC, mask);
+            if (dst->rest == 0) {
+                dst->rest = fn_800C3260(lbl_803206EC);
+            }
+            dst->rest = fn_800C30DC(lbl_803206EC, dst->rest, temp);
+        } else if (dst->rest != 0) {
+            fn_800C3220(lbl_803206EC, dst->rest);
+            dst->rest = 0;
+        }
+    }
+    return arg0;
+}
+
 void *fn_8001C5F8(void *arg0, s16 arg1) {
     void fn_800C3220(void *, s32);
     void fn_800C428C(void *);
