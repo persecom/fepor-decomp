@@ -14,15 +14,18 @@ s32 fn_800119D8(void) {
     return 0x18;
 }
 
-extern u16 lbl_80283948;
-extern u16 lbl_80283EFC;
 void *fn_800119E0(void *arg0, s16 arg1) {
+    void fn_8006EDA0(void *);
+    void fn_800C428C(void *);
+    extern u16 lbl_80283EFC[];
+    extern u16 lbl_80283948[];
+
     if (arg0 != NULL) {
-        *(u16**)arg0 = &lbl_80283EFC;
+        *(void **)arg0 = lbl_80283EFC;
         if (arg0 != NULL) {
-            *(u16**)arg0 = &lbl_80283948;
-            if (*(u32*)((char*)arg0 + 4) != 0) {
-                fn_8006EDA0((char*)arg0 + 4);
+            *(void **)arg0 = lbl_80283948;
+            if (*(u32 *)((u8 *)arg0 + 4) != 0) {
+                fn_8006EDA0((u8 *)arg0 + 4);
             }
         }
         if (arg1 > 0) {
