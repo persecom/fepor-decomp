@@ -909,6 +909,19 @@ void fn_8022B0F0(void) {
     ((void (*)(u16 *))*(void **)(gDBCommTable + 6))(gDBCommTable);
 }
 
+void fn_8022B120(void) {
+    extern u8 TRK_Use_BBA[];
+    extern u8 gDBCommTable[40];
+    void (*fn)(u8 *);
+
+    if (TRK_Use_BBA[0] == 0) {
+        fn = *(void (**)(u8 *))(gDBCommTable + 4);
+        if (fn != NULL) {
+            fn(gDBCommTable);
+        }
+    }
+}
+
 void TRKEXICallBack(s32 arg0, s32 arg1) {
     M2C_UNK OSEnableScheduler();
     M2C_UNK TRKLoadContext(s32, M2C_UNK);
