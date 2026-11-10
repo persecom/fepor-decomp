@@ -363,25 +363,21 @@ extern "C" void fn_80116944(void *arg0) {
 }
 #pragma cplusplus reset
 void fn_80116F84(void *arg0, void *arg1) {
-    s32 temp_r0;
+    void fn_800DB7A4(void *, void *);
+    s32 sp10;
+    s32 spC;
+    s32 sp8;
     s32 temp_r5;
     s32 temp_r6;
-    s32 sp8;
-    s32 spC;
-    s32 sp10;
 
     temp_r6 = M2C_FIELD(arg1, s32 *, 0);
     temp_r5 = M2C_FIELD(arg1, s32 *, 4);
-    temp_r0 = M2C_FIELD(arg1, s32 *, 8);
-    
     sp8 = temp_r6;
     spC = temp_r5;
-    sp10 = temp_r0;
-    
-    fn_800DB7A4(&sp8, temp_r5, temp_r6);
-    
-    if ((u8) M2C_FIELD(arg0, u8 *, 0x195) != 0) {
-        M2C_FIELD(arg0, s32 *, 0x9C) = (s32) (M2C_FIELD(arg0, s32 *, 0xC8) * M2C_FIELD(arg0, s32 *, 0x198));
+    sp10 = M2C_FIELD(arg1, s32 *, 8);
+    fn_800DB7A4(arg0, &sp8);
+    if (M2C_FIELD(arg0, u8 *, 0x195) != 0) {
+        M2C_FIELD(arg0, s32 *, 0x9C) = M2C_FIELD(arg0, s32 *, 0xC8) * M2C_FIELD(arg0, s32 *, 0x198);
     }
 }
 
@@ -519,21 +515,26 @@ void fn_8011829C(void *arg0) {
 }
 
 void fn_80118308(s32 arg0) {
-    M2C_UNK fn_8000E0E4(void *);
-    M2C_UNK fn_80018AF4();
-    M2C_UNK fn_80024398(s32, M2C_UNK);
-    M2C_UNK fn_8011A2FC();
-    void *fn_8013BFFC();
-    u32 fn_8013FF94(s32, M2C_UNK, M2C_UNK);
-    M2C_UNK fn_801658DC(void *);
-    extern u8 lbl_80274508[];
+    void fn_8000E0E4(void *);
+    void fn_80018AF4(void);
+    void fn_80024398(void *, s32, s32);
+    void fn_8011A2FC(void);
+    void *fn_8013BFFC(void);
+    u32 fn_8013FF94(s32, s32, s32);
+    void fn_801658DC(u32, void *);
+    extern char lbl_80274508[];
+    void *tmp;
+    u32 result;
+
     fn_8011A2FC();
     fn_80018AF4();
-    fn_8000E0E4(&lbl_80274508[0x17C]);
-    M2C_FIELD(fn_8013BFFC(), s8 *, 0x24) = 1;
-    fn_80024398(arg0, 0);
-    if (fn_8013FF94(arg0, -0x1000, 0) != 0U) {
-        fn_801658DC(&lbl_80274508[0x194]);
+    fn_8000E0E4(lbl_80274508 + 0x17C);
+    tmp = fn_8013BFFC();
+    *((u8 *)tmp + 0x24) = 1;
+    fn_80024398(tmp, arg0, 0);
+    result = fn_8013FF94(arg0, -0x1000, 0);
+    if (result != 0) {
+        fn_801658DC(result, lbl_80274508 + 0x194);
     }
 }
 
