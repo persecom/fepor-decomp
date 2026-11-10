@@ -1352,6 +1352,79 @@ void fn_801BB1FC(void *arg0) {
     }
 }
 
+void fn_801BB400(void *arg0) {
+    void fn_8000C070(void *, s32);
+    void fn_8002833C(void *, u32);
+    u32 fn_8013AC54(void *);
+    void fn_8013FDA0(void *);
+    void fn_80140210(void *, void *, s32);
+    void fn_80140258(void *, void *, s16 *, s32);
+    void fn_801475FC(void *, s32);
+    void fn_801694AC(u32, void *);
+    void fn_801695BC(u32, void *, s32);
+    void fn_8017BB94(void *);
+    s32 fn_8017C3C8(u32);
+    extern u8 lbl_8027C698[];
+    extern u32 lbl_802EF4C8[];
+    extern u32 lbl_80367110;
+    extern void *lbl_80367240;
+    s16 sp8[2];
+    s32 a;
+    s32 btn;
+    register u8 gate;
+    register int flags;
+    s16 tmp;
+    unsigned int var_r31;
+    void *obj60;
+    void *obj64;
+
+    var_r31 = fn_8013AC54(M2C_FIELD(arg0, void **, 0x48));
+    fn_8013FDA0(arg0);
+    if (var_r31 != fn_8013AC54(M2C_FIELD(arg0, void **, 0x48))) {
+        var_r31 = fn_8013AC54(M2C_FIELD(arg0, void **, 0x48));
+        obj64 = M2C_FIELD(arg0, void **, 0x64);
+        M2C_FIELD(obj64, u32 *, 0x3C) = var_r31;
+        obj60 = M2C_FIELD(arg0, void **, 0x60);
+        M2C_FIELD(obj60, u32 *, 0x4C) = var_r31;
+        fn_8017BB94(obj60);
+        M2C_FIELD(obj60, f32 *, 0x50) = (f32)fn_8017C3C8(var_r31);
+    }
+    flags = lbl_80367110;
+    gate = 0;
+    if ((flags & 0x10) && !(flags & 0x20)) {
+        gate = 1;
+    }
+    if (!gate) {
+        a = M2C_FIELD(lbl_80367240, s32 *, 4);
+        btn = a & (M2C_FIELD(lbl_80367240, s32 *, 8) ^ a);
+        if ((btn & 0x100) && var_r31) {
+            fn_8002833C(lbl_802EF4C8, var_r31);
+            M2C_FIELD(M2C_FIELD(arg0, void **, 0x48), f32 *, 0x30) = 0.5f;
+            obj64 = M2C_FIELD(arg0, void **, 0x64);
+            tmp = M2C_FIELD(obj64, s16 *, 0xC);
+            sp8[0] = 0x260;
+            sp8[1] = tmp;
+            fn_80140258(arg0, obj64, sp8, 0);
+            fn_80140210(arg0, M2C_FIELD(arg0, void **, 0x50), 0);
+            obj60 = M2C_FIELD(arg0, void **, 0x60);
+            M2C_FIELD(obj60, u8 *, 0x54) = 1;
+            fn_8000C070(arg0, 0x11);
+            fn_801475FC(lbl_8027C698 + 0x10C, 0x64);
+        } else if ((btn & 0x800) && var_r31) {
+            fn_801695BC(var_r31, arg0, 0x1000000);
+            M2C_FIELD(arg0, u8 *, 0x44) = 0x10;
+            fn_8000C070(arg0, 0x1D);
+        } else if ((btn & 0x400) && var_r31) {
+            fn_801694AC(var_r31, arg0);
+            M2C_FIELD(arg0, u8 *, 0x44) = 0x10;
+            fn_8000C070(arg0, 0x1E);
+        } else if (btn & 0x200) {
+            fn_8000C070(arg0, 0x1C);
+            fn_801475FC(lbl_8027C698 + 0x11C, 0x64);
+        }
+    }
+}
+
 #pragma cplusplus on
 extern "C" void fn_801BC784(void *arg0) {
     void fn_8014004C(void *, void *);
