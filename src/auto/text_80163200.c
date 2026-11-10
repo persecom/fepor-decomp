@@ -3336,10 +3336,12 @@ extern "C" void fn_80176DDC(s32 arg0, void *arg1) {
 
 void fn_80176E24(s32 arg0, void *arg1) {
     extern u16 lbl_80294604[];
-    void *fn_8000C0C0(u16 *, u16 *);
-    
-    u8 *src = (u8 *) fn_8000C0C0((u16 *)lbl_80294604, (u16 *)lbl_80294604);
-    *(u8 *)((u8 *)arg1 + 0x64) = *(u8 *)(src + 0x62);
+    void *fn_8000C0C0(u16 *, void *);
+    void fn_8013E2C8(s32, void *);
+    void *res;
+
+    res = fn_8000C0C0(lbl_80294604, arg1);
+    *(u8 *)((u8 *)res + 0x64) = *(u8 *)((u8 *)arg1 + 0x62);
     fn_8013E2C8(arg0, arg1);
 }
 
