@@ -350,7 +350,7 @@ void fn_80116760(s32 arg0, s32 arg1) {
     s32 sp8;
 
     fn_800CB90C(&sp8, arg1, (u8 *)lbl_80273DF8 + 0xfc);
-    fn_800C9758(arg0 + 0x154, &sp8, 0, -1);
+    fn_800C9758((void *)(arg0 + 0x154), &sp8, 0, -1);
     fn_800C9A60(&sp8, -1);
 }
 
@@ -402,6 +402,99 @@ void fn_80116FE8(void)
     // Start with a minimal stub that matches the prologue and epilogue structure.
     // This will be expanded as I get more confident about how this code actually works.
 }
+
+#pragma use_lmw_stmw on
+void *fn_80117A94(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s8 arg5)
+{
+    String sp24;
+    String sp18;
+    s32 sp14;
+    s32 sp10;
+    s32 spC;
+    s32 sp8;
+    s32 a3;
+    s32 a4;
+    s8 a5;
+
+    fn_800C9ABC(&sp24, (char *)lbl_80273DF8 + 0x573, &sp14);
+    fn_800C9ABC(&sp18, (char *)lbl_80273DF8 + 0x579, &sp10);
+    a3 = arg3;
+    a4 = arg4;
+    a5 = arg5;
+    fn_800E6418(arg0, arg1, &sp24, arg2, a3, &sp18);
+    fn_800C9A60(&sp18, -1);
+    fn_800C9A60(&sp24, -1);
+
+    {
+        u8 *self = (u8 *)arg0;
+
+        *(void **)(self + 0x40) = lbl_8028F6C8;
+
+        *(u32 *)(self + 0x154) = 0;
+        *(u32 *)(self + 0x158) = 0;
+        *(u32 *)(self + 0x15C) = 0;
+        *(u32 *)(self + 0x158) = 0;
+        *(u32 *)(self + 0x160) = 0;
+        *(u32 *)(self + 0x164) = 0;
+        *(u32 *)(self + 0x168) = 0;
+        *(u32 *)(self + 0x164) = 0;
+        *(u32 *)(self + 0x16C) = 0;
+        *(u32 *)(self + 0x170) = 0;
+        *(u32 *)(self + 0x174) = 0;
+        *(u32 *)(self + 0x170) = 0;
+        *(u32 *)(self + 0x178) = 0;
+        *(u32 *)(self + 0x17C) = 0;
+        *(u32 *)(self + 0x180) = 0;
+        *(u32 *)(self + 0x17C) = 0;
+
+        fn_800D6878(self + 0x1BC, &sp8, &spC);
+
+        *(s32 *)(self + 0x118) = 0;
+        *(s32 *)(self + 0x11C) = 0;
+        *(s32 *)(self + 0x120) = 0;
+        *(f32 *)(self + 0x124) = lbl_8036A1DC;
+        *(f32 *)(self + 0x128) = lbl_8036A1A4;
+        *(s32 *)(self + 0x12C) = 0;
+        *(s32 *)(self + 0x130) = 0;
+        *(s32 *)(self + 0x134) = 0;
+        *(s32 *)(self + 0x138) = 0;
+        *(s32 *)(self + 0x13C) = 0;
+        *(s32 *)(self + 0x140) = 0;
+        *(s32 *)(self + 0x14C) = -1;
+        *(s32 *)(self + 0x148) = 0;
+        self[0x184] = 0;
+        self[0x194] = 0;
+        self[0x195] = 0;
+        *(s32 *)(self + 0x198) = 1;
+        *(s32 *)(self + 0x19C) = 0;
+        self[0x1A0] = 0;
+        self[0x1A1] = 0;
+        self[0x1A2] = a5;
+        self[0x1A3] = a5;
+        self[0x1A4] = 0;
+        self[0x1A5] = 0;
+        self[0x1A6] = 0;
+        self[0x1A7] = 0;
+        self[0x1A8] = 0;
+        *(s32 *)(self + 0x1AC) = a4;
+        *(f32 *)(self + 0x1B0) = lbl_8036A1C8;
+        self[0x1B4] = 0;
+        self[0x1B5] = 0;
+        self[0x1B6] = 0;
+        *(s32 *)(self + 0x1B8) = 1;
+
+        fn_800C96F8(self + 0x154, (char *)lbl_80273DF8 + 0x581, strlen((char *)lbl_80273DF8 + 0x581));
+        fn_800C96F8(self + 0x160, (char *)lbl_80273DF8 + 0x1C, strlen((char *)lbl_80273DF8 + 0x1C));
+        fn_800C96F8(self + 0x16C, (char *)lbl_80273DF8 + 0x1C, strlen((char *)lbl_80273DF8 + 0x1C));
+
+        self[0x1D7] = 1;
+        self[0x1D6] = 1;
+        self[0x1D5] = 1;
+        self[0x1D4] = 1;
+        return self;
+    }
+}
+#pragma use_lmw_stmw reset
 
 s32 fn_80117CC0(void *arg0, s32 arg1) {
     return M2C_FIELD(arg0, s32 *, 8) + arg1;
