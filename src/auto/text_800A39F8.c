@@ -97,9 +97,9 @@ s32 fn_800A3A68(s32 arg0, s32 arg1) {
 }
 
 s32 fn_800A3D08(void) {
-    extern M2C_UNK lbl_803123A0;
-    if ((s32) M2C_FIELD(&lbl_803123A0, s32 *, 0xA0) != 0) {
-        return M2C_FIELD(&lbl_803123A0, s32 *, 0x50);
+    extern u8 lbl_803123A0[];
+    if (*(s32 *)(lbl_803123A0 + 0xA0) != 0) {
+        return *(s32 *)(lbl_803123A0 + 0x50);
     }
     return 0;
 }
