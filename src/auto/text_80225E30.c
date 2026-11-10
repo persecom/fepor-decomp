@@ -82,7 +82,7 @@ extern void fn_8020C1A4(u8, u32, void *);
 
 extern u8 lbl_80289EB8[16];
 
-void TRKDestructEvent(void *arg0) {
+int TRKDestructEvent(void *arg0) {
     M2C_UNK fn_8022699C(s32);
     fn_8022699C(M2C_FIELD(arg0, s32 *, 8));
 }
@@ -289,7 +289,46 @@ s32 fn_80226A2C(void) {
     return 0;
 }
 
+int TRKInitializeMessageBuffers(void) {
+    u8 *queue;
+    s32 i;
+
+    queue = &((u8 *)&lbl_8033B078)[0];
+
+    for (i = 0; i < 3; i++) {
+        fn_802287B8(queue);
+        fn_802287B0(queue);
+
+        *(u32 *)(queue + 0x4) = 0;
+
+        fn_802287A8(queue);
+
+        queue += 0x890;
+    }
+
+    return 0;
+}
+
 s32 fn_80226B68(void) {
+    return 0;
+}
+
+s32 TRKInitializeSerialHandler(void) {
+    void MWTRACE(u8 level, char *fmt, ...);
+    extern u16 lbl_802822F0[200];
+    extern u16 lbl_8033CA28[12];
+    u8 *g = (u8 *)lbl_8033CA28;
+    char *msgs = (char *)lbl_802822F0;
+
+    *(s32 *)(g + 0) = -1;
+    *(s32 *)(g + 8) = 0;
+    *(s32 *)(g + 0xc) = 0;
+    MWTRACE(1, (char *)((u8 *)msgs + 0), 0x40);
+    MWTRACE(1, msgs + 0x24, 0x40);
+    MWTRACE(1, msgs + 0x48, 0x40);
+    MWTRACE(1, msgs + 0x6c, 0x40);
+    MWTRACE(1, msgs + 0x8c, 0x40);
+    MWTRACE(1, msgs + 0xac, 0x40);
     return 0;
 }
 
