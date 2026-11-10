@@ -1080,6 +1080,73 @@ void fn_80205B7C(void *arg0, s32 arg1, s32 arg2) {
     return;
 }
 
+#pragma use_lmw_stmw on
+void OSDumpContext(OSContext *context) {
+    extern char lbl_8029BDE0[];
+    s32 fn_8022C568(f64);
+    OSContext exceptionContext;
+    OSContext *oldCtx;
+    BOOL enabled;
+    u32 i;
+    char *str;
+    u32 *p;
+    u32 j;
+    s32 hi;
+    s32 lo;
+    u32 gpr;
+    u32 gpr2;
+
+    str = lbl_8029BDE0;
+    OSReport(str, context);
+    for (i = 0; i < 16; i++) {
+        gpr = context->gpr[i];
+        gpr2 = context->gpr[i + 16];
+        OSReport(str + 0x44, i, gpr, gpr, i + 16, gpr2, gpr2);
+    }
+    OSReport(str + 0x74, context->lr, context->cr);
+    OSReport(str + 0xA4, context->srr0, context->srr1);
+    OSReport(str + 0xD4);
+    for (i = 0; i < 4; i++) {
+        OSReport(str + 0xE8, i, context->gqr[i], i + 4, context->gqr[i + 4]);
+    }
+    if (context->state & 1u) {
+        enabled = OSDisableInterrupts();
+        oldCtx = *(OSContext **)0x800000D4;
+        exceptionContext.mode = 0;
+        exceptionContext.state = 0;
+        if (&exceptionContext == *(OSContext **)0x800000D8) {
+            *(OSContext **)0x800000D8 = 0;
+        }
+        OSSetCurrentContext(&exceptionContext);
+        OSReport(str + 0x10C);
+        for (i = 0; i < 32; i += 2) {
+            hi = fn_8022C568(context->fpr[i + 1]);
+            lo = fn_8022C568(context->fpr[i]);
+            OSReport(str + 0x120, i, lo, i + 1, hi);
+        }
+        OSReport(str + 0x13C);
+        for (i = 0; i < 32; i += 2) {
+            hi = fn_8022C568(context->psf[i + 1]);
+            lo = fn_8022C568(context->psf[i]);
+            OSReport(str + 0x150, i, lo, i + 1, hi);
+        }
+        exceptionContext.mode = 0;
+        exceptionContext.state = 0;
+        if (&exceptionContext == *(OSContext **)0x800000D8) {
+            *(OSContext **)0x800000D8 = 0;
+        }
+        OSSetCurrentContext(oldCtx);
+        OSRestoreInterrupts(enabled);
+    }
+    OSReport(str + 0x170);
+    p = (u32 *)context->gpr[1];
+    for (j = 0; p != 0 && (u32)p + 0x10000 != 0xFFFFFFFF && j < 16; j++) {
+        OSReport(str + 0x198, p, p[0], p[1]);
+        p = (u32 *)p[0];
+    }
+}
+#pragma use_lmw_stmw reset
+
 void fn_8020602C(void) {
     s32 obj;
     s32 temp_r5;
@@ -1604,15 +1671,15 @@ u8 *fn_80207768(u16 arg0, u8 *arg1, s32 *arg2, s32 *arg3) {
     return ptr;
 }
 
-#pragma global_optimizer off
+#pragma global_optimizer on
 s32 fn_802078A4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4) {
 extern u16 lbl_80366F48;
 extern void (*lbl_803684C0)(void);
 FontImageHeader *h; s32 index;
-s32 result, cells, x, y, row, col, mask; u8 pixel, color;
-u8 *base, *dst, *src; s32 sx, sy, stride, srcY, dstY, srcSubY, dstSubY; u8 *palette;
-u16 val; u32 mode;
-if (lbl_80366F48 != 0xffff) { mode=lbl_80366F48; goto ready; } {
+s32 mask, col, row, y, x, cells, result; u8 pixel, color;
+u8 *base, *dst, *src; s32 sy, sx, dstSubY, srcSubY, dstY, srcY, stride; u8 *palette;
+u16 val; s32 mode;
+mode=lbl_80366F48; if (mode != 0xffff) { goto ready; } {
 switch (*(s32*)0x800000cc) {
 case 0: if (*(u16*)0xcc00206e & 2) val=1; else val=0; lbl_80366F48=val; break;
 default: lbl_80366F48=0; break;
@@ -1626,7 +1693,7 @@ cells=h->columns*h->rows;
 x=(index%cells % h->columns)*h->width;
 y=(index%cells / h->columns)*h->height;
 base=(u8*)h+h->imageOffset;
-base+=((u32)((index/cells)*h->sheetSize)>>1);
+base+=(u32)(h->sheetSize*(index/cells))/2;
 palette=h->palette;
 stride=((arg3*4)/8)<<5;
 for(row=0;row<h->height;row++){
@@ -1642,7 +1709,9 @@ dst+=(sy/8)*32;
 dst+=dstSubY;
 dst+=(sy%8)/2;
 if(sy%2) mask=15; else mask=240;
-pixel=*dst; color=palette[((*src>>(6-(sx%4)*2))&3)];
+color=*src;
+pixel=*dst;
+color=palette[(color>>(6-(sx%4)*2))&3];
 *dst=pixel | (color & mask);
 }
 }
@@ -1672,28 +1741,188 @@ s32 fn_80207BAC(s16 arg0) {
     return InterruptHandlerTable_803684C8[arg0];
 }
 
-s32 __OSMaskInterrupts(s32 arg0) {
-    s32 temp_r29;
-    s32 temp_r30;
-    s32 temp_r31;
-    s32 temp_r5;
-    u32 var_r3;
+volatile u16 OS_MEMRegs[64] : 0xCC004000;
+volatile u16 OS_DSPRegs[64] : 0xCC005000;
+volatile u32 OS_PIRegs[16] : 0xCC003000;
+volatile u32 OS_AIRegs[8] : 0xCC006C00;
+volatile u32 OS_EXIRegs[16] : 0xCC006800;
 
-    temp_r29 = *(s32 *)0x800000C4;
-    temp_r30 = ((BOOL (*)(void))OSDisableInterrupts)();
-    temp_r5 = *(s32 *)0x800000C8;
-    var_r3 = arg0 & ~(temp_r29 | temp_r5);
-    temp_r31 = arg0 | temp_r29;
-    *(s32 *)0x800000C4 = temp_r31;
-    do {
-        if (var_r3 != 0) {
-            var_r3 = fn_80207C34(temp_r31 | temp_r5);
-        } else {
-            break;
+#pragma peephole off
+u32 fn_80207C34(u32 mask, u32 current) {
+    u32 reg;
+    u32 addr;
+
+    switch (__cntlzw(mask)) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+        reg = 0;
+        if (!(current & 0x80000000)) {
+            reg |= 0x1;
         }
-    } while(1);
-    ((void (*)(BOOL))OSRestoreInterrupts)(temp_r30);
-    return temp_r29;
+        if (!(current & 0x40000000)) {
+            reg |= 0x2;
+        }
+        if (!(current & 0x20000000)) {
+            reg |= 0x4;
+        }
+        if (!(current & 0x10000000)) {
+            reg |= 0x8;
+        }
+        if (!(current & 0x08000000)) {
+            reg |= 0x10;
+        }
+        addr = 0xCC004000;
+        *(volatile u16 *)(addr + 0x1C) = (u16)reg;
+        mask &= 0x07FFFFFF;
+        break;
+    case 5:
+    case 6:
+    case 7:
+        addr = 0xCC005000;
+        addr = addr + 0xA;
+        reg = *(volatile u16 *)addr;
+        reg &= ~0x1F8;
+        if (!(current & 0x04000000)) {
+            reg |= 0x10;
+        }
+        if (!(current & 0x02000000)) {
+            reg |= 0x40;
+        }
+        if (!(current & 0x01000000)) {
+            reg |= 0x100;
+        }
+        *(volatile u16 *)addr = (u16)reg;
+        mask &= 0xF8FFFFFF;
+        break;
+    case 8:
+        reg = *(volatile u32 *)0xCC006C00;
+        reg &= ~0x2C;
+        if (!(current & 0x00800000)) {
+            reg |= 0x4;
+        }
+        *(volatile u32 *)0xCC006C00 = reg;
+        mask &= 0xFF7FFFFF;
+        break;
+    case 9:
+    case 10:
+    case 11:
+        reg = *(volatile u32 *)0xCC006800;
+        reg &= ~0x2C0F;
+        if (!(current & 0x00400000)) {
+            reg |= 0x1;
+        }
+        if (!(current & 0x00200000)) {
+            reg |= 0x4;
+        }
+        if (!(current & 0x00100000)) {
+            reg |= 0x400;
+        }
+        *(volatile u32 *)0xCC006800 = reg;
+        mask &= 0xFF8FFFFF;
+        break;
+    case 12:
+    case 13:
+    case 14:
+        addr = 0xCC006800;
+        addr = addr + 0x14;
+        reg = *(volatile u32 *)addr;
+        reg &= ~0xC0F;
+        if (!(current & 0x00080000)) {
+            reg |= 0x1;
+        }
+        if (!(current & 0x00040000)) {
+            reg |= 0x4;
+        }
+        if (!(current & 0x00020000)) {
+            reg |= 0x400;
+        }
+        *(volatile u32 *)addr = reg;
+        mask &= 0xFFF1FFFF;
+        break;
+    case 15:
+    case 16:
+        addr = 0xCC006800;
+        addr = addr + 0x28;
+        reg = *(volatile u32 *)addr;
+        reg &= ~0xF;
+        if (!(current & 0x00010000)) {
+            reg |= 0x1;
+        }
+        if (!(current & 0x00008000)) {
+            reg |= 0x4;
+        }
+        *(volatile u32 *)addr = reg;
+        mask &= 0xFFFE7FFF;
+        break;
+    case 17:
+    case 18:
+    case 19:
+    case 20:
+    case 21:
+    case 22:
+    case 23:
+    case 24:
+    case 25:
+    case 26:
+        reg = 0xF0;
+        if (!(current & 0x00004000)) {
+            reg |= 0x800;
+        }
+        if (!(current & 0x00000800)) {
+            reg |= 0x8;
+        }
+        if (!(current & 0x00000400)) {
+            reg |= 0x4;
+        }
+        if (!(current & 0x00000200)) {
+            reg |= 0x2;
+        }
+        if (!(current & 0x00000100)) {
+            reg |= 0x1;
+        }
+        if (!(current & 0x00000080)) {
+            reg |= 0x100;
+        }
+        if (!(current & 0x00000040)) {
+            reg |= 0x1000;
+        }
+        if (!(current & 0x00002000)) {
+            reg |= 0x200;
+        }
+        if (!(current & 0x00001000)) {
+            reg |= 0x400;
+        }
+        if (!(current & 0x00000020)) {
+            reg |= 0x2000;
+        }
+        addr = 0xCC003000;
+        *(volatile u32 *)(addr + 4) = reg;
+        mask &= 0xFFFF801F;
+        break;
+    }
+    return mask;
+}
+#pragma peephole reset
+u32 __OSMaskInterrupts(u32 global) {
+    BOOL enabled;
+    u32 prev;
+    u32 mask;
+    u32 current;
+
+    enabled = OSDisableInterrupts();
+    prev = *(u32 *)0x800000C4;
+    mask = global & ~(prev | *(u32 *)0x800000C8);
+    current = global | prev;
+    *(u32 *)0x800000C4 = current;
+    current |= *(u32 *)0x800000C8;
+    while (mask != 0) {
+        mask = fn_80207C34(mask, current);
+    }
+    OSRestoreInterrupts(enabled);
+    return prev;
 }
 
 void __OSModuleInit(void) {
