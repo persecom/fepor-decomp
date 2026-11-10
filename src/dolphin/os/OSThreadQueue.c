@@ -139,7 +139,7 @@ extern s32 RunQueueHint_8036851C;
 void __OSReschedule(void) {
     extern s32 RunQueueHint_8036851C;
     if (RunQueueHint_8036851C != 0) {
-        SelectThread(0);
+        SelectThread_8020A2C4(0);
     }
 }
 
