@@ -1822,6 +1822,21 @@ s32 fn_80079018(void *arg0) {
     return 1;
 }
 
+s32 fn_8007906C(void *arg0) {
+    void fn_8000C070(void *, u8);
+    extern u8 lbl_802EF4C8[];
+    u32 *ptr;
+    u32 val;
+
+    ptr = *(u32 **)((u8 *)arg0 + 4);
+    val = *ptr;
+    if ((val >> 24) == lbl_802EF4C8[8]) {
+        fn_8000C070(arg0, (u8)(val >> 16));
+    }
+    *(u8 **)((u8 *)arg0 + 4) = *(u8 **)((u8 *)arg0 + 4) + 4;
+    return 1;
+}
+
 s32 fn_800790CC(void) {
     return 0;
 }
