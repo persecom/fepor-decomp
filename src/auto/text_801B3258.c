@@ -33,53 +33,6 @@ typedef struct UIListObj {
     void *field74;
 } UIListObj;
 
-/* Returns 1 if slot cleared (caller should return 1), 0 to continue. */
-static s32 ClearBadSaveSlot(u8 *slot, s32 arg0) {
-    extern void *lbl_803682F0;
-    extern u8 lbl_8027E980[];
-    void *fn_800C4638(s32, void *, s32);
-    void fn_800C4588(void *);
-    void fn_800EC1F8(void);
-    u32 fn_800EC0A4(void *, void *, s32);
-    void fn_800E9B80(void *, s32, s32, s32, s32);
-    void *memset(void *, s32, s32);
-    void *buf;
-    u32 sum;
-    u8 hdrOk;
-    u8 chkOk;
-
-    if (*(u32 *)(slot + 0x40) != 0x4645384AU) {
-        hdrOk = 0;
-    } else if (*(u32 *)(slot + 0x44) != 0x20050201U) {
-        hdrOk = 0;
-    } else {
-        hdrOk = 1;
-    }
-    if (hdrOk == 0) {
-        return 0;
-    }
-    if (*(u32 *)(slot + 0x50) == 0x12345678U) {
-        chkOk = 1;
-    } else if (*(u8 *)(slot + 0x60) == 1) {
-        chkOk = 1;
-    } else {
-        buf = fn_800C4638(0x400, lbl_8027E980 + 0x14E, 0);
-        fn_800EC1F8();
-        sum = fn_800EC0A4(buf, slot + 0x70, *(s32 *)(slot + 0x4C) - 0x70);
-        fn_800C4588(buf);
-        if (*(u32 *)(slot + 0x50) != sum) {
-            chkOk = 0;
-        } else {
-            chkOk = 1;
-        }
-    }
-    if (chkOk != 0) {
-        return 0;
-    }
-    memset(slot, 0, 0x2000);
-    fn_800E9B80(slot, 0x2000, (s32)(slot - (u8 *)lbl_803682F0), -1, arg0);
-    return 1;
-}
 
 static inline s32 MsgBoxAddPad(s32 h, s32 pad) {
     return h + pad;
