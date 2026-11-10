@@ -2475,6 +2475,60 @@ void fn_80170034(void *arg0) {
     fn_8000A430(M2C_FIELD(arg0, s32 *, 0x5C));
 }
 
+#pragma cplusplus on
+extern "C" void fn_80170058(void *arg0) {
+    void fn_801400F4(void *, void *);
+    void fn_8014027C(void *, void *, s16 *, s32);
+    void fn_80140258(void *, void *, s16 *, s32);
+    void *fn_8013FF94(void *, s32, s32);
+    void fn_8014004C(void *, void *);
+    void fn_80109020(void *);
+    extern u16 lbl_80278080[];
+
+    struct RefObj {
+        virtual void destroy(s32);
+        s32 refCount;
+    };
+
+    void *obj4c;
+    void *obj40;
+    RefObj *p;
+    void *ret;
+    s16 spC[2];
+    s16 sp8[2];
+    s16 tmp;
+    s32 refs;
+
+    obj4c = *(void **)((u8 *)arg0 + 0x4C);
+    *((u8 *)obj4c + 0x78) = 1;
+    *((u8 *)obj4c + 0x4A) = 0;
+    obj40 = *(void **)((u8 *)arg0 + 0x40);
+    fn_801400F4(arg0, obj40);
+    spC[0] = *(s16 *)((u8 *)obj40 + 0xA);
+    spC[1] = 0x10;
+    fn_8014027C(arg0, obj40, spC, 0);
+
+    p = *(RefObj **)((u8 *)arg0 + 0x54);
+    tmp = *(s16 *)((u8 *)p + 0xC);
+    sp8[0] = 0x260;
+    sp8[1] = tmp;
+    fn_80140258(arg0, p, sp8, 1);
+
+    p = *(RefObj **)((u8 *)arg0 + 0x54);
+    if (p != NULL) {
+        refs = p->refCount - 1;
+        p->refCount = refs;
+        if (refs == 0 && p != NULL) {
+            p->destroy(1);
+        }
+        *(RefObj **)((u8 *)arg0 + 0x54) = (RefObj *)0;
+    }
+    ret = fn_8013FF94(arg0, 0x109, 0);
+    fn_8014004C(arg0, ret);
+    fn_80109020((u8 *)lbl_80278080 + 0x210);
+}
+#pragma cplusplus reset
+
 void fn_8017073C(void *arg0) {
     M2C_UNK fn_8013FF00(void *, s32);
     u32 fn_8013FF94(void *, s32, s32);
