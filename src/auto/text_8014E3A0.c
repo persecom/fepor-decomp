@@ -3,6 +3,7 @@
 extern u32 *lbl_80367140;
 typedef struct { u8 r, g, b, a; } Color;
 typedef struct { s32 c0, c1, c2, c3; } Color4;
+typedef struct { s32 c3, c2, c1, c0; } Color4rev;
 
 s32 fn_8014E3A0(void) {
     return 0;
@@ -2421,10 +2422,10 @@ void fn_80161B98(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s16 *arg5, s3
             c1 = arg6[1];
             c2 = arg6[2];
             c3 = arg6[3];
-            *(s32 *)&sp2C = c0;
-            *(s32 *)&sp28 = c1;
-            *(s32 *)&sp24 = c2;
             *(s32 *)&sp20 = c3;
+            *(s32 *)&sp24 = c2;
+            *(s32 *)&sp28 = c1;
+            *(s32 *)&sp2C = c0;
             fn_80007898(3);
             fn_800077D8((f32)arg0, (f32)arg1, (f32)w, (f32)h);
             t1 = arg5[1];
