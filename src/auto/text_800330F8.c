@@ -4520,9 +4520,11 @@ void fn_80053658(void *arg0, s32 arg1, s32 arg2) {
 }
 
 void fn_8005366C(void *arg0, s32 arg1, s32 arg2) {
-    u32 addr = (u32)arg0 + 0x30;
-    u32 ptr = addr + (arg1 << 2);
-    *(s32 *)ptr = arg2;
+    u8 *p;
+
+    p = *(u8 **)((u8 *)arg0 + 0x30);
+    p = p + (arg1 << 2);
+    *(s32 *)(p + 0x4C) = arg2;
 }
 
 void fn_80053680(void *arg0, void *arg1) {
