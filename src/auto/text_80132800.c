@@ -3461,10 +3461,32 @@ void fn_80143BC8(s32 *arg0, void *arg1) {
     *arg0 = fn_8013F748(arg1, &sp8, &sp8, temp_r6, temp_r7, temp_r8);
 }
 
-s16 fn_80143C58(void **arg0) {
-    return M2C_FIELD((arg0 + (M2C_FIELD(*arg0, s32 (**)(), 0x30)() * 2)), s16 *, 0x64);
-}
+#pragma cplusplus on
+extern "C" s16 fn_80143C58(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual u16 v10() = 0;
+    };
+    typedef struct {
+        u8 pad[0x64];
+        s16 unk64[1];
+    } Unk80143C58;
+    Unk80143C58 *obj = (Unk80143C58 *)arg0;
+    u16 var_r0;
 
+    var_r0 = ((Obj *)arg0)->v10();
+    return obj->unk64[var_r0];
+}
+#pragma cplusplus reset
 void fn_80143E0C(void *unit, s16 arg1) {
     s16 var_r31;
     s16 temp_r4;
@@ -4289,6 +4311,58 @@ void fn_80147EBC(s16 arg0) {
     } while (var_r28 < 4);
 }
 
+void fn_80147FA8(s16 arg0) {
+    extern struct Unk30 {
+        u8 pad_0x0[8];
+        void **vtbl;     /* +0x8 */
+        u8 flags;        /* +0xC */
+        u8 pad_d[9];
+        u8 unk_16;       /* +0x16 */
+        u8 pad_17[0x11];
+        u8 unk_28;       /* +0x28 */
+        u8 unk_29;       /* +0x29 */
+        u8 unk_2A;       /* +0x2A */
+        u8 pad_2B;
+        s16 unk_2C;      /* +0x2C */
+        s16 unk_2E;      /* +0x2E */
+    } lbl_8032FF08;
+    extern f32 lbl_8036A7A0;
+    s32 var_r31;
+    struct Unk30 *var_r30;
+    s32 var_r29;
+    s32 temp;
+    s16 var_r4;
+
+    var_r31 = arg0;
+    var_r30 = &lbl_8032FF08;
+    var_r29 = 0;
+    do {
+        if ((var_r30->flags & 1) &&
+            (((u8 (*)(M2C_UNK *))var_r30->vtbl[0x6C / 4])((M2C_UNK *)var_r30) == 0)) {
+            if (arg0 <= 0) {
+                if (!(var_r30->flags & 4)) {
+                    var_r30->unk_2A = var_r30->unk_16;
+                    ((void (*)(M2C_UNK *))var_r30->vtbl[0x14 / 4])((M2C_UNK *)var_r30);
+                }
+            } else {
+                temp = (s32) ((f32) var_r31 / lbl_8036A7A0);
+                var_r4 = (s16) temp;
+                if (var_r4 <= 0) {
+                    var_r4 = 1;
+                }
+                var_r30->unk_2A = var_r30->unk_16;
+                var_r30->unk_28 = var_r30->unk_16;
+                var_r30->unk_29 = 0;
+                var_r30->unk_2E = var_r4;
+                var_r30->unk_2C = 0;
+                var_r30->flags = (u8)(var_r30->flags | 4);
+            }
+        }
+        var_r29 += 1;
+        var_r30 = (struct Unk30 *)((u8 *)var_r30 + 0x30);
+    } while (var_r29 < 4);
+}
+
 void fn_8014876C(void *arg0, s8 arg1, s16 arg2) {
     extern f32 lbl_8036A7A0;
     s16 var_r6;
@@ -4921,14 +4995,17 @@ u16 fn_80149E84(void **arg0) {
     return M2C_FIELD(temp_r3, u16 *, 0x12) & 0xFFFF;
 }
 
-u8 fn_80149EA8(void **arg0) {
+s32 fn_80149EA8(void **arg0) {
+    u8 var_r0;
     void *temp_r3;
-    
+
     temp_r3 = *arg0;
-    if (M2C_FIELD(temp_r3, u8 *, 5) & 4) {
-        return 0;
+    if (*(u8 *)((u8 *)temp_r3 + 5) & 4) {
+        var_r0 = 0;
+    } else {
+        var_r0 = *(u8 *)((u8 *)temp_r3 + 0xC);
     }
-    return M2C_FIELD(temp_r3, u8 *, 0xC);
+    return var_r0;
 }
 
 void fn_80149ECC(void) {
