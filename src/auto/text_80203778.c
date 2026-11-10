@@ -256,7 +256,7 @@ void fn_802038C0(void) {
 
     temp_r4 = *(s32 *)0xC0;
     OSReport(lbl_8029B910, temp_r4);
-    OSDumpContext(temp_r4 + 0x80000000);
+    OSDumpContext((OSContext *)(temp_r4 + 0x80000000));
     PPCHalt();
 }
 
@@ -1603,14 +1603,15 @@ u8 *fn_80207768(u16 arg0, u8 *arg1, s32 *arg2, s32 *arg3) {
     return ptr;
 }
 
+#pragma global_optimizer off
 s32 fn_802078A4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4) {
 extern u16 lbl_80366F48;
 extern void (*lbl_803684C0)(void);
-u8 *h; s32 index;
-s32 cells, x, y, row, col, mask, result;
-u8 *base, *dst; s32 sx, sy, stride;
-u16 val; s32 mode;
-if (lbl_80366F48 != 0xffff) {mode=lbl_80366F48; goto ready;} {
+FontImageHeader *h; s32 index;
+s32 result, cells, x, y, row, col, mask; u8 pixel, color;
+u8 *base, *dst, *src; s32 sx, sy, stride, srcY, dstY, srcSubY, dstSubY; u8 *palette;
+u16 val; u32 mode;
+if (lbl_80366F48 != 0xffff) { mode=lbl_80366F48; goto ready; } {
 switch (*(s32*)0x800000cc) {
 case 0: if (*(u16*)0xcc00206e & 2) val=1; else val=0; lbl_80366F48=val; break;
 default: lbl_80366F48=0; break;
@@ -1619,24 +1620,29 @@ mode=lbl_80366F48;
 lbl_803684C0=(void(*)(void))fn_80207768;
 }
 ready:
-arg0=((s32(*)(u16,s32,u8**,s32*))lbl_803684C0)(mode,arg0,&h,&index);
-cells=*(u16*)(h+0x1a)**(u16*)(h+0x1c);
-x=(index%cells % *(u16*)(h+0x1a))**(u16*)(h+0x10);
-y=(index%cells / *(u16*)(h+0x1a))**(u16*)(h+0x12);
-base=h+*(u32*)(h+0x24)+((u32)((index/cells)**(s32*)(h+0x14))>>1);
+arg0=((s32(*)(s32,s32,FontImageHeader**,s32*))lbl_803684C0)(mode,arg0,&h,&index);
+cells=h->columns*h->rows;
+x=(index%cells % h->columns)*h->width;
+y=(index%cells / h->columns)*h->height;
+base=(u8*)h+h->imageOffset;
+base+=((u32)((index/cells)*h->sheetSize)>>1);
+palette=h->palette;
 stride=((arg3*4)/8)<<5;
-for(row=0;row<*(u16*)(h+0x12);row++){
-for(col=0;col<*(u16*)(h+0x10);col++){
+for(row=0;row<h->height;row++){
+srcY=(y+row)/8; srcSubY=((y+row)%8)*2; dstY=(row/8)*stride; dstSubY=(row%8)*4;
+for(col=0;col<h->width;col++){
 sx=x+col; sy=arg2+col;
-dst=(u8*)arg1+(row/8)*stride+(sy/8)*32+(row%8)*4+(sy%8)/2;
-mask=sy%2 ? 15:240;
-*dst |= h[0x2c+((base[((((s32)*(u16*)(h+0x1e)/8)<<5)/2)*((y+row)/8)+(sx/8)*16+((y+row)%8)*2+(sx%8)/4]>>(6-(sx%4)*2))&3)] & mask;
+src=&base[((((s32)h->sheetWidth/8)<<5)/2)*srcY+(sx/8)*16+srcSubY+(sx%8)/4];
+dst=(u8*)arg1+dstY+(sy/8)*32+dstSubY+(sy%8)/2;
+if(sy%2) mask=15; else mask=240;
+pixel=*dst; color=palette[((*src>>(6-(sx%4)*2))&3)];
+*dst=pixel | (color & mask);
 }
 }
-if(arg4) *arg4=h[*(u16*)(h+0x22)+index];
+if(arg4) *arg4=((u8*)h)[h->widthOffset+index];
 return arg0;
 }
-
+#pragma global_optimizer reset
 void *__OSSetInterruptHandler(s32 arg0, void *arg1) {
     extern void *InterruptHandlerTable_803684C8;
     void **table;
