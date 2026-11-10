@@ -948,6 +948,34 @@ int parse_format_80233B44(char* format, char* buffer, int arg1, int arg2)
     return result;
 }
 
+s32 fn_80234048(void *isc, s32 ch, s32 act)
+{
+    char ret;
+    __InStrCtrl *Iscp = (__InStrCtrl *)isc;
+
+    switch (act) {
+    case 0:
+        ret = *Iscp->NextChar;
+        if (ret == '\0') {
+            Iscp->NullCharDetected = 1;
+            return -1;
+        }
+        Iscp->NextChar++;
+        return (u8)ret;
+    case 1:
+        if (Iscp->NullCharDetected == 0) {
+            Iscp->NextChar--;
+        } else {
+            Iscp->NullCharDetected = 0;
+        }
+        return ch;
+    case 2:
+        return Iscp->NullCharDetected;
+    default:
+        return 0;
+    }
+}
+
 s32 fn_802340D8(s32 arg0) {
     extern void (*lbl_8033E170[])(s32);
     extern s32 __begin_critical_region(s32);
