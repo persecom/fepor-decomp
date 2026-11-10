@@ -188,6 +188,13 @@ void fn_801A3164(s32 arg0) {
     fn_8000CAA0(lbl_80297118, arg0);
 }
 
+s32 fn_801A3190(void) {
+    void fn_8002A2BC(void);
+    extern s32 lbl_802EF4E0[];
+    fn_8002A2BC();
+    return lbl_802EF4E0[0] != 0;
+}
+
 s32 fn_801A32C0(void) {
     void fn_8002A8CC(void);
     extern s32 lbl_802EF4E0[];
