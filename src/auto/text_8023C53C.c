@@ -102,7 +102,6 @@ typedef struct StreamState {
     StreamChannel channels[67]; /* 0x364 */
     u8 padEE8[0x1C];
     StreamMsg msgs[64]; /* 0xF04 */
-    u8 padF64[0x40];
     u8 *voices; /* 0x1504 */
     u8 pad1508[0x36];
     StreamVoice voiceFlags[1]; /* 0x153E */
