@@ -1264,22 +1264,28 @@ s32 fn_8001D5F4(void *arg0, u8 arg1) {
 }
 
 s32 fn_8001D818(void *arg0, void *arg1) {
-    M2C_UNK fn_800C3220(M2C_UNK *);
-    extern M2C_UNK lbl_803206EC;
-    void **ptr0 = (void **)arg0;
-    u8 *ptr5 = (u8 *)arg0 + 5;
-    u8 *ptr4 = (u8 *)arg0 + 4;
-    
-    *ptr0 = NULL;
-    *ptr4 = 0U;
-    *ptr5 = (*ptr5 & ~0x80);
-    *ptr5 = (*ptr5 & ~0x40);
-    if ((*ptr5 & 0x3F) != 0) {
-        fn_800C3220(&lbl_803206EC);
-        *ptr5 = (*ptr5 & ~0x3F);
+    void fn_800C3220(void *, s32);
+    extern u8 lbl_803206EC[];
+    typedef struct {
+        u8 pad : 1;
+        u8 flag : 1;
+        u8 rest : 6;
+    } Bit6;
+    Bit6 *bf;
+    s32 mask;
+
+    *(s32 *)arg0 = 0;
+    *((u8 *)arg0 + 4) = 0;
+    bf = (Bit6 *)((u8 *)arg0 + 5);
+    bf->pad = 0;
+    bf->flag = 0;
+    mask = *((u8 *)arg0 + 5) & 0x3F;
+    if (mask != 0) {
+        fn_800C3220(lbl_803206EC, mask);
+        bf->rest = 0;
     }
-    *ptr0 = arg1;
-    *ptr4 = *(u8 *)((char *)arg1 + 0x18);
+    *(void **)arg0 = arg1;
+    *((u8 *)arg0 + 4) = *((u8 *)arg1 + 0x18);
     return 1;
 }
 
