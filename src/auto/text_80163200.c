@@ -1111,6 +1111,137 @@ void fn_801690B0(s32 arg0) {
       return arg0;
   }
 
+#pragma cplusplus on
+extern "C" void *fn_8016915C(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
+    void fn_80142060(void *);
+    void fn_8013BBF8(void *);
+    extern u8 lbl_8028FDB0[];
+    extern u8 lbl_80292230[];
+    extern u8 lbl_80292208[];
+    extern u8 lbl_80291B70[];
+    extern u8 lbl_80295478[];
+    extern f32 lbl_8036A9AC;
+    extern f32 lbl_8036A9B0;
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+    };
+    struct Sub {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+    };
+    void *r31;
+    void *r30;
+    s32 z;
+    s16 n1;
+    s16 c108;
+    f32 one;
+    s32 e1;
+    s32 e2;
+    s32 e3;
+
+    z = 0;
+    n1 = -1;
+    c108 = 0x108;
+    one = lbl_8036A9AC;
+    r31 = arg0;
+    r30 = r31;
+    *(void **)r31 = lbl_8028FDB0;
+    e1 = arg1;
+    *(s32 *)((u8 *)r31 + 4) = z;
+    *(void **)r31 = lbl_80292230;
+    e2 = arg2;
+    e3 = arg3;
+    *(s16 *)((u8 *)r31 + 8) = n1;
+    *(s16 *)((u8 *)r31 + 0xA) = arg1;
+    *(s16 *)((u8 *)r31 + 0xC) = arg2;
+    *(s16 *)((u8 *)r31 + 0xE) = (s16)(e1 + 0x108);
+    *(s16 *)((u8 *)r31 + 0x10) = (s16)(e2 + e3);
+    *(s16 *)((u8 *)r31 + 0x12) = z;
+    *(s16 *)((u8 *)r31 + 0x14) = z;
+    *(s16 *)((u8 *)r31 + 0x16) = c108;
+    *(s16 *)((u8 *)r31 + 0x18) = arg3;
+    *(s16 *)((u8 *)r31 + 0x1A) = z;
+    *(s16 *)((u8 *)r31 + 0x1C) = z;
+    *(u8 *)((u8 *)r31 + 0x1E) = 0xFF;
+    *(u8 *)((u8 *)r31 + 0x1F) = 0xFF;
+    *(u8 *)((u8 *)r31 + 0x20) = 0xFF;
+    *(u8 *)((u8 *)r31 + 0x21) = 0xFF;
+    *(s16 *)((u8 *)r31 + 0x22) = arg4;
+    *(s16 *)((u8 *)r31 + 0x24) = z;
+    *(f32 *)((u8 *)r31 + 0x28) = one;
+    *(f32 *)((u8 *)r31 + 0x2C) = one;
+    *(f32 *)((u8 *)r31 + 0x30) = one;
+    *(s32 *)((u8 *)r31 + 0x34) = z;
+    *(s32 *)((u8 *)r31 + 0x38) = z;
+    *(void **)r31 = lbl_80292208;
+    fn_80142060((u8 *)r30 + 0x3C);
+    *(void **)r31 = lbl_80291B70;
+    *(s32 *)((u8 *)r31 + 0x48) = 0;
+    *(u8 *)((u8 *)r31 + 0x4C) = 1;
+    *(u8 *)((u8 *)r31 + 0x4D) = 0;
+    *(s16 *)((u8 *)r31 + 0x4E) = 0;
+    *(s16 *)((u8 *)r31 + 0x52) = -1;
+    *(s16 *)((u8 *)r31 + 0x54) = -1;
+    *(s16 *)((u8 *)r31 + 0x56) = 0;
+    *(s16 *)((u8 *)r31 + 0x58) = 1;
+    *(s16 *)((u8 *)r31 + 0x5A) = 0x20;
+    *(f32 *)((u8 *)r31 + 0x5C) = lbl_8036A9B0;
+    *(s16 *)((u8 *)r31 + 0x60) = 0;
+    *(s16 *)((u8 *)r31 + 0x62) = 0x10;
+    *(s16 *)((u8 *)r31 + 0x64) = 0;
+    fn_8013BBF8((u8 *)r31 + 0x70);
+    *(s32 *)((u8 *)r31 + 0x7C) = 0;
+    *(void **)((u8 *)r31 + 0x84) = lbl_80295478;
+    {
+        f32 f1 = lbl_8036A9AC;
+        f32 f0 = lbl_8036A9B0;
+        *(s32 *)((u8 *)r31 + 0x88) = 0;
+        *(s32 *)((u8 *)r31 + 0x8C) = 2;
+        *(u8 *)((u8 *)r31 + 0x90) = 1;
+        *(u8 *)((u8 *)r31 + 0x91) = 1;
+        *(s16 *)((u8 *)r31 + 0x98) = 0;
+        *(s16 *)((u8 *)r31 + 0x9A) = 0;
+        *(f32 *)((u8 *)r31 + 0x9C) = f1;
+        *(f32 *)((u8 *)r31 + 0xA0) = f1;
+        *(u8 *)((u8 *)r31 + 0xA4) = 0xFF;
+        *(u8 *)((u8 *)r31 + 0xA5) = 0xFF;
+        *(u8 *)((u8 *)r31 + 0xA6) = 0xFF;
+        *(u8 *)((u8 *)r31 + 0xA7) = 0xFF;
+        *(f32 *)((u8 *)r31 + 0xA8) = f0;
+        ((Sub *)((u8 *)r31 + 0x84))->v1();
+    }
+    *(void **)((u8 *)r31 + 0xAC) = lbl_80295478;
+    {
+        f32 f1 = lbl_8036A9AC;
+        f32 f0 = lbl_8036A9B0;
+        *(s32 *)((u8 *)r31 + 0xB0) = 0;
+        *(s32 *)((u8 *)r31 + 0xB4) = 3;
+        *(u8 *)((u8 *)r31 + 0xB8) = 1;
+        *(u8 *)((u8 *)r31 + 0xB9) = 1;
+        *(s16 *)((u8 *)r31 + 0xC0) = 0;
+        *(s16 *)((u8 *)r31 + 0xC2) = 0;
+        *(f32 *)((u8 *)r31 + 0xC4) = f1;
+        *(f32 *)((u8 *)r31 + 0xC8) = f1;
+        *(u8 *)((u8 *)r31 + 0xCC) = 0xFF;
+        *(u8 *)((u8 *)r31 + 0xCD) = 0xFF;
+        *(u8 *)((u8 *)r31 + 0xCE) = 0xFF;
+        *(u8 *)((u8 *)r31 + 0xCF) = 0xFF;
+        *(f32 *)((u8 *)r31 + 0xD0) = f0;
+        ((Sub *)((u8 *)r31 + 0xAC))->v1();
+    }
+    ((Obj *)r31)->v8();
+    return r31;
+}
+#pragma cplusplus reset
+
 u32 fn_8016947C(void) {
     extern u8 lbl_80330708[];
 
@@ -5024,21 +5155,20 @@ void *fn_80179D70(void *arg0, s16 arg1) {
 }
 
 void *fn_80179F8C(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
-    M2C_UNK fn_8017A000(s16 *, s16 *, s32);
-    extern u16 lbl_80291B1C;
+    void *fn_8017A000(void *, s16 *, s16 *, s16);
+      extern u16 lbl_80291B1C;
 
-    s16 spA;
-    s16 spC;
-    s16 spE;
-    s16 sp8;
-    s16 temp_r4, temp_r5, temp_r6, temp_r7;
+      s16 spA;
+      s16 spC;
+      s16 spE;
+      s16 sp8;
 
-    sp8 = arg3;
-    spC = arg1;
-    spE = arg2;
-    spA = arg4;
-    
-    fn_8017A000(&spC, &sp8, arg5);
+      sp8 = arg3;
+      spC = arg1;
+      spE = arg2;
+      spA = arg4;
+
+      fn_8017A000(arg0, &spC, &sp8, (s16)arg5);
     *(u16 **)arg0 = &lbl_80291B1C;
     *(u16 *)((char *)arg0 + 0xD4) = 1;
     (*(void (**)(void *, u16 *))(*(u32 **)arg0 + 0x0A))(arg0, &lbl_80291B1C);
