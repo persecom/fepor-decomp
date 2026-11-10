@@ -1927,6 +1927,22 @@ void fn_801FB048(void *arg0, u32 arg1) {
     }
 }
 
+void *fn_801FB1C0(void *arg0, s16 arg1) {
+    void fn_800C428C(void *);
+    void fn_801FB548(void *);
+
+    if (arg0 != NULL) {
+        fn_801FB548(arg0);
+        if (M2C_FIELD(arg0, void **, 8) != NULL) {
+            fn_800C428C(M2C_FIELD(arg0, void **, 8));
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_801FB220(void **ret, s32 *list, void **start, void **end) {
     struct Node {
         struct Node *prev;
