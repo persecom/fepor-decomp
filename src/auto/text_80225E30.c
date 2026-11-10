@@ -116,6 +116,19 @@ s32 TRKGetNextEvent(void) {
     return var_r3;
 }
 
+int TRKInitializeEventQueue(void) {
+    fn_802287B8(&lbl_8033B048);
+    fn_802287B0(&lbl_8033B048);
+
+    *(u32 *)((u8 *)&lbl_8033B048 + 0x4) = 0;
+    *(u32 *)((u8 *)&lbl_8033B048 + 0x8) = 0;
+    *(u32 *)((u8 *)&lbl_8033B048 + 0x24) = 0x100;
+
+    fn_802287A8();
+
+    return 0;
+}
+
 void TRKNubWelcome(void) {
     TRK_board_display(&lbl_80289EB8);
 }
