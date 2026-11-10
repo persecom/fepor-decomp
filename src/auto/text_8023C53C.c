@@ -4261,7 +4261,7 @@ u32 fn_802614C4(u32 arg0) {
 s32 fn_80261620(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 fn_802636C8(void);
     s32 fn_8026341C(void (*)(void), s32, s32);
-    s32 fn_802596A8(u32, u32, u32);
+    s32 fn_802596A8(s32, s32, s32);
     void fn_80262504(void);
     s32 fn_80263534(s32);
     void fn_802636F4(void);
@@ -4270,37 +4270,26 @@ s32 fn_80261620(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     extern u8 lbl_80368AD4;
     extern u8 lbl_80368AD3;
     extern u32 lbl_80368AA4;
-    s32 a0;
-    s32 a1;
-    s32 a2;
-    s32 a3;
-    u32 t5;
-    u32 t3;
-    u32 t4;
-
-    a0 = arg0;
-    a1 = arg1;
-    a2 = arg2;
-    a3 = arg3;
+    s32 a0 = arg0;
+    s32 a1 = arg1;
+    s32 a2 = arg2;
+    s32 a3 = arg3;
 
     fn_802636C8();
     lbl_80368AD4 = 0;
     lbl_80368AD3 = 0;
     lbl_80368AA4 = 0;
 
-    if (fn_8026341C(fn_802614CC, a3, a0) == 0U) {
+    if ((u32)fn_8026341C(fn_802614CC, a3, a0) == 0) {
         goto error;
     }
-    t5 = a3 & 1;
-    t3 = (u8)a1;
-    t4 = (u8)a2;
-    if (fn_802596A8(t3, t4, t5) == 0U) {
+    if ((u32)fn_802596A8(a1 & 0xFF, a2 & 0xFF, a3 & 1) == 0) {
         goto error;
     }
     if (a3 & 8) {
         fn_80262504();
     }
-    if (fn_80263534(a3) == 0U) {
+    if ((u32)fn_80263534(a3) == 0) {
         goto error;
     }
     fn_802636F4();
@@ -4813,7 +4802,7 @@ int fn_8026372C(void) {
     }
 }
 
-void fn_80263764(void) {
+int fn_80263764(void) {
     M2C_UNK OSDisableInterrupts();
     OSDisableInterrupts();
 }
