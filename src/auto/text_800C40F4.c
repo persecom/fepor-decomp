@@ -1715,7 +1715,8 @@ void fn_800D697C(u8 *arg0, u32 arg1, s32 arg2) {
     }
 }
 
-void fn_800D6A84(u32 arg1, s32 arg2) {
+void fn_800D6A84(void *arg0, u32 arg1, s32 arg2) {
+    void fn_800D6AB4(u32, s32);
     if (arg1 != 0U) {
         fn_800D6AB4(arg1, arg2);
     }
