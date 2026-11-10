@@ -906,8 +906,7 @@ s32 fn_8022B0B4(s32 a, s32 b) {
 
 void fn_8022B0F0(void) {
     extern u16 gDBCommTable[20];
-    void (*func)(u16 *) = (void (*)(u16 *))(gDBCommTable + 0xC);
-    func(gDBCommTable);
+    ((void (*)(u16 *))*(void **)(gDBCommTable + 6))(gDBCommTable);
 }
 
 void TRKEXICallBack(s32 arg0, s32 arg1) {
