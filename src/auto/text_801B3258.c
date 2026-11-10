@@ -2109,6 +2109,7 @@ extern u8 lbl_8029824C[];
 void fn_801C4440(void){extern u8 lbl_8029824C[];void fn_8000BF00(void*);fn_8000BF00(lbl_8029824C);}
 
 void fn_801C4468(s32 arg0) {
+    void *fn_8000CAF0(void *, s32);
     M2C_FIELD(fn_8000CAF0(&lbl_8029824C, 4), s32 *, 0x3C) = arg0;
 }
 
@@ -3967,6 +3968,17 @@ extern "C" void fn_801D2C30(void *arg0) {
         virtual s16 v12() { return 0; }
     };
 
+    struct Self {
+        u8 unk00[0x4E];
+        s16 field4E;
+        u8 unk50[4];
+        s16 field54;
+        u8 unk56[0x16];
+        u32 count;
+        u8 unk70[4];
+        void *field74;
+    };
+
     void *sp18;
     void *sp14;
     s32 sp10;
@@ -3977,24 +3989,20 @@ extern "C" void fn_801D2C30(void *arg0) {
         void *node;
         u32 unit;
     } row;
-    void *self;
+    s32 item;
+    u32 unit;
+    Self *self;
+    s32 idx;
     void *endPtr;
     s16 cur;
     s32 total;
-    s32 idx;
-    s32 item;
-    u32 unit;
-    void **p14;
-    void **p18;
 
-    self = arg0;
+    self = (Self *)arg0;
     endPtr = (u8 *)self + 0x70;
-    cur = *(s16 *)((u8 *)self + 0x4E);
-    p14 = &sp14;
-    p18 = &sp18;
-    *p18 = endPtr;
-    *p14 = *(void **)((u8 *)self + 0x74);
-    fn_801C1824(&sp10, (u8 *)self + 0x6C, p14, p18);
+    cur = self->field4E;
+    sp18 = endPtr;
+    sp14 = self->field74;
+    fn_801C1824(&sp10, &self->count, &sp14, &sp18);
     total = fn_800BE914();
     idx = 0;
     while (idx < total) {
@@ -4016,20 +4024,22 @@ extern "C" void fn_801D2C30(void *arg0) {
                 }
             }
             if (unit != 0) {
+                u32 *p;
                 if (row.node != 0) {
                     fn_800616A0(row.node);
                 }
                 row.node = fn_80061870();
                 *(s32 *)((u8 *)row.node + 4) = (s32)(unit + 0x1C);
-                *(u32 *)row.node = *(u32 *)row.node | 0x50028400;
-                fn_800506E0(unit, 0, row.node);
+                p = (u32 *)row.node;
+                *p = *p | 0x50028400;
+                fn_800506E0(unit, 0, p);
                 *(s32 *)((u8 *)row.node + 0x44) = fn_800639B4();
                 row.unit = unit;
                 *(u32 *)((u8 *)row.node + 0x90) = unit;
                 fn_8006140C(row.node);
             }
             spC = endPtr;
-            fn_801D2FE4(&sp8, (u8 *)self + 0x6C, &spC, &row);
+            fn_801D2FE4(&sp8, &self->count, &spC, &row);
             if (row.node != 0) {
                 fn_800616A0(row.node);
             }
@@ -4037,7 +4047,7 @@ extern "C" void fn_801D2C30(void *arg0) {
         idx += 1;
     }
     {
-        u32 count = *(u32 *)((u8 *)self + 0x6C);
+        u32 count = self->count;
         u32 last = count - 1;
         s16 v;
         s16 scroll;
@@ -4049,21 +4059,21 @@ extern "C" void fn_801D2C30(void *arg0) {
         }
         v = ((Obj *)self)->v12();
         if (count <= (u32)v) {
-            *(s16 *)((u8 *)self + 0x4E) = cur;
-            *(s16 *)((u8 *)self + 0x54) = 0;
+            self->field4E = cur;
+            self->field54 = 0;
         } else {
-            scroll = *(s16 *)((u8 *)self + 0x54);
+            scroll = self->field54;
             if ((u32)(count - scroll) < (u32)v) {
-                *(s16 *)((u8 *)self + 0x4E) = cur;
-                *(s16 *)((u8 *)self + 0x54) = (s16)(count - v);
+                self->field4E = cur;
+                self->field54 = (s16)(count - v);
             } else if (scroll < cur && (s32)(cur - scroll) < (s32)(v - 1)) {
-                *(s16 *)((u8 *)self + 0x4E) = cur;
+                self->field4E = cur;
             } else if (cur == 0) {
-                *(s16 *)((u8 *)self + 0x54) = cur;
-                *(s16 *)((u8 *)self + 0x4E) = cur;
+                self->field54 = cur;
+                self->field4E = cur;
             } else {
-                *(s16 *)((u8 *)self + 0x4E) = cur;
-                *(s16 *)((u8 *)self + 0x54) = (s16)(cur - 1);
+                self->field4E = cur;
+                self->field54 = (s16)(cur - 1);
             }
         }
     }
