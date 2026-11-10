@@ -2,6 +2,7 @@
 #include "common.h"
 extern u32 *lbl_80367140;
 typedef struct { u8 r, g, b, a; } Color;
+typedef struct { s32 c0, c1, c2, c3; } Color4;
 
 s32 fn_8014E3A0(void) {
     return 0;
@@ -2372,6 +2373,112 @@ void fn_80161778(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         fn_80007884();
     }
 }
+
+#pragma use_lmw_stmw on
+void fn_80161B98(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s16 *arg5, s32 *arg6, s32 arg7) {
+    void fn_8000A258(void);
+    void fn_8000A174(void *, u16);
+    void fn_8000A248(void);
+    void fn_80007898(s32);
+    void fn_800077D8(f32, f32, f32, f32);
+    void fn_800077B0(f32, f32, f32, f32);
+    void fn_800076EC(void);
+    void fn_800076CC(void);
+    void fn_800075D8(void);
+    void fn_80007588(void);
+    void fn_80007538(void);
+    void fn_800072B0(Color *, Color *, Color *, Color *);
+    void fn_80007884(void);
+    extern u8 lbl_80330D18[64];
+    extern f64 lbl_8036A868;
+    Color sp2C;
+    Color sp28;
+    Color sp24;
+    Color sp20;
+    Color sp1C;
+    Color sp18;
+    Color sp14;
+    Color sp10;
+    Color tmp;
+    Color tmp2;
+    s32 c3;
+    s32 c2;
+    s32 c1;
+    s32 c0;
+    s16 t1;
+    s16 t0;
+    s16 w;
+    s16 h;
+
+    w = arg2;
+    h = arg3;
+    if (w != 0) {
+        if (h != 0) {
+            fn_8000A258();
+            fn_8000A174((void *)&lbl_80330D18, (u16)(arg4 | 1));
+            fn_8000A248();
+            c0 = arg6[0];
+            c1 = arg6[1];
+            c2 = arg6[2];
+            c3 = arg6[3];
+            *(s32 *)&sp2C = c0;
+            *(s32 *)&sp28 = c1;
+            *(s32 *)&sp24 = c2;
+            *(s32 *)&sp20 = c3;
+            fn_80007898(3);
+            fn_800077D8((f32)arg0, (f32)arg1, (f32)w, (f32)h);
+            t1 = arg5[1];
+            t0 = arg5[0];
+            fn_800077B0((f32)t0, (f32)t1, (f32)(s16)(arg5[2] - t0), (f32)(s16)(arg5[3] - t1));
+            if (arg7 & 1) {
+                fn_800076EC();
+                *(s32 *)&tmp = *(s32 *)&sp2C;
+                if (&sp2C != &sp28) {
+                    sp2C.r = sp28.r;
+                    sp2C.g = sp28.g;
+                    sp2C.b = sp28.b;
+                    sp2C.a = sp28.a;
+                }
+                if (&sp28 != &tmp) {
+                    sp28.r = tmp.r;
+                    sp28.g = tmp.g;
+                    sp28.b = tmp.b;
+                    sp28.a = tmp.a;
+                }
+            }
+            if (arg7 & 2) {
+                fn_800076CC();
+                *(s32 *)&tmp2 = *(s32 *)&sp24;
+                if (&sp24 != &sp20) {
+                    sp24.r = sp20.r;
+                    sp24.g = sp20.g;
+                    sp24.b = sp20.b;
+                    sp24.a = sp20.a;
+                }
+                if (&sp20 != &tmp2) {
+                    sp20.r = tmp2.r;
+                    sp20.g = tmp2.g;
+                    sp20.b = tmp2.b;
+                    sp20.a = tmp2.a;
+                }
+            }
+            fn_800075D8();
+            if (arg7 & 0x100) {
+                fn_80007588();
+            }
+            if (arg7 & 0x200) {
+                fn_80007538();
+            }
+            *(s32 *)&sp10 = *(s32 *)&sp20;
+            *(s32 *)&sp14 = *(s32 *)&sp24;
+            *(s32 *)&sp18 = *(s32 *)&sp28;
+            *(s32 *)&sp1C = *(s32 *)&sp2C;
+            fn_800072B0(&sp1C, &sp18, &sp14, &sp10);
+            fn_80007884();
+        }
+    }
+}
+#pragma use_lmw_stmw reset
 
 void fn_80161E58(s16 arg0, s16 arg1, s32 arg2, s16 *arg3, s32 *arg4, s32 arg5) {
     void fn_80007538(void);
