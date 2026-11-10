@@ -183,7 +183,6 @@ extern "C" void fn_8005A79C(void *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4) 
     }
 }
 #pragma cplusplus reset
-#pragma scheduling reset
 #pragma global_optimizer reset
 #pragma use_lmw_stmw reset
 
