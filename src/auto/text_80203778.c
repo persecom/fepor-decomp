@@ -1145,7 +1145,6 @@ after:
 
 s32 fn_80207628(s32 arg0, s32 arg1) {
     s32 fn_80207304(s32, s32, s32);
-    void fn_80207768(void);
     extern u16 lbl_80366F48;
     extern s32 lbl_803684B8;
     extern s32 lbl_803684BC;
