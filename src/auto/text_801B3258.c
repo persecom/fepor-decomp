@@ -2154,7 +2154,7 @@ void fn_801C44A4(void *arg0) {
 
 void fn_801C4564(void) { M2C_UNK fn_801C45A4(); fn_801C45A4(); }
 
-void fn_801C4584(void){ fn_801C5B80(); /*try*/ }
+void fn_801C4584(void){ void fn_801C5B80(void); fn_801C5B80(); /*try*/ }
 
 void fn_801C6008(s32 arg0) {
     extern u8 lbl_80298224[];
@@ -3996,13 +3996,17 @@ extern "C" void fn_801D2C30(void *arg0) {
     void *endPtr;
     s16 cur;
     s32 total;
+    void **p14;
+    void **p18;
 
+    p14 = &sp14;
+    p18 = &sp18;
     self = (Self *)arg0;
     endPtr = (u8 *)self + 0x70;
     cur = self->field4E;
-    sp18 = endPtr;
-    sp14 = self->field74;
-    fn_801C1824(&sp10, &self->count, &sp14, &sp18);
+    *p18 = endPtr;
+    *p14 = self->field74;
+    fn_801C1824(&sp10, &self->count, p14, p18);
     total = fn_800BE914();
     idx = 0;
     while (idx < total) {
