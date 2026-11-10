@@ -3837,20 +3837,23 @@ u16 fn_8026071C(void *arg0) {
 
 s32 fn_80260764(void *arg0)
 {
+    s32 fn_802601EC(void *, void *, u8, u8);
+
     u32 flags;
 
     flags = *(u32 *)((u8 *)arg0 + 0x220);
 
-    if ((flags & 0x08000000) == 0) {
+    if ((flags & 0x8) == 0) {
         return *(u16 *)((u8 *)arg0 + 0x2B0);
     }
 
-    flags &= ~0x10000000;
+    flags &= ~0x8;
     *(u32 *)((u8 *)arg0 + 0x220) = flags;
 
     return fn_802601EC(
-        *(u8 *)((u8 *)arg0 + 0x121),
+        arg0,
         (u8 *)arg0 + 0x290,
+        *(u8 *)((u8 *)arg0 + 0x121),
         *(u8 *)((u8 *)arg0 + 0x122)
     );
 }
