@@ -385,7 +385,7 @@ config.libs = [
             Object(NonMatching, "dolphin/os/OSResetSW.c"),
             Object(NonMatching, "dolphin/os/OSThread.c", mw_version="GC/1.2.5n"),
             Object(NonMatching, "dolphin/os/OSThreadQueue.c", mw_version="GC/1.2.5n"),
-            Object(NonMatching, "dolphin/os/OSTime.c"),
+            Object(NonMatching, "dolphin/os/OSTime.c", mw_version="GC/1.2.5n"),
             Object(NonMatching, "dolphin/dvd/dvdlow.c", mw_version="GC/1.2.5n"),
             Object(NonMatching, "dolphin/dvd/dvdfs.c", mw_version="GC/1.2.5n"),
             Object(NonMatching, "dolphin/pad/Pad.c", mw_version="GC/1.2.5n"),
