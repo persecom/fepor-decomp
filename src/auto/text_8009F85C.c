@@ -1133,6 +1133,22 @@ s32 fn_800A1824(void) {
     temp_r4 = (u8) fn_80049D84(fn_80047178(fn_80040844(lbl_80330708), (s8) temp_r30, (s8) temp_r31));
     return (temp_r4 != 0) ? 0 : 2;
 }
+
+s32 fn_800A18A4(void) {
+    s32 fn_80040844(void *);
+    s32 fn_80047178(s32, s32, s32);
+    s32 fn_80049D30(void);
+    extern f32 lbl_80330708[];
+    s8 temp_r31;
+    s8 temp_r30;
+
+    temp_r31 = (s8)lbl_80330708[0x14A];
+    temp_r30 = (s8)lbl_80330708[0x149];
+    fn_80047178(fn_80040844(lbl_80330708), temp_r30, temp_r31);
+    fn_80049D30();
+    return 0;
+}
+
 void *fn_800A1910(void) {
     extern u16 lbl_8026D8D8[];
     return (u16*)((char*)lbl_8026D8D8 + 0x651);
