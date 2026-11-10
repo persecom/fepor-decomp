@@ -569,10 +569,11 @@ typedef struct {
     u8 unk4;
 } UnkRet800378CC;
 
+M2C_UNK fn_80165E90(s32 *, s32);
 UnkRet800378CC fn_800378CC(s32 arg0) {
     UnkRet800378CC ret;
 
-    fn_80165E90(&ret.unk0, arg0 + 0x1BC);
+    fn_80165E90((s32 *)&ret.unk0, arg0 + 0x1BC);
     return ret;
 }
 
