@@ -1,6 +1,18 @@
 /* Functions from 0x801B3258 to 0x801E4380, found by decomp-toolkit. */
 #include "common.h"
 
+typedef struct Self801CAF94 {
+    s32 unk0;
+    u8 pad4[0x50];
+    s32 unk54;
+    u8 pad58[0x14];
+    void *unk6C;
+    u8 pad70[4];
+    s32 unk74;
+    s8 unk78;
+    s8 unk79;
+} Self801CAF94;
+
 void *fn_8000CAF0(void *, s32);
 
 typedef struct ListNode {
@@ -3138,6 +3150,122 @@ void fn_801CAF58(void *arg0) {
 s32 fn_801CAF8C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x6C);
 }
+
+#pragma use_lmw_stmw on
+#pragma cplusplus on
+extern "C" void fn_801CAF94(void *arg0, s32 arg1, s8 arg2, s8 arg3, s32 arg4) {
+    u8 fn_800E903C(void *);
+    void fn_800DF6DC(void *, s32);
+    void fn_800E7B80(s32, void *);
+    void fn_800C9A60(void *, s32);
+    void *fn_800E8BB4(void *);
+    void fn_800E8BBC(void *, void *);
+    void fn_800E8FAC(void *, s32);
+    s32 fn_800E8F00(void *);
+    void fn_800D5D04(void *, void *, s32, s32);
+    void fn_800CB90C(void *, void *, char *);
+    void fn_800C9758(void *, void *, s32, s32);
+    s32 fn_800C9400(void *, s32, u32, char *, u32);
+    void fn_800C96F8(void *, char *, u32);
+    void fn_800C99A0(void *, void *, s32, s32);
+    void *fn_800C93EC(void *);
+    void fn_800E574C(void *, void *, f32, s32, s32, s32, s32);
+    u32 strlen(const char *);
+    extern char lbl_8027DAB0[];
+    extern f32 lbl_8036B4AC;
+
+    struct Str {
+        u32 size;
+        u32 cap;
+        char *data;
+    };
+    struct Obj {
+        u8 pad[0x40];
+        virtual void m08(s32) = 0;
+    };
+    struct Self {
+        s32 unk0;
+        u8 pad4[0x50];
+        s32 unk54;
+        u8 pad58[0x14];
+        void *unk6C;
+        u8 pad70[4];
+        s32 unk74;
+        s8 unk78;
+        s8 unk79;
+    };
+
+    struct Str sp44;
+    struct Str sp38;
+    struct Str sp2C;
+    struct Str sp20;
+    struct Str sp14;
+    struct Str sp8;
+    Self *self;
+    s32 a1;
+    s32 unk0;
+    void *child;
+    u32 len;
+
+    self = (Self *)arg0;
+    a1 = arg1;
+    unk0 = self->unk0;
+    if (self->unk6C != NULL) {
+        if (fn_800E903C(self->unk6C) == 0) {
+            fn_800DF6DC(&sp2C, (s32)self->unk6C);
+            fn_800E7B80(unk0, &sp2C);
+            fn_800C9A60(&sp2C, -1);
+        }
+        child = fn_800E8BB4(self->unk6C);
+        if (child != NULL && *(u32 *)((u8 *)child + 0x6C) != 0) {
+            *(s32 *)((u8 *)child + 0x74) = -1;
+            fn_800E8BBC(*(void **)((u8 *)child + 0x6C), NULL);
+        }
+        fn_800E8FAC(self->unk6C, a1);
+        fn_800E8BBC(self->unk6C, self);
+        if ((u8)arg4 != 0) {
+            sp44.cap = 0;
+            sp38.cap = 0;
+            sp44.size = 0;
+            sp44.data = 0;
+            sp44.cap = 0;
+            sp38.size = 0;
+            sp38.data = 0;
+            sp38.cap = 0;
+            arg4 = fn_800E8F00(self->unk6C);
+            if (arg4 != 0) {
+                unk0 = self->unk54;
+                fn_800D5D04(&sp20, &self->unk54, unk0 - 2, 2);
+                fn_800CB90C(&sp14, &sp20, lbl_8027DAB0 + 0xC9);
+                fn_800C9758(&sp44, &sp14, 0, -1);
+                fn_800C9A60(&sp14, -1);
+                fn_800C9A60(&sp20, -1);
+                len = strlen((char *)lbl_8027DAB0 + 0xCB);
+                if (fn_800C9400(&sp44, 0, sp44.size, &lbl_8027DAB0[0xCB], len) == 0) {
+                    len = strlen((char *)lbl_8027DAB0 + 0xCF);
+                    fn_800C96F8(&sp44, &lbl_8027DAB0[0xCF], len);
+                }
+                fn_800D5D04(&sp8, &self->unk54, 5, unk0 - 8);
+                fn_800C9758(&sp38, &sp8, 0, -1);
+                fn_800C9A60(&sp8, -1);
+                len = strlen((char *)lbl_8027DAB0 + 0xD3);
+                if (fn_800C9400(&sp38, 0, sp38.size, &lbl_8027DAB0[0xD3], len) == 0) {
+                    len = strlen((char *)lbl_8027DAB0 + 0xD8);
+                    fn_800C96F8(&sp38, &lbl_8027DAB0[0xD8], len);
+                }
+                fn_800C99A0(&sp44, &sp38, 0, -1);
+                fn_800E574C((void *)arg4, fn_800C93EC(&sp44), lbl_8036B4AC, 0, 1, 0, 0xA);
+            }
+            fn_800C9A60(&sp38, -1);
+            fn_800C9A60(&sp44, -1);
+        }
+        self->unk74 = 0;
+        self->unk78 = arg2;
+        self->unk79 = arg3;
+        ((Obj *)self)->m08(1);
+    }
+}
+#pragma cplusplus reset
 
 void fn_801CB25C(s32 arg0, s32 arg1) {
     fn_800C9B6C(arg0, arg1 + 0x60);
