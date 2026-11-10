@@ -3588,7 +3588,7 @@ s32 fn_800BCB80(s32 arg0) {
 }
 
 s32 fn_800BCBBC(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
-    fn_8014D254(lbl_80330708, arg0, arg1, arg2, arg3, arg0);
+    fn_8014D254(lbl_80330708, arg0, arg1, arg2, arg3);
     return 1;
 }
 
