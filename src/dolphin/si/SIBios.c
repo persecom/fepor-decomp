@@ -173,6 +173,17 @@ extern f64 lbl_8036C148;
 
 volatile u32 __SIRegs[64] : 0xCC006400;
 
+/* Version string at +0, transfer state at +0x44 (Si_8029EFAC) */
+typedef struct SIControl {
+    char version[0x44];
+    s32 chan;
+    u32 unk48;
+    u32 inputBytes;
+    void *input;
+    void *callback;
+} SIControl;
+extern SIControl lbl_8029EF68;
+
 typedef struct SIPacket {
     s32 chan;
     void *output;
@@ -310,27 +321,28 @@ loop_1:
 }
 
 void SIInit(void) {
-    M2C_UNK OSRegisterVersion(s32, M2C_UNK *);
-    M2C_UNK SIGetType(M2C_UNK);
-    M2C_UNK SISetSamplingRate(M2C_UNK, M2C_UNK *, M2C_UNK);
-    M2C_UNK __OSSetInterruptHandler(M2C_UNK, M2C_UNK *);
-    M2C_UNK __OSUnmaskInterrupts(M2C_UNK);
-    extern SIPacket Packet_8033E248[4];
-    extern M2C_UNK SIInterruptHandler;
-    extern M2C_UNK Si_8029EFAC;
+    void OSRegisterVersion(s32);
+    void SISetSamplingRate(u32);
+    void __OSSetInterruptHandler(s32, void *);
+    void __OSUnmaskInterrupts(s32);
+    u32 SIGetType(s32);
     extern s32 __SIVersion;
-    OSRegisterVersion(__SIVersion, (M2C_UNK *)Packet_8033E248);
+    extern s32 Si_8029EFAC[];
+    extern void SIInterruptHandler(void);
+    u32 *reg;
+
+    OSRegisterVersion(__SIVersion);
     Packet_8033E248[3].chan = -1;
     Packet_8033E248[2].chan = -1;
     Packet_8033E248[1].chan = -1;
     Packet_8033E248[0].chan = -1;
-    M2C_FIELD(&Si_8029EFAC, s32 *, 4) = 0;
-    SISetSamplingRate(0, &Si_8029EFAC, -1);
-    do {
-
-    } while (M2C_FIELD((void *)0xCC006400, s32 *, 0x34) & 1);
-    M2C_FIELD((void *)0xCC006400, s32 *, 0x34) = 0x80000000;
-    __OSSetInterruptHandler(0x14, &SIInterruptHandler);
+    Si_8029EFAC[1] = 0;
+    SISetSamplingRate(0);
+    reg = (u32 *)__SIRegs;
+    if (!(reg[13] & 1)) {
+        reg[13] = 0x80000000;
+    }
+    __OSSetInterruptHandler(0x14, SIInterruptHandler);
     __OSUnmaskInterrupts(0x800);
     SIGetType(0);
     SIGetType(1);
