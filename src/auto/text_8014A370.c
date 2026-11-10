@@ -488,10 +488,9 @@ s32 fn_8014B314(void) {
     return 1;
 }
 
-u16 fn_8014B31C(void) {
-    extern u16 *lbl_80367B14;
-    
-    return *lbl_80367B14;  // Assuming the symbol points to a u16, and we return the value.
+s32 fn_8014B31C(void) {
+    extern s32 *lbl_80367B14;
+    return *lbl_80367B14;
 }
 
 s32 fn_8014B328(void) {
