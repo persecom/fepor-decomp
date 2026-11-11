@@ -1,6 +1,27 @@
 # Fire Emblem: Path of Radiance
 
-[![Code Progress](https://bytematch.dev/persecom/fepor-decomp.svg?label=Code&measure=matched_code_percent&version=GFEE01)](https://bytematch.dev/persecom/fepor-decomp)
+[![Code Progress]][progress] [![Data Progress]][progress]
+
+---
+
+[<img src=".github/assets/progress.svg" width="512" height="256" alt="Decompilation Progress">][progress]
+
+---
+
+This repository contains a work-in-progress decompilation of **Fire Emblem: Path of Radiance (USA)** for the Nintendo GameCube.
+
+**Game ID:** GFEE01  
+**Region:** USA  
+**Revision:** 0
+
+Track the latest decompilation progress on [ByteMatch](https://bytematch.dev/persecom/fepor-decomp).
+
+## Progress Badges
+
+[Code Progress]: https://bytematch.dev/persecom/fepor-decomp.svg?measure=matched_code_percent&label=Code&version=GFEE01
+[Data Progress]: https://bytematch.dev/persecom/fepor-decomp.svg?measure=matched_data_percent&label=Data&version=GFEE01
+
+[progress]: https://bytematch.dev/persecom/fepor-decomp
 
 A work-in-progress matching decompilation of **Fire Emblem: Path of Radiance** (GFEE01) for the Nintendo GameCube.
 
