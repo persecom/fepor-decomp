@@ -2833,7 +2833,7 @@ outer_cmp:
         by = (s8)bestY;
         p = map + bx;
         v = ((u8 *)self)[0x198];
-        p = p + (by << 6);
+        p = (u8 *)((s32)p + (by << 6));
         tile = p[0xD];
         if (tile != v) {
             fn_801014BC(self, bestX, bestY, 1, 0xFFFF, 0, 0, -1);
@@ -2841,6 +2841,7 @@ outer_cmp:
     }
     return lbl_8032B3C0[0x21C];
 }
+#pragma use_lmw_stmw reset
 u8 fn_8010BB74(void *arg0) {
     void fn_800FE2A0(void *, s32, s32);
     s8 fn_8003A398(void *);
