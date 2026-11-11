@@ -283,6 +283,48 @@ void fn_8021250C(s32 chan, u32 type) {
     }
 }
 
+#pragma opt_strength_reduction off
+u32 fn_802129C0(PADStatus *status){
+s32 OSDisableInterrupts(void); void OSRestoreInterrupts(s32);
+s32 fn_8021264C(u32); s32 fn_8023ABF4(s32); u32 fn_8023B788(s32); u32 SIGetType(s32);
+s32 fn_8023BA70(s32,void*); void fn_8023C188(s32,void*);
+void fn_8021203C(void); void fn_8021250C(s32,u32);
+s32 SITransfer(s32,void*,u32,void*,u32,void*,s64);
+void *memset(void*,s32,u32);
+extern u8 lbl_8033A1C0[];extern s32 lbl_80366FA4;extern u16 lbl_80366FB8;
+extern u32 lbl_8036866C,lbl_80368670,lbl_80368678,lbl_8036867C,lbl_80368680;
+extern void (*lbl_80366FB4)(s32,PADStatus*,u32*);
+u64 response; u32 bit; u8 *origin; s32 enabled; s32 chan; u32 result;
+enabled=OSDisableInterrupts();chan=0;origin=lbl_8033A1C0+chan*12;result=0;
+do{
+bit=0x80000000U>>chan;
+if(lbl_80368680&bit){fn_8021264C(0);status->err=-2;memset(status,0,10);}
+else if((lbl_80368670&bit)||lbl_80366FA4==chan){status->err=-2;memset(status,0,10);}
+else if(!(lbl_8036866C&bit)){status->err=-1;memset(status,0,10);}
+else if(fn_8023ABF4(chan)){status->err=-3;memset(status,0,10);}
+else if(fn_8023B788(chan)&8){
+fn_8023BA70(chan,(u32*)&response);
+if(lbl_80368678&bit){
+status->err=0;memset(status,0,10);
+if(!(lbl_8036867C&bit)){lbl_8036867C|=bit;fn_8023C188(chan,fn_8021250C);}
+}else {PADDisable(chan);status->err=-1;memset(status,0,10);}
+}else{
+if(!(SIGetType(chan)&0x20000000))result|=bit;
+if(!fn_8023BA70(chan,(u32*)&response)){status->err=-3;memset(status,0,10);}
+else if(((u32*)&response)[0]&0x80000000){status->err=-3;memset(status,0,10);}
+else {
+lbl_80366FB4(chan,status,(u32*)&response);
+if(status->button&0x2000){
+status->err=-3;memset(status,0,10);
+SITransfer(chan,&lbl_80366FB8,1,origin,10,fn_8021203C,0);
+}else {status->err=0;status->button&=~0x80;}
+}
+}
+chan++;origin+=12;status++;
+}while(chan<4);
+OSRestoreInterrupts(enabled);return result;
+}
+#pragma opt_strength_reduction reset
 void fn_80212CC0(s32 arg0, u32 arg1) {
     s32 OSDisableInterrupts(void);
     void OSRestoreInterrupts(s32);
@@ -547,6 +589,25 @@ s32 fn_80213530(s32 arg0)
   }
   lbl_8036868C = 0;
   return 1;
+}
+
+void fn_802135EC(s32 arg0, OSContext *context)
+{
+    extern void (*lbl_80368688)(void);
+    void OSClearContext(void *);
+    void OSSetCurrentContext(void *);
+
+    OSContext tempContext;
+
+    if (lbl_80368688 != 0) {
+        OSClearContext(&tempContext);
+        OSSetCurrentContext(&tempContext);
+
+        lbl_80368688();
+
+        OSClearContext(&tempContext);
+        OSSetCurrentContext(context);
+    }
 }
 
 u32 fn_8021364C(u32 arg0) {
