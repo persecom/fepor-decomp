@@ -51,6 +51,28 @@ void *fn_801A7F5C(void *arg0) {
     return arg0;
 }
 
+int fn_801A7FA4(void *arg0)
+{
+    void fn_80016F78(void *);
+    void fn_8001C76C(void *);
+    void fn_801A9EB8(void *);
+
+    u8 *ptr;
+
+    ptr = (u8 *)arg0;
+
+    fn_80016F78(arg0);
+
+    fn_8001C76C(ptr + 0x284);
+    fn_8001C76C(ptr + 0x28C);
+
+    *(u16 *)(ptr + 0x2AE) = 0;
+
+    fn_801A9EB8(arg0);
+
+    return (int)arg0;
+}
+
 u16 *fn_801A7FF4(void *arg0) {
     s8 temp = ((s8 *)arg0)[0x2C8 / sizeof(s8)];
     if (temp <= 0) {
