@@ -17,6 +17,7 @@ extern char lbl_80271860[];
 extern u8 lbl_80366E58;
 
 void *fn_800C9A60(void *arg0, s16 arg1);
+typedef struct T6374 { s32 x; } T6374;
 
 typedef struct {
     s32 unk0;
@@ -2017,16 +2018,184 @@ extern "C" void fn_800CE214(void *arg0, void *arg1) {
     void fn_80199240(void);
     extern char lbl_802704F8[];
 
-    s32 a;
-    s32 b;
+    u8 sp[0x58];
+    void *self;
+    void *stat;
+    s32 r29;
+    s32 r30;
+    u8 ok;
+    s32 i;
+    s8 n;
+    s16 *stream;
+    s32 idx4;
+    s32 code;
+    s32 tmp;
+    void *entry;
+    void *p;
+    u8 found;
+    s32 ctr;
+    u8 code2;
 
-    a = fn_80116580(*(void **)arg1);
-    b = fn_8011654C(*(void **)arg1);
-    (void)a;
-    (void)b;
-    fn_800D5DB0((u8 *)arg0 + 0x200,
-        (u8 *)*(void **)((u8 *)arg0 + 0x208) + *(s32 *)((u8 *)arg0 + 0x204) * 0x58,
-        1, arg1);
+    self = arg0;
+    stat = arg1;
+    r29 = fn_80116580(*(void **)stat);
+    r30 = fn_8011654C(*(void **)stat);
+    ok = 1;
+    if (*(s32 *)((u8 *)stat + 0x18) != 0xB) {
+        *(s32 *)((u8 *)stat + 0x18) = 0;
+    }
+    i = 0;
+    *(s32 *)((u8 *)stat + 0x1C) = 0;
+    *(s32 *)((u8 *)stat + 0x20) = 0;
+    *(s32 *)((u8 *)stat + 0x24) = 0;
+    stream = *(s16 **)((u8 *)self + 0x1FC);
+    {
+        s16 idx = stream[0];
+        stream[0] = (s16)(idx + 1);
+        n = (s8)*(s16 *)((u8 *)stream + idx * 4 + 6);
+    }
+
+    while (i < (s32)n) {
+        stream = *(s16 **)((u8 *)self + 0x1FC);
+        idx4 = stream[0] * 4;
+        code = ((u8 *)stream)[idx4 + 4];
+        switch (code) {
+        case 9:
+            if (*(s32 *)((u8 *)stat + 0x10) == 0) {
+                *(s32 *)((u8 *)stat + 0x20) = (s8)*(s16 *)((u8 *)stream + idx4 + 6);
+            } else {
+                *(s32 *)((u8 *)stat + 0x24) = (s8)*(s16 *)((u8 *)stream + idx4 + 6);
+                if (*(s32 *)((u8 *)stat + 0x24) == 0) {
+                    fn_800558D8(lbl_802704F8 + 0x46F);
+                    fn_800558D8(lbl_802704F8 + 0x47C);
+                }
+            }
+            break;
+        case 0x15:
+            if (*(s32 *)((u8 *)stat + 0x10) == 1) {
+                *(s32 *)((u8 *)stat + 0x20) = (s8)*(s16 *)((u8 *)stream + idx4 + 6);
+            } else {
+                *(s32 *)((u8 *)stat + 0x24) = (s8)*(s16 *)((u8 *)stream + idx4 + 6);
+                if (*(s32 *)((u8 *)stat + 0x24) == 0) {
+                    fn_800558D8(lbl_802704F8 + 0x46F);
+                    fn_800558D8(lbl_802704F8 + 0x47C);
+                }
+            }
+            break;
+        case 0x50:
+            *(s32 *)((u8 *)stat + 0x1C) = 0;
+            break;
+        case 0x51:
+            tmp = 1;
+            *(s32 *)((u8 *)stat + 0x18) = tmp;
+            *(s32 *)((u8 *)stat + 0x1C) = tmp;
+            fn_800558D8(lbl_802704F8 + 0x48B);
+            break;
+        case 0x52:
+            *(s32 *)((u8 *)stat + 0x1C) = 2;
+            fn_800558D8(lbl_802704F8 + 0x499);
+            break;
+        case 0x53:
+            ok = 0;
+            break;
+        }
+        stream = *(s16 **)((u8 *)self + 0x1FC);
+        i += 1;
+        stream[0] = (s16)(stream[0] + 1);
+    }
+
+    tmp = *(s32 *)((u8 *)self + 0x204);
+    if (tmp > 1 && ok != 0) {
+        entry = (u8 *)*(void **)((u8 *)self + 0x208) + (tmp - 1) * 0x58;
+        {
+            u32 *s;
+            u32 *d;
+            s32 k;
+            s = (u32 *)((u8 *)entry - 4);
+            d = (u32 *)(sp - 4);
+            for (k = 11; k > 0; k--) {
+                d[1] = s[1];
+                s += 2;
+                d += 2;
+                d[0] = s[0];
+            }
+        }
+        if (*(s32 *)((u8 *)stat + 0x10) == *(s32 *)(sp + 0x14)) {
+            *(s32 *)((u8 *)entry + 0x2C) = 1;
+            *(s32 *)((u8 *)stat + 0x28) = 1;
+        }
+    }
+
+    if (fn_80116604(*(void **)stat) != 0) {
+        fn_80116604(*(void **)stat);
+        fn_80199240();
+    }
+
+    ctr = *(s32 *)((u8 *)stat + 0x50);
+    p = stat;
+    found = 0;
+    if (ctr > 0) {
+        do {
+            tmp = *(s32 *)((u8 *)p + 0x30);
+            if (tmp >= 0 && tmp <= 0x13 && tmp != 7 && tmp != 9 && tmp != 5) {
+                found = 1;
+            }
+            p = (u8 *)p + 4;
+            ctr -= 1;
+        } while (ctr != 0);
+    }
+    if (found != 0) {
+        *(s32 *)((u8 *)stat + 0x18) = 8;
+    }
+
+    if ((r30 == 1 && *(s32 *)((u8 *)self + 0x228) > 1) || r29 == 3) {
+        tmp = *(s32 *)((u8 *)stat + 0x18);
+        if (tmp == 0) {
+            *(s32 *)((u8 *)stat + 0x18) = 2;
+        } else if (tmp == 1) {
+            *(s32 *)((u8 *)stat + 0x18) = 3;
+        } else if (tmp == 8) {
+            *(s32 *)((u8 *)stat + 0x18) = 4;
+        }
+    }
+
+    if (r29 == 4 || (r30 == 2 && *(s32 *)((u8 *)self + 0x228) > 1)) {
+        tmp = *(s32 *)((u8 *)stat + 0x18);
+        if (tmp == 0 || tmp == 2) {
+            *(s32 *)((u8 *)stat + 0x18) = 5;
+        } else if (tmp == 1 || tmp == 3) {
+            *(s32 *)((u8 *)stat + 0x18) = 6;
+        } else if (tmp == 8 || tmp == 4) {
+            *(s32 *)((u8 *)stat + 0x18) = 7;
+        }
+    }
+
+    if (r29 == 0xB) {
+        tmp = *(s32 *)((u8 *)stat + 0x18);
+        if (tmp == 0 || tmp == 2) {
+            *(s32 *)((u8 *)stat + 0x18) = 9;
+        } else if (tmp == 1 || tmp == 3) {
+            *(s32 *)((u8 *)stat + 0x18) = 0xA;
+        }
+    }
+
+    stream = *(s16 **)((u8 *)self + 0x1FC);
+    code2 = ((u8 *)stream)[stream[0] * 4 + 4];
+    if ((s32)code2 == 0xB || (s32)code2 == 0x17) {
+        *(s32 *)((u8 *)stat + 0x1C) = 3;
+        fn_800558D8(lbl_802704F8 + 0x4A2);
+        if ((s32)code2 == 0xB) {
+            ((u8 *)self)[0x72] = ((u8 *)self)[0x70];
+        } else {
+            ((u8 *)self)[0x72] = ((u8 *)self)[0x71];
+        }
+        stream = *(s16 **)((u8 *)self + 0x1FC);
+        stream[0] = (s16)(stream[0] + 1);
+    }
+
+    fn_800D5DB0((u8 *)self + 0x200,
+        (u8 *)*(void **)((u8 *)self + 0x208) + *(s32 *)((u8 *)self + 0x204) * 0x58,
+        1, stat);
 }
 s32 fn_800CE690(s32 param1, s32 param2) {
     // Simplest version first - just the basic structure to get it compiling
