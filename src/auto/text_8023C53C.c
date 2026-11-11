@@ -1293,51 +1293,91 @@ s32 fn_8024800C(u8 key, u8 group, u8 channel, s32 arg3, s32 *status) {
  } else *status=found;
  return result;
 }
+#pragma global_optimizer off
 s32 fn_8024866C(u16 id, s16 volume, s32 arg2, s32 arg3, s32 key, s32 arg5, u8 pan, s32 arg7, u8 a8, u8 a9, u16 a10, u16 a11, s32 a12, u8 a13, u8 a14, s32 a15) {
- s32 fn_802508E0(u16);
- s32 fn_8024800C(s32,s32,u8,s32,s32*);
- s32 fn_802482AC(u16,s16,s32,s32,u8,s32,u8,s32,u8,u8,u16,u16,u8,u8,u8,s32);
- s32 fn_802555A0(u16,u8,s32,s32,u8,s32,u8,s32,u8,u8,u16,u16,u8,u8,u8,s32);
- u32 offset, low; u8 *table; u8 *entry; u8 original; s32 note; s32 flags; s32 value; s32 result; u32 valid; s32 status; u16 sample; s16 v;
- table=(u8*)fn_802508E0(id);
- if(table!=0) {
-  original=key;
-  offset=(key&0x7F)*8;
-  low=key&127;
-  entry=table+offset;
-  sample=*(u16*)entry;
-  if(sample!=0xFFFF) {
-   flags=sample&0xC000;
-   if(flags!=0x4000) {
-    if(!(entry[3]&0x80)) {
-     value=table[(u8)key*8+3]-0x40;
-     value+=pan;
-     if(value<0) pan=0;
-     else if(value>127) pan=127;
-     else pan=(u8)value;
-    } else pan=128;
-    note=low+(s8)(table+offset)[2];
-    if(note>127) key=127; else key=note & ~(note>>31);
-    volume+=*(s16*)(table+offset+4);
-    v=volume;
-    if(v>255) v=255; else v=v & ~(v>>31);
-    volume=v;
-    if(flags==0) {
-     if(fn_8025FC64(0x41,arg7,a8)>0x1F80U) {
-      result=fn_8024800C(key&127,arg7,a8,a12,&status);
-      valid=status==0;
-     } else {result=-1;valid=1;}
-     if(valid==0) return -1;
-     if((u32)(result+0x10000)!=0xFFFF) return result;
-     return fn_802555A0(*(u16*)entry,(u8)volume,arg2,arg3,(u8)(key|(original&128)),arg5,pan,arg7,a8,a9,a10,a11,(u8)a12,a13,a14,a15);
+    s32 fn_802508E0(u16);
+    u16 fn_8025FC64(u8, s32, u8);
+    s32 fn_8024800C(s32, s32, u8, s32, s32 *);
+    s32 fn_802482AC(u16, s16, s32, s32, u8, s32, u8, s32, u8, u8, u16, u16, u8, u8, u8, s32);
+    s32 fn_802555A0(u16, u8, s32, s32, u8, s32, u8, s32, u8, u8, u16, u16, u8, u8, u8, s32);
+    u8 *table;
+    u8 *entry;
+    u8 *alt;
+    u8 *row;
+    u32 offset;
+    u32 low;
+    u8 original;
+    s32 note;
+    s32 flags;
+    s32 value;
+    s32 result;
+    u32 valid;
+    s32 status;
+    u16 sample;
+    s16 v;
+    u16 save10;
+    u16 save11;
+    s32 save15;
+
+    save10 = a10;
+    save11 = a11;
+    save15 = a15;
+    table = (u8 *)fn_802508E0(id);
+    if (table != 0) {
+        original = key;
+        offset = (key & 0x7F) * 8;
+        low = key & 127;
+        entry = table + offset;
+        sample = *(u16 *)entry;
+        if (sample != 0xFFFF) {
+            flags = sample & 0xC000;
+            if (flags != 0x4000) {
+                if (!(entry[3] & 0x80)) {
+                    alt = table + ((u8)key << 3);
+                    value = alt[3] - 0x40;
+                    value += pan;
+                    if (value < 0)
+                        pan = 0;
+                    else if (value > 127)
+                        pan = 127;
+                    else
+                        pan = (u8)value;
+                } else
+                    pan = 128;
+                row = table + offset;
+                note = low + *(s8 *)(row + 2);
+                if (note > 127)
+                    key = 127;
+                else
+                    key = note & ~(note >> 31);
+                volume += *(s16 *)(row + 4);
+                v = volume;
+                if (v > 255)
+                    v = 255;
+                else
+                    v = v & ~(v >> 31);
+                volume = v;
+                if (flags == 0) {
+                    if (fn_8025FC64(0x41, arg7, a8) > 0x1F80U) {
+                        result = fn_8024800C(key & 127, arg7, a8, a12, &status);
+                        valid = status == 0;
+                    } else {
+                        result = -1;
+                        valid = 1;
+                    }
+                    if (valid == 0)
+                        return -1;
+                    if ((u32)(result + 0x10000) != 0xFFFF)
+                        return result;
+                    return fn_802555A0(*(u16 *)entry, (u8)volume, arg2, arg3, (u8)(key | (original & 128)), arg5, pan, arg7, a8, a9, save10, save11, (u8)a12, a13, a14, save15);
+                }
+                return fn_802482AC(sample, volume, arg2, arg3, (u8)(key | (original & 128)), arg5, pan, arg7, a8, a9, save10, save11, (u8)a12, a13, a14, save15);
+            }
+        }
     }
-    return fn_802482AC(sample,volume,arg2,arg3,(u8)(key|(original&128)),arg5,pan,arg7,a8,a9,a10,a11,(u8)a12,a13,a14,a15);
-   }
-  }
- }
- return -1;
+    return -1;
 }
-#pragma global_optimizer on
+#pragma global_optimizer reset
 void fn_80249D6C(void *arg0) {
     void fn_80249C1C(void *, s32, s32);
     extern s32 lbl_803689B8;
@@ -1912,14 +1952,21 @@ void fn_8024C84C(u32 arg0) {
     }
 }
 
-s32 fn_8024CE1C(s32 arg0, s32 arg1) {
-    s32 temp_r3;
+s32 fn_8024CE1C(s32 arg0, s32 arg1)
+{
+    u32 value;
+    u32 result;
 
     if (arg1 & 1) {
-        temp_r3 = (arg0 + 0xD) / 7;
-        return (((((u32) ((arg0 + 0xD) - temp_r3) >> 1U) + temp_r3) & 0xFFFFFFF8) + 0x1F) & 0xFFFFFFE0;
+        value = (u32)(arg0 + 0xD);
+
+        result = (value / 7) << 2;
+        result &= ~7U;
+
+        return (result + 0x1F) & ~31U;
     }
-    return ((arg0 * 2) + 0x1F) & 0xFFFFFFE0;
+
+    return ((arg0 << 1) + 0x1F) & ~31;
 }
 
 s32 fn_8024F1D8(u16 id, s32 data, s16 type) {
@@ -3977,7 +4024,8 @@ void fn_80253BCC(SynthVmState *arg0, void *arg1) {
     u32 raw;
     u8 index;
     s32 result;
-    SynthMessageQueue *q;
+    u32 *p;
+    u32 *dummy;
 
     bits = *(u32 *)((u8 *)arg1 + 4);
     index = (bits >> 8) & 31;
@@ -4025,8 +4073,9 @@ void fn_80253BCC(SynthVmState *arg0, void *arg1) {
             state = (u8 *)lbl_803689A8 + (u8)result * 0x458;
             if (state[0x440] < 4) {
                 state[0x440]++;
-                q = (SynthMessageQueue *)(state + state[0x442] * 4);
-                q->slots[0] = value;
+                p = (u32 *)state + state[0x442];
+                dummy = *&p;
+                dummy[0x111] = value;
                 state[0x442] = (state[0x442] + 1) & 3;
                 if (state[0x68] != 0 && *(u32 *)(state + 0x58) != 0) {
                     *(u32 *)(state + 0x38) = *(u32 *)(state + 0x64);
