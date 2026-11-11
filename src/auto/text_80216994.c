@@ -5,21 +5,7 @@
 #include "global.h"
 #include "ef.h"
 
-static inline s32 CardCopySerial(u8 *dst, const u8 *src, s32 length) {
-    s32 i;
-    s32 sum = 0;
-    for (i = 0; i < length; i++) {
-        *dst++ = src[i];
-        sum += src[i];
-    }
-    return sum;
-}
-static inline s32 CardSumSerial(const u8 *src, s32 length) {
-    s32 i;
-    s32 sum = 0;
-    for (i = 0; i < length; i++) sum += *src++;
-    return sum;
-}
+
 
 typedef struct CardDirEntry {
     u8 unk0[4];
