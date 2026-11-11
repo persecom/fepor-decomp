@@ -95,8 +95,8 @@ s32 fn_8014A4E0(void) {
 }
 
 void *fn_8014A4E8(void) {
-    extern M2C_UNK lbl_80276F00;
-    return &lbl_80276F00 + 0xDE;
+    extern u16 lbl_80276F00[];
+    return (char *)lbl_80276F00 + 0xDE;
 }
 
 void fn_800C426C(s32);
