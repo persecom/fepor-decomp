@@ -270,6 +270,10 @@ public:
     SortIterator operator+(s32 n) const { return SortIterator(*this) += n; }
     SortOutputProxy operator*() const { return SortOutputProxy(ptr,state); }
     SortIterator &operator++() { ++ptr; return *this; }
+    void assign(s32 value) {
+        if (((s32)ptr-M2C_FIELD(state,s32 *,8))/4 < M2C_FIELD(state,s32 *,4)) *ptr=value;
+        else { if(ptr) *ptr=value; M2C_FIELD(state,s32 *,4)++; }
+    }
 };
 class SortCompare {
 public:
@@ -4619,25 +4623,31 @@ extern "C" void fn_800E14E4(s32 *begin, s32 *mid, s32 *end, SortCompare comp, s3
     if (len1 <= len2 && len1 <= n) {
         SortIterator start(a);
         SortIterator it(a);
+        SortIterator *pit = &it;
+        SortIterator last(it);
         s32 *p = begin;
         while (p != mid) {
-            *it = *p;
+            *(*pit) = *p;
             ++p;
-            ++it;
+            ++(*pit);
         }
-        fn_800E0A94(start, SortIterator(it), mid, end, begin, comp);
+        last = it;
+        fn_800E0A94(start, last, mid, end, begin, comp);
         return;
     }
     if (len2 <= n) {
         SortIterator start(a);
         SortIterator it(a);
+        SortIterator *pit = &it;
+        SortIterator last(it);
         s32 *p = mid;
         while (p != end) {
-            *it = *p;
+            *(*pit) = *p;
             ++p;
-            ++it;
+            ++(*pit);
         }
-        fn_800E0C44(begin, mid, start, SortIterator(it), end, comp);
+        last = it;
+        fn_800E0C44(begin, mid, start, last, end, comp);
         return;
     }
     if (len1 <= len2) {
@@ -4657,7 +4667,6 @@ extern "C" void fn_800E14E4(s32 *begin, s32 *mid, s32 *end, SortCompare comp, s3
     fn_800E14E4(newmid, cut2, end, comp, len1, len2 - right, a, b);
 #pragma cplusplus off
 }
-
 void fn_800E2138(void *arg0, void *arg1, s32 arg2) {
     s32 spC;
     s32 sp8;
@@ -8636,6 +8645,120 @@ void fn_800F5A8C(void *arg0, void *arg1) {
     }
 }
 
+#pragma use_lmw_stmw on
+#pragma fp_contract off
+s32 fn_800F6F94(void *arg0, u8 arg1) {
+void *fn_801A7FF4(void *);
+void *fn_8001CB64(void *);
+f32 fn_800F738C(s32,f32);
+u8 fn_800F73EC(void *,void *,void *);
+s8 fn_800F8308(void *);
+s16 fn_800F8310(void *);
+s16 fn_800F8318(void *);
+s16 fn_800F8320(void *);
+u64 fn_800F8328(void *,u64);
+s16 fn_800F833C(void *);
+void *fn_800F8344(void *);
+void *fn_800F834C(void *);
+u8 fn_800F8350(void *);
+f64 fn_802387C8(f64,f64);
+extern u32 lbl_80330EAC[];
+extern s32 lbl_80366E68;
+extern f32 lbl_8036A06C,lbl_8036A078,lbl_8036A07C,lbl_8036A080,lbl_8036A090;
+extern f64 lbl_8036A098;
+
+    s16 *base;
+    s32 sp8;
+    void *temp_r29_2;
+    void *temp_r30;
+    f32 temp_f0;
+    f32 temp_f0_2;
+    f32 temp_f1;
+    f32 var_f1;
+    f32 var_f1_2;
+    s32 temp_r27;
+    s32 temp_r27_3;
+    s32 *var_r3;
+    s32 temp_r27_2;
+    s32 temp_r29;
+    s32 var_r27;
+    s32 var_r30;
+    u64 temp_ret;
+    u8 temp_r28;
+    u8 temp_r4;
+    void *temp_r3;
+
+    base = (s16 *)lbl_80330EAC;
+    temp_r29 = base[0x14e] >= (s32)(base[0x2be] + 4);
+    temp_r3 = fn_8001CB64(fn_801A7FF4(base));
+    var_r30 = *(s16 *)((u8 *)lbl_80330EAC + 0x298) - base[0x2bd];
+    temp_r4 = temp_r29 | (u8)((*(u64 *)temp_r3 & 0x20ULL) != 0);
+    if (var_r30 < 0) {
+        var_r30 = 0;
+    }
+    var_f1 = lbl_8036A078 * (f32) base[0x151];
+    if (temp_r4 != 0) {
+        temp_f0 = lbl_8036A07C - var_f1;
+        var_f1_2 = lbl_8036A07C - (temp_f0 * temp_f0);
+        if (var_f1_2 > lbl_8036A07C) {
+            var_f1_2 = lbl_8036A07C;
+        }
+        if (var_f1_2 < lbl_8036A080) {
+            var_f1_2 = lbl_8036A080;
+        }
+        var_r30 = (s32) (lbl_8036A090 * (f32) var_r30 * (f32) fn_802387C8(var_f1_2, lbl_8036A098));
+    } else {
+        if (var_f1 > lbl_8036A07C) {
+            var_f1 = lbl_8036A07C;
+        }
+        if (var_f1 < lbl_8036A080) {
+            var_f1 = lbl_8036A080;
+        }
+        var_r30 = (s32) ((f32) var_r30 * (f32) fn_802387C8(var_f1, lbl_8036A098));
+    }
+    if (arg1 != 0) {
+        var_r30 = (s32) (lbl_8036A06C * ((f32) var_r30 * (f32) *(s8 *)((u8 *)arg0 + 5)));
+        if (var_r30 <= 0) {
+            temp_r29_2 = fn_800F834C(lbl_80330EAC);
+            temp_r30 = fn_800F8344(lbl_80330EAC);
+            var_r27 = 0;
+            if (fn_800F73EC(temp_r29_2, temp_r30, fn_801A7FF4(temp_r30)) != 0) {
+                if (fn_800F8350(fn_801A7FF4(temp_r30)) != 0) {
+                    temp_r27 = fn_800F833C(temp_r30);
+                    temp_r27_2 = (s32) (fn_800F833C(temp_r29_2) + 4) <= temp_r27;
+                    temp_ret = fn_800F8328(fn_8001CB64(fn_801A7FF4(temp_r30)), 0x20ULL);
+                    temp_r28 = temp_r27_2 | (u8) (temp_ret != 0);
+                    temp_r27_3 = fn_800F8320(temp_r30);
+                    var_r27 = temp_r27_3 - fn_800F8318(temp_r29_2);
+                    if (var_r27 < 0) {
+                        var_r27 = 0;
+                    }
+                    temp_f1 = lbl_8036A078 * (f32) fn_800F8310(temp_r30);
+                    if (temp_r28 != 0) {
+                        temp_f0_2 = lbl_8036A07C - temp_f1;
+                        var_r27 = (s32) (lbl_8036A090 * (f32) var_r27 * fn_800F738C(0, lbl_8036A07C - (temp_f0_2 * temp_f0_2)));
+                    } else {
+                        var_r27 = (s32) ((f32) var_r27 * fn_800F738C(0, temp_f1));
+                    }
+                }
+            }
+            if (fn_800F8308(temp_r29_2) <= var_r27) {
+                var_r27 += 0x32;
+            }
+            var_r3 = &sp8;
+            sp8 = var_r27;
+            if ((s32) lbl_80366E68 < var_r27) {
+                var_r3 = &lbl_80366E68;
+            }
+            var_r30 = -*var_r3;
+        }
+    }
+    if (*(s8 *)((u8 *)base + 0x488) <= var_r30) {
+        var_r30 += 0x32;
+    }
+    return var_r30;
+}
+#pragma fp_contract on
 f32 fn_800F738C(u8 arg0, f32 farg0) {
     extern f32 lbl_8036A07C;
     extern f32 lbl_8036A080;
