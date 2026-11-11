@@ -179,7 +179,7 @@ static inline BOOL DVDComparePathComponent(char *path, char *name) {
     s32 fn_80230CE0(s32);
     while (*name) {
         s32 first = fn_80230CE0(*name++);
-        if (first != fn_80230CE0(*path++)) return FALSE;
+        if (fn_80230CE0(*path++) != first) return FALSE;
     }
     if (*path == '/' || *path == 0) return TRUE;
     return FALSE;
@@ -213,53 +213,105 @@ void __DVDFSInit(void) {
 }
 
 u32 fn_8020C3E0(char *path) {
-extern u32 __DVDLongFileNameFlag;
-extern char lbl_8029CEE8[];
-extern s32 lbl_80366F60;
-void fn_8020602C(void*,s32,char*,...);
-s32 fn_80230CE0(s32);
-char *original=path; u32 entry=lbl_80368588;
-char *end,*extension,*name,*component;
-s32 invalid,dotted,more,length,equal,first;
-u32 parent;
-for(;;){
-if(*path==0) return entry;
-if(*path=='/'){entry=0;path++;continue;}
-if(*path=='.'){
-if(path[1]=='.'){
-if(path[2]=='/'){entry=parentDir(entry);path+=3;continue;}
-if(path[2]==0) return parentDir(entry);
-}else{
-if(path[1]=='/'){path+=2;continue;}
-if(path[1]==0)return entry;
-}
-}
-if(!__DVDLongFileNameFlag){
-end=path;dotted=0;invalid=0;
-while(*end && *end!='/'){
-if(*end=='.'){
-if(end-path>8 || dotted==1){invalid=1;break;}
-extension=end+1; dotted=1;
-}else if(*end==' ')invalid=1;
-end++;
-}
-if(dotted==1 && end-extension>3)invalid=1;
-if(invalid)fn_8020602C(&lbl_80366F60,0x183,lbl_8029CEE8,original);
-}else {for(end=path;*end && *end!='/';end++);}
-if(*end==0) more=0; else more=1;
-parent=entry; length=end-path;
-for(entry++;entry<FstStart_8036857C[parent].nextEntryOrLength;){
-if(entryIsDir(entry) || more!=1){
-equal=DVDComparePathComponent(FstStringStart_80368580+stringOff(entry),path);
-if(equal==1)goto found;
-}
-entry=entryIsDir(entry)?FstStart_8036857C[entry].nextEntryOrLength:entry+1;
-}
-return -1;
-found:
-if(!more)return entry;
-path+=length;path++;
-}
+    extern u32 __DVDLongFileNameFlag;
+    extern char lbl_8029CEE8[];
+    extern s32 lbl_80366F60;
+    void fn_8020602C(void *, s32, char *, ...);
+
+    s32 more;
+    u32 parent;
+    char *end;
+    s32 length;
+    u32 entry;
+    char *original;
+    char *extension;
+    s32 invalid;
+    s32 dotted;
+    s32 equal;
+
+    original = path;
+    entry = (u32)lbl_80368588;
+
+    for (;;) {
+        if (*path == 0) {
+            return entry;
+        }
+        if (*path == '/') {
+            entry = 0;
+            path++;
+            continue;
+        }
+        if (*path == '.') {
+            if (path[1] == '.') {
+                if (path[2] == '/') {
+                    entry = parentDir(entry);
+                    path += 3;
+                    continue;
+                }
+                if (path[2] == 0) {
+                    return parentDir(entry);
+                }
+            } else {
+                if (path[1] == '/') {
+                    path += 2;
+                    continue;
+                }
+                if (path[1] == 0) {
+                    return entry;
+                }
+            }
+        }
+        if (!__DVDLongFileNameFlag) {
+            end = path;
+            dotted = 0;
+            invalid = 0;
+            while (*end && *end != '/') {
+                if (*end == '.') {
+                    if (end - path > 8 || dotted == 1) {
+                        invalid = 1;
+                        break;
+                    }
+                    extension = end + 1;
+                    dotted = 1;
+                } else if (*end == ' ') {
+                    invalid = 1;
+                }
+                end++;
+            }
+            if (dotted == 1 && end - extension > 3) {
+                invalid = 1;
+            }
+            if (invalid) {
+                fn_8020602C(&lbl_80366F60, 0x183, lbl_8029CEE8, original);
+            }
+        } else {
+            for (end = path; *end && *end != '/'; end++) {
+            }
+        }
+        if (*end == 0) {
+            more = 0;
+        } else {
+            more = 1;
+        }
+        parent = entry;
+        length = end - path;
+        for (entry++; entry < FstStart_8036857C[parent].nextEntryOrLength;) {
+            if (entryIsDir(entry) || more != 1) {
+                equal = DVDComparePathComponent(path, FstStringStart_80368580 + stringOff(entry));
+                if (equal == 1) {
+                    goto found;
+                }
+            }
+            entry = entryIsDir(entry) ? FstStart_8036857C[entry].nextEntryOrLength : entry + 1;
+        }
+        return -1;
+    found:
+        if (!more) {
+            return entry;
+        }
+        path += length;
+        path++;
+    }
 }
 
 s32 fn_8020C79C(void) {
@@ -683,6 +735,61 @@ void stateBusy_8020E178(void) {
     // The exact structure is inferred from similar functions in the codebase.
 }
 
+s32 fn_8020EB10(void *arg0, u32 arg1, u32 arg2, u32 arg3, u32 arg4, s32 arg5)
+{
+    void DCInvalidateRange(void *, u32);
+    u32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(u32);
+    s32 __DVDPushWaitingQueue(s32, void *);
+    void stateReady(void);
+
+    extern s32 autoInvalidation_80366F6C;
+    extern void *executing_80368598;
+    extern s32 PauseFlag_803685A4;
+
+    u8 *block;
+    u32 interrupts;
+    s32 result;
+    u32 command;
+
+    block = (u8 *)arg0;
+
+    *(u32 *)(block + 0x08) = 1;
+    *(u32 *)(block + 0x18) = arg1;
+    *(u32 *)(block + 0x14) = arg2;
+    *(u32 *)(block + 0x10) = arg3;
+    *(u32 *)(block + 0x20) = 0;
+    *(u32 *)(block + 0x28) = arg4;
+
+    if (autoInvalidation_80366F6C != 0) {
+        command = *(u32 *)(block + 0x08);
+
+        if (command == 1 ||
+            (u32)(command - 4) <= 1 ||
+            command == 14) {
+            DCInvalidateRange(
+                *(void **)(block + 0x18),
+                *(u32 *)(block + 0x14)
+            );
+        }
+    }
+
+    interrupts = OSDisableInterrupts();
+
+    *(u32 *)(block + 0x0C) = 2;
+
+    result = __DVDPushWaitingQueue(arg5, arg0);
+
+    if (executing_80368598 == 0 &&
+        PauseFlag_803685A4 == 0) {
+        stateReady();
+    }
+
+    OSRestoreInterrupts(interrupts);
+
+    return result;
+}
+
 void fn_8020EBEC(void* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 {
     *(u32*)((char*)arg0 + 0x8) = 4;
@@ -774,6 +881,68 @@ s32 fn_8020F404(void) {
     return 0x80000000;
 }
 
+s32 fn_8020F40C(void)
+{
+    u32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(u32);
+
+    extern s32 FatalErrorFlag_803685B0;
+    extern s32 PausingFlag_803685A8;
+    extern u32 ResumeFromHere_803685C0;
+    extern u8 DummyCommandBlock_80339F80[];
+
+    u32 interrupts;
+    u32 diStatus;
+    s32 state;
+    s32 result;
+
+    interrupts = OSDisableInterrupts();
+
+    if (FatalErrorFlag_803685B0 != 0) {
+        state = -1;
+    } else if (PausingFlag_803685A8 != 0) {
+        state = 8;
+    } else if (executing_80368598 == 0 ||
+               executing_80368598 == (void *)DummyCommandBlock_80339F80) {
+        state = 0;
+    } else {
+        state = *(s32 *)((u8 *)executing_80368598 + 0xC);
+    }
+
+    result = 0;
+
+    switch (state) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+        result = 1;
+        break;
+
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+        diStatus = *(volatile u32 *)0xCC006004;
+
+        if ((diStatus & 4) == 0 && (diStatus & 1) != 0) {
+            result = 0;
+        } else if (ResumeFromHere_803685C0 != 0) {
+            result = 0;
+        } else {
+            result = 1;
+        }
+        break;
+
+    default:
+        result = 0;
+        break;
+    }
+
+    OSRestoreInterrupts(interrupts);
+    return result;
+}
+
 int fn_8020F620(void *arg0) {
     extern u8 lbl_80339FB0[];
 
@@ -798,6 +967,35 @@ void __DVDClearWaitingQueue(void) {
         ptr->next = ptr;
         ptr->prev = ptr;
     }
+}
+
+int __DVDPushWaitingQueue(s32 priority, void *block)
+{
+    u32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(u32);
+
+    extern u8 WaitingQueue_80339FD8[];
+
+    u32 interrupts;
+    u8 *queue;
+    u8 *tail;
+    u8 *entry;
+
+    entry = (u8 *)block;
+
+    interrupts = OSDisableInterrupts();
+
+    queue = WaitingQueue_80339FD8 + (priority << 3);
+    tail = *(u8 **)(queue + 4);
+
+    *(void **)tail = block;
+    *(void **)(entry + 4) = tail;
+    *(void **)entry = queue;
+    *(void **)(queue + 4) = block;
+
+    OSRestoreInterrupts(interrupts);
+
+    return 1;
 }
 
 s32 __DVDCheckWaitingQueue(void) {
