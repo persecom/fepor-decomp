@@ -2981,9 +2981,11 @@ int fn_802368F4(f64 *y, f64 x) {
     extern f64 lbl_8036BFF0;
     extern f64 lbl_8036BFF8;
     extern f64 lbl_8036C000;
+    extern f64 lbl_8036C008;
     extern s32 lbl_80282E08[];
     extern s32 lbl_80282D00[];
     f64 z, w, t, r, fn;
+    f64 pio2_1, pio2_1t, pio2_2, pio2_2t;
     f64 tx[3];
     int e0, i, j, nx, n, ix, hx;
 
@@ -2998,33 +3000,47 @@ int fn_802368F4(f64 *y, f64 x) {
         if (hx > 0) {
             z = x - lbl_8036BFC0;
             if ((unsigned)(ix - 0x3ff90000) != 0x21fbU) {
-                y[0] = z - lbl_8036BFC8;
-                y[1] = (z - y[0]) - lbl_8036BFC8;
+                pio2_1t = lbl_8036BFC8;
+                y[0] = z - pio2_1t;
+                y[1] = (z - y[0]) - pio2_1t;
             } else {
-                z -= lbl_8036BFD0;
-                y[0] = z - lbl_8036BFD8;
-                y[1] = (z - y[0]) - lbl_8036BFD8;
+                pio2_2 = lbl_8036BFD0;
+                pio2_2t = lbl_8036BFD8;
+                z -= pio2_2;
+                y[0] = z - pio2_2t;
+                y[1] = (z - y[0]) - pio2_2t;
             }
             return 1;
         } else {
-            z = x + lbl_8036BFC0;
+            z = lbl_8036BFC0 + x;
             if ((unsigned)(ix - 0x3ff90000) != 0x21fbU) {
-                y[0] = z + lbl_8036BFC8;
-                y[1] = (z - y[0]) + lbl_8036BFC8;
+                pio2_1t = lbl_8036BFC8;
+                y[0] = pio2_1t + z;
+                y[1] = pio2_1t + (z - y[0]);
             } else {
-                z += lbl_8036BFD0;
-                y[0] = z + lbl_8036BFD8;
-                y[1] = (z - y[0]) + lbl_8036BFD8;
+                pio2_2 = lbl_8036BFD0;
+                pio2_2t = lbl_8036BFD8;
+                z += pio2_2;
+                y[0] = pio2_2t + z;
+                y[1] = pio2_2t + (z - y[0]);
             }
             return -1;
         }
     }
     if (ix <= 0x413921fb) {
         t = __fabs(x);
-        n = (int)(t * lbl_8036BFE8 + lbl_8036BFE0);
-        fn = (double)n;
-        r = t - fn * lbl_8036BFC0;
-        w = fn * lbl_8036BFC8;
+        n = (int)(lbl_8036BFE8 * t + lbl_8036BFE0);
+        {
+            int hi = 0x43300000;
+            int lo = n ^ 0x80000000;
+            *(int *)&fn = hi;
+            *((int *)&fn + 1) = lo;
+            fn = fn - lbl_8036C008;
+        }
+        pio2_1 = lbl_8036BFC0;
+        pio2_1t = lbl_8036BFC8;
+        r = t - pio2_1 * fn;
+        w = pio2_1t * fn;
         if (n < 32 && ix != lbl_80282E08[n - 1]) {
             y[0] = r - w;
         } else {
