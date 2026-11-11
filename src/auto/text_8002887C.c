@@ -849,7 +849,6 @@ extern "C" void fn_8002C194(void *arg0, s8 arg1) {
         ((Visitor *)&obj)->apply(*(void **)((u8 *)arg0 + 0x194));
     }
 }
-#pragma global_optimizer reset
 #pragma use_lmw_stmw reset
 #pragma cplusplus reset
 
