@@ -2202,6 +2202,7 @@ f64 fn_80238378(s32 arg0, f64 farg0) {
     return var_f1;
 }
 
+#pragma global_optimizer off
 f64 fn_80236C94(f64 farg0, f64 farg1) {
     extern f64 lbl_8036C010;
     extern f64 lbl_8036C018;
@@ -2213,20 +2214,22 @@ f64 fn_80236C94(f64 farg0, f64 farg1) {
     extern f64 lbl_8036C048;
     extern f64 lbl_8036C050;
     f64 qx;
-    f64 sp8;
+    f64 x;
     f64 z;
     f64 r;
     s32 ix;
 
-    sp8 = farg0;
-    ix = *(s32 *)&sp8 & 0x7FFFFFFF;
-    if (ix < 0x3E400000 && (s32)farg0 == 0) {
-        return lbl_8036C010;
+    x = farg0;
+    ix = ((s32 *)&x)[0] & 0x7FFFFFFF;
+    if (ix < 0x3E400000) {
+        if ((s32)farg0 == 0) {
+            return lbl_8036C010;
+        }
     }
-    z = sp8 * sp8;
+    z = x * x;
     r = z * (((((lbl_8036C040 * z + lbl_8036C038) * z + lbl_8036C030) * z + lbl_8036C028) * z + lbl_8036C020) * z + lbl_8036C018);
     if (ix < 0x3FD33333) {
-        return lbl_8036C010 - ((lbl_8036C048 * z) - ((z * r) - (sp8 * farg1)));
+        return lbl_8036C010 - ((lbl_8036C048 * z) - ((z * r) - (x * farg1)));
     }
     if (ix > 0x3FE90000) {
         qx = lbl_8036C050;
@@ -2234,9 +2237,9 @@ f64 fn_80236C94(f64 farg0, f64 farg1) {
         ((s32 *)&qx)[0] = ix - 0x00200000;
         ((s32 *)&qx)[1] = 0;
     }
-    return (lbl_8036C010 - qx) - (((lbl_8036C048 * z) - qx) - ((z * r) - (sp8 * farg1)));
+    return (lbl_8036C010 - qx) - (((lbl_8036C048 * z) - qx) - ((z * r) - (x * farg1)));
 }
-
+#pragma global_optimizer reset
 f64 fn_80238638(f64 farg0) {
     f64 sp10;
     f64 sp8;
