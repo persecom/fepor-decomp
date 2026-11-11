@@ -6049,10 +6049,12 @@ virtual void v12(s32) = 0;
  entry=M2C_FIELD(lbl_802CA264,void * *,0);
  while(entry){fn_8013B064(hold,entry);entry=M2C_FIELD(entry,void * *,0x184);}
  }
- hold=M2C_FIELD(arg0,void * *,0x40);
- entry=M2C_FIELD(lbl_802CA264,void * *,0x3C);
- while(entry){fn_8013B064(hold,entry);entry=M2C_FIELD(entry,void * *,0x184);}
- fn_801400F4(arg0,M2C_FIELD(arg0,void * *,0x40));
+ {void *entry2;void *hold2;
+hold2=M2C_FIELD(arg0,void * *,0x40);
+ entry2=M2C_FIELD(lbl_802CA264,void * *,0x3C);
+ while(entry2){fn_8013B064(hold2,entry2);entry2=M2C_FIELD(entry2,void * *,0x184);}
+ }
+fn_801400F4(arg0,M2C_FIELD(arg0,void * *,0x40));
  p=fn_800C42D8(0x7C);
  if(p)p=fn_80179DEC(p,0x20,0x84,0x1F4);
  M2C_FIELD(arg0,void * *,0x4C)=p;
@@ -6106,6 +6108,7 @@ M2C_FIELD(p,u8 *,63)=0xFF;M2C_FIELD(p,s32 *,0x40)=0;M2C_FIELD(p,s16 *,0x44)=0;M2
 #pragma cplusplus reset
 
 #pragma opt_common_subs on
+#pragma global_optimizer on
 void fn_801766C0(s32 param_1, s32 param_2, s32 param_3, s32 param_4)
 {
     u32 *puVar1;
