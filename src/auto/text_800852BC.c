@@ -43,15 +43,6 @@ extern u8 lbl_80289EB8[16];
 
 extern f32 lbl_803697E0;
 extern f32 lbl_803697E4;
-extern f64 lbl_80369470;
-
-static inline f32 fe_s16_to_f32(s16 v) {
-    int lo;
-    double t;
-    lo = (int)v ^ 0x80000000;
-    t = (double)(*(long long *)&(struct { unsigned int h; int l; }){0x43300000, lo});
-    return (f32)(t - lbl_80369470);
-}
 
 
 void fn_800852BC(s32 arg0) {
