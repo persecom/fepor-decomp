@@ -441,6 +441,52 @@ s32 fn_801B61CC(u32 arg0) {
     return 1;
 }
 
+s32 fn_801B6348(void *arg0)
+{
+    void fn_801B32C8(void *, void *);
+    extern u8 lbl_80330EAC[];
+
+    u8 *base;
+    u8 *object;
+    u8 *data;
+    u32 flags;
+    u8 state;
+
+    base = lbl_80330EAC;
+    flags = *(u32 *)(base + 0xCAC);
+
+    if ((flags & 0x10) != 0 || (flags & 0x800) == 0) {
+        return 0;
+    }
+
+    object = *(u8 **)(base + 0x280);
+
+    if (object != 0) {
+        data = *(u8 **)(object + 0x190);
+        state = data[8];
+
+        if (state == 0 || state == 5) {
+            fn_801B32C8(object, arg0);
+            return 1;
+        }
+    }
+
+    object = *(u8 **)(base + 0x560);
+
+    if (object != 0) {
+        data = *(u8 **)(object + 0x190);
+        state = data[8];
+
+        if (state == 0 || state == 5) {
+            fn_801B32C8(object, arg0);
+            return 1;
+        }
+    }
+
+    fn_801B32C8(0, arg0);
+    return 1;
+}
+
 s32 fn_801B6414(u32 arg0) {
     void *fn_8000CAA0(void *, u32);
     void *fn_8000CAF0(void *, s32);
@@ -1021,6 +1067,7 @@ void fn_801B893C(void *arg0) {
     void *pad;
     void *st;
     void *data;
+    s32 state;
     s32 btn;
 
     pad = lbl_80367240;
@@ -1036,7 +1083,8 @@ void fn_801B893C(void *arg0) {
         lbl_80368258 = (s32)pad;
         lbl_8036825C = 1;
     }
-    switch (*(s32 *)st) {
+    state = *(s32 *)st;
+    switch (state) {
     case 0:
         *(s32 *)st = 1;
         *(s32 *)((u8 *)st + 4) = 0;
@@ -1072,7 +1120,7 @@ void fn_801B893C(void *arg0) {
             break;
         }
         {
-            s32 idx = *(s32 *)st - 1;
+            s32 idx = state - 1;
             void *slot = (u8 *)st + (idx * 4);
             void *src = (u8 *)data + (idx * 4);
             s32 cur = *(s32 *)((u8 *)slot + 0x10);
@@ -1821,8 +1869,8 @@ extern "C" void fn_801BCFF4(void *arg0) {
     register u8 gate;
     register int flags;
     u32 sp14;
-    s16 spC[2];
     s16 sp8[2];
+    s16 spC[2];
     u8 pad[8];
     Obj *temp;
     s32 refs;
@@ -1846,7 +1894,8 @@ extern "C" void fn_801BCFF4(void *arg0) {
             fn_8000C188(arg0);
         } else if ((btn & 0x800) && fn_80166D8C(lbl_80330D68) == 0) {
             *(Vec2s *)&sp14 = ((Obj *)*(void **)((u8 *)arg0 + 0x5C))->v9();
-            fn_8016758C(lbl_80330D68, arg0, (s32)(lbl_8027C698 + 0x215), (f32)*(s16 *)&sp14, (f32)*((s16 *)&sp14 + 1));
+            s32 text = (s32)(lbl_8027C698 + 0x215);
+            fn_8016758C(lbl_80330D68, arg0, text, (f32)*(s16 *)&sp14, (f32)*((s16 *)&sp14 + 1));
             *(s32 *)lbl_80330D68 = *(s32 *)lbl_80330D68 | lbl_80368DC4;
         } else if ((btn & 0xa00) && fn_80166D8C(lbl_80330D68) != 0) {
             fn_801673D0(lbl_80330D68);
@@ -3304,11 +3353,12 @@ void fn_801C65E0(void *arg0) {
         fn_80220DEC(0x98, 0, 4);
         c = 0xFF;
         {
-            f32 f3 = lbl_8036B434;
+            f64 f3 = lbl_8036B434;
             f32 f2 = lbl_8036B424;
             f32 f4 = -f3;
-            f32 f0 = f4 + lbl_8036B468;
+            f32 f0;
             f32 f1 = lbl_8036B464;
+            f0 = f4 + lbl_8036B468;
             *(f32 *)0xCC008000 = f3;
             *(f32 *)0xCC008000 = f2;
             *(f32 *)0xCC008000 = f1;
@@ -3373,7 +3423,6 @@ void fn_801C6978(u32 arg0) {
     f32 spC;
     f32 sp8;
     f32 t;
-    f32 a;
     void *p;
     u8 *base;
     u8 *entry;
@@ -3414,10 +3463,8 @@ void fn_801C6978(u32 arg0) {
                 *(u32 *)&spC = lbl_8027D540[1];
                 *(u32 *)&sp10 = lbl_8027D540[2];
                 t = fn_8005A028(2, lbl_8036B424, lbl_8036B434, (f32)max, (f32)counter);
-                a = *(f32 *)(entry + 8);
-                sp8 = -fn_80059F64(a, lbl_8036B424, lbl_8036B434, t);
-                a = *(f32 *)(entry + 0x10);
-                sp10 = -fn_80059F64(a, lbl_8036B424, lbl_8036B434, t);
+                sp8 = -fn_80059F64(*(f32 *)(entry + 8), lbl_8036B424, lbl_8036B434, t);
+                sp10 = -fn_80059F64(*(f32 *)(entry + 0x10), lbl_8036B424, lbl_8036B434, t);
                 obj = *(void **)entry;
                 *(f32 *)((u8 *)obj + 0x78) = t;
                 fn_80202540(mtx, obj, sp8, spC, sp10);
@@ -3443,6 +3490,64 @@ void fn_801C6978(u32 arg0) {
             }
         }
     }
+}
+
+void fn_801C6CBC(u32 *arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    void *fn_8000C0C0(void *);
+    void fn_8000C070(void *, s32);
+    void *fn_8000CAF0(void *, s32);
+
+    extern u8 lbl_802981F4[];
+    extern u8 lbl_802981D0[];
+
+    u8 *entry;
+    u8 *source;
+    u8 *dest;
+    u32 value;
+    u32 temp;
+
+    entry = (u8 *)fn_8000C0C0(lbl_802981F4);
+
+    if (entry != 0) {
+        if (*(s32 *)(entry + 0x38) < arg3) {
+            return;
+        }
+
+        fn_8000C070(entry, 0);
+    }
+
+    entry = (u8 *)fn_8000CAF0(lbl_802981F4, arg2);
+
+    *(u32 *)(entry + 0x30) = 0;
+    *(s32 *)(entry + 0x34) = arg1;
+    *(s32 *)(entry + 0x38) = arg3;
+
+    value = *arg0;
+
+    source = (u8 *)fn_8000C0C0(lbl_802981D0);
+
+    if (source == 0) {
+        dest = 0;
+    } else {
+        dest = *(u8 **)(source + 0x30);
+    }
+
+    if (dest == 0) {
+        return;
+    }
+
+    dest[0x288] = dest[0x284];
+    dest[0x289] = dest[0x285];
+    dest[0x28A] = dest[0x286];
+    dest[0x28B] = dest[0x287];
+
+    temp = value;
+
+    dest[0x284] = ((u8 *)&temp)[0];
+    dest[0x285] = ((u8 *)&temp)[1];
+    dest[0x286] = ((u8 *)&temp)[2];
+    dest[0x287] = ((u8 *)&temp)[3];
 }
 
 void fn_801C6DB8(u32 arg0) {
@@ -3876,14 +3981,14 @@ void fn_801C8E84(void) {
         } else {
             *var_r6 = (u8)(s32)((f32)temp_r8 * lbl_8036B480);
         }
-        temp_r9 = var_r9 + 1;
-        if (temp_r9 < count) {
+        var_r9 += 1;
+        if (var_r9 < count) {
             var_r6[1] = (u8)(s32)((f32)temp_r8 * lbl_8036B480 + lbl_8036B478);
         } else {
             var_r6[1] = (u8)(s32)((f32)temp_r8 * lbl_8036B480);
         }
         var_r6 += 2;
-        var_r9 = temp_r9 + 1;
+        var_r9 += 1;
     }
     var_r6_2 = (u8 *)&spC;
     var_r8 = 0;
@@ -4507,7 +4612,6 @@ s32 fn_801CAF8C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0x6C);
 }
 
-#pragma use_lmw_stmw on
 #pragma cplusplus on
 extern "C" void fn_801CAF94(void *arg0, s32 arg1, s8 arg2, s8 arg3, s32 arg4) {
     u8 fn_800E903C(void *);
@@ -5957,7 +6061,6 @@ void *fn_801D2C20(void) {
     return &lbl_8027E0F8[0x12];
 }
 
-#pragma use_lmw_stmw on
 #pragma cplusplus on
 extern "C" void fn_801D2C30(void *arg0) {
     void fn_801C1824(void *, void *, void *, void *);
@@ -6074,7 +6177,7 @@ extern "C" void fn_801D2C30(void *arg0) {
     {
         u32 count = self->count;
         s32 cur32 = cur;
-        u32 last = count - 1;
+        register u32 last = count - 1;
         s16 v;
         s16 scroll;
         if ((u32)cur32 > last) {
@@ -7485,8 +7588,8 @@ void fn_801DC1F0(void *arg0) {
     s32 buttons;
     s32 prev;
     s32 mask;
+    s32 v340;
     void *entry;
-    s16 v340;
     s16 v33e;
     s16 t0;
     s16 t8;
@@ -7502,11 +7605,10 @@ void fn_801DC1F0(void *arg0) {
         goto not_mode1;
     }
 
-    bonus = 0x28;
+    
     mask = *(s16 *)((u8 *)state + 0x330);
     mask = (mask >> 2) & 1;
-    mask = (s32)~((mask - 1) | (1 - mask)) >> 31;
-    bonus &= mask;
+    bonus = mask == 1 ? 0x28 : 0;
 
     if ((pressed & 0x100) == 0) {
         goto after_100;
@@ -7539,7 +7641,7 @@ after_200:
         val_c8 = 0xC8;
         *((u8 *)state + 0x14) = zero;
         four = 4;
-        v340 = *(s16 *)((u8 *)state + 0x340);
+        v340 = *(s16 *)((u8 *)state + 0x340) + bonus;
         v33e = *(s16 *)((u8 *)state + 0x33E);
         entry = (u8 *)state + (*(s32 *)((u8 *)self + 0x40) * 0x14) + 0x51A;
         t0 = *(s16 *)entry;
@@ -7552,7 +7654,7 @@ after_200:
         *(s16 *)((u8 *)entry + 0xC) = t8;
         *(s16 *)((u8 *)entry + 0xE) = t10;
         *(s16 *)((u8 *)entry + 0x10) = v33e;
-        *(s16 *)((u8 *)entry + 0x12) = v340 + bonus;
+        *(s16 *)((u8 *)entry + 0x12) = v340;
         *(s16 *)((u8 *)entry + 4) = zero;
         *(s16 *)((u8 *)entry + 6) = four;
     }
@@ -7564,6 +7666,12 @@ after_01:
         fn_801475FC(lbl_8027E258 + 0x328, 0x64);
     }
     {
+        s32 v340;
+        void *entry;
+        s16 v33e;
+        s16 t0;
+        s16 t8;
+        s16 t10;
         s32 one;
         s32 val_c8;
         s32 zero;
@@ -7573,7 +7681,7 @@ after_01:
         *((u8 *)state + 0x14) = one;
         zero = 0;
         four = 4;
-        v340 = *(s16 *)((u8 *)state + 0x344);
+        v340 = *(s16 *)((u8 *)state + 0x344) + bonus;
         v33e = *(s16 *)((u8 *)state + 0x342);
         entry = (u8 *)state + (*(s32 *)((u8 *)self + 0x40) * 0x14) + 0x51A;
         t0 = *(s16 *)entry;
@@ -7586,7 +7694,7 @@ after_01:
         *(s16 *)((u8 *)entry + 0xC) = t8;
         *(s16 *)((u8 *)entry + 0xE) = t10;
         *(s16 *)((u8 *)entry + 0x10) = v33e;
-        *(s16 *)((u8 *)entry + 0x12) = v340 + bonus;
+        *(s16 *)((u8 *)entry + 0x12) = v340;
         *(s16 *)((u8 *)entry + 4) = zero;
         *(s16 *)((u8 *)entry + 6) = four;
     }
