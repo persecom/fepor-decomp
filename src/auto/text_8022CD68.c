@@ -242,6 +242,134 @@ void fn_8022D084(void *heap, void *ptr) {
     }
 }
 
+void fn_8022CDD0(void *);
+#pragma global_optimizer off
+#pragma opt_strength_reduction off
+void fn_8022D234(void **arg0, void *arg1) {
+    u32 *block;
+    u32 sizeWord;
+    u32 heapRaw;
+    u32 size;
+    u32 *nextHeader;
+    u32 *heap;
+    s32 off;
+    u32 *listHead;
+    u32 *p;
+    u32 prevSize;
+    u32 *prev;
+    u32 *bck;
+    u32 sz;
+    u32 nextSize;
+    u32 *nextBlk;
+    u32 nextWord;
+    u32 combined;
+    u32 maxFree;
+    u32 flagWord;
+    s32 shouldReturn;
+    void **link;
+
+    block = (u32 *)((u8 *)arg1 - 8);
+    sizeWord = *(u32 *)((u8 *)arg1 - 8);
+    heapRaw = *(u32 *)((u8 *)block + 4);
+    size = sizeWord & ~7u;
+    *block = sizeWord & ~2u;
+    nextHeader = (u32 *)((u8 *)block + size);
+    heap = (u32 *)(heapRaw & ~1u);
+    *nextHeader = *nextHeader & ~4u;
+    *(u32 *)((u8 *)nextHeader - 4) = size;
+    off = (heap[3] & ~7u) - 4;
+    listHead = *(u32 **)((u8 *)heap + off);
+    if (listHead != 0) {
+        *(u32 *)((u8 *)block + 8) = *(u32 *)((u8 *)listHead + 8);
+        *(u32 *)(*(u32 *)((u8 *)block + 8) + 0xC) = (u32)block;
+        *(u32 *)((u8 *)block + 0xC) = *(u32 *)((u8 *)heap + off);
+        *(u32 *)(*(u32 *)((u8 *)heap + off) + 8) = (u32)block;
+        *(u32 *)((u8 *)heap + off) = (u32)block;
+        p = *(u32 **)((u8 *)heap + off);
+        if (!(*p & 4)) {
+            prevSize = *(u32 *)((u8 *)p - 4);
+            if (prevSize & 2) {
+                prev = p;
+            } else {
+                prev = (u32 *)((u8 *)p - prevSize);
+                *prev = *prev & 7;
+                *prev = *prev | ((prevSize + (*p & ~7u)) & ~7u);
+                if (!(*prev & 2)) {
+                    combined = prevSize + (*p & ~7u);
+                    *(u32 *)((u8 *)prev + combined - 4) = combined;
+                }
+                listHead = *(u32 **)((u8 *)heap + off);
+                if (listHead == p) {
+                    *(u32 *)((u8 *)heap + off) = *(u32 *)((u8 *)listHead + 0xC);
+                }
+                *(u32 *)(*(u32 *)((u8 *)p + 0xC) + 8) = *(u32 *)((u8 *)p + 8);
+                bck = *(u32 **)((u8 *)p + 0xC);
+                *(u32 *)(*(u32 *)((u8 *)bck + 8) + 0xC) = (u32)bck;
+            }
+        } else {
+            prev = p;
+        }
+        *(u32 *)((u8 *)heap + off) = (u32)prev;
+        p = *(u32 **)((u8 *)heap + off);
+        sz = *p;
+        nextSize = sz & ~7u;
+        nextBlk = (u32 *)((u8 *)p + nextSize);
+        nextWord = *nextBlk;
+        if (!(nextWord & 2)) {
+            *p = sz & 7;
+            combined = nextSize + (nextWord & ~7u);
+            *p = *p | (combined & ~7u);
+            if (!(*p & 2)) {
+                *(u32 *)((u8 *)p + combined - 4) = combined;
+            }
+            if (!(*p & 2)) {
+                *(u32 *)((u8 *)p + combined) = *(u32 *)((u8 *)p + combined) & ~4u;
+            } else {
+                *(u32 *)((u8 *)p + combined) = *(u32 *)((u8 *)p + combined) | 4;
+            }
+            listHead = *(u32 **)((u8 *)heap + off);
+            if (listHead == nextBlk) {
+                *(u32 *)((u8 *)heap + off) = *(u32 *)((u8 *)listHead + 0xC);
+            }
+            if (*(u32 **)((u8 *)heap + off) == nextBlk) {
+                *(u32 *)((u8 *)heap + off) = 0;
+            }
+            *(u32 *)(*(u32 *)((u8 *)nextBlk + 0xC) + 8) = *(u32 *)((u8 *)nextBlk + 8);
+            *(u32 *)(*(u32 *)((u8 *)nextBlk + 8) + 0xC) = *(u32 *)((u8 *)nextBlk + 0xC);
+        }
+    } else {
+        *(u32 *)((u8 *)heap + off) = (u32)block;
+        *(u32 *)((u8 *)block + 8) = (u32)block;
+        *(u32 *)((u8 *)block + 0xC) = (u32)block;
+    }
+    maxFree = **(u32 **)((u8 *)heap + off) & ~7u;
+    if (*(u32 *)((u8 *)heap + 8) < maxFree) {
+        *(u32 *)((u8 *)heap + 8) = maxFree;
+    }
+    flagWord = *(u32 *)((u8 *)heap + 0x10);
+    shouldReturn = 0;
+    if (!(flagWord & 2) && ((flagWord & ~7u) == ((*(u32 *)((u8 *)heap + 0xC) & ~7u) - 0x18))) {
+        shouldReturn = 1;
+    }
+    if (shouldReturn != 0) {
+        link = *(void ***)((u8 *)heap + 4);
+        if ((u32 *)link == heap) {
+            link = 0;
+        }
+        if (*arg0 == heap) {
+            *arg0 = link;
+        }
+        if (link != 0) {
+            *link = *(void **)heap;
+            *(void **)((u8 *)*link + 4) = link;
+        }
+        *(u32 *)((u8 *)heap + 4) = 0;
+        *(u32 *)heap = 0;
+        fn_8022CDD0(heap);
+    }
+}
+#pragma opt_strength_reduction reset
+#pragma global_optimizer reset
 s32 fn_8022D4C8(void) {
     s32 fn_80231178(void *);
     extern char __files[];
@@ -759,15 +887,21 @@ s32 fn_802314D8(s32 arg0, s32 arg1, s32 arg2) {
         u8 mode:3;
         u8 rest:5;
     } B8;
-    S4 *s4 = (S4 *)arg0;
-    B4 *b4 = (B4 *)arg0;
-    B8 *b8 = (B8 *)arg0;
+    S4 *s4;
+    B4 *b4;
+    B8 *b8;
     s32 offset;
     s32 whence;
-    s32 result;
     s32 i;
+    s32 result;
+    u8 *p;
+    s32 n;
+    s32 adj;
     s32 (*seek_proc)(s32, s32 *, s32, s32);
 
+    s4 = (S4 *)arg0;
+    b4 = (B4 *)arg0;
+    b8 = (B8 *)arg0;
     whence = arg2;
     offset = arg1;
 
@@ -786,10 +920,7 @@ s32 fn_802314D8(s32 arg0, s32 arg1, s32 arg2) {
     }
 
     if (whence == 1) {
-        register u8 *p;
-        register s32 adj;
-        register s32 n;
-
+        p = 0;
         whence = 0;
         adj = 0;
         if ((s4->mode != 1 && s4->mode != 2) || M2C_FIELD(arg0, u8 *, 0xA) != 0) {
@@ -885,6 +1016,26 @@ void *__memrchr(void *arg0, int arg1, u32 arg2) {
     return NULL;
 }
 
+void *memchr(const void *ptr, int value, unsigned long count)
+{
+    const unsigned char *p;
+    unsigned char c;
+
+    p = (const unsigned char *)ptr;
+    c = (unsigned char)value;
+
+    while (count != 0) {
+        if (*p == c) {
+            return (void *)p;
+        }
+
+        p++;
+        count--;
+    }
+
+    return 0;
+}
+
 #pragma use_lmw_stmw on
 s32 fn_80231D94(char *dest, const char *fmt, ...) {
     va_list args;
@@ -928,6 +1079,33 @@ s32 fn_80231F48(char *s, const char *fmt, va_list args) {
         s[idx] = 0;
     }
     return n;
+}
+
+s32 fn_80232058(void *stream, const char *format, ...)
+{
+    s32 fwide(void *, s32);
+    void __begin_critical_region(s32);
+    void __end_critical_region(s32);
+    s32 __FileWrite(void *, const char *, u32);
+
+    s32 result;
+    va_list args;
+
+    if (fwide(stream, -1) >= 0) {
+        return -1;
+    }
+
+    __begin_critical_region(2);
+
+    va_start(args, format);
+
+    result = __pformatter(__FileWrite, stream, format, args);
+
+    va_end(args);
+
+    __end_critical_region(2);
+
+    return result;
 }
 
 s32 __FileWrite(s32 arg0, s32 arg1, u32 arg2) {
@@ -2023,6 +2201,8 @@ f64 fn_80238378(s32 arg0, f64 farg0) {
 
     return var_f1;
 }
+
+f64 fn_80236C94(f64 farg0, f64 farg1);
 
 f64 fn_80238638(f64 farg0) {
     f64 sp10;
