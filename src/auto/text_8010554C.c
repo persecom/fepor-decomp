@@ -2182,6 +2182,7 @@ void fn_8010A704(void *arg0, u8 arg1) {
     fn_800072B0(&sp14, &sp10, &spC, &sp8);
     fn_80007884();
 }
+#pragma use_lmw_stmw reset
 
 #pragma cplusplus on
 extern "C" void fn_8010A998(void *arg0, u8 arg1) {
