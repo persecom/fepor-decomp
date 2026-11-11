@@ -3468,6 +3468,53 @@ s32 fn_8010C4B0(void *arg0) {
     return M2C_FIELD(fn_8000D354(M2C_FIELD(arg0, s32 *, 0x240)), u8 *, 7) != 0;
 }
 
+s32 fn_8010C504(void *arg0) {
+    u8 fn_80102EA8(void);
+    s8 fn_8003B2D0(void *);
+    s32 fn_8022C568(f32);
+    void *fn_8000D354(void *);
+    extern f64 lbl_8036A168;
+    extern f32 lbl_8036A160;
+    extern f32 lbl_8036A164;
+    u8 saved;
+    s32 result;
+    u32 val;
+    u32 flags;
+    u8 *data;
+    f32 ratio;
+
+    if (fn_80102EA8() != 0) {
+        saved = *(u8 *)((u8 *)arg0 + 0x1A8);
+        ratio = (f32)(s8)saved / (f32)fn_8003B2D0(arg0);
+        if (ratio <= lbl_8036A160) {
+            *(u32 *)((u8 *)arg0 + 0x254) |= 1;
+            return 1;
+        }
+        *(u32 *)((u8 *)arg0 + 0x254) &= ~1U;
+        return 0;
+    }
+
+    result = 0;
+    {
+        s8 b2d = fn_8003B2D0(arg0);
+        s8 v = (s8)*(u8 *)((u8 *)arg0 + 0x1A8);
+        val = fn_8022C568((lbl_8036A164 * (f32)v) / (f32)b2d);
+    }
+    data = fn_8000D354(*(void **)((u8 *)arg0 + 0x240));
+    flags = *(u32 *)((u8 *)arg0 + 0x254);
+    if (flags & 1) {
+        if (data[6] <= val) {
+            *(u32 *)((u8 *)arg0 + 0x254) = flags & ~1U;
+        } else {
+            result = 1;
+        }
+    } else if (data[5] > val) {
+        result = 1;
+        *(u32 *)((u8 *)arg0 + 0x254) = flags | 1;
+    }
+    return result;
+}
+
 #pragma use_lmw_stmw on
 #pragma opt_strength_reduction off
 s32 fn_8010C674(void *arg0, s32 arg1, u8 (*arg2)(void *)) {
@@ -4169,7 +4216,8 @@ s32 fn_8010EF74(void *arg0, s32 arg1, u8 (*arg2)(void *)) {
     s32 minX,maxX,maxY,row;
     s32 slot=arg1;
     s32 range,minY;
-    s32 startX,startY;
+    s32 startX;
+    s32 startY;
     void *item;
     u8 extra;
     s32 k,score;
@@ -4243,6 +4291,74 @@ s32 fn_8010EF74(void *arg0, s32 arg1, u8 (*arg2)(void *)) {
     }
     return best!=NULL;
 }
+
+s32 fn_8010F3F4(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s32 *arg5)
+{
+    extern u8 lbl_802CA518[];
+    extern s16 lbl_80273B78[];
+
+    extern s32 fn_800F7994(void *, s32, s32);
+    extern s32 fn_800F7838(void *, s32, s32);
+    extern u32 fn_800FCF48(s32, s32);
+
+    u8 *base;
+    s16 *direction;
+    s16 *heightTable;
+    s32 x;
+    s32 y;
+    s32 dx;
+    s32 dy;
+    s32 index;
+    s32 score;
+    s32 bestScore;
+    s32 i;
+    u32 value;
+
+    base = lbl_802CA518;
+    direction = lbl_80273B78;
+    heightTable = *(s16 **)(base + 0x14190);
+
+    bestScore = (s32)0x80000000;
+    score = 0;
+
+    for (i = 0; i < 4; i++, direction += 2) {
+        x = (s16)((s16)arg1 + direction[0]);
+        y = (s16)((s16)arg2 + direction[1]);
+
+        index = (s8)x + ((s8)y << 6);
+
+        if (heightTable[index] < 0) {
+            continue;
+        }
+
+        if ((s8)base[0xE18E + index] != 0) {
+            continue;
+        }
+
+        value = base[0xD + index];
+
+        if (value != 0) {
+            if (value != *((u8 *)arg0 + 0x198)) {
+                continue;
+            }
+        }
+
+        score += fn_800F7994(arg0, (s8)x, (s8)y);
+        score += fn_800F7838(arg0, (s8)x, (s8)y);
+
+        value = fn_800FCF48((s8)x, (s8)y);
+        score -= (value >> 4) & 0xFFF;
+
+        if (score > bestScore) {
+            *(s16 *)arg4 = (s16)x;
+            *(s16 *)arg5 = (s16)y;
+            bestScore = score;
+        }
+    }
+
+    return bestScore != (s32)0x80000000;
+}
+
 #pragma opt_strength_reduction reset
 
 void fn_8010F52C(void* arg0, int arg1)
