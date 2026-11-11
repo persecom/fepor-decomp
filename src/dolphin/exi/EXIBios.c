@@ -278,11 +278,10 @@ void SetExiInterruptMask(s32 arg0, void *arg1) {
 BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void (*callback)(s32, void *))
 {
     BOOL enabled;
-    EXIControl *exi;
+    EXIControl *exi = &Ecb_8033E188[chan];
     u32 data;
     s32 i;
 
-    exi = &Ecb_8033E188[chan];
     enabled = OSDisableInterrupts();
     if ((exi->state & 3) || !(exi->state & 4)) {
         OSRestoreInterrupts(enabled);
@@ -299,8 +298,7 @@ BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void (*callback)(s32, void *
 
     if (type != 0) {
         data = 0;
-        i = (s32)data;
-        for (; i < len; i++) {
+        for (i = 0; i < len; i++) {
             data |= ((u8 *)buf)[i] << (8 * (3 - i));
         }
         __EXIRegs[chan * 5 + 4] = data;
@@ -314,10 +312,6 @@ BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void (*callback)(s32, void *
     OSRestoreInterrupts(enabled);
     return TRUE;
 }
-#pragma use_lmw_stmw reset
-#pragma scheduling reset
-
-#pragma scheduling reset
 s32 fn_80238E78(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 EXIImm(s32, s32, s32, s32, s32);
     s32 EXISync(s32);
@@ -346,6 +340,49 @@ loop_9:
     var_r28 += var_r27;
     var_r29 -= var_r27;
     goto loop_9;
+}
+
+s32 EXIDma(s32 chan, void *buffer, s32 length, s32 type, void *callback)
+{
+    u32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(u32);
+    void EXIClearInterrupts(s32, s32, s32, s32);
+    void __OSUnmaskInterrupts(u32);
+
+    struct EXIControl *ecb;
+    volatile u32 *exi;
+    u32 interrupts;
+    u32 flags;
+
+    ecb = &Ecb_8033E188[chan];
+
+    interrupts = OSDisableInterrupts();
+
+    flags = *(u32 *)((u8 *)ecb + 0xC);
+
+    if ((flags & 3) != 0 || (flags & 4) == 0) {
+        OSRestoreInterrupts(interrupts);
+        return 0;
+    }
+
+    *(void **)((u8 *)ecb + 4) = callback;
+
+    if (callback != 0) {
+        EXIClearInterrupts(chan, 0, 1, 0);
+        __OSUnmaskInterrupts(0x200000 >> (chan * 3));
+    }
+
+    *(u32 *)((u8 *)ecb + 0xC) |= 1;
+
+    exi = (volatile u32 *)(0xCC006800 + chan * 0x14);
+
+    exi[1] = (u32)buffer & 0x03FFFFE0;
+    exi[2] = length;
+    exi[3] = (type << 2) | 3;
+
+    OSRestoreInterrupts(interrupts);
+
+    return 1;
 }
 
 s32 fn_80204410(void);
@@ -798,11 +835,12 @@ s32 fn_8023A114(s32 arg0) {
     return M2C_FIELD((&Ecb_8033E188 + (arg0 << 6)), s32 *, 0xC);
 }
 
-void UnlockedHandler(void) {
-    M2C_UNK EXIGetID(M2C_UNK, M2C_UNK *);
-    M2C_UNK sp10;
+void UnlockedHandler(s32 chan, void *context) {
+    s32 EXIGetID(s32, s32, u32 *);
+    u32 id;
 
-    EXIGetID(0, &sp10);
+    (void)context;
+    EXIGetID(chan, 0, &id);
 }
 
 void fn_8023A504(s32 *arg2) {
