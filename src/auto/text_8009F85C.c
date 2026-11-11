@@ -1152,6 +1152,41 @@ s32 fn_800A1178(void)
   return 0;
 }
 
+s32 fn_800A12DC(void)
+{
+    extern u8 *lbl_80367240;
+    extern u16 lbl_80330708[];
+
+    extern void fn_8014D268(void *, s32);
+
+    u8 *obj;
+    u8 *table;
+    u32 flags;
+    s32 value;
+
+    obj = lbl_80367240;
+    flags = *(u32 *)(obj + 0x10);
+
+    if (flags & 0x01000001) {
+        table = (u8 *)lbl_80330708;
+        value = *(s32 *)(table + 0x18);
+
+        fn_8014D268(table, value - 0x64);
+    }
+
+    obj = lbl_80367240;
+    flags = *(u32 *)(obj + 0x10);
+
+    if (flags & 0x02000002) {
+        table = (u8 *)lbl_80330708;
+        value = *(s32 *)(table + 0x18);
+
+        fn_8014D268(table, value + 0x64);
+    }
+
+    return 0;
+}
+
 s32 fn_800A13A0(void) {
     extern M2C_UNK lbl_80330708;
     extern void *lbl_80367240;
