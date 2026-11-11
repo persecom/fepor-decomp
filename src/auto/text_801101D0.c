@@ -1550,8 +1550,12 @@ void fn_8011B2EC(void) {
     fn_800F20E0();
 }
 
+static u8 fn_8011B310_u8(u8 v) {
+    return v;
+}
+
 #pragma use_lmw_stmw on
-void fn_8011B310(UnitStruct *arg0) {
+void fn_8011B310(void *arg0) {
     void fn_800F20E0(void);
     void fn_800F214C(void);
     void fn_801475FC(void *, s32);
@@ -1566,33 +1570,33 @@ void fn_8011B310(UnitStruct *arg0) {
     u8 *node;
     u8 *base;
 
-    skip = 0;
     base = (u8 *)lbl_80330708;
     saved_x = (u8)(s32)*(f32 *)(base + 0x524);
     saved_y = (u8)(s32)*(f32 *)(base + 0x528);
+    skip = 0;
     if ((lbl_80367110 & 0x10) && !(lbl_80367110 & 0x20)) {
         skip = 1;
     }
     if (skip == 0) {
         flags = lbl_80367240[3];
         if (flags & 1) {
-            node = *(u8 **)((u8 *)arg0->unk30 + 4);
-            arg0->unk30 = node;
+            node = *(u8 **)(*(u8 **)((u8 *)arg0 + 0x30) + 4);
+            *(void **)((u8 *)arg0 + 0x30) = node;
             fn_8014CBD8(lbl_80330708, (f32)(s8)node[0], (f32)(s8)node[1]);
         }
         if (flags & 8) {
-            node = *(u8 **)((u8 *)arg0->unk30 + 0xC);
-            arg0->unk30 = node;
+            node = *(u8 **)(*(u8 **)((u8 *)arg0 + 0x30) + 0xC);
+            *(void **)((u8 *)arg0 + 0x30) = node;
             fn_8014CBD8(lbl_80330708, (f32)(s8)node[0], (f32)(s8)node[1]);
         }
         if (flags & 2) {
-            node = *(u8 **)((u8 *)arg0->unk30 + 8);
-            arg0->unk30 = node;
+            node = *(u8 **)(*(u8 **)((u8 *)arg0 + 0x30) + 8);
+            *(void **)((u8 *)arg0 + 0x30) = node;
             fn_8014CBD8(lbl_80330708, (f32)(s8)node[0], (f32)(s8)node[1]);
         }
         if (flags & 4) {
-            node = *(u8 **)((u8 *)arg0->unk30 + 0x10);
-            arg0->unk30 = node;
+            node = *(u8 **)(*(u8 **)((u8 *)arg0 + 0x30) + 0x10);
+            *(void **)((u8 *)arg0 + 0x30) = node;
             fn_8014CBD8(lbl_80330708, (f32)(s8)node[0], (f32)(s8)node[1]);
         }
         if ((flags & 0xF) == 0) {
@@ -2682,6 +2686,123 @@ void fn_8011DED8(void *arg0) {
 void fn_8011E4B8(void) {
     // Placeholder for now. This is a complex function with many branches and data accesses.
     // Will need to decompile it properly step by step.
+}
+
+s32 fn_8011FFE0(void *arg0, u32 arg1) {
+    s32 fn_801208BC(void *, u32);
+    void fn_80108BD0(void *, s32, s32, s32);
+    void fn_80122DD0(void *, s16, s16);
+    void fn_80122E28(void *, s16, s16);
+    void fn_801222A4(void *, void *);
+    extern u16 lbl_80274BB0[];
+    extern s16 lbl_80312060[];
+    s32 var29;
+    void *obj;
+    s32 pos;
+    u8 *tmp;
+    s32 var30;
+    void *self;
+    u32 idx;
+
+    self = arg0;
+    tmp = (u8 *)self + ((arg1 << 2) & 0x3FC);
+    *(void **)((u8 *)self + 0x44) = *(void **)(tmp + 0x34);
+    idx = arg1 & 0xFF;
+    obj = *(void **)((u8 *)self + 0x44);
+    if (obj != NULL && *(u8 *)((u8 *)obj + 0x68) == 0) {
+        pos = fn_801208BC(*(void **)((u8 *)self + 0x30), idx) + 0xE0;
+        switch (idx) {
+        case 0:
+            obj = *(void **)((u8 *)self + 0x34);
+            var30 = pos;
+            if (obj != NULL && *(u8 *)((u8 *)obj + 0x6B) != 0) {
+                if (pos < 0x170) {
+                    var30 = 0x170;
+                }
+                if (var30 > 0x230) {
+                    var30 = 0x230;
+                }
+                fn_80108BD0((char *)lbl_80274BB0 + 0xD6, 0x18, 0x14, var30);
+                obj = *(void **)((u8 *)self + 0x34);
+                if (obj != NULL) {
+                    fn_80122DD0(obj, (s16)(var30 - 0x40), 0x7C);
+                }
+            }
+            break;
+        case 1:
+            obj = *(void **)((u8 *)self + 0x38);
+            var30 = pos;
+            if (obj != NULL && *(u8 *)((u8 *)obj + 0x6B) != 0) {
+                if (pos < 0x170) {
+                    var30 = 0x170;
+                }
+                if (var30 > 0x230) {
+                    var30 = 0x230;
+                }
+                fn_80108BD0((char *)lbl_80274BB0 + 0xDF, 0x248 - var30, 0x13C, var30);
+                fn_80122E28(*(void **)((u8 *)self + 0x38), (s16)(0x278 - var30), 0x14C);
+                obj = *(void **)((u8 *)self + 0x38);
+                if (obj != NULL) {
+                    fn_80122DD0(obj, (s16)(0x288 - var30), 0x1A4);
+                }
+            }
+            break;
+        case 2:
+            obj = *(void **)((u8 *)self + 0x3C);
+            var29 = pos;
+            if (obj != NULL && *(u8 *)((u8 *)obj + 0x6B) != 0) {
+                var30 = 0x60;
+                if (pos < 0x170) {
+                    var29 = 0x170;
+                }
+                if (var29 > 0x230) {
+                    var29 = 0x230;
+                }
+                if (var29 + 0x60 > 0x230) {
+                    var30 = 0x230 - var29;
+                }
+                fn_80108BD0((char *)lbl_80274BB0 + 0xE8, var30 + 0x18, 0xA0, var29);
+                fn_80122E28(*(void **)((u8 *)self + 0x3C), (s16)(var30 + 0xC0), 0xB0);
+                lbl_80312060[6] = (s16)(var30 + 0x70);
+                lbl_80312060[7] = 0x10F;
+                lbl_80312060[8] = 1;
+                obj = *(void **)((u8 *)self + 0x3C);
+                if (obj != NULL) {
+                    s16 t = (s16)(var29 - 0x40);
+                    fn_80122DD0(obj, (s16)(var30 + t), 0x108);
+                }
+            }
+            break;
+        case 3:
+            obj = *(void **)((u8 *)self + 0x40);
+            var30 = pos;
+            if (obj != NULL && *(u8 *)((u8 *)obj + 0x6B) != 0) {
+                var29 = 0x60;
+                if (pos < 0x170) {
+                    var30 = 0x170;
+                }
+                if (var30 > 0x230) {
+                    var30 = 0x230;
+                }
+                if (var30 + 0x60 > 0x230) {
+                    var29 = 0x230 - var30;
+                }
+                fn_80108BD0((char *)lbl_80274BB0 + 0xF1, (0x248 - var30) - var29, 0xB4, var30);
+                fn_80122E28(*(void **)((u8 *)self + 0x40), (s16)((0x278 - var30) - var29), 0xC4);
+                lbl_80312060[9] = (s16)(0x1F0 - var29);
+                lbl_80312060[10] = 0x123;
+                lbl_80312060[11] = 0;
+                obj = *(void **)((u8 *)self + 0x40);
+                if (obj != NULL) {
+                    fn_80122DD0(obj, (s16)((0x288 - var30) - var29), 0x11C);
+                }
+            }
+            break;
+        }
+        fn_801222A4(*(void **)((u8 *)self + 0x44), self);
+        return 1;
+    }
+    return 0;
 }
 
 void fn_80120304(void *arg0)
