@@ -341,16 +341,16 @@ extern f32 lbl_80368CA0;
 extern f32 lbl_80368C8C;
 extern u8 lbl_802CA434[];
 void fn_8000C188(void *);
-void fn_80017C1C(void *);
-void fn_80059F64(f32, f32, f32, f32);
-void fn_80059F78(s32, f32, f32, f32, f32);
-void fn_8005A028(s32, f32, f32, f32, f32);
+void fn_80017C1C(void *, f32);
+f32 fn_80059F64(f32, f32, f32, f32);
+f32 fn_80059F78(s32, f32, f32, f32, f32);
+f32 fn_8005A028(s32, f32, f32, f32, f32);
 void fn_80017998(void *arg0) {
     void fn_8000C188(void *);
-    void fn_80017C1C(void *);
-    void fn_80059F64(f32, f32, f32, f32);
-    void fn_80059F78(s32, f32, f32, f32, f32);
-    void fn_8005A028(s32, f32, f32, f32, f32);
+    void fn_80017C1C(void *, f32);
+    f32 fn_80059F64(f32, f32, f32, f32);
+    f32 fn_80059F78(s32, f32, f32, f32, f32);
+    f32 fn_8005A028(s32, f32, f32, f32, f32);
     extern s32 lbl_80367110;
     extern f32 lbl_80368C88;
 
@@ -372,29 +372,29 @@ void fn_80017998(void *arg0) {
     switch (mode) {
     case 0:
         lim = *(s32 *)((u8 *)arg0 + 0x38);
-        fn_80059F64(f1, (f32)lim, (f32)lim, (f32)*(s32 *)((u8 *)arg0 + 0x34));
+        f1 = fn_80059F64(f1, (f32)lim, (f32)lim, (f32)*(s32 *)((u8 *)arg0 + 0x34));
         break;
     case 1:
         lim = *(s32 *)((u8 *)arg0 + 0x38);
-        fn_80059F78(2, f1, (f32)lim, (f32)lim, (f32)*(s32 *)((u8 *)arg0 + 0x34));
+        f1 = fn_80059F78(2, f1, (f32)lim, (f32)lim, (f32)*(s32 *)((u8 *)arg0 + 0x34));
         break;
     case 2:
         lim = *(s32 *)((u8 *)arg0 + 0x38);
-        fn_8005A028(2, f1, (f32)lim, (f32)lim, (f32)*(s32 *)((u8 *)arg0 + 0x34));
+        f1 = fn_8005A028(2, f1, (f32)lim, (f32)lim, (f32)*(s32 *)((u8 *)arg0 + 0x34));
         break;
     case 3: {
         s32 half;
         lim = *(s32 *)((u8 *)arg0 + 0x38);
         half = lim / 2;
         if (*(s32 *)((u8 *)arg0 + 0x34) < half) {
-            fn_80059F78(2, f1, (f32)half, (f32)half, (f32)*(s32 *)((u8 *)arg0 + 0x34));
+            f1 = fn_80059F78(2, f1, (f32)half, (f32)half, (f32)*(s32 *)((u8 *)arg0 + 0x34));
         } else {
-            fn_8005A028(2, (f32)half, (f32)lim, (f32)half, (f32)(*(s32 *)((u8 *)arg0 + 0x34) - half));
+            f1 = fn_8005A028(2, (f32)half, (f32)lim, (f32)half, (f32)(*(s32 *)((u8 *)arg0 + 0x34) - half));
         }
         break;
     }
     }
-    fn_80017C1C(arg0);
+    fn_80017C1C(arg0, f1);
 }
 
 void fn_80017BFC(void) {
