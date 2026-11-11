@@ -2,8 +2,8 @@
 #include "common.h"
 
 u16 *fn_800119C0(void) {
-    extern u16 lbl_80267DC8;
-    return (u16*)((u32)&lbl_80267DC8 + 0x86);
+    extern u16 lbl_80267DC8[];
+    return (u16 *)((u32)lbl_80267DC8 + 0x43);
 }
 
 s32 fn_800119D0(void) {
