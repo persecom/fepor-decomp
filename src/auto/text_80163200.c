@@ -4018,6 +4018,7 @@ void fn_8016F790(void *arg0) {
     s32 fn_80164BB0(void *);
     u32 fn_8013FF94(void *, s32, s32);
     void fn_801658DC(u32, s32);
+    typedef struct { u8 hi : 1; u8 lo : 7; } Bit7;
     extern u16 lbl_80278080[];
     extern u32 lbl_802EF4C8[];
     extern u8 lbl_80294AE8[];
@@ -4040,7 +4041,7 @@ void fn_8016F790(void *arg0) {
                 temp_r3 = fn_8001CB64(temp_r31);
                 if ((*(long long *)temp_r3 & 0x100000000LL) != 0
                     && (*(s32 *)((u8 *)*(void **)lbl_802EF4C8 + 0x1A0) & 0x800000)) {
-                    ((u8 *)temp_r31)[5] &= ~0x80;
+                    ((Bit7 *)((u8 *)temp_r31 + 5))->hi = 0;
                     fn_8000CAA0(lbl_80294AE8, arg0);
                 }
             }
