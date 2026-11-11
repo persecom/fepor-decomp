@@ -860,7 +860,6 @@ s32 fn_8023A114(s32 arg0) {
 }
 
 void UnlockedHandler(s32 chan, void *context) {
-    s32 EXIGetID(s32, s32, u32 *);
     u32 id;
 
     (void)context;
