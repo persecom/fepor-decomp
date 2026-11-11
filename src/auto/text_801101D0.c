@@ -1550,8 +1550,12 @@ void fn_8011B2EC(void) {
     fn_800F20E0();
 }
 
-static u8 fn_8011B310_u8(u8 v) {
-    return v;
+static u8 fn_8011B310_ret0(void) {
+    return 0;
+}
+
+static u8 fn_8011B310_ret1(void) {
+    return 1;
 }
 
 #pragma use_lmw_stmw on
@@ -1570,12 +1574,12 @@ void fn_8011B310(void *arg0) {
     u8 *node;
     u8 *base;
 
+    skip = fn_8011B310_u8(0);
     base = (u8 *)lbl_80330708;
     saved_x = (u8)(s32)*(f32 *)(base + 0x524);
     saved_y = (u8)(s32)*(f32 *)(base + 0x528);
-    skip = 0;
     if ((lbl_80367110 & 0x10) && !(lbl_80367110 & 0x20)) {
-        skip = 1;
+        skip = fn_8011B310_u8(1);
     }
     if (skip == 0) {
         flags = lbl_80367240[3];
