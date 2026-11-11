@@ -4,7 +4,7 @@
 
 ---
 
-[<img src="https://bytematch.dev/persecom/fepor-decomp.svg?w=512&h=256&version=GFEE01" width="512" height="256" alt="Decompilation Progress">][progress]
+[<img src=".github/assets/progress.svg" width="512" height="256" alt="Decompilation Progress">][progress]
 
 ---
 
