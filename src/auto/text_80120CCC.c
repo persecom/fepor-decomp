@@ -497,6 +497,38 @@ void fn_8012205C(void *arg0)
     base[0x400C] = 1;
 }
 
+void fn_801220B8(void *arg0)
+{
+    u8 *base;
+    u32 index;
+    u32 offset;
+
+    base = (u8 *)arg0;
+
+    if (base[0x400C] != 0) {
+        return;
+    }
+
+    index = *(u32 *)(base + 0x4000);
+    offset = *(u32 *)(base + 0x4004);
+
+    base + (((u8)(index + 0x100) << 6) + offset);
+
+    base[((u8)(index + 0x100) << 6) + offset] = 0;
+
+    *(u32 *)(base + 0x4004) = 0;
+
+    index = *(u32 *)(base + 0x4000);
+    *(u32 *)(base + 0x4000) = index + 1;
+
+    index = *(u32 *)(base + 0x4000);
+    offset = *(u32 *)(base + 0x4004);
+
+    base[((u8)(index + 0x100) << 6) + offset] = 0;
+
+    base[0x400C] = 1;
+}
+
 void fn_80122170(u32 *arg0) {
     u32 temp_r3;
     
