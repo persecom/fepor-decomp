@@ -1,8 +1,7 @@
 /* Functions from 0x80120CCC to 0x80127D80, found by decomp-toolkit. */
 #include "common.h"
 
-/* Signed int-to-float bias; const → .sdata2 so (f32)(s32) -str reuse can share it. */
-const f64 lbl_8036A2C8 = 4503601774854144.0;
+extern f64 lbl_8036A2C8;
 
 typedef struct {
     s32 field_0x84;
@@ -779,6 +778,7 @@ void fn_80123034(void *arg0, void *arg1, s32 arg2, f32 farg0, f32 farg1) {
     f32 f31;
     f32 f30;
     f32 t0;
+    f64 bias;
 
     self = arg0;
     list = arg1;
@@ -791,6 +791,7 @@ void fn_80123034(void *arg0, void *arg1, s32 arg2, f32 farg0, f32 farg1) {
 
     if (*(u32 *)((u8 *)list + 4) == 0) {
         obj = fn_8005397C(lbl_80274DB0 + 8, 4);
+        bias = lbl_8036A2C8;
         fn_800536B0(obj,
                     (f32)*(s32 *)((u8 *)self + 0x48),
                     (f32)*(s32 *)((u8 *)self + 0x4C),
@@ -801,6 +802,7 @@ void fn_80123034(void *arg0, void *arg1, s32 arg2, f32 farg0, f32 farg1) {
         return;
     }
 
+    bias = lbl_8036A2C8;
     i = 0;
     f30 = lbl_8036A2C0;
     off = 0;
@@ -818,6 +820,7 @@ void fn_80123034(void *arg0, void *arg1, s32 arg2, f32 farg0, f32 farg1) {
         *(f32 *)(*(u8 **)((u8 *)obj + 0x30) + 0x20) = f31;
         *(f32 *)(*(u8 **)((u8 *)obj + 0x30) + 0x18) = f30;
     }
+    (void)bias;
 }
 #pragma use_lmw_stmw reset
 
