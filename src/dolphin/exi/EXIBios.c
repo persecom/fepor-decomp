@@ -521,6 +521,113 @@ s32 fn_80239508(s32 arg0) {
     return -1;
 }
 
+s32 fn_802395BC(s32 chan, void *callback)
+{
+    u8 *ecb;
+    u32 id;
+    u32 enabled;
+    u32 enabled2;
+    s32 result;
+
+    ecb = (u8 *)Ecb_8033E188 + (chan << 6);
+
+    if (__EXIProbe(chan) != 0) {
+        if (*(u32 *)(ecb + 0x20) == 0) {
+            EXIGetID(chan, 0, &id);
+        }
+    }
+
+    enabled = OSDisableInterrupts();
+
+    if (*(u32 *)(ecb + 0x20) == 0) {
+        OSRestoreInterrupts(enabled);
+        return 0;
+    }
+
+    enabled2 = OSDisableInterrupts();
+
+    if ((*(u32 *)(ecb + 0xC) & 8) == 0) {
+        if (__EXIProbe(chan) == 0) {
+            OSRestoreInterrupts(enabled2);
+            result = 0;
+            goto done;
+        }
+    } else {
+        EXIClearInterrupts(chan, 1, 0, 0);
+    }
+
+    *(void **)(ecb + 8) = callback;
+
+    __OSUnmaskInterrupts(0x100000U >> (chan * 3));
+
+    *(u32 *)(ecb + 0xC) |= 8;
+
+    OSRestoreInterrupts(enabled2);
+    result = 1;
+
+done:
+    OSRestoreInterrupts(enabled);
+    return result;
+}
+
+s32 EXISelect(s32 chan, u32 dev, u32 freq)
+{
+    u8 *ecb;
+    u32 interrupts;
+    u32 flags;
+    u32 value;
+    u32 mask;
+    volatile u32 *exi;
+
+    ecb = (u8 *)Ecb_8033E188 + (chan << 6);
+
+    interrupts = OSDisableInterrupts();
+
+    flags = *(u32 *)(ecb + 0xC);
+
+    if (flags & 4) {
+        OSRestoreInterrupts(interrupts);
+        return 0;
+    }
+
+    if (chan != 2) {
+        if (dev == 0 && !(flags & 8)) {
+            if (!__EXIProbe(chan)) {
+                OSRestoreInterrupts(interrupts);
+                return 0;
+            }
+        }
+
+        if (!(flags & 0x10) ||
+            *(u32 *)(ecb + 0x18) != dev) {
+            OSRestoreInterrupts(interrupts);
+            return 0;
+        }
+    }
+
+    *(u32 *)(ecb + 0xC) |= 4;
+
+    exi = (volatile u32 *)(0xCC006800 + chan * 0x14);
+
+    value = *exi & 0x405;
+    value |= (1U << dev) << 7;
+    value |= freq << 4;
+
+    *exi = value;
+
+    if (*(u32 *)(ecb + 0xC) & 8) {
+        if (chan == 0) {
+            __OSMaskInterrupts(0x00100000);
+        } else if (chan == 1) {
+            __OSMaskInterrupts(0x00020000);
+        }
+    }
+
+    OSRestoreInterrupts(interrupts);
+
+    return 1;
+}
+
 void EXIDeselect(void)
 {
     u32 *ecb;
@@ -573,16 +680,52 @@ restore_interrupts:
     OSRestoreInterrupts(enabled);
 }
 
+void EXIIntrruptHandler(s16 interrupt, OSContext *context)
+{
+    void OSClearContext(void *);
+    void OSSetCurrentContext(void *);
+
+    s32 chan;
+    u8 *ecb;
+    volatile u32 *exi;
+    u32 value;
+    void (*callback)(s32, OSContext *);
+    OSContext tempContext;
+
+    chan = ((s32)interrupt - 9) / 3;
+
+    exi = (volatile u32 *)(0xCC006800 + chan * 0x14);
+
+    value = *exi;
+    value &= 0x7F5;
+    value |= 2;
+    *exi = value;
+
+    ecb = (u8 *)Ecb_8033E188 + (chan << 6);
+
+    callback = *(void (**)(s32, OSContext *))ecb;
+
+    if (callback != 0) {
+        OSClearContext(&tempContext);
+        OSSetCurrentContext(&tempContext);
+
+        callback(chan, context);
+
+        OSClearContext(&tempContext);
+        OSSetCurrentContext(context);
+    }
+}
+
 void OSClearContext(void *);
 void OSSetCurrentContext(void *);
 #pragma scheduling off
 void TCIntrruptHandler(s16 interrupt, OSContext *context)
 {
-    u8 filler[8];
-    EXIControl *exi;
     s32 chan;
+    EXIControl *exi;
     void (*callback)(s32, void *);
     OSContext exceptionContext;
+    u8 filler[8];
 
     (void)filler;
     chan = (interrupt - 10) / 3;
