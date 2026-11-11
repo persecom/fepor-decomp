@@ -1,12 +1,26 @@
 /* Functions from 0x8012C3D0 to 0x8013275C, found by decomp-toolkit. */
 #include "common.h"
 
-static inline void fn_801302F4_Adjust(void *obj, s16 x, s16 y, s16 w, s16 h) {
-    *(s16 *)((u8 *)obj + 0x58) = (*(s16 *)((u8 *)obj + 0x58) + x) / 2;
-    *(s16 *)((u8 *)obj + 0x5A) = (*(s16 *)((u8 *)obj + 0x5A) + y) / 2;
-    *(s16 *)((u8 *)obj + 0x5C) = (*(s16 *)((u8 *)obj + 0x5C) + w) / 2;
-    *(s16 *)((u8 *)obj + 0x5E) = (*(s16 *)((u8 *)obj + 0x5E) + h) / 2;
-}
+typedef struct DrawState801302F4 {
+    u8 pad0[0x38];
+    void **items;
+    u8 pad3C[8];
+    void *obj44;
+    void *obj48;
+    void *obj4C;
+    void *obj50;
+    u8 pad54[4];
+    s16 x, y, w, h;
+    u8 pad60[2];
+    s8 field62;
+    u8 field63;
+    u8 pad64;
+    s8 field65;
+    u8 pad66[4];
+    s16 field6A;
+    u8 pad6C;
+    u8 field6D;
+} DrawState801302F4;
 #include "global.h"
 #include "unit.h"
 
@@ -880,15 +894,16 @@ void fn_801302F4(void *arg0) {
     register s16 x;
     int ah;
     s8 unk62;
-    s16 y;
-    register s16 h;
-    register s16 w;
-    register s32 aw;
     int t;
+    s16 temp;
+    s16 y;
+    register s16 w;
+    register s16 h;
+    register s32 aw;
 
-    t = *(s16 *)((u8 *)arg0 + 0x6A);
-    if (t % 32 == 0) {
-        s16 var4;
+    temp = *(s16 *)((u8 *)arg0 + 0x6A);
+    if (temp % 32 == 0) {
+        s32 var4;
         s16 var6;
         s16 var7;
         register s16 var8;
@@ -908,9 +923,9 @@ void fn_801302F4(void *arg0) {
             var4 = 0x28;
             var7 = 0x1B8;
             var8 = 0x16;
-            var6 = (s16)(((unk62 << 5) + 0x60) - t);
+            var6 = (s16)(((unk62 << 5) + 0x60) - temp);
         }
-        t = *(s16 *)((u8 *)arg0 + 0x58) + var4;
+        t = *(s16 *)((u8 *)arg0 + 0x58) + (s16)var4;
         *(s16 *)((u8 *)arg0 + 0x58) = (s16)(t / 2);
         t = *(s16 *)((u8 *)arg0 + 0x5A) + var6;
         *(s16 *)((u8 *)arg0 + 0x5A) = (s16)(t / 2);
@@ -927,6 +942,7 @@ void fn_801302F4(void *arg0) {
     fn_80009B98();
     fn_8000A248();
     if ((s8)*(u8 *)((u8 *)arg0 + 0x62) >= 0) {
+        s32 bw;
         fn_8000A258();
         fn_80009D74((f32)(x + 0x2E), (f32)(y + 5), lbl_8036A500, lbl_8036A50C);
         fn_80009B8C(0xFF);
@@ -934,9 +950,9 @@ void fn_801302F4(void *arg0) {
         t = w + 0x10;
         aw = (s32)(lbl_8036A590 * (f32)t);
         ah = h / 2;
-        t = (s32)(lbl_8036A594 * (f32)t);
+        bw = (s32)(lbl_8036A594 * (f32)t);
         fn_8008AB7C(aw / 2, ah, aw, 0x18, 0x19, 0x4B, 1);
-        fn_8008AB7C(aw + t / 2, ah, t, 0x18, 0x19, 0x4B, 1);
+        fn_8008AB7C(aw + bw / 2, ah, bw, 0x18, 0x19, 0x4B, 1);
     }
     fn_8000A258();
     fn_80009D74(lbl_8036A510, lbl_8036A510, lbl_8036A598, lbl_8036A50C);
