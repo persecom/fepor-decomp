@@ -6,7 +6,7 @@ typedef struct Pair { u8 *lo; u8 *hi; } Pair;
 typedef struct InitTable { u8 first[0x20]; u8 second[0x68]; u8 third[0x18]; } InitTable;
 
 #pragma use_lmw_stmw on
-#pragma optimization_level 4
+#pragma optimization_level 2
 #pragma global_optimizer off
 void fn_8014A25C(void) {
     extern u8 lbl_802845E8[];
@@ -88,11 +88,11 @@ void fn_8014A25C(void) {
     pD2C = lbl_80292D2C;
     pCCC = lbl_80292CCC;
     pC6C = lbl_80292C6C;
-    p914 = lbl_80292914;
-    r34 = &lbl_80367B34;
     base0 = base->first;
     base20 = base->second;
     base88 = base->third;
+    p914 = lbl_80292914;
+    r34 = &lbl_80367B34;
     r44->hi = common;
     r60->hi = common;
     lbl_80367B18 = pF0C;
