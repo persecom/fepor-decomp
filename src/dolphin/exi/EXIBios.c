@@ -780,6 +780,29 @@ void TCIntrruptHandler(s16 interrupt, OSContext *context)
         OSSetCurrentContext(context);
     }
 }
+
+void EXTIntrruptHandler(s16 interrupt, OSContext *context)
+{
+    s32 chan;
+    EXIControl *exi;
+    void (*callback)(s32, void *);
+    OSContext exceptionContext;
+
+    chan = (interrupt - 11) / 3;
+    __OSMaskInterrupts(0x500000U >> (chan * 3));
+    exi = &Ecb_8033E188[chan];
+    callback = exi->extCallback;
+    exi->state &= ~0x8;
+    if (callback) {
+        OSClearContext(&exceptionContext);
+        OSSetCurrentContext(&exceptionContext);
+        exi->extCallback = 0;
+        callback(chan, context);
+        OSClearContext(&exceptionContext);
+        OSSetCurrentContext(context);
+    }
+}
+
 #pragma scheduling reset
 s32 EXILock(s32 arg0, u32 arg1, u32 arg2) {
     s32 temp_r29;
