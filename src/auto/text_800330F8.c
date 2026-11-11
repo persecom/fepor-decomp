@@ -2474,8 +2474,8 @@ void fn_8003D2C4(void *arg0) {
     void *fn_8000D354(void *);
     void fn_800381EC(void *, s8);
     void fn_8003868C(void *, s32);
-    s32 fn_8003B2D0(void *);
     u8 fn_80105BC0(void *, s32);
+    s32 fn_8003B2D0(void *);
     void fn_80105CEC(void *, s32);
     typedef struct {
         u8 pad0[0xC];
@@ -2554,7 +2554,7 @@ void fn_8003D2C4(void *arg0) {
         if (dp[0x20C] < t) {
             dp[0x20C] = t;
         }
-        i = (i + 1) | 0;
+        i = (s32)i + 1;
         item = self->unk18C;
         ip = (Item *)((u8 *)item + (u8)i);
         dp = (u8 *)self + (u8)i;
@@ -2562,7 +2562,7 @@ void fn_8003D2C4(void *arg0) {
         if (dp[0x20C] < t) {
             dp[0x20C] = t;
         }
-        i = (i + 1) | 0;
+        i = i + 1;
         item = self->unk18C;
         ip = (Item *)((u8 *)item + (u8)i);
         dp = (u8 *)self + (u8)i;
@@ -2570,7 +2570,7 @@ void fn_8003D2C4(void *arg0) {
         if (dp[0x20C] < t) {
             dp[0x20C] = t;
         }
-        i = (i + 1) | 0;
+        i = i + 1;
         item = self->unk18C;
         ip = (Item *)((u8 *)item + (u8)i);
         dp = (u8 *)self + (u8)i;
@@ -2578,7 +2578,7 @@ void fn_8003D2C4(void *arg0) {
         if (dp[0x20C] < t) {
             dp[0x20C] = t;
         }
-        i = (i + 1) | 0;
+        i = i + 1;
     }
     self->unk19A = 1;
     fn_8003868C(self, 0);
@@ -2587,7 +2587,7 @@ void fn_8003D2C4(void *arg0) {
     tmp = self->unk1B5;
     self->unk1B5 = (u8)((s32)(((u32)tmp >> 31) + tmp) >> 1);
     tmp = self->unk1B6;
-    self->unk1B6 = (u8)((s32)(((u32)tmp >> 31) + tmp) >> 1);
+    self->unk1B6 = (u8)((s32)(((u32)tmp >> 31) + (int)tmp) >> 1);
     tmp = self->unk1B7;
     self->unk1B7 = (u8)((s32)(((u32)tmp >> 31) + tmp) >> 1);
     tmp = self->unk1B8;
@@ -3732,6 +3732,7 @@ void fn_80043E88(void) {
 }
 
 #pragma global_optimizer off
+typedef struct { u32 x, y, z; } PositionWords;
 void fn_80043F9C(void *cam, f32 *mtx, f32 x, f32 y) {
     f32 fn_8002300C(void *, s32, s32, s32);
     void fn_80203290(f32 *, f32 *, f32 *);
@@ -3761,6 +3762,8 @@ void fn_80043F9C(void *cam, f32 *mtx, f32 x, f32 y) {
     f32 base;
     f32 t;
     f32 tmp;
+    f32 zero;
+    f32 one;
 
     tbl = lbl_8026A590;
     ix = (s32)x;
@@ -3836,9 +3839,11 @@ void fn_80043F9C(void *cam, f32 *mtx, f32 x, f32 y) {
         sp8C[2] = sp74[2];
     }
 
-    spA4[1] = lbl_80368EE4;
-    spA4[0] = lbl_80368F10;
-    spA4[2] = lbl_80368EE4;
+    zero = lbl_80368EE4;
+    one = lbl_80368F10;
+    spA4[1] = zero;
+    spA4[0] = one;
+    spA4[2] = zero;
     fn_80203290(sp8C, spA4, sp98);
     fn_80203290(sp98, sp8C, spA4);
 
@@ -3854,8 +3859,10 @@ void fn_80043F9C(void *cam, f32 *mtx, f32 x, f32 y) {
 
     fn_802031E8(sp8C, sp80);
     {
-        f32 v0 = sp80[0];
-        f32 z = lbl_80368EE4;
+        f32 z;
+        f32 v0;
+        v0 = sp80[0];
+        z = lbl_80368EE4;
         mtx[2] = v0;
         mtx[6] = sp80[1];
         mtx[10] = sp80[2];
@@ -6872,7 +6879,7 @@ void fn_80053F68(void *arg0) {
     void *dst;
     void *src;
     u32 flags;
-    u32 bit;
+    u32 fl;
     u8 b;
 
     inner = *(void **)((u8 *)arg0 + 0x30);
@@ -6891,37 +6898,34 @@ void fn_80053F68(void *arg0) {
 
     if (ok) {
         inner = *(void **)((u8 *)arg0 + 0x30);
-        bit = (*(u32 *)((u8 *)inner + 8) >> 28) & 1;
-        if (bit) {
-            other = *(void **)((u8 *)arg0 + 0x18);
-            if (other != 0) {
-                *(u32 *)((u8 *)inner + 8) = *(u32 *)((u8 *)inner + 8) | 0x10000000;
-                *(s32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x30) =
-                    *(s32 *)((u8 *)*(void **)((u8 *)other + 0x30) + 0x30);
-                *(s32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x34) =
-                    *(s32 *)((u8 *)*(void **)((u8 *)other + 0x30) + 0x34);
-                dst = *(void **)((u8 *)arg0 + 0x30);
-                src = *(void **)((u8 *)other + 0x30);
-                tmp.x = *(f32 *)((u8 *)src + 0xC);
-                tmp.y = *(f32 *)((u8 *)src + 0x10);
-                tmp.z = *(f32 *)((u8 *)src + 0x14);
-                tmp2 = tmp;
-                *(f32 *)((u8 *)dst + 0xC) = tmp2.x;
-                dst = *(void **)((u8 *)arg0 + 0x30);
-                *(f32 *)((u8 *)dst + 0x10) = tmp2.y;
-                dst = *(void **)((u8 *)arg0 + 0x30);
-                *(f32 *)((u8 *)dst + 0x14) = tmp2.z;
-                *(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x18) =
-                    *(f32 *)((u8 *)*(void **)((u8 *)other + 0x30) + 0x18);
-                *(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x20) =
-                    *(f32 *)((u8 *)*(void **)((u8 *)other + 0x30) + 0x20);
-                *(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x24) =
-                    *(f32 *)((u8 *)*(void **)((u8 *)other + 0x30) + 0x24);
-                *(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x28) =
-                    *(f32 *)((u8 *)*(void **)((u8 *)other + 0x30) + 0x28);
-                ((u8 *)*(void **)((u8 *)arg0 + 0x30))[3] =
-                    ((u8 *)*(void **)((u8 *)other + 0x30))[3];
-            }
+        if ((((fl = *(u32 *)((u8 *)inner + 8)) >> 28) & 1) &&
+            (other = *(void **)((u8 *)arg0 + 0x18)) != 0) {
+            *(u32 *)((u8 *)inner + 8) = fl | 0x10000000;
+            *(s32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x30) =
+                *(s32 *)((u8 *)*(void **)((u8 *)other + 0x30) + 0x30);
+            *(s32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x34) =
+                *(s32 *)((u8 *)*(void **)((u8 *)other + 0x30) + 0x34);
+            dst = *(void **)((u8 *)arg0 + 0x30);
+            src = *(void **)((u8 *)other + 0x30);
+            tmp.x = *(f32 *)((u8 *)src + 0xC);
+            tmp.y = *(f32 *)((u8 *)src + 0x10);
+            tmp.z = *(f32 *)((u8 *)src + 0x14);
+            tmp2 = tmp;
+            *(f32 *)((u8 *)dst + 0xC) = tmp2.x;
+            dst = *(void **)((u8 *)arg0 + 0x30);
+            *(f32 *)((u8 *)dst + 0x10) = tmp2.y;
+            dst = *(void **)((u8 *)arg0 + 0x30);
+            *(f32 *)((u8 *)dst + 0x14) = tmp2.z;
+            *(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x18) =
+                *(f32 *)((u8 *)*(void **)((u8 *)other + 0x30) + 0x18);
+            *(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x20) =
+                *(f32 *)((u8 *)*(void **)((u8 *)other + 0x30) + 0x20);
+            *(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x24) =
+                *(f32 *)((u8 *)*(void **)((u8 *)other + 0x30) + 0x24);
+            *(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x28) =
+                *(f32 *)((u8 *)*(void **)((u8 *)other + 0x30) + 0x28);
+            ((u8 *)*(void **)((u8 *)arg0 + 0x30))[3] =
+                ((u8 *)*(void **)((u8 *)other + 0x30))[3];
         }
 
         dst = *(void **)((u8 *)arg0 + 0x30);
