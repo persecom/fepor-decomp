@@ -819,6 +819,31 @@ void fn_801B0F60(void *arg0) {
     }
 }
 
+void fn_801B1130(void *arg0)
+{
+    extern void fn_801905FC(void *, void *);
+
+    u8 *obj;
+    u8 *data;
+    u8 *state;
+    u8 *target;
+
+    obj = (u8 *)arg0;
+    data = *(u8 **)(obj + 0x48);
+
+    data[0x3C] = 0;
+
+    state = *(u8 **)(obj + 0x40);
+
+    if (*(s16 *)(state + 0x3E) != 4) {
+        target = *(u8 **)(obj + 0x50);
+        fn_801905FC(target, data + 0x60);
+    }
+
+    target = *(u8 **)(obj + 0x4C);
+    *(void **)(target + 0x3C) = data + 0x60;
+}
+
 void fn_801B1194(s32 arg0) {
     extern u32 lbl_80367110;
     extern void *lbl_80367240;
