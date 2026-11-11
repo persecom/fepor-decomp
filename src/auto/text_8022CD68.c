@@ -940,6 +940,23 @@ void __kill_critical_regions(void) {
 
 }
 
+u32 fwrite(const void *ptr, u32 size, u32 count, void *stream)
+{
+    extern void __begin_critical_region(s32);
+    extern void __end_critical_region(s32);
+    extern u32 __fwrite(const void *, u32, u32, void *);
+
+    u32 result;
+
+    __begin_critical_region(2);
+
+    result = __fwrite(ptr, size, count, stream);
+
+    __end_critical_region(2);
+
+    return result;
+}
+
 int fn_80231178(void *arg0) {
     s32 __flush_buffer(void *, s32 *);
     s32 fn_8022D4C8();
