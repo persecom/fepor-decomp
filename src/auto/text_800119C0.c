@@ -37,6 +37,92 @@ void *fn_800119E0(void *arg0, s16 arg1) {
     return obj;
 }
 
+void fn_80011A5C(void *arg0)
+{
+    extern s32 lbl_80367180;
+
+    u8 *context;
+    u8 *command;
+    u32 *stack;
+    u32 result;
+    s32 count;
+    void *callback;
+
+    command = (u8 *)arg0;
+    context = (u8 *)lbl_80367180;
+
+    count = (s8)command[0xD];
+    stack = *(u32 **)(context + 0x18);
+    stack -= count;
+    *(u32 **)(context + 0x18) = stack;
+
+    callback = *(void **)(command + 4);
+
+    switch (count) {
+    case 0:
+        result = ((u32 (*)(void))callback)();
+        break;
+
+    case 1:
+        result = ((u32 (*)(u32))callback)(
+            stack[0]);
+        break;
+
+    case 2:
+        result = ((u32 (*)(u32, u32))callback)(
+            stack[0], stack[1]);
+        break;
+
+    case 3:
+        result = ((u32 (*)(u32, u32, u32))callback)(
+            stack[0], stack[1], stack[2]);
+        break;
+
+    case 4:
+        result = ((u32 (*)(u32, u32, u32, u32))callback)(
+            stack[0], stack[1], stack[2], stack[3]);
+        break;
+
+    case 5:
+        result = ((u32 (*)(u32, u32, u32, u32, u32))callback)(
+            stack[0], stack[1], stack[2], stack[3], stack[4]);
+        break;
+
+    case 6:
+        result = ((u32 (*)(u32, u32, u32, u32, u32, u32))callback)(
+            stack[0], stack[1], stack[2], stack[3], stack[4],
+            stack[5]);
+        break;
+
+    case 7:
+        result = ((u32 (*)(u32, u32, u32, u32, u32, u32, u32))callback)(
+            stack[0], stack[1], stack[2], stack[3], stack[4],
+            stack[5], stack[6]);
+        break;
+
+    case 8:
+        result = ((u32 (*)(u32, u32, u32, u32, u32, u32, u32, u32))callback)(
+            stack[0], stack[1], stack[2], stack[3], stack[4],
+            stack[5], stack[6], stack[7]);
+        break;
+
+    case 9:
+        result = ((u32 (*)(u32, u32, u32, u32, u32, u32, u32, u32, u32))callback)(
+            stack[0], stack[1], stack[2], stack[3], stack[4],
+            stack[5], stack[6], stack[7], stack[8]);
+        break;
+
+    default:
+        return;
+    }
+
+    context = (u8 *)lbl_80367180;
+    stack = *(u32 **)(context + 0x18);
+
+    *stack = result;
+    *(u32 **)(context + 0x18) = stack + 1;
+}
+
 s32 fn_80011EDC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 {
     // Simple implementation to test basic structure 
@@ -87,6 +173,36 @@ void fn_80013A6C(s32 arg0) {
     *cursor = arg0;
     lbl_80367188 += 1;
 }
+
+#pragma scheduling reset
+s32 fn_80013A90(void) {
+    extern s32 lbl_803671A4;
+    extern s32 lbl_80367180;
+    extern s32 lbl_8036718C;
+    extern s32 lbl_80367184;
+    extern s32 lbl_80367188;
+    u32 fn_8000D354(void);
+    void fn_800142B0(s32);
+
+    u32 result;
+    s32 context;
+    s32 zero;
+    s32 ret;
+
+    context = lbl_803671A4;
+    lbl_80367180 = context;
+    lbl_8036718C = *(s32 *)((u8 *)context + 0x18);
+    result = fn_8000D354();
+    if ((lbl_80367184 = result) == 0U) {
+        fn_800142B0(5);
+        return 0;
+    }
+    zero = 0;
+    ret = 1;
+    lbl_80367188 = zero;
+    return ret;
+}
+
 #pragma scheduling reset
 u32 fn_80013B60(void *arg0) {
     extern void *lbl_80367190;
@@ -428,10 +544,11 @@ void main(void) {
     extern f32 lbl_80368C70;
     extern f32 lbl_80368C74;
 
-    register u8 *base;
-    register u8 *stack;
+    typedef struct { u32 pad; } Thread;
+    u8 *base;
     s32 sp8;
     s32 tmp;
+    u32 stack;
 
     base = lbl_802AEE40;
     lbl_803671B4 = fn_80209FD4();
@@ -440,8 +557,8 @@ void main(void) {
     fn_801C9460();
     fn_8006E568(5);
     fn_801FBC48();
-    stack = base + 0x1698;
-    fn_8020A558(base + 0x1380, fn_80014790, 0, stack + 0x1000, 0x1000, 0x10, 1);
+    stack = (u32)base + 0x1698;
+    fn_8020A558(base + 0x1380, fn_80014790, 0, (void *)(stack + 0x1000), 0x1000, 0x10, 1);
     fn_8020A9E0(base + 0x1380);
     fn_8000D5C8();
     fn_8005BCF0();
@@ -470,9 +587,9 @@ void main(void) {
     fn_8000A280();
     lbl_803671B8 = 0;
     fn_8014702C(0);
-    stack = base + 0x318;
-    fn_8020A558(base + 0, fn_80014EA8, 0, stack + 0x1000, 0x1000, 0x10, 1);
-    fn_8020A9E0(base + 0);
+    stack = (u32)base + 0x318;
+    fn_8020A558((Thread *)base, fn_80014EA8, 0, (void *)(stack + 0x1000), 0x1000, 0x10, 1);
+    fn_8020A9E0((Thread *)base);
     fn_8020A51C();
     fn_801ED52C(0);
     fn_80005C60();
@@ -851,6 +968,39 @@ void fn_80015320(u8 arg0, u8 *arg1) {
         return;
     }
 }
+
+char *fn_80015574(s32 arg0)
+{
+    extern u8 lbl_80268018[];
+
+    switch ((u32)arg0) {
+    case 0:
+        return (char *)lbl_80268018 + 0x58;
+
+    case 1:
+        return (char *)lbl_80268018 + 0x5F;
+
+    case 2:
+        return (char *)lbl_80268018 + 0x65;
+
+    case 3:
+        return (char *)lbl_80268018 + 0x6B;
+
+    case 5:
+        return (char *)lbl_80268018 + 0x73;
+
+    case 6:
+        return (char *)lbl_80268018 + 0x7A;
+
+    case 4:
+    default:
+        if (arg0 >= 0) {
+            return (char *)lbl_80268018 + 0x83;
+        }
+        return (char *)lbl_80268018 + 0x7F;
+    }
+}
+
 #pragma global_optimizer reset
 s32 fn_80015610(void *arg0, void *arg1) {
     u8 temp_r0;
@@ -1438,6 +1588,94 @@ void fn_80016628(s32 arg0) {
         var_r27_2 += 1;
         var_r31 += 0x280;
     } while (var_r27_2 < 0x9F);
+}
+
+void fn_800167E4(void *arg0)
+{
+    extern u8 lbl_802B14E4[];
+
+    void fn_800152F8(s32, s32, s32, s32, s32, s32, s32, s32, void *);
+    s32 fn_80105BC0(void *, s32);
+    void fn_8003D60C(void *, s32);
+    void fn_80016F78(void *);
+    void fn_8003B6F0(void *, s32);
+    void fn_8003CA94(void *, void *);
+    void fn_8022C1E8(void *, void *, s32, s32);
+    void fn_8001C5F8(void);
+
+    u8 flags[8];
+    u8 savedIds[8];
+    void *savedUnits[8];
+
+    u8 temp[0x1CC];
+    u8 list1[0x20];
+    u8 list2[0x20];
+
+    u8 *unit;
+    u8 *unitData;
+    u8 *base;
+
+    s32 i;
+    s32 count;
+    s32 type;
+    s32 savedCount;
+
+    base = lbl_802B14E4;
+    savedCount = 0;
+
+    fn_800152F8(0, 1, 1, 1, 0, 0, 0, 0, flags);
+
+    for (i = 1; i <= 0x9F; i++) {
+        if ((u8)i != 0) {
+            unit = base + ((u8)i - 1) * 0x280;
+        } else {
+            unit = 0;
+        }
+
+        if (*(s32 *)(unit + 0x188) != 0) {
+            unitData = *(u8 **)(unit + 0x190);
+            type = unitData[8];
+
+            if (flags[type] != 0) {
+                if ((u8)fn_80105BC0(unit + 0x1BC, 0x59) != 0) {
+                    savedUnits[savedCount] = unit;
+                    savedIds[savedCount] = type;
+                    savedCount++;
+
+                    fn_8003D60C(unit, 7);
+                }
+            }
+        }
+    }
+
+    fn_80016F78(temp);
+    fn_8003B6F0(temp, -1);
+
+    unit = base;
+
+    for (i = 0; i < 0x9F; i++) {
+        unitData = *(u8 **)(unit + 0x190);
+        type = unitData[8];
+
+        if (type == 0) {
+            fn_8003CA94(temp, arg0);
+        } else if (type >= 1 && type < 8) {
+            if (type >= 5) {
+                fn_8003CA94(unit, arg0);
+            } else {
+                fn_8003CA94(temp, arg0);
+            }
+        }
+
+        unit += 0x280;
+    }
+
+    for (i = 0; i < savedCount; i++) {
+        fn_8003D60C(savedUnits[i], savedIds[i]);
+    }
+
+    fn_8022C1E8(list1, fn_8001C5F8, 8, 4);
+    fn_8022C1E8(list2, fn_8001C5F8, 8, 4);
 }
 
 s32 fn_800169A8(s32 arg0, s16 arg1) {
