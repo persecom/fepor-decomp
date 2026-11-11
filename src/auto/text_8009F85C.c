@@ -980,8 +980,8 @@ s32 fn_800A08FC(void) {
 }
 
 void *fn_800A0AA8(void) {
-    extern u16 lbl_8026D8D8;
-    return (char *)&lbl_8026D8D8 + 0x527;
+    extern u16 lbl_8026D8D8[];
+    return (char *)((u32)lbl_8026D8D8 + 0x860);
 }
 
 s32 fn_800A0AB8(void) {
@@ -2077,6 +2077,23 @@ void fn_800A3808(void) {
 f32 fn_800A3828(void) {
     extern f32 lbl_80369A08;
     return lbl_80369A08;
+}
+
+void *fn_800A3830(void *arg0, void *arg1)
+{
+    extern s32 lbl_80367520;
+    extern u8 lbl_8026D8D8[];
+    extern u32 lbl_80312290[];
+
+    s32 index;
+
+    index = *(u8 *)((u8 *)arg1 + 0x3A);
+
+    if (index > lbl_80367520) {
+        return lbl_8026D8D8 + 0x6E4;
+    }
+
+    return (void *)lbl_80312290[index];
 }
 
 s32 fn_800A3864(s32 unused, s32 arg1, void *arg2) {
