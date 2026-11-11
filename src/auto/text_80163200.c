@@ -4,8 +4,8 @@ static inline void init_761F8_base(void *p,s16 x,s16 y,s16 w,s16 h,s16 style) {
  extern u16 lbl_8028FDB0[],lbl_80292230[];
  extern f32 lbl_8036AB6C;
  f32 zero;
- zero=lbl_8036AB6C;
- M2C_FIELD(p,void * *,0)=lbl_8028FDB0; M2C_FIELD(p,s32 *,4)=0; M2C_FIELD(p,void * *,0)=lbl_80292230; M2C_FIELD(p,s16 *,8)=-1;M2C_FIELD(p,s16 *,10)=x;
+ M2C_FIELD(p,void * *,0)=lbl_8028FDB0; M2C_FIELD(p,s32 *,4)=0; M2C_FIELD(p,void * *,0)=lbl_80292230; zero=lbl_8036AB6C;
+ M2C_FIELD(p,s16 *,8)=-1;M2C_FIELD(p,s16 *,10)=x;
 M2C_FIELD(p,s16 *,12)=y;
 M2C_FIELD(p,s16 *,14)=x+w;
 M2C_FIELD(p,s16 *,16)=y+h;
