@@ -2997,7 +2997,7 @@ int fn_802368F4(f64 *y, f64 x) {
     if (ix < 0x4002d97c) {
         if (hx > 0) {
             z = x - lbl_8036BFC0;
-            if ((ix - 0x3ff921fb) != 0) {
+            if ((unsigned)(ix - 0x3ff90000) != 0x21fbU) {
                 y[0] = z - lbl_8036BFC8;
                 y[1] = (z - y[0]) - lbl_8036BFC8;
             } else {
@@ -3008,7 +3008,7 @@ int fn_802368F4(f64 *y, f64 x) {
             return 1;
         } else {
             z = x + lbl_8036BFC0;
-            if ((ix - 0x3ff921fb) != 0) {
+            if ((unsigned)(ix - 0x3ff90000) != 0x21fbU) {
                 y[0] = z + lbl_8036BFC8;
                 y[1] = (z - y[0]) + lbl_8036BFC8;
             } else {
