@@ -100,6 +100,88 @@ s32 fn_8001F4CC(void *arg0, s8 arg1, s8 arg2) {
     return arg2 < (s8) M2C_FIELD(arg0, u8 *, 0xB);
 }
 
+#pragma fp_contract off
+#pragma global_optimizer off
+f32 fn_8001F53C(void *arg0, s8 arg1, s8 arg2, s32 arg3) {
+    extern f32 lbl_80368D78;
+    extern f32 lbl_80368D7C;
+    s32 idx;
+    s16 *cell;
+    u8 *row;
+    f32 scale;
+    f32 t0, t1, t2, t3;
+    f32 s0, s1;
+
+    switch (arg3) {
+    case 8:
+        idx = (s32)arg1 + ((s32)arg2 << 6);
+        row = (u8 *)arg0 + 0x10000;
+        cell = (s16 *)(row + (idx << 3));
+        scale = *(f32 *)((u8 *)arg0 + 0x1C2D4);
+        t0 = (f32)*(s16 *)((u8 *)cell + 0x42D4);
+        t1 = (f32)*(s16 *)((u8 *)cell + 0x42D6);
+        t2 = (f32)*(s16 *)((u8 *)cell + 0x42D8);
+        t3 = (f32)*(s16 *)((u8 *)cell + 0x42DA);
+        t0 = t0 * scale;
+        t1 = t1 * scale;
+        s0 = (t0 + t1) * lbl_80368D78;
+        t2 = t2 * scale;
+        t3 = t3 * scale;
+        s1 = (t2 + t3) * lbl_80368D78;
+        return s0 - s1;
+    case 4:
+        idx = (s32)arg1 + ((s32)arg2 << 6);
+        row = (u8 *)arg0 + 0x10000;
+        cell = (s16 *)(row + (idx << 3));
+        scale = *(f32 *)((u8 *)arg0 + 0x1C2D4);
+        t0 = (f32)*(s16 *)((u8 *)cell + 0x42D8);
+        t1 = (f32)*(s16 *)((u8 *)cell + 0x42DA);
+        t2 = (f32)*(s16 *)((u8 *)cell + 0x42D4);
+        t3 = (f32)*(s16 *)((u8 *)cell + 0x42D6);
+        t0 = t0 * scale;
+        t1 = t1 * scale;
+        s0 = (t0 + t1) * lbl_80368D78;
+        t2 = t2 * scale;
+        t3 = t3 * scale;
+        s1 = (t2 + t3) * lbl_80368D78;
+        return s0 - s1;
+    case 1:
+        idx = (s32)arg1 + ((s32)arg2 << 6);
+        row = (u8 *)arg0 + 0x10000;
+        cell = (s16 *)(row + (idx << 3));
+        scale = *(f32 *)((u8 *)arg0 + 0x1C2D4);
+        t0 = (f32)*(s16 *)((u8 *)cell + 0x42D4);
+        t1 = (f32)*(s16 *)((u8 *)cell + 0x42D8);
+        t2 = (f32)*(s16 *)((u8 *)cell + 0x42D6);
+        t3 = (f32)*(s16 *)((u8 *)cell + 0x42DA);
+        t0 = t0 * scale;
+        t1 = t1 * scale;
+        s0 = (t0 + t1) * lbl_80368D78;
+        t2 = t2 * scale;
+        t3 = t3 * scale;
+        s1 = (t2 + t3) * lbl_80368D78;
+        return s0 - s1;
+    case 2:
+        idx = (s32)arg1 + ((s32)arg2 << 6);
+        row = (u8 *)arg0 + 0x10000;
+        cell = (s16 *)(row + (idx << 3));
+        scale = *(f32 *)((u8 *)arg0 + 0x1C2D4);
+        t0 = (f32)*(s16 *)((u8 *)cell + 0x42D6);
+        t1 = (f32)*(s16 *)((u8 *)cell + 0x42DA);
+        t2 = (f32)*(s16 *)((u8 *)cell + 0x42D4);
+        t3 = (f32)*(s16 *)((u8 *)cell + 0x42D8);
+        t0 = t0 * scale;
+        t1 = t1 * scale;
+        s0 = (t0 + t1) * lbl_80368D78;
+        t2 = t2 * scale;
+        t3 = t3 * scale;
+        s1 = (t2 + t3) * lbl_80368D78;
+        return s0 - s1;
+    default:
+        return lbl_80368D7C;
+    }
+}
+#pragma global_optimizer on
 s32 fn_8001F85C(s32 arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
     s32 var_r0;
     s32 var_r8;
@@ -582,6 +664,130 @@ f32 fn_800233D0(void *arg0, s8 arg1, s8 arg2, u8 arg3) {
     return var_f1;
 }
 
+#pragma fp_contract on
+f32 fn_80023430(void *arg0, f32 x, f32 y) {
+    void fn_80203290(f32 *, f32 *, f32 *);
+    extern u8 lbl_80268CE8[];
+    extern f32 lbl_80368D88;
+    f32 sp5C[3];
+    f32 sp50[3];
+    f32 sp44[3];
+    f32 sp38[3];
+    f32 sp34;
+    f32 sp2C;
+    f32 sp30;
+    f32 sp28;
+    f32 sp20;
+    f32 sp24;
+    f32 sp1C;
+    f32 sp14;
+    f32 sp18;
+    f32 sp10;
+    f32 sp8;
+    f32 spC;
+    u8 *tbl;
+    s32 ix_i;
+    s32 iy_i;
+    s32 six;
+    s32 siy;
+    f32 scale;
+    f32 h;
+    u8 *cell;
+    u8 *base2;
+    f32 t;
+    f32 f0;
+    f32 f1;
+    f32 nz;
+
+    tbl = lbl_80268CE8;
+    ix_i = (s32)x;
+    iy_i = (s32)y;
+    six = (s8)ix_i;
+    siy = (s8)iy_i;
+    if (((y + (x - (f32)six)) - (f32)siy) > lbl_80368D88) {
+        u32 w24, w1c, w20, w30, w28, w2c;
+        s16 ha, hb, hc;
+        base2 = (u8 *)arg0 + 0x20000;
+        cell = (u8 *)arg0 + 0x10000 + ((six + (siy << 6)) * 8);
+        w24 = *(u32 *)(tbl + 0x24);
+        w1c = *(u32 *)(tbl + 0x1C);
+        ha = *(s16 *)(cell + 0x42DA);
+        hb = *(s16 *)(cell + 0x42D8);
+        scale = *(f32 *)(base2 - 0x3D2C);
+        w20 = *(u32 *)(tbl + 0x20);
+        w30 = *(u32 *)(tbl + 0x30);
+        h = (f32)ha * scale;
+        w28 = *(u32 *)(tbl + 0x28);
+        w2c = *(u32 *)(tbl + 0x2C);
+        t = (f32)hb * scale;
+        *(u32 *)&sp34 = w24;
+        *(u32 *)&sp5C[0] = w1c;
+        *(u32 *)&sp5C[1] = w20;
+        *(u32 *)&sp28 = w30;
+        sp34 = t - h;
+        *(u32 *)&sp2C = w1c;
+        *(u32 *)&sp5C[2] = *(u32 *)&sp34;
+        *(u32 *)&sp30 = w20;
+        hc = *(s16 *)(cell + 0x42D6);
+        *(u32 *)&sp20 = w28;
+        *(u32 *)&sp24 = w2c;
+        *(u32 *)&sp50[0] = w28;
+        *(u32 *)&sp50[1] = w2c;
+        t = (f32)hc * scale;
+        sp28 = t - h;
+        *(u32 *)&sp50[2] = *(u32 *)&sp28;
+        fn_80203290(sp5C, sp50, sp5C);
+        f0 = sp5C[1] * y;
+        f0 = f0 + sp5C[0] * x;
+        nz = sp5C[2];
+        f1 = sp5C[1] * (f32)(siy + 1);
+        f1 = f1 + sp5C[0] * (f32)(six + 1);
+        f1 = -(f1 + nz * h);
+        return -(f1 + f0) / nz;
+    }
+    {
+        u32 w3c, w34, w38, w48, w40, w44;
+        s16 ha, hb, hc;
+        base2 = (u8 *)arg0 + 0x20000;
+        cell = (u8 *)arg0 + 0x10000 + ((six + (siy << 6)) * 8);
+        w3c = *(u32 *)(tbl + 0x3C);
+        w34 = *(u32 *)(tbl + 0x34);
+        ha = *(s16 *)(cell + 0x42D4);
+        hb = *(s16 *)(cell + 0x42D6);
+        scale = *(f32 *)(base2 - 0x3D2C);
+        w38 = *(u32 *)(tbl + 0x38);
+        w48 = *(u32 *)(tbl + 0x48);
+        h = (f32)ha * scale;
+        w40 = *(u32 *)(tbl + 0x40);
+        w44 = *(u32 *)(tbl + 0x44);
+        t = (f32)hb * scale;
+        *(u32 *)&sp1C = w3c;
+        *(u32 *)&sp44[0] = w34;
+        *(u32 *)&sp44[1] = w38;
+        *(u32 *)&sp10 = w48;
+        sp1C = t - h;
+        *(u32 *)&sp14 = w34;
+        *(u32 *)&sp44[2] = *(u32 *)&sp1C;
+        *(u32 *)&sp18 = w38;
+        hc = *(s16 *)(cell + 0x42D8);
+        *(u32 *)&sp8 = w40;
+        *(u32 *)&spC = w44;
+        *(u32 *)&sp38[0] = w40;
+        *(u32 *)&sp38[1] = w44;
+        t = (f32)hc * scale;
+        sp10 = t - h;
+        *(u32 *)&sp38[2] = *(u32 *)&sp10;
+        fn_80203290(sp44, sp38, sp44);
+        f0 = sp44[1] * y;
+        f0 = f0 + sp44[0] * x;
+        nz = sp44[2];
+        f1 = sp44[1] * (f32)siy;
+        f1 = f1 + sp44[0] * (f32)six;
+        f1 = -(f1 + nz * h);
+        return -(f1 + f0) / nz;
+    }
+}
+#pragma fp_contract reset
 extern f32 lbl_80368D8C;
 #pragma global_optimizer off
 #pragma use_lmw_stmw on
@@ -684,6 +890,7 @@ outer_test:
 #pragma use_lmw_stmw reset
 #pragma global_optimizer on
 void fn_80023DC0(void) {
+    void fn_8002297C(void *);
     fn_8002297C(&lbl_802CA518);
 }
 
@@ -1482,7 +1689,7 @@ s32 fn_800255A0(void) {
 }
 
 s32 fn_800255A8(s32 *arg0, s32 arg1) {
-    return *(arg0 + (arg1 << 2));
+    return arg0[arg1 << 2];
 }
 
 void fn_800255B8(void) {
