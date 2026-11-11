@@ -9486,6 +9486,53 @@ void fn_800F8364(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x251) = (u8) (M2C_FIELD(arg0, u8 *, 0x251) + 1);
 }
 
+void fn_800F8390(void *arg0)
+{
+    extern u8 *lbl_803678F8;
+    extern s32 lbl_803678F4;
+    extern u8 lbl_803678F0;
+
+    extern void *fn_8000D354(void *);
+
+    long index;
+    u8 *entry;
+    long count;
+    u8 *obj;
+
+    obj = (u8 *)arg0;
+    index = 0;
+
+    count = *(s32 *)(lbl_803678F8 + 0x10);
+
+    if (lbl_803678F4 == 0) {
+        entry = (u8 *)fn_8000D354(*(void **)(obj + 0x238));
+    } else {
+        entry = (u8 *)fn_8000D354(*(void **)(obj + 0x23C));
+    }
+
+    if (count) {
+        while (*(s32 *)entry != 0 ||
+               *(s32 *)(entry + 0xC) != count) {
+            entry += 0x1C;
+            index++;
+        }
+
+        if (!lbl_803678F4) {
+            obj[0x250] = index;
+        } else {
+            obj[0x251] = index;
+        }
+    } else {
+        if (!lbl_803678F4) {
+            obj[0x250] = 0;
+        } else {
+            obj[0x251] = 0;
+        }
+    }
+
+    lbl_803678F0 = 1;
+}
+
 void fn_800F8464(void *arg0)
 {
     extern u8 *lbl_803678F8;
