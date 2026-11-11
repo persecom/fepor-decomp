@@ -5944,6 +5944,17 @@ s32 fn_8004C0F0(void *arg0) {
     return result;
 }
 
+void fn_8004C108(void)
+{
+    extern u8 lbl_803672BC;
+    extern void fn_8004C148(void);
+    extern void fn_80067708(s32, s32, void (*)(void), s32);
+
+    if (lbl_803672BC != 0) {
+        fn_80067708(2, 1, fn_8004C148, 0);
+    }
+}
+
 void fn_8004C148(void) {
 }
 
@@ -6438,11 +6449,12 @@ s32 fn_8004F128(void *arg0) {
  u8 fn_8005BA10(void *);
  void *res;
  s32 id;
+ void *obj=arg0;
  u8 flags=M2C_FIELD(arg0,u8 *,3);
  if(flags&2) return 1;
  if(!(flags&1)) return 1;
  id=get_4F128_id(arg0);
- res=get_4F128_resource(arg0,id);
+ res=get_4F128_resource(obj,id);
  if(!fn_8005BA10(fn_8004B158(res))) return 0;
  if(!fn_8004AF74(res,M2C_FIELD(M2C_FIELD(arg0,void **,0x190),u8 *,8))) {
  res=get_4F128_resource(arg0,get_4F128_id(arg0));
