@@ -1,6 +1,13 @@
 /* Functions from 0x8007C5E4 to 0x8009F0BC, found by decomp-toolkit. */
 #include "common.h"
 #include "global.h"
+typedef struct {
+    f32 x, y;
+    u8 unk8[4];
+    s8 next;
+    u8 type;
+    u8 unkE[6];
+} Menu888Entry;
 extern void* lbl_803674E8;
 extern f32 lbl_803696C8;
 
@@ -254,6 +261,101 @@ void fn_80087F50(s32 arg0, f32 farg0, f32 farg1) {
             ch = *p;
             x = (s16)(x + gap[0] - gap[0] + widths[ch - 0x30]);
         }
+    }
+}
+
+#pragma opt_strength_reduction off
+void fn_800888A4(void *arg0) {
+    void fn_8000C070(void *, s32);
+    void *fn_80037BD0(void *, s32);
+    void fn_8007DAC4(void *, void *);
+    void fn_801475FC(void *, s32);
+    u8 fn_80166D8C(void *);
+    void fn_8016758C(void *, void *, void *, f32, f32);
+    extern u8 lbl_80330D68[];
+    extern u8 lbl_8026C86C[];
+    extern s32 lbl_8026C7D0[];
+    extern u8 lbl_80288FE8[];
+    extern void *lbl_80367240;
+    extern f32 lbl_80369670, lbl_80369674, lbl_80369678;
+    s32 sp8[3];
+    u32 repeat;
+    u8 *base;
+    u32 pressed, buttons;
+    void *self;
+    u8 *entry;
+    s32 valid;
+    u8 type;
+    self = M2C_FIELD(arg0, void * *, 0x30);
+    buttons = M2C_FIELD(lbl_80367240, u32 *, 4);
+    repeat = M2C_FIELD(lbl_80367240, u32 *, 0xC);
+    pressed = buttons & (M2C_FIELD(lbl_80367240, u32 *, 8) ^ buttons);
+    if (fn_80166D8C(lbl_80330D68) != 0) return;
+    if (pressed & 0x200) {
+        fn_8000C070(arg0,3);
+        fn_801475FC(lbl_8026C86C+0x394,100);
+        return;
+    }
+    if (repeat & 0x02000002) {
+        fn_8000C070(arg0,1);
+        M2C_FIELD(self, s32 *, 0x20) = 1;
+        fn_801475FC(lbl_8026C86C+0x3A4,100);
+        return;
+    }
+    if (repeat & 0x01000001) {
+        fn_8000C070(arg0,1);
+        M2C_FIELD(self, s32 *, 0x20) = -1;
+        fn_801475FC(lbl_8026C86C+0x3A4,100);
+        return;
+    }
+    if (repeat & 0x08000008) {
+        fn_8000C070(arg0,2);
+        M2C_FIELD(self, s32 *, 0x20) = -1;
+        fn_801475FC(lbl_8026C86C+0x3C0,100);
+        return;
+    }
+    if (repeat & 0x04000004) {
+        fn_8000C070(arg0,2);
+        M2C_FIELD(self, s32 *, 0x20) = 1;
+        fn_801475FC(lbl_8026C86C+0x3C0,100);
+        return;
+    }
+    if ((repeat & 0x100) && M2C_FIELD(M2C_FIELD(self, void * *, 0x58), u32 *, 0x194) != 0) {
+        fn_8000C070(arg0,2);
+        M2C_FIELD(self, s32 *, 0x20) = 0;
+        fn_801475FC(lbl_8026C86C+0x3C0,100);
+        return;
+    }
+    if (pressed & 0x800) {
+        sp8[0]=lbl_8026C7D0[0]; sp8[1]=lbl_8026C7D0[1]; sp8[2]=lbl_8026C7D0[2];
+        base=lbl_80288FE8;
+        M2C_FIELD(self, s16 *, 4)=1;
+        M2C_FIELD(self, s32 *, 0x1C)=sp8[M2C_FIELD(self, s8 *, 9)];
+        goto check;
+        next:
+        M2C_FIELD(self, s32 *, 0x1C)=(s8)(base+M2C_FIELD(self, s8 *, 9)*0x2E4+M2C_FIELD(self, s32 *, 0x1C)*0x14)[0xC];
+        check:
+        {
+            entry=base+M2C_FIELD(self, s8 *, 9)*0x2E4+M2C_FIELD(self, s32 *, 0x1C)*0x14;
+            type=entry[0xD];
+            if(type>=10 && type<=14) {
+                if (M2C_FIELD((u8 *)self+(type-10)*2, s16 *, 0x24) == -1) valid=0; else valid=1;
+            } else if(type>=2 && type<=9) {
+                if (M2C_FIELD(fn_80037BD0(M2C_FIELD(self, void * *, 0x58),type-2), u32 *, 0) != 0) valid=1; else valid=0;
+            } else if(type>=15 && type<=22) {
+                if (M2C_FIELD((u8 *)self+(type-15)*4, u32 *, 0x38) == 0) valid=0; else valid=1;
+            } else valid=1;
+            if (!valid) goto next;
+        }
+        entry=lbl_80288FE8+M2C_FIELD(self, s8 *, 9)*0x2E4+M2C_FIELD(self, s32 *, 0x1C)*0x14;
+        fn_8016758C(lbl_80330D68,arg0,lbl_8026C86C+0x3E1,M2C_FIELD(entry, f32 *, 0),M2C_FIELD(entry, f32 *, 4));
+        fn_8007DAC4(self,entry);
+        return;
+    }
+    if(lbl_80330708[0x57]>=2) {
+        M2C_FIELD(self, f32 *, 0x64) -= (f32)(s32)(M2C_FIELD(M2C_FIELD(lbl_80367240, void * *, 0), s8 *, 4)*lbl_80369670);
+        if(M2C_FIELD(self, f32 *, 0x64)<lbl_80369674) M2C_FIELD(self, f32 *, 0x64)+=lbl_80369678;
+        if(M2C_FIELD(self, f32 *, 0x64)>lbl_80369678) M2C_FIELD(self, f32 *, 0x64)-=lbl_80369678;
     }
 }
 void fn_80088CC4(void *arg0) {
