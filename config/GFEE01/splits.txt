@@ -346,7 +346,10 @@ auto/text_8014A25C.c:
 	.ctors      start:0x80267AF4 end:0x80267AF8
 
 auto/text_8014A370.c:
-	.text       start:0x8014A370 end:0x8014CC5C
+	.text       start:0x8014A370 end:0x8014A928
+
+text_8014A928.c:
+	.text       start:0x8014A928 end:0x8014CC5C
 
 auto/text_8014CC5C.c:
 	.text       start:0x8014CC5C end:0x8014CF10
