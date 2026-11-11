@@ -1546,6 +1546,27 @@ s32 fn_800B7098(s32 arg0)
     return 1;
 }
 
+s32 fn_800B70EC(s32 arg0)
+{
+    void fn_8004F5EC(void *, s32);
+    extern u8 lbl_802CA264[];
+
+    u8 *entry;
+    u8 *next;
+
+    entry = *(u8 **)(lbl_802CA264 + arg0 * 0xC);
+
+    while (entry != 0) {
+        next = *(u8 **)(entry + 0x184);
+
+        fn_8004F5EC(entry, 0);
+
+        entry = next;
+    }
+
+    return 1;
+}
+
 s32 fn_800B7140(u32 arg0) {
     M2C_UNK fn_801070FC(u32);
     M2C_UNK fn_80107294(M2C_UNK);
