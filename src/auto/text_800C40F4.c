@@ -5081,6 +5081,20 @@ extern "C" s32 fn_800E7EA0(void *arg0) {
     fn_800E0140(list, -1);
     return 0;
 }
+
+extern "C" void fn_800E7F60(void *arg0, void *arg1) {
+    void *fn_800C93EC(void *);
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2(char *, void *) = 0;
+    };
+    extern char lbl_80272230[];
+
+    ((Obj *)arg0)->v2(lbl_80272230 + 0x16, fn_800C93EC(arg1));
+}
+
 #pragma dont_inline reset
 #pragma cplusplus reset
 
@@ -7781,7 +7795,8 @@ void fn_801001B8(s32 a0, s32 a1, s32 a2, s32 a3) {
 
 #pragma opt_loop_invariants off
 #pragma use_lmw_stmw on
-void fn_801007A0(void *arg0) {
+void fn_801007A0(void *arg0)
+{
     struct UnitBits {
         u16 f0 : 3;
         u16 f1 : 3;
@@ -8325,7 +8340,145 @@ s32 fn_80102810(void *arg0, s32 flags, s32 arg2, s16 *outX, s16 *outY) {
     }
     return best != 0x7FFF;
 }
-#pragma use_lmw_stmw reset
+
+#pragma use_lmw_stmw on
+s32 fn_80102ACC(void *arg0, s32 arg1, s32 arg2, s16 *arg3, s16 *arg4) {
+    void fn_800FE398(void *, s32, s32);
+    u8 fn_800FE84C(s8, s8);
+    u8 fn_80015610(void *, void *);
+    u8 fn_800FB5C8(void *);
+    void fn_8002F728(void *);
+    void fn_8002C618(void *, s8, s8);
+    extern struct {
+        s32 width;
+        s32 height;
+        s8 xMin;
+        s8 yMin;
+        s8 xMax;
+        s8 yMax;
+        u8 pad0C;
+        u8 unitMap[8][64][64];
+        u8 pad800D[0x181];
+        s16 costMap[3][64 * 64];
+        s8 fogMap[64][64];
+    } lbl_802CA518;
+    extern u8 lbl_802B14E4[];
+    extern s16 lbl_802732A0[];
+    extern void *lbl_80284E20;
+    extern void *lbl_8028EA88;
+    extern s32 lbl_802EF4E0;
+
+    s16 sp20;
+    void *sp18[2];
+    void *sp10[2];
+    s16 *outX;
+    s16 *outY;
+    void *self;
+    s32 flag1;
+    s32 flag2;
+    s32 mode;
+    s16 best;
+    s16 bestY;
+    s32 y;
+    s32 x;
+    s16 *cost;
+    u8 id;
+    void *unit;
+    s16 *nei;
+    s32 nx, ny;
+    s32 count;
+    s32 oob;
+    u8 *base;
+
+    outX = arg3;
+    outY = arg4;
+    mode = arg2;
+    self = arg0;
+    fn_800FE398(self, 6, lbl_802CA518.width * lbl_802CA518.height);
+    flag1 = arg1 & 1;
+    flag2 = arg1 & 2;
+    best = 0x7FFF;
+    for (y = lbl_802CA518.yMin; y <= lbl_802CA518.yMax - 1; y++) {
+        for (x = lbl_802CA518.xMin; x <= lbl_802CA518.xMax - 1; x++) {
+            cost = &lbl_802CA518.costMap[0][(s8)x + ((s8)y << 6)];
+            if (*cost < 0) {
+                continue;
+            }
+            if (lbl_802CA518.fogMap[(s8)y][(s8)x] != 0) {
+                continue;
+            }
+            if (fn_800FE84C((s8)x, (s8)y) != 0) {
+                continue;
+            }
+            if (flag1 != 0) {
+                id = lbl_802CA518.unitMap[0][(s8)y][(s8)x];
+                if (id != 0) {
+                    if (id != 0) {
+                        unit = lbl_802B14E4 + (id - 1) * 0x280;
+                    } else {
+                        unit = NULL;
+                    }
+                    if (fn_80015610(*(void **)((u8 *)self + 0x190), *(void **)((u8 *)unit + 0x190)) == 1) {
+                        continue;
+                    }
+                }
+            }
+            if (flag2 != 0) {
+                nei = lbl_802732A0;
+                count = 0;
+                while (*nei != 0x7FFF) {
+                    nx = (s16)x + nei[0];
+                    ny = (s16)y + nei[1];
+                    oob = 0;
+                    if (nx < lbl_802CA518.xMin || lbl_802CA518.xMax - 1 < nx || ny < lbl_802CA518.yMin || lbl_802CA518.yMax - 1 < ny) {
+                        oob = 1;
+                    }
+                    if (oob == 0) {
+                        id = lbl_802CA518.unitMap[0][(s8)ny][(s8)nx];
+                        if (id != 0) {
+                            if (id != 0) {
+                                unit = lbl_802B14E4 + (id - 1) * 0x280;
+                            } else {
+                                unit = NULL;
+                            }
+                            if (fn_800FB5C8(unit) != 0) {
+                                count += 1;
+                            }
+                        }
+                    }
+                    nei += 2;
+                }
+                if (count != 0) {
+                    continue;
+                }
+            }
+            sp18[0] = &lbl_80284E20;
+            sp18[0] = &lbl_8028EA88;
+            fn_8002F728(&lbl_802EF4E0);
+            sp18[1] = (void *)mode;
+            fn_8002C618(sp18, (s8)x, (s8)y);
+            if (lbl_802EF4E0 != 0) {
+                if (*cost < best) {
+                    best = *cost;
+                    sp20 = (s16)x;
+                    bestY = (s16)y;
+                }
+            }
+        }
+    }
+    if (best != 0x7FFF) {
+        sp10[0] = &lbl_80284E20;
+        sp10[0] = &lbl_8028EA88;
+        fn_8002F728(&lbl_802EF4E0);
+        sp10[1] = (void *)mode;
+        fn_8002C618(sp10, (s8)sp20, (s8)bestY);
+        *outX = sp20;
+        *outY = bestY;
+        return 1;
+    }
+    fn_8002F728(&lbl_802EF4E0);
+    return 0;
+}
 
 #pragma use_lmw_stmw reset
 
