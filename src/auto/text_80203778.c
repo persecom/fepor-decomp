@@ -224,6 +224,10 @@ void PPCMthid2(void) {
     M2C_ERROR(/* unknown instruction: mtspr HID2, $r3 */);
 }
 
+s32 fn_80203854(void) {
+    return 0;
+}
+
 #pragma dont_inline reset
 
 void PPCMtwpar(void) {
@@ -502,26 +506,20 @@ void InsertAlarm(void *alarm_p, s64 fire, void (*handler)(void *, OSContext *)) 
     extern struct AlarmQueue AlarmQueue_80368490;
     extern s64 __OSGetSystemTime(void);
     extern void PPCMtdec(u32);
-    extern s64 __div2i(s64, s64);
     struct OSAlarm *next;
     struct OSAlarm *prev;
     s64 time;
-    s64 remain;
-    s64 quot;
-    s64 period;
-    s64 start;
+    s64 new_var[2];
+    s32 zg;
     struct OSAlarm *alarm;
 
+    zg = 0;
     alarm = (struct OSAlarm *)alarm_p;
-
-    if (0 < alarm->period) {
+    if (zg < alarm->period) {
         time = __OSGetSystemTime();
         fire = alarm->start;
         if (alarm->start < time) {
-            start = alarm->start;
-            period = alarm->period;
-            quot = __div2i(time - start, period);
-            fire = start + period * (quot + 1);
+            fire += alarm->period * ((time - alarm->start) / alarm->period + 1);
         }
     }
 
@@ -540,11 +538,12 @@ void InsertAlarm(void *alarm_p, s64 fire, void (*handler)(void *, OSContext *)) 
             }
             AlarmQueue_80368490.head = alarm;
             time = __OSGetSystemTime();
-            remain = alarm->fire - time;
-            if (remain < 0) {
+            new_var[0] = alarm->fire - time;
+            new_var[1] = (u32)new_var[0];
+            if (new_var[0] < 0) {
                 PPCMtdec(0);
-            } else if (remain < 0x80000000LL) {
-                PPCMtdec((u32)remain);
+            } else if (new_var[0] < 0x80000000LL) {
+                PPCMtdec(new_var[1]);
             } else {
                 PPCMtdec(0x7FFFFFFF);
             }
@@ -563,11 +562,12 @@ void InsertAlarm(void *alarm_p, s64 fire, void (*handler)(void *, OSContext *)) 
     AlarmQueue_80368490.tail = alarm;
     AlarmQueue_80368490.head = alarm;
     time = __OSGetSystemTime();
-    remain = alarm->fire - time;
-    if (remain < 0) {
+    new_var[0] = alarm->fire - time;
+    new_var[1] = (u32)new_var[0];
+    if (new_var[0] < 0) {
         PPCMtdec(0);
-    } else if (remain < 0x80000000LL) {
-        PPCMtdec((u32)remain);
+    } else if (new_var[0] < 0x80000000LL) {
+        PPCMtdec(new_var[1]);
     } else {
         PPCMtdec(0x7FFFFFFF);
     }
@@ -575,91 +575,111 @@ void InsertAlarm(void *alarm_p, s64 fire, void (*handler)(void *, OSContext *)) 
 #pragma use_lmw_stmw reset
 
 #pragma use_lmw_stmw on
-void DecrementerExceptionCallback(u8 type, OSContext *context) {
-    struct AlarmQueue {
-        void *head;
-        void *tail;
-    };
-    struct OSAlarm {
-        void (*handler)(void *, OSContext *);
-        u32 tag;
-        s64 fire;
-        struct OSAlarm *prev;
-        struct OSAlarm *next;
-        s64 period;
-    };
-    extern struct AlarmQueue AlarmQueue_80368490;
-    extern s64 __OSGetSystemTime(void);
-    extern void PPCMtdec(u32);
-    extern void OSLoadContext(OSContext *);
-    extern void InsertAlarm(struct OSAlarm *, s64, void (*)(void *, OSContext *));
-    extern void OSDisableScheduler(void);
-    extern void OSEnableScheduler(void);
-    extern void __OSReschedule(void);
-    OSContext exceptionContext;
-    u8 pad[8];
-    struct OSAlarm *alarm;
-    struct OSAlarm *next;
+void DecrementerExceptionCallback(u8 type, OSContext *context)
+{
+  struct AlarmQueue
+  {
+    void *head;
+    void *tail;
+  };
+  struct OSAlarm
+  {
     void (*handler)(void *, OSContext *);
-    s64 now;
-    s64 remain;
-    u32 ticks;
-    struct OSAlarm *head;
-
-    (void)type;
-    (void)pad[0];
-    now = __OSGetSystemTime();
-    alarm = AlarmQueue_80368490.head;
-    if (alarm == NULL) {
-        OSLoadContext(context);
-    }
-    if (now < alarm->fire) {
-        now = __OSGetSystemTime();
-        remain = alarm->fire - now;
-        ticks = (u32)remain;
-        if (remain < 0) {
-            PPCMtdec(0);
-        } else if (remain < 0x80000000LL) {
-            PPCMtdec(ticks);
-        } else {
-            PPCMtdec(0x7FFFFFFF);
-        }
-        OSLoadContext(context);
-    }
-    next = alarm->next;
-    AlarmQueue_80368490.head = next;
-    if (next == NULL) {
-        AlarmQueue_80368490.tail = NULL;
-    } else {
-        next->prev = NULL;
-    }
-    handler = alarm->handler;
-    alarm->handler = NULL;
-    if (0 < alarm->period) {
-        InsertAlarm(alarm, 0, handler);
-    }
-    head = AlarmQueue_80368490.head;
-    if (head != NULL) {
-        now = __OSGetSystemTime();
-        remain = head->fire - now;
-        ticks = (u32)remain;
-        if (remain < 0) {
-            PPCMtdec(0);
-        } else if (remain < 0x80000000LL) {
-            PPCMtdec(ticks);
-        } else {
-            PPCMtdec(0x7FFFFFFF);
-        }
-    }
-    OSDisableScheduler();
-    OSClearContext(&exceptionContext);
-    OSSetCurrentContext(&exceptionContext);
-    handler(alarm, context);
-    OSClearContext(&exceptionContext);
-    OSSetCurrentContext(context);
-    OSEnableScheduler();
-    __OSReschedule();
+    u32 tag;
+    s64 fire;
+    struct OSAlarm *prev;
+    struct OSAlarm *next;
+    s64 period;
+  };
+  extern struct AlarmQueue AlarmQueue_80368490;
+  extern s64 __OSGetSystemTime(void);
+  extern void PPCMtdec(u32);
+  extern void OSLoadContext(OSContext *);
+  extern void InsertAlarm(struct OSAlarm *, s64, void (*)(void *, OSContext *));
+  extern void OSDisableScheduler(void);
+  extern void OSEnableScheduler(void);
+  extern void __OSReschedule(void);
+  OSContext exceptionContext;
+  u8 pad[8];
+  struct OSAlarm *alarm;
+  struct OSAlarm *next;
+  void (*handler)(void *, OSContext *);
+  s64 now;
+  s64 new_var[2];
+  struct OSAlarm *head;
+  (void) type;
+  (void) pad[0];
+  now = __OSGetSystemTime();
+  alarm = AlarmQueue_80368490.head;
+  if (alarm == NULL)
+  {
     OSLoadContext(context);
+  }
+  if (now < alarm->fire)
+  {
+    now = __OSGetSystemTime();
+    new_var[0] = alarm->fire - now;
+    new_var[1] = (u32) new_var[0];
+    if (new_var[0] < 0)
+    {
+      PPCMtdec(0);
+    }
+    else
+      if (new_var[0] < 0x80000000LL)
+    {
+      PPCMtdec(new_var[1]);
+    }
+    else
+    {
+      PPCMtdec(0x7FFFFFFF);
+    }
+    OSLoadContext(context);
+  }
+  next = alarm->next;
+  AlarmQueue_80368490.head = next;
+  if (next == NULL)
+  {
+    AlarmQueue_80368490.tail = NULL;
+  }
+  else
+  {
+    next->prev = NULL;
+  }
+  handler = alarm->handler;
+  alarm->handler = NULL;
+  if (0 < alarm->period)
+  {
+    InsertAlarm(alarm, 0, handler);
+  }
+  head = AlarmQueue_80368490.head;
+  if (head != NULL)
+  {
+    now = __OSGetSystemTime();
+    new_var[0] = head->fire - now;
+    new_var[1] = (u32) new_var[0];
+    if (new_var[0] < 0)
+    {
+      PPCMtdec(0);
+    }
+    else
+      if (new_var[0] < 0x80000000LL)
+    {
+      PPCMtdec(new_var[1]);
+    }
+    else
+    {
+      PPCMtdec(0x7FFFFFFF);
+    }
+  }
+  OSDisableScheduler();
+  OSClearContext(&exceptionContext);
+  OSSetCurrentContext(&exceptionContext);
+  handler(alarm, context);
+  OSClearContext(&exceptionContext);
+  OSSetCurrentContext(context);
+  OSEnableScheduler();
+  __OSReschedule();
+  OSLoadContext(context);
 }
 #pragma use_lmw_stmw reset
 void DecrementerExceptionCallback(u8 type, OSContext *context);
@@ -1145,6 +1165,22 @@ void OSDumpContext(OSContext *context) {
         p = (u32 *)p[0];
     }
 }
+
+void __OSContextInit(void)
+{
+    void __OSSetExceptionHandler(s32, void *);
+    void OSSwitchFPUContext(void);
+    void DBPrintf(const char *, ...);
+
+    extern char lbl_8029BF94[];
+
+    __OSSetExceptionHandler(7, (void *)OSSwitchFPUContext);
+
+    *(volatile u32 *)0x800000D8 = 0;
+
+    DBPrintf(lbl_8029BF94);
+}
+
 #pragma use_lmw_stmw reset
 
 void fn_8020602C(void) {
@@ -1176,6 +1212,9 @@ OSErrorHandler OSSetErrorHandler(u16 error, OSErrorHandler handler)
     u32 fpscr;
     OSContext *context;
     s32 i;
+    u32 stackPad[4];
+
+    (void)stackPad[0];
 
     enabled = OSDisableInterrupts();
     oldHandler = __OSErrorTable[error];
@@ -1233,8 +1272,8 @@ OSErrorHandler OSSetErrorHandler(u16 error, OSErrorHandler handler)
                 context->fpscr |= (lbl_80366F38 & 0xF8);
                 context->fpscr &= (0x60060000 - 0x701);
             }
-            fpscr |= (lbl_80366F38 & 0xF8);
             msr |= 0x900;
+            fpscr |= (lbl_80366F38 & 0xF8);
         } else {
             for (context = *(OSContext **)0x800000DC; context;
                  context = *(OSContext **)((u8 *)context + 0x2FC)) {
@@ -1543,6 +1582,123 @@ after:
     return lbl_80366F48;
 }
 
+u32 fn_80207304(u8 *arg0, u16 arg1, FontImageHeader *arg2) {
+    s32 fn_802096B0(void *, s32, s32);
+    void fn_8020712C(u8 *, u8 *);
+    s32 fn_80206FB8(u16, u16);
+    extern u32 lbl_8036BCA0;
+    extern u32 lbl_8036BCA4;
+    u32 sp1C;
+    u32 sp20;
+    s32 var_r25;
+    s32 var_r26;
+    s32 var_r27;
+    u8 *var_r31;
+    u32 size;
+    s32 idx;
+    s32 cells;
+    s32 sheet;
+    s32 pos;
+    s32 row;
+    s32 col;
+    s32 x;
+    s32 y;
+    u8 *base;
+    s32 temp_r0;
+    s32 temp_r3;
+    s32 temp_r5;
+    s32 temp_r8;
+    s32 temp_r9;
+    u32 imageOffset;
+
+    if (arg1 == 1) {
+        var_r31 = arg0;
+        var_r26 = 0x1AFF00;
+        var_r27 = 0x4D000;
+        while (var_r27 > 0) {
+            if (var_r27 <= 0x100) {
+                var_r25 = var_r27;
+            } else {
+                var_r25 = 0x100;
+            }
+            var_r27 -= var_r25;
+            do {
+            } while (fn_802096B0(var_r31, var_r25, var_r26) == 0);
+            var_r26 += var_r25;
+            var_r31 += var_r25;
+        }
+    } else {
+        var_r26 = (s32)arg0;
+        var_r31 = (u8 *)0x1FCF00;
+        var_r27 = 0x3000;
+        while (var_r27 > 0) {
+            if (var_r27 <= 0x100) {
+                var_r25 = var_r27;
+            } else {
+                var_r25 = 0x100;
+            }
+            var_r27 -= var_r25;
+            do {
+            } while (fn_802096B0((u8 *)var_r26, var_r25, (s32)var_r31) == 0);
+            var_r31 += var_r25;
+            var_r26 += var_r25;
+        }
+    }
+
+    if (arg0[0] == 0x59 && arg0[1] == 0x61 && arg0[2] == 0x79) {
+        size = *(u32 *)(arg0 + 4);
+    } else {
+        size = 0;
+    }
+    if (size == 0) {
+        return 0;
+    }
+    fn_8020712C(arg0, (u8 *)arg2);
+    if (arg1 == 1) {
+        sp1C = lbl_8036BCA0;
+        sp20 = lbl_8036BCA4;
+        idx = fn_80206FB8(arg1, 0x54);
+        temp_r9 = arg2->columns;
+        temp_r8 = temp_r9 * arg2->rows;
+        imageOffset = arg2->imageOffset;
+        temp_r5 = arg2->height;
+        temp_r0 = arg2->sheetWidth;
+        cells = temp_r8;
+        sheet = idx / cells;
+        pos = idx % cells;
+        row = pos / temp_r9;
+        col = pos - row * temp_r9;
+        temp_r5 = row * temp_r5;
+        x = col * arg2->width;
+        y = temp_r5;
+        base = (u8 *)arg2 + imageOffset + ((u32)(sheet * arg2->sheetSize) >> 1);
+        temp_r0 = ((temp_r0 / 8) << 5) / 2;
+        temp_r8 = (x / 8) * 16;
+        temp_r3 = (x % 8) / 4;
+
+        {
+            s32 a = y + 4;
+            *(u16 *)(base + temp_r0 * (a / 8) + temp_r8 + (a % 8) * 2 + temp_r3) = ((u16 *)&sp1C)[0];
+        }
+        {
+            s32 a = y + 5;
+            s32 f = ((((s32)arg2->sheetWidth / 8) << 5) / 2);
+            *(u16 *)(base + f * (a / 8) + temp_r8 + (a % 8) * 2 + temp_r3) = ((u16 *)&sp1C)[1];
+        }
+        {
+            s32 a = y + 6;
+            s32 f = ((((s32)arg2->sheetWidth / 8) << 5) / 2);
+            *(u16 *)(base + f * (a / 8) + temp_r8 + (a % 8) * 2 + temp_r3) = ((u16 *)&sp20)[0];
+        }
+        {
+            s32 a = y + 7;
+            s32 f = ((((s32)arg2->sheetWidth / 8) << 5) / 2);
+            *(u16 *)(base + f * (a / 8) + temp_r8 + (a % 8) * 2 + temp_r3) = ((u16 *)&sp20)[1];
+        }
+    }
+    return size;
+}
+
 s32 fn_80207628(s32 arg0, s32 arg1) {
     s32 fn_80207304(s32, s32, s32);
     extern u16 lbl_80366F48;
@@ -1736,9 +1892,9 @@ void *__OSSetInterruptHandler(s32 arg0, void *arg1) {
     return oldHandler;
 }
 
-extern u16 InterruptHandlerTable_803684C8[32];
+extern void *InterruptHandlerTable_803684C8;
 s32 fn_80207BAC(s16 arg0) {
-    return InterruptHandlerTable_803684C8[arg0];
+    return ((u32 *)InterruptHandlerTable_803684C8)[arg0];
 }
 
 volatile u16 OS_MEMRegs[64] : 0xCC004000;
@@ -1896,26 +2052,186 @@ u32 fn_80207C34(u32 mask, u32 current) {
     }
     return mask;
 }
-#pragma peephole reset
+#pragma global_optimizer off
 u32 __OSMaskInterrupts(u32 global) {
-    BOOL enabled;
     u32 prev;
+    BOOL enabled;
+    u32 ie;
     u32 mask;
-    u32 current;
 
+    global |= 0;
     enabled = OSDisableInterrupts();
     prev = *(u32 *)0x800000C4;
-    mask = global & ~(prev | *(u32 *)0x800000C8);
-    current = global | prev;
-    *(u32 *)0x800000C4 = current;
-    current |= *(u32 *)0x800000C8;
+    ie = *(u32 *)0x800000C8;
+    mask = global & ~(prev | ie);
+    global |= prev;
+    *(u32 *)0x800000C4 = global;
+    global |= ie;
     while (mask != 0) {
-        mask = fn_80207C34(mask, current);
+        mask = fn_80207C34(mask, global);
     }
     OSRestoreInterrupts(enabled);
     return prev;
 }
 
+void fn_8020801C(u8 unused, OSContext *context) {
+    extern s32 lbl_8029CDF8[];
+    extern s16 __OSLastInterrupt;
+    extern s64 __OSLastInterruptTime;
+    extern u32 __OSLastInterruptSrr0;
+    extern s64 OSGetTime(void);
+    extern void OSDisableScheduler(void);
+    extern void OSEnableScheduler(void);
+    extern void __OSReschedule(void);
+    extern void OSLoadContext(OSContext *);
+    u32 cause;
+    u32 exceptmask;
+    u16 reg;
+    u32 reg32;
+    u32 *prio;
+    u32 bit;
+    s16 interrupt;
+    void (*handler)(s16, OSContext *);
+    s64 time;
+    void **table;
+
+    (void)unused;
+    cause = OS_PIRegs[0] & ~0x00010000;
+    if (cause == 0 || (cause & OS_PIRegs[1]) == 0) {
+        OSLoadContext(context);
+    }
+
+    exceptmask = 0;
+    if (cause & 0x00000080) {
+        reg = OS_MEMRegs[0x1E / 2];
+        if (reg & 0x0001) {
+            exceptmask |= 0x80000000;
+        }
+        if (reg & 0x0002) {
+            exceptmask |= 0x40000000;
+        }
+        if (reg & 0x0004) {
+            exceptmask |= 0x20000000;
+        }
+        if (reg & 0x0008) {
+            exceptmask |= 0x10000000;
+        }
+        if (reg & 0x0010) {
+            exceptmask |= 0x08000000;
+        }
+    }
+
+    if (cause & 0x00000040) {
+        reg = OS_DSPRegs[0xA / 2];
+        if (reg & 0x0008) {
+            exceptmask |= 0x04000000;
+        }
+        if (reg & 0x0020) {
+            exceptmask |= 0x02000000;
+        }
+        if (reg & 0x0080) {
+            exceptmask |= 0x01000000;
+        }
+    }
+
+    if ((cause & 0x00000020) && (OS_AIRegs[0] & 0x00000008)) {
+        exceptmask |= 0x00800000;
+    }
+
+    if (cause & 0x00000010) {
+        reg32 = OS_EXIRegs[0];
+        if (reg32 & 0x00000002) {
+            exceptmask |= 0x00400000;
+        }
+        if (reg32 & 0x00000008) {
+            exceptmask |= 0x00200000;
+        }
+        if (reg32 & 0x00000800) {
+            exceptmask |= 0x00100000;
+        }
+
+        reg32 = OS_EXIRegs[0x14 / 4];
+        if (reg32 & 0x00000002) {
+            exceptmask |= 0x00080000;
+        }
+        if (reg32 & 0x00000008) {
+            exceptmask |= 0x00040000;
+        }
+        if (reg32 & 0x00000800) {
+            exceptmask |= 0x00020000;
+        }
+
+        reg32 = OS_EXIRegs[0x28 / 4];
+        if (reg32 & 0x00000002) {
+            exceptmask |= 0x00010000;
+        }
+        if (reg32 & 0x00000008) {
+            exceptmask |= 0x00008000;
+        }
+    }
+
+    if (cause & 0x00002000) {
+        exceptmask |= 0x00000020;
+    }
+    if (cause & 0x00001000) {
+        exceptmask |= 0x00000040;
+    }
+    if (cause & 0x00000400) {
+        exceptmask |= 0x00001000;
+    }
+    if (cause & 0x00000200) {
+        exceptmask |= 0x00002000;
+    }
+    if (cause & 0x00000100) {
+        exceptmask |= 0x00000080;
+    }
+    if (cause & 0x00000008) {
+        exceptmask |= 0x00000800;
+    }
+    if (cause & 0x00000004) {
+        exceptmask |= 0x00000400;
+    }
+    if (cause & 0x00000002) {
+        exceptmask |= 0x00000200;
+    }
+    if (cause & 0x00000800) {
+        exceptmask |= 0x00004000;
+    }
+    if (cause & 0x00000001) {
+        exceptmask |= 0x00000100;
+    }
+
+    exceptmask &= ~(*(u32 *)0x800000C4 | *(u32 *)0x800000C8);
+    if (exceptmask != 0) {
+        prio = (u32 *)lbl_8029CDF8;
+        for (;;) {
+            bit = *prio & exceptmask;
+            if (bit != 0) {
+                break;
+            }
+            prio++;
+        }
+        interrupt = (s16)__cntlzw(bit);
+        table = *(void ***)&InterruptHandlerTable_803684C8;
+        handler = (void (*)(s16, OSContext *))table[interrupt];
+        if (handler != 0) {
+            if (interrupt > 4) {
+                __OSLastInterrupt = interrupt;
+                time = OSGetTime();
+                __OSLastInterruptTime = time;
+                __OSLastInterruptSrr0 = context->srr0;
+            }
+            OSDisableScheduler();
+            handler(interrupt, context);
+            OSEnableScheduler();
+            __OSReschedule();
+            OSLoadContext(context);
+        }
+    }
+    OSLoadContext(context);
+}
+
+#pragma global_optimizer reset
 void __OSModuleInit(void) {
     s32 *ptr = (s32 *)0x800030CC;
     ptr[0] = 0;
