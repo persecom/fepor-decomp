@@ -1561,6 +1561,7 @@ s32 fn_80166D8C(void) {
     return *(u8 *)((u8 *)p + 0x2E) == 0;
 }
 
+#pragma global_optimizer off
 #pragma use_lmw_stmw on
 void fn_80166DD0(void *arg0, void **arg1, f32 farg0, f32 farg1) {
     u8 *fn_8000E0E4(void *);
@@ -1588,16 +1589,19 @@ void fn_80166DD0(void *arg0, void **arg1, f32 farg0, f32 farg1) {
     s32 var_r26;
     u8 *var_r25;
     u8 *var_r4;
-    f32 var_f2;
-    f32 var_f5;
-    f32 var_f6;
     f32 var_f7;
+    f32 var_f6;
+    f32 var_f5;
+    f32 var_f2;
     u8 temp_r3;
     s32 temp_r3_2;
     u8 var_r0;
     u8 var_r0_2;
     u8 var_r0_3;
     u8 var_r0_4;
+    u32 var_m0;
+    u32 var_m4;
+    s32 var_idx;
     void *temp_r3_3;
     void *temp_r3_4;
     void *temp_r3_5;
@@ -1627,7 +1631,8 @@ loop_3:
         if (var_r27 > 0) {
             memcpy(var_r25 + 4, var_r4, (u32)var_r27);
         }
-        var_r25[var_r27 + 4] = 0;
+        var_idx = var_r27 + 4;
+        var_r25[var_idx] = 0;
         temp_r3_2 = fn_80010B78(var_r25 + 4, lbl_8036A944, -1);
         var_r25 += 0x40;
         var_r26 += 1;
@@ -1654,7 +1659,7 @@ loop_done:
         } else {
             var_r0 = 0xc;
         }
-        if ((var_r0 == 7) && (temp_r3_4 = fn_8001CB64(arg1), ((((*(s32 *)((u8 *)temp_r3_4 + 4) & 4) ^ 0) | ((*(s32 *)((u8 *)temp_r3_4 + 0) & 0) ^ 0)) != 0))) {
+        if ((var_r0 == 7) && (temp_r3_4 = fn_8001CB64(arg1), var_m0 = 0, var_m4 = 4, ((((*(s32 *)((u8 *)temp_r3_4 + 4) & var_m4) ^ var_m0) | ((*(s32 *)((u8 *)temp_r3_4 + 0) & var_m0) ^ var_m0)) != 0))) {
             if ((f32)*(s32 *)((u8 *)arg0 + 0xd4) < lbl_8036A948) {
                 *(s32 *)((u8 *)arg0 + 0xd4) = (s32)lbl_8036A948;
             }
@@ -1722,6 +1727,7 @@ loop_done:
     }
 }
 #pragma use_lmw_stmw reset
+#pragma global_optimizer on
 
 #pragma use_lmw_stmw on
 void fn_80167190(void *arg0, void *arg1, f32 farg0, f32 farg1) {
@@ -6760,13 +6766,13 @@ extern "C" void fn_80178FFC(void *unused, void *arg1) {
                 }
             }
         }
-        if ((s8)*(u8 *)((u8 *)arg1 + 0x62) != (s8)*(u8 *)((u8 *)arg1 + 0x63)) {
+        if (*(s8 *)((u8 *)arg1 + 0x62) != *(s8 *)((u8 *)arg1 + 0x63)) {
             p = (u8 *)arg1;
-            p += (s8)*(u8 *)((u8 *)arg1 + 0x63);
+            p += *(s8 *)((u8 *)arg1 + 0x63);
             tmp = fn_8000B908(p[0x40]);
             (*(Inner **)((u8 *)tmp + 0x34))->v15(arg1, tmp);
             p = (u8 *)arg1;
-            p += (s8)*(u8 *)((u8 *)arg1 + 0x62);
+            p += *(s8 *)((u8 *)arg1 + 0x62);
             tmp = fn_8000B908(p[0x40]);
             (*(Inner **)((u8 *)tmp + 0x34))->v14(arg1, tmp);
             fn_801475FC((u8 *)lbl_80278080 + 0x64e, 0x64);
