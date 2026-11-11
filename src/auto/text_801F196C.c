@@ -502,77 +502,111 @@ void fn_801F3338(void *arg0) {
 }
 
 void fn_801F363C(void *arg0) {
+    struct Entry {
+        u32 unk0;
+        char *name;
+    };
+    struct Work {
+        u8 pad0[4];
+        void *unk4;
+        s32 unk8;
+        u8 padC[2];
+        s16 unkE;
+        u8 pad10;
+        u8 unk11;
+        s16 unk12;
+        s16 unk14;
+        s16 unk16;
+        u8 pad18[8];
+        u8 unk20;
+        u8 pad21[5];
+        u8 unk26;
+        u8 unk27;
+        u8 unk28;
+        u8 unk29;
+        s16 unk2A;
+        s16 unk2C;
+        u8 pad30[4];
+        struct Entry *unk34;
+        u8 pad38[4];
+        char unk3C[0x18];
+        char unk54[0x60];
+        char unkB4[0x28];
+        s32 unkDC;
+        s32 unkE0;
+    };
+    void fn_80057E64(s32, s32);
+    char *fn_8000E0E4(char *);
+    void fn_8006EDA0(void *);
+    char *fn_80234450(char *, const char *);
+    char *fn_802343E0(char *, const char *);
     extern char lbl_8027F868[];
     extern u8 lbl_8029A9E8[];
     extern u8 lbl_8029AB60[];
     extern u8 lbl_8029AD68[];
     extern u8 lbl_8029AF18[];
-    void fn_80057E64(s32, s32);
-    char *fn_8000E0E4(char *);
-    void fn_802343E0(char *, char *);
-    void fn_80234450();
-    void fn_8006EDA0(void *);
-    void *p = (void *)M2C_FIELD(arg0, u32 *, 0x30);
-    u32 *vr;
-    s32 cnt;
+    struct Work *p;
+    struct Entry *vr;
     s32 var_r3;
     s32 diff;
-    s32 q;
-    s32 r;
+    s32 quotient;
+    s32 remainder;
 
-    M2C_FIELD(p, s32 *, 0x08) = 5;
-    M2C_FIELD(p, u8 *, 0x54) = 0;
-    M2C_FIELD(p, u8 *, 0x20) = 0;
-    M2C_FIELD(p, u8 *, 0x26) = 1;
-    M2C_FIELD(p, u8 *, 0x28) = 1;
-    fn_80057E64(M2C_FIELD(p, s32 *, 0xDC), 0);
-    fn_80057E64(M2C_FIELD(p, s32 *, 0xE0), 0);
-    fn_80234450((char *)p + 0x3C, lbl_8027F868 + 0x1248);
-    M2C_FIELD(p, u8 *, 0x27) = M2C_FIELD(p, u8 *, 0x11);
-    switch (M2C_FIELD(p, u8 *, 0x11)) {
+    p = M2C_FIELD(arg0, struct Work **, 0x30);
+    p->unk8 = 5;
+    p->unk54[0] = 0;
+    p->unk20 = 0;
+    p->unk26 = 1;
+    p->unk28 = 1;
+    fn_80057E64(p->unkDC, 0);
+    fn_80057E64(p->unkE0, 0);
+    fn_80234450(p->unk3C, lbl_8027F868 + 0x1248);
+    p->unk27 = p->unk11;
+    switch (p->unk11) {
     case 1:
-        M2C_FIELD(p, u32 *, 0x34) = (u32)lbl_8029A9E8;
+        p->unk34 = (struct Entry *)lbl_8029A9E8;
         break;
     case 2:
-        M2C_FIELD(p, u32 *, 0x34) = (u32)lbl_8029AB60;
+        p->unk34 = (struct Entry *)lbl_8029AB60;
         break;
     case 3:
-        M2C_FIELD(p, u32 *, 0x34) = (u32)lbl_8029AD68;
+        p->unk34 = (struct Entry *)lbl_8029AD68;
         break;
     case 4:
-        M2C_FIELD(p, u32 *, 0x34) = (u32)lbl_8029AF18;
+        p->unk34 = (struct Entry *)lbl_8029AF18;
         break;
     }
-    vr = (u32 *)M2C_FIELD(p, u32 *, 0x34);
-    M2C_FIELD(p, u8 *, 0x29) = 0;
-    while (*vr != 0) {
-        vr = (u32 *)((char *)vr + 8);
-        M2C_FIELD(p, u8 *, 0x29) = (u8)(M2C_FIELD(p, u8 *, 0x29) + 1);
+    vr = p->unk34;
+    p->unk29 = 0;
+    while (vr->unk0 != 0) {
+        vr++;
+        p->unk29 = (u8)(p->unk29 + 1);
     }
-    cnt = M2C_FIELD(p, u8 *, 0x29);
-    var_r3 = cnt / 3;
-    if (cnt % 3 > 0) {
+    var_r3 = p->unk29 / 3;
+    if (p->unk29 % 3 > 0) {
         var_r3++;
     }
-    M2C_FIELD(p, s16 *, 0x2A) = (s16)(var_r3 * 0x1C + 0x30);
-    if (M2C_FIELD(p, s16 *, 0x2A) > 0x10C) {
-        M2C_FIELD(p, s16 *, 0x2A) = 0x10C;
+    p->unk2A = (s16)(var_r3 * 0x1C + 0x30);
+    if (p->unk2A > 0x10C) {
+        p->unk2A = 0x10C;
     }
-    diff = (s32)M2C_FIELD(p, s16 *, 0x0E) - (s32)M2C_FIELD(p, s16 *, 0x2C) * 3;
-    M2C_FIELD(p, s16 *, 0x16) = 0;
-    q = diff / 3;
-    r = diff % 3;
-    M2C_FIELD(p, s16 *, 0x12) = (s16)(r * 0xA0 + 0x45);
-    M2C_FIELD(p, s16 *, 0x14) = (s16)(q * 0x1C + 0x9C);
-    fn_80234450((char *)p + 0x54, lbl_8027F868 + 0x1259, q * 0x1C, q, diff);
-    fn_802343E0((char *)p + 0x54, fn_8000E0E4(lbl_8027F868 + 0x11EF));
-    fn_802343E0((char *)p + 0x54, lbl_8027F868 + 0x125F);
-    fn_802343E0((char *)p + 0x54, fn_8000E0E4(lbl_8027F868 + 0x1267));
-    fn_802343E0((char *)p + 0x54, lbl_8027F868 + 0x1272);
-    fn_802343E0((char *)p + 0x54, fn_8000E0E4(lbl_8027F868 + 0x1209));
-    if (M2C_FIELD(p, s32 *, 0x04) != 0) {
-        fn_8006EDA0((void *)&M2C_FIELD(p, s32 *, 0x04));
-        M2C_FIELD(p, s32 *, 0x04) = 0;
+    diff = (s32)p->unkE - (s32)p->unk2C * 3;
+    p->unk16 = 0;
+    quotient = diff / 3;
+    remainder = diff % 3;
+    p->unk12 = (s16)(remainder * 0xA0 + 0x45);
+    p->unk14 = (s16)(quotient * 0x1C + 0x9C);
+    fn_80234450(p->unk54, lbl_8027F868 + 0x1259);
+    fn_802343E0(p->unk54, fn_8000E0E4(lbl_8027F868 + 0x11EF));
+    fn_802343E0(p->unk54, lbl_8027F868 + 0x125F);
+    fn_802343E0(p->unk54, fn_8000E0E4(lbl_8027F868 + 0x1267));
+    fn_802343E0(p->unk54, lbl_8027F868 + 0x1272);
+    fn_802343E0(p->unk54, fn_8000E0E4(lbl_8027F868 + 0x1209));
+    if (p->unk4 != NULL) {
+        if (p->unk4 != NULL) {
+            fn_8006EDA0(&p->unk4);
+            p->unk4 = NULL;
+        }
     }
 }
 
@@ -1957,10 +1991,9 @@ void fn_801F9E00(void *arg0) {
     Obj *obj;
     s32 temp_r0;
     u8 pk;
-    f32 f3;
-    f32 f0;
-    f32 f1;
-    u32 shifted;
+    f32 lim;
+    f32 f;
+    s32 count;
 
     temp_r28 = lbl_80330708 + 0x3C4;
     obj = (Obj *)arg0;
@@ -1988,17 +2021,17 @@ loop_body:
 accumulate:
     temp_r0 = spC - var_r27;
     var_r27 = spC;
-    packet.field = packet.field + spA;
-    packet.val = packet.val + temp_r0;
+    packet.field += spA;
+    packet.val += temp_r0;
     goto loop_next;
 else_path:
     if (pk != 0xFF) {
         fn_801FAA9C(&obj->unk30, obj->unk38 + (obj->unk34 << 3), 1, &packet);
     }
-    temp_r0 = spC - var_r27;
     packet.kind = sp8;
-    var_r27 = spC;
+    temp_r0 = spC - var_r27;
     packet.field = spA;
+    var_r27 = spC;
     packet.val = temp_r0;
 loop_next:
     var_r26 += 1;
@@ -2009,18 +2042,12 @@ loop_check:
     if (packet.kind != 0xFF) {
         fn_801FAA9C(&obj->unk30, obj->unk38 + (obj->unk34 << 3), 1, &packet);
     }
-    f3 = lbl_8036BA04;
-    shifted = (u32)(obj->unk34 << 6);
-    f0 = obj->unk3C;
-    f1 = (f32)shifted;
-    f3 = f3 + f0;
-    f0 = lbl_8036BA00;
-    f1 = f3 + f1;
-    obj->unk40 = f1;
-    f1 = obj->unk40 / f0;
-    obj->unk48 = (s32)(f1 * (f32)obj->unk48);
-    f1 = obj->unk40;
-    obj->unk44 = f1 / (f32)obj->unk48;
+    lim = lbl_8036BA00;
+    f = lbl_8036BA04 + obj->unk3C;
+    count = obj->unk34;
+    obj->unk40 = f + (f32)(u32)(count << 6);
+    obj->unk48 = (s32)((obj->unk40 / lim) * (f32)obj->unk48);
+    obj->unk44 = obj->unk40 / (f32)obj->unk48;
     fn_80109180(lbl_80281028 + 0x2F3, obj);
     obj->unk4C = fn_80109180(lbl_80281028 + 0x301, obj);
 }
