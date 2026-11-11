@@ -4,7 +4,7 @@ static inline void init_761F8_base(void *p,s16 x,s16 y,s16 w,s16 h,s16 style) {
  extern u16 lbl_8028FDB0[],lbl_80292230[];
  extern f32 lbl_8036AB6C;
  f32 zero;
- s32 clear=0;
+ s16 clear=0;
  M2C_FIELD(p,void * *,0)=lbl_8028FDB0; M2C_FIELD(p,s32 *,4)=clear; M2C_FIELD(p,void * *,0)=lbl_80292230; M2C_FIELD(p,s16 *,8)=-1;M2C_FIELD(p,s16 *,10)=x;
 M2C_FIELD(p,s16 *,12)=y;
 M2C_FIELD(p,s16 *,14)=x+w;
@@ -6068,12 +6068,11 @@ fn_801400F4(arg0,M2C_FIELD(arg0,void * *,0x40));
  fn_801400F4(arg0,M2C_FIELD(arg0,void * *,0x4C));
  p=fn_800C42D8(0x50);
  if(p) {
- u32 clear=0;
  init_761F8_base(p,0x130,0x94,0x118,0x40,0x1FE);
  M2C_FIELD(p,void * *,0)=lbl_80292178;M2C_FIELD(p,u8 *,60)=0xFF;
 M2C_FIELD(p,u8 *,61)=0xFF;
 M2C_FIELD(p,u8 *,62)=0xFF;
-M2C_FIELD(p,u8 *,63)=0xFF;M2C_FIELD(p,s32 *,0x40)=clear;M2C_FIELD(p,s16 *,0x44)=clear;M2C_FIELD(p,s16 *,0x46)=clear;((Obj *)p)->v8();
+M2C_FIELD(p,u8 *,63)=0xFF;M2C_FIELD(p,s32 *,0x40)=0;M2C_FIELD(p,s16 *,0x44)=0;M2C_FIELD(p,s16 *,0x46)=0;((Obj *)p)->v8();
  }
  M2C_FIELD(arg0,void * *,0x48)=p;
  q=M2C_FIELD(arg0,void * *,0x48);
@@ -6090,9 +6089,8 @@ M2C_FIELD(p,u8 *,63)=0xFF;M2C_FIELD(p,s32 *,0x40)=clear;M2C_FIELD(p,s16 *,0x44)=
  fn_801400F4(arg0,M2C_FIELD(arg0,void * *,0x48));
  p=fn_800C42D8(0x54);
  if(p) {
- s32 clear=0;
  init_761F8_base(p,0x138,0x12C,0x108,0x55,0x1F4);
- M2C_FIELD(p,void * *,0)=lbl_80291A3C;M2C_FIELD(p,s32 *,0x3C)=clear;M2C_FIELD(p,s32 *,0x40)=0x1003C;M2C_FIELD(p,s32 *,0x4C)=clear;M2C_FIELD(p,s32 *,0x50)=clear;((Obj *)p)->v8();
+ M2C_FIELD(p,void * *,0)=lbl_80291A3C;M2C_FIELD(p,s32 *,0x3C)=0;M2C_FIELD(p,s32 *,0x40)=0x1003C;M2C_FIELD(p,s32 *,0x4C)=0;M2C_FIELD(p,s32 *,0x50)=0;((Obj *)p)->v8();
  }
  M2C_FIELD(arg0,void * *,0x44)=p;
  q=M2C_FIELD(arg0,void * *,0x44);
