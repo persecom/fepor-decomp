@@ -3099,6 +3099,7 @@ void fn_8007B1C4(void *arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4) {
 #pragma use_lmw_stmw reset
 
 #pragma opt_common_subs reset
+#pragma global_optimizer reset
 void fn_8007B990(void *arg0) {
     extern void *lbl_80312040[];
     void fn_8000C60C(void *);
