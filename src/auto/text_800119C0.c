@@ -503,16 +503,6 @@ void fn_800152F8(s8 arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4, s8 arg5, s8 arg6, 
     M2C_FIELD(arg_sp8, s8 *, 7) = arg7;
 }
 
-s32 fn_80015648(u8 arg0, u8 arg1) {
-    if (arg0 == arg1) {
-        return 0;
-    }
-    if ((arg0 == 1) || (arg1 == 1)) {
-        return 1;
-    }
-    return 2;
-}
-
 void fn_80015320(u8 arg0, u8 *arg1) {
     extern u8 lbl_80330708[];
     s32 var_r5;
@@ -645,6 +635,16 @@ s32 fn_80015610(void *arg0, void *arg1) {
         return 0;
     }
     if ((temp_r0 == 1) || (temp_r3 == 1)) {
+        return 1;
+    }
+    return 2;
+}
+
+s32 fn_80015648(u8 arg0, u8 arg1) {
+    if (arg0 == arg1) {
+        return 0;
+    }
+    if ((arg0 == 1) || (arg1 == 1)) {
         return 1;
     }
     return 2;
