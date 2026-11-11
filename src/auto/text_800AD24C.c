@@ -27,50 +27,6 @@ static inline u32 LoadSoundBankB(void *path) {
     return buffer;
 }
 
-static inline void SortSoundReadsB(u8 *list, u32 n) {
-    void *memcpy(void *, const void *, u32);
-    void fn_800B50FC(u8 **, u32);
-    s32 fn_800B4FF8(u8 *,u8 *);
-    extern u8 *lbl_8031DEC0[];
-    extern u8 lbl_8031FEC0[];
-    extern s32 (*lbl_80367828)(u8 *,u8 *);
-    u8 **table, **walk, **slot;
-    u8 *cur, *saved, *dst;
-    u32 i;
-    lbl_80367828 = fn_800B4FF8;
-    table = lbl_8031DEC0;
-    saved = lbl_8031FEC0;
-    if (n > 1) {
-        walk = table;
-        cur = list;
-        for (i = n; i != 0; i--) {
-            *walk++ = cur++;
-        }
-        fn_800B50FC(table, n);
-        walk = table;
-        cur = list;
-        i = 0;
-        while (i++ < n) {
-            if (*walk != 0 && *walk != cur) {
-                slot = walk;
-                dst = cur;
-                memcpy(saved, cur, 1);
-                do {
-                    memcpy(dst, *slot, 1);
-                    dst = *slot;
-                    *slot = 0;
-                    slot = table + (dst - list);
-                } while (*slot != cur);
-                memcpy(dst, saved, 1);
-                *slot = 0;
-            }
-            cur++;
-            walk++;
-        }
-    }
-
-}
-
 static inline u32 SoundReadSizeB(u32 offset, u32 limit) {
     u32 size = 0x8000;
     u32 step = 0x10000;
@@ -720,37 +676,23 @@ void fn_800AECC0(void) {
     extern u8 lbl_80317338[];
     s32 i;
     u8 *entry;
-    u8 *global;
     u8 *stream;
-    u32 size, aligned, size2, aligned2;
+    u32 size, aligned;
     s32 position;
     u32 base, offset, limit, n, step;
     u16 flags;
-    global = lbl_80317338;
     i = 0;
     position = 0;
     do {
-        entry = *(u8 **)(global + 0xF8) + position;
+        entry = *(u8 **)((u8 *)lbl_80317338 + 0xF8) + position;
         flags = *(u16 *)entry;
         if ((flags & 8) && !(flags & 2)) {
             if (flags & 1) {
                 if (*(u32 *)(entry+0x70) != 0 && *(s16 *)(entry+0x80)==0 && !(flags&0x1000)) {
         stream = entry + 0x2C;
-        step = 0x10000;
-        size = step - 0x8000;
         offset = *(u32 *)(entry + 0x60);
         limit = *(u32 *)(entry + 0x8C);
-        if (offset + 0x8000 > limit) size = limit - offset;
-        else {
-            for (n = 2; n < 6; n++) {
-                if (offset + step > limit) {
-                    size -= (0x8000 - (limit - (offset + ((n - 1) << 15)))) / n;
-                    size += 0x20 - (size & 0x1F);
-                    break;
-                }
-                step += 0x8000;
-            }
-        }
+        size = SoundReadSizeB(offset,limit);
         aligned = (size + 0x1F) & ~0x1F;
         if (!(flags & 0x400)) {
             fn_800B49E0(*(void **)stream, *(s32 *)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), aligned, *(u16 *)(entry + 4) + offset, fn_800B1720);
@@ -768,31 +710,19 @@ void fn_800AECC0(void) {
                     flags = *(u16 *)entry;
                     if (!(flags&0x2000)) {
             stream = entry + 0xB4;
-            step = 0x10000;
-        size2 = step - 0x8000;
             offset = *(u32 *)(entry + 0xE8);
             limit = *(u32 *)(entry + 0x114);
-            base = limit + (0x20 - (limit & 0x1F));
-            if (offset + 0x8000 > limit) size2 = limit - offset;
-            else {
-                    for (n = 2; n < 6; n++) {
-                    if (offset + step > limit) {
-                        size2 -= (0x8000 - (limit - (offset + ((n - 1) << 15)))) / n;
-                        size2 += 0x20 - (size2 & 0x1F);
-                        break;
-                    }
-                    step += 0x8000;
-                }
-            }
-            aligned2 = (size2 + 0x1F) & ~0x1F;
+            base = limit + (32 - (limit & 31));
+            size = SoundReadSizeB(offset,limit);
+            aligned = (size + 0x1F) & ~0x1F;
             if (!(flags & 0x400)) {
-                fn_800B49E0(*(void **)stream, *(s32 *)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), aligned2, *(u16 *)(entry + 4) + (offset + base), fn_800B1720);
+                fn_800B49E0(*(void **)stream, *(s32 *)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), aligned, *(u16 *)(entry + 4) + (offset + base), fn_800B1720);
             } else {
                 base = offset + base + *(u32 *)((u8 *)lbl_80317338 + *(u16 *)(entry + 2)*4 + 0x134) + *(u16 *)(entry + 4);
                 DCInvalidateRange(*(void **)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), 0x8000);
-                fn_80215D9C(stream + 4, stream, 1, 0, base, *(void **)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), aligned2, fn_800B16EC);
+                fn_80215D9C(stream + 4, stream, 1, 0, base, *(void **)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), aligned, fn_800B16EC);
             }
-            *(u32 *)(stream + 0x48) = size2;
+            *(u32 *)(stream + 0x48) = size;
 
                         *(u16 *)entry |= 0x2000;
                         if (*(u16 *)entry & 0x400) *(u16 *)(entry+0x108)=1;
