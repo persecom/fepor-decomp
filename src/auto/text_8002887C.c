@@ -1781,8 +1781,8 @@ void fn_8002F774(void) {
 }
 
 void *fn_8002F778(void) {
-    extern void *lbl_802694B8;
-    return (char*)&lbl_802694B8 + 0xDE;
+    extern u16 lbl_802694B8[];
+    return (char *)lbl_802694B8 + 0xDE;
 }
 
 void fn_8002F788(s32 arg0) {
