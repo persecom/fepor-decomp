@@ -2,6 +2,11 @@
 #include "common.h"
 #include "global.h"
 
+static inline f32 ClampMovementMinimum(f32 value, f32 minimum) {
+    if (value < minimum) value = minimum;
+    return value;
+}
+
 static inline s32 CountUnitItemReferences(u8 *unit,u8 *target) {
 void **fn_80037BBC(void *,s32);
 s32 count=0; u8 *entry; void *item; s32 i;
@@ -1755,12 +1760,12 @@ void fn_8018931C(void *arg0, f32 scaleArg) {
     extern u8 lbl_803301A8[];
     extern void *lbl_80367240;
     extern f32 lbl_8036AD18, lbl_8036ACF8, lbl_8036AD08, lbl_8036AD1C, lbl_8036ACD8;
-    f32 z;
- f32 duration;
- f32 x;
- f32 y;
+    f32 duration;
+ 
+ 
+ 
  f32 step;
- f32 scale;
+ f32 scale; f32 dx,dy; f32 minimum; f32 distance;
     u8 fast;
     u32 flags;
     u8 index;
@@ -1772,16 +1777,19 @@ void fn_8018931C(void *arg0, f32 scaleArg) {
     else if(lbl_80330708[0x57]>=2 && (flags&0x100)) fast=1;
     else fast=0;
     if(fast) {
-        scaleArg=lbl_8036AD18;
-        step=duration*scaleArg;
-        if(step<lbl_8036ACF8) step=lbl_8036ACF8;
+        step=duration*lbl_8036AD18;
+        minimum=lbl_8036ACF8;
+ if(step<minimum) step=minimum;
         M2C_FIELD(M2C_FIELD(arg0,void **,0x34),f32 *,0x5C)=lbl_8036AD08;
     } else {
         M2C_FIELD(M2C_FIELD(arg0,void **,0x34),f32 *,0x5C)=step=lbl_8036ACF8;
     }
     if(M2C_FIELD(arg0,u16 *,0x52)&0x8000) {
-        scaleArg=lbl_8036AD1C*(f32)__fabs(M2C_FIELD(arg0,f32 *,0x48)-M2C_FIELD(arg0,f32 *,0x44));
-        if(scaleArg<lbl_8036ACF8) scaleArg=lbl_8036ACF8;
+        scaleArg=M2C_FIELD(arg0,f32 *,0x48)-M2C_FIELD(arg0,f32 *,0x44);
+ scaleArg=(f32)__fabs(scaleArg);
+ scaleArg=lbl_8036AD1C*scaleArg;
+        minimum=lbl_8036ACF8;
+ if(scaleArg<minimum) scaleArg=minimum;
         duration=(s32)(duration*scaleArg);
     }
     M2C_FIELD(arg0,f32 *,0x3C)+=step;
@@ -1790,11 +1798,17 @@ void fn_8018931C(void *arg0, f32 scaleArg) {
         M2C_FIELD(arg0,u8 *,0x58)++;
         fn_8000C188(arg0);
     }
-    x=fn_80059F64(lbl_8036ACD8+(f32)(s8)M2C_FIELD(arg0,u8 *,0x40),lbl_8036ACD8+(f32)(s8)M2C_FIELD(arg0,u8 *,0x42),duration,M2C_FIELD(arg0,f32 *,0x3C));
+    {
+    f32 x=fn_80059F64(lbl_8036ACD8+(f32)(s8)M2C_FIELD(arg0,u8 *,0x40),lbl_8036ACD8+(f32)(s8)M2C_FIELD(arg0,u8 *,0x42),duration,M2C_FIELD(arg0,f32 *,0x3C));
+    f32 y;
+    f32 z;
     y=fn_80059F64(lbl_8036ACD8+(f32)(s8)M2C_FIELD(arg0,u8 *,0x41),lbl_8036ACD8+(f32)(s8)M2C_FIELD(arg0,u8 *,0x43),duration,M2C_FIELD(arg0,f32 *,0x3C));
     z=fn_80059F64(M2C_FIELD(arg0,f32 *,0x44),M2C_FIELD(arg0,f32 *,0x48),duration,M2C_FIELD(arg0,f32 *,0x3C));
     p=M2C_FIELD(arg0,u8 **,0x30);
-    M2C_FIELD(arg0,f32 *,0x4C)+=(f32)__fabs(x-M2C_FIELD(p,f32 *,4))+(f32)__fabs(y-M2C_FIELD(p,f32 *,8));
+    distance=M2C_FIELD(arg0,f32 *,0x4C);
+ dy=y-M2C_FIELD(p,f32 *,8);
+ dx=x-M2C_FIELD(p,f32 *,4);
+ M2C_FIELD(arg0,f32 *,0x4C)=distance+((f32)__fabs(dx)+(f32)__fabs(dy));
     M2C_FIELD(M2C_FIELD(arg0,void **,0x30),f32 *,4)=x;
     M2C_FIELD(M2C_FIELD(arg0,void **,0x30),f32 *,8)=y;
     M2C_FIELD(M2C_FIELD(arg0,void **,0x30),f32 *,12)=z;
@@ -1812,6 +1826,7 @@ void fn_8018931C(void *arg0, f32 scaleArg) {
         M2C_FIELD(p,f32 *,0x1C)=x; M2C_FIELD(p,f32 *,0x20)=y; M2C_FIELD(p,f32 *,0x24)=z;
         p[12]|=2;
     }
+}
 }
 
 void fn_8018A7E4(void *arg0) {
@@ -3364,7 +3379,6 @@ extern "C" void fn_8018F338(void *arg0) {
 }
 
 #pragma use_lmw_stmw on
-#pragma opt_strength_reduction off
 #pragma cplusplus on
 extern "C" s32 fn_8018F374(void *arg0) {
     void *fn_80105710(void *);
@@ -3379,11 +3393,12 @@ extern "C" s32 fn_8018F374(void *arg0) {
     Entry *e;
     s32 ctr;
     s32 dummy;
+    s32 j;
     void *p0;
     u8 *next;
+    s32 total;
     u8 *unit;
     void *target;
-    s32 total;
     void *tmp;
 
     tmp = *(void **)((u8 *)arg0 + 0x3C);
@@ -3418,37 +3433,18 @@ loop2_test:
     e = lbl_803200AC;
     dummy = 0;
     for (ctr = 0x28; ctr != 0; ctr--) {
-        p0 = e->ptr;
-        if (p0 != NULL && (e->flags & 0x3F) == 0 && p0 == target) {
-            total++;
+        for (j = 5; j != 0; j--) {
+            p0 = e->ptr;
+            if (p0 != NULL && (e->flags & 0x3F) == 0 && p0 == target) {
+                total++;
+            }
+            e++;
         }
-        e++;
-        p0 = e->ptr;
-        if (p0 != NULL && (e->flags & 0x3F) == 0 && p0 == target) {
-            total++;
-        }
-        e++;
-        p0 = e->ptr;
-        if (p0 != NULL && (e->flags & 0x3F) == 0 && p0 == target) {
-            total++;
-        }
-        e++;
-        p0 = e->ptr;
-        if (p0 != NULL && (e->flags & 0x3F) == 0 && p0 == target) {
-            total++;
-        }
-        e++;
-        p0 = e->ptr;
-        if (p0 != NULL && (e->flags & 0x3F) == 0 && p0 == target) {
-            total++;
-        }
-        e++;
         dummy += 4;
     }
     return total;
 }
 #pragma cplusplus reset
-#pragma opt_strength_reduction reset
 #pragma use_lmw_stmw reset
 
 extern "C" void fn_8018F6E8(void *arg0, s32 arg1) {
@@ -6079,9 +6075,14 @@ extern "C" void *fn_80198288(void *arg0, void *arg1, void *arg2) {
     self->unk80 = temp;
     fn_800C9A60(&sp20, -1);
 
+    z = lbl_8036AE88;
+    self->unk90 = z;
+    self->unk94 = z;
+    self->unk98 = 0;
+    self->unk9C = 0;
     self->unk60 = (void *)fn_800E7FB4(
-        (temp = self->unk80, self->unk88 = temp, self->unk98 = 0, self->unk9C = 0, saved),
-        (z = lbl_8036AE88, self->unk90 = z, self->unk94 = z, &self->str54));
+        (self->unk88 = self->unk80, saved),
+        &self->str54);
 
     self->unk64 = ((VObj *)saved)->v2((char *)(lbl_8027A780 + 0x53), fn_800C93EC(&sp74));
     self->unk68 = ((VObj *)saved)->v2((char *)(lbl_8027A780 + 0x5A), fn_800C93EC(&sp68));
