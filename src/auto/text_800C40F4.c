@@ -253,6 +253,7 @@ public:
     s32 *ptr;
     s32 state;
     SortIterator(const SortIterator &o) { ptr=o.ptr; state=o.state; }
+    ~SortIterator() {}
     SortIterator &operator+=(s32 n) { ptr+=n; return *this; }
     SortIterator operator+(s32 n) const { return SortIterator(*this) += n; }
 };
