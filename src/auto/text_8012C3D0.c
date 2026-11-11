@@ -704,6 +704,49 @@ void fn_8012F5A8(s32 unused0, s32 unused1, s32 *arg2, s32 *arg3, s32 *arg4, s32 
     *arg5 = 0x28;
 }
 
+void fn_8012FE1C(void *arg0, void *arg1, f32 farg0, f32 farg1) {
+    void fn_800075D8(void);
+    void fn_8000770C(f32, f32, f32, f32, f32, f32);
+    void fn_80007884(void);
+    void fn_80007898(s32);
+    void fn_80009B8C(s32);
+    void fn_80009B98(void);
+    void fn_80009D74(f32, f32, f32, f32);
+    void fn_80009F90(void *, s32, s32);
+    void fn_8000A248(void);
+    void fn_8000A258(void);
+    extern f32 lbl_8036A550;
+    extern f32 lbl_8036A554;
+    extern f32 lbl_8036A56C;
+    extern f32 lbl_8036A570;
+    extern f32 lbl_8036A574;
+    extern f32 lbl_8036A578;
+    extern f32 lbl_8036A500;
+    extern f32 lbl_8036A50C;
+    extern f32 lbl_8036A510;
+
+    fn_8000A258();
+    fn_80009B98();
+    fn_80009B8C(0xFF);
+    fn_8000A248();
+    fn_8000A258();
+    fn_80009D74(farg0, farg1, lbl_8036A554, lbl_8036A50C);
+    fn_80009F90(arg1, 0, 0x11);
+    fn_8000A248();
+    fn_80007898(1);
+    fn_8000770C(lbl_8036A510, lbl_8036A510, lbl_8036A510, lbl_8036A510, lbl_8036A56C, lbl_8036A570);
+    fn_800075D8();
+    fn_80007884();
+    fn_8000A258();
+    fn_80009D74(lbl_8036A550 + farg0, lbl_8036A550 + farg1, lbl_8036A500, lbl_8036A50C);
+    fn_80009F90(arg1, 0x11, 0x11);
+    fn_8000A248();
+    fn_80007898(1);
+    fn_8000770C(lbl_8036A510, lbl_8036A510, lbl_8036A510, (f32)(*(u8 *)((u8 *)arg0 + 0x22) << 5), lbl_8036A574, lbl_8036A578);
+    fn_800075D8();
+    fn_80007884();
+}
+
 #pragma use_lmw_stmw on
 void fn_8012FF60(void *arg0) {
     void fn_80202300(void *, s32, f32);
