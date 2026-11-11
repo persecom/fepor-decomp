@@ -867,13 +867,13 @@ void UnlockedHandler(s32 chan, void *context) {
 }
 
 void fn_8023A504(s32 *arg2) {
-    s32 EXIGetID(s32 *);
-    s32 sp14;
+    s32 EXIGetID(s32, u32, u32 *);
+    u32 sp14;
     s32 temp_r0;
     s32 temp_r4;
     s32 temp_r5;
 
-    if (EXIGetID(&sp14) == 0) {
+    if (EXIGetID(0, 0, &sp14) == 0) {
         return;
     }
     temp_r5 = sp14 & 0xFFFFFF00;
