@@ -2265,7 +2265,7 @@ void fn_80079B9C(void *arg1, void *arg2) {
 void fn_80079CD8(void *arg0) {
     M2C_UNK fn_8000C070(void *, s32);
     u32 fn_8000CD60();
-    M2C_UNK fn_8007A524(void *, M2C_UNK, M2C_UNK);
+    void fn_8007A524(void *, s32, s32);
     s32 var_r31 = 0;
     s32 temp_r0 = M2C_FIELD(arg0, s16 *, 0x38);
     u32 temp_r3;
