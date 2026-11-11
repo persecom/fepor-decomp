@@ -5971,6 +5971,27 @@ void fn_80196844(void) {
 
 }
 
+extern u16 lbl_8028E090[];
+void *fn_80196848(void *arg0, s16 arg1) {
+    void fn_800C9A60(void *, s32);
+    void fn_800DF724(void *, s32);
+    void fn_800C428C(void *);
+    extern void *lbl_80296778[];
+
+    if (arg0 != NULL) {
+        M2C_FIELD(arg0, void ***, 0x40) = lbl_80296778;
+        fn_800C9A60((s8 *)arg0 + 0x54, -1);
+        if (arg0 != NULL) {
+            *(void **)((char *)arg0 + 0x40) = (void *)lbl_8028E090;
+            fn_800DF724(arg0, 0);
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_801968CC(void *arg0, s32 arg1) {
     s32 temp_r0;
     s32 temp_r5;
