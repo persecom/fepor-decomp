@@ -2007,28 +2007,37 @@ void fn_800D6878(void *arg0) {
 }
 
 #pragma use_lmw_stmw on
-u32 *fn_800D6898(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3, void *arg4) {
+u32 *fn_800D6898(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3, void *arg4)
+{
     struct Tag { u8 b; } tag;
     M2C_UNK fn_800CA728(u32 *, char *, char *, void *, struct Tag);
     M2C_UNK fn_8022CF78(void);
     M2C_UNK fn_80232058(void *, const char *, ...);
     extern char __files[];
+
     u32 size;
     u32 len;
     char *p;
 
-    size = arg1[0];
+    size = *(volatile u32 *)arg1;
+
     arg0[1] = 0;
+
     if (arg2 > size) {
         fn_80232058(__files + 0xA0, lbl_802704F8 + 0x9B3);
         fn_8022CF78();
     }
+
     len = size - arg2;
+
     if (len > arg3) {
         len = arg3;
     }
+
     p = (char *)arg1[2] + arg2;
+
     fn_800CA728(arg0, p, p + len, arg4, tag);
+
     return arg0;
 }
 #pragma use_lmw_stmw reset
@@ -10962,7 +10971,6 @@ extern u8 lbl_802CA518[];
     s32 temp_r30;
     void *temp_r28;
     void *temp_r27;
-    u8 *base;
 
     sp10 = arg5;
     var_r19 = arg_spC;
@@ -10979,13 +10987,15 @@ extern u8 lbl_802CA518[];
     var_r18 = (s16)arg1;
     var_r17 = (s16)arg0;
     fn_800FE490((s16)var_r17, (s16)var_r18, arg2, 5, var_r19);
-    base = lbl_802CA518;
-    if (*(s16 *)(base + (((s8)arg3 + ((s8)arg4 << 6)) * 2) + 0x610e) < 0) {
-        var_r0 = 0x7FFF;
-    } else {
-        base += 0x10000;
-        base += ((s8)arg0 + ((s8)arg1 << 6)) * 2;
-        var_r0 = *(s16 *)(base - 0x7e72);
+    {
+        u8 *base = lbl_802CA518;
+        if (*(s16 *)(base + (((s8)arg3 + ((s8)arg4 << 6)) * 2) + 0x610e) < 0) {
+            var_r0 = 0x7FFF;
+        } else {
+            base += 0x10000;
+            base += ((s8)var_r17 + ((s8)var_r18 << 6)) * 2;
+            var_r0 = *(s16 *)(base - 0x7e72);
+        }
     }
     var_r26 = (s16)var_r0;
     var_r25 = -1;
@@ -11903,6 +11913,98 @@ s32 fn_801032F8(void) {
     fn_800D758C(lbl_80367918);
     return 0;
 }
+
+void *fn_80103428(void *arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    extern u8 lbl_80273420[];
+    extern u8 lbl_8028EAC8[];
+
+    extern void fn_800C9ABC(void *, const char *, void *);
+    extern void fn_800CB90C(void *, void *, const char *);
+    extern void fn_800D764C(void *, s32, s32, s32, void *, void *);
+    extern void fn_800C9A60(void *, s32);
+    extern void *fn_800D75FC(void *, void *);
+
+    extern void fn_80103320(void);
+    extern void fn_801032F8(void);
+
+    u8 *obj;
+    u8 *strings;
+
+    u8 temp0[12];
+    u8 temp1[12];
+    u8 temp2[12];
+    u8 temp3[12];
+    u8 temp4[12];
+    u8 temp5[12];
+
+    u32 value0;
+    u32 value1;
+    u32 value2;
+    u32 value3;
+    u32 value4;
+    u32 value5;
+
+    u8 *entry;
+
+    obj = (u8 *)arg0;
+    strings = lbl_80273420;
+
+    fn_800C9ABC(temp0, (const char *)(strings + 0xC), &value0);
+
+    fn_800CB90C(
+        temp1,
+        temp0,
+        (const char *)(strings + 0x13)
+    );
+
+    fn_800C9ABC(temp2, (const char *)(strings + 0x1E), &value1);
+
+    fn_800D764C(
+        obj,
+        arg1,
+        arg2,
+        arg3,
+        temp1,
+        temp2
+    );
+
+    fn_800C9A60(temp2, -1);
+    fn_800C9A60(temp1, -1);
+    fn_800C9A60(temp0, -1);
+
+    *(void **)(obj + 0xC) = lbl_8028EAC8;
+
+    fn_800C9ABC(temp3, (const char *)(strings + 0x25), &value2);
+
+    entry = (u8 *)fn_800D75FC(obj, temp3);
+    *(void **)(obj + 0x424) = entry;
+
+    fn_800C9A60(temp3, -1);
+
+    fn_800C9ABC(temp4, (const char *)(strings + 0x2D), &value3);
+
+    entry = (u8 *)fn_800D75FC(obj, temp4);
+    *(void **)(obj + 0x428) = entry;
+
+    fn_800C9A60(temp4, -1);
+
+    fn_800C9ABC(temp5, (const char *)(strings + 0x33), &value4);
+
+    entry = (u8 *)fn_800D75FC(obj, temp5);
+    *(void **)(obj + 0x42C) = entry;
+
+    fn_800C9A60(temp5, -1);
+
+    entry = *(u8 **)(obj + 0x428);
+    *(void **)(entry + 0xA4) = (void *)fn_80103320;
+
+    entry = *(u8 **)(obj + 0x42C);
+    *(void **)(entry + 0xA4) = (void *)fn_801032F8;
+
+    return obj;
+}
+
 extern s32 lbl_80320C20;
 extern u16 lbl_803678F4;
 extern u8 lbl_8032B3C0[];
