@@ -1567,8 +1567,8 @@ void fn_80188820(void *arg0) {
     s32 fn_800056CC(const char *, ...);
     s8 fn_80147578(void *, s32, f32, f32, f32);
     extern u8 lbl_80278E24[];
-    void *str;
     void *ent;
+    void *str;
     void *parent;
     f32 f31;
     f32 f30;
