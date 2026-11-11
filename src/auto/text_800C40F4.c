@@ -254,8 +254,8 @@ public:
     s32 state;
     SortIterator(const SortIterator &o) { ptr=o.ptr; state=o.state; }
     SortIterator &operator+=(s32 n) { ptr+=n; return *this; }
+    SortIterator operator+(s32 n) const { return SortIterator(*this) += n; }
 };
-static inline SortIterator operator+(SortIterator it, s32 n) { it+=n; return it; }
 class SortCompare {
 public:
     u8 value;
