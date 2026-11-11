@@ -1,9 +1,8 @@
 /* Functions from 0x8010554C to 0x80110128, found by decomp-toolkit. */
 #include "common.h"
 
-static inline s16 fn_8010EF74_cost(s8 x, s8 y) {
-    extern u8 lbl_802CA518[];
-    return (*(s16 **)(lbl_802CA518 + 0x14190))[x + (y << 6)];
+static inline s32 fn_8010EF74_cost(u8 *map, s8 x, s8 y) {
+    return (*(s16 **)(map + 0x14190))[x + (y << 6)];
 }
 
 static inline u8 fn_8010CF28_check(void *a, void *b) {
