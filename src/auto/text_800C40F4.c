@@ -4734,6 +4734,26 @@ void fn_800E2180(s32 *arg0, s32 *arg1) {
     *arg1 = temp_r5;
 }
 
+void *fn_800E2194(void *arg0, s16 arg1) {
+    void fn_800C9A60(void *, s32);
+    void fn_800DF724(void *, s32);
+    void fn_800C428C(void *);
+    extern void *lbl_8028E020[];
+
+    if (arg0 != NULL) {
+        M2C_FIELD(arg0, void ***, 0x40) = lbl_8028E020;
+        fn_800C9A60((s8 *)arg0 + 0x54, -1);
+        if (arg0 != NULL) {
+            *(void **)((char *)arg0 + 0x40) = (void *)lbl_8028E090;
+            fn_800DF724(arg0, 0);
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void fn_800E2218(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 0x64) = arg1;
 }
