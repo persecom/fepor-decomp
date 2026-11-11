@@ -4,7 +4,7 @@
 
 ---
 
-[<img src=".github/assets/progress.svg" width="512" height="256" alt="Decompilation Progress">][progress]
+[<img src="https://bytematch.dev/persecom/fepor-decomp.svg?w=512&h=256&version=GFEE01" width="512" height="256" alt="Decompilation Progress">][progress]
 
 ---
 
@@ -16,11 +16,8 @@ This repository contains a work-in-progress decompilation of **Fire Emblem: Path
 
 Track the latest decompilation progress on [ByteMatch](https://bytematch.dev/persecom/fepor-decomp).
 
-## Progress Badges
-
 [Code Progress]: https://bytematch.dev/persecom/fepor-decomp.svg?measure=matched_code_percent&label=Code&version=GFEE01
 [Data Progress]: https://bytematch.dev/persecom/fepor-decomp.svg?measure=matched_data_percent&label=Data&version=GFEE01
-
 [progress]: https://bytematch.dev/persecom/fepor-decomp
 
 A work-in-progress matching decompilation of **Fire Emblem: Path of Radiance** (GFEE01) for the Nintendo GameCube.
