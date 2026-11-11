@@ -1008,7 +1008,7 @@ block_10:
 }
 
 void __OSEnableBarnacle(s32 arg0, s32 arg1) {
-    s32 EXIGetID(s32 *);
+    s32 EXIGetID(s32, u32, u32 *);
     s32 fn_8023A61C(s32, s32, s32 *);
     extern u16 lbl_80368808;
     extern u16 lbl_8036880C;
@@ -1016,7 +1016,7 @@ void __OSEnableBarnacle(s32 arg0, s32 arg1) {
     extern u16 lbl_80368814;
     s32 sp10;
 
-    if ((EXIGetID(&sp10) != 0) && (sp10 != 0x01020000)) {
+    if ((EXIGetID(0, 0, (u32 *)&sp10) != 0) && (sp10 != 0x01020000)) {
         if (sp10 < 0x01020000) {
             if (sp10 != 4) {
                 if (sp10 < 4) {
