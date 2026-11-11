@@ -7652,10 +7652,10 @@ s32 fn_800EC2B8(void) {
 
 extern void *lbl_803678C0;
 s32 fn_800ECCB8(void) {
-    s32 temp_r3;
-    
-    temp_r3 = *(s32*)((char*)lbl_803678C0 + 0x478);
-    fn_800DC454((void *)temp_r3);
+    void *temp_r3;
+
+    temp_r3 = *(void **)((char *)lbl_803678C0 + 0x478);
+    fn_800DC454(temp_r3);
     return 0;
 }
 
