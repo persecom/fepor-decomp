@@ -2,6 +2,8 @@
 #include "common.h"
 #include "global.h"
 
+typedef struct MaterialColor { u8 r, g, b, a; } MaterialColor;
+
 // Structure definition for the argument passed to fn_80063A14
 typedef struct {
     void* unk0;
@@ -1287,33 +1289,33 @@ void fn_8005E12C(u8 *arg0, char *arg1, u16 arg2) {
     char *ext;
     u8 match;
     u8 ch;
-    s8 c;
+    s8 sc;
     s8 drive;
     s32 size;
     s32 off;
     u32 res;
     s32 z;
 
-    if (*arg1 == '/') {
-        src = arg1 + 1;
-    } else {
-        src = arg1;
+    src = arg1;
+    if (*arg1 == (char)0x2f) {
+        src += 1;
     }
     z = 0;
-    dst = arg0;
     *(s32 *)(arg0 + 0x2C) = z;
+    dst = arg0;
     for (ctr = 0x29; ctr != 0; ctr--) {
         ch = *(u8 *)src;
-        if ((s8)ch >= 'A' && (s8)ch <= 'Z') {
-            *(u8 *)src = ch + 0x20;
+        sc = (s8)ch;
+        if (sc >= (s8)'A' && sc <= (s8)'Z') {
+            *(u8 *)src = (u8)(ch + 0x20);
         }
         *dst = *(u8 *)src;
         ch = *(u8 *)src;
         if ((s8)ch == 0) {
             break;
         }
-        c = (s8)ch;
-        *(s32 *)(arg0 + 0x2C) = c + *(s32 *)(arg0 + 0x2C) * 0x25;
+        sc = (s8)ch;
+        *(s32 *)(arg0 + 0x2C) = sc + *(s32 *)(arg0 + 0x2C) * 0x25;
         dst += 1;
         src += 1;
     }
@@ -1329,23 +1331,23 @@ void fn_8005E12C(u8 *arg0, char *arg1, u16 arg2) {
     ext = lbl_8026B330 + 0x221;
     goto find1_chk;
 find1:
-    if ((s8)c == '.') {
+    if (sc == (s8)'.') {
         goto cmp1;
     }
     p += 1;
 find1_chk:
-    c = *p;
-    if ((s8)c != 0) {
+    sc = (s8)*p;
+    if (sc != 0) {
         goto find1;
     }
 cmp1:
     for (;;) {
-        c = *p;
-        if ((s8)c == 0) {
+        sc = (s8)*p;
+        if (sc == 0) {
             match = 0;
             break;
         }
-        if ((s8)c == (s8)*ext) {
+        if (sc == (s8)*ext) {
             ext += 1;
             p += 1;
             if ((s8)*ext == 0 && (s8)*p == 0) {
@@ -1365,23 +1367,23 @@ cmp1:
     ext = lbl_8026B330 + 0x226;
     goto find2_chk;
 find2:
-    if ((s8)c == '.') {
+    if (sc == (s8)'.') {
         goto cmp2;
     }
     p += 1;
 find2_chk:
-    c = *p;
-    if ((s8)c != 0) {
+    sc = (s8)*p;
+    if (sc != 0) {
         goto find2;
     }
 cmp2:
     for (;;) {
-        c = *p;
-        if ((s8)c == 0) {
+        sc = (s8)*p;
+        if (sc == 0) {
             match = 0;
             break;
         }
-        if ((s8)c == (s8)*ext) {
+        if (sc == (s8)*ext) {
             ext += 1;
             p += 1;
             if ((s8)*ext == 0 && (s8)*p == 0) {
@@ -1401,23 +1403,23 @@ cmp2:
     ext = lbl_8026B330 + 0x22B;
     goto find3_chk;
 find3:
-    if ((s8)c == '.') {
+    if (sc == (s8)'.') {
         goto cmp3;
     }
     p += 1;
 find3_chk:
-    c = *p;
-    if ((s8)c != 0) {
+    sc = (s8)*p;
+    if (sc != 0) {
         goto find3;
     }
 cmp3:
     for (;;) {
-        c = *p;
-        if ((s8)c == 0) {
+        sc = (s8)*p;
+        if (sc == 0) {
             match = 0;
             break;
         }
-        if ((s8)c == (s8)*ext) {
+        if (sc == (s8)*ext) {
             ext += 1;
             p += 1;
             if ((s8)*ext == 0 && (s8)*p == 0) {
@@ -3494,8 +3496,10 @@ void fn_80069F04(s32 arg0) {
 
 #pragma use_lmw_stmw on
 #pragma inline_depth(3)
+#pragma opt_common_subs off
 void fn_80069F2C(s32 arg0,void *arg1) {
 u32 fn_80060638(void*);
+void fn_8006C2A4(void*,s32);
 void fn_8006CAB0(s32);void fn_8006CA8C(void*);void fn_8006CA68(void*);void fn_8014E7F8(void*);
 u8 *child;
 u8 *data;
@@ -3504,21 +3508,22 @@ if(child)fn_80069F2C(arg0,child);
 data=(u8*)fn_80060638(arg1);
 if(*((u8*)arg1+0xb)){
 switch(arg0) {
-case 0:if(*(u32*)(data+0x3c))fn_8006CAB0((s32)arg1);break;
-case 1:if(*(u32*)(data+0x40))fn_8006CA8C(arg1);break;
+case 0:if(*(u32*)(data+0x3c))fn_8006C2A4(arg1,0);break;
+case 1:if(*(u32*)(data+0x40))fn_8006C2A4(arg1,1);break;
 case 2:
-if(*(u32*)(data+0x44))fn_8006CA68(arg1);
+if(*(u32*)(data+0x44))fn_8006C2A4(arg1,2);
 if(*(u32*)((u8*)arg1+0x54))fn_8014E7F8(arg1);
 break;
 default:
-if(*(u32*)(data+0x3c))fn_8006CAB0((s32)arg1);
-if(*(u32*)(data+0x40))fn_8006CA8C(arg1);
-if(*(u32*)(data+0x44))fn_8006CA68(arg1);
+if(*(u32*)(data+0x3c))fn_8006C2A4(arg1,0);
+if(*(u32*)(data+0x40))fn_8006C2A4(arg1,1);
+if(*(u32*)(data+0x44))fn_8006C2A4(arg1,2);
 if(*(u32*)((u8*)arg1+0x54))fn_8014E7F8(arg1);
 break;
 }
 }
 }
+#pragma opt_common_subs reset
 s32 fn_8006A374(void) {
     extern s32 lbl_8036730C;
     return lbl_8036730C;
@@ -3663,6 +3668,73 @@ void fn_8006B39C(void) {
     return;
 }
 
+#pragma use_lmw_stmw on
+void fn_8006C2A4(void *arg0,s32 arg1){
+u32 fn_80060638(void*);s32 fn_80060664(void*);u32 fn_800605E0(void*);s32 fn_8006049C(void*);s32 fn_80060520(void*);s32 fn_800604F4(void*);s32 fn_800604C8(void*);
+void fn_80220154(s32,s32,s32);void fn_8006DA64(void*,s32,void*);void fn_8006C748(void*,s32);
+void fn_8006B39C(void*,void*,s32);void fn_8006A930(void*,void*,s32);void fn_80224E1C(s16);
+void fn_802245D8(s32,s32,s32,s32);void fn_80224684(s32,s32,s32);void fn_80067490(s32);
+void fn_8006A6C8(u32,u8,u8,u8,s32);u8 fn_80068D84(void*,s32,void*,s32);void fn_80224A68(s32,s32);void fn_80066D00(s32);void fn_80069C98(void);
+extern u8 lbl_8026B8AC[];extern void *lbl_80367308,*lbl_8036730C;
+u8 *data,*node,*p;
+s32 aux,work,addr1,addr2;
+u32 geometry,last,format;
+u8 draw,reset;
+data=(u8*)fn_80060638(arg0);aux=fn_80060664(arg0);geometry=fn_800605E0(arg0);work=fn_8006049C(arg0);last=-1;
+fn_80220154(11,*(s32*)(data+0x30),4);fn_80220154(12,*(s32*)(data+0x30),4);
+fn_80220154(13,*(s32*)(data+0x2c),4);fn_80220154(14,*(s32*)(data+0x2c),4);
+/* Original initializes GQR2 through GQR5 here. */
+switch(arg1){
+case 0:node=*(u8**)(data+0x3c);break;
+case 1:node=*(u8**)(data+0x40);break;
+case 2:node=*(u8**)(data+0x44);break;
+default:fn_8006DA64(lbl_8026B8AC+0x27,0x162,lbl_8026B8AC+0x9d);break;
+}
+draw=1;fn_8006C748(arg0,arg1);
+for(p=node;p;p=*(u8**)(p+4))*(s16*)(p+0xe)=-1;
+for(;node;node=*(u8**)(node+4)){
+if(!(*(u16*)(node+8)&0x400)&&(!(*(u32*)arg0&0x400000)||(*(u16*)(node+8)&0x8000))){
+if(*(u16*)(node+8)&2)fn_8006B39C(node,arg0,work);
+else{if(*(s16*)(node+0xe)<0)fn_8006A930(node,arg0,work);fn_80224E1C(*(s16*)(node+0xe));}
+if(*(u16*)(node+8)&0x1e0){
+if(*(u16*)(node+8)&0x40)fn_802245D8(1,4,1,0);
+if(*(u16*)(node+8)&0x80)fn_802245D8(3,0,0,0);
+if(*(u16*)(node+8)&0x100)fn_80224684(0,3,0);
+if(*(u16*)(node+8)&0x20)fn_80067490(0);
+}
+lbl_80367308=arg0;lbl_8036730C=node;
+format=*(u32*)(node+0x10)&0xfffffff;
+if(last!=format){
+last=format;
+if(*(u16*)(node+8)&1){
+fn_8006A6C8(format,(*(u8**)(data+0x48))[0xc],0,data[0x5e],1);
+fn_80220154(9,fn_80060520(arg0),12);
+if(format&0x800)fn_80220154(25,fn_80060520(arg0)+6,12);
+else fn_80220154(10,fn_80060520(arg0)+6,12);
+}else {
+fn_8006A6C8(format,data[0x5c],data[0x5d],data[0x5e],0);
+if(!geometry){
+fn_80220154(9,*(s32*)(data+0x24),6);
+if(format&0x800)fn_80220154(25,*(s32*)(data+0x28),3);
+else fn_80220154(10,*(s32*)(data+0x28),3);
+}else{
+addr1=fn_800604F4(arg0);addr2=fn_800604C8(arg0);fn_80220154(9,addr1,6);
+if(format&0x800)fn_80220154(25,addr2,3);else fn_80220154(10,addr2,3);
+}
+}
+}
+if((*(u32*)arg0&0xc00000)||!(*(u16*)(node+8)&4))draw=fn_80068D84(arg0,aux,node,*(s32*)(data+0x34)+(*(s16*)(node+0xa)<<5));
+if(draw)fn_80224A68(*(s32*)(node+0x14),*(s32*)(node+0x18));
+if(!(*(u16*)(node+8)&0x1e0))reset=0;else {fn_80066D00(-1);reset=1;}
+if(reset)fn_8006C748(arg0,arg1);
+fn_80069C98();
+}
+}
+if(*(u32*)arg0&0xf025c820){
+if(*(u32*)arg0&0x80000000)(*(void(**)(void*,s32))((u8*)arg0+0x94))(arg0,1);
+fn_80066D00(-1);
+}
+}
 void fn_8006C6F8(void *arg0) {
     void fn_80066D00(s32);
     s32 temp_r5;
