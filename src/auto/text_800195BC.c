@@ -1391,6 +1391,55 @@ u8 fn_8001DDE8(void *arg0) {
     return (u8) ((((M2C_FIELD(arg0, s32 *, 0x3C) & 0x40E) ^ 0) | ((M2C_FIELD(arg0, s32 *, 0x38) & 0) ^ 0)) != 0);
 }
 
+char *fn_8001E4D0(u8 arg0, u8 arg1)
+{
+    extern u8 lbl_80268820[];
+
+    switch (arg0) {
+    case 0:
+        return (char *)lbl_80268820 + 0x2D4;
+
+    case 1:
+        return (char *)lbl_80268820 + 0x2DA;
+
+    case 2:
+        return (char *)lbl_80268820 + 0x2E0;
+
+    case 3:
+        return (char *)lbl_80268820 + 0x2E4;
+
+    case 4:
+        return (char *)lbl_80268820 + 0x2E8;
+
+    case 5:
+        return (char *)lbl_80268820 + 0x2ED;
+
+    case 6:
+        return (char *)lbl_80268820 + 0x2F5;
+
+    case 7:
+        if (arg1 != 0) {
+            return (char *)lbl_80268820 + 0x2FA;
+        }
+        return (char *)lbl_80268820 + 0x300;
+
+    case 8:
+        return (char *)lbl_80268820 + 0x306;
+
+    case 9:
+        return (char *)lbl_80268820 + 0x30B;
+
+    case 10:
+        return (char *)lbl_80268820 + 0x30E;
+
+    case 11:
+        return (char *)lbl_80268820 + 0x311;
+
+    default:
+        return (char *)lbl_80268820 + 0x314;
+    }
+}
+
 void fn_8001E5D0(u32 arg0, u32 arg1)
 {
     // Early return if argument exceeds bounds
