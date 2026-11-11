@@ -31,6 +31,8 @@ extern u16 lbl_80330708[1400];
 extern f32 lbl_803692E0;
 extern f32 lbl_80369300;
 extern f32 lbl_8036930C;
+extern f64 lbl_803692C0;
+extern f32 lbl_803692B8;
 extern u16 lbl_80285D18[];
 extern char lbl_8026B590[];
 
