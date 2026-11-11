@@ -16,6 +16,13 @@ typedef struct {
 } Unit;
 
 typedef struct {
+    u8 pad0[0xC];
+    u32 unkC;
+    u8 pad1[8];
+    void *unk18;
+} Unk18CObj;
+
+typedef struct {
     s32 unk0;
     s32 unk4;
     s32 unk8;
@@ -4667,7 +4674,6 @@ void fn_80049E24(void) {
     s8 y;
     s8 x;
     s32 yOff;
-    s32 idx;
     s32 pos;
     u16 tile;
     f32 fx;
@@ -4712,10 +4718,9 @@ void fn_80049E24(void) {
         do {
             x = *(s32 *)lbl_802CA518 - 1;
             pos = x + yOff;
-            idx = pos << 1;
             goto x_test;
             do {
-                tile = *(u16 *)(lbl_802CA518 + 0x1218E + idx);
+                tile = *(u16 *)(lbl_802CA518 + 0x1218E + (pos << 1));
                 if (tile & 0x2000) {
                     fn_80222C50(sp3C + ((tile << 1) & 0x1E0), 0);
                     fx = (f32)(s8)x;
@@ -4749,7 +4754,6 @@ void fn_80049E24(void) {
                     *(volatile u8 *)0xCC008000 = 1;
                 }
                 pos -= 1;
-                idx -= 2;
                 x -= 1;
             x_test:
                 ;
