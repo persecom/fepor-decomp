@@ -2969,3 +2969,9 @@ s32 Hu_IsStub(void) {
 extern u16 Ecb_8033E188[];
 
 extern u16 Ecb_8033E188[192];
+int fn_802368F4(y, x)
+    f64 *y;
+    f64 x;
+{
+    return 0;
+}
