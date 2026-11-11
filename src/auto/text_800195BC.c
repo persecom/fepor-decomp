@@ -1446,6 +1446,82 @@ void fn_8001E71C(void *arg0) {
     }
 }
 
+s32 fn_8001E7C0(void *arg0) {
+    s32 fn_802342B8(void *, void *);
+    extern u8 lbl_80268820[];
+
+    if (fn_802342B8(arg0, lbl_80268820 + 0x35D) == 0) {
+        return 0x81;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x366) == 0) {
+        return 0x81;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x371) == 0) {
+        return 0x81;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x37D) == 0) {
+        return 0x81;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x388) == 0) {
+        return 0x81;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x394) == 0) {
+        return 0x83;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x39D) == 0) {
+        return 0x84;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x3A7) == 0) {
+        return 0x84;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x3B3) == 0) {
+        return 0x84;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x3BF) == 0) {
+        return 0x85;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x3C8) == 0) {
+        return 0x85;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x3D3) == 0) {
+        return 0x86;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x3E0) == 0) {
+        return 0x87;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x3EC) == 0) {
+        return 0x87;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x3F6) == 0) {
+        return 0x85;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x401) == 0) {
+        return 0x81;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x40F) == 0) {
+        return 0x81;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x41A) == 0) {
+        return 0x85;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x42A) == 0) {
+        return 0x85;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x436) == 0) {
+        return 0x85;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x445) == 0) {
+        return 0x83;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x453) == 0) {
+        return 0x87;
+    }
+    if (fn_802342B8(arg0, lbl_80268820 + 0x461) == 0) {
+        return 0x87;
+    }
+    return fn_802342B8(arg0, lbl_80268820 + 0x46F) ? 0xC : 0x85;
+}
+
 void *fn_8001ED1C(void *arg0) {
     void *fn_8000E0E4(void *);
     extern u8 lbl_80268820[];
