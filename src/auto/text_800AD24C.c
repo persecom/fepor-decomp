@@ -663,6 +663,40 @@ s32 fn_800B1DEC(s32 arg0, s32 arg1) {
     return 0;
 }
 
+void fn_800B1E44(s32 arg0)
+{
+    void fn_8024B714(u32);
+    extern u8 lbl_80317338[];
+
+    u8 *entry;
+    u8 *base;
+
+    base = *(u8 **)(lbl_80317338 + 0xF4);
+    entry = base + arg0 * 0x14;
+
+    if (*(u16 *)entry != 0) {
+        fn_8024B714(*(u32 *)(entry + 0xC));
+        *(u16 *)entry = 0;
+    }
+}
+
+s32 fn_800B2494(s32 arg0)
+{
+    extern u8 lbl_80317338[];
+    s32 fn_8024B370(void *);
+
+    u8 *base;
+    void *entry;
+    s32 result;
+
+    base = *(u8 **)(lbl_80317338 + 0xF0);
+    entry = *(void **)(base + (arg0 << 4));
+
+    result = fn_8024B370(entry);
+
+    return result != 0;
+}
+
 void fn_800B24D8(s32 arg0, u8 arg1) {
     u8 fn_8024B370(s32);
     void fn_8024B4B0(u8, s32, s32, s32);
@@ -6243,9 +6277,9 @@ void fn_800B080C(s32 arg0, s32 arg1, s32 arg2) {
         *(s32 *)(buf + 0xFC) = arg0;
         if (arg2 != 0) {
         }
-        f0 = 0.0f;
+        f1 = 0.0f;
         *(u16 *)(entry + 0x78) = zero;
-        f1 = lbl_80369CD4;
+        f0 = lbl_80369CD4;
         *(s32 *)(entry + 0x70) = zero;
         *(s32 *)(entry + 0x60) = zero;
         *(s32 *)(entry + 0x64) = zero;
@@ -6265,9 +6299,9 @@ void fn_800B080C(s32 arg0, s32 arg1, s32 arg2) {
         *(u16 *)(entry + 0x110) = zero;
         *(u16 *)(entry + 6) = forty;
         *(u16 *)(entry + 8) = zero;
-        *(f32 *)(entry + 0x10) = f0;
-        *(f32 *)(entry + 0xC) = f1;
-        *(f32 *)(entry + 0x14) = f1;
+        *(f32 *)(entry + 0xC) = f0;
+        *(f32 *)(entry + 0x10) = f1;
+        *(f32 *)(entry + 0x14) = f0;
         *(u16 *)entry = one;
         if (arg2 != 0) {
             *(u16 *)entry = (u16)(*(u16 *)entry | 0x400);
