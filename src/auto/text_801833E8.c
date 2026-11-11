@@ -6537,6 +6537,7 @@ void fn_80196AD0(void *arg0, s32 arg1) {
         break;
     }
 }
+#pragma use_lmw_stmw reset
 
 #pragma cplusplus on
 extern "C" void fn_80197F5C(void *arg0) {
