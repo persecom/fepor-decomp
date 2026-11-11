@@ -4,22 +4,22 @@ static inline void init_761F8_base(void *p,s16 x,s16 y,s16 w,s16 h,s16 style) {
  extern u16 lbl_8028FDB0[],lbl_80292230[];
  extern f32 lbl_8036AB6C;
  f32 zero;
- s16 clear=0;
- M2C_FIELD(p,void * *,0)=lbl_8028FDB0; M2C_FIELD(p,s32 *,4)=clear; M2C_FIELD(p,void * *,0)=lbl_80292230; M2C_FIELD(p,s16 *,8)=-1;M2C_FIELD(p,s16 *,10)=x;
+ zero=lbl_8036AB6C;
+ M2C_FIELD(p,void * *,0)=lbl_8028FDB0; M2C_FIELD(p,s32 *,4)=0; M2C_FIELD(p,void * *,0)=lbl_80292230; M2C_FIELD(p,s16 *,8)=-1;M2C_FIELD(p,s16 *,10)=x;
 M2C_FIELD(p,s16 *,12)=y;
 M2C_FIELD(p,s16 *,14)=x+w;
 M2C_FIELD(p,s16 *,16)=y+h;
-M2C_FIELD(p,s16 *,18)=clear;
-M2C_FIELD(p,s16 *,20)=clear;
+M2C_FIELD(p,s16 *,18)=0;
+M2C_FIELD(p,s16 *,20)=0;
 M2C_FIELD(p,s16 *,22)=w;
 M2C_FIELD(p,s16 *,24)=h;
-M2C_FIELD(p,s16 *,26)=clear;
-M2C_FIELD(p,s16 *,28)=clear;M2C_FIELD(p,u8 *,30)=0xFF;
+M2C_FIELD(p,s16 *,26)=0;
+M2C_FIELD(p,s16 *,28)=0;M2C_FIELD(p,u8 *,30)=0xFF;
 M2C_FIELD(p,u8 *,31)=0xFF;
 M2C_FIELD(p,u8 *,32)=0xFF;
-M2C_FIELD(p,u8 *,33)=0xFF;M2C_FIELD(p,s16 *,0x22)=style; M2C_FIELD(p,s16 *,0x24)=clear;
- zero=lbl_8036AB6C; M2C_FIELD(p,f32 *,0x28)=zero; M2C_FIELD(p,f32 *,0x2C)=zero; M2C_FIELD(p,f32 *,0x30)=zero;
- M2C_FIELD(p,s32 *,0x34)=clear; M2C_FIELD(p,s32 *,0x38)=clear;
+M2C_FIELD(p,u8 *,33)=0xFF;M2C_FIELD(p,s16 *,0x22)=style; M2C_FIELD(p,s16 *,0x24)=0;
+ M2C_FIELD(p,f32 *,0x28)=zero; M2C_FIELD(p,f32 *,0x2C)=zero; M2C_FIELD(p,f32 *,0x30)=zero;
+ M2C_FIELD(p,s32 *,0x34)=0; M2C_FIELD(p,s32 *,0x38)=0;
  
 }
 #pragma opt_common_subs on
