@@ -2059,6 +2059,7 @@ void fn_801FA508(void *arg0) {
 
 __declspec(section ".rodata") static const char staff_fmt[] = "#F04%s";
 
+#pragma global_optimizer off
 void fn_801FA5DC(void *arg0) {
     void fn_8000A258(void);
     void fn_80009D74(f32, f32, f32, f32);
@@ -2093,6 +2094,7 @@ void fn_801FA5DC(void *arg0) {
     f32 limit;
     f32 scroll;
     f32 step;
+    f32 period;
     s16 w;
     u8 flag;
     Entry *ent;
@@ -2107,9 +2109,9 @@ void fn_801FA5DC(void *arg0) {
     fn_80009B8C(0xFF);
     fn_80009B80(0x80);
     fn_8000A248();
-    limit = *(f32 *)((u8 *)arg0 + 0x38);
-    scroll = (f32)fn_802387C8(lbl_8036BA28, lbl_8036BA30);
-    scroll = (f32)(s32)(scroll * (limit + lbl_8036BA38 / scroll)) / scroll;
+    step = *(f32 *)((u8 *)arg0 + 0x38);
+    period = (f32)fn_802387C8(lbl_8036BA28, lbl_8036BA30);
+    scroll = (f32)(s32)(period * (step + lbl_8036BA38 / period)) / period;
     ent = (Entry *)fn_8000D2BC(lbl_80281028 + 0x387);
     limit = lbl_8036BA00;
     step = lbl_8036BAAC;
@@ -2124,23 +2126,24 @@ void fn_801FA5DC(void *arg0) {
             fn_8000A258();
             fn_8000A174(0, 0x13);
             fn_8000A248();
-            if (ent->str0 != NULL) {
+            if ((u32)ent->str0 != 0U) {
                 w = fn_80010B78(ent->str0, -1, lbl_8036BA20);
                 fn_8001019C((s32)(f32)(0x120 - w), (s32)scroll, 1, ent->str0);
             }
-            if (ent->str4 != NULL) {
+            if ((u32)ent->str4 != 0U) {
                 w = fn_80010B78(ent->str4, -1, lbl_8036BA20);
                 fn_8001019C((s32)(f32)(0x130 - (w >> 1)), (s32)scroll, 1, ent->str4);
             }
-            if (ent->str8 != NULL) {
+            if ((u32)ent->str8 != 0U) {
                 fn_80010B78(ent->str8, -1, lbl_8036BA20);
-                fn_8001019C((s32)lbl_8036BAB0, (s32)scroll, 1, (void *)staff_fmt, ent->str8);
+                fn_8001019C((s32)lbl_8036BAB0, (s32)scroll, 1, (void *)(lbl_80281028 + 0x39A), ent->str8);
             }
         }
         scroll += step;
         ent++;
     }
 }
+#pragma global_optimizer reset
 void fn_801FA874(void *arg0) {
     s32 temp_r0;
 
