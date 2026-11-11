@@ -352,6 +352,25 @@ void fn_8022695C(void *arg0, s32 arg1) {
     }
 }
 
+void fn_8022699C(s32 arg0)
+{
+    extern u8 lbl_8033B078[];
+    extern void fn_802287B0(void *);
+    extern void fn_802287A8(void *);
+
+    u8 *buffer;
+
+    if (arg0 != -1 && arg0 >= 0 && arg0 < 3) {
+        buffer = lbl_8033B078 + arg0 * 0x890;
+
+        fn_802287B0(buffer);
+
+        *(u32 *)(buffer + 4) = 0;
+
+        fn_802287A8(buffer);
+    }
+}
+
 void *TRKGetBuffer(s32 arg0) {
     extern u8 lbl_8033B078[];
     void *ret;
