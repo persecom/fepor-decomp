@@ -1,5 +1,6 @@
 /* Functions from 0x800AD24C to 0x800C3F18, found by decomp-toolkit. */
 #include "common.h"
+typedef struct StreamB { u8 pad[0x2C]; s32 buffers[2]; u8 pad34[0x14]; u32 size; u16 index; } StreamB;
 extern s32 fn_80010710(u8* arg0);
   extern s32 lbl_80368230;
   extern s32 lbl_8028D544[];
@@ -6409,5 +6410,88 @@ s32 fn_800B125C(s32 arg0, s32 arg1) {
     }
     
     return arg1;
+}
+
+void fn_800B1368(void *arg0) {
+    void fn_800B1720(void *);
+    s32 fn_800B49C8(void *);
+    void fn_800B49E0(void *, s32, s32, s32, void *);
+    void DCInvalidateRange(void *, u32);
+    void fn_80215D9C(void *, void *, s32, s32, u32, void *, u32, void *);
+
+
+    u8 *entry;
+    u8 *stream;
+    u32 size, aligned, offset, limit, step, n, base;
+    s32 i;
+    entry = *(u8 **)((u8 *)lbl_80317338 + 0xF8) + (u8)*(u32 *)((u8 *)arg0 + 4) * 0x13C;
+    if (*(u32 *)(entry + 0x64) >= (u32)fn_800B49C8(*(void **)(entry + 0x2C))) {
+        *(u32 *)(entry + 0x60) = 0;
+        *(u32 *)(entry + 0x64) = 0;
+        *(u32 *)(entry + 0xE8) = 0;
+        *(u32 *)(entry + 0xEC) = 0;
+        *(u16 *)(entry + 0x78) = 1;
+        stream = entry + 0x2C;
+        size = 0x8000;
+        offset = *(u32 *)(entry + 0x60);
+        limit = *(u32 *)(entry + 0x8C);
+        if (offset + 0x8000 > limit) size = limit - offset;
+        else {
+            step = 0x10000;
+            for (n = 2; n < 6; n++) {
+                if (offset + step > limit) {
+                    size -= (0x8000 - (limit - (offset + ((n - 1) << 15)))) / n;
+                    size += 0x20 - (size & 0x1F);
+                    break;
+                }
+                step += 0x8000;
+            }
+        }
+        aligned = (size + 0x1F) & ~0x1F;
+        if (!(*(u16 *)entry & 0x400)) {
+            fn_800B49E0(*(void **)stream, *(s32 *)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), aligned, *(u16 *)(entry + 4) + offset, fn_800B1720);
+        } else {
+            base = *(u32 *)((u8 *)lbl_80317338 + *(u16 *)(entry + 2)*4 + 0x134) + offset + *(u16 *)(entry + 4);
+            DCInvalidateRange(*(void **)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), 0x8000);
+            fn_80215D9C(stream + 4, stream, 1, 0, base, *(void **)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), aligned, fn_800B16EC);
+        }
+        *(u32 *)(stream + 0x48) = size;
+        if (*(u16 *)(entry + 0x1E) == 2) {
+            *(u16 *)(entry + 0x100) = 1;
+            stream = entry + 0xB4;
+            size = 0x8000;
+            offset = *(u32 *)(entry + 0xE8);
+            limit = *(u32 *)(entry + 0x114);
+            base = limit + (0x20 - (limit & 0x1F));
+            if (offset + 0x8000 > limit) size = limit - offset;
+            else {
+                step = 0x10000;
+                for (n = 2; n < 6; n++) {
+                    if (offset + step > limit) {
+                        size -= (0x8000 - (limit - (offset + ((n - 1) << 15)))) / n;
+                        size += 0x20 - (size & 0x1F);
+                        break;
+                    }
+                    step += 0x8000;
+                }
+            }
+            aligned = (size + 0x1F) & ~0x1F;
+            if (!(*(u16 *)entry & 0x400)) {
+                fn_800B49E0(*(void **)stream, *(s32 *)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), aligned, *(u16 *)(entry + 4) + (offset + base), fn_800B1720);
+            } else {
+                base = offset + base + *(u32 *)((u8 *)lbl_80317338 + *(u16 *)(entry + 2)*4 + 0x134) + *(u16 *)(entry + 4);
+                DCInvalidateRange(*(void **)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), 0x8000);
+                fn_80215D9C(stream + 4, stream, 1, 0, base, *(void **)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), aligned, fn_800B16EC);
+            }
+            *(u32 *)(stream + 0x48) = size;
+        }
+    } else {
+        limit = fn_800B49C8(*(void **)(entry + 0x2C));
+        offset = *(u32 *)(entry + 0x60);
+        size = 0x8000;
+        if (offset + 0x8000 >= limit) size = limit - offset;
+        fn_800B49E0(*(void **)(entry + 0x2C), *(s32 *)(entry + 0x58), (size + 0x1F) & ~0x1F, offset, fn_800B125C);
+        *(u32 *)(entry + 0x74) = size;
+    }
 }
 
