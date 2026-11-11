@@ -529,6 +529,40 @@ void fn_801220B8(void *arg0)
     base[0x400C] = 1;
 }
 
+void fn_80122114(void *arg0, u8 arg1)
+{
+    extern s32 lbl_80367110;
+
+    u8 *base;
+    s32 offset;
+    u32 index;
+
+    if (lbl_80367110 & 0x800) {
+        return;
+    }
+
+    base = (u8 *)arg0;
+    base[0x400C] = 0;
+
+    offset = *(s32 *)(base + 0x4004);
+
+    if (offset > 0x3E) {
+        return;
+    }
+
+    index = *(u32 *)(base + 0x4000);
+
+    base[(((u8)(index + 0x100)) << 6) + offset] = arg1;
+
+    offset = *(s32 *)(base + 0x4004);
+    *(s32 *)(base + 0x4004) = offset + 1;
+
+    index = *(u32 *)(base + 0x4000);
+    offset = *(s32 *)(base + 0x4004);
+
+    base[(((u8)(index + 0x100)) << 6) + offset] = 0;
+}
+
 void fn_80122170(u32 *arg0) {
     u32 temp_r3;
     
