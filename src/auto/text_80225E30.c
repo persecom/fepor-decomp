@@ -88,6 +88,7 @@ extern u8 lbl_80289EB8[16];
 
 void TRKNubMainLoop(void);
 s32 TRKGetNextEvent(void *);
+#pragma options sdata=0
 void TRKNubMainLoop(void) {
     void *TRKGetBuffer(s32);
     void TRKDispatchMessage(void *);
@@ -100,7 +101,6 @@ void TRKNubMainLoop(void) {
     s32 exitFlag;
     s32 isIdle;
     void *buf;
-    u8 *pending;
 
     exitFlag = 0;
     isIdle = 0;
@@ -127,7 +127,7 @@ void TRKNubMainLoop(void) {
                 break;
             }
             TRKDestructEvent(event);
-        } else if (isIdle == 0 || (pending = *(u8 **)((u8 *)&gTRKInputPendingPtr + 0), *pending != 0)) {
+        } else if (isIdle == 0 || *gTRKInputPendingPtr != 0) {
             isIdle = 1;
             TRKGetInput();
         } else {
@@ -377,17 +377,17 @@ s32 TRKInitializeSerialHandler(void) {
     extern u16 lbl_802822F0[200];
     extern u16 lbl_8033CA28[12];
     u8 *g = (u8 *)lbl_8033CA28;
-    char *msgs = (char *)lbl_802822F0;
+    char *table = (char *)lbl_802822F0;
 
     *(s32 *)(g + 0) = -1;
     *(s32 *)(g + 8) = 0;
     *(s32 *)(g + 0xc) = 0;
-    MWTRACE(1, msgs + 0x00, 0x40);
-    MWTRACE(1, msgs + 0x24, 0x40);
-    MWTRACE(1, msgs + 0x48, 0x40);
-    MWTRACE(1, msgs + 0x6c, 0x40);
-    MWTRACE(1, msgs + 0x8c, 0x40);
-    MWTRACE(1, msgs + 0xac, 0x40);
+    MWTRACE(1, &table[0x00], 0x40);
+    MWTRACE(1, &table[0x24], 0x40);
+    MWTRACE(1, &table[0x48], 0x40);
+    MWTRACE(1, &table[0x6c], 0x40);
+    MWTRACE(1, &table[0x8c], 0x40);
+    MWTRACE(1, &table[0xac], 0x40);
     return 0;
 }
 
@@ -985,8 +985,11 @@ void TRKInterruptHandler(void)
     return;
 }
 
-void fn_80228CDC(f64 *arg0) {
-    *arg0 = M2C_ERROR(/* unknown instruction: mffs $f31 */);
+void fn_80228CDC(f64 *arg0)
+{
+    f64 __mffs(void);
+
+    *arg0 = __mffs();
 }
 
 void fn_80228D00(f64 *arg0)
@@ -1294,7 +1297,11 @@ s32 fn_8022A230(u32 start, s32 length, s32 mode) {
 #pragma use_lmw_stmw reset
 
 u8 fn_8022A4E0(s32 command, s32 file_handle, s32 *length_ptr, s32 buffer_ptr) {
-    __builtin_trap();
+    (void)command;
+    (void)file_handle;
+    (void)length_ptr;
+    (void)buffer_ptr;
+    return 0;
 }
 
 void fn_8022A4E8(void) {
@@ -1473,6 +1480,22 @@ void TRKLoadContext(void) {
 
 void TRKUARTInterruptHandler(void) {
 
+}
+
+void InitializeProgramEndTrap(void)
+{
+    void *fn_80003488(void *, const void *, u32);
+    void ICInvalidateRange(void *, u32);
+    void DCFlushRange(void *, u32);
+    void PPCHalt(void);
+
+    u8 *address;
+
+    address = (u8 *)PPCHalt + 4;
+
+    fn_80003488(address, (const void *)0x802827F8, 4);
+    ICInvalidateRange(address, 4);
+    DCFlushRange(address, 4);
 }
 
 void UnreserveEXI2Port(void) {
