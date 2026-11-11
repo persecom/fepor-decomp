@@ -1645,6 +1645,7 @@ void fn_8018B010(void *arg0) {
     M2C_FIELD(temp_r3, f32 *, 0xC) = (f32) M2C_FIELD(arg0, f32 *, 0x48);
 }
 
+typedef struct { u8 pad[0x50]; s32 current, limit; } B060State;
 void fn_8018B060(void *arg0) {
     void fn_8000C188(void);
     void fn_80050BCC(void *, s32);
@@ -4230,8 +4231,7 @@ void fn_80193668(void *arg0) {
     *(f32 *)((u8 *)self + 0x64) = lbl_8036AE20;
     key = fn_80019E04(lbl_80279DF0 + 0x510);
     fn_80015320(4, sp8);
-    i = 1;
-    do {
+    for (i = 1; i <= 0x9F; i++) {
         if ((u8)i != 0) {
             unit = lbl_802B14E4 + ((u8)i - 1) * 0x280;
         } else {
@@ -4243,8 +4243,7 @@ void fn_80193668(void *arg0) {
             found = 1;
             break;
         }
-        i += 1;
-    } while (i <= 0x9F);
+    }
     if (found == 0) {
         if (fn_800C39A4(lbl_803200AC, key) >= 0) {
             found = 1;
@@ -7976,10 +7975,10 @@ s32 fn_801A0F68(u8 arg0, u8 arg1, u8 arg2) {
 
     u8 *var_r31;
     u16 var_r30;
+    s32 temp_r28;
     void *temp;
     u8 sp9;
     u8 sp8;
-    s32 temp_r28;
     u16 half;
     void *var_r6;
     u32 var_r3;
