@@ -555,6 +555,24 @@ u8 fn_80092F9C(void *arg0)
   return count;
 }
 
+s32 fn_80093010(void *arg0, void *arg1)
+{
+    extern void *fn_80037BD0(void *, s32);
+
+    s32 i;
+    void *value;
+
+    for (i = 0; i < 8; i++) {
+        value = *(void **)fn_80037BD0(arg0, i);
+
+        if (value != 0 && value == arg1) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
 s32 fn_80093088(void *arg0) {
     s32 i = 0;
     for (;;) {
