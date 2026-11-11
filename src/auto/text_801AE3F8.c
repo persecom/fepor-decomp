@@ -4,10 +4,6 @@
 extern u16 lbl_802917D0;
 extern struct unk_struct lbl_80331C6C;
 
-#pragma cplusplus on
-static inline s32 as_s16(s32 x) { return (s16)x; }
-#pragma cplusplus reset
-
 void *fn_801AE3F8(u32 arg0) {
     void *fn_8000CAA0(void *, u32);
     void *fn_8000CAF0(void *, u32);
@@ -713,9 +709,10 @@ extern "C" void fn_801B0564(void *arg0) {
     void *p;
     void *color_arg;
     void *self;
-    s32 saved;
+    s16 saved;
     s16 cur;
     void *tmp;
+    s32 a;
     register int btn;
     register u8 gate;
     register int flags;
@@ -731,8 +728,9 @@ extern "C" void fn_801B0564(void *arg0) {
     *(u8 *)((u8 *)tmp + 0x3C) = 1;
     fn_8013FDA0(self);
     tmp = *(void **)((u8 *)self + 0x58);
+    a = saved;
     cur = *(s16 *)((u8 *)tmp + 0x3E);
-    if ((s16)saved != cur) {
+    if (a != cur) {
         saved = cur;
         if (fn_80166D8C(lbl_80330D68) != 0) {
             *(Pair *)&pos1 = ((Obj *)*(void **)((u8 *)self + 0x58))->v10();
@@ -752,7 +750,7 @@ extern "C" void fn_801B0564(void *arg0) {
         btn = *(s32 *)((u8 *)lbl_80367240 + 4);
         btn = btn & (*(s32 *)((u8 *)lbl_80367240 + 8) ^ btn);
         if ((btn & 0x100) && fn_80166D8C(lbl_80330D68) == 0) {
-            switch ((s16)saved) {
+            switch (saved) {
             case 0:
                 fn_801475FC(lbl_8027BD18 + 0x3B0, 0x64);
                 break;
