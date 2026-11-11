@@ -283,48 +283,128 @@ void fn_8021250C(s32 chan, u32 type) {
     }
 }
 
+#pragma use_lmw_stmw on
 #pragma opt_strength_reduction off
-u32 fn_802129C0(PADStatus *status){
-s32 OSDisableInterrupts(void); void OSRestoreInterrupts(s32);
-s32 fn_8021264C(u32); s32 fn_8023ABF4(s32); u32 fn_8023B788(s32); u32 SIGetType(s32);
-s32 fn_8023BA70(s32,void*); void fn_8023C188(s32,void*);
-void fn_8021203C(void); void fn_8021250C(s32,u32);
-s32 SITransfer(s32,void*,u32,void*,u32,void*,s64);
-void *memset(void*,s32,u32);
-extern u8 lbl_8033A1C0[];extern s32 lbl_80366FA4;extern u16 lbl_80366FB8;
-extern u32 lbl_8036866C,lbl_80368670,lbl_80368678,lbl_8036867C,lbl_80368680;
-extern void (*lbl_80366FB4)(s32,PADStatus*,u32*);
-u64 response; u32 bit; u8 *origin; s32 enabled; s32 chan; u32 result;
-enabled=OSDisableInterrupts();chan=0;origin=lbl_8033A1C0+chan*12;result=0;
-do{
-bit=0x80000000U>>chan;
-if(lbl_80368680&bit){fn_8021264C(0);status->err=-2;memset(status,0,10);}
-else if((lbl_80368670&bit)||lbl_80366FA4==chan){status->err=-2;memset(status,0,10);}
-else if(!(lbl_8036866C&bit)){status->err=-1;memset(status,0,10);}
-else if(fn_8023ABF4(chan)){status->err=-3;memset(status,0,10);}
-else if(fn_8023B788(chan)&8){
-fn_8023BA70(chan,(u32*)&response);
-if(lbl_80368678&bit){
-status->err=0;memset(status,0,10);
-if(!(lbl_8036867C&bit)){lbl_8036867C|=bit;fn_8023C188(chan,fn_8021250C);}
-}else {PADDisable(chan);status->err=-1;memset(status,0,10);}
-}else{
-if(!(SIGetType(chan)&0x20000000))result|=bit;
-if(!fn_8023BA70(chan,(u32*)&response)){status->err=-3;memset(status,0,10);}
-else if(((u32*)&response)[0]&0x80000000){status->err=-3;memset(status,0,10);}
-else {
-lbl_80366FB4(chan,status,(u32*)&response);
-if(status->button&0x2000){
-status->err=-3;memset(status,0,10);
-SITransfer(chan,&lbl_80366FB8,1,origin,10,fn_8021203C,0);
-}else {status->err=0;status->button&=~0x80;}
-}
-}
-chan++;origin+=12;status++;
-}while(chan<4);
-OSRestoreInterrupts(enabled);return result;
+u32 fn_802129C0(PADStatus *status)
+{
+  s32 OSDisableInterrupts(void);
+  void OSRestoreInterrupts(s32);
+  s32 fn_8021264C(u32);
+  s32 fn_8023ABF4(s32);
+  u32 fn_8023B788(s32);
+  u32 SIGetType(s32);
+  s32 fn_8023BA70(s32, void *);
+  void fn_8023C188(s32, void *);
+  void fn_8021203C(void);
+  void fn_8021250C(s32, u32);
+  s32 SITransfer(s32, void *, u32, void *, u32, void *, s64);
+  void *memset(void *, s32, u32);
+  extern u8 lbl_8033A1C0[];
+  extern s32 lbl_80366FA4;
+  extern u16 lbl_80366FB8;
+  extern u32 lbl_8036866C;
+  extern u32 lbl_80368670;
+  extern u32 lbl_80368678;
+  extern u32 lbl_8036867C;
+  extern u32 lbl_80368680;
+  extern void (*lbl_80366FB4)(s32, PADStatus *, u32 *);
+  u64 response;
+  u8 *origin;
+  s32 enabled;
+  s32 chan;
+  u32 result;
+  u32 bit;
+  u32 offset;
+  enabled = OSDisableInterrupts();
+  chan = (result = 0);
+  offset = chan * 12;
+  origin = lbl_8033A1C0 + offset;
+  do
+  {
+    bit = 0x80000000U >> chan;
+    if (lbl_80368680 & bit)
+    {
+      fn_8021264C(0);
+      status->err = -2;
+      memset(status, 0, 10);
+    }
+    else if ((lbl_80368670 & bit) || (lbl_80366FA4 == chan))
+    {
+      status->err = -2;
+      memset(status, 0, 10);
+    }
+    else if (!(lbl_8036866C & bit))
+    {
+      status->err = -1;
+      memset(status, 0, 10);
+    }
+    else if (fn_8023ABF4(chan))
+    {
+      status->err = -3;
+      memset(status, 0, 10);
+    }
+    else if (fn_8023B788(chan) & 8)
+    {
+      fn_8023BA70(chan, (u32 *) (&response));
+      if (lbl_80368678 & bit)
+      {
+        status->err = 0;
+        memset(status, 0, 10);
+        if (!(lbl_8036867C & bit))
+        {
+          lbl_8036867C |= bit;
+          fn_8023C188(chan, fn_8021250C);
+        }
+      }
+      else
+      {
+        PADDisable(chan);
+        status->err = -1;
+        memset(status, 0, 10);
+      }
+    }
+    else
+    {
+      if (!(SIGetType(chan) & 0x20000000))
+      {
+        result |= bit;
+      }
+      if (!fn_8023BA70(chan, (u32 *) (&response)))
+      {
+        status->err = -3;
+        memset(status, 0, 10);
+      }
+      else if (((u32 *) (&response))[0] & 0x80000000)
+      {
+        status->err = -3;
+        memset(status, 0, 10);
+      }
+      else
+      {
+        lbl_80366FB4(chan, status, (u32 *) (&response));
+        if (status->button & 0x2000)
+        {
+          status->err = -3;
+          memset(status, 0, 10);
+          SITransfer(chan, &lbl_80366FB8, 1, origin, 10, fn_8021203C, 0);
+        }
+        else
+        {
+          status->err = 0;
+          status->button &= ~0x80;
+        }
+      }
+    }
+    chan++;
+    origin += 12;
+    status++;
+  }
+  while (chan < 4);
+  OSRestoreInterrupts(enabled);
+  return result;
 }
 #pragma opt_strength_reduction reset
+#pragma use_lmw_stmw reset
 void fn_80212CC0(s32 arg0, u32 arg1) {
     s32 OSDisableInterrupts(void);
     void OSRestoreInterrupts(s32);
@@ -777,11 +857,13 @@ BOOL fn_802142C0(void)
 }
 
 void fn_80214338(void) {
+    extern volatile u16 __PADRegs[];
     typedef struct { u8 pad[0xA]; u16 val; } PadReg;
-    volatile PadReg *p = (volatile PadReg *)0xCC005000;
-    u16 v = p->val;
-    u16 r = (v & -0x89) | 0x20;
-    p->val = r;
+    volatile PadReg *p;
+    u16 v;
+    p = (volatile PadReg *)__PADRegs;
+    v = p->val;
+    p->val = (u16)((v & -0x89) | 0x20);
 }
 
 s32 fn_80214358(void) {
@@ -860,6 +942,175 @@ void fn_80216050(void) {
 }
 
 void fn_802160C0(u8 level, char *fmt, ...) {
+}
+
+void fn_80216110(s32 arg0, OSContext *ctx) {
+    void OSClearContext(OSContext *);
+    void OSSetCurrentContext(OSContext *);
+    u32 fn_80215F40(void);
+    u32 fn_80215F50(void);
+    s32 fn_80215F60(void);
+    void fn_80215F78(s32);
+    void fn_80216534(void *, void *);
+    void fn_80216900(void *);
+    extern s32 lbl_80368728;
+    extern void *lbl_8036872C;
+    extern void *lbl_80368734;
+    extern void *lbl_80368738;
+    extern void *lbl_8036873C;
+
+    typedef struct { u8 pad[0xA]; u16 val; } PadReg;
+    struct Node {
+        s32 state;
+        s32 unk04;
+        s32 unk08;
+        u8 pad[0x1C];
+        void (*cb28)(void);
+        void (*cb2C)(void);
+        void (*cb30)(void *);
+        void (*cb34)(void *);
+        struct Node *next;
+        struct Node *prev;
+    };
+
+    OSContext temp;
+    volatile PadReg *p;
+    u16 v;
+    struct Node *node;
+    s32 type;
+    u32 pad0, pad1;
+
+    p = (volatile PadReg *)0xCC005000;
+    v = p->val;
+    p->val = (u16)((v & ~0x28) | 0x80);
+    OSClearContext(&temp);
+    OSSetCurrentContext(&temp);
+
+    do {
+    } while (fn_80215F50() == 0);
+
+    type = fn_80215F60();
+    node = (struct Node *)lbl_8036873C;
+    if ((node->unk08 & 2) && ((u32)(type + 0x232F0000) == 2)) {
+        type = 0xDCD10003;
+    }
+    switch (type) {
+    case 0xDCD10000:
+        node->state = 1;
+        if (((struct Node *)lbl_8036873C)->cb28 != NULL) {
+            ((struct Node *)lbl_8036873C)->cb28();
+        }
+        break;
+    case 0xDCD10001:
+        node->state = 1;
+        if (((struct Node *)lbl_8036873C)->cb2C != NULL) {
+            ((struct Node *)lbl_8036873C)->cb2C();
+        }
+        break;
+    case 0xDCD10002:
+        if (lbl_80368728 != 0) {
+            if (lbl_8036873C == lbl_8036872C) {
+                fn_80215F78(0xCDD10003);
+                do {
+                } while (fn_80215F40() != 0);
+                lbl_8036872C = NULL;
+                lbl_80368728 = 0;
+                if (((struct Node *)lbl_8036873C)->cb2C != NULL) {
+                    ((struct Node *)lbl_8036873C)->cb2C();
+                }
+            } else {
+                fn_80215F78(0xCDD10001);
+                do {
+                } while (fn_80215F40() != 0);
+                fn_80216534(lbl_8036873C, lbl_8036872C);
+                ((struct Node *)lbl_8036873C)->state = 2;
+                lbl_80368728 = 0;
+                lbl_8036873C = lbl_8036872C;
+                lbl_8036872C = NULL;
+            }
+        } else if (((struct Node *)lbl_8036873C)->next == NULL) {
+            if (lbl_8036873C == lbl_80368738) {
+                fn_80215F78(0xCDD10003);
+                do {
+                } while (fn_80215F40() != 0);
+                if (((struct Node *)lbl_8036873C)->cb2C != NULL) {
+                    ((struct Node *)lbl_8036873C)->cb2C();
+                }
+            } else {
+                fn_80215F78(0xCDD10001);
+                do {
+                } while (fn_80215F40() != 0);
+                fn_80216534(lbl_8036873C, lbl_80368738);
+                ((struct Node *)lbl_8036873C)->state = 2;
+                lbl_8036873C = lbl_80368738;
+            }
+        } else {
+            fn_80215F78(0xCDD10001);
+            do {
+            } while (fn_80215F40() != 0);
+            fn_80216534(lbl_8036873C, ((struct Node *)lbl_8036873C)->next);
+            ((struct Node *)lbl_8036873C)->state = 2;
+            lbl_8036873C = ((struct Node *)lbl_8036873C)->next;
+        }
+        break;
+    case 0xDCD10003:
+        if (lbl_80368728 != 0) {
+            if (((struct Node *)lbl_8036873C)->cb30 != NULL) {
+                ((struct Node *)lbl_8036873C)->cb30(lbl_8036873C);
+            }
+            fn_80215F78(0xCDD10001);
+            do {
+            } while (fn_80215F40() != 0);
+            fn_80216534(NULL, lbl_8036872C);
+            fn_80216900(lbl_8036873C);
+            lbl_80368728 = 0;
+            lbl_8036873C = lbl_8036872C;
+            lbl_8036872C = NULL;
+        } else if (((struct Node *)lbl_8036873C)->next == NULL) {
+            if (lbl_8036873C == lbl_80368738) {
+                if (((struct Node *)lbl_8036873C)->cb30 != NULL) {
+                    ((struct Node *)lbl_8036873C)->cb30(lbl_8036873C);
+                }
+                fn_80215F78(0xCDD10002);
+                do {
+                } while (fn_80215F40() != 0);
+                ((struct Node *)lbl_8036873C)->state = 3;
+                fn_80216900(lbl_8036873C);
+            } else {
+                if (((struct Node *)lbl_8036873C)->cb30 != NULL) {
+                    ((struct Node *)lbl_8036873C)->cb30(lbl_8036873C);
+                }
+                fn_80215F78(0xCDD10001);
+                do {
+                } while (fn_80215F40() != 0);
+                ((struct Node *)lbl_8036873C)->state = 3;
+                fn_80216534(NULL, lbl_80368738);
+                lbl_8036873C = lbl_80368738;
+                fn_80216900(lbl_80368734);
+            }
+        } else {
+            if (((struct Node *)lbl_8036873C)->cb30 != NULL) {
+                ((struct Node *)lbl_8036873C)->cb30(lbl_8036873C);
+            }
+            fn_80215F78(0xCDD10001);
+            do {
+            } while (fn_80215F40() != 0);
+            ((struct Node *)lbl_8036873C)->state = 3;
+            fn_80216534(NULL, ((struct Node *)lbl_8036873C)->next);
+            lbl_8036873C = ((struct Node *)lbl_8036873C)->next;
+            fn_80216900(((struct Node *)lbl_8036873C)->prev);
+        }
+        break;
+    case 0xDCD10004:
+        if (((struct Node *)lbl_8036873C)->cb34 != NULL) {
+            ((struct Node *)lbl_8036873C)->cb34(lbl_8036873C);
+        }
+        break;
+    }
+    (void)pad0;
+    (void)pad1;
+    OSClearContext(&temp);
+    OSSetCurrentContext(ctx);
 }
 
 void fn_80216534(void *arg0, void *arg1) {
