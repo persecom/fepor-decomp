@@ -1,6 +1,9 @@
 /* Functions from 0x80120CCC to 0x80127D80, found by decomp-toolkit. */
 #include "common.h"
 
+/* Signed int-to-float bias; -str reuse merges (f32)(s32) casts onto this symbol. */
+f64 lbl_8036A2C8 = 4503601774854144.0;
+
 typedef struct {
     s32 field_0x84;
 } SomeStruct;
@@ -323,6 +326,7 @@ void fn_80121D60(void *arg0, u8 *arg1) {
     u8 c;
     s32 pos;
     s32 off;
+    u32 bit;
 
     if (arg1 == *(u8 **)((u8 *)arg0 + 0x4008)) {
         return;
@@ -333,7 +337,8 @@ void fn_80121D60(void *arg0, u8 *arg1) {
     }
     if ((s32)*arg1 == 0x47) {
         s = lbl_80274D20 + 0x31;
-        switch (lbl_80367110 & 0x800) {
+        bit = lbl_80367110 & 0x800;
+        switch (bit) {
         case 0:
             do {
                 c = *s;
@@ -368,7 +373,8 @@ void fn_80121D60(void *arg0, u8 *arg1) {
         }
     } else {
         s = lbl_80274D20 + 0x37;
-        switch (lbl_80367110 & 0x800) {
+        bit = lbl_80367110 & 0x800;
+        switch (bit) {
         case 0:
             do {
                 c = *s;
@@ -391,7 +397,8 @@ void fn_80121D60(void *arg0, u8 *arg1) {
             break;
         }
         s = fn_8007C378(arg1);
-        switch (lbl_80367110 & 0x800) {
+        bit = lbl_80367110 & 0x800;
+        switch (bit) {
         case 0:
             do {
                 c = *s;
@@ -1090,9 +1097,8 @@ void fn_80124424(void *self) {
     {
         s32 t = fn_800067B4();
         u8 flag = *((u8 *)self + 0x4D);
-        pts = *(s16 **)((u8 *)self + 0x5C);
-        t = (t & 7) * *(u16 *)((u8 *)self + 0x54);
-        pts = (s16 *)((u8 *)pts + t * 6);
+        t = *(u16 *)((u8 *)self + 0x54) * (t & 7);
+        pts = (s16 *)((u8 *)*(s16 **)((u8 *)self + 0x5C) + t * 6);
         if (flag != 0) {
             i = 0;
             while (i < *(u16 *)((u8 *)self + 0x54)) {
@@ -1118,8 +1124,8 @@ void fn_80124424(void *self) {
     if (*((u8 *)self + 0x4C) != 0) {
         i = 0;
         scale = lbl_8036A30C;
-        rangeY = i;
-        rangeX = rangeY;
+        rangeX = i;
+        rangeY = rangeX;
         while (i < *((u8 *)self + 0x52)) {
             pairs = *(f32 **)((u8 *)self + 0x64);
             if (!(*(f32 *)((u8 *)pairs + rangeX + 4) >= scale)) {
@@ -1139,19 +1145,19 @@ void fn_80124424(void *self) {
     }
 
     if ((fn_800067B4() & 3) == 0) {
-        register s32 j;
         register s32 off;
+        register s32 j;
         s32 ctr;
         f32 z;
         j = 0;
         off = j;
-        z = lbl_8036A30C;
         ctr = *((u8 *)self + 0x52);
-        for (; ctr != 0; ctr--) {
+        z = lbl_8036A30C;
+        for (; ctr > 0; ctr--) {
             f32 v;
             pairs = *(f32 **)((u8 *)self + 0x64);
             v = *(f32 *)((u8 *)pairs + off + 4);
-            if (!(v >= z)) {
+            if (!(z <= v)) {
                 pairs = (f32 *)((u8 *)pairs + (j << 3));
                 pairs[1] = lbl_8036A32C;
                 {
