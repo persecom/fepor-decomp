@@ -1001,6 +1001,23 @@ void *arg1;
     return (s32)arg0;
 }
 
+void fn_800CA59C(void *arg0, u32 arg1, void *arg2)
+{
+    extern void fn_800CA5FC(void *, void *);
+
+    u8 *ptr;
+    u32 count;
+
+    ptr = (u8 *)arg0;
+    count = arg1;
+
+    while (count != 0) {
+        fn_800CA5FC(ptr, arg2);
+        ptr += 0xC;
+        count--;
+    }
+}
+
 #pragma auto_inline reset
 
 void fn_800CA5FC(void) {
@@ -1011,6 +1028,28 @@ void fn_800CA5FC(void) {
 void fn_800CA644(void) {
     M2C_UNK fn_800CA664();
     fn_800CA664();
+}
+
+void *fn_800CA664(void *arg0, void *arg1, void *arg2)
+{
+    extern void fn_800CA5FC(void *, void *);
+
+    u8 *destination;
+    u8 *source;
+    u8 *begin;
+
+    begin = (u8 *)arg0;
+    source = (u8 *)arg1;
+    destination = (u8 *)arg2;
+
+    while (source > begin) {
+        destination -= 0xC;
+        source -= 0xC;
+
+        fn_800CA5FC(destination, source);
+    }
+
+    return destination;
 }
 
 void *fn_800CA6C8(void *arg0, s16 arg1) {
@@ -3823,6 +3862,27 @@ void fn_800DDD08(void* arg0) {
             fn_800E5A4C((void *)ptr[8]);
         }
     }
+}
+
+void *fn_800DE99C(void *arg0, s32 arg1)
+{
+    extern void fn_800C428C(void *);
+
+    u8 *obj;
+
+    obj = (u8 *)arg0;
+
+    if (obj != 0) {
+        if (*(void **)(obj + 8) != 0) {
+            fn_800C428C(*(void **)(obj + 8));
+        }
+
+        if ((s16)arg1 > 0) {
+            fn_800C428C(obj);
+        }
+    }
+
+    return obj;
 }
 
 void fn_800DE9FC(void *arg0) {
@@ -10389,6 +10449,70 @@ void fn_800FF36C(void *arg0) {
     }
     if (var_r3 == 1) {
         fn_8000C188(arg0);
+    }
+}
+
+void fn_800FF3C4(void *arg0)
+{
+    extern u8 lbl_802EF4C8[];
+    extern void fn_800271C8(void *);
+
+    *(u32 *)((u8 *)arg0 + 0x30) = 0;
+
+    switch (lbl_802EF4C8[8]) {
+    case 4:
+    case 10:
+    case 11:
+    case 12:
+    case 14:
+    case 15:
+    case 16:
+    case 17:
+    case 18:
+    case 19:
+    case 20:
+    case 21:
+    case 22:
+    case 23:
+    case 24:
+    case 25:
+    case 26:
+    case 27:
+    case 28:
+    case 29:
+    case 30:
+    case 31:
+    case 32:
+    case 33:
+    case 34:
+    case 36:
+    case 37:
+    case 39:
+    case 44:
+        fn_800271C8(lbl_802EF4C8);
+        break;
+
+    case 2:
+    case 3:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 13:
+    case 38:
+    case 40:
+    case 41:
+    case 42:
+    case 43:
+        fn_800271C8(lbl_802EF4C8);
+        break;
+
+    case 0:
+    case 1:
+    case 35:
+    default:
+        break;
     }
 }
 
