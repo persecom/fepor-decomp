@@ -3776,6 +3776,7 @@ void fn_80043F9C(void *cam, f32 *mtx, f32 x, f32 y) {
     tmp = fn_8002300C(lbl_802CA518, ix, iy, 1) - base;
     {
         u32 t2;
+        u32 tz;
         u32 t1;
         u32 t0;
         t0 = *(u32 *)&sp50[0];
@@ -3784,8 +3785,9 @@ void fn_80043F9C(void *cam, f32 *mtx, f32 x, f32 y) {
         sp50[2] = tmp;
         *(u32 *)&sp38[0] = t0;
         *(u32 *)&sp38[1] = t1;
+        tz = *(u32 *)&sp50[2];
+        *(u32 *)&sp38[2] = tz;
         *(u32 *)&sp5C[0] = t2;
-        *(u32 *)&sp38[2] = *(u32 *)&sp50[2];
         *(u32 *)&sp5C[1] = *(u32 *)(tbl + 0xA4);
         *(u32 *)&sp5C[2] = *(u32 *)(tbl + 0xA8);
     }
@@ -3804,6 +3806,7 @@ void fn_80043F9C(void *cam, f32 *mtx, f32 x, f32 y) {
     tmp = fn_8002300C(lbl_802CA518, ix, iy, 2) - base;
     {
         u32 t2;
+        u32 tz;
         u32 t1;
         u32 t0;
         t0 = *(u32 *)&sp20[0];
@@ -3812,8 +3815,9 @@ void fn_80043F9C(void *cam, f32 *mtx, f32 x, f32 y) {
         sp20[2] = tmp;
         *(u32 *)&sp8[0] = t0;
         *(u32 *)&sp8[1] = t1;
+        tz = *(u32 *)&sp20[2];
+        *(u32 *)&sp8[2] = tz;
         *(u32 *)&sp2C[0] = t2;
-        *(u32 *)&sp8[2] = *(u32 *)&sp20[2];
         *(u32 *)&sp2C[1] = *(u32 *)(tbl + 0x8C);
         *(u32 *)&sp2C[2] = *(u32 *)(tbl + 0x90);
     }
@@ -3860,12 +3864,13 @@ void fn_80043F9C(void *cam, f32 *mtx, f32 x, f32 y) {
     fn_802031E8(sp8C, sp80);
     {
         f32 z;
-        f32 v0;
-        v0 = sp80[0];
+        t = sp80[0];
         z = lbl_80368EE4;
-        mtx[2] = v0;
-        mtx[6] = sp80[1];
-        mtx[10] = sp80[2];
+        mtx[2] = t;
+        t = sp80[1];
+        mtx[6] = t;
+        t = sp80[2];
+        mtx[10] = t;
         mtx[11] = z;
         mtx[7] = z;
         mtx[3] = z;
