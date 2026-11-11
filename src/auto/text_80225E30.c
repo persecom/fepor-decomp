@@ -1850,6 +1850,28 @@ s32 gdev_cc_shutdown(void) {
     return 0;
 }
 
+s32 gdev_cc_initialize(void *arg0, void *arg1)
+{
+    extern u8 lbl_80282A94[];
+    extern u8 lbl_80282AA8[];
+    extern u8 lbl_8033DD08[];
+    extern u8 lbl_8033D808[];
+
+    extern void MWTRACE(s32, const char *, ...);
+    extern void fn_802673E0(void *, void *);
+    extern void fn_8022BC44(void *, void *, s32);
+
+    MWTRACE(1, (const char *)lbl_80282A94);
+
+    fn_802673E0(arg0, arg1);
+
+    MWTRACE(1, (const char *)lbl_80282AA8);
+
+    fn_8022BC44(lbl_8033DD08, lbl_8033D808, 0x500);
+
+    return 0;
+}
+
 void MWTRACE(u8 level, char *fmt, ...) {
 }
 
