@@ -1123,6 +1123,35 @@ s32 fn_800A1078(void) {
     return 0;
 }
 
+s32 fn_800A1178(void)
+{
+  extern u8 *lbl_80367240;
+  extern u16 lbl_80330708[];
+  u8 *obj;
+  u8 *table;
+  u32 previous;
+  u32 current;
+  u32 changed;
+  u8 count;
+  obj = lbl_80367240;
+  table = (u8 *) lbl_80330708;
+  previous = *((u32 *) (obj + 4));
+  current = *((u32 *) (obj + 8));
+  count = table[0xA6];
+  changed = previous & (current ^ previous);
+  if (changed & 0x01000001)
+  {
+    count = (u8) (count - 1);
+  }
+  if (changed & 0x02000002)
+  {
+    changed = 1;
+    count = (u8) (count + changed);
+  }
+  table[0xA6] = ((s32) count) % 4;
+  return 0;
+}
+
 s32 fn_800A13A0(void) {
     extern M2C_UNK lbl_80330708;
     extern void *lbl_80367240;
