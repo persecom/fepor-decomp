@@ -1089,7 +1089,7 @@ void fn_8014CBD8(void *arg0, f32 farg0, f32 farg1) {
 
 #include "common.h"
 extern f32 lbl_8036A7F0;
-extern u8 lbl_802CA518[];
+extern M2C_UNK lbl_802CA518;
 extern s32 lbl_80367B00;
 extern s32 lbl_80367B04;
 extern u8 lbl_80367B0D;
