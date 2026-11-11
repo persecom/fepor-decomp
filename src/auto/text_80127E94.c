@@ -496,15 +496,28 @@ void fn_8012979C(void) {
     // correct logic that matches assembly.
 }
 
-void fn_80129888(void *arg0) {
-    u8 fn_80040824();
-    M2C_UNK fn_80049B78(s32, M2C_UNK);
-    s32 temp_r31;
+void fn_80129888(void *arg0, void *arg1)
+{
+    extern u8 lbl_80290B70[];
 
-    if (fn_80040824() != 0) {
-        temp_r31 = M2C_FIELD(arg0, s32 *, 0x30);
-        fn_80049B78(temp_r31, 1);
+    extern void *fn_8000CAA0(void *, void *);
+    extern void *fn_8000CAF0(void *, s32);
+    extern void *fn_80040844(void);
+    extern s32 fn_80046400(void *, void *, void *);
+
+    u8 *entry;
+    void *result;
+
+    if (arg1 != 0) {
+        entry = (u8 *)fn_8000CAA0(lbl_80290B70, arg1);
+    } else {
+        entry = (u8 *)fn_8000CAF0(lbl_80290B70, 3);
     }
+
+    result = fn_80040844();
+
+    *(s32 *)(entry + 0x50) =
+        fn_80046400(result, arg0, entry + 0x30);
 }
 
 void fn_801298FC(void *arg0) {
