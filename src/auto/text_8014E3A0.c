@@ -5,13 +5,11 @@ typedef struct { u8 r, g, b, a; } Color;
 typedef struct { s32 c0, c1, c2, c3; } Color4;
 typedef struct { s32 c3, c2, c1, c0; } Color4rev;
 
-static inline Color4rev fn_80161B98_load_colors(s32 *arg6) {
-    Color4rev r;
-    r.c0 = arg6[0];
-    r.c1 = arg6[1];
-    r.c2 = arg6[2];
-    r.c3 = arg6[3];
-    return r;
+static inline void fn_80161B98_load_colors(Color4rev *dst, Color4 *src) {
+    dst->c0 = src->c0;
+    dst->c1 = src->c1;
+    dst->c2 = src->c2;
+    dst->c3 = src->c3;
 }
 
 s32 fn_8014E3A0(void) {
@@ -2740,11 +2738,9 @@ void fn_80161B98(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s16 *arg5, s3
     w = arg2;
     h = arg3;
     if (w != 0) {
-        if (h == 0)
-            goto end;
-        else
-            goto body;
-    body:
+        if (h == 0) {
+            h = 0;
+        } else {
             fn_8000A258();
             fn_8000A174((void *)&lbl_80330D18, (u16)(arg4 | 1));
             fn_8000A248();
@@ -2806,10 +2802,9 @@ void fn_80161B98(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s16 *arg5, s3
             *(s32 *)&sp1C = *(s32 *)&sp2C;
             fn_800072B0(&sp1C, &sp18, &sp14, &sp10);
             fn_80007884();
+        }
     }
-    end:;
 }
-
 void fn_80161E58(s16 arg0, s16 arg1, s32 arg2, s16 *arg3, s32 *arg4, s32 arg5) {
     void fn_80007538(void);
     void fn_80007588(void);
