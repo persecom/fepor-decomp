@@ -1,6 +1,7 @@
 /* Functions from 0x800C40F4 to 0x801035C8, found by decomp-toolkit. */
 #include "common.h"
 #include "structs.h"
+typedef struct { u8 pad[0x610E]; s16 value; } AIMapCell;
 extern s32 lbl_8036A0C8;
 extern s32 lbl_8036A0D0;
 extern s32 lbl_8036A0DC;
