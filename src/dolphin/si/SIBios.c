@@ -233,6 +233,328 @@ s32 fn_8023ABF4(s32 arg0) {
     return var_r5;
 }
 
+#pragma use_lmw_stmw on
+#pragma global_optimizer off
+u32 fn_8023AC30(void) {
+    s64 __OSGetSystemTime(void);
+    extern u32 Type_8029EFC0[4];
+    extern s64 lbl_8033E388[4];
+    u8 *siRegs;
+    u32 *comcsr;
+    SIControl *si;
+    u32 sr;
+    u32 *dst;
+    u32 i;
+    u32 nWords;
+    u32 nBytes;
+    u32 data;
+    u32 err;
+    u32 chan;
+    s64 time;
+    u32 *pInputBytes;
+    u32 *src;
+    u32 ctr;
+    s32 left;
+    u32 pad;
+
+    siRegs = (u8 *)0xCC006400;
+    comcsr = (u32 *)(siRegs + 0x34);
+    sr = *(u32 *)0xCC006438;
+    *(u32 *)(siRegs + 0x34) = (*(u32 *)0xCC006434 | 0x80000000) & ~1;
+    si = &lbl_8029EF68;
+    err = sr;
+    pad = 0;
+    if (si->chan != -1) {
+        time = __OSGetSystemTime();
+        pInputBytes = &si->inputBytes;
+        i = 0;
+        lbl_8033E388[si->chan] = time;
+        dst = (u32 *)si->input;
+        nWords = *pInputBytes >> 2;
+        if (nWords > 0) {
+            if (nWords > 8) {
+                left = (s32)(nWords - 8);
+                ctr = (u32)(left + 7) >> 3;
+                if (left > 0) {
+                    do {
+                        i += 8;
+                        dst[0] = *(u32 *)(siRegs + 0x80);
+                        dst[1] = *(u32 *)(siRegs + 0x84);
+                        dst[2] = *(u32 *)(siRegs + 0x88);
+                        dst[3] = *(u32 *)(siRegs + 0x8C);
+                        dst[4] = *(u32 *)(siRegs + 0x90);
+                        dst[5] = *(u32 *)(siRegs + 0x94);
+                        dst[6] = *(u32 *)(siRegs + 0x98);
+                        data = *(u32 *)(siRegs + 0x9C);
+                        siRegs += 0x20;
+                        dst[7] = data;
+                        dst += 8;
+                    } while (--ctr);
+                }
+            }
+            src = (u32 *)((u8 *)0xCC006400 + (i << 2));
+            left = (s32)(nWords - i);
+            if (i < nWords) {
+                do {
+                    data = *(u32 *)((u8 *)src + 0x80);
+                    src += 1;
+                    i += 1;
+                    *dst = data;
+                    dst += 1;
+                } while (--left);
+            }
+        }
+        nBytes = *pInputBytes & 3;
+        if (nBytes != 0) {
+            data = *(u32 *)((u8 *)0xCC006400 + (i << 2) + 0x80);
+            i = 0;
+            if (nBytes > 0) {
+                if (nBytes > 8) {
+                    left = (s32)(nBytes - 8);
+                    ctr = (u32)(left + 7) >> 3;
+                    if (left > 0) {
+                        do {
+                            ((u8 *)dst)[0] = (u8)(data >> ((3 - i) << 3));
+                            ((u8 *)dst)[1] = (u8)(data >> ((3 - (i + 1)) << 3));
+                            ((u8 *)dst)[2] = (u8)(data >> ((3 - (i + 2)) << 3));
+                            ((u8 *)dst)[3] = (u8)(data >> (-i << 3));
+                            ((u8 *)dst)[4] = (u8)(data >> ((3 - (i + 4)) << 3));
+                            ((u8 *)dst)[5] = (u8)(data >> ((3 - (i + 5)) << 3));
+                            ((u8 *)dst)[6] = (u8)(data >> ((3 - (i + 6)) << 3));
+                            ((u8 *)dst)[7] = (u8)(data >> ((3 - (i + 7)) << 3));
+                            dst = (u32 *)((u8 *)dst + 8);
+                            i += 8;
+                        } while (--ctr);
+                    }
+                }
+                left = (s32)(nBytes - i);
+                if (i < nBytes) {
+                    do {
+                        *(u8 *)dst = (u8)(data >> ((3 - i) << 3));
+                        dst = (u32 *)((u8 *)dst + 1);
+                        i += 1;
+                    } while (--left);
+                }
+            }
+        }
+        if (*comcsr & 0x20000000) {
+            chan = (u32)si->chan;
+            err = (sr >> ((3 - chan) << 3)) & 0xF;
+            if (err & 8) {
+                if (!(Type_8029EFC0[chan] & 0x80)) {
+                    Type_8029EFC0[chan] = 8;
+                }
+            }
+            if (err == 0) {
+                err = 4;
+            }
+        } else {
+            time = __OSGetSystemTime();
+            TypeTime[si->chan] = time;
+            err = 0;
+        }
+        si->chan = -1;
+    }
+    (void)pad;
+    return err;
+}
+
+#pragma use_lmw_stmw on
+#pragma global_optimizer off
+void SIInterruptHandler(s32 interrupt, s32 context) {
+    s64 __OSGetSystemTime(void);
+    void fn_80204770(void *);
+    u32 fn_8023AC30(void);
+    BOOL fn_8023B57C(s32, void *, u32, void *, u32, void *);
+    s32 fn_8023B99C(s32);
+    s32 SITransfer(s32, void *, u32, void *, u32, void *, s64);
+    u32 fn_802117D8(void);
+    extern void GetTypeCallback(s32, u32);
+    extern u32 lbl_80368818;
+    extern SIPacket Packet_8033E248[4];
+    volatile u32 pad[2];
+    SIPacket *pktBase;
+    SIControl *si;
+    s32 i;
+    s32 j;
+    SIPacket *packet;
+    u32 sr;
+    s32 chan;
+    u32 xfer;
+    void (*cb)(s32, u32, s32);
+    u32 *typep;
+    s32 ok;
+    u32 vc;
+    u32 rdst;
+    volatile u32 *vcp;
+    u32 *pollp;
+    u32 poll;
+    u32 bit;
+    volatile u32 *vp;
+    void (**rdstCb)(s32, s32);
+    void (*handler)(s32, s32);
+    u32 bus;
+    u32 delay;
+    u8 *alarm;
+    u32 hi;
+    u32 sh;
+    void (*gtc)(s32, u32);
+    u32 half;
+    u32 *r3base;
+    u32 *r4sic;
+    u32 r5;
+
+    pktBase = Packet_8033E248;
+    si = &lbl_8029EF68;
+    sr = *(volatile u32 *)0xCC006434;
+    if ((u32)((sr & 0xC0000000) + 0x40000000) == 0) {
+        chan = si->chan;
+        xfer = fn_8023AC30();
+        cb = (void (*)(s32, u32, s32))si->callback;
+        i = 0;
+        si->callback = (void *)i;
+        j = chan;
+        for (;;) {
+            j = j + 1;
+            j = j % 4;
+            packet = (SIPacket *)((u8 *)pktBase + (j << 5));
+            if (packet->chan != -1) {
+                if (!(__OSGetSystemTime() < packet->fire)) {
+                    if (fn_8023B57C(packet->chan, packet->output, packet->outputBytes,
+                                    packet->input, packet->inputBytes, packet->callback)) {
+                        alarm = (u8 *)pktBase + j * 0x28;
+                        fn_80204770(alarm + 0x80);
+                        packet->chan = -1;
+                    }
+                    break;
+                }
+            }
+            i += 1;
+            if (i >= 4) {
+                break;
+            }
+        }
+        if (cb != 0) {
+            (*cb)(chan, xfer, context);
+        }
+        r3base = (u32 *)0xCC000000;
+        r4sic = r3base + (0x6400 / 4);
+        r5 = r3base[0x6438 / 4];
+        r5 &= (u32)((s32)0x0F000000 >> (chan * 8));
+        r4sic[0x38 / 4] = r5;
+        typep = (u32 *)((u8 *)si + (chan * 4));
+        typep = (u32 *)((u8 *)typep + 0x58);
+        if (*typep == 0x80) {
+            ok = 1;
+            if (((s32 *)pktBase)[chan * 8] == -1 && si->chan != chan) {
+                ok = 0;
+            }
+            if (ok == 0) {
+                bus = *(u32 *)0x800000F8;
+                gtc = GetTypeCallback;
+                bus >>= 2;
+                delay = __mulhwu(0x431BDE83, bus);
+                delay = delay >> 15;
+                delay = delay * 0x41;
+                delay = delay >> 3;
+                SITransfer(chan, &lbl_80368818, 1, typep, 3, gtc, delay);
+            }
+        }
+    }
+    if ((u32)((sr & 0x18000000) + 0xE8000000) == 0) {
+        vc = fn_802117D8();
+        poll = *(u32 *)((u8 *)si + 0x48);
+        vcp = (volatile u32 *)((u8 *)pktBase + 0x1E0);
+        pollp = &si->unk48;
+        vp = vcp;
+        vc = vc + 1;
+        rdst = (poll >> 16) & 0x3FF;
+        i = 0;
+        do {
+            if (fn_8023B99C(i) != 0) {
+                *vp = vc;
+            }
+            i += 1;
+            vp += 1;
+        } while (i < 4);
+        poll = *pollp;
+        half = rdst >> 1;
+        hi = 0x80000000;
+        sh = 0x18;
+        bit = hi >> sh;
+        if (poll & bit) {
+            if (*vcp == 0) {
+                goto out;
+            }
+            if (half + *vcp >= vc) {
+                goto bit1;
+            }
+            goto out;
+        }
+    bit1:
+        vp = vcp + 1;
+        sh = 0x19;
+        bit = hi >> sh;
+        if (poll & bit) {
+            if (*vp == 0) {
+                goto out;
+            }
+            if (half + *vp >= vc) {
+                goto bit2;
+            }
+            goto out;
+        }
+    bit2:
+        vp = vp + 1;
+        sh = 0x1A;
+        bit = hi >> sh;
+        if (poll & bit) {
+            if (*vp == 0) {
+                goto out;
+            }
+            if (half + *vp >= vc) {
+                goto bit3;
+            }
+            goto out;
+        }
+    bit3:
+        vp = vp + 1;
+        sh = 0x1B;
+        bit = hi >> sh;
+        if (poll & bit) {
+            if (*vp == 0) {
+                goto out;
+            }
+            if (half + *vp >= vc) {
+                goto bit4;
+            }
+            goto out;
+        }
+    bit4:
+        i = 0;
+        *vcp = i;
+        rdstCb = (void (**)(s32, s32))((u8 *)pktBase + 0x1A0);
+        *(u32 *)((u8 *)pktBase + 0x1E4) = i;
+        *(u32 *)((u8 *)pktBase + 0x1E8) = i;
+        *(u32 *)((u8 *)pktBase + 0x1EC) = i;
+        do {
+            handler = *rdstCb;
+            if (handler != 0) {
+                (*handler)(interrupt, context);
+            }
+            i += 1;
+            rdstCb += 1;
+        } while (i < 4);
+    }
+out:
+    ;
+}
+#pragma global_optimizer reset
+#pragma use_lmw_stmw reset
+
+#pragma global_optimizer reset
+#pragma use_lmw_stmw reset
+
 BOOL fn_8023B270(BOOL enable) {
     BOOL enabled;
     BOOL rc;
@@ -466,6 +788,46 @@ void fn_8023B99C(void)
     D_80368AD0 = 0;
 }
 
+s32 fn_8023BA70(s32 chan, void *arg1)
+{
+    u8 *packet;
+    volatile u32 *si;
+    u32 interrupts;
+    s32 result;
+    u32 offset;
+
+    packet = (u8 *)Packet_8033E248;
+
+    interrupts = OSDisableInterrupts();
+
+    if (fn_8023B788(chan) & 0x20) {
+        si = (volatile u32 *)(0xCC006400 + chan * 0xC);
+
+        offset = chan << 3;
+
+        *(u32 *)(packet + 0x1C0 + offset) = si[1];
+        *(u32 *)(packet + 0x1C4 + offset) = si[2];
+
+        *(u32 *)(packet + 0x1B0 + (chan << 2)) = 1;
+    }
+
+    result = *(s32 *)(packet + 0x1B0 + (chan << 2));
+
+    *(u32 *)(packet + 0x1B0 + (chan << 2)) = 0;
+
+    if (result != 0) {
+        offset = chan << 3;
+
+        *(u32 *)arg1 = *(u32 *)(packet + 0x1C0 + offset);
+        *(u32 *)((u8 *)arg1 + 4) =
+            *(u32 *)(packet + 0x1C4 + offset);
+    }
+
+    OSRestoreInterrupts(interrupts);
+
+    return result;
+}
+
 void fn_8023BB34(void *alarm, void *context) {
     extern SIAlarm lbl_8033E2C8[4];
     extern SIPacket Packet_8033E248[4];
@@ -482,8 +844,8 @@ void fn_8023BB34(void *alarm, void *context) {
     }
 }
 
-#pragma use_lmw_stmw on
 #pragma global_optimizer off
+#pragma opt_common_subs off
 void GetTypeCallback(s32 chan, u32 type) {
     s32 SITransfer(s32, void *, u32, void *, u32, void *, s64);
     s64 __OSGetSystemTime(void);
@@ -593,8 +955,8 @@ void GetTypeCallback(s32 chan, u32 type) {
     } while (i < 4);
     (void)padp;
 }
+#pragma opt_common_subs reset
 #pragma global_optimizer reset
-#pragma use_lmw_stmw reset
 
 s32 SIGetType(void)
 {

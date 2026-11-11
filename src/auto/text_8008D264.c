@@ -143,8 +143,8 @@ void fn_8008D510(void *arg0, u8 arg1, s32 arg2, s32 arg3) {
     extern u8 lbl_802F0308[];
     struct { unsigned b : 8; } t;
     u8 var_r26;
-    s32 var_color;
     u8 var_r3;
+    s32 var_color;
     u64 flags;
 
     if (*(void **)arg0 != NULL) {
@@ -179,7 +179,6 @@ void fn_8008D510(void *arg0, u8 arg1, s32 arg2, s32 arg3) {
         fn_8005AC24(lbl_802F0308, arg2, arg3, (u8)(*(void **)arg0 != NULL ? *((u8 *)*(void **)arg0 + 0x15) : 0) + 0x61);
     }
 }
-#pragma use_lmw_stmw reset
 void fn_8008D6D8(void *arg0) {
     M2C_UNK fn_8000CAF0(void *, s32);
     M2C_UNK fn_8000E0E4(void *);

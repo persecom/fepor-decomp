@@ -774,6 +774,201 @@ void fn_800899D4(s32 arg0)
     *(u16 *)(ptr + 0x36) = (u16)result;
 }
 
+void fn_80089A28(void *arg0) {
+    f32 fn_800067BC(s32, f32, f32, f32, f32);
+    void fn_80202540(void *, f32, f32, f32);
+    void fn_80202B3C(void *, f32, f32, f32, f32, f32, f32);
+    void fn_8021F4E4(s32, s32);
+    void fn_8021FBB8(void);
+    void fn_8021FBF0(s32, s32, s32, s32, s32);
+    void fn_80220428(s32);
+    void fn_80220DEC(s32, s32, s32);
+    void fn_80222334(s32);
+    void fn_80222370(s32, s32, s32, s32, s32, s32, s32);
+    void fn_802239D0(s32, s32);
+    void fn_80223F2C(s32, s32, s32, s32);
+    void fn_802240C8(s32);
+    void fn_802245D8(s32, s32, s32, s32);
+    void fn_80224684(s32, s32, s32);
+    void fn_80224C4C(void *, s32);
+    void fn_80224D7C(void *, s32);
+    void fn_80224E1C(s32);
+    void fn_80224FEC(f32, f32, f32, f32, f32, f32);
+    extern s32 lbl_80367110;
+    extern f32 lbl_80369694;
+    extern f32 lbl_80369698;
+    extern f32 lbl_8036969C;
+    extern f32 lbl_803696A0;
+    extern f32 lbl_803696A4;
+    extern f32 lbl_803696B4;
+    extern f32 lbl_803696CC;
+    extern f32 lbl_803696D0;
+    extern f32 lbl_803696D4;
+
+    u8 sp8[0x60];
+    s32 xv[4];
+    f32 f31;
+    f32 f30;
+    f32 start;
+    s32 mode;
+    s32 a0;
+    s32 a1;
+    s32 zero;
+    s32 height;
+    u16 state;
+
+    if (lbl_80367110 & 1) {
+        state = *(u16 *)((u8 *)arg0 + 0x32);
+        switch (state) {
+        case 0:
+        case 2:
+            return;
+        case 1:
+            *(u16 *)((u8 *)arg0 + 0x32) = 2;
+            return;
+        case 3:
+            *(u16 *)((u8 *)arg0 + 0x32) = 0;
+            return;
+        }
+    }
+
+    state = *(u16 *)((u8 *)arg0 + 0x32);
+    switch (state) {
+    case 0:
+        return;
+    case 1:
+        *(u16 *)((u8 *)arg0 + 0x34) = *(u16 *)((u8 *)arg0 + 0x34) + 1;
+        start = lbl_803696B4;
+        f31 = fn_800067BC(0, start, lbl_803696CC,
+                          (f32)*(u16 *)((u8 *)arg0 + 0x34),
+                          (f32)*(u16 *)((u8 *)arg0 + 0x36));
+        mode = 0;
+        if (*(u16 *)((u8 *)arg0 + 0x34) >= *(u16 *)((u8 *)arg0 + 0x36)) {
+            *(u16 *)((u8 *)arg0 + 0x32) = 2;
+        }
+        break;
+    case 2:
+        f31 = lbl_803696CC;
+        mode = 0;
+        break;
+    case 3:
+        *(u16 *)((u8 *)arg0 + 0x34) = *(u16 *)((u8 *)arg0 + 0x34) + 1;
+        start = lbl_80369690;
+        f31 = fn_800067BC(0, start, lbl_803696D0,
+                          (f32)*(u16 *)((u8 *)arg0 + 0x34),
+                          (f32)*(u16 *)((u8 *)arg0 + 0x36));
+        mode = 1;
+        if (*(u16 *)((u8 *)arg0 + 0x34) >= *(u16 *)((u8 *)arg0 + 0x36)) {
+            *(u16 *)((u8 *)arg0 + 0x32) = 0;
+        }
+        break;
+    }
+
+    fn_80202B3C(sp8, lbl_80369690, lbl_80369694, lbl_80369690, lbl_80369698, lbl_80369690, lbl_8036969C);
+    fn_80224C4C(sp8, 1);
+    fn_80202540(sp8, lbl_80369690, lbl_80369690, lbl_803696A0);
+    fn_80224D7C(sp8, 0);
+    fn_80224E1C(0);
+    fn_80224FEC(lbl_80369690, lbl_80369690, lbl_80369698, lbl_80369694, lbl_80369690, lbl_803696A4);
+    fn_8021FBB8();
+    fn_8021F4E4(9, 1);
+    fn_8021F4E4(0xB, 1);
+    fn_8021FBF0(0, 9, 1, 3, 0);
+    fn_8021FBF0(0, 0xB, 1, 5, 0);
+    fn_80220428(0);
+    fn_802239D0(0, 4);
+    fn_80223F2C(0, 0xFF, 0xFF, 4);
+    fn_802240C8(1);
+    fn_80222334(1);
+    fn_80222370(4, 0, 1, 1, 0, 0, 2);
+    fn_802245D8(1, 4, 5, 0);
+    fn_80224684(1, 3, 0);
+
+    if (mode == 0) {
+        a0 = 0;
+        a1 = 0xFF;
+        f30 = lbl_803696D4 + f31;
+    } else if (mode == 1) {
+        f30 = f31;
+        a0 = 0xFF;
+        a1 = 0;
+        f31 = lbl_803696B4 + f31;
+    } else {
+        return;
+    }
+
+    zero = 0;
+    height = 0x1C0;
+
+    fn_80220DEC(0x98, 0, 4);
+    xv[0] = (s32)f31;
+    xv[1] = (s32)(lbl_803696D4 + f31);
+    xv[2] = (s32)f31;
+    xv[3] = (s32)(lbl_803696D4 + f31);
+    *(volatile s16 *)0xCC008000 = (s16)xv[0];
+    *(volatile s16 *)0xCC008000 = (s16)zero;
+    *(volatile s16 *)0xCC008000 = (s16)zero;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = (u8)a0;
+    *(volatile s16 *)0xCC008000 = (s16)xv[1];
+    *(volatile s16 *)0xCC008000 = (s16)zero;
+    *(volatile s16 *)0xCC008000 = (s16)zero;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = (u8)a1;
+    *(volatile s16 *)0xCC008000 = (s16)xv[2];
+    *(volatile s16 *)0xCC008000 = (s16)height;
+    *(volatile s16 *)0xCC008000 = (s16)zero;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = (u8)a0;
+    *(volatile s16 *)0xCC008000 = (s16)xv[3];
+    *(volatile s16 *)0xCC008000 = (s16)height;
+    *(volatile s16 *)0xCC008000 = (s16)zero;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = (u8)a1;
+
+    fn_80220DEC(0x98, 0, 4);
+    xv[0] = (s32)f30;
+    xv[1] = (s32)(lbl_803696B4 + f30);
+    xv[2] = (s32)f30;
+    xv[3] = (s32)(lbl_803696B4 + f30);
+    *(volatile s16 *)0xCC008000 = (s16)xv[0];
+    *(volatile s16 *)0xCC008000 = (s16)zero;
+    *(volatile s16 *)0xCC008000 = (s16)zero;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0xFF;
+    *(volatile s16 *)0xCC008000 = (s16)xv[1];
+    *(volatile s16 *)0xCC008000 = (s16)zero;
+    *(volatile s16 *)0xCC008000 = (s16)zero;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0xFF;
+    *(volatile s16 *)0xCC008000 = (s16)xv[2];
+    *(volatile s16 *)0xCC008000 = (s16)height;
+    *(volatile s16 *)0xCC008000 = (s16)zero;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0xFF;
+    *(volatile s16 *)0xCC008000 = (s16)xv[3];
+    *(volatile s16 *)0xCC008000 = (s16)height;
+    *(volatile s16 *)0xCC008000 = (s16)zero;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0;
+    *(volatile u8 *)0xCC008000 = 0xFF;
+}
+
 s32 fn_80089ED8(void) {
     extern void *lbl_803674E8;
     u16 temp_r0;

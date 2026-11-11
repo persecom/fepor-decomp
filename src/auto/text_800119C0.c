@@ -175,7 +175,7 @@ void fn_80013A6C(s32 arg0) {
 }
 
 #pragma scheduling reset
-s32 fn_80013A90(void) {
+s32 fn_80013A90(void *arg0) {
     extern s32 lbl_803671A4;
     extern s32 lbl_80367180;
     extern s32 lbl_8036718C;
@@ -187,20 +187,55 @@ s32 fn_80013A90(void) {
     u32 result;
     s32 context;
     s32 zero;
-    s32 ret;
 
+    (void)arg0;
     context = lbl_803671A4;
     lbl_80367180 = context;
     lbl_8036718C = *(s32 *)((u8 *)context + 0x18);
     result = fn_8000D354();
-    if ((lbl_80367184 = result) == 0U) {
+    lbl_80367184 = result;
+    if (result == 0U) {
         fn_800142B0(5);
         return 0;
     }
     zero = 0;
-    ret = 1;
     lbl_80367188 = zero;
-    return ret;
+    return 1;
+}
+
+s32 fn_80013AE8(void *arg0, void *arg1, u8 arg2)
+{
+    extern s16 lbl_8036719E;
+    extern s16 lbl_8036719C;
+    extern u8 *lbl_803671A0;
+    extern s32 lbl_803671A8;
+
+    extern void fn_8000D3EC(void *, void *);
+
+    s32 index;
+    s16 next;
+    u8 *entry;
+
+    index = lbl_8036719E;
+    next = index + 1;
+    entry = lbl_803671A0 + (index << 4);
+
+    lbl_8036719E = next;
+
+    if (next > lbl_8036719C) {
+        lbl_803671A8 = 9;
+        return 0;
+    }
+
+    *(void **)(entry + 0x0) = arg0;
+    *(void **)(entry + 0x4) = arg1;
+    *(u32 *)(entry + 0x8) = 0;
+    entry[0xD] = arg2;
+    entry[0xC] = 0;
+
+    fn_8000D3EC(arg0, entry);
+
+    return 1;
 }
 
 #pragma scheduling reset
@@ -356,6 +391,31 @@ s32 fn_80014400(void *arg0) {
     return 0;
 }
 
+s32 fn_80014468(void *arg0)
+{
+    extern void *fn_8000D354(void *);
+    extern void fn_8000C070(void *, s32);
+
+    u8 *obj;
+    u8 *data;
+    s32 index;
+    void *value;
+
+    obj = (u8 *)arg0;
+    data = *(u8 **)(obj + 4);
+
+    index = (s16)(*(u32 *)data >> 16);
+    value = *(void **)(data + 4);
+
+    *(u8 **)(obj + 4) = data + 8;
+
+    if (fn_8000D354(value) != 0) {
+        fn_8000C070(obj, (u8)index);
+    }
+
+    return 1;
+}
+
 s32 fn_800144D0(void *arg0) {
     u8 fn_80089640();
     if (fn_80089640() != 0) {
@@ -399,6 +459,28 @@ s32 fn_800145E0(void *arg0) {
                  *(s32 *)((u8 *)*(void **)((u8 *)arg0 + 4) + 4));
     *(void **)((u8 *)arg0 + 4) = (void *)((u8 *)*(void **)((u8 *)arg0 + 4) + 8);
     return 1;
+}
+
+s32 fn_8001462C(void *arg0)
+{
+    extern void fn_8008A290(s32, s32);
+
+    u8 *obj;
+    u32 *data;
+    u32 value;
+    s32 index;
+
+    obj = (u8 *)arg0;
+    data = *(u32 **)(obj + 4);
+
+    value = data[0];
+    index = (value >> 16) & 0xFF;
+
+    fn_8008A290(index, data[1]);
+
+    *(u8 **)(obj + 4) += 8;
+
+    return index == 7;
 }
 
 int fn_80014690(void *arg0)

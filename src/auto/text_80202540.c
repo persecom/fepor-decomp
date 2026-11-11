@@ -333,6 +333,147 @@ f32 fn_80202C18(void) {
     return M2C_ERROR(/* psq_l unimplemented */);
 }
 
+#pragma ppc_intrinsics on
+s32 fn_80202D1C(f32 *src, f32 *inv) {
+    void fn_80202BD4(f32 *, f32 *);
+    extern f32 lbl_8036BC58;
+    extern f32 lbl_8036BC60;
+    f32 sp10[16];
+    f32 one;
+    f32 zero;
+    f64 zpair;
+    f32 f1;
+    f32 f4;
+    f32 f0;
+    f32 t;
+    s32 i;
+    s32 j;
+    s32 pivot;
+    s32 off;
+    s32 col;
+    s32 r5;
+    s32 r6;
+    s32 r0;
+    s32 ctr;
+
+    fn_80202BD4(src, sp10);
+    one = lbl_8036BC58;
+    zero = lbl_8036BC60;
+    ((f32 *)&zpair)[0] = zero;
+    ((f32 *)&zpair)[1] = zero;
+    inv[0] = one;
+    *(f64 *)&inv[1] = zpair;
+    *(f64 *)&inv[3] = zpair;
+    inv[5] = one;
+    *(f64 *)&inv[6] = zpair;
+    *(f64 *)&inv[8] = zpair;
+    inv[10] = one;
+    *(f64 *)&inv[11] = zpair;
+    *(f64 *)&inv[13] = zpair;
+    inv[15] = one;
+
+    i = 0;
+    off = 0;
+    col = 0;
+    do {
+        f1 = zero;
+        pivot = i;
+        j = i;
+        r5 = j << 4;
+        ctr = 4 - j;
+        if (j < 4) {
+            do {
+                r0 = r5 + col;
+                f0 = __fabsf(*(f32 *)((s8 *)sp10 + r0));
+                if (f0 > f1) {
+                    f1 = f0;
+                    pivot = j;
+                }
+                j += 1;
+                r5 += 0x10;
+            } while (--ctr);
+        }
+        if (zero == f1)
+            return 0;
+        if (pivot != i) {
+            r5 = pivot << 4;
+            t = *(f32 *)((s8 *)sp10 + off);
+            *(f32 *)((s8 *)sp10 + off) = *(f32 *)((s8 *)sp10 + r5);
+            *(f32 *)((s8 *)sp10 + r5) = t;
+            t = *(f32 *)((s8 *)inv + off);
+            *(f32 *)((s8 *)inv + off) = *(f32 *)((s8 *)inv + r5);
+            *(f32 *)((s8 *)inv + r5) = t;
+            r6 = off + 4; r0 = r5 + 4;
+            t = *(f32 *)((s8 *)sp10 + r6);
+            *(f32 *)((s8 *)sp10 + r6) = *(f32 *)((s8 *)sp10 + r0);
+            *(f32 *)((s8 *)sp10 + r0) = t;
+            t = *(f32 *)((s8 *)inv + r6);
+            *(f32 *)((s8 *)inv + r6) = *(f32 *)((s8 *)inv + r0);
+            *(f32 *)((s8 *)inv + r0) = t;
+            r6 = off + 8; r0 = r5 + 8;
+            t = *(f32 *)((s8 *)sp10 + r6);
+            *(f32 *)((s8 *)sp10 + r6) = *(f32 *)((s8 *)sp10 + r0);
+            *(f32 *)((s8 *)sp10 + r0) = t;
+            t = *(f32 *)((s8 *)inv + r6);
+            *(f32 *)((s8 *)inv + r6) = *(f32 *)((s8 *)inv + r0);
+            *(f32 *)((s8 *)inv + r0) = t;
+            r6 = off + 0xC; r0 = r5 + 0xC;
+            t = *(f32 *)((s8 *)sp10 + r6);
+            *(f32 *)((s8 *)sp10 + r6) = *(f32 *)((s8 *)sp10 + r0);
+            *(f32 *)((s8 *)sp10 + r0) = t;
+            t = *(f32 *)((s8 *)inv + r6);
+            *(f32 *)((s8 *)inv + r6) = *(f32 *)((s8 *)inv + r0);
+            *(f32 *)((s8 *)inv + r0) = t;
+        }
+        f4 = one / *(f32 *)((s8 *)sp10 + (off + col));
+        f0 = *(f32 *)((s8 *)sp10 + off) * f4; *(f32 *)((s8 *)sp10 + off) = f0;
+        f0 = *(f32 *)((s8 *)inv + off) * f4; *(f32 *)((s8 *)inv + off) = f0;
+        r0 = off + 4;
+        f0 = *(f32 *)((s8 *)sp10 + r0) * f4; *(f32 *)((s8 *)sp10 + r0) = f0;
+        f0 = *(f32 *)((s8 *)inv + r0) * f4; *(f32 *)((s8 *)inv + r0) = f0;
+        r0 = off + 8;
+        f0 = *(f32 *)((s8 *)sp10 + r0) * f4; *(f32 *)((s8 *)sp10 + r0) = f0;
+        f0 = *(f32 *)((s8 *)inv + r0) * f4; *(f32 *)((s8 *)inv + r0) = f0;
+        r0 = off + 0xC;
+        f0 = *(f32 *)((s8 *)sp10 + r0) * f4; *(f32 *)((s8 *)sp10 + r0) = f0;
+        f0 = *(f32 *)((s8 *)inv + r0) * f4; *(f32 *)((s8 *)inv + r0) = f0;
+        j = 0; r5 = 0; ctr = 2;
+        do {
+            if (j != i) {
+                f4 = *(f32 *)((s8 *)sp10 + (r5 + col));
+                f0 = f4 * *(f32 *)((s8 *)sp10 + off); t = *(f32 *)((s8 *)sp10 + r5) - f0; *(f32 *)((s8 *)sp10 + r5) = t;
+                f0 = f4 * *(f32 *)((s8 *)inv + off); t = *(f32 *)((s8 *)inv + r5) - f0; *(f32 *)((s8 *)inv + r5) = t;
+                r0 = off + 4; r6 = r5 + 4;
+                f0 = f4 * *(f32 *)((s8 *)sp10 + r0); t = *(f32 *)((s8 *)sp10 + r6) - f0; *(f32 *)((s8 *)sp10 + r6) = t;
+                f0 = f4 * *(f32 *)((s8 *)inv + r0); t = *(f32 *)((s8 *)inv + r6) - f0; *(f32 *)((s8 *)inv + r6) = t;
+                r0 = off + 8; r6 = r5 + 8;
+                f0 = f4 * *(f32 *)((s8 *)sp10 + r0); t = *(f32 *)((s8 *)sp10 + r6) - f0; *(f32 *)((s8 *)sp10 + r6) = t;
+                f0 = f4 * *(f32 *)((s8 *)inv + r0); t = *(f32 *)((s8 *)inv + r6) - f0; *(f32 *)((s8 *)inv + r6) = t;
+                r0 = off + 0xC; r6 = r5 + 0xC;
+                f0 = f4 * *(f32 *)((s8 *)sp10 + r0); t = *(f32 *)((s8 *)sp10 + r6) - f0; *(f32 *)((s8 *)sp10 + r6) = t;
+                f0 = f4 * *(f32 *)((s8 *)inv + r0); t = *(f32 *)((s8 *)inv + r6) - f0; *(f32 *)((s8 *)inv + r6) = t;
+            }
+            j += 1; r5 += 0x10;
+            if (j != i) {
+                f4 = *(f32 *)((s8 *)sp10 + (r5 + col));
+                f0 = f4 * *(f32 *)((s8 *)sp10 + off); t = *(f32 *)((s8 *)sp10 + r5) - f0; *(f32 *)((s8 *)sp10 + r5) = t;
+                f0 = f4 * *(f32 *)((s8 *)inv + off); t = *(f32 *)((s8 *)inv + r5) - f0; *(f32 *)((s8 *)inv + r5) = t;
+                r0 = off + 4; r6 = r5 + 4;
+                f0 = f4 * *(f32 *)((s8 *)sp10 + r0); t = *(f32 *)((s8 *)sp10 + r6) - f0; *(f32 *)((s8 *)sp10 + r6) = t;
+                f0 = f4 * *(f32 *)((s8 *)inv + r0); t = *(f32 *)((s8 *)inv + r6) - f0; *(f32 *)((s8 *)inv + r6) = t;
+                r0 = off + 8; r6 = r5 + 8;
+                f0 = f4 * *(f32 *)((s8 *)sp10 + r0); t = *(f32 *)((s8 *)sp10 + r6) - f0; *(f32 *)((s8 *)sp10 + r6) = t;
+                f0 = f4 * *(f32 *)((s8 *)inv + r0); t = *(f32 *)((s8 *)inv + r6) - f0; *(f32 *)((s8 *)inv + r6) = t;
+                r0 = off + 0xC; r6 = r5 + 0xC;
+                f0 = f4 * *(f32 *)((s8 *)sp10 + r0); t = *(f32 *)((s8 *)sp10 + r6) - f0; *(f32 *)((s8 *)sp10 + r6) = t;
+                f0 = f4 * *(f32 *)((s8 *)inv + r0); t = *(f32 *)((s8 *)inv + r6) - f0; *(f32 *)((s8 *)inv + r6) = t;
+            }
+            j += 1; r5 += 0x10;
+        } while (--ctr);
+        i += 1; off += 0x10; col += 4;
+    } while (i < 4);
+    return 1;
+}
 void fn_80203184(void) {
     M2C_ERROR(/* unknown instruction: ps_add $f6, $f2, $f4 */);
     M2C_ERROR(/* unknown instruction: ps_add $f7, $f3, $f5 */);

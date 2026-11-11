@@ -156,6 +156,135 @@ void __DVDInitWA(void) {
     OSInitAlarm();
 }
 
+#pragma use_lmw_stmw on
+void __DVDInterruptHandler(s32 type, OSContext *context) {
+    s64 __OSGetSystemTime(void);
+    void fn_80204770(void *);
+    void fn_8020B940(void *, u32, u32, void *);
+    void fn_8020BD68(u32, void *);
+    extern s32 lbl_80368570;
+    extern s64 lbl_80368560;
+    extern s32 lbl_80366F58;
+    extern s32 StopAtNextInt_80368530;
+    extern u32 ResetOccurred_80368548;
+    extern s64 LastResetEnd_80368540;
+    extern void (*lbl_8036853C)(s32);
+    extern s32 WaitingCoverClose_8036854C;
+    extern s32 lbl_80368550;
+    extern s32 NextCommandNumber_80368574;
+    extern void (*Callback_80368538)(u32);
+    OSContext sp10;
+    u32 masked;
+    u8 *base;
+    u32 intVal;
+    u32 regand;
+    u32 *diBase;
+    u32 reg;
+    s32 finished;
+
+    (void)type;
+    base = (u8 *)CommandList_80339E70;
+    intVal = 0;
+    if (lbl_80368570 != 0) {
+        lbl_80368560 = __OSGetSystemTime();
+        lbl_80366F58 = 0;
+        *(u32 *)(base + 0xB8) = *(u32 *)(base + 0xC4);
+        *(u32 *)(base + 0xBC) = *(u32 *)(base + 0xC8);
+        *(u32 *)(base + 0xC0) = *(u32 *)(base + 0xCC);
+        if (StopAtNextInt_80368530 == 1) {
+            intVal |= 8;
+        }
+    }
+    lbl_80368570 = 0;
+    diBase = (u32 *)0xCC006000;
+    StopAtNextInt_80368530 = 0;
+    reg = diBase[0];
+    masked = reg & 0x2A;
+    regand = (reg & 0x54) & (masked << 1);
+    if (regand & 0x40) {
+        intVal |= 8;
+    }
+    if (regand & 0x10) {
+        intVal |= 1;
+    }
+    if (regand & 4) {
+        intVal |= 2;
+    }
+    if (intVal != 0) {
+        ResetOccurred_80368548 = 0;
+        fn_80204770(base + 0x68);
+    }
+    *(volatile u32 *)0xCC006000 = regand | masked;
+    if (ResetOccurred_80368548 != 0) {
+        if ((u64)(__OSGetSystemTime() - LastResetEnd_80368540) >
+            ((*(u32 *)0x800000F8 >> 2) / 1000) * 200) {
+            {
+                volatile u32 *diPtr = (volatile u32 *)0xCC006000;
+                reg = *++diPtr;
+                if (((reg & 4) & ((reg << 1) & 4)) & 4) {
+                    if (lbl_8036853C) {
+                        lbl_8036853C(4);
+                    }
+                    lbl_8036853C = 0;
+                }
+                *diPtr = *diPtr;
+            }
+            goto after_cover;
+        }
+    }
+    if (WaitingCoverClose_8036854C != 0) {
+        {
+            volatile u32 *diPtr = (volatile u32 *)0xCC006000;
+            reg = *++diPtr;
+            masked = (reg & 4) & ((reg << 1) & 4);
+            if (masked & 4) {
+                intVal |= 4;
+            }
+            *diPtr = masked | (reg & 2);
+        }
+        WaitingCoverClose_8036854C = 0;
+    } else {
+        *(volatile u32 *)0xCC006004 = 0;
+    }
+after_cover:
+    if ((intVal & 8) && (lbl_80368550 == 0)) {
+        intVal &= ~8;
+    }
+    finished = 0;
+    if (intVal & 1) {
+        s32 off = NextCommandNumber_80368574 * 0x14;
+        s32 c = *(s32 *)(base + off);
+        if (c == 1) {
+            NextCommandNumber_80368574++;
+            fn_8020B940(*(void **)(base + off + 4), *(u32 *)(base + off + 8),
+                        *(u32 *)(base + off + 0xC), *(void **)(base + off + 0x10));
+            finished = 1;
+        } else if (c == 2) {
+            NextCommandNumber_80368574++;
+            fn_8020BD68(*(u32 *)(base + off + 0xC), *(void **)(base + off + 0x10));
+            finished = 1;
+        }
+    }
+    if (finished == 0) {
+        void (*cb)(u32);
+        *(s32 *)base = -1;
+        NextCommandNumber_80368574 = 0;
+        OSClearContext(&sp10);
+        OSSetCurrentContext(&sp10);
+        if (intVal != 0) {
+            cb = Callback_80368538;
+            Callback_80368538 = 0;
+            if (cb) {
+                cb(intVal);
+            }
+            lbl_80368550 = 0;
+        }
+    }
+    OSClearContext(&sp10);
+    OSSetCurrentContext(context);
+}
+#pragma use_lmw_stmw reset
+
 void fn_8020B84C(void) {
     extern u16 Scb_80339420[];
     extern s32 NextCommandNumber_80368574;
@@ -227,6 +356,115 @@ void fn_8020BA50(void *addr, u32 length, u32 offset, void *callback) {
     fn_8020BD68(offsetToSeek, callback);
 }
 
+#pragma use_lmw_stmw on
+#pragma global_optimizer off
+BOOL fn_8020BAD0(void *addr, u32 length, u32 offset, void *callback) {
+    extern volatile u32 WorkAroundType_80368554;
+    extern s32 NextCommandNumber_80368574;
+    extern s32 lbl_80366F58;
+    extern s64 lbl_80368560;
+    void fn_8020B940(void *, u32, u32, void *);
+    void fn_8020BA50(void *, u32, u32, void *);
+    void *fn_8020F404(void);
+    s64 __OSGetSystemTime(void);
+    void fn_8020B84C(void *, void *);
+    u32 current;
+    u32 end;
+    s64 delay;
+    s64 elapsed;
+    u32 ticks5;
+    u32 bus;
+    s32 nearby;
+    s32 padding;
+    s32 cached;
+    u32 lastLen;
+    u32 lastOff;
+    u32 previous;
+    u32 requested;
+    u32 *readOffset;
+    u32 *prevLength;
+    u32 *prevOffset;
+    u8 *base;
+
+    base = (u8 *)CommandList_80339E70;
+    readOffset = (u32 *)(base + 0xCC);
+    __DIRegs[6] = length;
+    *(void **)(base + 0xC4) = addr;
+    *(u32 *)(base + 0xC8) = length;
+    *readOffset = offset;
+    if (WorkAroundType_80368554 == 0) {
+        CommandList_80339E70[0].command = -1;
+        NextCommandNumber_80368574 = 0;
+        fn_8020B940(addr, length, offset, callback);
+    } else if (WorkAroundType_80368554 == 1) {
+        if (lbl_80366F58 != 0) {
+            fn_8020BA50(addr, length, offset, callback);
+        } else {
+            prevLength = (u32 *)(base + 0xBC);
+            current = *readOffset;
+            prevOffset = (u32 *)(base + 0xC0);
+            lastLen = prevLength[0];
+            lastOff = prevOffset[0];
+            current = current >> 15;
+            lastLen = lastLen - 1;
+            end = (lastOff + lastLen) >> 15;
+            if (*(u8 *)((u8 *)fn_8020F404() + 8) != 0) {
+                cached = 1;
+            } else {
+                cached = 0;
+            }
+            if (cached != 0) {
+                padding = 5;
+            } else {
+                padding = 15;
+            }
+            if (current > end - 2 || (cached = padding + 3, current < end + cached)) {
+                nearby = 1;
+            } else {
+                nearby = 0;
+            }
+            if (nearby == 0) {
+                CommandList_80339E70[0].command = -1;
+                NextCommandNumber_80368574 = 0;
+                fn_8020B940(addr, length, offset, callback);
+            } else {
+                previous = *prevLength;
+                requested = *prevOffset;
+                previous = previous - 1;
+                lastOff = *readOffset;
+                previous = requested + previous;
+                previous = previous >> 15;
+                requested = lastOff >> 15;
+                if (previous == requested || (previous + 1) == requested) {
+                    elapsed = __OSGetSystemTime() - lbl_80368560;
+                    bus = *(u32 *)0x800000F8 / 4;
+                    ticks5 = (bus / 1000) * 5;
+                    if (elapsed > (s64)ticks5) {
+                        CommandList_80339E70[0].command = -1;
+                        NextCommandNumber_80368574 = 0;
+                        fn_8020B940(addr, length, offset, callback);
+                    } else {
+                        CommandList_80339E70[0].command = 1;
+                        CommandList_80339E70[0].addr = addr;
+                        CommandList_80339E70[0].length = length;
+                        CommandList_80339E70[0].offset = offset;
+                        CommandList_80339E70[0].callback = callback;
+                        CommandList_80339E70[1].command = -1;
+                        NextCommandNumber_80368574 = 0;
+                        delay = (s64)ticks5 - elapsed + (((bus / 125000) * 500) >> 3);
+                        OSCreateAlarm(base + 0x40);
+                        OSSetAlarm(base + 0x40, delay, fn_8020B84C);
+                    }
+                } else {
+                    fn_8020BA50(addr, length, offset, callback);
+                }
+            }
+        }
+    }
+    return TRUE;
+}
+#pragma global_optimizer reset
+#pragma use_lmw_stmw reset
 BOOL fn_8020BD68(u32 offset, void *callback) {
     extern void *Callback_80368538;
 

@@ -833,9 +833,9 @@ void *fn_801049E0(u8 *arg0, void **arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *a
     }
 
     if (is_double != 0) {
+        code = *(u8 *)(arg0 + 1);
         next = arg0 + 2;
-        code = arg0[1];
-        code = (u16)(code | (((s32)(s8)*(u8 *)arg0 << 8) & 0xFF00));
+        code = (u16)(code | (*(s8 *)((u8 *)arg0 + 0) << 8));
     } else {
         code = *(u8 *)arg0;
         next = arg0 + 1;
@@ -863,6 +863,7 @@ void *fn_801049E0(u8 *arg0, void **arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *a
         s32 idx;
         s32 stride;
         s32 off;
+        s32 tmp;
 
         temp_r5 = ctx[3];
         *arg4 = (s8)temp_r5[0xC];
@@ -870,7 +871,10 @@ void *fn_801049E0(u8 *arg0, void **arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *a
         idx = *(u16 *)(temp_r5 + 2);
         stride = *(s32 *)(temp_r6 + 0x14);
         off = *(s32 *)(temp_r6 + 0x24);
-        *arg1 = (void *)(off + idx * stride + (s32)temp_r6);
+        tmp = idx * stride;
+        tmp = off + tmp;
+        tmp = (s32)temp_r6 + tmp;
+        *arg1 = (void *)tmp;
         *arg2 = *(u16 *)(temp_r5 + 4);
         *arg3 = *(u16 *)(temp_r5 + 6);
     }

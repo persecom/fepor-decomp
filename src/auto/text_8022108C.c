@@ -164,6 +164,88 @@ void fn_8022108C(const GXRenderModeObj *rmin, GXRenderModeObj *rmout, u16 hor, u
     rmout->viYOrigin = (u16)(rmin->viYOrigin + ver);
 }
 
+void fn_802211D0(u32 arg0, u32 arg1, u32 arg2, u32 arg3)
+{
+    u8 *gx;
+    u32 value;
+    u32 width;
+    u32 height;
+
+    gx = (u8 *)__GXData;
+
+    width = (u16)arg2 - 1;
+    height = (u16)arg3 - 1;
+
+    *(u32 *)(gx + 0x1E0) = 0;
+
+    value = *(u32 *)(gx + 0x1E0);
+    value = (value & ~0x3FF) | ((u16)arg0 & 0x3FF);
+    *(u32 *)(gx + 0x1E0) = value;
+
+    value = *(u32 *)(gx + 0x1E0);
+    value = (value & ~0xFFC00) | (((u16)arg1 << 10) & 0xFFC00);
+    *(u32 *)(gx + 0x1E0) = value;
+
+    value = *(u32 *)(gx + 0x1E0);
+    value = (value & 0x00FFFFFF) | 0x49000000;
+    *(u32 *)(gx + 0x1E0) = value;
+
+    *(u32 *)(gx + 0x1E4) = 0;
+
+    value = *(u32 *)(gx + 0x1E4);
+    value = (value & ~0x3FF) | (width & 0x3FF);
+    *(u32 *)(gx + 0x1E4) = value;
+
+    value = *(u32 *)(gx + 0x1E4);
+    value = (value & ~0xFFC00) | ((height << 10) & 0xFFC00);
+    *(u32 *)(gx + 0x1E4) = value;
+
+    value = *(u32 *)(gx + 0x1E4);
+    value = (value & 0x00FFFFFF) | 0x4A000000;
+    *(u32 *)(gx + 0x1E4) = value;
+}
+
+void fn_8022124C(u32 arg0, u32 arg1, u32 arg2, u32 arg3)
+{
+    u8 *gx;
+    u32 value;
+    u32 width;
+    u32 height;
+
+    gx = (u8 *)__GXData;
+
+    width = (u16)arg2 - 1;
+    height = (u16)arg3 - 1;
+
+    *(u32 *)(gx + 0x1F0) = 0;
+
+    value = *(u32 *)(gx + 0x1F0);
+    value = (value & ~0x3FF) | ((u16)arg0 & 0x3FF);
+    *(u32 *)(gx + 0x1F0) = value;
+
+    value = *(u32 *)(gx + 0x1F0);
+    value = (value & ~0xFFC00) | (((u16)arg1 << 10) & 0xFFC00);
+    *(u32 *)(gx + 0x1F0) = value;
+
+    value = *(u32 *)(gx + 0x1F0);
+    value = (value & 0x00FFFFFF) | 0x49000000;
+    *(u32 *)(gx + 0x1F0) = value;
+
+    *(u32 *)(gx + 0x1F4) = 0;
+
+    value = *(u32 *)(gx + 0x1F4);
+    value = (value & ~0x3FF) | (width & 0x3FF);
+    *(u32 *)(gx + 0x1F4) = value;
+
+    value = *(u32 *)(gx + 0x1F4);
+    value = (value & ~0xFFC00) | ((height << 10) & 0xFFC00);
+    *(u32 *)(gx + 0x1F4) = value;
+
+    value = *(u32 *)(gx + 0x1F4);
+    value = (value & 0x00FFFFFF) | 0x4A000000;
+    *(u32 *)(gx + 0x1F4) = value;
+}
+
 void fn_802212C8(s32 arg0) {
     __GXData[0x1E8/2] = 0;
     __GXData[0x1E8/2] = (__GXData[0x1E8/2] & ~0x3FF) | ((arg0 >> 5) & 0x3FF);
@@ -172,6 +254,35 @@ void fn_802212C8(s32 arg0) {
 
 u32 fn_8022142C(void) {
     return lbl_80368770 + (lbl_80368738 * 2);
+}
+
+void fn_80221450(u32 arg0)
+{
+    u8 *gx;
+    u32 value;
+    u32 flag0;
+    u32 flag1;
+
+    gx = (u8 *)__GXData;
+
+    flag0 = ((arg0 & 1) == 1);
+    flag1 = ((arg0 & 2) == 2);
+
+    value = *(u32 *)(gx + 0x1EC);
+    value = (value & ~1U) | flag0;
+    *(u32 *)(gx + 0x1EC) = value;
+
+    value = *(u32 *)(gx + 0x1EC);
+    value = (value & ~2U) | (flag1 << 1);
+    *(u32 *)(gx + 0x1EC) = value;
+
+    value = *(u32 *)(gx + 0x1FC);
+    value = (value & ~1U) | flag0;
+    *(u32 *)(gx + 0x1FC) = value;
+
+    value = *(u32 *)(gx + 0x1FC);
+    value = (value & ~2U) | (flag1 << 1);
+    *(u32 *)(gx + 0x1FC) = value;
 }
 
 #pragma use_lmw_stmw on
@@ -283,6 +394,40 @@ s32 fn_802216E0(s32 arg0) {
     ptr = (u16*)0x8036C260 + 0x388 + arg0 * 0x10;
     ret = *ptr;
     return (ret - *(ptr + 7)) + 0x4000;
+}
+
+void fn_802217AC(u8 *arg0, u32 arg1)
+{
+    volatile u8 *fifo;
+    u32 value;
+    u8 *gx;
+
+    fifo = (volatile u8 *)0xCC008000;
+    gx = (u8 *)__GXData;
+
+    value = 0;
+    value |= arg0[0];
+    value |= (u32)arg0[3] << 8;
+    value |= 0x4F000000;
+
+    *fifo = 0x61;
+    *(volatile u32 *)fifo = value;
+
+    value = 0;
+    value |= arg0[2];
+    value |= (u32)arg0[1] << 8;
+    value |= 0x50000000;
+
+    *fifo = 0x61;
+    *(volatile u32 *)fifo = value;
+
+    value = arg1 & 0x00FFFFFF;
+    value |= 0x51000000;
+
+    *fifo = 0x61;
+    *(volatile u32 *)fifo = value;
+
+    *(u16 *)(gx + 2) = 0;
 }
 
 #pragma use_lmw_stmw on
@@ -643,6 +788,47 @@ void fn_80221FF8(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
 
 void fn_802220DC(void *arg0, s32 *arg1) {
     M2C_FIELD(arg0, s32 *, 0xC) = (s32) *arg1;
+}
+
+void fn_802220E8(void *arg0, u32 arg1)
+{
+    volatile u8 *fifo;
+    u8 *src;
+    u32 command;
+    u32 value;
+    f64 f0, f1, f2, f3, f4, f5;
+
+    src = (u8 *)arg0;
+    fifo = (volatile u8 *)0xCC008000;
+
+    command = ((31 - __cntlzw(arg1)) & 7) << 4;
+    command += 0x600;
+
+    *fifo = 0x10;
+    *(volatile u32 *)fifo = command | 0x000F0000;
+
+    value = *(u32 *)(src + 0xC);
+
+    f5 = *(f64 *)(src + 0x10);
+    f4 = *(f64 *)(src + 0x18);
+    f3 = *(f64 *)(src + 0x20);
+    f2 = *(f64 *)(src + 0x28);
+    f1 = *(f64 *)(src + 0x30);
+    f0 = *(f64 *)(src + 0x38);
+
+    *(volatile u32 *)fifo = 0;
+    *(volatile u32 *)fifo = 0;
+    *(volatile u32 *)fifo = 0;
+    *(volatile u32 *)fifo = value;
+
+    *(volatile f64 *)fifo = f5;
+    *(volatile f64 *)fifo = f4;
+    *(volatile f64 *)fifo = f3;
+    *(volatile f64 *)fifo = f2;
+    *(volatile f64 *)fifo = f1;
+    *(volatile f64 *)fifo = f0;
+
+    *(u16 *)((u8 *)__GXData + 2) = 1;
 }
 
 void fn_8022224C(s32 arg0, void *arg1) {

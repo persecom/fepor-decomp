@@ -6,10 +6,11 @@ typedef struct Pair { u8 *lo; u8 *hi; } Pair;
 typedef struct InitTable { u8 first[0x20]; u8 second[0x68]; u8 third[0x18]; } InitTable;
 
 #pragma use_lmw_stmw on
-#pragma optimization_level 2
 #pragma global_optimizer off
 void fn_8014A25C(void) {
+    typedef struct Pair { u8 *lo; u8 *hi; } Pair;
     extern u8 lbl_802845E8[];
+    extern u8 lbl_80292808[];
     extern u8 lbl_80292914[];
     extern u8 lbl_80292990[];
     extern u8 lbl_802929DC[];
@@ -26,7 +27,6 @@ void fn_8014A25C(void) {
     extern u8 lbl_80292DEC[];
     extern u8 lbl_80292E4C[];
     extern u8 lbl_80292F0C[];
-    extern InitTable lbl_80292808;
     extern u8 *lbl_80367B18;
     extern u8 *lbl_80367B1C;
     extern u8 *lbl_80367B20;
@@ -45,10 +45,17 @@ void fn_8014A25C(void) {
     extern u8 *lbl_80367B5C;
     extern Pair lbl_80367B60;
     u8 *common;
-    InitTable *base;
-    Pair *r44;
-    Pair *r60;
+    u8 *base;
+    u8 *base0;
+    u8 *base20;
+    u8 *base88;
     u8 *pF0C;
+    u8 *pE4C;
+    u8 *pDEC;
+    u8 *pD8C;
+    u8 *pD2C;
+    u8 *pCCC;
+    u8 *pC6C;
     u8 *pBD4;
     u8 *pB88;
     u8 *pB0C;
@@ -57,20 +64,13 @@ void fn_8014A25C(void) {
     u8 *pA28;
     u8 *p9DC;
     u8 *p990;
-    u8 *pE4C;
-    u8 *pDEC;
-    u8 *pD8C;
-    u8 *pD2C;
-    u8 *pCCC;
-    u8 *pC6C;
-    u8 *base0;
-    u8 *base20;
-    u8 *base88;
     u8 *p914;
+    Pair *r44;
+    Pair *r60;
     Pair *r34;
 
     common = lbl_802845E8;
-    base = &lbl_80292808;
+    base = lbl_80292808;
     r44 = &lbl_80367B44;
     r60 = &lbl_80367B60;
     pF0C = lbl_80292F0C;
@@ -88,13 +88,19 @@ void fn_8014A25C(void) {
     pD2C = lbl_80292D2C;
     pCCC = lbl_80292CCC;
     pC6C = lbl_80292C6C;
-    base0 = base->first;
-    base20 = base->second;
-    base88 = base->third;
-    p914 = lbl_80292914;
-    r34 = &lbl_80367B34;
+    base0 = base + 0;
+    base20 = base + 0x20;
     r44->hi = common;
+    base88 = base + 0x88;
+    pAC0 = lbl_80292AC0;
+    pA74 = lbl_80292A74;
+    pA28 = lbl_80292A28;
+    p9DC = lbl_802929DC;
+    p990 = lbl_80292990;
+    r34 = &lbl_80367B34;
+    pB0C = lbl_80292B0C;
     r60->hi = common;
+    p914 = lbl_80292914;
     lbl_80367B18 = pF0C;
     lbl_80367B1C = pE4C;
     lbl_80367B20 = pDEC;

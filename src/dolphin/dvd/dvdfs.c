@@ -481,14 +481,21 @@ void fn_8020D27C(u32 arg0) {
     extern void (*lbl_803685E0)(void *);
     extern void fn_8020D4E0(u32);
 
-    void *temp_r30;
-    void *dummy;
+    typedef struct DVDReadyCommand {
+        u8 pad[8];
+        s32 command;
+        s32 state;
+        u8 pad10[0x18];
+        void (*callback)(s32, void *);
+    } DVDReadyCommand;
+
+    DVDReadyCommand *temp_r30;
     u32 temp_r29;
     u32 temp_r28;
     u32 temp_r31;
     s32 var_r4;
     s32 var_r0;
-    void (*cb)(s32, void *);
+    s32 zero;
 
     if (arg0 == 0x10) {
         __DVDStoreErrorCode(0x01234568);
@@ -511,25 +518,24 @@ void fn_8020D27C(u32 arg0) {
     }
     if ((u32)(temp_r31 - 2) <= 1) {
         var_r4 = 0;
-    } else if ((u32)(temp_r28 + 0xFF000000) == 0) {
+    } else if (temp_r28 == 0x01000000) {
         var_r4 = 4;
-    } else if ((u32)(temp_r28 + 0xFE000000) == 0) {
+    } else if (temp_r28 == 0x02000000) {
         var_r4 = 6;
-    } else if ((u32)(temp_r28 + 0xFD000000) == 0) {
+    } else if (temp_r28 == 0x03000000) {
         var_r4 = 3;
     } else {
         var_r4 = 5;
     }
     if (lbl_803685B8 != 0) {
-        dummy = DummyCommandBlock_80339F80;
+        zero = 0;
         ResumeFromHere_803685C0 = var_r4;
-        temp_r30 = executing_80368598;
-        lbl_803685B8 = 0;
-        executing_80368598 = dummy;
-        *(u32 *)((u8 *)temp_r30 + 0xC) = 0xA;
-        cb = *(void (**)(s32, void *))((u8 *)temp_r30 + 0x28);
-        if (cb != NULL) {
-            cb(-3, temp_r30);
+        temp_r30 = (DVDReadyCommand *)executing_80368598;
+        lbl_803685B8 = zero;
+        executing_80368598 = DummyCommandBlock_80339F80;
+        temp_r30->state = 0xA;
+        if (temp_r30->callback != NULL) {
+            temp_r30->callback(-3, temp_r30);
         }
         if (lbl_803685BC != NULL) {
             lbl_803685BC((void *)0, temp_r30);
@@ -546,25 +552,25 @@ void fn_8020D27C(u32 arg0) {
             return;
         }
         if (temp_r31 == 3) {
-            if ((u32)((temp_r29 & 0xFFFFFF) + 0xFFFD0000) == 0x1100) {
+            if ((temp_r29 & 0xFFFFFF) == 0x031100) {
                 fn_8020BD68(*(u32 *)((u8 *)executing_80368598 + 0x10), (void *)fn_8020D4E0, executing_80368598);
                 return;
             }
             lbl_803685E0(executing_80368598);
             return;
         }
-        if ((u32)(temp_r28 + 0xFF000000) == 0) {
-            *(u32 *)((u8 *)executing_80368598 + 0xC) = 5;
+        if (temp_r28 == 0x01000000) {
+            ((DVDReadyCommand *)executing_80368598)->state = 5;
             fn_8020DD7C();
             return;
         }
-        if ((u32)(temp_r28 + 0xFE000000) == 0) {
-            *(u32 *)((u8 *)executing_80368598 + 0xC) = 3;
+        if (temp_r28 == 0x02000000) {
+            ((DVDReadyCommand *)executing_80368598)->state = 3;
             fn_8020DC14();
             return;
         }
-        if ((u32)(temp_r28 + 0xFD000000) == 0) {
-            *(u32 *)((u8 *)executing_80368598 + 0xC) = 4;
+        if (temp_r28 == 0x03000000) {
+            ((DVDReadyCommand *)executing_80368598)->state = 4;
             fn_8020DD7C();
             return;
         }
@@ -1364,6 +1370,25 @@ void fn_802100F4(u32 arg0) {
     }
 }
 
+#pragma peephole off
+void fn_802107A8(void) {
+    extern u32 lbl_80368604;
+    extern u8 lbl_8036860C;
+    BOOL OSDisableInterrupts(void);
+    void OSRestoreInterrupts(BOOL);
+    void fn_8020ADD8(void *);
+    BOOL enabled;
+    u32 previous;
+
+    enabled = OSDisableInterrupts();
+    previous = lbl_80368604;
+    fn_8020ADD8(&lbl_8036860C);
+    if (previous == lbl_80368604) {
+    } else {
+        OSRestoreInterrupts(enabled);
+    }
+}
+#pragma peephole reset
 s32 fn_80211690(void) {
     extern s32 lbl_80368604;
     return lbl_80368604;

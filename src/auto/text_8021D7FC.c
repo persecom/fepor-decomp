@@ -426,6 +426,25 @@ void fn_8021F36C(u32 arg0, u8 arg1) {
     *(u16 *)(__cpReg + 2) = (u16)__GXData[2];
 }
 
+void fn_8021F39C(u32 arg0, u8 arg1)
+{
+    extern u8 *__GXData;
+    extern u8 *__cpReg;
+
+    u32 value;
+
+    value = *(u32 *)(__GXData + 0x10);
+    value = (value & ~1U) | (arg0 & 1);
+    *(u32 *)(__GXData + 0x10) = value;
+
+    value = *(u32 *)(__GXData + 0x10);
+    value = (value & ~2U) | ((arg1 & 1) << 1);
+    *(u32 *)(__GXData + 0x10) = value;
+
+    value = *(u32 *)(__GXData + 0x10);
+    *(volatile u16 *)(__cpReg + 4) = (u16)value;
+}
+
 s32 fn_8021F4CC(void) {
     extern s32 lbl_80368770;
     return lbl_80368770;
@@ -656,6 +675,37 @@ void fn_80220428(u32 arg0) {
     *(u32 *)((u8 *)gx_data + 0x5AC) = value | 4;
 }
 
+int fn_802204F8(void)
+{
+    void fn_80220D6C(void);
+    void fn_802037B0(void);
+    extern u32 __GXData;
+
+    u8 *gx;
+    volatile u32 *fifo;
+
+    gx = (u8 *)__GXData;
+
+    if (*(u32 *)(gx + 0x5AC) != 0) {
+        fn_80220D6C();
+
+        fifo = (volatile u32 *)0xCC008000;
+
+        *fifo = 0;
+        *fifo = 0;
+        *fifo = 0;
+        *fifo = 0;
+        *fifo = 0;
+        *fifo = 0;
+        *fifo = 0;
+        *fifo = 0;
+    }
+
+    fn_802037B0();
+
+    return 0;
+}
+
 void fn_802206F4(void) {
     OSGetTime();
 }
@@ -816,6 +866,84 @@ void fn_80220C78(M2C_UNK *arg1) {
         OSSetCurrentContext(arg1);
     }
     fn_8020AEC4(&lbl_8036879C);
+}
+
+void __GXPEInit(void)
+{
+    void __OSSetInterruptHandler(s32, void *);
+    void OSInitThreadQueue(void *);
+    void __OSUnmaskInterrupts(u32);
+
+    void fn_80220BAC(void);
+    void fn_80220C78(void);
+
+    extern u32 lbl_8036879C;
+
+    volatile u16 *pe;
+    u16 value;
+
+    __OSSetInterruptHandler(0x12, (void *)fn_80220BAC);
+    __OSSetInterruptHandler(0x13, (void *)fn_80220C78);
+
+    OSInitThreadQueue(&lbl_8036879C);
+
+    __OSUnmaskInterrupts(0x2000);
+    __OSUnmaskInterrupts(0x1000);
+
+    pe = (volatile u16 *)__peReg;
+
+    value = pe[5];
+    value |= 4;
+    value |= 8;
+    value |= 1;
+    value |= 2;
+    pe[5] = value;
+}
+
+void fn_80220F44(u32 arg0, u32 arg1)
+{
+    extern u32 __GXData;
+
+    u8 *gx;
+    u32 value;
+
+    gx = (u8 *)__GXData;
+
+    value = *(u32 *)(gx + 0x7C);
+    value = (value & ~0x000000FF) | (arg0 & 0xFF);
+    *(u32 *)(gx + 0x7C) = value;
+
+    value = *(u32 *)(gx + 0x7C);
+    value = (value & ~0x00070000) | ((arg1 << 16) & 0x00070000);
+    *(u32 *)(gx + 0x7C) = value;
+
+    *(volatile u8 *)0xCC008000 = 0x61;
+    *(volatile u32 *)0xCC008000 = *(u32 *)(gx + 0x7C);
+
+    *(u16 *)(gx + 2) = 0;
+}
+
+void fn_80220F84(u32 arg0, u32 arg1)
+{
+    extern u32 __GXData;
+
+    u8 *gx;
+    u32 value;
+
+    gx = (u8 *)__GXData;
+
+    value = *(u32 *)(gx + 0x7C);
+    value = (value & ~0x0000FF00) | ((arg0 & 0xFF) << 8);
+    *(u32 *)(gx + 0x7C) = value;
+
+    value = *(u32 *)(gx + 0x7C);
+    value = (value & ~0x00380000) | ((arg1 << 19) & 0x00380000);
+    *(u32 *)(gx + 0x7C) = value;
+
+    *(volatile u8 *)0xCC008000 = 0x61;
+    *(volatile u32 *)0xCC008000 = *(u32 *)(gx + 0x7C);
+
+    *(u16 *)(gx + 2) = 0;
 }
 
 s32 fn_80220FC4(s32 arg0, s32 arg1) {

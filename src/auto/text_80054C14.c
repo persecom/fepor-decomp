@@ -296,6 +296,30 @@ void fn_80054C14(void* arg0)
     __builtin_unreachable();
 }
 
+void *fn_80055204(void *arg0, s32 arg1)
+{
+    u8 *ptr;
+    u8 *base;
+
+    if (arg0 == 0) {
+        return 0;
+    }
+
+    ptr = (u8 *)arg0 + 0x28C;
+
+    if (ptr == 0) {
+        return 0;
+    }
+
+    base = *(u8 **)ptr;
+
+    if (base == 0) {
+        return 0;
+    }
+
+    return *(void **)(base + 0x40 + (arg1 << 2));
+}
+
 #pragma global_optimizer off
 u8 fn_80055248(s32 arg0) {
     void *fn_8000D354(s32);

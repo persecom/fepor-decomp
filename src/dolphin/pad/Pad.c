@@ -945,8 +945,8 @@ void fn_802160C0(u8 level, char *fmt, ...) {
 }
 
 void fn_80216110(s32 arg0, OSContext *ctx) {
-    void OSClearContext(OSContext *);
-    void OSSetCurrentContext(OSContext *);
+    void OSClearContext(void *);
+    void OSSetCurrentContext(void *);
     u32 fn_80215F40(void);
     u32 fn_80215F50(void);
     s32 fn_80215F60(void);
@@ -958,6 +958,7 @@ void fn_80216110(s32 arg0, OSContext *ctx) {
     extern void *lbl_80368734;
     extern void *lbl_80368738;
     extern void *lbl_8036873C;
+    extern volatile u16 __PADRegs[];
 
     typedef struct { u8 pad[0xA]; u16 val; } PadReg;
     struct Node {
@@ -973,18 +974,17 @@ void fn_80216110(s32 arg0, OSContext *ctx) {
         struct Node *prev;
     };
 
-    OSContext temp;
+    u8 temp[sizeof(OSContext) + 8];
     volatile PadReg *p;
     u16 v;
-    struct Node *node;
     s32 type;
-    u32 pad0, pad1;
+    struct Node *node;
 
-    p = (volatile PadReg *)0xCC005000;
+    p = (volatile PadReg *)__PADRegs;
     v = p->val;
     p->val = (u16)((v & ~0x28) | 0x80);
-    OSClearContext(&temp);
-    OSSetCurrentContext(&temp);
+    OSClearContext(temp);
+    OSSetCurrentContext(temp);
 
     do {
     } while (fn_80215F50() == 0);
@@ -1023,10 +1023,10 @@ void fn_80216110(s32 arg0, OSContext *ctx) {
                 do {
                 } while (fn_80215F40() != 0);
                 fn_80216534(lbl_8036873C, lbl_8036872C);
-                ((struct Node *)lbl_8036873C)->state = 2;
+                *(s32 *)lbl_8036873C = 2;
                 lbl_80368728 = 0;
                 lbl_8036873C = lbl_8036872C;
-                lbl_8036872C = NULL;
+                lbl_8036872C = 0;
             }
         } else if (((struct Node *)lbl_8036873C)->next == NULL) {
             if (lbl_8036873C == lbl_80368738) {
@@ -1065,7 +1065,7 @@ void fn_80216110(s32 arg0, OSContext *ctx) {
             fn_80216900(lbl_8036873C);
             lbl_80368728 = 0;
             lbl_8036873C = lbl_8036872C;
-            lbl_8036872C = NULL;
+            lbl_8036872C = 0;
         } else if (((struct Node *)lbl_8036873C)->next == NULL) {
             if (lbl_8036873C == lbl_80368738) {
                 if (((struct Node *)lbl_8036873C)->cb30 != NULL) {
@@ -1107,9 +1107,7 @@ void fn_80216110(s32 arg0, OSContext *ctx) {
         }
         break;
     }
-    (void)pad0;
-    (void)pad1;
-    OSClearContext(&temp);
+    OSClearContext(temp);
     OSSetCurrentContext(ctx);
 }
 

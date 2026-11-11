@@ -1185,11 +1185,48 @@ void fn_80151EDC(s32 arg0, s32 arg1, s32 arg2)
     }
 }
 
-#pragma pool_strings reset
-#pragma readonly_strings reset
-#pragma use_lmw_stmw reset
-#pragma cplusplus reset
-
+#pragma cplusplus off
+#pragma use_lmw_stmw on
+void fn_80152010(s16 arg0,s16 arg1,s16 arg2,u8 arg3,s32 arg4) {
+void fn_8006ECCC(void*,void*,s32);
+void fn_8000A258(void);void fn_8000A174(void*,u16);void fn_8000A248(void);
+void fn_80007898(s32);void fn_80007884(void);
+void fn_8000770C(f32,f32,f32,f32,f32,f32);
+void fn_800077D8(f32,f32,f32,f32);
+void fn_800077B0(f32,f32,f32,f32);void fn_80007668(void*);
+extern u8 lbl_80330D18[];extern void *lbl_803680C8;
+extern s16 lbl_80368088[4],lbl_80368090[4],lbl_80368098[4];
+u8 color[4];
+u32 c2,c1,c0;
+s16 right,x2,x1,h2,h1,w1,left,h0,w0;
+s16 w2;
+s32 raw;
+color[0]=255;color[1]=255;color[2]=255;color[3]=arg3;
+fn_8006ECCC(lbl_803680C8,lbl_80330D18,0xa8);
+w0=lbl_80368088[2]-lbl_80368088[0];h0=lbl_80368088[3]-lbl_80368088[1];
+if(w0 && h0) {
+fn_8000A258();fn_8000A174(lbl_80330D18,(u16)(arg4|1));fn_8000A248();fn_80007898(1);
+fn_8000770C(arg0,arg1,lbl_80368088[0],lbl_80368088[1],w0,h0);
+c1=*(u32*)color;fn_80007668(&c1);fn_80007884();
+}
+fn_8006ECCC(lbl_803680C8,lbl_80330D18,0xa9);
+left=lbl_80368088[2]-lbl_80368088[0];
+right=lbl_80368098[2]-lbl_80368098[0];
+w1=arg2-left-right;h1=lbl_80368090[3]-lbl_80368090[1];x1=arg0+left;
+if(w1 && h1) {
+fn_8000A258();fn_8000A174(lbl_80330D18,(u16)(arg4|1));fn_8000A248();fn_80007898(1);
+fn_800077D8(x1,arg1,w1,h1);
+fn_800077B0(lbl_80368090[0],lbl_80368090[1],(s16)(lbl_80368090[2]-lbl_80368090[0]),(s16)(lbl_80368090[3]-lbl_80368090[1]));
+c2=*(u32*)color;fn_80007668(&c2);fn_80007884();
+}
+fn_8006ECCC(lbl_803680C8,lbl_80330D18,0xaa);
+raw=lbl_80368098[2]-lbl_80368098[0];x2=arg0+(arg2-(s16)raw);w2=raw;h2=lbl_80368098[3]-lbl_80368098[1];
+if((s16)w2 && h2) {
+fn_8000A258();fn_8000A174(lbl_80330D18,(u16)(arg4|1));fn_8000A248();fn_80007898(1);
+fn_8000770C(x2,arg1,lbl_80368098[0],lbl_80368098[1],(s16)w2,h2);
+c0=*(u32*)color;fn_80007668(&c0);fn_80007884();
+}
+}
 s32 fn_80152414(void* arg0) {
     if (arg0 == NULL) {
         return 0;

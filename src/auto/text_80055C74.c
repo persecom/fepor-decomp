@@ -1216,6 +1216,136 @@ f32 fn_80059500(f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 farg4)
   return (f32) ((((f64) (farg4 * (temp_f10 * farg4))) * (lbl_80369160 * ((f64) (farg3 - farg1)))) + ((((f64) (farg4 * (temp_f6 * temp_f6))) * (lbl_80369160 * ((f64) (farg2 - farg0)))) + ((f64) ((((lbl_8036912C + temp_f12) * (temp_f10 * temp_f10)) * farg1) + (((lbl_8036915C - (lbl_80369104 * farg4)) * (farg4 * farg4)) * farg2)))));
 }
 
+#pragma use_lmw_stmw on
+void fn_8005956C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, f32 farg0) {
+    void fn_80059C2C(s32, s32, s32, s32, s32);
+    void fn_80066D00(s32);
+    void fn_80201FC4(void *);
+    void fn_8021F4E4(s32, s32);
+    void fn_8021FBB8(void);
+    void fn_8021FBF0(s32, s32, s32, s32, s32);
+    void fn_802201A8(s32, s32, s32, s32, s32, s32);
+    void fn_80220428(s32);
+    void fn_80220DEC(s32, s32, s32);
+    void fn_80222334(s32);
+    void fn_80222370(s32, s32, s32, s32, s32, s32, s32);
+    void fn_80222644(void *, s32, s32, s32, s32, s32, s32, s32);
+    void fn_802228D8(void *, s32, s32, s32, s32, s32, f32, f32, f32);
+    void fn_80222C50(void *, s32);
+    void fn_80223A5C(s32, s32, s32, s32, s32);
+    void fn_80223AA0(s32, s32, s32, s32, s32);
+    void fn_80223AE4(s32, s32, s32, s32, s32, s32);
+    void fn_80223B4C(s32, s32, s32, s32, s32, s32);
+    void fn_80223E5C(s32, s32, s32, s32, s32);
+    void fn_80223F2C(s32, s32, s32, s32);
+    void fn_802240C8(s32);
+    void fn_802245D8(s32, s32, s32, s32);
+    void fn_80224684(s32, s32, s32);
+    void fn_80224E50(void *, s32, s32);
+    extern f32 lbl_80369108;
+    extern f64 lbl_80369118;
+    extern f32 lbl_80369128;
+    extern f32 lbl_8036912C;
+
+    u8 sp58[0x30];
+    u8 sp28[0x30];
+    u8 sp8[0x20];
+    f32 scale;
+    f32 fz;
+    f32 f0;
+    f32 f1;
+    s32 x1;
+    s32 y1;
+    s32 a0;
+    s32 a1;
+    s32 a2;
+    s32 a3;
+    s32 a4;
+    s32 a6;
+    void *p;
+    s32 t;
+
+    fz = farg0;
+    a4 = arg4;
+    a0 = arg0;
+    a1 = arg1;
+    a2 = arg2;
+    a3 = arg3;
+    a6 = arg6;
+
+    fn_80059C2C(arg0, arg1, arg2, arg3, arg5);
+    p = sp8;
+    t = a6;
+    fn_80222644(p, t, a2 & 0xFFFF, a3 & 0xFFFF, 0x11, 0, 0, 0);
+    f0 = lbl_80369108;
+    fn_802228D8(sp8, 1, 1, 0, 0, 0, f0, f0, f0);
+    fn_80222C50(sp8, 0);
+    fn_80222C50(sp8, 1);
+    fn_80201FC4(sp58);
+    scale = lbl_80369128 * (f32)a4;
+    *(f32 *)(sp58 + 0xC) = scale / (f32)a2;
+    fn_80201FC4(sp28);
+    *(f32 *)(sp28 + 0x1C) = scale / (f32)a3;
+    fn_80220428(2);
+    fn_802240C8(2);
+    fn_80222334(1);
+    fn_80222370(4, 0, 1, 1, 0, 0, 2);
+    fn_80223F2C(0, 0, 0, 4);
+    fn_80223A5C(0, 0xF, 0xF, 0xF, 0xF);
+    fn_80223AE4(0, 0, 0, 0, 1, 0);
+    fn_80223AA0(0, 4, 7, 7, 7);
+    fn_80223B4C(0, 0, 0, 0, 0, 0);
+    fn_80223F2C(1, 1, 1, 0xFF);
+    fn_80223A5C(1, 0xF, 0xF, 0xF, 0);
+    fn_80223AE4(1, 0, 0, 0, 1, 0);
+    fn_80223AA0(1, 4, 7, 7, 0);
+    fn_80223B4C(1, 1, 0, 0, 0, 0);
+    fn_80224E50(sp58, 0x1E, 1);
+    fn_80224E50(sp28, 0x21, 1);
+    fn_8021FBB8();
+    fn_8021F4E4(9, 1);
+    fn_8021F4E4(0xD, 1);
+    fn_8021FBF0(0, 9, 1, 4, 0);
+    fn_8021FBF0(0, 0xD, 1, 4, 0);
+    fn_802201A8(0, 1, 4, 0x1E, 0, 0x7D);
+    fn_802201A8(1, 1, 4, 0x21, 0, 0x7D);
+    fn_80223E5C(6, 1, 0, 3, 0xFF);
+    fn_80224684(0, 3, 0);
+    fn_802245D8(1, 6, 7, 0);
+    fn_80220DEC(0x80, 0, 4);
+
+    x1 = a0 + a2;
+    y1 = a1 + a3;
+    (void)lbl_80369118;
+    f0 = lbl_80369108;
+    f1 = lbl_8036912C;
+
+    *(volatile f32 *)0xCC008000 = (f32)a0;
+    *(volatile f32 *)0xCC008000 = (f32)a1;
+    *(volatile f32 *)0xCC008000 = fz;
+    *(volatile f32 *)0xCC008000 = f0;
+    *(volatile f32 *)0xCC008000 = f0;
+
+    *(volatile f32 *)0xCC008000 = (f32)x1;
+    *(volatile f32 *)0xCC008000 = (f32)a1;
+    *(volatile f32 *)0xCC008000 = fz;
+    *(volatile f32 *)0xCC008000 = f1;
+    *(volatile f32 *)0xCC008000 = f0;
+
+    *(volatile f32 *)0xCC008000 = (f32)x1;
+    *(volatile f32 *)0xCC008000 = (f32)y1;
+    *(volatile f32 *)0xCC008000 = fz;
+    *(volatile f32 *)0xCC008000 = f1;
+    *(volatile f32 *)0xCC008000 = f1;
+
+    *(volatile f32 *)0xCC008000 = (f32)a0;
+    *(volatile f32 *)0xCC008000 = (f32)y1;
+    *(volatile f32 *)0xCC008000 = fz;
+    *(volatile f32 *)0xCC008000 = f0;
+    *(volatile f32 *)0xCC008000 = f1;
+
+    fn_80066D00(-1);
+}
 void fn_800599D0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     void fn_8022124C(s32, s32, s32, s32);
     void fn_802212FC(s32, s32, s32, s32);

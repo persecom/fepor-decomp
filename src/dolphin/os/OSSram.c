@@ -174,6 +174,29 @@ s32 fn_80209010(s32 arg0, s32 arg1, s32 arg2) {
     return temp_r31 == 0;
 }
 
+void *__OSLockSramEx(void)
+{
+    u32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(u32);
+
+    u8 *scb;
+    u32 interrupts;
+
+    scb = (u8 *)Scb_80339420;
+
+    interrupts = OSDisableInterrupts();
+
+    if (*(u32 *)(scb + 0x48) != 0) {
+        OSRestoreInterrupts(interrupts);
+        return 0;
+    }
+
+    *(u32 *)(scb + 0x44) = interrupts;
+    *(u32 *)(scb + 0x48) = 1;
+
+    return scb + 0x14;
+}
+
 void fn_8020931C(u32 param_1) {
     if (param_1 < 0x14) {
         return;
@@ -221,6 +244,36 @@ s32 fn_80209A78(void) {
     return (scb_ptr[0x8] >> 6) & 1;
 }
 
+s32 fn_80209B8C(s32 arg0)
+{
+    extern u16 Scb_80339420[];
+
+    extern s32 OSDisableInterrupts(void);
+    extern void OSRestoreInterrupts(s32);
+    extern void fn_8020931C(s32, s32);
+
+    u8 *scb;
+    s32 interrupts;
+    s32 result;
+
+    scb = (u8 *)Scb_80339420;
+    interrupts = OSDisableInterrupts();
+
+    if (*(s32 *)(scb + 0x48) != 0) {
+        OSRestoreInterrupts(interrupts);
+        return 0;
+    }
+
+    *(s32 *)(scb + 0x44) = interrupts;
+    *(s32 *)(scb + 0x48) = 1;
+
+    result = *(u16 *)(scb + 0x30 + (arg0 << 1));
+
+    fn_8020931C(0, 0x14);
+
+    return result;
+}
+
 void fn_80209C10(void) {
     u16 *scb = Scb_80339420;
     OSDisableInterrupts();
@@ -263,6 +316,26 @@ void OSInitThreadQueue(void *arg0) {
 
 s32 fn_80209FD4(void) {
     return *(s32 *)0x800000E4;
+}
+
+s32 OSEnableScheduler(void)
+{
+    u32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(u32);
+
+    extern s32 Reschedule_80368520;
+
+    u32 interrupts;
+    s32 previous;
+
+    interrupts = OSDisableInterrupts();
+
+    previous = Reschedule_80368520;
+    Reschedule_80368520 = previous - 1;
+
+    OSRestoreInterrupts(interrupts);
+
+    return previous;
 }
 
 void fn_8020A060(void *arg0) {

@@ -1158,6 +1158,28 @@ void fn_800946F0(s32 arg0) {
     } while (r30 < 8);
 }
 
+s32 fn_80094768(void *arg0)
+{
+    extern void *fn_80037BD0(void *, s32);
+
+    s32 i;
+    u8 *entry;
+
+    for (i = 0; i < 8; i++) {
+        entry = (u8 *)fn_80037BD0(arg0, i);
+
+        if (entry != 0) {
+            if (*(u32 *)entry != 0) {
+                if (entry[5] & 0x40) {
+                    return 1;
+                }
+            }
+        }
+    }
+
+    return 0;
+}
+
 void fn_800947E0(s32 arg0) {
     u32 sp40;
     u32 sp38;

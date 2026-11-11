@@ -170,6 +170,177 @@ void fn_8020A740(void *arg0) {
     M2C_FIELD(arg0, void **, 0x2DC) = NULL;
 }
 
+#pragma use_lmw_stmw on
+s32 fn_8020A9E0(void *arg0)
+{
+    typedef struct OSThread OSThread;
+    typedef struct OSThreadQueue {
+        OSThread *head;
+        OSThread *tail;
+    } OSThreadQueue;
+    typedef struct OSMutexLink {
+        OSThread *head;
+        u8 pad[0xC];
+        struct OSMutexLink *next;
+    } OSMutexLink;
+    struct OSThread {
+        u8 pad[0x2C8];
+        u16 state;
+        u16 pad2C8;
+        s32 suspend;
+        s32 priority;
+        s32 basePriority;
+        u8 pad2D8[4];
+        OSThreadQueue *queue;
+        OSThread *next;
+        OSThread *prev;
+        u8 pad2E8[8];
+        void *mutex;
+        OSMutexLink *mutexQueue;
+    };
+
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    void SelectThread_8020A2C4(s32);
+    s32 fn_8020A0C8(OSThread *);
+    OSThread *fn_8020A104(OSThread *);
+    extern s32 RunQueueBits_80368518;
+    extern s32 RunQueueHint_8036851C;
+
+    OSThread *thread;
+    s32 enabled;
+    s32 prevSuspend;
+    s32 prio;
+    OSMutexLink *link;
+    OSThread *t;
+    OSThread *next;
+    OSThread *prev;
+    OSThread *cur;
+    s32 eff;
+    s32 pad1;
+    s32 pad2;
+
+    thread = (OSThread *)arg0;
+
+    enabled = OSDisableInterrupts();
+    prevSuspend = thread->suspend;
+    thread->suspend = prevSuspend - 1;
+    pad1 = prevSuspend;
+    pad2 = enabled;
+
+    if (thread->suspend < 0) {
+        thread->suspend = 0;
+    } else if (thread->suspend == 0) {
+        switch (thread->state) {
+        case 1:
+            prio = thread->basePriority;
+            link = thread->mutexQueue;
+            while (link != NULL) {
+                t = link->head;
+                if (t != NULL) {
+                    if (prio > t->priority) {
+                        prio = t->priority;
+                    }
+                }
+                link = link->next;
+            }
+            thread->priority = prio;
+            thread->queue = &((OSThreadQueue *)RunQueue_80339478)[thread->priority];
+            prev = thread->queue->tail;
+            if (prev == NULL) {
+                thread->queue->head = thread;
+            } else {
+                prev->next = thread;
+            }
+            thread->prev = prev;
+            thread->next = NULL;
+            thread->queue->tail = thread;
+            RunQueueBits_80368518 |= 1 << (31 - thread->priority);
+            RunQueueHint_8036851C = 1;
+            break;
+
+        case 4:
+            next = thread->next;
+            prev = thread->prev;
+            if (next == NULL) {
+                thread->queue->tail = prev;
+            } else {
+                next->prev = prev;
+            }
+            if (prev == NULL) {
+                thread->queue->head = next;
+            } else {
+                prev->next = next;
+            }
+
+            prio = thread->basePriority;
+            link = thread->mutexQueue;
+            while (link != NULL) {
+                t = link->head;
+                if (t != NULL) {
+                    if (prio > t->priority) {
+                        prio = t->priority;
+                    }
+                }
+                link = link->next;
+            }
+            thread->priority = prio;
+
+            cur = thread->queue->head;
+            while (cur != NULL && cur->priority <= thread->priority) {
+                cur = cur->next;
+            }
+            if (cur == NULL) {
+                prev = thread->queue->tail;
+                if (prev == NULL) {
+                    thread->queue->head = thread;
+                } else {
+                    prev->next = thread;
+                }
+                thread->prev = prev;
+                thread->next = NULL;
+                thread->queue->tail = thread;
+            } else {
+                thread->next = cur;
+                prev = cur->prev;
+                cur->prev = thread;
+                thread->prev = prev;
+                if (prev == NULL) {
+                    thread->queue->head = thread;
+                } else {
+                    prev->next = thread;
+                }
+            }
+
+            if (thread->mutex != NULL) {
+                thread = *(OSThread **)((u8 *)thread->mutex + 8);
+                for (;;) {
+                    if (thread->suspend > 0) {
+                        break;
+                    }
+                    eff = fn_8020A0C8(thread);
+                    if (thread->priority == eff) {
+                        break;
+                    }
+                    thread = fn_8020A104(thread);
+                    if (thread == NULL) {
+                        break;
+                    }
+                }
+            }
+            break;
+        }
+
+        if (RunQueueHint_8036851C != 0) {
+            SelectThread_8020A2C4(0);
+        }
+    }
+
+    OSRestoreInterrupts(enabled);
+    return prevSuspend;
+}
+#pragma use_lmw_stmw reset
+
 s64 OSGetTime(void) {
     u32 hi;
     u32 lo;

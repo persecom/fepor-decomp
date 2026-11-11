@@ -866,6 +866,135 @@ void UnlockedHandler(s32 chan, void *context) {
     EXIGetID(chan, 0, &id);
 }
 
+#pragma scheduling off
+#pragma use_lmw_stmw on
+s32 EXIGetID(s32 chan, u32 dev, u32 *id) {
+    u8 filler[8];
+    u32 cmd;
+    s32 err;
+    s32 enabled;
+    s32 enabled2;
+    s32 enabled3;
+    s32 startTime;
+    void (*cb)(s32, void *);
+    s32 ok;
+    void (*handler)(s32, void *);
+    s32 *probeTime;
+    EXIControl *exi;
+    extern u32 IDSerialPort1_80368800;
+    void UnlockedHandler(s32, void *);
+    BOOL EXIClearInterrupts(s32, BOOL, BOOL, BOOL);
+    s32 EXILock(s32, u32, u32);
+    BOOL EXISelect(s32, u32, u32);
+    BOOL EXIImm(s32, void *, s32, u32, void (*)(s32, void *));
+    BOOL EXISync(s32);
+    BOOL EXIDeselect(s32);
+    void SetExiInterruptMask(s32, void *);
+    void __OSUnmaskInterrupts(u32);
+    void __OSMaskInterrupts(u32);
+    void *memmove(void *, const void *, u32);
+
+    (void)filler;
+    exi = &Ecb_8033E188[chan];
+    if (chan == 0 && dev == 2 && IDSerialPort1_80368800 != 0) {
+        *id = IDSerialPort1_80368800;
+        return 1;
+    }
+    if (chan < 2 && dev == 0) {
+        if (!__EXIProbe(chan)) {
+            return 0;
+        }
+        probeTime = &__EXIProbeStartTime[chan];
+        if (exi->idTime == *probeTime) {
+            *id = exi->id;
+            return exi->idTime;
+        }
+        enabled = OSDisableInterrupts();
+        if ((exi->state & 8) || !__EXIProbe(chan)) {
+            OSRestoreInterrupts(enabled);
+            ok = 0;
+        } else {
+            EXIClearInterrupts(chan, 1, 0, 0);
+            exi->extCallback = 0;
+            __OSUnmaskInterrupts(0x100000U >> (chan * 3));
+            exi->state |= 8;
+            OSRestoreInterrupts(enabled);
+            ok = 1;
+        }
+        if (!ok) {
+            return 0;
+        }
+        startTime = *probeTime;
+    }
+    enabled = OSDisableInterrupts();
+    ok = 0;
+    if (chan < 2 && dev == 0) {
+        ok = 1;
+    }
+    if (ok != 0) {
+        handler = UnlockedHandler;
+    } else {
+        handler = 0;
+    }
+    err = !EXILock(chan, dev, (u32)handler);
+    if (!err) {
+        err = !EXISelect(chan, dev, 0);
+        if (!err) {
+            cmd = 0;
+            err |= !EXIImm(chan, &cmd, 2, 1, NULL);
+            err |= !EXISync(chan);
+            err |= !EXIImm(chan, id, 4, 0, NULL);
+            err |= !EXISync(chan);
+            err |= !EXIDeselect(chan);
+        }
+        enabled2 = OSDisableInterrupts();
+        if (!(exi->state & 0x10)) {
+            OSRestoreInterrupts(enabled2);
+        } else {
+            exi->state &= ~0x10;
+            SetExiInterruptMask(chan, exi);
+            if (exi->items > 0) {
+                cb = exi->queue[0].callback;
+                if (--exi->items > 0) {
+                    memmove(&exi->queue[0], &exi->queue[1], exi->items * 8);
+                }
+                cb(chan, 0);
+            }
+            OSRestoreInterrupts(enabled2);
+        }
+    }
+    OSRestoreInterrupts(enabled);
+    if (chan < 2 && dev == 0) {
+        enabled3 = OSDisableInterrupts();
+        if (!(exi->state & 8)) {
+            OSRestoreInterrupts(enabled3);
+        } else if ((exi->state & 0x10) && exi->dev == 0) {
+            OSRestoreInterrupts(enabled3);
+        } else {
+            exi->state &= ~8;
+            __OSMaskInterrupts(0x500000U >> (chan * 3));
+            OSRestoreInterrupts(enabled3);
+        }
+        enabled3 = OSDisableInterrupts();
+        err |= startTime != __EXIProbeStartTime[chan];
+        if (!err) {
+            exi->id = *id;
+            exi->idTime = startTime;
+        }
+        OSRestoreInterrupts(enabled3);
+        if (err) {
+            return 0;
+        }
+        return exi->idTime;
+    }
+    if (err) {
+        return 0;
+    }
+    return 1;
+}
+#pragma use_lmw_stmw reset
+#pragma scheduling reset
+
 void fn_8023A504(s32 *arg2) {
     u32 sp14;
     s32 temp_r0;

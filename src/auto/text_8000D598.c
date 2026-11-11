@@ -459,48 +459,46 @@ s32 fn_800102BC(s32 arg0, f32 arg1)
 
 s32 fn_80010428(s32 arg0, s32 arg1, f32 arg2)
 {
-    extern s32 lbl_802AEE20[5];
-
-    s32 fn_8010494C(s32);
-    s32 fn_80104FC4(s32);
-
-    s32 *table;
-    s32 result;
+    s32 var;
     s32 index;
-    s32 value;
+    u32 *table;
+    u32 result;
+    u32 *p;
 
-    table = lbl_802AEE20;
-    index = arg1;
-
-    if (index == -1) {
-        result = fn_8010494C(table[0]);
-
+    var = arg0;
+    if (arg1 == -1) {
+        arg1 = 0;
+        result = (u32)fn_8010494C(*(void **)((char *)lbl_802AEE20 + (arg1 << 2)));
+        table = (u32 *)lbl_802AEE20;
         if (table[0] == result) {
             index = 0;
-        } else if (table[1] == result) {
-            index = 1;
-        } else if (table[2] == result) {
-            index = 2;
-        } else if (table[3] == result) {
-            index = 3;
-        } else if (table[4] == result) {
-            index = 4;
         } else {
-            index = -1;
+            p = table + 1;
+            if (table[1] == result) {
+                index = 1;
+            } else if (*++p == result) {
+                index = 2;
+            } else if (*++p == result) {
+                index = 3;
+            } else if (p[1] == result) {
+                index = 4;
+            } else {
+                index = -1;
+            }
         }
     }
 
-    value = (s32)(arg2 * (f32)fn_80104FC4(arg0));
+    var = (s32)(arg2 * (f32)fn_80104FC4(var));
 
     if (index == -1) {
         index = 0;
-        result = fn_8010494C(table[index]);
-
+        result = (u32)fn_8010494C(*(void **)((char *)lbl_802AEE20 + (index << 2)));
         if (table[0] != result) {
+            p = table + 1;
             if (table[1] != result) {
-                if (table[2] != result) {
-                    if (table[3] != result) {
-                        if (table[4] != result) {
+                if (*++p != result) {
+                    if (*++p != result) {
+                        if (p[1] != result) {
                         }
                     }
                 }
@@ -508,7 +506,7 @@ s32 fn_80010428(s32 arg0, s32 arg1, f32 arg2)
         }
     }
 
-    return value;
+    return var;
 }
 
 s32 fn_8001059C(s32 arg0, s32 arg1, f32 arg2)

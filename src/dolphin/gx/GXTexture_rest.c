@@ -408,6 +408,50 @@ void fn_80224C4C(s32 arg0, s32 arg1, s32 arg2)
     }
 }
 
+void fn_80224CF0(f32 *arg0)
+{
+    extern f32 lbl_8036BDB8;
+
+    u8 *gx;
+    f32 *dst;
+    volatile u8 *fifo8;
+    volatile u32 *fifo32;
+    volatile f32 *fifoFloat;
+    u32 flag;
+
+    flag = (lbl_8036BDB8 == arg0[0]) ? 0 : 1;
+
+    gx = (u8 *)__GXData;
+    *(u32 *)(gx + 0x4D8) = flag;
+
+    dst = (f32 *)(gx + 0x4DC);
+
+    dst[0] = arg0[1];
+    dst[1] = arg0[2];
+    dst[2] = arg0[3];
+    dst[3] = arg0[4];
+    dst[4] = arg0[5];
+    dst[5] = arg0[6];
+
+    fifo8 = (volatile u8 *)0xCC008000;
+    fifo32 = (volatile u32 *)0xCC008000;
+    fifoFloat = (volatile f32 *)0xCC008000;
+
+    *fifo8 = 0x10;
+    *fifo32 = 0x61020;
+
+    *fifoFloat = dst[0];
+    *fifoFloat = dst[1];
+    *fifoFloat = dst[2];
+    *fifoFloat = dst[3];
+    *fifoFloat = dst[4];
+    *fifoFloat = dst[5];
+
+    *fifo32 = *(u32 *)(gx + 0x4D8);
+
+    *(u16 *)(gx + 2) = 1;
+}
+
 void fn_80224DCC(void *arg0, s32 arg1) {
     u32 temp_r5 = (arg1 * 3) + 0x400;
     
@@ -440,6 +484,93 @@ f32 fn_80224E50(u32 arg1, s32 arg2) {
         return M2C_ERROR(/* psq_l unimplemented */);
     }
     return M2C_ERROR(/* psq_l unimplemented */);
+}
+
+void fn_80224F04(u16 *arg0)
+{
+    extern f32 lbl_8036BDC0;
+    extern f32 lbl_8036BDC4;
+
+    u8 *gx;
+    volatile u8 *fifo8;
+    volatile u32 *fifo32;
+    volatile f32 *fifoFloat;
+
+    f32 scale;
+    f32 bias;
+    f32 a;
+    f32 b;
+    f32 c;
+    f32 d;
+    f32 e;
+    f32 f;
+    f32 g;
+    f32 h;
+    f32 negA;
+
+    f32 result1;
+    f32 result2;
+    f32 result3;
+    f32 result4;
+    f32 result5;
+    f32 result6;
+    f32 product1;
+    f32 product2;
+    f32 product3;
+
+    gx = (u8 *)arg0;
+
+    fifo8 = (volatile u8 *)0xCC008000;
+    fifo32 = (volatile u32 *)0xCC008000;
+    fifoFloat = (volatile f32 *)0xCC008000;
+
+    scale = lbl_8036BDC0;
+
+    a = *(f32 *)(gx + 0x500);
+    b = *(f32 *)(gx + 0x4FC);
+    c = *(f32 *)(gx + 0x4F4);
+    d = *(f32 *)(gx + 0x4F8);
+    e = *(f32 *)(gx + 0x508);
+    f = *(f32 *)(gx + 0x510);
+    g = *(f32 *)(gx + 0x504);
+    h = *(f32 *)(gx + 0x50C);
+
+    negA = -a;
+
+    result1 = b * scale;
+    product1 = a * scale;
+    result2 = negA * scale;
+
+    product2 = e * f;
+    product3 = g * f;
+
+    bias = lbl_8036BDC4;
+
+    *fifo8 = 0x10;
+
+    result4 = c + result1;
+
+    *fifo32 = 0x5101A;
+
+    result5 = d + product1;
+
+    *fifoFloat = result1;
+
+    result3 = product2 - product3;
+
+    result4 = bias + result4;
+
+    *fifoFloat = result2;
+
+    result5 = bias + result5;
+
+    *fifoFloat = result3;
+    *fifoFloat = result4;
+    *fifoFloat = result5;
+
+    result6 = product2 + h;
+
+    *fifoFloat = result6;
 }
 
 void fn_80224F94(u32 arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 farg4, f32 farg5) {

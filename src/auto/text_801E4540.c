@@ -701,17 +701,18 @@ void fn_801E80B4(void *arg0) {
     s16 sp1C[2];
     s16 sp10[2];
     s16 sp18[2];
-    void **sp8;
-    void **spC;
     s8 old33;
     u8 *p33;
     u32 held;
     u32 buttons;
     u32 cur;
+    u32 *pad;
     u8 t;
     s32 max;
-    s32 pos;
-    s32 tgt;
+    s16 pos;
+    s16 tgt;
+    s32 pos32;
+    s32 tgt32;
     void *str;
     void **node;
     s8 idx;
@@ -719,12 +720,13 @@ void fn_801E80B4(void *arg0) {
     u8 b;
     s32 zero;
 
+    pad = lbl_80367240;
     t = *(u8 *)((u8 *)arg0 + 0x33);
-    p33 = (u8 *)arg0 + 0x33;
-    held = lbl_80367240[4];
+    p33 = (u8 *)((u8 *)arg0 + 0x33);
+    held = *(u32 *)((u8 *)pad + 0x10);
     old33 = (s8)t;
-    cur = lbl_80367240[1];
-    buttons = cur & (lbl_80367240[2] ^ cur);
+    cur = *(u32 *)((u8 *)pad + 4);
+    buttons = cur & (*(u32 *)((u8 *)pad + 8) ^ cur);
     max = *(s32 *)((u8 *)arg0 + 0x50);
 
     if (held & 0x08000008U) {
@@ -751,13 +753,15 @@ void fn_801E80B4(void *arg0) {
     t = *p33;
     if (old33 != (s8)t) {
         if (fn_801E8B38(arg0, p33, old33) != 0) {
-            if (fn_80230BCC(old33 - (s8)*p33) <= 2) {
+            if (fn_80230BCC((s32)(old33 - (s8)*p33)) <= 2) {
                 pos = *(s16 *)((u8 *)arg0 + 0x36);
                 tgt = *(s16 *)((u8 *)arg0 + 0x38);
                 if (pos == tgt) {
                     fn_8000C188(arg0);
                 } else {
-                    if ((s16)pos < (s16)tgt) {
+                    pos32 = pos;
+                    tgt32 = tgt;
+                    if (pos32 < tgt32) {
                         *(s16 *)((u8 *)arg0 + 0x36) = (s16)(*(s16 *)((u8 *)arg0 + 0x3A) + pos);
                     } else {
                         *(s16 *)((u8 *)arg0 + 0x36) = (s16)(pos - *(s16 *)((u8 *)arg0 + 0x3A));
@@ -796,9 +800,7 @@ void fn_801E80B4(void *arg0) {
     }
 
     if (buttons & 0x01000001U) {
-        spC = *(void ***)((u8 *)arg0 + 0x58);
-        sp8 = spC;
-        node = spC;
+        node = *(void ***)((u8 *)arg0 + 0x58);
         idx = (s8)t;
         if (idx >= 0) {
             while (idx > 0) {
@@ -811,7 +813,7 @@ void fn_801E80B4(void *arg0) {
                 idx = (s8)(idx + 1);
             }
         }
-        mode = *(s8 *)((u8 *)arg0 + 0x30);
+        mode = (s8)*(u8 *)((u8 *)arg0 + 0x30);
         switch (mode) {
         case 0:
             b = ((u8 *)node[2])[2];
@@ -841,7 +843,9 @@ void fn_801E80B4(void *arg0) {
             if (pos == tgt) {
                 fn_8000C188(arg0);
             } else {
-                if ((s16)pos < (s16)tgt) {
+                pos32 = pos;
+                tgt32 = tgt;
+                if (pos32 < tgt32) {
                     *(s16 *)((u8 *)arg0 + 0x36) = (s16)(*(s16 *)((u8 *)arg0 + 0x3A) + pos);
                 } else {
                     *(s16 *)((u8 *)arg0 + 0x36) = (s16)(pos - *(s16 *)((u8 *)arg0 + 0x3A));

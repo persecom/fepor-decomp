@@ -175,7 +175,7 @@ void fn_80203790(u32 arg0) {
 }
 
 s32 PPCMfl2cr(void) {
-    return M2C_ERROR(/* unknown instruction: mfspr $r3, L2CR */);
+    return 0;
 }
 
 void PPCMtl2cr(void) {
@@ -2074,6 +2074,7 @@ u32 __OSMaskInterrupts(u32 global) {
     return prev;
 }
 
+#pragma peephole off
 void fn_8020801C(u8 unused, OSContext *context) {
     extern s32 lbl_8029CDF8[];
     extern s16 __OSLastInterrupt;
@@ -2086,17 +2087,16 @@ void fn_8020801C(u8 unused, OSContext *context) {
     extern void OSLoadContext(OSContext *);
     u32 cause;
     u32 exceptmask;
-    u16 reg;
-    u32 reg32;
+    u32 reg;
     u32 *prio;
     u32 bit;
-    s16 interrupt;
     void (*handler)(s16, OSContext *);
-    s64 time;
-    void **table;
+    s16 interrupt;
+    u32 stackMasked;
 
     (void)unused;
-    cause = OS_PIRegs[0] & ~0x00010000;
+    cause = OS_PIRegs[0];
+    cause &= ~0x00010000;
     if (cause == 0 || (cause & OS_PIRegs[1]) == 0) {
         OSLoadContext(context);
     }
@@ -2104,32 +2104,32 @@ void fn_8020801C(u8 unused, OSContext *context) {
     exceptmask = 0;
     if (cause & 0x00000080) {
         reg = OS_MEMRegs[0x1E / 2];
-        if (reg & 0x0001) {
+        if (reg & 0x00000001) {
             exceptmask |= 0x80000000;
         }
-        if (reg & 0x0002) {
+        if (reg & 0x00000002) {
             exceptmask |= 0x40000000;
         }
-        if (reg & 0x0004) {
+        if (reg & 0x00000004) {
             exceptmask |= 0x20000000;
         }
-        if (reg & 0x0008) {
+        if (reg & 0x00000008) {
             exceptmask |= 0x10000000;
         }
-        if (reg & 0x0010) {
+        if (reg & 0x00000010) {
             exceptmask |= 0x08000000;
         }
     }
 
     if (cause & 0x00000040) {
         reg = OS_DSPRegs[0xA / 2];
-        if (reg & 0x0008) {
+        if (reg & 0x00000008) {
             exceptmask |= 0x04000000;
         }
-        if (reg & 0x0020) {
+        if (reg & 0x00000020) {
             exceptmask |= 0x02000000;
         }
-        if (reg & 0x0080) {
+        if (reg & 0x00000080) {
             exceptmask |= 0x01000000;
         }
     }
@@ -2139,33 +2139,33 @@ void fn_8020801C(u8 unused, OSContext *context) {
     }
 
     if (cause & 0x00000010) {
-        reg32 = OS_EXIRegs[0];
-        if (reg32 & 0x00000002) {
+        reg = OS_EXIRegs[0];
+        if (reg & 0x00000002) {
             exceptmask |= 0x00400000;
         }
-        if (reg32 & 0x00000008) {
+        if (reg & 0x00000008) {
             exceptmask |= 0x00200000;
         }
-        if (reg32 & 0x00000800) {
+        if (reg & 0x00000800) {
             exceptmask |= 0x00100000;
         }
 
-        reg32 = OS_EXIRegs[0x14 / 4];
-        if (reg32 & 0x00000002) {
+        reg = OS_EXIRegs[0x14 / 4];
+        if (reg & 0x00000002) {
             exceptmask |= 0x00080000;
         }
-        if (reg32 & 0x00000008) {
+        if (reg & 0x00000008) {
             exceptmask |= 0x00040000;
         }
-        if (reg32 & 0x00000800) {
+        if (reg & 0x00000800) {
             exceptmask |= 0x00020000;
         }
 
-        reg32 = OS_EXIRegs[0x28 / 4];
-        if (reg32 & 0x00000002) {
+        reg = OS_EXIRegs[0x28 / 4];
+        if (reg & 0x00000002) {
             exceptmask |= 0x00010000;
         }
-        if (reg32 & 0x00000008) {
+        if (reg & 0x00000008) {
             exceptmask |= 0x00008000;
         }
     }
@@ -2201,24 +2201,23 @@ void fn_8020801C(u8 unused, OSContext *context) {
         exceptmask |= 0x00000100;
     }
 
-    exceptmask &= ~(*(u32 *)0x800000C4 | *(u32 *)0x800000C8);
-    if (exceptmask != 0) {
+    stackMasked = exceptmask & ~(*(u32 *)0x800000C4 | *(u32 *)0x800000C8);
+    if (stackMasked) {
         prio = (u32 *)lbl_8029CDF8;
-        for (;;) {
-            bit = *prio & exceptmask;
-            if (bit != 0) {
-                break;
-            }
-            prio++;
+        goto loop_test;
+    loop_incr:
+        prio++;
+    loop_test:
+        bit = *prio & stackMasked;
+        if (bit == 0) {
+            goto loop_incr;
         }
         interrupt = (s16)__cntlzw(bit);
-        table = *(void ***)&InterruptHandlerTable_803684C8;
-        handler = (void (*)(s16, OSContext *))table[interrupt];
+        handler = ((void (**)(s16, OSContext *))InterruptHandlerTable_803684C8)[interrupt];
         if (handler != 0) {
             if (interrupt > 4) {
                 __OSLastInterrupt = interrupt;
-                time = OSGetTime();
-                __OSLastInterruptTime = time;
+                __OSLastInterruptTime = OSGetTime();
                 __OSLastInterruptSrr0 = context->srr0;
             }
             OSDisableScheduler();
@@ -2230,8 +2229,6 @@ void fn_8020801C(u8 unused, OSContext *context) {
     }
     OSLoadContext(context);
 }
-
-#pragma global_optimizer reset
 void __OSModuleInit(void) {
     s32 *ptr = (s32 *)0x800030CC;
     ptr[0] = 0;

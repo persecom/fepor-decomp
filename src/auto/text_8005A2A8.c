@@ -137,28 +137,28 @@ extern "C" void fn_8005A79C(void *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4) 
             } else {
                 src = fn_80222CDC((u8 *)arg0 + 0x24);
                 count = fn_80222CE8((u8 *)arg0 + 0x24);
-                nbytes = (count << 1) & 0x1FFFE;
+                nbytes = ((u16)count) << 1;
                 count = (u16)count;
-                memcpy(*(void **)((u8 *)arg0 + 0x3C), (void *)(src + 0x80000000), nbytes);
+                memcpy(*(void **)((u8 *)arg0 + 0x3C), (void *)((u32)src + 0x80000000), nbytes);
                 for (off = 0; count > 0; off += 2) {
                     pix = *(u16 *)(*(u8 **)((u8 *)arg0 + 0x3C) + off);
                     if (pix & 0x8000) {
                         r = (pix & 0x7C00) >> 10;
                         g = (pix & 0x3E0) >> 5;
                         b = pix & 0x1F;
-                        r += color[0] >> 3;
+                        r = (u16)(r + (color[0] >> 3));
                         if (r > 0x1F) {
                             r = 0x1F;
                         }
-                        g += color[1] >> 3;
+                        g = (u16)(g + (color[1] >> 3));
                         if (g > 0x1F) {
                             g = 0x1F;
                         }
-                        b += color[2] >> 3;
+                        b = (u16)(b + (color[2] >> 3));
                         if (b > 0x1F) {
                             b = 0x1F;
                         }
-                        *(u16 *)(*(u8 **)((u8 *)arg0 + 0x3C) + off) = 0x8000 | (r << 10) | (g << 5) | b;
+                        *(u16 *)(*(u8 **)((u8 *)arg0 + 0x3C) + off) = (u16)(0x8000 | (r << 10) | (g << 5) | b);
                     }
                     count--;
                 }

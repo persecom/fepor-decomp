@@ -1657,6 +1657,31 @@ loop_1:
     }
 }
 
+s32 fn_801090C0(u8 *arg0)
+{
+    extern s32 lbl_803679DC;
+    extern u8 *lbl_803679D8;
+    extern u8 lbl_8028F390[];
+
+    extern void fn_8011D484(void *);
+    extern void fn_8010913C(void);
+    extern void fn_8000BF6C(void *, void *);
+
+    if (arg0[0] == 'T' &&
+        arg0[1] == 'B' &&
+        arg0[2] == 'G' &&
+        (s8)arg0[3] == 0) {
+        fn_8011D484(arg0);
+    } else {
+        lbl_803679DC = 0;
+        lbl_803679D8 = arg0;
+
+        fn_8000BF6C(lbl_8028F390, (void *)fn_8010913C);
+    }
+
+    return lbl_803679DC;
+}
+
 void fn_8010913C(void *arg0) {
     s32 fn_802342B8(s32, s32);
     extern s32 lbl_803679D8;
@@ -1681,6 +1706,31 @@ s32 fn_80109180(s32 arg0, u32 arg1) {
     temp_r31 = fn_8000CAF0(&lbl_8028F390, arg1);
     fn_80109F88(arg0);
     return temp_r31;
+}
+
+void fn_801091D8(void *arg0)
+{
+    u8 *list;
+    u8 *entry;
+    u8 *obj;
+    void **vtable;
+    void (*callback)(void *);
+    s32 i;
+
+    list = *(u8 **)((u8 *)arg0 + 0x30);
+    entry = list;
+    i = 0;
+
+    while (i < list[4]) {
+        obj = *(u8 **)(entry + 0x14);
+        vtable = *(void ***)(obj + 4);
+        callback = (void (*)(void *))vtable[4];
+
+        callback(obj);
+
+        entry += 4;
+        i++;
+    }
 }
 
 void fn_80009B80(s8 arg0);

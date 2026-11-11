@@ -1355,6 +1355,30 @@ void fn_801ED848(void *arg0, void *arg1, void *arg2, void *arg3) {
     fn_80215D9C(arg0, 0, 1, 0, *(s32 *)((char *)arg0 + 0x68), arg1, *(s32 *)((char *)arg0 + 0x64), fn_801ED800);
 }
 
+void fn_801ED8CC(void *arg0)
+{
+    extern u8 lbl_802EF4C8[];
+    extern u32 lbl_8029A734[];
+    extern u8 lbl_8027F26C[];
+
+    extern s32 fn_8000E0E4(void *);
+    extern void fn_8000D864(s32, s32);
+    extern void fn_801B79A0(s32, s32, void *, s32);
+
+    s32 value;
+    s32 result;
+
+    value = fn_8000E0E4(
+        (void *)lbl_8029A734[lbl_802EF4C8[0x14]]
+    );
+
+    fn_8000D864(0, value);
+
+    result = fn_8000E0E4(lbl_8027F26C + 0x17E);
+
+    fn_801B79A0(result, 0, arg0, 0);
+}
+
 void fn_801ED940(s32 arg0) {
     M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
     extern u8 lbl_803392B8[];

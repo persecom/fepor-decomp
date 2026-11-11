@@ -2179,83 +2179,86 @@ found:
     return 1;
 }
 
-s32 fn_8000AB90(void *arg0)
-{
+s32 fn_8000AB90(void *arg0) {
     extern u8 lbl_802A66D8[];
-
     u8 *entry;
     u8 *source;
     u8 *a;
     u8 *b;
-    s32 i;
-    s32 result;
+    unsigned ctr;
+    s32 n;
+    s32 diff;
+    u8 ch1;
+    u8 ch2;
+    u8 *p;
 
+    p = *(u8 **)((u8 *)arg0 + 4);
     entry = lbl_802A66D8;
-    source = *(u8 **)(*(u8 **)((u8 *)arg0 + 4) + 4);
-
-    for (i = 0; i < 0x80; i++) {
+    ctr = 0x80;
+    source = *(u8 **)(p + 4);
+    n = 0;
+    for (; ctr != 0; ctr--) {
         if (*(u32 *)entry != 0) {
             a = *(u8 **)(entry + 0x14);
             b = source;
-
-            do {
-                s32 c1 = (s8)*a;
-                s32 c2 = (s8)*b;
-
-                if (c1 != c2) {
-                    result = c1 - c2;
-                    break;
-                }
-
-                a++;
-                b++;
-
-                if ((c1 | c2) == 0) {
-                    result = 0;
-                    break;
-                }
-            } while (1);
-
-            if (result == 0) {
-                return 0;
+            goto cmp1_ld;
+        cmp1:
+            if ((s8)ch1 != (s8)ch2) {
+                diff = (s8)ch1 - (s8)ch2;
+                goto cmp1_done;
             }
+            a += 1;
+            b += 1;
+        cmp1_ld:
+            ch1 = *a;
+            ch2 = *b;
+            if (((s8)ch1 | (s8)ch2) != 0) {
+                goto cmp1;
+            }
+            diff = 0;
+        cmp1_done:
+            if ((u32)diff != 0) {
+                goto next1;
+            }
+            goto found;
         }
-
+    next1:
         entry += 0x70;
-
         if (*(u32 *)entry != 0) {
-            a = *(u8 **)(entry + 0x14);
             b = source;
-
-            do {
-                s32 c1 = (s8)*a;
-                s32 c2 = (s8)*b;
-
-                if (c1 != c2) {
-                    result = c1 - c2;
-                    break;
-                }
-
-                a++;
-                b++;
-
-                if ((c1 | c2) == 0) {
-                    result = 0;
-                    break;
-                }
-            } while (1);
-
-            if (result == 0) {
-                return 0;
+            a = *(u8 **)(entry + 0x14);
+            goto cmp2_ld;
+        cmp2:
+            if ((s8)ch1 != (s8)ch2) {
+                diff = (s8)ch1 - (s8)ch2;
+                goto cmp2_done;
             }
+            a += 1;
+            b += 1;
+        cmp2_ld:
+            ch1 = *a;
+            ch2 = *b;
+            if (((s8)ch1 | (s8)ch2) != 0) {
+                goto cmp2;
+            }
+            diff = 0;
+        cmp2_done:
+            if ((u32)diff != 0) {
+                goto next2;
+            }
+            goto found;
         }
-
+    next2:
+        n += 1;
         entry += 0x70;
     }
-
-    *(u32 *)((u8 *)arg0 + 4) += 8;
-
-    return 1;
+    entry = 0;
+found:
+    if (entry == 0) {
+        *(u8 **)((u8 *)arg0 + 4) = *(u8 **)((u8 *)arg0 + 4) + 8;
+        return 1;
+    }
+    return 0;
 }
 
 s32 fn_8000ACA0(void *arg0) {

@@ -635,6 +635,34 @@ loop_4:
     return var_r3;
 }
 
+void fn_80218C34(void *arg0)
+{
+    extern void fn_80215F78(u32);
+    extern s32 fn_80215F40(void);
+
+    u8 *base;
+    u32 previous;
+
+    base = (u8 *)lbl_8033A200;
+
+    if (arg0 == base + 0x30) {
+        return;
+    }
+
+    if (arg0 == base + 0x140) {
+        return;
+    }
+
+    previous = *(u32 *)(base + 0x190);
+
+    fn_80215F78(0xFF000000);
+
+    if (fn_80215F40() == 0) {
+        fn_80215F78(previous);
+        fn_80215F40();
+    }
+}
+
 #pragma use_lmw_stmw on
 void fn_80218CA4(void *arg0) {
     s32 EXIUnlock(s32);
@@ -1391,13 +1419,13 @@ u8 *__OSLockSramEx(void);void __OSUnlockSramEx(s32);
 s32 fn_80216CE8(s32,s32);void fn_80239298(s32,void*);void fn_80216AA4(void);void fn_8021AE98(s32,s32);
 s32 fn_802190A4(s32,u32,u32,void*,void*);void fn_80217BD0(void*,s32);void fn_8021B170(s32,s32);
 extern u16 lbl_8033A200[];extern s32 lbl_8029DB60[],lbl_8029DB80[];extern u16 lbl_80366FF0;
-u32 id;
 u8 status;
+u32 id;
 u8 *card;
 s32 rc, i, sum;
 s32 result;
 u16 code;
-u8 *sram, *p, *serial;
+u8 *serial, *p, *sram;
 card=(u8*)lbl_8033A200+chan*0x110;
 if(*(s32*)(card+0x24)==0) {
 if(!EXIGetID(chan,0,&id)) result=-3;

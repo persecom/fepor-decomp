@@ -211,6 +211,125 @@ void fn_80005ED4(void) {
     fn_800C50FC((u8 *)lbl_80267B80 + 0xDF, 0xB00000);
 }
 
+void fn_80005F04(void)
+{
+    void fn_801ED3D4(void);
+    void fn_80121414(void);
+    void fn_801E379C(void *);
+    void fn_8014D2B0(u32);
+    void fn_8014D41C(void *);
+    void fn_801E2594(void *);
+    void *fn_8000C0C0(void *);
+    void fn_8002D548(void);
+    void fn_8014D920(void);
+    s32 fn_8016947C(void);
+    void fn_80016C58(void);
+    void fn_8014CBD8(float, float);
+    void fn_800187F0(void);
+    void fn_80016DE0(void);
+
+    extern u8 lbl_803682F0;
+    extern u8 lbl_80330708[];
+    extern u8 lbl_802832FC[];
+
+    u8 *object;
+    u8 *data;
+    u8 *state;
+    u8 type;
+    s8 x;
+    s8 y;
+
+    object = *(u8 **)((u8 *)&lbl_803682F0 + 4);
+
+    fn_801ED3D4();
+    fn_80121414();
+    fn_801E379C(object);
+
+    type = object[0x65];
+
+    switch (type) {
+    case 10:
+        data = lbl_80330708;
+        data[0x9F] |= 8;
+
+        fn_8014D2B0(object[0x64]);
+        fn_8014D41C(data);
+
+    case 4:
+        fn_801E2594(&lbl_803682F0);
+
+        state = (u8 *)fn_8000C0C0(lbl_802832FC);
+        *(s32 *)(state + 0x60) = 0xA;
+        break;
+
+    case 5:
+    case 6:
+    case 7:
+        fn_8002D548();
+        fn_8014D920();
+        fn_801E379C(object);
+        fn_801E2594(&lbl_803682F0);
+
+        state = (u8 *)fn_8000C0C0(lbl_802832FC);
+        *(s32 *)(state + 0x60) = 0x11;
+        break;
+
+    case 1:
+        fn_8002D548();
+        fn_8014D920();
+        fn_801E379C(object);
+        fn_801E2594(&lbl_803682F0);
+
+        if ((u8)fn_8016947C() == 0) {
+            fn_80016C58();
+
+            state = (u8 *)fn_8000C0C0(lbl_802832FC);
+            *(s32 *)(state + 0x60) = 0xE;
+        } else {
+            data = lbl_80330708;
+
+            x = (s8)data[0x52];
+            y = (s8)data[0x53];
+
+            fn_8014CBD8((float)x, (float)y);
+            fn_800187F0();
+
+            state = (u8 *)fn_8000C0C0(lbl_802832FC);
+            *(s32 *)(state + 0x60) = 0x15;
+        }
+        break;
+
+    case 2:
+        fn_8002D548();
+        fn_8014D920();
+        fn_801E379C(object);
+        fn_801E2594(&lbl_803682F0);
+
+        state = (u8 *)fn_8000C0C0(lbl_802832FC);
+        *(s32 *)(state + 0x60) = 0x16;
+        break;
+
+    case 3:
+        fn_801E2594(&lbl_803682F0);
+        fn_801E379C(object);
+        fn_80016DE0();
+
+        state = (u8 *)fn_8000C0C0(lbl_802832FC);
+        *(s32 *)(state + 0x60) = 0xA;
+        break;
+
+    case 8:
+        state = (u8 *)fn_8000C0C0(lbl_802832FC);
+        *(s32 *)(state + 0x60) = 0x12;
+        break;
+
+    case 0:
+    case 9:
+    default:
+        break;
+    }
+}
+
 void fn_800060F8(void) {
     M2C_UNK fn_80016DE0();
     fn_80016DE0();

@@ -402,6 +402,164 @@ void fn_80017BFC(void) {
     fn_8001840C();
 }
 
+#pragma use_lmw_stmw on
+void fn_80017C1C(void *arg0, f32 farg0) {
+    f32 fn_80059500(f32, f32, f32, f32, f32);
+    extern s32 lbl_80268318[];
+    extern s32 lbl_803671C4;
+    extern f32 lbl_80368C88;
+    extern f32 lbl_80368C8C;
+
+    typedef struct { s32 x, y, z; } Vec;
+    Vec sp74, sp68, sp5C, sp50, sp44, sp38, sp2C, sp20, sp14, sp8;
+    s32 hole[8];
+    Vec *vp;
+    Vec *src;
+    Vec *out;
+    Vec def;
+    void *pt;
+    void *self;
+    void *cam;
+    s32 i;
+    s32 n;
+    s32 ctr;
+    s32 key;
+    s32 prevKey;
+    s32 delta;
+    f32 t;
+    f32 denom;
+    f32 prev_f;
+
+    n = *((u8 *)arg0 + 0x45);
+    cam = (void *)lbl_803671C4;
+    self = arg0;
+    if (((u32)(-(s32)n | n) >> 31) != 0) {
+        src = (Vec *)lbl_80268318;
+        def = *src;
+        vp = &sp14; *vp = def;
+        vp = &sp44; *vp = def;
+        vp = &sp38; *vp = def;
+        vp = (Vec *)hole; *vp = def;
+        if (n == 0) {
+            sp68 = def;
+            out = &sp68;
+        } else {
+            pt = *(void **)((u8 *)self + 0x48);
+            i = 0;
+            for (ctr = n; ctr != 0; ctr--) {
+                key = *(s32 *)((u8 *)pt + 4);
+                if ((f32)key >= farg0) {
+                    if (i == 0) {
+                        *(f32 *)&sp38.x = *(f32 *)((u8 *)pt + 8);
+                        *(f32 *)&sp38.y = *(f32 *)((u8 *)pt + 0xC);
+                        *(f32 *)&sp38.z = *(f32 *)((u8 *)pt + 0x10);
+                    } else {
+                        prevKey = *(s32 *)((u8 *)pt - 0x10);
+                        delta = key - prevKey;
+                        denom = (f32)delta;
+                        prev_f = (f32)prevKey;
+                        if (lbl_80368C88 == denom) {
+                            t = lbl_80368C8C;
+                        } else {
+                            t = (farg0 - prev_f) / denom;
+                        }
+                        {
+                            void *p0 = (i >= 2) ? (void *)((u8 *)pt - 0x28) : (void *)((u8 *)pt - 0x14);
+                            void *p2 = (i < n - 1) ? (void *)((u8 *)pt + 0x14) : pt;
+                            *(f32 *)&sp38.x = fn_80059500(*(f32 *)((u8 *)p0 + 8), *(f32 *)((u8 *)pt - 0xC), *(f32 *)((u8 *)pt + 8), *(f32 *)((u8 *)p2 + 8), t);
+                            *(f32 *)&sp38.y = fn_80059500(*(f32 *)((u8 *)p0 + 0xC), *(f32 *)((u8 *)pt - 8), *(f32 *)((u8 *)pt + 0xC), *(f32 *)((u8 *)p2 + 0xC), t);
+                            *(f32 *)&sp38.z = fn_80059500(*(f32 *)((u8 *)p0 + 0x10), *(f32 *)((u8 *)pt - 4), *(f32 *)((u8 *)pt + 0x10), *(f32 *)((u8 *)p2 + 0x10), t);
+                        }
+                    }
+                    sp68 = sp38;
+                    out = &sp68;
+                    goto first_store;
+                }
+                i += 1;
+                pt = (u8 *)pt + 0x14;
+            }
+            {
+                u8 *last = (u8 *)pt + ((n - 1) * 0x14) + 8;
+                *(f32 *)&sp38.x = *(f32 *)(last + 0);
+                *(f32 *)&sp38.y = *(f32 *)(last + 4);
+                *(f32 *)&sp38.z = *(f32 *)(last + 8);
+                sp68 = sp38;
+                out = &sp68;
+            }
+        }
+    first_store:
+        sp5C = *out;
+        *(f32 *)((u8 *)cam + 0x4C) = *(f32 *)&sp5C.x;
+        *(f32 *)((u8 *)cam + 0x50) = *(f32 *)&sp5C.y;
+        *(f32 *)((u8 *)cam + 0x54) = *(f32 *)&sp5C.z;
+        *(f32 *)((u8 *)cam + 0x40) = *(f32 *)((u8 *)cam + 0x4C);
+        *(f32 *)((u8 *)cam + 0x44) = *(f32 *)((u8 *)cam + 0x50);
+        *(f32 *)((u8 *)cam + 0x48) = *(f32 *)((u8 *)cam + 0x54);
+    }
+
+    n = *((u8 *)self + 0x46);
+    if (((u32)(-(s32)n | n) >> 31) != 0) {
+        src = (Vec *)lbl_80268318;
+        def = *src;
+        vp = &sp8; *vp = def;
+        vp = &sp2C; *vp = def;
+        vp = &sp20; *vp = def;
+        if (n == 0) {
+            sp50 = def;
+            out = &sp50;
+        } else {
+            pt = *(void **)((u8 *)self + 0x4C);
+            i = 0;
+            for (ctr = n; ctr != 0; ctr--) {
+                key = *(s32 *)((u8 *)pt + 4);
+                if ((f32)key >= farg0) {
+                    if (i == 0) {
+                        *(f32 *)&sp20.x = *(f32 *)((u8 *)pt + 8);
+                        *(f32 *)&sp20.y = *(f32 *)((u8 *)pt + 0xC);
+                        *(f32 *)&sp20.z = *(f32 *)((u8 *)pt + 0x10);
+                    } else {
+                        prevKey = *(s32 *)((u8 *)pt - 0x10);
+                        delta = key - prevKey;
+                        denom = (f32)delta;
+                        prev_f = (f32)prevKey;
+                        if (lbl_80368C88 == denom) {
+                            t = lbl_80368C8C;
+                        } else {
+                            t = (farg0 - prev_f) / denom;
+                        }
+                        {
+                            void *p0 = (i >= 2) ? (void *)((u8 *)pt - 0x28) : (void *)((u8 *)pt - 0x14);
+                            void *p2 = (i < n - 1) ? (void *)((u8 *)pt + 0x14) : pt;
+                            *(f32 *)&sp20.x = fn_80059500(*(f32 *)((u8 *)p0 + 8), *(f32 *)((u8 *)pt - 0xC), *(f32 *)((u8 *)pt + 8), *(f32 *)((u8 *)p2 + 8), t);
+                            *(f32 *)&sp20.y = fn_80059500(*(f32 *)((u8 *)p0 + 0xC), *(f32 *)((u8 *)pt - 8), *(f32 *)((u8 *)pt + 0xC), *(f32 *)((u8 *)p2 + 0xC), t);
+                            *(f32 *)&sp20.z = fn_80059500(*(f32 *)((u8 *)p0 + 0x10), *(f32 *)((u8 *)pt - 4), *(f32 *)((u8 *)pt + 0x10), *(f32 *)((u8 *)p2 + 0x10), t);
+                        }
+                    }
+                    sp50 = sp20;
+                    out = &sp50;
+                    goto second_store;
+                }
+                i += 1;
+                pt = (u8 *)pt + 0x14;
+            }
+            {
+                u8 *last = (u8 *)pt + ((n - 1) * 0x14) + 8;
+                *(f32 *)&sp20.x = *(f32 *)(last + 0);
+                *(f32 *)&sp20.y = *(f32 *)(last + 4);
+                *(f32 *)&sp20.z = *(f32 *)(last + 8);
+                sp50 = sp20;
+                out = &sp50;
+            }
+        }
+    second_store:
+        sp74 = *out;
+        *(f32 *)((u8 *)cam + 4) = *(f32 *)&sp74.x;
+        *(f32 *)((u8 *)cam + 8) = *(f32 *)&sp74.y;
+        *(f32 *)((u8 *)cam + 0xC) = *(f32 *)&sp74.z;
+    }
+}
+#pragma use_lmw_stmw reset
+
 void fn_800180F4(void *arg0, u8 arg1) {
     void fn_80018594(void *);
     void fn_80017C1C(void *, f32);
