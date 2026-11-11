@@ -1338,6 +1338,32 @@ void fn_8018715C(void *arg0) {
     }
 }
 
+void fn_801872CC(void *arg0)
+{
+    extern void fn_8004FE98(void *, s32);
+
+    u8 *obj;
+    void (*callback)(void *);
+
+    obj = (u8 *)arg0;
+
+    if (obj[0x48] == 0) {
+        fn_8004FE98(*(void **)(obj + 0x30), 0);
+
+        if (*(void **)(obj + 0x34) != 0) {
+            fn_8004FE98(*(void **)(obj + 0x34), 0);
+        }
+    }
+
+    if (obj[0x49] == 0) {
+        callback = *(void (**)(void *))(obj + 0x40);
+
+        if (callback != 0) {
+            callback(*(void **)(obj + 0x44));
+        }
+    }
+}
+
 void fn_80187344(void *arg0) {
     void fn_8000A388(void *, void *, void *);
     void *fn_8000CA64(void *, void *);
@@ -6386,7 +6412,7 @@ void fn_80196AD0(void *arg0, s32 arg1) {
 
   #pragma cplusplus reset
   #pragma use_lmw_stmw on
-  void fn_80197A78(void *arg0, s32 arg1)
+void fn_80197A78(void *arg0, s32 arg1)
 {
     void fn_800076AC(u8, u8, u8, u8);
     void fn_800077D8(f32, f32, f32, f32);
@@ -6406,131 +6432,117 @@ void fn_80196AD0(void *arg0, s32 arg1) {
     void fn_801976A4(void *);
     extern f32 lbl_8036AE88;
     extern f32 lbl_8036AE8C;
-    extern f64 lbl_8036AE90;
-    extern f64 lbl_8036AE98;
 
     s32 rect1[4];
     s32 rect2[4];
     s32 copy[4];
-    s32 state;
-    s32 a, b, c, d;
-    s32 pad;
-    s32 x0, y0, x1, y1;
-    s32 h;
+    s32 rect1b[4];
+    s32 rect2b[4];
+    s32 copyb[4];
+    void *self;
+    s32 arg;
+    s32 a, b, c, d, pad, x0, y0, h, alpha;
     void *obj38;
-    u8 r, g, bl, al;
-    s32 alpha;
+    u8 r, g, bl;
 
-    state = *(s32 *)((u8 *)arg0 + 0x6C);
-    switch (state) {
+    self = arg0;
+    arg = arg1;
+    switch (*(s32 *)((u8 *)self + 0x6C)) {
     case 0:
-        if (*(s32 *)((u8 *)arg0 + 0x70) <= 0x28) {
-            fn_801976A4(arg0);
+        if (*(s32 *)((u8 *)self + 0x70) <= 0x28) {
+            fn_801976A4(self);
         } else {
-            fn_80196F10(arg0, arg1);
+            fn_80196F10(self, arg);
         }
         break;
     case 1:
-        if (*(s32 *)((u8 *)arg0 + 0x70) > 0x28) {
-            fn_80196AD0(arg0);
-            break;
-        }
-        rect1[3] = 0;
-        rect1[2] = 0;
-        rect1[1] = 0;
-        rect1[0] = 0;
-        rect2[3] = 0;
-        rect2[2] = 0;
-        rect2[1] = 0;
-        rect2[0] = 0;
-        a = fn_800E2E58(*(void **)((u8 *)arg0 + 0x60));
-        b = fn_800E2E50(*(void **)((u8 *)arg0 + 0x60));
-        c = fn_800E2E68(*(void **)((u8 *)arg0 + 0x60));
-        d = fn_800E2E60(*(void **)((u8 *)arg0 + 0x60));
-        rect1[1] = b;
-        rect1[2] = a;
-        pad = *(s32 *)((u8 *)arg0 + 0x78) * 5 + 1;
-        rect1[3] = d + b;
-        rect1[0] = pad + a;
-        obj38 = *(void **)((u8 *)arg0 + 0x38);
-        x0 = *(s32 *)((u8 *)arg0 + 0x48) + (*(s32 *)((u8 *)obj38 + 0x60) + (c - pad));
-        rect2[0] = x0;
-        y0 = *(s32 *)((u8 *)arg0 + 0x4C) + *(s32 *)((u8 *)obj38 + 0x64);
-        rect2[2] = x0 + pad;
-        rect2[1] = y0;
-        rect2[3] = y0 + d;
-        fn_800E35F4(*(void **)((u8 *)arg0 + 0x60), arg1, rect1, rect2,
-                    *(s32 *)((u8 *)arg0 + 0x44), 0xFF, 0xFF, 0xFF, 0xFF, 0);
-        obj38 = *(void **)((u8 *)arg0 + 0x38);
-        copy[0] = rect2[0];
-        bl = *(u8 *)((u8 *)arg0 + 0x52);
-        copy[1] = rect2[1];
-        copy[2] = rect2[2];
-        g = *(u8 *)((u8 *)arg0 + 0x51);
-        r = *(u8 *)((u8 *)arg0 + 0x50);
-        copy[3] = rect2[3];
-        h = rect2[3] - rect2[1];
-        alpha = (s32)(*(f32 *)((u8 *)obj38 + 0x6C) * (f32)*(u8 *)((u8 *)arg0 + 0x53));
-        fn_8000A258();
-        {
-            s32 t = *(s32 *)((u8 *)arg0 + 0x44) - 1;
-            fn_80009D74(lbl_8036AE88, lbl_8036AE88, (f32)t, lbl_8036AE8C);
-        }
-        fn_8000A174(0, 0x20);
-        fn_8000A248();
-        fn_80007898(1);
-        fn_800077D8((f32)copy[0], (f32)copy[1], (f32)(copy[2] - copy[0]), (f32)h);
-        fn_800076AC(r, g, bl, (u8)alpha);
-        fn_80007884();
-        break;
-    case 2:
-        rect1[3] = 0;
-        rect1[2] = 0;
-        rect1[1] = 0;
-        rect1[0] = 0;
-        rect2[3] = 0;
-        rect2[2] = 0;
-        rect2[1] = 0;
-        rect2[0] = 0;
-        {
-            s32 v84 = *(s32 *)((u8 *)arg0 + 0x84);
-            s32 rem = v84 % 100;
-            a = fn_800E2E58(*(void **)((u8 *)arg0 + 0x60));
-            b = fn_800E2E50(*(void **)((u8 *)arg0 + 0x60));
-            c = fn_800E2E68(*(void **)((u8 *)arg0 + 0x60));
-            d = fn_800E2E60(*(void **)((u8 *)arg0 + 0x60));
-            rect1[0] = a;
+        if (*(s32 *)((u8 *)self + 0x70) <= 0x28) {
+            rect1[3] = 0; rect1[2] = 0; rect1[1] = 0; rect1[0] = 0;
+            rect2[3] = 0; rect2[2] = 0; rect2[1] = 0; rect2[0] = 0;
+            a = fn_800E2E58(*(void **)((u8 *)self + 0x60));
+            b = fn_800E2E50(*(void **)((u8 *)self + 0x60));
+            c = fn_800E2E68(*(void **)((u8 *)self + 0x60));
+            d = fn_800E2E60(*(void **)((u8 *)self + 0x60));
+            pad = *(s32 *)((u8 *)self + 0x78) * 5 + 1;
             rect1[1] = b;
-            rect1[2] = c + a;
+            rect1[2] = a;
             rect1[3] = d + b;
-            obj38 = *(void **)((u8 *)arg0 + 0x38);
-            x0 = *(s32 *)((u8 *)arg0 + 0x48) + *(s32 *)((u8 *)obj38 + 0x60);
+            rect1[0] = pad + a;
+            obj38 = *(void **)((u8 *)self + 0x38);
+            x0 = *(s32 *)((u8 *)self + 0x48) + (*(s32 *)((u8 *)obj38 + 0x60) + (c - pad));
             rect2[0] = x0;
-            y0 = *(s32 *)((u8 *)arg0 + 0x4C) + *(s32 *)((u8 *)obj38 + 0x64);
-            rect2[2] = x0 + (c * rem) / 100;
+            y0 = *(s32 *)((u8 *)self + 0x4C) + *(s32 *)((u8 *)obj38 + 0x64);
+            rect2[2] = x0 + pad;
             rect2[1] = y0;
             rect2[3] = y0 + d;
-            fn_800E35F4(*(void **)((u8 *)arg0 + 0x60), arg1, rect1, rect2,
-                        *(s32 *)((u8 *)arg0 + 0x44), 0xFF, 0xFF, 0xFF, 0xFF, 0);
-            obj38 = *(void **)((u8 *)arg0 + 0x38);
+            fn_800E35F4(*(void **)((u8 *)self + 0x60), arg, rect1, rect2,
+                        *(s32 *)((u8 *)self + 0x44), 0xFF, 0xFF, 0xFF, 0xFF, 0);
+            obj38 = *(void **)((u8 *)self + 0x38);
             copy[0] = rect2[0];
-            bl = *(u8 *)((u8 *)arg0 + 0x52);
+            bl = *(u8 *)((u8 *)self + 0x52);
             copy[1] = rect2[1];
             copy[2] = rect2[2];
-            g = *(u8 *)((u8 *)arg0 + 0x51);
-            r = *(u8 *)((u8 *)arg0 + 0x50);
+            g = *(u8 *)((u8 *)self + 0x51);
+            r = *(u8 *)((u8 *)self + 0x50);
             copy[3] = rect2[3];
             h = rect2[3] - rect2[1];
-            alpha = (s32)(*(f32 *)((u8 *)obj38 + 0x6C) * (f32)*(u8 *)((u8 *)arg0 + 0x53));
+            alpha = (s32)(*(f32 *)((u8 *)obj38 + 0x6C) * (f32)*(u8 *)((u8 *)self + 0x53));
             fn_8000A258();
             {
-                s32 t = *(s32 *)((u8 *)arg0 + 0x44) - 1;
+                s32 t = *(s32 *)((u8 *)self + 0x44) - 1;
                 fn_80009D74(lbl_8036AE88, lbl_8036AE88, (f32)t, lbl_8036AE8C);
             }
             fn_8000A174(0, 0x20);
             fn_8000A248();
             fn_80007898(1);
             fn_800077D8((f32)copy[0], (f32)copy[1], (f32)(copy[2] - copy[0]), (f32)h);
+            fn_800076AC(r, g, bl, (u8)alpha);
+            fn_80007884();
+        } else {
+            fn_80196AD0(self);
+        }
+        break;
+    case 2:
+        rect1b[3] = 0; rect1b[2] = 0; rect1b[1] = 0; rect1b[0] = 0;
+        rect2b[3] = 0; rect2b[2] = 0; rect2b[1] = 0; rect2b[0] = 0;
+        {
+            s32 rem = *(s32 *)((u8 *)self + 0x84) % 100;
+            a = fn_800E2E58(*(void **)((u8 *)self + 0x60));
+            b = fn_800E2E50(*(void **)((u8 *)self + 0x60));
+            c = fn_800E2E68(*(void **)((u8 *)self + 0x60));
+            d = fn_800E2E60(*(void **)((u8 *)self + 0x60));
+            rect1b[0] = a;
+            rect1b[1] = b;
+            rect1b[2] = c + a;
+            rect1b[3] = d + b;
+            obj38 = *(void **)((u8 *)self + 0x38);
+            x0 = *(s32 *)((u8 *)self + 0x48) + *(s32 *)((u8 *)obj38 + 0x60);
+            rect2b[0] = x0;
+            y0 = *(s32 *)((u8 *)self + 0x4C) + *(s32 *)((u8 *)obj38 + 0x64);
+            rect2b[2] = x0 + (c * rem) / 100;
+            rect2b[1] = y0;
+            rect2b[3] = y0 + d;
+            fn_800E35F4(*(void **)((u8 *)self + 0x60), arg, rect1b, rect2b,
+                        *(s32 *)((u8 *)self + 0x44), 0xFF, 0xFF, 0xFF, 0xFF, 0);
+            obj38 = *(void **)((u8 *)self + 0x38);
+            copyb[0] = rect2b[0];
+            bl = *(u8 *)((u8 *)self + 0x52);
+            copyb[1] = rect2b[1];
+            copyb[2] = rect2b[2];
+            g = *(u8 *)((u8 *)self + 0x51);
+            r = *(u8 *)((u8 *)self + 0x50);
+            copyb[3] = rect2b[3];
+            h = rect2b[3] - rect2b[1];
+            alpha = (s32)(*(f32 *)((u8 *)obj38 + 0x6C) * (f32)*(u8 *)((u8 *)self + 0x53));
+            fn_8000A258();
+            {
+                s32 t = *(s32 *)((u8 *)self + 0x44) - 1;
+                fn_80009D74(lbl_8036AE88, lbl_8036AE88, (f32)t, lbl_8036AE8C);
+            }
+            fn_8000A174(0, 0x20);
+            fn_8000A248();
+            fn_80007898(1);
+            fn_800077D8((f32)copyb[0], (f32)copyb[1], (f32)(copyb[2] - copyb[0]), (f32)h);
             fn_800076AC(r, g, bl, (u8)alpha);
             fn_80007884();
         }
