@@ -1931,6 +1931,11 @@ u8 fn_8011BF1C(void) {
     return (u8)((temp >> 5) & 0xFF);
 }
 
+s32 fn_8011BF30(void) {
+    lbl_802EF4C8[8] = 0x82;
+    return 5;
+}
+
 void fn_8011BF48(void) {
     extern u16 lbl_80274508[];
     fn_8000E0E4((u8 *)lbl_80274508 + 0x435);
