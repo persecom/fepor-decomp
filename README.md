@@ -1,5 +1,7 @@
 # Fire Emblem: Path of Radiance
 
+[![Code Progress](https://bytematch.dev/persecom/fepor-decomp.svg?label=Code&measure=matched_code_percent&version=GFEE01)](https://bytematch.dev/persecom/fepor-decomp)
+
 A work-in-progress matching decompilation of **Fire Emblem: Path of Radiance** (GFEE01) for the Nintendo GameCube.
 
 This repository does not contain any game assets or the original disc image. An existing copy of the game is required.
