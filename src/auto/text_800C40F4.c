@@ -3414,6 +3414,17 @@ s32 fn_800DC44C(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 0xB0);
 }
 
+#pragma dont_inline on
+void fn_800DC454(void *arg0)
+{
+    void fn_800CA91C(void *);
+
+    fn_800CA91C((char *)arg0 + 0xAC);
+    *(s32 *)((char *)arg0 + 0xBC) = 0;
+    *(s32 *)((char *)arg0 + 0x110) = -1;
+}
+#pragma dont_inline reset
+
 void fn_800DC494(void *arg0, s32 arg1) {
     extern void fn_800DD87C(void*, s32);
     extern void fn_800DD948(void*, s32);
