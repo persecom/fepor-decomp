@@ -34,6 +34,20 @@ static inline u8 *FindAudioResource(void *data, u16 id, u32 offset) {
 typedef struct SynthStateLink { u8 pad[0xEC]; s32 next; u8 padF0[0x458 - 0xF0]; } SynthStateLink;
 typedef s32 Fn80256FF0Arg;
 typedef struct ThpDecodeState { f32 tables[3][64]; u8 pad[0x398]; u16 count; u16 pad69A; u8 *cursor; u32 pad6A0; u32 bits; } ThpDecodeState;
+static inline u32 ThpReadByte(void) {
+extern ThpDecodeState *lbl_80368950;
+u8 *p=lbl_80368950->cursor;
+lbl_80368950->cursor=p+1;
+return *p;
+}
+static inline u16 ThpReadWord(void) {
+extern ThpDecodeState *lbl_80368950;
+u8 **cursor=&lbl_80368950->cursor;
+u8 *p=*cursor;
+u16 value=(p[0]<<8)|p[1];
+*cursor=p+2;
+return value;
+}
 static inline u8 SynthAllocateStream(void) {
 extern u8 lbl_8035A6D0[];
 u8 i;
