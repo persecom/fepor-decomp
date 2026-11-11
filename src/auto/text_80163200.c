@@ -1,4 +1,5 @@
 #include "common.h"
+#pragma opt_common_subs off
 static inline void init_761F8_base(void *p,s16 x,s16 y,s16 w,s16 h,s16 style) {
  extern u16 lbl_8028FDB0[],lbl_80292230[];
  extern f32 lbl_8036AB6C;
