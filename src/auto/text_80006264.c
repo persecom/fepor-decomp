@@ -2529,6 +2529,143 @@ void fn_8000C194(s32 arg0) {
     }
 }
 
+void fn_8000B850(void *);
+void fn_8000C188(void *);
+void fn_8000C1CC(void *arg0) {
+    extern u32 lbl_802ADAFC[9];
+    u8 *self;
+    u8 *node;
+    u8 *child;
+    void (*cb)(void *);
+    s32 t;
+    u32 x;
+    u32 y;
+
+    self = (u8 *)arg0;
+    node = *(u8 **)(self + 0x24);
+    if (node != NULL) {
+        child = *(u8 **)(node + 0x24);
+        if (child != NULL) {
+            fn_8000C1CC(child);
+        }
+        if (*(u32 *)node != 0 && node[0x2E] == 0) {
+            if (node[0x2D] == 0 && ((node[0x2C] & 4) == 0 || (*(u8 **)(node + 0x18))[0x2D] == 0)) {
+                for (;;) {
+                    if (*(void **)(node + 0x10) == NULL) {
+                        fn_8000B850(node);
+                    }
+                    if (*(void **)(node + 0x10) != NULL) {
+                        t = *(s16 *)(node + 0x28);
+                        if (t >= 0) {
+                            *(s16 *)(node + 0x28) = (s16)(t - 1);
+                            if (*(s16 *)(node + 0x28) < 0) {
+                                fn_8000C188(node);
+                                continue;
+                            }
+                        }
+                        (*(void (**)(void *))(node + 0x10))(node);
+                    }
+                    if (node[0x2C] & 1) {
+                        goto done1;
+                    }
+                    break;
+                }
+            }
+            cb = *(void (**)(void *))(node + 0xC);
+            if (cb != NULL) {
+                cb(node);
+            }
+            child = *(u8 **)(node + 0x1C);
+            if (child != NULL) {
+                fn_8000C1CC(child);
+            }
+        }
+    }
+done1:
+
+    if (*(u32 *)self != 0 && self[0x2E] == 0) {
+        if (self[0x2D] == 0 && ((self[0x2C] & 4) == 0 || (*(u8 **)(self + 0x18))[0x2D] == 0)) {
+            for (;;) {
+                if (*(void **)(self + 0x10) == NULL) {
+                    if (*(u32 *)self != 0 && self[0x2D] == 0 && self[0x2E] == 0 && *(void **)(self + 0x10) == NULL) {
+                        for (;;) {
+                            x = **(u32 **)(self + 4);
+                            y = lbl_802ADAFC[(x >> 8) & 7];
+                            if (((u8 (*)(void *))(*(u32 *)(y + ((x & 0xFF) << 2))))(self)
+                                && *(u32 *)self != 0 && self[0x2D] == 0) {
+                                if (self[0x2E] == 0) {
+                                    continue;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+                if (*(void **)(self + 0x10) != NULL) {
+                    t = *(s16 *)(self + 0x28);
+                    if (t >= 0) {
+                        *(s16 *)(self + 0x28) = (s16)(t - 1);
+                        if (*(s16 *)(self + 0x28) < 0) {
+                            *(void **)(self + 0x10) = NULL;
+                            continue;
+                        }
+                    }
+                    (*(void (**)(void *))(self + 0x10))(self);
+                }
+                if (self[0x2C] & 1) {
+                    goto done2;
+                }
+                break;
+            }
+        }
+        cb = *(void (**)(void *))(self + 0xC);
+        if (cb != NULL) {
+            cb(self);
+        }
+        node = *(u8 **)(self + 0x1C);
+        if (node != NULL) {
+            child = *(u8 **)(node + 0x24);
+            if (child != NULL) {
+                fn_8000C1CC(child);
+            }
+            if (*(u32 *)node != 0 && node[0x2E] == 0) {
+                if (node[0x2D] == 0 && ((node[0x2C] & 4) == 0 || (*(u8 **)(node + 0x18))[0x2D] == 0)) {
+                    for (;;) {
+                        if (*(void **)(node + 0x10) == NULL) {
+                            fn_8000B850(node);
+                        }
+                        if (*(void **)(node + 0x10) != NULL) {
+                            t = *(s16 *)(node + 0x28);
+                            if (t >= 0) {
+                                *(s16 *)(node + 0x28) = (s16)(t - 1);
+                                if (*(s16 *)(node + 0x28) < 0) {
+                                    fn_8000C188(node);
+                                    continue;
+                                }
+                            }
+                            (*(void (**)(void *))(node + 0x10))(node);
+                        }
+                        if (node[0x2C] & 1) {
+                            goto done2;
+                        }
+                        break;
+                    }
+                }
+                cb = *(void (**)(void *))(node + 0xC);
+                if (cb != NULL) {
+                    cb(node);
+                }
+                child = *(u8 **)(node + 0x1C);
+                if (child != NULL) {
+                    fn_8000C1CC(child);
+                }
+            }
+        }
+    }
+done2:
+    ;
+}
+
 s32 fn_8000C510(void) {
     extern void *lbl_80367148;
     extern u8 lbl_802AD6D8[];
