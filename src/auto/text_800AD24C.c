@@ -5005,6 +5005,27 @@ void fn_800BE890(void) {
     }
 }
 
+s32 fn_800BE914(void)
+{
+  void *fn_80013B60(void *);
+  u8 *entry;
+  s32 count;
+  int new_var;
+  count = 0;
+  new_var = 0xE;
+  entry = (u8 *) fn_80013B60(0);
+  while (entry != 0)
+  {
+    if (entry[0xC] == new_var)
+    {
+      count++;
+    }
+    entry = (u8 *) fn_80013B60(entry);
+  }
+
+  return count;
+}
+
 void fn_800BEAC0(void* arg0, void* arg1, int arg2) {
     s32 temp_r3;
     s32 temp_r4;
