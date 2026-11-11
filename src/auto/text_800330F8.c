@@ -4679,7 +4679,7 @@ void fn_80049E24(void) {
     extern u8 lbl_802CA518[];
     u32 sp8;
     f32 spC[12];
-    u8 sp3C[0x200];
+    u8 sp3C[16][32];
     s32 pos;
     s32 yOff;
     s8 y;
@@ -4718,7 +4718,7 @@ void fn_80049E24(void) {
         fn_80223D94(0, 0, 3);
         fn_80223DDC(3, 0, 1, 2, 0);
         tex = lbl_803674F0;
-        p = sp3C;
+        p = &sp3C[0][0];
         i = 0;
         do {
             fn_8006ECCC(tex, p, i + 1);
@@ -4735,8 +4735,8 @@ void fn_80049E24(void) {
             do {
                 tile = *(u16 *)(lbl_802CA518 + 0x1218E + (pos << 1));
                 if (tile & 0x2000) {
-                    off = (tile << 1) & 0x1E0;
-                    fn_80222C50(sp3C + off, 0);
+                    off = (tile >> 4) & 15;
+                    fn_80222C50(sp3C[off], 0);
                     fx = (f32)x;
                     fy = (f32)y;
                     fx1 = lbl_80368F8C + fx;
@@ -4783,7 +4783,6 @@ void fn_80049E24(void) {
     }
 }
 #pragma global_optimizer reset
-#pragma use_lmw_stmw reset
 
 void fn_8004A1F0(void) {
     extern u32* lbl_80285858;
