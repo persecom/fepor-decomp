@@ -77,13 +77,13 @@ void fn_80092438(void *arg0) {
 #pragma use_lmw_stmw on
 s32 fn_80092528(void *arg0, s32 arg1) {
     u8 fn_80105BC0(void *, s32);
-    s32 fn_8001CCE4(u8);
+    u8 fn_8001CCE4(u8);
     u32 fn_8001CFA8(u8);
-    register void *self;
-    register s32 a1;
-    register u32 idx;
-    register u8 result;
-    register s32 result2;
+    void *self;
+    s32 a1;
+    u32 idx;
+    u8 result;
+    u8 result2;
     u32 a;
     u32 b;
 
@@ -213,8 +213,6 @@ done2:
     b = fn_8001CFA8(result2);
     return (u8)a != (u8)b;
 }
-
-#pragma use_lmw_stmw on
 s32 fn_800927EC(void *arg0, void *arg1) {
     u8 fn_80105BC0(void *, s32);
     s8 fn_8001CBA0(void *);
@@ -535,6 +533,28 @@ u8 fn_80092F38(void *arg0) {
     }
 }
 
+u8 fn_80092F9C(void *arg0)
+{
+  extern void *fn_80037BBC(void *, s32);
+  unsigned long new_var;
+  u8 count;
+  s32 i;
+  count = 0;
+  for (i = 0; i < 4; i++)
+  {
+    if ((*((u32 *) fn_80037BBC(arg0, i))) != 0)
+    {
+      new_var = 1;
+      if (new_var)
+      {
+        count = (u8) (count + new_var);
+      }
+    }
+  }
+
+  return count;
+}
+
 s32 fn_80093088(void *arg0) {
     s32 i = 0;
     for (;;) {
@@ -611,39 +631,39 @@ u8 fn_8009326C(void *arg0, void *arg1) {
     u8 fn_800940B0(void *, void *);
     u8 tmp;
     struct { unsigned ok : 8; } t;
-    u32 lsw;
-    u32 msw;
-    u32 lo_z;
+    u32 lo;
+    u32 hi;
+    u32 z;
     u64 flags;
 
     t.ok = 0;
-    lsw = *(u32 *)((u8 *)arg1 + 0x3C);
-    msw = *(u32 *)((u8 *)arg1 + 0x38);
-    lo_z = msw & t.ok;
-    flags = ((u64)msw << 32) | lsw;
+    lo = *(u32 *)((u8 *)arg1 + 0x3C);
+    hi = *(u32 *)((u8 *)arg1 + 0x38);
+    z = 0;
+    flags = ((u64)hi << 32) | lo;
     if (!(flags & 4)) {
-        return 0;
+        return (u8)z;
     }
     if (flags & 0x200) {
         tmp = fn_80105BC0((u8 *)arg0 + 0x1BC, 9);
         if (tmp) {
             t.ok = 1;
         } else {
-            t.ok = 0;
+            t.ok = (u8)z;
         }
     } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
         t.ok = 1;
     } else if (flags & 2) {
-        t.ok = 0;
+        t.ok = (u8)z;
     } else if (flags & 4) {
-        t.ok = 0;
+        t.ok = (u8)z;
     } else if (flags & 0x40) {
         t.ok = 1;
     } else {
         t.ok = 1;
     }
     if (t.ok == 0) {
-        return (u8)lo_z;
+        return (u8)z;
     }
     return fn_800940B0(arg0, arg1) != 0;
 }
@@ -762,6 +782,241 @@ u8 fn_80093708(void *arg0, void *arg1) {
     flags2 = flags;
     m = 5;
 
+    if (flags & m) {
+        t.ok = 1;
+        if (flags & 1) {
+            if (!(flags2 & 1)) {
+            } else {
+                if (flags & 0x200) {
+                    if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
+                        t.ok = 1;
+                    } else {
+                        t.ok = 0;
+                    }
+                } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
+                } else if (flags & 2) {
+                    t.ok = t.result;
+                } else if (flags & 4) {
+                    t.ok = t.result;
+                } else if (flags & 0x40) {
+                    t.ok = 1;
+                }
+                if (t.ok == 0) {
+                    t.result = 0;
+                } else if (fn_800940B0(arg0, arg1) == 0) {
+                    t.result = 0;
+                } else {
+                    t.result = 1;
+                }
+            }
+        } else {
+            if (flags & 4) {
+                if (!(flags2 & 4)) {
+                } else {
+                    if (flags & 0x200) {
+                        if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
+                            t.ok = 1;
+                        } else {
+                            t.ok = 0;
+                        }
+                    } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
+                    } else if (flags & 2) {
+                        t.ok = t.result;
+                    } else if (flags & 4) {
+                        t.ok = t.result;
+                    } else if (flags & 0x40) {
+                        t.ok = 1;
+                    }
+                    if (t.ok == 0) {
+                        t.result = 0;
+                    } else if (fn_800940B0(arg0, arg1) == 0) {
+                        t.result = 0;
+                    } else {
+                        t.result = 1;
+                    }
+                }
+            }
+        }
+        return t.result;
+    }
+    if (flags & 0x18) {
+        if (flags & 8) {
+            if (!(flags2 & 8)) {
+            } else if (flags & ((u64)0x100 << 32)) {
+            } else {
+                t.result = 1;
+            }
+        } else {
+            if (flags & 0x10) {
+                if (!(flags2 & 0x10)) {
+                    tmp = t.result;
+                } else {
+                    tmp = fn_800940B0(arg0, arg1);
+                }
+                t.result = tmp;
+            }
+        }
+        return t.result;
+    }
+    return 0;
+}
+
+u8 fn_800939FC(void *arg0, void *arg1) {
+    s32 fn_800061F4(void);
+    u8 fn_8001C914(void *, void *);
+    void *fn_8001C9BC(void *);
+    u8 fn_800940B0(void *, void *);
+    u8 fn_80105BC0(void *, s32);
+    struct { unsigned ok : 8; unsigned result : 8; } t;
+    u32 lo;
+    u32 hi;
+    u64 flags;
+    u64 bit;
+    u8 tmp;
+    void *rec;
+    u8 var_r0;
+
+    t.result = 0;
+    lo = *(u32 *)((u8 *)arg1 + 0x3C);
+    hi = *(u32 *)((u8 *)arg1 + 0x38);
+    flags = (u64)lo | ((u64)hi << 32);
+
+    bit = flags & 8;
+    if (bit) {
+        if (fn_800061F4() == 0x10) {
+            rec = fn_8001C9BC(arg1);
+            if (rec == NULL) {
+                var_r0 = 0;
+            } else if (*(u32 *)rec == 0) {
+                var_r0 = 0;
+            } else {
+                var_r0 = *((u8 *)rec + 4);
+            }
+            if (var_r0 == 0) {
+                return 0;
+            }
+            return fn_8001C914(arg0, arg1);
+        }
+        rec = fn_8001C9BC(arg1);
+        if (rec == NULL) {
+            var_r0 = 0;
+        } else if (*(u32 *)rec == 0) {
+            var_r0 = 0;
+        } else {
+            var_r0 = *((u8 *)rec + 5);
+        }
+        if (var_r0 == 0) {
+            return 0;
+        }
+        return fn_8001C914(arg0, arg1);
+    }
+    if (flags & 5) {
+        t.ok = 1;
+        bit = flags & 1;
+        if (bit) {
+            if (!bit) {
+            } else {
+                if (flags & 0x200) {
+                    if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
+                        t.ok = 1;
+                    } else {
+                        t.ok = 0;
+                    }
+                } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
+                } else if (flags & 2) {
+                    t.ok = t.result;
+                } else if (flags & 4) {
+                    t.ok = t.result;
+                } else if (flags & 0x40) {
+                    t.ok = 1;
+                }
+                if (t.ok == 0) {
+                    t.result = 0;
+                } else if (fn_800940B0(arg0, arg1) == 0) {
+                    t.result = 0;
+                } else {
+                    t.result = 1;
+                }
+            }
+        } else {
+            bit = flags & 4;
+            if (bit) {
+                if (!bit) {
+                } else {
+                    if (flags & 0x200) {
+                        if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
+                            t.ok = 1;
+                        } else {
+                            t.ok = 0;
+                        }
+                    } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
+                    } else if (flags & 2) {
+                        t.ok = t.result;
+                    } else if (flags & 4) {
+                        t.ok = t.result;
+                    } else if (flags & 0x40) {
+                        t.ok = 1;
+                    }
+                    if (t.ok == 0) {
+                        t.result = 0;
+                    } else if (fn_800940B0(arg0, arg1) == 0) {
+                        t.result = 0;
+                    } else {
+                        t.result = 1;
+                    }
+                }
+            }
+        }
+        return t.result;
+    }
+    if (flags & 0x18) {
+        bit = flags & 8;
+        if (bit) {
+            if (!bit) {
+            } else if (flags & ((u64)0x100 << 32)) {
+            } else {
+                t.result = 1;
+            }
+        } else {
+            bit = flags & 0x10;
+            if (bit) {
+                if (!bit) {
+                    tmp = t.result;
+                } else {
+                    tmp = fn_800940B0(arg0, arg1);
+                }
+                t.result = tmp;
+            }
+        }
+        return t.result;
+    }
+    return 0;
+}
+
+u8 fn_80093DA8(void *arg0, void *arg1) {
+    u8 fn_800940B0(void *, void *);
+    u8 fn_80105BC0(void *, s32);
+    struct { unsigned ok : 8; unsigned result : 8; } t;
+    u32 *p;
+    u32 lo;
+    u32 hi;
+    u64 flags;
+    u64 flags2;
+    u8 tmp;
+    u32 m;
+
+    t.result = 0;
+    p = (u32 *)((u8 *)arg1 + 0x38);
+    lo = p[1];
+    hi = p[0];
+    flags = ((u64)hi << 32) | lo;
+    flags2 = flags;
+    m = 8;
+
+    if (flags & m) {
+        return 1;
+    }
+    m = 5;
     if (flags & m) {
         t.ok = 1;
         if (flags & 1) {
@@ -1032,6 +1287,157 @@ s32 fn_80094C10(s32 arg0, void *arg1) {
     return 1;
 }
 
+#pragma use_lmw_stmw off
+#pragma optimization_level 2
+void *fn_80094CDC(void *arg0, s32 arg1) {
+    void **fn_80037BBC(void *, s32);
+    u8 fn_800940B0(void *, void *);
+    void *fn_8009542C(void *, s32);
+    u8 fn_80105BC0(void *, s32);
+    void **slot;
+    void *obj;
+    u8 ok;
+    u8 result;
+    u64 flags;
+    s32 var_r29;
+    s32 var_r30;
+    void *entry;
+    u8 *p;
+
+    if (arg1 < 4) {
+        if (fn_80105BC0((u8 *)arg0 + 0x1BC, 8) != 0) {
+            return fn_80037BBC(arg0, 0);
+        }
+        var_r30 = 0;
+        var_r29 = 0;
+        do {
+            slot = fn_80037BBC(arg0, var_r30);
+            {
+                u8 t = *((u8 *)slot + 5);
+                var_r30 += 1;
+                *((u8 *)slot + 5) = (u8)__rlwimi(t, var_r29, 7, 24, 24);
+            }
+        } while (var_r30 < 4);
+        if (arg1 >= 0) {
+            slot = fn_80037BBC(arg0, arg1);
+            obj = *slot;
+            result = 0;
+            flags = *(u64 *)((u8 *)obj + 0x38);
+            if ((flags & 1) == 0) {
+            } else if (fn_800940B0(arg0, obj) == 0) {
+                result = 0;
+            } else {
+                result = 1;
+            }
+            if (result == 0) {
+                return NULL;
+            }
+        } else {
+            var_r30 = 0;
+            for (;;) {
+                slot = fn_80037BBC(arg0, var_r30);
+                obj = *slot;
+                if (((u32)(-(s32)obj | (s32)obj) >> 31) == 0) {
+                    return NULL;
+                }
+                result = 0;
+                ok = 1;
+                flags = *(u64 *)((u8 *)obj + 0x38);
+                if ((flags & 1) == 0) {
+                } else {
+                    if (flags & 0x200) {
+                        if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
+                            ok = 1;
+                        } else {
+                            ok = 0;
+                        }
+                    } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
+                    } else if (flags & 2) {
+                        ok = 0;
+                    } else if (flags & 4) {
+                        ok = 0;
+                    } else if (flags & 0x40) {
+                    }
+                    if (ok == 0) {
+                        result = 0;
+                    } else if (fn_800940B0(arg0, obj) == 0) {
+                        result = 0;
+                    } else {
+                        result = 1;
+                    }
+                }
+                if (result != 0) {
+                    break;
+                }
+                var_r30 += 1;
+                if (var_r30 >= 4) {
+                    return NULL;
+                }
+            }
+        }
+        {
+            u8 t = *((u8 *)slot + 5);
+            s32 one = 1;
+            *((u8 *)slot + 5) = (u8)__rlwimi(t, one, 7, 24, 24);
+        }
+        return fn_8009542C(arg0, -1);
+    }
+
+    var_r29 = 0;
+    {
+        u8 t;
+        t = *((u8 *)arg0 + 0x1F1);
+        *((u8 *)arg0 + 0x1F1) = (u8)__rlwimi(t, var_r29, 7, 24, 24);
+        t = *((u8 *)arg0 + 0x1F9);
+        *((u8 *)arg0 + 0x1F9) = (u8)__rlwimi(t, var_r29, 7, 24, 24);
+        t = *((u8 *)arg0 + 0x201);
+        *((u8 *)arg0 + 0x201) = (u8)__rlwimi(t, var_r29, 7, 24, 24);
+        t = *((u8 *)arg0 + 0x209);
+        *((u8 *)arg0 + 0x209) = (u8)__rlwimi(t, var_r29, 7, 24, 24);
+    }
+    if (arg1 - 4 >= 0) {
+        entry = (u8 *)arg0 + (((arg1 - 4) << 3) + 0x1EC);
+        obj = *(void **)entry;
+        flags = *(u64 *)((u8 *)obj + 0x38);
+        if ((flags & 0x10) == 0) {
+            result = 0;
+        } else {
+            result = fn_800940B0(arg0, obj);
+        }
+        if (result != 0) {
+            u8 t = *((u8 *)entry + 5);
+            s32 one = 1;
+            *((u8 *)entry + 5) = (u8)__rlwimi(t, one, 7, 24, 24);
+        } else {
+            entry = NULL;
+        }
+        return entry;
+    }
+    p = arg0;
+    var_r29 = 0;
+    for (;;) {
+        obj = *(void **)(p + 0x1EC);
+        entry = p + 0x1EC;
+        if (((u32)(-(s32)obj | (s32)obj) >> 31) != 0) {
+            result = 0;
+            flags = *(u64 *)((u8 *)obj + 0x38);
+            if ((flags & 0x10) != 0) {
+                result = fn_800940B0(arg0, obj);
+            }
+            if (result != 0) {
+                u8 t = *((u8 *)entry + 5);
+                s32 one = 1;
+                *((u8 *)entry + 5) = (u8)__rlwimi(t, one, 7, 24, 24);
+                return entry;
+            }
+        }
+        var_r29 += 1;
+        p += 8;
+        if (var_r29 >= 4) {
+            return NULL;
+        }
+    }
+}
 void fn_80095070(void* arg0, void* arg1, s32 arg2) {
     s32* r3 = (s32*)arg0;
     s32* r4 = (s32*)arg1;
