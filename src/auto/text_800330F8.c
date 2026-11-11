@@ -6387,11 +6387,11 @@ static inline void *get_4F5EC_resource(void *arg0) {
  extern void *lbl_80366DC8;
 
  char buf[0x20];
- void *resolved;
- void *base;
  s32 value;
- void *name;
+ void *base;
  s32 idx;
+ void *resolved;
+ void *name;
  value=get_4F5EC_id(arg0);
  base=M2C_FIELD(arg0,void **,0x18C);
  if(M2C_FIELD(arg0,u8 *,3)&4) base=M2C_FIELD(base,void **,0xC)?fn_8000D354(M2C_FIELD(base,void **,0xC)):0;
