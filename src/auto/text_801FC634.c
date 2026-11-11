@@ -541,27 +541,27 @@ void fn_801FFF30(void) {
         count = 0;
         i = 0;
         do {
-            slot = fn_801E2580(&lbl_803682F0, i);
-            if (slot != NULL && fn_801E4268(slot) != 0) {
-                switch (*(s32 *)((u8 *)slot + 0x44)) {
+            j = (s32)fn_801E2580(&lbl_803682F0, i);
+            if ((void *)j != NULL && fn_801E4268((void *)j) != 0) {
+                switch (*(s32 *)((u8 *)(void *)j + 0x44)) {
                 case 0x20041216:
                     ok = 0;
                     buf = fn_800C4638(0x4000, lbl_80282008 + 0x91, 0);
-                    if ((s32)*(u8 *)((u8 *)slot + 0x230) == 0x4D &&
-                        (s32)*(u8 *)((u8 *)slot + 0x231) == 0x44 &&
-                        (s32)*(u8 *)((u8 *)slot + 0x232) == 0x53 &&
-                        (s32)*(u8 *)((u8 *)slot + 0x233) == 0x54) {
-                        memcpy(buf, slot, 0x170);
+                    if ((s32)*(u8 *)((u8 *)(void *)j + 0x230) == 0x4D &&
+                        (s32)*(u8 *)((u8 *)(void *)j + 0x231) == 0x44 &&
+                        (s32)*(u8 *)((u8 *)(void *)j + 0x232) == 0x53 &&
+                        (s32)*(u8 *)((u8 *)(void *)j + 0x233) == 0x54) {
+                        memcpy(buf, (void *)j, 0x170);
                         memset((u8 *)buf + 0x170, 0, 0x140);
-                        memcpy((u8 *)buf + 0x2B0, (u8 *)slot + 0x210, 0x3D50);
-                        memcpy(slot, buf, 0x4000);
-                        fn_801E4194(slot);
+                        memcpy((u8 *)buf + 0x2B0, (u8 *)(void *)j + 0x210, 0x3D50);
+                        memcpy((void *)j, buf, 0x4000);
+                        fn_801E4194((void *)j);
                         ok = 1;
-                    } else if ((s32)*(u8 *)((u8 *)slot + 0x2D0) == 0x4D &&
-                               (s32)*(u8 *)((u8 *)slot + 0x2D1) == 0x44 &&
-                               (s32)*(u8 *)((u8 *)slot + 0x2D2) == 0x53 &&
-                               (s32)*(u8 *)((u8 *)slot + 0x2D3) == 0x54) {
-                        fn_801E4194(slot);
+                    } else if ((s32)*(u8 *)((u8 *)(void *)j + 0x2D0) == 0x4D &&
+                               (s32)*(u8 *)((u8 *)(void *)j + 0x2D1) == 0x44 &&
+                               (s32)*(u8 *)((u8 *)(void *)j + 0x2D2) == 0x53 &&
+                               (s32)*(u8 *)((u8 *)(void *)j + 0x2D3) == 0x54) {
+                        fn_801E4194((void *)j);
                         ok = 1;
                     }
                     fn_800C426C(buf);
@@ -578,7 +578,6 @@ void fn_801FFF30(void) {
             i += 1;
         } while (i < 6);
         j = 0;
-        i = (s32)slot;
         do {
             slot = fn_801E2568(&lbl_803682F0, j);
             if (slot != NULL && fn_801E4268(slot) != 0) {
@@ -616,7 +615,6 @@ void fn_801FFF30(void) {
             }
             j += 1;
         } while (j < 2);
-        slot = (void *)i;
     } while (count != 0);
 }
 #pragma optimization_level reset
