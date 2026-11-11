@@ -2082,6 +2082,81 @@ void fn_801BD37C(void *arg0) {
 }
 
 #pragma cplusplus on
+extern "C" void fn_801BD5A0(void *arg0) {
+ void fn_8000C070(void *,s32); void fn_8002833C(void *,u32);
+ u8 fn_8003D13C(u32); void fn_80137EA0(void *,u32); void fn_80138808(void *,u32);
+ u32 fn_8013AC54(void *); void fn_8013FDA0(void *);
+ void fn_80140210(void *,void *,s32);
+ void fn_801475FC(void *,s32); void fn_801694AC(u32,void *); void fn_801695BC(u32,void *,s32);
+ void fn_80176888(void *,void *,f32,f32); s16 fn_8017D604(u32,s32);
+ extern u8 lbl_8027C698[]; extern u8 lbl_802EF4C8[]; extern u8 lbl_80330708[];
+ extern u32 lbl_80367110; extern void *lbl_80367240; extern f32 lbl_8036B2E4;
+ class Pair { public: s16 x,y; Pair() {} Pair(s16 a,s16 b): x(a), y(b) {} Pair(const Pair &o) { *(u32 *)this=*(u32 *)&o; } Pair &operator=(const Pair &o) { *(u32 *)this=*(u32 *)&o; return *this; } };
+ void fn_80140258(void *,void *,const Pair &,s32);
+ struct Obj {
+ virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+ virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+ virtual Pair v9();
+ };
+ u32 pos1,pos2;
+
+ s32 a,btn;
+ u8 gate;
+ s32 flags;
+ s16 tmp;
+ u32 unit;
+ s32 money;
+ void *obj;
+ unit=fn_8013AC54(M2C_FIELD(arg0,void **,0x48));
+ fn_8013FDA0(arg0);
+ if(unit!=fn_8013AC54(M2C_FIELD(arg0,void **,0x48))) {
+ unit=fn_8013AC54(M2C_FIELD(arg0,void **,0x48));
+ fn_80138808(M2C_FIELD(arg0,void **,0x4C),unit);
+ fn_80137EA0(M2C_FIELD(arg0,void **,0x54),unit);
+ M2C_FIELD(M2C_FIELD(arg0,void **,0x58),u32 *,0x3C)=unit;
+ }
+ flags=lbl_80367110; gate=0;
+ if((flags&0x10)&&!(flags&0x20)) gate=1;
+ if(!gate) {
+ a=M2C_FIELD(lbl_80367240,s32 *,4);
+ btn=a&(M2C_FIELD(lbl_80367240,s32 *,8)^a);
+ if((btn&0x100)&&unit) {
+ if(!fn_8003D13C(unit)) {
+ *(Pair *)&pos1=((Obj *)M2C_FIELD(arg0,void **,0x48))->v9();
+ fn_80176888(lbl_8027C698+0x24F,arg0,(f32)*(s16 *)&pos1,(f32)*((s16 *)&pos1+1));
+ return;
+ }
+ money=*(s32 *)(lbl_80330708+0x1C);
+ if(money<fn_8017D604(unit,1)) {
+ *(Pair *)&pos2=((Obj *)M2C_FIELD(arg0,void **,0x48))->v9();
+ fn_80176888(lbl_8027C698+0x263,arg0,(f32)*(s16 *)&pos2,(f32)*((s16 *)&pos2+1));
+ return;
+ }
+ {
+
+ fn_8002833C(lbl_802EF4C8,unit);
+ obj=M2C_FIELD(arg0,void **,0x48);
+ lbl_802EF4C8[0x15]=M2C_FIELD(obj,s16 *,0x56);
+ M2C_FIELD(obj,f32 *,0x30)=lbl_8036B2E4;
+ obj=M2C_FIELD(arg0,void **,0x48);
+ tmp=M2C_FIELD(obj,s16 *,0x10)-M2C_FIELD(obj,s16 *,0xC);
+ fn_80140258(arg0,obj,Pair(M2C_FIELD(obj,s16 *,0xA),-tmp),0);
+ fn_80140210(arg0,M2C_FIELD(arg0,void **,0x50),0);
+ fn_8000C070(arg0,5);
+ fn_801475FC(lbl_8027C698+0x10C,0x64);
+ }
+ } else if((btn&0x800)&&unit) {
+ fn_801695BC(unit,arg0,0x1000000); M2C_FIELD(arg0,u8 *,0x44)=4; fn_8000C070(arg0,0x1D);
+ } else if((btn&0x400)&&unit) {
+ fn_801694AC(unit,arg0); M2C_FIELD(arg0,u8 *,0x44)=4; fn_8000C070(arg0,0x1E);
+ } else if(btn&0x200) {
+ fn_8000C070(arg0,12); fn_801475FC(lbl_8027C698+0x11C,0x64);
+ }
+ }
+}
+#pragma cplusplus reset
+
+#pragma cplusplus on
 extern "C" void fn_801BD8B4(void *arg0) {
     f32 fn_8013893C(void *);
     void fn_8013FF00(void *, void *);
@@ -4110,20 +4185,20 @@ void fn_801C9170(void *arg0) {
     extern s8 lbl_803682B0;
     extern s8 lbl_803682B1;
     void *self;
-    u8 b0;
     s32 *pad;
     s32 held;
     s32 trig;
     s32 buttons;
     void *obj;
+    u8 b0;
     u8 b1;
     u8 b2;
 
     self = arg0;
-    b0 = lbl_803682B0;
     pad = (s32 *)lbl_80367240;
-    held = pad[1];
+    b0 = lbl_803682B0;
     buttons = pad[3];
+    held = pad[1];
     trig = held & (pad[2] ^ held);
 
     if ((s8)b0 > -0x14 && (buttons & 0x01000001)) {
@@ -4177,18 +4252,10 @@ void fn_801C9170(void *arg0) {
     }
 
     if (trig & 0x100) {
-        u8 *dst;
-        u8 t_e9c;
-        u8 t_b1;
-        u8 t_b0;
         fn_801E3560(lbl_80331FB8, lbl_803682B0, lbl_803682B1, lbl_80366E9C);
-        dst = lbl_80330708;
-        t_e9c = lbl_80366E9C;
-        t_b1 = lbl_803682B1;
-        t_b0 = lbl_803682B0;
-        dst[0xA3] = t_b1;
-        dst[0xA2] = t_b0;
-        dst[0xA1] = t_e9c;
+        lbl_80330708[0xA3] = lbl_803682B1;
+        lbl_80330708[0xA2] = lbl_803682B0;
+        lbl_80330708[0xA1] = lbl_80366E9C;
         fn_801475FC(lbl_8027D740 + 0x121, 0x64);
         fn_8000C188(self);
     } else if (trig & 0x200) {
