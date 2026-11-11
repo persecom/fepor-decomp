@@ -3383,8 +3383,8 @@ extern "C" s32 fn_8018F374(void *arg0) {
     } Entry;
     extern Entry lbl_803200AC[];
     Entry *e;
-    s32 i;
     void *p0;
+    s32 i;
     u8 *next;
     s32 total;
     u8 *unit;
@@ -3392,6 +3392,8 @@ extern "C" s32 fn_8018F374(void *arg0) {
     void *tmp;
 
     tmp = *(void **)((u8 *)arg0 + 0x3C);
+    goto after_load;
+after_load:
     total = 0;
     if (tmp == NULL) {
         return -1;
@@ -5023,7 +5025,6 @@ extern "C" void fn_801943FC(void *arg0) {
     void fn_8011D79C(s32);
     void fn_8013FDA0(void *);
     u32 fn_8013FF94(void *, s32, s32);
-    void fn_80140258(void *, void *, s16 *, s32);
     s32 *fn_80143A84(void *);
     void fn_801475FC(void *, s32);
     void fn_801658DC(u32, s32);
@@ -5037,14 +5038,16 @@ extern "C" void fn_801943FC(void *arg0) {
     extern void *lbl_80367240;
     extern s32 lbl_80368DC4;
 
-    class Vec2s {
+    class Pair {
     public:
         s16 x;
         s16 y;
-        Vec2s() {}
-        Vec2s(const Vec2s &o) { *(u32 *)this = *(u32 *)&o; }
-        Vec2s &operator=(const Vec2s &o) { *(u32 *)this = *(u32 *)&o; return *this; }
+        Pair() {}
+        Pair(s16 a, s16 b) : x(a), y(b) {}
+        Pair(const Pair &o) { *(u32 *)this = *(u32 *)&o; }
+        Pair &operator=(const Pair &o) { *(u32 *)this = *(u32 *)&o; return *this; }
     };
+    void fn_80140258(void *, void *, const Pair &, s32);
     struct Obj {
         virtual void v0() = 0;
         virtual void v1() = 0;
@@ -5059,7 +5062,7 @@ extern "C" void fn_801943FC(void *arg0) {
         virtual void v10() = 0;
         virtual void v11() = 0;
         virtual void v12() = 0;
-        virtual Vec2s v13() = 0;
+        virtual Pair v13() = 0;
     };
     struct Child {
         u8 pad[0xC];
@@ -5081,12 +5084,8 @@ extern "C" void fn_801943FC(void *arg0) {
     s32 saved;
     u32 ret;
     s32 val;
-    s16 sp8[2];
-    u32 spC;
-    u32 sp10;
-    u32 sp14;
-    u32 sp18;
-    s16 t;
+    u32 pos1;
+    u32 pos2;
 
     self = arg0;
     obj40 = *(void **)((u8 *)arg0 + 0x40);
@@ -5097,8 +5096,8 @@ extern "C" void fn_801943FC(void *arg0) {
         var_r30 = fn_80143A84(obj40);
         if (fn_80166D8C(lbl_80330D68) != 0) {
             if (var_r30 != NULL) {
-                *(Vec2s *)&sp10 = ((Obj *)obj40)->v13();
-                fn_80166DD0(lbl_80330D68, *var_r30, (f32)*(s16 *)&sp10, (f32)*((s16 *)&sp10 + 1));
+                *(Pair *)&pos1 = ((Obj *)obj40)->v13();
+                fn_80166DD0(lbl_80330D68, *var_r30, (f32)*(s16 *)&pos1, (f32)*((s16 *)&pos1 + 1));
             } else {
                 fn_801673D0(lbl_80330D68);
             }
@@ -5138,17 +5137,14 @@ extern "C" void fn_801943FC(void *arg0) {
                 fn_8000C188(self);
             }
         } else if ((btn & 0x800) && fn_80166D8C(lbl_80330D68) == 0 && var_r30 != NULL) {
-            *(Vec2s *)&spC = ((Obj *)obj40)->v13();
-            fn_8016746C(lbl_80330D68, self, *var_r30, (f32)*(s16 *)&spC, (f32)*((s16 *)&spC + 1));
+            *(Pair *)&pos2 = ((Obj *)obj40)->v13();
+            fn_8016746C(lbl_80330D68, self, *var_r30, (f32)*(s16 *)&pos2, (f32)*((s16 *)&pos2 + 1));
             *(s32 *)lbl_80330D68 = *(s32 *)lbl_80330D68 | lbl_80368DC4;
         } else if ((btn & 0xa00) && fn_80166D8C(lbl_80330D68) != 0) {
             fn_801673D0(lbl_80330D68);
         } else if ((btn & 0x200) && fn_80166D8C(lbl_80330D68) == 0) {
             *(u8 *)((u8 *)obj40 + 0x4C) = 0;
-            t = child->unkC;
-            sp8[0] = 0x260;
-            sp8[1] = t;
-            fn_80140258(self, child, sp8, 0);
+            fn_80140258(self, child, Pair(0x260, child->unkC), 0);
             fn_8000C070(self, 6);
             fn_801475FC((u8 *)lbl_8027A360 + 0x1b0, 0x64);
         }
