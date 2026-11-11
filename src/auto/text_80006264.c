@@ -2283,7 +2283,7 @@ void fn_8000B950(void *arg0, void (*arg1)(void *)) {
 
 #pragma use_lmw_stmw on
 #pragma inline_depth(0)
-static inline void *B9A4_right(void *node) { return *(void **)((u8 *)node + 0x1C); }
+#pragma optimization_level 3
 void fn_8000B9A4(void *arg0, void (*arg1)(void *)) {
     void *v28;
     void *v29;
@@ -2357,20 +2357,18 @@ void fn_8000B9A4(void *arg0, void (*arg1)(void *)) {
                 }
             }
             arg1(v29);
-            v30 = *(void **)((u8 *)v29 + 0x1C);
-            if (v30 != NULL) {
-                if (*(void **)((u8 *)v30 + 0x24) != NULL) {
-                    fn_8000B9A4(*(void **)((u8 *)v30 + 0x24), arg1);
+            if ((v29 = *(void **)((u8 *)v29 + 0x1C)) != NULL) {
+                if (*(void **)((u8 *)v29 + 0x24) != NULL) {
+                    fn_8000B9A4(*(void **)((u8 *)v29 + 0x24), arg1);
                 }
-                arg1(v30);
-                if (*(void **)((u8 *)v30 + 0x1C) != NULL) {
-                    fn_8000B9A4(*(void **)((u8 *)v30 + 0x1C), arg1);
+                arg1(v29);
+                if (*(void **)((u8 *)v29 + 0x1C) != NULL) {
+                    fn_8000B9A4(*(void **)((u8 *)v29 + 0x1C), arg1);
                 }
             }
         }
         arg1(v28);
-        v28 = *(void **)((u8 *)v28 + 0x1C);
-        if (v28 != NULL) {
+        if ((v28 = *(void **)((u8 *)v28 + 0x1C)) != NULL) {
             v29 = *(void **)((u8 *)v28 + 0x24);
             if (v29 != NULL) {
                 if (*(void **)((u8 *)v29 + 0x24) != NULL) {
@@ -2395,8 +2393,7 @@ void fn_8000B9A4(void *arg0, void (*arg1)(void *)) {
         }
     }
 }
-#pragma inline_depth(3)
-#pragma use_lmw_stmw reset
+#pragma optimization_level 4
 void fn_8000BD98(u8 *arg0) {
     extern u8 lbl_802A66D8[];
     u32 *p = (u32 *)lbl_802A66D8;
