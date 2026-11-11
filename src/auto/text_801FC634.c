@@ -97,6 +97,7 @@ void fn_801FDA40(void) {
     fn_8006EEFC(&lbl_80368418, lbl_80281EC8 + 0x13);
 }
 
+#pragma global_optimizer off
 #pragma use_lmw_stmw on
 void fn_801FDA70(void *arg0) {
     void *fn_8000CAF0(void *, void *);
@@ -119,16 +120,16 @@ void fn_801FDA70(void *arg0) {
     void *temp_r23;
     s32 temp_r22;
     s32 temp;
-    f32 f1;
     f32 f0;
+    f32 f1;
 
     temp_r23 = fn_8000CAF0(lbl_8029B550, arg0);
-    if (temp_r23 != NULL) {
+    if ((s32)temp_r23 != 0) {
         lbl_80368420 = 0x8000;
-        f0 = lbl_8036BADC;
         f1 = lbl_8036BB48;
         lbl_80368428 = 0x4000;
         lbl_80368424 = 0x14000;
+        f0 = lbl_8036BADC;
         lbl_8036842C = 0xC000;
         lbl_80368430 = 0x40;
         lbl_80368431 = 0xC0;
@@ -191,6 +192,7 @@ void fn_801FDA70(void *arg0) {
     }
 }
 #pragma use_lmw_stmw reset
+#pragma global_optimizer reset
 
 void fn_801FDE64(void) {
     M2C_UNK fn_8006EDA0(M2C_UNK *);
