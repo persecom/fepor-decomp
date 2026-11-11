@@ -6387,9 +6387,9 @@ static inline void *get_4F5EC_resource(void *arg0) {
  extern void *lbl_80366DC8;
 
  char buf[0x20];
- void *name;
- void *base;
  s32 idx;
+ void *base;
+ void *name;
  s32 value;
  void *resolved;
  value=get_4F5EC_id(arg0);
