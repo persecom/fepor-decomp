@@ -60,6 +60,7 @@ p[8]=1;*(u32*)(p+12)=0;return i;
 }
 return 255;
 }
+static inline s32 SynthClamp(s32 value, s32 maximum) { if(value>maximum) return maximum; return value & ~(value>>31); }
 typedef struct SynthFreeNode { u8 prev, next; u16 active; } SynthFreeNode;
 
 extern u16 lbl_80366F28;
@@ -404,6 +405,7 @@ s32 fn_8023C930(void) {
     return 0;
 }
 
+#pragma opt_strength_reduction off
 #pragma use_lmw_stmw on
 s32 fn_8023CA4C(void) {
 extern u8 lbl_80282FD8[];
@@ -431,6 +433,7 @@ size-=65;
 return 0;
 }
 #pragma use_lmw_stmw off
+#pragma opt_strength_reduction on
 void fn_8023CFE8(void)
 {
     extern u32 lbl_803688E4;
@@ -743,29 +746,23 @@ u32 fn_80243AD4(s16 *out, void *src, s32 stereo) {
     s64 fn_8022CB08(s32, u32, s32);
     s64 fn_8022CB50(s32, u32, s32);
 
-    u8 st[0x18];
+    struct { u8 gap[0xC]; u8 st[0x10]; } sp;
     s16 *dstL;
     s16 *dstR;
     s16 yn1;
     s16 yn2;
-    s16 samp;
     s32 stride;
     u32 i;
-    s32 ni;
-    u8 *coef;
     u8 *hdr;
     u8 *base;
-    s64 acc;
-    s32 t0;
-    s32 t1;
-    s32 t2;
 
-    if (out == NULL || src == NULL) {
+    if (out == 0 || src == 0) {
         return 0;
     }
 
     base = (u8 *)src + 0x50;
-    hdr = (u8 *)src + *(s32 *)src + 0x50;
+    hdr = (u8 *)src + *(s32 *)src;
+    hdr += 0x50;
 
     if (stereo == 1) {
         dstL = out;
@@ -778,25 +775,22 @@ u32 fn_80243AD4(s16 *out, void *src, s32 stereo) {
     }
 
     if (*(u32 *)src == 0) {
-        fn_80243F14(st, base);
+        fn_80243F14(sp.st, base);
         yn1 = *(s16 *)((u8 *)src + 0x48);
         yn2 = *(s16 *)((u8 *)src + 0x4A);
-        stride <<= 1;
+        stride *= 2;
         for (i = 0; i < *(u32 *)((u8 *)src + 4); i++) {
-            ni = fn_80243E84(st);
-            coef = (u8 *)src + st[8] * 4;
-            t1 = *(s16 *)(coef + 0xA) * yn2;
-            t0 = *(s16 *)(coef + 8) * yn1;
-            t2 = (ni << st[9]) << 11;
-            acc = (s64)t1 + (s64)t0 + (s64)t2;
+            s32 ni = fn_80243E84(sp.st);
+            u8 *coef = (u8 *)src + (sp.st[8] << 2);
+            s32 t1 = *(s16 *)(coef + 0xA) * yn2;
+            s32 t0 = *(s16 *)(coef + 8) * yn1;
+            s32 t2 = (ni << sp.st[9]) << 11;
+            s64 acc = (s64)t1 + (s64)t0 + (s64)t2;
+            s16 samp;
             acc = fn_8022CB08((s32)(acc >> 32), (u32)acc, 5);
             acc += 0x8000;
-            if (acc > 0x7FFFFFFFLL) {
-                acc = 0x7FFFFFFFLL;
-            }
-            if (acc < -0x80000000LL) {
-                acc = -0x80000000LL;
-            }
+            if (acc > 0x7FFFFFFFLL) acc = 0x7FFFFFFFLL;
+            if (acc < -0x80000000LL) acc = -0x80000000LL;
             samp = (s16)fn_8022CB50((s32)(acc >> 32), (u32)acc, 0x10);
             *dstR = samp;
             yn2 = yn1;
@@ -806,50 +800,43 @@ u32 fn_80243AD4(s16 *out, void *src, s32 stereo) {
             dstL = (s16 *)((u8 *)dstL + stride);
         }
     } else {
-        fn_80243F14(st, base);
+        fn_80243F14(sp.st, base);
         yn1 = *(s16 *)((u8 *)src + 0x48);
         yn2 = *(s16 *)((u8 *)src + 0x4A);
-        stride <<= 1;
+        stride *= 2;
         for (i = 0; i < *(u32 *)((u8 *)src + 4); i++) {
-            ni = fn_80243E84(st);
-            coef = (u8 *)src + st[8] * 4;
-            t1 = *(s16 *)(coef + 0xA) * yn2;
-            t0 = *(s16 *)(coef + 8) * yn1;
-            t2 = (ni << st[9]) << 11;
-            acc = (s64)t1 + (s64)t0 + (s64)t2;
+            s32 ni = fn_80243E84(sp.st);
+            u8 *coef = (u8 *)src + (sp.st[8] << 2);
+            s32 t1 = *(s16 *)(coef + 0xA) * yn2;
+            s32 t0 = *(s16 *)(coef + 8) * yn1;
+            s32 t2 = (ni << sp.st[9]) << 11;
+            s64 acc = (s64)t1 + (s64)t0 + (s64)t2;
+            s16 samp;
             acc = fn_8022CB08((s32)(acc >> 32), (u32)acc, 5);
             acc += 0x8000;
-            if (acc > 0x7FFFFFFFLL) {
-                acc = 0x7FFFFFFFLL;
-            }
-            if (acc < -0x80000000LL) {
-                acc = -0x80000000LL;
-            }
+            if (acc > 0x7FFFFFFFLL) acc = 0x7FFFFFFFLL;
+            if (acc < -0x80000000LL) acc = -0x80000000LL;
             samp = (s16)fn_8022CB50((s32)(acc >> 32), (u32)acc, 0x10);
             *dstR = samp;
             yn2 = yn1;
             yn1 = samp;
             dstR = (s16 *)((u8 *)dstR + stride);
         }
-
-        fn_80243F14(st, hdr);
+        fn_80243F14(sp.st, hdr);
         yn1 = *(s16 *)((u8 *)src + 0x4C);
         yn2 = *(s16 *)((u8 *)src + 0x4E);
         for (i = 0; i < *(u32 *)((u8 *)src + 4); i++) {
-            ni = fn_80243E84(st);
-            coef = (u8 *)src + st[8] * 4;
-            t1 = *(s16 *)(coef + 0x2A) * yn2;
-            t0 = *(s16 *)(coef + 0x28) * yn1;
-            t2 = (ni << st[9]) << 11;
-            acc = (s64)t1 + (s64)t0 + (s64)t2;
+            s32 ni = fn_80243E84(sp.st);
+            u8 *coef = (u8 *)src + (sp.st[8] << 2);
+            s32 t1 = *(s16 *)(coef + 0x2A) * yn2;
+            s32 t0 = *(s16 *)(coef + 0x28) * yn1;
+            s32 t2 = (ni << sp.st[9]) << 11;
+            s64 acc = (s64)t1 + (s64)t0 + (s64)t2;
+            s16 samp;
             acc = fn_8022CB08((s32)(acc >> 32), (u32)acc, 5);
             acc += 0x8000;
-            if (acc > 0x7FFFFFFFLL) {
-                acc = 0x7FFFFFFFLL;
-            }
-            if (acc < -0x80000000LL) {
-                acc = -0x80000000LL;
-            }
+            if (acc > 0x7FFFFFFFLL) acc = 0x7FFFFFFFLL;
+            if (acc < -0x80000000LL) acc = -0x80000000LL;
             samp = (s16)fn_8022CB50((s32)(acc >> 32), (u32)acc, 0x10);
             *dstL = samp;
             yn2 = yn1;
@@ -857,7 +844,6 @@ u32 fn_80243AD4(s16 *out, void *src, s32 stereo) {
             dstL = (s16 *)((u8 *)dstL + stride);
         }
     }
-
     return *(u32 *)((u8 *)src + 4);
 }
 #pragma use_lmw_stmw reset
@@ -1463,6 +1449,68 @@ s32 fn_8024800C(u8 key, u8 group, u8 channel, s32 arg3, s32 *status) {
  } else *status=found;
  return result;
 }
+
+s32 fn_802482AC(u16 id, s16 volume, s32 arg2, s32 arg3, u8 key, u8 velocity, u8 pan, u8 channel, u8 a8, u8 a9, u16 a10, u16 a11, u32 a12, u8 a13, u8 a14, s32 a15) {
+s32 fn_8025094C(u16,u16 *);
+s32 fn_802555A0(u16,u8,s32,s32,u8,u8,u8,u8,u8,u8,u16,u16,u32,u8,u8,s32);
+s32 fn_8024866C(u16,s16,s32,s32,u8,u8,u8,u8,u8,u8,u16,u16,u32,u8,u8,s32);
+s32 fn_80255E88(void *);
+extern s32 lbl_803689A8;
+u32 low; s32 note; u32 high; s32 result; s32 last; u8 *entry; s32 first; s32 value; s32 balance; s32 flags; u8 vel; u32 savedPan; u32 valid; s32 status; u16 count; u8 savedVelocity;
+savedVelocity=velocity; first=-1;
+entry=(u8 *)fn_8025094C(id,&count);
+if(entry) {
+low=key&127; high=key&128; savedPan=pan;
+while(count) {
+u16 sample=*(u16 *)entry;
+if(sample!=65535 && entry[2]<=low && entry[3]>=low) {
+value=low+(s8)entry[4];
+if(value>127) note=127; else note=value & ~(value>>31);
+if(!(sample&0xC000)) {
+if(fn_8025FC64(0x41,channel,a8)>0x1F80U) {
+result=fn_8024800C(note&127,channel,a8,0,&status);
+valid=status==0;
+} else { result=-1; valid=1; }
+if(!valid) goto next;
+if((u32)(result+0x10000)!=0xFFFF) goto link;
+}
+balance=entry[8];
+if(!(balance&128)) {
+balance=balance-64; balance+=savedPan;
+if(balance<0) balance=0; else if(balance>127) balance=127;
+} else balance=128;
+volume+=*(s16 *)(entry+6);
+vel=savedVelocity*entry[5]/127;
+if(volume>255) volume=255; else volume=volume & ~(volume>>31);
+flags=*(u16 *)entry&0xC000;
+switch(flags) {
+case 0: result=fn_802555A0(*(u16 *)entry,(u8)volume,arg2,arg3,(u8)(note|high),vel,(u8)balance,channel,a8,a9,a10,a11,0,a13,a14,a15); break;
+case 0x4000: result=fn_8024866C(*(u16 *)entry,volume,arg2,arg3,(u8)(note|high),vel,(u8)balance,channel,a8,a9,a10,a11,0,a13,a14,a15); break;
+case 0x8000: result=fn_802482AC(*(u16 *)entry,volume,arg2,arg3,(u8)(note|high),vel,(u8)balance,channel,a8,a9,a10,a11,0,a13,a14,a15); break;
+}
+if((u32)(result+0x10000)!=0xFFFF) {
+link:
+if((u32)(first+0x10000)==0xFFFF) {
+if(a12) first=fn_80255E88((u8 *)lbl_803689A8+(u8)result*0x458);
+else first=result;
+} else {
+*(s32 *)((u8 *)lbl_803689A8+(u8)last*0x458+0xEC)=result;
+*(s32 *)((u8 *)lbl_803689A8+(u8)result*0x458+0xF0)=last;
+}
+last=result;
+while((u32)(*(s32 *)((u8 *)lbl_803689A8+(u8)last*0x458+0xEC)+0x10000)!=0xFFFF) {
+*((u8 *)lbl_803689A8+(u8)last*0x458+0x11C)=1;
+last=*(s32 *)((u8 *)lbl_803689A8+(u8)last*0x458+0xEC);
+}
+*((u8 *)lbl_803689A8+(u8)last*0x458+0x11C)=1;
+}
+}
+next: entry+=12; count--;
+}
+}
+return first;
+}
+
 #pragma global_optimizer off
 s32 fn_8024866C(u16 id, s16 volume, s32 arg2, s32 arg3, s32 key, s32 arg5, u8 pan, s32 arg7, u8 a8, u8 a9, u16 a10, u16 a11, s32 a12, u8 a13, u8 a14, s32 a15) {
     s32 fn_802508E0(u16);
