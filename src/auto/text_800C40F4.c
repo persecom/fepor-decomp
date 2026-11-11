@@ -3908,8 +3908,8 @@ extern "C" void fn_800E103C(s32 *begin,s32 *end,SortIterator a,SortIterator b,So
  mid=begin+n/2;
  if(n<=((s32)b.ptr-(s32)a.ptr)/4) {
  fn_800E18B4(begin,mid,a,comp);
- fn_800E18B4(mid,end,a+n/2,comp);
- fn_800E1340(a,a+n/2,a+n/2,a+n,begin,comp);
+ fn_800E18B4(mid,end,SortIterator(a+n/2),comp);
+ fn_800E1340(a,SortIterator(a+n/2),SortIterator(a+n/2),SortIterator(a+n),begin,comp);
  } else {
  fn_800E103C(begin,mid,a,b,comp);
  fn_800E103C(mid,end,a,b,comp);
