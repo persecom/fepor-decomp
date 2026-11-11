@@ -498,36 +498,36 @@ void fn_80113F88(void *arg0) {
 #pragma cplusplus on
 extern "C" void fn_80114840(void *arg0) {
     void *fn_800C42D8(s32);
-    void fn_800DBB74(void *, void *);
     void fn_800C9ABC(void *, char *, void *);
+    void fn_800DBB74(void *, void *);
     void fn_800C9A60(void *, s32);
     void *fn_80151D50(void *, void *, void *, void *, void *, void *, s32);
     void fn_80147578(void *, s32, f32, f32, f32);
-    void fn_80025624(void *, s32);
     extern void *lbl_80367240;
+    void fn_80025624(void *, s32);
 
     struct Actor {
         u8 pad[0x40];
-        virtual void v0() = 0;
         virtual void v1() = 0;
-        virtual void v2() = 0;
+        virtual void v0() = 0;
         virtual void v3() = 0;
+        virtual void v2() = 0;
         virtual void v4() = 0;
         virtual void v5() = 0;
         virtual void v6() = 0;
         virtual void v7() = 0;
         virtual void v8() = 0;
-        virtual void v9() = 0;
         virtual void v10() = 0;
+        virtual void v9() = 0;
         virtual void v11() = 0;
         virtual Vec3f GetPos(s32) = 0;
     };
 
     struct Manager {
         u8 pad[0x10];
+        virtual void v2() = 0;
         virtual void v0() = 0;
         virtual void v1() = 0;
-        virtual void v2() = 0;
         virtual void v3() = 0;
         virtual void v4() = 0;
         virtual void v5(void *) = 0;
@@ -538,21 +538,21 @@ extern "C" void fn_80114840(void *arg0) {
     } Word3;
 
     void *self;
-    void *obj;
-    s8 flagB;
-    s8 flagA;
     Word3 pos;
+    s8 flagA;
+    register s8 flagB;
+    register String strC;
     Vec3f got;
     Word3 copyA;
-    Word3 tmpVec;
-    Word3 copyB;
-    String strB;
-    String strA;
-    Word3 copyA2;
-    Word3 tmpVec2;
+    register Word3 tmpVec;
     Word3 copyB2;
+    register String strB;
+    register String strA;
+    Word3 copyB;
+    void *obj;
+    Word3 tmpVec2;
+    Word3 copyA2;
     String strD;
-    String strC;
     void *scratch;
     void *scratch2;
     void *scratch3;
@@ -582,10 +582,10 @@ extern "C" void fn_80114840(void *arg0) {
         obj = fn_80151D50(obj, *(void **)((u8 *)self + 0xAC), &strA, &strB, &copyB, &copyA, 0);
     }
     (*(Manager **)((u8 *)self + 0xAC))->v5(obj);
-    if (flagA != 0) {
+    if (flagA) {
         fn_800C9A60(&strA, -1);
     }
-    if (flagB != 0) {
+    if (flagB) {
         fn_800C9A60(&strB, -1);
     }
     flagA = 0;
@@ -602,10 +602,10 @@ extern "C" void fn_80114840(void *arg0) {
         obj = fn_80151D50(obj, *(void **)((u8 *)self + 0xAC), &strC, &strD, &copyB2, &copyA2, 0);
     }
     (*(Manager **)((u8 *)self + 0xAC))->v5(obj);
-    if (flagB != 0) {
+    if (flagB) {
         fn_800C9A60(&strC, -1);
     }
-    if (flagA != 0) {
+    if (flagA) {
         fn_800C9A60(&strD, -1);
     }
     fn_80147578((char *)lbl_80273DF8 + 0x4DA, 0x64, *(f32 *)&pos.x, *(f32 *)&pos.y, *(f32 *)&pos.z);
@@ -2507,6 +2507,27 @@ block_5:
     M2C_FIELD(arg0, s8 *, 0x64) = 2;
 }
 
+void fn_8011DD80(void *arg0)
+{
+    void fn_800AA1CC(void *);
+    void fn_80109180(void *, void *);
+
+    extern u16 lbl_80367A58;
+    extern void *lbl_80367A5C;
+
+    void *ptr;
+
+    fn_800AA1CC(arg0);
+
+    lbl_80367A58 |= 0x80;
+
+    ptr = lbl_80367A5C;
+
+    if (ptr != 0) {
+        fn_80109180(ptr, arg0);
+    }
+}
+
 extern u32 lbl_80367A5C;
 void fn_8011DDCC(void* arg0) {
     int i;
@@ -2574,6 +2595,9 @@ void fn_8011DED8(void *arg0) {
     void fn_80122C84(void *);
     extern u8 lbl_8032BDE8[];
     void *self;
+    void *p;
+    s32 i;
+    s32 zero;
 
     self = arg0;
     while (!(lbl_80367A58 & 0x20)) {
@@ -2588,32 +2612,29 @@ void fn_8011DED8(void *arg0) {
         fn_80089650(2, 0x85);
     }
     if (lbl_80367110 & 3) {
-        u8 *p;
-        s32 i;
-        s32 zero;
         i = 0;
-        zero = i;
-        p = (u8 *)self;
+        p = self;
+        zero = i ^ i;
         do {
-            void *obj = *(void **)(p + 0x34);
+            void *obj = *(void **)((u8 *)p + 0x34);
             if (obj != NULL) {
                 fn_80122C84(obj);
-                *(s32 *)(p + 0x34) = zero;
+                *(s32 *)((u8 *)p + 0x34) = zero;
             }
             i += 1;
-            p += 4;
+            p = (u8 *)p + 4;
         } while (i < 4);
         i = 0;
-        zero = i;
-        p = (u8 *)self;
+        p = self;
+        zero = i ^ i;
         do {
-            void *obj = *(void **)(p + 0x48);
+            void *obj = *(void **)((u8 *)p + 0x48);
             if (obj != NULL) {
                 fn_8007AD6C(obj);
-                *(s32 *)(p + 0x48) = zero;
+                *(s32 *)((u8 *)p + 0x48) = zero;
             }
             i += 1;
-            p += 4;
+            p = (u8 *)p + 4;
         } while (i < 4);
         *(s32 *)((u8 *)self + 0x30) = 0;
         if (lbl_80367A5C != 0) {
@@ -2643,26 +2664,26 @@ void fn_8011DED8(void *arg0) {
     }
     fn_80120F94();
     {
-        void *p;
-        s32 i;
-        i = 0;
-        p = self;
+        void *p2;
+        s32 i2;
+        i2 = 0;
+        p2 = self;
         do {
-            void *obj = *(void **)((u8 *)p + 0x34);
+            void *obj = *(void **)((u8 *)p2 + 0x34);
             if (obj != NULL) {
                 fn_80122238(obj, self);
             }
-            i += 1;
-            p = (u8 *)p + 4;
-        } while (i < 4);
+            i2 += 1;
+            p2 = (u8 *)p2 + 4;
+        } while (i2 < 4);
     }
     {
-        void *p;
-        s32 i;
-        i = 0;
-        p = self;
+        void *p2;
+        s32 i2;
+        i2 = 0;
+        p2 = self;
         do {
-            void *obj = *(void **)((u8 *)p + 0x48);
+            void *obj = *(void **)((u8 *)p2 + 0x48);
             if (obj != NULL) {
                 if (lbl_80367110 & 3) {
                     fn_8007AD6C(obj);
@@ -2670,9 +2691,9 @@ void fn_8011DED8(void *arg0) {
                     fn_800790D4(obj, self);
                 }
             }
-            i += 1;
-            p = (u8 *)p + 4;
-        } while (i < 4);
+            i2 += 1;
+            p2 = (u8 *)p2 + 4;
+        } while (i2 < 4);
     }
     if (lbl_80367A5C != 0) {
         fn_80109BB4(fn_801090C0((void *)lbl_80367A5C), (u8)((*(s16 *)((u8 *)self + 0x68) * 0x3C) / 1000));
