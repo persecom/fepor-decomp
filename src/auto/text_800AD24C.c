@@ -71,6 +71,24 @@ static inline void SortSoundReadsB(u8 *list, u32 n) {
 
 }
 
+static inline u32 SoundReadSizeB(u32 offset, u32 limit) {
+    u32 size = 0x8000;
+    u32 step = 0x10000;
+    u32 n;
+    if (offset + 0x8000 > limit) size = limit - offset;
+    else {
+        for (n=2;n<6;n++) {
+            if (offset + step > limit) {
+                size -= (0x8000 - (limit - (offset + ((n-1)<<15)))) / n;
+                size += 0x20 - (size & 31);
+                break;
+            }
+            step += 0x8000;
+        }
+    }
+    return size;
+}
+
 typedef struct StreamB { u8 pad[0x2C]; s32 buffers[2]; u8 pad34[0x14]; u32 size; u16 index; } StreamB;
 extern s32 fn_80010710(u8* arg0);
   extern s32 lbl_80368230;
@@ -692,6 +710,109 @@ void fn_800AEA74(void *arg0) {
     fn_80009B28();
 }
 
+#pragma use_lmw_stmw on
+void fn_800AECC0(void) {
+    void fn_800B1720(void *);
+    void fn_800B16EC(void *);
+    void fn_800B49E0(void *,s32,s32,s32,void *);
+    void DCInvalidateRange(void *,u32);
+    void fn_80215D9C(void *,void *,s32,s32,u32,void *,u32,void *);
+    extern u8 lbl_80317338[];
+    s32 i;
+    u8 *entry;
+    u8 *global;
+    u8 *stream;
+    u32 size, aligned, size2, aligned2;
+    s32 position;
+    u32 base, offset, limit, n, step;
+    u16 flags;
+    global = lbl_80317338;
+    i = 0;
+    position = 0;
+    do {
+        entry = *(u8 **)(global + 0xF8) + position;
+        flags = *(u16 *)entry;
+        if ((flags & 8) && !(flags & 2)) {
+            if (flags & 1) {
+                if (*(u32 *)(entry+0x70) != 0 && *(s16 *)(entry+0x80)==0 && !(flags&0x1000)) {
+        stream = entry + 0x2C;
+        step = 0x10000;
+        size = step - 0x8000;
+        offset = *(u32 *)(entry + 0x60);
+        limit = *(u32 *)(entry + 0x8C);
+        if (offset + 0x8000 > limit) size = limit - offset;
+        else {
+            for (n = 2; n < 6; n++) {
+                if (offset + step > limit) {
+                    size -= (0x8000 - (limit - (offset + ((n - 1) << 15)))) / n;
+                    size += 0x20 - (size & 0x1F);
+                    break;
+                }
+                step += 0x8000;
+            }
+        }
+        aligned = (size + 0x1F) & ~0x1F;
+        if (!(flags & 0x400)) {
+            fn_800B49E0(*(void **)stream, *(s32 *)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), aligned, *(u16 *)(entry + 4) + offset, fn_800B1720);
+        } else {
+            base = *(u32 *)((u8 *)lbl_80317338 + *(u16 *)(entry + 2)*4 + 0x134) + offset + *(u16 *)(entry + 4);
+            DCInvalidateRange(*(void **)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), 0x8000);
+            fn_80215D9C(stream + 4, stream, 1, 0, base, *(void **)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), aligned, fn_800B16EC);
+        }
+        *(u32 *)(stream + 0x48) = size;
+
+                    *(u16 *)entry |= 0x1000;
+                    if (*(u16 *)entry & 0x400) *(u16 *)(entry+0x80)=1;
+                }
+                if (*(u16 *)(entry+0x1E)==2 && *(u32 *)(entry+0xF8)!=0 && *(s16 *)(entry+0x108)==0) {
+                    flags = *(u16 *)entry;
+                    if (!(flags&0x2000)) {
+            stream = entry + 0xB4;
+            step = 0x10000;
+        size2 = step - 0x8000;
+            offset = *(u32 *)(entry + 0xE8);
+            limit = *(u32 *)(entry + 0x114);
+            base = limit + (0x20 - (limit & 0x1F));
+            if (offset + 0x8000 > limit) size2 = limit - offset;
+            else {
+                    for (n = 2; n < 6; n++) {
+                    if (offset + step > limit) {
+                        size2 -= (0x8000 - (limit - (offset + ((n - 1) << 15)))) / n;
+                        size2 += 0x20 - (size2 & 0x1F);
+                        break;
+                    }
+                    step += 0x8000;
+                }
+            }
+            aligned2 = (size2 + 0x1F) & ~0x1F;
+            if (!(flags & 0x400)) {
+                fn_800B49E0(*(void **)stream, *(s32 *)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), aligned2, *(u16 *)(entry + 4) + (offset + base), fn_800B1720);
+            } else {
+                base = offset + base + *(u32 *)((u8 *)lbl_80317338 + *(u16 *)(entry + 2)*4 + 0x134) + *(u16 *)(entry + 4);
+                DCInvalidateRange(*(void **)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), 0x8000);
+                fn_80215D9C(stream + 4, stream, 1, 0, base, *(void **)(stream + (1 - *(u16 *)(stream + 0x4C))*4 + 0x2C), aligned2, fn_800B16EC);
+            }
+            *(u32 *)(stream + 0x48) = size2;
+
+                        *(u16 *)entry |= 0x2000;
+                        if (*(u16 *)entry & 0x400) *(u16 *)(entry+0x108)=1;
+                    }
+                }
+            }
+            if (*(u16 *)(entry+0x1E)==2 && *(s16 *)(entry+0x80)==0 && *(s16 *)(entry+0x108)==0) {
+                u16 state = *(u16 *)(entry+0x78);
+                if (state != *(u16 *)(entry+0x100)) {
+                    *(u16 *)(entry+0x100)=state;
+                    *(u32 *)(entry+0xF8)=*(u32 *)(entry+0x70);
+                    *(u32 *)(entry+0xEC)=*(u32 *)(entry+0x64);
+                    *(u32 *)(entry+0xE8)=*(u32 *)(entry+0x60);
+                }
+            }
+        }
+        i++;
+        position += 0x13C;
+    } while (i<3);
+}
 void fn_800B16EC(void *arg0) {
     M2C_UNK fn_800B1720(M2C_UNK, s32);
     fn_800B1720(0, *M2C_FIELD(arg0, s32 **, 4) + 0x40);
@@ -1448,12 +1569,12 @@ void fn_800B4C20(void) {
     extern s32 (*lbl_80367828)(u8 *,u8 *);
     extern u8 lbl_8026EC50[];
     u8 list[256];
-    u32 count;
     u8 *dst, *entry, *cur, *saved;
     u8 **table, **slot, **walk;
     u32 i, n;
     s32 j, moved, size, result;
     void (*callback)(s32, void *);
+    u32 count;
     count = 0;
     memset(list, 0, 256);
     {
@@ -1473,16 +1594,16 @@ void fn_800B4C20(void) {
     }
     lbl_80367828 = fn_800B4FF8;
     {
-    u8 **table, **walk, **slot;
-    u8 *saved, *cur, *dst;
-    u32 n, i;
+    u32 i, n;
+    u8 *dst, *cur, *saved;
+    u8 **slot, **walk, **table;
     table = lbl_8031DEC0;
     n = count;
     saved = lbl_8031FEC0;
     if (count > 1) {
         walk = table;
         cur = list;
-        for (i = count; i > 0; i--) {
+        for (i = count; (s32)i > 0; i--) {
             *walk++ = cur++;
         }
         fn_800B50FC(table, n);
@@ -1544,8 +1665,10 @@ void fn_800B4C20(void) {
             if (fn_8020C79C(entry + 0x40) == 0) OSReport(lbl_8026EC50 + 0x1E, entry);
             memset(entry, 0, 0x98);
         }
-        if (moved != 0) break;
+        if (moved) goto done;
+
     }
+done:
     if (lbl_80367824) lbl_80367824();
 }
 #pragma global_optimizer reset
