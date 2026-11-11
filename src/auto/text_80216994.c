@@ -1,11 +1,6 @@
 /* Functions from 0x801FC634 to 0x8022C1E8, found by decomp-toolkit. */
 #include "common.h"
 
-static inline void ClearFilenameTail(u8 *name, u8 *end) {
-    while (++name < end) {
-        *name = 0;
-    }
-}
 #include <dolphin/os.h>
 #include "global.h"
 #include "ef.h"
