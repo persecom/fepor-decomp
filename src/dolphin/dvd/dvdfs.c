@@ -185,42 +185,6 @@ static inline BOOL DVDComparePathComponent(char *path, char *name) {
     return FALSE;
 }
 
-static inline char *DVDScanPathComponent(char *path, BOOL check83, BOOL *outInvalid) {
-    char *end;
-    char *extension;
-    s32 dotted;
-    s32 invalid;
-
-    if (!check83) {
-        for (end = path; *end && *end != '/'; end++) {
-        }
-        *outInvalid = FALSE;
-        return end;
-    }
-
-    end = path;
-    dotted = 0;
-    invalid = 0;
-    while (*end && *end != '/') {
-        if (*end == '.') {
-            if (end - path > 8 || dotted == 1) {
-                invalid = 1;
-                break;
-            }
-            extension = end + 1;
-            dotted = 1;
-        } else if (*end == ' ') {
-            invalid = 1;
-        }
-        end++;
-    }
-    if (dotted == 1 && end - extension > 3) {
-        invalid = 1;
-    }
-    *outInvalid = invalid;
-    return end;
-}
-
 static u32 myStrncpy(char *dest, char *src, u32 maxlen) {
     u32 i = maxlen;
 
