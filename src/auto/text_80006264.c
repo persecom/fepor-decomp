@@ -1585,11 +1585,8 @@ void fn_8000A248(void) {
     *(u8 *)(*(u8 **)&lbl_80367140 + 0xa8) = 2;
 }
 
-u16 fn_8000A258(u16 arg0, u16 arg1) {
-    u16 *var_r3;
-    var_r3 = &lbl_80367140;
-    *var_r3 = arg0;
-    return arg1;
+void fn_8000A258(void) {
+*(u8 *)(*(u8 **)&lbl_80367140+0xA8)=1;
 }
 
 u8 fn_8000A268(void) {
