@@ -1,6 +1,8 @@
 /* Functions from 0x800330F8 to 0x80055C70, found by decomp-toolkit. */
 #include "common.h"
 
+void fn_8004FE98(s32 arg0, s8 arg1);
+
 typedef struct {
     u8 unk0;
     u8 unk1;
@@ -4668,19 +4670,20 @@ void fn_80049E24(void) {
     u32 sp8;
     f32 spC[12];
     u8 sp3C[0x200];
+    s32 pos;
+    s32 yOff;
+    s32 y;
+    s32 x;
     s32 tex;
     u8 *p;
     s32 i;
-    s8 y;
-    s8 x;
-    s32 yOff;
-    s32 pos;
     u16 tile;
     f32 fx;
     f32 fy;
     f32 fx1;
     f32 fy1;
     f32 z;
+    s32 off;
 
     if (fn_800AA188() != 0 && !(lbl_80367110 & 0x1000)) {
         fn_8021FBB8();
@@ -4722,36 +4725,37 @@ void fn_80049E24(void) {
             do {
                 tile = *(u16 *)(lbl_802CA518 + 0x1218E + (pos << 1));
                 if (tile & 0x2000) {
-                    fn_80222C50(sp3C + ((tile << 1) & 0x1E0), 0);
+                    off = (tile << 1) & 0x1E0;
+                    fn_80222C50(sp3C + off, 0);
                     fx = (f32)(s8)x;
                     fy = (f32)(s8)y;
                     fx1 = lbl_80368F8C + fx;
                     fy1 = lbl_80368F8C + fy;
                     fn_80220DEC(0x98, 0, 4);
                     z = fn_8002300C(lbl_802CA518, x, y, 0);
-                    *(volatile f32 *)0xCC008000 = fx;
-                    *(volatile f32 *)0xCC008000 = fy;
-                    *(volatile f32 *)0xCC008000 = z;
-                    *(volatile u8 *)0xCC008000 = 0;
-                    *(volatile u8 *)0xCC008000 = 0;
+                    *(f32 *)0xCC008000 = fx;
+                    *(f32 *)0xCC008000 = fy;
+                    *(f32 *)0xCC008000 = z;
+                    *(u8 *)0xCC008000 = 0;
+                    *(u8 *)0xCC008000 = 0;
                     z = fn_8002300C(lbl_802CA518, x, y, 1);
-                    *(volatile f32 *)0xCC008000 = fx1;
-                    *(volatile f32 *)0xCC008000 = fy;
-                    *(volatile f32 *)0xCC008000 = z;
-                    *(volatile u8 *)0xCC008000 = 1;
-                    *(volatile u8 *)0xCC008000 = 0;
+                    *(f32 *)0xCC008000 = fx1;
+                    *(f32 *)0xCC008000 = fy;
+                    *(f32 *)0xCC008000 = z;
+                    *(u8 *)0xCC008000 = 1;
+                    *(u8 *)0xCC008000 = 0;
                     z = fn_8002300C(lbl_802CA518, x, y, 2);
-                    *(volatile f32 *)0xCC008000 = fx;
-                    *(volatile f32 *)0xCC008000 = fy1;
-                    *(volatile f32 *)0xCC008000 = z;
-                    *(volatile u8 *)0xCC008000 = 0;
-                    *(volatile u8 *)0xCC008000 = 1;
+                    *(f32 *)0xCC008000 = fx;
+                    *(f32 *)0xCC008000 = fy1;
+                    *(f32 *)0xCC008000 = z;
+                    *(u8 *)0xCC008000 = 0;
+                    *(u8 *)0xCC008000 = 1;
                     z = fn_8002300C(lbl_802CA518, x, y, 3);
-                    *(volatile f32 *)0xCC008000 = fx1;
-                    *(volatile f32 *)0xCC008000 = fy1;
-                    *(volatile f32 *)0xCC008000 = z;
-                    *(volatile u8 *)0xCC008000 = 1;
-                    *(volatile u8 *)0xCC008000 = 1;
+                    *(f32 *)0xCC008000 = fx1;
+                    *(f32 *)0xCC008000 = fy1;
+                    *(f32 *)0xCC008000 = z;
+                    *(u8 *)0xCC008000 = 1;
+                    *(u8 *)0xCC008000 = 1;
                 }
                 pos -= 1;
                 x -= 1;
