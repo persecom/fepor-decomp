@@ -2956,6 +2956,30 @@ void fn_800680AC(u16 arg0, u16 arg1, u16 arg2, u16 arg3) {
     *(u16 *)((u8 *)lbl_803672F8 + 0x22) = arg3;
 }
 
+void fn_800680D0(void *arg0, u8 arg1)
+{
+    void fn_80202BD4(void *, void *);
+    extern u32 lbl_803672F8;
+
+    u8 *ptr;
+    u16 flags;
+
+    if (arg1 != 0) {
+        ptr = (u8 *)lbl_803672F8;
+        flags = *(u16 *)ptr;
+        flags |= 1;
+        *(u16 *)ptr = flags;
+    } else {
+        ptr = (u8 *)lbl_803672F8;
+        flags = *(u16 *)ptr;
+        flags &= ~1;
+        *(u16 *)ptr = (unsigned)flags;
+    }
+
+    ptr = (u8 *)lbl_803672F8;
+    fn_80202BD4(arg0, ptr + 0x24);
+}
+
 s32 fn_80068124(char *name) {
     extern u16 lbl_80330708[1400];
     u8 *e;
