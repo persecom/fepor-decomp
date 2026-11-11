@@ -1864,7 +1864,7 @@ u8 fn_8011BDAC(void) {
     return (u8)((temp >> 5) & 0xFF);
 }
 
-extern s8 lbl_802EF4C8[];
+extern u8 lbl_802EF4C8[24];
 s32 fn_8011BDC0(void) {
     lbl_802EF4C8[8] = 0x85;
     return 5;
