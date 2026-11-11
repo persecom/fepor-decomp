@@ -6547,6 +6547,7 @@ void fn_8005306C(void *arg0) {
 }
 
 #pragma use_lmw_stmw on
+static inline void set_53260_xy(f32 *pos, f32 x, f32 y) { pos[0] = x; pos[1] = y; }
 static inline void *get_53260_object(void *base) {
     void *obj;
     if (*(u32 *)((u8 *)base + 8) & 0x20000000) {
@@ -6585,6 +6586,7 @@ void fn_80053260(void *arg0)
     Vec pos;
     Vec tmp;
     Vec src;
+    f32 mult, py, px;
     f32 scale;
     void *node;
     void *cam;
@@ -6601,14 +6603,7 @@ void fn_80053260(void *arg0)
     pos = src;
     node = *(void **)((u8 *)base + 0x5C);
     flags = *(u32 *)((u8 *)base + 0x8);
-    if ((flags & 0x20000000) != 0) {
-        obj = *(void **)((u8 *)base + 0x34);
-        if (obj == NULL) {
-            obj = *(void **)((u8 *)base + 0x30);
-        }
-    } else {
-        obj = *(void **)((u8 *)base + 0x30);
-    }
+    obj = get_53260_object(base);
     if (obj == NULL) {
         cam = NULL;
     } else {
@@ -6635,9 +6630,12 @@ void fn_80053260(void *arg0)
             pos.z = (f32)(s32)*(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x1C);
             break;
         case 2:
-            pos.x = lbl_803690A8;
-            pos.y = lbl_803690AC;
-            scale *= lbl_803690A4;
+            px = lbl_803690A8;
+            py = lbl_803690AC;
+            mult = lbl_803690A4;
+            pos.x = px;
+            pos.y = py;
+            scale *= mult;
             pos.z = (f32)(s32)*(f32 *)((u8 *)base + 0x1C);
             break;
         default:
