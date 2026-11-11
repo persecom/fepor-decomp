@@ -3732,7 +3732,6 @@ void fn_80043E88(void) {
 }
 
 #pragma global_optimizer off
-typedef struct { u32 x, y, z; } PositionWords;
 void fn_80043F9C(void *cam, f32 *mtx, f32 x, f32 y) {
     f32 fn_8002300C(void *, s32, s32, s32);
     void fn_80203290(f32 *, f32 *, f32 *);
