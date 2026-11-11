@@ -41,22 +41,17 @@ static inline void *get_4F128_resource(void *arg0,s32 value) {
  name=M2C_FIELD(name,void * *,0x5C);
  if(!name) name=M2C_FIELD(base,void * *,0x18);
  if(!name) {fn_800056A0(0);name=lbl_8026AB18+0x52;}
- if(!name||!*(s8 *)name) resolved=fn_8000D354(lbl_8026AB18+0x53);
- else {
+ 
+ if(!name||!*(s8 *)name) return fn_8000D354(lbl_8026AB18+0x53);
  fn_80231D94(buf,lbl_8026AB18+0x5F,name,fn_8004B1A0(value));
  resolved=fn_8000D354(buf);
- if(!resolved) {
- fn_800056A0(0);resolved=fn_8000D354(lbl_8026AB18+0x53);
- } else {
+ if(!resolved) {fn_800056A0(0);return fn_8000D354(lbl_8026AB18+0x53);}
  fn_80231D94(buf,lbl_8026AB18+0x64,fn_8004B158(resolved));
  if(fn_8005C144(buf)==0x8000U) {
  fn_800056CC(lbl_8026AB18+0x67,buf);
- resolved=fn_8000D354(lbl_8026AB18+0x53);
- } 
- }
+ return fn_8000D354(lbl_8026AB18+0x53);
  }
  return resolved;
- 
 
 }
 
@@ -6420,6 +6415,49 @@ void fn_8004E9D8(void *arg0, s32 arg1) {
         *(u32 *)((u8 *)arg0 + 0x17C) = 0;
     }
     fn_8004EB14(arg0, arg1);
+}
+
+s32 fn_8004F128(void *arg0) {
+#pragma opt_common_subs off
+  void fn_800056A0(s32);
+ void fn_800056CC(void *, ...);
+ void *fn_8000D354(void *);
+ void *fn_80037D54(void *);
+ s32 fn_8004ABD4(void *,s32);
+ u8 fn_8004AF74(void *,u8);
+ void *fn_8004B078(void *,s32);
+ void *fn_8004B158(void *);
+ s32 fn_8004B1A0(s32);
+ u16 fn_8005C144(void *);
+ void fn_8005C870(void *,u16);
+ u8 fn_80105BC0(void *,s32);
+ void fn_80231D94(void *,void *,...);
+ extern u8 lbl_8026AB18[];
+ extern void *lbl_80366DC8;
+
+ u8 fn_8005BA10(void *);
+ void *res;
+ s32 id;
+ u8 flags=M2C_FIELD(arg0,u8 *,3);
+ if(flags&2) return 1;
+ if(!(flags&1)) return 1;
+ id=M2C_FIELD(arg0,s8 *,0x16C);
+ if(id>=0){}else id=fn_8004ABD4(fn_80037D54(arg0),0);
+ res=get_4F128_resource(arg0,id);
+ if(!fn_8005BA10(fn_8004B158(res))) return 0;
+ if(!fn_8004AF74(res,M2C_FIELD(M2C_FIELD(arg0,void **,0x190),u8 *,8))) {
+ res=get_4F128_resource(arg0,get_4F128_id(arg0));
+ switch(M2C_FIELD(M2C_FIELD(arg0,void **,0x190),u8 *,8)) {
+ case 0: res=fn_8004B078(res,0);break;
+case 1: res=fn_8004B078(res,1);break;
+case 2: res=fn_8004B078(res,2);break;
+case 3: res=fn_8004B078(res,3);break;
+default: res=fn_8004B078(res,0);break;
+ }
+ if(!res||fn_8005C144(res)==0x8000U) res=lbl_80366DC8;
+ if(res!=lbl_80366DC8&&!fn_8005BA10(res))return 0;
+ }
+ return 1;
 }
 
 static inline s32 get_4F5EC_id(void *arg0) {
