@@ -1,10 +1,6 @@
 /* Functions from 0x8010554C to 0x80110128, found by decomp-toolkit. */
 #include "common.h"
 
-static inline s32 fn_8010CACC_index(s8 x, s8 y) {
-    return x + (y << 6);
-}
-
 static inline u8 fn_8010CF28_check(void *a, void *b) {
     u8 fn_80015610(void *, void *);
     return fn_80015610(a, b) == 1;
@@ -3620,7 +3616,7 @@ s32 fn_8010CACC(void *arg0, s32 arg1, u8 (*arg2)(void *)) {
     minY=startY-range; if(minY<(s8)lbl_802CA518[9]) minY=(s8)lbl_802CA518[9];
     maxX=startX+range; if(maxX>(s8)lbl_802CA518[10]-1) maxX=(s8)lbl_802CA518[10]-1;
     maxY=startY+range; if(maxY>(s8)lbl_802CA518[11]-1) maxY=(s8)lbl_802CA518[11]-1;
-    for(row=minY;row<=maxY;row++) {
+    for(row=minY;maxY>=row;++row) {
         rowMap=map+((s8)row<<6);
         for(x=minX;x<=maxX;x++) {
             u8 id=rowMap[(s8)x+13];
