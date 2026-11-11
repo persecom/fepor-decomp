@@ -6586,7 +6586,6 @@ void fn_80053260(void *arg0)
     Vec pos;
     Vec tmp;
     Vec src;
-    f32 mult, py, px;
     f32 scale;
     void *node;
     void *cam;
@@ -6630,12 +6629,9 @@ void fn_80053260(void *arg0)
             pos.z = (f32)(s32)*(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x1C);
             break;
         case 2:
-            px = lbl_803690A8;
-            py = lbl_803690AC;
-            mult = lbl_803690A4;
-            pos.x = px;
-            pos.y = py;
-            scale *= mult;
+            pos.x = lbl_803690A8;
+            scale *= lbl_803690A4;
+            pos.y = lbl_803690AC;
             pos.z = (f32)(s32)*(f32 *)((u8 *)base + 0x1C);
             break;
         default:
