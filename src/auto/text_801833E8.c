@@ -815,7 +815,7 @@ void fn_80185830(void *arg0) {
 
     self = arg0;
     base = lbl_80295A00;
-    z = 0;
+    z = 0x40;
     *(s32 *)((u8 *)arg0 + 0x34) = 1;
     if (*(u8 *)((u8 *)arg0 + 0x3C) != 0) {
         if (fn_800504FC(*(void **)((u8 *)self + 0x30), 0xA) != 0) {
@@ -830,6 +830,7 @@ void fn_80185830(void *arg0) {
             r29 = 0x10;
             r28 = *(void **)((u8 *)self + 0x30);
             if (fn_8004C0F0(r28) != 0) {
+                z -= 0x40;
                 *(void **)(sp40 + 0x30) = r28;
                 fn_8000A388(base + z, fn_80185078, sp40);
                 *(void **)(sp8 + 0x30) = r28;
@@ -2363,7 +2364,7 @@ u8 fn_8018D294(void *arg0, s32 arg1) {
     void **fn_80037BD0(void *, s32);
     u32 *fn_8000D2BC(char *);
     u8 fn_8003DAC4(void *, void **);
-    s32 fn_802342B8(s32);
+    s32 fn_802342B8(s32, u32);
     void fn_8010F3F4(void *, s8, s8, s16 *, s16 *);
     void fn_800FB96C(s32, s8, s8, void *, s8, s8, s8, s32, s32);
     extern u8 lbl_80284E20[];
@@ -2379,7 +2380,7 @@ u8 fn_8018D294(void *arg0, s32 arg1) {
     } obj;
     s16 sp12;
     s16 sp10;
-    s32 val;
+    register s32 val;
     s32 dist;
     u32 *tbl;
     u32 t;
@@ -2426,11 +2427,9 @@ u8 fn_8018D294(void *arg0, s32 arg1) {
                         } else {
                             val = 0;
                         }
-                        if (fn_802342B8(val) != 0) {
-                            goto lbl_incr;
+                        if (fn_802342B8(val, t) == 0) {
+                            goto lbl_done;
                         }
-                        goto lbl_done;
-                    lbl_incr:
                         tbl++;
                         dist++;
                     lbl_check:
@@ -2790,6 +2789,21 @@ void fn_8018DB90(void) {
         M2C_FIELD(temp_r3, s16 *, 0x32) = 0;
         M2C_FIELD(temp_r3, s16 *, 0x44) = 8;
         M2C_FIELD(temp_r3, s16 *, 0x54) = 0xFF;
+    }
+}
+
+void fn_8018DBD8(void)
+{
+    void *fn_8000C0C0(void *);
+    extern u8 lbl_80296128[];
+
+    u8 *entry;
+
+    entry = (u8 *)fn_8000C0C0(lbl_80296128);
+
+    if (entry != 0) {
+        *(u16 *)(entry + 0x32) = 1;
+        *(u16 *)(entry + 0x46) = 0;
     }
 }
 
@@ -3699,6 +3713,7 @@ extern "C" void fn_80191590(void *arg0) {
     Child *c2;
     Child *c4;
     Child *c5;
+    s16 t;
 
     self = (Self *)arg0;
     saved = self->unk50;
@@ -3707,20 +3722,18 @@ extern "C" void fn_80191590(void *arg0) {
     c5 = fn_8013FF94(self, 5, 0);
     c6 = fn_8013FF94(self, 6, 0);
     fn_8014004C(self, saved);
-    {
-        s16 t = c2->unkC;
-        sp14[0] = 0x260;
-        sp14[1] = t;
-        fn_80140258(self, c2, sp14, 0);
-    }
+    t = c2->unkC;
+    sp14[0] = 0x260;
+    sp14[1] = t;
+    fn_80140258(self, c2, sp14, 0);
     if (c4 != 0) {
-        s16 t = c4->unkC;
+        t = c4->unkC;
         sp10[0] = 0x260;
         sp10[1] = t;
         fn_80140258(self, c4, sp10, 0);
     }
     if (c5 != 0) {
-        s16 t = c5->unkC;
+        t = c5->unkC;
         spC[0] = 0x260;
         spC[1] = t;
         fn_80140258(self, c5, spC, 0);
@@ -3737,7 +3750,7 @@ extern "C" void fn_80191590(void *arg0) {
         }
     }
     if (c6 != 0) {
-        s16 t = c6->unkC;
+        t = c6->unkC;
         sp8[0] = 0x260;
         sp8[1] = t;
         fn_80140258(self, c6, sp8, 0);
@@ -4622,7 +4635,7 @@ extern "C" void fn_8019477C(void *arg0) {
         fn_801400F4(arg0, obj);
     }
     if (M2C_FIELD(obj, s16 *, 0xA) != 0x108) {
-        tmp = M2C_FIELD(obj, s16 *, 0xC);
+        register tmp = M2C_FIELD(obj, s16 *, 0xC);
         spC.x = 0x108;
         spC.y = tmp;
         fn_8014027C(arg0, obj, &spC.x, 0);
@@ -4631,8 +4644,8 @@ extern "C" void fn_8019477C(void *arg0) {
         p = fn_800C42D8(0x44);
         if (p != NULL) {
             M2C_FIELD(p, void **, 0) = lbl_8028FDB0;
-            M2C_FIELD(p, u32 *, 4) = 0;
             M2C_FIELD(p, void **, 0) = lbl_80292230;
+            M2C_FIELD(p, u32 *, 4) = 0;
             M2C_FIELD(p, s16 *, 8) = -1;
             M2C_FIELD(p, s16 *, 0xA) = 0x260;
             M2C_FIELD(p, s16 *, 0xC) = 0x14C;
@@ -4677,9 +4690,6 @@ extern "C" void fn_8019477C(void *arg0) {
         fn_801658DC(p, msg);
     }
 }
-
-#pragma use_lmw_stmw on
-#pragma cplusplus on
 extern "C" void fn_80194988(void *arg0) {
     void *fn_800C42D8(s32);
     void *fn_80194DA0(void *, s32, s32, s32, s32, s32);
