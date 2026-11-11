@@ -3282,6 +3282,62 @@ s32 fn_800B9258(u32 arg0, s32 arg1, s32 arg2) {
     return 1;
 }
 
+s32 fn_800B9368(u32 arg0)
+{
+    extern s32 lbl_80367110;
+
+    extern void *fn_801CF760(u32);
+    extern void fn_801CFDD4(void *);
+
+    void *result;
+
+    if (arg0 < 0x80000000) {
+        if (lbl_80367110 & 1) {
+            return 0;
+        }
+    } else if (arg0 >= 0x81800000) {
+        return 0;
+    }
+
+    result = fn_801CF760(arg0);
+
+    if (result == 0) {
+        return 0;
+    }
+
+    fn_801CFDD4(result);
+
+    return 1;
+}
+
+s32 fn_800B9548(u32 arg0)
+{
+    extern s32 lbl_80367110;
+
+    extern void *fn_801CF760(u32);
+    extern void fn_801D0200(void *);
+
+    void *result;
+
+    if (arg0 < 0x80000000) {
+        if (lbl_80367110 & 1) {
+            return 0;
+        }
+    } else if (arg0 >= 0x81800000) {
+        return 0;
+    }
+
+    result = fn_801CF760(arg0);
+
+    if (result == 0) {
+        return 0;
+    }
+
+    fn_801D0200(result);
+
+    return 1;
+}
+
 s32 fn_800B97B8(u32 arg0, s32 arg1) {
     void *fn_801CF760(u32);
     M2C_UNK fn_801D041C(void *, s32);
@@ -4127,6 +4183,32 @@ u16 fn_800BBD68(void) {
     return M2C_FIELD(temp_r3, u16 *, 0xE);
 }
 
+s32 fn_800BBE9C(u32 arg0)
+{
+    extern u8 lbl_802B14E4[];
+    extern void fn_80105DAC(void *);
+
+    u8 *unit;
+
+    if ((u8)arg0 != 0) {
+        unit = lbl_802B14E4 + ((u8)arg0 - 1) * 0x280;
+    } else {
+        unit = 0;
+    }
+
+    if (unit == 0) {
+        return 1;
+    }
+
+    if (*(u32 *)(unit + 0x188) == 0) {
+        return 1;
+    }
+
+    fn_80105DAC(unit + 0x1BC);
+
+    return 1;
+}
+
 s32 fn_800BBF04(u8 arg0, s32 arg1) {
     u32 *fn_80037BD0(void *, s32);
     void fn_800949A4(void *, s8);
@@ -4693,6 +4775,29 @@ s32 fn_800BCDF0(u8 arg0) {
         break;
     }
     return 1;
+}
+
+s32 fn_800BCED4(u32 arg0, void *arg1)
+{
+    extern u8 lbl_802B14E4[];
+    extern void *fn_80019E8C(void *);
+
+    u8 *unit;
+    void *value;
+
+    if ((u8)arg0 != 0) {
+        unit = lbl_802B14E4 + ((u8)arg0 - 1) * 0x280;
+    } else {
+        unit = 0;
+    }
+
+    if (unit == 0) {
+        return 0;
+    }
+
+    value = *(void **)(unit + 0x188);
+
+    return (u8)(value == fn_80019E8C(arg1));
 }
 
 s32 fn_800BCF44(u8 arg0, s32 arg1) {
