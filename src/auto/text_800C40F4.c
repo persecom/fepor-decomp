@@ -7655,7 +7655,7 @@ s32 fn_800ECCB8(void) {
     s32 temp_r3;
     
     temp_r3 = *(s32*)((char*)lbl_803678C0 + 0x478);
-    fn_800DC454(temp_r3);
+    fn_800DC454((void *)temp_r3);
     return 0;
 }
 
@@ -10929,34 +10929,32 @@ extern u8 lbl_802CA518[];
     s32 sp14;
     u8 sp10;
     s32 sp8;
-    void *temp_r27;
-    void *temp_r28;
-    s32 temp_r30;
+    u8 *map;
+    u8 temp_r3_3;
+    s16 temp_r3_4;
+    s32 temp_r4;
+    s32 temp_r3;
+    s32 var_r0_2;
+    s32 var_r0;
+    s32 var_r5;
+    s16 var_r14;
+    s32 var_r17;
+    s32 var_r18;
+    s32 var_r19;
+    s16 var_r20;
+    s16 var_r21;
+    s16 var_r23;
+    u16 var_r24;
+    s16 var_r22;
     s16 var_r26;
     s16 var_r25;
-    u16 var_r24;
-    s16 var_r23;
-    s16 var_r22;
-    s16 var_r21;
-    s16 var_r20;
-    s32 var_r19;
-    s32 var_r18;
-    s32 var_r17;
-    s16 temp_r18;
-    s16 temp_r17;
-    s16 var_r14;
-    s32 var_r5;
-    s32 var_r0;
-    s32 var_r0_2;
-    s32 temp_r0;
-    s32 temp_r3;
-    s32 temp_r3_2;
-    s32 temp_r4;
-    s16 temp_r3_4;
-    u8 temp_r3_3;
-    u8 *map;
+    s32 temp_r30;
+    void *temp_r28;
+    void *temp_r27;
+    u8 *base;
 
     sp10 = arg5;
+    var_r19 = arg_spC;
     if ((((s16)arg0) == ((s16)arg3)) && (((s16)arg1) == ((s16)arg4))) {
         sp8 = 0;
         fn_800FB96C(arg5, (s8)((s16)arg3), (s8)((s16)arg4), 0, (s8)((s16)arg3), (s8)((s16)arg4), -1, 0, 0);
@@ -10967,41 +10965,42 @@ extern u8 lbl_802CA518[];
     } else {
         fn_800FE490(((s16)arg3), ((s16)arg4), arg2, 6, *(s32 *)(lbl_802CA518) * *(s32 *)(lbl_802CA518+4));
     }
-    temp_r17 = (s16)arg0;
-    temp_r18 = (s16)arg1;
-    fn_800FE490(temp_r17, temp_r18, arg2, 5, arg_spC);
-    if (*(s16 *)(lbl_802CA518 + 0x610e + (((s8)arg3 + ((s8)arg4 << 6)) * 2)) < 0) {
+    var_r18 = (s16)arg1;
+    var_r17 = (s16)arg0;
+    fn_800FE490((s16)var_r17, (s16)var_r18, arg2, 5, var_r19);
+    base = lbl_802CA518;
+    if (*(s16 *)(base + (((s8)arg3 + ((s8)arg4 << 6)) * 2) + 0x610e) < 0) {
         var_r0 = 0x7FFF;
     } else {
-        var_r0 = *(s16 *)(lbl_802CA518 + 0x818e + (((s8)arg0 + ((s8)arg1 << 6)) * 2));
+        base += 0x10000;
+        base += ((s8)arg0 + ((s8)arg1 << 6)) * 2;
+        var_r0 = *(s16 *)(base - 0x7e72);
     }
     var_r26 = (s16)var_r0;
     var_r25 = -1;
     var_r24 = 0xFFFF;
     var_r22 = 0x7FFF;
-    if (arg_spC < 0) {
+    if (var_r19 < 0) {
         var_r5 = fn_8003A398(arg2);
     } else {
-        var_r5 = arg_spC;
+        var_r5 = var_r19;
     }
-    temp_r0 = temp_r17 - var_r5;
-    sp18 = temp_r0;
-    if (temp_r0 < (s8)*(s8 *)(lbl_802CA518+0x8)) {
+    sp18 = var_r17 - var_r5;
+    if (sp18 < (s8)*(s8 *)(lbl_802CA518+0x8)) {
         sp18 = (s32)(s8)*(s8 *)(lbl_802CA518+0x8);
     }
-    var_r0_2 = temp_r18 - var_r5;
+    var_r0_2 = var_r18 - var_r5;
     if (var_r0_2 < (s8)*(s8 *)(lbl_802CA518+0x9)) {
         var_r0_2 = (s8)*(s8 *)(lbl_802CA518+0x9);
     }
-    var_r19 = temp_r17 + var_r5;
+    var_r19 = var_r17 + var_r5;
     temp_r3 = (s8)*(s8 *)(lbl_802CA518+0xA) - 1;
     if (var_r19 > temp_r3) {
         var_r19 = temp_r3;
     }
-    temp_r3_2 = temp_r18 + var_r5;
-    sp14 = temp_r3_2;
+    sp14 = var_r18 + var_r5;
     temp_r4 = (s8)*(s8 *)(lbl_802CA518+0xB) - 1;
-    if (temp_r3_2 > temp_r4) {
+    if (sp14 > temp_r4) {
         sp14 = temp_r4;
     }
     map = lbl_802CA518;
@@ -11016,8 +11015,8 @@ extern u8 lbl_802CA518[];
                 if ((*(s8 *)((u8 *)temp_r28 + 0xe18e) == 0) && (fn_800FE84C((s8)var_r17, (s8)var_r18) == 0) && ((temp_r3_3 = *(u8 *)((u8 *)temp_r28 + 13), ((temp_r3_3 == 0) != 0)) || (temp_r3_3 == (u8)*(u8 *)((u8 *)arg2 + 0x198))) && ((temp_r27 = (u8 *)temp_r27 + 0x818e), *(s16 *)temp_r27 >= 0)) {
                     if (((u16)arg6) < fn_800FCF48((s8)var_r17, (s8)var_r18)) {
                         if (var_r24 > fn_800FCF48((s8)var_r17, (s8)var_r18)) {
-                            var_r14 = (s16)var_r17;
                             var_r24 = fn_800FCF48((s8)var_r17, (s8)var_r18);
+                            var_r14 = (s16)var_r17;
                             var_r23 = (s16)var_r18;
                         }
                     } else {
