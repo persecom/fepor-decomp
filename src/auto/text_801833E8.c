@@ -9066,4 +9066,4 @@ s32 fn_80199028(void *arg0) {
 extern f32 lbl_8036ADF0;
 extern f32 lbl_8036ADF4;
 extern u8 lbl_80279C40[];
-typedef struct { s32 x, y, z; } Word3B9;
+
