@@ -1,6 +1,11 @@
 /* Functions from 0x80074370 to 0x8007C534, found by decomp-toolkit. */
 #include "common.h"
 #include "structs.h"
+static inline s32 get_B4D8_mode(u16 flags) {
+ s32 mode=3;
+ if(flags&2)mode=6;
+ return mode;
+}
 
 typedef struct {
     s16 unk0;
@@ -3095,6 +3100,82 @@ void fn_8007B1C4(void *arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4) {
         fn_80007884();
     }
 }
+
+void fn_8007B4D8(s32 a0,s32 a1,u8 a2,void *a3) {
+#pragma opt_common_subs off
+ void **fn_8006EDD8(void *,s32);
+ void fn_8000A258(void);
+ void fn_80009EB0(void *,s32,u8,s32);
+ void fn_8000A248(void);
+ void fn_80007898(s32);
+ void fn_80007838(f32,f32,f32,f32);
+ void fn_80007818(f32,f32,f32,f32);
+ void fn_800076AC(u8,u8,u8,u8);
+ void fn_80007884(void);
+ void fn_8007B1C4(void *,s32,s32,u8,s32);
+ extern f32 lbl_803693D4;
+ u16 *dim;
+ void *meta;
+ u8 shade;
+ s32 x,y,xx,yy;
+ s32 height,width,hh,ww;
+ void *arg3;
+ u8 arg2;
+ s32 arg1;
+ s32 arg0;
+ s32 mode;
+ u16 flags;
+  arg0=a0;arg1=a1;arg3=a3;arg2=a2;
+ shade=M2C_FIELD(arg3,u8 *,0x41);
+ dim=*fn_8006EDD8(M2C_FIELD(arg3,void * *,0x30),0);
+ width=dim[1];height=dim[0];
+ x=arg0-(width>>1);y=arg1-height;
+ fn_8000A258();fn_80009EB0(M2C_FIELD(arg3,void * *,0x30),0,M2C_FIELD(arg3,u8 *,0x40),0x11);fn_8000A248();
+ fn_80007898(1);
+ if(M2C_FIELD(arg3,u16 *,0x46)&1) {
+ f32 scale;
+ fn_80007838((f32)x,(f32)y,(f32)width,lbl_803693D4);
+ scale=M2C_FIELD(arg3,f32 *,0x4C);
+ fn_80007818((f32)width*scale+(f32)x,(f32)height*scale+(f32)y,lbl_803693D4,(f32)height);
+ } else {
+ f32 scale;
+ fn_80007838((f32)x,(f32)y,lbl_803693D4,lbl_803693D4);
+ scale=M2C_FIELD(arg3,f32 *,0x4C);
+ fn_80007818((f32)width*scale+(f32)x,(f32)height*scale+(f32)y,(f32)width,(f32)height);
+ }
+ fn_800076AC(shade,shade,shade,arg2);fn_80007884();
+ meta=M2C_FIELD(arg3,void * *,0x34);
+ if(M2C_FIELD(meta,u16 *,0x18)&2) {
+ flags=M2C_FIELD(arg3,u16 *,0x46);
+ mode=3;
+ if(flags&2)mode=6;
+ xx=M2C_FIELD(meta,u16 *,0x14);yy=M2C_FIELD(meta,u16 *,0x16);
+ if(flags&1)xx=width-xx;
+ xx+=x; yy+=y;
+ dim=*fn_8006EDD8(M2C_FIELD(arg3,void * *,0x30),mode);
+ ww=dim[1];hh=dim[0];
+ if(M2C_FIELD(arg3,u16 *,0x46)&1)xx-=ww;
+ fn_8000A258();fn_80009EB0(M2C_FIELD(arg3,void * *,0x30),mode,M2C_FIELD(arg3,u8 *,0x40),0x11);fn_8000A248();
+ fn_80007898(1);
+ if(M2C_FIELD(arg3,u16 *,0x46)&1) {
+ f32 scale;
+ fn_80007838((f32)xx,(f32)yy,(f32)ww,lbl_803693D4);
+ scale=M2C_FIELD(arg3,f32 *,0x4C);
+ fn_80007818((f32)ww*scale+(f32)xx,(f32)hh*scale+(f32)yy,lbl_803693D4,(f32)hh);
+ } else {
+ f32 scale;
+ fn_80007838((f32)xx,(f32)yy,lbl_803693D4,lbl_803693D4);
+ scale=M2C_FIELD(arg3,f32 *,0x4C);
+ fn_80007818((f32)ww*scale+(f32)xx,(f32)hh*scale+(f32)yy,(f32)ww,(f32)hh);
+ }
+ fn_800076AC(shade,shade,shade,arg2);fn_80007884();
+ }
+ if(M2C_FIELD(M2C_FIELD(arg3,void * *,0x34),u16 *,0x18)&1) {
+ fn_8007B1C4(arg3,arg0,arg1,arg2,7);
+ fn_8007B1C4(arg3,arg0,arg1,arg2,10);
+ }
+}
+
 #pragma global_optimizer reset
 #pragma use_lmw_stmw reset
 
