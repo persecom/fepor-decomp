@@ -40,7 +40,6 @@ u8 *p=lbl_80368950->cursor;
 lbl_80368950->cursor=p+1;
 return *p;
 }
-static inline f32 ThpReadQuant(void) { return (f32)ThpReadByte(); }
 static inline u16 ThpReadWord(void) {
 extern ThpDecodeState *lbl_80368950;
 u8 **cursor=&lbl_80368950->cursor;
