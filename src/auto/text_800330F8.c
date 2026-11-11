@@ -6547,6 +6547,14 @@ void fn_8005306C(void *arg0) {
 }
 
 #pragma use_lmw_stmw on
+static inline void *get_53260_object(void *base) {
+    void *obj;
+    if (*(u32 *)((u8 *)base + 8) & 0x20000000) {
+        obj = *(void **)((u8 *)base + 0x34);
+        if (obj != NULL) return obj;
+    }
+    return *(void **)((u8 *)base + 0x30);
+}
 void fn_80053260(void *arg0)
 {
     void *fn_80040844(void);
