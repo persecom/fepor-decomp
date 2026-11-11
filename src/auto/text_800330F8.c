@@ -6547,7 +6547,6 @@ void fn_8005306C(void *arg0) {
 }
 
 #pragma use_lmw_stmw on
-static inline void set_53260_xy(f32 *pos, f32 x, f32 y) { pos[0] = x; pos[1] = y; }
 static inline void *get_53260_object(void *base) {
     void *obj;
     if (*(u32 *)((u8 *)base + 8) & 0x20000000) {
