@@ -4072,6 +4072,128 @@ void fn_8016F790(void *arg0) {
         fn_801658DC(ret, (s32)((u8 *)lbl_80278080 + 0x18E));
     }
 }
+
+#pragma cplusplus on
+extern "C" void fn_8016F8CC(void *arg0) {
+    void fn_8000C070(void *, s32);
+    void fn_8000C188(void *);
+    void *fn_8000CAA0(void *, void *);
+    u32 *fn_8001CB64(u32);
+    void fn_8013FDA0(void *);
+ void *fn_8013BE3C(void *);
+ void fn_80024398(void *,void *,s32);
+ void *fn_8013FF94(void *,s32,s32);
+ void fn_801658DC(void *,void *);
+ s8 fn_80037E00(u32);
+ void fn_800951D0(u32,s32);
+ void fn_80184C7C(u32,s32,s32,s32);
+ void fn_80138808(void *,void *); 
+ extern u32 lbl_802EF4C8[];
+    void fn_801475FC(void *, s32);
+    u32 fn_80164BB0(void *);
+    u8 fn_80166D8C(void *);
+    void fn_80166DD0(void *, u32, f32, f32);
+    void fn_801673D0(void *);
+    void fn_8016746C(void *, void *, u32, f32, f32);
+    extern u16 lbl_80278080[];
+    extern u8 lbl_80330D68[];
+    extern u32 lbl_80367110;
+    extern void *lbl_80367240;
+    extern s32 lbl_80368DC4;
+    extern u8 lbl_80294580[];
+
+    class Vec2s {
+    public:
+        s16 x;
+        s16 y;
+        Vec2s() {}
+        Vec2s(const Vec2s &o) { *(u32 *)this = *(u32 *)&o; }
+        Vec2s &operator=(const Vec2s &o) { *(u32 *)this = *(u32 *)&o; return *this; }
+    };
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual Vec2s v10() = 0;
+    };
+
+    void *obj4c;
+    u32 var_r30;
+    void *self;
+    register int btn;
+    register u8 gate;
+    register int flags;
+    u32 *bits;
+    void *obj;
+    u32 sp1C;
+    u32 sp18;
+    u32 sp14;
+
+    self = arg0;
+    obj4c = *(void **)((u8 *)arg0 + 0x4C);
+    var_r30 = fn_80164BB0(obj4c);
+    fn_8013FDA0(arg0);
+    if (var_r30 != fn_80164BB0(obj4c)) {
+        var_r30 = fn_80164BB0(obj4c);
+        if (fn_80166D8C(lbl_80330D68) != 0) {
+            if (var_r30 != 0) {
+                *(Vec2s *)&sp1C = ((Obj *)obj4c)->v10();
+                fn_80166DD0(lbl_80330D68, var_r30, (f32)*(s16 *)&sp1C, (f32)*((s16 *)&sp1C + 1));
+            } else {
+                fn_801673D0(lbl_80330D68);
+            }
+        }
+    }
+    flags = lbl_80367110;
+    gate = 0;
+    if ((flags & 0x10) && !(flags & 0x20)) {
+        gate = 1;
+    }
+    if (!gate) {
+        btn = *(s32 *)((u8 *)lbl_80367240 + 4);
+        btn = btn & (*(s32 *)((u8 *)lbl_80367240 + 8) ^ btn);
+        if ((btn & 0x100) && var_r30 != 0 && fn_80166D8C(lbl_80330D68) == 0) {
+            bits = fn_8001CB64(var_r30);
+            if ((*(u64 *)bits & 0x20000000000ULL) != 0 || (*(u64 *)fn_8001CB64(var_r30) & 0x200ULL) != 0) {
+                *(Vec2s *)&sp18 = ((Obj *)obj4c)->v10();
+                obj = fn_8000CAA0(lbl_80294580, self);
+                *(f32 *)((u8 *)obj + 0x30) = (f32)*(s16 *)&sp18;
+                *(f32 *)((u8 *)obj + 0x34) = (f32)*((s16 *)&sp18 + 1);
+                *(void **)((u8 *)obj + 0x54) = (u8 *)lbl_80278080 + 0x1A7;
+            } else {
+                obj=fn_8013BE3C((u8 *)lbl_80278080+0x1B4);
+ *(u8 *)((u8 *)obj+0x24)=1;
+ fn_80024398(obj,self,0);
+ obj=fn_8013FF94(self,-0x1000,0);
+ if(obj)fn_801658DC(obj,(u8 *)lbl_80278080+0x1CA);
+ fn_8000C188(self);
+ fn_801475FC((u8 *)lbl_80278080+0x1DD,0x64);
+            }
+        } else if ((btn & 0x800) && fn_80166D8C(lbl_80330D68) == 0 && var_r30 != 0) {
+            *(Vec2s *)&sp14 = ((Obj *)obj4c)->v10();
+            fn_8016746C(lbl_80330D68, self, var_r30, (f32)*(s16 *)&sp14, (f32)*((s16 *)&sp14 + 1));
+            *(s32 *)lbl_80330D68 = *(s32 *)lbl_80330D68 | lbl_80368DC4;
+        } else if ((btn & 0xa00) && fn_80166D8C(lbl_80330D68) != 0) {
+            fn_801673D0(lbl_80330D68);
+        } else if ((btn & 0x200) && fn_80166D8C(lbl_80330D68) == 0) {
+            if(fn_80037E00(lbl_802EF4C8[0])<0)fn_800951D0(lbl_802EF4C8[0],-1);
+ if(lbl_802EF4C8[0])fn_80184C7C(lbl_802EF4C8[0],0,4,0);
+ obj=*(void **)((u8 *)self+0x44);
+ if(obj&&*(void **)((u8 *)obj+0x3C))fn_80138808(obj,*(void **)((u8 *)obj+0x3C));
+ fn_8000C070(self,0x2C);
+            fn_801475FC((u8 *)lbl_80278080 + 0x1ed, 0x64);
+        }
+    }
+}
+#pragma cplusplus reset
+
 void fn_8016FE5C(void) {
     return;
 }
