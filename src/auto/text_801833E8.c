@@ -1343,6 +1343,7 @@ void fn_80187D70(void *arg0) {
     void *temp_r4;
     u8 *base;
     u8 *msg;
+    s32 sum;
 
     *(f32 *)((u8 *)arg0 + 0x3C) = lbl_8036ACEC;
     fn_8004FC70(*(void **)((u8 *)arg0 + 0x30), 6);
@@ -1377,12 +1378,13 @@ void fn_80187D70(void *arg0) {
         *(u8 *)((u8 *)arg0 + 0x38) = *(u8 *)((u8 *)arg0 + 0x3A);
         *(u8 *)((u8 *)arg0 + 0x39) = *(u8 *)((u8 *)arg0 + 0x3B);
     }
-    unit = (void *)fn_80230BCC((s8)*(u8 *)((u8 *)arg0 + 0x3A) - (s8)*(u8 *)((u8 *)arg0 + 0x38));
-    unit = (void *)((s32)unit + fn_80230BCC((s8)*(u8 *)((u8 *)arg0 + 0x3B) - (s8)*(u8 *)((u8 *)arg0 + 0x39)));
-    base = lbl_80278E24;
-    msg = base + 0x371;
-    if ((s32)unit >= 2) {
+    sum = fn_80230BCC((s8)*(u8 *)((u8 *)arg0 + 0x3A) - (s8)*(u8 *)((u8 *)arg0 + 0x38));
+    if ((sum = fn_80230BCC((s8)*(u8 *)((u8 *)arg0 + 0x3B) - (s8)*(u8 *)((u8 *)arg0 + 0x39)) + sum, sum >= 2)) {
+        base = lbl_80278E24;
         msg = base + 0x360;
+    } else {
+        base = lbl_80278E24;
+        msg = base + 0x371;
     }
     fn_800558D8(msg);
 }
@@ -7973,12 +7975,13 @@ s32 fn_801A0F68(u8 arg0, u8 arg1, u8 arg2) {
 
     u8 *var_r31;
     u16 var_r30;
-    s32 temp_r28;
     void *temp;
-    void *var_r6;
-    u32 var_r3;
     u8 sp9;
     u8 sp8;
+    s32 temp_r28;
+    u16 half;
+    void *var_r6;
+    u32 var_r3;
     u8 b;
     s32 sw;
 
@@ -8027,20 +8030,17 @@ s32 fn_801A0F68(u8 arg0, u8 arg1, u8 arg2) {
         break;
     }
 
-    {
-        u16 half;
-        temp = fn_8000C0C0(lbl_80296F90);
-        if (temp != NULL) {
-            half = *(u16 *)((u8 *)temp + 0x34);
-        } else {
-            half = 0;
-        }
-        half = (u16)(var_r30 | half);
-        sp9 = arg1;
-        sp8 = arg2;
-        var_r30 = half;
-        temp_r28 = fn_80107D64(var_r31, &sp9, &sp8, 1, 0, 0);
+    temp = fn_8000C0C0(lbl_80296F90);
+    if (temp != NULL) {
+        half = *(u16 *)((u8 *)temp + 0x34);
+    } else {
+        half = 0;
     }
+    var_r30 = var_r30 | half;
+
+    sp9 = arg1;
+    sp8 = arg2;
+    temp_r28 = fn_80107D64(var_r31, &sp9, &sp8, 1, 0, 0);
     if (temp_r28 != 0) {
         fn_8003816C(var_r31, sp9, sp8);
         if (lbl_80367110 & 1) {
@@ -9066,3 +9066,4 @@ s32 fn_80199028(void *arg0) {
 extern f32 lbl_8036ADF0;
 extern f32 lbl_8036ADF4;
 extern u8 lbl_80279C40[];
+typedef struct { s32 x, y, z; } Word3B9;
