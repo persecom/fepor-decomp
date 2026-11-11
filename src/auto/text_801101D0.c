@@ -2611,6 +2611,35 @@ s32 fn_8011C5B4(void) {
     return 0;
 }
 
+s32 fn_8011C5DC(void)
+{
+    extern u8 *lbl_80367A50;
+
+    extern void fn_800D758C(void *);
+    extern s32 fn_8011C9E4(void *);
+    extern void fn_800DA894(s32, s32, s32);
+
+    u8 *obj;
+    s32 value1;
+    s32 value2;
+    s32 value3;
+
+    fn_800D758C(lbl_80367A50);
+
+    obj = lbl_80367A50;
+    value3 = fn_8011C9E4(*(void **)(obj + 0x42C));
+
+    obj = lbl_80367A50;
+    value2 = fn_8011C9E4(*(void **)(obj + 0x428));
+
+    obj = lbl_80367A50;
+    value1 = fn_8011C9E4(*(void **)(obj + 0x424));
+
+    fn_800DA894(value1, value2, value3);
+
+    return 0;
+}
+
 void fn_8011C64C(void *arg0, s32 arg1) {
     void fn_8011CAAC(s32, s32, s32);
     fn_8011CAAC(*(s32 *)((u8 *)arg0 + 0x428), arg1, 0);
