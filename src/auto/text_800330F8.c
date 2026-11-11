@@ -6387,11 +6387,11 @@ static inline void *get_4F5EC_resource(void *arg0) {
  extern void *lbl_80366DC8;
 
  char buf[0x20];
- s32 value;
- void *base;
- s32 idx;
  void *resolved;
  void *name;
+ s32 idx;
+ void *base;
+ s32 value;
  value=get_4F5EC_id(arg0);
  base=M2C_FIELD(arg0,void **,0x18C);
  if(M2C_FIELD(arg0,u8 *,3)&4) base=M2C_FIELD(base,void **,0xC)?fn_8000D354(M2C_FIELD(base,void **,0xC)):0;
@@ -6444,13 +6444,13 @@ void fn_8004F5EC(void *arg0,u32 arg1) {
  arg1=(u16)arg1|8;
  fn_8005C870(name,arg1);
  if(!fn_8004AF74(res,M2C_FIELD(M2C_FIELD(arg0,void **,0x190),u8 *,8))) {
- res=get_4F5EC_resource(arg0);
+ void *second=get_4F5EC_resource(arg0);
  switch(M2C_FIELD(M2C_FIELD(arg0,void **,0x190),u8 *,8)) {
- case 0: res=fn_8004B078(res,0);break;
-case 1: res=fn_8004B078(res,1);break;
-case 2: res=fn_8004B078(res,2);break;
-case 3: res=fn_8004B078(res,3);break;
-default: res=fn_8004B078(res,0);break;
+ case 0: res=fn_8004B078(second,0);break;
+case 1: res=fn_8004B078(second,1);break;
+case 2: res=fn_8004B078(second,2);break;
+case 3: res=fn_8004B078(second,3);break;
+default: res=fn_8004B078(second,0);break;
  }
  if(!res||fn_8005C144(res)==0x8000U) res=lbl_80366DC8;
  if(res!=lbl_80366DC8) fn_8005C870(res,arg1);
