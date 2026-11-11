@@ -1,8 +1,9 @@
 /* Functions from 0x80120CCC to 0x80127D80, found by decomp-toolkit. */
 #include "common.h"
 
-/* Signed int-to-float bias; -str reuse merges (f32)(s32) casts onto this symbol. */
-f64 lbl_8036A2C8 = 4503601774854144.0;
+/* Signed int-to-float bias (exact 0x4330000080000000); -str reuse merges casts onto this. */
+static const u32 lbl_8036A2C8_bits[2] = {0x43300000, 0x80000000};
+#define lbl_8036A2C8 (*(f64 *)lbl_8036A2C8_bits)
 
 typedef struct {
     s32 field_0x84;
@@ -761,67 +762,63 @@ loop_2:
 
 #pragma use_lmw_stmw on
 void fn_80123034(void *arg0, void *arg1, s32 arg2, f32 farg0, f32 farg1) {
-    void *fn_8005397C(void *, s32);
     void fn_800536B0(void *, f32, f32, f32);
+    void *fn_8005397C(void *, s32);
     void *fn_800C93EC(s32);
     extern f32 lbl_8036A2D0;
     extern f32 lbl_8036A2D4;
     extern f32 lbl_8036A2D8;
     extern f32 lbl_8036A2C0;
     extern f32 lbl_8036A2C4;
-    extern f64 lbl_8036A2C8;
     extern u8 lbl_80274DB0[];
     void *obj;
     s32 i;
-    void *list;
+    u32 off;
     void *self;
-    s32 off;
-    f64 f29;
-    f32 f30;
+    void *list;
+    f32 t3;
     f32 f31;
-    f32 a;
-    f32 b;
+    f32 f30;
+    f32 t0;
 
     self = arg0;
     list = arg1;
-    a = lbl_8036A2D0;
-    b = lbl_8036A2D4;
-    M2C_FIELD(arg0, f32 *, 0x78) = a * farg0;
-    M2C_FIELD(arg0, f32 *, 0x80) = b * farg0;
-    M2C_FIELD(arg0, f32 *, 0x7C) = farg1;
-    M2C_FIELD(arg0, s32 *, 0x90) = arg2;
+    t3 = lbl_8036A2D0;
+    t0 = lbl_8036A2D4;
+    *(f32 *)((u8 *)self + 0x78) = t3 * farg0;
+    *(f32 *)((u8 *)self + 0x80) = t0 * farg0;
+    *(f32 *)((u8 *)self + 0x7C) = farg1;
+    *(s32 *)((u8 *)self + 0x90) = arg2;
 
-    if (M2C_FIELD(list, u32 *, 4) == 0) {
+    if (*(u32 *)((u8 *)list + 4) == 0) {
         obj = fn_8005397C(lbl_80274DB0 + 8, 4);
         fn_800536B0(obj,
-                    (f32)M2C_FIELD(self, s32 *, 0x48),
-                    (f32)M2C_FIELD(self, s32 *, 0x4C),
-                    (f32)(M2C_FIELD(self, s32 *, 0x44) + 1));
-        M2C_FIELD(M2C_FIELD(obj, void **, 0x30), f32 *, 0x1C) =
-            (f32)(s16)(M2C_FIELD(self, s32 *, 0x44) + 1);
-        M2C_FIELD(M2C_FIELD(obj, void **, 0x30), f32 *, 0x18) = lbl_8036A2D8;
+                    (f32)*(s32 *)((u8 *)self + 0x48),
+                    (f32)*(s32 *)((u8 *)self + 0x4C),
+                    (f32)(*(s32 *)((u8 *)self + 0x44) + 1));
+        *(f32 *)(*(u8 **)((u8 *)obj + 0x30) + 0x1C) =
+            (f32)(s16)(*(s32 *)((u8 *)self + 0x44) + 1);
+        *(f32 *)(*(u8 **)((u8 *)obj + 0x30) + 0x18) = lbl_8036A2D8;
         return;
     }
 
-    f29 = lbl_8036A2C8;
     i = 0;
     f30 = lbl_8036A2C0;
     off = 0;
     f31 = lbl_8036A2C4;
-    while (i < M2C_FIELD(list, s32 *, 4)) {
-        obj = fn_8005397C(fn_800C93EC(M2C_FIELD(list, s32 *, 8) + off), 4);
+    while (i < *(s32 *)((u8 *)list + 4)) {
+        obj = fn_8005397C(fn_800C93EC(*(s32 *)((u8 *)list + 8) + (s32)off), 4);
         fn_800536B0(obj,
-                    (f32)M2C_FIELD(self, s32 *, 0x48),
-                    (f32)M2C_FIELD(self, s32 *, 0x4C),
-                    (f32)(M2C_FIELD(self, s32 *, 0x44) + 1));
-        i += 1;
+                    (f32)*(s32 *)((u8 *)self + 0x48),
+                    (f32)*(s32 *)((u8 *)self + 0x4C),
+                    (f32)(*(s32 *)((u8 *)self + 0x44) + 1));
+        ++i;
         off += 0xC;
-        M2C_FIELD(M2C_FIELD(obj, void **, 0x30), f32 *, 0x1C) =
-            (f32)(s16)(M2C_FIELD(self, s32 *, 0x44) + 1);
-        M2C_FIELD(M2C_FIELD(obj, void **, 0x30), f32 *, 0x18) = f30;
-        M2C_FIELD(M2C_FIELD(obj, void **, 0x30), f32 *, 0x20) = f31;
+        *(f32 *)(*(u8 **)((u8 *)obj + 0x30) + 0x1C) =
+            (f32)(s16)(*(s32 *)((u8 *)self + 0x44) + 1);
+        *(f32 *)(*(u8 **)((u8 *)obj + 0x30) + 0x20) = f31;
+        *(f32 *)(*(u8 **)((u8 *)obj + 0x30) + 0x18) = f30;
     }
-    (void)f29;
 }
 #pragma use_lmw_stmw reset
 
