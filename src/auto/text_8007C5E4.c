@@ -1,5 +1,6 @@
 /* Functions from 0x8007C5E4 to 0x8009F0BC, found by decomp-toolkit. */
 #include "common.h"
+typedef struct { u32 unk0; s8 vals[4]; } E2C4Info;
 #include "global.h"
 extern void* lbl_803674E8;
 extern f32 lbl_803696C8;
@@ -721,6 +722,84 @@ void fn_8007DF6C(void *arg0) {
         fn_800616A0(temp);
     }
     fn_800C4588(temp_r31);
+}
+
+void fn_8007E2C4(void *arg0) {
+ void fn_801A8CB8(void *,void *);
+ void **fn_8006EDD8(void *,s32);
+ u32 *fn_8018D900(s32);
+ void fn_8000A258(void);
+ void fn_80009F90(void *,s32,s32);
+ void fn_8000A248(void);
+ void fn_80007898(s32);
+ void fn_80007870(f32);
+ void fn_80007838(f32,f32,f32,f32);
+ void fn_80007818(f32,f32,f32,f32);
+ void fn_800076AC(u8,u8,u8,u8);
+ void fn_800075D8(void);
+ void fn_80007884(void);
+ void fn_80009C0C(f32);
+ void fn_8000A174(s32,s32);
+ void fn_80231D94(void *,void *,...);
+ s32 fn_80010B78(void *,s32,f32);
+ void fn_8001003C(s32,s32,s32,s32,s32,void *,...);
+ extern u8 lbl_80330EAC[],lbl_8026C86C[];
+ extern void *lbl_803674F4;
+ extern f32 lbl_8036948C,lbl_80369430,lbl_80369418,lbl_8036942C;
+ extern f32 lbl_803694B0,lbl_803694B4,lbl_803694B8,lbl_803694BC;
+ char b3[16];
+ char b2[16];
+ char b1[16];
+ char b0[16];
+ s8 info[8];
+ u32 color;
+ f32 x,y,texw,texh,scaledh,scaledw;
+ void *obj;
+ u16 *dim;
+ s32 left,right,top,bottom,width;
+ u8 k0,k1,k2,k3;
+ s32 val;
+ f32 scale;
+ x=lbl_8036948C+M2C_FIELD(arg0,f32 *,0x14);
+ y=M2C_FIELD(arg0,f32 *,0x18);
+ fn_801A8CB8(lbl_80330EAC,info);
+ dim=*fn_8006EDD8(lbl_803674F4,0x1A);
+ scale=lbl_80369430;
+ scaledw=(f32)dim[0]*scale;
+ scaledh=(f32)dim[1]*scale;
+ color=*fn_8018D900(1);
+ obj=lbl_803674F4;
+ dim=*fn_8006EDD8(obj,0x1A);
+ texh=(f32)dim[1]; texw=(f32)dim[0];
+ fn_8000A258();fn_80009F90(obj,0x1A,0x11);fn_8000A248();
+ fn_80007898(1);fn_80007870(lbl_80369418);
+ fn_80007838(x,y,lbl_80369418,lbl_80369418);
+ fn_80007818(x+scaledh,y+scaledw,texh,texw);
+ fn_800076AC(((u8 *)&color)[0],((u8 *)&color)[1],((u8 *)&color)[2],0xFF);
+ fn_800075D8();fn_80007884();
+ fn_8000A258();fn_80009C0C(lbl_8036942C);fn_8000A248();
+ fn_8000A258();fn_8000A174(0,0x13);fn_8000A248();
+ val=info[4];
+ if(val>0) {fn_80231D94(b0,lbl_8026C86C+0x210,val);k0=0xC;} else {fn_80231D94(b0,lbl_8026C86C+0x215);k0=2;}
+ width=(s16)fn_80010B78(b0,-1,lbl_80369430);
+top=(s32)(lbl_803694B4+y); left=(s32)(lbl_803694B0+x)+0x10;
+fn_8001003C((s16)(left-width/2),(s16)(top),k0,0,0,b0,lbl_80369430,lbl_80369418);
+val=info[5];
+ if(val>0) {fn_80231D94(b1,lbl_8026C86C+0x210,val);k1=0xC;} else {fn_80231D94(b1,lbl_8026C86C+0x215);k1=2;}
+ width=(s16)fn_80010B78(b1,-1,lbl_80369430);
+right=(s32)(lbl_803694B8+x)+0x10;
+fn_8001003C((s16)(right-width/2),(s16)(top),k1,0,0,b1,lbl_80369430,lbl_80369418);
+val=info[6];
+ if(val>0) {fn_80231D94(b2,lbl_8026C86C+0x210,val);k2=0xC;} else {fn_80231D94(b2,lbl_8026C86C+0x215);k2=2;}
+ width=(s16)fn_80010B78(b2,-1,lbl_80369430);
+bottom=(s32)(lbl_803694BC+y);
+fn_8001003C((s16)(left-width/2),(s16)(bottom),k2,0,0,b2,lbl_80369430,lbl_80369418);
+val=info[7];
+ if(val>0) {fn_80231D94(b3,lbl_8026C86C+0x210,val);k3=0xC;} else {fn_80231D94(b3,lbl_8026C86C+0x215);k3=2;}
+ width=(s16)fn_80010B78(b3,-1,lbl_80369430);
+fn_8001003C((s16)(right-width/2),(s16)(bottom),k3,0,0,b3,lbl_80369430,lbl_80369418);
+
+ fn_8000A258();fn_80009C0C(lbl_80369430);fn_8000A248();
 }
 
 #pragma use_lmw_stmw on
