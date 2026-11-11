@@ -1886,7 +1886,7 @@ void *fn_8011BE14(void) {
 }
 
 s32 fn_8011BE60(void) {
-    M2C_FIELD(&lbl_802EF4C8, s8 *, 8) = 0x84;
+    lbl_802EF4C8[8] = 0x84;
     return 5;
 }
 
