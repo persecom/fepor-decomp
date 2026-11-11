@@ -177,18 +177,11 @@ extern s32 lbl_80368588;
 
 static inline BOOL DVDComparePathComponent(char *path, char *name) {
     s32 fn_80230CE0(s32);
-    while (*name != 0) {
-        s32 first;
-        first = fn_80230CE0(*name);
-        name++;
-        if (fn_80230CE0(*path) != first) {
-            return FALSE;
-        }
-        path++;
+    while (*name) {
+        s32 first = fn_80230CE0(*name++);
+        if (first != fn_80230CE0(*path++)) return FALSE;
     }
-    if ((*path == '/') || (*path == 0)) {
-        return TRUE;
-    }
+    if (*path == '/' || *path == 0) return TRUE;
     return FALSE;
 }
 
