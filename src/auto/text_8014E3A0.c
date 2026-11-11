@@ -6,12 +6,10 @@ typedef struct { s32 c0, c1, c2, c3; } Color4;
 typedef struct { s32 c3, c2, c1, c0; } Color4rev;
 
 static inline void fn_80161B98_load_colors(Color4rev *dst, s32 *arg6) {
-    Color4 t;
-    t = *(Color4 *)arg6;
-    dst->c0 = t.c0;
-    dst->c1 = t.c1;
-    dst->c2 = t.c2;
-    dst->c3 = t.c3;
+    dst->c0 = arg6[0];
+    dst->c1 = arg6[1];
+    dst->c2 = arg6[2];
+    dst->c3 = arg6[3];
 }
 
 s32 fn_8014E3A0(void) {
