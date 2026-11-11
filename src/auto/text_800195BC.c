@@ -2,9 +2,8 @@
 #include "common.h"
 
 void *fn_800195BC(void) {
-    extern u16 lbl_80268330;
-    void *ptr = &lbl_80268330;
-    return (u8*)ptr + 0x346;
+extern u8 lbl_80268330[];
+return lbl_80268330+0x1A3;
 }
 
 void fn_800195CC(void) {
