@@ -6387,10 +6387,10 @@ static inline void *get_4F5EC_resource(void *arg0) {
  extern void *lbl_80366DC8;
 
  char buf[0x20];
- void *base;
- s32 idx;
- void *name;
  s32 value;
+ void *name;
+ s32 idx;
+ void *base;
  void *resolved;
  value=get_4F5EC_id(arg0);
  base=M2C_FIELD(arg0,void **,0x18C);
@@ -6417,7 +6417,7 @@ static inline void *get_4F5EC_resource(void *arg0) {
  }
  return resolved;
 }
-void fn_8004F5EC(void *arg0,u16 arg1) {
+void fn_8004F5EC(void *arg0,u32 arg1) {
 #pragma opt_common_subs off
  void fn_800056A0(s32);
  void fn_800056CC(void *, ...);
@@ -6446,14 +6446,14 @@ void fn_8004F5EC(void *arg0,u16 arg1) {
  if(!fn_8004AF74(res,M2C_FIELD(M2C_FIELD(arg0,void **,0x190),u8 *,8))) {
  res=get_4F5EC_resource(arg0);
  switch(M2C_FIELD(M2C_FIELD(arg0,void **,0x190),u8 *,8)) {
- case 0: name=fn_8004B078(res,0);break;
-case 1: name=fn_8004B078(res,1);break;
-case 2: name=fn_8004B078(res,2);break;
-case 3: name=fn_8004B078(res,3);break;
-default: name=fn_8004B078(res,0);break;
+ case 0: res=fn_8004B078(res,0);break;
+case 1: res=fn_8004B078(res,1);break;
+case 2: res=fn_8004B078(res,2);break;
+case 3: res=fn_8004B078(res,3);break;
+default: res=fn_8004B078(res,0);break;
  }
- if(!name||fn_8005C144(name)==0x8000U) name=lbl_80366DC8;
- if(name!=lbl_80366DC8) fn_8005C870(name,arg1);
+ if(!res||fn_8005C144(res)==0x8000U) res=lbl_80366DC8;
+ if(res!=lbl_80366DC8) fn_8005C870(res,arg1);
  }
  M2C_FIELD(arg0,u8 *,3)|=1;
  }
