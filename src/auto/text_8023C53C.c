@@ -6585,6 +6585,82 @@ done:
     return ret;
 }
 
+s32 fn_802596A8(u8 arg0, u8 arg1, s32 arg2) {
+extern u8 lbl_80368AD2, lbl_80368AD1;
+extern u8 *lbl_80368A88, *lbl_80368A98, *lbl_80368AA0, *lbl_80368A9C, *lbl_80368A94;
+extern s32 lbl_80368A68;
+extern u8 lbl_8035B838[];
+void *fn_802637D0(u32); void *fn_802637A4(u32);
+s32 fn_80262AD0(void); void fn_80259A94(s32,s32,s32); void fn_80259A5C(void);
+void fn_8020516C(void *,u16);
+void DCFlushRange(void *,u32); void DCFlushRangeNoSync(void *,u32); void DCInvalidateRange(void *,u32);
+u32 i; u32 off; u8 *p; u8 *studio;
+lbl_80368AD2=arg0; lbl_80368AD1=arg1;
+lbl_80368A68=fn_80262AD0();
+if (!(lbl_80368A88=fn_802637D0(0x800))) goto fail;
+if (!(lbl_80368A98=fn_802637D0(0x280))) goto fail;
+memset(lbl_80368A98,0,0x280); DCFlushRange(lbl_80368A98,0x280);
+if (!(lbl_80368AA0=fn_802637A4(lbl_80368AD2*0xF8))) goto fail;
+if (!(lbl_80368A9C=fn_802637D0(lbl_80368AD2*0x40))) goto fail;
+DCInvalidateRange(lbl_80368A9C,lbl_80368AD2*0x40);
+p=lbl_80368A9C;
+for(i=0,off=0;i<lbl_80368AD2;off+=0xF8,i++) {
+lbl_80368AA0[off+240]=0;
+lbl_80368AA0[off+241]=0;
+lbl_80368AA0[off+242]=0;
+lbl_80368AA0[off+232]=255;
+lbl_80368AA0[off+233]=255;
+lbl_80368AA0[off+234]=255;
+lbl_80368AA0[off+235]=255;
+*(void **)(lbl_80368AA0+off)=fn_802637D0(0xC4);
+memset(*(void **)(lbl_80368AA0+off),0,0xC4);
+*(void **)(lbl_80368AA0+off+4)=fn_802637D0(0x80);
+*(u16 *)(*(u8 **)(lbl_80368AA0+off)+4)=(u32)*(void **)(lbl_80368AA0+off)>>16;
+*(u16 *)(*(u8 **)(lbl_80368AA0+off)+6)=(u32)*(void **)(lbl_80368AA0+off);
+*(u16 *)(*(u8 **)(lbl_80368AA0+off)+0x4E)=(u32)*(void **)(lbl_80368AA0+off+4)>>16;
+*(u16 *)(*(u8 **)(lbl_80368AA0+off)+0x50)=(u32)*(void **)(lbl_80368AA0+off+4);
+*(u16 *)(*(u8 **)(lbl_80368AA0+off)+0x38)=(u32)p>>16;
+*(u16 *)(*(u8 **)(lbl_80368AA0+off)+0x3A)=(u32)p;
+*(u8 **)(lbl_80368AA0+off+8)=p; p+=0x40;
+*(s32 *)(lbl_80368AA0+off+0xEC)=-1;
+fn_8020516C(*(void **)(lbl_80368AA0+off),0xC4);
+*(u32 *)(lbl_80368AA0+off+36)=0;
+*(u32 *)(lbl_80368AA0+off+40)=0;
+*(u32 *)(lbl_80368AA0+off+44)=0;
+*(u32 *)(lbl_80368AA0+off+48)=0;
+*(u32 *)(lbl_80368AA0+off+52)=0;
+}
+for(off=0,i=(u32)lbl_8035B838;off<lbl_80368AD1;i+=0xBC,off++) {
+((u8 *)i)[0x50]=0;
+if (!(*(void **)i=fn_802637D0(0x36))) return 0;
+if (!(*(void **)(i+0x28)=fn_802637D0(0x3C00))) return 0;
+memset(*(void **)(i+0x28),0,0x3C00);
+DCFlushRangeNoSync(*(void **)(i+0x28),0x3C00);
+*(u8 **)(i+44)=*(u8 **)(i+40)+0x780;
+*(u8 **)(i+48)=*(u8 **)(i+44)+0x780;
+*(u8 **)(i+52)=*(u8 **)(i+48)+0x780;
+*(u8 **)(i+56)=*(u8 **)(i+52)+0x780;
+*(u8 **)(i+60)=*(u8 **)(i+56)+0x780;
+*(u8 **)(i+64)=*(u8 **)(i+60)+0x780;
+*(u8 **)(i+68)=*(u8 **)(i+64)+0x780;
+memset(*(void **)i,0,0x36);
+*(u32 *)(i+12)=0;
+*(u32 *)(i+8)=0;
+*(u32 *)(i+4)=0;
+*(u32 *)(i+24)=0;
+*(u32 *)(i+20)=0;
+*(u32 *)(i+16)=0;
+*(u32 *)(i+36)=0;
+*(u32 *)(i+32)=0;
+*(u32 *)(i+28)=0;
+DCFlushRangeNoSync(*(void **)i,0x36);
+}
+fn_80259A94(0,1,arg2!=0);
+if (!(lbl_80368A94=fn_802637D0(0x100))) return 0;
+fn_80259A5C(); return 1;
+fail: return 0;
+}
+
 void fn_80259A5C(void) {
     M2C_UNK DCFlushRangeNoSync(s32, M2C_UNK);
     M2C_UNK memset(s32, M2C_UNK, M2C_UNK);
