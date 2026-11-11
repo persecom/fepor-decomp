@@ -2728,7 +2728,7 @@ f64 fn_80237E90(f64 farg0) {
       if (temp_r3 >= 0x7FF00000) {
           return farg0 - farg0;
       }
-      return fn_80237C7C(1 - ((fn_802368F4(sp10) * 2) & 2), sp10[0], sp10[1]);
+      return fn_80237C7C(1 - ((fn_802368F4(sp10, farg0) * 2) & 2), sp10[0], sp10[1]);
   }
 
 void fn_80238788(void) {
