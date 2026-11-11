@@ -17,6 +17,10 @@ static inline s32 mul_ss(s32 a, s32 b) {
     return a * b;
 }
 
+static inline f32 mul_ss_f(s32 a, s32 b) {
+    return (f32)(a * b);
+}
+
 typedef struct Vec2s {
     s16 x;
     s16 y;
