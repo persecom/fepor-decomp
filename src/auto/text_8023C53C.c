@@ -3,6 +3,7 @@
 
 typedef struct SynthMessageSlots { u8 pad[0xAC]; u32 slots[32]; } SynthMessageSlots;
 typedef struct SynthMessageQueue { u8 pad[0x444]; u32 slots[4]; } SynthMessageQueue;
+typedef struct SynthMsgSlot { u8 pad[0x444]; u32 value; } SynthMsgSlot;
 typedef struct SampleKey { s32 data; u16 id; u16 type; u16 ref; u16 pad; } SampleKey;
 typedef struct SoundKeyEntry { u16 id; s8 key; u8 pan; s16 volume; u16 pad; } SoundKeyEntry;
 typedef struct AudioTableRange { u16 count; u16 start; } AudioTableRange;
@@ -386,6 +387,35 @@ s32 fn_8023C930(void) {
     return 0;
 }
 
+void fn_8023CFE8(void)
+{
+    extern u32 lbl_803688E4;
+    extern u32 lbl_803688E8;
+
+    u8 *counts;
+    u8 *output;
+    s32 value;
+    s32 index;
+    s32 count;
+    s32 i;
+
+    counts = (u8 *)lbl_803688E4;
+    count = 0;
+
+    for (value = 1; value <= 16; value++) {
+        index = counts[value - 1];
+
+        for (i = 0; i < index; i++) {
+            output = (u8 *)lbl_803688E8;
+            output[count] = (u8)value;
+            count++;
+        }
+    }
+
+    output = (u8 *)lbl_803688E8;
+    output[count] = 0;
+}
+
 void fn_8023D0D8(void)
 {
     extern u8 *lbl_803688E8;
@@ -753,11 +783,17 @@ found:
     if(sv->next!=NULL) sv->next->prev=sv->prev;
     sv->next=lbl_80368970;
     if(lbl_80368970!=NULL) lbl_80368970->prev=sv;
-    sv->prev=NULL; lbl_80368970=sv; sv->state=2;
-    for(i=0,walk=sv;i<2;i++,walk=(SynthVoice*)((u8*)walk+4)) {
+    sv->prev=(SynthVoice *)(i=0);
+    lbl_80368970=sv;
+    sv->state=2;
+    for(walk=sv;i<2;i++,walk=(SynthVoice*)((u8*)walk+4)) {
      for(node=walk->lists[0];node!=NULL;node=node->next) fn_80257224(node->vid);
     }
-    for(node=sv->listE6C;node!=NULL;node=node->next) fn_80257224(node->vid);
+    walk=(SynthVoice *)sv->listE6C;
+    while(walk!=NULL) {
+     fn_80257224(((VidList *)walk)->vid);
+     walk=(SynthVoice *)((VidList *)walk)->next;
+    }
     for(i=0,walk=sv;i<2;i++,walk=(SynthVoice*)((u8*)walk+4)) {
      tail=walk->lists[0];
      if(tail!=NULL) {
@@ -1693,6 +1729,72 @@ void fn_8024B8EC(s32 arg0, s32 arg1, s32 arg2) {
     fn_802636F4();
 }
 
+#pragma global_optimizer off
+void fn_8024B94C(s32 arg0)
+{
+    void fn_802624F8(void);
+    void fn_8024C84C(void);
+
+    extern u32 lbl_803689A4;
+    extern u8 lbl_8034C110[];
+    extern s32 lbl_803689A8;
+
+    u32 oldFlags;
+    u32 b;
+    u32 a;
+    u32 offset;
+    u32 i;
+    u8 *table;
+
+    oldFlags = lbl_803689A4;
+
+    switch (arg0) {
+    case 0:
+        lbl_803689A4 = oldFlags | 1;
+        lbl_803689A4 = lbl_803689A4 & ~2;
+        fn_802624F8();
+        break;
+    case 1:
+        a = oldFlags & ~1;
+        b = oldFlags & ~3;
+        lbl_803689A4 = a;
+        lbl_803689A4 = b;
+        fn_802624F8();
+        break;
+    case 2:
+        lbl_803689A4 = oldFlags & ~1;
+        lbl_803689A4 = lbl_803689A4 | 2;
+        fn_802624F8();
+        break;
+    }
+
+    if (oldFlags != lbl_803689A4) {
+        table = lbl_8034C110;
+        i = 0;
+        offset = 0;
+        while (i < table[0x210]) {
+            u32 *p1;
+            u32 *p2;
+            u32 w0;
+            u32 w1;
+            u32 off;
+            u8 *base;
+
+            base = (u8 *)lbl_803689A8;
+            off = offset + 0x114;
+            offset += 0x458;
+            i += 1;
+            p1 = (u32 *)(base + off);
+            p2 = (u32 *)(base + off);
+            w0 = p1[0];
+            w1 = p1[1];
+            p2[1] = w1;
+            p2[0] = w0 | 0x2000;
+        }
+        fn_8024C84C();
+    }
+}
+#pragma global_optimizer reset
 void fn_8024C5C8(void) {
 
 }
@@ -3860,61 +3962,81 @@ void fn_80253A80(void *arg0, u32 *arg1, u8 arg2)
 
 extern void (*lbl_803689AC)(u32,u32);
 #pragma opt_strength_reduction off
-void fn_80253BCC(void *arg0, void *arg1) {
- s32 fn_80255FB0();
- extern s32 lbl_8034CB74[];
- extern void (*lbl_803689AC)(u32,u32);
- void fn_8025539C(void *);
- u32 id; u32 value; u8 i; u8 *state; u32 bits, raw; u8 index; s32 result;
- bits = *(u32*)((u8*)arg1+4);
- index = (bits >> 8) & 31;
- if(index < 16) value=((SynthMessageSlots*)((u8*)arg0+(u8)index*4))->slots[0];
- else value=*(u32*)((u8*)lbl_8034CB74+(u8)index*4-0x40);
- raw=*(u32*)arg1;
- if((u8)(raw>>8)==0) {
-  id=raw>>16;
-  if(id!=0xFFFF) {
-   for(i=0;i<lbl_8034C110[0x210];i++) {
-    state=(u8*)lbl_803689A8+i*0x458;
-    if(*(u32*)(state+0x34)!=0 && id==*(u16*)(state+0x104)) {
-     result=fn_80255FB0(*(u32*)(*(u8**)(state+0xF8)+8));
-     if((u32)result!=0xFFFFFFFF) {
-      state=(u8*)lbl_803689A8+(u8)result*0x458;
-      if(state[0x440]<4) {
- state[0x440]++;
- *(u32*)(state+(state[0x442]*4+0x444))=value;
- state[0x442]=(state[0x442]+1)&3;
- if(state[0x68]!=0 && *(u32*)(state+0x58)!=0) {
- *(u32*)(state+0x38)=*(u32*)(state+0x64);
- *(u32*)(state+0x34)=*(u32*)(state+0x58);
- *(u32*)(state+0x58)=0;
- fn_8025539C(state);
- }
-}
-     }
+void fn_80253BCC(SynthVmState *arg0, void *arg1) {
+    s32 fn_80255FB0();
+    extern s32 lbl_8034CB74[];
+    extern void (*lbl_803689AC)(u32, u32);
+    void fn_8025539C(void *);
+    extern u8 lbl_8034C110[];
+    extern s32 lbl_803689A8;
+    u32 id;
+    u32 value;
+    u8 i;
+    u8 *state;
+    u32 bits;
+    u32 raw;
+    u8 index;
+    s32 result;
+    SynthMessageQueue *q;
+
+    bits = *(u32 *)((u8 *)arg1 + 4);
+    index = (bits >> 8) & 31;
+    if (index < 16) {
+        value = arg0->regs[index];
+    } else {
+        value = lbl_8034CB74[index - 16];
     }
-   }
-  } else if(lbl_803689AC) lbl_803689AC(*(u32*)(*(u8**)((u8*)arg0+0xF8)+8),value);
- } else {
-  index=bits&31;
-  if(index<16) result=((SynthMessageSlots*)((u8*)arg0+(u8)index*4))->slots[0];
-  else result=*(s32*)((u8*)lbl_8034CB74+(u8)index*4-0x40);
-  result=fn_80255FB0(result);
-  if((u32)result!=0xFFFFFFFF) {
-   state=(u8*)lbl_803689A8+(u8)result*0x458;
-   if(state[0x440]<4) {
- state[0x440]++;
- ((SynthMessageQueue*)(state+state[0x442]*4))->slots[0]=value;
- state[0x442]=(state[0x442]+1)&3;
- if(state[0x68]!=0 && *(u32*)(state+0x58)!=0) {
- *(u32*)(state+0x38)=*(u32*)(state+0x64);
- *(u32*)(state+0x34)=*(u32*)(state+0x58);
- *(u32*)(state+0x58)=0;
- fn_8025539C(state);
- }
-}
-  }
- }
+    raw = *(u32 *)arg1;
+    if ((u8)(raw >> 8) == 0) {
+        id = raw >> 16;
+        if (id != 0xFFFF) {
+            for (i = 0; i < lbl_8034C110[0x210]; i++) {
+                state = (u8 *)lbl_803689A8 + i * 0x458;
+                if (*(u32 *)(state + 0x34) != 0 && id == *(u16 *)(state + 0x104)) {
+                    result = fn_80255FB0(*(u32 *)(*(u8 **)(state + 0xF8) + 8));
+                    if ((u32)result != 0xFFFFFFFF) {
+                        state = (u8 *)lbl_803689A8 + (u8)result * 0x458;
+                        if (state[0x440] < 4) {
+                            state[0x440]++;
+                            ((SynthMessageQueue *)state)->slots[state[0x442]] = value;
+                            state[0x442] = (state[0x442] + 1) & 3;
+                            if (state[0x68] != 0 && *(u32 *)(state + 0x58) != 0) {
+                                *(u32 *)(state + 0x38) = *(u32 *)(state + 0x64);
+                                *(u32 *)(state + 0x34) = *(u32 *)(state + 0x58);
+                                *(u32 *)(state + 0x58) = 0;
+                                fn_8025539C(state);
+                            }
+                        }
+                    }
+                }
+            }
+        } else if (lbl_803689AC) {
+            lbl_803689AC(*(u32 *)(*(u8 **)((u8 *)arg0 + 0xF8) + 8), value);
+        }
+    } else {
+        index = bits & 31;
+        if (index < 16) {
+            result = arg0->regs[index];
+        } else {
+            result = lbl_8034CB74[index - 16];
+        }
+        result = fn_80255FB0(result);
+        if ((u32)result != 0xFFFFFFFF) {
+            state = (u8 *)lbl_803689A8 + (u8)result * 0x458;
+            if (state[0x440] < 4) {
+                state[0x440]++;
+                q = (SynthMessageQueue *)(state + state[0x442] * 4);
+                q->slots[0] = value;
+                state[0x442] = (state[0x442] + 1) & 3;
+                if (state[0x68] != 0 && *(u32 *)(state + 0x58) != 0) {
+                    *(u32 *)(state + 0x38) = *(u32 *)(state + 0x64);
+                    *(u32 *)(state + 0x34) = *(u32 *)(state + 0x58);
+                    *(u32 *)(state + 0x58) = 0;
+                    fn_8025539C(state);
+                }
+            }
+        }
+    }
 }
 #pragma opt_strength_reduction on
 void fn_80253E10(void *arg0, u32 *arg1) {
@@ -6021,7 +6143,7 @@ void fn_80258888(void) {
     u32 fn_80262538(void);
     void fn_802618E4(u8);
     void fn_80255054(void *);
-    void fn_80256FF0(Fn80256FF0Arg);
+    void fn_80256FF0(u8);
     extern u8 lbl_8035A6D0[];
     extern s32 lbl_803689A8;
 
