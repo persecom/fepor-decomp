@@ -1214,7 +1214,7 @@ block_3:
 
 char *double2hex(char *buffer, void *format, f64 value) {
     void fn_8022E660(void *, void *);
-    void fn_80234450(char *, char *);
+    void fn_80234450(char *, const char *);
     char *long2str_802338EC(s32, char *, void *);
 
     typedef struct {
@@ -1228,24 +1228,27 @@ char *double2hex(char *buffer, void *format, f64 value) {
         s32 precision;
     } PrintFormat;
 
-    PrintFormat *fmt;
-    f64 sp8;
+    typedef struct {
+        s8 kind;
+        s8 pad;
+        s16 width;
+    } DecCtrl;
+
+    char sp40[0x38];
+    char sp30[16];
+    char sp20[16];
     f64 sp18;
-    s8 sp10;
-    s16 sp12;
-    u8 decbuf[0x30];
-    u8 opts[0x10];
-    u8 opts2[0x10];
-    char *p;
+    DecCtrl sp10;
+    f64 sp8;
+    PrintFormat *fmt;
     char *out;
+    char *p;
     s32 exp;
     s32 prec;
     s32 i;
     s8 nibble;
-    s8 digit;
-    u8 *bits;
-    u32 signbit;
     u8 b;
+    u32 sb;
 
     fmt = (PrintFormat *)format;
     sp8 = value;
@@ -1254,63 +1257,63 @@ char *double2hex(char *buffer, void *format, f64 value) {
         return NULL;
     }
 
-    sp10 = 0;
-    sp12 = 0x20;
-    fn_8022E660(&sp10, decbuf);
+    sp10.kind = 0;
+    sp10.width = 0x20;
+    fn_8022E660(&sp10, sp40);
 
-    if (decbuf[5] == 'I') {
+    if ((u8)sp40[5] == 'I') {
         if (*(s16 *)&sp18 & 0x8000) {
             out = buffer - 5;
             if (fmt->conv == 'A') {
-                fn_80234450(out, "-INF");
+                fn_80234450(out, double2hex_strpool + 1);
             } else {
-                fn_80234450(out, "-inf");
+                fn_80234450(out, double2hex_strpool + 6);
             }
         } else {
             out = buffer - 4;
             if (fmt->conv == 'A') {
-                fn_80234450(out, "INF");
+                fn_80234450(out, double2hex_strpool + 0xB);
             } else {
-                fn_80234450(out, "inf");
+                fn_80234450(out, double2hex_strpool + 0xF);
             }
         }
         return out;
     }
 
-    if (decbuf[5] == 'N') {
+    if ((u8)sp40[5] == 'N') {
         if (*(u8 *)&sp8 & 0x80) {
             out = buffer - 5;
             if (fmt->conv == 'A') {
-                fn_80234450(out, "-NAN");
+                fn_80234450(out, double2hex_strpool + 0x13);
             } else {
-                fn_80234450(out, "-nan");
+                fn_80234450(out, double2hex_strpool + 0x18);
             }
         } else {
             out = buffer - 4;
             if (fmt->conv == 'A') {
-                fn_80234450(out, "NAN");
+                fn_80234450(out, double2hex_strpool + 0x1D);
             } else {
-                fn_80234450(out, "nan");
+                fn_80234450(out, double2hex_strpool + 0x21);
             }
         }
         return out;
     }
 
-    opts[0] = 1;
-    opts[1] = 1;
-    opts[2] = 0;
-    opts[3] = 0;
-    opts[4] = 0;
-    opts[5] = 0x64;
-    *(s32 *)(opts + 8) = 0;
-    *(s32 *)(opts + 0xC) = 1;
-    *(s32 *)(opts2 + 0) = *(s32 *)(opts + 0);
-    *(s32 *)(opts2 + 4) = *(s32 *)(opts + 4);
-    *(s32 *)(opts2 + 8) = 0;
-    *(s32 *)(opts2 + 0xC) = 1;
+    sp30[0] = 1;
+    sp30[1] = 1;
+    sp30[2] = 0;
+    sp30[3] = 0;
+    sp30[4] = 0;
+    sp30[5] = 0x64;
+    *(s32 *)(sp30 + 8) = 0;
+    *(s32 *)(sp30 + 12) = 1;
+    *(s32 *)(sp20 + 0) = *(s32 *)(sp30 + 0);
+    *(s32 *)(sp20 + 4) = *(s32 *)(sp30 + 4);
+    *(s32 *)(sp20 + 8) = 0;
+    *(s32 *)(sp20 + 12) = 1;
 
     exp = (s16)((*(u16 *)&sp18 >> 4) & 0x7FF) - 0x3FF;
-    p = long2str_802338EC(exp, buffer, opts2);
+    p = long2str_802338EC(exp, buffer, sp20);
 
     if (fmt->conv == 'a') {
         p[-1] = 'p';
@@ -1321,25 +1324,23 @@ char *double2hex(char *buffer, void *format, f64 value) {
     }
 
     prec = fmt->precision;
-    bits = (u8 *)&sp8;
     i = prec;
     if (prec >= 1) {
         do {
-            signbit = (u32)i >> 31;
-            b = bits[((s32)(signbit + i) >> 1) + 1];
-            if ((((i & 1) ^ (s32)signbit) - (s32)signbit) != 0) {
+            sb = (u32)i >> 31;
+            b = ((u8 *)&sp8)[((s32)(sb + i) >> 1) + 1];
+            if ((((i & 1) ^ (s32)sb) - (s32)sb) != 0) {
                 nibble = (s8)(b & 0xF);
             } else {
                 nibble = (s8)((b >> 4) & 0xF);
             }
             if (nibble < 0xA) {
-                digit = nibble + '0';
+                *--out = nibble + '0';
             } else if (fmt->conv == 'a') {
-                digit = nibble + 0x57;
+                *--out = nibble + 0x57;
             } else {
-                digit = nibble + 0x37;
+                *--out = nibble + 0x37;
             }
-            *--out = digit;
             i -= 1;
         } while (--prec);
     }
@@ -2163,6 +2164,130 @@ f64 fn_80235B4C(f64 farg0) {
     Nz = ((((lbl_8036BE68 * z + lbl_8036BE60) * z + lbl_8036BE58) * z + lbl_8036BE48) * z + lbl_8036BE70) * z + lbl_8036BE80;
     Dz = ((((lbl_8036BE90 * z + lbl_8036BE88) * z + lbl_8036BE40) * z + lbl_8036BE50) * z + lbl_8036BE90);
     return lbl_8036BEA0 * (sp10 + (Nz / Dz * h + (-((sp10 * sp10) - z) / (h + sp10))));
+}
+
+f64 fn_80235D88(f64 x, f64 y) {
+    extern f64 lbl_80282CC0[];
+    int n, hx, hy, hz, ix, iy, sx, i;
+    unsigned lx, ly, lz;
+
+    hy = *(int *)&y;
+    hx = *(int *)&x;
+    ly = *(1 + (unsigned *)&y);
+    sx = hx & 0x80000000;
+    hx ^= sx;
+    hy &= 0x7fffffff;
+    lx = *(1 + (unsigned *)&x);
+
+    if ((hy | ly) == 0 || (hx >= 0x7ff00000) ||
+        ((hy | ((ly | -ly) >> 31)) > 0x7ff00000))
+        return (x * y) / (x * y);
+    if (hx <= hy) {
+        if ((hx < hy) || (lx < ly))
+            return x;
+        if (lx == ly)
+            return lbl_80282CC0[(unsigned)sx >> 31];
+    }
+
+    if (hx < 0x00100000) {
+        if (hx == 0) {
+            for (ix = -1043, i = lx; i > 0; i <<= 1)
+                ix -= 1;
+        } else {
+            for (ix = -1022, i = (hx << 11); i > 0; i <<= 1)
+                ix -= 1;
+        }
+    } else
+        ix = (hx >> 20) - 1023;
+
+    if (hy < 0x00100000) {
+        if (hy == 0) {
+            for (iy = -1043, i = ly; i > 0; i <<= 1)
+                iy -= 1;
+        } else {
+            for (iy = -1022, i = (hy << 11); i > 0; i <<= 1)
+                iy -= 1;
+        }
+    } else
+        iy = (hy >> 20) - 1023;
+
+    if (ix >= -1022)
+        hx = 0x00100000 | (0x000fffff & hx);
+    else {
+        n = -1022 - ix;
+        if (n <= 31) {
+            hx = (hx << n) | (lx >> (32 - n));
+            lx <<= n;
+        } else {
+            hx = lx << (n - 32);
+            lx = 0;
+        }
+    }
+    if (iy >= -1022)
+        hy = 0x00100000 | (0x000fffff & hy);
+    else {
+        n = -1022 - iy;
+        if (n <= 31) {
+            hy = (hy << n) | (ly >> (32 - n));
+            ly <<= n;
+        } else {
+            hy = ly << (n - 32);
+            ly = 0;
+        }
+    }
+
+    n = ix - iy;
+    while (n--) {
+        hz = hx - hy;
+        lz = lx - ly;
+        if (lx < ly)
+            hz -= 1;
+        if (hz < 0) {
+            hx = hx + hx + (lx >> 31);
+            lx = lx + lx;
+        } else {
+            if ((hz | lz) == 0)
+                return lbl_80282CC0[(unsigned)sx >> 31];
+            hx = hz + hz + (lz >> 31);
+            lx = lz + lz;
+        }
+    }
+    hz = hx - hy;
+    lz = lx - ly;
+    if (lx < ly)
+        hz -= 1;
+    if (hz >= 0) {
+        hx = hz;
+        lx = lz;
+    }
+
+    if ((hx | lx) == 0)
+        return lbl_80282CC0[(unsigned)sx >> 31];
+    while (hx < 0x00100000) {
+        hx = hx + hx + (lx >> 31);
+        lx = lx + lx;
+        iy -= 1;
+    }
+    if (iy >= -1022) {
+        hx = ((hx - 0x00100000) | ((iy + 1023) << 20));
+        *(int *)&x = hx | sx;
+        *(1 + (unsigned *)&x) = lx;
+    } else {
+        n = -1022 - iy;
+        if (n <= 20) {
+            lx = (lx >> n) | ((unsigned)hx << (32 - n));
+            hx >>= n;
+        } else if (n <= 31) {
+            lx = ((unsigned)hx << (32 - n)) | (lx >> n);
+            hx = sx;
+        } else {
+            lx = hx >> (n - 32);
+            hx = sx;
+        }
+        *(int *)&x = hx | sx;
+        *(1 + (unsigned *)&x) = lx;
+    }
+    return x;
 }
 
 f64 fn_802380A8(f64 farg0, f64 farg1) {
