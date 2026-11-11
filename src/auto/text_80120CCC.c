@@ -1,9 +1,8 @@
 /* Functions from 0x80120CCC to 0x80127D80, found by decomp-toolkit. */
 #include "common.h"
 
-/* Signed int-to-float bias (exact 0x4330000080000000); -str reuse merges casts onto this. */
-static const u32 lbl_8036A2C8_bits[2] = {0x43300000, 0x80000000};
-#define lbl_8036A2C8 (*(f64 *)lbl_8036A2C8_bits)
+/* Signed int-to-float bias; const → .sdata2 so (f32)(s32) -str reuse can share it. */
+const f64 lbl_8036A2C8 = 4503601774854144.0;
 
 typedef struct {
     s32 field_0x84;
