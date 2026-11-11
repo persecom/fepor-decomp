@@ -247,6 +247,22 @@ typedef struct String {
     char *data;
 } String;
 
+#pragma cplusplus on
+class SortIterator {
+public:
+    s32 *ptr;
+    s32 state;
+    SortIterator(const SortIterator &o) { ptr=o.ptr; state=o.state; }
+    SortIterator &operator+=(s32 n) { ptr+=n; return *this; }
+    SortIterator operator+(s32 n) const { SortIterator out(*this); out+=n; return out; }
+};
+class SortCompare {
+public:
+    u8 value;
+    SortCompare(const SortCompare &o) { value=o.value; }
+};
+#pragma cplusplus reset
+
 /* std::min on string lengths (returns a reference) */
 static inline const u32 *StrMin(const u32 *a, const u32 *b) {
     return (*b < *a) ? b : a;
@@ -1218,6 +1234,62 @@ void fn_800CD5E4(void *arg0) {
     temp_r3 = vtable_entry[0x10 / sizeof(void *)];
     ((void (*)(void *, void *, void *))temp_r3)(temp_r3, (u16 *)lbl_802704F8 + 0x3D0, (u16 *)lbl_802704F8 + 0x3D7);
 }
+
+#pragma dont_inline on
+#pragma use_lmw_stmw on
+extern "C" void *fn_800CD79C(s32 arg0,void *arg1,s32 arg2,u32 arg3,u32 arg4,s32 arg5,u8 arg6) {
+ void fn_800C9ABC(void *,void *,void *); void fn_800CB8A4(void *,void *,s32); void fn_800CB90C(void *,void *,void *);
+ void *fn_800C42D8(u32); void *fn_800C93EC(s32); void *fn_800C96F8(void *,void *,s32);
+ char *fn_801992F8(u32); s32 strlen(const char *);
+ void fn_800E78B0(void *,String *); void fn_800E8154(void *,void *);
+ void *fn_80117A94(void *,void *,void *,void *,s32,u8);
+ void fn_80112824(void *,void *); void fn_801167BC(void *,u32); void fn_801166C4(void *,u32);
+ void fn_800DF664(u32); void fn_8011660C(void *,s32); void fn_800E4E5C(void *);
+ void fn_800E4D24(void *); void fn_800E4BA4(void *,s32); void fn_800E4B84(void *); void fn_800E4B44(void *);
+ extern char lbl_802704F8[]; extern u8 lbl_8036788C;
+ struct Obj { u8 pad[16]; virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(void *); };
+ String sp74,sp68,sp5C,sp50,sp44,sp38,sp2C,sp20,sp14;
+ u32 sp10,spC,sp8;
+ void *result;
+ s8 made1,made2;
+ s32 self;
+ self=arg0;
+
+ fn_800C9ABC(&sp74,lbl_802704F8+0x3DB,&sp10);
+ sp68.cap=0; sp5C.cap=0; sp68.size=0; sp68.data=0; sp68.cap=0;
+ sp5C.size=0; sp5C.data=0; sp5C.cap=0;
+ if(M2C_FIELD(self,s32 *,0x274)) {
+ if(arg6) arg6=0; else arg6=1;
+ }
+ if(arg3) { result=fn_801992F8(arg3); fn_800C96F8(&sp5C,result,strlen((char *)result)); }
+ else fn_800C96F8(&sp5C,lbl_802704F8+0x16F,strlen((char *)lbl_802704F8+0x16F));
+ if(lbl_8036788C) fn_800C96F8(&sp5C,lbl_802704F8+0x16F,strlen((char *)lbl_802704F8+0x16F));
+ fn_800E78B0(M2C_FIELD(self,void **,4),&sp5C);
+ fn_800CB8A4(&sp50,&sp74,arg2); fn_800CB90C(&sp44,&sp50,lbl_802704F8+0x1D1);
+ fn_800E8154(M2C_FIELD(self,void **,4),&sp44);
+ fn_800C9A60(&sp44,-1); fn_800C9A60(&sp50,-1);
+ made1=0; made2=0;
+ result=fn_800C42D8(0x1D8);
+ if(result) {
+ fn_800C9ABC(&sp38,fn_800C93EC(arg2),&spC); made1=1;
+ fn_800C9ABC(&sp2C,arg1,&sp8); made2=1;
+ result=fn_80117A94(result,M2C_FIELD(self,void **,4),&sp2C,&sp38,arg5,arg6);
+ }
+ if(made2) fn_800C9A60(&sp2C,-1);
+ if(made1) fn_800C9A60(&sp38,-1);
+ fn_800CB8A4(&sp20,&sp74,arg2); fn_800CB90C(&sp14,&sp20,lbl_802704F8+0x3DF);
+ fn_80112824(result,&sp14); fn_800C9A60(&sp14,-1); fn_800C9A60(&sp20,-1);
+ fn_801167BC(result,arg3);
+ if(arg4) { fn_801166C4(result,arg4); fn_800DF664(arg4); }
+ fn_8011660C(result,M2C_FIELD(self,s32 *,0x228));
+ ((Obj *)M2C_FIELD(self,void **,4))->v5(result);
+ if(M2C_FIELD(self,u8 *,0x186)) fn_800E4E5C(result);
+ fn_800E4D24(result); fn_800E4BA4(result,255); fn_800E4B84(result); fn_800E4B44(result);
+ fn_800C9A60(&sp5C,-1); fn_800C9A60(&sp68,-1); fn_800C9A60(&sp74,-1);
+ return result;
+}
+#pragma dont_inline reset
+#pragma use_lmw_stmw reset
 
 void fn_800CDAA0(void *arg0, void *arg1) {
     s32 tmp;
