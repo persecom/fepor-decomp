@@ -451,6 +451,41 @@ u16 fn_80222CE8(void *arg0) {
     return M2C_FIELD(arg0, u16 *, 8);
 }
 
+void fn_80222CF0(void *arg0, void *arg1)
+{
+    void __GXFlushTextureState(void);
+
+    u32 *texture;
+    u32 *region;
+    u32 *gx;
+    u32 (*callback)(void *);
+    u32 value;
+
+    texture = (u32 *)arg0;
+    gx = (u32 *)__GXData;
+
+    callback = *(u32 (**)(void *))((u8 *)gx + 0x4CC);
+    region = (u32 *)callback(arg1);
+
+    __GXFlushTextureState();
+
+    *(volatile u8 *)0xCC008000 = 0x61;
+    *(volatile u32 *)0xCC008000 = texture[1];
+
+    *(volatile u8 *)0xCC008000 = 0x61;
+    *(volatile u32 *)0xCC008000 = region[0];
+
+    __GXFlushTextureState();
+
+    value = texture[0];
+    value = (value & ~0x3FF) | (region[0] & 0x3FF);
+    texture[0] = value;
+
+    region[1] = texture[0];
+    region[2] = texture[1];
+    region[3] = texture[2];
+}
+
 void GXInitTexCacheRegion(void *region, s8 is_32b, u32 tmem_even, s32 size_even, u32 tmem_odd, s32 size_odd) {
     u32 a;
     s32 var_r9;
@@ -534,6 +569,51 @@ s32 fn_80222F10(s32 arg0) {
     return temp_r0;
 }
 
+void fn_80222F24(u32 arg0, u32 arg1)
+{
+    u8 *gx;
+    u8 *source;
+    u8 *dest;
+    u32 value;
+    u32 flags;
+    u32 reg;
+    u32 field;
+
+    gx = (u8 *)__GXData;
+    source = gx + (arg0 << 2);
+    dest = gx + (arg1 << 2);
+
+    value = *(u32 *)(source + 0x514);
+
+    reg = *(u32 *)(dest + 0xB8);
+    reg = (reg & 0xFFFF0000) | (value & 0x3FF);
+    *(u32 *)(dest + 0xB8) = reg;
+
+    field = (value >> 10) & 0x3FF;
+
+    reg = *(u32 *)(dest + 0xD8);
+    reg = (reg & 0xFFFF0000) | field;
+    *(u32 *)(dest + 0xD8) = reg;
+
+    flags = *(u32 *)(source + 0x534);
+
+    reg = *(u32 *)(dest + 0xB8);
+    reg = (reg & ~0x10000) | (((flags & 3) == 1) << 16);
+    *(u32 *)(dest + 0xB8) = reg;
+
+    reg = *(u32 *)(dest + 0xD8);
+    reg = (reg & ~0x10000) | ((((flags >> 2) & 3) == 1) << 16);
+    *(u32 *)(dest + 0xD8) = reg;
+
+    *(volatile u8 *)0xCC008000 = 0x61;
+    *(volatile u32 *)0xCC008000 = *(u32 *)(dest + 0xB8);
+
+    *(volatile u8 *)0xCC008000 = 0x61;
+    *(volatile u32 *)0xCC008000 = *(u32 *)(dest + 0xD8);
+
+    *(u16 *)(gx + 2) = 0;
+}
+
 void fn_80222FC4(void) {
     u32* gxData;
     u32 temp_r0;
@@ -605,6 +685,115 @@ void fn_80222FC4(void) {
             var_r31 += 1;
             goto loop_26;
         }
+    }
+}
+
+void __GXSetTmemConfig(u32 nTmemConfig)
+{
+    switch (nTmemConfig) {
+    case 2:
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x8C0D8000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x900DC000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x8D0D8800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x910DC800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x8E0D9000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x920DD000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x8F0D9800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x930DD800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xAC0DA000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xB00DC400;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xAD0DA800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xB10DCC00;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xAE0DB000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xB20DD400;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xAF0DB800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xB30DDC00;
+        break;
+    case 1:
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x8C0D8000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x900DC000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x8D0D8800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x910DC800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x8E0D9000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x920DD000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x8F0D9800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x930DD800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xAC0DA000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xB00DE000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xAD0DA800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xB10DE800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xAE0DB000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xB20DF000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xAF0DB800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xB30DF800;
+        break;
+    case 0:
+    default:
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x8C0D8000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x900DC000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x8D0D8400;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x910DC400;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x8E0D8800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x920DC800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x8F0D8C00;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0x930DCC00;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xAC0D9000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xB00DD000;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xAD0D9400;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xB10DD400;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xAE0D9800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xB20DD800;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xAF0D9C00;
+        *(u8 *)0xCC008000 = 0x61;
+        *(u32 *)0xCC008000 = 0xB30DDC00;
+        break;
     }
 }
 
@@ -711,6 +900,51 @@ void __GXFlushTextureState(void) {
     *(u16 *)__GXData = 0;
 }
 
+void fn_802239D0(s32 arg0, u32 arg1)
+{
+    extern u8 lbl_8029E2E0[];
+
+    u8 *table;
+    u8 *gx;
+    u32 *entry;
+    u32 value;
+    u32 other;
+    u32 index;
+    u32 offset;
+
+    table = lbl_8029E2E0;
+    offset = arg1 << 2;
+
+    if (arg0 == 0) {
+        value = *(u32 *)(table + offset);
+        other = *(u32 *)(table + offset + 0x28);
+    } else {
+        value = *(u32 *)(table + offset + 0x14);
+        other = *(u32 *)(table + offset + 0x3C);
+    }
+
+    gx = (u8 *)__GXData;
+    index = arg0 << 2;
+    entry = (u32 *)(gx + index + 0x130);
+
+    value = (*entry & 0xFF000000) | (value & 0x00FFFFFF);
+
+    *(volatile u8 *)0xCC008000 = 0x61;
+    *(volatile u32 *)0xCC008000 = value;
+
+    *entry = value;
+
+    entry = (u32 *)(gx + index + 0x170);
+
+    other = (*entry & 0xFF00000F) | (other & 0x00FFFFF0);
+
+    *(volatile u8 *)0xCC008000 = 0x61;
+    *(volatile u32 *)0xCC008000 = other;
+
+    *entry = other;
+    *(u16 *)(gx + 2) = 0;
+}
+
 void fn_80223A5C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     u32 *temp_r8;
     u32 temp_r10;
@@ -731,6 +965,39 @@ void fn_80223A5C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 
 u16 fn_80223AA0(u16 arg0) {
     return __GXData[0x388 + arg0 * 0x10];
+}
+
+void fn_80223AE4(u32 arg0, s32 arg1, u32 arg2, u32 arg3, u32 arg4, u32 arg5)
+{
+    u8 *gx;
+    u32 *entry;
+    u32 value;
+    u32 index;
+
+    gx = (u8 *)__GXData;
+    index = arg0 << 2;
+    entry = (u32 *)(gx + 0x130 + index);
+
+    value = *entry;
+
+    value = (value & ~0x00040000) | ((arg1 << 18) & 0x00040000);
+
+    if (arg1 <= 1) {
+        value = (value & ~0x00300000) | ((arg3 << 20) & 0x00300000);
+        value = (value & ~0x00030000) | ((arg2 << 16) & 0x00030000);
+    } else {
+        value = (value & ~0x00300000) | ((arg1 << 19) & 0x00300000);
+        value = (value & ~0x00030000) | 0x00030000;
+    }
+
+    value = (value & ~0x00080000) | ((arg4 << 19) & 0x00080000);
+    value = (value & ~0x00C00000) | ((arg5 << 22) & 0x00C00000);
+
+    *(volatile u8 *)0xCC008000 = 0x61;
+    *(volatile u32 *)0xCC008000 = value;
+
+    *entry = value;
+    *(u16 *)(gx + 2) = 0;
 }
 
 u16* fn_80223B4C(s32 arg0) {
