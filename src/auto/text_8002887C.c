@@ -768,7 +768,6 @@ extern "C" void fn_8002BAFC(void *arg0, s32 arg1) {
 
 #pragma cplusplus on
 #pragma use_lmw_stmw on
-#pragma global_optimizer off
 extern "C" void fn_8002C194(void *arg0, s8 arg1) {
     extern u8 lbl_80284E20[];
     extern u8 lbl_80284CB0[];
