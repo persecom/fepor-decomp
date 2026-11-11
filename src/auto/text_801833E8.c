@@ -430,6 +430,80 @@ void fn_80183EAC(s32 arg0, s32 arg1, s8 arg2, s8 arg3, s32 arg4) {
     *((u8 *)temp_r3 + 0x49) = 0;
 }
 
+void *fn_80183F30(void *arg0, void *arg1) {
+    void fn_8000A388(void *, void *, void *);
+    void fn_80185060(void *, void *);
+    void *fn_8000CAA0(void *, void *);
+    void *fn_800C45B8(s32, void *, s32);
+    void fn_80050BCC(void *, s32);
+    void fn_8018851C(void *);
+    u8 *fn_8001FC34(void *);
+    extern u8 lbl_80295BC0[];
+    extern u8 lbl_80278E24[];
+    extern u8 lbl_802CA518[];
+    void *search[14];
+    u8 *obj;
+    s32 i;
+    s32 count;
+    s32 temp;
+    u8 flags;
+    u8 *str;
+
+    str = fn_8001FC34(lbl_802CA518);
+    search[12] = arg0;
+    search[13] = 0;
+    fn_8000A388(lbl_80295BC0, fn_80185060, search);
+    obj = search[13];
+    if (obj == 0) {
+        obj = fn_8000CAA0(lbl_80295BC0, arg1);
+        *(void **)(obj + 0x30) = arg0;
+        *(u16 *)(obj + 0x52) = 0x40;
+        *(void **)(obj + 0x54) = fn_800C45B8(-128, (void *)((u32)lbl_80278E24 + 0x1A9), 0);
+        obj[0x59] = 0;
+        obj[0x5A] = 16;
+        *(s8 *)(obj + 0x6A) = -1;
+        *(void **)(obj + 0x6C) = fn_800C45B8(-1536, (char *)((u8 *)lbl_80278E24 + 0x1A9), 0);
+        if (*(u16 *)(obj + 0x52) & 16) {
+            fn_80050BCC(arg0, 0);
+        }
+        if ((*(u8 **)((u8 *)arg0 + 0x18C))[0x42] == 9) {
+            *(u16 *)(obj + 0x52) |= 0x8000;
+        }
+        temp = (s32)*(f32 *)((u8 *)arg0 + 4);
+        obj[0x40] = temp;
+        obj[0x42] = temp;
+        temp = (s32)*(f32 *)((u8 *)arg0 + 8);
+        obj[0x41] = temp;
+        obj[0x43] = temp;
+    }
+    if (str == 0) {
+        count = 0;
+    } else {
+        u8 *q;
+        count = 0;
+        q = str;
+        for (;;) {
+            if (*q == 16) {
+                break;
+            }
+            count++;
+            q++;
+        }
+    }
+    for (i = 0; i < count; i++) {
+        (*(u8 **)(obj + 0x54))[i + obj[0x59]] = *str;
+        obj[0x5A] = *str++;
+    }
+    (*(u8 **)(obj + 0x54))[i + obj[0x59]] = 16;
+    flags = *(u16 *)(obj + 0x52) & 15;
+    if (flags) {
+        obj[0x5A] = flags;
+    }
+    obj[0x59] += count;
+    fn_8018851C(obj);
+    return obj;
+}
+
 #pragma opt_common_subs off
 #pragma use_lmw_stmw on
 void *fn_80184264(void *arg0,u8 *arg1,u16 arg2,void *arg3) {
@@ -5591,6 +5665,68 @@ void fn_80196AD0(void *arg0, s32 arg1) {
     fn_800076AC(temp_r24_4, temp_r25_3, temp_r26_2, (u8) temp_r27_2);
     fn_80007884();
 }
+
+#pragma cplusplus on
+extern "C" void fn_80197F5C(void *arg0) {
+void fn_80123300(void *,s32); void fn_801232F4(void *,f32,f32); void fn_801475FC(void *,s32);
+f64 fn_80238638(f64);
+extern void *lbl_80368278;
+extern u8 lbl_8027A780[];
+extern f32 lbl_8036AE88,lbl_8036AE8C,lbl_8036AEA0,lbl_8036AEA4;
+struct Obj {u8 pad[0x40];
+virtual void v0()=0; virtual void v1()=0; virtual void v2()=0; virtual void v3()=0;
+virtual void v4()=0; virtual void v5()=0; virtual void v6()=0; virtual void v7()=0;
+virtual void v8()=0; virtual void v9()=0; virtual void v10()=0;
+virtual void color(u8,u8,u8,u8)=0;
+};
+u8 *self=(u8 *)arg0; u8 *owner=*(u8 **)self;
+s32 value; f32 wave,zero; Obj *obj; u8 c;
+value=(*(s32 *)(self+0x78));
+if(value>0 && (*(s32 *)(self+0x7C))<value) {
+if(--(*(s32 *)(self+0x8C))<=0) {
+(*(s32 *)(self+0x78))--;(*(s32 *)(self+0x8C))=1;
+fn_80123300((*(void * *)(self+0x64)),(*(s32 *)(self+0x78)));
+if((*(s32 *)(self+0x7C))==(value=(*(s32 *)(self+0x78))) || value==0) {
+fn_801232F4((*(void * *)(self+0x64)),lbl_8036AE8C,*(f32 *)((u8 *)lbl_80368278+0xAC));(*(s32 *)(self+0x8C))=-1;
+}
+}
+}
+value=(*(s32 *)(self+0x78));
+if(value<(*(s32 *)(self+0x70)) && (*(s32 *)(self+0x7C))>value) {
+if(--(*(s32 *)(self+0x8C))<=0) {
+(*(s32 *)(self+0x78))++;(*(s32 *)(self+0x8C))=3;
+fn_801475FC(lbl_8027A780+8,100);fn_80123300((*(void * *)(self+0x64)),(*(s32 *)(self+0x78)));
+if((*(s32 *)(self+0x7C))==(*(s32 *)(self+0x78))) (*(s32 *)(self+0x8C))=-1;
+}
+}
+if((*(s32 *)(self+0x88))>(*(s32 *)(self+0x84))) {
+if(--(*(s32 *)(self+0x8C))<=0) {
+(*(s32 *)(self+0x84))++;(*(s32 *)(self+0x8C))=1;
+fn_801475FC(lbl_8027A780+0x1C,100);fn_80123300((*(void * *)(self+0x64)),(*(s32 *)(self+0x84))%100);
+if((*(s32 *)(self+0x88))==(*(s32 *)(self+0x84))) (*(s32 *)(self+0x8C))=-1;
+}
+}
+if((*(s32 *)(self+0x6C))!=2 && (*(s32 *)(self+0x98))==0) {
+wave=lbl_8036AEA0*(f32)fn_80238638((f32)*(s32 *)(owner+0x44) * *(f32 *)((u8 *)lbl_80368278+0xD4));
+if(wave<lbl_8036AE88) wave*=lbl_8036AEA4;
+(*(u8 *)(self+0x52))=64;(*(u8 *)(self+0x51))=64;(*(u8 *)(self+0x50))=64;(*(u8 *)(self+0x53))=(s8)(s32)wave;
+}
+if((*(s32 *)(self+0x98))!=0) {
+(*(u8 *)(self+0x50))=255; (*(u8 *)(self+0x52))=64; (*(u8 *)(self+0x51))=64; (*(u8 *)(self+0x53))=(s8)(s32)(*(f32 *)(self+0x90));
+if((*(u8 *)(self+0x9C))!=0) {
+obj=(Obj *)(*(void * *)(self+0x68)); if(obj) obj->color(255,255,255,(*(u8 *)(self+0x53)));
+} else {
+obj=(Obj *)(*(void * *)(self+0x64));c=255-(*(u8 *)(self+0x53));obj->color(255,c,c,255);
+}
+zero=lbl_8036AE88;
+(*(f32 *)(self+0x90))+=(*(f32 *)(self+0x94));
+if((*(f32 *)(self+0x90))<zero) {
+(*(f32 *)(self+0x90))=zero; ((Obj *)(*(void * *)(self+0x64)))->color(255,255,255,255);
+}
+(*(s32 *)(self+0x98))--;
+}
+}
+#pragma cplusplus off
 
 void fn_801985C4(void *arg0) {
     void *x = *(void **)((u8 *)arg0 + 0x144);
