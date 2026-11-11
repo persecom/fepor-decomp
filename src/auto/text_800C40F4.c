@@ -254,8 +254,8 @@ public:
     s32 state;
     SortIterator(const SortIterator &o) { ptr=o.ptr; state=o.state; }
     SortIterator &operator+=(s32 n) { ptr+=n; return *this; }
-    const SortIterator operator+(s32 n) const { return SortIterator(*this) += n; }
 };
+static inline SortIterator operator+(SortIterator it, s32 n) { it+=n; return it; }
 class SortCompare {
 public:
     u8 value;
@@ -3783,7 +3783,6 @@ loop_1:
     }
 }
 
-#pragma opt_class_copy off
 #pragma cplusplus on
 #pragma use_lmw_stmw on
 extern "C" void fn_800E103C(s32 *begin,s32 *end,SortIterator a,SortIterator b,SortCompare comp) {
@@ -3827,7 +3826,6 @@ extern "C" void fn_800E103C(s32 *begin,s32 *end,SortIterator a,SortIterator b,So
  fn_800E14E4(begin,mid,end,comp,((s32)mid-(s32)begin)/4,((s32)end-(s32)mid)/4,a,b);
  }
  }
-#pragma opt_class_copy reset
 #pragma cplusplus off
 }
 void fn_800E2138(void *arg0, void *arg1, s32 arg2) {
