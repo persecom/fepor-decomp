@@ -27,6 +27,50 @@ static inline u32 LoadSoundBankB(void *path) {
     return buffer;
 }
 
+static inline void SortSoundReadsB(u8 *list, u32 n) {
+    void *memcpy(void *, const void *, u32);
+    void fn_800B50FC(u8 **, u32);
+    s32 fn_800B4FF8(u8 *,u8 *);
+    extern u8 *lbl_8031DEC0[];
+    extern u8 lbl_8031FEC0[];
+    extern s32 (*lbl_80367828)(u8 *,u8 *);
+    u8 **table, **walk, **slot;
+    u8 *cur, *saved, *dst;
+    u32 i;
+    lbl_80367828 = fn_800B4FF8;
+    table = lbl_8031DEC0;
+    saved = lbl_8031FEC0;
+    if (n > 1) {
+        walk = table;
+        cur = list;
+        for (i = n; i != 0; i--) {
+            *walk++ = cur++;
+        }
+        fn_800B50FC(table, n);
+        walk = table;
+        cur = list;
+        i = 0;
+        while (i++ < n) {
+            if (*walk != 0 && *walk != cur) {
+                slot = walk;
+                dst = cur;
+                memcpy(saved, cur, 1);
+                do {
+                    memcpy(dst, *slot, 1);
+                    dst = *slot;
+                    *slot = 0;
+                    slot = table + (dst - list);
+                } while (*slot != cur);
+                memcpy(dst, saved, 1);
+                *slot = 0;
+            }
+            cur++;
+            walk++;
+        }
+    }
+
+}
+
 typedef struct StreamB { u8 pad[0x2C]; s32 buffers[2]; u8 pad34[0x14]; u32 size; u16 index; } StreamB;
 extern s32 fn_80010710(u8* arg0);
   extern s32 lbl_80368230;
@@ -1387,6 +1431,124 @@ s32 fn_800B4A84(void* arg0, s32 arg1, s32 arg2) {
     }
 }
 
+#pragma global_optimizer off
+#pragma use_lmw_stmw on
+void fn_800B4C20(void) {
+    void *memset(void *, s32, u32);
+    void *memcpy(void *, const void *, u32);
+    void fn_800B50FC(u8 **, u32);
+    s32 fn_8020C79C(void *);
+    s32 fn_8020CC28(void *, s32, s32, s32, s32);
+    void OSReport(void *, ...);
+    s32 fn_800B4FF8(u8 *, u8 *);
+    extern u8 *lbl_80367820;
+    extern u8 *lbl_8031DEC0[];
+    extern u8 lbl_8031FEC0[];
+    extern void (*lbl_80367824)(void);
+    extern s32 (*lbl_80367828)(u8 *,u8 *);
+    extern u8 lbl_8026EC50[];
+    u8 list[256];
+    u32 count;
+    u8 *dst, *entry, *cur, *saved;
+    u8 **table, **slot, **walk;
+    u32 i, n;
+    s32 j, moved, size, result;
+    void (*callback)(s32, void *);
+    count = 0;
+    memset(list, 0, 256);
+    {
+    u8 *dst;
+    u8 *entry;
+    u32 i;
+    dst = list;
+    entry = lbl_80367820;
+    for (i = 0; i < 256; i++) {
+        if (*(u16 *)(entry + 0x90) & 0x8000) {
+            *dst = i;
+            count++;
+            dst++;
+        }
+        entry += 0x98;
+    }
+    }
+    lbl_80367828 = fn_800B4FF8;
+    {
+    u8 **table, **walk, **slot;
+    u8 *saved, *cur, *dst;
+    u32 n, i;
+    table = lbl_8031DEC0;
+    n = count;
+    saved = lbl_8031FEC0;
+    if (count > 1) {
+        walk = table;
+        cur = list;
+        for (i = count; i > 0; i--) {
+            *walk++ = cur++;
+        }
+        fn_800B50FC(table, n);
+        walk = table;
+        cur = list;
+        i = 0;
+        while (i++ < n) {
+            if (*walk != 0) {
+                slot = walk;
+                if (*walk != cur) {
+                dst = cur;
+                memcpy(saved, cur, 1);
+                do {
+                    memcpy(dst, *slot, 1);
+                    dst = *slot;
+                    *slot = 0;
+                    slot = table + (dst - list);
+                } while (*slot != cur);
+                memcpy(dst, saved, 1);
+                *slot = 0;
+                }
+            }
+            cur++;
+            walk++;
+        }
+    }
+    }
+    cur = list;
+    for (j = 0; j < (s32)count; j++, cur++) {
+        moved = 0;
+        entry = lbl_80367820 + *cur * 0x98;
+        if (!(*(u16 *)(entry + 0x90) & 0x80) && (*(u16 *)(entry + 0x90) & 1)) {
+            size = *(s32 *)(entry + 0x80);
+            if (*(u16 *)(entry + 0x92) != 0 && size > 0x40000) size = 0x40000;
+            result = fn_8020CC28(entry + 0x40, *(s32 *)(entry + 0x7C), size, *(s32 *)(entry + 0x84) + *(s32 *)(entry + 0x88), 2);
+            if (result == -3) {
+                *(u16 *)(entry + 0x90) &= ~1;
+                *(u16 *)(entry + 0x90) |= 2;
+                callback = *(void (**)(s32,void *))(entry + 0x8C);
+                if (callback) callback(result, entry + 0x40);
+            } else if (result < 0) {
+                OSReport(lbl_8026EC50, entry);
+                *(u16 *)(entry + 0x90) |= 0x20;
+                *(u16 *)(entry + 0x90) |= 0x80;
+            } else {
+                *(s32 *)(entry + 0x80) -= size;
+                *(s32 *)(entry + 0x88) += size;
+                *(s32 *)(entry + 0x7C) += size;
+                if (*(s32 *)(entry + 0x80) == 0) {
+                    *(u16 *)(entry + 0x90) &= ~1;
+                    *(u16 *)(entry + 0x90) |= 2;
+                    callback = *(void (**)(s32,void *))(entry + 0x8C);
+                    if (callback) callback(result, entry + 0x40);
+                }
+                moved = 1;
+            }
+        }
+        if (*(u16 *)(entry + 0x90) & 8) {
+            if (fn_8020C79C(entry + 0x40) == 0) OSReport(lbl_8026EC50 + 0x1E, entry);
+            memset(entry, 0, 0x98);
+        }
+        if (moved != 0) break;
+    }
+    if (lbl_80367824) lbl_80367824();
+}
+#pragma global_optimizer reset
 extern u8 *lbl_80367820;
 s32 fn_800B4FF8(u8 *arg0, u8 *arg1) {
     u8 *temp_r4;
