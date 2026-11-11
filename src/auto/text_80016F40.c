@@ -404,7 +404,7 @@ void fn_80017BFC(void) {
 
 void fn_800180F4(void *arg0, u8 arg1) {
     void fn_80018594(void *);
-    void fn_80017C1C(void *);
+    void fn_80017C1C(void *, f32);
     void fn_8000C070(void *, s32);
     extern s32 lbl_803671C4;
     extern u8 lbl_803671C8;
@@ -548,7 +548,7 @@ void fn_800180F4(void *arg0, u8 arg1) {
     fn_80018594(arg0);
     lbl_803671C8 = 3;
     lbl_803671C4 = (s32)lbl_802CA434;
-    fn_80017C1C(arg0);
+    fn_80017C1C(arg0, lbl_80368C88);
     fn_8000C070(arg0, 0);
 }
 
