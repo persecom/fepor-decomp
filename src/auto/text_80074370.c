@@ -10,6 +10,7 @@ typedef struct {
 extern u8 D_802EF4C8[24];
 extern u8 lbl_8036723A;
 s32 fn_80024398();
+void fn_8007A524(void *arg0, s32 arg1, s32 arg2);
 
 void fn_80074370(void *arg0) {
     extern s32 lbl_80367468;
@@ -2775,6 +2776,100 @@ void fn_8007B128(void *arg0) {
     }
     M2C_FIELD(arg0, s32 *, 0x3C) = (s32) (temp_r3 + 1);
 }
+
+#pragma use_lmw_stmw on
+#pragma global_optimizer off
+void fn_8007B1C4(void *arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4) {
+    void **fn_8006EDD8(void *, s32);
+    void fn_8000A258(void);
+    void fn_80009EB0(void *, s32, u8, s32);
+    void fn_8000A248(void);
+    void fn_80007898(s32);
+    void fn_80007838(f32, f32, f32, f32);
+    void fn_80007818(f32, f32, f32, f32, f32);
+    void fn_800076AC(u8, u8, u8, u8);
+    void fn_80007884(void);
+    extern f32 lbl_803693D4;
+    u8 tint;
+    s16 x;
+    s16 y;
+    s32 mode;
+    u8 pad;
+    void *obj;
+    void *info;
+    void **pp;
+    void *entry;
+    s32 w;
+    s32 h;
+    s32 w2;
+    s32 h2;
+    f32 scale;
+
+    x = 0;
+    y = 0;
+    mode = arg4;
+    obj = arg0;
+    pad = arg3;
+    tint = *(u8 *)((u8 *)arg0 + 0x41);
+    if ((u32)(mode - 7) > 1U) {
+        if (mode == 9) {
+            info = *(void **)((u8 *)obj + 0x34);
+            if (*(u16 *)((u8 *)info + 0xC) == *(u16 *)((u8 *)info + 0x10)) {
+                return;
+            }
+        }
+    }
+    if (mode == 7) {
+        info = *(void **)((u8 *)obj + 0x34);
+        x = *(u16 *)((u8 *)info + 0xC);
+        y = *(u16 *)((u8 *)info + 0xE);
+    } else {
+        info = *(void **)((u8 *)obj + 0x34);
+        x = *(u16 *)((u8 *)info + 0x10);
+        y = *(u16 *)((u8 *)info + 0x12);
+    }
+    if (x != -1) {
+        info = *(void **)((u8 *)obj + 0x34);
+        if ((*(u16 *)((u8 *)info + 0x18) & 2) == 0) {
+            mode -= 6;
+        }
+        pp = fn_8006EDD8(*(void **)((u8 *)obj + 0x30), 0);
+        entry = *pp;
+        w = *(u16 *)((u8 *)entry + 2);
+        h = *(u16 *)((u8 *)entry + 0);
+        if ((*(u16 *)((u8 *)obj + 0x46) & 1) != 0) {
+            x = w - x;
+        }
+        x += arg1 - (w >> 1);
+        y += arg2 - h;
+        pp = fn_8006EDD8(*(void **)((u8 *)obj + 0x30), mode);
+        entry = *pp;
+        w2 = *(u16 *)((u8 *)entry + 2);
+        h2 = *(u16 *)((u8 *)entry + 0);
+        if ((*(u16 *)((u8 *)obj + 0x46) & 1) != 0) {
+            x -= w2;
+        }
+        fn_8000A258();
+        fn_80009EB0(*(void **)((u8 *)obj + 0x30), mode, *(u8 *)((u8 *)obj + 0x40), 0x11);
+        fn_8000A248();
+        fn_80007898(1);
+        if ((*(u16 *)((u8 *)obj + 0x46) & 1) != 0) {
+            scale = *(f32 *)((u8 *)obj + 0x4C);
+            fn_80007838((f32)x, (f32)y, (f32)w2, lbl_803693D4);
+            fn_80007818((f32)w2 * scale + (f32)x, (f32)h2 * scale + (f32)y, lbl_803693D4,
+                        (f32)h2, scale);
+        } else {
+            scale = *(f32 *)((u8 *)obj + 0x4C);
+            fn_80007838((f32)x, (f32)y, lbl_803693D4, lbl_803693D4);
+            fn_80007818((f32)w2 * scale + (f32)x, (f32)h2 * scale + (f32)y, (f32)w2, (f32)h2,
+                        scale);
+        }
+        fn_800076AC(tint, tint, tint, pad);
+        fn_80007884();
+    }
+}
+#pragma global_optimizer reset
+#pragma use_lmw_stmw reset
 
 void fn_8007B990(void *arg0) {
     extern void *lbl_80312040[];
