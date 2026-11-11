@@ -7681,6 +7681,24 @@ void fn_8019C1B0(void *arg0) {
     }
 }
 
+void fn_8019C1F8(void *arg0)
+{
+    extern void *fn_80053C30(void *, void *);
+    extern void fn_800536D8(void *, void *);
+    extern void fn_8005306C(void *);
+
+    void *result;
+
+    result = fn_80053C30((u8 *)arg0 + 0x41, arg0);
+
+    fn_800536D8(
+        result,
+        *(void **)(*(u8 **)((u8 *)arg0 + 0x30))
+    );
+
+    fn_8005306C(result);
+}
+
 extern u16 gUnkGlobalVar_80296B20[];
 void fn_8019C394(s32 arg0, s32 arg1) {
     void *fn_8000CAA0(void *, s32);
