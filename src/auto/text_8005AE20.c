@@ -1292,26 +1292,27 @@ void fn_8005E12C(u8 *arg0, char *arg1, u16 arg2) {
     s32 size;
     s32 off;
     u32 res;
+    s32 z;
 
-    src = arg1;
-    if (*src == '/') {
-        src += 1;
+    if (*arg1 == '/') {
+        src = arg1 + 1;
+    } else {
+        src = arg1;
     }
+    z = 0;
     dst = arg0;
-    *(s32 *)(arg0 + 0x2C) = 0;
+    *(s32 *)(arg0 + 0x2C) = z;
     for (ctr = 0x29; ctr != 0; ctr--) {
         ch = *(u8 *)src;
-        c = (s8)ch;
-        if (c >= 'A' && c <= 'Z') {
-            ch = ch + 0x20;
-            *(u8 *)src = ch;
+        if ((s8)ch >= 'A' && (s8)ch <= 'Z') {
+            *(u8 *)src = ch + 0x20;
         }
         *dst = *(u8 *)src;
         ch = *(u8 *)src;
-        c = (s8)ch;
-        if (c == 0) {
+        if ((s8)ch == 0) {
             break;
         }
+        c = (s8)ch;
         *(s32 *)(arg0 + 0x2C) = c + *(s32 *)(arg0 + 0x2C) * 0x25;
         dst += 1;
         src += 1;
@@ -1328,32 +1329,34 @@ void fn_8005E12C(u8 *arg0, char *arg1, u16 arg2) {
     ext = lbl_8026B330 + 0x221;
     goto find1_chk;
 find1:
-    if (c == '.') {
+    if ((s8)c == '.') {
         goto cmp1;
     }
     p += 1;
 find1_chk:
-    c = (s8)*p;
-    if (c != 0) {
+    c = *p;
+    if ((s8)c != 0) {
         goto find1;
     }
 cmp1:
-    c = (s8)*p;
-    if (c == 0) {
-        match = 0;
-        goto done1;
-    }
-    if (c == (s8)*ext) {
-        ext += 1;
-        p += 1;
-        if ((s8)*ext == 0 && (s8)*p == 0) {
-            match = 1;
-            goto done1;
+    for (;;) {
+        c = *p;
+        if ((s8)c == 0) {
+            match = 0;
+            break;
         }
-        goto cmp1;
+        if ((s8)c == (s8)*ext) {
+            ext += 1;
+            p += 1;
+            if ((s8)*ext == 0 && (s8)*p == 0) {
+                match = 1;
+                break;
+            }
+            continue;
+        }
+        match = 0;
+        break;
     }
-    match = 0;
-done1:
     if (match) {
         *(u16 *)(arg0 + 0x30) |= 0xC00;
     }
@@ -1362,32 +1365,34 @@ done1:
     ext = lbl_8026B330 + 0x226;
     goto find2_chk;
 find2:
-    if (c == '.') {
+    if ((s8)c == '.') {
         goto cmp2;
     }
     p += 1;
 find2_chk:
-    c = (s8)*p;
-    if (c != 0) {
+    c = *p;
+    if ((s8)c != 0) {
         goto find2;
     }
 cmp2:
-    c = (s8)*p;
-    if (c == 0) {
-        match = 0;
-        goto done2;
-    }
-    if (c == (s8)*ext) {
-        ext += 1;
-        p += 1;
-        if ((s8)*ext == 0 && (s8)*p == 0) {
-            match = 1;
-            goto done2;
+    for (;;) {
+        c = *p;
+        if ((s8)c == 0) {
+            match = 0;
+            break;
         }
-        goto cmp2;
+        if ((s8)c == (s8)*ext) {
+            ext += 1;
+            p += 1;
+            if ((s8)*ext == 0 && (s8)*p == 0) {
+                match = 1;
+                break;
+            }
+            continue;
+        }
+        match = 0;
+        break;
     }
-    match = 0;
-done2:
     if (match) {
         *(u16 *)(arg0 + 0x30) |= 0x800;
     }
@@ -1396,32 +1401,34 @@ done2:
     ext = lbl_8026B330 + 0x22B;
     goto find3_chk;
 find3:
-    if (c == '.') {
+    if ((s8)c == '.') {
         goto cmp3;
     }
     p += 1;
 find3_chk:
-    c = (s8)*p;
-    if (c != 0) {
+    c = *p;
+    if ((s8)c != 0) {
         goto find3;
     }
 cmp3:
-    c = (s8)*p;
-    if (c == 0) {
-        match = 0;
-        goto done3;
-    }
-    if (c == (s8)*ext) {
-        ext += 1;
-        p += 1;
-        if ((s8)*ext == 0 && (s8)*p == 0) {
-            match = 1;
-            goto done3;
+    for (;;) {
+        c = *p;
+        if ((s8)c == 0) {
+            match = 0;
+            break;
         }
-        goto cmp3;
+        if ((s8)c == (s8)*ext) {
+            ext += 1;
+            p += 1;
+            if ((s8)*ext == 0 && (s8)*p == 0) {
+                match = 1;
+                break;
+            }
+            continue;
+        }
+        match = 0;
+        break;
     }
-    match = 0;
-done3:
     if (match) {
         *(u16 *)(arg0 + 0x30) |= 0x400;
     }
@@ -1433,8 +1440,7 @@ done3:
     } else {
         if (*(volatile u16 *)(arg0 + 0x30) & 2) {
             drive = (s8)arg0[0x29];
-            size = *(s32 *)(arg0 + 0x3C);
-            size += 1;
+            size = *(s32 *)(arg0 + 0x3C) + 1;
             if (fn_800C44F4(drive) < (u32)size) {
                 res = 0;
             } else {
@@ -3484,21 +3490,10 @@ void fn_80069F04(s32 arg0) {
 
 #pragma use_lmw_stmw on
 #pragma inline_depth(3)
-void fn_8006CA68(void *arg0) {
-    M2C_UNK fn_8006C2A4(void *, M2C_UNK);
-    fn_8006C2A4(arg0, 2);
-}
 
-void fn_8006CA8C(void *arg0) {
-    M2C_UNK fn_8006C2A4(void *, M2C_UNK);
-    fn_8006C2A4(arg0, 1);
-}
 
-void fn_8006CAB0(s32 arg0) {
-    void fn_8006C2A4(s32, s32);
-    fn_8006C2A4(arg0, 0);
-}
-
+#pragma use_lmw_stmw on
+#pragma inline_depth(3)
 void fn_80069F2C(s32 arg0,void *arg1) {
 u32 fn_80060638(void*);
 void fn_8006CAB0(s32);void fn_8006CA8C(void*);void fn_8006CA68(void*);void fn_8014E7F8(void*);
@@ -3524,7 +3519,6 @@ break;
 }
 }
 }
-
 s32 fn_8006A374(void) {
     extern s32 lbl_8036730C;
     return lbl_8036730C;
@@ -3784,6 +3778,21 @@ void fn_8006C9E8(u32 *arg0) {
 }
 
 
+
+void fn_8006CA68(void *arg0) {
+    M2C_UNK fn_8006C2A4(void *, M2C_UNK);
+    fn_8006C2A4(arg0, 2);
+}
+
+void fn_8006CA8C(void *arg0) {
+    M2C_UNK fn_8006C2A4(void *, M2C_UNK);
+    fn_8006C2A4(arg0, 1);
+}
+
+void fn_8006CAB0(s32 arg0) {
+    void fn_8006C2A4(s32, s32);
+    fn_8006C2A4(arg0, 0);
+}
 
 int fn_8006CAD4(void *arg0, int arg1, int arg2) {
     s32 fn_8005B010(void *, s32, void *, ...);
