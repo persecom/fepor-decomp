@@ -2509,6 +2509,8 @@ s32 fn_801FBC30(s32 arg0) {
     return lbl_8029B520[temp];
 }
 
+void fn_801FBC84(void);
+
 void fn_801FBC48(void) {
     extern u32 lbl_80368410[2];
     u32 *p = lbl_80368410;
