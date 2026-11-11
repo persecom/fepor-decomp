@@ -2283,6 +2283,7 @@ void fn_8000B950(void *arg0, void (*arg1)(void *)) {
 
 #pragma use_lmw_stmw on
 #pragma inline_depth(0)
+static inline void *B9A4_right(void *node) { return *(void **)((u8 *)node + 0x1C); }
 void fn_8000B9A4(void *arg0, void (*arg1)(void *)) {
     void *v28;
     void *v29;
@@ -2356,14 +2357,14 @@ void fn_8000B9A4(void *arg0, void (*arg1)(void *)) {
                 }
             }
             arg1(v29);
-            v29 = *(void **)((u8 *)v29 + 0x1C);
-            if (v29 != NULL) {
-                if (*(void **)((u8 *)v29 + 0x24) != NULL) {
-                    fn_8000B9A4(*(void **)((u8 *)v29 + 0x24), arg1);
+            v30 = *(void **)((u8 *)v29 + 0x1C);
+            if (v30 != NULL) {
+                if (*(void **)((u8 *)v30 + 0x24) != NULL) {
+                    fn_8000B9A4(*(void **)((u8 *)v30 + 0x24), arg1);
                 }
-                arg1(v29);
-                if (*(void **)((u8 *)v29 + 0x1C) != NULL) {
-                    fn_8000B9A4(*(void **)((u8 *)v29 + 0x1C), arg1);
+                arg1(v30);
+                if (*(void **)((u8 *)v30 + 0x1C) != NULL) {
+                    fn_8000B9A4(*(void **)((u8 *)v30 + 0x1C), arg1);
                 }
             }
         }
@@ -2795,7 +2796,7 @@ s32 fn_8000D1D0(u8 *arg0) {
 
 s32 fn_8000D2BC(s8 *str) {
     extern u8 lbl_802ADB20[];
-    struct { u32 h2; u32 h1; } key;
+    HashKey key;
     u32 *node;
 
     if (str == NULL) {
