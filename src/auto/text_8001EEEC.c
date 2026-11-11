@@ -1,5 +1,57 @@
 /* Functions from 0x8001EEEC to 0x80028864, found by decomp-toolkit. */
 #include "common.h"
+#pragma cplusplus on
+struct MenuController24768 { u32 pad;
+virtual void v0() = 0;
+virtual void v1() = 0;
+virtual void v2() = 0;
+virtual void v3() = 0;
+virtual void v4() = 0;
+virtual void v5() = 0;
+virtual void v6() = 0;
+virtual void v7() = 0;
+virtual void v8() = 0;
+virtual void v9() = 0;
+virtual void v10() = 0;
+virtual void v11(void *) = 0;
+virtual void v12(void *) = 0;
+virtual void v13(void *) = 0;
+virtual u8 v14(void *) = 0;
+virtual void v15() = 0;
+virtual void v16() = 0;
+virtual void v17() = 0;
+virtual void v18() = 0;
+virtual void v19() = 0;
+virtual void v20() = 0;
+virtual void v21() = 0;
+virtual void v22() = 0;
+virtual void v23() = 0;
+virtual void v24() = 0;
+virtual void v25() = 0;
+virtual void v26() = 0;
+virtual void * v27() = 0;
+virtual void * v28() = 0;
+};
+struct MenuItem24768 {
+virtual void v0() = 0;
+virtual void v1() = 0;
+virtual void * v2() = 0;
+virtual void v3() = 0;
+virtual void v4() = 0;
+virtual void v5() = 0;
+virtual void v6() = 0;
+virtual void v7() = 0;
+virtual void v8() = 0;
+virtual void v9() = 0;
+virtual void v10() = 0;
+virtual void v11() = 0;
+virtual void v12() = 0;
+virtual void v13() = 0;
+virtual void v14() = 0;
+virtual void v15(void *,void *) = 0;
+virtual void * v16(void *) = 0;
+};
+#pragma cplusplus off
 
 typedef struct {
     s32 field_0x0;
@@ -815,6 +867,25 @@ void fn_80022FD8(s32 arg0, s32 arg1, s32 arg2) {
     
     arg2 = *(s32*)(arg0 + 0x1000C + (arg1 << 2));
     *temp_r4 = arg2;
+}
+
+f32 fn_8002300C(void *arg0, s8 arg1, s8 arg2, u8 arg3)
+{
+    u8 *base;
+    s32 index;
+    s16 value;
+    f32 scale;
+
+    base = (u8 *)arg0 + 0x20000;
+
+    scale = *(f32 *)(base - 0x3D2C);
+
+    index = (s8)arg1 + ((s8)arg2 << 6);
+    index = (index << 2) + (u8)arg3;
+
+    value = *(s16 *)(base + (index << 1) - 0x3D28);
+
+    return (f32)value * scale;
 }
 
 void fn_80023068(u16 *a0, u16 *a1, f32 a2, f32 a3) {
