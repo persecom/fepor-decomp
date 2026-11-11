@@ -177,11 +177,18 @@ extern s32 lbl_80368588;
 
 static inline BOOL DVDComparePathComponent(char *path, char *name) {
     s32 fn_80230CE0(s32);
-    while (*name) {
-        s32 first = fn_80230CE0(*name++);
-        if (fn_80230CE0(*path++) != first) return FALSE;
+    while (*name != 0) {
+        s32 first;
+        first = fn_80230CE0(*name);
+        name++;
+        if (fn_80230CE0(*path) != first) {
+            return FALSE;
+        }
+        path++;
     }
-    if (*path == '/' || *path == 0) return TRUE;
+    if ((*path == '/') || (*path == 0)) {
+        return TRUE;
+    }
     return FALSE;
 }
 
@@ -213,105 +220,57 @@ void __DVDFSInit(void) {
 }
 
 u32 fn_8020C3E0(char *path) {
-    extern u32 __DVDLongFileNameFlag;
-    extern char lbl_8029CEE8[];
-    extern s32 lbl_80366F60;
-    void fn_8020602C(void *, s32, char *, ...);
-
-    s32 more;
-    u32 parent;
-    char *end;
-    s32 length;
-    u32 entry;
-    char *original;
-    char *extension;
-    s32 invalid;
-    s32 dotted;
-    s32 equal;
-
-    original = path;
-    entry = (u32)lbl_80368588;
-
-    for (;;) {
-        if (*path == 0) {
-            return entry;
-        }
-        if (*path == '/') {
-            entry = 0;
-            path++;
-            continue;
-        }
-        if (*path == '.') {
-            if (path[1] == '.') {
-                if (path[2] == '/') {
-                    entry = parentDir(entry);
-                    path += 3;
-                    continue;
-                }
-                if (path[2] == 0) {
-                    return parentDir(entry);
-                }
-            } else {
-                if (path[1] == '/') {
-                    path += 2;
-                    continue;
-                }
-                if (path[1] == 0) {
-                    return entry;
-                }
-            }
-        }
-        if (!__DVDLongFileNameFlag) {
-            end = path;
-            dotted = 0;
-            invalid = 0;
-            while (*end && *end != '/') {
-                if (*end == '.') {
-                    if (end - path > 8 || dotted == 1) {
-                        invalid = 1;
-                        break;
-                    }
-                    extension = end + 1;
-                    dotted = 1;
-                } else if (*end == ' ') {
-                    invalid = 1;
-                }
-                end++;
-            }
-            if (dotted == 1 && end - extension > 3) {
-                invalid = 1;
-            }
-            if (invalid) {
-                fn_8020602C(&lbl_80366F60, 0x183, lbl_8029CEE8, original);
-            }
-        } else {
-            for (end = path; *end && *end != '/'; end++) {
-            }
-        }
-        if (*end == 0) {
-            more = 0;
-        } else {
-            more = 1;
-        }
-        parent = entry;
-        length = end - path;
-        for (entry++; entry < FstStart_8036857C[parent].nextEntryOrLength;) {
-            if (entryIsDir(entry) || more != 1) {
-                equal = DVDComparePathComponent(path, FstStringStart_80368580 + stringOff(entry));
-                if (equal == 1) {
-                    goto found;
-                }
-            }
-            entry = entryIsDir(entry) ? FstStart_8036857C[entry].nextEntryOrLength : entry + 1;
-        }
-        return -1;
-    found:
-        if (!more) {
-            return entry;
-        }
-        path += length;
-        path++;
-    }
+extern u32 __DVDLongFileNameFlag;
+extern char lbl_8029CEE8[];
+extern s32 lbl_80366F60;
+void fn_8020602C(void*,s32,char*,...);
+s32 more;
+u32 parent;
+char *end;
+s32 length;
+u32 entry;
+char *original;
+char *extension;
+s32 invalid,dotted,equal;
+original=path; entry=lbl_80368588;
+for(;;){
+if(*path==0) return entry;
+if(*path=='/'){entry=0;path++;continue;}
+if(*path=='.'){
+if(path[1]=='.'){
+if(path[2]=='/'){entry=parentDir(entry);path+=3;continue;}
+if(path[2]==0) return parentDir(entry);
+}else{
+if(path[1]=='/'){path+=2;continue;}
+if(path[1]==0)return entry;
+}
+}
+if(!__DVDLongFileNameFlag){
+end=path;dotted=0;invalid=0;
+while(*end && *end!='/'){
+if(*end=='.'){
+if(end-path>8 || dotted==1){invalid=1;break;}
+extension=end+1; dotted=1;
+}else if(*end==' ')invalid=1;
+end++;
+}
+if(dotted==1 && end-extension>3)invalid=1;
+if(invalid)fn_8020602C(&lbl_80366F60,0x183,lbl_8029CEE8,original);
+}else {for(end=path;*end && *end!='/';end++);}
+if(*end==0) more=0; else more=1;
+parent=entry; length=end-path;
+for(entry++;entry<FstStart_8036857C[parent].nextEntryOrLength;){
+if(entryIsDir(entry) || more!=1){
+equal=DVDComparePathComponent(path,FstStringStart_80368580+stringOff(entry));
+if(equal==1)goto found;
+}
+entry=entryIsDir(entry)?FstStart_8036857C[entry].nextEntryOrLength:entry+1;
+}
+return -1;
+found:
+if(!more)return entry;
+path=length+path;path++;
+}
 }
 
 s32 fn_8020C79C(void) {
