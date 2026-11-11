@@ -433,32 +433,36 @@ void fn_80121D60(void *arg0, u8 *arg1) {
     }
 }
 
-void fn_80122000(void *arg0) {
-    if ((u8) M2C_FIELD(arg0, u8 *, 0x400C) == 0) {
-        s32 temp_r4;
-        s32 temp_r5;
-        
-        temp_r5 = M2C_FIELD(arg0, s32 *, 0x4000);
-        temp_r4 = M2C_FIELD(arg0, s32 *, 0x4004);
-        
-        temp_r5 = (temp_r5 + 0x100) << 6;
-        temp_r5 = temp_r5 & 0x3FC0;
-        temp_r5 = temp_r5 + temp_r4;
-        
-        M2C_FIELD(arg0, u8 *, temp_r5) = 0;
-        M2C_FIELD(arg0, s32 *, 0x4004) = 0;
-        M2C_FIELD(arg0, s32 *, 0x4000) = (s32) (M2C_FIELD(arg0, s32 *, 0x4000) + 1);
-        
-        temp_r5 = M2C_FIELD(arg0, s32 *, 0x4000);
-        temp_r4 = M2C_FIELD(arg0, s32 *, 0x4004);
-        
-        temp_r5 = (temp_r5 + 0x100) << 6;
-        temp_r5 = temp_r5 & 0x3FC0;
-        temp_r5 = temp_r5 + temp_r4;
-        
-        M2C_FIELD(arg0, u8 *, temp_r5) = 0;
-        M2C_FIELD(arg0, u8 *, 0x400C) = 1;
+void fn_80122000(void *arg0)
+{
+    u8 *base;
+    u32 index;
+    u32 offset;
+
+    base = (u8 *)arg0;
+
+    if (base[0x400C] != 0) {
+        return;
     }
+
+    index = *(u32 *)(base + 0x4000);
+    offset = *(u32 *)(base + 0x4004);
+
+    base + (((u8)(index + 0x100) << 6) + offset);
+
+    base[((u8)(index + 0x100) << 6) + offset] = 0;
+
+    *(u32 *)(base + 0x4004) = 0;
+
+    index = *(u32 *)(base + 0x4000);
+    *(u32 *)(base + 0x4000) = index + 1;
+
+    index = *(u32 *)(base + 0x4000);
+    offset = *(u32 *)(base + 0x4004);
+
+    base[((u8)(index + 0x100) << 6) + offset] = 0;
+
+    base[0x400C] = 1;
 }
 
 void fn_8012205C(void *arg0)
