@@ -2723,6 +2723,163 @@ int fn_8000C60C(void *arg0) {
     return 0;
 }
 
+void fn_8000C6AC(void *arg0) {
+    void fn_8000C52C(void *);
+    extern void **lbl_80367148;
+    typedef struct Node {
+        void *unk0;
+        u8 pad04[4];
+        void (*cb)(struct Node *);
+        u8 pad0C[4];
+        void *unk10;
+        u8 pad14[4];
+        struct Node *unk18;
+        struct Node *unk1C;
+        u8 pad20[4];
+        struct Node *unk24;
+        u8 pad28[4];
+        u8 flags;
+        u8 pad2D;
+    } Node;
+    Node *self = (Node *)arg0;
+    Node *n;
+    Node *c;
+    void **p;
+
+    n = self->unk24;
+    if (n != NULL) {
+        c = n->unk24;
+        if (c != NULL) {
+            if (c->unk24 != NULL) {
+                fn_8000C6AC(c->unk24);
+            }
+            if (c->unk1C != NULL) {
+                fn_8000C6AC(c->unk1C);
+            }
+            if ((c->flags & 1) == 0) {
+                if (c->cb != NULL) {
+                    c->cb(c);
+                }
+                fn_8000C52C(c);
+                c->unk0 = NULL;
+                c->unk10 = NULL;
+                c->flags |= 1;
+                if (c->flags & 2) {
+                    c->unk18->pad2D -= 1;
+                }
+            }
+        }
+        c = n->unk1C;
+        if (c != NULL) {
+            if (c->unk24 != NULL) {
+                fn_8000C6AC(c->unk24);
+            }
+            if (c->unk1C != NULL) {
+                fn_8000C6AC(c->unk1C);
+            }
+            if ((c->flags & 1) == 0) {
+                if (c->cb != NULL) {
+                    c->cb(c);
+                }
+                fn_8000C52C(c);
+                c->unk0 = NULL;
+                c->unk10 = NULL;
+                c->flags |= 1;
+                if (c->flags & 2) {
+                    c->unk18->pad2D -= 1;
+                }
+            }
+        }
+        if ((n->flags & 1) == 0) {
+            if (n->cb != NULL) {
+                n->cb(n);
+            }
+            p = (void **)((u8 *)lbl_80367148 - 4);
+            lbl_80367148 = p;
+            *p = n;
+            n->unk0 = NULL;
+            n->unk10 = NULL;
+            n->flags |= 1;
+            if (n->flags & 2) {
+                n->unk18->pad2D -= 1;
+            }
+        }
+    }
+    n = self->unk1C;
+    if (n != NULL) {
+        c = n->unk24;
+        if (c != NULL) {
+            if (c->unk24 != NULL) {
+                fn_8000C6AC(c->unk24);
+            }
+            if (c->unk1C != NULL) {
+                fn_8000C6AC(c->unk1C);
+            }
+            if ((c->flags & 1) == 0) {
+                if (c->cb != NULL) {
+                    c->cb(c);
+                }
+                fn_8000C52C(c);
+                c->unk0 = NULL;
+                c->unk10 = NULL;
+                c->flags |= 1;
+                if (c->flags & 2) {
+                    c->unk18->pad2D -= 1;
+                }
+            }
+        }
+        c = n->unk1C;
+        if (c != NULL) {
+            if (c->unk24 != NULL) {
+                fn_8000C6AC(c->unk24);
+            }
+            if (c->unk1C != NULL) {
+                fn_8000C6AC(c->unk1C);
+            }
+            if ((c->flags & 1) == 0) {
+                if (c->cb != NULL) {
+                    c->cb(c);
+                }
+                fn_8000C52C(c);
+                c->unk0 = NULL;
+                c->unk10 = NULL;
+                c->flags |= 1;
+                if (c->flags & 2) {
+                    c->unk18->pad2D -= 1;
+                }
+            }
+        }
+        if ((n->flags & 1) == 0) {
+            if (n->cb != NULL) {
+                n->cb(n);
+            }
+            p = (void **)((u8 *)lbl_80367148 - 4);
+            lbl_80367148 = p;
+            *p = n;
+            n->unk0 = NULL;
+            n->unk10 = NULL;
+            n->flags |= 1;
+            if (n->flags & 2) {
+                n->unk18->pad2D -= 1;
+            }
+        }
+    }
+    if ((self->flags & 1) == 0) {
+        if (self->cb != NULL) {
+            self->cb(self);
+        }
+        p = (void **)((u8 *)lbl_80367148 - 4);
+        lbl_80367148 = p;
+        *p = self;
+        self->unk0 = NULL;
+        self->unk10 = NULL;
+        self->flags |= 1;
+        if (self->flags & 2) {
+            self->unk18->pad2D -= 1;
+        }
+    }
+}
+
 void fn_8000CA64(u32 arg1) {
     M2C_UNK fn_8000CAA0();
     M2C_UNK fn_8000CAF0();
