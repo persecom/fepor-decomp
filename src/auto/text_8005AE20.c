@@ -1282,8 +1282,8 @@ void fn_8005E12C(u8 *arg0, char *arg1, u16 arg2) {
     extern char lbl_8026B330[];
     extern u8 lbl_803672E8;
     u32 strlen(char *);
-    char *src;
-    u8 *dst;
+    register char *src;
+    register u8 *dst;
     unsigned ctr;
     char *p;
     char *ext;
@@ -1297,21 +1297,22 @@ void fn_8005E12C(u8 *arg0, char *arg1, u16 arg2) {
     s32 z;
 
     src = arg1;
-    if (*arg1 == (char)0x2f) {
+    if (*arg1 == '/') {
         src += 1;
     }
     z = 0;
-    *(s32 *)(arg0 + 0x2C) = z;
     dst = arg0;
+    *(s32 *)(arg0 + 0x2C) = z;
     for (ctr = 0x29; ctr != 0; ctr--) {
         ch = *(u8 *)src;
         sc = (s8)ch;
-        if (sc >= (s8)'A' && sc <= (s8)'Z') {
+        if (sc >= 'A' && sc <= 'Z') {
             *(u8 *)src = (u8)(ch + 0x20);
         }
         *dst = *(u8 *)src;
         ch = *(u8 *)src;
-        if ((s8)ch == 0) {
+        sc = (s8)ch;
+        if (sc == 0) {
             break;
         }
         sc = (s8)ch;
@@ -1331,7 +1332,8 @@ void fn_8005E12C(u8 *arg0, char *arg1, u16 arg2) {
     ext = lbl_8026B330 + 0x221;
     goto find1_chk;
 find1:
-    if (sc == (s8)'.') {
+    sc = (s8)sc;
+    if (sc == '.') {
         goto cmp1;
     }
     p += 1;
@@ -1340,25 +1342,31 @@ find1_chk:
     if (sc != 0) {
         goto find1;
     }
+    goto cmp1;
 cmp1:
-    for (;;) {
-        sc = (s8)*p;
-        if (sc == 0) {
-            match = 0;
-            break;
+cmp1_body:
+    ch = *(u8 *)ext;
+    sc = (s8)sc;
+    if (sc == (s8)ch) {
+        ch = *(u8 *)++ext;
+        p += 1;
+        if ((s8)ch != 0) {
+            sc = (s8)*p;
+            goto cmp1_body;
         }
-        if (sc == (s8)*ext) {
-            ext += 1;
-            p += 1;
-            if ((s8)*ext == 0 && (s8)*p == 0) {
-                match = 1;
-                break;
-            }
-            continue;
+        if ((s8)*p != 0) {
+            sc = (s8)*p;
+            goto cmp1_body;
         }
-        match = 0;
-        break;
+        match = 1;
+        goto done1;
     }
+    sc = (s8)*p;
+    if (sc != 0) {
+        goto cmp1_body;
+    }
+    match = 0;
+done1:
     if (match) {
         *(u16 *)(arg0 + 0x30) |= 0xC00;
     }
@@ -1367,7 +1375,8 @@ cmp1:
     ext = lbl_8026B330 + 0x226;
     goto find2_chk;
 find2:
-    if (sc == (s8)'.') {
+    sc = (s8)sc;
+    if (sc == '.') {
         goto cmp2;
     }
     p += 1;
@@ -1376,25 +1385,31 @@ find2_chk:
     if (sc != 0) {
         goto find2;
     }
+    goto cmp2;
 cmp2:
-    for (;;) {
-        sc = (s8)*p;
-        if (sc == 0) {
-            match = 0;
-            break;
+cmp2_body:
+    ch = *(u8 *)ext;
+    sc = (s8)sc;
+    if (sc == (s8)ch) {
+        ch = *(u8 *)++ext;
+        p += 1;
+        if ((s8)ch != 0) {
+            sc = (s8)*p;
+            goto cmp2_body;
         }
-        if (sc == (s8)*ext) {
-            ext += 1;
-            p += 1;
-            if ((s8)*ext == 0 && (s8)*p == 0) {
-                match = 1;
-                break;
-            }
-            continue;
+        if ((s8)*p != 0) {
+            sc = (s8)*p;
+            goto cmp2_body;
         }
-        match = 0;
-        break;
+        match = 1;
+        goto done2;
     }
+    sc = (s8)*p;
+    if (sc != 0) {
+        goto cmp2_body;
+    }
+    match = 0;
+done2:
     if (match) {
         *(u16 *)(arg0 + 0x30) |= 0x800;
     }
@@ -1403,7 +1418,8 @@ cmp2:
     ext = lbl_8026B330 + 0x22B;
     goto find3_chk;
 find3:
-    if (sc == (s8)'.') {
+    sc = (s8)sc;
+    if (sc == '.') {
         goto cmp3;
     }
     p += 1;
@@ -1412,25 +1428,31 @@ find3_chk:
     if (sc != 0) {
         goto find3;
     }
+    goto cmp3;
 cmp3:
-    for (;;) {
-        sc = (s8)*p;
-        if (sc == 0) {
-            match = 0;
-            break;
+cmp3_body:
+    ch = *(u8 *)ext;
+    sc = (s8)sc;
+    if (sc == (s8)ch) {
+        ch = *(u8 *)++ext;
+        p += 1;
+        if ((s8)ch != 0) {
+            sc = (s8)*p;
+            goto cmp3_body;
         }
-        if (sc == (s8)*ext) {
-            ext += 1;
-            p += 1;
-            if ((s8)*ext == 0 && (s8)*p == 0) {
-                match = 1;
-                break;
-            }
-            continue;
+        if ((s8)*p != 0) {
+            sc = (s8)*p;
+            goto cmp3_body;
         }
-        match = 0;
-        break;
+        match = 1;
+        goto done3;
     }
+    sc = (s8)*p;
+    if (sc != 0) {
+        goto cmp3_body;
+    }
+    match = 0;
+done3:
     if (match) {
         *(u16 *)(arg0 + 0x30) |= 0x400;
     }
@@ -1455,8 +1477,8 @@ cmp3:
             *(u32 *)(arg0 + 0x38) = res;
             *(u8 *)(*(u8 **)(arg0 + 0x3C) + *(u32 *)(arg0 + 0x38)) = 0;
         } else {
-            drive = (s8)arg0[0x29];
             size = *(s32 *)(arg0 + 0x3C);
+            drive = (s8)arg0[0x29];
             if (fn_800C44F4(drive) < (u32)size) {
                 res = 0;
             } else {
@@ -3426,6 +3448,61 @@ void fn_80069010(s32 *arg0, void *arg1) {
             return;
         }
     }
+}
+
+s32 fn_80069810(void *arg0,s32 arg1,void *arg2,void *arg3) {
+u8 fn_80064938(s32,s16,void*,f32);void fn_80064BBC(s32,s16,void*,f32);
+void fn_8006DA64(void*,s32,void*);
+void fn_80223BB4(s32,MaterialColor*);void fn_8022224C(s32,MaterialColor*);
+void fn_80223F2C(s32,s32,s32,s32);void fn_80223A5C(s32,s32,s32,s32,s32);
+void fn_80223AE4(s32,s32,s32,s32,s32,s32);void fn_80223AA0(s32,s32,s32,s32,s32);void fn_80223B4C(s32,s32,s32,s32,s32,s32);
+extern u8 lbl_80367300;extern u8 lbl_8026B7F8[];extern s32 lbl_80285E88[16];
+extern f32 lbl_80369288;extern u32 lbl_8036C450,lbl_8036C454,lbl_8036C458;
+MaterialColor color,copy3,c3,copy4,c4,copy2,c2;
+s32 stage,r,g,b;
+s32 alpha;
+color.r=((u8*)arg3)[8];color.g=((u8*)arg3)[9];color.b=((u8*)arg3)[10];color.a=((u8*)arg3)[11];
+if((*(u32*)arg0&0x8020)==0x8000)color.a=((u8*)arg0)[0x84];
+else{
+if(fn_80064938(arg1,*(s16*)((u8*)arg2+10),&color,*(f32*)((u8*)arg0+0x58))){
+alpha=(s32)(lbl_80369288*(f32)(((u8*)arg0)[11]*color.a));color.a=alpha;
+if(*(u16*)((u8*)arg2+8)&0x80){color.b=alpha;color.g=alpha;color.r=alpha;}
+}else color.a=(s32)(lbl_80369288*(f32)(((u8*)arg0)[11]*color.a));
+if(!color.a)return 0;
+}
+fn_80064BBC(arg1,*(s16*)((u8*)arg2+10),&color,*(f32*)((u8*)arg0+0x58));
+if(((u8*)arg0)[8]<128)color.r=(((u8*)arg0)[8]*color.r)>>7;
+if(((u8*)arg0)[9]<128)color.g=(((u8*)arg0)[9]*color.g)>>7;
+if(((u8*)arg0)[10]<128)color.b=(((u8*)arg0)[10]*color.b)>>7;
+if((*(u32*)((u8*)arg2+0x10)&0x1000)&&(((u8*)arg0)[8]<128||((u8*)arg0)[9]<128||((u8*)arg0)[10]<128)){
+if(lbl_80367300>=16)fn_8006DA64(lbl_8026B7F8+1,44,lbl_8026B7F8+0x3f);
+c3=*(MaterialColor*)&lbl_8036C450;
+stage=lbl_80285E88[lbl_80367300++];
+c3.r=color.r;c3.g=color.g;c3.b=color.b;c3.a=color.a;
+copy3=c3;fn_80223BB4(3,&copy3);
+fn_80223F2C(stage,255,255,255);
+fn_80223A5C(stage,15,0,6,15);
+fn_80223AE4(stage,0,0,0,1,0);
+fn_80223AA0(stage,7,7,7,0);
+fn_80223B4C(stage,0,0,0,1,0);
+}
+c4=*(MaterialColor*)&lbl_8036C454;c4.r=color.r;c4.g=color.g;c4.b=color.b;c4.a=color.a;
+copy4=c4;fn_8022224C(4,&copy4);
+if(((u8*)arg0)[8]>128||((u8*)arg0)[9]>128||((u8*)arg0)[10]>128){
+r=((((u8*)arg0)[8]-128)*255)>>7;g=((((u8*)arg0)[9]-128)*255)>>7;b=((((u8*)arg0)[10]-128)*255)>>7;
+if(r<0)r=0;if(g<0)g=0;if(b<0)b=0;
+if(lbl_80367300>=16)fn_8006DA64(lbl_8026B7F8+1,44,lbl_8026B7F8+0x3f);
+c2=*(MaterialColor*)&lbl_8036C458;
+stage=lbl_80285E88[lbl_80367300++];
+c2.r=r;c2.g=g;c2.b=b;
+copy2=c2;fn_80223BB4(2,&copy2);
+fn_80223F2C(stage,255,255,255);
+fn_80223A5C(stage,15,12,4,0);
+fn_80223AE4(stage,0,0,0,1,0);
+fn_80223AA0(stage,7,7,7,0);
+fn_80223B4C(stage,0,0,0,1,0);
+}
+return 1;
 }
 
 void fn_80069C7C(void) {
