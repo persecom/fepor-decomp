@@ -5,11 +5,13 @@ typedef struct { u8 r, g, b, a; } Color;
 typedef struct { s32 c0, c1, c2, c3; } Color4;
 typedef struct { s32 c3, c2, c1, c0; } Color4rev;
 
-static inline void fn_80161B98_load_colors(Color4rev *dst, s32 *arg6) {
-    dst->c0 = arg6[0];
-    dst->c1 = arg6[1];
-    dst->c2 = arg6[2];
-    dst->c3 = arg6[3];
+static inline Color4rev fn_80161B98_load_colors(s32 *arg6) {
+    Color4rev r;
+    r.c0 = arg6[0];
+    r.c1 = arg6[1];
+    r.c2 = arg6[2];
+    r.c3 = arg6[3];
+    return r;
 }
 
 s32 fn_8014E3A0(void) {
