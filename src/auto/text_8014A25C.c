@@ -8,7 +8,6 @@ typedef struct InitTable { u8 first[0x20]; u8 second[0x68]; u8 third[0x18]; } In
 #pragma use_lmw_stmw on
 #pragma optimization_level 2
 #pragma global_optimizer off
-#pragma scheduling off
 void fn_8014A25C(void) {
     extern u8 lbl_802845E8[];
     extern u8 lbl_80292914[];
