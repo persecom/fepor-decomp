@@ -314,7 +314,7 @@ config.libs = [
             Object(NonMatching, "auto/text_8007C5E4.c"),
             Object(NonMatching, "auto/text_8007F410.c"),
             Object(Matching, "auto/text_8007F7F8.c", mw_version="GC/1.3"),
-            Object(NonMatching, "auto/text_8007F844.c", mw_version="GC/1.2.5n"),
+            Object(NonMatching, "auto/text_8007F844.c", mw_version="GC/1.3"),
             Object(Matching, "auto/text_80081CB0.c", mw_version="GC/1.3"),
             Object(NonMatching, "auto/text_80081CF4.c", mw_version="GC/1.2.5n"),
             Object(NonMatching, "auto/text_80083DC0.c", mw_version="GC/1.3"),
