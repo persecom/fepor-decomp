@@ -1,6 +1,8 @@
 /* Functions from 0x8022CD68 to 0x80267A7C, found by decomp-toolkit. */
 #include "common.h"
 
+typedef struct AudioGroupSlot { void *node; s32 id; void *data; } AudioGroupSlot;
+typedef struct AudioGroupState { u8 pad[8]; s16 count; u16 padA; AudioGroupSlot slots[128]; } AudioGroupState;
 typedef struct SynthMessageSlots { u8 pad[0xAC]; u32 slots[32]; } SynthMessageSlots;
 typedef struct SynthMessageQueue { u8 pad[0x444]; u32 slots[4]; } SynthMessageQueue;
 typedef struct SynthMsgSlot { u8 pad[0x444]; u32 value; } SynthMsgSlot;
@@ -6337,6 +6339,41 @@ void fn_80258AE8(s32 id, void *data, u8 type, u32 remove) {
 void fn_80258D74(void) {
     M2C_UNK fn_80262410();
     fn_80262410();
+}
+
+s32 fn_80258D94(void *arg0, u16 arg1, s32 arg2, s32 arg3, s32 arg4) {
+extern u8 lbl_80368978;
+extern s32 *lbl_80368A5C;
+s32 fn_802622F4(s32);
+u32 fn_8024F964(s32,s32);
+void fn_80258AE8(u16,s32,s32,s32);
+s32 fn_8024FE1C(u16,void *,u16);
+void fn_802624B8(void);
+u8 *node; u16 *p; u16 i; s16 n;
+if(lbl_80368978 && (n=*(s16 *)((u8 *)lbl_80368A5C+8))<128) {
+for(node=arg0; *(u32 *)node != 0xFFFFFFFF; node=(u8 *)arg0+*(u32 *)node) {
+if(*(u16 *)(node+4)==arg1) {
+*(void **)((u8 *)lbl_80368A5C+n*12+12)=node;
+*(void **)((u8 *)lbl_80368A5C+*(s16 *)((u8 *)lbl_80368A5C+8)*12+20)=arg0;
+*(s32 *)((u8 *)lbl_80368A5C+*(s16 *)((u8 *)lbl_80368A5C+8)*12+16)=arg3;
+p=(u16 *)((u8 *)arg0+*(u32 *)(node+12));
+if(fn_8024F964(arg3,fn_802622F4(arg2))) {
+while(*p!=0xFFFF) { if(*p & 0x8000) { for(i=*p & 0x3FFF;i<=p[1];i++) fn_80258AE8(i,arg3,1,0); p+=2; } else { fn_80258AE8(*p++,arg3,1,0); } }
+}
+p=(u16 *)((u8 *)arg0+*(u32 *)(node+8));
+while(*p!=0xFFFF) { if(*p & 0x8000) { for(i=*p & 0x3FFF;i<=p[1];i++) fn_80258AE8(i,arg4,0,0); p+=2; } else { fn_80258AE8(*p++,arg4,0,0); } }
+p=(u16 *)((u8 *)arg0+*(u32 *)(node+16));
+while(*p!=0xFFFF) { if(*p & 0x8000) { for(i=*p & 0x3FFF;i<=p[1];i++) fn_80258AE8(i,arg4,4,0); p+=2; } else { fn_80258AE8(*p++,arg4,4,0); } }
+p=(u16 *)((u8 *)arg0+*(u32 *)(node+20));
+while(*p!=0xFFFF) { if(*p & 0x8000) { for(i=*p & 0x3FFF;i<=p[1];i++) fn_80258AE8(i,arg4,2,0); p+=2; } else { fn_80258AE8(*p++,arg4,2,0); } }
+p=(u16 *)((u8 *)arg0+*(u32 *)(node+24));
+while(*p!=0xFFFF) { if(*p & 0x8000) { for(i=*p & 0x3FFF;i<=p[1];i++) fn_80258AE8(i,arg4,3,0); p+=2; } else { fn_80258AE8(*p++,arg4,3,0); } }
+if(*(u16 *)(node+6)==1) { p=(u16 *)((u8 *)arg0+*(u32 *)(node+28)); fn_8024FE1C(arg1,(u8 *)p+4,*p); }
+fn_802624B8(); (*(s16 *)((u8 *)lbl_80368A5C+8))++; return 1;
+}
+}
+}
+return 0;
 }
 
 s32 fn_80259430(s32 arg0, s32 arg1) {
