@@ -1,6 +1,7 @@
 /* Functions from 0x8001EEEC to 0x80028864, found by decomp-toolkit. */
 #include "common.h"
 #pragma cplusplus on
+struct MenuSelection24768 { u8 pad[0x40]; u8 index; };
 struct MenuController24768 { u32 pad;
 virtual void v0() = 0;
 virtual void v1() = 0;
@@ -1619,6 +1620,64 @@ extern "C" void fn_80024734(void *arg0) {
     };
     ((Obj *)*(void **)((u8 *)arg0 + 0x3C))->v4(arg0);
 }
+
+#pragma cplusplus on
+extern "C" void fn_80024768(void *arg0) {
+void *fn_8000B908(u8);void fn_8000C188(void*);
+void fn_801475FC(void*,s32);void fn_801673D0(void*);void fn_8016746C(void*,void*,void*,f32,f32);void fn_8016758C(void*,void*,void*,f32,f32);
+extern s32 lbl_80367110;extern u8 lbl_80367238,lbl_80367239,lbl_8036723A;
+extern u8 lbl_80268D90[],lbl_80284548[],lbl_80330D68[];extern u32 lbl_80368DC4;
+f32 x,y;
+MenuController24768 *ctrl;
+void *item,*q;
+u8 *node;
+u8 flags;
+ctrl=*(MenuController24768**)((u8*)arg0+0x3c);flags=0;
+if(!(lbl_80367110&0x80)){
+if(*(s8*)((u8*)arg0+0x62)<0){ctrl->v13(arg0);return;}
+ctrl->v11(arg0);
+(*(MenuController24768**)((u8*)arg0+0x3c))->v12(arg0);
+if(*((u8*)arg0+0x2b)!=0x7b){
+item=fn_8000B908(*((u8*)arg0+*(s8*)((u8*)arg0+0x62)+0x40));lbl_80367238=*((u8*)item+0x3a);
+item=fn_8000B908(*((u8*)arg0+*(s8*)((u8*)arg0+0x62)+0x40));lbl_80367239=*((u8*)item+0x3b);
+}
+flags=(*(MenuController24768**)((u8*)arg0+0x3c))->v14(arg0);
+if(*((u8*)arg0+0x2b)!=0x7b)lbl_8036723A=flags;
+}
+if((flags&4)&&ctrl->v28())fn_801475FC(ctrl->v28(),100);
+if(flags&8)fn_801475FC(lbl_80268D90+0x43,100);
+if(flags&16)fn_801475FC(lbl_80268D90+0x53,100);
+if(flags&1){
+fn_8000C188(arg0);
+item=fn_8000B908(*((u8*)arg0+*(s8*)((u8*)arg0+0x62)+0x40));
+(*(MenuItem24768**)((u8*)item+0x34))->v15(arg0,item);
+if(ctrl->v27())fn_801475FC(ctrl->v27(),100);
+}else if(flags&2){
+node=(u8*)arg0;
+if(ctrl->v27())fn_801475FC(ctrl->v27(),100);
+while(node && *(void**)node==lbl_80284548){
+fn_8000C188(node);
+if(node[0x2c]&2){node[0x2c]&=~2;((u8*)*(void**)(node+0x18))[0x2d]--;}
+node=*(u8**)(node+0x18);
+}
+}else if(flags&32){
+item=fn_8000B908(*((u8*)arg0+*(s8*)((u8*)arg0+0x62)+0x40));
+x=(f32)(*(s16*)((u8*)arg0+0x30)+*(s16*)((u8*)item+0x30));
+item=fn_8000B908(*((u8*)arg0+*(s8*)((u8*)arg0+0x62)+0x40));
+y=(f32)(*(s16*)((u8*)arg0+0x32)+*(s16*)((u8*)item+0x32));
+item=fn_8000B908(*((u8*)arg0+*(s8*)((u8*)arg0+0x62)+0x40));
+q=(*(MenuItem24768**)((u8*)item+0x34))->v2();
+if(q)fn_8016758C(lbl_80330D68,arg0,q,x,y);
+else {
+item=fn_8000B908(*((u8*)arg0+*(s8*)((u8*)arg0+0x62)+0x40));
+q=(*(MenuItem24768**)((u8*)item+0x34))->v16(item);
+fn_8016746C(lbl_80330D68,arg0,q,x,y);
+}
+*(u32*)lbl_80330D68|=lbl_80368DC4;
+}else if(flags&64)fn_801673D0(lbl_80330D68);
+}
+#pragma cplusplus reset
+
 #pragma cplusplus reset
 void fn_80024D18(s32 unused, void *arg1) {
     extern u32 *lbl_80367240;
