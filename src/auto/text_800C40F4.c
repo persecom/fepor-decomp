@@ -253,7 +253,6 @@ public:
     s32 *ptr;
     s32 state;
     SortIterator(const SortIterator &o) { ptr=o.ptr; state=o.state; }
-    ~SortIterator() {}
     SortIterator &operator+=(s32 n) { ptr+=n; return *this; }
     SortIterator operator+(s32 n) const { return SortIterator(*this) += n; }
 };
@@ -7827,21 +7826,26 @@ s32 fn_800FE904(void) {
     void *unit;
     s32 offset;
     u8 out;
+    u8 x;
+    u8 y;
     u16 dist;
+    s32 result;
     s32 *p;
-    u64 *flags;
+    s32 neg;
 
     map = lbl_802CA518;
     count = 0;
     offset = 0;
     unit = *(void **)(lbl_802CA264 + lbl_80330708[0x11] * 0xC);
     while (unit != NULL) {
+        x = *(u8 *)((u8 *)unit + 0x19E);
         out = 0;
         next = *(void **)((u8 *)unit + 0x184);
-        if (((s8)*(u8 *)((u8 *)unit + 0x19E) < *(s8 *)(map + 8))
-            || ((s32)(*(s8 *)(map + 0xA) - 1) < (s8)*(u8 *)((u8 *)unit + 0x19E))
-            || ((s8)*(u8 *)((u8 *)unit + 0x19F) < *(s8 *)(map + 9))
-            || ((s32)(*(s8 *)(map + 0xB) - 1) < (s8)*(u8 *)((u8 *)unit + 0x19F))) {
+        y = *(u8 *)((u8 *)unit + 0x19F);
+        if (((s8)x < *(s8 *)(map + 8))
+            || ((s32)(*(s8 *)(map + 0xA) - 1) < (s8)x)
+            || ((s8)y < *(s8 *)(map + 9))
+            || ((s32)(*(s8 *)(map + 0xB) - 1) < (s8)y)) {
             out = 1;
         }
         if (out == 0
@@ -7849,21 +7853,22 @@ s32 fn_800FE904(void) {
             && (*(u8 *)((u8 *)unit + 0x1A5) & 7) == 0
             && (*(u32 *)((u8 *)unit + 0x1A0) & 0x9D) == 0
             && (fn_80102EA8(unit) == 0 || fn_80017318((u8 *)unit + 0x236) != 0)) {
-            dist = fn_800FCF48(*(u8 *)((u8 *)unit + 0x19E), *(u8 *)((u8 *)unit + 0x19F));
-            sp8 = -(fn_8003A398(unit) + dist);
-            sp8 = sp8 + ((*(s8 *)((u8 *)unit + 0x248) + 0x80) << 16);
+            dist = fn_800FCF48(x, y);
+            neg = -(fn_8003A398(unit) + dist);
+            sp8 = neg;
+            sp8 = neg + ((*(s8 *)((u8 *)unit + 0x248) + 0x80) << 16);
             if (fn_80105BC0((u8 *)unit + 0x1BC, 0x18) != 0) {
-                sp8 = sp8 + 0x578;
+                result = sp8 + 0x578;
             } else if (fn_8010C4B0(unit) != 0
                 && (*(u32 *)((u8 *)unit + 0x254) & 1)
-                && (fn_80102EA8(unit) == 0 || fn_80017318((u8 *)unit + 0x236) == 6)) {
+                && (fn_80102EA8(unit) == 0 || (u8)fn_80017318((u8 *)unit + 0x236) == 6)) {
                 p = &sp8;
                 if (sp8 < lbl_80366E78) {
                     p = &lbl_80366E78;
                 }
-                sp8 = *p;
+                result = *p;
             } else if (fn_80105BC0((u8 *)unit + 0x1BC, 0x3C) != 0) {
-                sp8 = sp8 + 0x320;
+                result = sp8 + 0x320;
             } else {
                 score = 0x4B0;
                 for (i = 0; i < 4; i++) {
@@ -7872,12 +7877,11 @@ s32 fn_800FE904(void) {
                     }
                     item = *fn_80037BBC(unit, i);
                     if (fn_800934CC(unit, item) != 0) {
-                        flags = (u64 *)((u8 *)item + 0x38);
-                        if ((*flags & 4ULL) != 0) {
+                        if ((*(u64 *)((u8 *)item + 0x38) & 4ULL) != 0) {
                             if (score > 0xC8) {
                                 score = 0xC8;
                             }
-                        } else if ((*flags & 3ULL) != 0) {
+                        } else if ((*(u64 *)((u8 *)item + 0x38) & 3ULL) != 0) {
                             if ((u8)fn_8001DD54(item, unit) > 1) {
                                 if (score > 0x190) {
                                     score = 0x190;
@@ -7888,14 +7892,14 @@ s32 fn_800FE904(void) {
                         }
                     }
                 }
-                sp8 = sp8 + score;
                 p = &sp8;
+                sp8 = sp8 + score;
                 if (sp8 < lbl_80366E7C) {
                     p = &lbl_80366E7C;
                 }
-                sp8 = *p;
+                result = *p;
             }
-            *(s32 *)((u8 *)unit + 0x24C) = sp8;
+            *(s32 *)((u8 *)unit + 0x24C) = result;
             count += 1;
             *(void **)(lbl_8032B3C0 + offset + 0x18) = unit;
             offset += 4;
