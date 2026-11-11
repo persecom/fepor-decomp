@@ -4,7 +4,7 @@
 
 static inline s32 CountUnitItemReferences(u8 *unit,u8 *target) {
 void **fn_80037BBC(void *,s32);
-s32 count=0,i; u8 *entry; void *item;
+s32 i; u8 *entry; void *item; s32 count=0;
 if((*(u64 *)(target+0x38)&5ULL)!=0) {
 for(i=count;i<4;i++) { entry=(u8 *)fn_80037BBC(unit,i);item=*(void **)entry; if(!item) break;
 if(!(entry[5]&63) && target==item) count++;
@@ -3294,6 +3294,95 @@ extern "C" void fn_8018F338(void *arg0) {
     ((Obj *)arg0)->v2();
     fn_80154004(0, 0, 0x10);
 }
+
+#pragma use_lmw_stmw on
+#pragma opt_strength_reduction off
+#pragma cplusplus on
+extern "C" s32 fn_8018F374(void *arg0) {
+    void *fn_80105710(void *);
+    extern u32 lbl_802CA264[];
+    typedef struct Entry {
+        void *ptr;
+        u8 unk4;
+        u8 flags;
+        u8 pad[2];
+    } Entry;
+    extern Entry lbl_803200AC[];
+    Entry *e;
+    s32 ctr;
+    s32 dummy;
+    void *p0;
+    u8 *next;
+    u8 *unit;
+    void *target;
+    s32 total;
+    void *tmp;
+
+    tmp = *(void **)((u8 *)arg0 + 0x3C);
+    total = 0;
+    if (tmp == NULL) {
+        return -1;
+    }
+    if (fn_80105710(tmp) == NULL) {
+        return -1;
+    }
+    target = fn_80105710(*(void **)((u8 *)arg0 + 0x3C));
+    unit = *(u8 **)((u8 *)lbl_802CA264 + 0);
+    goto loop1_test;
+loop1_body:
+    next = *(u8 **)(unit + 0x184);
+    total += CountUnitItemReferences(unit, (u8 *)target);
+    unit = next;
+loop1_test:
+    if (unit != NULL) {
+        goto loop1_body;
+    }
+    unit = *(u8 **)((u8 *)lbl_802CA264 + 0x3C);
+    goto loop2_test;
+loop2_body:
+    next = *(u8 **)(unit + 0x184);
+    total += CountUnitItemReferences(unit, (u8 *)target);
+    unit = next;
+loop2_test:
+    if (unit != NULL) {
+        goto loop2_body;
+    }
+    e = lbl_803200AC;
+    dummy = 0;
+    for (ctr = 0x28; ctr != 0; ctr--) {
+        p0 = e->ptr;
+        if (p0 != NULL && (e->flags & 0x3F) == 0 && p0 == target) {
+            total++;
+        }
+        e++;
+        p0 = e->ptr;
+        if (p0 != NULL && (e->flags & 0x3F) == 0 && p0 == target) {
+            total++;
+        }
+        e++;
+        p0 = e->ptr;
+        if (p0 != NULL && (e->flags & 0x3F) == 0 && p0 == target) {
+            total++;
+        }
+        e++;
+        p0 = e->ptr;
+        if (p0 != NULL && (e->flags & 0x3F) == 0 && p0 == target) {
+            total++;
+        }
+        e++;
+        p0 = e->ptr;
+        if (p0 != NULL && (e->flags & 0x3F) == 0 && p0 == target) {
+            total++;
+        }
+        e++;
+        dummy += 4;
+    }
+    return total;
+}
+#pragma cplusplus reset
+#pragma opt_strength_reduction reset
+#pragma use_lmw_stmw reset
+
 extern "C" void fn_8018F6E8(void *arg0, s32 arg1) {
     struct Obj {
         virtual void v0() = 0;
@@ -5920,14 +6009,15 @@ extern "C" void *fn_80198288(void *arg0, void *arg1, void *arg2) {
     self->unk80 = temp;
     fn_800C9A60(&sp20, -1);
 
-    temp = self->unk80;
-    z = lbl_8036AE88;
-    self->unk88 = temp;
-    self->unk90 = z;
-    self->unk94 = z;
-    self->unk98 = 0;
-    self->unk9C = 0;
-    self->unk60 = (void *)fn_800E7FB4(saved, &self->str54);
+    self->unk60 = (void *)fn_800E7FB4(
+        saved,
+        (self->unk88 = self->unk80,
+         z = lbl_8036AE88,
+         self->unk90 = z,
+         self->unk94 = z,
+         self->unk98 = 0,
+         self->unk9C = 0,
+         &self->str54));
 
     self->unk64 = ((VObj *)saved)->v2((char *)(lbl_8027A780 + 0x53), fn_800C93EC(&sp74));
     self->unk68 = ((VObj *)saved)->v2((char *)(lbl_8027A780 + 0x5A), fn_800C93EC(&sp68));
