@@ -1841,51 +1841,6 @@ void fn_801F9498(void *arg0) {
     }
 }
 
-#pragma global_optimizer off
-typedef struct ListNode801F94D8 {
-    struct ListNode801F94D8 *prev;
-    struct ListNode801F94D8 *next;
-    void *obj;
-} ListNode801F94D8;
-
-#pragma opt_strength_reduction off
-static inline ListNode801F94D8 *walk_list_next(ListNode801F94D8 *node, s32 n) {
-    s32 ctr;
-    for (ctr = (u32)n >> 3; ctr != 0; ctr--) {
-        node = node->next;
-        node = node->next;
-        node = node->next;
-        node = node->next;
-        node = node->next;
-        node = node->next;
-        node = node->next;
-        node = node->next;
-    }
-    for (ctr = n & 7; ctr != 0; ctr--) {
-        node = node->next;
-    }
-    return node;
-}
-
-static inline ListNode801F94D8 *walk_list_prev(ListNode801F94D8 *node, s32 n) {
-    s32 ctr;
-    for (ctr = (u32)n >> 3; ctr != 0; ctr--) {
-        node = node->prev;
-        node = node->prev;
-        node = node->prev;
-        node = node->prev;
-        node = node->prev;
-        node = node->prev;
-        node = node->prev;
-        node = node->prev;
-    }
-    for (ctr = n & 7; ctr != 0; ctr--) {
-        node = node->prev;
-    }
-    return node;
-}
-#pragma opt_strength_reduction reset
-
 void fn_801F94D8(void *arg0) {
     void fn_8000A258(void);
     void fn_80009D74(f32, f32, f32, f32);
