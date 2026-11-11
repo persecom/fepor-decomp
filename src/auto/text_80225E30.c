@@ -127,7 +127,7 @@ void TRKNubMainLoop(void) {
                 break;
             }
             TRKDestructEvent(event);
-        } else if (isIdle == 0 || *gTRKInputPendingPtr != 0) {
+        } else if (isIdle == 0 || **(u8 ***)0x803687B0 != 0) {
             isIdle = 1;
             TRKGetInput();
         } else {
@@ -195,6 +195,25 @@ void TRKNubWelcome(void) {
 s32 TRKTerminateNub(void) {
     M2C_UNK fn_80226B68();
     fn_80226B68();
+    return 0;
+}
+
+s32 fn_802262E8(void *arg0)
+{
+    extern u8 lbl_802822A8[];
+
+    extern s32 fn_8022B078(void *, s32);
+    extern void MWTRACE(s32, const char *, ...);
+
+    s32 result;
+
+    result = fn_8022B078(
+        (u8 *)arg0 + 0x10,
+        *(s32 *)((u8 *)arg0 + 8)
+    );
+
+    MWTRACE(1, (const char *)lbl_802822A8, result);
+
     return 0;
 }
 
@@ -962,7 +981,7 @@ void fn_80228858(s32 arg0, s32 arg1) {
 }
 
 s32 fn_80228950(void) {
-    return 0;
+    return M2C_ERROR(/* unknown instruction: mtmsr $r3 */);
 }
 
 void fn_80228958(s32 arg0, s32 arg1, s32 arg2) {
