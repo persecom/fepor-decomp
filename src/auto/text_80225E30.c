@@ -1866,6 +1866,27 @@ s32 __va_arg(u8 *arg0, s32 arg1) {
     return var_r6;
 }
 
+void __destroy_global_chain(void)
+{
+    struct DestructorNode {
+        struct DestructorNode *next;
+        void (*destructor)(void *, s32);
+        void *object;
+    };
+
+    extern struct DestructorNode *__global_destructor_chain;
+
+    struct DestructorNode *node;
+
+    while (__global_destructor_chain != 0) {
+        node = __global_destructor_chain;
+
+        __global_destructor_chain = node->next;
+
+        node->destructor(node->object, -1);
+    }
+}
+
 void __register_global_object(s32 arg0, s32 arg1, void *arg2) {
     extern void *__global_destructor_chain;
     M2C_FIELD(arg2, void **, 0) = (void *) __global_destructor_chain;
