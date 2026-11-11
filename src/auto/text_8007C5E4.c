@@ -1,6 +1,7 @@
 /* Functions from 0x8007C5E4 to 0x8009F0BC, found by decomp-toolkit. */
 #include "common.h"
 typedef struct { u32 unk0; s8 vals[4]; } E2C4Info;
+typedef struct { char labels[4][16]; E2C4Info info; } E2C4Labels;
 #include "global.h"
 extern void* lbl_803674E8;
 extern f32 lbl_803696C8;
@@ -747,14 +748,12 @@ void fn_8007E2C4(void *arg0) {
  extern void *lbl_803674F4;
  extern f32 lbl_8036948C,lbl_80369430,lbl_80369418,lbl_8036942C;
  extern f32 lbl_803694B0,lbl_803694B4,lbl_803694B8,lbl_803694BC;
- char b3[16];
- char b2[16];
- char b1[16];
- char b0[16];
- s8 info[8];
+ E2C4Info info;
+ char b0[16],b1[16],b2[16],b3[16];
  u32 color;
  f32 x,y,texw,texh,scaledh,scaledw;
  void *obj;
+ f32 dimw,dimh;
  u16 *dim;
  s32 left,right,top,bottom,width;
  u8 k0,k1,k2,k3;
@@ -762,11 +761,11 @@ void fn_8007E2C4(void *arg0) {
  f32 scale;
  x=lbl_8036948C+M2C_FIELD(arg0,f32 *,0x14);
  y=M2C_FIELD(arg0,f32 *,0x18);
- fn_801A8CB8(lbl_80330EAC,info);
+ fn_801A8CB8(lbl_80330EAC,&info);
  dim=*fn_8006EDD8(lbl_803674F4,0x1A);
- scale=lbl_80369430;
- scaledw=(f32)dim[0]*scale;
- scaledh=(f32)dim[1]*scale;
+ dimw=(f32)dim[0]; dimh=(f32)dim[1];
+ scaledw=dimw*lbl_80369430;
+ scaledh=dimh*lbl_80369430;
  color=*fn_8018D900(1);
  obj=lbl_803674F4;
  dim=*fn_8006EDD8(obj,0x1A);
@@ -779,22 +778,22 @@ void fn_8007E2C4(void *arg0) {
  fn_800075D8();fn_80007884();
  fn_8000A258();fn_80009C0C(lbl_8036942C);fn_8000A248();
  fn_8000A258();fn_8000A174(0,0x13);fn_8000A248();
- val=info[4];
+ val=info.vals[0];
  if(val>0) {fn_80231D94(b0,lbl_8026C86C+0x210,val);k0=0xC;} else {fn_80231D94(b0,lbl_8026C86C+0x215);k0=2;}
  width=(s16)fn_80010B78(b0,-1,lbl_80369430);
 top=(s32)(lbl_803694B4+y); left=(s32)(lbl_803694B0+x)+0x10;
 fn_8001003C((s16)(left-width/2),(s16)(top),k0,0,0,b0,lbl_80369430,lbl_80369418);
-val=info[5];
+val=info.vals[1];
  if(val>0) {fn_80231D94(b1,lbl_8026C86C+0x210,val);k1=0xC;} else {fn_80231D94(b1,lbl_8026C86C+0x215);k1=2;}
  width=(s16)fn_80010B78(b1,-1,lbl_80369430);
 right=(s32)(lbl_803694B8+x)+0x10;
 fn_8001003C((s16)(right-width/2),(s16)(top),k1,0,0,b1,lbl_80369430,lbl_80369418);
-val=info[6];
+val=info.vals[2];
  if(val>0) {fn_80231D94(b2,lbl_8026C86C+0x210,val);k2=0xC;} else {fn_80231D94(b2,lbl_8026C86C+0x215);k2=2;}
  width=(s16)fn_80010B78(b2,-1,lbl_80369430);
 bottom=(s32)(lbl_803694BC+y);
 fn_8001003C((s16)(left-width/2),(s16)(bottom),k2,0,0,b2,lbl_80369430,lbl_80369418);
-val=info[7];
+val=info.vals[3];
  if(val>0) {fn_80231D94(b3,lbl_8026C86C+0x210,val);k3=0xC;} else {fn_80231D94(b3,lbl_8026C86C+0x215);k3=2;}
  width=(s16)fn_80010B78(b3,-1,lbl_80369430);
 fn_8001003C((s16)(right-width/2),(s16)(bottom),k3,0,0,b3,lbl_80369430,lbl_80369418);
