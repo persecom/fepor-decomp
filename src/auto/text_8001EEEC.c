@@ -1816,8 +1816,8 @@ extern "C" void fn_800254EC(void *arg0) {
 }
 #pragma cplusplus reset
 void *fn_80025518(void) {
-    extern u16 lbl_80268D90;
-    return (u8*)&lbl_80268D90 + 0x1E;
+extern u8 lbl_80268D90[];
+return lbl_80268D90+0x1E;
 }
 
 void *fn_80025528(void) {
