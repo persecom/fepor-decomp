@@ -43,6 +43,12 @@ extern u8 lbl_80289EB8[16];
 
 extern f32 lbl_803697E0;
 extern f32 lbl_803697E4;
+extern f64 lbl_80369470;
+
+static inline f32 fe_s16_to_f32(s16 v) {
+    return (f32)v;
+}
+
 
 void fn_800852BC(s32 arg0) {
     M2C_UNK fn_80069F04(s32);
