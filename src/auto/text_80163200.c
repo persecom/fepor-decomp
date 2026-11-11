@@ -16,9 +16,8 @@ M2C_FIELD(p,s16 *,26)=0;
 M2C_FIELD(p,s16 *,28)=0;M2C_FIELD(p,u8 *,30)=0xFF;
 M2C_FIELD(p,u8 *,31)=0xFF;
 M2C_FIELD(p,u8 *,32)=0xFF;
-M2C_FIELD(p,u8 *,33)=0xFF;zero=lbl_8036AB6C;
- M2C_FIELD(p,s16 *,0x22)=style; M2C_FIELD(p,s16 *,0x24)=0;
- M2C_FIELD(p,f32 *,0x28)=zero; M2C_FIELD(p,f32 *,0x2C)=zero; M2C_FIELD(p,f32 *,0x30)=zero;
+M2C_FIELD(p,u8 *,33)=0xFF;M2C_FIELD(p,s16 *,0x22)=style; M2C_FIELD(p,s16 *,0x24)=0;
+ zero=lbl_8036AB6C; M2C_FIELD(p,f32 *,0x28)=zero; M2C_FIELD(p,f32 *,0x2C)=zero; M2C_FIELD(p,f32 *,0x30)=zero;
  M2C_FIELD(p,s32 *,0x34)=0; M2C_FIELD(p,s32 *,0x38)=0;
  
 }
