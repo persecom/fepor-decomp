@@ -748,6 +748,25 @@ void fn_800B16EC(void *arg0) {
     fn_800B1720(0, *M2C_FIELD(arg0, s32 **, 4) + 0x40);
 }
 
+s32 fn_800B1B24(s32 arg0)
+{
+    extern u8 lbl_80317338[];
+    extern s32 fn_8024B7DC(void *);
+
+    u8 *entry;
+    s32 result;
+
+    entry = *(u8 **)(lbl_80317338 + 0xF4) + arg0 * 0x14;
+
+    if (*(u16 *)entry == 0) {
+        return 0;
+    }
+
+    result = fn_8024B7DC(*(void **)(entry + 0xC));
+
+    return result != -1;
+}
+
 s32 fn_800B1BFC(s32 arg0)
 {
     extern u16 lbl_80317338[4976];
