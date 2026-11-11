@@ -11,7 +11,7 @@ extern f32 lbl_80369690;
 extern f32 lbl_803696A8;
 extern f32 lbl_803696BC;
 
-static f32 fn_8008A5AC_lerp(f32 bc, u32 a, u32 b, f32 lo, f32 hi) {
+static f32 fn_8008A5AC_lerp(u32 a, f32 bc, u32 b, f32 lo, f32 hi) {
     return bc * ((((f32)a / (f32)b) * (hi - lo)) + lo);
 }
 extern f32 lbl_803696AC;
@@ -819,14 +819,10 @@ void fn_8008A5AC(void *arg0) {
     extern f32 lbl_8036969C;
     extern f32 lbl_803696A0;
     extern f32 lbl_803696A4;
-    extern f32 lbl_803696BC;
     u8 spC[0x44];
     s32 sp8;
     f32 temp_f5;
     f32 bc;
-    f32 f34;
-    f32 f36;
-    f32 hi;
     u16 t;
     u32 u34;
     u32 u36;
@@ -851,12 +847,8 @@ void fn_8008A5AC(void *arg0) {
         *(u16 *)((u8 *)arg0 + 0x34) = *(u16 *)((u8 *)arg0 + 0x34) + 1;
         u34 = *(u16 *)((u8 *)arg0 + 0x34);
         u36 = *(u16 *)((u8 *)arg0 + 0x36);
-        f34 = (f32)u34;
-        f36 = (f32)u36;
-        bc = lbl_803696BC;
         temp_f5 = *(f32 *)((u8 *)arg0 + 0x38);
-        hi = *(f32 *)((u8 *)arg0 + 0x3C);
-        *(u8 *)((u8 *)arg0 + 0x43) = (u8)(s32)(bc * ((f34 / f36) * (hi - temp_f5) + temp_f5));
+        *(u8 *)((u8 *)arg0 + 0x43) = (u8)(s32)fn_8008A5AC_lerp(lbl_803696BC, u34, u36, temp_f5, *(f32 *)((u8 *)arg0 + 0x3C));
     }
     if (*(u8 *)((u8 *)arg0 + 0x43) != 0) {
         fn_80202B3C(spC, lbl_80369690, lbl_80369694, lbl_80369690, lbl_80369698, lbl_80369690, lbl_8036969C);
