@@ -2085,6 +2085,93 @@ s32 fn_800D78F4(void) {
     return 0;
 }
 
+void *fn_800D7954(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    void fn_800C9ABC(void *, char *, void *);
+    void fn_800CB90C(void *, void *, char *);
+    void *fn_800D75FC(void *, void *);
+    void fn_800D764C(void *, s32, s32, s32, void *, void *);
+    void fn_800E3F54(void *);
+    extern char lbl_80271038[];
+    extern u8 lbl_8028DDD8[];
+    extern void fn_800D78F4(void);
+    extern void fn_800D78C4(void);
+    extern void fn_800D7894(void);
+    extern void fn_800D7864(void);
+    extern void fn_800D7834(void);
+    extern void fn_800D77D4(void);
+    extern void fn_800D77B0(void);
+    String sp98;
+    String sp8C;
+    String sp80;
+    String sp74;
+    String sp68;
+    String sp5C;
+    String sp50;
+    String sp44;
+    String sp38;
+    String sp2C;
+    void *sp28;
+    void *sp24;
+    void *sp20;
+    void *sp1C;
+    void *sp18;
+    void *sp14;
+    void *sp10;
+    void *spC;
+    void *sp8;
+    void *temp;
+    void *self;
+
+    self = arg0;
+    fn_800C9ABC(&sp98, lbl_80271038, &sp28);
+    fn_800CB90C(&sp8C, &sp98, lbl_80271038 + 7);
+    fn_800C9ABC(&sp80, lbl_80271038 + 0x10, &sp24);
+    fn_800D764C(self, arg1, arg2, arg3, &sp8C, &sp80);
+    fn_800C9A60(&sp80, -1);
+    fn_800C9A60(&sp8C, -1);
+    fn_800C9A60(&sp98, -1);
+    *(void **)((u8 *)self + 0xC) = lbl_8028DDD8;
+    fn_800C9ABC(&sp74, lbl_80271038 + 0x1B, &sp20);
+    *(void **)((u8 *)self + 0x424) = fn_800D75FC(self, &sp74);
+    fn_800C9A60(&sp74, -1);
+    fn_800C9ABC(&sp68, lbl_80271038 + 0x24, &sp1C);
+    *(void **)((u8 *)self + 0x428) = fn_800D75FC(self, &sp68);
+    fn_800C9A60(&sp68, -1);
+    fn_800C9ABC(&sp5C, lbl_80271038 + 0x2E, &sp18);
+    *(void **)((u8 *)self + 0x42C) = fn_800D75FC(self, &sp5C);
+    fn_800C9A60(&sp5C, -1);
+    fn_800C9ABC(&sp50, lbl_80271038 + 0x39, &sp14);
+    *(void **)((u8 *)self + 0x430) = fn_800D75FC(self, &sp50);
+    fn_800C9A60(&sp50, -1);
+    fn_800C9ABC(&sp44, lbl_80271038 + 0x43, &sp10);
+    *(void **)((u8 *)self + 0x434) = fn_800D75FC(self, &sp44);
+    fn_800C9A60(&sp44, -1);
+    fn_800C9ABC(&sp38, lbl_80271038 + 0x49, &spC);
+    *(void **)((u8 *)self + 0x438) = fn_800D75FC(self, &sp38);
+    fn_800C9A60(&sp38, -1);
+    fn_800C9ABC(&sp2C, lbl_80271038 + 0x53, &sp8);
+    *(void **)((u8 *)self + 0x43C) = fn_800D75FC(self, &sp2C);
+    fn_800C9A60(&sp2C, -1);
+    *(void **)((u8 *)*(void **)((u8 *)self + 0x424) + 0xA4) = (void *)fn_800D78F4;
+    *(void **)((u8 *)*(void **)((u8 *)self + 0x428) + 0xA4) = (void *)fn_800D78C4;
+    temp = *(void **)((u8 *)self + 0x42C);
+    *(void **)((u8 *)temp + 0xA4) = (void *)fn_800D7894;
+    *(void **)((u8 *)*(void **)((u8 *)self + 0x430) + 0xA4) = (void *)fn_800D7864;
+    *(void **)((u8 *)*(void **)((u8 *)self + 0x434) + 0xA4) = (void *)fn_800D7834;
+    *(void **)((u8 *)*(void **)((u8 *)self + 0x438) + 0xA4) = (void *)fn_800D77D4;
+    *(void **)((u8 *)*(void **)((u8 *)self + 0x43C) + 0xA4) = (void *)fn_800D77B0;
+    *(void **)((u8 *)self + 0x14) = *(void **)((u8 *)self + 0x424);
+    *(void **)((u8 *)self + 0x18) = *(void **)((u8 *)self + 0x428);
+    *(void **)((u8 *)self + 0x1C) = *(void **)((u8 *)self + 0x430);
+    *(void **)((u8 *)self + 0x20) = *(void **)((u8 *)self + 0x42C);
+    *(void **)((u8 *)self + 0x24) = *(void **)((u8 *)self + 0x434);
+    *(void **)((u8 *)self + 0x28) = *(void **)((u8 *)self + 0x438);
+    *(void **)((u8 *)self + 0x2C) = *(void **)((u8 *)self + 0x43C);
+    *(void **)((u8 *)self + 0x414) = *(void **)((u8 *)self + 0x424);
+    fn_800E3F54(*(void **)((u8 *)self + 0x424));
+    return self;
+}
+
 s32 fn_800D7C5C(void) {
     M2C_UNK fn_800D758C(s32);
     extern s32 lbl_803678A8;
@@ -3696,6 +3783,7 @@ loop_1:
     }
 }
 
+#pragma opt_class_copy off
 #pragma cplusplus on
 #pragma use_lmw_stmw on
 extern "C" void fn_800E103C(s32 *begin,s32 *end,SortIterator a,SortIterator b,SortCompare comp) {
@@ -3705,8 +3793,11 @@ extern "C" void fn_800E103C(s32 *begin,s32 *end,SortIterator a,SortIterator b,So
  void fn_800E14E4(s32 *,s32 *,s32 *,SortCompare,s32,s32,SortIterator,SortIterator);
  s32 n=((s32)end-(s32)begin)/4;
  s32 *mid;
- s32 *cur,*prev,*hole;
- s32 value,other,key;
+ s32 other;
+ s32 *cur;
+ s32 value;
+ s32 *prev,*hole;
+ s32 key;
  if(n<=1) return;
  if(n==2) {
  value=*begin;
@@ -3718,10 +3809,7 @@ extern "C" void fn_800E103C(s32 *begin,s32 *end,SortIterator a,SortIterator b,So
  if(begin!=end) {
  for(cur=begin+1;cur<end;cur++) {
  value=*cur; prev=cur; hole=cur;
- while(begin<hole) {
- other=*--prev;
- key=fn_800DF6B0((void *)value);
- if(fn_800DF6B0((void *)other)<=key) break;
+ while(begin<hole && (other=*--prev,key=fn_800DF6B0((void *)value),fn_800DF6B0((void *)other)>key)) {
  *hole=*prev; --hole;
  }
  *hole=value;
@@ -3739,9 +3827,9 @@ extern "C" void fn_800E103C(s32 *begin,s32 *end,SortIterator a,SortIterator b,So
  fn_800E14E4(begin,mid,end,comp,((s32)mid-(s32)begin)/4,((s32)end-(s32)mid)/4,a,b);
  }
  }
+#pragma opt_class_copy reset
 #pragma cplusplus off
 }
-
 void fn_800E2138(void *arg0, void *arg1, s32 arg2) {
     s32 spC;
     s32 sp8;
