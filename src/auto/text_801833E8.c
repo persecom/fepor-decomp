@@ -1748,7 +1748,7 @@ void fn_80188EF4(void *arg0) {
 }
 
 #pragma global_optimizer off
-void fn_8018931C(void *arg0, register f32 scaleArg) {
+void fn_8018931C(void *arg0, f32 scaleArg) {
     void fn_8000C188(void *);
     void fn_80050BCC(void *, s32);
     f32 fn_80059F64(f32,f32,f32,f32);
@@ -1774,18 +1774,15 @@ void fn_8018931C(void *arg0, register f32 scaleArg) {
     else if(lbl_80330708[0x57]>=2 && (flags&0x100)) fast=1;
     else fast=0;
     if(fast) {
-        minimum=lbl_8036ACF8;
- scaleArg=lbl_8036AD18;
- step=duration*scaleArg;
- if(step<minimum) step=minimum;
+        step=duration*lbl_8036AD18;
+ if(step<lbl_8036ACF8) step=lbl_8036ACF8;
         M2C_FIELD(M2C_FIELD(arg0,void **,0x34),f32 *,0x5C)=lbl_8036AD08;
     } else {
         M2C_FIELD(M2C_FIELD(arg0,void **,0x34),f32 *,0x5C)=step=lbl_8036ACF8;
     }
     if(M2C_FIELD(arg0,u16 *,0x52)&0x8000) {
-        minimum=lbl_8036ACF8;
- scaleArg=lbl_8036AD1C*(f32)__fabs(M2C_FIELD(arg0,f32 *,0x48)-M2C_FIELD(arg0,f32 *,0x44));
- if(scaleArg<minimum) scaleArg=minimum;
+        scaleArg=lbl_8036AD1C*(f32)__fabs(M2C_FIELD(arg0,f32 *,0x48)-M2C_FIELD(arg0,f32 *,0x44));
+ if(scaleArg<lbl_8036ACF8) scaleArg=lbl_8036ACF8;
         duration=(s32)(duration*scaleArg);
     }
     M2C_FIELD(arg0,f32 *,0x3C)+=step;
@@ -3386,7 +3383,7 @@ extern "C" s32 fn_8018F374(void *arg0) {
     } Entry;
     extern Entry lbl_803200AC[];
     Entry *e;
-    s32 ctr;
+    s32 i;
     void *p0;
     u8 *next;
     s32 total;
@@ -3424,7 +3421,7 @@ loop2_test:
         goto loop2_body;
     }
     e = lbl_803200AC;
-    for (ctr = 200; ctr != 0; ctr--) {
+    for (i = 0; i < 200; i++) {
         p0 = e->ptr;
         if (p0 != NULL && (e->flags & 0x3F) == 0 && target == p0) {
             total++;
@@ -5083,10 +5080,12 @@ extern "C" void fn_801943FC(void *arg0) {
     void *nest;
     s32 saved;
     u32 ret;
-    u32 sp18;
-    u32 sp14;
-    u32 spC;
+    s32 val;
     s16 sp8[2];
+    u32 spC;
+    u32 sp10;
+    u32 sp14;
+    u32 sp18;
     s16 t;
 
     self = arg0;
@@ -5098,8 +5097,8 @@ extern "C" void fn_801943FC(void *arg0) {
         var_r30 = fn_80143A84(obj40);
         if (fn_80166D8C(lbl_80330D68) != 0) {
             if (var_r30 != NULL) {
-                *(Vec2s *)&sp18 = ((Obj *)obj40)->v13();
-                fn_80166DD0(lbl_80330D68, *var_r30, (f32)*(s16 *)&sp18, (f32)*((s16 *)&sp18 + 1));
+                *(Vec2s *)&sp10 = ((Obj *)obj40)->v13();
+                fn_80166DD0(lbl_80330D68, *var_r30, (f32)*(s16 *)&sp10, (f32)*((s16 *)&sp10 + 1));
             } else {
                 fn_801673D0(lbl_80330D68);
             }
@@ -5107,10 +5106,11 @@ extern "C" void fn_801943FC(void *arg0) {
     }
     child = (Child *)fn_8013FF94(arg0, 1, 0);
     if (var_r30 != NULL) {
-        child->unk3C = *(s32 *)*var_r30;
+        val = *(s32 *)*var_r30;
     } else {
-        child->unk3C = 0;
+        val = 0;
     }
+    child->unk3C = val;
     flags = lbl_80367110;
     gate = 0;
     if ((flags & 0x10) && !(flags & 0x20)) {
