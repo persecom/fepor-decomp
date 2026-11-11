@@ -1,3 +1,7 @@
+/* string pool for double2hex / printf float specials */
+static const char double2hex_strpool[] =
+    "\0-INF\0-inf\0INF\0inf\0-NAN\0-nan\0NAN\0nan";
+
 /* Functions from 0x8022CD68 to 0x80267A7C, found by decomp-toolkit. */
 #include "common.h"
 
@@ -1208,6 +1212,162 @@ block_3:
     ((u8*)arg0)[3] = 0x30;
 }
 
+char *double2hex(char *buffer, void *format, f64 value) {
+    void fn_8022E660(void *, void *);
+    void fn_80234450(char *, char *);
+    char *long2str_802338EC(s32, char *, void *);
+
+    typedef struct {
+        u8 unk0;
+        u8 sign_style;
+        u8 unk2;
+        u8 alternate;
+        u8 unk4;
+        u8 conv;
+        u8 pad6[6];
+        s32 precision;
+    } PrintFormat;
+
+    PrintFormat *fmt;
+    f64 sp8;
+    f64 sp18;
+    s8 sp10;
+    s16 sp12;
+    u8 decbuf[0x30];
+    u8 opts[0x10];
+    u8 opts2[0x10];
+    char *p;
+    char *out;
+    s32 exp;
+    s32 prec;
+    s32 i;
+    s8 nibble;
+    s8 digit;
+    u8 *bits;
+    u32 signbit;
+    u8 b;
+
+    fmt = (PrintFormat *)format;
+    sp8 = value;
+    sp18 = value;
+    if (fmt->precision > 0x1FD) {
+        return NULL;
+    }
+
+    sp10 = 0;
+    sp12 = 0x20;
+    fn_8022E660(&sp10, decbuf);
+
+    if (decbuf[5] == 'I') {
+        if (*(s16 *)&sp18 & 0x8000) {
+            out = buffer - 5;
+            if (fmt->conv == 'A') {
+                fn_80234450(out, "-INF");
+            } else {
+                fn_80234450(out, "-inf");
+            }
+        } else {
+            out = buffer - 4;
+            if (fmt->conv == 'A') {
+                fn_80234450(out, "INF");
+            } else {
+                fn_80234450(out, "inf");
+            }
+        }
+        return out;
+    }
+
+    if (decbuf[5] == 'N') {
+        if (*(u8 *)&sp8 & 0x80) {
+            out = buffer - 5;
+            if (fmt->conv == 'A') {
+                fn_80234450(out, "-NAN");
+            } else {
+                fn_80234450(out, "-nan");
+            }
+        } else {
+            out = buffer - 4;
+            if (fmt->conv == 'A') {
+                fn_80234450(out, "NAN");
+            } else {
+                fn_80234450(out, "nan");
+            }
+        }
+        return out;
+    }
+
+    opts[0] = 1;
+    opts[1] = 1;
+    opts[2] = 0;
+    opts[3] = 0;
+    opts[4] = 0;
+    opts[5] = 0x64;
+    *(s32 *)(opts + 8) = 0;
+    *(s32 *)(opts + 0xC) = 1;
+    *(s32 *)(opts2 + 0) = *(s32 *)(opts + 0);
+    *(s32 *)(opts2 + 4) = *(s32 *)(opts + 4);
+    *(s32 *)(opts2 + 8) = 0;
+    *(s32 *)(opts2 + 0xC) = 1;
+
+    exp = (s16)((*(u16 *)&sp18 >> 4) & 0x7FF) - 0x3FF;
+    p = long2str_802338EC(exp, buffer, opts2);
+
+    if (fmt->conv == 'a') {
+        p[-1] = 'p';
+        out = p - 1;
+    } else {
+        p[-1] = 'P';
+        out = p - 1;
+    }
+
+    prec = fmt->precision;
+    bits = (u8 *)&sp8;
+    i = prec;
+    if (prec >= 1) {
+        do {
+            signbit = (u32)i >> 31;
+            b = bits[((s32)(signbit + i) >> 1) + 1];
+            if ((((i & 1) ^ (s32)signbit) - (s32)signbit) != 0) {
+                nibble = (s8)(b & 0xF);
+            } else {
+                nibble = (s8)((b >> 4) & 0xF);
+            }
+            if (nibble < 0xA) {
+                digit = nibble + '0';
+            } else if (fmt->conv == 'a') {
+                digit = nibble + 0x57;
+            } else {
+                digit = nibble + 0x37;
+            }
+            *--out = digit;
+            i -= 1;
+        } while (--prec);
+    }
+
+    if (fmt->precision != 0 || fmt->alternate != 0) {
+        *--out = '.';
+    }
+
+    out[-1] = '1';
+    if (fmt->conv == 'a') {
+        out[-2] = 'x';
+        out -= 2;
+    } else {
+        out[-2] = 'X';
+        out -= 2;
+    }
+    *--out = '0';
+
+    if (*(s16 *)&sp18 & 0x8000) {
+        *--out = '-';
+    } else if (fmt->sign_style == 1) {
+        *--out = '+';
+    } else if (fmt->sign_style == 2) {
+        *--out = ' ';
+    }
+    return out;
+}
+
 char* long2str_802338EC(s32 value, char* buffer, u32 flags) {
     char* result = buffer;
     s32 absValue = value;
@@ -2284,7 +2444,15 @@ extern f64 lbl_8036C120;
 extern f64 lbl_8036C128;
 
 f64 fn_80237C7C(s32 arg0, f64 farg0, f64 farg1) {
-    f64 st[5];
+    extern f64 lbl_8036C0D0;
+    extern f64 lbl_8036C0D8;
+    extern f64 lbl_8036C0E0;
+    extern f64 lbl_8036C0E8;
+    extern f64 lbl_8036C0F0;
+    extern f64 lbl_8036C0F8;
+    extern f64 lbl_8036C100;
+    extern f64 lbl_80282ED8[];
+    f64 st[3];
     f64 z;
     f64 w;
     f64 r;
@@ -2334,12 +2502,9 @@ f64 fn_80237C7C(s32 arg0, f64 farg0, f64 farg1) {
     w = st[0] + r;
     if (ix >= 0x3FE59428) {
         sf = 1 - ((s32)((u32)hx >> 30) & 2);
-        ((s32 *)&st[3])[1] = arg0 ^ 0x80000000;
-        ((s32 *)&st[3])[0] = 0x43300000;
-        ((s32 *)&st[4])[1] = sf ^ 0x80000000;
-        ((s32 *)&st[4])[0] = 0x43300000;
-        v = st[3] - lbl_8036C100;
-        a = st[4] - lbl_8036C100;
+        v = (f64)arg0;
+        a = (f64)sf;
+        (void)lbl_8036C100;
         s = w * w;
         z = w + v;
         s = s / z - r;
