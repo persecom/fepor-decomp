@@ -254,7 +254,7 @@ public:
     s32 state;
     SortIterator(const SortIterator &o) { ptr=o.ptr; state=o.state; }
     SortIterator &operator+=(s32 n) { ptr+=n; return *this; }
-    SortIterator operator+(s32 n) const { SortIterator out(*this); out+=n; return out; }
+    SortIterator operator+(s32 n) const { return SortIterator(*this) += n; }
 };
 class SortCompare {
 public:
@@ -3694,6 +3694,52 @@ loop_1:
         var_r4 = var_r7;
         goto loop_1;
     }
+}
+
+#pragma cplusplus on
+#pragma use_lmw_stmw on
+extern "C" void fn_800E103C(s32 *begin,s32 *end,SortIterator a,SortIterator b,SortCompare comp) {
+ s32 fn_800DF6B0(void *);
+ void fn_800E18B4(s32 *,s32 *,SortIterator,SortCompare);
+ void fn_800E1340(SortIterator,SortIterator,SortIterator,SortIterator,s32 *,SortCompare);
+ void fn_800E14E4(s32 *,s32 *,s32 *,SortCompare,s32,s32,SortIterator,SortIterator);
+ s32 n=((s32)end-(s32)begin)/4;
+ s32 *mid;
+ s32 *cur,*prev,*hole;
+ s32 value,other,key;
+ if(n<=1) return;
+ if(n==2) {
+ value=*begin;
+ key=fn_800DF6B0((void *)end[-1]);
+ if(fn_800DF6B0((void *)value)>key) {
+ other=*begin; *begin=end[-1]; end[-1]=other;
+ }
+ } else if(n<=20) {
+ if(begin!=end) {
+ for(cur=begin+1;cur<end;cur++) {
+ value=*cur; prev=cur; hole=cur;
+ while(begin<hole) {
+ other=*--prev;
+ key=fn_800DF6B0((void *)value);
+ if(fn_800DF6B0((void *)other)<=key) break;
+ *hole=*prev; --hole;
+ }
+ *hole=value;
+ }
+ }
+ } else {
+ mid=begin+n/2;
+ if(n<=((s32)b.ptr-(s32)a.ptr)/4) {
+ fn_800E18B4(begin,mid,a,comp);
+ fn_800E18B4(mid,end,a+n/2,comp);
+ fn_800E1340(a,a+n/2,a+n/2,a+n,begin,comp);
+ } else {
+ fn_800E103C(begin,mid,a,b,comp);
+ fn_800E103C(mid,end,a,b,comp);
+ fn_800E14E4(begin,mid,end,comp,((s32)mid-(s32)begin)/4,((s32)end-(s32)mid)/4,a,b);
+ }
+ }
+#pragma cplusplus off
 }
 
 void fn_800E2138(void *arg0, void *arg1, s32 arg2) {
