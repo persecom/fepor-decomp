@@ -373,6 +373,11 @@ s32 fn_8009FFF0(s32 arg0, s32 arg1) {
     return 0;
 }
 
+void *fn_800A001C(void) {
+    extern u16 lbl_8026D8D8[];
+    return (char *)lbl_8026D8D8 + 0x37A;
+}
+
 extern s32 lbl_80367550;
 s32 fn_800A002C(s32 arg0, s32 arg1) {
     M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
