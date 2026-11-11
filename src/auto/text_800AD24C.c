@@ -884,39 +884,31 @@ s32 fn_800B2928(s32 arg0) {
     s32 handle;
     u8 *base;
     u8 *p, *node, *tail;
+    u8 *loopBase, *names;
+    s32 id = arg0;
     u32 length;
     u16 index;
     base = (u8 *)lbl_80317338;
     if (*(u32 *)(base + 0xE4) >= 8) return 0;
-    fn_80231D94(lbl_80319AA8, lbl_8026EB70 + 0x1E, arg0, lbl_8026EB70 + 0x2F);
+    fn_80231D94(lbl_80319AA8, lbl_8026EB70 + 0x1E, id, lbl_8026EB70 + 0x2F);
 
-    handle = fn_800B4A84(lbl_80319AA8, 2, 0);
-    if (handle == 0) buffer = 0;
-    else {
-        value = fn_800B49C8((void *)handle);
-        if (value == 0) buffer = 0;
-        else {
-            size = (value + 0x1F) & ~0x1F;
-            buffer = fn_800C4638(size, (u8 *)lbl_8026EB70 + 0x2E, 0);
-            if (buffer == 0) buffer = 0;
-            else if (fn_800B4A14((void *)handle, buffer, size, 0) <= 0) {
-                fn_800C4588(buffer);
-                buffer = 0;
-            } else fn_800B49D0((void *)handle);
-        }
-    }
+    buffer = LoadSoundBankB(lbl_80319AA8);
     if (buffer == 0) return 0;
 
-    *(u32 *)((u8 *)lbl_80317338 + *(u32 *)(base + 0xE4)*4 + 0x60) = buffer;
+    value = *(u32 *)(base + 0xE4);
+    loopBase = (u8 *)lbl_80317338;
+    names = lbl_8026EB70;
+    p = loopBase + value*4;
+    *(u32 *)(p + 0x60) = buffer;
     for (;;) {
         length = *(u32 *)buffer;
         if (length == 0xFFFFFFFF) break;
-        node = (u8 *)fn_800C4638(0x10, lbl_8026EB70 + 0x2E, 0);
+        node = (u8 *)fn_800C4638(0x10, names + 0x2E, 0);
         if (node == 0) { for (;;) {} }
         index = 0;
-        if (*(u8 **)((u8 *)lbl_80317338 + 0xEC) == 0) *(u8 **)((u8 *)lbl_80317338 + 0xEC) = node;
+        if (*(u8 **)(loopBase + 0xEC) == 0) *(u8 **)(loopBase + 0xEC) = node;
         else {
-            tail = *(u8 **)((u8 *)lbl_80317338 + 0xEC);
+            tail = *(u8 **)(loopBase + 0xEC);
             for (;;) {
                 u8 *next = *(u8 **)(tail + 0xC);
                 index++;
@@ -933,46 +925,28 @@ s32 fn_800B2928(s32 arg0) {
         *(u32 *)(node + 0xC) = 0;
         buffer += length;
     }
-    fn_80231D94(lbl_80319AA8, (u8 *)lbl_8026EB70 + 0x1E, arg0, (u8 *)lbl_8026EB70 + 0x35);
+    fn_80231D94(lbl_80319AA8, (u8 *)lbl_8026EB70 + 0x1E, id, (u8 *)lbl_8026EB70 + 0x35);
 
-    handle = fn_800B4A84(lbl_80319AA8, 2, 0);
-    if (handle == 0) buffer = 0;
-    else {
-        value = fn_800B49C8((void *)handle);
-        if (value == 0) buffer = 0;
-        else {
-            size = (value + 0x1F) & ~0x1F;
-            buffer = fn_800C4638(size, (u8 *)lbl_8026EB70 + 0x2E, 0);
-            if (buffer == 0) buffer = 0;
-            else if (fn_800B4A14((void *)handle, buffer, size, 0) <= 0) {
-                fn_800C4588(buffer);
-                buffer = 0;
-            } else fn_800B49D0((void *)handle);
-        }
-    }
+    buffer = LoadSoundBankB(lbl_80319AA8);
     if (buffer == 0) return 0;
 
-    *(u32 *)((u8 *)lbl_80317338 + *(u32 *)(base + 0xE4)*4 + 0x80) = buffer;
-    fn_80231D94(lbl_80319AA8, &lbl_8026EB70[0x1E], arg0, &lbl_8026EB70[0x3B]);
-
-    handle = fn_800B4A84(lbl_80319AA8, 2, 0);
-    if (handle == 0) buffer = 0;
-    else {
-        value = fn_800B49C8((void *)handle);
-        if (value == 0) buffer = 0;
-        else {
-            size = (value + 0x1F) & ~0x1F;
-            buffer = fn_800C4638(size, (u8 *)lbl_8026EB70 + 0x2E, 0);
-            if (buffer == 0) buffer = 0;
-            else if (fn_800B4A14((void *)handle, buffer, size, 0) <= 0) {
-                fn_800C4588(buffer);
-                buffer = 0;
-            } else fn_800B49D0((void *)handle);
-        }
+    {
+        u32 slot = *(u32 *)(base + 0xE4);
+        u8 *table = (u8 *)lbl_80317338;
+        table += slot * 4;
+        *(u32 *)(table + 0x80) = buffer;
     }
+    fn_80231D94(lbl_80319AA8, &lbl_8026EB70[0x1E], id, &lbl_8026EB70[0x3B]);
+
+    buffer = LoadSoundBankB(lbl_80319AA8);
     if (buffer == 0) return 0;
 
-    *(u32 *)((u8 *)lbl_80317338 + *(u32 *)(base + 0xE4)*4 + 0xA0) = buffer;
+    {
+        u32 slot = *(u32 *)(base + 0xE4);
+        u8 *table = (u8 *)lbl_80317338;
+        table += slot * 4;
+        *(u32 *)(table + 0xA0) = buffer;
+    }
     *(u32 *)(base + 0xE4) += 1;
     return 1;
 }
