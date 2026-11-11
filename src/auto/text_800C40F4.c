@@ -2420,9 +2420,9 @@ void *fn_800D7954(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
 }
 
 s32 fn_800D7C5C(void) {
-    M2C_UNK fn_800D758C(s32);
-    extern s32 lbl_803678A8;
-    extern s32 lbl_803678C8;
+    void fn_800D758C(void *);
+    extern void *lbl_803678A8;
+    extern void *lbl_803678C8;
     fn_800D758C(lbl_803678A8);
     fn_800D758C(lbl_803678C8);
     return 0;
