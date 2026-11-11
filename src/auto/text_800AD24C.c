@@ -1504,11 +1504,25 @@ s32 fn_800B6FE4(u32 arg0) {
     return 1;
 }
 
-s32 fn_800B7044(s32 arg0) {
-    if (arg0 < 0) {
-        return 0;
+s32 fn_800B7044(s32 arg0)
+{
+    void fn_8004EA60(void *, s32);
+    extern u8 lbl_802CA264[];
+
+    u8 *entry;
+    u8 *next;
+
+    entry = *(u8 **)(lbl_802CA264 + arg0 * 0xC);
+
+    while (entry != 0) {
+        next = *(u8 **)(entry + 0x184);
+
+        fn_8004EA60(entry, 0);
+
+        entry = next;
     }
-    return arg0;
+
+    return 1;
 }
 
 s32 fn_800B7098(s32 arg0)
