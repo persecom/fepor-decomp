@@ -1,5 +1,12 @@
 /* Functions from 0x8012C3D0 to 0x8013275C, found by decomp-toolkit. */
 #include "common.h"
+
+static inline void fn_801302F4_Adjust(void *obj, s16 x, s16 y, s16 w, s16 h) {
+    *(s16 *)((u8 *)obj + 0x58) = (*(s16 *)((u8 *)obj + 0x58) + x) / 2;
+    *(s16 *)((u8 *)obj + 0x5A) = (*(s16 *)((u8 *)obj + 0x5A) + y) / 2;
+    *(s16 *)((u8 *)obj + 0x5C) = (*(s16 *)((u8 *)obj + 0x5C) + w) / 2;
+    *(s16 *)((u8 *)obj + 0x5E) = (*(s16 *)((u8 *)obj + 0x5E) + h) / 2;
+}
 #include "global.h"
 #include "unit.h"
 
@@ -846,10 +853,11 @@ void fn_801302C0(void) {
     fn_80059C2C(0, 0, 0x260, 0x1E0, 0);
 }
 
+#pragma cplusplus reset
 #pragma use_lmw_stmw on
 void fn_801302F4(void *arg0) {
-    void fn_8000A258(void);
     void fn_80009B98(void);
+    void fn_8000A258(void);
     void fn_8000A248(void);
     void fn_80009D74(f32, f32, f32, f32);
     void fn_80009B8C(s32);
@@ -862,34 +870,33 @@ void fn_801302F4(void *arg0) {
     void fn_80057020(void *);
     void fn_80056B0C(void *);
     extern f64 lbl_8036A4F0;
-    extern f32 lbl_8036A500;
     extern f32 lbl_8036A50C;
+    extern f32 lbl_8036A500;
     extern f32 lbl_8036A590;
     extern f32 lbl_8036A594;
     extern f32 lbl_8036A510;
     extern f32 lbl_8036A598;
 
-    s16 x;
-    s16 y;
-    s16 w;
-    s16 h;
-    s32 aw;
-    s32 ah;
-    s32 t;
-    s16 temp;
+    register s16 x;
+    int ah;
     s8 unk62;
+    s16 y;
+    register s16 h;
+    register s16 w;
+    register s32 aw;
+    int t;
 
-    temp = *(s16 *)((u8 *)arg0 + 0x6A);
-    if (temp % 32 == 0) {
+    t = *(s16 *)((u8 *)arg0 + 0x6A);
+    if (t % 32 == 0) {
         s16 var4;
         s16 var6;
         s16 var7;
-        s16 var8;
+        register s16 var8;
         void **arr;
-        u8 *ptr;
+        register u8 *ptr;
 
         unk62 = *(s8 *)((u8 *)arg0 + 0x62);
-        if (unk62 < 0) {
+        if (0 > unk62) {
             var7 = 0;
             var8 = var7;
             var6 = 0x42;
@@ -901,16 +908,16 @@ void fn_801302F4(void *arg0) {
             var4 = 0x28;
             var7 = 0x1B8;
             var8 = 0x16;
-            var6 = (s16)(((unk62 << 5) + 0x60) - temp);
+            var6 = (s16)(((unk62 << 5) + 0x60) - t);
         }
         t = *(s16 *)((u8 *)arg0 + 0x58) + var4;
-        *(s16 *)((u8 *)arg0 + 0x58) = (s16)((s32)(((u32)t >> 31) + t) >> 1);
+        *(s16 *)((u8 *)arg0 + 0x58) = (s16)(t / 2);
         t = *(s16 *)((u8 *)arg0 + 0x5A) + var6;
-        *(s16 *)((u8 *)arg0 + 0x5A) = (s16)((s32)(((u32)t >> 31) + t) >> 1);
+        *(s16 *)((u8 *)arg0 + 0x5A) = (s16)(t / 2);
         t = *(s16 *)((u8 *)arg0 + 0x5C) + var7;
-        *(s16 *)((u8 *)arg0 + 0x5C) = (s16)((s32)(((u32)t >> 31) + t) >> 1);
+        *(s16 *)((u8 *)arg0 + 0x5C) = (s16)(t / 2);
         t = *(s16 *)((u8 *)arg0 + 0x5E) + var8;
-        *(s16 *)((u8 *)arg0 + 0x5E) = (s16)((s32)(((u32)t >> 31) + t) >> 1);
+        *(s16 *)((u8 *)arg0 + 0x5E) = (s16)(t / 2);
     }
     x = *(s16 *)((u8 *)arg0 + 0x58);
     y = *(s16 *)((u8 *)arg0 + 0x5A);
@@ -926,10 +933,10 @@ void fn_801302F4(void *arg0) {
         fn_8000A248();
         t = w + 0x10;
         aw = (s32)(lbl_8036A590 * (f32)t);
-        ah = (s32)(((u32)h >> 31) + h) >> 1;
+        ah = h / 2;
         t = (s32)(lbl_8036A594 * (f32)t);
-        fn_8008AB7C((s32)(((u32)aw >> 31) + aw) >> 1, ah, aw, 0x18, 0x19, 0x4B, 1);
-        fn_8008AB7C(aw + ((s32)(((u32)t >> 31) + t) >> 1), ah, t, 0x18, 0x19, 0x4B, 1);
+        fn_8008AB7C(aw / 2, ah, aw, 0x18, 0x19, 0x4B, 1);
+        fn_8008AB7C(aw + t / 2, ah, t, 0x18, 0x19, 0x4B, 1);
     }
     fn_8000A258();
     fn_80009D74(lbl_8036A510, lbl_8036A510, lbl_8036A598, lbl_8036A50C);
@@ -953,9 +960,7 @@ void fn_801302F4(void *arg0) {
     fn_80057020(*(void **)((u8 *)arg0 + 0x4C));
     fn_80056B0C(*(void **)((u8 *)arg0 + 0x50));
 }
-
 #pragma cplusplus on
-#pragma use_lmw_stmw on
 extern "C" void fn_801305F8(void *arg0) {
     struct Obj {
         u8 pad[0x4C];
