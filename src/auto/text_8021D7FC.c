@@ -103,14 +103,59 @@ extern void fn_8020C1A4(u8, u32, void *);
 
 extern u8 lbl_80289EB8[16];
 
-void *fn_8021D8F8(u32 arg0) {
-    extern u8 *__GXData;
-    if (arg0 >= 0x14) {
-        return 0;
+void *fn_8021D7FC(s32 arg0, s32 arg1)
+{
+    extern u32 __GXData;
+
+    s32 fn_80222AA0(s32);
+    s32 fn_80222AA8(s32);
+
+    s32 type;
+    s32 flag;
+    s32 index;
+    u8 *gx;
+
+    type = fn_80222AA0(arg0);
+    flag = fn_80222AA8(arg0);
+
+    index = arg1 - (arg1 / 8) * 8;
+
+    gx = (u8 *)__GXData;
+
+    if (type == 6) {
+        if ((u8)flag != 0) {
+            return gx + 0x308 + (index << 4);
+        }
+
+        return gx + 0x288 + (index << 4);
     }
-    return __GXData + 0x388 + arg0 * 0x10;
+
+    if (type >= 7 && type <= 10) {
+        if ((u8)flag != 0) {
+            return gx + 0x288 + (index << 4);
+        }
+
+        return gx + 0x208 + (index << 4);
+    }
+
+    return gx + 0x208 + (index << 4);
 }
 
+#pragma peephole off
+void *fn_8021D8F8(u32 arg0)
+{
+    extern u8 *__GXData;
+    void *result;
+
+    if (arg0 >= 0x14) {
+        result = 0;
+    } else {
+        result = __GXData + 0x388 + (arg0 << 4);
+    }
+
+    return result;
+}
+#pragma peephole on
 void GXInitFifoBase(void* arg0, void* arg1, u32 arg2) {
     u32 temp_r3;
     u32* fifo_ptr;
@@ -475,6 +520,65 @@ void fn_8021F750(s32 arg0, s32 arg1) {
                 break;
         }
     }
+}
+
+void fn_8021FA94(void)
+{
+    extern u32 __GXData;
+    extern u8 lbl_80367000[];
+    extern u8 lbl_80367004[];
+    extern u8 lbl_80367008[];
+
+    u8 *gx;
+    u32 word14;
+    u32 word18;
+    u32 word1C;
+    u32 count;
+    u32 multiplier;
+
+    gx = (u8 *)__GXData;
+
+    if (*(u16 *)(gx + 4) == 0) {
+        return;
+    }
+
+    word14 = *(u32 *)(gx + 0x14);
+    word18 = *(u32 *)(gx + 0x18);
+    word1C = *(u32 *)(gx + 0x1C);
+
+    count = word14 & 1;
+    count += (word14 >> 1) & 1;
+    count += (word14 >> 2) & 1;
+    count += (word14 >> 3) & 1;
+    count += (word14 >> 4) & 1;
+    count += (word14 >> 5) & 1;
+    count += (word14 >> 6) & 1;
+    count += (word14 >> 7) & 1;
+    count += (word14 >> 8) & 1;
+
+    count += lbl_80367008[(word14 >> 9) & 3];
+
+    if (((word1C >> 9) & 1) == 1) {
+        multiplier = 3;
+    } else {
+        multiplier = 1;
+    }
+
+    count += lbl_80367008[(word14 >> 11) & 3] * multiplier;
+
+    count += lbl_80367000[(word14 >> 13) & 3];
+    count += lbl_80367000[(word14 >> 15) & 3];
+
+    count += lbl_80367004[word18 & 3];
+    count += lbl_80367004[(word18 >> 2) & 3];
+    count += lbl_80367004[(word18 >> 4) & 3];
+    count += lbl_80367004[(word18 >> 6) & 3];
+    count += lbl_80367004[(word18 >> 8) & 3];
+    count += lbl_80367004[(word18 >> 10) & 3];
+    count += lbl_80367004[(word18 >> 12) & 3];
+    count += lbl_80367004[(word18 >> 14) & 3];
+
+    *(u16 *)(gx + 6) = (u16)count;
 }
 
 void fn_8021FBB8(void) {
