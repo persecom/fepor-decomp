@@ -2526,31 +2526,31 @@ f64 fn_80236C94(f64 farg0, f64 farg1) {
 }
 #pragma global_optimizer reset
 f64 fn_80238638(f64 farg0) {
-    f64 sp10;
+    f64 sp10[2];
     f64 sp8;
     s32 temp_r0;
     s32 temp_r3;
 
     sp8 = farg0;
-    temp_r3 = (s32)(sp8) & 0x7FFFFFFF;
+    temp_r3 = *(s32 *)&sp8 & 0x7FFFFFFF;
     if (temp_r3 <= 0x3FE921FB) {
-        return fn_80237BDC(0, 0.0);
+        return fn_80237BDC(0, farg0, 0.0);
     }
     if (temp_r3 >= 0x7FF00000) {
         return farg0 - farg0;
     }
-    temp_r0 = fn_802368F4(&sp10) & 3;
-    switch (temp_r0) {                              /* irregular */
+    temp_r0 = fn_802368F4(sp10, farg0) & 3;
+    switch (temp_r0) {
     case 1:
-        return fn_80236C94(sp10, 0.0);
+        return fn_80236C94(sp10[0], sp10[1]);
     case 2:
-        return -fn_80237BDC(1, sp10, 0.0);
+        return -fn_80237BDC(1, sp10[0], sp10[1]);
     case 0:
-        return fn_80237BDC(1, sp10, 0.0);
+        return fn_80237BDC(1, sp10[0], sp10[1]);
     default:
-        return -fn_80236C94(sp10, 0.0);
+        return -fn_80236C94(sp10[0], sp10[1]);
     }
-  }
+}
 
   extern f64 lbl_8036C180;
   extern f64 lbl_80282ED8[];
