@@ -1412,39 +1412,44 @@ void fn_80153634(s16 arg0, s16 arg1, s32 arg2) {
     void fn_800076EC(void);
     void fn_80007884(void);
     extern s32 lbl_803680C8;
+    extern u8 lbl_80330D18[64];
     extern struct { s16 f0; s16 f2; s16 f4; s16 f6; } lbl_80368010;
     s16 var_r26;
     s16 var_r27;
     s32 var_r28;
-    s16 temp_r30;
-    s16 temp_r31;
+    s16 *rect;
+    s16 w;
+    s16 h;
+    s32 raw;
 
     var_r26 = arg0;
     var_r27 = arg1;
     var_r28 = arg2;
     fn_8006ECCC(lbl_803680C8, (void *)&lbl_80330D18, 0x4A);
-    temp_r30 = (s16)(lbl_80368010.f4 - lbl_80368010.f0);
-    temp_r31 = (s16)(lbl_80368010.f6 - lbl_80368010.f2);
-    if (temp_r30 != 0) {
-        if (temp_r31 != 0) {
+    rect = (s16 *)&lbl_80368010;
+    h = (s16)(rect[3] - rect[1]);
+    w = (s16)(rect[2] - lbl_80368010.f0);
+    if (w != 0) {
+        if (h != 0) {
             fn_8000A258();
             fn_8000A174((void *)&lbl_80330D18, (u16)(var_r28 | 1));
             fn_8000A248();
             fn_80007898(1);
-            fn_8000770C((f32)var_r26, (f32)var_r27, (f32)lbl_80368010.f0, (f32)lbl_80368010.f2, (f32)temp_r30, (f32)temp_r31);
+            fn_8000770C((f32)var_r26, (f32)var_r27, (f32)lbl_80368010.f0, (f32)rect[1], (f32)w, (f32)h);
             fn_80007884();
         }
     }
-    temp_r31 = (s16)(lbl_80368010.f4 - lbl_80368010.f0);
-    var_r26 = (s16)(var_r26 + temp_r31);
-    temp_r30 = (s16)(lbl_80368010.f6 - lbl_80368010.f2);
-    if (temp_r31 != 0) {
-        if (temp_r30 != 0) {
+    raw = rect[2] - lbl_80368010.f0;
+    var_r26 = (s16)(var_r26 + (s16)raw);
+    w = (s16)(rect[3] - rect[1]);
+    h = (s16)raw;
+    if (h != 0) {
+        if (w != 0) {
             fn_8000A258();
             fn_8000A174((void *)&lbl_80330D18, (u16)(var_r28 | 1));
             fn_8000A248();
             fn_80007898(1);
-            fn_8000770C((f32)var_r26, (f32)var_r27, (f32)lbl_80368010.f0, (f32)lbl_80368010.f2, (f32)temp_r31, (f32)temp_r30);
+            fn_8000770C((f32)var_r26, (f32)var_r27, (f32)lbl_80368010.f0, (f32)rect[1], (f32)h, (f32)w);
             fn_800076EC();
             fn_80007884();
         }
