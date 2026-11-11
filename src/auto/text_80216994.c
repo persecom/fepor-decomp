@@ -5,6 +5,22 @@
 #include "global.h"
 #include "ef.h"
 
+static inline s32 CardCopySerial(u8 *dst, const u8 *src, s32 length) {
+    s32 i;
+    s32 sum = 0;
+    for (i = 0; i < length; i++) {
+        *dst++ = src[i];
+        sum += src[i];
+    }
+    return sum;
+}
+static inline s32 CardSumSerial(const u8 *src, s32 length) {
+    s32 i;
+    s32 sum = 0;
+    for (i = 0; i < length; i++) sum += *src++;
+    return sum;
+}
+
 typedef struct CardDirEntry {
     u8 unk0[4];
     u8 unk4[2];
@@ -633,6 +649,115 @@ loop_4:
     return var_r3;
 }
 
+#pragma use_lmw_stmw on
+void fn_80218CA4(void *arg0) {
+    s32 EXIUnlock(s32);
+    s32 fn_80216DA8(s32, u8 *);
+    s32 fn_80217ED4(s32, u32, void *, s32, s32);
+    s32 fn_80218018(void);
+    void fn_8021AE98(s32, s32);
+    s32 fn_80239488(s32);
+    extern u16 lbl_8033A200[];
+
+    u8 cmd[0x50];
+    u8 status;
+    s32 result;
+    u32 scramble;
+    u32 n;
+    u32 i;
+    u32 rem;
+    u32 ctr;
+    u32 t;
+    s32 left;
+    u8 *work;
+    s32 tick;
+    u8 *card;
+    u32 cid;
+    s32 chan;
+
+    chan = 0;
+    card = (u8 *)lbl_8033A200;
+    if ((u8 *)lbl_8033A200 + 0x30 != (u8 *)arg0) {
+        card = (u8 *)lbl_8033A200 + 0x110;
+        chan = 1;
+        if ((u8 *)lbl_8033A200 + 0x140 != (u8 *)arg0) {
+            chan = 2;
+        }
+    }
+
+    work = (u8 *)((*(u32 *)(card + 0x80) + 0x2F) & ~0x1Fu);
+    cid = *(u32 *)(work + 0x20);
+    tick = fn_80218018();
+    if (fn_80217ED4(chan, (cid ^ *(u32 *)(card + 0x2C)) & 0xFFFF0000u, cmd, tick, 1) < 0) {
+        EXIUnlock(chan);
+        fn_8021AE98(chan, -3);
+        return;
+    }
+
+    i = 0;
+    scramble = *(u32 *)(card + 0x2C);
+    n = (u32)(tick + *(s32 *)(card + 0x14));
+    n += 4;
+    n <<= 3;
+    n += 1;
+    if (n != 0) {
+        if (n > 8) {
+            rem = n - 8;
+            ctr = (rem + 7) >> 3;
+            if (rem != 0) {
+                do {
+                    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                    scramble = (scramble << 1) | ((t >> 30) & 2);
+                    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                    scramble = (scramble << 1) | ((t >> 30) & 2);
+                    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                    scramble = (scramble << 1) | ((t >> 30) & 2);
+                    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                    scramble = (scramble << 1) | ((t >> 30) & 2);
+                    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                    scramble = (scramble << 1) | ((t >> 30) & 2);
+                    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                    scramble = (scramble << 1) | ((t >> 30) & 2);
+                    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                    scramble = (scramble << 1) | ((t >> 30) & 2);
+                    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                    scramble = (scramble << 1) | ((t >> 30) & 2);
+                    i += 8;
+                } while (--ctr);
+            }
+        }
+        left = (s32)(n - i);
+        if (i < n) {
+            do {
+                t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                scramble = (scramble << 1) | ((t >> 30) & 2);
+            } while (--left);
+        }
+    }
+
+    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+    scramble |= t >> 31;
+    *(u32 *)(card + 0x2C) = scramble;
+
+    tick = fn_80218018();
+    if (fn_80217ED4(chan, ((cid << 16) ^ *(u32 *)(card + 0x2C)) & 0xFFFF0000u, cmd, tick, 1) < 0) {
+        EXIUnlock(chan);
+        fn_8021AE98(chan, -3);
+        return;
+    }
+
+    result = fn_80216DA8(chan, &status);
+    if (fn_80239488(chan) == 0) {
+        EXIUnlock(chan);
+        fn_8021AE98(chan, -3);
+        return;
+    }
+    if (result == 0 && !(status & 0x40)) {
+        EXIUnlock(chan);
+        result = -5;
+    }
+    fn_8021AE98(chan, result);
+}
 s32 fn_802190A4(s32 chan, u32 addr, u32 length, void *dst, void *callback) {
     extern u16 lbl_8033A200[];
     void fn_80218FC8();
@@ -1099,51 +1224,88 @@ s32 fn_80219CF4(s32 card, s32 *alternative) {
 }
 
 #pragma global_optimizer off
-s32 fn_80219F34(s32 card,s32 *alternative) {
-void *memcpy(void*,const void*,u32);
-u8 *block[2];
-s32 i;
-u8 **bp;
-s32 *alt;
-s32 cBlock,cCheck;
-u8 *b;
-u8 *base;
+s32 fn_80219F34(s32 card, s32 *alternative) {
+    void *memcpy(void *, const void *, u32);
+    u8 *block[2];
+    s32 i;
+    u8 **bp;
+    s32 *alt;
+    s32 cBlock, cCheck;
+    u8 *b;
 
-i=0;cBlock=0;cCheck=0;alt=alternative;bp=block;
-do{
-s32 n;
-u16 *p;
-u16 temp;
-u32 sum,inv;
-base=*(u8**)((u8*)card+0x80);
-b=base+((i+3)<<13);
-*bp=b;
-n=0x1ffc;n/=2;
-p=(u16*)(b+4);sum=inv=0;
-for(;n>0;n--){temp=*p++;sum+=temp;inv+=~temp;}
-if((u16)sum==0xffff)sum=0;
-if((u16)inv==0xffff)inv=0;
-if(*(u16*)b!=(u16)sum || *(u16*)(b+2)!=(u16)inv){
-*(u8**)((u8*)card+0x88)=0;cCheck=i;cBlock++;
-}else{
-u16 free,j;
-u32 total=*(u16*)((u8*)card+0x10);
-p=(u16*)(b+10);free=0;j=5;
-while(j<total){if(*p==0)free++;p++;j++;}
-if(free!=*(u16*)(b+6)){*(u8**)((u8*)card+0x88)=0;cCheck=i;cBlock++;}
-}
-i++;bp++;
-}while(i<2);
-if(cBlock==0){
-if(*(u8**)((u8*)card+0x88)==0){
-if(*(s16*)(block[0]+4)-*(s16*)(block[1]+4)<0)cCheck=0;else cCheck=1;
-{u8 **chosen=&block[cCheck];
-*(u8**)((u8*)card+0x88)=*chosen;
-memcpy(*chosen,block[cCheck^1],0x2000);}
-}else {s32 chosen;if(*(u8**)((u8*)card+0x88)==block[0])chosen=0;else chosen=1;cCheck=chosen;}
-}
-if(alt)*alt=cCheck;
-return cBlock;
+    i = 0;
+    cBlock = 0;
+    cCheck = 0;
+    alt = alternative;
+    bp = block;
+    do {
+        s32 n;
+        u16 *p;
+        u16 temp;
+        u32 sum, inv;
+        b = *(u8 **)((u8 *)card + 0x80) + ((i + 3) << 13);
+        *bp = b;
+        n = 0x1FFC;
+        n /= 2;
+        p = (u16 *)(b + 4);
+        sum = inv = 0;
+        for (; n > 0; n--) {
+            temp = *p++;
+            sum += temp;
+            inv += ~temp;
+        }
+        if ((u16)sum == 0xFFFF)
+            sum = 0;
+        if ((u16)inv == 0xFFFF)
+            inv = 0;
+        if (*(u16 *)b != (u16)sum || *(u16 *)(b + 2) != (u16)inv) {
+            *(u8 **)((u8 *)card + 0x88) = 0;
+            cCheck = i;
+            cBlock++;
+        } else {
+            u16 free, j;
+            u32 total = *(u16 *)((u8 *)card + 0x10);
+            p = (u16 *)(b + 10);
+            free = 0;
+            j = 5;
+            while (j < total) {
+                if (*p == 0)
+                    free++;
+                p++;
+                j++;
+            }
+            if (free != *(u16 *)(b + 6)) {
+                *(u8 **)((u8 *)card + 0x88) = 0;
+                cCheck = i;
+                cBlock++;
+            }
+        }
+        i++;
+        bp++;
+    } while (i < 2);
+    if (cBlock == 0) {
+        if (*(u8 **)((u8 *)card + 0x88) == 0) {
+            if (*(s16 *)(block[0] + 4) - *(s16 *)(block[1] + 4) < 0)
+                cCheck = 0;
+            else
+                cCheck = 1;
+            {
+                u8 **chosen = &block[cCheck];
+                *(u8 **)((u8 *)card + 0x88) = *chosen;
+                memcpy(*chosen, block[cCheck ^ 1], 0x2000);
+            }
+        } else {
+            s32 chosen;
+            if (*(u8 **)((u8 *)card + 0x88) == block[0])
+                chosen = 0;
+            else
+                chosen = 1;
+            cCheck = chosen;
+        }
+    }
+    if (alt)
+        *alt = cCheck;
+    return cBlock;
 }
 #pragma global_optimizer reset
 #pragma opt_strength_reduction off
@@ -1234,7 +1396,67 @@ s32 fn_8021A8C8(s32 chan, s32 *memSize, s32 *sectorSize) {
     OSRestoreInterrupts(enabled);
     return card;
 }
-#pragma use_lmw_stmw reset
+
+#pragma opt_strength_reduction on
+s32 fn_8021AA44(s32 chan) {
+s32 EXIGetID(s32,s32,u32*);s32 EXIUnlock(s32);
+s32 fn_8021A7FC(u32);s32 fn_80216E98(s32,void*);s32 fn_80217D4C(void);s32 fn_80216F88(s32);s32 fn_80216DA8(s32,u8*);s32 fn_80239488(s32);s32 fn_802180DC(s32,void*);
+u8 *__OSLockSramEx(void);void __OSUnlockSramEx(s32);
+s32 fn_80216CE8(s32,s32);void fn_80239298(s32,void*);void fn_80216AA4(void);void fn_8021AE98(s32,s32);
+s32 fn_802190A4(s32,u32,u32,void*,void*);void fn_80217BD0(void*,s32);void fn_8021B170(s32,s32);
+extern u16 lbl_8033A200[];extern s32 lbl_8029DB60[],lbl_8029DB80[];extern u16 lbl_80366FF0;
+u32 id;
+u8 status;
+u8 *card;
+s32 rc, i, sum;
+s32 result;
+u16 code;
+u8 *sram, *p, *serial;
+card=(u8*)lbl_8033A200+chan*0x110;
+if(*(s32*)(card+0x24)==0) {
+if(!EXIGetID(chan,0,&id)) result=-3;
+else if(fn_8021A7FC(id))result=0;else result=-2;
+if(result<0)goto fail;
+*(u32*)(card+0x108)=id;
+*(u16*)(card+8)=id&0xfc;
+*(s32*)(card+0xc)=*(s32*)((u8*)lbl_8029DB60+((id>>9)&0x1c));
+*(u16*)(card+0x10)=((s32)(*(u16*)(card+8)<<20)/8)/ *(s32*)(card+0xc);
+*(s32*)(card+0x14)=*(s32*)((u8*)lbl_8029DB80+((id>>6)&0x1c));
+result=fn_80216E98(chan,card+0x12);if(result<0)goto fail;
+if(fn_80217D4C() && (*(u16*)(card+0x12)>>8)==0xec) *(u16*)(card+0xa)=512;else *(u16*)(card+0xa)=128;
+result=fn_80216F88(chan);if(result<0)goto fail;
+result=fn_80216DA8(chan,&status);if(result<0)goto fail;
+if(!fn_80239488(chan)) {result=-3;goto fail;}
+if(!(status&0x40)){
+result=fn_802180DC(chan,card+0x18);if(result<0)goto fail;
+sram=__OSLockSramEx();p=sram+chan*12;serial=card+0x18;sum=0;
+for(i=0;i<12;i++){*p++=card[0x18+i];sum+=card[0x18+i];}
+sram[0x26+chan]=~sum;__OSUnlockSramEx(1);return result;
+}
+*(s32*)(card+0x24)=1;
+sram=__OSLockSramEx();p=sram+chan*12;sum=0;
+for(i=0;i<12;i++)sum+=*p++;
+__OSUnlockSramEx(0);
+if(sram[0x26+chan]!=(u8)~sum){result=-5;goto fail;}
+}
+if(*(s32*)(card+0x24)==1) {
+if(*(u32*)(card+0x108)==0x80000004) {
+sram=__OSLockSramEx();code=*(u16*)(sram+chan*12);__OSUnlockSramEx(0);
+if(lbl_80366FF0==0xffff || code!=lbl_80366FF0){result=-2;goto fail;}
+}
+*(s32*)(card+0x24)=2;
+result=fn_80216CE8(chan,1);if(result<0)goto fail;
+fn_80239298(chan,fn_80216AA4);EXIUnlock(chan);
+DCInvalidateRange(*(void**)(card+0x80),0xa000);
+}
+i=*(s32*)(card+0x24)-2;
+rc=fn_802190A4(chan,*(s32*)(card+0xc)*i,0x2000,*(u8**)(card+0x80)+(i<<13),fn_8021AE98);
+if(rc<0)fn_80217BD0(card,rc);
+return rc;
+fail:
+EXIUnlock(chan);fn_8021B170(chan,result);return result;
+}
+#pragma opt_strength_reduction off
 
 void fn_8021B170(s32 arg0, s32 arg1) {
     // This is an exact structural match to the original instruction sequence.
@@ -2066,6 +2288,7 @@ s32 fn_8021D378(s32 arg0, s32 arg1, CardDirEntry *arg2, s32 arg3) {
     s32 ret;
     u8 *base;
     CardDirEntry *slot;
+    u8 *fileNameEnd;
     u8 *fileName;
 
     if (arg1 < 0 || arg1 >= 0x7F || arg2->unk8[0] == 0xFF || arg2->unk8[0] == 0) {
@@ -2082,9 +2305,11 @@ s32 fn_8021D378(s32 arg0, s32 arg1, CardDirEntry *arg2, s32 arg3) {
         return fn_80217BD0((void *)sp18, ret);
     }
     fileName = arg2->unk8;
-    for (; fileName < ((u8 *)arg2 + 0x28); fileName++) {
+    fileNameEnd = (u8 *)arg2 + 0x28;
+    for (; fileName < fileNameEnd; fileName++) {
         if (*fileName == 0) {
-                    while (++fileName < ((u8 *)arg2 + 0x28)) {
+            fileNameEnd = (u8 *)arg2 + 0x28;
+            while (++fileName < fileNameEnd) {
                 *fileName = 0;
             }
             break;
