@@ -11862,8 +11862,8 @@ void fn_8010329C(void *arg0, void *arg1) {
 }
 
 s32 fn_801032F8(void) {
-    M2C_UNK fn_800D758C(s32);
-    extern s32 lbl_80367918;
+    void fn_800D758C(void *);
+    extern void *lbl_80367918;
     fn_800D758C(lbl_80367918);
     return 0;
 }
