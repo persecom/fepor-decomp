@@ -8008,6 +8008,29 @@ void fn_8019D068(s32 arg0)
   }
 }
 
+void fn_8019D0F4(void *arg0)
+{
+    extern void *fn_80055204(void *, s32);
+    extern void fn_80234450(void *, void *);
+    extern void fn_800558D8(void *);
+
+    u8 *obj;
+    void *result;
+
+    obj = (u8 *)arg0;
+
+    if ((s8)obj[0x41] == 0) {
+        result = fn_80055204(
+            *(void **)(*(u8 **)(obj + 0x30)),
+            0
+        );
+
+        fn_80234450(obj + 0x41, result);
+    }
+
+    fn_800558D8(obj + 0x41);
+}
+
 void fn_8019D150(void *arg0) {
     u8 fn_80098568(void **);
     M2C_UNK fn_80183B24(s32, void *);
