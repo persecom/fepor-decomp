@@ -3929,6 +3929,22 @@ void fn_801C7C08(void *arg0) {
 
 void fn_801C7F60(void){void fn_801C7F80(void);fn_801C7F80();}
 
+s32 fn_801C7F80(void *arg0)
+{
+    s32 fn_8000CAA0(void *, void *);
+    void fn_801C7FC0(void);
+
+    extern u8 lbl_802983C0[];
+
+    s32 result;
+
+    result = fn_8000CAA0(lbl_802983C0, arg0);
+
+    fn_801C7FC0();
+
+    return result;
+}
+
 void fn_801C7FC0(u32 arg0) {
     M2C_UNK fn_801C7FE8();
     if (arg0 != 0U) {
