@@ -296,6 +296,203 @@ void fn_80054C14(void* arg0)
     __builtin_unreachable();
 }
 
+#pragma global_optimizer off
+u8 fn_80055248(s32 arg0) {
+    void *fn_8000D354(s32);
+    void fn_80231D94(void *, void *, void *, ...);
+    u8 fn_8005BA10(void *);
+    u8 fn_800B2FF4(s32);
+    s32 fn_80055C84(void *);
+    s32 fn_80055AC0(s32 *, s32);
+    u8 fn_80055C7C(void *);
+    u32 fn_80055C74(void *);
+    extern u8 lbl_8026AC0C[];
+    u8 sp188[0x40];
+    u8 sp148[0x40];
+    u8 sp108[0x40];
+    u8 spC8[0x40];
+    u8 sp88[0x40];
+    u8 sp48[0x40];
+    u8 sp8[0x40];
+    void *node;
+    u8 ok;
+    s32 v;
+
+    node = fn_8000D354(arg0);
+    fn_80231D94(sp188, lbl_8026AC0C + 0x120, lbl_8026AC0C + 0x129, *(s32 *)node);
+    if ((u8)fn_8005BA10(sp188) == 0) {
+        return 0;
+    }
+    v = *(u8 *)((u8 *)node + 5);
+    if (v != 0) {
+        if ((u8)fn_800B2FF4(v) == 0) {
+            return 0;
+        }
+    }
+    if (*(u32 *)((u8 *)node + 8) == 0) {
+        goto success1;
+    }
+
+    node = fn_8000D354(*(s32 *)((u8 *)node + 8));
+    fn_80231D94(sp148, lbl_8026AC0C + 0x120, lbl_8026AC0C + 0x129, *(s32 *)node);
+    if ((u8)fn_8005BA10(sp148) == 0) {
+        ok = 0;
+        goto check2;
+    }
+    v = *(u8 *)((u8 *)node + 5);
+    if (v != 0) {
+        if ((u8)fn_800B2FF4(v) == 0) {
+            ok = 0;
+            goto check2;
+        }
+    }
+    if (*(u32 *)((u8 *)node + 8) == 0) {
+        goto success2;
+    }
+
+    node = fn_8000D354(*(s32 *)((u8 *)node + 8));
+    fn_80231D94(sp108, lbl_8026AC0C + 0x120, lbl_8026AC0C + 0x129, *(s32 *)node);
+    if ((u8)fn_8005BA10(sp108) == 0) {
+        ok = 0;
+        goto check3;
+    }
+    v = *(u8 *)((u8 *)node + 5);
+    if (v != 0) {
+        if ((u8)fn_800B2FF4(v) == 0) {
+            ok = 0;
+            goto check3;
+        }
+    }
+    if (*(u32 *)((u8 *)node + 8) == 0) {
+        goto success3;
+    }
+
+    node = fn_8000D354(*(s32 *)((u8 *)node + 8));
+    fn_80231D94(spC8, lbl_8026AC0C + 0x120, lbl_8026AC0C + 0x129, *(s32 *)node);
+    if ((u8)fn_8005BA10(spC8) == 0) {
+        ok = 0;
+        goto check4;
+    }
+    v = *(u8 *)((u8 *)node + 5);
+    if (v != 0) {
+        if ((u8)fn_800B2FF4(v) == 0) {
+            ok = 0;
+            goto check4;
+        }
+    }
+    if (*(u32 *)((u8 *)node + 8) == 0) {
+        goto success4;
+    }
+
+    node = fn_8000D354(*(s32 *)((u8 *)node + 8));
+    fn_80231D94(sp88, lbl_8026AC0C + 0x120, lbl_8026AC0C + 0x129, *(s32 *)node);
+    if ((u8)fn_8005BA10(sp88) == 0) {
+        ok = 0;
+        goto check5;
+    }
+    v = *(u8 *)((u8 *)node + 5);
+    if (v != 0) {
+        if ((u8)fn_800B2FF4(v) == 0) {
+            ok = 0;
+            goto check5;
+        }
+    }
+    if (*(u32 *)((u8 *)node + 8) == 0) {
+        goto success5;
+    }
+
+    node = fn_8000D354(*(s32 *)((u8 *)node + 8));
+    fn_80231D94(sp48, lbl_8026AC0C + 0x120, lbl_8026AC0C + 0x129, fn_80055C84(node));
+    if ((u8)fn_8005BA10(sp48) == 0) {
+        ok = 0;
+        goto check6;
+    }
+    v = *(u8 *)((u8 *)node + 5);
+    if (v != 0) {
+        if ((u8)fn_800B2FF4(v) == 0) {
+            ok = 0;
+            goto check6;
+        }
+    }
+    if (*(u32 *)((u8 *)node + 8) == 0) {
+        goto success6;
+    }
+
+    node = fn_8000D354(*(s32 *)((u8 *)node + 8));
+    fn_80055AC0(node, (s32)sp8);
+    if ((u8)fn_8005BA10(sp8) == 0) {
+        ok = 0;
+        goto check7;
+    }
+    v = (u8)fn_80055C7C(node);
+    if (v != 0) {
+        if ((u8)fn_800B2FF4(v) == 0) {
+            ok = 0;
+            goto check7;
+        }
+    }
+    if (fn_80055C74(node) != 0) {
+        if ((u8)fn_80055248(fn_80055C74(node)) == 0) {
+            ok = 0;
+            goto check7;
+        }
+    }
+
+    ok = 1;
+check7:
+    if ((u8)ok != 0) {
+        goto success6;
+    }
+    ok = 0;
+    goto check6;
+
+success6:
+    ok = 1;
+check6:
+    if ((u8)ok != 0) {
+        goto success5;
+    }
+    ok = 0;
+    goto check5;
+
+success5:
+    ok = 1;
+check5:
+    if ((u8)ok != 0) {
+        goto success4;
+    }
+    ok = 0;
+    goto check4;
+
+success4:
+    ok = 1;
+check4:
+    if ((u8)ok != 0) {
+        goto success3;
+    }
+    ok = 0;
+    goto check3;
+
+success3:
+    ok = 1;
+check3:
+    if ((u8)ok != 0) {
+        goto success2;
+    }
+    ok = 0;
+    goto check2;
+
+success2:
+    ok = 1;
+check2:
+    if ((u8)ok != 0) {
+        goto success1;
+    }
+    return 0;
+
+success1:
+    return 1;
+}
 void fn_800558D8(s32 arg0) {
     void fn_800555EC(s32, s32);
     fn_800555EC(arg0, 0);
