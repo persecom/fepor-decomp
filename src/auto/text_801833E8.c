@@ -6223,6 +6223,7 @@ void fn_8019B8A0(s32 arg0, s32 arg1) {
     M2C_FIELD(temp_r31, u8 *, 0x5C) = 2;
 }
 
+typedef struct { s32 x, y, z; } Word3B9;
 s32 fn_8019B9F0(void *arg0) {
     void *fn_80018ADC(void);
     void fn_80052CA8(void *);
