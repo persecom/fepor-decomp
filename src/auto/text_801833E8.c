@@ -2,6 +2,7 @@
 #include "common.h"
 #include "global.h"
 
+typedef struct PathHeightPoint { s32 index; f32 height; f32 rawHeight; } PathHeightPoint;
 extern u16 gUnkGlobalVar_803306E0[];
 
 #pragma optimization_level 4
