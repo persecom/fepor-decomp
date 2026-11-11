@@ -270,10 +270,6 @@ public:
     SortIterator operator+(s32 n) const { return SortIterator(*this) += n; }
     SortOutputProxy operator*() const { return SortOutputProxy(ptr,state); }
     SortIterator &operator++() { ++ptr; return *this; }
-    void assign(s32 value) {
-        if (((s32)ptr-M2C_FIELD(state,s32 *,8))/4 < M2C_FIELD(state,s32 *,4)) *ptr=value;
-        else { if(ptr) *ptr=value; M2C_FIELD(state,s32 *,4)++; }
-    }
 };
 class SortCompare {
 public:
@@ -8667,10 +8663,12 @@ extern s32 lbl_80366E68;
 extern f32 lbl_8036A06C,lbl_8036A078,lbl_8036A07C,lbl_8036A080,lbl_8036A090;
 extern f64 lbl_8036A098;
 
-    s16 *base;
-    s32 sp8;
     void *temp_r29_2;
     void *temp_r30;
+    u8 *base;
+    s32 var_r30;
+    s32 sp8;
+
     f32 temp_f0;
     f32 temp_f0_2;
     f32 temp_f1;
@@ -8682,21 +8680,20 @@ extern f64 lbl_8036A098;
     s32 temp_r27_2;
     s32 temp_r29;
     s32 var_r27;
-    s32 var_r30;
     u64 temp_ret;
     u8 temp_r28;
     u8 temp_r4;
     void *temp_r3;
 
-    base = (s16 *)lbl_80330EAC;
-    temp_r29 = base[0x14e] >= (s32)(base[0x2be] + 4);
+    base = (u8 *)lbl_80330EAC;
+    temp_r29 = *(s16 *)(base + 0x29C) >= (s32)(*(s16 *)(base + 0x57C) + 4);
     temp_r3 = fn_8001CB64(fn_801A7FF4(base));
-    var_r30 = *(s16 *)((u8 *)lbl_80330EAC + 0x298) - base[0x2bd];
+    var_r30 = *(s16 *)((u8 *)lbl_80330EAC + 0x298) - *(s16 *)(base + 0x57A);
     temp_r4 = temp_r29 | (u8)((*(u64 *)temp_r3 & 0x20ULL) != 0);
     if (var_r30 < 0) {
         var_r30 = 0;
     }
-    var_f1 = lbl_8036A078 * (f32) base[0x151];
+    var_f1 = lbl_8036A078 * (f32) *(s16 *)(base + 0x2A2);
     if (temp_r4 != 0) {
         temp_f0 = lbl_8036A07C - var_f1;
         var_f1_2 = lbl_8036A07C - (temp_f0 * temp_f0);
@@ -8725,7 +8722,7 @@ extern f64 lbl_8036A098;
             if (fn_800F73EC(temp_r29_2, temp_r30, fn_801A7FF4(temp_r30)) != 0) {
                 if (fn_800F8350(fn_801A7FF4(temp_r30)) != 0) {
                     temp_r27 = fn_800F833C(temp_r30);
-                    temp_r27_2 = (s32) (fn_800F833C(temp_r29_2) + 4) <= temp_r27;
+                    temp_r27_2 = temp_r27 >= (s32)(fn_800F833C(temp_r29_2) + 4);
                     temp_ret = fn_800F8328(fn_8001CB64(fn_801A7FF4(temp_r30)), 0x20ULL);
                     temp_r28 = temp_r27_2 | (u8) (temp_ret != 0);
                     temp_r27_3 = fn_800F8320(temp_r30);
@@ -8753,7 +8750,7 @@ extern f64 lbl_8036A098;
             var_r30 = -*var_r3;
         }
     }
-    if (*(s8 *)((u8 *)base + 0x488) <= var_r30) {
+    if (*(s8 *)(base + 0x488) <= var_r30) {
         var_r30 += 0x32;
     }
     return var_r30;
