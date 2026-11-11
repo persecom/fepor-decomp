@@ -431,8 +431,8 @@ s32 fn_8014ADF0(void) {
     return 0;
 }
 
+void fn_8014AE50(void *arg0, void *arg1, void *arg2) {
 #pragma cplusplus on
-extern "C" void fn_8014AE50(void *arg0, void *arg1, void *arg2) {
     struct Model {
         u8 pad[4];
         virtual void v0() = 0;
@@ -537,8 +537,8 @@ extern "C" void fn_8014AE50(void *arg0, void *arg1, void *arg2) {
         fn_80007290(0, 0, 0, 0xFF);
     }
     fn_80007884();
-}
 #pragma cplusplus off
+}
 
 s32 fn_8014B20C(void) {
     return 0x7F;
