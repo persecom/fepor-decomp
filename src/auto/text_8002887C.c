@@ -335,37 +335,33 @@ void fn_800299B8(void *arg0) {
     } obj;
     void *unit;
     u8 id;
-    s8 y;
     s8 x;
-    unsigned yOff;
+    s8 y;
     u16 *flags;
+    unsigned yOff;
+    u16 f;
 
     obj.vtbl = lbl_80284E20;
     obj.vtbl = lbl_80284E00;
     obj.vtbl = lbl_80284DF0;
-    obj.arg = arg0;
     obj.vtbl = lbl_80284DE0;
+    obj.arg = arg0;
     fn_8002F728(lbl_802EF4E0);
-    {
-        void *p = obj.arg;
-        y = (s8)*((u8 *)p + 0x19F);
-        x = (s8)*((u8 *)p + 0x19E);
-        yOff = (unsigned)y << 6;
-    }
+    x = (s8)*((u8 *)obj.arg + 0x19E);
+    y = (s8)*((u8 *)obj.arg + 0x19F);
+    yOff = y << 6;
     flags = (u16 *)(lbl_802CA518 + ((x + (s32)yOff) << 1));
-    {
-        u16 f = *(u16 *)((u8 *)flags + 0x408E);
-        flags = (u16 *)((u8 *)flags + 0x408E);
-        if ((f & 8) != 0) {
-            id = lbl_802CA518[x + ((s8)(y - 1) << 6) + 0xD];
-            if (id != 0) {
-                unit = lbl_802B14E4 + (id - 1) * 0x280;
-            } else {
-                unit = 0;
-            }
-            if (unit != 0) {
-                ((Visitor *)&obj)->apply(unit);
-            }
+    f = *(u16 *)((u8 *)flags + (unsigned)0x408E);
+    flags = (u16 *)((u8 *)flags + 0x408E);
+    if ((f & 8) != 0) {
+        id = lbl_802CA518[x + ((s8)(y - 1) << 6) + 0xD];
+        if (id != 0) {
+            unit = lbl_802B14E4 + (id - 1) * 0x280;
+        } else {
+            unit = 0;
+        }
+        if (unit) {
+            ((Visitor *)&obj)->apply(unit);
         }
     }
     if ((*flags & 2) != 0) {
@@ -386,7 +382,7 @@ void fn_800299B8(void *arg0) {
         } else {
             unit = 0;
         }
-        if (unit != 0) {
+        if (unit) {
             ((Visitor *)&obj)->apply(unit);
         }
     }
@@ -600,8 +596,8 @@ extern "C" void fn_8002B758(void *arg0) {
 
 #pragma cplusplus on
 extern "C" void fn_8002B89C(void *arg0, void *arg1) {
-    extern u8 lbl_80284E20[];
     extern u8 lbl_80284D00[];
+    extern u8 lbl_80284E20[];
     extern u8 lbl_802EF4E0[];
     extern u8 lbl_802CA518[];
     extern u8 lbl_802B14E4[];
@@ -628,26 +624,26 @@ extern "C" void fn_8002B89C(void *arg0, void *arg1) {
     x = (s8)*((u8 *)arg0 + 0x19E);
     y = (s8)*((u8 *)arg0 + 0x19F);
     if ((lbl_802CA518 + x)[((unsigned)y << 6) + 0x100D] != 0x16) {
-        y = (s8)*((u8 *)obj.arg + 0x19F);
         x = (s8)*((u8 *)obj.arg + 0x19E);
-        yOff = (unsigned)y << 6;
+        y = (s8)*((u8 *)obj.arg + 0x19F);
+        yOff = y << 6;
         flags = (u16 *)(lbl_802CA518 + ((x + (s32)yOff) << 1));
         f = *(u16 *)((u8 *)flags + 0x408E);
         flags = (u16 *)((u8 *)flags + 0x408E);
         if ((f & 8) != 0) {
             id = lbl_802CA518[x + ((s8)(y - 1) << 6) + 0xD];
-            if (id != 0) {
+            if (id) {
                 unit = lbl_802B14E4 + (id - 1) * 0x280;
             } else {
                 unit = 0;
             }
-            if (unit != 0) {
+            if (unit) {
                 ((Visitor *)&obj)->apply(unit);
             }
         }
         if ((*flags & 2) != 0) {
             id = lbl_802CA518[(s8)(x + 1) + (s32)yOff + 0xD];
-            if (id != 0) {
+            if (id) {
                 unit = lbl_802B14E4 + (id - 1) * 0x280;
             } else {
                 unit = 0;
@@ -669,12 +665,12 @@ extern "C" void fn_8002B89C(void *arg0, void *arg1) {
         }
         if ((*flags & 1) != 0) {
             id = lbl_802CA518[(s8)(x - 1) + (s32)yOff + 0xD];
-            if (id != 0) {
+            if (id) {
                 unit = lbl_802B14E4 + (id - 1) * 0x280;
             } else {
                 unit = 0;
             }
-            if (unit != 0) {
+            if ((unsigned)unit != 0) {
                 ((Visitor *)&obj)->apply(unit);
             }
         }
@@ -699,17 +695,16 @@ extern "C" void fn_8002BAFC(void *arg0, s32 arg1) {
     } obj;
     s8 y;
     s8 x;
-    s32 flags;
 
     obj.vtbl = lbl_80284E20;
     obj.vtbl = lbl_80284CF0;
     obj.arg = arg0;
     obj.val = arg1;
     fn_8002F728(lbl_802EF4E0);
-    flags = (s32)arg0;
-    y = (s8)*((u8 *)flags + 0x19F);
-    x = (s8)*((u8 *)flags + 0x19E);
+    y = (s8)*((u8 *)arg0 + 0x19F);
+    x = (s8)*((u8 *)arg0 + 0x19E);
     if ((lbl_802CA518 + x)[((unsigned)y << 6) + 0x100D] != 0x16) {
+        s32 flags;
         unsigned yOff;
         void *unit;
         u8 id;
@@ -773,6 +768,7 @@ extern "C" void fn_8002BAFC(void *arg0, s32 arg1) {
 
 #pragma cplusplus on
 #pragma use_lmw_stmw on
+#pragma global_optimizer off
 extern "C" void fn_8002C194(void *arg0, s8 arg1) {
     extern u8 lbl_80284E20[];
     extern u8 lbl_80284CB0[];
@@ -800,10 +796,9 @@ extern "C" void fn_8002C194(void *arg0, s8 arg1) {
     obj.arg = arg0;
     obj.flag = arg1;
     fn_8002F728(lbl_802EF4E0);
-    y = (s8)*((u8 *)arg0 + 0x19F);
-    x = (s8)*((u8 *)arg0 + 0x19E);
-    yOff = y;
-    yOff <<= 6;
+    y = *(s8 *)((u8 *)arg0 + 0x19F);
+    x = *(s8 *)((u8 *)arg0 + 0x19E);
+    yOff = (unsigned)y << 6;
     flags = (u16 *)(lbl_802CA518 + ((x + (s32)yOff) << 1));
     f = *(u16 *)((u8 *)flags + 0x408E);
     flags = (u16 *)((u8 *)flags + 0x408E);
@@ -855,6 +850,7 @@ extern "C" void fn_8002C194(void *arg0, s8 arg1) {
         ((Visitor *)&obj)->apply(*(void **)((u8 *)arg0 + 0x194));
     }
 }
+#pragma global_optimizer reset
 #pragma use_lmw_stmw reset
 #pragma cplusplus reset
 
