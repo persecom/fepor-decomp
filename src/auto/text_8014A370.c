@@ -913,7 +913,7 @@ void fn_8014C5F4(void *arg0, s32 arg1) {
 
 void *fn_8014C604(void) {
     void fn_80015320(s32, void *);
-    extern u16 lbl_802B14E4[];
+    extern u8 lbl_802B14E4[];
     u8 sp8[8];
     u8 *best;
     s32 best_val;
