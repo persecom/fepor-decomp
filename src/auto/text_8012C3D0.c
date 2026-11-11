@@ -1,26 +1,7 @@
 /* Functions from 0x8012C3D0 to 0x8013275C, found by decomp-toolkit. */
 #include "common.h"
 
-typedef struct DrawState801302F4 {
-    u8 pad0[0x38];
-    void **items;
-    u8 pad3C[8];
-    void *obj44;
-    void *obj48;
-    void *obj4C;
-    void *obj50;
-    u8 pad54[4];
-    s16 x, y, w, h;
-    u8 pad60[2];
-    s8 field62;
-    u8 field63;
-    u8 pad64;
-    s8 field65;
-    u8 pad66[4];
-    s16 field6A;
-    u8 pad6C;
-    u8 field6D;
-} DrawState801302F4;
+
 #include "global.h"
 #include "unit.h"
 
@@ -903,7 +884,7 @@ void fn_801302F4(void *arg0) {
 
     temp = *(s16 *)((u8 *)arg0 + 0x6A);
     if (temp % 32 == 0) {
-        s32 var4;
+        s16 var4;
         s16 var6;
         s16 var7;
         register s16 var8;
@@ -925,7 +906,7 @@ void fn_801302F4(void *arg0) {
             var8 = 0x16;
             var6 = (s16)(((unk62 << 5) + 0x60) - temp);
         }
-        t = *(s16 *)((u8 *)arg0 + 0x58) + (s16)var4;
+        t = *(s16 *)((u8 *)arg0 + 0x58) + var4;
         *(s16 *)((u8 *)arg0 + 0x58) = (s16)(t / 2);
         t = *(s16 *)((u8 *)arg0 + 0x5A) + var6;
         *(s16 *)((u8 *)arg0 + 0x5A) = (s16)(t / 2);
