@@ -248,6 +248,7 @@ typedef struct String {
 } String;
 
 #pragma cplusplus on
+#pragma opt_class_copy off
 class SortIterator {
 public:
     s32 *ptr;
@@ -7799,6 +7800,112 @@ u8 fn_800FE84C(s8 arg0, s8 arg1) {
 s32 fn_800FE8E8(void *arg0, void *arg1) {
     return (u32) M2C_FIELD(arg0, u32 *, 0x24C) < (u32) M2C_FIELD(arg1, u32 *, 0x24C);
 }
+
+#pragma use_lmw_stmw on
+s32 fn_800FE904(void) {
+    u8 fn_80017318(void *);
+    u8 fn_8001DD54(void *, void *);
+    void **fn_80037BBC(void *, s32);
+    s8 fn_8003A398(void *);
+    u8 fn_800934CC(void *, void *);
+    u16 fn_800FCF48(u8, u8);
+    u8 fn_80102EA8(void *);
+    u8 fn_80105BC0(void *, s32);
+    u8 fn_8010C4B0(void *);
+    extern u8 lbl_80330708[];
+    extern u8 lbl_802CA264[];
+    extern u8 lbl_802CA518[];
+    extern s32 lbl_80366E78;
+    extern s32 lbl_80366E7C;
+    extern u8 lbl_8032B3C0[];
+    s32 sp8;
+    u8 *map;
+    s32 i;
+    u32 score;
+    void *next;
+    void *item;
+    s32 count;
+    void *unit;
+    s32 offset;
+    u8 out;
+    u16 dist;
+    s32 *p;
+    u64 *flags;
+
+    map = lbl_802CA518;
+    count = 0;
+    offset = 0;
+    unit = *(void **)(lbl_802CA264 + lbl_80330708[0x11] * 0xC);
+    while (unit != NULL) {
+        out = 0;
+        next = *(void **)((u8 *)unit + 0x184);
+        if (((s8)*(u8 *)((u8 *)unit + 0x19E) < *(s8 *)(map + 8))
+            || ((s32)(*(s8 *)(map + 0xA) - 1) < (s8)*(u8 *)((u8 *)unit + 0x19E))
+            || ((s8)*(u8 *)((u8 *)unit + 0x19F) < *(s8 *)(map + 9))
+            || ((s32)(*(s8 *)(map + 0xB) - 1) < (s8)*(u8 *)((u8 *)unit + 0x19F))) {
+            out = 1;
+        }
+        if (out == 0
+            && ((*(u16 *)((u8 *)unit + 0x1A4) >> 7) & 7) == 0
+            && (*(u8 *)((u8 *)unit + 0x1A5) & 7) == 0
+            && (*(u32 *)((u8 *)unit + 0x1A0) & 0x9D) == 0
+            && (fn_80102EA8(unit) == 0 || fn_80017318((u8 *)unit + 0x236) != 0)) {
+            dist = fn_800FCF48(*(u8 *)((u8 *)unit + 0x19E), *(u8 *)((u8 *)unit + 0x19F));
+            sp8 = -(fn_8003A398(unit) + dist);
+            sp8 = sp8 + ((*(s8 *)((u8 *)unit + 0x248) + 0x80) << 16);
+            if (fn_80105BC0((u8 *)unit + 0x1BC, 0x18) != 0) {
+                sp8 = sp8 + 0x578;
+            } else if (fn_8010C4B0(unit) != 0
+                && (*(u32 *)((u8 *)unit + 0x254) & 1)
+                && (fn_80102EA8(unit) == 0 || fn_80017318((u8 *)unit + 0x236) == 6)) {
+                p = &sp8;
+                if (sp8 < lbl_80366E78) {
+                    p = &lbl_80366E78;
+                }
+                sp8 = *p;
+            } else if (fn_80105BC0((u8 *)unit + 0x1BC, 0x3C) != 0) {
+                sp8 = sp8 + 0x320;
+            } else {
+                score = 0x4B0;
+                for (i = 0; i < 4; i++) {
+                    if (*fn_80037BBC(unit, i) == NULL) {
+                        break;
+                    }
+                    item = *fn_80037BBC(unit, i);
+                    if (fn_800934CC(unit, item) != 0) {
+                        flags = (u64 *)((u8 *)item + 0x38);
+                        if ((*flags & 4ULL) != 0) {
+                            if (score > 0xC8) {
+                                score = 0xC8;
+                            }
+                        } else if ((*flags & 3ULL) != 0) {
+                            if ((u8)fn_8001DD54(item, unit) > 1) {
+                                if (score > 0x190) {
+                                    score = 0x190;
+                                }
+                            } else if (score > 0x258) {
+                                score = 0x258;
+                            }
+                        }
+                    }
+                }
+                sp8 = sp8 + score;
+                p = &sp8;
+                if (sp8 < lbl_80366E7C) {
+                    p = &lbl_80366E7C;
+                }
+                sp8 = *p;
+            }
+            *(s32 *)((u8 *)unit + 0x24C) = sp8;
+            count += 1;
+            *(void **)(lbl_8032B3C0 + offset + 0x18) = unit;
+            offset += 4;
+        }
+        unit = next;
+    }
+    return count;
+}
+#pragma use_lmw_stmw reset
 
 void fn_800FEFD4(s32 *arg0, s32 *arg1, s32 *arg2, u8 (*cmp)(s32, s32)) {
     s32 *a2;
