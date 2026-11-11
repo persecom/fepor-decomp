@@ -25,10 +25,10 @@ static inline void *get_4F128_resource(void *arg0,s32 value) {
  extern void *lbl_80366DC8;
 
  char buf[0x20];
+ void *resolved;
  void *base;
  s32 idx;
  void *name;
- void *resolved;
  
  base=M2C_FIELD(arg0,void * *,0x18C);
  if(M2C_FIELD(arg0,u8 *,3)&4) base=M2C_FIELD(base,void * *,0xC)?fn_8000D354(M2C_FIELD(base,void * *,0xC)):0;
@@ -6441,8 +6441,7 @@ s32 fn_8004F128(void *arg0) {
  u8 flags=M2C_FIELD(arg0,u8 *,3);
  if(flags&2) return 1;
  if(!(flags&1)) return 1;
- id=M2C_FIELD(arg0,s8 *,0x16C);
- if(id>=0){}else id=fn_8004ABD4(fn_80037D54(arg0),0);
+ id=get_4F128_id(arg0);
  res=get_4F128_resource(arg0,id);
  if(!fn_8005BA10(fn_8004B158(res))) return 0;
  if(!fn_8004AF74(res,M2C_FIELD(M2C_FIELD(arg0,void **,0x190),u8 *,8))) {
