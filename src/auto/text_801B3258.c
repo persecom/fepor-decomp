@@ -1,6 +1,9 @@
 /* Functions from 0x801B3258 to 0x801E4380, found by decomp-toolkit. */
 #include "common.h"
 
+typedef struct ParseValue801CB41C { f32 v[8]; } ParseValue801CB41C;
+typedef struct String801CB41C { u32 a, b, c; } String801CB41C;
+
 typedef struct Self801CAF94 {
     s32 unk0;
     u8 pad4[0x50];
