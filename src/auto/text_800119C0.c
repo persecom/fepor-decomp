@@ -503,24 +503,25 @@ void fn_800152F8(s8 arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4, s8 arg5, s8 arg6, 
     M2C_FIELD(arg_sp8, s8 *, 7) = arg7;
 }
 
+#pragma global_optimizer off
 void fn_80015320(u8 arg0, u8 *arg1) {
     extern u8 lbl_80330708[];
-    s32 var_r5;
+    u8 var_r5;
     u8 r6;
-    s32 var_r0;
-    s32 var_r0_2;
+    u8 var_r0;
+    u8 var_r0_2;
     u8 *a;
 
     var_r5 = 0;
     a = arg1;
-    *a++ = (u8)var_r5;
-    *a++ = (u8)var_r5;
-    *a++ = (u8)var_r5;
-    *a++ = (u8)var_r5;
-    *a++ = (u8)var_r5;
-    *a++ = (u8)var_r5;
-    *a++ = (u8)var_r5;
-    *a = (u8)var_r5;
+    *a++ = var_r5;
+    *a++ = var_r5;
+    *a++ = var_r5;
+    *a++ = var_r5;
+    *a++ = var_r5;
+    *a++ = var_r5;
+    *a++ = var_r5;
+    *a = var_r5;
     r6 = lbl_80330708[0x11];
     switch (arg0) {
     case 0:
@@ -528,7 +529,7 @@ void fn_80015320(u8 arg0, u8 *arg1) {
         return;
     case 1:
         if (r6 == 0) {
-            var_r5 = 0;
+            var_r5 = var_r5;
             goto case1_after;
         }
         if (r6 == 1) {
@@ -566,7 +567,7 @@ void fn_80015320(u8 arg0, u8 *arg1) {
         return;
     case 2:
         if (r6 == 0) {
-            var_r5 = 0;
+            var_r5 = var_r5;
             goto case2_after;
         }
         if (r6 == 1) {
@@ -624,7 +625,7 @@ void fn_80015320(u8 arg0, u8 *arg1) {
         return;
     }
 }
-
+#pragma global_optimizer reset
 s32 fn_80015610(void *arg0, void *arg1) {
     u8 temp_r0;
     u8 temp_r3;
