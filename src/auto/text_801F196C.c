@@ -109,7 +109,7 @@ void fn_801F20F0(void *arg0) {
     void fn_8006EEFC(void *, void *);
     void fn_80147188(s32);
     void fn_802343E0(void *, void *);
-    void fn_80234450(void *, void *, s16, s32, s32);
+    void fn_80234450(void *, void *);
     extern u8 lbl_8027F730[];
 
     struct Slot {
@@ -138,10 +138,9 @@ void fn_801F20F0(void *arg0) {
     };
     struct Obj *temp_r31;
     void *a3;
-    void *a4;
+    u8 *a4;
     s32 c40;
     s32 z;
-    s16 t;
 
     temp_r31 = *(struct Obj **)((u8 *)arg0 + 0x30);
     z = 0;
@@ -154,12 +153,11 @@ void fn_801F20F0(void *arg0) {
     fn_80147188(0);
     a4 = lbl_8027F730;
     c40 = 0x40;
-    temp_r31->slots[0].x = temp_r31->unk16 + 0x2A;
+    temp_r31->slots[0].x = *(s16 *)((u8 *)temp_r31 + 0x16) + 0x2A;
     z = 0;
-    a3 = temp_r31->unk50;
-    a4 = (u8 *)a4 + 0xF6;
-    t = temp_r31->unk18;
-    temp_r31->slots[0].y = t + 0xB;
+    a3 = (u8 *)temp_r31 + 0x50;
+    a4 = a4 + 0xF6;
+    temp_r31->slots[0].y = temp_r31->unk18 + 0xB;
     temp_r31->slots[0].w = c40;
     temp_r31->slots[0].flag = z;
     temp_r31->slots[1].x = temp_r31->unk16 + 0xC4;
@@ -179,11 +177,10 @@ void fn_801F20F0(void *arg0) {
     temp_r31->slots[4].w = c40;
     temp_r31->slots[4].flag = z;
     temp_r31->slots[5].x = temp_r31->unk16 + 0x15E;
-    t = temp_r31->unk18;
-    temp_r31->slots[5].y = t + 0x93;
+    temp_r31->slots[5].y = temp_r31->unk18 + 0x93;
     temp_r31->slots[5].w = c40;
     temp_r31->slots[5].flag = z;
-    fn_80234450(a3, a4, t, z, c40);
+    fn_80234450(a3, a4);
     fn_802343E0(temp_r31->unk50, fn_8000E0E4(lbl_8027F730 + 0xFC));
     fn_802343E0(temp_r31->unk50, lbl_8027F730 + 0x107);
     fn_802343E0(temp_r31->unk50, fn_8000E0E4(lbl_8027F730 + 0x10F));
@@ -1622,11 +1619,12 @@ s32 fn_801F8A18(s32 arg0) {
 
 #pragma optimization_level 2
 #pragma use_lmw_stmw on
+#pragma opt_pointer_aliasing off
 void fn_801F8A98(void *arg0) {
     void fn_800152F8(s32, s32, s32, s32, s32, s32, s32, s32, void *);
     void fn_800506E0(void *, s32, void *);
-    void fn_8006140C(void *);
     void fn_800616A0(void *);
+    void fn_8006140C(void *);
     void *fn_80061870(void);
     s32 fn_800639B4(void);
     void fn_8006EEFC(void *, void *);
@@ -1661,10 +1659,10 @@ void fn_801F8A98(void *arg0) {
     void *self;
     void *unit;
     void *base;
-    void *strs;
+    register void *strs;
     Node *n;
     void *fmt259;
-    s32 i;
+    register s32 i;
 
     self = arg0;
     fn_800152F8(1, 0, 0, 0, 0, 1, 1, 0, flags);
@@ -1677,20 +1675,18 @@ void fn_801F8A98(void *arg0) {
             unit = NULL;
         }
         if (*(void **)((u8 *)unit + 0x188) != NULL) {
-            if (flags[((u8 *)*(void **)((u8 *)unit + 0x190))[8]] != 0) {
+            if (flags[((u8 *)*(void **)((u8 *)unit + (short)0x190))[8]] != 0) {
                 u32 *p;
                 pair.owner = unit;
                 pair.obj = (void *)0;
                 if (pair.obj != (void *)0) {
                     fn_800616A0(pair.obj);
                 }
-#pragma scheduling off
                 pair.obj = fn_80061870();
-                *(void **)((u8 *)pair.obj + 4) = (u8 *)unit + 0x1C;
                 p = (u32 *)pair.obj;
+                *(void **)((u8 *)pair.obj + 4) = (u8 *)unit + 0x1C;
                 *p |= 0x50028400;
                 fn_800506E0(unit, 0, p);
-#pragma scheduling reset
                 *(s32 *)((u8 *)pair.obj + 0x44) = fn_800639B4();
                 fn_8006140C(pair.obj);
                 sp14 = base;
@@ -1701,7 +1697,7 @@ void fn_801F8A98(void *arg0) {
             }
         }
         i += 1;
-    } while (i <= 0x9F);
+    } while (0x9F >= i);
     fn_801FA8B4((void *)((u32)self + 0x30U), fn_801F8D38);
     n = *(Node **)base;
     strs = lbl_80281028;
@@ -1730,8 +1726,9 @@ void fn_801F8A98(void *arg0) {
     }
     fn_8006EEFC((u8 *)self + 0x50, lbl_8029B378[1]);
 }
-#pragma use_lmw_stmw reset
+#pragma opt_pointer_aliasing reset
 #pragma optimization_level reset
+#pragma use_lmw_stmw on
 
 u32 fn_801F8D38(void **arg0, void **arg1) {
     u16 temp_r0;
@@ -1917,6 +1914,7 @@ void fn_801F9DC0(u32 arg0) {
 }
 
 #pragma use_lmw_stmw on
+#pragma global_optimizer off
 void fn_801F9E00(void *arg0) {
     s32 fn_80109180(void *, void *);
     void fn_8014DBE0(void *, s32, u8 *, u16 *, s32 *);
@@ -1926,6 +1924,8 @@ void fn_801F9E00(void *arg0) {
     extern u8 lbl_80281028[];
     extern f32 lbl_8036BA00;
     extern f32 lbl_8036BA04;
+    extern f64 lbl_8036BA08;
+    extern f64 lbl_8036BA10;
 
     typedef struct {
         u8 pad[0x30];
@@ -1948,14 +1948,15 @@ void fn_801F9E00(void *arg0) {
     s32 spC;
     u16 spA;
     u8 sp8;
-    Obj *obj;
-    s32 var_r26;
-    s32 var_r27;
-    void *temp_r28;
-    u16 *p_spA;
-    s32 *p_spC;
     s32 temp_r31;
+    s32 *p_spC;
+    u16 *p_spA;
+    void *temp_r28;
+    s32 var_r27;
+    s32 var_r26;
+    Obj *obj;
     s32 temp_r0;
+    u8 pk;
     f32 f3;
     f32 f0;
     f32 f1;
@@ -1974,10 +1975,11 @@ void fn_801F9E00(void *arg0) {
     goto loop_check;
 loop_body:
     fn_8014DBE0(temp_r28, var_r26, &sp8, p_spA, p_spC);
-    if (packet.kind == sp8) {
+    pk = packet.kind;
+    if (pk == sp8) {
         goto accumulate;
     }
-    if (packet.kind != 0x1C) {
+    if (pk != 0x1C) {
         goto else_path;
     }
     if (sp8 != 0x1D) {
@@ -1986,11 +1988,11 @@ loop_body:
 accumulate:
     temp_r0 = spC - var_r27;
     var_r27 = spC;
-    packet.field += spA;
-    packet.val += temp_r0;
+    packet.field = packet.field + spA;
+    packet.val = packet.val + temp_r0;
     goto loop_next;
 else_path:
-    if (packet.kind != 0xFF) {
+    if (pk != 0xFF) {
         fn_801FAA9C(&obj->unk30, obj->unk38 + (obj->unk34 << 3), 1, &packet);
     }
     temp_r0 = spC - var_r27;
@@ -2013,14 +2015,16 @@ loop_check:
     f1 = (f32)shifted;
     f3 = f3 + f0;
     f0 = lbl_8036BA00;
-    obj->unk40 = f3 + f1;
-    f1 = obj->unk40;
-    obj->unk48 = (s32)((f1 / f0) * (f32)obj->unk48);
+    f1 = f3 + f1;
+    obj->unk40 = f1;
+    f1 = obj->unk40 / f0;
+    obj->unk48 = (s32)(f1 * (f32)obj->unk48);
     f1 = obj->unk40;
     obj->unk44 = f1 / (f32)obj->unk48;
     fn_80109180(lbl_80281028 + 0x2F3, obj);
     obj->unk4C = fn_80109180(lbl_80281028 + 0x301, obj);
 }
+#pragma global_optimizer reset
 #pragma use_lmw_stmw reset
 
 void fn_801FA478(void *arg0) {
@@ -2392,23 +2396,19 @@ void fn_801FB548(void *arg0) {
 
 void fn_801FB580(void *arg0, void *arg1, void *arg2)
 {
-    void *node;
-    void *sentinel;
     void *list;
+    void *sentinel;
     void *next;
     void *prev;
-    u32 count;
 
-    node = arg2;
-
-    if (*(u32 *)node == 0) {
+    if (*(u32 *)arg2 == 0) {
         return;
     }
 
-    sentinel = (u8 *)node + 4;
     list = *(void **)arg1;
-    next = *(void **)((u8 *)node + 8);
-    prev = *(void **)((u8 *)node + 4);
+    sentinel = (u8 *)arg2 + 4;
+    next = *(void **)((u8 *)arg2 + 8);
+    prev = *(void **)((u8 *)arg2 + 4);
 
     *(void **)((u8 *)sentinel + 4) = sentinel;
     *(void **)sentinel = sentinel;
@@ -2419,11 +2419,9 @@ void fn_801FB580(void *arg0, void *arg1, void *arg2)
     *(void **)list = prev;
     *(void **)((u8 *)prev + 4) = list;
 
-    count = *(u32 *)arg0;
-    count += *(u32 *)node;
-    *(u32 *)arg0 = count;
+    *(u32 *)arg0 = *(u32 *)arg0 + *(u32 *)arg2;
 
-    *(u32 *)node = 0;
+    *(u32 *)arg2 = 0;
 }
 
 u32 fn_801FB9CC(void *arg0, u16 arg1) {
