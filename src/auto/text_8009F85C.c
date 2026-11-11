@@ -88,8 +88,8 @@ void fn_8009F980(s32 arg0, s32 arg1, void *arg2) {
 }
 
 void *fn_8009FAAC(void) {
-    extern u16 lbl_8026D8D8;
-    return &lbl_8026D8D8 + 0x588;
+    extern u16 lbl_8026D8D8[];
+    return (char *)lbl_8026D8D8 + 0x2C4;
 }
 
 s32 fn_8009FABC(void *arg2) {
