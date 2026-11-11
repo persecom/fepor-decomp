@@ -213,57 +213,103 @@ void __DVDFSInit(void) {
 }
 
 u32 fn_8020C3E0(char *path) {
-extern u32 __DVDLongFileNameFlag;
-extern char lbl_8029CEE8[];
-extern s32 lbl_80366F60;
-void fn_8020602C(void*,s32,char*,...);
-s32 more;
-u32 parent;
-char *end;
-s32 length;
-u32 entry;
-char *original;
-char *extension;
-s32 invalid,dotted,equal;
-original=path; entry=lbl_80368588;
-for(;;){
-if(*path==0) return entry;
-if(*path=='/'){entry=0;path++;continue;}
-if(*path=='.'){
-if(path[1]=='.'){
-if(path[2]=='/'){entry=parentDir(entry);path+=3;continue;}
-if(path[2]==0) return parentDir(entry);
-}else{
-if(path[1]=='/'){path+=2;continue;}
-if(path[1]==0)return entry;
-}
-}
-if(!__DVDLongFileNameFlag){
-end=path;dotted=0;invalid=0;
-while(*end && *end!='/'){
-if(*end=='.'){
-if(end-path>8 || dotted==1){invalid=1;break;}
-extension=end+1; dotted=1;
-}else if(*end==' ')invalid=1;
-end++;
-}
-if(dotted==1 && end-extension>3)invalid=1;
-if(invalid)fn_8020602C(&lbl_80366F60,0x183,lbl_8029CEE8,original);
-}else {for(end=path;*end && *end!='/';end++);}
-if(*end==0) more=0; else more=1;
-parent=entry; length=end-path;
-for(entry++;entry<FstStart_8036857C[parent].nextEntryOrLength;){
-if(entryIsDir(entry) || more!=1){
-equal=DVDComparePathComponent(path,FstStringStart_80368580+stringOff(entry));
-if(equal==1)goto found;
-}
-entry=entryIsDir(entry)?FstStart_8036857C[entry].nextEntryOrLength:entry+1;
-}
-return -1;
-found:
-if(!more)return entry;
-path=length+path;path++;
-}
+    extern u32 __DVDLongFileNameFlag;
+    extern char lbl_8029CEE8[];
+    extern s32 lbl_80366F60;
+    void fn_8020602C(void *, s32, char *, ...);
+
+    s32 more;
+    u32 parent;
+    char *end;
+    s32 length;
+    u32 entry;
+    char *original;
+    char *extension;
+    s32 invalid;
+    s32 dotted;
+
+    original = path;
+    entry = (u32)lbl_80368588;
+
+    for (;;) {
+        if (*path == 0) {
+            return entry;
+        }
+        if (*path == '/') {
+            entry = 0;
+            path++;
+            continue;
+        }
+        if (*path == '.') {
+            if (path[1] == '.') {
+                if (path[2] == '/') {
+                    entry = parentDir(entry);
+                    path += 3;
+                    continue;
+                }
+                if (path[2] == 0) {
+                    return parentDir(entry);
+                }
+            } else {
+                if (path[1] == '/') {
+                    path += 2;
+                    continue;
+                }
+                if (path[1] == 0) {
+                    return entry;
+                }
+            }
+        }
+        if (!__DVDLongFileNameFlag) {
+            end = path;
+            dotted = 0;
+            invalid = 0;
+            while (*end && *end != '/') {
+                if (*end == '.') {
+                    if (end - path > 8 || dotted == 1) {
+                        invalid = 1;
+                        break;
+                    }
+                    extension = end + 1;
+                    dotted = 1;
+                } else if (*end == ' ') {
+                    invalid = 1;
+                }
+                end++;
+            }
+            if (dotted == 1 && end - extension > 3) {
+                invalid = 1;
+            }
+            if (invalid) {
+                fn_8020602C(&lbl_80366F60, 0x183, lbl_8029CEE8, original);
+            }
+        } else {
+            for (end = path; *end && *end != '/'; end++) {
+            }
+        }
+        if (*end == 0) {
+            more = 0;
+        } else {
+            more = 1;
+        }
+        parent = entry;
+        length = end - path;
+        for (entry++; entry < FstStart_8036857C[parent].nextEntryOrLength;) {
+            if (entryIsDir(entry) || more != 1) {
+                if (DVDComparePathComponent(path, FstStringStart_80368580 + stringOff(entry)) == 1) {
+                    goto found;
+                }
+            }
+            entry = entryIsDir(entry) ? FstStart_8036857C[entry].nextEntryOrLength : entry + 1;
+        }
+        return -1;
+    found:
+        if (!more) {
+            return entry;
+        }
+        path += length;
+        path++;
+    }
 }
 
 s32 fn_8020C79C(void) {
@@ -640,48 +686,123 @@ void fn_8020DD7C(void) {
     DVDLowWaitCoverClose(cbForStateMotorStopped);
 }
 
-#pragma global_optimizer off
-void stateReady(void){
-extern u16 BB2_80339F40[];
-extern s32 CurrCommand_803685B4, CancelLastError_803685C4;
-extern u32 ResumeFromHere_803685C0;
-extern u32 MotorState_803685D8;
-s32 __DVDCheckWaitingQueue(void);
-void stateBusy_8020E178(void*);
-void DVDLowWaitCoverClose(void(*)(void));
-void cbForStateMotorStopped(void);
-void DVDReset(void);
-void OSCreateAlarm(void*);
-void OSSetAlarm(void*,u64,void(*)(void*,void*));
-void __DVDStoreErrorCode(s32);
-void DVDLowStopMotor(void(*)(u32));
-void cbForStateError(u32);
-u8 *base=(u8*)BB2_80339F40;
-void *block; void(*cb)(s32,void*);
-if(!__DVDCheckWaitingQueue()){executing_80368598=0; return;}
-if(PauseFlag_803685A4){PausingFlag_803685A8=1; executing_80368598=0;return;}
-executing_80368598=(void*)__DVDPopWaitingQueue();
-if(FatalErrorFlag_803685B0){
-((DVDReadyCommand*)executing_80368598)->state=-1;
-block=executing_80368598;executing_80368598=base+0x40;
-cb=*(void(**)(s32,void*))((u8*)block+0x28);if(cb) cb(-1,block);stateReady();return;
+#pragma opt_common_subs off
+void stateReady(void) {
+    extern u16 BB2_80339F40[];
+    extern volatile s32 CurrCommand_803685B4;
+    extern s32 CancelLastError_803685C4;
+    extern volatile u32 ResumeFromHere_803685C0;
+    extern u32 MotorState_803685D8;
+    s32 __DVDCheckWaitingQueue(void);
+    void stateBusy_8020E178(void *);
+    void DVDLowWaitCoverClose(void (*)(void));
+    void cbForStateMotorStopped(void);
+    void DVDReset(void);
+    void OSCreateAlarm(void *);
+    void OSSetAlarm(void *, u64, void (*)(void *, void *));
+    void __DVDStoreErrorCode(s32);
+    void DVDLowStopMotor(void (*)(u32));
+    void cbForStateError(u32);
+    u8 *base = (u8 *)BB2_80339F40;
+    void *block;
+    void (*cb)(s32, void *);
+
+    if (!__DVDCheckWaitingQueue()) {
+        executing_80368598 = 0;
+        return;
+    }
+    if (PauseFlag_803685A4) {
+        PausingFlag_803685A8 = 1;
+        executing_80368598 = 0;
+        return;
+    }
+    executing_80368598 = (void *)__DVDPopWaitingQueue();
+    if (FatalErrorFlag_803685B0) {
+        ((DVDReadyCommand *)executing_80368598)->state = -1;
+        block = executing_80368598;
+        executing_80368598 = base + 0x40;
+        cb = *(void (**)(s32, void *))((u8 *)block + 0x28);
+        if (cb)
+            cb(-1, block);
+        stateReady();
+        return;
+    }
+    block = executing_80368598;
+    CurrCommand_803685B4 = ((DVDReadyCommand *)block)->command;
+    if (ResumeFromHere_803685C0 != 0U) {
+        switch ((s32)ResumeFromHere_803685C0) {
+        case 2:
+            ((DVDReadyCommand *)executing_80368598)->state = 11;
+            DVDLowWaitCoverClose(cbForStateMotorStopped);
+            break;
+        case 3:
+            ((DVDReadyCommand *)executing_80368598)->state = 4;
+            DVDLowWaitCoverClose(cbForStateMotorStopped);
+            break;
+        case 4:
+            ((DVDReadyCommand *)executing_80368598)->state = 5;
+            DVDLowWaitCoverClose(cbForStateMotorStopped);
+            break;
+        case 1:
+        case 6:
+        case 7:
+            ((DVDReadyCommand *)block)->state = 3;
+            switch (CurrCommand_803685B4) {
+            case 4:
+            case 5:
+            case 13:
+            case 15:
+                __DVDClearWaitingQueue();
+                block = executing_80368598;
+                executing_80368598 = base + 0x40;
+                cb = *(void (**)(s32, void *))((u8 *)block + 0x28);
+                if (cb)
+                    cb(-4, block);
+                stateReady();
+                break;
+            default:
+                MotorState_803685D8 = 0;
+                DVDReset();
+                OSCreateAlarm(base + 0x70);
+                OSSetAlarm(base + 0x70, (u64)(((*(u32 *)0x800000f8 / 4) / 1000) * 1150), AlarmHandler);
+                break;
+            }
+            break;
+        case 5:
+            __DVDStoreErrorCode(CancelLastError_803685C4);
+            DVDLowStopMotor(cbForStateError);
+            break;
+        }
+        ResumeFromHere_803685C0 = 0;
+        return;
+    }
+    if (MotorState_803685D8 == 0) {
+        ((DVDReadyCommand *)executing_80368598)->state = 1;
+        stateBusy_8020E178(executing_80368598);
+        return;
+    }
+    switch (CurrCommand_803685B4) {
+    case 4:
+    case 5:
+    case 13:
+    case 15:
+        __DVDClearWaitingQueue();
+        block = executing_80368598;
+        executing_80368598 = base + 0x40;
+        cb = *(void (**)(s32, void *))((u8 *)block + 0x28);
+        if (cb)
+            cb(-4, block);
+        stateReady();
+        break;
+    default:
+        MotorState_803685D8 = 0;
+        DVDReset();
+        OSCreateAlarm(base + 0x70);
+        OSSetAlarm(base + 0x70, (u64)(((*(u32 *)0x800000f8 / 4) / 1000) * 1150), AlarmHandler);
+        break;
+    }
 }
-block=executing_80368598;
-CurrCommand_803685B4=((DVDReadyCommand*)block)->command;
-if(ResumeFromHere_803685C0 != 0U){
-switch((s32)ResumeFromHere_803685C0){
-case 2:((DVDReadyCommand*)executing_80368598)->state=11;DVDLowWaitCoverClose(cbForStateMotorStopped);break;
-case 3:((DVDReadyCommand*)executing_80368598)->state=4;DVDLowWaitCoverClose(cbForStateMotorStopped);break;
-case 4:((DVDReadyCommand*)executing_80368598)->state=5;DVDLowWaitCoverClose(cbForStateMotorStopped);break;
-case 1:case 6:case 7:((DVDReadyCommand*)block)->state=3;switch(CurrCommand_803685B4){case 4:case 5:case 13:case 15: __DVDClearWaitingQueue(); block=executing_80368598; executing_80368598=base+0x40; cb=*(void(**)(s32,void*))((u8*)block+0x28); if(cb) cb(-4,block); stateReady(); break; default: MotorState_803685D8=0; DVDReset(); OSCreateAlarm(base+0x70); OSSetAlarm(base+0x70,(u64)(((*(u32*)0x800000f8/4)/1000)*1150),AlarmHandler); break;} break;
-case 5:__DVDStoreErrorCode(CancelLastError_803685C4);DVDLowStopMotor(cbForStateError);break;
-}
-ResumeFromHere_803685C0=0;return;
-}
-if(MotorState_803685D8==0){((DVDReadyCommand*)executing_80368598)->state=1;stateBusy_8020E178(executing_80368598);return;}
-switch(CurrCommand_803685B4){case 4:case 5:case 13:case 15: __DVDClearWaitingQueue(); block=executing_80368598; executing_80368598=base+0x40; cb=*(void(**)(s32,void*))((u8*)block+0x28); if(cb) cb(-4,block); stateReady(); break; default: MotorState_803685D8=0; DVDReset(); OSCreateAlarm(base+0x70); OSSetAlarm(base+0x70,(u64)(((*(u32*)0x800000f8/4)/1000)*1150),AlarmHandler); break;}
-}
-#pragma global_optimizer reset
+#pragma opt_common_subs reset
 void stateBusy_8020E178(void) {
     // Implementation based on analysis of neighboring functions.
     // The exact structure is inferred from similar functions in the codebase.
