@@ -252,7 +252,7 @@ class SortIterator {
 public:
     s32 *ptr;
     s32 state;
-    SortIterator(const SortIterator &o) { ptr=o.ptr; state=o.state; }
+    SortIterator(const SortIterator &o) { *(u64 *)this=*(const u64 *)&o; }
     SortIterator &operator+=(s32 n) { ptr+=n; return *this; }
     SortIterator operator+(s32 n) const { return SortIterator(*this) += n; }
 };
@@ -2306,6 +2306,96 @@ void fn_800D8D94(void *arg0, s32 arg2, s32 arg3) {
     fn_800C9A60(&sp14, -1);
 }
 
+#pragma use_lmw_stmw on
+s32 fn_800D9804(void *arg0, s32 arg1, u32 arg2) {
+    u16 fn_8005C144(void);
+    s32 fn_8005C84C(void);
+    char *fn_800C93EC(String *);
+    void fn_800C96F8(String *, char *, u32);
+    void fn_800C9758(String *, String *, s32, s32);
+    void fn_800C9A60(String *, s32);
+    void fn_800CB8A4(String *, String *, s32);
+    void fn_800CB90C(String *, String *, char *);
+    void fn_800CBF24(String *, char *, s32);
+    char *fn_801992F8(u32);
+    u32 strlen(const char *);
+    extern char lbl_802711B0[];
+
+    String name;
+    String result;
+    String s8c, s80, s74, s68, s5c, s50;
+    String s44, s38, s2c, s20, s14, s8;
+    char *p;
+    s32 ret;
+    s32 path;
+
+    (void)arg0;
+    path = arg1;
+    result.cap = 0;
+    name.cap = 0;
+    result.size = 0;
+    result.data = 0;
+    result.cap = 0;
+    name.size = 0;
+    name.data = 0;
+    name.cap = 0;
+
+    if (arg2 != 0) {
+        p = fn_801992F8(arg2);
+        fn_800C96F8(&result, p, strlen(p));
+    } else {
+        fn_800C96F8(&result, lbl_802711B0 + 0x1D7, strlen(lbl_802711B0 + 0x1D7));
+    }
+
+    fn_800CBF24(&s8c, lbl_802711B0 + 0x189, path);
+    fn_800CB90C(&s80, &s8c, lbl_802711B0 + 0x18D);
+    fn_800CB8A4(&s74, &s80, path);
+    fn_800CB90C(&s68, &s74, lbl_802711B0 + 0x1F4);
+    fn_800CB8A4(&s5c, &s68, (s32)&result);
+    fn_800CB90C(&s50, &s5c, lbl_802711B0 + 0x1F6);
+    fn_800C9758(&name, &s50, 0, -1);
+    fn_800C9A60(&s50, -1);
+    fn_800C9A60(&s5c, -1);
+    fn_800C9A60(&s68, -1);
+    fn_800C9A60(&s74, -1);
+    fn_800C9A60(&s80, -1);
+    fn_800C9A60(&s8c, -1);
+    fn_800C93EC(&name);
+    if ((u16)fn_8005C144() != 0x8000) {
+        fn_800C93EC(&name);
+        ret = fn_8005C84C();
+        fn_800C9A60(&name, -1);
+        fn_800C9A60(&result, -1);
+        return ret;
+    }
+
+    fn_800CBF24(&s44, lbl_802711B0 + 0x189, path);
+    fn_800CB90C(&s38, &s44, lbl_802711B0 + 0x18D);
+    fn_800CB8A4(&s2c, &s38, path);
+    fn_800CB90C(&s20, &s2c, lbl_802711B0 + 0x1F4);
+    fn_800CB8A4(&s14, &s20, (s32)&result);
+    fn_800CB90C(&s8, &s14, lbl_802711B0 + 0x1FB);
+    fn_800C9758(&name, &s8, 0, -1);
+    fn_800C9A60(&s8, -1);
+    fn_800C9A60(&s14, -1);
+    fn_800C9A60(&s20, -1);
+    fn_800C9A60(&s2c, -1);
+    fn_800C9A60(&s38, -1);
+    fn_800C9A60(&s44, -1);
+    fn_800C93EC(&name);
+    if ((u16)fn_8005C144() != 0x8000) {
+        fn_800C93EC(&name);
+        ret = fn_8005C84C();
+        fn_800C9A60(&name, -1);
+        fn_800C9A60(&result, -1);
+        return ret;
+    }
+
+    fn_800C9A60(&name, -1);
+    fn_800C9A60(&result, -1);
+    return 0;
+}
+
 void fn_800DA2CC(void *arg0)
 {
     extern void *lbl_803678B8;
@@ -3806,6 +3896,7 @@ extern "C" void fn_800E103C(s32 *begin,s32 *end,SortIterator a,SortIterator b,So
  }
  } else if(n<=20) {
  if(begin!=end) {
+ s32 *hole,*prev; s32 value; s32 *cur; s32 other,key;
  for(cur=begin+1;cur<end;cur++) {
  value=*cur; prev=cur; hole=cur;
  while(begin<hole && (other=*--prev,key=fn_800DF6B0((void *)value),fn_800DF6B0((void *)other)>key)) {
