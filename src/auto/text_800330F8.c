@@ -6388,8 +6388,8 @@ static inline void *get_4F5EC_resource(void *arg0) {
 
  char buf[0x20];
  void *name;
- s32 idx;
  void *base;
+ s32 idx;
  s32 value;
  void *resolved;
  value=get_4F5EC_id(arg0);
