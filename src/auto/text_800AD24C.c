@@ -3852,6 +3852,37 @@ s32 fn_800B7E60(s32 arg0, u32 arg1, s32 arg2) {
     return 1;
 }
 
+#pragma cplusplus on
+extern "C" s32 fn_800B7EF8(s32 arg0) {
+    struct Obj {
+        u8 pad[8];
+        virtual u8 v0() = 0;
+        u8 flag;
+        u8 pad2[0x23];
+    };
+    extern Obj lbl_8032FF08[];
+    void fn_80146B00(void);
+    void fn_80148980(void *, s32);
+    u8 ok;
+    Obj *obj;
+
+    ok = 0;
+    obj = &lbl_8032FF08[(u8)arg0];
+    if (obj->flag & 1) {
+        if (obj->v0()) {
+            ok = 1;
+        }
+    }
+    if (ok) {
+        fn_80148980(obj, 1);
+    }
+    if (arg0 == 0) {
+        fn_80146B00();
+    }
+    return 1;
+}
+#pragma cplusplus reset
+
 s32 fn_800B7F98(s32 arg0, s32 arg1, s32 arg2) {
     void fn_8014876C(void *, u8, s16);
     extern u8 lbl_8032FF08[];
@@ -6840,6 +6871,8 @@ s32 fn_800BDB9C(s32 arg0, s32 arg1) {
 
 #pragma use_lmw_stmw on
 void fn_800BDBC8(s32 arg0, s32 arg1) {
+    s32 fn_8000D598(s32);
+    s32 fn_802342B8(s32, s32);
     s32 var_r30;
     u32 temp_r31;
     s32 temp_r5;
@@ -6854,8 +6887,11 @@ loop_1:
         goto next;
     }
     result = fn_802342B8(*(s32 *)var_r29, arg1);
-    if (result != 0) {
+    switch (result) {
+    default:
         goto next;
+    case 0:
+        break;
     }
     goto after;
 next:
