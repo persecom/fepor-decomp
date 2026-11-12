@@ -3307,19 +3307,19 @@ s32 fn_800B7140(u32 arg0) {
 }
 
 u8 fn_800B719C(u8 arg0) {
-    u8 fn_800F32A4(void);
-    extern u8 lbl_802B14E4;
-    void *var_r3;
+    s32 fn_800F32A4(void);
+    extern u8 lbl_802B14E4[];
+    void *unit;
 
     if (arg0 != 0) {
-        var_r3 = &lbl_802B14E4 + ((arg0 - 1) * 0x280);
+        unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
     } else {
-        var_r3 = NULL;
+        unit = NULL;
     }
-    if ((var_r3 == NULL) || ((u32) M2C_FIELD(var_r3, u32 *, 0x188) == 0U)) {
-        return 0U;
+    if (unit == NULL || *(u32 *)((u8 *)unit + 0x188) == 0) {
+        return 0;
     }
-    return fn_800F32A4();
+    return (u8)fn_800F32A4();
 }
 
 u8 fn_800B7200(void) {
