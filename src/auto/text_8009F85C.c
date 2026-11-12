@@ -2282,9 +2282,8 @@ s32 fn_800A3914(void) {
 }
 
 void *fn_800A391C(void) {
-    extern u16 lbl_8026D8D8;
-    void* ptr = (char*)&lbl_8026D8D8 + 0x807;
-    return ptr;
+    extern u16 lbl_8026D8D8[];
+    return (u8 *)lbl_8026D8D8 + 0x807;
 }
 
 s32 fn_800A392C(void) {
