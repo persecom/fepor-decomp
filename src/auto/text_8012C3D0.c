@@ -2936,6 +2936,22 @@ s32 fn_80131AA8(s32 arg0, void *arg1, s32 arg2) {
     }
 }
 
+void *fn_80131B24(s32 arg0, s32 arg1) {
+    extern u8 lbl_80275AC0[];
+    switch (arg1) {
+    case 1:
+        return &lbl_80275AC0[0x3CE];
+    case 2:
+        return &lbl_80275AC0[0x3E3];
+    case 3:
+        return &lbl_80275AC0[0x3F5];
+    case 4:
+        return &lbl_80275AC0[0x408];
+    default:
+        return &lbl_80275AC0[0x247];
+    }
+}
+
 void fn_80131B9C(s32 unused, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4, s32 *arg5)
 {
   switch (arg1)
