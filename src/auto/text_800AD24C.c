@@ -3162,7 +3162,7 @@ s32 fn_800B6C6C(s32 arg0) {
     return 1;
 }
 
-extern M2C_UNK lbl_8028E7F8;
+extern u8 lbl_8028E7F8[];
 s32 fn_800B6CD8(u32 arg0) {
     void OSReport(void *, ...);
     if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
@@ -3207,6 +3207,33 @@ s32 fn_800B6DB8(s32 arg0, s32 arg1) {
 u8 fn_800B6DF0(void) {
     extern u16 lbl_80330708[];
     return *(u8 *)((u8 *)lbl_80330708 + 0x56);
+}
+
+s32 fn_800B6E00(s32 arg0) {
+    void fn_8002D780(s32, void *);
+    void fn_8000BD98(void *);
+    void fn_8000BF00(void *);
+    extern u8 lbl_80330708[];
+    extern u8 lbl_8026ECB8[];
+    s32 var;
+
+    var = 0;
+    switch (arg0) {
+    case 1:
+        var = 5;
+        break;
+    case 2:
+        var = 6;
+        break;
+    case 3:
+        var = 7;
+        break;
+    }
+    lbl_80330708[0x54] = (u8)var;
+    fn_8002D780(2, lbl_80330708);
+    fn_8000BD98(lbl_8026ECB8 + 0x98b);
+    fn_8000BF00(&lbl_8028E7F8);
+    return 1;
 }
 
 s32 fn_800B6E8C(s32 mode, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
