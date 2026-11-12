@@ -1350,15 +1350,16 @@ StreamQueueNode *fn_80246288(StreamQueueNode *arg0, u8 arg1, u32 *arg2)
 }
 #pragma dont_inline reset
 
+#pragma opt_strength_reduction off
 s32 fn_80246EBC(u8 arg0,u32 arg1){
-void fn_80247F1C(s32,u8,s32);
+StreamQueueNode *fn_80246288(StreamQueueNode*,u8,u32*);void fn_80247F1C(s32,u8,s32);
 extern u32 lbl_80368960;extern f32 lbl_8036C1B0,lbl_8036C1B4,lbl_8036C1B8;extern f64 lbl_8036C1C0;
 f64 fn_802387A8(f64,f64);f64 fn_802381A4(f64);
-u32 changed=0;u32 off=arg0*0x38;StreamTempo *tempo=(StreamTempo*)((u8*)lbl_80368968+off+0x1508);
-StreamTempo *t;StreamQueueNode *node;u32 time;u32 i,j;u32 *event;f32 f;
+u32 changed=0;s32 off=arg0*0x38;StreamTempo *tempo=(StreamTempo*)((u8*)lbl_80368968+off+0x1508);
+StreamTempo *t;StreamQueueNode *node;u32 time;s32 i,j;u32 *event;f32 f;
 goto check;
 for(;;){
-if(node){tempo->head=node->next;if(tempo->head)tempo->head->prev=0;}
+if(node){StreamQueueNode *next=node->next;tempo->head=next;if(next)tempo->head->prev=0;}
 if(!node){
 if(!changed)return 0;
 changed=0;tempo->active^=1;
@@ -1391,7 +1392,7 @@ node=fn_80246070((u8)j);if(node){t=(StreamTempo*)((u8*)lbl_80368968+off+0x1508);
 }}
 }
 }else{
-node=((StreamQueueNode*(*)(StreamQueueNode*,u8,u32*))fn_80246288)(node,arg0,&changed);
+node=fn_80246288(node,arg0,&changed);
 if(node)StreamQueueInsert(&tempo->head,node);
 }
 check:
@@ -1399,7 +1400,9 @@ node=tempo->head;time=node?node->time:0;
 if(time>tempo->buffers[tempo->active*2+1])return 1;
 }
 }
-
+#pragma opt_common_subs reset
+#pragma opt_loop_invariants reset
+#pragma opt_strength_reduction reset
 void fn_80247D74(void)
 {
     extern u32 lbl_80368974;
@@ -9882,9 +9885,9 @@ void fn_80262200(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     fn_802625F8(off, fnResult + aligned, arg2, 1, arg4, arg5);
 }
 
-void fn_80262290(void) {
-    M2C_UNK fn_80263074();
-    fn_80263074();
+u32 fn_80262290(s32 arg0) {
+    u32 fn_80263074(s32);
+    return fn_80263074(arg0);
 }
 
 void fn_802622B0(void) {
