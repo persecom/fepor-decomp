@@ -201,20 +201,14 @@ void fn_80072B04(void *arg0) {
 
 void fn_80072C64(void *arg0)
 {
-    extern void *lbl_803682F0;
+    void fn_801E047C(void *, void *);
+    void fn_801DDBA8(void *, u8 *, s32, s32, s32);
+    extern u8 lbl_803682F0;
     extern u8 lbl_8026BE40[];
-    extern u8 lbl_80311D50[];
+    extern u16 lbl_80311D50[];
 
-    fn_801E047C(lbl_803682F0, arg0);
-
-    fn_801DDBA8(
-        lbl_80311D50,
-        lbl_8026BE40 + 0x14D,
-        0,
-        0,
-        0,
-        0
-    );
+    fn_801E047C(&lbl_803682F0, arg0);
+    fn_801DDBA8(lbl_80311D50, lbl_8026BE40 + 0x14D, 0, 0, 0);
 }
 
 void fn_80072CB0(s32 arg0) {
