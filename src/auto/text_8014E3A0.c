@@ -75,45 +75,33 @@ s32 fn_8014E4C8(void *arg0, void *arg1, void *arg2) {
     extern u32 lbl_80367B78;
     extern s32 lbl_80367B84;
     extern u32 lbl_80367B70;
-
-    u8 *fn_8000E0E4(void *);
-
+    char *fn_8000E0E4(void *);
     s32 index;
-    s32 valid;
-    u8 value;
-    void *entry;
-    u8 *str;
+    char *str;
+    u8 flag;
 
-    value = *(u8 *)((u8 *)arg2 + 0x3A);
-
-    index = lbl_80367B7C * 24;
-    index += value;
-
+    index = lbl_80367B7C * 0x18;
+    index += *(u8 *)((u8 *)arg2 + 0x3A);
     lbl_80367B84 = index;
-
     if (index >= (s32)lbl_80367B78) {
         return 0x10;
     }
-
-    valid = 0;
-
-    entry = ((void **)lbl_80367B70)[index];
-
-    if (entry != NULL) {
-        str = fn_8000E0E4(entry);
-
-        if (str[0] == 0x24) {
-            if (str[1] == 0x52) {
-                valid = 1;
-            }
+    if (*(void **)(lbl_80367B70 + index * 4) == NULL) {
+        flag = 0;
+    } else {
+        str = fn_8000E0E4(*(void **)(lbl_80367B70 + index * 4));
+        if (str[0] != '$') {
+            flag = 0;
+        } else if (str[1] != 'R') {
+            flag = 0;
+        } else {
+            flag = 1;
         }
     }
-
-    if (valid != 0) {
-        return 5;
+    if (flag == 0) {
+        return 0x10;
     }
-
-    return 0x10;
+    return 5;
 }
 
 #pragma use_lmw_stmw on
