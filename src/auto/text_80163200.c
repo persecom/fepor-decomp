@@ -10704,6 +10704,14 @@ s32 fn_8017A950(void *arg0) {
     return result;
 }
 
+s32 fn_8017A9B0(void *arg0) {
+    u8 **pp = (u8 **)((u8 *)arg0 + 4);
+    u8 hi = *(*pp)++;
+    u8 lo = *(*pp)++;
+
+    return (hi << 8) + lo;
+}
+
 u8 fn_8017A9DC(void *arg0) {
     u8 *temp_r4;
 
