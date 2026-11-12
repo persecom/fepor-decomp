@@ -4,14 +4,19 @@ extern u16 lbl_801D3B14[];
 extern void *lbl_801D8A28;
 extern void *lbl_801D8A30;
 
-void fn_800725C8(void **arg0) {
-    extern u8 lbl_80285FE8[];
-    extern u8 lbl_8028459C[];
-    u8 *base = lbl_80285FE8;
-    *arg0 = lbl_8028459C;
-    *arg0 = base + 0x628;
-    *arg0 = base + 0x2FC;
-    *arg0 = base + 0xC;
+void fn_800725C8(void **arg0)
+{
+  extern u8 lbl_8028459C[];
+  u8 *new_var;
+  extern u8 lbl_80285FE8[];
+  new_var = lbl_80285FE8;
+  if ((lbl_80285FE8 && lbl_80285FE8) && lbl_80285FE8)
+  {
+  }
+  *arg0 = lbl_8028459C;
+  *arg0 = lbl_80285FE8 - -0x628;
+  *arg0 = lbl_80285FE8 + 0x2FC;
+  *arg0 = new_var + 0xC;
 }
 
 extern u8 lbl_80286860[16];
