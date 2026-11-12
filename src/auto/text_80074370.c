@@ -1723,8 +1723,8 @@ void fn_80077E00(void) {
 }
 
 s32 fn_80077ED0(void) {
-    extern u16 lbl_802EF4C8;
-    lbl_802EF4C8 = 0x19;
+    extern u8 lbl_802EF4C8[24];
+    lbl_802EF4C8[8] = 0x19;
     return 5;
 }
 
