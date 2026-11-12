@@ -2006,6 +2006,24 @@ void fn_80078034(void) {
     fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x4AF);
 }
 
+s32 fn_80078060(void) {
+    u8 fn_80105BC0(void *, s32);
+    void fn_8002BAFC(void *, s32);
+    extern u8 lbl_802EF4C8[];
+    extern struct { s32 n; u8 pad[2004]; } lbl_802EF4E0;
+    u8 *p;
+
+    if (fn_80105BC0(*(u8 **)lbl_802EF4C8 + 0x1BC, 0x44) == 0) {
+        return 3;
+    }
+    p = lbl_802EF4C8;
+    if ((s8)p[0x12] != 0) {
+        return 3;
+    }
+    fn_8002BAFC(*(void **)p, 1);
+    return lbl_802EF4E0.n ? 0 : 3;
+}
+
 s32 fn_800780E8(void) {
     extern u8 lbl_802EF4C8[24];
     lbl_802EF4C8[8] = 0x13;
