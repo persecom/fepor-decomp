@@ -526,6 +526,7 @@ void fn_8020D16C(void) {
 void fn_8020D1A0(void) {
     void fn_8020BF58(void (*)(void));
     extern void fn_8020D27C(void);
+
     fn_8020BF58(fn_8020D27C);
 }
 
