@@ -6956,12 +6956,10 @@ void fn_80172C44(void *arg0) {
 }
 
 s32 fn_80172C68(void *arg0) {
-    s32 bit;
     if (arg0 == NULL || *(u32 *)arg0 == 0) {
         return 0;
     }
-    bit = (*(u8 *)((u8 *)arg0 + 5) >> 7) & 1;
-    return bit != 0;
+    return ((struct { u8 hi:1; u8 lo:7; } *)((u8 *)arg0 + 5))->hi != 0;
 }
 
 void fn_80172C9C(void *arg0) {
