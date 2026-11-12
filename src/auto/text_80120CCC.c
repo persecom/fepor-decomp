@@ -2623,6 +2623,7 @@ void fn_801261AC(s32 arg0) {
     fn_8014C718(lbl_80330708, arg0);
 }
 
+#pragma global_optimizer off
 void fn_80126204(void) {
     void fn_80013F48(void *);
     void fn_8000BD98(void *);
@@ -2644,7 +2645,7 @@ void fn_80126204(void) {
         *(void **)(temp + 0x54) = lbl_80320060;
     }
 }
-
+#pragma global_optimizer on
 void fn_801262A8(s32 arg0) {
     void fn_8000BF00(void *);
     void fn_8014C718(void *, s32);
