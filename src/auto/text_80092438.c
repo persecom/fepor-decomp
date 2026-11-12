@@ -937,65 +937,67 @@ u8 fn_800939FC(void *arg0, void *arg1) {
     }
     if (flags & 5) {
         t.ok = 1;
-        bit = flags & 1;
-        if (bit) {
-            if (!bit) {
-            } else {
-                if (flags & 0x200) {
-                    if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
-                        t.ok = 1;
-                    } else {
-                        t.ok = 0;
-                    }
-                } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
-                } else if (flags & 2) {
-                    t.ok = t.result;
-                } else if (flags & 4) {
-                    t.ok = t.result;
-                } else if (flags & 0x40) {
-                    t.ok = 1;
-                }
-                if (t.ok == 0) {
-                    t.result = 0;
-                } else if (fn_800940B0(arg0, arg1) == 0) {
-                    t.result = 0;
-                } else {
-                    t.result = 1;
-                }
-            }
-        } else {
-            bit = flags & 4;
-            if (bit) {
-                if (!bit) {
-                } else {
-                    if (flags & 0x200) {
-                        if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
-                            t.ok = 1;
-                        } else {
-                            t.ok = 0;
-                        }
-                    } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
-                    } else if (flags & 2) {
-                        t.ok = t.result;
-                    } else if (flags & 4) {
-                        t.ok = t.result;
-                    } else if (flags & 0x40) {
-                        t.ok = 1;
-                    }
-                    if (t.ok == 0) {
-                        t.result = 0;
-                    } else if (fn_800940B0(arg0, arg1) == 0) {
-                        t.result = 0;
-                    } else {
-                        t.result = 1;
-                    }
-                }
-            }
-        }
-        return t.result;
-    }
-    if (flags & 0x18) {
-        bit = flags & 8;
+                  bit = flags & 1;
+          if (bit) {
+              if (!bit) {
+              } else {
+                  if (flags & 0x200) {
+                      if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
+                          t.ok = 1;
+                      } else {
+                          t.ok = 0;
+                      }
+                  } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
+                  } else if (flags & 2) {
+                      t.ok = t.result;
+                  } else if (flags & 4) {
+                      t.ok = t.result;
+                  } else if (flags & 0x40) {
+                      t.ok = 1;
+                  }
+                  if (t.ok == 0) {
+                      t.result = 0;
+                  } else if (fn_800940B0(arg0, arg1) == 0)
+                  {
+                      t.result = 0;
+                  } else {
+                      t.result = 1;
+                  }
+              }
+          } else {
+              bit = flags & 4;
+              if (bit) {
+                  if (!bit) {
+                  } else {
+                      if (flags & 0x200) {
+                          if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
+                              t.ok = 1;
+                          } else {
+                              t.ok = 0;
+                          }
+                      } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
+                      } else if (flags & 2) {
+                          t.ok = t.result;
+                      } else if (flags & 4) {
+                          t.ok = t.result;
+                      } else if (flags & 0x40) {
+                          t.ok = 1;
+                      }
+                      if (t.ok == 0) {
+                          t.result = 0;
+                      } else if (fn_800940B0(arg0, arg1) == 0)
+                      {
+                          t.result = 0;
+                      } else {
+                          t.result = 1;
+                      }
+                  }
+              }
+          }
+          return t.result;
+      }
+      if (flags & 0x18) {
+          bit = flags & 8;
         if (bit) {
             if (!bit) {
             } else if (flags & ((u64)0x100 << 32)) {
