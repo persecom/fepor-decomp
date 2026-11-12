@@ -1365,20 +1365,33 @@ f32 fn_80113650(void *arg0) {
     return M2C_FIELD(arg0, f32 *, 0x128);
 }
 
-void fn_80113658(void* arg0) {
-    if (arg0 != NULL) {
-        s32** ptr = (s32**)arg0;
-        (*ptr)[0] = 0;
-        (*ptr)[1] = 0;
-        (*ptr)[2] = 0;
-        (*ptr)[3] = -1;
-        (*ptr)[4] = 0;
-        (*ptr)[5] = 0;
-        (*ptr)[6] = 0;
-        (*ptr)[7] = 0;
-    }
-}
+#pragma cplusplus on
+extern "C" void fn_80113658(void *arg0, void *arg1) {
+    struct Actor {
+        u8 pad0[0x40];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual Vec3f GetPos() = 0;
+    };
+    Vec3f a;
+    Vec3f b;
 
+    a = ((Actor *)arg0)->GetPos();
+    b = ((Actor *)arg1)->GetPos();
+    fn_802032CC(a, b);
+}
+#pragma cplusplus reset
 void fn_801136EC(void) {
     lbl_80273DF8[0] = 0x2D004300;
     lbl_80273DF8[1] = 0x42004100;
@@ -4112,18 +4125,51 @@ s32 fn_8011B578(void) {
     return 0xB0;
 }
 
-void fn_8011B580(void *arg0, void *arg1) {
+#pragma cplusplus on
+extern "C" void fn_8011B580(void *arg0, void *arg1) {
+    void fn_8008C1D8(s32, s32, s32, s32, s32);
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual s16 v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual void v25() = 0;
+        virtual void v26() = 0;
+        virtual void v27() = 0;
+        virtual void v28() = 0;
+        virtual void v29() = 0;
+    };
     s8 temp_r31;
-    void *temp_r3;
-    void **temp_r4 = (void **)M2C_FIELD(arg0, void **, 4);
-    s32 (*func_ptr)(void) = (s32 (*)(void))temp_r4[0x7C / 4];
-    
-    temp_r31 = (s8) M2C_FIELD(arg1, u8 *, 0x60);
-    func_ptr();
-    temp_r3 = M2C_FIELD(arg1, void **, 0x3C);
-    fn_8008C1D8(0, 0, 0, (temp_r31 * M2C_FIELD(M2C_FIELD(temp_r3, void **, 4), s16 (**)(void *), 0x58)(temp_r3)) + 0x20, 2);
-}
+    void *r30;
 
+    r30 = arg1;
+    temp_r31 = *(u8 *)((u8 *)arg1 + 0x60);
+    ((Obj *)arg0)->v29();
+    fn_8008C1D8(0, 0, 0, temp_r31 * ((Obj *)*(void **)((u8 *)r30 + 0x3C))->v20() + 0x20, 2);
+}
+#pragma cplusplus reset
 void fn_8011B5FC(void *arg0, void *arg1) {
     M2C_UNK fn_80009C0C(f32);
     M2C_UNK fn_8000A248();
