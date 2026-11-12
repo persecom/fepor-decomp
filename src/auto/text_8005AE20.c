@@ -268,16 +268,80 @@ void fn_8005B73C(void *arg0) {
 }
 
 s32 fn_8005B760(s32 arg0) {
-    s32 temp_r0;
-    u16 *jumptable_80285D18;
-
-    temp_r0 = arg0 - 10;
-    if (temp_r0 > 0x42) {
-        return 0x1a;
+    switch ((unsigned int)(arg0 - 10)) {
+    case 0:
+    case 16:
+    default:
+        return 0x1A;
+    case 14:
+        return 0x18;
+    case 15:
+        return 0x19;
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+    case 12:
+    case 13:
+    case 17:
+    case 18:
+    case 19:
+    case 20:
+    case 21:
+    case 22:
+    case 23:
+    case 24:
+    case 25:
+    case 26:
+    case 27:
+    case 28:
+    case 29:
+    case 30:
+    case 31:
+    case 32:
+    case 33:
+    case 34:
+    case 35:
+    case 36:
+    case 37:
+    case 38:
+    case 39:
+    case 40:
+    case 41:
+    case 42:
+    case 43:
+    case 44:
+    case 45:
+    case 46:
+    case 47:
+    case 48:
+    case 49:
+    case 50:
+    case 51:
+    case 52:
+    case 53:
+    case 54:
+    case 55:
+    case 56:
+    case 57:
+    case 58:
+    case 59:
+    case 60:
+    case 61:
+    case 62:
+    case 63:
+    case 64:
+    case 65:
+    case 66:
+        return 0;
     }
-    
-    jumptable_80285D18 = &lbl_80285D18[temp_r0];
-    return *jumptable_80285D18;
 }
 
 u8 fn_8005B7A4(u8 *arg0) {
@@ -7363,16 +7427,33 @@ s32 fn_80072290(void) {
     return 8;
 }
 
-s16 fn_80072298(void *arg0) {
-    s16 (*func_ptr)(void);
-    s16 temp_r3;
-
-    func_ptr = ((s16 (**)())((void ***)arg0)[1])[0x50 / sizeof(void *)];
-    temp_r3 = func_ptr();
-    return (s16) (0x130 - ((s32) (((u32) temp_r3 >> 0x1FU) + temp_r3) >> 1));
-}
-
 #pragma cplusplus on
+extern "C" s16 fn_80072298(void *arg0) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual s16 v18() = 0;
+    };
+    s16 temp = ((Obj *)arg0)->v18();
+    return (s16)(0x130 - (temp / 2));
+}
 extern "C" s16 fn_800722DC(void *arg0) {
     struct Obj {
         u8 pad[4];
