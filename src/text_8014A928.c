@@ -181,18 +181,12 @@ s32 fn_8014AC68(void) {
     return 0;
 }
 
-s32 fn_8014ACE8(u8 arg2) {
-    extern u8 lbl_80367B08;
-    extern u8 lbl_80367B0B;
-    extern u8 lbl_80367B0C;
-    if ((s8) lbl_80367B08 == 0) {
-        if ((s32) arg2 == (s8) lbl_80367B0B) {
+s32 fn_8014ACE8(s32 unused0, s32 unused1, s32 arg2) {
+    if ((s8)lbl_80367B08 == 0) {
+        if ((arg2 & 0xFF) == (s8)lbl_80367B0B) {
             return 1;
         }
-        /* Duplicate return node #5. Try simplifying control flow for better match */
-        return 0;
-    }
-    if ((s32) arg2 == (s8) lbl_80367B0C) {
+    } else if ((arg2 & 0xFF) == (s8)lbl_80367B0C) {
         return 1;
     }
     return 0;
