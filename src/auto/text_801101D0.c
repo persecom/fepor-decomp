@@ -6166,5 +6166,35 @@ extern void *lbl_802CA264;
 extern u16 lbl_802EF4E0[];
 
 s32 fn_80120C2C(void) {
-    return 0;
+    extern u16 lbl_80367A58;
+    extern void *lbl_80367240;
+    extern s32 lbl_80367110;
+    u32 raw;
+    u16 cleared;
+    void *pad;
+    s32 buttons;
+    s32 pressed;
+
+    raw = lbl_80367A58;
+    pad = lbl_80367240;
+    raw &= ~0x400;
+    cleared = (u16)raw;
+    lbl_80367A58 = cleared;
+    buttons = *(s32 *)((u8 *)pad + 4);
+    pressed = buttons & (*(s32 *)((u8 *)pad + 8) ^ buttons);
+    if (!(pressed & 0x100)) {
+        if (!(buttons & 0x04000004) || !(buttons & 0x100)) {
+            if (*(volatile u16 *)&lbl_80367A58 & 8) {
+                if (!(pressed & 0x200)) {
+                    return 0;
+                }
+            } else {
+                return (lbl_80367110 & 3) != 0;
+            }
+        } else {
+            lbl_80367A58 = (u16)(cleared | 0x400);
+        }
+    }
+    lbl_80367A58 |= 0x200;
+    return 1;
 }
