@@ -4991,31 +4991,49 @@ extern "C" void *fn_8013B7E8(void *arg0, s16 arg1) {
         virtual void v1() = 0;
         virtual void v2() = 0;
     };
-    extern u8 lbl_80291B70[];
-    extern u8 lbl_80295478[];
+    typedef struct {
+        u32 unk0;
+        ListNode node;
+    } DtorList;
+    typedef struct Owner {
+        void *vtbl;
+        u8 pad4[0x6C];
+        DtorList list;
+        u8 pad80[4];
+        void *sub84;
+        u8 pad88[0x24];
+        void *subAC;
+    } Owner;
     void fn_8013BA08(void *, void *, void *, void *);
     void fn_8013F2A4(void *, s32);
     void fn_800C428C(void *);
+    extern u8 lbl_80291B70[];
+    extern u8 lbl_80295478[];
+
     ListNode *sp10;
     ListNode *spC;
     u8 sp8[4];
+    ListNode *end;
+    Owner *a0;
 
+    a0 = (Owner *)arg0;
     if (arg0 != NULL) {
-        *(void **)arg0 = lbl_80291B70;
-        if ((u8 *)arg0 + 0xAC != NULL) {
-            *(void **)((u8 *)arg0 + 0xAC) = lbl_80295478;
-            ((Obj *)((u8 *)arg0 + 0xAC))->v2();
+        a0->vtbl = lbl_80291B70;
+        if (&a0->subAC != NULL) {
+            a0->subAC = lbl_80295478;
+            ((Obj *)&a0->subAC)->v2();
         }
-        if ((u8 *)arg0 + 0x84 != NULL) {
-            *(void **)((u8 *)arg0 + 0x84) = lbl_80295478;
-            ((Obj *)((u8 *)arg0 + 0x84))->v2();
+        if (&a0->sub84 != NULL) {
+            a0->sub84 = lbl_80295478;
+            ((Obj *)&a0->sub84)->v2();
         }
-        if ((u8 *)arg0 + 0x70 != NULL) {
-            if ((u8 *)arg0 + 0x70 != NULL) {
-                if ((u8 *)arg0 + 0x70 != NULL) {
-                    sp10 = (ListNode *)((u8 *)arg0 + 0x74);
-                    spC = *(ListNode **)((u8 *)arg0 + 0x78);
-                    fn_8013BA08(sp8, (u8 *)arg0 + 0x70, &spC, &sp10);
+        if (&a0->list != NULL) {
+            if (&a0->list != NULL) {
+                if (&a0->list != NULL) {
+                    end = &a0->list.node;
+                    sp10 = end;
+                    spC = end->next;
+                    fn_8013BA08(sp8, &a0->list, &spC, &sp10);
                 }
             }
         }
@@ -7077,51 +7095,65 @@ void *fn_8013F6B8(void *arg0, void *arg1, void *arg2) {
     return arg1;
 }
 
-void fn_8013F920(void *arg1) {
-    s16 *ptr = (s16*)arg1;
-    s16 temp;
+void fn_8013F920(void *arg0, void *arg1) {
+    void fn_80225058(s16, s16, s16, s16);
+    struct {
+        s16 x;
+        s16 y;
+        s16 x2;
+        s16 y2;
+    } r;
+    s16 v;
+    s16 t;
 
-    // Process first element
-    if (ptr[0] < 0) {
-        temp = 0;
-    } else if (ptr[0] > 0x7FF) {
-        temp = 0x7FF;
+    ((u32 *)&r)[0] = ((u32 *)arg1)[0];
+    ((u32 *)&r)[1] = ((u32 *)arg1)[1];
+
+    v = r.x;
+    if (v < 0) {
+        t = 0;
     } else {
-        temp = ptr[0];
+        t = 0x7FF;
+        if (v <= 0x7FF) {
+            t = v;
+        }
     }
-    ptr[0] = temp;
+    r.x = t;
 
-    // Process second element
-    if (ptr[1] < 0) {
-        temp = 0;
-    } else if (ptr[1] > 0x7FF) {
-        temp = 0x7FF;
+    v = r.y;
+    if (v < 0) {
+        t = 0;
     } else {
-        temp = ptr[1];
+        t = 0x7FF;
+        if (v <= 0x7FF) {
+            t = v;
+        }
     }
-    ptr[1] = temp;
+    r.y = t;
 
-    // Process third element
-    if (ptr[2] < 0) {
-        temp = 0;
-    } else if (ptr[2] > 0x7FF) {
-        temp = 0x7FF;
+    v = r.x2;
+    if (v < 0) {
+        t = 0;
     } else {
-        temp = ptr[2];
+        t = 0x7FF;
+        if (v <= 0x7FF) {
+            t = v;
+        }
     }
-    ptr[2] = temp;
+    r.x2 = t;
 
-    // Process fourth element
-    if (ptr[3] < 0) {
-        temp = 0;
-    } else if (ptr[3] > 0x7FF) {
-        temp = 0x7FF;
+    v = r.y2;
+    if (v < 0) {
+        t = 0;
     } else {
-        temp = ptr[3];
+        t = 0x7FF;
+        if (v <= 0x7FF) {
+            t = v;
+        }
     }
-    ptr[3] = temp;
+    r.y2 = t;
 
-    fn_80225058(ptr[0], ptr[1], ptr[2] - ptr[0], ptr[3] - ptr[1]);
+    fn_80225058(r.x, r.y, r.x2 - r.x, r.y2 - r.y);
 }
 
 s32 fn_8013FA10(void) {
