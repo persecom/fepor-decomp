@@ -7871,21 +7871,18 @@ loop2_test:
 }
 #pragma global_optimizer on
 
-void fn_800462FC(void *arg0, s32 arg1, s32 arg2) {
-    M2C_UNK fn_80060638(s32);
-    M2C_UNK fn_80068558(s32, s32);
-    s32 var_r30;
-    s32 var_r31;
+void fn_800462FC(void *arg0, void *arg1, void *arg2) {
+    void *fn_80060638(void *);
+    void fn_80068558(void *, void *, void *);
+    u8 *ptr;
+    s32 i;
 
-    var_r30 = 0;
-    var_r31 = M2C_FIELD(arg0, s32 *, 0x10);
-loop_2:
-    if (var_r30 < (s16) M2C_FIELD(arg0, s16 *, 4)) {
-        fn_80060638(var_r31 + 4);
-        fn_80068558(arg1, arg2);
-        var_r30 += 1;
-        var_r31 += 0xC0;
-        goto loop_2;
+    i = 0;
+    ptr = *(u8 **)((u8 *)arg0 + 0x10);
+    while (i < *(s16 *)((u8 *)arg0 + 4)) {
+        fn_80068558(fn_80060638(ptr + 4), arg1, arg2);
+        i += 1;
+        ptr += 0xC0;
     }
 }
 
