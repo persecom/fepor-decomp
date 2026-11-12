@@ -59,22 +59,14 @@ void fn_8008CDE0(void *arg0, s32 arg1) {
     }
 }
 
-void fn_8008CFB4(void **arg0) {
-    M2C_UNK fn_8005AC24(M2C_UNK *, s32);
-    extern M2C_UNK lbl_802F0308;
-    s32 temp_cr0_eq;
-    u8 var_r0;
-    void *temp_r6;
+void fn_8008CFB4(void **arg0, s32 arg1, s32 arg2) {
+    void fn_8005AC24(void *, s32, s32, s32);
+    extern u8 lbl_802F0308[];
+    void *p;
 
-    temp_r6 = *arg0;
-    temp_cr0_eq = temp_r6 == NULL;
-    if (temp_cr0_eq == 0) {
-        if (temp_cr0_eq == 0) {
-            var_r0 = M2C_FIELD(temp_r6, u8 *, 0x15);
-        } else {
-            var_r0 = 0;
-        }
-        fn_8005AC24(&lbl_802F0308, var_r0 + 0x61);
+    p = *arg0;
+    if (p != NULL) {
+        fn_8005AC24(lbl_802F0308, arg1, arg2, (u8)(p != NULL ? *((u8 *)p + 0x15) : 0) + 0x61);
     }
 }
 
