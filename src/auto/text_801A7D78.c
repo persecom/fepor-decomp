@@ -81,19 +81,7 @@ u16 *fn_801A7FF4(void *arg0) {
     return (u16 *)((u8 *)arg0 + 0x284);
 }
 
-extern s32 fn_80015320(s32 arg0, s32 arg1);
-extern void fn_80015610(s32 arg0, s32 arg1);
-s32 fn_801A80D8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
-    /* Based on a minimal attempt to understand the function */
-    if (arg4 == 0) {
-        return 0;
-    }
-    
-    fn_80015320(arg0, arg1);
-    
-    /* This is just placeholder code as there's significant complexity and unclear parts in assembly */
-    return 0;
-}
+void fn_801A80D8(void *arg0, s32 *arg1, s32 *arg2, s32 *arg3);
 
 #pragma use_lmw_stmw on
 void fn_801A8268(void *arg0) {
