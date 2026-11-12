@@ -5749,8 +5749,8 @@ s32 fn_800BCA38(u8 arg0, s32 arg1) {
 }
 
 s16 fn_800BCADC(void) {
-    extern u16 lbl_8031FFC0[];
-    return (s16)(u16)lbl_8031FFC0[1];
+    extern u8 lbl_8031FFC0[];
+    return *(s16 *)((char *)lbl_8031FFC0 + 2);
 }
 
 extern u16 lbl_8031FFC0;
