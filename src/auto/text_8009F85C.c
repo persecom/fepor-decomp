@@ -1092,6 +1092,31 @@ s32 fn_800A0BFC(s32 arg0, s32 arg1, void *arg2) {
     return 0;
 }
 
+void *fn_800A0C44(void *unused, void *arg1) {
+    s32 fn_80040844(void *);
+    void *fn_80047178(s32, s32, s32);
+    void fn_80231D94(void *, void *, ...);
+    extern u8 lbl_80330708[];
+    extern u8 lbl_8026D8D8[];
+    extern u8 lbl_80312358[];
+    s32 x528;
+    s32 x524;
+    s32 ret;
+    void *tmp;
+
+    x528 = (s32)*(f32 *)(lbl_80330708 + 0x528);
+    x524 = (s32)*(f32 *)(lbl_80330708 + 0x524);
+    ret = fn_80040844(lbl_80330708);
+    tmp = fn_80047178(ret, (s8)x524, (s8)x528);
+    *(u8 *)((u8 *)arg1 + 0x39) = 2;
+    if (tmp == NULL) {
+        return lbl_8026D8D8 + 0x563;
+    }
+    fn_80231D94(lbl_80312358, lbl_8026D8D8 + 0x575, **(s32 **)((u8 *)tmp + 0x10));
+    *(u8 *)((u8 *)arg1 + 0x39) = 0;
+    return lbl_80312358;
+}
+
 extern s32 lbl_80367670;
 extern void *fn_80024398(void *, s32, s32);
 s32 fn_800A0D08(s32 arg0, s32 arg1, void *arg2) {
@@ -1374,53 +1399,30 @@ s32 fn_800A1448(void) {
     return 0;
 }
 
-s32 fn_800A1658(void) {
-    extern u32* lbl_80367240;
-    extern f32 lbl_80330708;
-    s32 r3, r4, r5, r6, r7, r8;
-    u8 *r5_ptr;
-    s32 r0;
+s32 fn_800A1658(s32 arg0, s32 arg1, void *arg2) {
+    extern u8 *lbl_80367240;
+    extern u8 lbl_80330708[];
+    void fn_8014D244(u8 *, u8, u8);
+    u32 previous;
+    u32 current;
+    u32 changed;
+    s32 idx;
+    u8 val;
 
-    r4 = *(s32*)((char*)&lbl_80367240 + 0x14);
-    r5 = *(u8*)((char*)&lbl_80330708 + 0x570) & 1;
-    if (r5 != 0) {
-        return 0;
+    previous = *(u32 *)(lbl_80367240 + 4);
+    current = *(u32 *)(lbl_80367240 + 8);
+    idx = *(u8 *)((u8 *)arg2 + 0x3A) + 1;
+    val = lbl_80330708[idx + 0x14];
+    changed = previous & (current ^ previous);
+    if (changed & 0x01000001) {
+        val = (u8)(val + 2);
     }
-    
-    r6 = *(u8*)((char*)&lbl_80330708 + 0x574);
-    if (r6 == 0) {
-        return 1;
+    if (changed & 0x02000002) {
+        val = (u8)(val + 1);
     }
-    
-    r5_ptr = (u8*) &lbl_80330708;
-    r3 = *(s32*)((char*)&lbl_80367240 + 0x10);
-    r8 = *r5_ptr;
-    r7 = r6;
-    
-    r5 = r3 ^ r7;
-    r5 &= r3;
-    r5 &= 1;
-    if (r5 == 0) {
-        return 1;
-    }
-
-    r5 = r8 & 1;
-    if (r5 == 0) {
-        return 2;
-    }
-    
-    r0 = 1;
-    
-    r5 = *(s32*)((char*)&lbl_80367240 + 0x10);
-    r3 = r5 & 0x5555;
-    r6 = (r5 * r8) >> 17; // This is an approximation using shifts, might need refining
-    r5 = r6 + (r6 >> 31); // This mimics a round of division
-    r5 = r5 * 3;
-    r5 = r5 - r8;
-    r5 = r5 & 0x00FF0000; // Mask to low byte
-    r5 = r5 >> 16;
-
-    return r5;
+    val = (u8)((s32)val % 3);
+    fn_8014D244(lbl_80330708, (u8)idx, val);
+    return 0;
 }
 
 s32 fn_800A1710(void) {
