@@ -599,27 +599,15 @@ s32 fn_80093088(void *arg0) {
     return -1;
 }
 
-void fn_80093154(s32 arg0, u8 arg1, s32 arg2) {
+void fn_80093154(s32 arg0, s32 arg1, s32 arg2) {
     M2C_UNK fn_8001C4FC(s32, s32);
-    s32 r6;
-    u32 r0;
+    s32 self = arg0;
 
-    r6 = arg0;
-    r0 = arg1;
-    if (r0 < 4U) {
-        r0 <<= 24;
-        r0 >>= 29;
-        r0 += 0x1CC;
-        r0 += r6;
-        fn_8001C4FC(r0, arg2);
-        return;
+    if ((u8)arg1 < 4) {
+        fn_8001C4FC(self + (((u8)arg1) << 3) + 0x1CC, arg2);
+    } else {
+        fn_8001C4FC(self + (((u8)(arg1 - 4)) << 3) + 0x1EC, arg2);
     }
-    r0 -= 4;
-    r0 <<= 24;
-    r0 >>= 29;
-    r0 += 0x1EC;
-    r0 += r6;
-    fn_8001C4FC(r0, arg2);
 }
 
 void fn_800931B0(s32 arg0, u8 arg1, s32 arg2) {
@@ -1106,9 +1094,6 @@ u8 fn_800940B0(void *arg0, void *arg1) {
 
     void *other;
     void *self;
-    u64 flags;
-    u32 lo;
-    u32 hi;
     u8 type;
     u8 result;
     u8 lim;
@@ -1116,70 +1101,67 @@ u8 fn_800940B0(void *arg0, void *arg1) {
 
     other = arg1;
     self = arg0;
-    lo = *(u32 *)((u8 *)other + 0x3C);
-    hi = *(u32 *)((u8 *)other + 0x38);
-    flags = ((u64)hi << 32) | lo;
 
-    if (!(flags & 4)) {
-        if (flags & 0x7FF80000) {
-            if (flags & 0x200000) {
+    if (!(*(u64 *)((u8 *)other + 0x38) & 4)) {
+        if (*(u64 *)((u8 *)other + 0x38) & 0x7FF80000) {
+            if (*(u64 *)((u8 *)other + 0x38) & 0x200000) {
                 if (fn_80105BC0((u8 *)self + 0x1BC, 0) == 0) {
                     return 0;
                 }
             }
-            if (flags & 0x400000) {
+            if (*(u64 *)((u8 *)other + 0x38) & 0x400000) {
                 unit = *(void **)((u8 *)self + 0x18C);
                 if ((*(u16 *)((u8 *)unit + 0x3A) & 0x20) == 0) {
                     return 0;
                 }
             }
-            if (flags & 0x800000) {
+            if (*(u64 *)((u8 *)other + 0x38) & 0x800000) {
                 if (fn_80105BC0((u8 *)self + 0x1BC, 8) == 0) {
                     return 0;
                 }
             }
-            if (flags & 0x1000000) {
+            if (*(u64 *)((u8 *)other + 0x38) & 0x1000000) {
                 unit = *(void **)((u8 *)self + 0x18C);
                 if ((*(u16 *)((u8 *)unit + 0x3A) & 4) == 0) {
                     return 0;
                 }
             }
-            if (flags & 0x2000000) {
+            if (*(u64 *)((u8 *)other + 0x38) & 0x2000000) {
                 if (fn_80105BC0((u8 *)self + 0x1BC, 0x4F) == 0) {
                     return 0;
                 }
             }
-            if (flags & 0x4000000) {
+            if (*(u64 *)((u8 *)other + 0x38) & 0x4000000) {
                 if (fn_80105BC0((u8 *)self + 0x1BC, 0x56) == 0) {
                     return 0;
                 }
             }
-            if (flags & 0x8000000) {
+            if (*(u64 *)((u8 *)other + 0x38) & 0x8000000) {
                 if (fn_80105BC0((u8 *)self + 0x1BC, 0x57) == 0) {
                     return 0;
                 }
             }
-            if (flags & 0x10000000) {
+            if (*(u64 *)((u8 *)other + 0x38) & 0x10000000) {
                 if (fn_80105BC0((u8 *)self + 0x1BC, 0x58) == 0) {
                     return 0;
                 }
             }
-            if (flags & 0x20000000) {
+            if (*(u64 *)((u8 *)other + 0x38) & 0x20000000) {
                 if (fn_80105BC0((u8 *)self + 0x1BC, 0x5D) == 0) {
                     return 0;
                 }
             }
-            if (flags & 0x40000000) {
+            if (*(u64 *)((u8 *)other + 0x38) & 0x40000000) {
                 if (fn_80105BC0((u8 *)self + 0x1BC, 0x5E) != 0) {
                     return 0;
                 }
             }
-            if (flags & 0x80000) {
+            if (*(u64 *)((u8 *)other + 0x38) & 0x80000) {
                 if (fn_80105BC0((u8 *)self + 0x1BC, 7) == 0) {
                     return 0;
                 }
             }
-            if (flags & 0x100000) {
+            if (*(u64 *)((u8 *)other + 0x38) & 0x100000) {
                 unit = *(void **)((u8 *)self + 0x18C);
                 if (unit != fn_80019E48(lbl_8026CFE8 + 0x39)) {
                     return 0;
@@ -1266,10 +1248,7 @@ clamp79:
 done:
     lim = *((u8 *)other + 0x16);
     lim = (u8)(lim + (lim == 0));
-    if (result < lim) {
-        return result;
-    }
-    return lim;
+    return (u8)(lim < result);
 }
 
 s32 fn_80094614(void* arg0, void* arg1) {
