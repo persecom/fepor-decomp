@@ -1385,8 +1385,8 @@ void *fn_800A19B0(void) {
 }
 
 void *fn_800A1AB0(void) {
-    extern u16 lbl_8026D8D8;
-    return (u16 *)&lbl_8026D8D8 + 0x66F;
+    extern u16 lbl_8026D8D8[];
+    return (u8 *)lbl_8026D8D8 + 0x66f;
 }
 
 void *fn_800A1AC0(void)
