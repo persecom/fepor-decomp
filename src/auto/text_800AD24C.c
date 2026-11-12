@@ -3049,21 +3049,10 @@ s32 fn_800B6AA8(s32 arg0) {
     return (s32) (lbl_80369CF4 * (f32) arg0);
 }
 
-int fn_800B6AE4(int arg0) {
-    extern f64 lbl_80369CF8;
+s32 fn_800B6AE4(s32 arg0)
+{
     extern f32 lbl_80369CF4;
-    union {
-        u64 u;
-        f64 d;
-    } converted;
-    f32 value;
-
-    converted.u = ((u64)0x43300000 << 32) |
-                  (u32)(arg0 ^ 0x80000000);
-    value = (f32)converted.d - (f32)lbl_80369CF8;
-    value /= lbl_80369CF4;
-
-    return (int)value;
+    return (s32)((f32)arg0 / lbl_80369CF4);
 }
 
 s32 fn_800B6B20(void)
