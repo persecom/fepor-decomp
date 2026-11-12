@@ -1911,38 +1911,46 @@ extern "C" void fn_801089A8(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
 }
 #pragma cplusplus reset
 
-void fn_80108BD0(s16 arg1, s16 arg2, s32 arg3) {
-    extern void *fn_8000D2BC(void);
-    
-    void *temp_r7;
-    void *temp_r4;
-    void *temp_r4_2;
-    void *temp_r3_2;
-    
-    temp_r7 = fn_8000D2BC();
-    
-    *(u16*)((char*)temp_r7 + 0x8) = (u16)(arg1 + 2);
-    *(u16*)((char*)temp_r7 + 0xA) = (u16)(arg2 + 2);
-    *(u16*)((char*)temp_r7 + 0xC) = (u16)(arg1 + arg3 - 4);
-    *(u16*)((char*)temp_r7 + 0xE) = (u16)(arg2 + 0x72);
-    
-    temp_r4 = *(void**)((char*)temp_r7 + 0x18);
-    *(u16*)((char*)temp_r4 + 0x18) = arg1;
-    *(u16*)((char*)temp_r4 + 0x14) = arg1;
-    *(u16*)((char*)temp_r4 + 0x1A) = arg2;
-    *(u16*)((char*)temp_r4 + 0x16) = arg2;
-    
-    temp_r4_2 = *(void**)((char*)temp_r7 + 0x1C);
-    *(u16*)((char*)temp_r4_2 + 0x18) = (u16)(arg1 + arg3 - 0x32);
-    *(u16*)((char*)temp_r4_2 + 0x14) = (u16)(arg1 + arg3 - 0x32);
-    *(u16*)((char*)temp_r4_2 + 0x1A) = arg2;
-    *(u16*)((char*)temp_r4_2 + 0x16) = arg2;
-    
-    temp_r3_2 = *(void**)((char*)temp_r7 + 0x20);
-    *(u16*)((char*)temp_r3_2 + 0x14) = (u16)(arg1 + 0x32);
-    *(u16*)((char*)temp_r3_2 + 0x18) = (u16)(arg1 + arg3 - 0x32);
-    *(u16*)((char*)temp_r3_2 + 0x1A) = arg2;
-    *(u16*)((char*)temp_r3_2 + 0x16) = arg2;
+void fn_80108BD0(void *arg0, s32 x, s32 y, s32 w) {
+    void *fn_8000D2BC(void *);
+    void *p;
+    s32 a;
+    s32 sum;
+    s32 b;
+    s32 c;
+    s32 d;
+
+    arg0 = fn_8000D2BC(arg0);
+    p = *(void **)((u8 *)arg0 + 0x14);
+    a = x + 2;
+    sum = x + w;
+    b = y + 2;
+    *(s16 *)((u8 *)p + 0x8) = a;
+    c = sum - 4;
+    d = y + 0x72;
+    sum = sum - 0x32;
+    *(s16 *)((u8 *)p + 0xA) = b;
+    a = x + 0x32;
+    *(s16 *)((u8 *)p + 0xC) = c;
+    *(s16 *)((u8 *)p + 0xE) = d;
+
+    p = *(void **)((u8 *)arg0 + 0x18);
+    *(s16 *)((u8 *)p + 0x18) = x;
+    *(s16 *)((u8 *)p + 0x14) = x;
+    *(s16 *)((u8 *)p + 0x1A) = y;
+    *(s16 *)((u8 *)p + 0x16) = y;
+
+    p = *(void **)((u8 *)arg0 + 0x1C);
+    *(s16 *)((u8 *)p + 0x18) = sum;
+    *(s16 *)((u8 *)p + 0x14) = sum;
+    *(s16 *)((u8 *)p + 0x1A) = y;
+    *(s16 *)((u8 *)p + 0x16) = y;
+
+    p = *(void **)((u8 *)arg0 + 0x20);
+    *(s16 *)((u8 *)p + 0x14) = a;
+    *(s16 *)((u8 *)p + 0x18) = sum;
+    *(s16 *)((u8 *)p + 0x1A) = y;
+    *(s16 *)((u8 *)p + 0x16) = y;
 }
 
 void fn_80108C80(s32 arg0, s32 arg1) {
@@ -2210,6 +2218,58 @@ void fn_80109448(void *arg0, s32 arg1) {
     }
 }
 
+void fn_801097DC(void *arg0) {
+    extern f32 lbl_8036A138;
+    f32 zero;
+    f32 val;
+    u8 kind;
+    void *target;
+
+    zero = lbl_8036A138;
+    val = *(f32 *)((u8 *)arg0 + 0x44);
+    kind = *(u8 *)((u8 *)arg0 + 0x34);
+    target = *(void **)((u8 *)arg0 + 0x30);
+    if (zero == val) {
+        return;
+    }
+    switch (kind) {
+    case 0:
+        *(f32 *)((u8 *)target + 0x40) = val;
+        break;
+    case 1:
+        *(f32 *)((u8 *)target + 0x44) = val;
+        break;
+    case 2:
+        *(f32 *)((u8 *)target + 0x48) = val;
+        break;
+    case 3:
+        *(f32 *)((u8 *)target + 0x4C) = val;
+        break;
+    case 4:
+        *(f32 *)((u8 *)target + 0x50) = val;
+        break;
+    case 5:
+        *(f32 *)((u8 *)target + 0x54) = val;
+        break;
+    case 6:
+        *(f32 *)((u8 *)target + 0x58) = val;
+        break;
+    case 7:
+        *(f32 *)((u8 *)target + 0x54) = val;
+        *(f32 *)((u8 *)target + 0x58) = val;
+        break;
+    case 8:
+        *(f32 *)((u8 *)target + 0x5C) = val;
+        break;
+    case 9:
+        *(u8 *)((u8 *)target + 0x60) = (u8)(s32)val;
+        break;
+    case 10:
+        *(u8 *)((u8 *)target + 0x61) = (u8)(s32)val;
+        break;
+    }
+}
+
 void fn_80109890(s32 arg0, s32 arg1) {
     void *fn_800B2754(void);
     M2C_UNK fn_800336A0(M2C_UNK *, M2C_UNK *, s32);
@@ -2258,75 +2318,77 @@ void fn_80109890(s32 arg0, s32 arg1) {
     }
 }
 
-float fn_801099A0(float* arg0, s32 arg1) {
-    u32 temp_r3;
-    float var_f1 = 0.0f;
-    
-    // Extract upper 8 bits using r4 right shift of 24 (clrlwi r4, r3, 24 in target)
-    temp_r3 = (u32)arg1 >> 24;
-    
-    // Conditional branch based on the top 8 bits value
-    if (temp_r3 <= 10) {
-        // Load a jump table address
-        void* jumptable = (void*)0x8028F514;
-        void** jumptable_ptr = (void**)jumptable;
-        
-        // Fetch function from jump table at index temp_r3
-        void* func_addr = jumptable_ptr[temp_r3];
-        
-        if (func_addr != NULL) {
-            // Direct call to the function in the jump table via CTR register
-            float (*func)(float*, s32) = (float (*)(float*, s32))func_addr;
-            var_f1 = func(arg0, arg1);
-        }
+f32 fn_801099A0(void *arg0, u8 arg1) {
+    extern f32 lbl_8036A130;
+
+    switch (arg1) {
+    case 0:
+        return *(f32 *)((u8 *)arg0 + 0x40);
+    case 1:
+        return *(f32 *)((u8 *)arg0 + 0x44);
+    case 2:
+        return *(f32 *)((u8 *)arg0 + 0x48);
+    case 3:
+        return *(f32 *)((u8 *)arg0 + 0x4C);
+    case 4:
+        return *(f32 *)((u8 *)arg0 + 0x50);
+    case 5:
+        return *(f32 *)((u8 *)arg0 + 0x54);
+    case 6:
+        return *(f32 *)((u8 *)arg0 + 0x58);
+    case 7:
+        return *(f32 *)((u8 *)arg0 + 0x5C);
+    case 8:
+        return (f32)*(u8 *)((u8 *)arg0 + 0x60);
+    case 9:
+        return (f32)*(u8 *)((u8 *)arg0 + 0x61);
+    case 10:
+    default:
+        return lbl_8036A130;
     }
-    
-    return var_f1;
 }
 
-void fn_80109A54(f32 arg0, f32 arg1, s32 arg2, void* arg3) {
-    if (arg0 == 0.0f) {
+void fn_80109A54(void *arg0, u8 arg1, f32 arg2) {
+    extern f32 lbl_8036A138;
+
+    if (lbl_8036A138 == arg2) {
         return;
     }
-
-    if (arg2 < 0 || arg2 > 10) {
-        return;
-    }
-
-    switch (arg2) {
-        case 0:
-            *(f32*)((char*)arg3 + 0x40) = arg1;
-            break;
-        case 1:
-            *(f32*)((char*)arg3 + 0x44) = arg1;
-            break;
-        case 2:
-            *(f32*)((char*)arg3 + 0x48) = arg1;
-            break;
-        case 3:
-            *(f32*)((char*)arg3 + 0x4C) = arg1;
-            break;
-        case 4:
-            *(f32*)((char*)arg3 + 0x50) = arg1;
-            break;
-        case 5:
-            *(f32*)((char*)arg3 + 0x54) = arg1;
-            break;
-        case 6:
-            *(f32*)((char*)arg3 + 0x58) = arg1;
-            break;
-        case 7:
-            *(f32*)((char*)arg3 + 0x5C) = arg1;
-            break;
-        case 8:
-            *(s32*)((char*)arg3 + 0x54) = (s32)arg1;
-            break;
-        case 9:
-            *(s32*)((char*)arg3 + 0x58) = (s32)arg1;
-            break;
-        case 10:
-            *(s32*)((char*)arg3 + 0x5C) = (s32)arg1;
-            break;
+    switch (arg1) {
+    case 0:
+        *(f32 *)((u8 *)arg0 + 0x40) = arg2;
+        break;
+    case 1:
+        *(f32 *)((u8 *)arg0 + 0x44) = arg2;
+        break;
+    case 2:
+        *(f32 *)((u8 *)arg0 + 0x48) = arg2;
+        break;
+    case 3:
+        *(f32 *)((u8 *)arg0 + 0x4C) = arg2;
+        break;
+    case 4:
+        *(f32 *)((u8 *)arg0 + 0x50) = arg2;
+        break;
+    case 5:
+        *(f32 *)((u8 *)arg0 + 0x54) = arg2;
+        break;
+    case 6:
+        *(f32 *)((u8 *)arg0 + 0x58) = arg2;
+        break;
+    case 7:
+        *(f32 *)((u8 *)arg0 + 0x54) = arg2;
+        *(f32 *)((u8 *)arg0 + 0x58) = arg2;
+        break;
+    case 8:
+        *(f32 *)((u8 *)arg0 + 0x5C) = arg2;
+        break;
+    case 9:
+        *(u8 *)((u8 *)arg0 + 0x60) = (u8)(s32)arg2;
+        break;
+    case 10:
+        *(u8 *)((u8 *)arg0 + 0x61) = (u8)(s32)arg2;
+        break;
     }
 }
 
