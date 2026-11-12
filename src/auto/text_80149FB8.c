@@ -30,20 +30,20 @@ void fn_8014A008(void *arg0) {
 }
 
 void fn_8014A030(s32 arg0) {
-    extern void* lbl_802928A8;
+    void fn_80147188(s32);
+    void *fn_8000CAA0(void *, s32);
+    extern u8 lbl_802928A8[];
     extern s8 lbl_80367B09;
     extern s8 lbl_80367B0A;
     extern s8 lbl_80367B0B;
     extern s8 lbl_80367B0C;
-    extern void fn_80147188(M2C_UNK);
-    extern void* fn_8000CAA0(void*, s32);
 
     lbl_80367B0A = 0;
     lbl_80367B09 = 0;
     lbl_80367B0C = 0;
     lbl_80367B0B = 0;
     fn_80147188(0);
-    fn_8000CAA0(&lbl_802928A8, arg0);
+    fn_8000CAA0(lbl_802928A8, arg0);
 }
 
 void fn_8014A084(s32 arg0) {
