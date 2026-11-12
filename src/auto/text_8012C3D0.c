@@ -1649,6 +1649,36 @@ s32 fn_8012F26C(void) {
     return 0;
 }
 
+void fn_8012F274(void *arg0, void *arg1, f32 farg0, f32 farg1) {
+    void fn_800075D8(void);
+    void fn_8000770C(f32, f32, f32, f32, f32, f32);
+    void fn_80007884(void);
+    void fn_80007898(s32);
+    void fn_80009B8C(s32);
+    void fn_80009BC0(void (*)(void), s32);
+    void fn_80009D74(f32, f32, f32, f32);
+    void fn_80009F90(void *, s32, s32);
+    void fn_8000A248(void);
+    void fn_8000A258(void);
+    void fn_801308C0(void);
+    extern f32 lbl_8036A500;
+    extern f32 lbl_8036A50C;
+    extern f32 lbl_8036A510;
+    extern f32 lbl_8036A514;
+    extern f32 lbl_8036A518;
+
+    fn_8000A258();
+    fn_80009D74(farg0, farg1, lbl_8036A500, lbl_8036A50C);
+    fn_80009F90(arg1, 3, 0x11);
+    fn_80009BC0(fn_801308C0, 0);
+    fn_80009B8C(0xC0);
+    fn_8000A248();
+    fn_80007898(1);
+    fn_8000770C(lbl_8036A510, lbl_8036A510, lbl_8036A510, (f32)(*(u8 *)((u8 *)arg0 + 0x22) * 0x18), lbl_8036A514, lbl_8036A518);
+    fn_800075D8();
+    fn_80007884();
+}
+
 #pragma cplusplus on
 extern "C" void fn_8012F360(void *arg0) {
     void fn_800075D8(void);
