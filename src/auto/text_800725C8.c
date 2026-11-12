@@ -117,8 +117,9 @@ void fn_80072890(void) {
 }
 
 void fn_800728C8(void) {
-    extern u16 lbl_802EF4C8;
-    fn_80184C7C(lbl_802EF4C8, 0, 4, 0);
+    void fn_80184C7C(s32, s32, s32, s32);
+    extern u8 lbl_802EF4C8[24];
+    fn_80184C7C(*(s32 *)lbl_802EF4C8, 0, 4, 0);
 }
 
 void fn_80072900(s32 arg0) {
