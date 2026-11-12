@@ -77,16 +77,34 @@ static inline u8 *FindEntryByName(char *name) {
 }
 
 static inline u32 FindUnk48(void *arg0) {
-    void *current;
-    u32 temp;
+    void *current = arg0;
 
-    for (current = arg0; current != NULL; current = M2C_FIELD(current, void **, 4)) {
-        temp = M2C_FIELD(current, u32 *, 0x48);
+    while (current != NULL) {
+        u32 temp = M2C_FIELD(current, u32 *, 0x48);
         if (temp != 0U) {
             return temp;
         }
+        current = M2C_FIELD(current, void **, 4);
     }
     return 0U;
+}
+
+static inline u32 CalcUnk48Size(u32 found) {
+    s16 t = M2C_FIELD(M2C_FIELD(found, void **, 0x48), s16 *, 0xA);
+    return (((t * 12) + 31) & ~31) / 2 * 2;
+}
+
+static inline u32 AddUnk48Size(u32 base, void *node) {
+    void *current = node;
+
+    while (current != NULL) {
+        u32 temp = M2C_FIELD(current, u32 *, 0x48);
+        if (temp != 0U) {
+            return base + CalcUnk48Size(temp);
+        }
+        current = M2C_FIELD(current, void **, 4);
+    }
+    return base + CalcUnk48Size(0);
 }
 
 void *fn_8005AE20(void) {
