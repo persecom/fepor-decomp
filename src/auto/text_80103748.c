@@ -358,14 +358,17 @@ s32 fn_80103D74(void) {
 }
 
 s32 fn_80103D7C(void) {
-    M2C_UNK fn_800C3AB0(M2C_UNK *, void *);
-    s32 fn_800C3D48(M2C_UNK *);
-    extern M2C_UNK lbl_802734D0;
-    extern M2C_UNK lbl_803200AC;
-loop_2:
-    if (fn_800C3D48(&lbl_803200AC) >= 0) {
-        fn_800C3AB0(&lbl_803200AC, &lbl_802734D0 + 0x1B1);
-        goto loop_2;
+    void fn_800C3AB0(void *, void *);
+    s32 fn_800C3D48(void *);
+    extern char lbl_802734D0[];
+    extern u8 lbl_803200AC[0x640];
+    char *str;
+    u8 *obj;
+
+    obj = lbl_803200AC;
+    str = lbl_802734D0;
+    while (fn_800C3D48(obj) >= 0) {
+        fn_800C3AB0(obj, str + 0x1B1);
     }
     return 6;
 }
@@ -557,32 +560,43 @@ s32 fn_8010424C(void *arg0) {
     return count;
 }
 
-void fn_801042A8(s32 arg0, s32 arg1, u8 arg2)
-{
-    switch (arg0)
-    {
+void fn_801042A8(void *arg0, u32 arg1, s32 arg2) {
+    struct { u8 hi:3; u8 lo:5; } *p;
+    struct { u16 hi:6; u16 mid:3; u16 lo:7; } *h;
+    struct { u8 hi:1; u8 mid:3; u8 lo:4; } *q;
+    struct { u8 a:3; u8 b:3; u8 c:2; } *r;
+    struct { u8 hi:5; u8 lo:3; } *s;
+    struct { u8 hi:3; u8 lo:5; } *t;
+    struct { u8 a:3; u8 b:3; u8 c:2; } *u;
+
+    switch (arg1) {
     case 0:
-        *(u8*)(arg1) |= (arg2 << 5) & 0x20;
-        break;
-    case 1:
-        *(u16*)(arg1) |= (arg2 << 7) & 0x400;
+        p = arg0;
+        p->hi = arg2;
         break;
     case 2:
-        *(u8*)(arg1 + 1) |= (arg2 << 4) & 0x18;
+        h = arg0;
+        h->mid = arg2;
         break;
     case 3:
-        *(u8*)(arg1) |= (arg2 << 2) & 0x6;
+        q = (void *)((u8 *)arg0 + 1);
+        q->mid = arg2;
         break;
     case 4:
-        *(u8*)(arg1 + 1) |= (arg2 << 0) & 0x1;
+        r = arg0;
+        r->b = arg2;
         break;
     case 5:
-        *(u8*)(arg1 + 2) |= (arg2 << 5) & 0x20;
+        s = (void *)((u8 *)arg0 + 1);
+        s->lo = arg2;
         break;
-    case 6:
-        *(u8*)(arg1 + 2) |= (arg2 << 2) & 0x6;
+    case 14:
+        t = (void *)((u8 *)arg0 + 2);
+        t->hi = arg2;
         break;
-    default:
+    case 15:
+        u = (void *)((u8 *)arg0 + 2);
+        u->b = arg2;
         break;
     }
 }
@@ -884,17 +898,23 @@ void* fn_8010494C(void* arg0) {
     return temp_r0;
 }
 
-void* fn_80104970(void* arg0) {
-    u8 temp_r0 = *(u8*)arg0;
-    
-    if ((temp_r0 >= 0x81 && temp_r0 <= 0x9F) || (temp_r0 >= 0xE0 && temp_r0 <= 0xFC)) {
-        u8 temp_r0_2 = *((u8*)arg0 + 1);
-        if (((temp_r0_2 < 0x40) == 0 && temp_r0_2 <= 0x7E) || (temp_r0_2 >= 0x80 && temp_r0_2 <= 0xFC)) {
-            return (u8*)arg0 + 2;
+u8 *fn_80104970(u8 *arg0) {
+    u8 is_double;
+    u8 b0;
+    u8 b1;
+
+    b0 = arg0[0];
+    if ((b0 >= 0x81U && b0 <= 0x9FU) || (b0 >= 0xE0U && b0 <= 0xFCU)) {
+        b1 = arg0[1];
+        if ((b1 >= 0x40U && b1 <= 0x7EU) || (b1 >= 0x80U && b1 <= 0xFCU)) {
+            is_double = 1;
+        } else {
+            is_double = 0;
         }
+    } else {
+        is_double = 0;
     }
-    
-    return (u8*)arg0 + 1;
+    return arg0 + 1 + (is_double != 0);
 }
 
 #pragma use_lmw_stmw on
