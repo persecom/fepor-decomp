@@ -820,8 +820,8 @@ s32 fn_800A0594(void) {
 }
 
 void *fn_800A05B8(void) {
-    extern u16 lbl_8026D8D8;
-    return (u16 *)((char *)&lbl_8026D8D8 + 0x454);
+    extern u16 lbl_8026D8D8[];
+    return (u8 *)lbl_8026D8D8 + 0x454;
 }
 
 s32 fn_800A05C8(void) {
