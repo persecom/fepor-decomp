@@ -10609,9 +10609,8 @@ void fn_8017A5C4(void *arg0, u8 arg1) {
 }
 
 void fn_8017A5EC(void *arg0, s8 arg1) {
-    s8 **temp_r5 = (s8 **)((u8*)arg0 + 4);
-    *temp_r5 += 1;
-    **temp_r5 = arg1;
+    s8 **pp = (s8 **)((u8 *)arg0 + 4);
+    *(*pp)++ = arg1;
 }
 
 s32 fn_8017A6C4(void *arg0, void *arg1) {
