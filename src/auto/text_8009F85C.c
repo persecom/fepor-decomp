@@ -2308,12 +2308,11 @@ s32 fn_800A395C(void) {
     return 0;
 }
 
-void fn_800A3964(void **arg0) {
-    extern void *lbl_8028459C;
-    extern void *lbl_8028A478;
-    
-    *arg0 = lbl_8028459C;
-    *(arg0 + 1) = lbl_8028A478;
+void fn_800A3964(void *arg0) {
+    extern u8 lbl_8028459C[];
+    extern u8 lbl_8028A478[];
+    *(void **)arg0 = lbl_8028459C;
+    *(void **)arg0 = lbl_8028A478;
 }
 
 void fn_800A3980(void **arg0) {
