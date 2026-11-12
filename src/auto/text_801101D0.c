@@ -2176,54 +2176,57 @@ void fn_8011662C(void *arg0, s32 arg1) {
     }
 }
 
-void fn_801166C4(void *arg0, void *arg1) {
+#pragma cplusplus on
+extern "C" void fn_801166C4(void *arg0, void *arg1) {
+    struct Obj {
+        u8 pad[0x40];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7(f32, f32, f32) = 0;
+        virtual void v8() = 0;
+        virtual void v9(f32, f32, f32) = 0;
+    };
     extern f32 lbl_8036A184;
     extern u16 lbl_80273DF8[];
 
     void fn_800DF670(void *);
-    void fn_800E4FE8(void *, void *, const char *);
+    void fn_800E4FE8(void *, void *, void *);
 
     u8 *obj;
-    u8 *ptr;
-    void **vtable;
+    Obj *ptr;
     f32 value;
 
     obj = (u8 *)arg0;
 
     if (arg1 != NULL) {
         *(void **)(obj + 0x120) = arg1;
+    }
 
-        ptr = *(u8 **)(obj + 0x120);
+    ptr = *(Obj **)(obj + 0x120);
 
-        if (ptr != NULL) {
-            vtable = *(void ***)(ptr + 0x40);
+    if (ptr != NULL) {
+        value = lbl_8036A184;
+        ptr->v7(value, value, value);
 
-            value = lbl_8036A184;
+        ptr = *(Obj **)(obj + 0x120);
+        value = lbl_8036A184;
+        ptr->v9(value, value, value);
 
-            ((void (*)(void *, f32, f32, f32))vtable[0x24 / 4])(
-                ptr, value, value, value
-            );
+        fn_800DF670(*(void **)(obj + 0x120));
 
-            ptr = *(u8 **)(obj + 0x120);
-            vtable = *(void ***)(ptr + 0x40);
-
-            value = lbl_8036A184;
-
-            ((void (*)(void *, f32, f32, f32))vtable[0x2C / 4])(
-                ptr, value, value, value
-            );
-
-            fn_800DF670(*(void **)(obj + 0x120));
-
-            fn_800E4FE8(
-                *(void **)(obj + 0x120),
-                obj,
-                (char *)(lbl_80273DF8 + 0xF5)
-            );
-        }
+        fn_800E4FE8(
+            *(void **)(obj + 0x120),
+            obj,
+            (u8 *)lbl_80273DF8 + 0xF5
+        );
     }
 }
-
+#pragma cplusplus reset
 void fn_80116760(s32 arg0, s32 arg1) {
     extern u16 lbl_80273DF8[];
     s32 sp8;
@@ -4962,28 +4965,33 @@ void fn_8011CB2C(void *arg0) {
 }
 
 void fn_8011CB6C(void *arg0, s32 arg1, s32 arg2) {
-    s32 temp_r7;
-    s32 temp_r5;
-    u32 temp_r4;
-    u8 var_r6 = 0;
+    s32 x;
+    s32 flag;
+    s32 y;
+    s32 v64;
+    s32 v60;
+    s32 vc8;
 
-    temp_r7 = *(s32 *)((u8 *)arg0 + 0x48);
-    temp_r7 = arg1 - temp_r7;
-    temp_r5 = *(s32 *)((u8 *)arg0 + 0x4C);
-    temp_r5 = arg2 - temp_r5;
-    *(s32 *)((u8 *)arg0 + 0xCC) = 0;
-    *(s32 *)((u8 *)arg0 + 0xD0) = *(s32 *)((u8 *)arg0 + 0xC8);
-    *(s32 *)((u8 *)arg0 + 0xD4) = *(s32 *)((u8 *)arg0 + 0x60);
-    *(s32 *)((u8 *)arg0 + 0xD8) = *(s32 *)((u8 *)arg0 + 0x64);
-    if (temp_r7 >= *(s32 *)((u8 *)arg0 + 0xCC) && temp_r7 <= *(s32 *)((u8 *)arg0 + 0xD4) &&
-        temp_r5 >= *(s32 *)((u8 *)arg0 + 0xD0) && temp_r5 <= *(s32 *)((u8 *)arg0 + 0xD8)) {
-        var_r6 = 1;
+    x = *(s32 *)((u8 *)arg0 + 0x48);
+    flag = 0;
+    y = *(s32 *)((u8 *)arg0 + 0x4C);
+    x = arg1 - x;
+    v64 = *(s32 *)((u8 *)arg0 + 0x64);
+    y = arg2 - y;
+    v60 = *(s32 *)((u8 *)arg0 + 0x60);
+    vc8 = *(s32 *)((u8 *)arg0 + 0xC8);
+    *(s32 *)((u8 *)arg0 + 0xCC) = flag;
+    *(s32 *)((u8 *)arg0 + 0xD0) = vc8;
+    *(s32 *)((u8 *)arg0 + 0xD4) = v60;
+    *(s32 *)((u8 *)arg0 + 0xD8) = v64;
+    if (x >= *(s32 *)((u8 *)arg0 + 0xCC) && x <= *(s32 *)((u8 *)arg0 + 0xD4) &&
+        y >= *(s32 *)((u8 *)arg0 + 0xD0) && y <= *(s32 *)((u8 *)arg0 + 0xD8)) {
+        flag = 1;
     }
-    if (var_r6 != 0) {
-        *(s32 *)((u8 *)arg0 + 0xEC) = (temp_r5 / 16) - 1;
-        temp_r4 = *(u32 *)((u8 *)arg0 + 0xB0);
-        if (*(u32 *)((u8 *)arg0 + 0xEC) >= temp_r4) {
-            *(s32 *)((u8 *)arg0 + 0xEC) = (s32)(temp_r4 - 1);
+    if ((u8)flag != 0) {
+        *(s32 *)((u8 *)arg0 + 0xEC) = (y / 16) - 1;
+        if (*(u32 *)((u8 *)arg0 + 0xEC) >= *(u32 *)((u8 *)arg0 + 0xB0)) {
+            *(s32 *)((u8 *)arg0 + 0xEC) = *(s32 *)((u8 *)arg0 + 0xB0) - 1;
         }
     }
 }
