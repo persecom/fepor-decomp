@@ -1438,6 +1438,335 @@ void fn_80107B54(u32 *arg0, u32 *arg1, u8 arg2) {
                 *(s8 *)((u8 *)var_r28 + 0xD),
                 *(s8 *)((u8 *)var_r28 + 0xE));
 }
+
+s32 fn_80107D64(void *arg0, u8 *arg1, u8 *arg2, u8 arg3, s32 arg4, void *arg5) {
+    void *fn_80040844(void);
+    u8 fn_8004434C(void *, s32, s32);
+    u8 fn_80040B1C(void *, s32, s32);
+    void fn_800AAC64(void *);
+    void *fn_80019DBC(u8);
+    void fn_800056A0(s32);
+    void fn_8001FC24(void *);
+    s32 fn_8001FC40(void *, s8, s8);
+    extern u8 lbl_802CA518[];
+    extern u16 lbl_802B14E4[];
+
+    u8 *yp;
+    s32 x;
+    s32 y;
+    u8 terrain;
+    s32 cost;
+    s32 ring;
+    s32 bestCost;
+    s32 bestX;
+    s32 bestY;
+    s32 i;
+    void *unit;
+    u8 *p;
+    u8 *map;
+    u8 *map1;
+    s32 row;
+    u8 id;
+    void *tmp;
+    u8 *cell;
+
+    yp = arg2;
+    x = (s8)*arg1;
+    y = (s8)*arg2;
+    if (fn_8004434C(fn_80040844(), x, y) != 0) {
+        return 0;
+    }
+    terrain = fn_80040B1C(fn_80040844(), x, y);
+    if (arg3 != 0 && arg0 != NULL) {
+        fn_800AAC64(arg0);
+    }
+    map = lbl_802CA518;
+    if (x < 0 || y < 0 || x >= *(s32 *)map || y >= *(s32 *)(map + 4)) {
+        cost = -1;
+    } else if ((u8)terrain != (u8)fn_80040B1C(fn_80040844(), x, y)) {
+        cost = -1;
+    } else {
+        row = y << 6;
+        tmp = fn_80019DBC(map[0x100D + x + row]);
+        if (*(u8 *)(*(u8 **)((u8 *)tmp + 8) + 7) != 0) {
+            cost = -1;
+        } else {
+            id = map[0xD + x + row];
+            if (id != 0) {
+                unit = (u8 *)lbl_802B14E4 + ((id - 1) * 0x280);
+            } else {
+                unit = NULL;
+            }
+            if (arg0 != NULL && unit == arg0) {
+                cost = 0;
+            } else if (unit != NULL) {
+                cost = -1;
+            } else if (map[0x300D + x + row] != 0) {
+                cost = -1;
+            } else if (arg3 != 0) {
+                cost = (*(s16 **)(map + 0x14190))[x + row];
+            } else {
+                cost = 0;
+            }
+        }
+    }
+    if (cost < 0) {
+        ring = 0;
+        map = lbl_802CA518;
+        map1 = map + 0x10000;
+        do {
+            bestX = -1;
+            bestY = -1;
+            bestCost = 0x2710;
+            i = 0;
+            ring += 1;
+            y -= 1;
+            while (i < ring) {
+                p = arg5;
+                if (x < 0 || y < 0 || x >= *(s32 *)map || y >= *(s32 *)(map + 4)) {
+                    cost = -1;
+                } else if ((u8)terrain != (u8)fn_80040B1C(fn_80040844(), x, y)) {
+                    cost = -1;
+                } else {
+                    if (arg5 != NULL && arg4 > 0) {
+                        s32 ctr = arg4;
+                        do {
+                            if ((s8)p[0xA] == x && (s8)p[0xB] == y) {
+                                cost = -1;
+                                goto arm1_done;
+                            }
+                            p += 0x110;
+                        } while (--ctr != 0);
+                    }
+                    {
+                        s32 xx = (s8)x;
+                        s32 yy = (s8)y << 6;
+                        cell = map + xx + yy;
+                        tmp = fn_80019DBC(cell[0x100D]);
+                        if (*(u8 *)(*(u8 **)((u8 *)tmp + 8) + 7) != 0) {
+                            cost = -1;
+                        } else {
+                            id = cell[0xD];
+                            if (id != 0) {
+                                unit = (u8 *)lbl_802B14E4 + ((id - 1) * 0x280);
+                            } else {
+                                unit = NULL;
+                            }
+                            if (arg0 != NULL && unit == arg0) {
+                                cost = 0;
+                            } else if (unit != NULL) {
+                                cost = -1;
+                            } else if (cell[0x300D] != 0) {
+                                cost = -1;
+                            } else if (arg3 != 0) {
+                                cost = (*(s16 **)(map1 + 0x4190))[xx + yy];
+                            } else {
+                                cost = 0;
+                            }
+                        }
+                    }
+                }
+            arm1_done:
+                if (cost >= 0 && cost < bestCost) {
+                    bestCost = cost;
+                    bestX = x;
+                    bestY = y;
+                }
+                i += 1;
+                x -= 1;
+                y += 1;
+            }
+            i = 0;
+            while (i < ring) {
+                p = arg5;
+                if (x < 0 || y < 0 || x >= *(s32 *)map || y >= *(s32 *)(map + 4)) {
+                    cost = -1;
+                } else if ((u8)terrain != (u8)fn_80040B1C(fn_80040844(), x, y)) {
+                    cost = -1;
+                } else {
+                    if (arg5 != NULL && arg4 > 0) {
+                        s32 ctr = arg4;
+                        do {
+                            if ((s8)p[0xA] == x && (s8)p[0xB] == y) {
+                                cost = -1;
+                                goto arm2_done;
+                            }
+                            p += 0x110;
+                        } while (--ctr != 0);
+                    }
+                    {
+                        s32 xx = (s8)x;
+                        s32 yy = (s8)y << 6;
+                        cell = map + xx + yy;
+                        tmp = fn_80019DBC(cell[0x100D]);
+                        if (*(u8 *)(*(u8 **)((u8 *)tmp + 8) + 7) != 0) {
+                            cost = -1;
+                        } else {
+                            id = cell[0xD];
+                            if (id != 0) {
+                                unit = (u8 *)lbl_802B14E4 + ((id - 1) * 0x280);
+                            } else {
+                                unit = NULL;
+                            }
+                            if (arg0 != NULL && unit == arg0) {
+                                cost = 0;
+                            } else if (unit != NULL) {
+                                cost = -1;
+                            } else if (cell[0x300D] != 0) {
+                                cost = -1;
+                            } else if (arg3 != 0) {
+                                cost = (*(s16 **)(map1 + 0x4190))[xx + yy];
+                            } else {
+                                cost = 0;
+                            }
+                        }
+                    }
+                }
+            arm2_done:
+                if (cost >= 0 && cost < bestCost) {
+                    bestCost = cost;
+                    bestX = x;
+                    bestY = y;
+                }
+                i += 1;
+                x += 1;
+                y += 1;
+            }
+            i = 0;
+            while (i < ring) {
+                p = arg5;
+                if (x < 0 || y < 0 || x >= *(s32 *)map || y >= *(s32 *)(map + 4)) {
+                    cost = -1;
+                } else if ((u8)terrain != (u8)fn_80040B1C(fn_80040844(), x, y)) {
+                    cost = -1;
+                } else {
+                    if (arg5 != NULL && arg4 > 0) {
+                        s32 ctr = arg4;
+                        do {
+                            if ((s8)p[0xA] == x && (s8)p[0xB] == y) {
+                                cost = -1;
+                                goto arm3_done;
+                            }
+                            p += 0x110;
+                        } while (--ctr != 0);
+                    }
+                    {
+                        s32 xx = (s8)x;
+                        s32 yy = (s8)y << 6;
+                        cell = map + xx + yy;
+                        tmp = fn_80019DBC(cell[0x100D]);
+                        if (*(u8 *)(*(u8 **)((u8 *)tmp + 8) + 7) != 0) {
+                            cost = -1;
+                        } else {
+                            id = cell[0xD];
+                            if (id != 0) {
+                                unit = (u8 *)lbl_802B14E4 + ((id - 1) * 0x280);
+                            } else {
+                                unit = NULL;
+                            }
+                            if (arg0 != NULL && unit == arg0) {
+                                cost = 0;
+                            } else if (unit != NULL) {
+                                cost = -1;
+                            } else if (cell[0x300D] != 0) {
+                                cost = -1;
+                            } else if (arg3 != 0) {
+                                cost = (*(s16 **)(map1 + 0x4190))[xx + yy];
+                            } else {
+                                cost = 0;
+                            }
+                        }
+                    }
+                }
+            arm3_done:
+                if (cost >= 0 && cost < bestCost) {
+                    bestCost = cost;
+                    bestX = x;
+                    bestY = y;
+                }
+                i += 1;
+                x += 1;
+                y -= 1;
+            }
+            i = 0;
+            while (i < ring) {
+                p = arg5;
+                if (x < 0 || y < 0 || x >= *(s32 *)map || y >= *(s32 *)(map + 4)) {
+                    cost = -1;
+                } else if ((u8)terrain != (u8)fn_80040B1C(fn_80040844(), x, y)) {
+                    cost = -1;
+                } else {
+                    if (arg5 != NULL && arg4 > 0) {
+                        s32 ctr = arg4;
+                        do {
+                            if ((s8)p[0xA] == x && (s8)p[0xB] == y) {
+                                cost = -1;
+                                goto arm4_done;
+                            }
+                            p += 0x110;
+                        } while (--ctr != 0);
+                    }
+                    {
+                        s32 xx = (s8)x;
+                        s32 yy = (s8)y << 6;
+                        cell = map + xx + yy;
+                        tmp = fn_80019DBC(cell[0x100D]);
+                        if (*(u8 *)(*(u8 **)((u8 *)tmp + 8) + 7) != 0) {
+                            cost = -1;
+                        } else {
+                            id = cell[0xD];
+                            if (id != 0) {
+                                unit = (u8 *)lbl_802B14E4 + ((id - 1) * 0x280);
+                            } else {
+                                unit = NULL;
+                            }
+                            if (arg0 != NULL && unit == arg0) {
+                                cost = 0;
+                            } else if (unit != NULL) {
+                                cost = -1;
+                            } else if (cell[0x300D] != 0) {
+                                cost = -1;
+                            } else if (arg3 != 0) {
+                                cost = (*(s16 **)(map1 + 0x4190))[xx + yy];
+                            } else {
+                                cost = 0;
+                            }
+                        }
+                    }
+                }
+            arm4_done:
+                if (cost >= 0 && cost < bestCost) {
+                    bestCost = cost;
+                    bestX = x;
+                    bestY = y;
+                }
+                i += 1;
+                x -= 1;
+                y -= 1;
+            }
+            if (bestCost != 0x2710) {
+                x = bestX;
+                y = bestY;
+                goto found;
+            }
+        } while (ring < 0x10);
+        fn_800056A0(0);
+        fn_8001FC24(lbl_802CA518);
+        return 0;
+    }
+found:
+    if (arg3 == 0) {
+        return 0;
+    }
+    *arg1 = (u8)x;
+    *yp = (u8)y;
+    if (x != (s8)*((u8 *)arg0 + 0x19E) || y != (s8)*((u8 *)arg0 + 0x19F)) {
+        return fn_8001FC40(lbl_802CA518, (s8)x, (s8)y);
+    }
+    fn_8001FC24(lbl_802CA518);
+    return 0;
+}
+
 #pragma use_lmw_stmw reset
 
 s32 fn_8010866C(void) {
@@ -4183,6 +4512,238 @@ ok_done:
     }
     return best != NULL;
 }
+
+#pragma use_lmw_stmw on
+s32 fn_8010D984(void *arg0, s32 arg1, u8 (*arg2)(void *)) {
+    s32 fn_8001DD54(void *, void *);
+    void fn_80022DAC(void *, s32, s32);
+    void fn_80022FD8(void *, s32);
+    void **fn_80037BBC(void *, s32);
+    s8 fn_80037E00(void *);
+    s8 fn_8003A398(void *);
+    s8 fn_8003AFA0(void *);
+    s8 fn_8003CFF0(void *, void *);
+    u8 fn_800934CC(void *, void *);
+    u64 *fn_8001CB64(void *);
+    s32 fn_800F7838(void *, s8, s8);
+    s32 fn_800F7994(void *, s8, s8);
+    void fn_800FB96C(s32, s8, s8, void *, u8, u8, s8, s32, s32);
+    u32 fn_800FCF48(s8, s8);
+    void fn_800FDDBC(s8, s8, u8, u8, s32);
+    void fn_800FE2A0(void *, s32, s32);
+    u8 fn_800FE84C(s8, s8);
+    void fn_80100D18(void *, void *, s32);
+    void fn_801A49AC(void *, s8);
+    void fn_801A7A68(void *, void *, void *);
+    extern u8 lbl_8032B3C0[];
+    extern u8 lbl_802CA518[];
+    extern u16 lbl_802B14E4[];
+    extern AiParam lbl_80273B98;
+    extern AiParam lbl_80273B88;
+    extern u8 lbl_80330EAC[];
+
+    AiParam sp28;
+    AiParam sp18;
+    u8 *flags;
+    u8 *map;
+    s32 slot;
+    void **weapon;
+    void *best;
+    s16 bestY;
+    s16 bestX;
+    u8 bestRank;
+    s32 minX;
+    s32 maxX;
+    s32 maxY;
+    s32 row;
+    s32 minY;
+    u8 *map9;
+    long x;
+    s32 y;
+    u8 extra;
+    s32 range;
+    void *item;
+    void *unit;
+    s32 score;
+    s32 bestScore;
+    s32 i;
+    s16 chosenX;
+    s16 chosenY;
+    u8 *pMaxX;
+    u8 *map11;
+    s8 iy;
+    s8 ix;
+
+    flags = lbl_8032B3C0;
+    map = lbl_802CA518;
+    slot = arg1;
+
+    if ((flags[1] & 2) || (*(u32 *)((u8 *)arg0 + 0x254) & 0x03000000)) {
+        fn_80022DAC(map, 5, -1);
+        fn_80022FD8(map, 5);
+        (*(s16 **)(map + 0x14190))[(s8)*((u8 *)arg0 + 0x19e) + ((s8)*((u8 *)arg0 + 0x19f) << 6)] = 0;
+    } else {
+        fn_800FE2A0(arg0, 5, -1);
+    }
+
+    weapon = fn_80037BBC(arg0, slot);
+    fn_80100D18(arg0, weapon, -1);
+    bestRank = 0;
+    best = NULL;
+    x = *(s8 *)((u8 *)arg0 + 0x19e);
+    y = *(s8 *)((u8 *)arg0 + 0x19f);
+    item = *weapon;
+    if (item) {
+        extra = fn_8001DD54(item, arg0);
+    } else {
+        extra = 0;
+    }
+    range = (s8)fn_8003A398(arg0);
+    range += (u8)extra;
+
+    minX = x - range;
+    if (minX < (s8)lbl_802CA518[8]) {
+        minX = (s8)lbl_802CA518[8];
+    }
+    minY = y - range;
+    map9 = lbl_802CA518;
+    if (minY < (s8)map9[9]) {
+        minY = (s8)map9[9];
+    }
+    maxX = x + range;
+    pMaxX = &lbl_802CA518[10];
+    if (maxX > (s8)*pMaxX - 1) {
+        maxX = (s8)*pMaxX - 1;
+    }
+    maxY = y + range;
+    map11 = lbl_802CA518;
+    if (maxY > (s8)map11[11] - 1) {
+        maxY = (s8)map11[11] - 1;
+    }
+
+    for (row = minY; row <= maxY; row++) {
+        for (x = minX; x <= maxX; x++) {
+            u8 id = map[((s8)row << 6) + (s8)x + 0xD];
+            u8 ok;
+            u8 wextra, wrange;
+            s8 ciff;
+
+            if (id == 0 || id == *((u8 *)arg0 + 0x198)) {
+                continue;
+            }
+            if (id != 0) {
+                unit = (u8 *)lbl_802B14E4 + (id - 1) * 0x280;
+            } else {
+                unit = NULL;
+            }
+            if (!(flags[1] & 4) && arg2 != NULL && arg2(unit) == 0) {
+                continue;
+            }
+            if (((*((u8 *)unit + 0x1A5) >> 4) & 7) != 0) {
+                continue;
+            }
+            if ((*(u16 *)((u8 *)*(void **)((u8 *)unit + 0x18C) + 0x3A) & 1) == 0) {
+                continue;
+            }
+
+            for (i = 0; i < 4; i++) {
+                void **sp = fn_80037BBC(unit, i);
+                if (*sp != NULL) {
+                    if ((*fn_8001CB64(sp) & 6ULL) != 0 && fn_800934CC(unit, *sp) != 0) {
+                        ok = 1;
+                        goto ok_done;
+                    }
+                }
+            }
+            ok = 0;
+ok_done:
+            if (ok == 0) {
+                continue;
+            }
+
+            item = *weapon;
+            if (item != NULL) {
+                wextra = fn_8001DD54(item, arg0);
+            } else {
+                wextra = 0;
+            }
+            item = *weapon;
+            if (item != NULL) {
+                wrange = *((u8 *)item + 0x1d);
+            } else {
+                wrange = 0;
+            }
+            fn_800FDDBC((s8)*((u8 *)unit + 0x19e), (s8)*((u8 *)unit + 0x19f), wrange, wextra, 6);
+
+            {
+                u8 *grid = lbl_802CA518;
+                u8 *grid2 = lbl_802CA518;
+                bestScore = 0x80000000;
+                for (iy = (s8)map9[9]; iy <= (s8)map11[11] - 1; iy++) {
+                    s32 yoff = (s8)iy << 6;
+                    u8 *rowY = grid + yoff;
+                    u8 *rowY2 = grid2 + yoff;
+                    for (ix = (s8)lbl_802CA518[8]; ix <= (s8)*pMaxX - 1; ix++) {
+                        s32 t = (s8)ix + yoff;
+                        s32 t2 = t * 2;
+                        if (*(s16 *)(grid + t2 + 0x610e) >= 0
+                            && (s8)rowY[(s32)ix + 0xe18e] == 0
+                            && fn_800FE84C(ix, iy) == 0
+                            && *(u16 *)(grid2 + t2 + 0xc18e) != 0) {
+                            u8 occ = rowY2[(s8)ix + 0xd];
+                            if (occ == 0 || occ == *((u8 *)arg0 + 0x198)) {
+                                score = fn_800F7994(arg0, ix, iy);
+                                score += fn_800F7838(arg0, ix, iy);
+                                score -= (fn_800FCF48(ix, iy) >> 4) & 0xfff;
+                                if (bestScore < score) {
+                                    bestScore = score;
+                                    chosenX = (s16)ix;
+                                    chosenY = (s16)iy;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ((u32)(bestScore + 0x80000000) == 0) {
+                continue;
+            }
+
+            sp18 = lbl_80273B98;
+            sp18.p = unit;
+            sp18.b4 = *((u8 *)unit + 0x19e);
+            sp18.b5 = *((u8 *)unit + 0x19f);
+            sp18.b6 = fn_80037E00(unit);
+            sp28 = lbl_80273B88;
+            sp28.p = arg0;
+            sp28.b4 = (u8)(s8)chosenX;
+            sp28.b5 = (u8)(s8)chosenY;
+            fn_801A7A68(lbl_80330EAC, &sp28, &sp18);
+            fn_801A49AC(lbl_80330EAC, (s8)slot);
+
+            ciff = fn_8003CFF0(arg0, unit);
+            if (ciff < 5) {
+                continue;
+            }
+            if ((s32)bestRank > (s32)(ciff + fn_8003AFA0(unit))) {
+                continue;
+            }
+            bestRank = (u8)(ciff + fn_8003AFA0(unit));
+            bestX = chosenX;
+            bestY = chosenY;
+            best = unit;
+        }
+    }
+
+    if (best != NULL) {
+        fn_800FB96C(0x10, (s8)bestX, (s8)bestY, best,
+                    *((u8 *)best + 0x19e), *((u8 *)best + 0x19f), (s8)slot, 0, 0);
+    }
+    return best != NULL;
+}
+#pragma use_lmw_stmw reset
+
 #pragma use_lmw_stmw reset
 s32 fn_8010DFC0(void *arg0, s32 arg1, u8 (*arg2)(void *)) {
     s32 fn_8001DD54(void *,void *);
@@ -5027,9 +5588,17 @@ void fn_8010FE08(void *arg0, s8 arg1, s8 arg2, u8 arg3) {
     }
 }
 
-void fn_8010FEEC(void *arg0) {
-    *(u8*)((char*)arg0 + 4) = 0;
-    *(u8*)((char*)arg0 + 5) = 0;
+void *fn_8010FEEC(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
+    char *temp_r8;
+
+    temp_r8 = (char *)arg0 + (*(s32 *)((char *)arg0 + 0x200) << 3);
+    *(u8 *)(temp_r8 + 0x0) = arg1;
+    *(u8 *)(temp_r8 + 0x1) = arg2;
+    *(u8 *)(temp_r8 + 0x2) = arg3;
+    *(u8 *)(temp_r8 + 0x3) = arg4;
+    *(u8 *)(temp_r8 + 0xA) = 0;
+    *(s32 *)((char *)arg0 + 0x200) = *(s32 *)((char *)arg0 + 0x200) + 1;
+    return temp_r8;
 }
 
 void *fn_8010FF24(void *arg0, s8 arg1, s8 arg2, u8 arg3) {
