@@ -9276,27 +9276,32 @@ u16 fn_800AF704(s32 arg0) {
 }
 
 void fn_800AF71C(s32 arg0, u16 arg1) {
-    u16 temp_r3;
-    void *temp_r30;
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    void fn_8024D3C4(void *, u16);
+    u8 *sys;
+    u8 *entry;
+    u16 nest;
 
-    temp_r30 = &lbl_80317338[0xF8 / 2] + (arg0 * 0x13C);
-    if ((u16) *(u16*)temp_r30 != 0) {
-        *(u16*)((char*)temp_r30 + 0x1C) = arg1;
-        if (*(u16*)temp_r30 & 8) {
-            if (lbl_80317338[0x124 / 2] == 0) {
-                lbl_80317338[0x128 / 2] = 0; // No interrupt disabling function, just setting to 0 for now
+    sys = (u8 *)lbl_80317338;
+    entry = *(u8 **)(sys + 0xF8) + arg0 * 0x13C;
+    if (*(u16 *)entry != 0) {
+        *(u16 *)(entry + 0x1C) = arg1;
+        if (*(u16 *)entry & 8) {
+            if (*(u16 *)(sys + 0x124) == 0) {
+                *(s32 *)((u8 *)lbl_80317338 + 0x128) = OSDisableInterrupts();
             }
-            lbl_80317338[0x124 / 2] = (u16) (lbl_80317338[0x124 / 2] + 1);
-            fn_8024D3C4(*(u32*)((char*)temp_r30 + 0x50), *(u16*)((char*)temp_r30 + 0x1C));
-            if ((u16) *(u16*)((char*)temp_r30 + 0x1E) == 2) {
-                fn_8024D3C4(*(u32*)((char*)temp_r30 + 0xD8), *(u16*)((char*)temp_r30 + 0x1C));
+            *(u16 *)(sys + 0x124) = *(u16 *)(sys + 0x124) + 1;
+            fn_8024D3C4(*(void **)(entry + 0x50), *(u16 *)(entry + 0x1C));
+            if (*(u16 *)(entry + 0x1E) == 2) {
+                fn_8024D3C4(*(void **)(entry + 0xD8), *(u16 *)(entry + 0x1C));
             }
-            if (lbl_80317338[0x124 / 2] != 0) {
-                temp_r3 = lbl_80317338[0x124 / 2] - 1;
-                lbl_80317338[0x124 / 2] = temp_r3;
-                if (temp_r3 == 0) {
-                    // No function to restore interrupts, just setting it to 0
-                    lbl_80317338[0x128 / 2] = 0; 
+            nest = *(u16 *)(sys + 0x124);
+            if (nest != 0) {
+                nest -= 1;
+                *(u16 *)(sys + 0x124) = nest;
+                if ((u16)nest == 0) {
+                    OSRestoreInterrupts(*(s32 *)((u8 *)lbl_80317338 + 0x128));
                 }
             }
         }
