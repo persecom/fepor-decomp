@@ -1401,6 +1401,23 @@ s32 fn_80076E9C(void) {
     return 5;
 }
 
+s32 fn_80076EB4(void) {
+    void fn_8002C194(void *, s32);
+    extern u8 lbl_802EF4C8[];
+    extern struct { s32 n; u8 pad[2004]; } lbl_802EF4E0;
+    u8 *p;
+
+    p = lbl_802EF4C8;
+    if ((s8)p[0x12] != 0) {
+        return 3;
+    }
+    if (p[0x16] & 2) {
+        return 3;
+    }
+    fn_8002C194(*(void **)p, -1);
+    return lbl_802EF4E0.n ? 0 : 3;
+}
+
 void fn_80076F28(void) {
     extern u16 lbl_8026C0B8[];
     fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x33e);
