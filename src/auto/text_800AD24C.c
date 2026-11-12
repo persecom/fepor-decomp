@@ -210,6 +210,43 @@ void fn_800AD700(void *arg0) {
     fn_8014CBD8(lbl_80330708, (f32)py[-1], (f32)py[0]);
 }
 
+void fn_800AD76C(void *arg0) {
+    void fn_801A4BE0(void *);
+    void *fn_8002F62C(void *);
+    void *fn_8002F740(void);
+    void fn_801A7794(void *, void *, void *);
+    void fn_80036248(void *);
+    extern u8 lbl_80330EAC[];
+    extern u8 lbl_802EF4E0[];
+    void *p;
+    void *unit;
+    void *f740;
+    u8 lim;
+
+    fn_801A4BE0(lbl_80330EAC);
+    if ((s8)lbl_80330EAC[0x1A8] == 0) {
+        p = *(void **)(lbl_80330EAC + 0x190);
+        if (*(u8 *)((u8 *)p + 8) == 1) {
+            unit = *(void **)((u8 *)arg0 + 0x30);
+            *(u16 *)((u8 *)unit + 0x22A) = *(u16 *)((u8 *)unit + 0x22A) + 1;
+            unit = *(void **)((u8 *)arg0 + 0x30);
+            *(u16 *)((u8 *)unit + 0x22C) = *(u16 *)((u8 *)unit + 0x22C) + 1;
+        }
+    }
+    fn_8002F62C(lbl_802EF4E0);
+    f740 = fn_8002F740();
+    unit = *(void **)((u8 *)arg0 + 0x30);
+    fn_801A7794(lbl_80330EAC, unit, f740);
+    if (*(u8 *)((u8 *)arg0 + 0x3B) != 0) {
+        lbl_80330EAC[0x2D6] = 1;
+    }
+    fn_80036248(lbl_80330EAC);
+    lim = lbl_80330EAC[0x2C9];
+    if (*(u8 *)((u8 *)arg0 + 0x3A) < lim) {
+        *(u8 *)((u8 *)arg0 + 0x3A) = lim;
+    }
+}
+
 void fn_800AD92C(s32 arg0) {
     void fn_8000C070(s32, s32);
     void *fn_8002F62C(void *);
