@@ -12038,17 +12038,22 @@ void fn_80053E9C(void *arg0) {
     fn_800C4588(arg0);
 }
 
-void fn_80053F08(void* arg0, s32 arg1) {
-    u16* r5;
-    u16 temp_r0;
+void fn_80053F08(void *arg0) {
+    void fn_800536E4(void *, void *);
+    void fn_8000A388(void *, void *, void *);
+    void fn_8000C188(void *);
+    extern u8 lbl_80285990[];
+    struct {
+        void *value;
+        void *result;
+    } data;
 
-    r5 = (u16*)((u8*)arg0 + 0x60);
-    temp_r0 = *(u8*)r5 + arg1;
-    *r5 |= 0x4002;
-
-    r5 = (u16*)((u8*)arg0 + 0x60);
-    temp_r0 = *(u8*)r5 + arg1;
-    *r5 |= 4;
+    data.value = arg0;
+    data.result = NULL;
+    fn_8000A388(lbl_80285990, fn_800536E4, &data);
+    if (data.result == NULL) {
+        fn_8000C188(arg0);
+    }
 }
 
 #pragma use_lmw_stmw on
