@@ -22,6 +22,7 @@ M2C_FIELD(p,u8 *,33)=0xFF;M2C_FIELD(p,s16 *,0x22)=style; M2C_FIELD(p,s16 *,0x24)
  
 }
 #pragma opt_common_subs on
+static inline u8 copy_flag_u8(s32 x) { return (u8)x; }
 extern u32 lbl_802EF4C8[];
 extern u16 lbl_80278080[];
 extern u16 lbl_80294604[];
