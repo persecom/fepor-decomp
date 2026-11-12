@@ -143,7 +143,7 @@ void fn_8008D510(void *arg0, u8 arg1, s32 arg2, s32 arg3) {
     extern u8 lbl_802F0308[];
     struct { unsigned b : 8; } t;
     u8 var_r26;
-    u8 var_r3;
+    u32 var_r3;
     s32 var_color;
     u64 flags;
 
@@ -159,7 +159,7 @@ void fn_8008D510(void *arg0, u8 arg1, s32 arg2, s32 arg3) {
                 var_color = 4;
             }
         }
-        var_r3 = var_color;
+        var_r3 = (u8)var_color;
         var_r26 = t.b;
         if (t.b == 1 && (*(u8 *)((u8 *)arg0 + 5) & 0x3F)) {
             var_r26 = 4;
