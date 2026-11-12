@@ -1373,6 +1373,251 @@ extern "C" void fn_80116944(void *arg0) {
     fn_800608AC(M2C_FIELD(arg0, s32 *, 0xE0));
     ((Obj *)arg0)->v1();
 }
+
+#pragma global_optimizer off
+#pragma cplusplus on
+extern "C" void fn_80116988(void *arg0, s32 arg1, f32 farg0) {
+    s32 strlen(char *);
+    void fn_800C96F8(void *, char *, u32);
+    void fn_800C9758(void *, void *, s32, s32);
+    void fn_800C9A60(void *, s32);
+    void fn_800CB90C(void *, void *, char *);
+    s32 fn_800DDAA4(void *, void *);
+    u32 fn_800DDC04(void *, void *);
+    extern void *lbl_80368278;
+
+    struct Actor {
+        u8 pad0[0x40];
+        virtual void v0() = 0;
+        virtual void Unk() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual Vec3f GetPos(s32) = 0;
+        virtual void v13() = 0;
+        virtual void Adjust(Vec3f *, f32, f32) = 0;
+    };
+
+    typedef void (*GetPosFn)(Vec3f *, void *, s32);
+
+    f32 f31;
+    f32 f30;
+    f32 f29;
+    f32 f28;
+    f32 f27;
+    f32 f26;
+    u8 sp98[0x30];
+    String sp8C;
+    Vec3f sp80;
+    Vec3f sp74;
+    String sp68;
+    String sp5C;
+    String sp50;
+    String sp44;
+    String sp38;
+    Vec3f sp2C;
+    Vec3f sp20;
+    Vec3f sp14;
+    Vec3f sp8;
+
+    sp8C.size = 0;
+    sp8C.cap = 0;
+    sp8C.data = 0;
+    sp8C.cap = 0;
+
+    f31 = farg0;
+    {
+        void *oth = *(void **)((u8 *)arg0 + 0x118);
+        ((GetPosFn)((void **)*(void **)((u8 *)oth + 0x40))[0xE])(&sp74, oth, 0);
+    }
+    f30 = *(f32 *)((u8 *)arg0 + 0x128) * f31 + sp74.x;
+
+    if (*(s32 *)((u8 *)arg0 + 0x19C) == 0) {
+        fn_800CB90C(&sp68, (u8 *)arg0 + 0x154, (char *)&lbl_80273DF8 + 0x53F);
+        fn_800C9758(&sp8C, &sp68, 0, -1);
+        fn_800C9A60(&sp68, -1);
+        if (fn_800DDC04(*(void **)((u8 *)arg0 + 0xDC), &sp8C) != 0) {
+            u32 res;
+            f27 = *(f32 *)((u8 *)arg0 + 0x48);
+            f28 = *(f32 *)((u8 *)arg0 + 0x4C);
+            f29 = *(f32 *)((u8 *)arg0 + 0x50);
+            res = fn_800DDC04(*(void **)((u8 *)arg0 + 0xDC), &sp8C);
+            if (res != 0) {
+                f32 z = lbl_8036A184;
+                void *e0;
+                *(f32 *)((u8 *)arg0 + 0x50) = z;
+                *(f32 *)((u8 *)arg0 + 0x4C) = z;
+                *(f32 *)((u8 *)arg0 + 0x48) = z;
+                e0 = *(void **)((u8 *)arg0 + 0xE0);
+                *(u32 *)((u8 *)e0 + 0x44) = res;
+                e0 = *(void **)((u8 *)arg0 + 0xE0);
+                *(u32 *)((u8 *)e0 + 0x74) = 0;
+                ((Actor *)arg0)->Unk();
+                fn_8005FEE8(*(void **)((u8 *)arg0 + 0xE0), lbl_8036A1B0);
+                fn_800608AC(*(void **)((u8 *)arg0 + 0xE0));
+                ((GetPosFn)((void **)*(void **)((u8 *)arg0 + 0x40))[0xE])(&sp20, arg0, 0);
+                f26 = sp20.x;
+            } else {
+                f26 = lbl_8036A184;
+            }
+            *(f32 *)((u8 *)arg0 + 0x48) = f27;
+            *(f32 *)((u8 *)arg0 + 0x4C) = f28;
+            *(f32 *)((u8 *)arg0 + 0x50) = f29;
+        } else {
+            f26 = lbl_8036A184;
+        }
+        fn_800CB90C(&sp5C, (u8 *)arg0 + 0x154, (char *)&lbl_80273DF8 + 0xFE);
+        fn_800C9758(&sp8C, &sp5C, 0, -1);
+        fn_800C9A60(&sp5C, -1);
+        {
+            s32 daa = fn_800DDAA4(*(void **)((u8 *)arg0 + 0xDC), &sp8C);
+            if (daa != 0) {
+                *(f32 *)((u8 *)arg0 + 0x48) =
+                    f31 * (*(f32 *)((u8 *)arg0 + 0x124) * ((f32)daa * (f32)*(s32 *)((u8 *)arg0 + 0x198))) + f30;
+                *(f32 *)((u8 *)arg0 + 0x48) = *(f32 *)((u8 *)arg0 + 0x48) + f26;
+            } else {
+                *(f32 *)((u8 *)arg0 + 0x48) = lbl_8036A1BC * f31;
+            }
+        }
+    } else {
+        f32 tmp;
+        fn_800CB90C(&sp50, (u8 *)arg0 + 0x154, (char *)&lbl_80273DF8 + 0xFE);
+        fn_800C9758(&sp8C, &sp50, 0, -1);
+        fn_800C9A60(&sp50, -1);
+        f28 = *(f32 *)((u8 *)arg0 + 0x48);
+        f27 = *(f32 *)((u8 *)arg0 + 0x4C);
+        f26 = *(f32 *)((u8 *)arg0 + 0x50);
+        {
+            u32 res = fn_800DDC04(*(void **)((u8 *)arg0 + 0xDC), &sp8C);
+            if (res != 0) {
+                f32 z = lbl_8036A184;
+                void *e0;
+                *(f32 *)((u8 *)arg0 + 0x50) = z;
+                *(f32 *)((u8 *)arg0 + 0x4C) = z;
+                *(f32 *)((u8 *)arg0 + 0x48) = z;
+                e0 = *(void **)((u8 *)arg0 + 0xE0);
+                *(u32 *)((u8 *)e0 + 0x44) = res;
+                e0 = *(void **)((u8 *)arg0 + 0xE0);
+                *(u32 *)((u8 *)e0 + 0x74) = 0;
+                ((Actor *)arg0)->Unk();
+                fn_8005FEE8(*(void **)((u8 *)arg0 + 0xE0), lbl_8036A1B0);
+                fn_800608AC(*(void **)((u8 *)arg0 + 0xE0));
+                ((GetPosFn)((void **)*(void **)((u8 *)arg0 + 0x40))[0xE])(&sp14, arg0, 0);
+                tmp = sp14.x;
+            } else {
+                tmp = lbl_8036A184;
+            }
+        }
+        *(f32 *)((u8 *)arg0 + 0x48) = f28;
+        *(f32 *)((u8 *)arg0 + 0x4C) = f27;
+        *(f32 *)((u8 *)arg0 + 0x50) = f26;
+        *(f32 *)((u8 *)arg0 + 0x48) = f30 - tmp;
+    }
+
+    if ((u8)arg1 != 0) {
+        void *oth;
+        f32 dx;
+        f32 z;
+        oth = *(void **)((u8 *)arg0 + 0x118);
+        dx = *(f32 *)((u8 *)arg0 + 0x48);
+        z = lbl_8036A184;
+        dx = dx - *(f32 *)((u8 *)oth + 0x48);
+        sp80.y = z;
+        sp80.x = dx;
+        sp80.z = z;
+        fn_80202300(sp98, 0x59, lbl_80368278,
+                    lbl_8036A1D8 * (*(f32 *)((u8 *)lbl_80368278 + 0x164) * f31),
+                    dx);
+        fn_802029C4(sp98, &sp80, &sp80);
+        *(f32 *)((u8 *)arg0 + 0x48) =
+            *(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x118) + 0x48) + sp80.x;
+        *(f32 *)((u8 *)arg0 + 0x4C) =
+            *(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x118) + 0x4C) + sp80.y;
+        *(f32 *)((u8 *)arg0 + 0x50) =
+            *(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x118) + 0x50) + sp80.z;
+        *(f32 *)((u8 *)arg0 + 0x58) =
+            *(f32 *)((u8 *)lbl_80368278 + 0x164) * f31 + *(f32 *)((u8 *)arg0 + 0x58);
+    }
+
+    {
+        f32 tmp;
+        fn_800CB90C(&sp44, (u8 *)arg0 + 0x154, (char *)&lbl_80273DF8 + 0x535);
+        fn_800C9758(&sp8C, &sp44, 0, -1);
+        fn_800C9A60(&sp44, -1);
+        f28 = *(f32 *)((u8 *)arg0 + 0x48);
+        f27 = *(f32 *)((u8 *)arg0 + 0x4C);
+        f26 = *(f32 *)((u8 *)arg0 + 0x50);
+        {
+            u32 res = fn_800DDC04(*(void **)((u8 *)arg0 + 0xDC), &sp8C);
+            if (res != 0) {
+                f32 z = lbl_8036A184;
+                void *e0;
+                *(f32 *)((u8 *)arg0 + 0x50) = z;
+                *(f32 *)((u8 *)arg0 + 0x4C) = z;
+                *(f32 *)((u8 *)arg0 + 0x48) = z;
+                e0 = *(void **)((u8 *)arg0 + 0xE0);
+                *(u32 *)((u8 *)e0 + 0x44) = res;
+                e0 = *(void **)((u8 *)arg0 + 0xE0);
+                *(u32 *)((u8 *)e0 + 0x74) = 0;
+                ((Actor *)arg0)->Unk();
+                fn_8005FEE8(*(void **)((u8 *)arg0 + 0xE0), lbl_8036A1B0);
+                fn_800608AC(*(void **)((u8 *)arg0 + 0xE0));
+                ((GetPosFn)((void **)*(void **)((u8 *)arg0 + 0x40))[0xE])(&sp8, arg0, 0);
+                tmp = sp8.x;
+            } else {
+                tmp = lbl_8036A184;
+            }
+        }
+        *(f32 *)((u8 *)arg0 + 0x48) = f28;
+        tmp = (f32)__fabs((f64)tmp);
+        *(f32 *)((u8 *)arg0 + 0x4C) = f27;
+        *(f32 *)((u8 *)arg0 + 0x50) = f26;
+        *(f32 *)((u8 *)arg0 + 0x1B0) = tmp;
+        *(u8 *)((u8 *)arg0 + 0x1A4) = 0;
+    }
+
+    fn_800CB90C(&sp38, (u8 *)arg0 + 0x154, (char *)&lbl_80273DF8 + 0x53A);
+    fn_800C9758(&sp8C, &sp38, 0, -1);
+    fn_800C9A60(&sp38, -1);
+    f28 = *(f32 *)((u8 *)arg0 + 0x48);
+    f27 = *(f32 *)((u8 *)arg0 + 0x4C);
+    f26 = *(f32 *)((u8 *)arg0 + 0x50);
+    {
+        u32 res = fn_800DDC04(*(void **)((u8 *)arg0 + 0xDC), &sp8C);
+        if (res != 0) {
+            f32 z = lbl_8036A184;
+            void *e0;
+            *(f32 *)((u8 *)arg0 + 0x50) = z;
+            *(f32 *)((u8 *)arg0 + 0x4C) = z;
+            *(f32 *)((u8 *)arg0 + 0x48) = z;
+            e0 = *(void **)((u8 *)arg0 + 0xE0);
+            *(u32 *)((u8 *)e0 + 0x44) = res;
+            e0 = *(void **)((u8 *)arg0 + 0xE0);
+            *(u32 *)((u8 *)e0 + 0x74) = 0;
+            ((Actor *)arg0)->Unk();
+            fn_8005FEE8(*(void **)((u8 *)arg0 + 0xE0), lbl_8036A1B0);
+            fn_800608AC(*(void **)((u8 *)arg0 + 0xE0));
+            ((GetPosFn)((void **)*(void **)((u8 *)arg0 + 0x40))[0xE])(&sp2C, arg0, 0);
+        }
+    }
+    *(f32 *)((u8 *)arg0 + 0x48) = f28;
+    *(f32 *)((u8 *)arg0 + 0x4C) = f27;
+    *(f32 *)((u8 *)arg0 + 0x50) = f26;
+
+    fn_800C96F8((u8 *)arg0 + 0x160, (char *)&lbl_80273DF8 + 0x1C,
+                strlen((char *)&lbl_80273DF8 + 0x1C));
+    fn_800C9A60(&sp8C, -1);
+}
+#pragma cplusplus reset
+#pragma global_optimizer reset
+
 #pragma cplusplus reset
 void fn_80116F84(void *arg0, void *arg1) {
     void fn_800DB7A4(void *, void *);
@@ -3481,6 +3726,34 @@ void fn_8011D79C(s32 arg0) {
             }
         }
     }
+}
+
+void fn_8011D87C(void *arg0)
+{
+    s32 fn_800056CC(const char *, ...);
+    void *fn_8000E0E4(void *);
+    void fn_8023440C(void *, const void *, s32);
+    void *fn_8000C0C0(void *);
+    void fn_8000C070(void *, u8);
+
+    void *result;
+    u8 *obj;
+    u16 flags;
+
+    fn_800056CC((char *)lbl_80274BB0 + 0x35, arg0);
+
+    result = fn_8000E0E4(arg0);
+
+    fn_8023440C(lbl_8032FE04, arg0, 0x1E);
+
+    obj = (u8 *)fn_8000C0C0(lbl_8028FE50);
+    *(void **)(obj + 0x30) = result;
+
+    flags = lbl_80367A58;
+    flags &= ~0x10;
+    lbl_80367A58 = flags;
+
+    fn_8000C070(obj, 1);
 }
 
 s32 fn_8011DB48(void* arg0) {
