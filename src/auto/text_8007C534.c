@@ -25,3 +25,23 @@ extern u8 lbl_80288DD4[76];
 extern u8 lbl_80288D88[76];
 extern u8 lbl_80288C68[40];
 extern u8 lbl_80288D0C[128];
+
+void fn_8007C534(void) {
+    void **p;
+    void *v;
+
+    p = lbl_803674B0;
+    p[1] = lbl_802845E8;
+    v = lbl_80288CC0;
+    lbl_8036748C = v;
+    lbl_80367490 = lbl_80288F9C;
+    lbl_80367494 = lbl_80288F50;
+    lbl_80367498 = lbl_80288F04;
+    lbl_8036749C = lbl_80288EB8;
+    lbl_803674A0 = lbl_80288E6C;
+    lbl_803674A4 = lbl_80288E20;
+    lbl_803674A8 = lbl_80288DD4;
+    lbl_803674AC = lbl_80288D88;
+    lbl_803674B0[0] = lbl_80288C68;
+    p[1] = lbl_80288D0C;
+}
