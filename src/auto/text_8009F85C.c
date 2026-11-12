@@ -1314,28 +1314,17 @@ char *fn_800A13FC(void) {
     return lbl_80312270;
 }
 
-s32 fn_800A1448(void)
-{
-    extern u8 *lbl_80367240;
-    extern u16 lbl_80330708[700];
+s32 fn_800A1448(void) {
+    extern void *lbl_80367240;
+    extern u8 lbl_80330708[];
+    void *obj = lbl_80367240;
 
-    u8 *context;
-    u8 *data;
-    s32 value;
-
-    context = lbl_80367240;
-    data = (u8 *)lbl_80330708;
-
-    if (*(u32 *)(context + 0x10) & 0x10001) {
-        value = *(s16 *)(data + 0x12);
-        *(s16 *)(data + 0x12) = value - 1;
+    if (*(s32 *)((u8 *)obj + 0x10) & 0x01000001) {
+        *(s16 *)(lbl_80330708 + 0x12) -= 1;
     }
-
-    if (*(u32 *)(context + 0x10) & 0x20002) {
-        value = *(s16 *)(data + 0x12);
-        *(s16 *)(data + 0x12) = value + 1;
+    if (*(s32 *)((u8 *)obj + 0x10) & 0x02000002) {
+        *(s16 *)(lbl_80330708 + 0x12) += 1;
     }
-
     return 0;
 }
 
