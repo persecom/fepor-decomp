@@ -2613,13 +2613,13 @@ void fn_800CB5CC(void *arg0, void *arg1)
     void fn_800C9ABC(void *, char *, void *);
     void fn_800CB65C(void *, void *, void *, void *, void *);
 
-    extern u8 lbl_80367878;
     extern void *lbl_8036787C;
+    extern u8 lbl_80367878;
 
     String temp;
-    void *scratch8;
-    void *scratchC;
     char *source;
+    void *scratchC;
+    void *scratch8;
 
     if (lbl_80367878 != 0) {
         fn_800C9ABC(arg0, (char *)lbl_8036787C, &scratchC);
@@ -20324,6 +20324,28 @@ loop_22:
         goto loop_24;
     }
     fn_80022FD8(&lbl_802CA518, 5);
+}
+
+s32 fn_80100F10(void *arg0, void *arg1, void **arg2) {
+    s32 fn_80230BCC(s32);
+    u8 fn_8001DD54(void *, void *);
+    s8 fn_8003A398(void *);
+    u8 a;
+    u8 b;
+    s32 dy;
+    s32 dist;
+    u8 bonus;
+
+    b = M2C_FIELD(arg1, u8 *, 0x19E);
+    a = M2C_FIELD(arg0, u8 *, 0x19E);
+    dy = fn_80230BCC((s8)M2C_FIELD(arg0, u8 *, 0x19F) - (s8)M2C_FIELD(arg1, u8 *, 0x19F));
+    dist = fn_80230BCC((s8)a - (s8)b) + dy;
+    if (*arg2 != NULL) {
+        bonus = (u8)fn_8001DD54(*arg2, arg1);
+    } else {
+        bonus = 0;
+    }
+    return dist <= ((s8)fn_8003A398(arg1) + bonus + (s8)fn_8003A398(arg0));
 }
 
 #pragma optimization_level 2
