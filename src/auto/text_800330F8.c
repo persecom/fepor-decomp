@@ -9603,6 +9603,13 @@ void *fn_8004B110(void *arg0) {
     return lbl_802EFFC8;
 }
 
+void *fn_8004B158(void *arg0) {
+    void fn_80231D94(void *, void *, ...);
+
+    fn_80231D94(lbl_802EFFC8, (u8 *)lbl_8026A9B0 + 0xD7, (u8 *)lbl_8026A9B0 + 0xA8, *(s32 *)((u8 *)arg0 + 4));
+    return lbl_802EFFC8;
+}
+
 s32 fn_8004B1A0(s32 arg0) {
     extern s32 lbl_802858C4[];
     return lbl_802858C4[arg0];
