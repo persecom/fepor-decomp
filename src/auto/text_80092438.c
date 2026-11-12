@@ -874,7 +874,6 @@ u8 fn_800934CC(void *arg0, void *arg1) {
 }
 
 u8 fn_800939FC(void *arg0, void *arg1) {
-    /* tool: brace off fn_800940B0 call lines */
     s32 fn_800061F4(void);
     u8 fn_8001C914(void *, void *);
     void *fn_8001C9BC(void *);
