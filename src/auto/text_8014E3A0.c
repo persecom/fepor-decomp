@@ -22,6 +22,17 @@ s32 fn_8014E3C0(void) {
     return 9;
 }
 
+void *fn_8014E3C8(void) {
+    void fn_80231D94(void *, void *, ...);
+    extern u8 lbl_80330CC8[];
+    extern u8 lbl_80277238[];
+    extern s32 lbl_80367B7C;
+    extern s32 lbl_80367B80;
+
+    fn_80231D94(lbl_80330CC8, lbl_80277238 + 0xD0, lbl_80367B7C + 1, lbl_80367B80);
+    return lbl_80330CC8;
+}
+
 s32 fn_8014E414(void) {
     return 0;
 }
