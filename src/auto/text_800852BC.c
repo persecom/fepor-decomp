@@ -2258,16 +2258,16 @@ void fn_80089FA8(void *arg0) {
 }
 
 void fn_8008A290(s32 arg0, s32 arg1) {
-    void fn_8008A32C(void *, s32, s32);
     extern s32 lbl_80367110;
+    void fn_8008A32C(void *, s32, s32);
     extern u16 *lbl_803674E0;
+    int var_r6;
     s32 var_r5;
-    s32 var_r6;
 
     var_r6 = arg0;
     var_r5 = arg1;
     if (lbl_80367110 & 1) {
-        switch (var_r6 & 0xFF) {
+        switch ((u8)var_r6) {
         case 2:
             var_r6 = 0;
             break;
