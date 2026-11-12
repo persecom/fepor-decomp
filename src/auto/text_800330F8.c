@@ -9949,40 +9949,42 @@ void fn_8004B588(u8 *arg0)
 
 void fn_8004B8F8(int arg0, int arg1, float arg2, float arg3)
 {
-    extern u8 *lbl_803672CC;
-    u8 *node;
-    u8 *pool;
-    u8 *head;
-
-    node = *(u8 **)(*(u8 **)(lbl_803672CC + 8));
-
-    if (node == 0) {
-        node = 0;
-    } else {
-        pool = lbl_803672CC;
-        head = *(u8 **)(pool + 0x10);
-        *(u8 **)(node + 4) = head;
-        *(u32 *)(node + 0) = 0;
-        head = *(u8 **)(pool + 0x10);
-        if (head != 0) {
-            *(u8 **)(head + 0) = node;
-        }
-        if (*(u8 **)(pool + 0xC) == 0) {
-            *(u8 **)(pool + 0xC) = node;
-        }
-        *(u8 **)(pool + 0x10) = node;
-        *(u8 **)(pool + 8) += 4;
-        ++*(u32 *)(pool + 0x14);
+  extern u8 *lbl_803672CC;
+  u8 *new_var[2];
+  u8 *pool;
+  pool = lbl_803672CC;
+  new_var[0] = *((u8 **) (*((u8 **) (pool + 8))));
+  if (new_var[0] == 0)
+  {
+    new_var[0] = 0;
+  }
+  else
+  {
+    new_var[1] = *((u8 **) (pool + 0x10));
+    *((u8 **) (new_var[0] + 4)) = new_var[1];
+    *((u32 *) (new_var[0] + 0)) = 0;
+    new_var[1] = *((u8 **) (pool + 0x10));
+    if (new_var[1] != 0)
+    {
+      *((u8 **) (new_var[1] + 0)) = new_var[0];
     }
-
-    if (node == 0) {
-        return;
+    if ((*((u8 **) (pool + 0xC))) == 0)
+    {
+      *((u8 **) (pool + 0xC)) = new_var[0];
     }
-    *(float *)(node + 0xC) = arg2;
-    *(float *)(node + 0x10) = arg3;
-    *(u16 *)(node + 0xA) = arg0;
-    *(u8 *)(node + 9) = 0;
-    *(u8 *)(node + 8) = arg1;
+    *((u8 **) (pool + 0x10)) = new_var[0];
+    *((u8 **) (pool + 8)) += 4;
+    ++(*((u32 *) (pool + 0x14)));
+  }
+  if (new_var[0] == 0)
+  {
+    return;
+  }
+  *((float *) (new_var[0] + 0xC)) = arg2;
+  *((float *) (new_var[0] + 0x10)) = arg3;
+  *((u16 *) (new_var[0] + 0xA)) = arg0;
+  *((u8 *) (new_var[0] + 9)) = 0;
+  *((u8 *) (new_var[0] + 8)) = arg1;
 }
 
 #pragma use_lmw_stmw reset
