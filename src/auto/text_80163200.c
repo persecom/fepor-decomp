@@ -3111,12 +3111,15 @@ void *fn_8016ABDC(void) {
     return (u8 *)lbl_80277BC0 + 0x1b7;
 }
 
-s32 fn_8016ABEC(s32 arg1) {
-    M2C_UNK fn_8000C070(M2C_UNK);
-    void *fn_8000C0C0(M2C_UNK *);
-    extern M2C_UNK lbl_80293D8C;
-    M2C_FIELD(fn_8000C0C0(&lbl_80293D8C), s32 *, 0x50) = arg1;
-    fn_8000C070(0xC);
+s32 fn_8016ABEC(s32 unused, s32 arg1) {
+    void *fn_8000C0C0(void *);
+    void fn_8000C070(void *, s32);
+    extern u8 lbl_80293D8C[];
+    void *temp;
+
+    temp = fn_8000C0C0(lbl_80293D8C);
+    *(s32 *)((u8 *)temp + 0x50) = arg1;
+    fn_8000C070(temp, 0xC);
     return 4;
 }
 
