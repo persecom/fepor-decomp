@@ -52,6 +52,13 @@ static inline u32 SoundReadSizeB(u32 offset, u32 limit) {
 }
 
 typedef struct StreamB { u8 pad[0x2C]; s32 buffers[2]; u8 pad34[0x14]; u32 size; u16 index; } StreamB;
+typedef struct {
+    u8 pad[0x30];
+    void *entries[0xC];
+    u8 kinds[0xC];
+    s16 count;
+    s16 cursor;
+} UnkAD554;
 extern s32 fn_80010710(u8* arg0);
   extern s32 lbl_80368230;
   extern s32 lbl_8028D544[];
@@ -172,6 +179,50 @@ s32 fn_800AD310(s32 arg0) {
         return 0;
     }
     return 1;
+}
+
+void fn_800AD554(void *arg0) {
+    void fn_8000C070(void *, s32);
+    void fn_800283C8(void *, void *);
+    void fn_8002629C(void *, void *);
+    void fn_800264BC(void *, void *);
+    extern u8 lbl_802EF4C8[];
+    s16 idx;
+    s16 count;
+    void *ptr;
+    u8 kind;
+
+    idx = *(s16 *)((u8 *)arg0 + 0x6E);
+    *(s16 *)((u8 *)arg0 + 0x6E) = (s16)(idx + 1);
+    count = *(s16 *)((u8 *)arg0 + 0x6C);
+    if (count >= 0xC) {
+        ptr = NULL;
+    } else {
+        ptr = *(void **)((u8 *)arg0 + (idx * 4) + 0x30);
+    }
+    if (ptr == NULL) {
+        fn_8000C070(arg0, 0x63);
+        return;
+    }
+    if (count >= 0xC) {
+        ptr = NULL;
+    } else {
+        ptr = *(void **)((u8 *)arg0 + (idx * 4) + 0x30);
+    }
+    fn_800283C8(lbl_802EF4C8, ptr);
+    if (*(s16 *)((u8 *)arg0 + 0x6C) >= 0xC) {
+        kind = 0;
+    } else {
+        kind = *((u8 *)arg0 + idx + 0x60);
+    }
+    switch (kind) {
+    case 1:
+        fn_8002629C(lbl_802EF4C8, arg0);
+        break;
+    case 2:
+        fn_800264BC(lbl_802EF4C8, arg0);
+        break;
+    }
 }
 
 extern u8 lbl_8028D064[16];
@@ -5507,31 +5558,32 @@ s32 fn_800BA230(u32 arg0, s32 arg1) {
 }
 
 s32 fn_800BA298(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
-    u32 fn_801090C0();
-    M2C_UNK fn_80109448(s32, s32, f32, f32, f32);
+    u32 fn_801090C0(void);
+    void fn_80109448(u32, s32, s32, f32, f32, f32);
     extern f32 lbl_80369D00;
+    extern f64 lbl_80369CF8;
+    u32 tmp;
     f32 var_f1;
     f32 var_f2;
 
     if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
         return 0;
     }
-    if (fn_801090C0() == 0U) {
+    tmp = fn_801090C0();
+    if (tmp == 0U) {
         return 0;
     }
-    var_f1 = (f32) arg3;
-    var_f2 = (f32) arg4;
+    var_f1 = (f32)arg3;
+    var_f2 = (f32)arg4;
     if (arg1 < 8) {
-        if (arg1 < 5) {
-
-        } else {
+        if (arg1 >= 5) {
             var_f2 *= lbl_80369D00;
-            if ((u32) (arg3 + 0xF8A50000) != -0x32EBU) {
+            if (arg3 != 123456789) {
                 var_f1 *= lbl_80369D00;
             }
         }
     }
-    fn_80109448(arg1, arg2, var_f1, var_f2, (f32) arg5);
+    fn_80109448(tmp, arg1, arg2, var_f1, var_f2, (f32)arg5);
     return 1;
 }
 
