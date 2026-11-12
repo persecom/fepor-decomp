@@ -1634,6 +1634,85 @@ void fn_801BA200(void *arg0) {
     return;
 }
 
+#pragma cplusplus on
+extern "C" void fn_801BA71C(void *arg0) {
+void fn_8000C070(void *,s32); void fn_8000C188(void *);
+s32 fn_80105814(void *); u8 fn_80105BC0(void *,u8); void *fn_801362C8(void *);
+void fn_8013FDA0(void *); void *fn_8013FF94(void *,s32,s32);
+void fn_801475FC(void *,s32); u8 fn_80166D8C(void *);
+void fn_80167190(void *,s32,f32,f32); void fn_801673D0(void *);
+void fn_8016758C(void *,void *,s32,f32,f32);
+void fn_80176888(void *,void *,f32,f32); s32 fn_8017C3C8(void *);
+extern u8 lbl_8027C698[],lbl_802EF4C8[],lbl_80330D68[];
+extern u32 lbl_80367110; extern void *lbl_80367240; extern s32 lbl_80368DC4;
+class Pair { public: s16 x,y; Pair() {} Pair(s16 a,s16 b):x(a),y(b) {} Pair(const Pair &o) { *(u32 *)this=*(u32 *)&o; } Pair &operator=(const Pair &o) { *(u32 *)this=*(u32 *)&o; return *this; } };
+void fn_80140258(void *,void *,const Pair &,s32);
+struct Obj { virtual void destroy(s32); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual Pair v9(); s32 refs; };
+void *self,*owner,*unit,*temp;
+s32 btn; u8 gate; s32 flags;
+u32 pos1,pos2,pos3,pos4;
+self=arg0; owner=*(void **)lbl_802EF4C8;
+unit=fn_801362C8(M2C_FIELD(self,void **,0x68));
+fn_8013FDA0(self);
+if(unit!=fn_801362C8(M2C_FIELD(self,void **,0x68))) {
+unit=fn_801362C8(M2C_FIELD(self,void **,0x68));
+if(fn_80166D8C(lbl_80330D68)) {
+if(unit) {
+*(Pair *)&pos1=((Obj *)M2C_FIELD(self,void **,0x68))->v9();
+fn_80167190(lbl_80330D68,fn_80105814(unit),(f32)*(s16 *)&pos1,(f32)*((s16 *)&pos1+1));
+} else fn_801673D0(lbl_80330D68);
+}
+}
+gate=0; flags=lbl_80367110;
+if((flags&0x10)&&!(flags&0x20)) gate=1;
+if(!gate) {
+s32 a=M2C_FIELD(lbl_80367240,s32 *,4);
+s32 changed=M2C_FIELD(lbl_80367240,s32 *,8)^a;
+M2C_FIELD(M2C_FIELD(self,void **,0x6c),void **,0x3c)=unit;
+btn=a&changed;
+if((btn&0x100)&&unit&&!fn_80166D8C(lbl_80330D68)) {
+s32 remaining=M2C_FIELD(M2C_FIELD(owner,void **,0x18c),u8 *,0x40);
+remaining-=fn_8017C3C8(owner);
+if(fn_80105BC0((u8 *)owner+0x1bc,M2C_FIELD(unit,u8 *,0x18))) {
+*(Pair *)&pos2=((Obj *)M2C_FIELD(self,void **,0x68))->v9();
+fn_80176888(lbl_8027C698+0x17a,self,(f32)*(s16 *)&pos2,(f32)*((s16 *)&pos2+1));
+return;
+}
+if(remaining<M2C_FIELD(unit,u8 *,0x1a)) {
+*(Pair *)&pos3=((Obj *)M2C_FIELD(self,void **,0x68))->v9();
+fn_80176888(lbl_8027C698+0x18c,self,(f32)*(s16 *)&pos3,(f32)*((s16 *)&pos3+1));
+return;
+}
+lbl_802EF4C8[0x14]=M2C_FIELD(unit,u8 *,0x18);
+temp=M2C_FIELD(self,void **,0x68);
+fn_80140258(self,temp,Pair(0x260,M2C_FIELD(temp,s16 *,0xc)),0);
+temp=M2C_FIELD(self,void **,0x6c);
+fn_80140258(self,temp,Pair(0x260,M2C_FIELD(temp,s16 *,0xc)),0);
+fn_801475FC(lbl_8027C698+0x10c,100); fn_8000C188(self); return;
+}
+if((btn&0x800)&&!fn_80166D8C(lbl_80330D68)&&unit) {
+*(Pair *)&pos4=((Obj *)M2C_FIELD(self,void **,0x68))->v9();
+fn_8016758C(lbl_80330D68,self,fn_80105814(unit),(f32)*(s16 *)&pos4,(f32)*((s16 *)&pos4+1));
+*(s32 *)lbl_80330D68|=lbl_80368DC4; return;
+}
+if((btn&0xa00)&&fn_80166D8C(lbl_80330D68)) {fn_801673D0(lbl_80330D68);return;}
+if((btn&0x200)&&!fn_80166D8C(lbl_80330D68)) {
+temp=M2C_FIELD(self,void **,0x68);
+fn_80140258(self,temp,Pair(0x260,M2C_FIELD(temp,s16 *,0xc)),1);
+{Obj *p=M2C_FIELD(self,Obj **,0x68);
+if(p) {if(--p->refs==0 && p) p->destroy(1); M2C_FIELD(self,void **,0x68)=0;}}
+temp=M2C_FIELD(self,void **,0x6c);
+fn_80140258(self,temp,Pair(0x260,M2C_FIELD(temp,s16 *,0xc)),0);
+{Obj *p=M2C_FIELD(self,Obj **,0x6c);
+if(p) {if(--p->refs==0 && p) p->destroy(1); M2C_FIELD(self,void **,0x6c)=0;}}
+temp=fn_8013FF94(self,0x82,0);
+fn_80140258(self,temp,Pair(M2C_FIELD(temp,s16 *,0xa),-0x3a),0);
+fn_801475FC(lbl_8027C698+0x11c,100); fn_8000C070(self,0x11);
+}
+}
+}
+#pragma cplusplus reset
+
 s32 fn_801BAC40(struct efUnit* arg0, s32 arg1)
 {
     struct efUnit* temp_r3;
