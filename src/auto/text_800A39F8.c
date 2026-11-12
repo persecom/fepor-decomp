@@ -2413,15 +2413,16 @@ void fn_800A8F94(s32 arg0) {
 
 #pragma optimization_level reset
 #pragma opt_common_subs reset
-void fn_800A8FE8(s32 arg0) {
-    M2C_UNK fn_8000C070(s32, M2C_UNK);
-    u8 fn_800A5C88();
+void fn_800A8FE8(void *arg0) {
+    void fn_8000C070(void *, s32);
+    void fn_8000C188(void *);
+    u8 fn_800A5C88(void);
     extern void *lbl_80367240;
     s32 temp_r5;
 
-    temp_r5 = M2C_FIELD(lbl_80367240, s32 *, 4);
-    if (temp_r5 & (M2C_FIELD(lbl_80367240, s32 *, 8) ^ temp_r5) & 0x1100) {
-        fn_8000C188();
+    temp_r5 = *(s32 *)((u8 *)lbl_80367240 + 4);
+    if (temp_r5 & (*(s32 *)((u8 *)lbl_80367240 + 8) ^ temp_r5) & 0x1100) {
+        fn_8000C188(arg0);
         return;
     }
     if (fn_800A5C88() == 0) {
