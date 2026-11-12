@@ -401,8 +401,8 @@ void fn_8009B028(void *arg0, u32 arg1, s32 arg2, f32 farg0, f32 farg1) {
     void fn_8001019C(s16, s32, s32, ...);
     s32 fn_80010B78(void *, s32, f32);
     void *fn_80019DBC(s32);
-    void *fn_80019E04(void *);
     void fn_8005926C(s32, s32, s32, s32, s32, s32, s32, s32);
+    void *fn_80019E04(void *);
     void *fn_8005B73C(void *);
     void fn_8009B55C(u32, s32, f32, f32);
     void *fn_8010F9BC(void *, s8, s8, s32);
@@ -416,8 +416,8 @@ void fn_8009B028(void *arg0, u32 arg1, s32 arg2, f32 farg0, f32 farg1) {
     extern f32 lbl_80369864;
     extern f32 lbl_80369868;
     extern f32 lbl_8036986C;
-    extern f32 lbl_80369870;
     extern f32 lbl_80369874;
+    extern f32 lbl_80369870;
     extern f32 lbl_80369878;
 
     typedef struct { u8 pad[0x4C]; void *p; } Slot;
@@ -425,9 +425,9 @@ void fn_8009B028(void *arg0, u32 arg1, s32 arg2, f32 farg0, f32 farg1) {
     void *unit;
     void *str;
     u32 tex;
-    void *self;
-    s32 x;
     s32 y;
+    s32 x;
+    void *self;
     s32 kind;
     void *obj;
     void *walk;
@@ -451,7 +451,7 @@ void fn_8009B028(void *arg0, u32 arg1, s32 arg2, f32 farg0, f32 farg1) {
     }
     unit = fn_80019DBC(kind);
     if (kind != 0x21) {
-        if (kind < 0x21) {
+        if (0x21 > kind) {
             if (kind != 0x1C) {
                 if (kind < 0x1C) {
                     if (kind == 9) {
@@ -463,7 +463,7 @@ void fn_8009B028(void *arg0, u32 arg1, s32 arg2, f32 farg0, f32 farg1) {
             }
             goto case_common;
         }
-        if (kind >= 0x2D) {
+        if (0x2D <= kind) {
             goto block_22;
         }
         if (kind >= 0x2B) {

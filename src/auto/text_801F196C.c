@@ -2450,7 +2450,7 @@ void fn_801FA874(void *arg0) {
     }
 }
 
-#pragma scheduling off
+#pragma peephole off
 void fn_801FAA9C(void *arg0, void *arg1, u32 arg2, void *arg3) {
     typedef struct {
         s32 a;
@@ -2702,7 +2702,7 @@ void fn_801FAA9C(void *arg0, void *arg1, u32 arg2, void *arg3) {
         }
     }
 }
-#pragma scheduling on
+#pragma peephole on
 void fn_801FB048(void *arg0, u32 arg1) {
     typedef struct {
         s32 unk0;
