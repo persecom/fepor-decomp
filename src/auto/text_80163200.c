@@ -6271,7 +6271,8 @@ void fn_80170DB0(void *arg0) {
 }
 
 void fn_80170E08(void *arg0) {
-    *(u8*)((char*)arg0 + 0x54) = 1;
+    u8 *p = *(u8 **)((u8 *)arg0 + 0x54);
+    p[0x4c] = 1;
 }
 
 void fn_80170E18(void *arg0) {
