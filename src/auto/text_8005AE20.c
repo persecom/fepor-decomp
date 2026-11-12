@@ -2884,9 +2884,9 @@ M2C_UNK fn_80063954(char *arg0) {
     return temp_r31;
 }
 
-extern M2C_UNK fn_8005C82C(char *, s32);
 #pragma inline_depth(0)
 void *fn_800639B4(void *arg0) {
+    M2C_UNK fn_8005C82C(char *, s32);
     void fn_80063A14(void *);
     void *temp_r31;
 
@@ -2897,7 +2897,6 @@ void *fn_800639B4(void *arg0) {
     }
     return temp_r31;
 }
-#pragma inline_depth(reset)
 extern f32 lbl_803691E4;
 extern f32 lbl_8036920C;
 f32 fn_80064164(void **arg0, s32 arg1, f32 farg0) {
