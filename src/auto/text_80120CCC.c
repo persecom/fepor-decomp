@@ -2727,8 +2727,9 @@ void fn_80126A98(s32 arg0) {
     fn_8000C188(arg0);
 }
 
-void fn_80126C44(u16 *arg0, u16 arg1) {
-    *arg0 = (*arg0 & ~0x130) | (arg1 & 0x130);
+void fn_80126C44(void) {
+    extern s32 lbl_80367110;
+    lbl_80367110 &= ~0x800;
 }
 
 void fn_80126C54(u16 *arg0) {
