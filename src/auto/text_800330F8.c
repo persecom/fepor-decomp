@@ -12217,13 +12217,16 @@ void fn_80053F68(void *arg0) {
 #pragma use_lmw_stmw reset
 
 void fn_80054314(void *arg0) {
-    u8 fn_8000A268();
-    M2C_UNK fn_80069F04(void *);
+    u8 fn_8000A268(void);
+    void fn_80069F04(void *);
+    void fn_8005F7B0(void *, s32);
     u8 temp_r31;
+    u8 tmp;
 
-    temp_r31 = M2C_FIELD(arg0, u8 *, 0xB);
-    if ((u8) ((temp_r31 * fn_8000A268()) / 255) != 0) {
-        fn_8005F7B0(arg0);
+    temp_r31 = *(u8 *)((u8 *)arg0 + 0xB);
+    tmp = (u8)((temp_r31 * fn_8000A268()) / 255);
+    if (tmp != 0) {
+        fn_8005F7B0(arg0, tmp);
         fn_80069F04(arg0);
         fn_8005F7B0(arg0, temp_r31);
     }
