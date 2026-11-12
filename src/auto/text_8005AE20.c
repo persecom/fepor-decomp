@@ -344,50 +344,44 @@ s32 fn_8005B760(s32 arg0) {
     }
 }
 
-u8 fn_8005B7A4(u8 *arg0) {
-    extern u32 lbl_802F03A8;
-    u8 *var_r3;
-    u32 var_r4;
-    u32 *var_r3_2;
-    s32 var_r5;
-    u8 temp_r5;
-    s32 var_ctr;
+u8 fn_8005B7A4(u8 *s) {
+    extern u32 lbl_802F03A8[0x4D];
+    u32 hash;
+    u8 b;
+    u32 *p;
+    s32 i;
+    s32 ctr;
 
-    var_r3 = arg0;
-    var_r4 = 0;
-    
-    // First loop to process input
-    do {
-        temp_r5 = *var_r3;
-        if (temp_r5 == 0) break;
-        var_r3++;
-        var_r4 = (var_r4 + temp_r5) << 4;  // slwi r4, r4, 4 is left shift by 4
-    } while(1);
-    
-    var_r3_2 = &lbl_802F03A8;
-    var_r5 = 0;
-    var_ctr = 0x4D;
-    
-    // Second loop to compare with table
-    do {
-        if (var_r4 == *var_r3_2) {
-            if (var_r5 == 0x21) {
-                return 0x1C;
+    hash = 0;
+    while ((b = *s, (s8)b != 0)) {
+        hash = hash + b;
+        s++;
+        hash <<= 4;
+    }
+
+    p = lbl_802F03A8;
+    i = 0;
+    for (ctr = 0x4D; ctr != 0; ctr--) {
+        if (hash == *p) {
+            if (i == 0x21) {
+                goto ret1c;
             }
-            if (var_r5 < 0x21) {
-                if (var_r5 == 0x9) {
-                    return 0x1C;
-                }
-                return (u8) var_r5;
+            if (i >= 0x21) {
+                goto retu8;
             }
-            return (u8) var_r5;
+            if (i == 9) {
+                goto ret1c;
+            }
+            goto retu8;
         }
-        var_r3_2 += 4;
-        var_r5 += 1;
-        var_ctr -= 1;
-    } while(var_ctr != 0);
-    
+        p++;
+        i++;
+    }
     return 0;
+ret1c:
+    return 0x1C;
+retu8:
+    return (u8)i;
 }
 
 void fn_8005B820(void) {
@@ -1364,26 +1358,23 @@ void fn_8005E014(void *arg0) {
 }
 
 void fn_8005E070(s32 arg0, void *arg1) {
-    extern u16 lbl_8030F4E0;
-    extern u8 lbl_803672EB;
-    extern u16 lbl_803672EC;
+    void fn_8020C79C(void *);
+    void fn_8020AEC4(u8 *);
+    extern u8 lbl_8030F4E0[];
+    extern volatile u8 lbl_803672EB;
+    extern u8 lbl_803672EC[8];
+    u8 *entry;
+    s32 val;
 
-    s32 temp_r31;
-    s32 temp_r6;
-    void *temp_r5;
-    u8 r4;
-
-    temp_r31 = *(s32 *)((char *)arg1 + 0x2C);
+    val = *(s32 *)((u8 *)arg1 + 0x2C);
     fn_8020C79C(arg1);
     if (arg0 >= 0) {
-        r4 = lbl_803672EB;
-        temp_r6 = r4 * 0xC;
-        temp_r5 = (char *)&lbl_8030F4E0 + temp_r6;
-        *(u8 *)temp_r5 = 0;
-        *(s32 *)((char *)temp_r5 + 4) = temp_r31;
-        *(s32 *)((char *)temp_r5 + 8) = 0;
-        lbl_803672EB = (r4 + 1) & 0x3F;
-        fn_8020AEC4(&lbl_803672EC, 0, temp_r5, temp_r6);
+        entry = lbl_8030F4E0 + lbl_803672EB * 0xC;
+        entry[0] = 0;
+        *(s32 *)(entry + 4) = val;
+        *(s32 *)(entry + 8) = 0;
+        lbl_803672EB = (lbl_803672EB + 1) & 0x3F;
+        fn_8020AEC4(lbl_803672EC);
     }
 }
 
@@ -4128,6 +4119,51 @@ loop_16:
     goto loop_16;
 }
 
+void *fn_80065634(void ***arg0, s32 arg1) {
+    u8 *base;
+    u8 *entry;
+    u16 offset;
+    s32 count;
+    s32 index;
+    s32 diff1;
+    s32 diff2;
+    s32 mask;
+
+    if (arg0 == NULL) {
+        base = NULL;
+    } else if (*arg0 == NULL) {
+        base = NULL;
+    } else {
+        base = (u8 *)**arg0;
+    }
+
+    if (base == NULL) {
+        return NULL;
+    }
+
+    count = *(u16 *)base;
+    index = 0;
+
+    while (count > 0) {
+        offset = *(u16 *)((u8 *)*(void **)(base + 4) + index);
+
+        diff1 = (s32)offset - 0xFFFF;
+        diff2 = 0xFFFF - (s32)offset;
+        mask = ~(diff1 | diff2) >> 31;
+
+        entry = (u8 *)(((u32)base + offset) & ~(u32)mask);
+
+        if (*(u16 *)entry == arg1) {
+            return entry;
+        }
+
+        index += 2;
+        count--;
+    }
+
+    return NULL;
+}
+
 #pragma optimization_level 2
 void *fn_800656C8(void *node, void *out)
 {
@@ -6845,28 +6881,41 @@ s32 fn_8006F014(void) {
     return lbl_80366DE8;
 }
 
-s32 fn_8006F020(void *arg0) {
-    if (*(u16*)((char*)arg0 + 0x7C) == 0xFFFF) {
-        return 0;
-    }
-    
-    if (*(u16*)((char*)arg0 + 0x7E) == 0xFFFF) {
-        return 0;
-    }
-
-    if (*(u16*)((char*)arg0 + 0x80) == 0xFFFF) {
-        return 0;
-    }
-
-    if (*(u16*)((char*)arg0 + 0x82) == 0xFFFF) {
-        return 0;
-    }
-
-    return 1;
-}
-
 #pragma global_optimizer off
 #pragma opt_strength_reduction off
+void fn_8006F020(void *arg0, void *arg1, void *arg2, void *arg3)
+{
+    void *fn_800C0658(void);
+    void fn_80024398(void *, void *, s32);
+    extern u8 lbl_80311CA8[];
+    u8 *base;
+    u8 *entries;
+    u8 *table;
+    void *p0;
+    void *p1;
+    void *p2;
+
+    base = lbl_80311CA8;
+    entries = base + 0x4C;
+    table = base + 0x6C;
+    p0 = entries + 8;
+    p1 = entries + 0x10;
+    p2 = entries + 0x18;
+
+    *(void **)(table + 0) = entries;
+    *(void **)(entries + 4) = arg0;
+    *(void **)(table + 4) = p0;
+    *(void **)(entries + 0xC) = arg1;
+    *(void **)(table + 8) = p1;
+    *(void **)(entries + 0x14) = arg2;
+    *(void **)(table + 0xC) = p2;
+    *(void **)(entries + 0x1C) = arg3;
+    *(void **)(table + 0x10) = (void *)0;
+
+    fn_80024398(base + 0x94, fn_800C0658(), 0);
+}
+#pragma opt_strength_reduction on
+#pragma global_optimizer on
 void fn_8006F09C(void *arg0, void *arg1, void *arg2)
 {
     void *fn_800C0658(void);
