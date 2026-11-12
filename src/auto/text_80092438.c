@@ -749,18 +749,15 @@ u8 fn_800934CC(void *arg0, void *arg1) {
                 ok = result;
                           } else if (flags & 0x40) {
               }
-              if (ok == 0) {
-                  result = 0;
-              } else if (fn_800940B0(arg0, arg1) == 0)
-              {
-                  result = 0;
-              } else {
-                  result = 1;
-              }
-          }
-          return result;
-      }
-      if (flags & 4) {
+                              if (ok == 0) {
+                    result = 0;
+                } else {
+                    result = fn_800940B0(arg0, arg1) != 0;
+                }
+            }
+            return result;
+        }
+        if (flags & 4) {
           if (!(flags & 4)) {
           } else {
               if (flags & 0x200) {
