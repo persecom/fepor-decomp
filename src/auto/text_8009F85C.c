@@ -244,8 +244,8 @@ s32 fn_8009FD60(void) {
 }
 
 void *fn_8009FD8C(void) {
-    extern u16 lbl_8026D8D8;
-    return &lbl_8026D8D8 + 0x5da;
+    extern u16 lbl_8026D8D8[];
+    return (u8 *)lbl_8026D8D8 + 0x2ed;
 }
 
 s32 fn_8009FD9C(void) {
