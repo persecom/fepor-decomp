@@ -5950,23 +5950,22 @@ u8 fn_800BC4FC(u8 arg0, s32 arg1) {
     return 0U;
 }
 
-s32 fn_800BC588(u8 arg0) {
-    void *fn_80037BD0(void);
+s32 fn_800BC588(u8 arg0, s32 arg1) {
+    u8 *fn_80037BD0(void *, s32);
     extern u8 lbl_802B14E4[];
-
     void *unit;
+    u8 *p;
+
     if (arg0 != 0) {
         unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
     } else {
-        unit = 0;
+        unit = NULL;
     }
-    if (unit == 0 || *(u32 *)((u8 *)unit + 0x188) == 0) {
+    if (unit == NULL || *(u32 *)((u8 *)unit + 0x188) == 0) {
         return 0;
     }
-    {
-        char *p = fn_80037BD0();
-        return !!(p[5] & 0x80);
-    }
+    p = fn_80037BD0(unit, arg1);
+    return ((p[5] & 0x80) >> 7) != 0;
 }
 
 s32 fn_800BC5FC(u8 arg0) {
