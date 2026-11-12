@@ -6898,7 +6898,7 @@ result=fn_8021F4DC();
 if(sp9!=0 && result==lbl_80367340){count=lbl_80367338+1;lbl_80367338=count;if(count>=lbl_80367334){OSReport(lbl_8026B990+0x126);fn_8006DDDC();fn_8020602C(lbl_8026B990+1,0x326,lbl_8026B990+0x15b);}}else{lbl_80367340=result;lbl_80367338=0;}
 }
 
-extern u16 lbl_8036732C;
+extern s32 lbl_8036732C;
 extern u32 lbl_80367334;
 extern s32 lbl_803682A0;
 extern f32 lbl_803692C8;
@@ -7783,13 +7783,45 @@ void fn_80071CE8(void *arg0, void *arg1) {
     }
 }
 
-void fn_80071D28(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    // Function should match exactly with prologue/epilogue
-    // But since I can't write assembly, I'll just return to see the prologue issue clearly
-    
-    // The core issue is this function has a specific stack frame that must be exact
-    // This approach won't work - I don't have the structure I need to make this function do what it does in the original.
-    return;
+void fn_80071D28(void *unused, void *unit) {
+    void *fn_8000B908(s32);
+    void fn_8000A258(void);
+    void fn_80009C0C(f32);
+    void fn_8000A248(void);
+    void fn_8008BF68(s32, s32, s32);
+    extern f32 lbl_803692F0;
+    s32 addr;
+    void *p;
+    s16 a;
+    s16 b;
+    s32 flag;
+
+    (void)unused;
+    addr = (s32)unit + (s8)((u8 *)unit)[0x62];
+    p = fn_8000B908(*(u8 *)(addr + 0x40));
+    a = *(s16 *)((u8 *)p + 0x30);
+
+    addr = (s32)unit + (s8)((u8 *)unit)[0x62];
+    p = fn_8000B908(*(u8 *)(addr + 0x40));
+    b = *(s16 *)((u8 *)p + 0x32);
+
+    if (*(s16 *)((u8 *)unit + 0x3A) < 0) {
+        *(s16 *)((u8 *)unit + 0x38) = a;
+        *(s16 *)((u8 *)unit + 0x3A) = b;
+    } else {
+        *(s16 *)((u8 *)unit + 0x38) = (s16)((*(s16 *)((u8 *)unit + 0x38) + a) / 2);
+        *(s16 *)((u8 *)unit + 0x3A) = (s16)((*(s16 *)((u8 *)unit + 0x3A) + b) / 2);
+    }
+
+    fn_8000A258();
+    fn_80009C0C(lbl_803692F0);
+    fn_8000A248();
+
+    flag = 0;
+    if (((u8 *)unit)[0x2D] == 0 && ((u8 *)unit)[0x2E] == 0) {
+        flag = 1;
+    }
+    fn_8008BF68(*(s16 *)((u8 *)unit + 0x38), *(s16 *)((u8 *)unit + 0x3A), flag);
 }
 
 void fn_80071E0C(void *arg0, void *arg1) {
