@@ -314,18 +314,25 @@ void fn_80132C14(s32 arg0) {
     fn_8016A5DC(arg0, M2C_FIELD(fn_8014D8FC(lbl_80330708), s32 *, 0x44), 90.0f);
 }
 
+#pragma global_optimizer off
 void fn_80132C5C(void *arg0) {
+    void fn_8016E9DC(void *);
+    void fn_80234450(void *, void *);
+    void fn_801CE070(void *, void *, void *);
+    extern u8 lbl_8032FE80[];
+    extern u8 lbl_802762DC[];
+
     switch (*(s32 *)((u8 *)arg0 + 0x44)) {
     case 0:
         fn_8016E9DC(arg0);
         break;
     case 1:
-        fn_80234450((void *)0x8032FE80, (const char *)0x802762DC + 0x2C);
-        fn_801CE070((void *)0x8032FE80, (const char *)0x802762DC + 0x2C, arg0);
+        fn_80234450(lbl_8032FE80, lbl_802762DC + 0x2C);
+        fn_801CE070(lbl_8032FE80, lbl_802762DC + 0x2C, arg0);
         break;
     }
 }
-
+#pragma global_optimizer on
 void fn_80132CDC(void) {
     M2C_UNK fn_8000C188();
     fn_8000C188();
