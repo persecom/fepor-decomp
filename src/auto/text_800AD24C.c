@@ -1408,8 +1408,8 @@ s32 fn_800B1E98(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
 }
 s32 fn_800B2494(s32 arg0)
 {
-    extern u8 lbl_80317338[];
     s32 fn_8024B370(void *);
+    extern u8 lbl_80317338[];
 
     u8 *base;
     void *entry;
@@ -1420,7 +1420,7 @@ s32 fn_800B2494(s32 arg0)
 
     result = fn_8024B370(entry);
 
-    return result != 0;
+    return (u8)result != 0;
 }
 
 void fn_800B24D8(s32 arg0, u8 arg1) {
