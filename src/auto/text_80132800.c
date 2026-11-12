@@ -10875,7 +10875,8 @@ void fn_8014876C(void *arg0, s8 arg1, s32 arg2) {
 }
 
 extern f64 lbl_8036A788;
-void fn_801487D0(void *arg0, s16 arg1) {
+#pragma cplusplus on
+extern "C" void fn_801487D0(void *arg0, s16 arg1) {
     extern f32 lbl_8036A7A0;
     s16 var_r31;
     void *temp_r4;
@@ -10894,7 +10895,6 @@ void fn_801487D0(void *arg0, s16 arg1) {
     }
 }
 
-#pragma cplusplus on
 extern "C" void fn_80148888(void *arg0, s16 arg1) {
     struct Obj {
         u8 pad[8];
