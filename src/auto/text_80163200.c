@@ -9349,8 +9349,11 @@ u8 fn_80177B10(void) {
     return 0;
 }
 
-u16 fn_80177C78(void) {
-    return *(u16 *)((char *)lbl_80278080 + 0x50A * 2);
+void fn_80177C78(void) {
+    extern u16 lbl_80278080[];
+    void fn_8000E0E4(u8 *);
+
+    fn_8000E0E4((u8 *)lbl_80278080 + 0x50A);
 }
 
 void *fn_80177CA4(void) {
