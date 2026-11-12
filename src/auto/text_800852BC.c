@@ -10,6 +10,7 @@ typedef struct {
 } Menu888Entry;
 extern void* lbl_803674E8;
 extern f32 lbl_803696C8;
+f64 lbl_80369688 = 4503601774854144.0;
 
 extern s32 lbl_803682F0;
 extern void *lbl_8026CC58;
@@ -1822,22 +1823,15 @@ void fn_80089970(void) {
 
 void fn_80089980(s32 arg0)
 {
-    extern f64 lbl_80369688;
     extern f32 lbl_803696C8;
-    extern u32 lbl_803674EC;
-
+    extern void *lbl_803674EC;
     u8 *ptr;
-    f32 value;
     s32 result;
 
     ptr = (u8 *)lbl_803674EC;
-
+    result = (s32)((f32)arg0 / lbl_803696C8);
     *(u16 *)(ptr + 0x32) = 3;
     *(u16 *)(ptr + 0x34) = 0;
-
-    value = (f32)((f64)arg0 / lbl_803696C8);
-    result = (s32)value;
-
     *(u16 *)(ptr + 0x36) = (u16)result;
 }
 
@@ -1845,21 +1839,16 @@ void fn_800899D4(s32 arg0)
 {
     extern f64 lbl_80369688;
     extern f32 lbl_803696C8;
-    extern u32 lbl_803674EC;
-
+    extern void *lbl_803674EC;
     u8 *ptr;
-    f32 value;
-    s32 result;
+    union { f64 d; struct { u32 hi; u32 lo; } w; } conv;
 
     ptr = (u8 *)lbl_803674EC;
-
+    conv.w.hi = 0x43300000;
+    conv.w.lo = (u32)arg0 ^ 0x80000000;
     *(u16 *)(ptr + 0x32) = 1;
     *(u16 *)(ptr + 0x34) = 0;
-
-    value = (f32)((f64)arg0 / lbl_803696C8);
-    result = (s32)value;
-
-    *(u16 *)(ptr + 0x36) = (u16)result;
+    *(u16 *)(ptr + 0x36) = (u16)(s32)((f32)(conv.d - lbl_80369688) / lbl_803696C8);
 }
 
 void fn_80089A28(void *arg0) {
