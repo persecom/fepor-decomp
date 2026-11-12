@@ -495,6 +495,30 @@ void DVDLowStopMotor(void) {
     OSRestoreInterrupts();
 }
 
+s32 fn_8020BF58(void *callback)
+{
+    extern void *Callback_80368538;
+
+    u32 ticks;
+
+    Callback_80368538 = callback;
+    StopAtNextInt_80368530 = 0;
+
+    __DIRegs[2] = 0xE0000000;
+    __DIRegs[7] = 1;
+
+    ticks = (*(u32 *)0x800000F8 >> 2) * 10;
+
+    OSCreateAlarm(AlarmForTimeout_80339ED8);
+    OSSetAlarm(
+        AlarmForTimeout_80339ED8,
+        (s64)(u32)ticks,
+        AlarmHandlerForTimeout
+    );
+
+    return 1;
+}
+
 void fn_8020C080(void) {
     s32 var_r3;
     var_r3 = 0;
