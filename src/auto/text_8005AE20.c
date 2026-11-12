@@ -6756,7 +6756,7 @@ s32 fn_8006EBA4(void *arg0, s32 arg1) {
     return *(s32 *)(base + (arg1 << 3) + 4) != 0;
 }
 
-extern void fn_8005D2CC(void);
+extern void fn_8005D2CC(u32);
 void fn_8006EDA0(s32 *arg0)
 {
     void fn_8005C7E8();
