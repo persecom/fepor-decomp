@@ -2056,31 +2056,32 @@ void *fn_80109180(s32 arg0, u32 arg1) {
     return result;
 }
 
-void fn_801091D8(void *arg0)
-{
+#pragma cplusplus on
+extern "C" void fn_801091D8(void *arg0) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    s32 i;
     u8 *list;
     u8 *entry;
-    u8 *obj;
-    void **vtable;
-    void (*callback)(void *);
-    s32 i;
 
+    i = 0;
     list = *(u8 **)((u8 *)arg0 + 0x30);
     entry = list;
-    i = 0;
-
-    while (i < list[4]) {
-        obj = *(u8 **)(entry + 0x14);
-        vtable = *(void ***)(obj + 4);
-        callback = (void (*)(void *))vtable[4];
-
-        callback(obj);
-
-        entry += 4;
-        i++;
+    goto check;
+loop:
+    ((Obj *)*(void **)(entry + 0x14))->v2();
+    entry += 4;
+    i += 1;
+check:
+    if (i < list[4]) {
+        goto loop;
     }
 }
-
+#pragma cplusplus reset
 void fn_80009B80(s8 arg0);
 void fn_80009B8C(s8 arg0);
 void fn_80009C20(void *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8);
@@ -2566,32 +2567,32 @@ extern "C" void fn_80109F88(void *arg0, void *arg1) {
 
 extern u16 lbl_80312060[32];
 void fn_8010A4D4(void *arg0) {
-    void *r8;
-    s32 r10;
-    s32 r11;
-    s32 temp_r0;
-    void *temp_r9;
-    s32 r0;
-    
-    r8 = arg0;
-    r10 = 0;
-    r11 = 0;
-loop_5:
-    r0 = *(s16*)((char*)arg0 + 0x8);
-    if (r11 < r0) {
-        if (*(u8*)((char*)r8 + 0xE) != 0) {
+    char *p;
+    s8 dest;
+    s32 i;
 
+    p = arg0;
+    dest = 0;
+    i = 0;
+    while (i < *(s16 *)((char *)arg0 + 8)) {
+        if (*(u8 *)(p + 0xE) != 0) {
         } else {
-            temp_r0 = r10 * 6;
-            r10 += 1;
-            temp_r9 = (void*)((char*)lbl_80312060 + temp_r0);
-            *(s16*)((char*)temp_r9 + 0x0) = *(s16*)((char*)r8 + 0xA);
-            *(s16*)((char*)temp_r9 + 0x2) = *(s16*)((char*)r8 + 0xC);
-            *(s16*)((char*)temp_r9 + 0x4) = *(s16*)((char*)r8 + 0x10);
+            s32 off = dest * 6;
+            u8 *out;
+            u8 c;
+            s16 b;
+            s16 a;
+            c = *(u8 *)(p + 0x10);
+            b = *(s16 *)(p + 0xC);
+            a = *(s16 *)(p + 0xA);
+            dest = (s8)(dest + 1);
+            out = (u8 *)lbl_80312060 + off;
+            *(s16 *)(out + 0) = a;
+            *(s16 *)(out + 2) = b;
+            *(s16 *)(out + 4) = c;
         }
-        r8 = (void*)((char*)r8 + 0x8);
-        r11 += 1;
-        goto loop_5;
+        p += 8;
+        i++;
     }
 }
 
