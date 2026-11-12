@@ -49,6 +49,14 @@ typedef struct Vec4 {
 
 extern Vec4 lbl_8026CD50;
 
+extern f64 lbl_80369740;
+static inline f32 ConvertUnsigned16(u16 value) {
+    union { f64 d; u32 w[2]; } conversion;
+    conversion.w[1] = value;
+    conversion.w[0] = 0x43300000;
+    return (f32)(conversion.d - lbl_80369740);
+}
+
 #pragma scheduling reset
 
 #pragma use_lmw_stmw on
