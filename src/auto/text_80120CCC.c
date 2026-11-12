@@ -2591,17 +2591,17 @@ void fn_801260E4(void *arg0) {
     extern u8 lbl_80275048[];
     extern u8 lbl_80290480[];
     s32 self;
-    void *temp;
+    s32 temp;
 
     self = (s32)arg0;
     fn_80013F48(lbl_80320060);
     fn_8000BD98(lbl_80275048 + 0x15B);
     if (fn_8000D354((void *)(self + 0x30)) != 0) {
-        temp = fn_8000CAF0(lbl_80290480, 2);
-        fn_8023440C((void *)((s32)temp + 0x30), (void *)(self + 0x30), 0x20);
-        *(void **)((u8 *)temp + 0x50) = fn_8000D354((void *)((s32)temp + 0x30));
-        *((u8 *)temp + 0x58) = 1;
-        *(void **)((u8 *)temp + 0x54) = lbl_80320060;
+        temp = (s32)fn_8000CAF0(lbl_80290480, 2);
+        fn_8023440C((void *)(temp + 0x30), (void *)(self + 0x30), 0x20);
+        *(void **)(temp + 0x50) = fn_8000D354((void *)(temp + 0x30));
+        *(u8 *)(temp + 0x58) = 1;
+        *(void **)(temp + 0x54) = lbl_80320060;
     }
 }
 
