@@ -8678,18 +8678,29 @@ res2:
 #pragma opt_peephole reset
 #pragma opt_loop_invariants reset
 #pragma use_lmw_stmw reset
-void fn_80048A3C(s8 arg0, s8 arg1, s8 arg2, void *arg3) {
+void fn_80048A3C(s8 arg0, s8 arg1, s8 arg2, u8 *arg3) {
     extern s8 lbl_8036728C;
     extern s8 lbl_8036728D;
     extern s8 lbl_8036728E;
-    extern M2C_UNK lbl_80367290;
+    extern u8 lbl_80367290[];
+    u8 a;
+    u8 b;
+    u8 c;
+    u8 d;
+    u8 *p;
+
+    a = arg3[0];
+    b = arg3[1];
+    c = arg3[2];
+    d = arg3[3];
+    p = lbl_80367290;
     lbl_8036728C = arg0;
     lbl_8036728D = arg1;
     lbl_8036728E = arg2;
-    M2C_FIELD(&lbl_80367290, u8 *, 0) = (u8) M2C_FIELD(arg3, u8 *, 0);
-    M2C_FIELD(&lbl_80367290, u8 *, 1) = (u8) M2C_FIELD(arg3, u8 *, 1);
-    M2C_FIELD(&lbl_80367290, u8 *, 2) = (u8) M2C_FIELD(arg3, u8 *, 2);
-    M2C_FIELD(&lbl_80367290, u8 *, 3) = (u8) M2C_FIELD(arg3, u8 *, 3);
+    p[0] = a;
+    p[1] = b;
+    p[2] = c;
+    p[3] = d;
 }
 
 void fn_80048A70(s8 arg0) {
@@ -8962,14 +8973,13 @@ void fn_80049CB4(s32 arg0, void *arg1) {
     fn_8005F7B0(temp_r31, M2C_FIELD(arg1, u8 *, 3));
 }
 
-void fn_80049D08(s32 arg0) {
+#pragma scheduling off
+void fn_80049D08(void *arg0) {
     extern f32 lbl_80368F2C;
-    M2C_UNK fn_8005FEE8(s32, f32);
-    
-    s32 temp_r3 = arg0 + 0x14;
-    fn_8005FEE8(temp_r3, lbl_80368F2C);
+    void fn_8005FEE8(void *, f32);
+    fn_8005FEE8((char *)arg0 + 0x14, lbl_80368F2C);
 }
-
+#pragma scheduling on
 void fn_80049D30(s32 arg0) {
     extern f32 lbl_80368EE4;
     s32 temp_r3 = arg0 + 0x14;
@@ -8986,15 +8996,12 @@ s32 fn_80049D6C(void *arg0) {
 }
 
 s32 fn_80049D84(void *arg0) {
-    u32 temp_r3;
-    u32 **temp_ptr;
-    
-    temp_ptr = (u32 **)((char *)arg0 + 0x10);
-    temp_r3 = *(temp_ptr[0] + 0xBC/4);
-    if (temp_r3 & 0x400) {
+    arg0 = *(void **)((u8 *)arg0 + 0x10);
+    arg0 = (void *)*(u32 *)((u8 *)arg0 + 0xBC);
+    if ((u32)arg0 & 0x400) {
         return 0;
     }
-    return (temp_r3 >> 9U) & 1;
+    return ((u32)arg0 >> 9) & 1;
 }
 
 M2C_UNK *fn_80049DA4(s32 arg0, u32 arg1, u32 arg2) {
@@ -9157,11 +9164,11 @@ void fn_80049E24(void) {
 #pragma global_optimizer reset
 
 void fn_8004A1F0(void) {
-    extern u32* lbl_80285858;
-    extern u16 lbl_80367110;
-    
+    extern u8 lbl_80285858[];
+    extern u32 lbl_80367110;
+    void fn_8000BF00(void *);
     fn_8000BF00(lbl_80285858);
-    lbl_80367110 &= 0xFBFF;
+    lbl_80367110 &= ~0x400u;
 }
 
 void fn_8004A224(void) {
@@ -11876,10 +11883,16 @@ void fn_8005366C(void *arg0, s32 arg1, s32 arg2) {
 
 void fn_80053680(void *arg0, void *arg1) {
     extern f32 lbl_8036909C;
-    f32 *ptr0 = (f32*)M2C_FIELD(arg0, void **, 0x30);
-    ptr0[3] = M2C_FIELD(arg1, f32 *, 4);
-    ptr0[4] = M2C_FIELD(arg1, f32 *, 8);
-    ptr0[5] = lbl_8036909C + M2C_FIELD(arg1, f32 *, 12);
+    f32 z;
+    f32 y;
+    f32 x;
+    z = *(f32 *)((char *)arg1 + 0xC);
+    y = *(f32 *)((char *)arg1 + 0x8);
+    x = *(f32 *)((char *)arg1 + 0x4);
+    *(f32 *)((char *)*(void **)((char *)arg0 + 0x30) + 0xC) = x;
+    z = lbl_8036909C + z;
+    *(f32 *)((char *)*(void **)((char *)arg0 + 0x30) + 0x10) = y;
+    *(f32 *)((char *)*(void **)((char *)arg0 + 0x30) + 0x14) = z;
 }
 
 void fn_800536B0(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
