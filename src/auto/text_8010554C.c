@@ -5684,29 +5684,22 @@ s32 fn_80110030(void *arg0) {
     return lbl_8032BD5C[*(u8 *)((u8 *)arg0 + 7)];
 }
 
-s32 fn_80110048(u32 arg0) {
-    extern u32 lbl_8032BD5C;
-    s32 var_ctr;
-    s32 var_r5;
-    u32 *var_r4;
+s32 fn_80110048(void *arg0) {
+    extern void *lbl_8032BD5C[0x20];
+    void **p;
+    s32 i;
 
-    var_r4 = &lbl_8032BD5C;
-    var_r5 = 0;
-    var_ctr = 0x20;
-loop_1:
-    if ((u32) *var_r4 == 0U) {
-        (&lbl_8032BD5C)[var_r5] = arg0;
-    } else {
-        var_r4 += 4;
-        var_r5 += 1;
-        var_ctr -= 1;
-        if (var_ctr == 0) {
-            var_r5 = -1;
-        } else {
-            goto loop_1;
+    p = lbl_8032BD5C;
+    for (i = 0; i < 0x20; i++) {
+        if (*p == NULL) {
+            lbl_8032BD5C[i] = arg0;
+            goto done;
         }
+        p++;
     }
-    return var_r5;
+    i = -1;
+done:
+    return i;
 }
 
 #pragma peephole off
