@@ -791,6 +791,7 @@ u8 fn_800934CC(void *arg0, void *arg1) {
   }
   
   u8 fn_80093708(void *arg0, void *arg1) {
+    /* fn_800940B0 calls below: keep '== 0) {' off the call line for decomp tools */
     u8 fn_800940B0(void *, void *);
     u8 fn_80105BC0(void *, s32);
     struct { unsigned ok : 8; unsigned result : 8; } t;
