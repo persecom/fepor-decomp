@@ -11027,7 +11027,7 @@ void fn_8004FE98(s32 arg0, s8 arg1) {
                 fn_800056A0(0);
                 var_r3_2 = fn_8000D354((s32)(lbl_8026AB18 + 0x53));
             } else {
-                fn_80231D94(sp28, (char *)(lbl_8026AB18 + 0x64), fn_8004B158());
+                fn_80231D94(sp28, (char *)(lbl_8026AB18 + 0x64), fn_8004B158(arg0));
                 if ((u16)fn_8005C144(sp28) == 0x8000U) {
                     fn_800056CC((char *)(lbl_8026AB18 + 0x67), sp28);
                     var_r3_2 = fn_8000D354((s32)(lbl_8026AB18 + 0x53));
