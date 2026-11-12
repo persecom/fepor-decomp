@@ -49,7 +49,7 @@ typedef struct StreamB { u8 pad[0x2C]; s32 buffers[2]; u8 pad34[0x14]; u32 size;
 extern s32 fn_80010710(u8* arg0);
   extern s32 lbl_80368230;
   extern s32 lbl_8028D544[];
-  extern u16 lbl_80319A68[32];
+  extern s32 lbl_80319A68[];
   void fn_800AE904(void *);
   void fn_800AEA74(void *);
 
@@ -1716,15 +1716,17 @@ s32 fn_800B2CCC(void) {
 }
 
 s32 fn_800B2D94(void) {
-    extern u16 lbl_80319A68[32];
-    lbl_80319A68[0] = 2;
-    lbl_80319A68[1] = 3;
-    lbl_80319A68[2] = 7;
-    lbl_80319A68[3] = 8;
-    lbl_80319A68[4] = 9;
-    lbl_80319A68[5] = 10;
-    lbl_80319A68[6] = 11;
-    lbl_80319A68[7] = 12;
+    s32 *p;
+
+    p = (s32 *)lbl_80319A68;
+    p[0] = 2;
+    p[1] = 3;
+    p[2] = 7;
+    p[3] = 8;
+    p[4] = 9;
+    p[5] = 10;
+    p[6] = 11;
+    p[7] = 12;
     return 1;
 }
 
