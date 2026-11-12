@@ -1120,8 +1120,8 @@ u8 fn_800940B0(void *arg0, void *arg1) {
     u8 fn_80105BC0(void *, s32);
     void *fn_80019E48(void *);
 
-    void *self;
     void *other;
+    void *self;
     u64 flags;
     u32 lo;
     u32 hi;
@@ -1130,8 +1130,8 @@ u8 fn_800940B0(void *arg0, void *arg1) {
     u8 lim;
     void *unit;
 
-    self = arg0;
     other = arg1;
+    self = arg0;
     lo = *(u32 *)((u8 *)other + 0x3C);
     hi = *(u32 *)((u8 *)other + 0x38);
     flags = ((u64)hi << 32) | lo;
