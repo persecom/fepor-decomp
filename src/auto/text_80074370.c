@@ -1932,8 +1932,8 @@ void fn_800787CC(void) {
 }
 
 s32 fn_800787F8(void) {
-    extern M2C_UNK lbl_802EF4C8;
-    M2C_FIELD(&lbl_802EF4C8, s8 *, 8) = 0xF;
+    extern u8 lbl_802EF4C8[24];
+    lbl_802EF4C8[8] = 0xF;
     return 5;
 }
 
