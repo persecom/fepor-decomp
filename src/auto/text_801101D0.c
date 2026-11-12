@@ -4848,16 +4848,23 @@ M2C_UNK *fn_8011C9F4(void *arg0) {
 
 extern void fn_800CA91C(void *arg0);
 extern void fn_800DD598(s32 arg0, s32 arg1, u8 *arg2);
+#pragma global_optimizer off
 void fn_8011CA3C(void *arg0, void *arg1) {
-    *(s32 *)((char *)arg0 + 0xAC) = 0;
-    
-    if (arg0 != arg1) {
-        u8 sp8 = *(u8 *)((char *)arg0 + 0xC);
-        s32 temp_r4 = *(s32 *)((char *)arg1 + 0x8); 
-        fn_800DD598(temp_r4, temp_r4 + (*(s32 *)((char *)arg1 + 0x4) * 0xC), &sp8);
+    void fn_800CA91C(void *);
+    void fn_800DD598(void *, void *, void *, u8 *);
+    u8 sp8;
+
+    fn_800CA91C((char *)arg0 + 0xAC);
+    *(s32 *)((char *)arg0 + 0xBC) = 0;
+    if ((void *)((char *)arg0 + 0xAC) != arg1) {
+        sp8 = *(u8 *)((char *)&sp8 + 4);
+        fn_800DD598((char *)arg0 + 0xAC,
+                    *(void **)((char *)arg1 + 8),
+                    (char *)*(void **)((char *)arg1 + 8) + *(s32 *)((char *)arg1 + 4) * 0xC,
+                    &sp8);
     }
 }
-
+#pragma global_optimizer on
 void fn_8011CAAC(void *arg0, void *arg1, void *arg2)
 {
     extern void fn_800CA18C(void *, void *, s32, void *);
