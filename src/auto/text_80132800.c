@@ -3220,28 +3220,29 @@ extern "C" void fn_80137F14(void *arg0, s32 arg1) {
 #pragma cplusplus reset
 
 void fn_80138808(void *arg0, s32 arg1) {
-    M2C_UNK fn_800506E0(s32, M2C_UNK, void *);
-    M2C_UNK fn_8006140C(void *, void *);
-    M2C_UNK fn_800616A0();
-    void *fn_80061870();
-    s32 fn_800639B4();
-    s32 temp_r31;
-    void *temp_r4;
-    void *temp_r5;
+    void fn_800506E0(void *, s32, void *);
+    void fn_8006140C(void *);
+    void fn_800616A0(void *);
+    void *fn_80061870(void);
+    s32 fn_800639B4(void);
 
-    M2C_FIELD(arg0, s32 *, 0x3C) = arg1;
-    temp_r31 = M2C_FIELD(arg0, s32 *, 0x3C);
-    if ((void *) M2C_FIELD(arg0, void **, 0x50) != NULL) {
-        fn_800616A0();
+    void *tmp;
+    s32 saved;
+
+    *(s32 *)((u8 *)arg0 + 0x3C) = arg1;
+    saved = *(s32 *)((u8 *)arg0 + 0x3C);
+    tmp = *(void **)((u8 *)arg0 + 0x50);
+    if (tmp != NULL) {
+        fn_800616A0(tmp);
     }
-    M2C_FIELD(arg0, void **, 0x50) = fn_80061870();
-    M2C_FIELD(M2C_FIELD(arg0, void **, 0x50), s32 *, 4) = (s32) (temp_r31 + 0x1C);
-    temp_r5 = M2C_FIELD(arg0, void **, 0x50);
-    M2C_FIELD(temp_r5, s32 *, 0) = (s32) (M2C_FIELD(temp_r5, s32 *, 0) | 0x50020000 | 0x8400);
-    fn_800506E0(temp_r31, 0, temp_r5);
-    temp_r4 = M2C_FIELD(arg0, void **, 0x50);
-    M2C_FIELD(temp_r4, s32 *, 0x44) = fn_800639B4();
-    fn_8006140C(M2C_FIELD(arg0, void **, 0x50), temp_r4);
+    *(void **)((u8 *)arg0 + 0x50) = fn_80061870();
+    tmp = *(void **)((u8 *)arg0 + 0x50);
+    *(s32 *)((u8 *)tmp + 4) = saved + 0x1C;
+    tmp = *(void **)((u8 *)arg0 + 0x50);
+    *(u32 *)tmp = *(u32 *)tmp | 0x50028400;
+    fn_800506E0((void *)saved, 0, tmp);
+    *(s32 *)((u8 *)*(void **)((u8 *)arg0 + 0x50) + 0x44) = fn_800639B4();
+    fn_8006140C(*(void **)((u8 *)arg0 + 0x50));
 }
 
 void fn_80138898(void *arg0) {
