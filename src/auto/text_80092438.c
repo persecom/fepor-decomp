@@ -775,11 +775,8 @@ u8 fn_800934CC(void *arg0, void *arg1) {
               }
                               if (ok == 0) {
                     result = 0;
-                } else if (fn_800940B0(arg0, arg1) == 0)
-                {
-                    result = 0;
                 } else {
-                    result = 1;
+                    result = fn_800940B0(arg0, arg1) != 0;
                 }
             }
             return result;
