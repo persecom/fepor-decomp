@@ -9422,33 +9422,32 @@ int fn_8014510C(void *arg0) {
     ptr[0] = (u32)ptr;
 }
 
-void fn_80145124(void) {
-    void *r3;
-    void *r4;
-    void *r5;
-    void *r6;
-    void *r7;
-    void *r8;
-    void *r9;
-    
-    r5 = *(void **)0x803630A0;
-    if (*(u32 *)r5 == 0) {
+void fn_80145124(u32 *arg0, ListNode **arg1, List *arg2)
+{
+    ListNode *list;
+    ListNode *sentinel;
+    ListNode *next;
+    ListNode *prev;
+
+    if (*(u32 *)arg2 == 0) {
         return;
     }
-    
-    r7 = (char *)r5 + 4;
-    r6 = *(void **)r4;
-    r8 = *(void **)((char *)r5 + 8);
-    *(u32 *)r7 = 0;
-    r9 = *(void **)((char *)r5 + 4);
-    *(void **)((char *)r7 + 4) = r7;
-    *(void **)(r7) = r7;
-    *(void **)r6 = r8;
-    *(void **)((char *)r6 + 4) = r6;
-    *(void **)r9 = r6;
-    *(void **)((char *)r9 + 4) = r9;
-    *(void **)r3 = r6;
-    *(u32 *)r5 = 0;
+
+    sentinel = (ListNode *)((u8 *)arg2 + 4);
+    list = *arg1;
+    next = sentinel->next;
+    prev = sentinel->prev;
+
+    sentinel->next = sentinel;
+    sentinel->prev = sentinel;
+
+    list->prev->next = next;
+    next->prev = list->prev;
+    list->prev = prev;
+    prev->next = list;
+
+    *arg0 = *arg0 + *(u32 *)arg2;
+    *(u32 *)arg2 = 0;
 }
 
 void fn_8014517C(void) {
