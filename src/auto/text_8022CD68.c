@@ -1365,6 +1365,10 @@ void *memchr(const void *ptr, int value, unsigned long count)
     return 0;
 }
 
+void __stdio_atexit(void) {
+    __stdio_exit = __close_all;
+}
+
 #pragma use_lmw_stmw on
 s32 fn_80231D94(char *dest, const char *fmt, ...) {
     va_list args;
