@@ -14340,31 +14340,31 @@ void fn_8018212C(s32 *arg0, s32 *arg1, void **arg2) {
 
 #pragma use_lmw_stmw reset
 
-void fn_80182514(void *arg0, void *arg1, void *arg2) {
-    void *list;
-    void *sentinel;
-    void *next;
-    void *prev;
+void fn_80182514(u32 *arg0, ListNode **arg1, List *arg2)
+{
+    ListNode *list;
+    ListNode *sentinel;
+    ListNode *next;
+    ListNode *prev;
 
     if (*(u32 *)arg2 == 0) {
         return;
     }
 
-    list = *(void **)arg1;
-    sentinel = (u8 *)arg2 + 4;
-    next = *(void **)((u8 *)arg2 + 8);
-    prev = *(void **)((u8 *)arg2 + 4);
+    sentinel = (ListNode *)((u8 *)arg2 + 4);
+    list = *arg1;
+    next = sentinel->next;
+    prev = sentinel->prev;
 
-    *(void **)((u8 *)sentinel + 4) = sentinel;
-    *(void **)sentinel = sentinel;
+    sentinel->next = sentinel;
+    sentinel->prev = sentinel;
 
-    *(void **)((u8 *)*(void **)list + 4) = next;
-    *(void **)next = *(void **)list;
+    list->prev->next = next;
+    next->prev = list->prev;
+    list->prev = prev;
+    prev->next = list;
 
-    *(void **)list = prev;
-    *(void **)((u8 *)prev + 4) = list;
-
-    *(u32 *)arg0 = *(u32 *)arg0 + *(u32 *)arg2;
+    *arg0 = *arg0 + *(u32 *)arg2;
     *(u32 *)arg2 = 0;
 }
 
