@@ -80,6 +80,7 @@ void fn_800727E0(void) {
     fn_80091A1C();
 }
 
+#pragma global_optimizer off
 void fn_80072810(void) {
     void fn_8010FF24(void *, u8, u8, s32);
     void fn_8010FA2C(void);
@@ -87,19 +88,21 @@ void fn_80072810(void) {
     void fn_80091A1C(void);
     extern u8 lbl_802EF4C8[];
     extern u8 lbl_8032BB58[];
+    u8 *base;
     void *ptr;
     u8 a;
     u8 b;
 
-    ptr = *(void **)lbl_802EF4C8;
-    a = *(u8 *)((u8 *)ptr + 0x19F);
-    b = *(u8 *)((u8 *)ptr + 0x19E);
+    base = lbl_802EF4C8;
+    ptr = *(void **)base;
+    a = *((u8 *)ptr + 0x19F);
+    b = *((u8 *)ptr + 0x19E);
     fn_8010FF24(lbl_8032BB58, b, a, 7);
     fn_8010FA2C();
     fn_8001D2C8();
     fn_80091A1C();
 }
-
+#pragma global_optimizer on
 void fn_8007285C(void) {
     void fn_8001D2C8(void);
     void fn_80037D54(void *);
