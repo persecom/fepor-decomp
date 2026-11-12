@@ -1377,6 +1377,15 @@ void fn_80077150(void) {
     fn_80007668(&value);
 }
 
+s32 fn_80077184(s32 unused, s32 arg1) {
+    void fn_801832F8(s32);
+    extern u8 lbl_802EF4C8[24];
+    u8 *p = lbl_802EF4C8;
+    p[8] = 0x32;
+    fn_801832F8(arg1);
+    return 4;
+}
+
 void fn_800771BC(void) {
     extern u16 lbl_8026C0B8[];
     M2C_UNK fn_8000E0E4(void *);
