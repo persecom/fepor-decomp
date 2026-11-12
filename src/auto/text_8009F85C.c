@@ -279,6 +279,11 @@ s32 fn_8009FE14(void) {
     return 0;
 }
 
+void *fn_8009FE40(void) {
+    extern u16 lbl_8026D8D8[];
+    return (u8 *)lbl_8026D8D8 + 0x314;
+}
+
 s32 fn_8009FE50(void) {
     void fn_8000CAA0(void *);
     extern u8 lbl_8028A2E8[];
