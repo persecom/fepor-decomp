@@ -56,3 +56,26 @@ s32 fn_8008D988(void) {
     return 0;
 }
 
+#pragma use_lmw_stmw on
+s32 fn_8008D9B8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
+    void *fn_8000C0C0(void *);
+    void *fn_8000CAF0(void *, s32);
+    extern u8 lbl_80289A8C[];
+    void *obj;
+
+    if (fn_8000C0C0(lbl_80289A8C) != NULL) {
+        obj = fn_8000C0C0(lbl_80289A8C);
+    } else {
+        obj = fn_8000CAF0(lbl_80289A8C, 3);
+    }
+    *(s32 *)((u8 *)obj + 0x34) = arg0;
+    *(s32 *)((u8 *)obj + 0x38) = arg1;
+    *(s32 *)((u8 *)obj + 0x3C) = arg2;
+    *(s32 *)((u8 *)obj + 0x40) = arg3;
+    *(s32 *)((u8 *)obj + 0x44) = arg4;
+    *(s32 *)((u8 *)obj + 0x48) = arg5;
+    *(u8 *)((u8 *)obj + 0x4C) = arg6 != 0;
+    return 0;
+}
+#pragma use_lmw_stmw reset
+
