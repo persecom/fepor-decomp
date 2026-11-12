@@ -12,8 +12,8 @@ extern void* lbl_803674E8;
 extern f32 lbl_803696C8;
 
 extern s32 lbl_803682F0;
-extern void *lbl_8026CC58;
-extern void *lbl_80289998;
+extern u8 lbl_8026CC58[];
+extern u8 lbl_80289998[];
 extern f32 lbl_80369690;
 extern f32 lbl_803696A8;
 extern f32 lbl_803696AC;
@@ -1603,6 +1603,32 @@ void fn_80088FFC(void *arg0) {
         fn_8022097C();
         fn_8000C60C(arg0);
     }
+}
+
+void fn_800892E8(void *arg0) {
+    s32 fn_80222420(s32, s32, s32, s32, s32);
+    void *fn_800C45B8(s32, void *, s32);
+    void DCInvalidateRange(void *, s32);
+    void fn_80222644(void *, void *, s32, s32, s32, s32, s32, s32);
+    void fn_802228D8(void *, s32, s32, s32, s32, s32, f32, f32, f32);
+    void *fn_8000CAF0(void *, s32);
+    u8 *obj;
+    s32 size;
+    void *tmp;
+
+    obj = (u8 *)arg0;
+    *(s32 *)(obj + 0x48) = 0;
+    size = fn_80222420(0x260, 0x1C0, 4, 0, 0);
+    *(void **)(obj + 0x48) = fn_800C45B8(-size, (u8 *)&lbl_8026CC58 + 0x2A, 0);
+    DCInvalidateRange(*(void **)(obj + 0x48), size);
+    fn_80222644(obj + 0x4C, *(void **)(obj + 0x48), 0x260, 0x1C0, 4, 0, 0, 0);
+    fn_802228D8(obj + 0x4C, 0, 0, 0, 0, 0, lbl_80369690, lbl_80369690, lbl_80369690);
+    tmp = fn_8000CAF0(&lbl_80289998, 6);
+    *(void **)((u8 *)tmp + 0x54) = arg0;
+    *(f32 *)(obj + 0x38) = lbl_803696A8;
+    *(f32 *)(obj + 0x3C) = lbl_803696AC;
+    *(u16 *)(obj + 0x34) = 0;
+    obj[0x30] = 0;
 }
 
 void fn_800893E0(void *arg0)
