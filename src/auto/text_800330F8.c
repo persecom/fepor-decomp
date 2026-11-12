@@ -9626,21 +9626,15 @@ s32 fn_8004B1A0(s32 arg0) {
     return lbl_802858C4[arg0];
 }
 
-void fn_8004B1B4(s32 arg0, s32 arg1) {
-    u8 *ptr = (u8 *)arg0;
-    
-    if (*(s32*)ptr == 0) {
-        return;
-    }
-    
-    if (fn_80105BC0((u8 *)arg1 + 0x1BC, 0)) {
-        // Set bit 4 of byte at offset 3 from pointer
-        *ptr |= 0x10;
-    } else {
-        // Call fn_8004FE98 with arg0 and 0xB
+void fn_8004B1B4(u8 *arg0) {
+    u8 fn_80105BC0(u8 *, s32);
+    void fn_8004FE98(u8 *, s32);
+
+    if ((u8)fn_80105BC0(arg0 + 0x1BC, 0x5C) != 0) {
         fn_8004FE98(arg0, 0xB);
-        // Set bit 5 of byte at offset 3 from pointer  
-        *ptr |= 0x20;
+        arg0[3] |= 0x10;
+    } else {
+        arg0[3] |= 0x20;
     }
 }
 
