@@ -9724,17 +9724,32 @@ void fn_800E00B0(s32 arg0, s32 arg1, s32* arg2)
     return;
 }
 
-void *fn_800E0140(void *arg0, s16 arg1)
+#pragma cplusplus on
+extern "C" void *fn_800E0140(void *arg0, s16 arg1)
 {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0();
+        virtual void v1();
+        virtual void v2();
+        virtual void v3();
+        virtual void v4();
+        virtual void v5();
+        virtual void v6();
+        virtual void v7();
+        virtual void v8();
+        virtual void v9();
+    };
     extern u8 lbl_8028DFE8[];
     void fn_800C428C(void *);
-
     void *self;
+    s16 flag;
 
+    flag = arg1;
     self = arg0;
     if (self != 0) {
         *(void **)((u8 *)self + 0x10) = lbl_8028DFE8;
-        (*(void (**)(void *))(*(u8 **)((u8 *)arg0 + 0x10) + 0x2C))(arg0);
+        ((Obj *)arg0)->v9();
 
         if (self != 0) {
             if (self != 0) {
@@ -9746,13 +9761,13 @@ void *fn_800E0140(void *arg0, s16 arg1)
             }
         }
 
-        if (arg1 > 0) {
+        if (flag > 0) {
             fn_800C428C(self);
         }
     }
     return self;
 }
-
+#pragma cplusplus reset
 void fn_800E01C8(void *arg0) {
     extern M2C_UNK lbl_8028DFE8;
     *(u32 *)((u8 *)arg0 + 0x10) = (u32) (&lbl_8028DFE8);
