@@ -750,45 +750,129 @@ void fn_8020D5BC(void) {
     DVDLowStopMotor(fn_8020D5E4);
 }
 
+void fn_8020D5E4(u32 arg0) {
+    /* cbForStateGoToRetry */
+    void __DVDStoreErrorCode(u32);
+    void DVDReset(void);
+    void cbForStateError(u32);
+    void DVDLowStopMotor(void (*)(u32));
+    void fn_8020DD7C(void);
+
+    extern s32 lbl_803685CC;
+    extern volatile s32 CurrCommand_803685B4;
+    extern s32 ResetRequired_803685D0;
+    extern u32 lbl_803685B8;
+    extern void *executing_80368598;
+    extern u8 DummyCommandBlock_80339F80[];
+    extern s32 ResumeFromHere_803685C0;
+    extern void (*lbl_803685BC)(void *, void *);
+
+    DVDReadyCommand *finished;
+
+    if (arg0 == 0x10) {
+        __DVDStoreErrorCode(0x01234568);
+        DVDReset();
+        cbForStateError(0);
+        return;
+    }
+
+    if (arg0 & 2) {
+        __DVDStoreErrorCode(0x01234567);
+        DVDLowStopMotor(cbForStateError);
+        return;
+    }
+
+    lbl_803685CC = 0;
+
+    if (CurrCommand_803685B4 == 4 ||
+        CurrCommand_803685B4 == 5 ||
+        CurrCommand_803685B4 == 13 ||
+        CurrCommand_803685B4 == 15) {
+        ResetRequired_803685D0 = 1;
+    }
+
+    if (lbl_803685B8 != 0) {
+        ResumeFromHere_803685C0 = 2;
+        lbl_803685B8 = 0;
+
+        finished = (DVDReadyCommand *)executing_80368598;
+        executing_80368598 = DummyCommandBlock_80339F80;
+
+        finished->state = 10;
+
+        if (finished->callback != 0) {
+            finished->callback(-3, finished);
+        }
+
+        if (lbl_803685BC != 0) {
+            lbl_803685BC(0, finished);
+        }
+
+        stateReady();
+        return;
+    }
+
+    ((DVDReadyCommand *)executing_80368598)->state = 11;
+    fn_8020DD7C();
+}
+
 void fn_8020D724(void) {
-    if (lbl_80368614 != 0) {
-        return;
+    /* stateCheckID */
+    extern u16 BB2_80339F40[];
+    extern volatile s32 CurrCommand_803685B4;
+    extern void *executing_80368598;
+    extern void *IDShouldBe_8036859C;
+    extern void (*lbl_803685E0)(void *);
+
+    s32 fn_8020F9E8(u8 *, u8 *);
+    s32 fn_80231944(const void *, const void *, u32);
+    void fn_8020D838();
+    void fn_8020D804();
+    void fn_8020D90C(u32);
+    void DVDLowStopMotor(void (*)(u32));
+    void DCInvalidateRange(void *, u32);
+
+    u8 *diskID;
+
+    diskID = (u8 *)BB2_80339F40 + 0x20;
+
+    if (CurrCommand_803685B4 == 3) {
+        if (fn_8020F9E8(
+                diskID,
+                *(u8 **)((u8 *)executing_80368598 + 0x24))) {
+
+            memcpy(IDShouldBe_8036859C, diskID, 0x20);
+
+            ((DVDReadyCommand *)executing_80368598)->state = 1;
+
+            DCInvalidateRange(BB2_80339F40, 0x20);
+
+            lbl_803685E0 = (void (*)(void *))fn_8020D838;
+            fn_8020D838(executing_80368598);
+        } else {
+            DVDLowStopMotor(fn_8020D90C);
+        }
+    } else {
+        if (fn_80231944(diskID, IDShouldBe_8036859C, 0x20) != 0) {
+            DVDLowStopMotor(fn_8020D90C);
+        } else {
+            lbl_803685E0 = (void (*)(void *))fn_8020D804;
+            fn_8020D804(executing_80368598);
+        }
     }
-    
-    OSDisableInterrupts();
-    
-    // Read and check SCB register
-    if (Scb_80339420[0x4C / sizeof(u16)] != 0) {
-        OSRestoreInterrupts();
-        return;
-    }
-    
-    // Set bits in SCB
-    Scb_80339420[0x48 / sizeof(u16)] = 1;
-    Scb_80339420[0x44 / sizeof(u16)] = 0;
-    
-    // Store status from memory at 0x800000E0
-    lbl_80368614 = *(u32 *)0x800000E0;
-    lbl_80368618 = *(void **)0x800000E4;
-    lbl_8036861C = *(void **)0x800000E8;
-    lbl_80368620 = *(void **)0x800000EC;
-    lbl_80368624 = *(void **)0x800000F0;
-    lbl_80368628 = *(void **)0x800000F4;
-    lbl_8036862C = *(void **)0x800000F8;
-    lbl_80368630 = *(void **)0x800000FC;
-    lbl_80368634 = *(void **)0x80000100;
-    lbl_80368638 = *(void **)0x80000104;
-    lbl_8036863C = *(void **)0x80000108;
-    lbl_80368640 = *(void **)0x8000010C;
-    lbl_80368644 = *(void **)0x80000110;
 }
 
 void fn_8020D804(void) {
+    /* DVD Disc ID Check */
     void fn_8020C1A4(u8, s32, void *);
     void fn_8020DAE0(void);
     extern void *IDShouldBe_8036859C;
 
-    fn_8020C1A4(M2C_FIELD(IDShouldBe_8036859C, u8 *, 8), 0xA, fn_8020DAE0);
+    fn_8020C1A4(
+        ((u8 *)IDShouldBe_8036859C)[8],
+        0xA,
+        fn_8020DAE0
+    );
 }
 
 extern void *fn_8020D86C;
