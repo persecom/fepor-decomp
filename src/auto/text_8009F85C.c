@@ -1195,6 +1195,16 @@ s32 fn_800A1178(void)
   return 0;
 }
 
+char *fn_800A11F0(void) {
+    void fn_80231D94(void *, void *, ...);
+    extern u8 lbl_80330708[];
+    extern char lbl_80312270[];
+    extern u8 lbl_8026D8D8[];
+
+    fn_80231D94(lbl_80312270, lbl_8026D8D8 + 0x5EC, lbl_80330708[0x10], lbl_80330708 + 0x504);
+    return lbl_80312270;
+}
+
 char *fn_800A1290(void) {
     void fn_80231D94(void *, void *, ...);
     extern u8 lbl_80330708[];
