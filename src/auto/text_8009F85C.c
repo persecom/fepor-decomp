@@ -1036,6 +1036,19 @@ u8 fn_800A0BC0(void) {
     return (u8)ret;
 }
 
+s32 fn_800A0BFC(s32 arg0, s32 arg1, void *arg2) {
+    void fn_800056A0(s32);
+    s32 fn_800C3468(void *);
+    extern u8 lbl_803200AC[];
+
+    if (*(u8 *)((char *)arg2 + 0x39) != 0) {
+        return 0;
+    }
+    fn_800C3468(lbl_803200AC);
+    fn_800056A0(0);
+    return 0;
+}
+
 extern s32 lbl_80367670;
 extern void *fn_80024398(void *, s32, s32);
 s32 fn_800A0D08(s32 arg0, s32 arg1, void *arg2) {
@@ -1492,8 +1505,9 @@ s32 fn_800A1C74(s32 arg0, s32 arg1, void *arg2) {
     return 0;
 }
 
-#pragma peephole off
-s32 fn_800A1CB4(void) {
+#pragma opt_strength_reduction off
+s32 fn_800A1CB4(void)
+{
     void *fn_800AA794(void);
     void *p;
     s32 two;
@@ -1501,11 +1515,11 @@ s32 fn_800A1CB4(void) {
 
     p = fn_800AA794();
     p = *(void **)((u8 *)p + 0x188);
-    two = 2;
+    two = 1 + 1;
     v = *(s32 *)((u8 *)p + 0x50);
     return two & -(v == 0);
 }
-#pragma peephole reset
+#pragma opt_strength_reduction on
 void *fn_800A1CF0(void) {
     extern u16 lbl_8026D8D8[];
     return (u8 *)lbl_8026D8D8 + 0x6b8;
@@ -1794,17 +1808,17 @@ s32 fn_800A2748(void *arg0) {
     return 0;
 }
 
-s32 fn_800A279C(void *arg0) {
+s32 fn_800A279C(void *arg0)
+{
     void *fn_800AA794(void);
-    void *temp;
-    s32 val;
-    s32 ret;
+    void *p;
+    u16 v;
 
-    temp = fn_800AA794();
-    ret = 0;
-    val = *(u16 *)((u8 *)*(void **)((u8 *)temp + 0x188) + 0x18);
-    *(u16 *)((u8 *)arg0 + 4) = (u16)val;
-    return ret;
+    p = fn_800AA794();
+    p = *(void **)((u8 *)p + 0x188);
+    v = *(u16 *)((u8 *)p + 0x18);
+    *(u16 *)((u8 *)arg0 + 4) = v;
+    return 0;
 }
 
 s32 fn_800A2848(void *arg0)
