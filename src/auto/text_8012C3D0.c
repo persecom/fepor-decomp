@@ -150,6 +150,17 @@ s32 fn_8012C54C(void) {
     return 0;
 }
 
+char *fn_8012C5CC(void) {
+    u8 fn_80109B48(s32);
+    void fn_80231D94(void *, void *, ...);
+    extern s32 lbl_80367A88;
+    extern u8 lbl_802758F8[];
+    extern char lbl_8032FE60[];
+
+    fn_80231D94(lbl_8032FE60, lbl_802758F8 + 0x164, (u8)fn_80109B48(lbl_80367A88));
+    return lbl_8032FE60;
+}
+
 void *fn_8012C618(void) {
     extern u16 lbl_802758F8[];
     return (u8 *)lbl_802758F8 + 0x175;
