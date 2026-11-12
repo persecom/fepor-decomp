@@ -1498,6 +1498,15 @@ s32 fn_801660A8(void) {
     return (M2C_FIELD(&lbl_80330708, u8 *, 0x10) * 7) + 0x39A81;
 }
 
+f32 fn_801660C4(s32 arg0, s32 arg1, u16 arg2, u8 arg3) {
+    f64 fn_80238638(f32);
+    extern f32 lbl_8036A8D8;
+    s32 t;
+
+    t = arg0 + (s32)(arg2 / 10) - arg1;
+    return (f32)fn_80238638((lbl_8036A8D8 * (f32)t) / (f32)arg3);
+}
+
 u32 fn_8016614C(void *arg0, s32 arg1) {
     extern u8 lbl_80330708[];
     s32 tmp;
