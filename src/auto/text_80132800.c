@@ -8077,19 +8077,21 @@ void *fn_80141D94(s32 arg0, void *arg1, u8 arg2, u8 arg3) {
 }
 
 void fn_80142018(Vec2s *out, void *arg0) {
-    s16 w = *(s16*)((u8*)arg0 + 0xE) - *(s16*)((u8*)arg0 + 0xA);
-    s16 h = *(s16*)((u8*)arg0 + 0x10) - *(s16*)((u8*)arg0 + 0xC);
+    s16 w = M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA);
+    s16 h = M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC);
     out->x = w;
     out->y = h;
 }
 
+#pragma scheduling off
 void fn_8014203C(void *arg0, Vec2s *size) {
+    s16 *p = (s16 *)((u8 *)arg0 + 0xA);
     s16 w = size->x;
     s16 h = size->y;
-    *(s16 *)((u8 *)arg0 + 0xE) = (*(s16 *)((u8 *)arg0 + 0xA) + w);
-    *(s16 *)((u8 *)arg0 + 0x10) = (*(s16 *)((u8 *)arg0 + 0xC) + h);
+    p[2] = p[0] + w;
+    p[3] = p[1] + h;
 }
-
+#pragma scheduling on
 int fn_80142060(void *arg0) {
     u32 *ptr;
 
@@ -9264,14 +9266,24 @@ s32 fn_80144850(void *arg0) {
     return M2C_FIELD(M2C_FIELD(arg0, void **, 0x128), s32 *, 0x3C);
 }
 
-void fn_8014485C(void *arg0) {
-    extern long lbl_80367AE0;
-
-    ((void (*)(void *))(*(void **)(*(u8 **)arg0 + 0x2C)))(
-        (void *)lbl_80367AE0
-    );
+#pragma cplusplus on
+extern "C" void fn_8014485C(void *arg0) {
+    extern s32 lbl_80367AE0;
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9(s32) = 0;
+    };
+    ((Obj *)arg0)->v9(lbl_80367AE0);
 }
-
+#pragma cplusplus reset
 void *fn_8014488C(void *arg0, s16 arg1) {
     void fn_8013F2A4(void *, s32);
     void fn_8022C1E8(void *, void *, s32, s32);
@@ -9821,13 +9833,17 @@ void fn_80146F0C(void)
     }
 }
 
-void fn_8014716C(u8 arg0) {
-    extern u16 lbl_80367AF8;
+s32 fn_8014716C(u8 arg0) {
+    extern s32 lbl_80367AF8;
+    s32 v = lbl_80367AF8;
+
     if (arg0) {
-        lbl_80367AF8 |= 2;
+        v |= 2;
     } else {
-        lbl_80367AF8 &= 0xFFFD;
+        v &= ~2;
     }
+    lbl_80367AF8 = v;
+    return v;
 }
 
 #pragma use_lmw_stmw on
@@ -9995,8 +10011,10 @@ extern "C" void fn_80147188(s32 arg0) {
 
 s32 fn_80147578(void *, s32, f32, f32, f32);
 
-void fn_80147548(void *arg0, void *arg1, s32 arg2) {
-    fn_80147578(arg0, arg2, *(f32 *)((u8 *)arg1 + 0), *(f32 *)((u8 *)arg1 + 4), *(f32 *)((u8 *)arg1 + 8));
+void fn_80147548(void *arg0, f32 *arg1, s32 arg2) {
+    void fn_80147578(void *, s32, f32, f32, f32);
+
+    fn_80147578(arg0, arg2, arg1[0], arg1[1], arg1[2]);
 }
 
 s32 fn_80147578(void *arg0, s32 arg1, f32 farg0, f32 farg1, f32 farg2) {
