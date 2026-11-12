@@ -1760,17 +1760,18 @@ void fn_8005EB5C(u8 *arg0, u8 *arg1) {
 
 void fn_8005EB80(s32 arg0, s32 arg1) {
     M2C_UNK fn_8005EA14();
-    M2C_UNK fn_8005EC18(s32, s32, M2C_UNK);
+    void fn_8005EC18(void *, s32, s32);
     if (arg0 != 0) {
         fn_8005EA14();
-        fn_8005EC18(arg0, arg1, 0x40800000);
+        fn_8005EC18((void *)arg0, arg1, 0x40800000);
     }
 }
 
 void fn_8005EBCC(s32 arg0, s32 arg1) {
+    void fn_8005EC18(void *, s32, s32);
     if (arg0 != 0) {
         fn_8005EA14();
-        fn_8005EC18(arg0, arg1, 0x40400000);
+        fn_8005EC18((void *)arg0, arg1, 0x40400000);
     }
 }
 
