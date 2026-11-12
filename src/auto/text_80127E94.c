@@ -627,15 +627,27 @@ void fn_80129A84(void *arg0, void *arg1)
 }
 
 void fn_80129AF8(void *arg0) {
-    if (fn_80040824() != 0) {
-        s32 i;
-        s32 count = *(s32 *)((char *)arg0 + 0x50);
-        for (i = 0; i < count; i++) {
-            if (i == count - 1) {
-                fn_80049C30(1);
+    u8 fn_80040824(void);
+    void fn_80049C30(void *, u8);
+
+    void *p;
+    s32 i;
+    s32 n;
+    void *v;
+
+    if ((u8)fn_80040824() != 0) {
+        p = arg0;
+        i = 0;
+        while (i < *(s32 *)((u8 *)arg0 + 0x50)) {
+            n = *(s32 *)((u8 *)arg0 + 0x50);
+            v = *(void **)((u8 *)p + 0x30);
+            if (i == n - 1) {
+                fn_80049C30(v, 1);
             } else {
-                fn_80049C30(0);
+                fn_80049C30(v, 0);
             }
+            p = (u8 *)p + 4;
+            i += 1;
         }
     }
 }
