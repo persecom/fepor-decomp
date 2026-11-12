@@ -45,3 +45,6 @@ void fn_8007C534(void) {
     lbl_803674B0[0] = lbl_80288C68;
     p[1] = lbl_80288D0C;
 }
+
+#pragma section "ctors$10"
+__declspec(section "ctors$10") void *const lbl_80267AB8 = fn_8007C534;
