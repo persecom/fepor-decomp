@@ -350,6 +350,34 @@ void fn_800C40F4(u8 *arg0) {
     *(u8 *)(arg0 + 0x17) = 0xFF;
 }
 
+void *fn_800C412C(void *arg0, s16 arg1)
+{
+    void fn_8022C1E8(char *, void (*)(char *, int), int, unsigned int);
+    void *fn_8001C5F8(void *, s16);
+    void fn_800C428C();
+
+    void *obj;
+    s16 flag;
+
+    obj = arg0;
+    flag = arg1;
+
+    if (obj != 0) {
+        fn_8022C1E8(
+            (char *)obj,
+            (void (*)(char *, int))fn_8001C5F8,
+            8,
+            0xC8
+        );
+
+        if (flag > 0) {
+            fn_800C428C(obj);
+        }
+    }
+
+    return obj;
+}
+
 s32 fn_800C4240(s32 arg0) {
     s32 fn_800C5A48(s32, s32);
     extern s32 lbl_80367870;
@@ -1183,7 +1211,8 @@ M2C_FIELD(vec,u32 *,0)=capacity;
 #pragma opt_loop_invariants reset
 
 #pragma use_lmw_stmw on
-void fn_800CA18C(void *vec, void *pos, u32 count, void *src) {
+void fn_800CA18C(void *vec, void *pos, u32 count, void *src)
+{
     void fn_800CA728(void *, char *, char *, void *, void *);
     void fn_800CA644(void *, void *, void *);
     void fn_800CA59C(void *, u32, void *);
@@ -1196,11 +1225,12 @@ void fn_800CA18C(void *vec, void *pos, u32 count, void *src) {
     extern char lbl_80270350[];
 
     struct {
-        u8 pad[0x48];
+        u8 pads[0x48];
         u32 cap;
         u32 size;
         void *data;
     } st;
+
     void *end;
     u32 room;
     void *dst;
@@ -1208,84 +1238,141 @@ void fn_800CA18C(void *vec, void *pos, u32 count, void *src) {
     void *cur;
     u32 cap;
     u32 need;
-    u32 sz;
+    u32 size;
 
     if (count == 0) {
         return;
     }
 
-    if (count > 0x15555555U || *(u32 *)((u8 *)vec + 4) > 0x15555555U - count) {
+    if (count > 0x15555555U ||
+        *(u32 *)((u8 *)vec + 4) > 0x15555555U - count) {
         fn_80232058(__files + 0xA0, lbl_80270350 + 0x136);
         fn_8022CF78();
     }
 
-    sz = *(u32 *)((u8 *)vec + 4);
-    need = sz + count;
+    size = *(u32 *)((u8 *)vec + 4);
+    need = size + count;
+
     if (need <= *(u32 *)vec) {
-        end = (void *)((u8 *)*(void **)((u8 *)vec + 8) + sz * 0xC);
+        end = *(u8 **)((u8 *)vec + 8) + size * 0xC;
         room = (u32)(((s32)end - (s32)pos) / 12);
 
         if (count > room) {
-            tag = st.pad[0x2C];
+            tag = st.pads[0x2C];
             dst = end;
+
             while (count > room) {
                 if (dst != 0) {
-                    *(u32 *)((u8 *)dst + 4) = *(u32 *)((u8 *)src + 4);
-                    st.pad[0x28] = tag;
-                    fn_800CA728(dst, *(char **)((u8 *)src + 8),
-                        *(char **)((u8 *)src + 8) + *(u32 *)src,
-                        &st.pad[0x44], &st.pad[0x28]);
+                    char *begin;
+                    char *endptr;
+
+                    *(u32 *)((u8 *)dst + 4) =
+                        *(u32 *)((u8 *)src + 4);
+
+                    begin = *(char **)((u8 *)src + 8);
+                    endptr = begin + *(u32 *)src;
+
+                    st.pads[0x28] = tag;
+
+                    fn_800CA728(
+                        dst,
+                        begin,
+                        endptr,
+                        &st.pads[0x44],
+                        &st.pads[0x28]
+                    );
                 }
+
                 dst = (u8 *)dst + 0xC;
                 count -= 1;
                 *(u32 *)((u8 *)vec + 4) += 1;
             }
-            tag = st.pad[0x24];
+
+            tag = st.pads[0x24];
             cur = pos;
+
             while ((u8 *)cur < (u8 *)end) {
                 if (dst != 0) {
-                    *(u32 *)((u8 *)dst + 4) = *(u32 *)((u8 *)cur + 4);
-                    st.pad[0x20] = tag;
-                    fn_800CA728(dst, *(char **)((u8 *)cur + 8),
-                        *(char **)((u8 *)cur + 8) + *(u32 *)cur,
-                        &st.pad[0x40], &st.pad[0x20]);
+                    char *begin;
+                    char *endptr;
+
+                    *(u32 *)((u8 *)dst + 4) =
+                        *(u32 *)((u8 *)cur + 4);
+
+                    begin = *(char **)((u8 *)cur + 8);
+                    endptr = begin + *(u32 *)cur;
+
+                    st.pads[0x20] = tag;
+
+                    fn_800CA728(
+                        dst,
+                        begin,
+                        endptr,
+                        &st.pads[0x40],
+                        &st.pads[0x20]
+                    );
                 }
+
                 cur = (u8 *)cur + 0xC;
                 dst = (u8 *)dst + 0xC;
                 *(u32 *)((u8 *)vec + 4) += 1;
             }
         } else {
             s32 bytes = count * 0xC;
-            tag = st.pad[0x1C];
+
+            tag = st.pads[0x1C];
             dst = end;
             cur = (u8 *)end - bytes;
+
             while ((u8 *)cur < (u8 *)end) {
                 if (dst != 0) {
-                    *(u32 *)((u8 *)dst + 4) = *(u32 *)((u8 *)cur + 4);
-                    st.pad[0x18] = tag;
-                    fn_800CA728(dst, *(char **)((u8 *)cur + 8),
-                        *(char **)((u8 *)cur + 8) + *(u32 *)cur,
-                        &st.pad[0x3C], &st.pad[0x18]);
+                    char *begin;
+                    char *endptr;
+
+                    *(u32 *)((u8 *)dst + 4) =
+                        *(u32 *)((u8 *)cur + 4);
+
+                    begin = *(char **)((u8 *)cur + 8);
+                    endptr = begin + *(u32 *)cur;
+
+                    st.pads[0x18] = tag;
+
+                    fn_800CA728(
+                        dst,
+                        begin,
+                        endptr,
+                        &st.pads[0x3C],
+                        &st.pads[0x18]
+                    );
                 }
+
                 cur = (u8 *)cur + 0xC;
                 dst = (u8 *)dst + 0xC;
                 *(u32 *)((u8 *)vec + 4) += 1;
             }
+
             bytes = (room - count) * 0xC;
-            if ((u32)((u8 *)end - bytes) <= (u32)src && (u8 *)src < (u8 *)end) {
+
+            if ((u32)((u8 *)end - bytes) <= (u32)src &&
+                (u8 *)src < (u8 *)end) {
                 src = (u8 *)src + count * 0xC;
             }
+
             fn_800CA644(pos, (u8 *)pos + bytes, end);
         }
+
         fn_800CA59C(pos, count, src);
     } else {
         st.cap = 0;
         st.size = 0;
         st.data = 0;
-        cap = 1;
-        if (*(u32 *)vec != 0) {
-            cap = *(u32 *)vec;
+
+        cap = *(u32 *)vec;
+
+        if (cap == 0) {
+            cap = 1;
         }
+
         while (need > cap) {
             if (cap < 0x0AAAAAAAU) {
                 cap *= 2;
@@ -1293,68 +1380,128 @@ void fn_800CA18C(void *vec, void *pos, u32 count, void *src) {
                 cap = 0x15555555U;
             }
         }
+
         dst = fn_800C42D8((s32)(cap * 0xC));
+
         if (dst == 0) {
-            fn_80232058(__files + 0xA0, lbl_80270350 + 0x7C);
+            fn_80232058(
+                __files + 0xA0,
+                lbl_80270350 + 0x7C
+            );
             fn_8022CF78();
         }
+
         st.data = dst;
-        tag = st.pad[0x14];
+        tag = st.pads[0x14];
         st.cap = cap;
+
         cur = *(void **)((u8 *)vec + 8);
         end = (u8 *)cur + *(u32 *)((u8 *)vec + 4) * 0xC;
+
         while ((u8 *)cur < (u8 *)pos) {
             if (dst != 0) {
-                *(u32 *)((u8 *)dst + 4) = *(u32 *)((u8 *)cur + 4);
-                st.pad[0x10] = tag;
-                fn_800CA728(dst, *(char **)((u8 *)cur + 8),
-                    *(char **)((u8 *)cur + 8) + *(u32 *)cur,
-                    &st.pad[0x38], &st.pad[0x10]);
+                char *begin;
+                char *endptr;
+
+                *(u32 *)((u8 *)dst + 4) =
+                    *(u32 *)((u8 *)cur + 4);
+
+                begin = *(char **)((u8 *)cur + 8);
+                endptr = begin + *(u32 *)cur;
+
+                st.pads[0x10] = tag;
+
+                fn_800CA728(
+                    dst,
+                    begin,
+                    endptr,
+                    &st.pads[0x38],
+                    &st.pads[0x10]
+                );
             }
+
             cur = (u8 *)cur + 0xC;
             dst = (u8 *)dst + 0xC;
             st.size += 1;
         }
-        tag = st.pad[0xC];
+
+        tag = st.pads[0xC];
+
         while (count != 0) {
             if (dst != 0) {
-                *(u32 *)((u8 *)dst + 4) = *(u32 *)((u8 *)src + 4);
-                st.pad[0x8] = tag;
-                fn_800CA728(dst, *(char **)((u8 *)src + 8),
-                    *(char **)((u8 *)src + 8) + *(u32 *)src,
-                    &st.pad[0x34], &st.pad[0x8]);
+                char *begin;
+                char *endptr;
+
+                *(u32 *)((u8 *)dst + 4) =
+                    *(u32 *)((u8 *)src + 4);
+
+                begin = *(char **)((u8 *)src + 8);
+                endptr = begin + *(u32 *)src;
+
+                st.pads[0x28] = tag;
+
+                fn_800CA728(
+                    dst,
+                    begin,
+                    endptr,
+                    &st.pads[0x44],
+                    &st.pads[0x28]
+                );
             }
+
             dst = (u8 *)dst + 0xC;
             count -= 1;
             st.size += 1;
         }
-        tag = st.pad[0x4];
+
+        tag = st.pads[0x4];
+
         while ((u8 *)cur < (u8 *)end) {
             if (dst != 0) {
-                *(u32 *)((u8 *)dst + 4) = *(u32 *)((u8 *)cur + 4);
-                st.pad[0] = tag;
-                fn_800CA728(dst, *(char **)((u8 *)cur + 8),
-                    *(char **)((u8 *)cur + 8) + *(u32 *)cur,
-                    &st.pad[0x30], &st.pad[0]);
+                char *begin;
+                char *endptr;
+
+                *(u32 *)((u8 *)dst + 4) =
+                    *(u32 *)((u8 *)cur + 4);
+
+                begin = *(char **)((u8 *)cur + 8);
+                endptr = begin + *(u32 *)cur;
+
+                st.pads[0] = tag;
+
+                fn_800CA728(
+                    dst,
+                    begin,
+                    endptr,
+                    &st.pads[0x30],
+                    &st.pads[0]
+                );
             }
+
             cur = (u8 *)cur + 0xC;
             dst = (u8 *)dst + 0xC;
             st.size += 1;
         }
+
         if (&st.cap != (u32 *)vec) {
-            u32 t = st.cap;
+            u32 temp;
+            void *ptr;
+
+            temp = st.cap;
             st.cap = *(u32 *)vec;
-            *(u32 *)vec = t;
-            {
-                void *p = st.data;
-                st.data = *(void **)((u8 *)vec + 8);
-                *(void **)((u8 *)vec + 8) = p;
-            }
-            t = st.size;
+            *(u32 *)vec = temp;
+
+            ptr = st.data;
+            st.data = *(void **)((u8 *)vec + 8);
+            *(void **)((u8 *)vec + 8) = ptr;
+
+            temp = st.size;
             st.size = *(u32 *)((u8 *)vec + 4);
-            *(u32 *)((u8 *)vec + 4) = t;
+            *(u32 *)((u8 *)vec + 4) = temp;
         }
+
         fn_800CA91C(&st.cap);
+
         if (st.data != 0) {
             fn_800C428C(st.data);
         }
@@ -2587,6 +2734,1236 @@ fn_800C9A60(p+32,-1);
 if(arg1>0)fn_800C428C(p);
 }return p;
 }
+
+void *fn_800D38BC(void *arg0)
+{
+    extern void fn_800D6878(void *, void *, void *);
+    extern void fn_800DF50C(void *);
+    extern void fn_800C9ABC(void *, char *, void *);
+    extern void fn_801515AC(void);
+    extern s64 OSGetTime(void);
+    extern char lbl_802704F8[];
+    extern u8 lbl_80367878;
+    extern void *lbl_803682B8;
+    extern void *lbl_80368278;
+    extern void *lbl_8036787C;
+    extern u32 lbl_80330EAC[];
+
+    extern f32 lbl_80369E20;
+    extern f32 lbl_80369E24;
+    extern f32 lbl_80369E28;
+    extern f32 lbl_80369DC8;
+
+    void *fn_800C992C(void *, const char *, u32);
+    M2C_UNK *fn_800C93EC(void *);
+    s32 fn_8005C82C(s32);
+    u32 strlen(const char *);
+
+    void *fn_80040844(void);
+    void *fn_800408A8(s32);
+    void fn_8004084C(void *);
+
+    void fn_800CB90C(void *, void *, char *);
+    void *fn_800E8504(void *, s32, void *);
+    void fn_800E8154(void *, void *);
+    void fn_800E7D10(void *, void *);
+
+    void *fn_801CA3C8(void *, void *, s32, s32);
+    void fn_800D758C(void *);
+    void fn_800D7564(void *);
+
+    void *fn_801BEF90(void *);
+    void fn_800C96F8(void *, const char *, u32);
+
+    void fn_800C9758(String *, String *, s32, s32);
+    void fn_800CCB9C(u8 *, char *);
+    void fn_800CC9D8(void *, char *);
+    void fn_800CC10C(void *, char *);
+    void fn_800CBF90(void *, void *, void *);
+    void fn_800CF5B8(void *);
+    void fn_800CF000(void *);
+    void fn_801CA1B8(void *);
+    void fn_800CB978(void *);
+    void fn_800CAE9C(void *);
+    void fn_800E76D8(void *, s8);
+    void fn_800CC7E4(void *, void *);
+    void fn_800CC3D8(void *, s32);
+    void fn_800056CC(void *, ...);
+    void fn_801C77A4(void);
+    void *fn_800CB37C(void *);
+    void fn_800CB27C(void **);
+    void *fn_800CCEBC(void *, void *, const char *, void *);
+    void *fn_800CB16C(void *);
+    s32 fn_80199310(void *);
+    void fn_800CB5CC(void *, void *);
+    void fn_800CB538(void *, void *);
+    s32 fn_800CDBA4(s32 *, u32);
+    void fn_800CDAA0(void *, void *);
+    void *fn_800CD79C(s32, void *, s32, u32, u32, s32, u8);
+    void fn_80113030(void *, void *, void *, void *);
+    void fn_8011662C(void *, void *);
+    void fn_800CB484(void *, void *);
+    s32 fn_800C9400(String *, u32, u32, char *, u32);
+    void fn_801168F4(void *, const char *);
+    void fn_800CBAF8(s32, void *, u32);
+    typedef void *(*ObjectLookupFn)(void *, const char *, const char *);
+    f32 fn_80113650(void *);
+    void fn_80113648(void *, f32);
+    char *fn_800A8A88(const char *);
+    void fn_800DB1FC(void *, void *);
+    void fn_800CB070(void);
+    void fn_800CAF74(void *, void *);
+    void fn_80033418(void *);
+    void fn_800555EC(char *, s32);
+    s32 fn_80165B0C(void *);
+    void fn_800558D8(char *);
+
+    struct {
+        String constructed;
+        volatile u32 backing[3];
+    } temp;
+
+    String secondString;
+    String constructedString;
+    String extraString1;
+    String extraString2;
+    String extraString3;
+    String constructedString2;
+
+    String rootString;
+    String workingString;
+    String temporaryString;
+
+    String pairA;
+    String pairB;
+    u32 pairScratchA;
+    u32 pairScratchB;
+
+    String configurationString;
+    u32 configurationScratch;
+    u8 *configuration;
+    char *configurationText;
+    s64 elapsed;
+    s64 milliseconds;
+    u32 timerClock;
+    u32 timerDivisor;
+    s64 phaseStart;
+    void *lookupOne;
+    void *lookupTwo;
+    void *lookupThree;
+    void *detailOne;
+    void *detailTwo;
+    void *detailThree;
+    void *lookupFallback;
+    void *lookupKey;
+
+    String loadString1;
+    String loadString2;
+    String loadString3;
+    String loadString4;
+    String loadString5;
+    String secondGeneratedString;
+    String thirdGeneratedString;
+    String finalLoadString1;
+    String finalLoadString2;
+    String finalLoadString3;
+    f32 value84;
+    f32 value88;
+    void *generatedItem;
+    void *generatedItem2;
+    void *setupValue;
+    u32 setupResult;
+    u32 setupResult2;
+
+    void *host;
+    ObjectLookupFn objectLookup;
+    void *orderedLookup0;
+    void *orderedLookup1;
+    void *orderedLookup2;
+    void *orderedLookup3;
+    String assignedName0;
+    String assignedName1;
+    String assignedName2;
+    String assignedName3;
+    u32 assignedScratch2;
+    char *assignedText2;
+    u32 assignedScratch0;
+    char *assignedText0;
+    volatile u32 *p;
+    u8 *obj;
+    u32 local0;
+    u32 local1;
+    u32 scratch;
+    u32 secondScratch;
+    u32 thirdScratch;
+    s64 timestamp;
+    u32 length;
+
+    void *allocation;
+    void *createdObject;
+    s8 constructed;
+
+    void *allocation2;
+    void *createdObject2;
+    s8 constructed2;
+
+    void *allocation3;
+    void *allocation4;
+
+    p = (volatile u32 *)arg0;
+    obj = (u8 *)arg0;
+
+    p[0x20 / 4] = 0;
+    p[0x24 / 4] = 0;
+    p[0x28 / 4] = 0;
+    p[0x24 / 4] = 0;
+    p[0x2C / 4] = 0;
+    p[0x30 / 4] = 0;
+    p[0x34 / 4] = 0;
+    p[0x30 / 4] = 0;
+    p[0x38 / 4] = 0;
+    p[0x3C / 4] = 0;
+    p[0x40 / 4] = 0;
+    p[0x3C / 4] = 0;
+    p[0x44 / 4] = 0;
+    p[0x48 / 4] = 0;
+    p[0x4C / 4] = 0;
+    p[0x48 / 4] = 0;
+    p[0x50 / 4] = 0;
+    p[0x54 / 4] = 0;
+    p[0x58 / 4] = 0;
+    p[0x54 / 4] = 0;
+    p[0x5C / 4] = 0;
+    p[0x60 / 4] = 0;
+    p[0x64 / 4] = 0;
+    p[0x60 / 4] = 0;
+
+    p[0xB8 / 4] = 0;
+    p[0xBC / 4] = 0;
+    p[0xC0 / 4] = 0;
+    p[0xBC / 4] = 0;
+    p[0xC4 / 4] = 0;
+    p[0xC8 / 4] = 0;
+    p[0xCC / 4] = 0;
+    p[0xC8 / 4] = 0;
+    p[0xD0 / 4] = 0;
+    p[0xD4 / 4] = 0;
+    p[0xD8 / 4] = 0;
+    p[0xD4 / 4] = 0;
+    p[0xDC / 4] = 0;
+    p[0xE0 / 4] = 0;
+    p[0xE4 / 4] = 0;
+    p[0xE0 / 4] = 0;
+    p[0xE8 / 4] = 0;
+    p[0xEC / 4] = 0;
+    p[0xF0 / 4] = 0;
+    p[0xEC / 4] = 0;
+    p[0xF4 / 4] = 0;
+    p[0xF8 / 4] = 0;
+    p[0xFC / 4] = 0;
+    p[0xF8 / 4] = 0;
+    p[0x100 / 4] = 0;
+    p[0x104 / 4] = 0;
+    p[0x108 / 4] = 0;
+    p[0x104 / 4] = 0;
+
+    p[0x10C / 4] = 0;
+    p[0x110 / 4] = 0;
+    p[0x114 / 4] = 0;
+    p[0x110 / 4] = 0;
+    p[0x118 / 4] = 0;
+    p[0x11C / 4] = 0;
+    p[0x120 / 4] = 0;
+    p[0x11C / 4] = 0;
+    p[0x124 / 4] = 0;
+    p[0x128 / 4] = 0;
+    p[0x12C / 4] = 0;
+    p[0x128 / 4] = 0;
+    p[0x130 / 4] = 0;
+    p[0x134 / 4] = 0;
+    p[0x138 / 4] = 0;
+    p[0x134 / 4] = 0;
+    p[0x13C / 4] = 0;
+    p[0x140 / 4] = 0;
+    p[0x144 / 4] = 0;
+    p[0x140 / 4] = 0;
+    p[0x148 / 4] = 0;
+    p[0x14C / 4] = 0;
+    p[0x150 / 4] = 0;
+    p[0x14C / 4] = 0;
+    p[0x154 / 4] = 0;
+    p[0x158 / 4] = 0;
+    p[0x15C / 4] = 0;
+    p[0x158 / 4] = 0;
+    p[0x160 / 4] = 0;
+    p[0x164 / 4] = 0;
+    p[0x168 / 4] = 0;
+    p[0x164 / 4] = 0;
+
+    p[0x198 / 4] = 0;
+    p[0x19C / 4] = 0;
+    p[0x1A0 / 4] = 0;
+    p[0x19C / 4] = 0;
+
+    p[0x1BC / 4] = 0;
+    p[0x1C0 / 4] = 0;
+    p[0x1C4 / 4] = 0;
+    p[0x1C8 / 4] = 0;
+    p[0x1CC / 4] = 0;
+    p[0x1D0 / 4] = 0;
+    p[0x1D4 / 4] = 0;
+    p[0x1D8 / 4] = 0;
+    p[0x1DC / 4] = 0;
+
+    fn_800D6878(
+        obj + 0x1E0,
+        &local0,
+        &local1
+    );
+
+    p[0x1F0 / 4] = 0;
+    p[0x1F4 / 4] = 0;
+    p[0x1F8 / 4] = 0;
+    p[0x200 / 4] = 0;
+    p[0x204 / 4] = 0;
+    p[0x208 / 4] = 0;
+
+    fn_800DF50C(obj + 0x280);
+    fn_800DF50C(obj + 0x2E0);
+
+    temp.backing[1] = 0;
+    temp.backing[0] = 0;
+    temp.backing[2] = 0;
+    temp.backing[1] = 0;
+
+    fn_800C9ABC(
+        &temp.constructed,
+        lbl_802704F8 + 0x665,
+        &scratch
+    );
+
+    fn_801515AC();
+
+    timestamp = OSGetTime();
+
+    fn_800C9ABC(
+        &secondString,
+        lbl_802704F8 + 0x1B0,
+        &secondScratch
+    );
+
+    length = strlen(lbl_802704F8 + 0x66B);
+
+    fn_800C992C(
+        &secondString,
+        lbl_802704F8 + 0x66B,
+        length
+    );
+
+    fn_800C93EC(&secondString);
+
+    p[0] = fn_8005C82C(8);
+
+    fn_800C9A60(&secondString, -1);
+
+    if (lbl_80367878 == 0) {
+        *(void **)(obj + 0x27C) = fn_80040844();
+        fn_8004084C(fn_800408A8(1));
+    }
+
+    constructed = 0;
+
+    allocation = (void *)fn_800C42D8(0x48);
+    createdObject = allocation;
+
+    if (allocation != 0) {
+        fn_800CB90C(
+            &constructedString,
+            &temp.constructed,
+            lbl_802704F8 + 0x674
+        );
+
+        constructed = 1;
+
+        createdObject = fn_800E8504(
+            allocation,
+            0,
+            &constructedString
+        );
+    }
+
+    *(void **)(obj + 4) = createdObject;
+
+    if (constructed != 0) {
+        fn_800C9A60(&constructedString, -1);
+    }
+
+    fn_800CB90C(
+        &extraString1,
+        &temp.constructed,
+        lbl_802704F8 + 0x67F
+    );
+
+    fn_800E8154(
+        *(void **)(obj + 4),
+        &extraString1
+    );
+
+    fn_800C9A60(&extraString1, -1);
+
+    fn_800CB90C(
+        &extraString2,
+        &temp.constructed,
+        lbl_802704F8 + 0x68A
+    );
+
+    fn_800E8154(
+        *(void **)(obj + 4),
+        &extraString2
+    );
+
+    fn_800C9A60(&extraString2, -1);
+
+    fn_800C9ABC(
+        &extraString3,
+        lbl_802704F8 + 0x698,
+        &thirdScratch
+    );
+
+    fn_800E7D10(
+        *(void **)(obj + 4),
+        &extraString3
+    );
+
+    fn_800C9A60(&extraString3, -1);
+
+    constructed2 = 0;
+
+    allocation2 = (void *)fn_800C42D8(0x48);
+    createdObject2 = allocation2;
+
+    if (allocation2 != 0) {
+        fn_800CB90C(
+            &constructedString2,
+            &temp.constructed,
+            lbl_802704F8 + 0x69C
+        );
+
+        constructed2 = 1;
+
+        createdObject2 = fn_800E8504(
+            allocation2,
+            0,
+            &constructedString2
+        );
+    }
+
+    *(void **)(obj + 0x8) = createdObject2;
+
+    if (constructed2 != 0) {
+        fn_800C9A60(&constructedString2, -1);
+    }
+
+    allocation3 = (void *)fn_800C42D8(0x454);
+
+    if (allocation3 != 0) {
+        lbl_803682B8 = fn_801CA3C8(
+            allocation3,
+            *(void **)(obj + 0x8),
+            0x190,
+            0x96
+        );
+
+        fn_800D758C(lbl_803682B8);
+        fn_800D7564(lbl_803682B8);
+    }
+
+    if (lbl_80367878 == 0) {
+        allocation4 = (void *)fn_800C42D8(0x1C8);
+
+        if (allocation4 != 0) {
+            lbl_80368278 = fn_801BEF90(allocation4);
+        }
+    }
+
+    p[0x10 / 4] = 0;
+    p[0x0C / 4] = 0;
+    obj[0x1C] = 0;
+
+    length = strlen(lbl_802704F8 + 0x1B0);
+
+    fn_800C96F8(
+        obj + 0xB8,
+        lbl_802704F8 + 0x1B0,
+        length
+    );
+
+    p[0x180 / 4] = 0;
+    p[0x17C / 4] = 0;
+
+    obj[0x185] = 0;
+    obj[0x187] = 0;
+
+    obj[0x72] = 0;
+    obj[0x71] = 0;
+    obj[0x70] = 0;
+
+    p[0x9C / 4] = 0;
+    p[0xA0 / 4] = 0;
+
+    p[0x22C / 4] = 0;
+    p[0x214 / 4] = 0;
+    p[0x218 / 4] = 0;
+    p[0x230 / 4] = 0;
+
+    p[0x240 / 4] = 0;
+    p[0x23C / 4] = 0;
+    p[0x238 / 4] = 0;
+    p[0x234 / 4] = 0;
+
+    p[0x250 / 4] = 0;
+    p[0x24C / 4] = 0;
+    p[0x248 / 4] = 0;
+    p[0x244 / 4] = 0;
+
+    p[0x258 / 4] = 0;
+    p[0x254 / 4] = 0;
+
+    *(f32 *)(obj + 0x188) = lbl_80369E24;
+    *(f32 *)(obj + 0x18C) = lbl_80369E28;
+    *(f32 *)(obj + 0x190) = lbl_80369E20;
+
+    obj[0x194] = 0;
+    obj[0x195] = 0;
+    obj[0x196] = 1;
+
+    length = strlen(lbl_802704F8 + 0x1B0);
+
+    fn_800C96F8(
+        obj + 0x198,
+        lbl_802704F8 + 0x1B0,
+        length
+    );
+
+    p[0x7C / 4] = 0;
+    p[0x78 / 4] = 0;
+    p[0x74 / 4] = 0;
+
+    p[0x348 / 4] = 0;
+    p[0x344 / 4] = 0;
+    p[0x340 / 4] = 0;
+    p[0x34C / 4] = 0;
+
+    p[0x274 / 4] = 0;
+    p[0x174 / 4] = 0;
+
+    obj[0x178] = 0;
+    obj[0x1A4] = 0;
+    obj[0x1A5] = 0;
+
+    p[0x1A8 / 4] = 0x4B0;
+    p[0x1AC / 4] = 0;
+
+    *(f32 *)(obj + 0x1B8) = lbl_80369DC8;
+    *(f32 *)(obj + 0x1B4) = lbl_80369DC8;
+    *(f32 *)(obj + 0x1B0) = lbl_80369DC8;
+
+    rootString.size = 0;
+    rootString.cap = 0;
+    rootString.data = 0;
+
+    workingString.size = 0;
+    workingString.cap = 0;
+    workingString.data = 0;
+
+    fn_800CB90C(
+        &temporaryString,
+        &temp.constructed,
+        lbl_802704F8 + 0x6A7
+    );
+
+    fn_800C9758(
+        &workingString,
+        &temporaryString,
+        0,
+        -1
+    );
+
+    fn_800C9A60(&temporaryString, -1);
+
+    fn_800CCB9C(
+        obj,
+        (char *)fn_800C93EC(&workingString)
+    );
+
+    fn_800CB90C(
+        &temporaryString,
+        &temp.constructed,
+        lbl_802704F8 + 0x6B2
+    );
+
+    fn_800C9758(
+        &workingString,
+        &temporaryString,
+        0,
+        -1
+    );
+
+    fn_800C9A60(&temporaryString, -1);
+
+    fn_800CC9D8(
+        obj,
+        (char *)fn_800C93EC(&workingString)
+    );
+
+    fn_800CB90C(
+        &temporaryString,
+        &temp.constructed,
+        lbl_802704F8 + 0x6BC
+    );
+
+    fn_800C9758(
+        &workingString,
+        &temporaryString,
+        0,
+        -1
+    );
+
+    fn_800C9A60(&temporaryString, -1);
+
+    fn_800CC10C(
+        obj,
+        (char *)fn_800C93EC(&workingString)
+    );
+
+    /* Existing four string pairs. */
+
+    fn_800C9ABC(&pairA, lbl_802704F8 + 0x5C3, &pairScratchA);
+    fn_800C9ABC(&pairB, lbl_802704F8 + 0x1B0, &pairScratchB);
+    fn_800CBF90(obj, &pairA, &pairB);
+    fn_800C9A60(&pairB, -1);
+    fn_800C9A60(&pairA, -1);
+
+    fn_800C9ABC(&pairA, lbl_802704F8 + 0x5CB, &pairScratchA);
+    fn_800C9ABC(&pairB, lbl_802704F8 + 0x1B0, &pairScratchB);
+    fn_800CBF90(obj, &pairA, &pairB);
+    fn_800C9A60(&pairB, -1);
+    fn_800C9A60(&pairA, -1);
+
+    fn_800C9ABC(&pairA, lbl_802704F8 + 0x6C8, &pairScratchA);
+    fn_800C9ABC(&pairB, lbl_802704F8 + 0x1B0, &pairScratchB);
+    fn_800CBF90(obj, &pairA, &pairB);
+    fn_800C9A60(&pairB, -1);
+    fn_800C9A60(&pairA, -1);
+
+    fn_800C9ABC(&pairA, lbl_802704F8 + 0x6CE, &pairScratchA);
+    fn_800C9ABC(&pairB, lbl_802704F8 + 0x1B0, &pairScratchB);
+    fn_800CBF90(obj, &pairA, &pairB);
+    fn_800C9A60(&pairB, -1);
+    fn_800C9A60(&pairA, -1);
+
+    /* New checkpoint: ten additional string pairs. */
+
+    fn_800C9ABC(&pairA, lbl_802704F8 + 0x6D4, &pairScratchA);
+    fn_800C9ABC(&pairB, lbl_802704F8 + 0x1B0, &pairScratchB);
+    fn_800CBF90(obj, &pairA, &pairB);
+    fn_800C9A60(&pairB, -1);
+    fn_800C9A60(&pairA, -1);
+
+    fn_800C9ABC(&pairA, lbl_802704F8 + 0x6DB, &pairScratchA);
+    fn_800C9ABC(&pairB, lbl_802704F8 + 0x1B0, &pairScratchB);
+    fn_800CBF90(obj, &pairA, &pairB);
+    fn_800C9A60(&pairB, -1);
+    fn_800C9A60(&pairA, -1);
+
+    fn_800C9ABC(&pairA, lbl_802704F8 + 0x6E3, &pairScratchA);
+    fn_800C9ABC(&pairB, lbl_802704F8 + 0x1B0, &pairScratchB);
+    fn_800CBF90(obj, &pairA, &pairB);
+    fn_800C9A60(&pairB, -1);
+    fn_800C9A60(&pairA, -1);
+
+    fn_800C9ABC(&pairA, lbl_802704F8 + 0x6E9, &pairScratchA);
+    fn_800C9ABC(&pairB, lbl_802704F8 + 0x1B0, &pairScratchB);
+    fn_800CBF90(obj, &pairA, &pairB);
+    fn_800C9A60(&pairB, -1);
+    fn_800C9A60(&pairA, -1);
+
+    fn_800C9ABC(&pairA, lbl_802704F8 + 0x6F2, &pairScratchA);
+    fn_800C9ABC(&pairB, lbl_802704F8 + 0x1B0, &pairScratchB);
+    fn_800CBF90(obj, &pairA, &pairB);
+    fn_800C9A60(&pairB, -1);
+    fn_800C9A60(&pairA, -1);
+
+    fn_800C9ABC(&pairA, lbl_802704F8 + 0x6FF, &pairScratchA);
+    fn_800C9ABC(&pairB, lbl_802704F8 + 0x1B0, &pairScratchB);
+    fn_800CBF90(obj, &pairA, &pairB);
+    fn_800C9A60(&pairB, -1);
+    fn_800C9A60(&pairA, -1);
+
+    fn_800C9ABC(&pairA, lbl_802704F8 + 0x70D, &pairScratchA);
+    fn_800C9ABC(&pairB, lbl_802704F8 + 0x1B0, &pairScratchB);
+    fn_800CBF90(obj, &pairA, &pairB);
+    fn_800C9A60(&pairB, -1);
+    fn_800C9A60(&pairA, -1);
+
+    fn_800C9ABC(&pairA, lbl_802704F8 + 0x71B, &pairScratchA);
+    fn_800C9ABC(&pairB, lbl_802704F8 + 0x1B0, &pairScratchB);
+    fn_800CBF90(obj, &pairA, &pairB);
+    fn_800C9A60(&pairB, -1);
+    fn_800C9A60(&pairA, -1);
+
+    fn_800C9ABC(&pairA, lbl_802704F8 + 0x62A, &pairScratchA);
+    fn_800C9ABC(&pairB, lbl_802704F8 + 0x1B0, &pairScratchB);
+    fn_800CBF90(obj, &pairA, &pairB);
+    fn_800C9A60(&pairB, -1);
+    fn_800C9A60(&pairA, -1);
+
+    fn_800C9ABC(&pairA, lbl_802704F8 + 0x64B, &pairScratchA);
+    fn_800C9ABC(&pairB, lbl_802704F8 + 0x1B0, &pairScratchB);
+    fn_800CBF90(obj, &pairA, &pairB);
+    fn_800C9A60(&pairB, -1);
+    fn_800C9A60(&pairA, -1);
+
+    /* Checkpoint: global initialization and persistent strings. */
+    fn_801CA1B8(lbl_803682B8);
+
+    length = strlen(lbl_802704F8 + 0x1B0);
+    fn_800C96F8(obj + 0xC4, lbl_802704F8 + 0x1B0, length);
+
+    length = strlen(lbl_802704F8 + 0x6CE);
+    fn_800C96F8(obj + 0xD0, lbl_802704F8 + 0x6CE, length);
+
+    length = strlen(lbl_802704F8 + 0x6D4);
+    fn_800C96F8(obj + 0xE8, lbl_802704F8 + 0x6D4, length);
+
+    length = strlen(lbl_802704F8 + 0x6DB);
+    fn_800C96F8(obj + 0xF4, lbl_802704F8 + 0x6DB, length);
+
+    length = strlen(lbl_802704F8 + 0x6E3);
+    fn_800C96F8(obj + 0xDC, lbl_802704F8 + 0x6E3, length);
+
+    length = strlen(lbl_802704F8 + 0x6E9);
+    fn_800C96F8(obj + 0x100, lbl_802704F8 + 0x6E9, length);
+
+    length = strlen(lbl_802704F8 + 0x6F2);
+    fn_800C96F8(obj + 0x10C, lbl_802704F8 + 0x6F2, length);
+
+    length = strlen(lbl_802704F8 + 0x6FF);
+    fn_800C96F8(obj + 0x148, lbl_802704F8 + 0x6FF, length);
+
+    length = strlen(lbl_802704F8 + 0x70D);
+    fn_800C96F8(obj + 0x154, lbl_802704F8 + 0x70D, length);
+
+    length = strlen(lbl_802704F8 + 0x71B);
+    fn_800C96F8(obj + 0x160, lbl_802704F8 + 0x71B, length);
+
+    fn_800CB978(arg0);
+    fn_800CAE9C(arg0);
+
+    /* Checkpoint: platform configuration and first timing diagnostic. */
+
+    if (lbl_80367878 != 0) {
+        configuration = (u8 *)lbl_8036787C;
+        fn_800E76D8(*(void **)(obj + 4), (s8)configuration[0x449]);
+    }
+
+    if (lbl_80367878 != 0) {
+        configuration = (u8 *)lbl_8036787C;
+        obj[0x278] = configuration[0x450];
+    } else {
+        obj[0x278] = (u8)((*(u32 *)((u8 *)lbl_80330EAC + 0xCAC) >> 30) & 1);
+    }
+
+    if (lbl_80367878 != 0) {
+        configuration = (u8 *)lbl_8036787C;
+        p[0x228 / 4] = *(u32 *)(configuration + 0x44C);
+    } else {
+        p[0x228 / 4] = *(u32 *)((u8 *)lbl_80330EAC + 0xCA8);
+    }
+
+    elapsed = OSGetTime() - timestamp;
+    timerClock = *(volatile u32 *)0x800000F8;
+    timerDivisor = (u32)(((u64)0x10624DD3 * (timerClock >> 2)) >> 32) >> 6;
+    if (timerDivisor != 0) {
+        milliseconds = elapsed / (s64)timerDivisor;
+    } else {
+        milliseconds = 0;
+    }
+
+    fn_800056CC(
+        lbl_802704F8 + 0x728,
+        (u32)((u64)milliseconds >> 32),
+        (u32)milliseconds
+    );
+    timestamp = OSGetTime();
+
+    if (lbl_80367878 != 0) {
+        configuration = (u8 *)lbl_8036787C;
+        configurationText = (char *)fn_800C93EC(
+            *(u8 **)(obj + 0x1D0) +
+            (*(u32 *)(configuration + 0x438) * 0xC)
+        );
+    } else {
+        configurationText = *(char **)((u8 *)lbl_80330EAC + 0xCB0);
+    }
+
+    fn_800C9ABC(&configurationString, configurationText, &configurationScratch);
+    fn_800CC7E4(arg0, &configurationString);
+    fn_800C9A60(&configurationString, -1);
+
+    if (lbl_80367878 != 0) {
+        configuration = (u8 *)lbl_8036787C;
+        obj[0x186] = configuration[0x448];
+        fn_800CC3D8(arg0, *(s32 *)(configuration + 0x43C));
+    } else {
+        obj[0x186] = 1;
+        fn_800CC3D8(arg0, 1);
+    }
+
+    /* Next checkpoint: two timed phases and the first lookups. */
+
+    elapsed = OSGetTime() - timestamp;
+    timerClock = *(volatile u32 *)0x800000F8;
+    timerDivisor = (u32)(((u64)0x10624DD3 * (timerClock >> 2)) >> 32) >> 6;
+    if (timerDivisor != 0) {
+        milliseconds = elapsed / (s64)timerDivisor;
+    } else {
+        milliseconds = 0;
+    }
+    fn_800056CC(
+        lbl_802704F8 + 0x751,
+        (u32)((u64)milliseconds >> 32),
+        (u32)milliseconds
+    );
+
+    phaseStart = OSGetTime();
+    fn_801C77A4();
+
+    elapsed = OSGetTime() - phaseStart;
+    timerClock = *(volatile u32 *)0x800000F8;
+    timerDivisor = (u32)(((u64)0x10624DD3 * (timerClock >> 2)) >> 32) >> 6;
+    if (timerDivisor != 0) {
+        milliseconds = elapsed / (s64)timerDivisor;
+    } else {
+        milliseconds = 0;
+    }
+    fn_800056CC(
+        lbl_802704F8 + 0x774,
+        (u32)((u64)milliseconds >> 32),
+        (u32)milliseconds
+    );
+    timestamp = OSGetTime();
+
+    /* First lookup: target uses the default configuration table
+       only when lbl_80367878 is zero. */
+    lookupFallback = (void *)((u8 *)lbl_80330EAC + 0x28C);
+    if (lbl_80367878 != 0) {
+        lookupFallback = 0;
+    }
+    lookupKey = fn_800CB37C(arg0);
+    lookupOne = fn_800CCEBC(
+        arg0, lookupKey, lbl_802704F8 + 0x633, lookupFallback
+    );
+
+    /* Second lookup. The existing fn_800CB27C declaration returns
+       void, so its return value cannot be used directly in C. */
+    lookupFallback = (void *)((u8 *)lbl_80330EAC + 0x56C);
+    if (lbl_80367878 != 0) {
+        lookupFallback = 0;
+    }
+    fn_800CB27C((void **)arg0);
+    lookupTwo = fn_800CCEBC(
+        arg0, arg0, lbl_802704F8 + 0x63B, lookupFallback
+    );
+
+    /* Next checkpoint: third top-level lookup. */
+    lookupFallback = (void *)((u8 *)lbl_80330EAC + 0x84C);
+    if (lbl_80367878 != 0) {
+        lookupFallback = 0;
+    }
+    lookupKey = fn_800CB16C(arg0);
+    lookupThree = fn_800CCEBC(
+        arg0, lookupKey, lbl_802704F8 + 0x797, lookupFallback
+    );
+
+    /* Query a secondary object only when the lookup has type 3. */
+    detailOne = 0;
+    if (lookupOne != 0 && fn_80199310(lookupOne) == 3) {
+        detailOne = fn_800CCEBC(
+            arg0,
+            lbl_802704F8 + 0x79F,
+            lbl_802704F8 + 0x7A5,
+            0
+        );
+    }
+
+    detailTwo = 0;
+    if (lookupTwo != 0 && fn_80199310(lookupTwo) == 3) {
+        detailTwo = fn_800CCEBC(
+            arg0,
+            lbl_802704F8 + 0x79F,
+            lbl_802704F8 + 0x7AC,
+            0
+        );
+    }
+
+    detailThree = 0;
+    if (lookupThree != 0 && fn_80199310(lookupThree) == 3) {
+        detailThree = fn_800CCEBC(
+            arg0,
+            lbl_802704F8 + 0x79F,
+            lbl_802704F8 + 0x7B3,
+            0
+        );
+    }
+
+    /* Diagnostic after the three lookup groups. */
+    elapsed = OSGetTime() - timestamp;
+    timerClock = *(volatile u32 *)0x800000F8;
+    timerDivisor = (u32)(((u64)0x10624DD3 * (timerClock >> 2)) >> 32) >> 6;
+    if (timerDivisor != 0) {
+        milliseconds = elapsed / (s64)timerDivisor;
+    } else {
+        milliseconds = 0;
+    }
+    fn_800056CC(
+        lbl_802704F8 + 0x7BA,
+        (u32)((u64)milliseconds >> 32),
+        (u32)milliseconds
+    );
+    timestamp = OSGetTime();
+
+    /* Next ~100 target instructions: four lookup-dependent setup calls. */
+
+    fn_800CB5CC(&loadString1, arg0);
+    setupResult = fn_800CDBA4((s32 *)arg0, (u32)&loadString1);
+    p[0x74 / 4] = setupResult;
+    fn_800C9A60(&loadString1, -1);
+
+    fn_800CB538(&loadString2, arg0);
+    setupResult2 = fn_800CDBA4((s32 *)arg0, (u32)&loadString2);
+    p[0x78 / 4] = setupResult2;
+    fn_800C9A60(&loadString2, -1);
+
+    fn_800CB5CC(&loadString3, arg0);
+    fn_800CDAA0(arg0, &loadString3);
+    fn_800C9A60(&loadString3, -1);
+
+    fn_800CB538(&loadString4, arg0);
+    fn_800CDAA0(arg0, &loadString4);
+    fn_800C9A60(&loadString4, -1);
+
+    elapsed = OSGetTime() - timestamp;
+    timerClock = *(volatile u32 *)0x800000F8;
+    timerDivisor = (u32)(((u64)0x10624DD3 * (timerClock >> 2)) >> 32) >> 6;
+    if (timerDivisor != 0) {
+        milliseconds = elapsed / (s64)timerDivisor;
+    } else {
+        milliseconds = 0;
+    }
+    fn_800056CC(
+        lbl_802704F8 + 0x7DD,
+        (u32)((u64)milliseconds >> 32),
+        (u32)milliseconds
+    );
+    timestamp = OSGetTime();
+
+    fn_800CB5CC(&loadString5, arg0);
+    generatedItem = fn_800CD79C(
+        (s32)arg0,
+        lbl_802704F8 + 0x800,
+        (s32)&loadString5,
+        (u32)lookupOne,
+        (u32)detailOne,
+        0,
+        0
+    );
+    *(void **)(obj + 0x84) = generatedItem;
+    fn_800C9A60(&loadString5, -1);
+
+    fn_80113030(
+        generatedItem,
+        *(void **)(obj + 0x68),
+        obj + 0x20,
+        obj + 0x44
+    );
+    fn_8011662C(generatedItem, *(void **)(obj + 0x80));
+
+    /* Next target sequence: construct and initialize the second generated item. */
+    fn_800CB538(&secondGeneratedString, arg0);
+    generatedItem2 = fn_800CD79C(
+        (s32)arg0,
+        lbl_802704F8 + 0x809,
+        (s32)&secondGeneratedString,
+        (u32)lookupTwo,
+        (u32)detailTwo,
+        1,
+        1
+    );
+    *(void **)(obj + 0x88) = generatedItem2;
+    fn_800C9A60(&secondGeneratedString, -1);
+
+    fn_80113030(
+        generatedItem2,
+        *(void **)(obj + 0x6C),
+        obj + 0x2C,
+        obj + 0x50
+    );
+    fn_8011662C(generatedItem2, *(void **)(obj + 0x80));
+
+    /* Build a third input string and copy it into the reusable string. */
+    fn_800CB484(&thirdGeneratedString, arg0);
+    fn_800C9758(&workingString, &thirdGeneratedString, 0, -1);
+    fn_800C9A60(&thirdGeneratedString, -1);
+
+    /* Target checks whether the third input is an empty string. */
+    length = strlen(lbl_802704F8 + 0x1B0);
+    if (fn_800C9400(
+            &workingString, 0, workingString.size,
+            lbl_802704F8 + 0x1B0, length
+        ) != 0) {
+        p[0x7C / 4] = fn_800CDBA4((s32 *)arg0, (u32)&workingString);
+        fn_800CDAA0(arg0, &workingString);
+
+        generatedItem = fn_800CD79C(
+            (s32)arg0,
+            lbl_802704F8 + 0x812,
+            (s32)&workingString,
+            (u32)lookupThree,
+            (u32)detailThree,
+            2,
+            0
+        );
+        *(void **)(obj + 0x8C) = generatedItem;
+        fn_80113030(
+            generatedItem,
+            *(void **)(obj + 0x68),
+            obj + 0x38,
+            obj + 0x5C
+        );
+        fn_8011662C(generatedItem, *(void **)(obj + 0x80));
+        fn_801168F4(generatedItem, lbl_802704F8 + 0x809);
+    } else {
+        *(void **)(obj + 0x8C) = 0;
+    }
+
+    /* The three paths are registered using the lookup objects. */
+    fn_800CB5CC(&finalLoadString1, arg0);
+    fn_800CBAF8((s32)arg0, &finalLoadString1, (u32)lookupOne);
+    fn_800C9A60(&finalLoadString1, -1);
+
+    fn_800CB538(&finalLoadString2, arg0);
+    fn_800CBAF8((s32)arg0, &finalLoadString2, (u32)lookupTwo);
+    fn_800C9A60(&finalLoadString2, -1);
+
+    if (*(void **)(obj + 0x8C) != 0) {
+        fn_800CB484(&finalLoadString3, arg0);
+        fn_800CBAF8((s32)arg0, &finalLoadString3, (u32)lookupThree);
+        fn_800C9A60(&finalLoadString3, -1);
+    }
+
+    /* Timing diagnostic for the preceding initialization block. */
+    elapsed = OSGetTime() - timestamp;
+    timerClock = *(volatile u32 *)0x800000F8;
+    timerDivisor = (u32)(((u64)0x10624DD3 * (timerClock >> 2)) >> 32) >> 6;
+    if (timerDivisor != 0) {
+        milliseconds = elapsed / (s64)timerDivisor;
+    } else {
+        milliseconds = 0;
+    }
+    fn_800056CC(
+        lbl_802704F8 + 0x81B,
+        (u32)((u64)milliseconds >> 32),
+        (u32)milliseconds
+    );
+
+    fn_801168F4(*(void **)(obj + 0x84), lbl_802704F8 + 0x809);
+    fn_801168F4(*(void **)(obj + 0x88), lbl_802704F8 + 0x800);
+
+    /* Reorder the created items according to the 0x274 field. */
+    if (p[0x274 / 4] == 0) {
+        *(void **)(obj + 0x90) = *(void **)(obj + 0x84);
+        *(void **)(obj + 0x94) = *(void **)(obj + 0x88);
+    } else {
+        *(void **)(obj + 0x90) = *(void **)(obj + 0x88);
+        *(void **)(obj + 0x94) = *(void **)(obj + 0x84);
+    }
+    *(void **)(obj + 0x98) = *(void **)(obj + 0x8C);
+
+    value84 = fn_80113650(*(void **)(obj + 0x84));
+    value88 = fn_80113650(*(void **)(obj + 0x88));
+    if (value84 > value88) {
+        fn_80113648(*(void **)(obj + 0x88), value84);
+    } else if (value84 < value88) {
+        fn_80113648(*(void **)(obj + 0x84), value88);
+    }
+
+    /* Next target block: virtual lookups for the ordered object names. */
+    host = *(void **)(obj + 4);
+    objectLookup = *(ObjectLookupFn *)((u8 *)*(void **)((u8 *)host + 0x10) + 0x10);
+
+    if (p[0x274 / 4] == 0) {
+        *(void **)(obj + 0xA4) = objectLookup(
+            host, lbl_802704F8 + 0x844, lbl_802704F8 + 0x84A
+        );
+        *(void **)(obj + 0xA8) = objectLookup(
+            host, lbl_802704F8 + 0x844, lbl_802704F8 + 0x851
+        );
+    } else {
+        *(void **)(obj + 0xA4) = objectLookup(
+            host, lbl_802704F8 + 0x844, lbl_802704F8 + 0x851
+        );
+        *(void **)(obj + 0xA8) = objectLookup(
+            host, lbl_802704F8 + 0x844, lbl_802704F8 + 0x84A
+        );
+    }
+
+    p[0xB0 / 4] = 0;
+    p[0xAC / 4] = 0;
+    *(void **)(obj + 0xB4) = objectLookup(
+        host, lbl_802704F8 + 0x844, lbl_802704F8 + 0x858
+    );
+
+    /* The next four virtual lookups depend on the ordering flag. */
+    host = *(void **)(obj + 4);
+    objectLookup = *(ObjectLookupFn *)((u8 *)*(void **)((u8 *)host + 0x10) + 0x10);
+
+    if (p[0x274 / 4] == 0) {
+        orderedLookup0 = objectLookup(
+            host, lbl_802704F8 + 0x56A, lbl_802704F8 + 0x861
+        );
+        orderedLookup1 = objectLookup(
+            host, lbl_802704F8 + 0x56A, lbl_802704F8 + 0x86A
+        );
+        orderedLookup2 = objectLookup(
+            host, lbl_802704F8 + 0x56A, lbl_802704F8 + 0x879
+        );
+        orderedLookup3 = objectLookup(
+            host, lbl_802704F8 + 0x56A, lbl_802704F8 + 0x882
+        );
+    } else {
+        orderedLookup0 = objectLookup(
+            host, lbl_802704F8 + 0x56A, lbl_802704F8 + 0x879
+        );
+        orderedLookup1 = objectLookup(
+            host, lbl_802704F8 + 0x56A, lbl_802704F8 + 0x882
+        );
+        orderedLookup2 = objectLookup(
+            host, lbl_802704F8 + 0x56A, lbl_802704F8 + 0x861
+        );
+        orderedLookup3 = objectLookup(
+            host, lbl_802704F8 + 0x56A, lbl_802704F8 + 0x86A
+        );
+    }
+
+    /* About 40 original instructions after the ordered virtual lookups.
+       First assigned name: config-selected text, converted to String. */
+    if (lbl_80367878 != 0) {
+        assignedText0 = lbl_802704F8 + 0x1BC;
+    } else {
+        assignedText0 = *(char **)((u8 *)lbl_80330EAC + 0x188);
+    }
+    assignedText0 = fn_800A8A88(assignedText0);
+    fn_800C9ABC(&assignedName0, assignedText0, &assignedScratch0);
+    fn_800DB1FC(orderedLookup0, &assignedName0);
+    fn_800C9A60(&assignedName0, -1);
+
+    /* The target uses the return value of fn_800CB070 as a String.
+       Its current implementation is void(void), so this placeholder
+       is only a compile-stage approximation. */
+    assignedName1.size = 0;
+    assignedName1.cap = 0;
+    assignedName1.data = 0;
+    fn_800CB070();
+    fn_800DB1FC(orderedLookup1, &assignedName1);
+    fn_800C9A60(&assignedName1, -1);
+
+    /* Next ~50 instructions: the remaining two name assignments. */
+    if (lbl_80367878 != 0) {
+        assignedText2 = lbl_802704F8 + 0x1BC;
+    } else {
+        assignedText2 = *(char **)((u8 *)lbl_80330EAC + 0x468);
+    }
+    assignedText2 = fn_800A8A88(assignedText2);
+    fn_800C9ABC(&assignedName2, assignedText2, &assignedScratch2);
+    fn_800DB1FC(orderedLookup2, &assignedName2);
+    fn_800C9A60(&assignedName2, -1);
+
+    /* Target uses a String created by fn_800CAF74.
+       Keep its current declaration and use a temporary until
+       its exact calling convention is reconstructed. */
+    assignedName3.size = 0;
+    assignedName3.cap = 0;
+    assignedName3.data = 0;
+    fn_800CAF74(&assignedName3, arg0);
+    fn_800DB1FC(orderedLookup3, &assignedName3);
+    fn_800C9A60(&assignedName3, -1);
+
+    /* Select the configuration data block for the next calls. */
+    if (lbl_80367878 != 0) {
+        *(void **)(obj + 0x1FC) =
+            (u8 *)lbl_8036787C + 0x454;
+    } else {
+        *(void **)(obj + 0x1FC) =
+            (u8 *)lbl_80330EAC + 0x8A0;
+    }
+
+    /* Next checkpoint: initialize the selected configuration block. */
+    fn_80033418(*(void **)(obj + 0x1FC));
+    *(u16 *)(*(u8 **)(obj + 0x1FC)) = 0;
+
+    fn_800555EC(lbl_802704F8 + 0x1FB, 8);
+    fn_800555EC(lbl_802704F8 + 0x208, 8);
+
+    /* Complete the mode-dependent registration calls. */
+    if (*(void **)(obj + 0x80) != 0) {
+        s32 mode = fn_80165B0C(*(void **)(obj + 0x80));
+
+        if (mode == 1) {
+            fn_800558D8(lbl_802704F8 + 0x212);
+            fn_800558D8(lbl_802704F8 + 0x222);
+            fn_800558D8(lbl_802704F8 + 0x233);
+            fn_800558D8(lbl_802704F8 + 0x244);
+            fn_800558D8(lbl_802704F8 + 0x255);
+        } else if (mode == 2) {
+            fn_800558D8(lbl_802704F8 + 0x266);
+            fn_800558D8(lbl_802704F8 + 0x277);
+            fn_800558D8(lbl_802704F8 + 0x288);
+            fn_800558D8(lbl_802704F8 + 0x299);
+            fn_800558D8(lbl_802704F8 + 0x2AA);
+        } else if (mode == 3) {
+            fn_800558D8(lbl_802704F8 + 0x2BB);
+            fn_800558D8(lbl_802704F8 + 0x2CB);
+            fn_800558D8(lbl_802704F8 + 0x2DC);
+            fn_800558D8(lbl_802704F8 + 0x2ED);
+            fn_800558D8(lbl_802704F8 + 0x2FE);
+        }
+    }
+
+    /* Final target calls and stack String destructors. */
+    fn_800CF5B8(arg0);
+    fn_800CF000(arg0);
+
+    fn_800C9A60(&workingString, -1);
+    fn_800C9A60(&temp.constructed, -1);
+    fn_800C9A60(&rootString, -1);
+
+    (void)orderedLookup0;
+    (void)orderedLookup1;
+    (void)orderedLookup2;
+    (void)orderedLookup3;
+
+    (void)lookupOne;
+    (void)lookupTwo;
+    (void)lookupThree;
+    (void)detailOne;
+    (void)detailTwo;
+    (void)detailThree;
+    (void)timestamp;
+
+    return arg0;
+}
+
 #pragma inline_depth(8)
 #pragma cplusplus reset
 
@@ -6024,6 +7401,43 @@ void fn_800E00B0(s32 arg0, s32 arg1, s32* arg2)
     
     *arg2 = 0;
     return;
+}
+
+void fn_800E0140(void *arg0, s32 arg1)
+{
+    extern u8 lbl_8028DFE8[];
+    void fn_800C428C();
+
+    void *self;
+    s32 flag;
+    void *member;
+    void (**vtable)(void *);
+
+    flag = arg1;
+    self = arg0;
+
+    if (self != 0) {
+        *(void **)((u8 *)self + 0x10) = lbl_8028DFE8;
+
+        vtable = *(void (***)(void *))((u8 *)arg0 + 0x10);
+        vtable[0x2C / 4](arg0);
+
+        if (self != 0) {
+            if (self != 0) {
+                if (self != 0) {
+                    member = *(void **)((u8 *)self + 8);
+
+                    if (member != 0) {
+                        fn_800C428C(member);
+                    }
+                }
+            }
+        }
+
+        if ((s16)flag > 0) {
+            fn_800C428C(self);
+        }
+    }
 }
 
 void fn_800E01C8(void *arg0) {
@@ -13420,66 +14834,68 @@ void fn_801007A0(void *arg0) {
     void fn_8010C504(void *);
     u8 fn_8009339C(void *, void *);
     u64 *fn_8001CB64(void **);
-    void *cur;
-    void **item;
     s32 i;
+    void **item;
+    void *unit = arg0;
 
-    M2C_FIELD(arg0, u32 *, 0x254) &= 0xFEFF80EB;
-    fn_8010C504(arg0);
+    M2C_FIELD(unit, u32 *, 0x254) &= 0xFEFF80EB;
+    fn_8010C504(unit);
 
     for (i = 0; i < 4; i++) {
-        item = fn_80037BBC(arg0, i);
+        item = fn_80037BBC(unit, i);
         if (*item == NULL) {
             break;
         }
-        if (fn_8009326C(arg0, *item)) {
+        if (fn_8009326C(unit, *item)) {
             if (GetItemKind(*item) == 0x81 || GetItemKind(*item) == 0x82) {
-                M2C_FIELD(arg0, u32 *, 0x254) |= 0x4;
+                M2C_FIELD(unit, u32 *, 0x254) |= 0x4;
             }
         }
     }
 
     for (i = 0; i < 4; i++) {
-        item = fn_80037BBC(arg0, i);
+        item = fn_80037BBC(unit, i);
         if (*item == NULL) {
             break;
         }
-        if (fn_8009326C(arg0, *item)) {
+        if (fn_8009326C(unit, *item)) {
             if (GetItemKind(*item) == 0x86) {
-                M2C_FIELD(arg0, u32 *, 0x254) |= 0x10;
+                M2C_FIELD(unit, u32 *, 0x254) |= 0x10;
             }
         }
     }
 
     for (i = 0; i < 4; i++) {
-        item = fn_80037BBC(arg0, i);
+        item = fn_80037BBC(unit, i);
         if (*item == NULL) {
             break;
         }
-        if (fn_8009339C(arg0, *item) && (*fn_8001CB64(item) & 2)) {
-            M2C_FIELD(arg0, u32 *, 0x254) |= 0x100;
+        if (fn_8009339C(unit, *item) && (*fn_8001CB64(item) & 2)) {
+            M2C_FIELD(unit, u32 *, 0x254) |= 0x100;
             break;
         }
     }
 
     for (i = 0; i < 4; i++) {
-        item = fn_80037BBC(arg0, i);
+        void *cur;
+
+        item = fn_80037BBC(unit, i);
         if (*item == NULL) {
             break;
         }
-        if (fn_8009326C(arg0, *item)) {
-            M2C_FIELD(arg0, u32 *, 0x254) |= 0x200;
+        if (fn_8009326C(unit, *item)) {
+            M2C_FIELD(unit, u32 *, 0x254) |= 0x200;
             cur = *item;
             if (fn_80019E04(lbl_80273304.iidSilence) == cur) {
-                M2C_FIELD(arg0, u32 *, 0x254) |= 0x400;
+                M2C_FIELD(unit, u32 *, 0x254) |= 0x400;
             } else {
                 cur = *item;
                 if (fn_80019E04(lbl_80273304.iidSleep) == cur) {
-                    M2C_FIELD(arg0, u32 *, 0x254) |= 0x800;
+                    M2C_FIELD(unit, u32 *, 0x254) |= 0x800;
                 } else {
                     cur = *item;
                     if (fn_80019E04(lbl_80273304.iidBerserk) == cur) {
-                        M2C_FIELD(arg0, u32 *, 0x254) |= 0x1000;
+                        M2C_FIELD(unit, u32 *, 0x254) |= 0x1000;
                     }
                 }
             }
@@ -13487,23 +14903,23 @@ void fn_801007A0(void *arg0) {
     }
 
     for (i = 0; i < 4; i++) {
-        item = fn_80037BBC(arg0, i);
+        item = fn_80037BBC(unit, i);
         if (*item == NULL) {
             break;
         }
-        if (fn_8009339C(arg0, *item)) {
+        if (fn_8009339C(unit, *item)) {
             if (GetItemUnk1D(*item) == 1) {
-                M2C_FIELD(arg0, u32 *, 0x254) |= 0x4000;
+                M2C_FIELD(unit, u32 *, 0x254) |= 0x4000;
             }
-            if (GetItemDD54(*item, arg0) > 1) {
-                M2C_FIELD(arg0, u32 *, 0x254) |= 0x2000;
+            if (GetItemDD54(*item, unit) > 1) {
+                M2C_FIELD(unit, u32 *, 0x254) |= 0x2000;
             }
         }
     }
 
-    if (M2C_FIELD(arg0, struct UnitBits *, 0x1A4).f2 || M2C_FIELD(arg0, struct UnitBits *, 0x1A4).f1 ||
-        M2C_FIELD(arg0, struct UnitBits *, 0x1A4).f4) {
-        M2C_FIELD(arg0, u32 *, 0x254) |= 0x01000000;
+    if (M2C_FIELD(unit, struct UnitBits *, 0x1A4).f2 || M2C_FIELD(unit, struct UnitBits *, 0x1A4).f1 ||
+        M2C_FIELD(unit, struct UnitBits *, 0x1A4).f4) {
+        M2C_FIELD(unit, u32 *, 0x254) |= 0x01000000;
     }
 }
 #pragma opt_loop_invariants reset
