@@ -6164,3 +6164,7 @@ extern u16 lbl_8028F6C8[];
 extern u16 lbl_80296128[];
 extern void *lbl_802CA264;
 extern u16 lbl_802EF4E0[];
+
+s32 fn_80120C2C(void) {
+    return 0;
+}
