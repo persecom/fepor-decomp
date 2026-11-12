@@ -3878,7 +3878,7 @@ u8 fn_801F1C5C(void) {
     return *(u8 *)(temp_r3 + 4);
 }
 
-s8 fn_801F1CE8(void)
+u8 fn_801F1CE8(void)
 {
     s32 fn_8000D354(void *);
 
@@ -3905,7 +3905,8 @@ s8 fn_801F1CE8(void)
         break;
     }
 
-    return *(u8 *)(temp_r3 + (s8)var_r0);
+    temp_r3 = temp_r3 + var_r0;
+    return *(u8 *)temp_r3;
 }
 
 #include "common.h"
