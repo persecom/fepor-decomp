@@ -6921,7 +6921,7 @@ loop_1:
     }
 }
 #pragma use_lmw_stmw reset
-void fn_800BDD08(void* arg0, void* arg1, int arg2) {
+void fn_800BDD08(void *arg0, void *arg1, int arg2) {
     s32* ptr0 = (s32*)arg0;
     s32* ptr1 = (s32*)arg1;
     int count = arg2 >> 2;
