@@ -6022,23 +6022,21 @@ u8 fn_800BC684(u8 arg0) {
     return (u8)fn_80092F9C();
 }
 
-s32 fn_800BC6E8(u8 arg0, s32 unused, s32 arg2) {
-    void *fn_80037BD0(void);
+s32 fn_800BC6E8(u8 arg0, s32 arg1, s32 arg2) {
+    void *fn_80037BD0(void *, s32);
     void fn_8001D780(void *, s32);
     extern u8 lbl_802B14E4[];
-    u8 *entry;
+    void *unit;
 
     if (arg0 != 0) {
-        entry = lbl_802B14E4 + (arg0 - 1) * 0x280;
+        unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
     } else {
-        entry = 0;
+        unit = NULL;
     }
-
-    if (entry == 0 || *(u32 *)(entry + 0x188) == 0) {
+    if (unit == NULL || *(u32 *)((u8 *)unit + 0x188) == 0) {
         return 0;
     }
-
-    fn_8001D780(fn_80037BD0(), arg2);
+    fn_8001D780(fn_80037BD0(unit, arg1), arg2);
     return 1;
 }
 
