@@ -1299,6 +1299,24 @@ void fn_80165B1C(void) {
     fn_800472D4();
 }
 
+void *fn_80165B40(void *arg0, s16 arg1) {
+    void *fn_80040844(void);
+    void fn_80041254(void *);
+    void fn_800DF724(void *, s32);
+    void fn_800C428C(void *);
+    extern void *lbl_80293CB0[];
+
+    if (arg0 != NULL) {
+        *(void **)((u8 *)arg0 + 0x40) = lbl_80293CB0;
+        fn_80041254(fn_80040844());
+        fn_800DF724(arg0, 0);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void *fn_80165BAC(void *arg0, s32 arg2) {
     M2C_UNK fn_80041514(s32);
     M2C_UNK fn_800C8DCC(M2C_UNK *, s32, s32 *);
