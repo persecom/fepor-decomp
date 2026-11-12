@@ -5564,9 +5564,8 @@ s16 fn_800BBC58(u8 arg0, s32 arg1) {
 }
 
 u8 fn_800BBCFC(s8 arg0, s8 arg1) {
-    extern u16 lbl_802CA518[];
-    s32 index = (arg1 << 6) + arg0;
-    return lbl_802CA518[index + 0x200D];
+    extern u8 lbl_802CA518[];
+    return lbl_802CA518[arg0 + (arg1 << 6) + 0x200D];
 }
 
 u8 fn_800BBD20(s8 arg0, s8 arg1) {
