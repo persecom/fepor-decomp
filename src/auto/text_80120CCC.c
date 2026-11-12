@@ -2640,12 +2640,17 @@ void fn_8012688C(s8 arg0) {
 }
 
 void fn_8012689C(s32 arg0) {
-    extern u8 lbl_80330708[1400];
-    u8 *ptr = &lbl_80330708[0x9F];
+    extern u8 lbl_80330708[];
+    struct {
+        u8 pad:1;
+        u8 flag:1;
+        u8 rest:6;
+    } *p = (void *)(lbl_80330708 + 0x9F);
+
     if (arg0 == 1) {
-        *ptr |= 0x40;
+        p->flag = 1;
     } else {
-        *ptr &= ~0x40;
+        p->flag = 0;
     }
 }
 
