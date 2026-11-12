@@ -4753,22 +4753,26 @@ void fn_8006805C(f32 arg0, f32 arg1) {
     *(f32 *)((u8 *)lbl_803672F8 + 0x184) = arg1;
 }
 
+#pragma global_optimizer off
 void fn_80068070(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
-    extern void *lbl_803672F8;
+    extern f32 *lbl_803672F8;
     extern f32 lbl_80369228;
     extern f32 lbl_80369224;
-    f32 value;
+    f32 *p;
+    f32 y;
+    f32 x;
 
-    value = lbl_80369228;
-
-    *(f32 *)((u8 *)lbl_803672F8 + 4) = arg0;
-    *(f32 *)((u8 *)lbl_803672F8 + 8) = arg1;
-    *(f32 *)((u8 *)lbl_803672F8 + 0xC) = arg2;
-    *(f32 *)((u8 *)lbl_803672F8 + 0x10) = arg3;
-    *(f32 *)((u8 *)lbl_803672F8 + 0x14) = value;
-    *(f32 *)((u8 *)lbl_803672F8 + 0x18) = lbl_80369224;
+    p = lbl_803672F8;
+    x = lbl_80369228;
+    p[1] = arg0;
+    y = lbl_80369224;
+    lbl_803672F8[2] = arg1;
+    lbl_803672F8[3] = arg2;
+    lbl_803672F8[4] = arg3;
+    lbl_803672F8[5] = x;
+    lbl_803672F8[6] = y;
 }
-
+#pragma global_optimizer reset
 void fn_800680AC(u16 arg0, u16 arg1, u16 arg2, u16 arg3) {
     extern void *lbl_803672F8;
 
