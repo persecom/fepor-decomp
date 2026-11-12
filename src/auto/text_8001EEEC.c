@@ -666,7 +666,7 @@ void fn_8002134C(struct unit* arg0)
 }
 
 void fn_800213D0(void *map, u8 x, u8 y, u16 range, s32 flagA, s32 flagB)
-{ /* match-wip */
+{
     void fn_80022DAC(void *, s32, s32);
     extern u8 lbl_802B14E4[];
     u8 *ed8;
