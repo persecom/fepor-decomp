@@ -46,5 +46,4 @@ void fn_8007C534(void) {
     p[1] = lbl_80288D0C;
 }
 
-#pragma section "ctors"
-__declspec(section "ctors") void *const lbl_80267AB8 = fn_8007C534;
+__declspec(section ".ctors") static void (*const lbl_80267AB8)(void) = fn_8007C534;
