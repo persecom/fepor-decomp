@@ -4343,19 +4343,21 @@ s32 fn_800B90C4(u32 arg0) {
 
 s32 fn_800B9130(u32 arg0, s32 arg1) {
     extern s32 lbl_80367110;
-    s32 fn_801CF760(void);
-    void fn_801CFD40(s32);
-    
+    void *fn_801CF760(void);
+    void fn_801CFD40(void *, s32);
+    void *tmp;
+
     if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
         return 0;
     }
     if (lbl_80367110 & 1) {
         return 0;
     }
-    if (fn_801CF760() == 0) {
+    tmp = fn_801CF760();
+    if (tmp == 0) {
         return 0;
     }
-    fn_801CFD40(arg1);
+    fn_801CFD40(tmp, arg1);
     return 1;
 }
 
