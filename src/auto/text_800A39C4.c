@@ -2,6 +2,9 @@
 // split_file divides it into the game's real files (file_status shows its range).
 #include "common.h"
 
+void fn_800A39C4(void);
+__declspec(section ".ctors") static void (*const lbl_80267AC4)(void) = fn_800A39C4;
+
 void fn_800A39C4(void) {
     typedef struct { void *a; void *b; } Pair;
     extern u8 lbl_8028C52C[];
