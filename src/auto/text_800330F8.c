@@ -5749,7 +5749,11 @@ void fn_800404DC(void) {
 #pragma use_lmw_stmw reset
 
 s32 fn_80040824(void) {
-    return 0;
+    extern void *lbl_803672AC;
+    if (lbl_803672AC == NULL) {
+        return 0;
+    }
+    return (M2C_FIELD(lbl_803672AC, u32 *, 0x64) >> 30) & 1;
 }
 
 s32 fn_80040844(void) {
