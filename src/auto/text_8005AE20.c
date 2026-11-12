@@ -3333,23 +3333,19 @@ void fn_80065E68(void) {
     fn_8005C7E8();
 }
 
-u32 fn_80065E88(s32 arg0, s32 arg1)
-{
 #pragma inline_depth(0)
-    s32 result;
+u32 fn_80065E88(s32 arg0, s32 arg1) {
+    void fn_80065F48(s32);
+    s32 temp_r31;
 
-    result = fn_8005C82C((char *)arg0, arg1);
-
+    (void)arg1;
+    temp_r31 = fn_8005C82C();
     if (!(fn_8005C6A0((char *)arg0) & 0x4000)) {
-        fn_80065F48(result);
+        fn_80065F48(temp_r31);
+        fn_8005C5A8((char *)arg0);
     }
-
-    fn_8005C5A8((char *)arg0);
-
-#pragma inline_depth(3)
-    return result;
+    return temp_r31;
 }
-
 s32 fn_80065EE8(void *arg0)
 {
     extern s32 fn_8005C82C(void *, s32);
