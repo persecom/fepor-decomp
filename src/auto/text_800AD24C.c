@@ -4856,13 +4856,18 @@ s32 fn_800BA138(u32 arg0, s32 arg1, s32 arg2) {
 }
 
 s32 fn_800BA230(u32 arg0, s32 arg1) {
+    u32 fn_801090C0(void);
+    void fn_80109DC0(u32, s32);
+    u32 tmp;
+
     if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
         return 0;
     }
-    if (fn_801090C0() == 0U) {
+    tmp = fn_801090C0();
+    if (tmp == 0U) {
         return 0;
     }
-    fn_80109DC0(arg1);
+    fn_80109DC0(tmp, arg1);
     return 1;
 }
 
