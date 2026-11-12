@@ -8276,9 +8276,14 @@ void fn_80142780(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
     fn_8008AB7C(arg1 + (arg3 >> 1), arg2 + (arg4 >> 1), arg3, 0x17, 0x19, 0x4C, arg5);
 }
 
-void fn_801427D4(void *arg0, s16 arg1, s16 arg2, s32 *arg4, s32 arg5) {
-    M2C_UNK fn_8008D264(s32, s32, s16, s16, f32);
-    fn_8008D264(*arg4, arg5, arg1, arg2, M2C_FIELD(arg0, f32 *, 0x128));
+void fn_801427D4(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s32 arg5) {
+    void fn_8008D264(s32, s32, s16, s16, f32);
+    s16 t1;
+    s16 t2;
+    void *p = arg0;
+    t2 = (s16)arg2;
+    t1 = (s16)arg1;
+    fn_8008D264(*arg4, arg5, t1, t2, *(f32 *)((u8 *)p + 0x128));
 }
 
 void fn_80142814(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 *arg4, s32 arg5) {
