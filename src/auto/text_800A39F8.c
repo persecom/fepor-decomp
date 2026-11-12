@@ -1283,6 +1283,26 @@ void fn_800A6450(void) {
     fn_80196078();
 }
 
+s32 fn_800A6510(s32 arg0) {
+    void fn_80094A08(s32, s32);
+    void fn_8000CAA0(void *, s32, void *);
+    extern struct {
+        s32 unk0;
+        s32 unk4;
+        u8 unk8;
+        u8 unk9;
+        s8 unkA;
+        u8 pad[0x18 - 0xB];
+    } lbl_802EF4C8;
+    extern u8 lbl_80330EAC[];
+    extern u8 lbl_8028C6D8[];
+
+    fn_80094A08(lbl_802EF4C8.unk0, lbl_802EF4C8.unkA);
+    *(u32 *)(lbl_80330EAC + 0xCAC) |= 0x2000;
+    fn_8000CAA0(lbl_8028C6D8, arg0, lbl_80330EAC);
+    return 1;
+}
+
 void fn_800A6578(void) {
     void fn_8003BE50(void *);
     extern u8 lbl_802EF4C8[24];
