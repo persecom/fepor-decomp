@@ -4,6 +4,7 @@ static const char double2hex_strpool[] =
 
 /* Functions from 0x8022CD68 to 0x80267A7C, found by decomp-toolkit. */
 #include "common.h"
+typedef struct RuntimeDecimal { u8 sign; s16 exponent; u8 length; u8 digits[36]; } RuntimeDecimal;
 
 extern f32 lbl_80367068;
 extern f64 lbl_8036BE20;
