@@ -318,9 +318,8 @@ s32 fn_8009FEC8(void) {
 }
 
 void *fn_8009FEF4(void) {
-    extern u16 lbl_8026D8D8;
-    u16* addr = &lbl_8026D8D8;
-    return (void*)((u32)addr + 0x34B * 2);
+    extern u16 lbl_8026D8D8[];
+    return (u8 *)lbl_8026D8D8 + 0x34b;
 }
 
 s32 fn_8009FF04(void) {
