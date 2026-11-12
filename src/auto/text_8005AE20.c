@@ -212,26 +212,28 @@ s32 fn_8005B42C(u32 *arg0, u32 arg1) {
 }
 
 s32 fn_8005B448(s32 arg0, s32 arg1, s32 *arg2, u8 (*arg3)(s32, s32)) {
-    s32 temp_r29;
-    s32 temp_r30;
-    s32 var_r26;
-    s32 var_r31;
+    s32 count;
+    s32 mid_ptr;
+    s32 mid;
+    u8 (*pred)(s32, s32);
+    s32 *key_ptr;
+    s32 lo;
 
-    var_r26 = arg0;
-    var_r31 = (s32) (arg1 - var_r26) / 8;
-loop_4:
-    if (var_r31 > 0) {
-        temp_r29 = (s32) (((u32) var_r31 >> 0x1FU) + var_r31) >> 1;
-        temp_r30 = var_r26 + (temp_r29 * 8);
-        if (arg3(temp_r30, *arg2) != 0) {
-            var_r26 = temp_r30 + 8;
-            var_r31 -= temp_r29 + 1;
+    lo = arg0;
+    key_ptr = arg2;
+    pred = arg3;
+    count = (arg1 - lo) / 8;
+    while (count > 0) {
+        mid = count / 2;
+        mid_ptr = lo + mid * 8;
+        if (pred(mid_ptr, *key_ptr) != 0) {
+            lo = mid_ptr + 8;
+            count -= mid + 1;
         } else {
-            var_r31 = temp_r29;
+            count = mid;
         }
-        goto loop_4;
     }
-    return var_r26;
+    return lo;
 }
 
 s32 fn_8005B4D8(s32 arg0) {
@@ -641,25 +643,29 @@ void fn_8005BFE4(void *arg0) {
  else {if(*flags&0x400){fn_8005DE84(arg0);return;}if(*flags&0x800)fn_8005D9A8(arg0);*flags|=0x2000;}
 }
 
-s32 fn_8005C0AC(u8 *arg1) {
-    M2C_UNK sp18;
-    M2C_UNK sp8;
-    s32 temp_r3;
+s32 fn_8005C0AC(void *arg0, u8 *arg1) {
+    void *fn_80234200(void *, s32);
+    void fn_80234450(void *, void *);
+    void fn_80238ADC(void *);
+    s32 fn_802342B8(void *, void *);
+    char sp18[0x10];
+    char sp8[0x10];
+    void *temp_r3;
     u8 *var_r31;
 
     var_r31 = arg1;
-    if ((s32) *arg1 == 0x2E) {
+    if ((s32)*arg1 == 0x2E) {
         var_r31 += 1;
     }
-    temp_r3 = fn_80234200(0x2E);
+    temp_r3 = fn_80234200(arg0, 0x2E);
     if (temp_r3 == 0) {
-        return (s8) *var_r31 == 0;
+        return (s8)*var_r31 == 0;
     }
-    fn_80234450(&sp18, temp_r3 + 1);
-    fn_80238ADC(&sp18);
-    fn_80234450(&sp8, var_r31);
-    fn_80238ADC(&sp8);
-    return fn_802342B8(&sp18, &sp8) == 0;
+    fn_80234450(sp18, (u8 *)temp_r3 + 1);
+    fn_80238ADC(sp18);
+    fn_80234450(sp8, var_r31);
+    fn_80238ADC(sp8);
+    return fn_802342B8(sp18, sp8) == 0;
 }
 
 u16 fn_8005C144(u8 *arg0) {
@@ -4120,9 +4126,12 @@ loop_16:
 }
 
 void *fn_80065634(void ***arg0, s32 arg1) {
+    void **mid;
     u8 *base;
     u8 *entry;
     u16 offset;
+    u16 lim;
+    s32 tmp;
     s32 count;
     s32 index;
     s32 diff1;
@@ -4131,24 +4140,29 @@ void *fn_80065634(void ***arg0, s32 arg1) {
 
     if (arg0 == NULL) {
         base = NULL;
-    } else if (*arg0 == NULL) {
-        base = NULL;
     } else {
-        base = (u8 *)**arg0;
+        mid = *arg0;
+        if (mid != NULL) {
+            base = (u8 *)*mid;
+        } else {
+            base = NULL;
+        }
     }
 
     if (base == NULL) {
         return NULL;
     }
 
+    tmp = 0x10000 - 1;
     count = *(u16 *)base;
     index = 0;
+    lim = (u16)tmp;
 
     while (count > 0) {
         offset = *(u16 *)((u8 *)*(void **)(base + 4) + index);
 
-        diff1 = (s32)offset - 0xFFFF;
-        diff2 = 0xFFFF - (s32)offset;
+        diff1 = (s32)offset - (s32)lim;
+        diff2 = (s32)lim - (s32)offset;
         mask = ~(diff1 | diff2) >> 31;
 
         entry = (u8 *)(((u32)base + offset) & ~(u32)mask);
