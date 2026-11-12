@@ -4723,24 +4723,52 @@ void fn_8013B120(void) {
 }
 
 void fn_8013B254(void *arg0) {
-    s16 temp_r3;
-    s16 temp_r5;
-    void *temp_r6;
+    s16 zero;
+    s16 x0;
+    s16 x1;
+    s16 y0;
+    s16 y1;
+    s16 dx;
+    s16 dy;
+    s16 half;
+    s16 a;
+    s16 c;
+    s16 e;
+    s16 new_a;
+    void *p;
 
-    M2C_FIELD(arg0, s16 *, 0x64) = (s16) (M2C_FIELD(arg0, s16 *, 0x64) + 8);
-    M2C_FIELD(arg0, s16 *, 0x92) = (s16) (((s16) (M2C_FIELD(arg0, s16 *, 0x16) - M2C_FIELD(arg0, s16 *, 0x12)) >> 1) - 0x20);
-    M2C_FIELD(arg0, s16 *, 0x94) = 0;
-    M2C_FIELD(arg0, s16 *, 0x96) = 0;
-    M2C_FIELD(arg0, s16 *, 0xBA) = (s16) (((s16) (M2C_FIELD(arg0, s16 *, 0x16) - M2C_FIELD(arg0, s16 *, 0x12)) >> 1) - 0x20);
-    M2C_FIELD(arg0, s16 *, 0xBC) = (s16) (M2C_FIELD(arg0, s16 *, 0x18) - M2C_FIELD(arg0, s16 *, 0x14));
-    M2C_FIELD(arg0, s16 *, 0xBE) = 0;
-    M2C_FIELD(M2C_FIELD(arg0, void **, 0x48), s32 *, 0x48) = 0;
-    temp_r6 = M2C_FIELD(arg0, void **, 0x48);
-    temp_r5 = M2C_FIELD(temp_r6, s16 *, 0xA);
-    temp_r3 = temp_r5 - 0x20;
-    M2C_FIELD(temp_r6, s16 *, 0xE) = (s16) (temp_r3 + (s16) (M2C_FIELD(temp_r6, s16 *, 0xE) - temp_r5));
-    M2C_FIELD(temp_r6, s16 *, 0xA) = temp_r3;
-    M2C_FIELD(temp_r6, s16 *, 0x10) = (s16) (M2C_FIELD(temp_r6, s16 *, 0xC) + (s16) (M2C_FIELD(temp_r6, s16 *, 0x10) - M2C_FIELD(temp_r6, s16 *, 0xC)));
+    zero = 0;
+    M2C_FIELD(arg0, s16 *, 0x64) = (s16)(M2C_FIELD(arg0, s16 *, 0x64) + 8);
+
+    x0 = M2C_FIELD(arg0, s16 *, 0x12);
+    x1 = M2C_FIELD(arg0, s16 *, 0x16);
+    half = (s16)(((s16)(x1 - x0) >> 1) - 0x20);
+    M2C_FIELD(arg0, s16 *, 0x92) = half;
+    M2C_FIELD(arg0, s16 *, 0x94) = zero;
+    M2C_FIELD(arg0, s16 *, 0x96) = zero;
+
+    x0 = M2C_FIELD(arg0, s16 *, 0x12);
+    x1 = M2C_FIELD(arg0, s16 *, 0x16);
+    y0 = M2C_FIELD(arg0, s16 *, 0x14);
+    dx = (s16)(x1 - x0);
+    y1 = M2C_FIELD(arg0, s16 *, 0x18);
+    half = (s16)(dx >> 1);
+    dy = (s16)(y1 - y0);
+    half = (s16)(half - 0x20);
+    M2C_FIELD(arg0, s16 *, 0xBA) = half;
+    M2C_FIELD(arg0, s16 *, 0xBC) = dy;
+    M2C_FIELD(arg0, s16 *, 0xBE) = zero;
+
+    p = M2C_FIELD(arg0, void **, 0x48);
+    M2C_FIELD(p, s32 *, 0x48) = zero;
+    p = M2C_FIELD(arg0, void **, 0x48);
+    a = M2C_FIELD(p, s16 *, 0xA);
+    e = M2C_FIELD(p, s16 *, 0xE);
+    new_a = (s16)(a - 0x20);
+    c = M2C_FIELD(p, s16 *, 0xC);
+    M2C_FIELD(p, s16 *, 0xE) = (s16)(new_a + (s16)(e - a));
+    M2C_FIELD(p, s16 *, 0xA) = new_a;
+    M2C_FIELD(p, s16 *, 0x10) = (s16)(c + (s16)(M2C_FIELD(p, s16 *, 0x10) - M2C_FIELD(p, s16 *, 0xC)));
 }
 
 void fn_8013B308(void) {
@@ -6917,6 +6945,43 @@ extern "C" void fn_8013FDA0(void *arg0) {
         q->v7();
     }
 }
+
+#pragma cplusplus on
+extern "C" void fn_8013FE0C(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4(void *) = 0;
+        virtual void v5(void *) = 0;
+    };
+    extern u8 lbl_80367AD8;
+    void fn_8000A258(void);
+    void fn_80009B98(void);
+    void fn_80009B8C(s32);
+    void fn_80009B80(s32);
+    void fn_8000A248(void);
+    ListNode *node;
+    ListNode *sent;
+
+    if ((s8)lbl_80367AD8 <= 0 && *(s8 *)((u8 *)arg0 + 0x30) <= 0) {
+        node = *(ListNode **)((u8 *)arg0 + 0x3C);
+        sent = (ListNode *)((u8 *)arg0 + 0x38);
+        while (node != sent) {
+            ((Obj *)node->val)->v4(arg0);
+            ((Obj *)node->val)->v5(arg0);
+            node = node->next;
+        }
+    }
+    fn_8000A258();
+    fn_80009B98();
+    fn_80009B8C(0xFF);
+    fn_80009B80(0x80);
+    fn_8000A248();
+}
+#pragma cplusplus reset
+
 #pragma cplusplus reset
 void fn_8013FEC0(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x30) = (u8) (M2C_FIELD(arg0, u8 *, 0x30) - 1);
