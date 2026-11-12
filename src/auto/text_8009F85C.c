@@ -1145,22 +1145,27 @@ char *fn_800A0E24(void) {
     return lbl_80312270;
 }
 
-void *fn_800A101C(void) {
-    extern u16 lbl_8026D8D8;
-    extern u16 lbl_80312270;
+char *fn_800A101C(void) {
+    void fn_80231D94(void *, void *, ...);
     extern u8 lbl_80330708[];
-    
+    extern char lbl_80312270[];
+    extern u8 lbl_8026D8D8[];
+    u8 *base;
+    u8 flag;
+    char *buf;
+    void *arg2;
     void *var_r5;
-    
-    u8 val = lbl_80330708[0x9F];
-    if (val & 0x80) {
-        var_r5 = &lbl_8026D8D8 + 0x5BA;
-    } else {
-        var_r5 = &lbl_8026D8D8 + 0x5C3;
+
+    base = lbl_8026D8D8;
+    flag = lbl_80330708[0x9F];
+    buf = lbl_80312270;
+    arg2 = base + 0x5AE;
+    var_r5 = base + 0x5C3;
+    if ((flag >> 7) & 1) {
+        var_r5 = base + 0x5BA;
     }
-    
-    fn_80231D94(&lbl_80312270, &lbl_8026D8D8 + 0x5AE, var_r5);
-    return &lbl_80312270;
+    fn_80231D94(buf, arg2, var_r5);
+    return lbl_80312270;
 }
 
 s32 fn_800A1078(void) {
@@ -1286,13 +1291,15 @@ char *fn_800A1354(void) {
 }
 
 s32 fn_800A13A0(void) {
-    extern M2C_UNK lbl_80330708;
     extern void *lbl_80367240;
-    if (M2C_FIELD(lbl_80367240, s32 *, 0x10) & 0x01000001) {
-        M2C_FIELD(&lbl_80330708, s32 *, 0x1C) = (s32) (M2C_FIELD(&lbl_80330708, s32 *, 0x1C) - 0x64);
+    extern u8 lbl_80330708[];
+    void *obj = lbl_80367240;
+
+    if (*(s32 *)((u8 *)obj + 0x10) & 0x01000001) {
+        *(s32 *)(lbl_80330708 + 0x1C) -= 0x64;
     }
-    if (M2C_FIELD(lbl_80367240, s32 *, 0x10) & 0x02000002) {
-        M2C_FIELD(&lbl_80330708, s32 *, 0x1C) = (s32) (M2C_FIELD(&lbl_80330708, s32 *, 0x1C) + 0x64);
+    if (*(s32 *)((u8 *)obj + 0x10) & 0x02000002) {
+        *(s32 *)(lbl_80330708 + 0x1C) += 0x64;
     }
     return 0;
 }
@@ -1830,9 +1837,17 @@ void fn_800A2410(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
     return;
 }
 
-s32 fn_800A2624(void *arg0) {
-    M2C_FIELD(arg0, u16 *, 4) = (u16) M2C_FIELD(M2C_FIELD(fn_800AA794(), void **, 0x18C), u16 *, 0x38);
-    return 0;
+s32 fn_800A2624(void *arg0)
+{
+    void *fn_800AA794(void);
+    void *p;
+    s32 ret;
+
+    p = fn_800AA794();
+    p = *(void **)((u8 *)p + 0x18c);
+    ret = 0;
+    *(u16 *)((u8 *)arg0 + 4) = *(u16 *)((u8 *)p + 0x38);
+    return ret;
 }
 
 M2C_UNK *fn_800A2660(void *arg0) {
