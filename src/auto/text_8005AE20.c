@@ -709,33 +709,30 @@ s32 fn_8005C268(char *name) {
     return 0;
 }
 
-s32 fn_8005C368(u32 arg0) {
-    extern u16 lbl_802F04E0[];
-    void *var_r3;
-    u16 *var_r5;
-    s32 var_ctr;
-    s32 var_r4;
+s32 fn_8005C368(u32 arg0)
+{
+    extern u8 lbl_802F04E0[];
+    u8 *found;
+    unsigned long j;
+    u8 *e;
+    unsigned ctr;
 
-    var_r5 = &lbl_802F04E0[0];
-    var_r4 = 0;
-    var_ctr = 0x400;
-loop_1:
-    if ((u32) *(var_r5 + 0x38 / sizeof(u16)) == arg0) {
-        var_r3 = &lbl_802F04E0[0] + (var_r4 * 0x7C);
-    } else {
-        var_r5 += 0x7C / sizeof(u16);
-        var_r4 += 1;
-        var_ctr -= 1;
-        if (var_ctr == 0) {
-            var_r3 = NULL;
-        } else {
-            goto loop_1;
+    e = lbl_802F04E0;
+    j = 0;
+    for (ctr = 0x400; ctr > 0; ctr--) {
+        if (*(u32 *)(e + 0x38) == arg0) {
+            found = lbl_802F04E0 + j * 0x7C;
+            goto done;
         }
+        e += 0x7C;
+        j += 1;
     }
-    if (var_r3 == NULL) {
+    found = 0;
+done:
+    if (found == 0) {
         return -1;
     }
-    return *(u16 *)((uintptr_t) var_r3 + 0x32);
+    return *(u16 *)(found + 0x32);
 }
 
 s32 fn_8005C3C4(char *name) {
@@ -1292,24 +1289,20 @@ void fn_8005DF60(void *arg0, s32 arg1) {
 }
 
 void fn_8005DFB8(void *arg0) {
-    extern u8 lbl_803672EB;
-    extern u16 lbl_8030F4E0[];
-    extern u8 lbl_803672EC[];
+    void fn_8020AEC4(u8 *);
+    extern u8 lbl_8030F4E0[];
+    extern volatile u8 lbl_803672EB;
+    extern u8 lbl_803672EC[8];
+    u8 *entry;
+    s32 val;
 
-    s32 temp_r6;
-    s32 temp_r7;
-    void *temp_r5;
-    u8 temp_r4;
-
-    temp_r6 = lbl_803672EB * 0xC;
-    temp_r7 = *(s32*)((char*)arg0 + 0x6C);
-    temp_r5 = (void*)((char*)lbl_8030F4E0 + temp_r6);
-    temp_r4 = lbl_803672EB + 1;
-    *(u8*)((char*)temp_r5 + 0x0) = 2;
-    *(void**)((char*)temp_r5 + 0x4) = arg0;
-    *(s32*)((char*)temp_r5 + 0x8) = temp_r7;
-    lbl_803672EB = temp_r4 & 0x3F;
-    fn_8020AEC4(lbl_803672EC, 2, temp_r5, temp_r6, temp_r7);
+    entry = lbl_8030F4E0 + lbl_803672EB * 0xC;
+    val = *(s32 *)((u8 *)arg0 + 0x6c);
+    entry[0] = 2;
+    *(void **)(entry + 4) = arg0;
+    *(s32 *)(entry + 8) = val;
+    lbl_803672EB = (lbl_803672EB + 1) & 0x3F;
+    fn_8020AEC4(lbl_803672EC);
 }
 
 void fn_8005E070(s32 arg0, void *arg1) {
