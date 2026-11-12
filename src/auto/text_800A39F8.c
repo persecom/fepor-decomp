@@ -1319,26 +1319,27 @@ void fn_800A6114(void *arg0)
     *(s16 *)((u8 *)self + 0x28) = fn_800A3D08();
     *(u8 *)((u8 *)self + 0x55) = 1;
 }
+#pragma global_optimizer off
 void fn_800A6450(void) {
-    extern void fn_8000D3EC(void *, void *);
-    extern void fn_8010554C();
-    extern void fn_80196078();
-
+    void fn_8000D3EC(void *, void *);
+    void fn_8010554C(void);
+    void fn_80196078(void);
     extern u8 lbl_8026E208[];
     extern u8 lbl_8028C6D8[];
+    u8 *dst;
 
-    // Replacing direct address loading with indirects that match more carefully
-    fn_8000D3EC((u8*)&lbl_8026E208 + 0xCE, (u8*)&lbl_8028C6D8 + 0x18);
-    fn_8000D3EC((u8*)&lbl_8026E208 + 0xE0, (u8*)&lbl_8028C6D8 + 0x28);
-    fn_8000D3EC((u8*)&lbl_8026E208 + 0xEF, (u8*)&lbl_8028C6D8 + 0x38);
-    fn_8000D3EC((u8*)&lbl_8026E208 + 0x101, (u8*)&lbl_8028C6D8 + 0x48);
-    fn_8000D3EC((u8*)&lbl_8026E208 + 0x113, (u8*)&lbl_8028C6D8 + 0x58);
-    fn_8000D3EC((u8*)&lbl_8026E208 + 0x125, (u8*)&lbl_8028C6D8 + 0x68);
-    fn_8000D3EC((u8*)&lbl_8026E208 + 0x139, (u8*)&lbl_8028C6D8 + 0x68);
+    dst = lbl_8028C6D8;
+    fn_8000D3EC(lbl_8026E208 + 0xCE, dst + 0x18);
+    fn_8000D3EC(lbl_8026E208 + 0xE0, dst + 0x28);
+    fn_8000D3EC(lbl_8026E208 + 0xEF, dst + 0x38);
+    fn_8000D3EC(lbl_8026E208 + 0x101, dst + 0x48);
+    fn_8000D3EC(lbl_8026E208 + 0x113, dst + 0x58);
+    fn_8000D3EC(lbl_8026E208 + 0x125, dst + 0x68);
+    fn_8000D3EC(lbl_8026E208 + 0x139, dst + 0x68);
     fn_8010554C();
     fn_80196078();
 }
-
+#pragma global_optimizer on
 s32 fn_800A6510(s32 arg0) {
     void fn_80094A08(s32, s32);
     void fn_8000CAA0(void *, s32, void *);
@@ -1613,14 +1614,12 @@ void fn_800A6CC4(void *arg0) {
     f32 fn_80059F64(f32, f32, f32, f32);
     void fn_8000C188(void *);
     extern f32 lbl_80369AA4;
-    extern f64 lbl_80369AA8;
     u8 t;
 
-    (void)lbl_80369AA8;
     t = *(u8 *)((u8 *)arg0 + 0x39);
     if (t < *(u8 *)((u8 *)arg0 + 0x3B)) {
         *(u8 *)((u8 *)arg0 + 0x39) = (u8)(t + 1);
-        *(s8 *)((u8 *)arg0 + 0x38) = (s8)fn_80059F64(
+        *(u8 *)((u8 *)arg0 + 0x38) = (u8)(s32)fn_80059F64(
             lbl_80369AA4,
             (f32)(u32)*(u8 *)((u8 *)arg0 + 0x3A),
             (f32)(u32)*(u8 *)((u8 *)arg0 + 0x3B),
