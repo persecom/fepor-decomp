@@ -896,13 +896,15 @@ s32 fn_80076010(void) {
     return fn_80093218(temp_r31, temp_r30) ? 2 : 3;
 }
 
-s32 fn_800760B8(void *arg2) {
-    extern u16 lbl_802EF4C8;
-    if ((u8) *(u8*)((u8*)arg2 + 0x39) != 0) {
+s32 fn_800760B8(s32 arg0, s32 arg1, void *arg2) {
+    extern u8 lbl_802EF4C8[];
+    u8 *p;
+    if (*((u8 *)arg2 + 0x39) != 0) {
         return 0x10;
     }
-    *(u16*)((u8*)&lbl_802EF4C8 + 0x0) = 0x4;
-    return 0x6;
+    p = lbl_802EF4C8;
+    p[8] = 4;
+    return 6;
 }
 
 s32 fn_80076148(void *arg2) {
