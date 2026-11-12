@@ -2430,6 +2430,23 @@ extern "C" void *fn_8016915C(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4)
     ((Obj *)r31)->v8();
     return r31;
 }
+
+extern "C" void fn_80169414(s32 arg0) {
+    void fn_8014C7C0(void *, s32);
+    void fn_801455B8(s32);
+    void fn_80013A90(void *);
+    void fn_800138F4(void);
+    void fn_800C08AC(void *, s32);
+    extern u8 lbl_80330708[];
+    extern u8 lbl_80277BC0[];
+
+    fn_8014C7C0(lbl_80330708, 0);
+    fn_801455B8(0);
+    fn_80013A90(lbl_80277BC0 + 0x85);
+    fn_800138F4();
+    fn_800C08AC(lbl_80277BC0 + 0x9d, arg0);
+}
+
 #pragma cplusplus reset
 
 extern "C" u32 fn_8016947C(void) {
