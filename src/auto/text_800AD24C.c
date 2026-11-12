@@ -440,11 +440,22 @@ s32 fn_800AE328(s32 arg0) {
 }
 
 void fn_800AE3DC(s32 arg0) {
+    void fn_8000CAA0(void *, s32);
     extern u8 lbl_80330708[];
-    extern u8 lbl_80284AC8[];
-    if (lbl_80330708[lbl_80330708[0x11] + 0x14] == 1) {
-        fn_8000CAA0(lbl_80284AC8, arg0);
+    extern u8 lbl_802CA264[];
+    extern u8 lbl_8028D138[];
+    u8 *entry;
+
+    entry = *(u8 **)(lbl_802CA264 + lbl_80330708[0x11] * 0xC);
+    while (entry != 0) {
+        u32 flags = *(u32 *)(entry + 0x1A0);
+        entry = *(u8 **)(entry + 0x184);
+        if (!(flags & 4))
+            goto do_call;
     }
+    return;
+do_call:
+    fn_8000CAA0(lbl_8028D138, arg0);
 }
 
 void fn_800AE444(void *arg0) {
