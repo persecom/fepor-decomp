@@ -45,9 +45,9 @@ extern f32 lbl_803697E4;
 
 #pragma scheduling reset
 
-void fn_8008D86C(void *arg0) {
-    extern M2C_UNK lbl_803674FC;
-    *(&lbl_803674FC + (s8) M2C_FIELD(arg0, u8 *, 0x3D)) = 0;
+void fn_8008D86C(u8 *arg0) {
+    extern u8 lbl_803674FC;
+    *(&lbl_803674FC + (s8)arg0[0x3d]) = 0;
 }
 
 s32 fn_8008D988(void) {
