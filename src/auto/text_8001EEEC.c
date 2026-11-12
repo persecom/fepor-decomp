@@ -665,14 +665,641 @@ void fn_8002134C(struct unit* arg0)
     *(u16*)((char*)arg0 + 0x18) = value;
 }
 
-void fn_800213D0(void *map, u8 x, u8 y, u16 range, s32 a, s32 b)
-{
-    (void)map;
-    (void)x;
-    (void)y;
-    (void)range;
-    (void)a;
-    (void)b;
+void fn_800213D0(void *map, u8 x, u8 y, u16 range, s32 flagA, s32 flagB)
+{ /* match-wip */
+    void fn_80022DAC(void *, s32, s32);
+    extern u8 lbl_802B14E4[];
+    u8 *ed8;
+    u8 *edc;
+    u8 slot;
+    s16 *costs;
+    u8 nx;
+    u8 ny;
+    u8 kind;
+    u16 flags;
+    u16 neu;
+    u16 oldc;
+    u16 have;
+    u8 *cell;
+    u8 tid;
+    u8 uid;
+    u8 *unit;
+    u8 *cls;
+    u8 gate;
+
+    ((u8 *)map + 0x20000)[0x4EE0] = 0;
+    *(u16 *)((u8 *)map + 0x24EE2) = range;
+    *(void **)((u8 *)map + 0x24ED8) = (u8 *)map + 0x242D8;
+    *(void **)((u8 *)map + 0x24EDC) = (u8 *)map + 0x248D8;
+
+    edc = *(u8 **)((u8 *)map + 0x24EDC);
+    edc[0] = x;
+    edc = *(u8 **)((u8 *)map + 0x24EDC);
+    edc[1] = y;
+    edc = *(u8 **)((u8 *)map + 0x24EDC);
+    edc[2] = 0x20;
+    edc = *(u8 **)((u8 *)map + 0x24EDC);
+    *(u16 *)(edc + 4) = 0;
+    edc = *(u8 **)((u8 *)map + 0x24EDC);
+    *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+    edc = *(u8 **)((u8 *)map + 0x24EDC);
+    edc[2] = 0x10;
+
+    fn_80022DAC(map, 0xB, -1);
+
+    ((u8 *)map)[0xC] = 0;
+    costs = *(s16 **)((u8 *)map + 0x14190);
+    costs[(s8)x + ((s8)y << 6)] = 0;
+
+    if (!((u8)flagA != 0 && (u8)flagB != 0)) {
+        ((u8 *)map + 0x20000)[0x4EE8] = 0;
+        if ((u8)flagB != 0) {
+            ((u8 *)map + 0x20000)[0x4EE8] |= 1;
+        }
+        if ((u8)flagA != 0) {
+            ((u8 *)map + 0x20000)[0x4EE8] |= 2;
+        }
+    }
+
+    for (;;) {
+        slot = ((u8 *)map + 0x20000)[0x4EE0];
+        *(void **)((u8 *)map + 0x24EDC) = (u8 *)map + slot * 0x600 + 0x242D8;
+        ((u8 *)map + 0x20000)[0x4EE0] = (u8)(slot ^ 1);
+        slot = ((u8 *)map + 0x20000)[0x4EE0];
+        *(void **)((u8 *)map + 0x24ED8) = (u8 *)map + slot * 0x600 + 0x242D8;
+        ((u8 *)map + 0x20000)[0x4EE1] = 0;
+
+        ed8 = *(u8 **)((u8 *)map + 0x24ED8);
+        if (ed8[2] == 0x10) {
+            break;
+        }
+
+        do {
+            ny = ed8[1];
+            nx = ed8[0];
+            kind = ed8[2];
+            flags = *(u16 *)((u8 *)map + 0x1408E + (((s8)nx + ((s8)ny << 6)) << 1));
+            if (((u8 *)map + 0x20000)[0x4EEA] != 0) {
+                flags = (u16)(((flags ^ 0xF0) >> 4) & 0xFFF);
+            }
+
+            costs = *(s16 **)((u8 *)map + 0x14190);
+            oldc = (u16)costs[(s8)nx + ((s8)ny << 6)];
+
+            switch (kind) {
+            case 0x20:
+                if (flags & 0x8) {
+                    cell = (u8 *)map + (s8)nx + (((s8)ny - 1) << 6);
+                    tid = cell[0x100D];
+                    uid = cell[0xD];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        cls = *(u8 **)(unit + 0x190);
+                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
+                        if (gate != 0) {
+                            goto c20_s;
+                        }
+                    }
+                    have = (u16)costs[(s8)nx + (((s8)ny - 1) << 6)];
+                    if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[0] = nx;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[1] = (u8)(ny - 1);
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[2] = 0x8;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u16 *)(edc + 4) = neu;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+                        ((u8 *)map + 0x20000)[0x4EE1]++;
+                        costs = *(s16 **)((u8 *)map + 0x14190);
+                        costs[(s8)nx + (((s8)ny - 1) << 6)] = (s16)neu;
+                    }
+                }
+c20_s:
+                if (flags & 0x4) {
+                    ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
+                    nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
+                    costs = *(s16 **)((u8 *)map + 0x14190);
+                    oldc = (u16)costs[(s8)nx + ((s8)ny << 6)];
+                    cell = (u8 *)map + (s8)nx + (((s8)ny + 1) << 6);
+                    tid = cell[0x100D];
+                    uid = cell[0xD];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        cls = *(u8 **)(unit + 0x190);
+                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
+                        if (gate != 0) {
+                            goto c20_w;
+                        }
+                    }
+                    have = (u16)costs[(s8)nx + (((s8)ny + 1) << 6)];
+                    if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[0] = nx;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[1] = (u8)(ny + 1);
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[2] = 0x4;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u16 *)(edc + 4) = neu;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+                        ((u8 *)map + 0x20000)[0x4EE1]++;
+                        costs = *(s16 **)((u8 *)map + 0x14190);
+                        costs[(s8)nx + (((s8)ny + 1) << 6)] = (s16)neu;
+                    }
+                }
+c20_w:
+                if (flags & 0x1) {
+                    ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
+                    nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
+                    costs = *(s16 **)((u8 *)map + 0x14190);
+                    oldc = (u16)costs[(s8)nx + ((s8)ny << 6)];
+                    cell = (u8 *)map + ((s8)nx - 1) + ((s8)ny << 6);
+                    tid = cell[0x100D];
+                    uid = cell[0xD];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        cls = *(u8 **)(unit + 0x190);
+                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
+                        if (gate != 0) {
+                            goto c20_e;
+                        }
+                    }
+                    have = (u16)costs[((s8)nx - 1) + ((s8)ny << 6)];
+                    if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[0] = (u8)(nx - 1);
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[1] = ny;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[2] = 0x1;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u16 *)(edc + 4) = neu;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+                        ((u8 *)map + 0x20000)[0x4EE1]++;
+                        costs = *(s16 **)((u8 *)map + 0x14190);
+                        costs[((s8)nx - 1) + ((s8)ny << 6)] = (s16)neu;
+                    }
+                }
+c20_e:
+                if (flags & 0x2) {
+                    ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
+                    nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
+                    costs = *(s16 **)((u8 *)map + 0x14190);
+                    oldc = (u16)costs[(s8)nx + ((s8)ny << 6)];
+                    cell = (u8 *)map + ((s8)nx + 1) + ((s8)ny << 6);
+                    tid = cell[0x100D];
+                    uid = cell[0xD];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        cls = *(u8 **)(unit + 0x190);
+                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
+                        if (gate != 0) {
+                            break;
+                        }
+                    }
+                    have = (u16)costs[((s8)nx + 1) + ((s8)ny << 6)];
+                    if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[0] = (u8)(nx + 1);
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[1] = ny;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[2] = 0x2;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u16 *)(edc + 4) = neu;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+                        ((u8 *)map + 0x20000)[0x4EE1]++;
+                        costs = *(s16 **)((u8 *)map + 0x14190);
+                        costs[((s8)nx + 1) + ((s8)ny << 6)] = (s16)neu;
+                    }
+                }
+                break;
+            case 0x8:
+                if (flags & 0x8) {
+                    cell = (u8 *)map + (s8)nx + (((s8)ny - 1) << 6);
+                    tid = cell[0x100D];
+                    uid = cell[0xD];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        cls = *(u8 **)(unit + 0x190);
+                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
+                        if (gate != 0) {
+                            goto c8_w;
+                        }
+                    }
+                    have = (u16)costs[(s8)nx + (((s8)ny - 1) << 6)];
+                    if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[0] = nx;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[1] = (u8)(ny - 1);
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[2] = 0x8;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u16 *)(edc + 4) = neu;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+                        ((u8 *)map + 0x20000)[0x4EE1]++;
+                        costs = *(s16 **)((u8 *)map + 0x14190);
+                        costs[(s8)nx + (((s8)ny - 1) << 6)] = (s16)neu;
+                    }
+                }
+c8_w:
+                if (flags & 0x1) {
+                    ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
+                    nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
+                    costs = *(s16 **)((u8 *)map + 0x14190);
+                    oldc = (u16)costs[(s8)nx + ((s8)ny << 6)];
+                    cell = (u8 *)map + ((s8)nx - 1) + ((s8)ny << 6);
+                    tid = cell[0x100D];
+                    uid = cell[0xD];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        cls = *(u8 **)(unit + 0x190);
+                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
+                        if (gate != 0) {
+                            goto c8_e;
+                        }
+                    }
+                    have = (u16)costs[((s8)nx - 1) + ((s8)ny << 6)];
+                    if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[0] = (u8)(nx - 1);
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[1] = ny;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[2] = 0x1;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u16 *)(edc + 4) = neu;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+                        ((u8 *)map + 0x20000)[0x4EE1]++;
+                        costs = *(s16 **)((u8 *)map + 0x14190);
+                        costs[((s8)nx - 1) + ((s8)ny << 6)] = (s16)neu;
+                    }
+                }
+c8_e:
+                if (flags & 0x2) {
+                    ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
+                    nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
+                    costs = *(s16 **)((u8 *)map + 0x14190);
+                    oldc = (u16)costs[(s8)nx + ((s8)ny << 6)];
+                    cell = (u8 *)map + ((s8)nx + 1) + ((s8)ny << 6);
+                    tid = cell[0x100D];
+                    uid = cell[0xD];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        cls = *(u8 **)(unit + 0x190);
+                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
+                        if (gate != 0) {
+                            break;
+                        }
+                    }
+                    have = (u16)costs[((s8)nx + 1) + ((s8)ny << 6)];
+                    if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[0] = (u8)(nx + 1);
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[1] = ny;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[2] = 0x2;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u16 *)(edc + 4) = neu;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+                        ((u8 *)map + 0x20000)[0x4EE1]++;
+                        costs = *(s16 **)((u8 *)map + 0x14190);
+                        costs[((s8)nx + 1) + ((s8)ny << 6)] = (s16)neu;
+                    }
+                }
+                break;
+            case 0x4:
+                if (flags & 0x4) {
+                    cell = (u8 *)map + (s8)nx + (((s8)ny + 1) << 6);
+                    tid = cell[0x100D];
+                    uid = cell[0xD];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        cls = *(u8 **)(unit + 0x190);
+                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
+                        if (gate != 0) {
+                            goto c4_w;
+                        }
+                    }
+                    have = (u16)costs[(s8)nx + (((s8)ny + 1) << 6)];
+                    if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[0] = nx;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[1] = (u8)(ny + 1);
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[2] = 0x4;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u16 *)(edc + 4) = neu;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+                        ((u8 *)map + 0x20000)[0x4EE1]++;
+                        costs = *(s16 **)((u8 *)map + 0x14190);
+                        costs[(s8)nx + (((s8)ny + 1) << 6)] = (s16)neu;
+                    }
+                }
+c4_w:
+                if (flags & 0x1) {
+                    ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
+                    nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
+                    costs = *(s16 **)((u8 *)map + 0x14190);
+                    oldc = (u16)costs[(s8)nx + ((s8)ny << 6)];
+                    cell = (u8 *)map + ((s8)nx - 1) + ((s8)ny << 6);
+                    tid = cell[0x100D];
+                    uid = cell[0xD];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        cls = *(u8 **)(unit + 0x190);
+                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
+                        if (gate != 0) {
+                            goto c4_e;
+                        }
+                    }
+                    have = (u16)costs[((s8)nx - 1) + ((s8)ny << 6)];
+                    if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[0] = (u8)(nx - 1);
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[1] = ny;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[2] = 0x1;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u16 *)(edc + 4) = neu;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+                        ((u8 *)map + 0x20000)[0x4EE1]++;
+                        costs = *(s16 **)((u8 *)map + 0x14190);
+                        costs[((s8)nx - 1) + ((s8)ny << 6)] = (s16)neu;
+                    }
+                }
+c4_e:
+                if (flags & 0x2) {
+                    ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
+                    nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
+                    costs = *(s16 **)((u8 *)map + 0x14190);
+                    oldc = (u16)costs[(s8)nx + ((s8)ny << 6)];
+                    cell = (u8 *)map + ((s8)nx + 1) + ((s8)ny << 6);
+                    tid = cell[0x100D];
+                    uid = cell[0xD];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        cls = *(u8 **)(unit + 0x190);
+                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
+                        if (gate != 0) {
+                            break;
+                        }
+                    }
+                    have = (u16)costs[((s8)nx + 1) + ((s8)ny << 6)];
+                    if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[0] = (u8)(nx + 1);
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[1] = ny;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[2] = 0x2;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u16 *)(edc + 4) = neu;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+                        ((u8 *)map + 0x20000)[0x4EE1]++;
+                        costs = *(s16 **)((u8 *)map + 0x14190);
+                        costs[((s8)nx + 1) + ((s8)ny << 6)] = (s16)neu;
+                    }
+                }
+                break;
+            case 0x1:
+                if (flags & 0x8) {
+                    cell = (u8 *)map + (s8)nx + (((s8)ny - 1) << 6);
+                    tid = cell[0x100D];
+                    uid = cell[0xD];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        cls = *(u8 **)(unit + 0x190);
+                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
+                        if (gate != 0) {
+                            goto c1_s;
+                        }
+                    }
+                    have = (u16)costs[(s8)nx + (((s8)ny - 1) << 6)];
+                    if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[0] = nx;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[1] = (u8)(ny - 1);
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[2] = 0x8;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u16 *)(edc + 4) = neu;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+                        ((u8 *)map + 0x20000)[0x4EE1]++;
+                        costs = *(s16 **)((u8 *)map + 0x14190);
+                        costs[(s8)nx + (((s8)ny - 1) << 6)] = (s16)neu;
+                    }
+                }
+c1_s:
+                if (flags & 0x4) {
+                    ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
+                    nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
+                    costs = *(s16 **)((u8 *)map + 0x14190);
+                    oldc = (u16)costs[(s8)nx + ((s8)ny << 6)];
+                    cell = (u8 *)map + (s8)nx + (((s8)ny + 1) << 6);
+                    tid = cell[0x100D];
+                    uid = cell[0xD];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        cls = *(u8 **)(unit + 0x190);
+                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
+                        if (gate != 0) {
+                            goto c1_w;
+                        }
+                    }
+                    have = (u16)costs[(s8)nx + (((s8)ny + 1) << 6)];
+                    if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[0] = nx;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[1] = (u8)(ny + 1);
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[2] = 0x4;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u16 *)(edc + 4) = neu;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+                        ((u8 *)map + 0x20000)[0x4EE1]++;
+                        costs = *(s16 **)((u8 *)map + 0x14190);
+                        costs[(s8)nx + (((s8)ny + 1) << 6)] = (s16)neu;
+                    }
+                }
+c1_w:
+                if (flags & 0x1) {
+                    ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
+                    nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
+                    costs = *(s16 **)((u8 *)map + 0x14190);
+                    oldc = (u16)costs[(s8)nx + ((s8)ny << 6)];
+                    cell = (u8 *)map + ((s8)nx - 1) + ((s8)ny << 6);
+                    tid = cell[0x100D];
+                    uid = cell[0xD];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        cls = *(u8 **)(unit + 0x190);
+                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
+                        if (gate != 0) {
+                            break;
+                        }
+                    }
+                    have = (u16)costs[((s8)nx - 1) + ((s8)ny << 6)];
+                    if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[0] = (u8)(nx - 1);
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[1] = ny;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[2] = 0x1;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u16 *)(edc + 4) = neu;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+                        ((u8 *)map + 0x20000)[0x4EE1]++;
+                        costs = *(s16 **)((u8 *)map + 0x14190);
+                        costs[((s8)nx - 1) + ((s8)ny << 6)] = (s16)neu;
+                    }
+                }
+                break;
+            case 0x2:
+                if (flags & 0x8) {
+                    cell = (u8 *)map + (s8)nx + (((s8)ny - 1) << 6);
+                    tid = cell[0x100D];
+                    uid = cell[0xD];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        cls = *(u8 **)(unit + 0x190);
+                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
+                        if (gate != 0) {
+                            goto c2_s;
+                        }
+                    }
+                    have = (u16)costs[(s8)nx + (((s8)ny - 1) << 6)];
+                    if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[0] = nx;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[1] = (u8)(ny - 1);
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[2] = 0x8;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u16 *)(edc + 4) = neu;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+                        ((u8 *)map + 0x20000)[0x4EE1]++;
+                        costs = *(s16 **)((u8 *)map + 0x14190);
+                        costs[(s8)nx + (((s8)ny - 1) << 6)] = (s16)neu;
+                    }
+                }
+c2_s:
+                if (flags & 0x4) {
+                    ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
+                    nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
+                    costs = *(s16 **)((u8 *)map + 0x14190);
+                    oldc = (u16)costs[(s8)nx + ((s8)ny << 6)];
+                    cell = (u8 *)map + (s8)nx + (((s8)ny + 1) << 6);
+                    tid = cell[0x100D];
+                    uid = cell[0xD];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        cls = *(u8 **)(unit + 0x190);
+                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
+                        if (gate != 0) {
+                            goto c2_e;
+                        }
+                    }
+                    have = (u16)costs[(s8)nx + (((s8)ny + 1) << 6)];
+                    if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[0] = nx;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[1] = (u8)(ny + 1);
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[2] = 0x4;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u16 *)(edc + 4) = neu;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+                        ((u8 *)map + 0x20000)[0x4EE1]++;
+                        costs = *(s16 **)((u8 *)map + 0x14190);
+                        costs[(s8)nx + (((s8)ny + 1) << 6)] = (s16)neu;
+                    }
+                }
+c2_e:
+                if (flags & 0x2) {
+                    ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
+                    nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
+                    costs = *(s16 **)((u8 *)map + 0x14190);
+                    oldc = (u16)costs[(s8)nx + ((s8)ny << 6)];
+                    cell = (u8 *)map + ((s8)nx + 1) + ((s8)ny << 6);
+                    tid = cell[0x100D];
+                    uid = cell[0xD];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        cls = *(u8 **)(unit + 0x190);
+                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
+                        if (gate != 0) {
+                            break;
+                        }
+                    }
+                    have = (u16)costs[((s8)nx + 1) + ((s8)ny << 6)];
+                    if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[0] = (u8)(nx + 1);
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[1] = ny;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        edc[2] = 0x2;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u16 *)(edc + 4) = neu;
+                        edc = *(u8 **)((u8 *)map + 0x24EDC);
+                        *(u8 **)((u8 *)map + 0x24EDC) = edc + 6;
+                        ((u8 *)map + 0x20000)[0x4EE1]++;
+                        costs = *(s16 **)((u8 *)map + 0x14190);
+                        costs[((s8)nx + 1) + ((s8)ny << 6)] = (s16)neu;
+                    }
+                }
+                break;
+            }
+
+            edc = *(u8 **)((u8 *)map + 0x24EDC);
+            edc[2] = 0x10;
+            ed8 += 6;
+            *(u8 **)((u8 *)map + 0x24ED8) = ed8;
+        } while (ed8[2] != 0x10);
+    }
 }
 
 void fn_80022748(void *arg0, void *arg1) {
