@@ -5147,8 +5147,14 @@ void fn_8013CD7C(void)
     lbl_802EF4C8[8] = 0x80;
 }
 
-void fn_8013CD90(void) {
-    return;
+void *fn_8013CD90(void *arg0) {
+    void *fn_8000E0E4(void *);
+    extern u8 lbl_80276908[];
+    arg0 = *(void **)((u8 *)arg0 + 0x20);
+    if (arg0 != NULL) {
+        return fn_8000E0E4(arg0);
+    }
+    return lbl_80276908 + 0x72;
 }
 
 s32 fn_8013CDCC(void) {
@@ -6102,15 +6108,13 @@ void *fn_8013E8F4(void *arg0, s16 arg1) {
     return arg0;
 }
 
-void fn_8013EB6C(void **arg0) {
-    void (**func_ptr)(void);
-    
-    func_ptr = (void (**)(void))((char *) *arg0 + 0x10);
-    (*func_ptr)();
-    
+#pragma cplusplus on
+extern "C" void fn_8013EB6C(void *arg0) {
+    void fn_801528E4(s32, s32, s32);
+    ((Menu42 *)arg0)->v2();
     fn_801528E4(0, 0, 0x10);
 }
-
+#pragma cplusplus reset
 void fn_8013EBA8(void *arg0) {
     s16 h = M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xc);
     s16 w = M2C_FIELD(arg0, s16 *, 0xe) - M2C_FIELD(arg0, s16 *, 0xa);
