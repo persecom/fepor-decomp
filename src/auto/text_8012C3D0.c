@@ -2494,6 +2494,33 @@ void fn_80130920(void) {
     fn_80225058(0xF8, 0x60, 0x120, 0x120);
 }
 
+s32 fn_80130A40(void *arg0, void *arg1, s32 arg2) {
+    void *fn_80105C5C(void *, u8);
+    s32 count;
+    s32 i;
+    void *unit;
+    void *temp;
+
+    count = 0;
+    unit = *(void **)arg1;
+    switch (arg2) {
+    case 0:
+        return -(s32)*(u16 *)((u8 *)*(void **)((u8 *)unit + 0x188) + 0x5A);
+    case 1:
+        i = 0;
+        do {
+            temp = fn_80105C5C((u8 *)unit + 0x1BC, (u8)i);
+            if (temp != NULL && *(u8 *)((u8 *)temp + 0x19) != 0) {
+                count += 1;
+            }
+            i += 1;
+        } while (i < 0x62);
+        return count;
+    default:
+        return 0;
+    }
+}
+
 void *fn_80130AE4(void *unused, s32 arg1) {
     extern u16 lbl_80275AC0[];
 
@@ -3044,10 +3071,37 @@ s32 fn_80131C78(s32 param_1, s32 param_2, s32 param_3, s32 param_4, s32 param_5)
     return 0;
 }
 
-void fn_80131F70(void)
-{
-    // Implementation for fn_80131F70
-    return;
+s32 fn_80131F70(void *arg0, void *arg1, u32 arg2) {
+    s32 fn_8003B258(void *);
+    s32 fn_8003AFA0(void *);
+    s32 fn_8003AF28(void *);
+    s32 fn_8003AEB0(void *);
+    s32 fn_8003ACF8(void *);
+    s32 fn_8003AA40(void *);
+    s32 fn_8003A778(void *);
+    void *p;
+
+    p = *(void **)arg1;
+    switch (arg2) {
+    case 0:
+        return -(s32)*(u16 *)((u8 *)*(void **)((u8 *)p + 0x188) + 0x5A);
+    case 1:
+        return (s8)fn_8003B258(p);
+    case 2:
+        return (s8)fn_8003AFA0(p);
+    case 3:
+        return (s8)fn_8003AF28(p);
+    case 4:
+        return (s8)fn_8003AEB0(p);
+    case 5:
+        return (s8)fn_8003ACF8(p);
+    case 6:
+        return (s8)fn_8003AA40(p);
+    case 7:
+        return (s8)fn_8003A778(p);
+    default:
+        return 0;
+    }
 }
 
 void *fn_80132018(s32 arg0, u32 arg1) {
