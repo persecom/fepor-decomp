@@ -3893,6 +3893,23 @@ s32 fn_800B8340(s32 arg0, s32 arg1, s32 arg2) {
     return 1;
 }
 
+s32 fn_800B83A4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    void *fn_8010FEEC(void *, s8, s8, u8, u8);
+    extern u8 lbl_8032BB58[];
+    u8 *temp_r3;
+    s32 t5;
+    s32 t4;
+
+    t5 = arg5;
+    t4 = arg4;
+    temp_r3 = fn_8010FEEC(lbl_8032BB58, arg0, arg1, arg2, arg3);
+    temp_r3[4] = t4;
+    temp_r3[5] = t5;
+    temp_r3[6] = 0;
+    temp_r3[7] = 0;
+    return 1;
+}
+
 s32 fn_800B841C(u8 arg0, u8 arg1, u8 arg2) {
     M2C_UNK fn_8000CAA0(M2C_UNK *, s32, M2C_UNK *);
     M2C_UNK fn_80033418(void *);
@@ -6005,22 +6022,23 @@ u8 fn_800BC684(u8 arg0) {
     return (u8)fn_80092F9C();
 }
 
-s32 fn_800BC6E8(u8 arg0, s32 arg2) {
-    M2C_UNK fn_8001D780(s32);
-    M2C_UNK fn_80037BD0();
-    extern M2C_UNK lbl_802B14E4;
-    void *var_r3;
+s32 fn_800BC6E8(u8 arg0, s32 unused, s32 arg2) {
+    void *fn_80037BD0(void);
+    void fn_8001D780(void *, s32);
+    extern u8 lbl_802B14E4[];
+    u8 *entry;
 
     if (arg0 != 0) {
-        var_r3 = &lbl_802B14E4 + ((arg0 - 1) * 0x280);
+        entry = lbl_802B14E4 + (arg0 - 1) * 0x280;
     } else {
-        var_r3 = NULL;
+        entry = 0;
     }
-    if ((var_r3 == NULL) || ((u32) M2C_FIELD(var_r3, u32 *, 0x188) == 0U)) {
+
+    if (entry == 0 || *(u32 *)(entry + 0x188) == 0) {
         return 0;
     }
-    fn_80037BD0();
-    fn_8001D780(arg2);
+
+    fn_8001D780(fn_80037BD0(), arg2);
     return 1;
 }
 
@@ -6833,19 +6851,26 @@ void fn_800BDD08(void* arg0, void* arg1, int arg2) {
     }
 }
 
-void fn_800BDDCC(s32 arg0, s32 arg1) {
-    s32 loop_counter;
-    u32* ptr_17C;
+void fn_800BDDCC(void *arg0, s32 arg1) {
+    s32 fn_8000D598(s32);
+    void *self;
+    s32 i;
+    u32 *p;
+    s32 n;
 
-    for (loop_counter = 0x5F; loop_counter >= 0; loop_counter--) {
-        ptr_17C = (u32*)(arg0 + 0x17C);
-        if (*ptr_17C == 0) {
-            *(u32*)(arg0 + (loop_counter * 4)) = arg1;
-            *(u32*)(arg0 + (loop_counter * 4) + 0x180) = fn_8000D598(arg1);
+    self = arg0;
+    i = 0x5F;
+    n = 0x60;
+    p = (u32 *)((u8 *)self + 0x17C);
+    do {
+        if (*p == 0) {
+            ((s32 *)self)[i] = arg1;
+            *(s32 *)((u8 *)self + (i << 2) + 0x180) = fn_8000D598(arg1);
             return;
         }
-        arg0 -= 4;
-    }
+        p--;
+        i--;
+    } while (--n);
 }
 
 void fn_800BDE40(u32 *arg0, s32 arg1) {
