@@ -1850,6 +1850,23 @@ void fn_80077E00(void) {
     }
 }
 
+s32 fn_80077E60(void) {
+    void fn_8002B89C(void);
+    extern u8 lbl_802EF4C8[];
+    extern struct { s32 n; u8 pad[2004]; } lbl_802EF4E0;
+    u8 *p;
+
+    p = lbl_802EF4C8;
+    if ((s8)p[0x12] != 0) {
+        return 3;
+    }
+    if (*(u32 *)(*(u8 **)p + 0x1A0) & 6) {
+        return 3;
+    }
+    fn_8002B89C();
+    return lbl_802EF4E0.n ? 0 : 3;
+}
+
 s32 fn_80077ED0(void) {
     extern u8 lbl_802EF4C8[24];
     lbl_802EF4C8[8] = 0x19;
