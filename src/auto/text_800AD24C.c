@@ -3297,18 +3297,19 @@ u8 fn_800B7200(void) {
     return lbl_8031FFC0[0xa];
 }
 
-s32 fn_800B7210(void) {
+s32 fn_800B7210(void)
+{
     void fn_800162B8(void);
     void fn_801A7CDC(void *);
     void fn_80016DE0(void);
     void fn_8002297C(void *);
-    extern u8 lbl_802CA518;
-    extern u8 lbl_80330EAC;
+    extern u8 lbl_80330EAC[];
+    extern u8 lbl_802CA518[];
 
     fn_800162B8();
-    fn_801A7CDC(&lbl_80330EAC);
+    fn_801A7CDC(lbl_80330EAC);
     fn_80016DE0();
-    fn_8002297C(&lbl_802CA518);
+    fn_8002297C(lbl_802CA518);
     return 1;
 }
 
