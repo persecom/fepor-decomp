@@ -1777,9 +1777,8 @@ s32 fn_800B2CCC(void) {
     s32 n;
 
     p = (s32 *)lbl_80319A68;
-    n = 0;
-    for (i = 0; i < 2; i++) {
-        if (p[0] != 0) {
+    for (i = 0, n = 0; i < 2; i++, n += 7) {
+        if (*p != 0) {
             return 0;
         }
         if (*++p != 0) {
@@ -1804,9 +1803,8 @@ s32 fn_800B2CCC(void) {
             return 0;
         }
         p++;
-        n += 7;
     }
-    return 1 + n - n;
+    return n | 1;
 }
 
 s32 fn_800B2D94(void) {
@@ -7383,28 +7381,59 @@ void fn_800BE068(void *arg0) {
     } while (i < 0x18);
 }
 
-void fn_800BE228(void *arg0) {
+void fn_800BE228(s32 *arg0) {
+    s32 *p;
     s32 i;
-    u32 *ptr = (u32 *)arg0;
 
-    // Clear the first 28 words (112 bytes) using explicit loop unrolling to match target
-    for (i = 0; i < 28; i++) {
-        ptr[i] = 0;
+    p = arg0;
+    for (i = 0; i < 6; i++) {
+        p[0] = 0;
+        p[0x60] = 0;
+        p[1] = 0;
+        p[0x61] = 0;
+        p[2] = 0;
+        p[0x62] = 0;
+        p[3] = 0;
+        p[0x63] = 0;
+        p[4] = 0;
+        p[0x64] = 0;
+        p[5] = 0;
+        p[0x65] = 0;
+        p[6] = 0;
+        p[0x66] = 0;
+        p[7] = 0;
+        p[0x67] = 0;
+        p[8] = 0;
+        p[0x68] = 0;
+        p[9] = 0;
+        p[0x69] = 0;
+        p[10] = 0;
+        p[0x6A] = 0;
+        p[11] = 0;
+        p[0x6B] = 0;
+        p[12] = 0;
+        p[0x6C] = 0;
+        p[13] = 0;
+        p[0x6D] = 0;
+        p[14] = 0;
+        p[0x6E] = 0;
+        p[15] = 0;
+        p[0x6F] = 0;
+        p += 16;
     }
-    
-    // Clear bytes at offset 0x300 to 0x30B with explicit stores
-    ((u8*)arg0)[0x300] = 0;
-    ((u8*)arg0)[0x301] = 0;
-    ((u8*)arg0)[0x302] = 0;
-    ((u8*)arg0)[0x303] = 0;
-    ((u8*)arg0)[0x304] = 0;
-    ((u8*)arg0)[0x305] = 0;
-    ((u8*)arg0)[0x306] = 0;
-    ((u8*)arg0)[0x307] = 0;
-    ((u8*)arg0)[0x308] = 0;
-    ((u8*)arg0)[0x309] = 0;
-    ((u8*)arg0)[0x30A] = 0;
-    ((u8*)arg0)[0x30B] = 0;
+
+    ((u8 *)arg0)[0x300] = 0;
+    ((u8 *)arg0)[0x301] = 0;
+    ((u8 *)arg0)[0x302] = 0;
+    ((u8 *)arg0)[0x303] = 0;
+    ((u8 *)arg0)[0x304] = 0;
+    ((u8 *)arg0)[0x305] = 0;
+    ((u8 *)arg0)[0x306] = 0;
+    ((u8 *)arg0)[0x307] = 0;
+    ((u8 *)arg0)[0x308] = 0;
+    ((u8 *)arg0)[0x309] = 0;
+    ((u8 *)arg0)[0x30A] = 0;
+    ((u8 *)arg0)[0x30B] = 0;
 }
 
 s32 fn_800BE57C(void *arg0)
