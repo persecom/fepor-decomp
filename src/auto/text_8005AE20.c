@@ -6594,15 +6594,8 @@ s32 fn_8006EB9C(void) {
 }
 
 s32 fn_8006EBA4(void *arg0, s32 arg1) {
-    void **var_r3;
-    s32 *var_r5;
-    s32 var_r0;
-
-    var_r3 = (void **)M2C_FIELD(arg0, void **, 0x8);
-    var_r5 = (s32 *)&var_r3[(arg1 << 3) + 4];
-    var_r0 = *var_r5;
-    var_r0 = -var_r0;
-    return (var_r0 < 0) ? 1 : 0;
+    u8 *base = M2C_FIELD(arg0, u8 **, 0x8);
+    return *(s32 *)(base + (arg1 << 3) + 4) != 0;
 }
 
 extern void fn_8005D2CC(void);
