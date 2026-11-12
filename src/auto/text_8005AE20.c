@@ -6087,8 +6087,8 @@ void *fn_80072250(void) {
 }
 
 void *fn_80072260(void) {
-    extern M2C_UNK lbl_8026BB84;
-    return &lbl_8026BB84 + 0xA2;
+    extern u16 lbl_8026BB84[];
+    return (u8 *)lbl_8026BB84 + 0xA2;
 }
 
 s32 fn_80072270(void) {
