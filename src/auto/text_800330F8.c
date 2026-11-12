@@ -9971,21 +9971,15 @@ void fn_8004BF24(void *arg0)
 {
     void *fn_80060664(void *);
     void fn_8005FEE8(void *, f32);
-
     extern f32 lbl_80368FFC;
-
-    u8 *ptr;
+    void *p;
     void *result;
 
-    ptr = (u8 *)arg0;
-
-    if (ptr[3] & 2) {
-        ptr += 0x1C;
-
-        result = fn_80060664(ptr);
-
+    if ((*(u8 *)((u8 *)arg0 + 3) & 2) != 0) {
+        p = (u8 *)arg0 + 0x1C;
+        result = fn_80060664(p);
         if (result != 0 && *(s32 *)((u8 *)result + 0x10) == 0) {
-            fn_8005FEE8(ptr, lbl_80368FFC);
+            fn_8005FEE8(p, lbl_80368FFC);
         }
     }
 }
