@@ -1289,8 +1289,7 @@ void* fn_80210008(void* arg0) {
     return temp_r31;
 }
 
-void fn_8021004C(s32 arg0) {
-}
+VITiming *fn_8021004C(u32 arg0);
 
 void fn_802100F4(u32 arg0) {
     VITiming *fn_8021004C(u32);
