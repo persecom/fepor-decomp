@@ -579,43 +579,28 @@ s32 fn_801043FC(s32 arg0) {
 }
 
 void fn_80104410(void *arg0) {
-    u8 *ptr = (u8 *)arg0;
-    u32 temp;
-    
-    temp = ptr[0];
-    temp &= ~0xE0;
-    temp |= 0x00;
-    ptr[0] = temp;
-    
-    temp = ptr[0];
-    temp &= ~0x380;
-    temp |= 0x00;
-    ptr[0] = temp;
-    
-    temp = ptr[1];
-    temp &= ~0x70;
-    temp |= 0x00;
-    ptr[1] = temp;
-    
-    temp = ptr[0];
-    temp &= ~0x1C;
-    temp |= 0x00;
-    ptr[0] = temp;
-    
-    temp = ptr[1];
-    temp &= ~0x07;
-    temp |= 0x00;
-    ptr[1] = temp;
-    
-    temp = ptr[2];
-    temp &= ~0xE0;
-    temp |= 0x00;
-    ptr[2] = temp;
-    
-    temp = ptr[2];
-    temp &= ~0x1C;
-    temp |= 0x00;
-    ptr[2] = temp;
+    struct { u8 hi:3; u8 lo:5; } *p;
+    struct { u16 hi:6; u16 mid:3; u16 lo:7; } *h;
+    struct { u8 hi:1; u8 mid:3; u8 lo:4; } *q;
+    struct { u8 a:3; u8 b:3; u8 c:2; } *r;
+    struct { u8 hi:5; u8 lo:3; } *s;
+    struct { u8 hi:3; u8 lo:5; } *t;
+    struct { u8 a:3; u8 b:3; u8 c:2; } *u;
+
+    p = arg0;
+    p->hi = 0;
+    h = arg0;
+    h->mid = 0;
+    q = (void *)((u8 *)arg0 + 1);
+    q->mid = 0;
+    r = arg0;
+    r->b = 0;
+    s = (void *)((u8 *)arg0 + 1);
+    s->lo = 0;
+    t = (void *)((u8 *)arg0 + 2);
+    t->hi = 0;
+    u = (void *)((u8 *)arg0 + 2);
+    u->b = 0;
 }
 
 void fn_8010446C(u8 *arg0) {
