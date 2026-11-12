@@ -548,6 +548,30 @@ void fn_8020C080(void) {
     lbl_803685E8 = (void (*)(void))fn_80013E50(var_r3);
 }
 
+s32 fn_8020C118(u32 command, void *callback)
+{
+    extern void *Callback_80368538;
+
+    u32 ticks;
+
+    Callback_80368538 = callback;
+    StopAtNextInt_80368530 = 0;
+
+    __DIRegs[2] = command | 0xE2000000;
+    __DIRegs[7] = 1;
+
+    ticks = (*(u32 *)0x800000F8 >> 2) * 10;
+
+    OSCreateAlarm(AlarmForTimeout_80339ED8);
+    OSSetAlarm(
+        AlarmForTimeout_80339ED8,
+        (s64)(u32)ticks,
+        AlarmHandlerForTimeout
+    );
+
+    return 1;
+}
+
 void DVDLowReset(void) {
     u32 temp_r30;
     u32 temp_r4;
