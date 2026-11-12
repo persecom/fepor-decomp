@@ -9596,17 +9596,11 @@ void *fn_8004B0C8(void *arg0) {
 
 extern u16 lbl_8026A9B0[40];
 extern u16 lbl_802EFFC8[16];
-u16 *fn_8004B110(void *arg0) {
-    void fn_80231D94(u16 *, u16 *, u16 *, s32, u16 *);
-    
-    u16 *r3 = lbl_802EFFC8;
-    u16 *r4 = lbl_8026A9B0 + 0xCB;
-    u16 *r5 = lbl_8026A9B0 + 0xA8;
-    s32 r6 = *(s32 *)((char *)arg0 + 4);
-    
-    fn_80231D94(r3, r4, r5, r6, r3);
-    
-    return r3;
+void *fn_8004B110(void *arg0) {
+    void fn_80231D94(void *, void *, ...);
+
+    fn_80231D94(lbl_802EFFC8, (u8 *)lbl_8026A9B0 + 0xCB, (u8 *)lbl_8026A9B0 + 0xA8, *(s32 *)((u8 *)arg0 + 4));
+    return lbl_802EFFC8;
 }
 
 s32 fn_8004B1A0(s32 arg0) {
