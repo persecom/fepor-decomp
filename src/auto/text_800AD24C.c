@@ -4635,28 +4635,26 @@ s32 fn_800B98B8(s32 arg0)
     return 1;
 }
 
-#pragma optimization_level 2
+#pragma optimization_level 1
 void fn_800B995C(void *arg0) {
     s32 base;
     s32 shift;
-    s32 mask;
     s32 flags;
+    void *p;
 
     base = 0x100;
     shift = 0;
-    mask = base << shift;
-    flags = *(s32 *)(*(u8 **)((u8 *)arg0 + 0x54) + 8);
-    if ((flags & mask) != 0) {
+    p = *(void **)((u8 *)arg0 + 0x54);
+    flags = *(s32 *)((u8 *)p + 8);
+    if ((flags & (base << shift)) != 0) {
         return;
     }
     shift = 1;
-    mask = base << shift;
-    if ((flags & mask) != 0) {
+    if ((flags & (base << shift)) != 0) {
         return;
     }
     shift = 2;
-    mask = base << shift;
-    if ((flags & mask) != 0) {
+    if ((flags & (base << shift)) != 0) {
         return;
     }
     fn_8000C188();
@@ -5277,10 +5275,11 @@ s32 fn_800BAD9C(s32 arg0, s32 arg1) {
 }
 
 s32 fn_800BAE4C(s32 arg0, s32 arg1) {
-    M2C_UNK fn_8001885C();
-    M2C_UNK fn_8014CBD8(M2C_UNK *, f32, f32);
-    extern M2C_UNK lbl_80330708;
-    fn_8014CBD8(&lbl_80330708, (f32) arg0, (f32) arg1);
+    void fn_8001885C(void);
+    void fn_8014CBD8(void *, f32, f32);
+    extern u8 lbl_80330708[];
+
+    fn_8014CBD8(lbl_80330708, (f32)arg0, (f32)arg1);
     fn_8001885C();
     return 0;
 }
