@@ -3,6 +3,6 @@
 #include "common.h"
 
 void fn_801A2AB4(void) {
-    extern s8 lbl_80330E90;
-    lbl_80330E90 = 0;
+    extern u8 lbl_80330E90[];
+    lbl_80330E90[0] = 0;
 }
