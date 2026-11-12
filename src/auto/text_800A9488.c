@@ -111,10 +111,10 @@ s32 fn_800A96D8(void) {
     return 0;
 }
 
-void fn_800A9710(void) {
-    extern u16 lbl_80331FB8[];
-    u16* ptr = &lbl_80331FB8[0x44 / 2];
-    *ptr = 0x2;
+s32 fn_800A9710(void) {
+    extern u8 lbl_80331FB8[];
+    lbl_80331FB8[0x44] = 2;
+    return 0;
 }
 
 #pragma cplusplus on
