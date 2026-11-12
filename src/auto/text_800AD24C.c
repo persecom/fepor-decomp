@@ -5753,9 +5753,9 @@ s16 fn_800BCADC(void) {
     return *(s16 *)((char *)lbl_8031FFC0 + 2);
 }
 
-extern u16 lbl_8031FFC0;
 s16 fn_800BCAEC(void) {
-    return (s16)*(u16*)((u8*)&lbl_8031FFC0);
+    extern u8 lbl_8031FFC0[];
+    return *(s16 *)((char *)lbl_8031FFC0 + 0);
 }
 
 u8 fn_800BCAFC(void) {
