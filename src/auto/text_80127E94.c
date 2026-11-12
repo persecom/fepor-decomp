@@ -533,24 +533,27 @@ void fn_80129888(void *arg0, void *arg1)
 }
 
 void fn_801298FC(void *arg0) {
-    s32 temp_r3;
-    s32 var_r30;
-    s32 var_r29;
+    u8 fn_80040824(void);
+    void fn_80049BD4(void *, u8);
 
-    if (fn_80040824() != 0) {
-        var_r29 = (s32)arg0;
-        var_r30 = 0;
-loop_6:
-        temp_r3 = *(s32 *)((char *)arg0 + 0x50);
-        if (var_r30 < temp_r3) {
-            if (var_r30 == (temp_r3 - 1)) {
-                fn_80049BD4(1);
+    void *p;
+    s32 i;
+    s32 n;
+    void *v;
+
+    if ((u8)fn_80040824() != 0) {
+        p = arg0;
+        i = 0;
+        while (i < *(s32 *)((u8 *)arg0 + 0x50)) {
+            n = *(s32 *)((u8 *)arg0 + 0x50);
+            v = *(void **)((u8 *)p + 0x30);
+            if (i == n - 1) {
+                fn_80049BD4(v, 1);
             } else {
-                fn_80049BD4(0);
+                fn_80049BD4(v, 0);
             }
-            var_r30 += 1;
-            arg0 = (char *)arg0 + 0x4;
-            goto loop_6;
+            p = (u8 *)p + 4;
+            i += 1;
         }
     }
 }
