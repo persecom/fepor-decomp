@@ -633,6 +633,35 @@ void fn_800AE904(void *arg0) {
     M2C_FIELD(M2C_FIELD(M2C_FIELD(arg0, void **, 0x30), void **, 0x4C), s32 *, 0x4C) = 0;
 }
 
+void fn_800AE918(s32 arg0) {
+    u8 fn_80055248(void *);
+    void fn_8000C188(s32);
+    extern u8 lbl_80330708[];
+    extern u8 lbl_8026EAA0[];
+    void *var_r3;
+
+    switch (lbl_80330708[0x11]) {
+    case 0:
+        var_r3 = lbl_8026EAA0 + 0x90;
+        break;
+    case 1:
+        var_r3 = lbl_8026EAA0 + 0xA0;
+        break;
+    case 2:
+        var_r3 = lbl_8026EAA0 + 0xAF;
+        break;
+    case 3:
+        var_r3 = lbl_8026EAA0 + 0xBE;
+        break;
+    default:
+        var_r3 = NULL;
+        break;
+    }
+    if (fn_80055248(var_r3) != 0) {
+        fn_8000C188(arg0);
+    }
+}
+
 void fn_800AE9CC(void) {
     void fn_8002DEB4(s32);
     void fn_800288E4(void);
@@ -3856,32 +3885,37 @@ s32 fn_800B7C4C(u8 arg0, s16 arg1) {
     return 1;
 }
 
-s32 fn_800B7D08(s32 arg0, s16 arg1) {
+#pragma cplusplus on
+extern "C" s32 fn_800B7D08(s32 arg0, s32 arg1) {
+    struct Obj {
+        u8 pad[8];
+        virtual u8 v0() = 0;
+        virtual u8 v1() = 0;
+        u8 flag;
+        u8 pad2[0x23];
+    };
+    extern Obj lbl_8032FF08[];
     void fn_80146B00(void);
     void fn_80148888(void *, s16);
-    typedef u8 (*VtblFunc)(void *);
-    extern u8 lbl_8032FF08[];
     u8 ok;
-    u8 *obj;
-    VtblFunc *vt;
+    Obj *obj;
 
     ok = 0;
-    obj = lbl_8032FF08 + ((u8)arg0 * 0x30);
-    if (obj[0xC] & 1) {
-        vt = *(VtblFunc **)(obj + 8);
-        if (vt[2](obj) != 0) {
+    obj = &lbl_8032FF08[(u8)arg0];
+    if (obj->flag & 1) {
+        if (obj->v1()) {
             ok = 1;
         }
     }
-    if (ok != 0) {
-        fn_80148888(obj, arg1);
+    if (ok) {
+        fn_80148888(obj, (s16)arg1);
     }
     if (arg0 == 0) {
         fn_80146B00();
     }
     return 1;
 }
-
+#pragma cplusplus reset
 s32 fn_800B7E60(s32 arg0, u32 arg1, s32 arg2) {
     void fn_8014832C(s32, void *, s32, s32);
     void fn_800056CC(void *, ...);
