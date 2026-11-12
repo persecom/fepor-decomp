@@ -567,17 +567,24 @@ void fn_80099EF4(void *arg0) {
     }
 }
 
-void fn_80099F20(void* arg0) {
-    void* temp_r31;
-    void* temp_r4;
+void fn_80099F20(void *arg0) {
+    void *fn_800980D4(s32);
+    void fn_8017E394(void *, void *, void *, s32);
+    void *a;
+    void *b;
+    s32 flag;
 
-    if ((u8)((char*)arg0 + 0x34) != 2) {
-        temp_r31 = fn_800980D4(0);
-        temp_r4 = fn_800980D4(1);
-        if ((u8)((char*)arg0 + 0x34) != 1) {
-            fn_8017E394(temp_r31, temp_r4, arg0, 0);
-        } else {
-            fn_8017E394(NULL, arg0, NULL, 0);
+    if (*(u8 *)((u8 *)arg0 + 0x34) != 2) {
+        a = fn_800980D4(0);
+        b = fn_800980D4(1);
+        flag = *(u8 *)((u8 *)arg0 + 0x34);
+        switch (flag) {
+        case 1:
+            fn_8017E394(b, 0, arg0, 0);
+            break;
+        default:
+            fn_8017E394(a, b, arg0, 0);
+            break;
         }
     }
 }
