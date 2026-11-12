@@ -185,9 +185,8 @@ loop_check:
     return 0;
 }
 void *fn_8014A6FC(void) {
-    extern u16 lbl_80276F00;
-    void *ptr = (u8 *)&lbl_80276F00 + 0xEC;
-    return ptr;
+    extern u16 lbl_80276F00[];
+    return (u8 *)lbl_80276F00 + 0xEC;
 }
 
 s32 fn_8014A70C(s32 arg0, s32 arg1)
