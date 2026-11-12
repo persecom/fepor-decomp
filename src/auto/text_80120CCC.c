@@ -2581,6 +2581,30 @@ void fn_801260D4(void) {
     lbl_80367110 &= 0xFFFFFF7F;
 }
 
+void fn_801260E4(void *arg0) {
+    void fn_80013F48(void *);
+    void fn_8000BD98(void *);
+    void *fn_8000D354(void *);
+    void *fn_8000CAF0(void *, s32);
+    void fn_8023440C(void *, void *, s32);
+    extern u8 lbl_80320060[];
+    extern u8 lbl_80275048[];
+    extern u8 lbl_80290480[];
+    s32 self;
+    void *temp;
+
+    self = (s32)arg0;
+    fn_80013F48(lbl_80320060);
+    fn_8000BD98(lbl_80275048 + 0x15B);
+    if (fn_8000D354((void *)(self + 0x30)) != 0) {
+        temp = fn_8000CAF0(lbl_80290480, 2);
+        fn_8023440C((void *)((s32)temp + 0x30), (void *)(self + 0x30), 0x20);
+        *(void **)((u8 *)temp + 0x50) = fn_8000D354((void *)((s32)temp + 0x30));
+        *((u8 *)temp + 0x58) = 1;
+        *(void **)((u8 *)temp + 0x54) = lbl_80320060;
+    }
+}
+
 extern u8 lbl_80290480[16];
 void fn_80126184(void) {
     fn_8000BF00(&lbl_80290480);
@@ -3201,24 +3225,29 @@ u8 fn_80127B50(s32 arg0) {
     return (u8)(fn_802342B8(arg0, temp_r3 + 0x30) == 0);
 }
 
-s32 fn_80127BA8(s32 arg0, s32 arg1) {
-    s32 var_r3;
-    s32 var_r4;
-    s32 temp_r5;
-    s32 temp_r6;
+s32 fn_80127BA8(void *arg0) {
+    extern u8 lbl_80275048[];
+    extern u8 lbl_80290480[16];
+    extern u8 lbl_80320060[];
 
-    if (arg0 != 0) {
-        var_r3 = 0;
-        var_r4 = 0;
-        do {
-            temp_r5 = arg1 + var_r4;
-            temp_r6 = arg0 + var_r4;
-            if (temp_r5 != temp_r6) {
-                return 0;
-            }
-            ++var_r4;
-        } while (var_r4 < arg0);
+    void fn_8000BD98(void *);
+    void *fn_8000D354(void *);
+    void *fn_8000CAF0(void *, s32);
+    void fn_8023440C(void *, void *, s32);
+
+    void *result;
+    u8 *obj;
+
+    fn_8000BD98(lbl_80275048 + 0x15B);
+    result = fn_8000D354(arg0);
+    if (result == NULL) {
+        return 0;
     }
+    obj = (u8 *)fn_8000CAF0(lbl_80290480, 2);
+    fn_8023440C(obj + 0x30, arg0, 0x20);
+    *(void **)(obj + 0x50) = fn_8000D354(obj + 0x30);
+    obj[0x58] = 1;
+    *(void **)(obj + 0x54) = lbl_80320060;
     return 1;
 }
 
