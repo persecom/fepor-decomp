@@ -46,16 +46,16 @@ extern f32 lbl_803697E4;
 #pragma scheduling reset
 
 void fn_80095850(void *arg0) {
-    void *fn_80018ADC();
-    M2C_UNK fn_80018AE4();
-    M2C_UNK fn_80019384(s32);
+    void *fn_80018ADC(void);
+    void fn_80018AE4(void);
+    void fn_80019384(void *, s32);
     extern f32 lbl_803697C0;
-    void *temp_r3;
+    void *temp;
 
-    temp_r3 = fn_80018ADC();
-    M2C_FIELD(temp_r3, f32 *, 8) = (f32) M2C_FIELD(arg0, f32 *, 0x30);
-    fn_80019384(M2C_FIELD(arg0, s32 *, 0x60));
-    M2C_FIELD(temp_r3, f32 *, 0x70) = (f32) lbl_803697C0;
+    temp = fn_80018ADC();
+    *(f32 *)((u8 *)temp + 8) = *(f32 *)((u8 *)arg0 + 0x30);
+    fn_80019384(temp, *(s32 *)((u8 *)arg0 + 0x60));
+    *(f32 *)((u8 *)temp + 0x70) = lbl_803697C0;
     fn_80018AE4();
 }
 
