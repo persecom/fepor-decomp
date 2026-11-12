@@ -496,6 +496,78 @@ s32 fn_80096C18(void)
     return lbl_803697BC == *(f32 *)(ptr + 0x10);
 }
 
+u8 fn_80096C78(s32 arg0) {
+    extern u8 lbl_80330EAC[];
+    u8 *base;
+    s16 *idx;
+    s16 saved;
+    s32 count;
+    s32 c;
+
+    base = lbl_80330EAC;
+    count = 0;
+    idx = (s16 *)(base + 0x8A0);
+    saved = *(s16 *)(base + 0x8A0);
+    *idx = (s16)arg0;
+    *idx = (s16)((s16)arg0 + 1);
+    for (;;) {
+        c = ((u8 *)idx)[*idx * 4 + 4];
+        if (c != 0x3D) {
+            if (c < 0x3D) {
+                if (c != 0x23) {
+                    if (c < 0x23) {
+                        if (c != 0) {
+                            if (c < 0) {
+                                goto cont;
+                            }
+                            if (c >= 0x20) {
+                                break;
+                            }
+                            goto cont;
+                        }
+                        break;
+                    }
+                    if (c < 0x37) {
+                        if (c >= 0x25) {
+                            goto cont;
+                        }
+                        break;
+                    }
+                    if (c >= 0x3A) {
+                        goto cont;
+                    }
+                    break;
+                }
+                goto cont;
+            }
+            if (c != 0x48) {
+                if (c < 0x48) {
+                    if (c >= 0x43) {
+                        goto cont;
+                    }
+                    if (c >= 0x3F) {
+                        break;
+                    }
+                    goto cont;
+                }
+                if (c >= 0x53) {
+                    goto cont;
+                }
+                if (c >= 0x50) {
+                    count += 1;
+                }
+                goto cont;
+            }
+            break;
+        }
+        break;
+    cont:
+        *idx = (s16)(*idx + 1);
+    }
+    *idx = saved;
+    return (u8)(count >= 2);
+}
+
 s32 fn_80096EEC(s32 *arg0, u32 arg1) {
     s32 var_r5;
 
@@ -836,31 +908,13 @@ void fn_80097970(void) {
 
 void fn_8009799C(void) {
     extern u8 lbl_803120C0[];
-    void **p;
-    void *u;
-    void *t;
-    s32 neg = -1;
-
-    p = (void **)lbl_803120C0;
-    u = *p;
-    if (u != NULL) {
-        t = *(void **)((u8 *)u + 0x280);
-        if (t != NULL) {
-            *(s8 *)((u8 *)t + 0x16C) = (s8)neg;
-        }
-    }
-    u = *(p = (void **)((u8 *)p + 0x14));
-    if (u != NULL) {
-        t = *(void **)((u8 *)u + 0x280);
-        if (t != NULL) {
-            *(s8 *)((u8 *)t + 0x16C) = (s8)neg;
-        }
-    }
-    u = *(void **)((u8 *)p + 0x14);
-    if (u != NULL) {
-        t = *(void **)((u8 *)u + 0x280);
-        if (t != NULL) {
-            *(s8 *)((u8 *)t + 0x16C) = (s8)neg;
+    u8 *p = lbl_803120C0;
+    s32 i;
+    for (i = 0; i < 3; i++, p += 0x14) {
+        void *u = *(void **)p;
+        if (u != NULL) {
+            void *t = *(void **)((u8 *)u + 0x280);
+            if (t != NULL) *(s8 *)((u8 *)t + 0x16C) = -1;
         }
     }
 }
