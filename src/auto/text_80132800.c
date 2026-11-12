@@ -8839,10 +8839,8 @@ extern "C" s16 fn_80143C58(void *arg0) {
         s16 unk64[1];
     } Unk80143C58;
     Unk80143C58 *obj = (Unk80143C58 *)arg0;
-    u16 var_r0;
 
-    var_r0 = ((Obj *)arg0)->v10();
-    return obj->unk64[var_r0];
+    return obj->unk64[((Obj *)arg0)->v10()];
 }
 #pragma cplusplus reset
 void fn_80143E0C(void *unit, s16 arg1) {
@@ -10994,20 +10992,15 @@ extern "C" void fn_801490C8(void *arg0) {
 
 #pragma cplusplus reset
 s8 fn_80149734(void) {
-    s8 var_r31;
-    s32 temp_r3;
+    s32 fn_800AF704(s32);
+    s32 i;
 
-    var_r31 = 0;
-loop_1:
-    temp_r3 = fn_800AF704(var_r31);
-    if (temp_r3 == 0U) {
-        return var_r31;
+    for (i = 0; i < 3; i++) {
+        if (fn_800AF704(i) == 0U) {
+            return (s8)i;
+        }
     }
-    var_r31 += 1;
-    if (var_r31 >= 3) {
-        return -1;
-    }
-    goto loop_1;
+    return -1;
 }
 
 void fn_80149784(void *arg0) {
