@@ -823,6 +823,22 @@ void fn_80075BD8(void) {
     fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x267);
 }
 
+s32 fn_80075C04(void) {
+    u64 *fn_8001CB64(void *);
+    void *fn_800285C0(void *);
+    extern u8 lbl_802EF4C8[];
+    void *item;
+
+    item = fn_800285C0(lbl_802EF4C8);
+    if (!((*(u8 *)((char *)item + 5) >> 7) & 1)) {
+        return 3;
+    }
+    if (*fn_8001CB64(item) & 0x200ULL) {
+        return 2;
+    }
+    return 0;
+}
+
 void fn_80075DAC(void) {
     extern u16 lbl_8026C0B8[];
     fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x28a);
