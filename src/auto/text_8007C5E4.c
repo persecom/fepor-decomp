@@ -111,6 +111,15 @@ void *fn_8007C73C(void) {
 }
 
 s32 fn_8007C74C(void) {
+    extern void *lbl_80367488;
+    u8 *ptr;
+
+    ptr = *(u8 **)((u8 *)lbl_80367488 + 0x54);
+
+    if (ptr != NULL) {
+        *(u16 *)(ptr + 0x36) = 1;
+    }
+
     return 0;
 }
 
