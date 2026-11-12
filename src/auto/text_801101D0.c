@@ -5023,27 +5023,18 @@ u32 fn_8011D484(void) {
     return 0U;
 }
 
-void fn_8011D5EC(void)
-{
+void fn_8011D5EC(void) {
     extern u8 lbl_8028FE50[];
     extern u16 lbl_80367A58;
-
-    extern void *fn_8000C0C0(void *);
-    extern void fn_80120CCC(void *);
-    extern void fn_8000C070(void *, s32);
-
+    void *fn_8000C0C0(void *);
+    void fn_80120CCC(u16 *);
+    void fn_8000C070(void *, s32);
     u8 *obj;
-    u32 value;
 
-    obj = (u8 *)fn_8000C0C0(lbl_8028FE50);
-
+    obj = fn_8000C0C0(lbl_8028FE50);
     fn_80120CCC(&lbl_80367A58);
-
-    value = *(u32 *)(obj + 0x30);
-    *(u32 *)(obj + 0x30) = value + 2;
-
-    lbl_80367A58 &= ~0x14;
-
+    *(u32 *)(obj + 0x30) = *(u32 *)(obj + 0x30) + 2;
+    lbl_80367A58 &= ~0x10;
     fn_8000C070(obj, 1);
 }
 
