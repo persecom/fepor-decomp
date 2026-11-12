@@ -3,16 +3,17 @@
 #include "common.h"
 
 void fn_800A39C4(void) {
+    typedef struct { void *a; void *b; } Pair;
     extern u8 lbl_8028C52C[];
     extern u8 lbl_802845E8[];
     extern u8 lbl_8028C4D8[];
-    extern u8 lbl_80366E28[];
+    extern u32 lbl_80366E28;
     extern void *lbl_803677A0;
-    extern u8 lbl_803677A4[];
+    extern Pair lbl_803677A4;
     extern void *lbl_803677AC;
-    lbl_803677A0 = (void*)lbl_8028C52C;
-    *(u32*)((u8*)lbl_803677A4 + 4) = (u32)lbl_802845E8;
-    *(u32*)lbl_803677A4 = (u32)lbl_80366E28;
-    lbl_803677AC = (void*)lbl_8028C4D8;
-    return;
+
+    lbl_803677A0 = lbl_8028C52C;
+    lbl_803677A4.b = lbl_802845E8;
+    lbl_803677A4.a = &lbl_80366E28;
+    lbl_803677AC = lbl_8028C4D8;
 }
