@@ -1968,6 +1968,22 @@ void fn_80077F2C(void) {
     fn_8000E0E4(&lbl_8026C0B8[0x490 / sizeof(u16)]);
 }
 
+s32 fn_80077F58(void) {
+    u8 fn_80105BC0(void *, s32);
+    void fn_8002BAFC(void *, s32);
+    extern u8 lbl_802EF4C8[];
+    extern struct { s32 n; u8 pad[2004]; } lbl_802EF4E0;
+
+    if (fn_80105BC0(*(u8 **)lbl_802EF4C8 + 0x1BC, 0x45) == 0) {
+        return 3;
+    }
+    if ((s8)lbl_802EF4C8[0x12] != 0) {
+        return 3;
+    }
+    fn_8002BAFC(*(void **)lbl_802EF4C8, 2);
+    return lbl_802EF4E0.n ? 0 : 3;
+}
+
 s32 fn_80077FE0(void) {
     extern u8 lbl_802EF4C8[];
     u8 *p = lbl_802EF4C8;
