@@ -10739,33 +10739,13 @@ void fn_8017A810(void *arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + arg1);
 }
 
-s32 fn_8017A950(void *arg0) {
-    u8 *temp_r5;
-    u8 *temp_r4;
-    u8 val1, val2, val3, val4;
-    s32 result;
-
-    temp_r5 = (u8 *)M2C_FIELD(arg0, u8 **, 4);
-    M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r5 + 1);
-    val1 = *temp_r5;
-    
-    temp_r4 = (u8 *)M2C_FIELD(arg0, u8 **, 4);
-    M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r4 + 1);
-    val2 = *temp_r4;
-
-    temp_r5 = (u8 *)M2C_FIELD(arg0, u8 **, 4);
-    M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r5 + 1);
-    val3 = *temp_r5;
-
-    temp_r4 = (u8 *)M2C_FIELD(arg0, u8 **, 4);
-    M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r4 + 1);
-    val4 = *temp_r4;
-    
-    result = (s32)val1 << 24;
-    result = result + (((s32)val2 << 16) & 0x00FF0000);
-    result = result + (((s32)val3 << 8) & 0x0000FF00);
-    result = result + (s32)val4;
-    return result;
+u32 fn_8017A950(u8 **arg0) {
+    u32 v;
+    v  = (u32)*arg0[1]++ << 24;
+    v += ((*arg0[1]++ << 16) & 0x00FF0000);
+    v += ((*arg0[1]++ << 8) & 0x0000FF00);
+    v += *arg0[1]++;
+    return v;
 }
 
 s32 fn_8017A9B0(void *arg0) {
