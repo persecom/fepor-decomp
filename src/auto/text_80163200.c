@@ -1257,6 +1257,37 @@ extern "C" void fn_8016533C(void *arg0, s32 arg1) {
     fn_800C96F8((u8 *)arg0 + 0x3c, s, strlen(s));
     fn_800C9A60(sp10, -1);
 }
+
+#pragma cplusplus on
+extern "C" void fn_8016562C(void *arg0) {
+    void fn_80161364(s32, s32, s16, s16, s32);
+    void fn_801610A8(s32, s32, s16, s16, s32);
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    s32 temp;
+
+    ((Obj *)arg0)->v2();
+    temp = *(s32 *)((u8 *)arg0 + 0x58);
+    switch (temp) {
+    case 0:
+        fn_80161364(0, 0,
+            (s16)(*(s16 *)((u8 *)arg0 + 0xE) - *(s16 *)((u8 *)arg0 + 0xA)),
+            (s16)(*(s16 *)((u8 *)arg0 + 0x10) - *(s16 *)((u8 *)arg0 + 0xC)),
+            0x10);
+        break;
+    case 1:
+        fn_801610A8(0, 0,
+            (s16)(*(s16 *)((u8 *)arg0 + 0xE) - *(s16 *)((u8 *)arg0 + 0xA)),
+            (s16)(*(s16 *)((u8 *)arg0 + 0x10) - *(s16 *)((u8 *)arg0 + 0xC)),
+            0x10);
+        break;
+    }
+}
+#pragma cplusplus reset
+
 #pragma cplusplus reset
 
 #pragma cplusplus reset
