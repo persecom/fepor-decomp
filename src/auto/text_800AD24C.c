@@ -5750,6 +5750,7 @@ s32 fn_800BBE9C(u8 arg0, s32 arg1) {
     void fn_80105DAC(void *);
     extern u8 lbl_802B14E4[];
     void *unit;
+    s32 keep = arg1;
 
     if (arg0 != 0) {
         unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
@@ -5760,7 +5761,7 @@ s32 fn_800BBE9C(u8 arg0, s32 arg1) {
         return 0;
     }
     fn_80105DAC((u8 *)unit + 0x1BC);
-    return 1;
+    return 1 + keep - keep;
 }
 
 s32 fn_800BBF04(u8 arg0, s32 arg1) {
@@ -7107,24 +7108,23 @@ void fn_800BE728(s32 arg0)
 }
 
 s16 fn_800BE798(s32 arg0) {
-    void *temp_r3;
-    s32 temp_r30;
-    s32 temp_r31;
-    
-    temp_r3 = (void *)fn_80013B60(NULL);
-    temp_r31 = 0;
-loop_4:
-    if (temp_r3 != NULL) {
-        if (*(u8 *)((char *)temp_r3 + 0xC) == 0xE) {
-            if (temp_r31 == arg0) {
-                return *(s16 *)((char *)temp_r3 + 0x18);
+    void *fn_80013B60(void *);
+    u8 *entry;
+    s32 count;
+    s32 kind;
+
+    kind = 0xE;
+    entry = fn_80013B60(0);
+    count = 0;
+    while (entry != 0) {
+        if (entry[0xC] == kind) {
+            if (count++ == arg0) {
+                break;
             }
         }
-        temp_r3 = (void *)fn_80013B60(temp_r3);
-        temp_r31 += 1;
-        goto loop_4;
+        entry = fn_80013B60(entry);
     }
-    return 0;
+    return *(s16 *)(entry + 0x18);
 }
 
 void fn_800BE800(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
