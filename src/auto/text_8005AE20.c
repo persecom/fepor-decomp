@@ -602,17 +602,18 @@ check:
     goto check;
 }
 
-void fn_8005BF8C(void *arg0) {
-    u16 *ptr = (u16 *)((u8 *)arg0 + 0x30);
+void fn_8005BF8C(void *arg0, s32 arg1) {
+    void fn_8005D9A8(void *);
+    void fn_8005DE84(void *);
 
-    if (*ptr & 0x400) {
-        fn_8005DE84();
-        return;
+    if (*(volatile u16 *)((u8 *)arg0 + 0x30) & 0x400) {
+        fn_8005DE84(arg0);
+    } else {
+        if (*(volatile u16 *)((u8 *)arg0 + 0x30) & 0x800) {
+            fn_8005D9A8(arg0);
+        }
+        *(volatile u16 *)((u8 *)arg0 + 0x30) |= 0x2004;
     }
-    if (*ptr & 0x800) {
-        fn_8005D9A8();
-    }
-    *ptr |= 0x2004;
 }
 
 void fn_8005BFE4(void *arg0) {
