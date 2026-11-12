@@ -9855,14 +9855,13 @@ void *fn_80145EBC(void *arg0) {
     s32 fn_802342B8(void *, void *);
 
     u8 *table;
+    s32 index;
     u8 *entry;
     s32 count;
-    s32 index;
 
     table = (u8 *)fn_8000D2BC(lbl_80276BC8 + 0x94);
-
-    count = *(s32 *)table;
     entry = table + 4;
+    count = *(s32 *)table;
     index = 0;
 
     while (index < count) {
