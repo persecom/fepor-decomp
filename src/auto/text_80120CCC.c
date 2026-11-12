@@ -2655,13 +2655,18 @@ void fn_8012689C(s32 arg0) {
 }
 
 void fn_801268D4(s32 arg0) {
-    extern u8 lbl_80330708[1400];
-    u8 *ptr = &lbl_80330708[0x9C];
+    struct S {
+        u8 pad[0x9C];
+        u8 skip : 5;
+        u8 flag : 1;
+    };
+    extern struct S lbl_80330708;
+    struct S *p = &lbl_80330708;
     if (arg0 == 1) {
-        *ptr |= 0x4;
-    } else {
-        *ptr &= ~0x4;
+        p->flag = 1;
+        return;
     }
+    p->flag = 0;
 }
 
 void fn_8012690C(s32 arg0) {
