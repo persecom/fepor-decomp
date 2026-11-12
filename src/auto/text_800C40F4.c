@@ -9821,7 +9821,7 @@ void *fn_800E8488(void *arg0, s32 arg1)
 {
     extern u8 lbl_8028E200[];
           extern void fn_800C9A60(void *, s32);
-      extern void *fn_800E0140(void *, s32);
+      extern void fn_800E0140(void *, s32);
       extern void fn_800C428C(void *);
 
     u8 *obj;
