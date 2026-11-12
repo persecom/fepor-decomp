@@ -247,6 +247,42 @@ void fn_800AD76C(void *arg0) {
     }
 }
 
+void fn_800AD84C(void *arg0) {
+    void *fn_8002F62C(void *);
+    void *fn_8002F740(void);
+    void fn_801A7218(void *, void *, s32);
+    void fn_801A4958(void *);
+    s8 fn_8003B2D0(void *);
+    void fn_801A4A88(void *, s8);
+    void fn_8019B704(void *, s32);
+    extern u8 lbl_802EF4E0[];
+    extern u8 lbl_80330EAC[];
+    void *p;
+    void *eac;
+    s32 diff;
+    s32 neg;
+    void *f740;
+    u8 div;
+
+    p = fn_8002F62C(lbl_802EF4E0);
+    f740 = fn_8002F740();
+    fn_801A7218(lbl_80330EAC, f740, -1);
+    fn_801A4958(lbl_80330EAC);
+    div = *(u8 *)((u8 *)p + 3);
+    eac = lbl_80330EAC;
+    diff = (*(s16 *)((u8 *)arg0 + 0x34) - *(s16 *)((u8 *)eac + 0x29A)) / div;
+    if (diff > fn_8003B2D0(eac)) {
+        diff = fn_8003B2D0(eac);
+    }
+    if (diff < 1) {
+        diff = 1;
+    }
+    neg = -diff;
+    *(u8 *)((u8 *)arg0 + 0x3B) = (u32)(neg | diff) >> 31;
+    fn_801A4A88(lbl_80330EAC, (s8)neg);
+    fn_8019B704(arg0, 0);
+}
+
 void fn_800AD92C(s32 arg0) {
     void fn_8000C070(s32, s32);
     void *fn_8002F62C(void *);
@@ -8011,16 +8047,33 @@ s32 fn_800BF32C(void* arg0, void* arg1, s32 arg2) {
     return 1;
 }
 
-void fn_800BF494(void) {
-    extern s32 lbl_8028D544[];
-    
-    lbl_8028D544[1] = 0;
-    lbl_8028D544[2] = 0;
-    
-    // This is the main part of the function.
-    // Based on analysis, there aren't direct calls to fn_800C273C in this function
-    // Let's match it more closely using the real assembly
-    return;
+s32 fn_800BF494(void *arg0) {
+    void *fn_800C273C(void *, u32);
+    u8 fn_800BDD08(void *, void *);
+    void *fn_80019E8C(void);
+    extern u8 lbl_802EF4C8[24];
+    void *v1;
+    void *v2;
+    void *a;
+    void *b;
+
+    if (fn_800BDD08((u8 *)lbl_80330708 + 0xB4,
+                    fn_800C273C(arg0, (u16)*(s16 *)((u8 *)arg0 + 0x1A))) != 0) {
+        return 0;
+    }
+    fn_800C273C(arg0, (u16)*(s16 *)((u8 *)arg0 + 0x14));
+    v1 = fn_80019E8C();
+    fn_800C273C(arg0, (u16)*(s16 *)((u8 *)arg0 + 0x16));
+    v2 = fn_80019E8C();
+    a = *(void **)(*(u8 **)lbl_802EF4C8 + 0x188);
+    b = *(void **)(*(u8 **)(lbl_802EF4C8 + 4) + 0x188);
+    if (a == v1 && b == v2) {
+        return 1;
+    }
+    if (*(s16 *)((u8 *)arg0 + 0x18) != 0 && a == v2 && b == v1) {
+        return 1;
+    }
+    return 0;
 }
 
 s32 fn_800BF574(s32 arg0) {
