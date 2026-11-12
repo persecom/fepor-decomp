@@ -1332,10 +1332,9 @@ s32 fn_800A6720(s32 arg0) {
 }
 
 void fn_800A67A4(void) {
-    extern u16 lbl_802EF4C8;
     void fn_801044C4(s32);
-    s32 val = (s32)(*(u16*)&lbl_802EF4C8);
-    fn_801044C4(val + 0x1A4);
+    extern u8 lbl_802EF4C8[];
+    fn_801044C4(*(s32 *)lbl_802EF4C8 + 0x1A4);
 }
 
 s32 fn_800A67D4(s32 arg0) {
