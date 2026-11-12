@@ -2155,6 +2155,7 @@ void fn_8024B8EC(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 #pragma global_optimizer off
+#pragma optimization_level 2
 void fn_8024B94C(s32 arg0)
 {
     void fn_802624F8(void);
@@ -2165,11 +2166,6 @@ void fn_8024B94C(s32 arg0)
     extern s32 lbl_803689A8;
 
     u32 oldFlags;
-    u32 b;
-    u32 a;
-    u32 offset;
-    u32 i;
-    u8 *table;
 
     oldFlags = lbl_803689A4;
 
@@ -2180,10 +2176,8 @@ void fn_8024B94C(s32 arg0)
         fn_802624F8();
         break;
     case 1:
-        a = oldFlags & ~1;
-        b = oldFlags & ~3;
-        lbl_803689A4 = a;
-        lbl_803689A4 = b;
+        lbl_803689A4 = oldFlags & ~1;
+        lbl_803689A4 = oldFlags & ~3;
         fn_802624F8();
         break;
     case 2:
@@ -2194,32 +2188,32 @@ void fn_8024B94C(s32 arg0)
     }
 
     if (oldFlags != lbl_803689A4) {
+        u32 i;
+        u32 table;
+        u32 offset;
+        u32 base;
+        u32 off;
         u32 *p1;
-        u32 *p2;
         u32 w0;
         u32 w1;
-        u32 off;
-        u8 *base;
 
-        table = lbl_8034C110;
-        i = 0;
-        offset = 0;
-        while (i < table[0x210]) {
-            base = (u8 *)lbl_803689A8;
+        for (i = 0, table = (u32)lbl_8034C110, offset = 0; i < *(u8 *)(table + 0x210);) {
+            base = (u32)lbl_803689A8;
             off = offset + 0x114;
             offset = offset + 0x458;
             i = i + 1;
             p1 = (u32 *)(base + off);
-            p2 = (u32 *)((s32)base + (s32)off);
+            base = base + off;
             w0 = *p1;
-            w1 = *(u32 *)((u8 *)p1 + 4);
-            *(volatile u32 *)((u8 *)p2 + 4) = w1;
-            *p2 = w0 | 0x2000;
+            w1 = *(p1 + 1);
+            *(volatile u32 *)(base + 4) = w1;
+            *(u32 *)base = w0 | 0x2000;
         }
         fn_8024C84C();
     }
 }
-#pragma global_optimizer reset
+#pragma optimization_level reset
+#pragma global_optimizer on
 void fn_8024C5C8(void) {
 
 }

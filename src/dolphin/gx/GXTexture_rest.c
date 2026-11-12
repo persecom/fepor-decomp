@@ -301,6 +301,65 @@ void fn_802246B8(u8 arg0) {
     *(volatile u16 *)((u8 *)__GXData + 2) = 0;
 }
 
+void fn_802246EC(u32 arg0, u32 arg1)
+{
+    extern u32 lbl_8029E358[];
+
+    u8 *gx;
+    u32 *entry;
+    u32 oldValue;
+    u32 value;
+    u32 flag;
+    volatile u8 *fifo;
+
+    gx = (u8 *)__GXData;
+    entry = &lbl_8029E358[arg0];
+    fifo = (volatile u8 *)0xCC008000;
+
+    oldValue = *(u32 *)(gx + 0x1DC);
+
+    value = *(u32 *)(gx + 0x1DC);
+    value = (value & ~7U) | (*entry & 7U);
+    *(u32 *)(gx + 0x1DC) = value;
+
+    value = *(u32 *)(gx + 0x1DC);
+    value = (value & ~0x38U) | ((arg1 << 3) & 0x38U);
+    *(u32 *)(gx + 0x1DC) = value;
+
+    value = *(u32 *)(gx + 0x1DC);
+
+    if (oldValue != value) {
+        *fifo = 0x61;
+        *(volatile u32 *)fifo = value;
+
+        flag = (arg0 == 2) ? 1 : 0;
+
+        value = *(u32 *)(gx + 0x204);
+        value = (value & ~0x200U) | ((flag << 9) & 0x200U);
+        *(u32 *)(gx + 0x204) = value;
+
+        *(u32 *)(gx + 0x5AC) |= 4;
+
+        if (*entry == 4) {
+            gx = (u8 *)__GXData;
+
+            value = *(u32 *)(gx + 0x1D4);
+            value = (value & ~0x600U) |
+                    (((arg0 - 4) << 9) & 0x600U);
+            *(u32 *)(gx + 0x1D4) = value;
+
+            value = *(u32 *)(gx + 0x1D4);
+            value = (value & ~0xFF000000U) | 0x42000000U;
+            *(u32 *)(gx + 0x1D4) = value;
+
+            *fifo = 0x61;
+            *(volatile u32 *)fifo = *(u32 *)(gx + 0x1D4);
+
+            *(u16 *)(gx + 2) = 0;
+        }
+    }
+}
+
 void fn_802247C0(s32 arg0) {
     u16 temp_r6;
     

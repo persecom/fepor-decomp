@@ -25,6 +25,40 @@ void fn_80055C8C(s32 arg0, s32 arg1, s32 arg2) {
     fn_80234450((char *)temp_r3 + 0x30, arg0);
 }
 
+void fn_80055CE4(void *arg0)
+{
+    extern u8 lbl_8026AD80[];
+    extern u32 fn_8005BA10(void *);
+    extern void fn_800056CC(const char *, ...);
+    extern void fn_8000C188(void *);
+
+    u8 *obj;
+    u32 count;
+    void (*callback)(void *);
+
+    obj = (u8 *)arg0;
+
+    count = *(u16 *)(obj + 0x68);
+    *(u16 *)(obj + 0x68) = count + 1;
+
+    if (count <= 0x2A30) {
+        if ((u8)fn_8005BA10(obj + 0x30) != 0) {
+            callback = *(void (**)(void *))(obj + 0x6C);
+
+            if (callback != 0) {
+                callback(*(void **)(obj + 0x18));
+            }
+
+            fn_800056CC(
+                (const char *)lbl_8026AD80 + 0x91,
+                obj + 0x30
+            );
+
+            fn_8000C188(obj);
+        }
+    }
+}
+
 void fn_80055D68(void *arg0) {
     *(u16 *)((char *)arg0 + 0x68) = 0;
     fn_8005C8B4((char *)arg0 + 0x30);

@@ -404,6 +404,291 @@ void *fn_80019F3C(void *arg0, s16 arg1) {
     return arg0;
 }
 
+void fn_80019FC4(void)
+{
+    u8 *fn_8000D2BC(char *);
+    void *fn_800C42AC(s32);
+    void *fn_8022C414(void *, void *, s32, s32, s32);
+    s32 fn_8001EB44(u32);
+    s32 fn_8001E7C0(u32);
+    s32 fn_8001CE78(u32);
+    void fn_8001DE1C(void *, u32);
+    void fn_8001DA94(void *, u32);
+    void fn_8001E71C(void *);
+    void fn_8000D3EC(u32, void *);
+    void fn_8001A5D0(void *);
+
+    extern char lbl_80268510[];
+    extern s32 lbl_803671E0;
+    extern void *lbl_803671E4;
+
+    u8 *data;
+    u8 *entry;
+    u32 value;
+    s32 count;
+    s32 i;
+    u8 *records;
+
+    data = fn_8000D2BC(lbl_80268510 + 0x6A);
+
+    count = (data[0] << 24) +
+            (data[1] << 16) +
+            (data[2] << 8) +
+            data[3];
+
+    lbl_803671E0 = count;
+
+    data += 4;
+
+    records = fn_8022C414(
+        fn_800C42AC(count * 0x48 + 0x10),
+        fn_8001A5D0,
+        0,
+        0x48,
+        count
+    );
+
+    lbl_803671E4 = records;
+
+    for (i = 0; i < count; i++) {
+        entry = records + i * 0x48;
+
+        *(u16 *)(entry + 0xE) = i + 1;
+
+        if (data != 0) {
+            value = (data[0] << 24) +
+                    (data[1] << 16) +
+                    (data[2] << 8) +
+                    data[3];
+            data += 4;
+        } else {
+            value = 0;
+        }
+
+        *(u32 *)(entry + 0x0) = value;
+
+        if (data != 0) {
+            value = (data[0] << 24) +
+                    (data[1] << 16) +
+                    (data[2] << 8) +
+                    data[3];
+            data += 4;
+        } else {
+            value = 0;
+        }
+
+        *(u32 *)(entry + 0x4) = value;
+
+        if (data != 0) {
+            value = (data[0] << 24) +
+                    (data[1] << 16) +
+                    (data[2] << 8) +
+                    data[3];
+            data += 4;
+        } else {
+            value = 0;
+        }
+
+        *(u32 *)(entry + 0x8) = value;
+
+        if (data != 0) {
+            value = (data[0] << 24) +
+                    (data[1] << 16) +
+                    (data[2] << 8) +
+                    data[3];
+            data += 4;
+        } else {
+            value = 0;
+        }
+
+        entry[0x12] = fn_8001EB44(value);
+
+        if (data != 0) {
+            value = (data[0] << 24) +
+                    (data[1] << 16) +
+                    (data[2] << 8) +
+                    data[3];
+            data += 4;
+        } else {
+            value = 0;
+        }
+
+        entry[0x13] = fn_8001EB44(value);
+
+        entry[0x14] = fn_8001E7C0(*(u32 *)(entry + 0x0));
+
+        if (data != 0) {
+            value = (data[0] << 24) +
+                    (data[1] << 16) +
+                    (data[2] << 8) +
+                    data[3];
+            data += 4;
+        } else {
+            value = 0;
+        }
+
+        entry[0x16] = fn_8001CE78(value);
+
+        if (data != 0) {
+            value = (data[0] << 24) +
+                    (data[1] << 16) +
+                    (data[2] << 8) +
+                    data[3];
+            data += 4;
+        } else {
+            value = 0;
+        }
+
+        fn_8001DE1C(entry, value);
+
+        if (data != 0) {
+            value = (data[0] << 24) +
+                    (data[1] << 16) +
+                    (data[2] << 8) +
+                    data[3];
+            data += 4;
+        } else {
+            value = 0;
+        }
+
+        fn_8001DE1C(entry, value);
+
+        if (data != 0) {
+            value = (data[0] << 24) +
+                    (data[1] << 16) +
+                    (data[2] << 8) +
+                    data[3];
+            data += 4;
+        } else {
+            value = 0;
+        }
+
+        fn_8001DE1C(entry, value);
+
+        if (data != 0) {
+            value = (data[0] << 24) +
+                    (data[1] << 16) +
+                    (data[2] << 8) +
+                    data[3];
+            data += 4;
+        } else {
+            value = 0;
+        }
+
+        fn_8001DE1C(entry, value);
+
+        if (data != 0) {
+            value = (data[0] << 24) +
+                    (data[1] << 16) +
+                    (data[2] << 8) +
+                    data[3];
+            data += 4;
+        } else {
+            value = 0;
+        }
+
+        fn_8001DE1C(entry, value);
+
+        if (data != 0) {
+            value = (data[0] << 24) +
+                    (data[1] << 16) +
+                    (data[2] << 8) +
+                    data[3];
+            data += 4;
+        } else {
+            value = 0;
+        }
+
+        fn_8001DE1C(entry, value);
+
+        if (data != 0) {
+            value = (data[0] << 24) +
+                    (data[1] << 16) +
+                    (data[2] << 8) +
+                    data[3];
+            data += 4;
+        } else {
+            value = 0;
+        }
+
+        fn_8001DA94(entry + 0xC, value);
+
+        if (data != 0) {
+            value = (data[0] << 24) +
+                    (data[1] << 16) +
+                    (data[2] << 8) +
+                    data[3];
+            data += 4;
+        } else {
+            value = 0;
+        }
+
+        fn_8001DA94(entry + 0xC, value);
+
+        if (data != 0) {
+            value = (data[0] << 24) +
+                    (data[1] << 16) +
+                    (data[2] << 8) +
+                    data[3];
+            data += 4;
+        } else {
+            value = 0;
+        }
+
+        *(u32 *)(entry + 0x40) = value;
+
+        if (data != 0) {
+            value = (data[0] << 24) +
+                    (data[1] << 16) +
+                    (data[2] << 8) +
+                    data[3];
+            data += 4;
+        } else {
+            value = 0;
+        }
+
+        *(u32 *)(entry + 0x44) = value;
+
+        *(u16 *)(entry + 0x10) =
+            (data[0] << 8) + data[1];
+
+        entry[0x18] = data[2];
+        entry[0x19] = data[3];
+        entry[0x1A] = data[4];
+        entry[0x1B] = data[5];
+        entry[0x1C] = data[6];
+        entry[0x1D] = data[7];
+        entry[0x1E] = data[8];
+        entry[0x15] = data[9];
+        entry[0x17] = data[10];
+        entry[0x1F] = data[11];
+        entry[0x20] = data[12];
+        entry[0x21] = data[13];
+        entry[0x22] = data[14];
+        entry[0x23] = data[15];
+        entry[0x24] = data[16];
+        entry[0x25] = data[17];
+        entry[0x26] = data[18];
+        entry[0x27] = data[19];
+        entry[0x28] = data[20];
+        entry[0x2A] = data[21];
+        entry[0x2B] = data[22];
+        entry[0x2C] = data[23];
+        entry[0x2D] = data[24];
+        entry[0x2E] = data[25];
+        entry[0x2F] = data[26];
+        entry[0x30] = data[27];
+        entry[0x31] = data[28];
+        entry[0x29] = data[29];
+
+        fn_8001E71C(entry);
+
+        fn_8000D3EC(*(u32 *)(entry + 0x0), entry);
+
+        data = (u8 *)(((u32)(data + 0x21)) & ~3);
+    }
+}
+
 void fn_8001A5D0(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0xC) = 0;
     M2C_FIELD(arg0, s32 *, 0x3C) = 0;

@@ -2015,6 +2015,34 @@ void fn_80078C94(void) {
     fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x557);
 }
 
+s32 fn_80078CC0(void)
+{
+    extern u8 lbl_802EF4C8[];
+    extern void *fn_80105C5C(void *, s32);
+    extern s32 fn_800BE968(s32, s32, s32);
+
+    u8 *entry;
+    u32 result;
+
+    if (*(s8 *)(lbl_802EF4C8 + 0x12) != 0) {
+        return 3;
+    }
+
+    entry = *(u8 **)lbl_802EF4C8;
+
+    if (fn_80105C5C(entry + 0x1BC, 0) == 0) {
+        return 3;
+    }
+
+    result = fn_800BE968(
+        0xD,
+        *(u8 *)(entry + 0x19E),
+        *(u8 *)(entry + 0x19F)
+    );
+
+    return -(u32)((u8)result == 0) & 3;
+}
+
 s32 fn_80078D48(s32 arg0, s32 arg1) {
     extern u8 lbl_802EF4C8[];
     extern u8 lbl_80311F8C[];

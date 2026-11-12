@@ -2492,6 +2492,34 @@ void fn_8010AB78(void *arg0) {
     }
 }
 
+void fn_8010ABC0(void *arg0)
+{
+    void fn_8006EEFC(void *, void *);
+    void fn_8005C4C4(void *, s32);
+    s32 fn_8006EBA4(void *, s32);
+
+    u8 *obj;
+    u8 flags;
+
+    obj = (u8 *)arg0;
+
+    if (!(obj[0x10] & 0x80)) {
+        fn_8006EEFC(obj + 0x0C, *(void **)(obj + 0x08));
+
+        if (obj[0x10] & 1) {
+            fn_8005C4C4(*(void **)(obj + 0x08), 4);
+        }
+
+        if (fn_8006EBA4(*(void **)(obj + 0x0C), obj[0x12]) != 0) {
+            flags = obj[0x10];
+            obj[0x10] = flags | 2;
+            obj[0x11] = 0;
+        }
+
+        obj[0x10] |= 0x80;
+    }
+}
+
 void fn_8010AC4C(void) {
 
 }

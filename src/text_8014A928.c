@@ -108,6 +108,32 @@ s32 fn_8014A968(void *arg1) {
     return ((s32*)lbl_80367B00)[temp];
 }
 
+s32 fn_8014A98C(s32 arg0, s32 arg1, void *arg2)
+{
+    u8 *fn_8000D2BC(s32);
+    s8 fn_80146BE4(s32);
+
+    s32 index;
+    s32 entry;
+
+    index = (s8)lbl_80367B0D * 0x18;
+    index += *(u8 *)((u8 *)arg2 + 0x3A);
+
+    if (index >= lbl_80367B04) {
+        return 0;
+    }
+
+    entry = ((s32 *)lbl_80367B00)[index];
+
+    if (fn_8000D2BC(entry)[5] & 4) {
+        if (fn_80146BE4(entry) < 0) {
+            fn_801475FC(entry, 0x64);
+        }
+    }
+
+    return 0;
+}
+
 void fn_8014AA18(void) {
     // Analyzing the function from assembly:
     // It appears to be setting up some data structure based on loop conditions

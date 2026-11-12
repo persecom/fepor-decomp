@@ -1643,21 +1643,21 @@ void fn_801F897C(void) {
     fn_8002D548();
 }
 
-void fn_801F89AC(void *arg0) {
+void fn_801F89AC(s32 arg0, s32 arg1) {
     extern u8 lbl_8029B394[];
     extern f32 lbl_8036BA00;
-    void *fn_8000CAA0(void *);
+    void *fn_8000CAA0(void *, s32);
     void fn_801FB410(void *);
-    u8 *entry;
+    void *temp_r31;
 
-    entry = (u8 *)fn_8000CAA0(lbl_8029B394);
-    if (entry != 0) {
-        fn_801FB410(entry + 0x30);
-        *(f32 *)(entry + 0x3C) = lbl_8036BA00;
-        *(u32 *)(entry + 0x4C) = 0;
-        *(u32 *)(entry + 0x50) = 0;
-        entry[0x54] = 5;
-        *(void **)(entry + 0x48) = arg0;
+    temp_r31 = fn_8000CAA0(lbl_8029B394, arg1);
+    if (temp_r31 != 0) {
+        fn_801FB410((u8 *)temp_r31 + 0x30);
+        *(f32 *)((u8 *)temp_r31 + 0x3C) = lbl_8036BA00;
+        *(s32 *)((u8 *)temp_r31 + 0x4C) = 0;
+        *(s32 *)((u8 *)temp_r31 + 0x50) = 0;
+        ((u8 *)temp_r31)[0x54] = 5;
+        *(s32 *)((u8 *)temp_r31 + 0x48) = arg0;
     }
 }
 
@@ -2450,6 +2450,259 @@ void fn_801FA874(void *arg0) {
     }
 }
 
+#pragma scheduling off
+void fn_801FAA9C(void *arg0, void *arg1, u32 arg2, void *arg3) {
+    typedef struct {
+        s32 a;
+        s32 b;
+    } Elem;
+    typedef struct {
+        u32 cap;
+        u32 size;
+        Elem *data;
+    } Vec;
+    void fn_800C428C(void *);
+    void *fn_800C42D8(u32);
+    void fn_801FB548(Vec *);
+    void fn_8022CF78(void);
+    void fn_80232058(void *, const char *, ...);
+    extern char __files[];
+    extern char lbl_80281028[];
+
+    Vec *vec;
+    Elem *fill;
+    u32 count;
+    Elem *pos;
+    Vec tmp;
+
+    count = arg2;
+    vec = (Vec *)arg0;
+    pos = (Elem *)arg1;
+    fill = (Elem *)arg3;
+    if (count == 0) {
+        return;
+    }
+    if (count > 0x1FFFFFFFU || vec->size > 0x1FFFFFFFU - count) {
+        char *files = __files;
+        char *msg = lbl_80281028;
+        fn_80232058(files + 0xA0, msg + 0x3A1);
+        fn_8022CF78();
+    }
+    if (vec->size + count <= vec->cap) {
+        Elem *dst = vec->data + vec->size;
+        Elem *fill_out = fill;
+        s32 n = dst - pos;
+        if (count > (u32)n) {
+            Elem *p = dst;
+            Elem *src;
+            u32 ctr;
+            for (ctr = count - (u32)n; ctr != 0; ctr--) {
+                if (p != NULL) {
+                    *p = *fill;
+                }
+                p++;
+                count--;
+                vec->size++;
+            }
+            for (src = pos; src < dst; src++, p++) {
+                if (p != NULL) {
+                    *p = *src;
+                }
+                vec->size++;
+            }
+        } else {
+            Elem *src = dst - count;
+            Elem *p = dst;
+            u32 words;
+            u8 *from_b;
+            u8 *to_b;
+            s32 off;
+
+            for (; src < dst; src++, p++) {
+                if (p != NULL) {
+                    *p = *src;
+                }
+                vec->size++;
+            }
+            off = (n - (s32)count) * 8;
+            if ((u8 *)dst - off <= (u8 *)fill && (u8 *)fill < (u8 *)dst) {
+                fill_out = (Elem *)((u8 *)fill + count * 8);
+            }
+            from_b = (u8 *)pos + off;
+            to_b = (u8 *)dst;
+            if (from_b > (u8 *)pos) {
+                words = (u32)(from_b + 7 - (u8 *)pos) >> 3;
+                for (; (words >> 3) != 0;) {
+                    u32 ctr = words >> 3;
+                    do {
+                        to_b[-8] = from_b[-8];
+                        *(u16 *)(to_b - 6) = *(u16 *)(from_b - 6);
+                        *(s32 *)(to_b - 4) = *(s32 *)(from_b - 4);
+                        to_b[-0x10] = from_b[-0x10];
+                        *(u16 *)(to_b - 0xe) = *(u16 *)(from_b - 0xe);
+                        *(s32 *)(to_b - 0xc) = *(s32 *)(from_b - 0xc);
+                        to_b[-0x18] = from_b[-0x18];
+                        *(u16 *)(to_b - 0x16) = *(u16 *)(from_b - 0x16);
+                        *(s32 *)(to_b - 0x14) = *(s32 *)(from_b - 0x14);
+                        to_b[-0x20] = from_b[-0x20];
+                        *(u16 *)(to_b - 0x1e) = *(u16 *)(from_b - 0x1e);
+                        *(s32 *)(to_b - 0x1c) = *(s32 *)(from_b - 0x1c);
+                        to_b[-0x28] = from_b[-0x28];
+                        *(u16 *)(to_b - 0x26) = *(u16 *)(from_b - 0x26);
+                        *(s32 *)(to_b - 0x24) = *(s32 *)(from_b - 0x24);
+                        to_b[-0x30] = from_b[-0x30];
+                        *(u16 *)(to_b - 0x2e) = *(u16 *)(from_b - 0x2e);
+                        *(s32 *)(to_b - 0x2c) = *(s32 *)(from_b - 0x2c);
+                        to_b[-0x38] = from_b[-0x38];
+                        *(u16 *)(to_b - 0x36) = *(u16 *)(from_b - 0x36);
+                        *(s32 *)(to_b - 0x34) = *(s32 *)(from_b - 0x34);
+                        to_b[-0x40] = from_b[-0x40];
+                        *(u16 *)(to_b - 0x3e) = *(u16 *)(from_b - 0x3e);
+                        *(s32 *)(to_b - 0x3c) = *(s32 *)(from_b - 0x3c);
+                        from_b -= 0x40;
+                        to_b -= 0x40;
+                    } while (--ctr != 0);
+                    break;
+                }
+                words &= 7;
+                if (words != 0) {
+                    do {
+                        to_b[-8] = from_b[-8];
+                        *(u16 *)(to_b - 6) = *(u16 *)(from_b - 6);
+                        *(s32 *)(to_b - 4) = *(s32 *)(from_b - 4);
+                        from_b -= 8;
+                        to_b -= 8;
+                    } while (--words != 0);
+                }
+            }
+        }
+        {
+            Elem *out = pos;
+            u32 left = count;
+            if (left != 0) {
+                u32 ctr = left >> 3;
+                if (ctr != 0) {
+                    do {
+                        ((u8 *)out)[0] = ((u8 *)fill_out)[0];
+                        *(u16 *)((u8 *)out + 2) = *(u16 *)((u8 *)fill_out + 2);
+                        *(s32 *)((u8 *)out + 4) = *(s32 *)((u8 *)fill_out + 4);
+                        ((u8 *)out)[8] = ((u8 *)fill_out)[0];
+                        *(u16 *)((u8 *)out + 0xa) = *(u16 *)((u8 *)fill_out + 2);
+                        *(s32 *)((u8 *)out + 0xc) = *(s32 *)((u8 *)fill_out + 4);
+                        ((u8 *)out)[0x10] = ((u8 *)fill_out)[0];
+                        *(u16 *)((u8 *)out + 0x12) = *(u16 *)((u8 *)fill_out + 2);
+                        *(s32 *)((u8 *)out + 0x14) = *(s32 *)((u8 *)fill_out + 4);
+                        ((u8 *)out)[0x18] = ((u8 *)fill_out)[0];
+                        *(u16 *)((u8 *)out + 0x1a) = *(u16 *)((u8 *)fill_out + 2);
+                        *(s32 *)((u8 *)out + 0x1c) = *(s32 *)((u8 *)fill_out + 4);
+                        ((u8 *)out)[0x20] = ((u8 *)fill_out)[0];
+                        *(u16 *)((u8 *)out + 0x22) = *(u16 *)((u8 *)fill_out + 2);
+                        *(s32 *)((u8 *)out + 0x24) = *(s32 *)((u8 *)fill_out + 4);
+                        ((u8 *)out)[0x28] = ((u8 *)fill_out)[0];
+                        *(u16 *)((u8 *)out + 0x2a) = *(u16 *)((u8 *)fill_out + 2);
+                        *(s32 *)((u8 *)out + 0x2c) = *(s32 *)((u8 *)fill_out + 4);
+                        ((u8 *)out)[0x30] = ((u8 *)fill_out)[0];
+                        *(u16 *)((u8 *)out + 0x32) = *(u16 *)((u8 *)fill_out + 2);
+                        *(s32 *)((u8 *)out + 0x34) = *(s32 *)((u8 *)fill_out + 4);
+                        ((u8 *)out)[0x38] = ((u8 *)fill_out)[0];
+                        *(u16 *)((u8 *)out + 0x3a) = *(u16 *)((u8 *)fill_out + 2);
+                        *(s32 *)((u8 *)out + 0x3c) = *(s32 *)((u8 *)fill_out + 4);
+                        out = (Elem *)((u8 *)out + 0x40);
+                    } while (--ctr != 0);
+                }
+                left &= 7;
+                if (left != 0) {
+                    do {
+                        ((u8 *)out)[0] = ((u8 *)fill_out)[0];
+                        *(u16 *)((u8 *)out + 2) = *(u16 *)((u8 *)fill_out + 2);
+                        *(s32 *)((u8 *)out + 4) = *(s32 *)((u8 *)fill_out + 4);
+                        out = (Elem *)((u8 *)out + 8);
+                    } while (--left != 0);
+                }
+            }
+        }
+        return;
+    }
+
+    {
+        u32 cap;
+        Elem *p;
+        Elem *dst;
+        Elem *src;
+        Elem *end;
+        u32 t;
+        Elem *tp;
+        u32 ts;
+        u32 z;
+
+        z = 0;
+        tmp.cap = z;
+        tmp.size = z;
+        tmp.data = (Elem *)z;
+        cap = 1;
+        z = vec->cap;
+        if (z != 0) {
+            cap = z;
+        }
+        while (vec->size + count > cap) {
+            if (cap < 0x0FFFFFFFU) {
+                cap *= 2;
+            } else {
+                cap = 0x1FFFFFFFU;
+            }
+        }
+        p = (Elem *)fn_800C42D8(cap * 8);
+        if (p == NULL) {
+            char *files = __files;
+            char *msg = lbl_80281028;
+            fn_80232058(files + 0xA0, msg + 0x3BE);
+            fn_8022CF78();
+        }
+        tmp.data = p;
+        tmp.cap = cap;
+        dst = p;
+        src = vec->data;
+        end = vec->data + vec->size;
+        for (; src < pos; src++, dst++) {
+            if (dst != NULL) {
+                *dst = *src;
+            }
+            tmp.size++;
+        }
+        {
+            u32 ctr;
+            for (ctr = count; ctr != 0; ctr--) {
+                if (dst != NULL) {
+                    *dst = *fill;
+                }
+                dst++;
+                tmp.size++;
+            }
+        }
+        for (; src < end; src++, dst++) {
+            if (dst != NULL) {
+                *dst = *src;
+            }
+            tmp.size++;
+        }
+        if (&tmp != vec) {
+            t = tmp.cap;
+            tmp.cap = vec->cap;
+            vec->cap = t;
+            tp = tmp.data;
+            tmp.data = vec->data;
+            vec->data = tp;
+            ts = tmp.size;
+            tmp.size = vec->size;
+            vec->size = ts;
+        }
+        fn_801FB548(&tmp);
+        if (tmp.data != NULL) {
+            fn_800C428C(tmp.data);
+        }
+    }
+}
+#pragma scheduling on
 void fn_801FB048(void *arg0, u32 arg1) {
     typedef struct {
         s32 unk0;
@@ -3623,6 +3876,36 @@ u8 fn_801F1C5C(void) {
     }
     temp_r3 = temp_r3 + var_r0;
     return *(u8 *)(temp_r3 + 4);
+}
+
+s8 fn_801F1CE8(void)
+{
+    s32 fn_8000D354(void *);
+
+    s32 temp_r3;
+    s8 var_r0;
+
+    temp_r3 = fn_8000D354(lbl_8027F710 + 0x15);
+
+    switch ((s32)lbl_80330708[0xA6]) {
+    case 3:
+        var_r0 = 3;
+        break;
+    case 0:
+        var_r0 = 0;
+        break;
+    case 1:
+        var_r0 = 1;
+        break;
+    case 2:
+        var_r0 = 2;
+        break;
+    default:
+        var_r0 = 0;
+        break;
+    }
+
+    return *(u8 *)(temp_r3 + (s8)var_r0);
 }
 
 #include "common.h"

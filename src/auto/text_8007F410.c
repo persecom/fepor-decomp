@@ -83,10 +83,10 @@ void fn_8007F410(void *arg0) {
     extern f32 lbl_803694E8;
     extern f32 lbl_80369500;
     f32 by;
+    f32 y;
     f32 bx;
-    f32 x = M2C_FIELD(arg0, f32 *, 0x14);
-    f32 y = M2C_FIELD(arg0, f32 *, 0x18);
-    u8 pid = M2C_FIELD(M2C_FIELD(M2C_FIELD(arg0, void **, 0x58), void **, 0x188), u8 *, 0x54);
+    f32 x;
+    u8 pid;
     Color color;
     f32 h;
     f32 w;
@@ -100,6 +100,9 @@ void fn_8007F410(void *arg0) {
     s32 id;
     s32 width;
 
+    x = M2C_FIELD(arg0, f32 *, 0x14);
+    y = M2C_FIELD(arg0, f32 *, 0x18);
+    pid = M2C_FIELD(M2C_FIELD(M2C_FIELD(arg0, void **, 0x58), void **, 0x188), u8 *, 0x54);
     fn_800875B4(0xB3, 0, x, y, lbl_803694C4, lbl_803694C8);
     fn_8000A258();
     fn_80009C0C(lbl_8036942C);
@@ -116,11 +119,10 @@ void fn_8007F410(void *arg0) {
     fn_800076AC(0, 0, 0, 0xFF);
     fn_80007884();
     tex = *fn_8006EDD8(lbl_803674F4, 0x1D);
-    sh = tex[0] * lbl_80369430;
-    sw = tex[1] * lbl_80369430;
+    sh = lbl_80369430 * tex[0];
+    sw = lbl_80369430 * tex[1];
     color = *fn_8018D900(1);
-    id = lbl_803674F4;
-    tex = *fn_8006EDD8(id, 0x1D);
+    tex = *fn_8006EDD8((id = lbl_803674F4), 0x1D);
     w = tex[1];
     h = tex[0];
     fn_8000A258();
@@ -151,7 +153,8 @@ void fn_8007F410(void *arg0) {
     nx = lbl_80369488 + x;
     fn_8001003C(nx, lbl_803694D0 + y, 4, 1, 0, obj, lbl_80369430, lbl_80369418);
     id = fn_8003B938(pid);
-    width = fn_80010B78(fn_8003B9AC(pid), -1, lbl_80369430);
+    obj = fn_8003B9AC(pid);
+    width = fn_80010B78(obj, -1, lbl_80369430);
     fn_8005AC24(lbl_802F0308, lbl_80369500 + (nx + width), by, id);
     fn_8000A258();
     fn_80009C0C(lbl_80369430);

@@ -1077,6 +1077,50 @@ int __DVDPushWaitingQueue(s32 priority, void *block)
     return 1;
 }
 
+s32 __DVDPopWaitingQueue(void)
+{
+    extern u8 WaitingQueue_80339FD8[];
+    u32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(u32);
+
+    struct DVDQueue {
+        struct DVDQueue *next;
+        struct DVDQueue *prev;
+    };
+
+    struct DVDQueue *queue;
+    struct DVDQueue *entry;
+    s32 i;
+
+    OSDisableInterrupts();
+
+    queue = (struct DVDQueue *)WaitingQueue_80339FD8;
+
+    for (i = 0; i < 4; i++) {
+        if (queue[i].next != &queue[i]) {
+            OSRestoreInterrupts(OSDisableInterrupts());
+
+            OSDisableInterrupts();
+
+            entry = ((struct DVDQueue *)WaitingQueue_80339FD8)[i].next;
+
+            queue = &((struct DVDQueue *)WaitingQueue_80339FD8)[i];
+            queue->next = entry->next;
+            entry->next->prev = queue;
+
+            OSRestoreInterrupts(OSDisableInterrupts());
+
+            entry->next = 0;
+            entry->prev = 0;
+
+            return (s32)entry;
+        }
+    }
+
+    OSRestoreInterrupts(OSDisableInterrupts());
+    return 0;
+}
+
 s32 __DVDCheckWaitingQueue(void) {
     extern u32 WaitingQueue_80339FD8[];
 
@@ -1118,6 +1162,28 @@ s32 fn_8020F7F0(void *arg0) {
     return 1;
 }
 
+u8 ErrorCode2Num(s32 error)
+{
+    extern u16 lbl_8029D210[];
+
+    u32 *table;
+    u32 i;
+
+    table = (u32 *)lbl_8029D210;
+
+    for (i = 0; i < 20; i++) {
+        if ((u32)error == table[i]) {
+            return (u8)i;
+        }
+    }
+
+    if ((u32)error >= 0x100000 && (u32)error <= 0x100008) {
+        return 0x11;
+    }
+
+    return 0x1D;
+}
+
 void __DVDStoreErrorCode(u32 arg0) {
     u8 ErrorCode2Num(s32);
     void *__OSLockSramEx();
@@ -1142,6 +1208,37 @@ void __DVDStoreErrorCode(u32 arg0) {
     }
     M2C_FIELD(__OSLockSramEx(), s8 *, 0x24) = var_r31;
     __OSUnlockSramEx(1);
+}
+
+s32 fn_8020F9E8(u8 *arg0, u8 *arg1)
+{
+    s32 fn_80234278(u8 *, u8 *, u32);
+
+    if ((s8)arg0[0] != 0 && (s8)arg1[0] != 0) {
+        if (fn_80234278(arg0, arg1, 4) != 0) {
+            return 0;
+        }
+    }
+
+    if ((s8)arg0[4] != 0 && (s8)arg1[4] != 0) {
+        if (fn_80234278(arg0 + 4, arg1 + 4, 2) != 0) {
+            return 0;
+        }
+    }
+
+    if (arg0[6] != 0xFF && arg1[6] != 0xFF) {
+        if (arg0[6] != arg1[6]) {
+            return 0;
+        }
+    }
+
+    if (arg0[7] != 0xFF && arg1[7] != 0xFF) {
+        if (arg0[7] != arg1[7]) {
+            return 0;
+        }
+    }
+
+    return 1;
 }
 
 void fn_8020FAE0(void) {
@@ -1426,7 +1523,7 @@ OSInitThreadQueue(lbl_8036860C);regs[0x30/2]=regs[0x30/2]&0x7fff;regs[0x34/2]=re
 lbl_80368614=0;lbl_80368618=0;__OSSetInterruptHandler(24,fn_8020FD50);__OSUnmaskInterrupts(0x80);
 }
 }
-#pragma optimization_level 4
+#pragma peephole off
 void fn_802107A8(void) {
     extern u32 lbl_80368604;
     extern u8 lbl_8036860C;
@@ -1438,13 +1535,12 @@ void fn_802107A8(void) {
 
     enabled = OSDisableInterrupts();
     previous = lbl_80368604;
-    fn_8020ADD8(&lbl_8036860C);
-    if (previous == lbl_80368604) {
-    } else {
+    fn_8020ADD8((void *)&lbl_8036860C);
+    if (previous != lbl_80368604) {
         OSRestoreInterrupts(enabled);
     }
 }
-#pragma peephole reset
+#pragma peephole on
 s32 fn_80211690(void) {
     extern s32 lbl_80368604;
     return lbl_80368604;

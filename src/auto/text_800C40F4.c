@@ -472,6 +472,33 @@ loop_2:
     M2C_FIELD(var_r4, s32 *, 0x10) = (s32) (M2C_FIELD(var_r4, s32 *, 0x10) + arg0);
 }
 
+void fn_800C469C(char *arg0)
+{
+    extern s32 lbl_80320B88[];
+    extern s32 lbl_80367870;
+
+    s32 i;
+    s32 *table;
+    s32 entry;
+
+    i = 0;
+    table = lbl_80320B88;
+
+    while (i < 0x10) {
+        entry = *table;
+
+        if (entry != 0) {
+            if (fn_802342B8(arg0, entry + 4) == 0) {
+                lbl_80367870 = lbl_80320B88[i];
+                break;
+            }
+        }
+
+        i++;
+        table++;
+    }
+}
+
 void fn_800C4728(s32 arg0) {
     extern s32 lbl_80320B88[];
     extern s32 lbl_80367870;

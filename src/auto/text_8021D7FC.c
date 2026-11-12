@@ -155,6 +155,70 @@ void *fn_8021D8F8(u32 arg0)
 
     return result;
 }
+
+void fn_8021EB88(s32 arg0, void *arg1)
+{
+    extern u8 *__GXData;
+    extern u16 *__cpReg;
+    extern u32 lbl_80368778;
+    extern u32 lbl_80368780;
+    extern u32 lbl_80368788;
+
+    void fn_8020A9E0(u32);
+    void fn_8020AC68(u32);
+    void fn_8021F39C(u32, u8);
+    void fn_8021F36C(u32, u8);
+
+    u8 context[0x2C8];
+    u32 control;
+    u32 status;
+
+    *(u32 *)(__GXData + 0xC) = __cpReg[0];
+
+    control = *(u32 *)(__GXData + 8);
+    if (control & 8) {
+        status = *(u32 *)(__GXData + 0xC);
+        if (status & 2) {
+            fn_8020A9E0(lbl_80368778);
+            lbl_80368780 = 0;
+            fn_8021F39C(1, 1);
+            fn_8021F36C(1, 0);
+        }
+    }
+
+    control = *(u32 *)(__GXData + 8);
+    if (control & 4) {
+        status = *(u32 *)(__GXData + 0xC);
+        if (status & 1) {
+            lbl_80368788++;
+            fn_8021F36C(0, 1);
+            fn_8021F39C(1, 0);
+            lbl_80368780 = 1;
+            fn_8020AC68(lbl_80368778);
+        }
+    }
+
+    control = *(u32 *)(__GXData + 8);
+    if (control & 0x20) {
+        status = *(u32 *)(__GXData + 0xC);
+        if (status & 0x10) {
+            control &= ~0x20;
+            *(u32 *)(__GXData + 8) = control;
+            __cpReg[1] = (u16)*(u32 *)(__GXData + 8);
+
+            if (lbl_80368784 != 0) {
+                OSClearContext((void *)context);
+                OSSetCurrentContext((void *)context);
+
+                ((void (*)(void))lbl_80368784)();
+
+                OSClearContext((void *)context);
+                OSSetCurrentContext(arg1);
+            }
+        }
+    }
+}
+
 #pragma peephole on
 void GXInitFifoBase(void* arg0, void* arg1, u32 arg2) {
     u32 temp_r3;
@@ -621,6 +685,48 @@ s32 fn_8021FE4C(s32 arg0)
     return arg0;
 }
 
+void fn_802200CC(void)
+{
+    extern void *__GXData;
+
+    u8 *gx;
+    volatile u8 *fifo8;
+    volatile u32 *fifo32;
+    u32 offset;
+    u32 index;
+    u32 flags;
+
+    gx = (u8 *)__GXData;
+    fifo8 = (volatile u8 *)0xCC008000;
+    fifo32 = (volatile u32 *)0xCC008000;
+
+    offset = 0;
+    index = 0;
+    flags = gx[0x5AB];
+
+    if (flags & 1) {
+        do {
+            *fifo8 = 8;
+            *fifo8 = index | 0x70;
+            *fifo32 = *(u32 *)(gx + offset + 0x1C);
+
+            *fifo8 = 8;
+            *fifo8 = index | 0x80;
+            *fifo32 = *(u32 *)(gx + offset + 0x3C);
+
+            *fifo8 = 8;
+            *fifo8 = index | 0x90;
+            *fifo32 = *(u32 *)(gx + offset + 0x5C);
+
+            flags >>= 1;
+            offset += 4;
+            index++;
+        } while (flags != 0);
+    }
+
+    ((u8 *)__GXData)[0x5AB] = 0;
+}
+
 void fn_80220154(s32 arg0, s32 arg1, u8 arg2) {
     s32 temp_r3;
     s32 var_r3;
@@ -898,6 +1004,33 @@ void __GXPEInit(void)
     value |= 1;
     value |= 2;
     pe[5] = value;
+}
+
+void fn_80220EBC(void)
+{
+    extern void *__GXData;
+
+    u8 *gx;
+    u32 count;
+    u32 i;
+    u16 a;
+    u16 b;
+
+    gx = (u8 *)__GXData;
+
+    a = *(u16 *)(gx + 4);
+    b = *(u16 *)(gx + 6);
+
+    *(volatile u8 *)0xCC008000 = 0x98;
+    *(volatile u16 *)0xCC008000 = a;
+
+    count = (a * b + 3) >> 2;
+
+    for (i = 0; i < count; i++) {
+        *(volatile u32 *)0xCC008000 = 0;
+    }
+
+    *(u16 *)((u8 *)__GXData + 2) = 1;
 }
 
 void fn_80220F44(u32 arg0, u32 arg1)

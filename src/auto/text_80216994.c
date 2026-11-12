@@ -1871,6 +1871,72 @@ s32 fn_8021C080(void) {
     return 0;
 }
 
+void fn_8021C088(s32 chan, s32 result)
+{
+    extern u16 lbl_8033A200[];
+
+    s32 fn_8021965C(void *);
+    s32 fn_802197FC(s32, s32);
+    s32 fn_80217BD0(void *, s32);
+    s64 OSGetTime(void);
+    void *memcpy(void *, const void *, u32);
+
+    u8 *card;
+    u8 *entry;
+    u8 *source;
+    void (*callback)(s32, s32);
+    s32 status;
+    u32 ticks;
+    s64 time;
+
+    card = (u8 *)lbl_8033A200 + chan * 0x110;
+    callback = *(void (**)(s32, s32))(card + 0xD0);
+    *(u32 *)(card + 0xD0) = 0;
+    status = result;
+
+    if (status >= 0) {
+        entry = (u8 *)fn_8021965C(card);
+        entry += *(u16 *)(card + 0xBC) << 6;
+
+        source = *(u8 **)(card + 0x10C);
+
+        memcpy(entry, source, 4);
+        memcpy(entry + 4, source + 4, 2);
+
+        entry[0x34] = 4;
+        entry[0x35] = 0;
+        *(u16 *)(entry + 0x36) = *(u16 *)(card + 0xBE);
+
+        entry[7] = 0;
+        *(s32 *)(entry + 0x2C) = -1;
+        *(u16 *)(entry + 0x30) = 0;
+        *(u16 *)(entry + 0x32) = 0;
+        *(s32 *)(entry + 0x3C) = -1;
+
+        *(u16 *)(entry + 0x32) =
+            (*(u16 *)(entry + 0x32) & ~3) | 1;
+
+        *(u32 *)(*(u8 **)(card + 0xC0) + 8) = 0;
+
+        *(u16 *)(*(u8 **)(card + 0xC0) + 0x10) =
+            *(u16 *)(entry + 0x36);
+
+        ticks = *(u32 *)0x800000F8 >> 2;
+        time = OSGetTime();
+
+        *(u32 *)(entry + 0x28) = (u32)(time / ticks);
+
+        status = fn_802197FC(chan, (s32)callback);
+    }
+
+    if (status < 0) {
+        fn_80217BD0(card, status);
+        if (callback != 0) {
+            callback(chan, status);
+        }
+    }
+}
+
 #pragma use_lmw_stmw on
 s32 fn_8021C1B8(s32 chan, char *name, u32 size, void *fileInfo, void *callback) {
     s32 fn_80217B18(s32, s32 *);
@@ -1957,6 +2023,155 @@ void fn_8021C3D8(s32 arg0) {
     if (fn_8021C1B8(&fn_80216998) >= 0) {
         fn_80217C64(arg0);
     }
+}
+
+void fn_8021C5D8(s32 chan, s32 result)
+{
+    extern u16 lbl_8033A200[];
+    s32 fn_802190A4(s32, u32, u32, void *, void *);
+    s32 fn_80219258(void *);
+    s32 fn_80217BD0(void *, s32);
+
+    u8 *card;
+    u8 *file;
+    u16 *fat;
+    s32 remaining;
+    s32 offset;
+    s32 blockSize;
+    s32 amount;
+    s32 next;
+    s32 count;
+    s32 status;
+    void (*callback)(s32, s32);
+
+    card = (u8 *)lbl_8033A200 + chan * 0x110;
+    status = result;
+
+    if (status >= 0) {
+        file = *(u8 **)(card + 0xC0);
+
+        remaining = *(s32 *)(file + 0xC);
+
+        if (remaining < 0) {
+            status = -14;
+        } else {
+            blockSize = *(s32 *)(card + 0xC);
+            offset = *(s32 *)(file + 8);
+
+            amount = ((offset + blockSize) & ~(blockSize - 1)) - offset;
+
+            remaining -= amount;
+            *(s32 *)(file + 0xC) = remaining;
+
+            if (remaining > 0) {
+                fat = (u16 *)fn_80219258(card);
+
+                *(s32 *)(file + 8) += amount;
+
+                next = *(u16 *)(file + 0x10);
+                *(u16 *)(file + 0x10) = fat[next];
+
+                next = *(u16 *)(file + 0x10);
+
+                if (next < 5 || next >= *(u16 *)(card + 0x10)) {
+                    status = -6;
+                } else {
+                    count = remaining;
+
+                    if (count >= blockSize) {
+                        count = blockSize;
+                    }
+
+                    status = fn_802190A4(
+                        chan,
+                        blockSize * next,
+                        count,
+                        *(void **)(card + 0xB4),
+                        (void *)fn_8021C5D8
+                    );
+                }
+            }
+        }
+
+        if (status < 0) {
+            callback = *(void (**)(s32, s32))(card + 0xD0);
+            *(void **)(card + 0xD0) = 0;
+
+            fn_80217BD0(card, status);
+            callback(chan, status);
+        }
+    }
+}
+
+s32 fn_8021C708(s32 *arg0, s32 arg1, s32 arg2, s32 arg3, void *arg4)
+{
+    s32 fn_8021C420(void *, u32, u32, void **);
+    s32 fn_802190A4(s32, u32, u32, void *, void *);
+    s32 fn_80217BD0(void *, s32);
+    s32 fn_8021965C(void *);
+    s32 fn_8021BCCC(void *, void *);
+    void DCInvalidateRange(void *, u32);
+    void fn_80216994(void);
+    void fn_8021C5D8(s32, s32);
+
+    void *card;
+    u8 *entry;
+    u32 sectorSize;
+    u32 offset;
+    u32 length;
+    u32 boundary;
+    s32 result;
+    void *callback;
+
+    if (((u32)arg3 & 0x1FF) != 0 || ((u32)arg2 & 0x1FF) != 0) {
+        return -0x80;
+    }
+
+    result = fn_8021C420(arg0, arg2, arg3, &card);
+    if (result < 0) {
+        return result;
+    }
+
+    entry = (u8 *)fn_8021965C(card);
+    entry += arg0[1] << 6;
+
+    result = fn_8021BCCC(card, entry);
+    if (result < 0) {
+        return fn_80217BD0(card, result);
+    }
+
+    DCInvalidateRange((void *)arg1, arg3);
+
+    if (arg4 != 0) {
+        callback = arg4;
+    } else {
+        callback = (void *)fn_80216994;
+    }
+
+    *(void **)((u8 *)card + 0xD0) = callback;
+
+    offset = *(u32 *)((u8 *)arg0 + 8);
+    sectorSize = *(u32 *)((u8 *)card + 0xC);
+    boundary = sectorSize - (offset & (sectorSize - 1));
+
+    length = arg3;
+    if (length >= boundary) {
+        length = boundary;
+    }
+
+    result = fn_802190A4(
+        arg0[0],
+        sectorSize * *(u16 *)((u8 *)arg0 + 0x10) + (offset & (sectorSize - 1)),
+        length,
+        (void *)arg1,
+        (void *)fn_8021C5D8
+    );
+
+    if (result < 0) {
+        fn_80217BD0(card, result);
+    }
+
+    return result;
 }
 
 s32 fn_8021C84C(s32 *arg0, s32 arg1, s32 arg2, s32 arg3) {

@@ -5308,6 +5308,47 @@ extern "C" void fn_80193F5C(void *arg0) {
         fn_80140304(arg0, 0);
     }
 }
+
+void fn_80193FE0(void *arg0)
+{
+    extern u32 lbl_80367110;
+    extern u8 *lbl_80367240;
+    extern u8 lbl_8027A360[];
+
+    extern void fn_801475FC(void *, s32);
+    extern void fn_8000C188(void *);
+
+    u32 flags;
+    u32 active;
+    u32 current;
+    u32 previous;
+    u8 *state;
+
+    active = 0;
+    flags = lbl_80367110;
+
+    if (flags & 0x10) {
+        if (!(flags & 0x20)) {
+            active = 1;
+        }
+    }
+
+    if ((u8)active != 0) {
+        return;
+    }
+
+    state = lbl_80367240;
+    current = *(u32 *)(state + 4);
+    previous = *(u32 *)(state + 8);
+
+    if ((current & (current ^ previous) & 0x300) == 0) {
+        return;
+    }
+
+    fn_801475FC(lbl_8027A360 + 0x17C, 0x64);
+    fn_8000C188(arg0);
+}
+
 #pragma cplusplus reset
 void fn_80194064(void *arg0) {
     s32 temp_r31;
