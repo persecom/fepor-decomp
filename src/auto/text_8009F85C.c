@@ -1502,8 +1502,8 @@ s32 fn_800A1CB4(void) {
 }
 #pragma peephole reset
 void *fn_800A1CF0(void) {
-    extern u16 lbl_8026D8D8;
-    return (void*)((u32)&lbl_8026D8D8 + 0x6B8);
+    extern u16 lbl_8026D8D8[];
+    return (u8 *)lbl_8026D8D8 + 0x6b8;
 }
 
 s32 fn_800A1D00(void) {
