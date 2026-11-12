@@ -628,41 +628,32 @@ loop_10:
     *(u8*)(r28 + 0x61) = 1;
 }
 
-void fn_80106690(void *arg0)
-{
-    void *object;
+void fn_80106690(void *arg0) {
+    s32 fn_8004F128(void *);
+    void fn_8000C188(void *);
     void *entry;
-    int count;
-    int limit;
-    int value;
+    s32 count;
+    s32 value;
+    void *p;
 
-    object = arg0;
+    value = *(u8 *)((u8 *)arg0 + 0x65);
+    *(u8 *)((u8 *)arg0 + 0x65) = (u8)(value + 1);
 
-    value = *(u8 *)((u8 *)object + 0x65);
-    *(u8 *)((u8 *)object + 0x65) = value + 1;
-
-    if (value > 0x2A30) {
-        return;
-    }
-
-    entry = *(void **)((u8 *)object + 0x68);
-    count = 0;
-    limit = *(u8 *)((u8 *)object + 0x63);
-
-    while (count < limit) {
-        value = *(u32 *)((u8 *)entry + 4);
-
-        if (value != 0) {
-            if ((u8)fn_8004F128(value) != 0) {
-                break;
+    if (value <= 0x2A30) {
+        entry = *(void **)((u8 *)arg0 + 0x68);
+        count = 0;
+        while (count < *(u8 *)((u8 *)arg0 + 0x63)) {
+            p = *(void **)((u8 *)entry + 4);
+            if (p != NULL) {
+                if ((u8)fn_8004F128(p) == 0) {
+                    return;
+                }
             }
+            count++;
+            entry = (u8 *)entry + 0x110;
         }
-
-        count++;
-        entry = (u8 *)entry + 0x110;
     }
-
-    fn_8000C188(object);
+    fn_8000C188(arg0);
 }
 
 void fn_8010671C(void *arg0) {
