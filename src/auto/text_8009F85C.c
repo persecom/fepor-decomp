@@ -1960,13 +1960,19 @@ s32 fn_800A28C0(void *arg0) {
     return 0;
 }
 
-void *fn_800A2914(void) {
-    extern void *lbl_80312270;
-    extern u16 lbl_8026D8D8;
+char *fn_800A2914(void) {
+    void *fn_80019DF0(u8);
+    s32 fn_8010586C(void);
+    void fn_80231D94(void *, void *, ...);
     extern u8 lbl_80366E08;
+    extern u8 lbl_8026D8D8[];
+    extern char lbl_80312270[];
+    u8 temp_r31;
+    s32 temp_r6;
 
-    u8 temp_r31 = ((u8*)(((u8*)fn_80019DF0(lbl_80366E08)) + 0x18))[0];
-    fn_80231D94(lbl_80312270, &lbl_8026D8D8 + 0x2C7, temp_r31, fn_8010586C(), lbl_80312270);
+    temp_r31 = *((u8 *)fn_80019DF0(lbl_80366E08) + 0x18);
+    temp_r6 = fn_8010586C();
+    fn_80231D94(lbl_80312270, lbl_8026D8D8 + 0x2C7, temp_r31, temp_r6);
     return lbl_80312270;
 }
 
