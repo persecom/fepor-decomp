@@ -89,8 +89,8 @@ void fn_80073518(void) {
 }
 
 s32 fn_80073544(void) {
-    extern u16 lbl_802EF4C8;
-    lbl_802EF4C8 = 0x35;
+    extern u8 lbl_802EF4C8[24];
+    lbl_802EF4C8[8] = 0x35;
     return 5;
 }
 
