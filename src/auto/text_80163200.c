@@ -5808,13 +5808,15 @@ void fn_8016F55C(void *arg0) {
     extern u8 lbl_80330708[];
     s32 base;
     void *fmt;
+    s32 tmp;
 
     fn_8000A408(*(void **)((u8 *)arg0 + 0x5C));
     fn_8013FED0(arg0);
     base = (s32)lbl_80278080;
     fmt = (void *)(base + 0x16C);
     fn_80231D94(fmt, (void *)(base + 0x17C), lbl_80330708[0x10]);
-    fn_80190D9C(arg0, fn_8000D354(fmt));
+    tmp = fn_8000D354(fmt);
+    fn_80190D9C(arg0, tmp);
 }
 
 void fn_8016F5DC(void *arg0) {
@@ -9685,15 +9687,12 @@ s32 fn_801784D8(void) {
     s32 fn_80015680(void *);
     u8 fn_8014D8DC(void *);
     extern u8 lbl_802CA264[];
-    extern u8 lbl_80330708[];
     s32 r31;
 
     r31 = 0;
     if (fn_801EAA88() == 0) {
         r31 = fn_80015680(lbl_802CA264);
-        #pragma scheduling off
         r31 += fn_80015680(lbl_802CA264 + 0x3C);
-        #pragma scheduling reset
     }
     if (r31 <= 1) {
         if (fn_8014D8DC(lbl_80330708) == 0) {
