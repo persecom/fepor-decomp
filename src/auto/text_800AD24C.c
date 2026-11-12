@@ -7555,17 +7555,17 @@ void fn_800C0A60(void *arg0)
     fn_8000CAA0(lbl_8028D4D0, arg0);
 }
 
-extern u16 lbl_80367110;
 s32 fn_800C0ACC(void) {
-    u16 temp = lbl_80367110;
-    temp &= 0xFFFFFFFB;
-    lbl_80367110 = temp;
+    extern s32 lbl_80367110;
+    lbl_80367110 &= ~0x4;
     return 1;
 }
 
-void fn_800C0AE0(void)
+s32 fn_800C0AE0(void)
 {
-    lbl_80367110 = 1;
+    extern s32 lbl_80367110;
+    lbl_80367110 |= 0x4;
+    return 1;
 }
 
 extern u8 lbl_8028D4D0[16];
@@ -7577,6 +7577,7 @@ void fn_800C0BAC(s32 arg0) {
 
 void fn_800C0BD8(void)
 {
+    extern s32 lbl_80367110;
     extern u8 lbl_8026FC78[];
 
     fn_800BDC68(
