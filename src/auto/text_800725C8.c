@@ -419,6 +419,6 @@ extern u16 lbl_80311D50[124];
 extern void fn_80006220(s32);
 extern void fn_8002D780(s32);
 extern void fn_8000BD98(void *);
-extern void fn_8000BCA4(void *);
+extern s32 fn_8000BCA4(void *);
 extern void fn_8000CAA0(void *, s32);
 extern void fn_80023DE8(void);
