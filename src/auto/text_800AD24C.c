@@ -6302,6 +6302,22 @@ s32 fn_800BCF9C(u8 arg0, s32 arg1) {
     return 0;
 }
 
+s32 fn_800BCFF4(u8 arg0)
+{
+    extern u8 lbl_802B14E4[];
+    void *unit;
+
+    if (arg0 != 0) {
+        unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
+    } else {
+        unit = NULL;
+    }
+    if (unit == NULL) {
+        return 0;
+    }
+    return *(s8 *)((u8 *)unit + 0x1A8);
+}
+
 s32 fn_800BD034(u8 arg0) {
     s8 fn_8003B2D0(void *);
     extern u8 lbl_802B14E4[];
