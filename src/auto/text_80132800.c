@@ -8250,18 +8250,18 @@ void fn_801426B4(void *arg0) {
 }
 
 void fn_801426C0(void *arg0) {
-    M2C_UNK fn_80140304(M2C_UNK);
+    void fn_80140304(void *, s32);
     void *var_r4;
 
-    if ((u32) M2C_FIELD(arg0, u32 *, 0x34) != 0U) {
-        var_r4 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x38), void **, 8);
+    if (*(u32 *)((u8 *)arg0 + 0x34) != 0U) {
+        var_r4 = *(void **)(*(u8 **)((u8 *)arg0 + 0x38) + 8);
     } else {
         var_r4 = NULL;
     }
-    M2C_FIELD(var_r4, s16 *, 0x8C) = 0;
-    M2C_FIELD(var_r4, s16 *, 0x8E) = 0;
+    *(s16 *)((u8 *)var_r4 + 0x8C) = 0;
+    *(s16 *)((u8 *)var_r4 + 0x8E) = 0;
     if (arg0 != NULL) {
-        fn_80140304(0);
+        fn_80140304(arg0, 0);
     }
 }
 
