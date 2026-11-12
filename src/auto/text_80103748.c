@@ -1058,38 +1058,43 @@ void fn_80104BF4(void* arg0, void* arg1) {
     }
 }
 
-s32 fn_80104D90(void) {
-    void *fn_8005C84C(void *);
-    extern u8 lbl_80273788[];
-    extern u8 lbl_8032BB44[20];
-    extern void *lbl_803679C0;
-    u16 *p;
-    u32 n;
-    u16 off;
-    u8 *ctx;
-    u16 sum;
-    u8 *file;
-    u8 *base;
+s32 fn_80104D90(void)
+{
+  void *fn_8005C84C(void *);
+  extern u8 lbl_80273788[];
+  extern u8 lbl_8032BB44[20];
+  extern void *lbl_803679C0;
+  u8 *file;
+  u8 **new_var;
+  u8 *new_var2;
+  u8 *ctx;
+  u16 sum;
+  u16 off;
+  u32 n;
+  u16 *p;
+  file = fn_8005C84C(lbl_80273788);
+  ctx = lbl_8032BB44;
+  *((u8 **) (lbl_8032BB44 + 4)) = file;
+  sum = (*((u16 *) (file + 0x8))) + (*((u16 *) (file + 0xA)));
+  *((u16 *) (file + 0x12)) = sum;
+  *((u16 *) (file + 0x10)) = sum;
+  off = (unsigned int) (*((u16 *) (file + 0x22)));
+  n = (*((u32 *) (ctx + 8)) = ((*((u32 *) (file + 0x24))) - off) >> 4);
+  p = (u16 *) (((*((u8 **) (ctx + 4))) + off) + ((n - 1) * 0x10));
+  while ((*p) == 0)
+  {
+    p = (u16 *) (((u8 *) p) - 0x10);
+    *((u32 *) (ctx + 8)) -= 1;
+  }
 
-    file = fn_8005C84C(lbl_80273788);
-    ctx = lbl_8032BB44;
-    *(u8 **)(ctx + 4) = file;
-    sum = *(u16 *)(file + 0x8) + *(u16 *)(file + 0xA);
-    *(u16 *)(file + 0x12) = sum;
-    *(u16 *)(file + 0x10) = sum;
-    off = *(u16 *)(file + 0x22);
-    n = (*(u32 *)(file + 0x24) - off) >> 4;
-    *(u32 *)(ctx + 8) = n;
-    p = (u16 *)(*(u8 **)(ctx + 4) + off + ((n - 1) * 0x10));
-    while (*p == 0) {
-        p = (u16 *)((u8 *)p - 0x10);
-        *(u32 *)(ctx + 8) -= 1;
-    }
-    off = *(u16 *)(file + 0x22);
-    base = lbl_8032BB44;
-    lbl_803679C0 = base;
-    *(u8 **)(base + 0xC) = *(u8 **)(ctx + 4) + off;
-    return 1;
+  new_var = &(*((u8 **) (ctx + 4)));
+  file++;
+  file--;
+  off = *((u16 *) (file + 0x22));
+  new_var2 = *new_var;
+  lbl_803679C0 = lbl_8032BB44;
+  *((u8 **) (lbl_8032BB44 + 0xC)) = new_var2 + off;
+  return 1;
 }
 
 u32 fn_80104E40(void) {
