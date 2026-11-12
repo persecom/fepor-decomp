@@ -2833,23 +2833,33 @@ void fn_8008BC94(s32 arg0, s32 arg1, u8 arg2) {
 }
 
 void fn_8008BD90(s32 arg0, s32 arg1, u8 arg2) {
-    M2C_UNK fn_800076CC();
-    M2C_UNK fn_8006ECCC(s32, M2C_UNK *, M2C_UNK);
-    u16 fn_80222A80(M2C_UNK *);
-    u16 fn_80222A90(M2C_UNK *);
+    s32 fn_8006ECCC(s32, void *, s32);
+    u16 fn_80222A80(void *);
+    u16 fn_80222A90(void *);
+    void fn_8000A258(void);
+    void fn_8000A174(void *, s32);
+    void fn_8000A248(void);
+    void fn_80007898(s32);
+    void fn_800077D8(f32, f32, f32, f32);
+    void fn_800076CC(void);
+    void fn_80007884(void);
     extern s32 lbl_803674F0;
-    u16 sp2A;
-    u16 sp28;
-    M2C_UNK sp8;
+    extern f64 lbl_803696E8;
+    extern f64 lbl_803696F0;
+    struct {
+        u8 buf[0x20];
+        u16 x;
+        u16 y;
+    } sp;
 
-    fn_8006ECCC(lbl_803674F0, &sp8, 0x14);
-    sp28 = fn_80222A80(&sp8);
-    sp2A = fn_80222A90(&sp8);
+    fn_8006ECCC(lbl_803674F0, sp.buf, 0x14);
+    sp.x = fn_80222A80(sp.buf);
+    sp.y = fn_80222A90(sp.buf);
     fn_8000A258();
-    fn_8000A174(&sp8, 0x10);
+    fn_8000A174(sp.buf, 0x10);
     fn_8000A248();
     fn_80007898(1);
-    fn_800077D8(sp28, (f32) arg0, (f32) arg1, (f32) sp28, (f32) sp2A);
+    fn_800077D8((f32)arg0, (f32)arg1, (f32)sp.x, (f32)sp.y);
     if (arg2 == 0) {
         fn_800076CC();
     }
