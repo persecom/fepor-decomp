@@ -862,10 +862,15 @@ void fn_800075D8(void) {
     ((f32*)temp_r3)[0x4C / 4] = ((f32*)temp_r3)[0x2C / 4];
 }
 
-void fn_80007628(s32 arg0, s32 arg1, s32 arg2) {
-    s32 temp_r3 = *(s32*)(arg0 + 0x10);
-    *(u32*)(temp_r3 + 0x14) = (u32)arg1;
-    *(u32*)(temp_r3 + 0x18) = (u32)arg2;
+void fn_80007628(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
+ extern void *lbl_80367140;
+ u8 *ptr = (u8 *)lbl_80367140;
+ ptr = *(u8 **)(ptr + 0xC);
+ ptr = *(u8 **)(ptr + 4);
+ *(f32 *)(ptr + 0x40) = arg0;
+ *(f32 *)(ptr + 0x44) = arg1;
+ *(f32 *)(ptr + 0x48) = arg2;
+ *(f32 *)(ptr + 0x4C) = arg3;
 }
 
 void fn_80007648(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
