@@ -876,7 +876,7 @@ s32 fn_800A06AC(void) {
 
 void *fn_800A06D8(void) {
     extern u16 lbl_8026D8D8[];
-    return (u8 *)lbl_8026D8D8 + 0x4a6;
+    return (u8 *)lbl_8026D8D8 + 0x4bb;
 }
 
 void *fn_800A073C(void) {
