@@ -1588,7 +1588,7 @@ void fn_80166258(void) {
     fn_80013E24(buffer);
 
     if (*(u32 *)(obj + 0x0C) == 0) {
-        *(void **)&lbl_803680E8 = NULL;
+        lbl_803680E8 = NULL;
     } else {
         fn_80231D94(
             buffer,
@@ -1596,7 +1596,7 @@ void fn_80166258(void) {
             *(u32 *)(obj + 0x0C)
         );
 
-        *(void **)&lbl_803680E8 = fn_8003FCCC(buffer);
+        lbl_803680E8 = fn_8003FCCC(buffer);
     }
 
     fn_8005C4C4(buffer, 4);
@@ -9570,7 +9570,36 @@ void *fn_80177B00(void) {
 }
 
 u8 fn_80177B10(void) {
-    return 0;
+    u8 fn_80091F70(void *, void *);
+    extern u32 lbl_802EF4C8[];
+    u8 *p;
+    void *base;
+    u8 found;
+    s32 i;
+    void *slot;
+    s32 ret;
+
+    found = 0;
+    i = 0;
+    base = (void *)lbl_802EF4C8[0];
+    p = (u8 *)base;
+    while (i < 4) {
+        slot = *(void **)(p + 0x1EC);
+        if (slot == 0) {
+            break;
+        }
+        if (fn_80091F70(base, slot) != 0) {
+            found = 1;
+            break;
+        }
+        i += 1;
+        p += 8;
+    }
+    ret = 2;
+    if (found != 0) {
+        ret = 0;
+    }
+    return ret;
 }
 
 void fn_80177C78(void) {
