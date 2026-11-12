@@ -8794,37 +8794,33 @@ extern "C" void *fn_80143A84(void *arg0) {
     }
     return (u8 *)node + 8;
 }
-#pragma cplusplus reset
-void fn_80143B24(s32 arg0) {
-    M2C_UNK __ptmf_scall(u32);
-    M2C_UNK memset(s32, M2C_UNK, M2C_UNK);
-    extern M2C_UNK lbl_802922F0;
-    s32 sp1C;
-    s32 sp18;
-    s32 sp14;
-    s32 sp10;
-    s32 spC;
-    s32 sp8;
-    u32 var_r30;
+#pragma cplusplus on
+extern "C" void fn_80143B24(void *arg0) {
+    void *memset(void *, int, unsigned long);
+    struct Slot {
+        u8 pad[0xC];
+        void clear();
+    };
+    typedef void (Slot::*PTMF)();
+    extern PTMF lbl_802922F0;
+    PTMF p[2];
+    PTMF t;
+    Slot *it;
+    Slot *end;
 
-    memset(arg0 + 0x4E, 0, 0x16);
-    memset(arg0 + 0x64, 0, 0x16);
-    var_r30 = arg0 + 0x90;
-    sp14 = M2C_FIELD(&lbl_802922F0, s32 *, 0);
-    sp18 = M2C_FIELD(&lbl_802922F0, s32 *, 4);
-    sp1C = M2C_FIELD(&lbl_802922F0, s32 *, 8);
-    sp8 = M2C_FIELD(&lbl_802922F0, s32 *, 0);
-    spC = M2C_FIELD(&lbl_802922F0, s32 *, 4);
-    sp10 = M2C_FIELD(&lbl_802922F0, s32 *, 8);
-loop_2:
-    if (var_r30 != (u32) (arg0 + 0x114)) {
-        __ptmf_scall(var_r30);
-        var_r30 += 0xC;
-        goto loop_2;
+    memset((u8 *)arg0 + 0x4E, 0, 0x16);
+    memset((u8 *)arg0 + 0x64, 0, 0x16);
+    t = lbl_802922F0;
+    p[0] = t;
+    p[1] = t;
+    it = (Slot *)((u8 *)arg0 + 0x90);
+    end = (Slot *)((u8 *)arg0 + 0x114);
+    while (it != end) {
+        (it->*p[0])();
+        it++;
     }
 }
-
-#pragma cplusplus on
+#pragma cplusplus reset
 extern "C" void fn_80143BC8(s32 *arg0, void *arg1) {
     struct Obj {
         virtual void v0() = 0;
@@ -11210,6 +11206,49 @@ void fn_801497D4(void *arg0) {
 void fn_801497FC(void *arg0) {
     fn_800AF71C(*(s8*)((uintptr_t)arg0 + 4));
 }
+
+#pragma cplusplus on
+extern "C" void fn_80149824(void *arg0, s32 arg1, s32 arg2) {
+    struct Obj {
+        u8 pad[8];
+        virtual s32 v0();
+        virtual s32 v1();
+        virtual s32 v2();
+        virtual s32 v3();
+        virtual s32 v4();
+        virtual s32 v5();
+        virtual s32 v6();
+        virtual s32 v7();
+        virtual s32 v8();
+        virtual s32 v9();
+        virtual s32 v10();
+        virtual s32 v11();
+        virtual s32 v12();
+        virtual s32 v13();
+        virtual s32 v14();
+        virtual s32 v15();
+        virtual s32 v16();
+        virtual s32 v17();
+        virtual s32 v18();
+        virtual s32 v19();
+        virtual s32 v20();
+        virtual s32 v21();
+        virtual s32 v22();
+        virtual s32 v23();
+        virtual s32 v24();
+    };
+    void fn_800B0AC8(s32, s32);
+    void fn_800AF96C(s32, s32);
+    void fn_800AFAFC(s32, s32);
+
+    *(s8 *)((u8 *)arg0 + 4) = (s8)((Obj *)arg0)->v5();
+    if (*(s8 *)((u8 *)arg0 + 4) >= 0) {
+        fn_800B0AC8((s32)*(s8 *)((u8 *)arg0 + 4), ((Obj *)arg0)->v24());
+        fn_800AF96C((s32)*(s8 *)((u8 *)arg0 + 4), arg1);
+        fn_800AFAFC((s32)*(s8 *)((u8 *)arg0 + 4), arg2);
+    }
+}
+#pragma cplusplus reset
 
 void fn_801498C8(void *arg0) {
     fn_800AFE0C(*(s8*)((uintptr_t)arg0 + 4));
