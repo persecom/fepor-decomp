@@ -6314,6 +6314,29 @@ s32 fn_800BCDF0(u8 arg0) {
     return 1;
 }
 
+s32 fn_800BCE64(u32 arg0, s32 arg1)
+{
+    extern u8 lbl_802B14E4[];
+    s32 fn_80019E48(s32);
+
+    u8 *unit;
+    s32 value;
+
+    if ((u8)arg0 != 0) {
+        unit = lbl_802B14E4 + ((u8)arg0 - 1) * 0x280;
+    } else {
+        unit = 0;
+    }
+
+    if (unit == 0) {
+        return 0;
+    }
+
+    value = *(s32 *)(unit + 0x18C);
+
+    return (u8)(value == fn_80019E48(arg1));
+}
+
 s32 fn_800BCED4(u32 arg0, void *arg1)
 {
     extern u8 lbl_802B14E4[];
