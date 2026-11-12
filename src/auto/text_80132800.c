@@ -4991,6 +4991,72 @@ void fn_8013B120(void) {
     fn_80059C2C(0, 0, 0x260, 0x1C0, 0);
 }
 
+#pragma cplusplus on
+extern "C" void *fn_8013B154(void *arg0, s16 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    typedef struct {
+        u32 unk0;
+        ListNode node;
+    } DtorList;
+    typedef struct Owner {
+        void *vtbl;
+        u8 pad4[0x6C];
+        DtorList list;
+        u8 pad80[4];
+        void *sub84;
+        u8 pad88[0x24];
+        void *subAC;
+    } Owner;
+    void fn_8013BA08(void *, void *, void *, void *);
+    void fn_8013F2A4(void *, s32);
+    void fn_800C428C(void *);
+    extern u8 lbl_80291A74[];
+    extern u8 lbl_80291B70[];
+    extern u8 lbl_80295478[];
+
+    ListNode *sp10;
+    ListNode *spC;
+    u8 sp8[4];
+    ListNode *end;
+    Owner *a0;
+
+    a0 = (Owner *)arg0;
+    if (arg0 != NULL) {
+        a0->vtbl = lbl_80291A74;
+        if (arg0 != NULL) {
+            a0->vtbl = lbl_80291B70;
+            if (&a0->subAC != NULL) {
+                a0->subAC = lbl_80295478;
+                ((Obj *)&a0->subAC)->v2();
+            }
+            if (&a0->sub84 != NULL) {
+                a0->sub84 = lbl_80295478;
+                ((Obj *)&a0->sub84)->v2();
+            }
+            if (&a0->list != NULL) {
+                if (&a0->list != NULL) {
+                    if (&a0->list != NULL) {
+                        end = &a0->list.node;
+                        sp10 = end;
+                        spC = end->next;
+                        fn_8013BA08(sp8, &a0->list, &spC, &sp10);
+                    }
+                }
+            }
+            fn_8013F2A4(arg0, 0);
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+#pragma cplusplus reset
+
 void fn_8013B254(void *arg0) {
     s16 zero;
     s16 x0;
