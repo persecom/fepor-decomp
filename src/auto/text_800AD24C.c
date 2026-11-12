@@ -6148,6 +6148,10 @@ s32 fn_800BCBBC(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
     return 1;
 }
 
+u8 fn_800BCC04(void) {
+    return *(u8 *)((u8 *)lbl_80330708 + 0x11);
+}
+
 void fn_800BCC14(s8 arg0) {
     *(u8*)((u8*)lbl_80330708 + 0x11) = arg0;
 }
