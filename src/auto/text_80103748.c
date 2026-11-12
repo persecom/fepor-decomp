@@ -574,11 +574,22 @@ void fn_8010446C(u8 *arg0) {
 }
 
 void fn_80104480(void *arg0) {
-    u8 *ptr = (u8*)arg0;
-    ptr[0] &= ~0xE0;
-    ptr[1] &= ~0x70;
-    ptr[0] &= ~0x1C;
-    ptr[1] &= ~7;
+    struct { u8 hi:3; u8 lo:5; } *p;
+    struct { u16 hi:6; u16 mid:3; u16 lo:7; } *h;
+    struct { u8 hi:1; u8 mid:3; u8 lo:4; } *q;
+    struct { u8 a:3; u8 b:3; u8 c:2; } *r;
+    struct { u8 hi:5; u8 lo:3; } *s;
+
+    p = arg0;
+    p->hi = 0;
+    h = arg0;
+    h->mid = 0;
+    q = (void *)((u8 *)arg0 + 1);
+    q->mid = 0;
+    r = arg0;
+    r->b = 0;
+    s = (void *)((u8 *)arg0 + 1);
+    s->lo = 0;
 }
 
 u32 fn_801044C4(void *arg0) {
