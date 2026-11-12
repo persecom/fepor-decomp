@@ -2209,18 +2209,16 @@ void fn_80168DE0(void) {
 }
 
 s32 fn_80168E90(s32 arg0) {
-    s32 fn_8000CAA0(u16 *, s32, u16 *);
+    s32 fn_8000CAA0(void *, s32);
     void fn_8016A6A4(void);
-    extern u16 lbl_80277B10[];
+    extern u8 lbl_80277B10[];
+    s32 result;
 
-    s32 temp_r3;
-
-    temp_r3 = fn_8000CAA0(lbl_80277B10, arg0, lbl_80277B10);
-    // The 'mr r5, r3' seems to be an optimization; it's not needed.
-    if (temp_r3 != 0) {
+    result = fn_8000CAA0(lbl_80277B10, arg0);
+    if (result != 0) {
         fn_8016A6A4();
     }
-    return temp_r3;
+    return result;
 }
 
 #pragma opt_common_subs reset
@@ -10669,17 +10667,21 @@ void *fn_8017A764(void *arg0, s32 arg1) {
 }
 
 void fn_8017A7D4(void *arg0, s32 arg1) {
-    extern u16 lbl_802842A4;
-    extern u16 lbl_802842B8;
-    *(u16**)((char*)arg0 + 0x10) = &lbl_802842A4;
-    *(s32*)((char*)arg0 + 4) = 0;
-    *(s32*)arg0 = 0;
-    *(s32*)((char*)arg0 + 8) = 0;
-    *(u8*)((char*)arg0 + 0xC) = 0;
-    *(u16**)((char*)arg0 + 0x10) = &lbl_802842B8;
-    *(s32*)((char*)arg0 + 4) = arg1;
-    *(s32*)arg0 = arg1;
-    *(u8*)((char*)arg0 + 0xC) = 0;
+    extern u8 lbl_802842A4[];
+    extern u8 lbl_802842B8[];
+    void *vtA = lbl_802842A4;
+    void *vtB = lbl_802842B8;
+    s32 z = 0;
+
+    *(void **)((u8 *)arg0 + 0x10) = vtA;
+    *(s32 *)((u8 *)arg0 + 4) = z;
+    *(s32 *)arg0 = z;
+    *(s32 *)((u8 *)arg0 + 8) = z;
+    *(u8 *)((u8 *)arg0 + 0xC) = (u8)z;
+    *(void **)((u8 *)arg0 + 0x10) = vtB;
+    *(s32 *)((u8 *)arg0 + 4) = arg1;
+    *(s32 *)arg0 = arg1;
+    *(u8 *)((u8 *)arg0 + 0xC) = (u8)z;
 }
 
 void fn_8017A810(void *arg0, s32 arg1, s32 arg2) {
