@@ -1412,6 +1412,23 @@ void fn_80076F54(void) {
     fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x349);
 }
 
+s32 fn_80076F80(void) {
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_802CA264[];
+    extern u8 lbl_80330708[];
+    u8 fn_80105BC0(void *, s32);
+    s32 fn_80015680(u8 *);
+    u8 fn_8014D8BC(u8 *);
+
+    if (fn_80105BC0(*(u8 **)lbl_802EF4C8 + 0x1BC, 0) == 0) {
+        return 3;
+    }
+    if (fn_80015680(lbl_802CA264 + 0x24) == 0) {
+        return 3;
+    }
+    return (fn_8014D8BC(lbl_80330708) == 0) ? 3 : 0;
+}
+
 void fn_80077008(void) {
     M2C_UNK fn_80007668(s32 *);
     s32 *fn_8018D900(M2C_UNK);
