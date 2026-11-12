@@ -10,7 +10,6 @@ typedef struct {
 } Menu888Entry;
 extern void* lbl_803674E8;
 extern f32 lbl_803696C8;
-f64 lbl_80369688 = 4503601774854144.0;
 
 extern s32 lbl_803682F0;
 extern void *lbl_8026CC58;
