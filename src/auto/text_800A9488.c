@@ -406,17 +406,14 @@ s32 fn_800AA078(void *arg0) {
     void fn_8014D698(void *, u8, M2C_UNK, M2C_UNK, M2C_UNK);
     extern u8 lbl_80330708[];
     extern u64 lbl_80331FB8[];
+    u8 *s = lbl_80330708;
     u8 saved;
 
-    saved = lbl_80330708[0xA6];
+    saved = s[0xA6];
     fn_80016DE0();
     fn_8014D698(lbl_80330708, (u8)(fn_8000CEE4(0x1E) + 1), 0, 0, 1);
-    lbl_80330708[0xA6] = saved;
-    {
-        void *tmp = fn_80019ED0(((s8 *)arg0)[4]);
-        u8 val = *(u8 *)((u8 *)tmp + 0x3C);
-        fn_8014D2B0(lbl_80330708, val);
-    }
+    s[0xA6] = saved;
+    fn_8014D2B0(lbl_80330708, M2C_FIELD(fn_80019ED0(M2C_FIELD(arg0, s8 *, 4)), u8 *, 0x3C));
     lbl_80331FB8[1] = 0x0123456789ABCDEFULL;
     fn_80006220(0xA);
     return 5;
@@ -601,6 +598,42 @@ void fn_800AA3C0(void) {
             }
         }
     }
+}
+
+void fn_800AA4F8(void *arg0) {
+    void fn_80028160(void *);
+    void fn_80022DAC(void *, s32, s32);
+    void fn_80022FD8(void *, s32);
+    void fn_800227F8(void *, s32);
+    void fn_80022748(void *, s32);
+    void fn_800213D0(void *, u8, u8, u8, s32, s32);
+    void fn_8000E0E4(void *);
+    void fn_80091A1C(void);
+    void fn_800283C8(void *, void *);
+    void fn_800AACDC(void *);
+    void fn_8004A224(void);
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_802CA518[];
+    extern u8 lbl_8026E770[];
+    u8 temp_r31;
+
+    if ((s8)lbl_802EF4C8[0x12] != 0) {
+        fn_80028160(lbl_802EF4C8);
+        temp_r31 = lbl_802EF4C8[0x11];
+        fn_80022DAC(lbl_802CA518, 8, 0);
+        fn_80022FD8(lbl_802CA518, 5);
+        fn_800227F8(lbl_802CA518, *(s32 *)((u8 *)arg0 + 0x18C));
+        fn_80022748(lbl_802CA518, *(s32 *)((u8 *)arg0 + 0x190));
+        fn_800213D0(lbl_802CA518, ((u8 *)arg0)[0x19E], ((u8 *)arg0)[0x19F], temp_r31, 0, 0);
+        fn_8000E0E4(lbl_8026E770 + 0xCE);
+        fn_80091A1C();
+    } else {
+        fn_800283C8(lbl_802EF4C8, arg0);
+        fn_800AACDC(arg0);
+        fn_8000E0E4(lbl_8026E770 + 0xD9);
+        fn_80091A1C();
+    }
+    fn_8004A224();
 }
 
 void *fn_800AA5F0(void *arg0) {
