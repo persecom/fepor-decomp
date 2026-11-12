@@ -307,9 +307,9 @@ void *fn_800A9C5C(void) {
     return (u8 *)lbl_8026E470 + 0x1b1;
 }
 
-s32 fn_800A9C6C(void *arg1) {
-    s32 arg1_val = *(s32*)((char*)arg1 + 0x18);
-    fn_801FFD7C(arg1_val);
+s32 fn_800A9C6C(s32 unused, void *arg1) {
+    void fn_801FFD7C(s32);
+    fn_801FFD7C(*(s32 *)((char *)arg1 + 0x18));
     fn_80006220(3);
     return 5;
 }
