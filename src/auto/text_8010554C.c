@@ -607,52 +607,48 @@ void fn_80105F0C(void *arg0, u32 arg1, s32 arg2) {
 extern void fn_8002297C(void* arg0);
 extern s32 fn_80183AB4(s32 arg0, s8 arg1, s8 arg2, void* arg3);
 extern s32 fn_80184264(void* arg0, u16 arg1, void* arg2);
-void fn_801065A8(void* arg0)
-{
-    u8 r0;
-    u16 r3;
-    u32 r28;
-    s32 r29;
-    void* r30;
+void fn_801065A8(void *arg0) {
+    void fn_80183AB4(void *, s32, s32, s32, void *);
+    void fn_80184264(void *, void *, u16, void *);
+    void fn_8002297C(void *);
+    extern u8 lbl_802CA518[];
+    u16 flags;
+    void *entry;
+    s32 count;
+    void *self;
+    s32 state;
+    void *p;
+    u32 t;
 
-    r28 = (u32)arg0;
-    r0 = *(u8*)(r28 + 0x60);
-    r3 = *(u8*)(r28 + 0x64);
-    r30 = *(void**)(r28 + 0x68);
-    
-    r3 |= 0x80;
-    
-    if (r0 < 2)
-    {
-        if (r0 != 0)
-        {
-            r3 |= 0x10;
-        }
+    self = arg0;
+    state = *(u8 *)((u8 *)arg0 + 0x60);
+    t = *(u8 *)((u8 *)arg0 + 0x64);
+    entry = *(void **)((u8 *)self + 0x68);
+    flags = t | 0x80;
+
+    switch (state) {
+    case 0:
+    case 1:
+        flags |= 0x10;
+        break;
     }
 
-    r29 = 0;
-    
-loop_10:
-    if (r29 < *(u8*)(r28 + 0x63))
-    {
-        if (*(u32*)((uintptr_t)r30 + 4) != 0)
-        {
-            if (r0 == 3)
-            {
-                fn_80183AB4(1, *(s8*)((uintptr_t)r30 + 0xA), *(s8*)((uintptr_t)r30 + 0xB), arg0);
-            }
-            else
-            {
-                fn_80184264((void*)((uintptr_t)r30 + 0xC), r3, arg0);
+    count = 0;
+    while (count < *(u8 *)((u8 *)self + 0x63)) {
+        p = *(void **)((u8 *)entry + 4);
+        if (p != NULL) {
+            if (*(u8 *)((u8 *)self + 0x60) == 3) {
+                fn_80183AB4(p, 1, *(s8 *)((u8 *)entry + 0xA), *(s8 *)((u8 *)entry + 0xB), self);
+            } else {
+                fn_80184264(p, (u8 *)entry + 0xC, flags, self);
             }
         }
-        r29 += 1;
-        r30 = (void*)((uintptr_t)r30 + 0x110);
-        goto loop_10;
+        count++;
+        entry = (u8 *)entry + 0x110;
     }
-    
-    fn_8002297C((void*)0x802CA518);
-    *(u8*)(r28 + 0x61) = 1;
+
+    fn_8002297C(lbl_802CA518);
+    *(u8 *)((u8 *)self + 0x61) = 1;
 }
 
 void fn_80106690(void *arg0) {
@@ -5615,33 +5611,38 @@ M2C_UNK *fn_8010FA2C(void *arg0) {
 }
 
 void fn_8010FAA8(void) {
-    extern u8 lbl_8032BB58[516];
-    extern u8 lbl_802CA518[151280];
-    s32 var_r31;
-    void *var_r29;
-    u8 temp_r0;
-    u8 *temp_r3;
+    void fn_8001F91C(void *, u8, u8, s8);
+    extern u8 lbl_8032BB58[];
+    extern u8 lbl_802CA518[];
+    u8 *p;
+    u8 *base;
+    s32 i;
+    u8 *cell;
+    u8 t;
+    s8 x;
+    s8 y;
 
-    var_r31 = 0;
-    var_r29 = &lbl_8032BB58;
-loop_9:
-    if (var_r31 < *(s32 *) (&lbl_8032BB58 + 0x200)) {
-        temp_r0 = *(u8 *) ((char *) var_r29 + 2);
-        switch ((s32) temp_r0) {                    /* irregular */
+    i = 0;
+    base = lbl_8032BB58;
+    p = base;
+    while (i < *(s32 *)(base + 0x200)) {
+        switch (p[2]) {
         case 6:
-            fn_8001F91C(&lbl_802CA518, *(u8 *) var_r29, *(u8 *) ((char *) var_r29 + 1), (s8) *(u8 *) ((char *) var_r29 + 3));
+            fn_8001F91C(lbl_802CA518, p[0], p[1], (s8)p[3]);
             break;
         case 9:
-            temp_r3 = &lbl_802CA518[*(u8 *) var_r29];
-            temp_r3 += (s8) *(u8 *) ((char *) var_r29 + 1) << 6;
-            if (*(u8 *) ((char *) temp_r3 + 0xD) == 0) {
-                *(u8 *) ((char *) temp_r3 + 0x300D) = *(u8 *) ((char *) temp_r3 + 0x300D) | 2;
+            y = p[1];
+            x = p[0];
+            cell = lbl_802CA518 + x + (y << 6);
+            if (cell[0xd] == 0) {
+                t = cell[0x300d];
+                t |= 2;
+                cell[0x300d] = t;
             }
             break;
         }
-        var_r29 = (char *) var_r29 + 8;
-        var_r31 += 1;
-        goto loop_9;
+        p += 8;
+        i += 1;
     }
 }
 
@@ -5701,33 +5702,45 @@ void fn_8010FDB8(void *arg0, s8 arg1, s8 arg2, s8 arg3, void *src) {
 }
 
 void fn_8010FE08(void *arg0, s8 arg1, s8 arg2, u8 arg3) {
+    s32 n;
     s32 i;
-    s32 count = *(s32 *)((u8 *)arg0 + 0x200);
-    if (count <= 0) {
+    s32 j;
+    u8 *walk;
+    u8 *dst;
+    u8 *src;
+
+restart:
+    n = *(s32 *)((u8 *)arg0 + 0x200);
+    walk = (u8 *)arg0;
+    i = 0;
+    if (n <= 0) {
         return;
     }
-
-    for (i = 0; i < count; i++) {
-        u8 *src = (u8 *)arg0 + (i * 8);
-        if ((arg1 == *(s8 *)(src + 0)) && (arg2 == *(s8 *)(src + 1)) && ((arg3 == 0) || (arg3 == *(u8 *)(src + 2)))) {
-            s32 j;
-            u8 *dst = (u8 *)arg0 + (*(s32 *)((u8 *)arg0 + 0x200) - 1) * 8;
-            for (j = i; j < *(s32 *)((u8 *)arg0 + 0x200) - 1; j++) {
-                src += 8;
-                dst[0] = src[0];
-                dst[1] = src[1];
-                dst[2] = src[2];
-                dst[3] = src[3];
-                dst[4] = src[4];
-                dst[5] = src[5];
-                dst[6] = src[6];
-                dst[7] = src[7];
-                dst -= 8;
+    {
+        s32 ctr = n;
+        do {
+            if (arg1 == (s8)walk[0] && arg2 == (s8)walk[1] && (arg3 == 0 || arg3 == walk[2])) {
+                dst = (u8 *)arg0 + (i << 3);
+                j = i;
+                while (j < *(s32 *)((u8 *)arg0 + 0x200) - 1) {
+                    j = j + 1;
+                    src = (u8 *)arg0 + (j << 3);
+                    dst[0] = src[0];
+                    dst[1] = src[1];
+                    dst[2] = src[2];
+                    dst[3] = src[3];
+                    dst[4] = src[4];
+                    dst[5] = src[5];
+                    dst[6] = src[6];
+                    dst[7] = src[7];
+                    dst += 8;
+                }
+                *(s32 *)((u8 *)arg0 + 0x200) = *(s32 *)((u8 *)arg0 + 0x200) - 1;
+                goto restart;
             }
-            *(s32 *)((u8 *)arg0 + 0x200) -= 1;
-            i--;
-            count--;
-        }
+            walk += 8;
+            i += 1;
+        } while (--ctr != 0);
     }
 }
 
