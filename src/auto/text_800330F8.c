@@ -9564,27 +9564,34 @@ M2C_UNK *fn_8004AFD4(void *arg0, s32 arg1) {
     return &lbl_802EFFC8;
 }
 
+#pragma opt_strength_reduction off
 char *fn_8004B078(void *arg0, s32 arg1)
 {
+    void fn_80231D94(void *, void *, ...);
     extern u8 lbl_8026A9B0[];
     extern u8 lbl_802EFFC8[];
 
-    void *address;
+    u8 *fmt;
+    u8 *address;
     void *value;
+    u8 b;
 
+    fmt = lbl_8026A9B0;
     address = (u8 *)arg0 + arg1;
     value = *(void **)((u8 *)arg0 + 4);
+    b = address[0xC];
 
     fn_80231D94(
         lbl_802EFFC8,
-        *(u8 *)((u8 *)address + 0xC),
-        lbl_8026A9B0 + 0xAD,
-        lbl_8026A9B0 + 0xA8
+        fmt + 0xAD,
+        fmt + 0xA8,
+        value,
+        b
     );
 
     return (char *)lbl_802EFFC8;
 }
-
+#pragma opt_strength_reduction on
 void *fn_8004B0C8(void *arg0) {
     void fn_80231D94(void *, void *, ...);
     extern u8 lbl_8026A9B0[];
@@ -9995,9 +10002,10 @@ u8 fn_8004C00C(void *arg0) {
 }
 
 void fn_8004C0A0(void *arg0) {
-    M2C_UNK fn_80040B1C(s32, s32);
-    fn_80040844();
-    fn_80040B1C((s32) M2C_FIELD(arg0, f32 *, 4), (s32) M2C_FIELD(arg0, f32 *, 8));
+    void *fn_80040844(void);
+    u8 fn_80040B1C(void *, s32, s32);
+
+    fn_80040B1C(fn_80040844(), (s32)*(f32 *)((u8 *)arg0 + 4), (s32)*(f32 *)((u8 *)arg0 + 8));
 }
 
 #pragma peephole off
