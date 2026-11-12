@@ -8212,8 +8212,9 @@ typedef struct {
     f32 unk28;
 } Struct_80067304;
 
-extern f32 lbl_8026B744[3];
-extern f32 lbl_8026B750[3];
+typedef struct { f32 x, y, z; } Vec3f_67304;
+extern Vec3f_67304 lbl_8026B744;
+extern Vec3f_67304 lbl_8026B750;
 extern f32 lbl_80369224;
 extern f32 lbl_80369228;
 extern s32 lbl_8036C444;
