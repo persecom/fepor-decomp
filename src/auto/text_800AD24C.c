@@ -1,5 +1,11 @@
 /* Functions from 0x800AD24C to 0x800C3F18, found by decomp-toolkit. */
 #include "common.h"
+
+typedef struct {
+    u8 flag : 1;
+    u8 unk : 7;
+} ItemFlagBits;
+
 static inline u32 LoadSoundBankB(void *path) {
     s32 fn_800B4A84(void *, s32, s32);
     s32 fn_800B49C8(void *);
@@ -6481,6 +6487,43 @@ s32 fn_800BC204(u8 arg0) {
     }
     ((Bit7 *)((u8 *)unit + slot * 8 + 0x1F1))->flag = 0;
     return slot + 4;
+}
+
+s32 fn_800BC29C(u8 arg0) {
+    void *fn_80037BBC(void *, s32);
+    s32 fn_80037E00(void *);
+    u8 fn_80105BC0(void *, s32);
+    void fn_80184C7C(void *, s32, s32, s32);
+    extern u8 lbl_802B14E4[];
+    void *unit;
+    s8 slot;
+    void *item;
+    s32 bit;
+    u8 *flag;
+
+    if (arg0 != 0) {
+        unit = lbl_802B14E4 + ((arg0 - 1) * 0x280);
+    } else {
+        unit = NULL;
+    }
+    if ((unit == NULL) || (*(u32 *)((u8 *)unit + 0x188) == 0U)) {
+        return 0;
+    }
+    if (fn_80105BC0((u8 *)unit + 0x1BC, 8) != 0) {
+        return -1;
+    }
+    slot = (s8)fn_80037E00(unit);
+    if (slot < 0) {
+        return -1;
+    }
+    item = fn_80037BBC(unit, slot);
+    bit = 0;
+    flag = (u8 *)item + 5;
+    *flag = (u8)((*flag & ~0x80) | ((bit << 7) & 0x80));
+    if ((slot >= 0) && (slot <= 3)) {
+        fn_80184C7C(unit, 0, 4, 0);
+    }
+    return slot;
 }
 
 s8 fn_800BC380(u8 arg0) {
