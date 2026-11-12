@@ -413,10 +413,9 @@ void fn_800AA134(void) {
 }
 
 void fn_800AA15C(void) {
-    extern s32 lbl_8028CDF0;
-    void *fn_8000CAF0(void *, s32);
-    void *arg = &lbl_8028CDF0;
-    fn_8000CAF0(arg, 4);
+    extern u8 lbl_8028CDF0[];
+    void fn_8000CAF0(void *, s32);
+    fn_8000CAF0(lbl_8028CDF0, 4);
 }
 
 u32 *fn_8000C0C0(u32 arg0);
