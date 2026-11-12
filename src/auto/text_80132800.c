@@ -2086,33 +2086,24 @@ s32 fn_80136268(void *arg0, void *arg1) {
 }
 
 s32 fn_801362C8(void *arg0) {
-    s16 *var_r4;
-    s16 var_r3;
+    void **node;
+    s32 idx;
 
-    if (*(u32 *)((char *)arg0 + 0x68) == 0U) {
+    if (*(u32 *)((u8 *)arg0 + 0x68) == 0) {
         return 0;
     }
-    var_r4 = (s16 *) *(u32 *)((char *)arg0 + 0x70);
-    var_r3 = *(s16 *)((char *)arg0 + 0x4E);
-    
-    if (var_r3 >= 0) {
-        do {
-            if (var_r3 <= 0) {
-                break;
-            }
-            var_r4 = (s16 *) var_r4[1];
-            var_r3 -= 1;
-        } while(1);
+    idx = *(s16 *)((u8 *)arg0 + 0x4E);
+    node = *(void ***)((u8 *)arg0 + 0x70);
+    if ((s16)idx >= 0) {
+        for (; (s16)idx > 0; idx--) {
+            node = (void **)node[1];
+        }
     } else {
-        do {
-            if (var_r3 >= 0) {
-                break;
-            }
-            var_r4 = (s16 *) *var_r4;
-            var_r3 += 1;
-        } while(1);
+        for (; (s16)idx < 0; idx++) {
+            node = (void **)node[0];
+        }
     }
-    return var_r4[2];
+    return (s32)node[2];
 }
 
 void fn_80136320(s32 *arg0, void *arg1) {
@@ -6000,13 +5991,61 @@ s16 fn_8013E67C(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0x20);
 }
 
-s16 fn_8013E684(void *arg0, void *arg1) {
-    s16 temp_r3;
+#pragma cplusplus on
+extern "C" s16 fn_8013E684(void *arg0, void *arg1) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual void v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual void v25() = 0;
+        virtual void v26() = 0;
+        virtual void v27() = 0;
+        virtual void v28() = 0;
+        virtual void v29() = 0;
+        virtual void v30() = 0;
+        virtual void v31() = 0;
+        virtual void v32() = 0;
+        virtual void v33() = 0;
+        virtual s16 v34() = 0;
+    };
+    struct Arg1 {
+        u8 pad[0x60];
+        s8 field_60;
+    };
+    s32 sum;
+    s16 temp;
+    s8 b;
 
-    temp_r3 = M2C_FIELD(M2C_FIELD(arg0, void **, 4), s16 (**)(), 0x90)();
-    return (s16) ((s32) ((temp_r3 + (s8) M2C_FIELD(arg1, u8 *, 0x60)) - 1) / temp_r3);
+    temp = ((Obj *)arg0)->v34();
+    b = ((Arg1 *)arg1)->field_60;
+    sum = temp + b;
+    sum -= 1;
+    return (s16)(sum / temp);
 }
-
+#pragma cplusplus reset
 s16 fn_8013E6D8(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0x16);
 }
@@ -6158,6 +6197,26 @@ void *fn_8013E8F4(void *arg0, s16 arg1) {
     }
     return arg0;
 }
+
+#pragma cplusplus on
+extern "C" void fn_8013E960(void *arg0, s32 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10(s32) = 0;
+    };
+    ((Obj *)arg0)->v9();
+    ((Obj *)arg0)->v10(arg1);
+}
+#pragma cplusplus reset
 
 #pragma cplusplus on
 extern "C" void fn_8013EB6C(void *arg0) {
