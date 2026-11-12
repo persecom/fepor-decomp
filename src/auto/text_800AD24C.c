@@ -3784,6 +3784,22 @@ s32 fn_800B8198(void) {
     return 1;
 }
 
+s32 fn_800B81C0(void) {
+    void fn_8016B700(void);
+    s32 fn_800C0658(void);
+    void fn_8000CAA0(void *, s32);
+    void fn_80013864(void);
+    void fn_80013874(void *);
+    extern u8 lbl_8028D218[];
+    extern u8 lbl_80320060[];
+
+    fn_8016B700();
+    fn_8000CAA0(lbl_8028D218, fn_800C0658());
+    fn_80013864();
+    fn_80013874(lbl_80320060);
+    return 1;
+}
+
 void fn_800B8208(s32 arg0) {
     extern u8 lbl_8026ECB8[];
     u32 fn_8000BCA4(void *);
