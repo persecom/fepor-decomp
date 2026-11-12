@@ -720,9 +720,33 @@ void fn_8020D4E0(u32 arg0) {
     fn_8020BF58(fn_8020D53C);
 }
 
+void fn_8020D53C(u32 arg0) {
+    /* cbForUnrecoveredErrorRetry */
+    void fn_8020D16C(void);
+    void __DVDStoreErrorCode(u32);
+    void DVDLowStopMotor(void (*)(u32));
+    void cbForStateError(u32);
+
+    if (arg0 == 0x10) {
+        fn_8020D16C();
+        return;
+    }
+
+    if (arg0 & 2) {
+        __DVDStoreErrorCode(0x01234567);
+        DVDLowStopMotor(cbForStateError);
+        return;
+    }
+
+    __DVDStoreErrorCode(__DIRegs[8]);
+    DVDLowStopMotor(cbForStateError);
+}
+
 void fn_8020D5BC(void) {
+    /* stateGoToRetry */
     void DVDLowStopMotor(void (*)(void));
     extern void fn_8020D5E4(void);
+
     DVDLowStopMotor(fn_8020D5E4);
 }
 
