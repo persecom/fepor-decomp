@@ -32,6 +32,13 @@ extern s32 lbl_80367110;
 extern s32 lbl_80330708[];
 extern f32 lbl_8036A184;
 extern f32 lbl_8036A1BC;
+extern f32 lbl_8036A1B0;
+extern f64 lbl_8036A198;
+extern f32 lbl_8036A1D8;
+void fn_8005FEE8(void *, f32);
+void fn_800608AC(void *);
+void fn_80202300(void *, s32, void *, f32, f32);
+void fn_802029C4(void *, void *, void *);
 #define VCALL(ptr, offset) (((void(**)(void *, void *))((u8*)(ptr) + (offset)))[0])
 
 typedef struct {
@@ -1034,10 +1041,12 @@ skip_43f:
         spF8.z = d;
         spF8.y = d;
         spF8.x = d;
+#pragma scheduling off
         if (other != 0) {
             goto do_dist;
         }
         goto after_dist;
+#pragma scheduling reset
 do_dist:
         sp44.z = d;
         sp44.y = d;
@@ -1057,15 +1066,15 @@ after_dist:
         scale = *(f32 *)((u8 *)lbl_80368278 + 0xE0);
         if (d < *(f32 *)((u8 *)arg0 + 0x128) * scale) {
             f32 a0, a1, a2;
-            if (other == 0) {
+            if (*(u32 *)((u8 *)arg0 + 0x118) == 0) {
                 a0 = *(f32 *)((u8 *)arg0 + 0x48);
                 a1 = lbl_8036A184;
                 a2 = *(f32 *)((u8 *)arg0 + 0x50);
             } else {
                 ((GetPosFn)((void **)*(void **)((u8 *)arg0 + 0x40))[0xE])(&sp2C, arg0, 0);
                 adj_x = sp2C.x;
-                other = *(void **)((u8 *)arg0 + 0x118);
-                ((GetPosFn)((void **)*(void **)((u8 *)other + 0x40))[0xE])(&sp38, other, 0);
+                ((GetPosFn)((void **)*(void **)((u8 *)*(void **)((u8 *)arg0 + 0x118) + 0x40))[0xE])(
+                    &sp38, *(void **)((u8 *)arg0 + 0x118), 0);
                 z = lbl_8036A184;
                 dx = adj_x - *(f32 *)((u8 *)arg0 + 0x48);
                 sp14.y = z;
