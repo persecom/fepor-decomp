@@ -1218,6 +1218,16 @@ s32 fn_800A12DC(void)
     return 0;
 }
 
+char *fn_800A1354(void) {
+    void fn_80231D94(void *, void *, ...);
+    extern u8 lbl_80330708[];
+    extern char lbl_80312270[];
+    extern u8 lbl_8026D8D8[];
+
+    fn_80231D94(lbl_80312270, lbl_8026D8D8 + 0x612, *(s32 *)(lbl_80330708 + 0x1C));
+    return lbl_80312270;
+}
+
 s32 fn_800A13A0(void) {
     extern M2C_UNK lbl_80330708;
     extern void *lbl_80367240;
