@@ -10216,20 +10216,21 @@ void fn_801478D0(s16 arg0) {
     }
 }
 
-void fn_80147B24(f32 farg0, f32 farg1, f32 farg2) {
+s32 fn_80147B24(f32 farg0, f32 farg1, f32 farg2) {
     s32 fn_80147B9C(void);
-    extern u16 lbl_8032FFC8[240];
+    extern u8 lbl_8032FFC8[];
     s32 temp_r3;
-    void *temp_r4;
+    u8 *temp_r4;
 
     temp_r3 = fn_80147B9C();
     if ((s8)temp_r3 >= 0) {
-        temp_r4 = (void *)(((s8)temp_r3 * 0x30) + (u8 *)lbl_8032FFC8);
-        *(f32 *)((u8 *)temp_r4 + 0x1C) = farg0;
-        *(f32 *)((u8 *)temp_r4 + 0x20) = farg1;
-        *(f32 *)((u8 *)temp_r4 + 0x24) = farg2;
-        *(u8 *)((u8 *)temp_r4 + 0xC) = (*(u8 *)((u8 *)temp_r4 + 0xC) | 2);
+        temp_r4 = (u8 *)lbl_8032FFC8 + ((s8)temp_r3 * 0x30);
+        *(f32 *)(temp_r4 + 0x1C) = farg0;
+        *(f32 *)(temp_r4 + 0x20) = farg1;
+        *(f32 *)(temp_r4 + 0x24) = farg2;
+        temp_r4[0xC] |= 2;
     }
+    return temp_r3;
 }
 
 s8 fn_80147B9C(void *arg0, s8 arg1, s16 arg2) {
