@@ -2632,32 +2632,33 @@ void fn_80130CDC(s32 unused, s32 kind, s32 *a, s32 *b, s32 *c, s32 *d) {
 }
 
 extern u16 jumptable_802911EC[];
-s32 fn_80131020(s32 arg0, s32 arg1)
-{
-    if (arg1 >= 8) {
+s32 fn_80131020(void *arg0, void *arg1, u32 arg2) {
+    u8 fn_80092ADC(void *, s32);
+    void *p;
+
+    p = *(void **)arg1;
+    switch (arg2) {
+    case 0:
+        return -(s32)*(u16 *)((u8 *)*(void **)((u8 *)p + 0x188) + 0x5A);
+    case 1:
+        return (u8)fn_80092ADC(p, 0);
+    case 2:
+        return (u8)fn_80092ADC(p, 1);
+    case 3:
+        return (u8)fn_80092ADC(p, 2);
+    case 4:
+        return (u8)fn_80092ADC(p, 3);
+    case 5:
+        return (u8)fn_80092ADC(p, 4);
+    case 6:
+        return (u8)fn_80092ADC(p, 5);
+    case 7:
+        return (u8)fn_80092ADC(p, 6);
+    case 8:
+        return (u8)fn_80092ADC(p, 7);
+    default:
         return 0;
     }
-    
-    switch (arg1) {
-        case 0:
-            return fn_80092ADC(0x0);
-        case 1:
-            return fn_80092ADC(0x1);
-        case 2:
-            return fn_80092ADC(0x2);
-        case 3:
-            return fn_80092ADC(0x3);
-        case 4:
-            return fn_80092ADC(0x4);
-        case 5:
-            return fn_80092ADC(0x5);
-        case 6:
-            return fn_80092ADC(0x6);
-        case 7:
-            return fn_80092ADC(0x7);
-    }
-    
-    return 0;
 }
 
 void *fn_801310F4(s32 arg0, u32 arg1) {
