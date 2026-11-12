@@ -1306,7 +1306,7 @@ s32 fn_80094768(void *arg0)
 
         if (entry != 0) {
             if (*(u32 *)entry != 0) {
-                if (entry[5] & 0x40) {
+                if ((entry[5] >> 6) & 1) {
                     return 1;
                 }
             }
