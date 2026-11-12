@@ -7395,24 +7395,19 @@ void fn_80070F3C(void *arg0) {
     *(s32 *)((u8 *)arg0 + 8) = lbl_803674F4;
 }
 
-s32 fn_80071410(s32 arg0, s32 arg1, f32 farg0, f32 farg1) {
-    void *fn_8001CB64();
-    s32 fn_8007CFB8(s32, M2C_UNK, f32, f32);
-    s32 var_r3;
-    void *temp_r3;
+void fn_80071410(s32 unused, void *arg1, f32 f1, f32 f2) {
+    u64 *fn_8001CB64(void *);
+    void fn_8007CFB8(void *, s32, f32, f32);
+    void *p;
 
-    var_r3 = arg0;
-    if (arg1 != 0) {
-        var_r3 = arg1 + 0x28C;
-        if (var_r3 != 0) {
-            temp_r3 = fn_8001CB64();
-            var_r3 = (M2C_FIELD(temp_r3, s32 *, 4) & 1) ^ 0;
-            if ((var_r3 | ((M2C_FIELD(temp_r3, s32 *, 0) & 0) ^ 0)) != 0) {
-                var_r3 = fn_8007CFB8(arg1, 0, farg0, farg1);
+    if (arg1 != NULL) {
+        p = (u8 *)arg1 + 0x28C;
+        if (p != NULL) {
+            if ((*fn_8001CB64(p) & 1ULL) != 0) {
+                fn_8007CFB8(arg1, 0, f1, f2);
             }
         }
     }
-    return var_r3;
 }
 
 #pragma cplusplus on
