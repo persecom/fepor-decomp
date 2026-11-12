@@ -5756,6 +5756,23 @@ void fn_8016F378(void *arg0) {
     fn_8000C188(arg0);
 }
 
+void fn_8016F404(void *arg0) {
+    void fn_8000A408(s32);
+    void fn_8013FED0(void *);
+    void fn_80231D94(void *, void *, ...);
+    s32 fn_8000D354(void *);
+    void fn_80190C24(void *, s32);
+    void *temp_r31;
+    s32 temp_r0;
+
+    fn_8000A408(*(s32 *)((u8 *)arg0 + 0x5C));
+    fn_8013FED0(arg0);
+    temp_r31 = (u8 *)lbl_80278080 + 0x14A;
+    fn_80231D94(temp_r31, (u8 *)lbl_80278080 + 0x15A, lbl_80330708[0x10]);
+    temp_r0 = fn_8000D354(temp_r31);
+    fn_80190C24(arg0, temp_r0);
+}
+
 void fn_8016F484(void *arg0) {
     M2C_UNK fn_8013FF00(void *, s32);
     s32 fn_8013FF94(void *, M2C_UNK, M2C_UNK);
