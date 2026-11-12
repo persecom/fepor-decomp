@@ -3108,10 +3108,11 @@ s32 fn_800B6C6C(s32 arg0) {
 
 extern M2C_UNK lbl_8028E7F8;
 s32 fn_800B6CD8(u32 arg0) {
+    void OSReport(void *, ...);
     if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
         return 0;
     }
-    fn_80010710(NULL);
+    OSReport((void *)arg0);
     return 1;
 }
 
