@@ -6635,12 +6635,14 @@ void fn_800BDAF8(void *arg0, void *arg1)
 }
 
 void fn_800BDB54(s32 arg0, s32 arg1) {
-    s32 temp_r5;
-    u8 *ptr;
-    
-    temp_r5 = arg1 >> 3; // srawi r5, r4, 3 (sign-extend right shift by 3)
-    ptr = (u8*)(arg0 + temp_r5);
-    *ptr &= ~(1 << (arg1 & 0x1F));  // clear bit in byte at offset
+    s32 addr;
+    u8 v;
+    s32 bit;
+
+    addr = arg0 + (arg1 >> 3);
+    bit = 1 << (arg1 & 7);
+    v = *(u8 *)(addr + 0x300);
+    *(u8 *)(addr + 0x300) = v & ~bit;
 }
 
 void fn_800BDB78(s32 arg0, s32 arg1) {
