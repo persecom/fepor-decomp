@@ -892,10 +892,8 @@ s32 fn_800A074C(void) {
 }
 
 void *fn_800A0778(void) {
-    extern u16 lbl_8026D8D8;
-    // Force 32-bit address loading to match target
-    void *ptr = (void *)((u32)&lbl_8026D8D8);
-    return (char *)ptr + 0x4E9;
+    extern u16 lbl_8026D8D8[];
+    return (u8 *)lbl_8026D8D8 + 0x4E9;
 }
 
 s32 fn_800A0788(void) {
