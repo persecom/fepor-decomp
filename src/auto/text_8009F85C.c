@@ -883,6 +883,19 @@ void *fn_800A06D8(void) {
     return (u8 *)lbl_8026D8D8 + 0x4bb;
 }
 
+s32 fn_800A06E8(void) {
+    void fn_800056A0(s32);
+    s32 fn_800056CC(const char *, ...);
+    void fn_8005BCD0(void);
+    extern u16 lbl_8026D8D8[];
+
+    fn_800056A0(0);
+    fn_800056CC((const char *)((u8 *)lbl_8026D8D8 + 0x4C6));
+    fn_8005BCD0();
+    fn_800056CC((const char *)((u8 *)lbl_8026D8D8 + 0x4AD));
+    return 5;
+}
+
 void *fn_800A073C(void) {
     extern u16 lbl_8026D8D8[];
     return (u8 *)lbl_8026D8D8 + 0x4dc;
