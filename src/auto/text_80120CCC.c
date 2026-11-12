@@ -2665,12 +2665,17 @@ void fn_801268D4(s32 arg0) {
 }
 
 void fn_8012690C(s32 arg0) {
-    extern u16 lbl_80330708;
-    u8 *temp = (u8 *) &lbl_80330708;
+    extern u8 lbl_80330708[];
+    struct {
+        u8 pad:6;
+        u8 flag:1;
+        u8 rest:1;
+    } *p = (void *)(lbl_80330708 + 0x9C);
+
     if (arg0 == 1) {
-        *temp |= 2;
+        p->flag = 1;
     } else {
-        *temp &= ~2;
+        p->flag = 0;
     }
 }
 
