@@ -927,8 +927,10 @@ void fn_80164A24(void *arg0) {
 }
 
 void fn_80164A48(void *arg0) {
-    if (*(u32 *)((char *)arg0 + 0x58) != 0) {
-        fn_800947E0();
+    void fn_800947E0(void *);
+    void *x = *(void **)((u8 *)arg0 + 0x58);
+    if (x != NULL) {
+        fn_800947E0(x);
     }
 }
 
