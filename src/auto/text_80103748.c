@@ -35,15 +35,17 @@ void *fn_801037A0(void) {
 }
 
 s32 fn_801037B0(void) {
-    M2C_UNK fn_80105D4C(void *, u8);
-    extern M2C_UNK lbl_80330708;
-    u8 var_r30;
+    void fn_80105D4C(void *, u8);
+    extern u8 lbl_80330708[];
+    void *p;
+    s32 i;
 
-    var_r30 = 0;
+    p = lbl_80330708 + 0x74;
+    i = 0;
     do {
-        fn_80105D4C(&lbl_80330708 + 0x74, var_r30);
-        var_r30 += 1;
-    } while ((s32) var_r30 < 0x40);
+        fn_80105D4C(p, (u8)i);
+        i += 1;
+    } while (i < 0x40);
     return 6;
 }
 
@@ -332,6 +334,22 @@ loop_2:
     return 6;
 }
 
+#pragma global_optimizer off
+char *fn_80103DDC(void *arg0, void *arg1) {
+    void fn_80231D94(void *, void *, ...);
+    extern char lbl_8032BB18[];
+    extern u8 lbl_802734D0[];
+    s32 a;
+    s32 c;
+    u8 *row;
+
+    a = *(s32 *)((char *)arg0 + 4);
+    c = *(s32 *)((char *)*(void **)((char *)arg1 + 0x18) + 0x3c);
+    row = (u8 *)(c + a);
+    fn_80231D94(lbl_8032BB18, lbl_802734D0 + 0x1bf, a, row[0x14]);
+    return lbl_8032BB18;
+}
+#pragma global_optimizer reset
 s32 fn_80103E30(void) {
     return 0;
 }
@@ -345,6 +363,20 @@ s32 fn_80103E48(void) {
     return 0;
 }
 
+#pragma global_optimizer off
+char *fn_80103E50(s32 arg0, void *arg1) {
+    void fn_80231D94(void *, void *, ...);
+    extern char lbl_8032BAF8[];
+    extern u8 lbl_802734D0[];
+    extern f32 lbl_8036A0D8;
+    void *p;
+
+    p = *(void **)((u8 *)arg1 + 0x18);
+    p = *(void **)((u8 *)p + 0x3c);
+    fn_80231D94(lbl_8032BAF8, lbl_802734D0 + 0x1dc, lbl_8036A0D8 * *(f32 *)((u8 *)p + 0xc));
+    return lbl_8032BAF8;
+}
+#pragma global_optimizer reset
 s32 fn_80103EA4(s32 arg0, void *arg1) {
     extern void *lbl_80367240;
     u16 temp_r5;
@@ -365,6 +397,27 @@ s32 fn_80103EA4(s32 arg0, void *arg1) {
     }
     return 0;
 }
+
+#pragma global_optimizer off
+char *fn_80103FA4(s32 arg0, void *arg1) {
+    void fn_80231D94(void *, void *, ...);
+    extern char lbl_8032BAD8[];
+    extern u8 lbl_802734D0[];
+    extern f32 lbl_8036A0E8;
+    u8 *fmt;
+    f32 scale;
+    void *p;
+    f32 val;
+
+    fmt = lbl_802734D0;
+    scale = lbl_8036A0E8;
+    p = *(void **)((u8 *)arg1 + 0x18);
+    p = *(void **)((u8 *)p + 0x3c);
+    val = *(f32 *)((u8 *)p + 8);
+    fn_80231D94(lbl_8032BAD8, fmt + 0x1eb, val * scale);
+    return lbl_8032BAD8;
+}
+#pragma global_optimizer reset
 
 s32 fn_80103FF8(s32 arg0, void *arg1) {
     extern void *lbl_80367240;
