@@ -10030,6 +10030,49 @@ extern "C" s8 fn_80146BE4(void *arg0) {
     } while (i < 0x1C);
     return -1;
 }
+
+#pragma use_lmw_stmw on
+#pragma cplusplus on
+extern "C" s8 fn_80146C94(void *arg0) {
+    void *fn_8000D2BC(void *);
+    struct Entry {
+        void **names;
+        u8 pad4[4];
+        virtual u8 v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        u8 flags;
+        u8 pad[0x23];
+    };
+    extern Entry lbl_8032FF08[];
+    void *self;
+    u8 active;
+    Entry *entry;
+    s32 i;
+    Entry *base;
+    void *h1;
+
+    self = arg0;
+    base = lbl_8032FF08;
+    i = 0;
+    do {
+        active = 0;
+        entry = (Entry *)((u8 *)base + ((u8)i * 0x30));
+        if ((entry->flags & 1) && entry->v0() != 0) {
+            active = 1;
+        }
+        if (active != 0) {
+            h1 = fn_8000D2BC(self);
+            if (h1 == fn_8000D2BC(*entry->names)) {
+                return (s8)i;
+            }
+        }
+        i += 1;
+    } while (i < 4);
+    return -1;
+}
+#pragma cplusplus reset
+
 #pragma cplusplus reset
 #pragma use_lmw_stmw reset
 
