@@ -440,15 +440,18 @@ void fn_800AA1CC(void)
     }
 }
 
-s32 fn_800AA208(void) {
+void fn_800AA208(void)
+{
     void *fn_8000C0C0(void *);
     extern u8 lbl_8028CDF0[];
-    
-    void *temp_r3 = fn_8000C0C0(lbl_8028CDF0);
-    if (temp_r3 != NULL) {
-        *(u32 *)((char *)temp_r3 + 0x60) -= 1;
+    void *p;
+    u32 v;
+
+    p = fn_8000C0C0(lbl_8028CDF0);
+    if (p != NULL) {
+        v = *(u32 *)((u8 *)p + 0x60);
+        *(u32 *)((u8 *)p + 0x60) = v - 1;
     }
-    return 0;
 }
 
 void fn_800AA244(void) {
