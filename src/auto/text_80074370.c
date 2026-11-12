@@ -1331,10 +1331,11 @@ void fn_80077008(void) {
     fn_80007668(&sp8);
 }
 
-s32 fn_8007703C(s32 arg1) {
-    M2C_UNK fn_801832F8(s32);
-    extern M2C_UNK lbl_802EF4C8;
-    M2C_FIELD(&lbl_802EF4C8, s8 *, 8) = 0x33;
+s32 fn_8007703C(s32 unused, s32 arg1) {
+    void fn_801832F8(s32);
+    extern u8 lbl_802EF4C8[24];
+    u8 *p = lbl_802EF4C8;
+    p[8] = 0x33;
     fn_801832F8(arg1);
     return 4;
 }
