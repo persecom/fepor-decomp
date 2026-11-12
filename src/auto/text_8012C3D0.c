@@ -340,11 +340,14 @@ void fn_8012CA40(s32 arg0) {
 void fn_8012CC0C(void *arg0)
 {
     extern u8 lbl_80275AC0[];
+    void fn_8000C60C(void *);
+    void fn_80109020(void *);
+    void fn_8007D064(void *, void *, s32);
 
     u8 *object;
-    u8 *entry;
+    void *entry;
     s32 index;
-    u8 mode;
+    s32 mode;
 
     object = *(u8 **)((u8 *)arg0 + 0x18);
 
@@ -353,16 +356,20 @@ void fn_8012CC0C(void *arg0)
 
     *(u32 *)(object + 0x34) = 0;
 
-    index = (signed char)object[0x62];
+    index = (s8)object[0x62];
     mode = object[0x6C];
+    entry = *(void **)(*(u8 **)(object + 0x3C) + index * 0x24);
 
-    entry = *(u8 **)(object + 0x3C);
-    entry = *(u8 **)(entry + index * 0x24);
-
-    if (mode == 0 || mode == 4) {
+    switch (mode) {
+    case 0:
+    case 4:
         fn_8007D064(entry, object, 0);
-    } else if (mode == 1) {
+        break;
+    case 1:
+    case 2:
+    case 3:
         fn_8007D064(entry, object, 0x01000000);
+        break;
     }
 }
 
