@@ -7133,13 +7133,26 @@ void fn_800BE800(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 
 extern u8 lbl_80317334[];
 extern s32 lbl_80368320;
-void fn_800BE890(void) {
-    if (lbl_80368320 != 0) {
-        s32 *ptr = (s32 *)(lbl_80317334 + 0x10);
-        if (*ptr != 0) {
-            *ptr = 0;
+void fn_800BE890(s32 arg0) {
+    void *fn_80013B60(void *);
+    s32 fn_800C273C(void *, u32);
+    s32 fn_800BDD08(void *, s32, void *);
+    u8 *entry;
+    s32 count;
+    s32 kind;
+
+    kind = 0xE;
+    entry = fn_80013B60(0);
+    count = 0;
+    while (entry != 0) {
+        if (entry[0xC] == kind) {
+            if (count++ == arg0) {
+                break;
+            }
         }
+        entry = fn_80013B60(entry);
     }
+    fn_800BDD08((u8 *)lbl_80330708 + 0xb4, fn_800C273C(entry, (u16)*(s16 *)(entry + 0x14)), lbl_80330708);
 }
 
 s32 fn_800BE914(void)
