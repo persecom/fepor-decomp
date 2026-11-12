@@ -7465,13 +7465,17 @@ void fn_8013FBDC(s16 *dst, s16 *src) {
     dst[1] = dy;
 }
 
-void fn_8013FC00(s16 *dst, s16 *src) {
-    s16 a;
-    s16 b;
-    b = src[1];
-    a = src[0];
-    dst[0] = a;
-    dst[1] = b;
+void fn_8013FC00(s16 *dst, s16 *src)
+{
+  s16 a;
+  s16 b;
+  int new_var;
+  b = src[0];
+  a = b;
+  b = src[1];
+  dst[0] = a;
+  new_var = 1;
+  dst[new_var] = b;
 }
 
 #pragma scheduling off
@@ -9550,6 +9554,28 @@ void fn_8014571C(void) {
     M2C_FIELD(temp_r3, f32 *, 0x30) = (f32) lbl_8036A778;
     M2C_FIELD(temp_r3, f32 *, 0x34) = (f32) lbl_8036A77C;
     M2C_FIELD(temp_r3, f32 *, 0x38) = (f32) lbl_80367AEE;
+}
+
+void fn_801457B4(void) {
+    void fn_8000BF00(void *);
+    void *fn_8000CAF0(void *, s32);
+    extern u8 lbl_80292558[];
+    extern u8 lbl_8029256C[];
+    extern u8 lbl_80367AEC;
+    extern f32 lbl_8036A778;
+    extern f32 lbl_8036A77C;
+    void *temp_r3;
+    f32 a;
+    f32 b;
+
+    fn_8000BF00(lbl_80292558);
+    fn_8000BF00(lbl_8029256C);
+    temp_r3 = fn_8000CAF0(lbl_8029256C, 3);
+    a = lbl_8036A778;
+    b = lbl_8036A77C;
+    *(f32 *)((u8 *)temp_r3 + 0x30) = a;
+    *(f32 *)((u8 *)temp_r3 + 0x34) = b;
+    *(f32 *)((u8 *)temp_r3 + 0x38) = (f32)lbl_80367AEC;
 }
 
 void fn_8014589C(void *arg0) {
