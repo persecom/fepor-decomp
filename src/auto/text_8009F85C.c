@@ -1022,6 +1022,17 @@ s32 fn_800A0B44(s32 arg0, s32 arg1) {
     return 0;
 }
 
+char *fn_800A0B70(void) {
+    s32 fn_800C3E54(void *);
+    void fn_80231D94(void *, void *, ...);
+    extern u8 lbl_803200AC[];
+    extern char lbl_80312378[];
+    extern u8 lbl_8026D8D8[];
+
+    fn_80231D94(lbl_80312378, lbl_8026D8D8 + 0x558, fn_800C3E54(lbl_803200AC));
+    return lbl_80312378;
+}
+
 u8 fn_800A0BC0(void) {
     s32 fn_800C3E54(void *);
     extern u8 lbl_803200AC[];
