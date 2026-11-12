@@ -200,7 +200,7 @@ loop_1:
 void PPCMtmmcr0(u32 arg0) {
 }
 
-void PPCMtpmc3(void) {
+void PPCMtpmc3(u32 arg0) {
     M2C_ERROR(/* unknown instruction: mtspr PMC3, $r3 */);
 }
 
