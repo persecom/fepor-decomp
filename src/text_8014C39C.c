@@ -264,12 +264,9 @@ void fn_8014C7C0(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
     }
 }
 
-void fn_8014CA20(s32 arg0, s32 arg1) {
-    s32 r0 = arg1 + 2;
-    s32 r3 = r0 * 0xC;
-    r3 += 0x20;
-    r3 += arg0;
-    fn_8000E0E4(r3, arg0);
+void fn_8014CA20(void *arg0, s32 arg1) {
+    void *base = arg0;
+    fn_8000E0E4((u8 *)base + (arg1 + 2) * 0xC + 0x20, base);
 }
 
 s32 fn_8014CA54(s32 arg0, s32 arg1) {
@@ -277,12 +274,10 @@ s32 fn_8014CA54(s32 arg0, s32 arg1) {
 }
 
 void fn_8014CA68(s32 arg0, s32 arg1) {
-    s32 r3;
-    s32 temp_r4;
-
-    temp_r4 = arg1 * 0xC;
-    r3 = arg0 + (temp_r4 + 0x20);
-    fn_8000E0E4(r3, temp_r4);
+    void fn_8000E0E4(s32, s32);
+    s32 t = arg1 * 0xC;
+    s32 u = t + 0x20;
+    fn_8000E0E4(arg0 + u, t);
 }
 
 void fn_8014CA98(s32 arg0, s32 arg1, u32 arg2) {
