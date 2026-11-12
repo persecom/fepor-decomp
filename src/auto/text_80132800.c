@@ -9437,7 +9437,7 @@ extern "C" void fn_80144A74(void *arg0) {
     void fn_80144B38(void *, void *, s32);
     void *fn_80144D74(void *);
     s32 *fn_80144D7C(void *);
-    void fn_80144D80(void *);
+    void *fn_80144D80(void *);
     struct Node {
         struct Node *prev;
         struct Node *next;
@@ -9452,8 +9452,7 @@ extern "C" void fn_80144A74(void *arg0) {
     if (node != (Node *)sentinel) {
         fn_80144B1C(node, *(void **)sentinel);
         while (node != (Node *)sentinel) {
-            fn_80144D80(arg0);
-            fn_80144B5C(arg0, (u8 *)node + 8);
+            fn_80144B5C(fn_80144D80(arg0), (u8 *)node + 8);
             tmp = node;
             node = node->next;
             fn_80144B38(fn_80144D74(arg0), tmp, 1);
