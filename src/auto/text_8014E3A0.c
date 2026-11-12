@@ -14,8 +14,8 @@ s32 fn_8014E3A8(void) {
 }
 
 void *fn_8014E3B0(void) {
-    extern u16 lbl_80277238;
-    return (u8 *)&lbl_80277238 + 0xA2;
+    extern u16 lbl_80277238[];
+    return (u8 *)lbl_80277238 + 0xA2;
 }
 
 s32 fn_8014E3C0(void) {
