@@ -877,7 +877,6 @@ void fn_8020D804(void) {
     );
 }
 
-extern void *fn_8020D86C;
 void fn_8020D838(void) {
     /* DVD Disc ID Check */
     void fn_8020C1A4(u8, s32, void *);
@@ -885,6 +884,31 @@ void fn_8020D838(void) {
     extern void *IDShouldBe_8036859C;
 
     fn_8020C1A4(M2C_FIELD(IDShouldBe_8036859C, u8 *, 8), 0xA, fn_8020D86C);
+}
+
+void fn_8020D86C(u32 arg0) {
+    void __DVDStoreErrorCode(u32);
+    void DVDReset(void);
+    void cbForStateError(u32);
+    void fn_8020BF58(void *);
+    void fn_8020D8D4();
+
+    extern s32 lbl_803685CC;
+
+    if (arg0 == 0x10) {
+        __DVDStoreErrorCode(0x01234568);
+        DVDReset();
+        cbForStateError(0);
+        return;
+    }
+
+    if (arg0 & 1) {
+        lbl_803685CC = 0;
+        fn_8020D8D4(executing_80368598);
+        return;
+    }
+
+    fn_8020BF58((void *)fn_8020D27C);
 }
 
 void fn_8020D8D4(void) {
