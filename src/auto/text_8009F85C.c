@@ -1023,16 +1023,17 @@ s32 fn_800A0B44(s32 arg0, s32 arg1) {
 }
 
 u8 fn_800A0BC0(void) {
-    s32 fn_800C3E54(u16 *ptr);
-    extern u16 lbl_803200AC;
-    
-    u16 *temp = &lbl_803200AC;
-    s32 result = fn_800C3E54(temp);
-    
+    s32 fn_800C3E54(void *);
+    extern u8 lbl_803200AC[];
+    s32 result;
+    s32 ret;
+
+    result = fn_800C3E54(lbl_803200AC);
+    ret = 2;
     if (result != 0) {
-        return 0;
+        ret = 0;
     }
-    return 2;
+    return (u8)ret;
 }
 
 extern s32 lbl_80367670;
