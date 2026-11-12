@@ -1528,16 +1528,14 @@ s32 fn_80077344(void) {
     void fn_8002AE6C(void *);
     extern u8 lbl_802EF4C8[];
     extern struct { s32 n; u8 pad[2004]; } lbl_802EF4E0;
-    u8 *p;
 
-    p = lbl_802EF4C8;
-    if ((s8)p[0x12] != 0) {
+    if ((s8)lbl_802EF4C8[0x12] != 0) {
         return 3;
     }
-    if (fn_80105BC0(*(u8 **)p + 0x1BC, 0x3C) == 0) {
+    if (fn_80105BC0(*(u8 **)lbl_802EF4C8 + 0x1BC, 0x3C) == 0) {
         return 3;
     }
-    fn_8002AE6C(*(void **)p);
+    fn_8002AE6C(*(void **)lbl_802EF4C8);
     return lbl_802EF4E0.n ? 0 : 3;
 }
 
