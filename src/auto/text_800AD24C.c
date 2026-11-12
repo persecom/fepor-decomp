@@ -5931,31 +5931,32 @@ s32 fn_800BC11C(u8 arg0, s32 arg1) {
     return 1;
 }
 
-s32 fn_800BC204(void *arg0) {
-    u8 temp;
-    u32 temp2;
+s32 fn_800BC204(u8 arg0) {
+    s8 fn_80037CCC(void *);
+    extern u8 lbl_802B14E4[];
+    typedef struct {
+        u8 flag : 1;
+        u8 rest : 7;
+    } Bit7;
+    void *unit;
+    s32 temp;
+    s8 slot;
 
-    temp = *(u8*)((u8*)arg0 + 0x1F1);
-    if ((temp & 0x80) && (*(u32*)((u8*)arg0 + 0x1EC) != 0)) {
+    if (arg0 != 0) {
+        unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
+    } else {
+        unit = NULL;
+    }
+    if (unit == NULL || *(u32 *)((u8 *)unit + 0x188) == 0) {
         return 0;
     }
-
-    temp = *(u8*)((u8*)arg0 + 0x1F9);
-    if ((temp & 0x80) && (*(u32*)((u8*)arg0 + 0x1F4) != 0)) {
-        return 1;
+    temp = fn_80037CCC(unit);
+    slot = (s8)temp;
+    if (slot < 0) {
+        return -1;
     }
-
-    temp = *(u8*)((u8*)arg0 + 0x201);
-    if ((temp & 0x80) && (*(u32*)((u8*)arg0 + 0x1FC) != 0)) {
-        return 2;
-    }
-
-    temp = *(u8*)((u8*)arg0 + 0x209);
-    if ((temp & 0x80) && (*(u32*)((u8*)arg0 + 0x204) != 0)) {
-        return 3;
-    }
-
-    return -1;
+    ((Bit7 *)((u8 *)unit + slot * 8 + 0x1F1))->flag = 0;
+    return slot + 4;
 }
 
 s8 fn_800BC380(u8 arg0) {
