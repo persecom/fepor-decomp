@@ -9008,16 +9008,17 @@ s32 fn_80049D84(void *arg0) {
     return ((u32)arg0 >> 9) & 1;
 }
 
-M2C_UNK *fn_80049DA4(s32 arg0, u32 arg1, u32 arg2) {
-    M2C_UNK fn_802343E0(M2C_UNK *, u32);
-    M2C_UNK fn_80234450(M2C_UNK *, s32, M2C_UNK *);
-    extern M2C_UNK lbl_802EFE20;
-    fn_80234450(&lbl_802EFE20, arg0, &lbl_802EFE20);
-    fn_802343E0(&lbl_802EFE20, arg1);
-    if (arg2 != 0U) {
-        fn_802343E0(&lbl_802EFE20, arg2);
+void *fn_80049DA4(s32 arg0, s32 arg1, u32 arg2) {
+    void fn_80234450(void *, s32);
+    void fn_802343E0(void *, s32);
+    extern u8 lbl_802EFE20[64];
+
+    fn_80234450(lbl_802EFE20, arg0);
+    fn_802343E0(lbl_802EFE20, arg1);
+    if (arg2 != 0) {
+        fn_802343E0(lbl_802EFE20, arg2);
     }
-    return &lbl_802EFE20;
+    return lbl_802EFE20;
 }
 
 s32 fn_80049E1C(void *arg0) {
