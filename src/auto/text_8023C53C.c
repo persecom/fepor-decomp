@@ -1344,9 +1344,9 @@ done:
 }
 
 #pragma dont_inline on
-s32 fn_80246288(s32 arg0, s32 arg1)
+StreamQueueNode *fn_80246288(StreamQueueNode *arg0, u8 arg1, u32 *arg2)
 {
-    return (arg0 + 1) * (arg1 + 1);
+    return (StreamQueueNode *)(((u32)arg0 + 1) * (arg1 + 1));
 }
 #pragma dont_inline reset
 
