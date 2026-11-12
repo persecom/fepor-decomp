@@ -3338,6 +3338,41 @@ s32 fn_801279D4(void) {
     return 1;
 }
 
+s32 fn_80127A00(void) {
+    void *fn_8000BCA4(void *);
+    void fn_8000C070(void *, s32);
+    void fn_8000BD98(void *);
+    void fn_8008D988(void);
+    void fn_8004A1F0(void);
+    void fn_80091858(void);
+    void fn_800162B8(void);
+    extern u16 lbl_80275048[];
+    extern volatile u32 lbl_80367110;
+    void *obj;
+    u32 flags;
+
+    obj = (u8 *)lbl_80275048 + 0x479;
+    flags = lbl_80367110 | 0x890;
+    lbl_80367110 = flags;
+    flags &= ~0x20;
+    lbl_80367110 = flags;
+    obj = fn_8000BCA4(obj);
+    if (obj != NULL) {
+        fn_8000C070(obj, 4);
+    }
+    fn_8000BD98((u8 *)lbl_80275048 + 0x472);
+    fn_8000BD98((u8 *)lbl_80275048 + 0x50c);
+    fn_8000BD98((u8 *)lbl_80275048 + 0xe0);
+    fn_8000BD98((u8 *)lbl_80275048 + 0x467);
+    fn_8000BD98((u8 *)lbl_80275048 + 0x15b);
+    fn_8000BD98((u8 *)lbl_80275048 + 0x513);
+    fn_8008D988();
+    fn_8004A1F0();
+    fn_80091858();
+    fn_800162B8();
+    return 1;
+}
+
 void fn_80127AC4(void) {
     extern u16 lbl_80275048[];
 
