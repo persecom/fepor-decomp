@@ -416,12 +416,13 @@ void fn_800AA15C(void) {
 
 u32 *fn_8000C0C0(u32 arg0);
 s32 fn_800AA188(void) {
-    void *temp_r3;
+    void *fn_8000C0C0(void *);
+    extern u8 lbl_8028CDF0[];
+    void *p;
 
-    temp_r3 = fn_8000C0C0((u32)"\0\0");
-    if (temp_r3 != NULL) {
-        s32 val = *(s32*)((char*)temp_r3 + 0x60);
-        return val == 0;
+    p = fn_8000C0C0(lbl_8028CDF0);
+    if (p != NULL) {
+        return *(s32 *)((u8 *)p + 0x60) == 0;
     }
     return 0;
 }
