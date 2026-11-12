@@ -956,28 +956,39 @@ s32 fn_80164BB0(void *arg0) {
 }
 #pragma global_optimizer on
 void fn_80164BF0(s32 *arg0, void *arg1) {
-    s32 *fn_8013F748(void *, M2C_UNK *, s16 *);
-    M2C_UNK spC;
-    s16 spA;
-    s16 sp8;
-    s16 temp_r0;
-    s16 var_r30;
+    struct Point {
+        s16 x;
+        s16 y;
+    };
+    struct Point *fn_8013F748(void *, struct Point *, struct Point *);
+    s32 (*v9)(void *);
+    struct Point out;
+    struct Point in;
+    s32 *dst;
+    void *self;
+    s32 var_r30;
     s16 var_r31;
+    s16 temp;
+    s32 cls;
 
-    temp_r0 = M2C_FIELD(arg1, s16 *, 0x4C);
-    if (temp_r0 < 0) {
+    temp = *(s16 *)((u8 *)arg1 + 0x4C);
+    dst = arg0;
+    self = arg1;
+    cls = temp;
+    if (cls < 0) {
         var_r30 = 0;
         var_r31 = 0;
     } else {
-        var_r31 = M2C_FIELD(arg1, s16 *, 0x64);
-        var_r30 = (temp_r0 * M2C_FIELD(arg1, s16 *, 0x54)) + M2C_FIELD(arg1, s16 *, 0x66);
-        if ((temp_r0 >= 4) && (temp_r0 <= 7)) {
-            var_r30 += M2C_FIELD(M2C_FIELD(arg1, void **, 0), s32 (**)(void *), 0x2C)(arg1);
+        var_r31 = *(s16 *)((u8 *)self + 0x64);
+        var_r30 = (s16)(cls * *(s16 *)((u8 *)self + 0x54) + *(s16 *)((u8 *)self + 0x66));
+        if (cls >= 4 && cls <= 7) {
+            v9 = *(s32 (**)(void *))(*(u8 **)self + 0x2C);
+            var_r30 += v9(self);
         }
     }
-    sp8 = var_r31;
-    spA = var_r30;
-    *arg0 = *fn_8013F748(arg1, &spC, &sp8);
+    in.x = var_r31;
+    in.y = (s16)var_r30;
+    *dst = *(s32 *)fn_8013F748(self, &out, &in);
 }
 
 s16 fn_80164CAC(void *arg0) {
@@ -6343,6 +6354,39 @@ extern "C" void fn_80170058(void *arg0) {
     ret = fn_8013FF94(arg0, 0x109, 0);
     fn_8014004C(arg0, ret);
     fn_80109020((u8 *)lbl_80278080 + 0x210);
+}
+
+extern "C" void fn_80170160(void *arg0) {
+    s8 fn_80037E00(void *);
+    void fn_800951D0(void *, s32);
+    void fn_80184C7C(void *, s32, s32, s32);
+    void fn_80138808(void *, void *);
+    s16 fn_80164E78(void *, s32);
+    extern u32 lbl_802EF4C8[];
+    void *temp_r31;
+    void *temp_r3;
+    void *temp_r4;
+
+    temp_r31 = arg0;
+    if ((s8)fn_80037E00((void *)lbl_802EF4C8[0]) < 0) {
+        fn_800951D0((void *)lbl_802EF4C8[0], -1);
+    }
+    temp_r3 = (void *)lbl_802EF4C8[0];
+    if (temp_r3 != NULL) {
+        fn_80184C7C(temp_r3, 0, 4, 0);
+    }
+    temp_r3 = *(void **)((u8 *)temp_r31 + 0x44);
+    if (temp_r3 != NULL) {
+        temp_r4 = *(void **)((u8 *)temp_r3 + 0x3C);
+        if (temp_r4 != NULL) {
+            fn_80138808(temp_r3, temp_r4);
+        }
+    }
+    temp_r31 = *(void **)((u8 *)temp_r31 + 0x4C);
+    *(u8 *)((u8 *)temp_r31 + 0x48) = 0;
+    *(s32 *)((u8 *)temp_r31 + 0x60) = 3;
+    *(u8 *)((u8 *)temp_r31 + 0x4B) = 0;
+    *(s16 *)((u8 *)temp_r31 + 0x4C) = fn_80164E78(temp_r31, 0);
 }
 
 #pragma cplusplus on
