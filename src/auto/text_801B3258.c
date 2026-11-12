@@ -14871,7 +14871,7 @@ void fn_801DFB4C(void *arg0) {
 
     arg = arg0;
 
-    if (lbl_803682F0 != NULL) {
+    if (lbl_803682F0 != (int)NULL) {
         fn_800056CC(
             (char *)(lbl_8027E980 + 0x122)
         );
