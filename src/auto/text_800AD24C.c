@@ -7317,15 +7317,33 @@ check:
     return 1;
 }
 
-void fn_800BF604(void) {
-    void *temp;
-    
-    temp = (void*)fn_80013B60();
-    
-    // Call some function using global structure  
-    if (temp != NULL) {
-        fn_8000CAA0(&lbl_8028D544, 7, &lbl_8028D544);
+s32 fn_800BF604(s32 arg0) {
+    void *fn_80013B60(void *);
+    void *fn_8000CAA0(void *, s32);
+    s32 fn_800BF694(void);
+    u8 *entry;
+    u8 found;
+    void *obj;
+    s32 kind;
+
+    kind = 0x7;
+    entry = fn_80013B60(0);
+    while (entry != 0) {
+        if (entry[0xC] == kind) {
+            found = 1;
+            goto check;
+        }
+        entry = fn_80013B60(entry);
     }
+    found = 0;
+check:
+    if (found == 0) {
+        return 0;
+    }
+    obj = fn_8000CAA0(lbl_8028D544, arg0);
+    *(s32 *)((u8 *)obj + 0x34) = 0x7;
+    *(s32 *)((u8 *)obj + 0x38) = (s32)fn_800BF694;
+    return 1;
 }
 
 s32 fn_800BF694(void) {
