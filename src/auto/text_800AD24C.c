@@ -4493,6 +4493,31 @@ s32 fn_800BBD9C(u32 arg0, void *arg1)
     return 1;
 }
 
+u32 fn_800BBE1C(u32 arg0, void *arg1)
+{
+    extern u8 lbl_802B14E4[];
+
+    extern u8 *fn_80019DD0(void *);
+    extern u32 fn_80105BC0(void *, u32);
+
+    u8 *entry;
+    u8 *result;
+
+    if ((u8)arg0 != 0) {
+        entry = lbl_802B14E4 + ((u8)arg0 - 1) * 0x280;
+    } else {
+        entry = 0;
+    }
+
+    if (entry == 0 || *(u32 *)(entry + 0x188) == 0) {
+        return 0;
+    }
+
+    result = fn_80019DD0(arg1);
+
+    return (u8)fn_80105BC0(entry + 0x1BC, result[0x18]);
+}
+
 s32 fn_800BBE9C(u32 arg0)
 {
     extern u8 lbl_802B14E4[];
