@@ -2834,18 +2834,22 @@ void fn_80169F30(void *arg0) {
     }
 }
 
-void fn_80169FC0(void* arg0) {
-    void* temp_r3;
-    void* temp_r31;
+void fn_80169FC0(void *arg0) {
+    void fn_8000C5B8(void);
+    void *fn_80024398(void *, void *, s32);
+    void *fn_80169948(void);
+    extern f32 lbl_8036A9C0;
+    void *temp_r31;
+    void *temp_r3;
 
-    temp_r3 = (void*)fn_80169948();
-    *(f32*)((char*)temp_r3 + 0x18) = lbl_8036A9C0;
-    *(s16*)((char*)temp_r3 + 0x1E) = 0;
-    temp_r31 = (void*)fn_80024398(arg0, 0);
+    temp_r3 = fn_80169948();
+    M2C_FIELD(temp_r3, f32 *, 0x18) = lbl_8036A9C0;
+    M2C_FIELD(temp_r3, s16 *, 0x1E) = 0;
+    temp_r31 = fn_80024398(temp_r3, arg0, 0);
     fn_8000C5B8();
-    *(s8*)((char*)temp_r31 + 0x61) = 0;
-    *(void**)((char*)arg0 + 0x4C) = temp_r31;
-    *(void**)((char*)arg0 + 0x50) = temp_r31;
+    M2C_FIELD(temp_r31, u8 *, 0x61) = 0;
+    M2C_FIELD(arg0, void **, 0x4C) = temp_r31;
+    M2C_FIELD(arg0, void **, 0x50) = temp_r31;
 }
 
 void fn_8016A028(void) {
