@@ -2396,11 +2396,11 @@ void fn_80109EEC(void *arg0) {
     extern f32 lbl_8036A130;
     extern f32 lbl_8036A14C;
     f32 zero;
-    f32 scale;
-    f32 *p;
     void *temp_r4;
     u8 *temp_r6;
     s32 kind;
+    f32 t;
+    f32 scale;
 
     zero = lbl_8036A130;
     temp_r4 = *(void **)((u8 *)arg0 + 0x30);
@@ -2414,11 +2414,10 @@ void fn_80109EEC(void *arg0) {
         *(f32 *)((u8 *)arg0 + 0x50) = (f32)(s32)(*(u16 *)(temp_r6 + 0x22) - *(u16 *)(temp_r6 + 0x1E));
         break;
     }
-    scale = lbl_8036A14C;
-    p = (f32 *)((u8 *)arg0 + 0x4C);
-    *p = *p * scale;
-    p = (f32 *)((u8 *)arg0 + 0x50);
-    *p = *p * scale;
+    t = *(f32 *)((u8 *)arg0 + 0x4C);
+    *(f32 *)((u8 *)arg0 + 0x4C) = t * (scale = lbl_8036A14C);
+    t = *(f32 *)((u8 *)arg0 + 0x50);
+    *(f32 *)((u8 *)arg0 + 0x50) = t * scale;
 }
 
 #pragma cplusplus on
@@ -5717,40 +5716,43 @@ done:
 #pragma peephole off
 s32 fn_80110094(void) {
     extern u32 lbl_8032BD5C[32];
+    u32 *p = lbl_8032BD5C;
+    s32 ret;
 
-    lbl_8032BD5C[0] = 0;
-    lbl_8032BD5C[1] = 0;
-    lbl_8032BD5C[2] = 0;
-    lbl_8032BD5C[3] = 0;
-    lbl_8032BD5C[4] = 0;
-    lbl_8032BD5C[5] = 0;
-    lbl_8032BD5C[6] = 0;
-    lbl_8032BD5C[7] = 0;
-    lbl_8032BD5C[8] = 0;
-    lbl_8032BD5C[9] = 0;
-    lbl_8032BD5C[10] = 0;
-    lbl_8032BD5C[11] = 0;
-    lbl_8032BD5C[12] = 0;
-    lbl_8032BD5C[13] = 0;
-    lbl_8032BD5C[14] = 0;
-    lbl_8032BD5C[15] = 0;
-    lbl_8032BD5C[16] = 0;
-    lbl_8032BD5C[17] = 0;
-    lbl_8032BD5C[18] = 0;
-    lbl_8032BD5C[19] = 0;
-    lbl_8032BD5C[20] = 0;
-    lbl_8032BD5C[21] = 0;
-    lbl_8032BD5C[22] = 0;
-    lbl_8032BD5C[23] = 0;
-    lbl_8032BD5C[24] = 0;
-    lbl_8032BD5C[25] = 0;
-    lbl_8032BD5C[26] = 0;
-    lbl_8032BD5C[27] = 0;
-    lbl_8032BD5C[28] = 0;
-    lbl_8032BD5C[29] = 0;
-    lbl_8032BD5C[30] = 0;
-    lbl_8032BD5C[31] = 0;
-    return 1;
+    p[0] = 0;
+    ret = 1;
+    p[1] = 0;
+    p[2] = 0;
+    p[3] = 0;
+    p[4] = 0;
+    p[5] = 0;
+    p[6] = 0;
+    p[7] = 0;
+    p[8] = 0;
+    p[9] = 0;
+    p[10] = 0;
+    p[11] = 0;
+    p[12] = 0;
+    p[13] = 0;
+    p[14] = 0;
+    p[15] = 0;
+    p[16] = 0;
+    p[17] = 0;
+    p[18] = 0;
+    p[19] = 0;
+    p[20] = 0;
+    p[21] = 0;
+    p[22] = 0;
+    p[23] = 0;
+    p[24] = 0;
+    p[25] = 0;
+    p[26] = 0;
+    p[27] = 0;
+    p[28] = 0;
+    p[29] = 0;
+    p[30] = 0;
+    p[31] = 0;
+    return ret;
 }
 #pragma peephole reset
 #include "global.h"
