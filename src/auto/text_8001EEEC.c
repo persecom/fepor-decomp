@@ -753,8 +753,8 @@ void fn_800213D0(void *map, u8 x, u8 y, u16 range, s32 flagA, s32 flagB)
                     tid = cell[0x100D];
                     uid = cell[0xD];
                                           neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
-                      unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
                       if (uid != 0) {
+                          unit = lbl_802B14E4 + (uid - 1) * 0x280;
                           cls = *(u8 **)(unit + 0x190);
                           gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
                           if (gate != 0) {
