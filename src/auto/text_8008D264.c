@@ -198,8 +198,9 @@ void fn_8008D6D8(void *arg0) {
     sp8 = lbl_8026CD50;
     M2C_FIELD(temp_r31, s8 *, 0x3D) = 0;
     while (M2C_FIELD(temp_r31, s8 *, 0x3D) < 4) {
-        if (lbl_803674FC[M2C_FIELD(temp_r31, s8 *, 0x3D)] == 0) {
-            lbl_803674FC[M2C_FIELD(temp_r31, s8 *, 0x3D)] = 1;
+        s32 index = M2C_FIELD(temp_r31, s8 *, 0x3D);
+        if (lbl_803674FC[index] == 0) {
+            lbl_803674FC[index] = 1;
             break;
         }
         M2C_FIELD(temp_r31, s8 *, 0x3D)++;
