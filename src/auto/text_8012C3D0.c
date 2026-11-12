@@ -2804,39 +2804,31 @@ void fn_801315B0(void* arg0, s32 arg1) {
     }
 }
 
-s32 fn_80131714(s32 arg0, s32 arg1)
+s32 fn_80131714(void *arg0, u8 *arg1, u32 arg2)
 {
-    s32 r3;
-    s32 r4;
-    
-    if (arg1 >= 6) {
-        return 0;
-    }
-    
-    switch (arg1) {
+    s32 fn_8003A398(void *);
+    s32 fn_8003A5B4(void *);
+    s32 fn_8003A1E0(void *);
+
+    void *p;
+
+    p = *(void **)arg1;
+
+    switch (arg2) {
     case 0:
-        r4 = *(u32*)(arg0 + 0x0);
-        r3 = *(u16*)(r4 + 0x188);
-        return -r3;
+        return -(s32)*(u16 *)((u8 *)*(void **)((u8 *)p + 0x188) + 0x5A);
     case 1:
-        return *(u8*)(arg0 + 0x1F);
+        return arg1[0x1F];
     case 2:
-        return *(u8*)(arg0 + 0x20);
+        return arg1[0x20];
     case 3:
-        {
-            s32 var = *(u8*)(arg0 + 0x22);
-            r3 = *(u8*)(arg0 + 0x21) + (var * 100);
-            return r3;
-        }
+        return arg1[0x21] + arg1[0x22] * 100;
     case 4:
-        r3 = fn_8003A398(arg0);
-        return r3;
+        return (s8)fn_8003A398(p);
     case 5:
-        r3 = fn_8003A5B4(arg0);
-        return r3;
+        return (s8)fn_8003A5B4(p);
     case 6:
-        r3 = fn_8003A1E0(arg0);
-        return r3;
+        return (s8)fn_8003A1E0(p);
     default:
         return 0;
     }
