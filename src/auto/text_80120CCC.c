@@ -2952,6 +2952,15 @@ void fn_80127150(void *arg0) {
     }
 }
 
+void fn_80127170(s32 arg0) {
+    void *fn_8000CAA0(void *, s32);
+    void fn_80109180(void *, void *);
+    extern u8 lbl_80290504[];
+    extern u8 lbl_80275048[];
+
+    fn_80109180(lbl_80275048 + 0x493, fn_8000CAA0(lbl_80290504, arg0));
+}
+
 void fn_80127594(void *arg0) {
     M2C_UNK fn_80109C1C(s32, M2C_UNK);
     fn_80109C1C(M2C_FIELD(arg0, s32 *, 0x30), 5);
