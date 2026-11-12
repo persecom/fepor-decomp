@@ -680,14 +680,18 @@ s32 fn_800AA76C(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 void *fn_800AA794(void) {
-    extern M2C_UNK lbl_802B14E4;
-    extern M2C_UNK lbl_802CA518;
-    extern M2C_UNK lbl_80330708;
-    u8 temp_r3;
+    extern u8 lbl_80330708[];
+    extern u8 lbl_802CA518[];
+    extern u8 lbl_802B14E4[];
+    s8 sx;
+    s8 sy;
+    u8 id;
 
-    temp_r3 = M2C_FIELD((&lbl_802CA518 + (s8) M2C_FIELD(&lbl_80330708, f32 *, 0x524) + ((s8) M2C_FIELD(&lbl_80330708, f32 *, 0x528) << 6)), u8 *, 0xD);
-    if (temp_r3 != 0) {
-        return &lbl_802B14E4 + ((temp_r3 - 1) * 0x280);
+    sx = (s8)*(f32 *)(lbl_80330708 + 0x524);
+    sy = (s8)*(f32 *)(lbl_80330708 + 0x528);
+    id = lbl_802CA518[sx + (sy << 6) + 0xD];
+    if (id != 0) {
+        return &lbl_802B14E4[(id - 1) * 0x280];
     }
     return NULL;
 }
