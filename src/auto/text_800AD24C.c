@@ -6646,12 +6646,14 @@ void fn_800BDB54(s32 arg0, s32 arg1) {
 }
 
 void fn_800BDB78(s32 arg0, s32 arg1) {
-    u8 *ptr;
-    u32 temp;
-    
-    ptr = (u8 *)arg0 + (arg1 >> 3);
-    temp = 1 << (arg1 & 7);
-    *(volatile u8 *)ptr |= temp;
+    s32 addr;
+    u8 v;
+    s32 bit;
+
+    addr = arg0 + (arg1 >> 3);
+    bit = 1 << (arg1 & 7);
+    v = *(u8 *)(addr + 0x300);
+    *(u8 *)(addr + 0x300) = v | bit;
 }
 
 s32 fn_800BDB9C(s32 arg0, s32 arg1) {
