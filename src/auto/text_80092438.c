@@ -574,28 +574,39 @@ s32 fn_80093010(void *arg0, void *arg1)
 }
 
 s32 fn_80093088(void *arg0) {
-    s32 i = 0;
-    for (;;) {
-        if (*(u32 *)fn_80037BBC(arg0, i) != 0)
-            break;
-        i++;
-        if (i == 4) {
+    void *fn_80037BBC(void *, s32);
+    s32 i;
+    s32 r;
+    s32 ok;
+
+    i = 0;
+loop:
+    if (*(u32 *)fn_80037BBC(arg0, i) == 0) {
+
+    } else {
+        i += 1;
+        if (i >= 4) {
             i = -1;
-            break;
+        } else {
+            goto loop;
         }
     }
-    if (i == 0) {
-        if (*(u32 *)((u8 *)arg0 + 0x1ec) != 0)
-            return 0;
-        if (*(u32 *)((u8 *)arg0 + 0x1f4) != 0)
-            return 1;
-        if (*(u32 *)((u8 *)arg0 + 0x1fc) != 0)
-            return 2;
-        if (*(u32 *)((u8 *)arg0 + 0x204) != 0)
-            return 3;
-        return -1;
+    ok = i == 0;
+    if (ok) {
+        if (*(u32 *)((u8 *)arg0 + 0x1ec) == 0) {
+            r = 0;
+        } else if (*(u32 *)((u8 *)arg0 + 0x1f4) == 0) {
+            r = 1;
+        } else if (*(u32 *)((u8 *)arg0 + 0x1fc) == 0) {
+            r = 2;
+        } else if (*(u32 *)((u8 *)arg0 + 0x204) == 0) {
+            r = 3;
+        } else {
+            r = -1;
+        }
+        return r == 0;
     }
-    return -1;
+    return ok;
 }
 
 void fn_80093154(s32 arg0, s32 arg1, s32 arg2) {
@@ -1250,33 +1261,26 @@ done:
     return (u8)(lim < result);
 }
 
-s32 fn_80094614(void* arg0, void* arg1) {
-    s32 r5;
-    s32 r7;
+s32 fn_80094614(void *arg0, void *arg1) {
+    u8 fn_80105BC0(void *, s32);
+    u64 flags;
 
-    r7 = *(s32*)((char*)arg1 + 0x3C);
-    r5 = *(s32*)((char*)arg1 + 0x38); 
-    
-    if ((r7 & 0x200) || (r5 & 0)) {
-        return fn_80105BC0((s32)arg0 + 0x1BC, 9) != 0;
+    flags = *(u64 *)((u8 *)arg1 + 0x38);
+    if (flags & 0x200) {
+        return (u8)fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0;
     }
-    
-    if (!(((u8)((char*)arg0)[0x1A5] >> 4U) & 7)) {
+    if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
         return 1;
     }
-    
-    if ((r7 & 2) || (r5 & 0)) {
+    if (flags & 2) {
         return 0;
     }
-    
-    if ((r7 & 4) || (r5 & 0)) {
+    if (flags & 4) {
         return 0;
     }
-    
-    if ((r7 & 0x40) || (r5 & 0)) {
+    if (flags & 0x40) {
         return 1;
     }
-    
     return 1;
 }
 
