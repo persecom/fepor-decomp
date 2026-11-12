@@ -8733,13 +8733,15 @@ void fn_80048C5C(void *arg0, s32 arg1, s32 arg2) {
 }
 
 void fn_800490F0(void *arg0) {
+    M2C_UNK fn_8005F7B0(s32, u8);
+    M2C_UNK fn_8005F7E0(s32, u8, u8, u8);
+    u8 sp[4];
     s32 temp_r31;
-    u8 sp8;
 
-    sp8 = *(u8*)((u32)arg0 + 0x3C);
-    temp_r31 = *(u32*)((u32)arg0 + 0x30) + 0x14;
-    fn_8005F7E0(temp_r31, sp8, *(u8*)((u32)arg0 + 0x31), *(u8*)((u32)arg0 + 0x32));
-    fn_8005F7B0(temp_r31, *(u8*)((u32)arg0 + 0x33));
+    *(u32 *)sp = *(u32 *)((u8 *)arg0 + 0x3C);
+    temp_r31 = *(s32 *)((u8 *)arg0 + 0x30) + 0x14;
+    fn_8005F7E0(temp_r31, sp[0], sp[1], sp[2]);
+    fn_8005F7B0(temp_r31, sp[3]);
 }
 
 void fn_80049144(void *arg0) {
