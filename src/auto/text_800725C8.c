@@ -41,14 +41,20 @@ void fn_80072624(void) {
 }
 #pragma global_optimizer on
 void fn_800726A8(s32 arg0) {
-    u8 fn_80091D74();
-    M2C_UNK fn_80183BE4(void *, s32);
-    extern M2C_UNK lbl_802EF4C8;
-    if ((M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 0), s32 *, 0x1A0) & 0x800000) && (fn_80091D74() == 0)) {
-        fn_80183BE4(M2C_FIELD(&lbl_802EF4C8, void **, 0), arg0);
+    u8 fn_80091D74(void);
+    void fn_80183BE4(void *, s32);
+    extern u8 lbl_802EF4C8[24];
+    void *p;
+    u8 *base;
+
+    p = *(void **)lbl_802EF4C8;
+    if ((*(s32 *)((u8 *)p + 0x1A0) & 0x800000) && fn_80091D74() == 0) {
+        fn_80183BE4(*(void **)lbl_802EF4C8, arg0);
     }
-    if ((M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 4), s32 *, 0x1A0) & 0x800000) && (fn_80091D74() == 0)) {
-        fn_80183BE4(M2C_FIELD(&lbl_802EF4C8, void **, 4), arg0);
+    base = lbl_802EF4C8;
+    p = *(void **)(base + 4);
+    if ((*(s32 *)((u8 *)p + 0x1A0) & 0x800000) && fn_80091D74() == 0) {
+        fn_80183BE4(*(void **)(base + 4), arg0);
     }
 }
 
