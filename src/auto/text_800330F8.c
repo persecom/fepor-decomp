@@ -9172,10 +9172,13 @@ void fn_8004A1F0(void) {
 }
 
 void fn_8004A224(void) {
-    void *fn_8000CAF0(M2C_UNK *, M2C_UNK);
-    extern M2C_UNK lbl_80285858;
-    extern s32 lbl_80367110;
-    M2C_FIELD(fn_8000CAF0(&lbl_80285858, 4), s32 *, 0x30) = 0;
+    void *fn_8000CAF0(void *, s32);
+    extern u8 lbl_80285858[];
+    extern u32 lbl_80367110;
+    void *p;
+
+    p = fn_8000CAF0(lbl_80285858, 4);
+    *(s32 *)((u8 *)p + 0x30) = 0;
     lbl_80367110 |= 0x400;
 }
 
