@@ -1021,83 +1021,85 @@ u8 fn_800939FC(void *arg0, void *arg1) {
 }
 
 u8 fn_80093DA8(void *arg0, void *arg1) {
-    u8 fn_800940B0(void *, void *);
-    u8 fn_80105BC0(void *, s32);
-    struct { unsigned ok : 8; unsigned result : 8; } t;
-    u32 *p;
-    u32 lo;
-    u32 hi;
-    u64 flags;
-    u64 flags2;
-    u8 tmp;
-    u32 m;
-
-    t.result = 0;
-    p = (u32 *)((u8 *)arg1 + 0x38);
-    lo = p[1];
-    hi = p[0];
-    flags = ((u64)hi << 32) | lo;
-    flags2 = flags;
-    m = 8;
-
-    if (flags & m) {
-        return 1;
-    }
-    m = 5;
-    if (flags & m) {
-        t.ok = 1;
-        if (flags & 1) {
-            if (!(flags2 & 1)) {
-            } else {
-                if (flags & 0x200) {
-                    if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
-                        t.ok = 1;
-                    } else {
-                        t.ok = 0;
-                    }
-                } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
-                } else if (flags & 2) {
-                    t.ok = t.result;
-                } else if (flags & 4) {
-                    t.ok = t.result;
-                } else if (flags & 0x40) {
-                    t.ok = 1;
-                }
-                if (t.ok == 0) {
-                    t.result = 0;
-                } else if (fn_800940B0(arg0, arg1) == 0) {
-                    t.result = 0;
-                } else {
-                    t.result = 1;
-                }
-            }
-        } else {
-            if (flags & 4) {
-                if (!(flags2 & 4)) {
-                } else {
-                    if (flags & 0x200) {
-                        if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
-                            t.ok = 1;
-                        } else {
-                            t.ok = 0;
-                        }
-                    } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
-                    } else if (flags & 2) {
-                        t.ok = t.result;
-                    } else if (flags & 4) {
-                        t.ok = t.result;
-                    } else if (flags & 0x40) {
-                        t.ok = 1;
-                    }
-                    if (t.ok == 0) {
-                        t.result = 0;
-                    } else if (fn_800940B0(arg0, arg1) == 0) {
-                        t.result = 0;
-                    } else {
-                        t.result = 1;
-                    }
-                }
-            }
+      u8 fn_800940B0(void *, void *);
+      u8 fn_80105BC0(void *, s32);
+      struct { unsigned ok : 8; unsigned result : 8; } t;
+      u32 *p;
+      u32 lo;
+      u32 hi;
+      u64 flags;
+      u64 flags2;
+      u8 tmp;
+      u32 m;
+  
+      t.result = 0;
+      p = (u32 *)((u8 *)arg1 + 0x38);
+      lo = p[1];
+      hi = p[0];
+      flags = ((u64)hi << 32) | lo;
+      flags2 = flags;
+      m = 8;
+  
+      if (flags & m) {
+          return 1;
+      }
+      m = 5;
+      if (flags & m) {
+          t.ok = 1;
+          if (flags & 1) {
+              if (!(flags2 & 1)) {
+              } else {
+                  if (flags & 0x200) {
+                      if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
+                          t.ok = 1;
+                      } else {
+                          t.ok = 0;
+                      }
+                  } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
+                  } else if (flags & 2) {
+                      t.ok = t.result;
+                  } else if (flags & 4) {
+                      t.ok = t.result;
+                  } else if (flags & 0x40) {
+                      t.ok = 1;
+                  }
+                  if (t.ok == 0) {
+                      t.result = 0;
+                  } else if (fn_800940B0(arg0, arg1) == 0)
+                  {
+                      t.result = 0;
+                  } else {
+                      t.result = 1;
+                  }
+              }
+          } else {
+              if (flags & 4) {
+                  if (!(flags2 & 4)) {
+                  } else {
+                      if (flags & 0x200) {
+                          if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
+                              t.ok = 1;
+                          } else {
+                              t.ok = 0;
+                          }
+                      } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
+                      } else if (flags & 2) {
+                          t.ok = t.result;
+                      } else if (flags & 4) {
+                          t.ok = t.result;
+                      } else if (flags & 0x40) {
+                          t.ok = 1;
+                      }
+                      if (t.ok == 0) {
+                          t.result = 0;
+                      } else if (fn_800940B0(arg0, arg1) == 0)
+                      {
+                          t.result = 0;
+                      } else {
+                          t.result = 1;
+                      }
+                  }
+              }
         }
         return t.result;
     }
