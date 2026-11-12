@@ -376,13 +376,17 @@ void fn_8014D698(void *arg0, u8 arg1, u8 arg2, s32 arg3, u8 arg4) {
 }
 
 s32 fn_8014D8BC(void *arg0) {
-    u8 temp_r0;
+    u8 v;
+    s32 ret;
 
-    temp_r0 = M2C_FIELD(arg0, u8 *, 0x10);
-    if ((temp_r0 >= 9U) || (temp_r0 == 0)) {
-        return 1;
+    v = *(u8 *)((u8 *)arg0 + 0x10);
+    ret = 0;
+    if (v < 9U) {
+        if (v == 0U) {
+            ret = 1;
+        }
     }
-    return 0;
+    return ret;
 }
 
 s32 fn_8014D8DC(void *arg0) {
@@ -402,18 +406,15 @@ void fn_8014D8FC(void *arg0) {
 
 s32 fn_8014DA68(void) {
     extern u8 lbl_80330708[];
-    return (lbl_80330708[0x9F] >> 7) & 1;
+    return ((lbl_80330708[0x9F] >> 7) & 1) ? 1 : 0;
 }
 
-void fn_8014DBE0(s32 arg0, s32 arg1, u8 *arg2, u16 *arg3, s32 *arg4) {
-    u8 *temp_r3;
-    s32 temp_r4;
-
-    temp_r4 = arg1 << 3;
-    temp_r3 = (u8 *)arg0 + temp_r4;
-    *arg2 = *(u8 *)temp_r3;
-    *arg3 = *(u16 *)((u8 *)temp_r3 + 0x2);
-    *arg4 = *(s32 *)((u8 *)temp_r3 + 0x4);
+void fn_8014DBE0(u8 *base, s32 idx, u8 *out0, u16 *out1, s32 *out2) {
+    idx *= 8;
+    *out0 = base[idx];
+    base += idx;
+    *out1 = *(u16 *)(base + 2);
+    *out2 = *(s32 *)(base + 4);
 }
 
 s32 fn_8014DC04(void *arg0) {
