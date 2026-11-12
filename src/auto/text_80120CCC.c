@@ -1672,7 +1672,9 @@ void fn_801248E4(void *arg0) {
         ptr = *(void **)data;
 
         if (ptr != NULL) {
-            fn_800C426C((u8 *)ptr - 0x10);
+            if (ptr != NULL) {
+                fn_800C426C((u8 *)ptr - 0x10);
+            }
             *(void **)data = NULL;
         }
 
