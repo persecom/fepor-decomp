@@ -908,8 +908,14 @@ void fn_80164940(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
     fn_8008AB7C(arg1 + (arg3 >> 1), arg2 + (arg4 >> 1), arg3, 0x18, 0x19, 0x4C, arg5);
 }
 
-void fn_80164994(s16 arg1, s16 arg2, s32 arg4, s32 arg5) {
-    fn_8008D510(arg4, arg5, arg1, arg2);
+void fn_80164994(s32 arg0, s32 arg1, s32 arg2, s32 arg3, void *arg4, s32 arg5) {
+    void fn_8008D510(void *, s32, s16, s16);
+    s16 t1;
+    s16 t2;
+    void *p = arg4;
+    t2 = (s16)arg2;
+    t1 = (s16)arg1;
+    fn_8008D510(p, arg5, t1, t2);
 }
 
 s32 fn_801649C8(void *arg0, s32 *arg1) {
@@ -6950,10 +6956,12 @@ void fn_80172C44(void *arg0) {
 }
 
 s32 fn_80172C68(void *arg0) {
-    if ((arg0 == NULL) || ((u32) M2C_FIELD(arg0, u32 *, 0) == 0U)) {
+    s32 bit;
+    if (arg0 == NULL || *(u32 *)arg0 == 0) {
         return 0;
     }
-    return (((u8) M2C_FIELD(arg0, u8 *, 5) >> 7U) & 1) != 0;
+    bit = (*(u8 *)((u8 *)arg0 + 5) >> 7) & 1;
+    return bit != 0;
 }
 
 void fn_80172C9C(void *arg0) {
