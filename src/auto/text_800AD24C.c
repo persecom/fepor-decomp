@@ -3810,10 +3810,11 @@ void fn_800B8208(s32 arg0) {
     }
 }
 
-s32 fn_800B8250(s8 arg0, s8 arg1, u8 arg2, s32 arg3) {
-    M2C_UNK fn_8010FD70(M2C_UNK *, s8, s8, u8, s32);
-    extern M2C_UNK lbl_8032BB58;
-    fn_8010FD70(&lbl_8032BB58, arg0, arg1, arg2, arg3);
+s32 fn_800B8250(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    void fn_8010FD70(void *, s8, s8, u8, s32);
+    extern u8 lbl_8032BB58[];
+
+    fn_8010FD70(lbl_8032BB58, arg0, arg1, arg2, arg3);
     return 1;
 }
 
