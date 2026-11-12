@@ -3856,22 +3856,27 @@ s32 fn_800B7C4C(u8 arg0, s16 arg1) {
     return 1;
 }
 
-s32 fn_800B7D08(u8 arg0, s16 arg1) {
-    M2C_UNK fn_80146B00();
-    M2C_UNK fn_80148888(void *, s16);
-    extern M2C_UNK lbl_8032FF08;
-    u8 var_r31;
-    void *temp_r30;
+s32 fn_800B7D08(s32 arg0, s16 arg1) {
+    void fn_80146B00(void);
+    void fn_80148888(void *, s16);
+    typedef u8 (*VtblFunc)(void *);
+    extern u8 lbl_8032FF08[];
+    u8 ok;
+    u8 *obj;
+    VtblFunc *vt;
 
-    var_r31 = 0;
-    temp_r30 = &lbl_8032FF08 + (arg0 * 0x30);
-    if ((M2C_FIELD(temp_r30, u8 *, 0xC) & 1) && (M2C_FIELD(M2C_FIELD(temp_r30, void **, 8), u8 (**)(void *), 8)(temp_r30) != 0)) {
-        var_r31 = 1;
+    ok = 0;
+    obj = lbl_8032FF08 + ((u8)arg0 * 0x30);
+    if (obj[0xC] & 1) {
+        vt = *(VtblFunc **)(obj + 8);
+        if (vt[2](obj) != 0) {
+            ok = 1;
+        }
     }
-    if (var_r31 != 0) {
-        fn_80148888(temp_r30, arg1);
+    if (ok != 0) {
+        fn_80148888(obj, arg1);
     }
-    if ((s32) arg0 == 0) {
+    if (arg0 == 0) {
         fn_80146B00();
     }
     return 1;
@@ -4548,20 +4553,22 @@ s32 fn_800B9130(u32 arg0, s32 arg1) {
 }
 
 s32 fn_800B91AC(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    void *fn_801CF760(u32);
+    void fn_801CFD60(void *, s32, s32, s32, s32);
     extern s32 lbl_80367110;
-    s32 fn_801CF760(void);
-    void fn_801CFD60(s32, s32, s32, s32);
-    
+    void *p;
+
     if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
         return 0;
     }
     if (lbl_80367110 & 1) {
         return 0;
     }
-    if (fn_801CF760() == 0) {
+    p = fn_801CF760(arg0);
+    if (p == NULL) {
         return 0;
     }
-    fn_801CFD60(arg1, arg2, arg3, arg4);
+    fn_801CFD60(p, arg1, arg2, arg3, arg4);
     return 1;
 }
 
