@@ -1625,15 +1625,19 @@ void fn_8012DFA8(void *arg0) {
     *(void **)(self + 0x34) = fn_80059208(&fn_8012F360, self);
     lbl_802EF4C8[8] = 0x80;
 }
-void fn_8012EF04(s32 arg0) {
-    extern u16 lbl_80275AC0[];
-    u16* ptr = &lbl_80275AC0[0x67];
-    fn_8005C8B4(ptr, &lbl_80275AC0);
-    if (fn_8005BA10(ptr) != 0) {
+#pragma global_optimizer off
+void fn_8012EF04(void *arg0) {
+    u8 fn_8005BA10(void *);
+    void fn_8005C8B4(void *);
+    void fn_8000C188(void *);
+    extern u8 lbl_80275AC0[];
+
+    fn_8005C8B4(lbl_80275AC0 + 0xC7);
+    if (fn_8005BA10(lbl_80275AC0 + 0xC7)) {
         fn_8000C188(arg0);
     }
 }
-
+#pragma global_optimizer on
 s32 fn_8012F26C(void) {
     return 0;
 }
