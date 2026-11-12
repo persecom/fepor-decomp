@@ -236,34 +236,30 @@ s32 fn_8005B448(s32 arg0, s32 arg1, s32 *arg2, u8 (*arg3)(s32, s32)) {
     return lo;
 }
 
+#pragma global_optimizer off
 s32 fn_8005B4D8(s32 arg0) {
     s32 fn_8000D2BC(void *);
-    u32 fn_8000D354(void *, void *);
+    void *fn_8000D354(void *);
     s32 fn_8001B894(s32 *);
     void fn_8001B940(s32 *);
-    extern u16 lbl_8026B308[];
-    
+    extern u8 lbl_8026B308[];
     s32 sp8;
-    s32 var_r31;
-    
-    if (fn_8000D354(&lbl_8026B308[4], lbl_8026B308) != 0U) {
-        sp8 = fn_8000D2BC(&lbl_8026B308[4]);
+    s32 i;
+
+    if (fn_8000D354(lbl_8026B308 + 8) != 0) {
+        sp8 = fn_8000D2BC(lbl_8026B308 + 8);
         fn_8001B940(&sp8);
         fn_8001B940(&sp8);
         fn_8001B940(&sp8);
         fn_8001B940(&sp8);
-        var_r31 = 0;
-loop_3:
-        if (var_r31 < arg0) {
+        for (i = 0; i < arg0; i++) {
             fn_8001B894(&sp8);
-            var_r31 += 1;
-            goto loop_3;
         }
         return fn_8001B894(&sp8);
     }
     return 0;
 }
-
+#pragma global_optimizer on
 void fn_8005B73C(void *arg0) {
     M2C_UNK fn_8000E0E4(s32);
     fn_8000E0E4(M2C_FIELD(arg0, s32 *, 4));
@@ -4061,6 +4057,51 @@ loop_1:
     if (temp_r3 == 0) {
         // Placeholder - this would require proper struct access  
     }
+}
+
+s32 fn_80064F24(s16 *arr, s32 key, s32 n) {
+    s32 mid;
+    s32 high;
+    s32 low;
+    u16 val;
+
+    if (n == 0) {
+        mid = -1;
+    } else {
+        high = n - 1;
+        low = 0;
+        goto check;
+    body:
+        mid = low + ((high - low) >> 1);
+        val = (u16)arr[mid * 2];
+        if (val < key) {
+            low = mid + 1;
+            goto check;
+        }
+        if (val > key) {
+            high = mid - 1;
+            goto check;
+        }
+        goto done;
+    check:
+        if (low <= high) {
+            goto body;
+        }
+        if (high < 0) {
+            mid = -1;
+        } else {
+            mid = n - 1;
+            if (low <= mid) {
+                if (arr[low * 2] <= key) {
+                    mid = low;
+                } else {
+                    mid = low - 1;
+                }
+            }
+        }
+    }
+done:
+    return mid;
 }
 
 #pragma dont_inline reset
