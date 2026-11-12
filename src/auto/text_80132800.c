@@ -8740,42 +8740,61 @@ extern "C" void fn_801439F0(void *arg0, s32 arg1, s32 arg2) {
         fn_80144EAC(&result, base, &entry, pair);
     }
 }
-#pragma cplusplus reset
-void *fn_80143A84(void *arg0) {
-    u8 *obj;
-    u8 *record;
-    u8 *node;
+#pragma cplusplus on
+extern "C" void *fn_80143A84(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual s32 v10() = 0;
+    };
+    struct Node {
+        struct Node *prev;
+        struct Node *next;
+    };
     s32 index;
-    s16 offset;
+    s32 off;
+    u8 *record;
+    s32 tmp;
+    s16 n;
+    Node *node;
 
-    obj = (u8 *)arg0;
-
-    index = ((s32 (*)(void *))(*(void **)(*(u8 **)obj + 0x30)))(arg0);
-
-    record = obj + 0x90 + index * 12;
-
+    index = ((Obj *)arg0)->v10();
+    off = (index << 1) + 0x64;
+    record = (u8 *)arg0 + index * 0xC + 0x90;
     if (*(u32 *)record == 0) {
         return NULL;
     }
-
-    offset = *(s16 *)(obj + 0x64 + index * 2);
-    node = *(u8 **)(record + 8);
-
-    if (offset >= 0) {
-        while (offset > 0) {
-            node = *(u8 **)(node + 4);
-            offset--;
-        }
+    tmp = *(s16 *)((u8 *)arg0 + off);
+    node = *(Node **)(record + 8);
+    n = (s16)tmp;
+    if (n >= 0) {
+        goto loop_pos;
+        do {
+            node = node->next;
+            n -= 1;
+        loop_pos:
+            ;
+        } while (n > 0);
     } else {
-        while (offset < 0) {
-            node = *(u8 **)node;
-            offset++;
-        }
+        goto loop_neg;
+        do {
+            node = node->prev;
+            n += 1;
+        loop_neg:
+            ;
+        } while (n < 0);
     }
-
-    return node + 8;
+    return (u8 *)node + 8;
 }
-
+#pragma cplusplus reset
 void fn_80143B24(s32 arg0) {
     M2C_UNK __ptmf_scall(u32);
     M2C_UNK memset(s32, M2C_UNK, M2C_UNK);
@@ -9857,11 +9876,11 @@ void *fn_80145EBC(void *arg0) {
     s32 count;
     u8 *entry;
     s32 index;
-    u8 *table;
+    s32 *table;
 
-    table = (u8 *)fn_8000D2BC(lbl_80276BC8 + 0x94);
-    entry = table + 4;
-    count = *(s32 *)table;
+    table = (s32 *)fn_8000D2BC(lbl_80276BC8 + 0x94);
+    entry = (u8 *)(table + 1);
+    count = *table;
     index = 0;
     while (index < count) {
         if (*(void **)entry != NULL) {
