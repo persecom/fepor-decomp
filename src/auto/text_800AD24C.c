@@ -1191,12 +1191,23 @@ void fn_800B1B80(s32 arg0, s16 arg1)
     }
 }
 
-s32 fn_800B1BFC(s32 arg0)
+void fn_800B1BFC(s32 arg0, s32 arg1)
 {
-    extern u16 lbl_80317338[4976];
-    s16 val = lbl_80317338[arg0];
-    lbl_80317338[arg0] = val - 1;
-    return val;
+    extern u8 lbl_80317338[];
+    void fn_8024B654(s32, s32, s32);
+    u8 *sys;
+    u8 *p;
+    s32 off;
+    u32 value;
+
+    sys = lbl_80317338;
+    off = arg0 * 0x14;
+    p = *(u8 **)(sys + 0xF4);
+    p[off + 8] = arg1;
+    value = *(u32 *)(*(u8 **)(sys + 0xF4) + off + 0xC);
+    if (value != 0xFFFFFFFFu) {
+        fn_8024B654((s32)value, 0x83, arg1);
+    }
 }
 
 void fn_800B1C54(s32 arg0, u8 arg1)
@@ -1277,17 +1288,20 @@ void fn_800B1D68(s32 arg0, u8 arg1) {
     }
 }
 
-s32 fn_800B1DEC(s32 arg0, s32 arg1) {
-    extern u16 lbl_80317338[];
-    s32 temp;
-    
-    temp = (s32)lbl_80317338[arg0 * 0x14 + 0xF4 / 2];
-    
-    if ((temp & 0x1000) != 0) {
-        return fn_8024B6B4(0x80, arg1);
+void fn_800B1DEC(s32 arg0, s32 arg1)
+{
+    void fn_8024B6B4(s32, s32, s32);
+    extern u8 lbl_80317338[];
+    u8 *entry;
+    u8 *base;
+    u32 handle;
+
+    base = *(u8 **)(lbl_80317338 + 0xF4);
+    entry = base + arg0 * 0x14;
+    handle = *(u32 *)(entry + 0xC);
+    if (handle != 0xFFFFFFFFu) {
+        fn_8024B6B4((s32)handle, 0x80, (u16)(*(u16 *)(entry + 0xA) + arg1));
     }
-    
-    return 0;
 }
 
 void fn_800B1E44(s32 arg0)
@@ -6705,8 +6719,14 @@ void fn_800BDB78(s32 arg0, s32 arg1) {
 }
 
 s32 fn_800BDB9C(s32 arg0, s32 arg1) {
-    u8 *ptr = (u8*)arg0 + (arg1 >> 3);
-    return (ptr[0x300] & (1 << (arg1 & 7))) != 0;
+    s32 addr;
+    u8 v;
+    s32 bit;
+
+    addr = arg0 + (arg1 >> 3);
+    bit = 1 << (arg1 & 7);
+    v = *(u8 *)(addr + 0x300);
+    return (v & bit) != 0;
 }
 
 #pragma use_lmw_stmw on
