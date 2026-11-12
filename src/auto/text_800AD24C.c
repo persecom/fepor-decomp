@@ -227,6 +227,32 @@ void fn_800AD92C(s32 arg0) {
     fn_8014CBD8(lbl_80330708, (f32)*(s8 *)((u8 *)temp_r3 + 0x19E), (f32)*(s8 *)((u8 *)temp_r3 + 0x19F));
 }
 
+void fn_800AD9C8(void *arg0) {
+    void fn_80029858(u8, u8);
+    void fn_80199CC0(void *);
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_80330EAC[];
+    void *a;
+    u8 *base;
+    void *p;
+    u16 n;
+    s32 z;
+
+    fn_80029858(lbl_802EF4C8[0xF], lbl_802EF4C8[0x10]);
+    z = 0;
+    base = lbl_80330EAC;
+    a = arg0;
+    *(void **)((u8 *)arg0 + 0x30) = *(void **)(base + 0x280);
+    *(s16 *)((u8 *)arg0 + 0x34) = *(s16 *)(base + 0x298);
+    *(s16 *)((u8 *)arg0 + 0x36) = *(s16 *)(base + 0x29E);
+    *(s16 *)((u8 *)arg0 + 0x38) = *(s16 *)(base + 0x2A4);
+    *(u8 *)((u8 *)arg0 + 0x3A) = z;
+    p = *(void **)((u8 *)arg0 + 0x30);
+    n = *(u16 *)((u8 *)p + 0x228);
+    *(u16 *)((u8 *)p + 0x228) = n + 1;
+    fn_80199CC0(a);
+}
+
 s32 fn_800ADB74(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 temp0, temp1, temp2, temp3;
     s32 var_r3, var_r4;
@@ -3189,9 +3215,9 @@ u8 fn_800B6DF0(void) {
     return *(u8 *)((u8 *)lbl_80330708 + 0x56);
 }
 
-s32 fn_800B6E8C(s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    f32 fn_800067BC(f32, f32, f32, f32);
-    return (s32) fn_800067BC((f32) arg1, (f32) arg2, (f32) arg3, (f32) arg4);
+s32 fn_800B6E8C(s32 mode, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    f32 fn_800067BC(s32, f32, f32, f32, f32);
+    return (s32)fn_800067BC(mode, (f32)arg1, (f32)arg2, (f32)arg3, (f32)arg4);
 }
 
 s32 fn_800B6F10(void)
