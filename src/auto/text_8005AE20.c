@@ -1851,14 +1851,14 @@ loop_5:
     return 0;
 }
 
-void fn_8005F410(void* arg0) {
+void *fn_8005F410(void *arg0) {
     if (arg0 == NULL) {
-        return;
+        return NULL;
     }
-    if (*(void**)((char*)arg0 + 0x8c) == NULL) {
-        return;
+    if (*(void **)((char *)arg0 + 0x8c) == NULL) {
+        return arg0;
     }
-    fn_8005F410(*(void**)((char*)arg0 + 0x8c));
+    return fn_8005F410(*(void **)((char *)arg0 + 0x8c));
 }
 
 void fn_8005F434(void *arg0, void *arg1, void *arg2)
