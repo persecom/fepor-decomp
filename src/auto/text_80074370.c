@@ -1138,12 +1138,15 @@ void fn_80076840(void) {
     fn_8000E0E4(&lbl_8026C0B8[0x2DC / sizeof(u16)]);
 }
 
-void fn_80076910(void *arg2) {
-    extern u16 lbl_802EF4C8[];
-    if ((u8) M2C_FIELD(arg2, u8 *, 0x39) == 0) {
-        M2C_FIELD(&lbl_802EF4C8, s8 *, 8) = 0x1D;
+s32 fn_80076910(s32 arg0, s32 arg1, void *arg2) {
+    extern u8 lbl_802EF4C8[];
+    u8 *p;
+    if (*((u8 *)arg2 + 0x39) != 0) {
+        return 0x10;
     }
-    return;
+    p = lbl_802EF4C8;
+    p[8] = 0x1d;
+    return 5;
 }
 
 s32 fn_8007693C(void) {
