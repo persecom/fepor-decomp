@@ -12492,4 +12492,3 @@ extern f32 lbl_8036A9DC;
 extern f32 lbl_8036A9E0;
 extern f64 lbl_8036A9B8;
 extern u16 lbl_80293BB8;
-static inline u8 copy_flag_u8(s32 x) { return (u8)x; }
