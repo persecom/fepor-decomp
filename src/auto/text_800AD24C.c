@@ -1586,10 +1586,10 @@ void fn_800B28DC(void) {
 }
 
 void fn_800B28FC(s32 arg0) {
-    M2C_UNK fn_8024B94C(M2C_UNK *);
-    extern M2C_UNK lbl_80317338;
-    M2C_FIELD(&lbl_80317338, s32 *, 0x130) = arg0;
-    fn_8024B94C(&lbl_80317338);
+    extern u8 lbl_80317338[];
+    void fn_8024B94C(void);
+    *(s32 *)(lbl_80317338 + 0x130) = arg0;
+    fn_8024B94C();
 }
 
 #pragma global_optimizer off
