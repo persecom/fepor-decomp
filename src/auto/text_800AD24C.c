@@ -1485,11 +1485,23 @@ void fn_800B2584(s32 arg0)
     }
 }
 
-s16 fn_800B25EC(s32 arg0) {
-    extern u16 lbl_80317338[];
-    s16 val = lbl_80317338[arg0];
-    lbl_80317338[arg0] = val - 1;
-    return val;
+void fn_800B25EC(s32 arg0)
+{
+    extern u8 lbl_80317338[];
+    s32 fn_8024B370(s32);
+    void fn_8024B3A0(s32);
+    u8 *base;
+    u8 *table;
+    s32 offset;
+
+    base = lbl_80317338;
+    offset = arg0 << 4;
+    table = *(u8 **)(base + 0xF0);
+
+    if ((u8)fn_8024B370(*(s32 *)(table + offset)) != 0) {
+        fn_8024B3A0(*(s32 *)(table + offset));
+        *(s32 *)(table + offset) = -1;
+    }
 }
 
 void fn_800B2648(s32 arg0) {
