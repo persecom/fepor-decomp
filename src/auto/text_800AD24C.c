@@ -5528,6 +5528,12 @@ s32 fn_800BBB58(s32 arg0, s32 arg1) {
     return (u8)fn_80036F5C(temp_r30, temp_r31);
 }
 
+u8 fn_800BBC14(void) {
+    s32 fn_801E3308(void *);
+    extern u8 lbl_80331FB8[];
+    return (u8)fn_801E3308(lbl_80331FB8);
+}
+
 s32 fn_800BBC40(void) {
     extern u16 lbl_80330EAC[];
     return *(s32 *)((u8 *)lbl_80330EAC + 0xcac);
