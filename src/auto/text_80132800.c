@@ -5811,10 +5811,53 @@ s32 fn_8013E588(void) {
     return 0x1C;
 }
 
-void fn_8013E590(void *arg0) {
-    M2C_FIELD(M2C_FIELD(arg0, void **, 4), M2C_UNK (**)(), 0xA0)();
+#pragma cplusplus on
+extern "C" void fn_8013E590(void *arg0) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual void v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual void v25() = 0;
+        virtual void v26() = 0;
+        virtual void v27() = 0;
+        virtual void v28() = 0;
+        virtual void v29() = 0;
+        virtual void v30() = 0;
+        virtual void v31() = 0;
+        virtual void v32() = 0;
+        virtual void v33() = 0;
+        virtual void v34() = 0;
+        virtual void v35() = 0;
+        virtual void v36() = 0;
+        virtual void v37() = 0;
+        virtual void v38() = 0;
+    };
+    ((Obj *)arg0)->v38();
 }
-
+#pragma cplusplus reset
 s16 fn_8013E5BC(void *arg0) {
     s32 temp_r31;
     s16 temp_r4;
@@ -6294,16 +6337,25 @@ s32 fn_8013FBD4(s32 arg0) {
     return arg0 + 0xA;
 }
 
-void fn_8013FBDC(void *arg0, void *arg1) {
-    s16 *a0 = (s16 *)arg0;
-    s16 *a1 = (s16 *)arg1;
-    a0[0] = a0[0] + a1[0];
-    a0[1] = a0[1] + a1[1];
+void fn_8013FBDC(s16 *dst, s16 *src) {
+    s16 dx = dst[0];
+    s16 sx = src[0];
+    s16 sy = src[1];
+    s16 dy;
+    dx = (s16)(dx + sx);
+    dst[0] = dx;
+    dy = dst[1];
+    dy = (s16)(dy + sy);
+    dst[1] = dy;
 }
 
-void fn_8013FC00(void *arg0, void *arg1) {
-    *(s16 *)((char *)arg0 + 0x0) = *(s16 *)((char *)arg1 + 0x0);
-    *(s16 *)((char *)arg0 + 0x2) = *(s16 *)((char *)arg1 + 0x2);
+void fn_8013FC00(s16 *dst, s16 *src) {
+    s16 a;
+    s16 b;
+    b = src[1];
+    a = src[0];
+    dst[0] = a;
+    dst[1] = b;
 }
 
 #pragma scheduling off
