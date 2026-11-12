@@ -311,7 +311,7 @@ extern u8 lbl_80311FD8[];
 extern s32 lbl_80367468;
 extern s32 lbl_8036746C;
 extern s32 lbl_80312000;
-extern s32 lbl_802EF4C8;
+extern u8 lbl_802EF4C8[24];
 void fn_80073BE4(s32 arg0) {
     M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
 
