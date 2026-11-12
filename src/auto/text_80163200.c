@@ -3704,17 +3704,17 @@ void fn_8016B800(void *arg0) {
 
 void fn_8016B9EC(void *arg0) {
     s32 fn_80059208(void *, void *);
-    u16 fn_8005C6A0(char *);
+    u16 fn_8005C6A0(void *);
     void fn_8006EEFC(void *, void *);
     void fn_8000C188(void *);
     void fn_8016E0E4(void *);
     extern u8 lbl_80277EA0[];
 
-    if (fn_8005C6A0((char *)lbl_80277EA0 + 0x78) & 0x2000) {
-        fn_8006EEFC((char *)arg0 + 0x38, (char *)lbl_80277EA0 + 0x78);
+    if (fn_8005C6A0(&lbl_80277EA0[0x78]) & 0x2000) {
+        fn_8006EEFC((char *)arg0 + 0x38, (void *)((s32)lbl_80277EA0 + 0x78));
+        *(s32 *)((char *)arg0 + 0x60) = fn_80059208(fn_8016E0E4, arg0);
+        fn_8000C188(arg0);
     }
-    *(s32 *)((char *)arg0 + 0x60) = fn_80059208(fn_8016E0E4, arg0);
-    fn_8000C188(arg0);
 }
 
 void fn_8016BA5C(void *arg0) {
