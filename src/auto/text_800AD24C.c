@@ -177,10 +177,10 @@ void fn_800AD64C(s32 arg0) {
 
 #pragma optimization_level reset
 void fn_800AD678(void) {
-    M2C_UNK fn_801A4BE0(M2C_UNK *);
-    extern M2C_UNK lbl_80330EAC;
-    M2C_FIELD(&lbl_80330EAC, s32 *, 0xCAC) = (s32) (M2C_FIELD(&lbl_80330EAC, s32 *, 0xCAC) | 1);
-    fn_801A4BE0(&lbl_80330EAC);
+    void fn_801A4BE0(void *);
+    extern u8 lbl_80330EAC[];
+    *(s32 *)(lbl_80330EAC + 0xCAC) |= 1;
+    fn_801A4BE0(lbl_80330EAC);
 }
 
 void fn_800AD6AC(void *arg0) {
@@ -6663,10 +6663,8 @@ void fn_800BDB78(s32 arg0, s32 arg1) {
 }
 
 s32 fn_800BDB9C(s32 arg0, s32 arg1) {
-    s32 shift = arg1 & 7;
     u8 *ptr = (u8*)arg0 + (arg1 >> 3);
-    u8 byte = ptr[0x300];
-    return (byte & (1 << shift)) != 0;
+    return (ptr[0x300] & (1 << (arg1 & 7))) != 0;
 }
 
 #pragma use_lmw_stmw on
