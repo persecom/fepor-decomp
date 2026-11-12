@@ -3953,10 +3953,70 @@ extern "C" void fn_80139884(void *arg0, s32 arg1) {
 }
 #pragma cplusplus reset
 
-void *fn_80139A50(void) {
-    extern u16 lbl_80276008[];
-    return &lbl_80276008[0x1D8];
+#pragma cplusplus on
+extern "C" void fn_80139A50(s32 *arg0, void *arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual s32 v11() = 0;
+    };
+    struct Point {
+        s16 x;
+        s16 y;
+    };
+    struct Point *fn_8013F748(void *, struct Point *, struct Point *);
+    struct Point out2;
+    struct Point in2;
+    struct Point in;
+    struct Point out;
+    s32 vret;
+    s16 v4e;
+    s16 v58;
+    s16 v56;
+    s16 v5a;
+    s16 v62;
+    s16 v64;
+    s32 quot;
+    s32 rem;
+    s16 adj;
+
+    v4e = *(s16 *)((u8 *)arg1 + 0x4E);
+    if (v4e != 0x7FFF) {
+        vret = ((Obj *)arg1)->v11();
+        v4e = *(s16 *)((u8 *)arg1 + 0x4E);
+        v58 = *(s16 *)((u8 *)arg1 + 0x58);
+        v56 = *(s16 *)((u8 *)arg1 + 0x56);
+        quot = v4e / v58;
+        v5a = *(s16 *)((u8 *)arg1 + 0x5A);
+        v62 = *(s16 *)((u8 *)arg1 + 0x62);
+        v64 = *(s16 *)((u8 *)arg1 + 0x64);
+        rem = quot * v58;
+        adj = (s16)quot;
+        adj = adj - v56;
+        rem = v4e - rem;
+        adj = (s16)adj;
+        rem = (s16)rem;
+        in.x = vret * rem + v62;
+        in.y = v5a * adj + v64;
+        *arg0 = *(s32 *)fn_8013F748(arg1, &out, &in);
+    } else {
+        s16 a14 = *(s16 *)((u8 *)arg1 + 0x14);
+        s16 a18 = *(s16 *)((u8 *)arg1 + 0x18);
+        in2.x = *(s16 *)((u8 *)arg1 + 0x62);
+        in2.y = a18 - a14;
+        *arg0 = *(s32 *)fn_8013F748(arg1, &out2, &in2);
+    }
 }
+#pragma cplusplus reset
 
 #pragma use_lmw_stmw on
 #pragma cplusplus on
