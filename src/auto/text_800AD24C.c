@@ -3034,18 +3034,14 @@ s32 fn_800B6A38(void) {
     return 1;
 }
 
-void fn_800B6A70(s32 arg0, s32 arg1, s32 arg2) {
-    if (arg0 < 0) {
-        arg0 = 0;
-    }
-    if (arg1 < 0) {
-        arg1 = 0;
-    }
-    if (arg2 < 0) {
-        arg2 = 0;
-    }
-    *(s32 *)(arg0 + 0x7C) = arg1;
-    *(s32 *)(arg0 + 0x80) = arg2;
+s32 fn_800B6A70(void) {
+    void fn_80025690(s32, s32);
+    extern s32 lbl_80367240;
+    extern s32 lbl_80367110;
+
+    fn_80025690(lbl_80367240, 0x1F70);
+    lbl_80367110 |= 0x2000;
+    return 1;
 }
 
 s32 fn_800B6AA8(s32 arg0) {
