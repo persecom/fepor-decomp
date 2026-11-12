@@ -8220,7 +8220,7 @@ void fn_800B080C(s32 arg0, s32 arg1, s32 arg2) {
     extern f32 lbl_80369CD4;
     extern u8 lbl_80319AA8[];
     extern u8 lbl_8026EB70[];
-    extern u8 fn_800AFF28[];
+    void fn_800AFF28(s32, u32);
 
     u8 *buf;
     u16 flags;
