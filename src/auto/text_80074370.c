@@ -289,11 +289,15 @@ void *fn_80074DDC(void) {
 
 extern s32 *fn_80037BD0(s32, u8);
 extern u8 fn_8001C0C8(void);
-s32 fn_80074DEC(u8 arg2) {
-    if ((u32)*fn_80037BD0(((s32 *)D_802EF4C8)[1], arg2) == 0U) {
+s32 fn_80074DEC(s32 arg0, s32 arg1, s32 arg2) {
+    extern u8 lbl_802EF4C8[24];
+    s32 *fn_80037BD0(s32, u8);
+    u8 fn_8001C0C8(void);
+
+    if ((u32)*fn_80037BD0(*(s32 *)(lbl_802EF4C8 + 4), (u8)arg2) == 0U) {
         return 3;
     }
-    return 2 & -((fn_8001C0C8() == 0) & 1);
+    return (fn_8001C0C8() == 0) ? 2 : 0;
 }
 
 #pragma cplusplus on
