@@ -7479,17 +7479,17 @@ void fn_8013FC00(s16 *dst, s16 *src)
 }
 
 #pragma scheduling off
-void fn_8013FC14(s16 *dst, s16 *src) {
-    struct { s16 x; s16 y; } *d;
-    struct { s16 x; s16 y; } *s;
-    s16 x;
-    s16 y;
-    d = (void *)dst;
-    s = (void *)src;
-    x = s->x;
-    y = s->y;
-    d->x = x;
-    d->y = y;
+void fn_8013FC14(s16 *dst, s16 *src)
+{
+  s16 a;
+  s16 b;
+  int new_var;
+  b = src[0];
+  a = b;
+  b = src[1];
+  dst[0] = a;
+  new_var = 1;
+  dst[new_var] = b;
 }
 
 #pragma scheduling off
