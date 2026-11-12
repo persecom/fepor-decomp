@@ -224,3 +224,37 @@ u8 fn_8014BC10(void *arg0) {
     return (u8)(0x45 - score / 3);
 }
 
+unsigned int fn_8014C12C(void *arg0)
+{
+  void *fn_80019F04(u8);
+  u8 id;
+  u8 *table;
+  s16 value;
+  s32 grade;
+  id = *((u8 *) (((u8 *) arg0) + 0x10));
+  if (id < 0x5A)
+  {
+    return 0x2D;
+  }
+  table = (u8 *) fn_80019F04(id);
+  value = *((s16 *) (((u8 *) arg0) + 0x12));
+  grade = 0x45;
+  if (value <= table[0x57])
+  {
+    grade = 0x44;
+    if (value <= table[0x56])
+    {
+      grade = 0x43;
+      if (value <= table[0x55])
+      {
+        grade = 0x42;
+        if (value <= table[0x54])
+        {
+          grade = 0x41;
+        }
+      }
+    }
+  }
+  return grade;
+}
+
