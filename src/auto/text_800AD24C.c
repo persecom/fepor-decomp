@@ -181,7 +181,7 @@ s32 fn_800AD310(s32 arg0) {
     return 1;
 }
 
-void fn_800AD554(void *arg0) {
+void fn_800AD554(UnkAD554 *arg0) {
     void fn_8000C070(void *, s32);
     void fn_800283C8(void *, void *);
     void fn_8002629C(void *, void *);
@@ -192,13 +192,13 @@ void fn_800AD554(void *arg0) {
     void *ptr;
     u8 kind;
 
-    idx = *(s16 *)((u8 *)arg0 + 0x6E);
-    *(s16 *)((u8 *)arg0 + 0x6E) = (s16)(idx + 1);
-    count = *(s16 *)((u8 *)arg0 + 0x6C);
+    idx = arg0->cursor;
+    arg0->cursor = idx + 1;
+    count = arg0->count;
     if (count >= 0xC) {
         ptr = NULL;
     } else {
-        ptr = *(void **)((u8 *)arg0 + (idx * 4) + 0x30);
+        ptr = arg0->entries[idx];
     }
     if (ptr == NULL) {
         fn_8000C070(arg0, 0x63);
@@ -207,13 +207,13 @@ void fn_800AD554(void *arg0) {
     if (count >= 0xC) {
         ptr = NULL;
     } else {
-        ptr = *(void **)((u8 *)arg0 + (idx * 4) + 0x30);
+        ptr = arg0->entries[idx];
     }
     fn_800283C8(lbl_802EF4C8, ptr);
-    if (*(s16 *)((u8 *)arg0 + 0x6C) >= 0xC) {
+    if (arg0->count >= 0xC) {
         kind = 0;
     } else {
-        kind = *((u8 *)arg0 + idx + 0x60);
+        kind = arg0->kinds[idx];
     }
     switch (kind) {
     case 1:
@@ -1393,23 +1393,13 @@ void fn_800B1B80(s32 arg0, s16 arg1)
     }
 }
 
-void fn_800B1BFC(s32 arg0, s32 arg1)
-{
-    extern u8 lbl_80317338[];
-    void fn_8024B654(s32, s32, s32);
-    u8 *sys;
-    u8 *p;
-    s32 off;
-    u32 value;
-
-    sys = lbl_80317338;
-    off = arg0 * 0x14;
-    p = *(u8 **)(sys + 0xF4);
-    p[off + 8] = arg1;
-    value = *(u32 *)(*(u8 **)(sys + 0xF4) + off + 0xC);
-    if (value != 0xFFFFFFFFu) {
-        fn_8024B654((s32)value, 0x83, arg1);
-    }
+void fn_800B1BFC(s32 arg0, s32 arg1) {
+extern u8 lbl_80317338[]; void fn_8024B654(s32,s32,s32);
+u8 *sys; u8 *p; s32 off; u32 value;
+sys=lbl_80317338; off=arg0*20+8;
+p=*(u8 **)(sys+0xF4); p[off]=arg1;
+value=*(u32 *)(*(u8 **)(sys+0xF4)+(off+4));
+if(value!=0xFFFFFFFFu) fn_8024B654(value,0x83,arg1);
 }
 
 void fn_800B1C54(s32 arg0, s32 arg1)
@@ -5366,27 +5356,19 @@ s32 fn_800B98B8(u32 arg0) {
 
 #pragma optimization_level 1
 void fn_800B995C(void *arg0) {
+    void fn_8000C188();
     s32 base;
     s32 shift;
     s32 flags;
-    void *p;
-
     base = 0x100;
     shift = 0;
-    p = *(void **)((u8 *)arg0 + 0x54);
-    flags = *(s32 *)((u8 *)p + 8);
-    if ((flags & (base << shift)) != 0) {
-        return;
-    }
+    flags = *(s32 *)((u8 *)*(void **)((u8 *)arg0 + 0x54) + 8);
+    if (flags & (base << shift)) return;
     shift = 1;
-    if ((flags & (base << shift)) != 0) {
-        return;
-    }
+    if (flags & (base << shift)) return;
     shift = 2;
-    if ((flags & (base << shift)) != 0) {
-        return;
-    }
-    fn_8000C188();
+    if (flags & (base << shift)) return;
+    fn_8000C188(arg0, base);
 }
 #pragma optimization_level 4
 s32 fn_800B99B8(u32 arg0, s32 arg1) {
@@ -8450,6 +8432,28 @@ s32 fn_800C044C(s32 arg0)
         }
 
         entry = (u8 *)fn_80013B60(0);
+    }
+
+    return count;
+}
+
+s32 fn_800C04B0(s32 arg0, u8 (*arg1)(void *)) {
+    void *fn_80013B60(void *);
+
+    u8 *entry;
+    s32 count;
+
+    count = 0;
+    entry = (u8 *)fn_80013B60(NULL);
+
+    while (entry != NULL) {
+        if ((s8)entry[0x0C] == arg0) {
+            if (arg1(entry) != 0) {
+                count++;
+            }
+        }
+
+        entry = (u8 *)fn_80013B60(entry);
     }
 
     return count;
