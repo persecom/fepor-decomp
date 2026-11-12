@@ -2547,21 +2547,23 @@ void *fn_80130B68(void *arg0, void *arg1, s32 arg2) {
     return arg0;
 }
 
-s32 fn_80130C54(void *arg1, s32 arg2) {
-    s32 var_r3;
+s32 fn_80130C54(s32 unused, void *arg1, s32 arg2) {
+    void *obj;
+    s32 n;
 
-    var_r3 = 0;
-    switch (arg2) {                                 /* irregular */
+    obj = *(void **)arg1;
+    n = 0;
+    switch (arg2) {
     case 0:
-        return -(s32) M2C_FIELD(M2C_FIELD(M2C_FIELD(arg1, void **, 0), void **, 0x188), u16 *, 0x5A);
+        return -(s32)*(u16 *)((u8 *)*(void **)((u8 *)obj + 0x188) + 0x5A);
     case 1:
-        if ((u32) M2C_FIELD(arg1, u32 *, 0xC) != 0U) {
-            var_r3 = 1;
+        if (*(u32 *)((u8 *)arg1 + 0xC) != 0) {
+            n = 1;
         }
-        if ((u32) M2C_FIELD(arg1, u32 *, 0x10) != 0U) {
-            return var_r3 + 1;
+        if (*(u32 *)((u8 *)arg1 + 0x10) == 0) {
+            return n;
         }
-        return var_r3;
+        return n + 1;
     default:
         return 0;
     }
