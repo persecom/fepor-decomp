@@ -6052,6 +6052,32 @@ extern "C" void fn_8016F8CC(void *arg0) {
         }
     }
 }
+
+extern "C" void fn_8016FD08(void *arg0) {
+    s16 fn_80164E78(void *, s32, s32);
+    void fn_8013FF00(void *, void *);
+    u32 fn_8013FF94(void *, s32, s32);
+    void fn_801658DC(u32, s32);
+    void fn_8016FDA4(void);
+    extern u32 lbl_802EF4C8[];
+    extern u16 lbl_80278080[];
+    void *obj;
+    u32 ret;
+    s32 val;
+
+    obj = *(void **)((u8 *)arg0 + 0x4C);
+    *(u8 *)((u8 *)obj + 0x48) = 1;
+    *(void **)((u8 *)obj + 0x70) = (void *)fn_8016FDA4;
+    val = lbl_802EF4C8[0];
+    *(s32 *)((u8 *)obj + 0x74) = val;
+    *(s16 *)((u8 *)obj + 0x4C) = fn_80164E78(obj, 0, val);
+    fn_8013FF00(arg0, obj);
+    ret = fn_8013FF94(arg0, -0x1000, 0);
+    if (ret != 0) {
+        fn_801658DC(ret, (s32)((u8 *)lbl_80278080 + 0x18E));
+    }
+}
+
 #pragma cplusplus reset
 
 void fn_8016FE5C(void) {
@@ -9940,6 +9966,26 @@ extern "C" s16 fn_80178A7C(void *arg0) {
     s16 t = ((Obj *)arg0)->v18() - ((Obj *)arg0)->v16() * 2;
     return t / 3;
 }
+
+extern "C" void fn_80178AFC(void *unused, u8 *arg1) {
+    u8 *fn_8000B908(u8);
+    extern u32 lbl_802EF4C8[];
+    u8 *p;
+    u8 cur;
+
+    ((u8 *)lbl_802EF4C8)[8] = 0;
+    while ((s8)(cur = arg1[0x62]) < (s8)arg1[0x60]) {
+        p = fn_8000B908(arg1[(s8)cur + 0x40]);
+        if (p[0x39] != 2) {
+            break;
+        }
+        arg1[0x62] = arg1[0x62] + 1;
+    }
+    if ((s8)arg1[0x62] >= (s8)arg1[0x60]) {
+        arg1[0x62] = 0;
+    }
+}
+
 #pragma cplusplus reset
 void fn_80178B98(void *arg0, s16 arg1) {
     s32 temp_r3;
