@@ -1047,11 +1047,8 @@ u8 fn_80093DA8(void *arg0, void *arg1) {
                   }
                   if (t.ok == 0) {
                       t.result = 0;
-                  } else if (fn_800940B0(arg0, arg1) == 0)
-                  {
-                      t.result = 0;
                   } else {
-                      t.result = 1;
+                      t.result = fn_800940B0(arg0, arg1) != 0;
                   }
               }
           } else {
@@ -1074,11 +1071,8 @@ u8 fn_80093DA8(void *arg0, void *arg1) {
                       }
                       if (t.ok == 0) {
                           t.result = 0;
-                      } else if (fn_800940B0(arg0, arg1) == 0)
-                      {
-                          t.result = 0;
                       } else {
-                          t.result = 1;
+                          t.result = fn_800940B0(arg0, arg1) != 0;
                       }
                   }
               }
