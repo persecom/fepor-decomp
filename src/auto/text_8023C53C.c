@@ -2337,6 +2337,7 @@ void fn_8024C84C(u32 arg0) {
     }
 }
 
+#pragma dont_inline on
 s32 fn_8024CE1C(s32 arg0, s32 arg1)
 {
     u32 value;
@@ -2353,6 +2354,7 @@ s32 fn_8024CE1C(s32 arg0, s32 arg1)
 
     return ((arg0 << 1) + 0x1F) & ~31;
 }
+#pragma dont_inline reset
 
 s32 fn_8024F1D8(u16 id, s32 data, s16 type) {
  void fn_8026372C(void); void fn_802636F4(void);
