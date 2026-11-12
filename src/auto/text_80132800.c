@@ -5211,14 +5211,13 @@ void fn_8013CE7C(void *arg0) {
     extern u16 lbl_80276908[];
     extern u16 lbl_80291EAC[];
 
-    u16** ptr = (u16**)arg0;
-    ptr[0] = lbl_8028459C;
-    ptr[1] = lbl_80292090;
-    ptr[2] = lbl_80291BEC;
-    ptr[3] = (u16*)(lbl_80276908 + 0x8C);
-    ((u8*)arg0)[0x10] = 2;
-    ((u8*)arg0)[0x11] = 0;
-    ptr[4] = lbl_80291EAC;
+    *(u16 **)arg0 = lbl_8028459C;
+    *(u16 **)arg0 = lbl_80292090;
+    *(u16 **)arg0 = lbl_80291BEC;
+    *(void **)((char *)arg0 + 4) = (void *)((s32)lbl_80276908 + 0x46);
+    *((u8 *)arg0 + 8) = 2;
+    *((u8 *)arg0 + 9) = 0;
+    *(u16 **)arg0 = lbl_80291EAC;
 }
 
 #pragma cplusplus on
