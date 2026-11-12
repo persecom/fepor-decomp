@@ -2254,10 +2254,12 @@ void fn_801690B0(s32 arg0) {
     void fn_8000C070(s32, s32);
     void fn_8013FDA0(s32);
     extern void *lbl_80367240;
+    s32 *p;
     s32 temp;
 
-    temp = ((s32 *)lbl_80367240)[2];
-    if (temp & (temp ^ ((s32 *)lbl_80367240)[1]) & 0x200) {
+    p = lbl_80367240;
+    temp = p[2];
+    if (temp & (temp ^ p[1]) & 0x200) {
         fn_8000C070(arg0, 1);
     }
     fn_8013FDA0(arg0);
@@ -10547,26 +10549,29 @@ void *fn_8017A294(void *arg0, s16 arg1) {
     return arg0;
 }
 
-void fn_8017A38C(void *arg0, void *arg1) {
-    u8 **ptr = (u8 **) ((u8 *)arg0 + 4);
-    u8 *addr;
-    u8 r6;
+void fn_8017A38C(u8 **arg0, u8 *arg1) {
+    u8 *p;
+    u8 b;
 
-    addr = *ptr;
-    *ptr = addr + 1;
-    *(u8*)addr = *(u8*)((u8*)arg1 + 0);
-    
-    addr = *ptr;
-    *ptr = addr + 1;
-    *(u8*)addr = *(u8*)((u8*)arg1 + 1);
+    p = arg0[1];
+    b = arg1[0];
+    arg0[1] = p + 1;
+    *p = b;
 
-    addr = *ptr;
-    *ptr = addr + 1;
-    *(u8*)addr = *(u8*)((u8*)arg1 + 2);
-    
-    addr = *ptr;
-    *ptr = addr + 1;
-    *(u8*)addr = *(u8*)((u8*)arg1 + 3);
+    p = arg0[1];
+    b = arg1[1];
+    arg0[1] = p + 1;
+    *p = b;
+
+    p = arg0[1];
+    b = arg1[2];
+    arg0[1] = p + 1;
+    *p = b;
+
+    p = arg0[1];
+    b = arg1[3];
+    arg0[1] = p + 1;
+    *p = b;
 }
 
 void fn_8017A3E0(void *arg0, s32 arg1, u8 arg2) {
