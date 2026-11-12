@@ -1729,10 +1729,7 @@ void fn_800A2410(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 }
 
 s32 fn_800A2624(void *arg0) {
-    void **temp_r3 = (void **)fn_800AA794();
-    void *temp_r4 = *(void **)((u8 *)temp_r3 + 0x18C);
-    u16 temp_r0 = *(u16 *)((u8 *)temp_r4 + 0x38);
-    *(u16 *)((u8 *)arg0 + 0x4) = temp_r0;
+    M2C_FIELD(arg0, u16 *, 4) = (u16) M2C_FIELD(M2C_FIELD(fn_800AA794(), void **, 0x18C), u16 *, 0x38);
     return 0;
 }
 
@@ -2173,6 +2170,15 @@ s32 fn_800A356C(s32 arg0, s32 arg1) {
 u16 *fn_800A3598(void) {
     extern u16 lbl_8026D8D8[];
     return (u16 *)((u8 *)lbl_8026D8D8 + 0x76f);
+}
+
+s32 fn_800A35A8(s32 unused, s32 arg1) {
+    void *fn_800241C8(s32);
+    void fn_80108C80(void *, s32, void *);
+    extern u8 lbl_8026D8D8[];
+
+    fn_80108C80(lbl_8026D8D8 + 0x774, *(s32 *)((u8 *)fn_800241C8(arg1) + 0x18), lbl_8026D8D8);
+    return 6;
 }
 
 void *fn_800A35E4(void) {
