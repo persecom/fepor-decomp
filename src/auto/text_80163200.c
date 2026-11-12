@@ -2251,14 +2251,14 @@ void fn_80168F54(s32 arg0) {
 }
 
 void fn_801690B0(s32 arg0) {
-    M2C_UNK fn_8000C070(M2C_UNK);
-    M2C_UNK fn_8013FDA0(s32);
+    void fn_8000C070(s32, s32);
+    void fn_8013FDA0(s32);
     extern void *lbl_80367240;
-    s32 temp_r4;
+    s32 temp;
 
-    temp_r4 = M2C_FIELD(lbl_80367240, s32 *, 8);
-    if (temp_r4 & (temp_r4 ^ M2C_FIELD(lbl_80367240, s32 *, 4)) & 0x200) {
-        fn_8000C070(1);
+    temp = ((s32 *)lbl_80367240)[2];
+    if (temp & (temp ^ ((s32 *)lbl_80367240)[1]) & 0x200) {
+        fn_8000C070(arg0, 1);
     }
     fn_8013FDA0(arg0);
 }
@@ -3055,6 +3055,20 @@ void fn_8016A7F8(void) {
 void *fn_8016A824(void) {
     extern u16 lbl_80277BC0[];
     return (u8 *)lbl_80277BC0 + 0x178;
+}
+
+s32 fn_8016A834(s32 unused, s32 arg1) {
+    void *fn_8000C0C0(void *);
+    void fn_8000C070(void *, s32);
+    extern u8 lbl_80293D8C[];
+    extern u32 lbl_802EF4C8[];
+    void *temp;
+
+    ((u8 *)lbl_802EF4C8)[8] = 0x81;
+    temp = fn_8000C0C0(lbl_80293D8C);
+    *(s32 *)((u8 *)temp + 0x50) = arg1;
+    fn_8000C070(temp, 5);
+    return 4;
 }
 
 void fn_8016A888(void) {
@@ -10060,15 +10074,15 @@ void *fn_80179274(void) {
 u8 fn_80179284(void) {
     s32 fn_800C3E54(void *);
     extern u8 lbl_803200AC[];
-    s32 temp_r3;
-    u8 var_r0;
+    s32 result;
+    s32 ret;
 
-    temp_r3 = fn_800C3E54(lbl_803200AC);
-    var_r0 = 2;
-    if (((u32)(-temp_r3 | temp_r3) >> 0x1FU) != 0) {
-        var_r0 = 0;
+    result = fn_800C3E54(lbl_803200AC);
+    ret = 2;
+    if (((u32)(-result | result) >> 0x1FU) != 0) {
+        ret = 0;
     }
-    return var_r0;
+    return (u8)ret;
 }
 
 void fn_801793B4(void) {
@@ -10591,27 +10605,26 @@ void fn_8017A4CC(void *arg0, s32 arg1, u8 arg2, u8 arg3) {
     *temp_r4_8 = arg3;
 }
 
-void fn_8017A574(u8 **arg0, u32 arg1) {
-    u8 *p;
-    u8 b0;
-    u8 b1;
-    u8 b2;
+void fn_8017A574(void *arg0, u32 arg1) {
+    u8** r5_ptr = (u8**)((char*)arg0 + 4);
+    u8* r5_val = *r5_ptr;
+    *r5_ptr = r5_val + 1;
+    *r5_val = (u8)(arg1 >> 24);
 
-    p = arg0[1];
-    b0 = arg1 >> 24;
-    b1 = arg1 >> 16;
-    b2 = arg1 >> 8;
-    arg0[1] = p + 1;
-    *p = b0;
-    p = arg0[1];
-    arg0[1] = p + 1;
-    *p = b1;
-    p = arg0[1];
-    arg0[1] = p + 1;
-    *p = b2;
-    p = arg0[1];
-    arg0[1] = p + 1;
-    *p = arg1;
+    r5_ptr = (u8**)((char*)arg0 + 4);
+    r5_val = *r5_ptr;
+    *r5_ptr = r5_val + 1;
+    *r5_val = (u8)(arg1 >> 16);
+
+    r5_ptr = (u8**)((char*)arg0 + 4);
+    r5_val = *r5_ptr;
+    *r5_ptr = r5_val + 1;
+    *r5_val = (u8)(arg1 >> 8);
+
+    r5_ptr = (u8**)((char*)arg0 + 4);
+    r5_val = *r5_ptr;
+    *r5_ptr = r5_val + 1;
+    *r5_val = (u8)arg1;
 }
 
 void fn_8017A5C4(u8 **arg0, u16 arg1) {
