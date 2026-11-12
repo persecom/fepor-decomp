@@ -102,10 +102,10 @@ s32 fn_8014A960(void) {
     return 0;
 }
 
-s32 fn_8014A968(void *arg1) {
-    char temp = *(char*)((char*)arg1 + 0x3A);
-    temp = (temp * 0x18) + *(s32*)((char*)arg1 + 0x20);
-    return ((s32*)lbl_80367B00)[temp];
+s32 fn_8014A968(s32 unused, void *arg1) {
+    s32 a = (s8)lbl_80367B0D;
+    s32 b = *(u8 *)((u8 *)arg1 + 0x3A);
+    return ((s32 *)lbl_80367B00)[a * 0x18 + b];
 }
 
 s32 fn_8014A98C(s32 arg0, s32 arg1, void *arg2)
