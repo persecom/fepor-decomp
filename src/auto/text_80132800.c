@@ -9996,6 +9996,43 @@ void fn_80146B00(void) {
     lbl_80367AF8 |= 1;
 }
 
+#pragma use_lmw_stmw on
+#pragma cplusplus on
+extern "C" s8 fn_80146BE4(void *arg0) {
+    void *fn_8000D2BC(void *);
+    struct Entry {
+        void **names;
+        u8 pad4[4];
+        virtual u8 v0() = 0;
+        u8 flags;
+    };
+    u8 active;
+    Entry *entry;
+    s32 i;
+    Entry *base;
+    void *h1;
+
+    base = (Entry *)lbl_803301A8;
+    i = 0;
+    do {
+        active = 0;
+        entry = (Entry *)((u8 *)base + ((u8)i * 0x30));
+        if ((entry->flags & 1) && entry->v0() != 0) {
+            active = 1;
+        }
+        if (active != 0) {
+            h1 = fn_8000D2BC(arg0);
+            if (h1 == fn_8000D2BC(*entry->names)) {
+                return (s8)i;
+            }
+        }
+        i += 1;
+    } while (i < 0x1C);
+    return -1;
+}
+#pragma cplusplus reset
+#pragma use_lmw_stmw reset
+
 void fn_80146F0C(void)
 {
     s32 fn_800C44F4(s32);
