@@ -140,10 +140,10 @@ void fn_80072954(void *arg0) {
     fn_801D3B14(arg0);
 }
 
-void fn_80072A2C(void) {
-    extern u16 lbl_80311D50[];
-    lbl_80311D50[0x54] = 0xC8;
-    lbl_80311D50[0x3A] = -0x20;
+void fn_80072A2C(void *arg0) {
+    extern u8 lbl_80311D50[];
+    *(u16 *)(lbl_80311D50 + 2) = 0xC8;
+    *(s16 *)((u8 *)arg0 + 0x3A) = -0x20;
 }
 
 void fn_80072A48(void) {
