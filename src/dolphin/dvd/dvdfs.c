@@ -722,13 +722,15 @@ void fn_8020D4E0(u32 arg0) {
 
 void fn_8020D53C(u32 arg0) {
     /* cbForUnrecoveredErrorRetry */
-    void fn_8020D16C(void);
+    void DVDReset(void);
     void __DVDStoreErrorCode(u32);
     void DVDLowStopMotor(void (*)(u32));
     void cbForStateError(u32);
 
     if (arg0 == 0x10) {
-        fn_8020D16C();
+        __DVDStoreErrorCode(0x01234568);
+        DVDReset();
+        cbForStateError(0);
         return;
     }
 
