@@ -9013,25 +9013,35 @@ extern "C" void fn_8014402C(void *arg0, s32 arg1) {
     }
 }
 
-void fn_8014413C(void *arg0)
-{
-    u8 *obj = (u8 *)arg0;
-
-    ((void (*)(void *))(*(void **)(*(u8 **)obj + 0x14)))(obj);
-
-    ((void (*)(void *, void *))(
-        *(void **)(*(u8 **)(obj + 0x88) + 0x2C)
-    ))(
-        obj + 0x88,
-        *(void **)(obj + 0x34)
-    );
-
-    ((void (*)(void *, void *))(
-        *(void **)(*(u8 **)(obj + 0xB0) + 0x2C)
-    ))(
-        obj + 0xB0,
-        *(void **)(obj + 0x34)
-    );
+extern "C" void fn_8014413C(void *arg0) {
+    struct Sub {
+        virtual void v0();
+        virtual void v1();
+        virtual void v2();
+        virtual void v3();
+        virtual void v4();
+        virtual void v5();
+        virtual void v6();
+        virtual void v7();
+        virtual void v8();
+        virtual void v9(s32);
+        u8 pad[0x24];
+    };
+    struct Obj {
+        virtual void v0();
+        virtual void v1();
+        virtual void v2();
+        virtual void v3();
+        u8 pad4[0x30];
+        s32 unk34;
+        u8 pad38[0x50];
+        Sub sub88;
+        Sub subB0;
+    };
+    Obj *self = (Obj *)arg0;
+    self->v3();
+    self->sub88.v9(self->unk34);
+    self->subB0.v9(self->unk34);
 }
 
 extern "C" void fn_801441A4(void *arg0) {
@@ -10532,15 +10542,19 @@ after_search:
 #pragma cplusplus reset
 #pragma use_lmw_stmw reset
 
-void fn_8014876C(void *arg0, s8 arg1, s16 arg2) {
+void fn_8014876C(void *arg0, s8 arg1, s32 arg2) {
     extern f32 lbl_8036A7A0;
+    s32 temp;
     s16 var_r6;
+    s16 a2;
 
-    var_r6 = (s16) ((f32) arg2 / lbl_8036A7A0);
+    a2 = (s16)arg2;
+    temp = (s32)((f32)a2 / lbl_8036A7A0);
+    var_r6 = (s16)temp;
     if (var_r6 <= 0) {
         var_r6 = 1;
     }
-    M2C_FIELD(arg0, u8 *, 0x28) = (u8) M2C_FIELD(arg0, u8 *, 0x16);
+    M2C_FIELD(arg0, u8 *, 0x28) = (u8)M2C_FIELD(arg0, u8 *, 0x16);
     M2C_FIELD(arg0, s8 *, 0x29) = arg1;
     M2C_FIELD(arg0, s16 *, 0x2E) = var_r6;
     M2C_FIELD(arg0, s16 *, 0x2C) = 0;
