@@ -3423,10 +3423,10 @@ void fn_801196A8(void *arg0) {
     }
 }
 
-void fn_80119738(s32 arg0) {
-    extern void *fn_80119768;
-    extern s32 fn_8006785C(s32, void *, s32);
-    fn_8006785C(2, &fn_80119768, arg0);
+void fn_80119738(void *arg0) {
+    void fn_8006785C(s32, void (*)(void *), void *);
+    void fn_80119768(void *);
+    fn_8006785C(2, fn_80119768, arg0);
 }
 
 #pragma use_lmw_stmw on
