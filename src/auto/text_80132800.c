@@ -2396,14 +2396,17 @@ loop_4:
     *arg0 = temp_r0;
 }
 
-void fn_80136FDC(void *arg0) {
-    void (**vptr)(void) = (void (**)(void))*(void***)arg0;
-    vptr[4]();
-    fn_8008B464(*(s32*)((char*)arg0 + 0x3C), 0, 0);
-}
-
-#pragma use_lmw_stmw on
 #pragma cplusplus on
+extern "C" void fn_80136FDC(void *arg0) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    void fn_8008B464(s32, s32, s32);
+    ((Obj *)arg0)->v2();
+    fn_8008B464(*(s32 *)((char *)arg0 + 0x3C), 0, 0);
+}
 extern "C" void fn_80137024(void *arg0, s32 arg1) {
     struct Obj {
         virtual void v0() = 0;
@@ -3294,23 +3297,23 @@ void fn_80138D14(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x18) = h;
 }
 
-void fn_80138D44(u8 *arg0) {
-    s16 x1, x0, y1, y0;
+void fn_80138D44(void *arg0) {
+    s16 t0e, t0a, t10, t0c;
     s16 dx, dy;
 
-    y0 = *(s16 *)(arg0 + 0xC);
-    y1 = *(s16 *)(arg0 + 0x10);
-    x0 = *(s16 *)(arg0 + 0xA);
-    x1 = *(s16 *)(arg0 + 0xE);
+    t0c = *(s16 *)((u8 *)arg0 + 0xC);
+    t10 = *(s16 *)((u8 *)arg0 + 0x10);
+    t0a = *(s16 *)((u8 *)arg0 + 0xA);
+    t0e = *(s16 *)((u8 *)arg0 + 0xE);
 
-    dy = (s16)(y1 - y0);
-    *(s16 *)(arg0 + 0x12) = 3;
-    dx = (s16)(x1 - x0);
+    dy = (s16)(t10 - t0c);
+    *(s16 *)((u8 *)arg0 + 0x12) = 3;
+    dx = (s16)(t0e - t0a);
     dy = (s16)(dy - 5);
-    *(s16 *)(arg0 + 0x14) = 5;
+    *(s16 *)((u8 *)arg0 + 0x14) = 5;
     dx = (s16)(dx - 3);
-    *(s16 *)(arg0 + 0x16) = dx;
-    *(s16 *)(arg0 + 0x18) = dy;
+    *(s16 *)((u8 *)arg0 + 0x16) = dx;
+    *(s16 *)((u8 *)arg0 + 0x18) = dy;
 }
 
 void fn_80138D88(void *arg0) {
