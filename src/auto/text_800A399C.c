@@ -7,3 +7,4 @@ void fn_800A399C(void) {
     extern void *lbl_80367798;
     lbl_80367798 = lbl_8028C488;
 }
+__declspec(section ".ctors") static void (*const lbl_80267AC0)(void) = fn_800A399C;
