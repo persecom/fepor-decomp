@@ -2056,31 +2056,25 @@ s32 fn_8005F230(s32 arg0) {
     return (s32) *(u32 *)((char *)arg0 + 0x9C);
 }
 
-s32 fn_8005F378(void *arg0) {
-    void *var_r4;
-    void *temp_r0;
-    void *temp_r5;
-    unsigned int var_r5;
+s32 fn_8005F378(void *node) {
+    void *child;
+    unsigned int count;
 
-    var_r4 = arg0;
-loop_1:
-    temp_r5 = M2C_FIELD(var_r4, void **, 4);
-    if ((temp_r5 != NULL) && (M2C_FIELD(temp_r5, u32 *, 0x8C) != 0U)) {
-        var_r4 = temp_r5;
-        goto loop_1;
+loop:
+    child = *(void **)((u8 *)node + 4);
+    if (child != NULL && *(u32 *)((u8 *)child + 0x8C) != 0U) {
+        node = child;
+        goto loop;
     }
-    var_r5 = 0;
-loop_5:
-    if (var_r4 == arg0) {
-        return var_r5;
+    count = 0;
+    for (;;) {
+        node = *(void **)((u8 *)node + 0x8C);
+        if (node == NULL) {
+            break;
+        }
+        count += 1;
     }
-    temp_r0 = M2C_FIELD(var_r4, void **, 0x8C);
-    if (temp_r0 != NULL) {
-        var_r4 = temp_r0;
-        var_r5 += 1;
-        goto loop_5;
-    }
-    return 0;
+    return count;
 }
 
 s32 fn_8005F3B8(void *arg0) {
