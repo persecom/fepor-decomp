@@ -5185,6 +5185,45 @@ s32 fn_800B95B4(u32 arg0, s32 arg1) {
     return 1;
 }
 
+s32 fn_800B9630(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u32 arg5) {
+    void *fn_801CF760(u32);
+    void fn_801D029C(void *, s32, s32, s32, void *, f32);
+    extern s32 lbl_80367110;
+    extern u32 lbl_80369CF0;
+    extern f64 lbl_80369CF8;
+    extern f32 lbl_80369D00;
+    void *p;
+    u32 packed;
+    u32 tmp;
+    u32 color;
+    u8 g;
+    u8 r;
+
+    if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
+        return 0;
+    }
+    if (lbl_80367110 & 1) {
+        return 0;
+    }
+    p = fn_801CF760(arg0);
+    if (p == NULL) {
+        return 0;
+    }
+    r = (u8)(arg5 >> 16);
+    g = (u8)(arg5 >> 8);
+    tmp = lbl_80369CF0;
+    ((u8 *)&packed)[0] = r;
+    ((u8 *)&packed)[1] = g;
+    ((u8 *)&packed)[2] = (u8)arg5;
+    ((u8 *)&packed)[3] = ((u8 *)&tmp)[3];
+    ((u8 *)&tmp)[0] = r;
+    ((u8 *)&tmp)[1] = g;
+    ((u8 *)&tmp)[2] = (u8)arg5;
+    color = packed;
+    fn_801D029C(p, arg1, arg2, arg3, &color, lbl_80369D00 * (f32)arg4);
+    return 1;
+}
+
 s32 fn_800B9724(u32 arg0, s32 arg1, s32 arg2) {
     void *fn_801CF760(u32);
     void fn_801D03E4(void *, s32, s32);
