@@ -3025,6 +3025,12 @@ s32 fn_800B6A30(void) {
 }
 
 s32 fn_800B6A38(void) {
+    void fn_80025680(s32, s32);
+    extern s32 lbl_80367240;
+    extern s32 lbl_80367110;
+
+    fn_80025680(lbl_80367240, 0x1F70);
+    lbl_80367110 &= ~0x2000;
     return 1;
 }
 
