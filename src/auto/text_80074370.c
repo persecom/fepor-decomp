@@ -2273,32 +2273,22 @@ void fn_80078C94(void) {
     fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x557);
 }
 
-s32 fn_80078CC0(void)
-{
+s32 fn_80078CC0(void) {
+    void *fn_80105C5C(void *, s32);
+    u8 fn_800BE968(s32, u8, u8);
     extern u8 lbl_802EF4C8[];
-    extern void *fn_80105C5C(void *, s32);
-    extern s32 fn_800BE968(s32, s32, s32);
+    u8 *p;
+    u8 *obj;
 
-    u8 *entry;
-    u32 result;
-
-    if (*(s8 *)(lbl_802EF4C8 + 0x12) != 0) {
+    p = lbl_802EF4C8;
+    if ((s8)p[0x12] != 0) {
         return 3;
     }
-
-    entry = *(u8 **)lbl_802EF4C8;
-
-    if (fn_80105C5C(entry + 0x1BC, 0) == 0) {
+    obj = *(u8 **)p;
+    if (fn_80105C5C(obj + 0x1BC, 0) == 0) {
         return 3;
     }
-
-    result = fn_800BE968(
-        0xD,
-        *(u8 *)(entry + 0x19E),
-        *(u8 *)(entry + 0x19F)
-    );
-
-    return -(u32)((u8)result == 0) & 3;
+    return (fn_800BE968(0xD, obj[0x19E], obj[0x19F]) == 0) ? 3 : 0;
 }
 
 s32 fn_80078D48(s32 arg0, s32 arg1) {
