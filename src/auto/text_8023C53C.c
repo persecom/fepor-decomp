@@ -115,6 +115,14 @@ extern u32 lbl_800000F8;
 
 #include "musyx/select_source.h"
 
+typedef struct StreamQueueNode StreamQueueNode;
+struct StreamQueueNode { StreamQueueNode *next, *prev; u32 time; };
+typedef struct StreamTempo { u32 *start, *cursor; u32 value; u32 timing[4]; StreamQueueNode *head; u32 buffers[4]; u8 active, pad31; u16 scale, count; } StreamTempo;
+static inline void StreamQueueInsert(StreamQueueNode **head, StreamQueueNode *node) {
+StreamQueueNode *prev=0,*cur=*head;
+while(cur){if(cur->time>node->time){node->next=cur;node->prev=prev;if(prev)prev->next=node;else *head=node;cur->prev=node;return;}prev=cur;cur=cur->next;}
+node->prev=prev;if(prev)prev->next=node;else *head=node;node->next=0;
+}
 typedef struct StreamMsg {
     u32 unk0;   /* 0x0 */
     u32 unk4;   /* 0x4 */
