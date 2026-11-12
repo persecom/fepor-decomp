@@ -11192,16 +11192,18 @@ void fn_80050BCC(s32 arg0, u8 arg1) {
     fn_8005F7B0(arg0 + 0x1C, arg1);
 }
 
-void fn_80050BF4(void* arg0, s32 arg1) {
-    u16* r4 = (u16*)((u8*)arg0 + 0x60);
-    u8 val = *r4;
-    u16* r3 = (u16*)((u8*)r4 + ((val + arg1) * 2));
-    *r3 |= 0x4002;
+void fn_80050BF4(void *arg0, s32 arg1)
+{
+    void fn_8005F7E0(void *, u8, u8, u8);
+    void fn_8005F7B0(void *, u8);
+    extern s32 lbl_802858E8[];
+    s32 sp8;
+    void *r31;
 
-    r4 = (u16*)((u8*)arg0 + 0x60);
-    val = *r4;
-    r3 = (u16*)((u8*)r4 + ((val + arg1) * 2));
-    *r3 |= 4;
+    r31 = (u8 *)arg0 + 0x1c;
+    sp8 = lbl_802858E8[arg1];
+    fn_8005F7E0(r31, ((u8 *)&sp8)[0], ((u8 *)&sp8)[1], ((u8 *)&sp8)[2]);
+    fn_8005F7B0(r31, ((u8 *)&sp8)[3]);
 }
 
 void fn_80050C50(void *arg0, f32 farg0, f32 farg1) {
