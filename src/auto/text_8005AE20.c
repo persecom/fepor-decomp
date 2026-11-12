@@ -2240,26 +2240,19 @@ void fn_8005F4F4(void *arg0, s32 arg1) {
     }
 }
 
-void fn_8005F554(void *arg0, void *arg1)
-{
-    extern void *fn_8006CCBC(void *, void *);
-    extern void fn_8006CC6C(void *);
+void fn_8005F554(void *arg0, void *arg1) {
+    void *fn_8006CCBC(void *, void *);
+    void fn_8006CC6C(void *);
+    void *saved;
+    void *temp;
 
-    u8 *obj;
-    void *previous;
-    void *current;
-
-    obj = (u8 *)arg0;
-    previous = *(void **)(obj + 0x48);
-
-    current = fn_8006CCBC(arg1, 0);
-
-    if (current != *(void **)(obj + 0x48)) {
-        *(void **)(obj + 0x48) = current;
-
-        if (previous != 0) {
-            fn_8006CC6C(previous);
-        }
+    saved = *(void **)((u8 *)arg0 + 0x48);
+    temp = fn_8006CCBC(arg1, 0);
+    if (temp != *(void **)((u8 *)arg0 + 0x48)) {
+        *(void **)((u8 *)arg0 + 0x48) = temp;
+    }
+    if (saved != NULL) {
+        fn_8006CC6C(saved);
     }
 }
 
