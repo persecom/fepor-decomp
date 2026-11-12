@@ -14,5 +14,4 @@ void fn_80016EE8(void) {
     fn_8022C260(lbl_802B14E4, fn_80016F78, fn_800169A8, 0x280, 0x9F);
     __register_global_object(NULL, fn_80016F40, lbl_802B14D8);
 }
-
 __declspec(section ".ctors") static void (*const lbl_80267A8C)(void) = fn_80016EE8;
