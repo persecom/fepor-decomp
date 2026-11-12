@@ -1615,18 +1615,22 @@ void fn_800892E8(void *arg0) {
     u8 *obj;
     s32 size;
     void *tmp;
+    f32 f3c;
+    f32 f38;
 
     obj = (u8 *)arg0;
     *(s32 *)(obj + 0x48) = 0;
     size = fn_80222420(0x260, 0x1C0, 4, 0, 0);
-    *(void **)(obj + 0x48) = fn_800C45B8(-size, (u8 *)&lbl_8026CC58 + 0x2A, 0);
+    *(void **)(obj + 0x48) = fn_800C45B8(-size, lbl_8026CC58 + 0x2A, 0);
     DCInvalidateRange(*(void **)(obj + 0x48), size);
     fn_80222644(obj + 0x4C, *(void **)(obj + 0x48), 0x260, 0x1C0, 4, 0, 0, 0);
     fn_802228D8(obj + 0x4C, 0, 0, 0, 0, 0, lbl_80369690, lbl_80369690, lbl_80369690);
-    tmp = fn_8000CAF0(&lbl_80289998, 6);
+    tmp = fn_8000CAF0(lbl_80289998, 6);
     *(void **)((u8 *)tmp + 0x54) = arg0;
-    *(f32 *)(obj + 0x38) = lbl_803696A8;
-    *(f32 *)(obj + 0x3C) = lbl_803696AC;
+    f38 = lbl_803696A8;
+    f3c = lbl_803696AC;
+    *(f32 *)(obj + 0x38) = f38;
+    *(f32 *)(obj + 0x3C) = f3c;
     *(u16 *)(obj + 0x34) = 0;
     obj[0x30] = 0;
 }
@@ -2521,16 +2525,18 @@ u16 fn_8008AF9C(s32 arg0, s32 arg1) {
     void fn_8000A248(void);
     void fn_8000A174(void *, s32);
     void fn_80007898(s32);
-    void fn_800077D8(s32, f32, f32, f32, f32);
+    void fn_800077D8(f32, f32, f32, f32);
     void fn_80007884(void);
     extern s32 lbl_803674F4;
     extern f32 lbl_80369704;
     extern f64 lbl_803696E8;
     extern f64 lbl_803696F0;
     extern f32 lbl_80369708;
-    struct { u8 buf[0x20]; volatile u16 x, y; } sp;
-    s32 temp_x;
-    s32 temp_y;
+    struct {
+        u8 buf[0x20];
+        u16 x;
+        u16 y;
+    } sp;
 
     fn_8006ECCC(lbl_803674F4, sp.buf, 0x38);
     sp.x = fn_80222A80(sp.buf);
@@ -2542,9 +2548,7 @@ u16 fn_8008AF9C(s32 arg0, s32 arg1) {
     fn_8000A174(sp.buf, 0x10);
     fn_8000A248();
     fn_80007898(1);
-    temp_x = arg0;
-    temp_y = arg1;
-    fn_800077D8(sp.x, (f32)temp_x, (f32)temp_y, (f32)sp.x, (f32)sp.y);
+    fn_800077D8((f32)arg0, (f32)arg1, (f32)sp.x, (f32)sp.y);
     fn_80007884();
     fn_8000A258();
     fn_80009C0C(lbl_80369708);
@@ -2835,27 +2839,41 @@ void fn_8008BBF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5) {
 }
 
 void fn_8008BC94(s32 arg0, s32 arg1, u8 arg2) {
+    s32 fn_8006ECCC(s32, void *, s32);
+    u16 fn_80222A80(void *);
+    u16 fn_80222A90(void *);
+    void fn_8000A258(void);
+    void fn_8000A174(void *, s32);
+    void fn_8000A248(void);
+    void fn_80007898(s32);
+    void fn_800077D8(f32, f32, f32, f32);
+    void fn_800076CC(void);
+    void fn_800075D8(void);
+    void fn_80007538(void);
+    void fn_80007884(void);
     extern s32 lbl_803674F0;
     extern f64 lbl_803696E8;
     extern f64 lbl_803696F0;
-    s32 sp8;
-    u16 sp28;
-    u16 sp2A;
+    struct {
+        u8 buf[0x20];
+        u16 x;
+        u16 y;
+    } sp;
 
-    fn_8006ECCC(lbl_803674F0, &sp8, 0x14);
-    sp28 = fn_80222A80(&sp8);
-    sp2A = fn_80222A90(&sp8);
+    fn_8006ECCC(lbl_803674F0, sp.buf, 0x14);
+    sp.x = fn_80222A80(sp.buf);
+    sp.y = fn_80222A90(sp.buf);
     fn_8000A258();
-    fn_8000A174(&sp8, 0x10);
+    fn_8000A174(sp.buf, 0x10);
     fn_8000A248();
     fn_80007898(2);
-    fn_800077D8(sp2A, (f32) arg0, (f32) arg1, (f32) sp2A, (f32) sp28);
+    fn_800077D8((f32)arg0, (f32)arg1, (f32)sp.y, (f32)sp.x);
     if (arg2 != 0) {
         fn_800076CC();
+        fn_800075D8();
+        fn_80007538();
+        fn_80007884();
     }
-    fn_800075D8();
-    fn_80007538();
-    fn_80007884();
 }
 
 void fn_8008BD90(s32 arg0, s32 arg1, u8 arg2) {
