@@ -5975,31 +5975,20 @@ s32 fn_800BC5FC(u8 arg0) {
     return temp_r0 + temp_r31;
 }
 
-s32 fn_800BC684(u32 arg0)
-{
+u8 fn_800BC684(u8 arg0) {
+    s32 fn_80092F9C(void);
     extern u8 lbl_802B14E4[];
-    extern s32 fn_80092F9C(void *);
+    void *unit;
 
-    u8 *unit;
-    s32 result;
-
-    if ((u8)arg0 != 0) {
-        unit = lbl_802B14E4 + ((u8)arg0 - 1) * 0x280;
+    if (arg0 != 0) {
+        unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
     } else {
-        unit = 0;
+        unit = NULL;
     }
-
-    if (unit == 0) {
+    if (unit == NULL || *(u32 *)((u8 *)unit + 0x188) == 0) {
         return 0;
     }
-
-    if (*(u32 *)(unit + 0x188) == 0) {
-        return 0;
-    }
-
-    result = fn_80092F9C(unit);
-
-    return (u8)result;
+    return (u8)fn_80092F9C();
 }
 
 s32 fn_800BC6E8(u8 arg0, s32 arg2) {
