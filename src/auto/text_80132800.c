@@ -11041,18 +11041,15 @@ s32 fn_80149974(void *arg0) {
 }
 
 s8 fn_801499A0(void) {
-    u8 fn_800B2494(s8);
+    u8 fn_800B2494(s32);
+    s32 i;
 
-    s8 var_r31 = 0;
-loop_1:
-    if (fn_800B2494(var_r31) == 0) {
-        return var_r31;
+    for (i = 0; i < 8; i++) {
+        if (fn_800B2494(i) == 0) {
+            return i;
+        }
     }
-    var_r31 += 1;
-    if (var_r31 >= 8) {
-        return -1;
-    }
-    goto loop_1;
+    return -1;
 }
 
 void fn_801499F0(void *arg0) {
