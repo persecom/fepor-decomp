@@ -1210,44 +1210,45 @@ void fn_800B1BFC(s32 arg0, s32 arg1)
     }
 }
 
-void fn_800B1C54(s32 arg0, u8 arg1)
+void fn_800B1C54(s32 arg0, s32 arg1)
 {
     extern u8 lbl_80317338[];
-    extern void fn_8024B654(void *, s32, s32);
-
-    u8 *entry;
-    u8 *base;
+    void fn_8024B654(s32, s32, s32);
+    u8 *sys;
+    u8 *p;
+    u8 *slot;
+    s32 off;
     u32 value;
 
-    base = *(u8 **)(lbl_80317338 + 0xF4);
-    entry = base + arg0 * 0x14;
-
-    *(u16 *)(entry + 6) = arg1;
-
-    value = *(u32 *)(entry + 0xC);
-
-    if (value != 0xFFFFFFFF) {
-        fn_8024B654((void *)value, 0xA, arg1);
+    sys = lbl_80317338;
+    off = arg0 * 0x14;
+    p = *(u8 **)(sys + 0xF4);
+    slot = p;
+    slot += off + 6;
+    *(u16 *)slot = (u8)arg1;
+    value = *(u32 *)(*(u8 **)(sys + 0xF4) + off + 0xC);
+    if (value != 0xFFFFFFFFu) {
+        fn_8024B654((s32)value, 0xA, arg1);
     }
 }
 
 void fn_800B1CB0(s32 arg0, s32 arg1)
 {
     extern u8 lbl_80317338[];
-    extern void fn_8024B654(s32, s32, s32);
+    void fn_8024B654(s32, s32, s32);
+    u8 *base;
+    s32 off;
+    u32 value;
 
-    u8 *entry;
-    s32 value;
+    base = *(u8 **)(lbl_80317338 + 0xF4);
+    off = arg0 * 0x14;
+    value = *(u32 *)(base + off + 0xC);
 
-    entry = *(u8 **)(lbl_80317338 + 0xF4) + arg0 * 0x14;
-    value = *(s32 *)(entry + 0xC);
-
-    if (value != -1) {
+    if (value != 0xFFFFFFFFu) {
         if ((u8)arg1 > 0x7F) {
             arg1 = 0x7F;
         }
-
-        fn_8024B654(value, 0x5D, arg1);
+        fn_8024B654((s32)value, 0x5D, arg1);
     }
 }
 
@@ -5258,12 +5259,12 @@ s32 fn_800BAE4C(s32 arg0, s32 arg1) {
     return 0;
 }
 
-s32 fn_800BAEAC(s32 arg0) {
+s32 fn_800BAEAC(void) {
     void *fn_8000BCA4(void *);
     extern u16 lbl_80367A58;
     extern u8 lbl_8026ECB8[];
     void *p;
-    u32 flags;
+    s32 flags;
 
     p = fn_8000BCA4(lbl_8026ECB8 + 0xA50);
     if (p == NULL) {
@@ -6720,13 +6721,11 @@ void fn_800BDB78(s32 arg0, s32 arg1) {
 
 s32 fn_800BDB9C(s32 arg0, s32 arg1) {
     s32 addr;
-    u8 v;
-    s32 bit;
+    u8 *p;
 
     addr = arg0 + (arg1 >> 3);
-    bit = 1 << (arg1 & 7);
-    v = *(u8 *)(addr + 0x300);
-    return (v & bit) != 0;
+    p = (u8 *)addr;
+    return (p[0x300] & (1 << (arg1 & 7))) != 0;
 }
 
 #pragma use_lmw_stmw on
