@@ -5574,9 +5574,8 @@ u8 fn_800BBD20(s8 arg0, s8 arg1) {
 }
 
 u8 fn_800BBD44(s8 arg0, s8 arg1) {
-    extern u16 lbl_802CA518[];
-    u16 *ptr = lbl_802CA518 + (arg1 << 1) + arg0;
-    return ptr[0xD];
+    extern u8 lbl_802CA518[];
+    return lbl_802CA518[arg0 + (arg1 << 6) + 0xD];
 }
 
 u16 fn_800BBD68(void) {
