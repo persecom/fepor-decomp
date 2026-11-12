@@ -13371,9 +13371,15 @@ void fn_80261714(s32 arg0) {
 }
 
 void fn_8026171C(s32 arg0, s32 arg1) {
-      extern u16 lbl_80368AA0[];
-      M2C_FIELD((lbl_80368AA0 + (arg0 * 0xF8)), s32 *, 0x1C) = arg1;
-  }
+    typedef struct {
+        u8 pad[0x1C];
+        s32 unk1C;
+        u8 pad2[0xF8 - 0x20];
+    } Entry;
+    extern Entry *lbl_80368AA0;
+
+    lbl_80368AA0[arg0].unk1C = arg1;
+}
 
 void fn_80261730(u8 arg0, u16 arg1, void *arg2, u32 arg3,
                  u32 arg4, u32 arg5, u32 arg6, u32 arg7)
