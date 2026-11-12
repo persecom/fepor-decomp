@@ -3100,14 +3100,16 @@ void fn_8007ADC8(s32 arg0) {
 }
 
 void fn_8007AF00(void *arg0) {
-    extern M2C_UNK lbl_80312040;
-    M2C_FIELD(arg0, s32 *, 0x34) = 0;
-    M2C_FIELD(arg0, s32 *, 0x3C) = (s32) M2C_FIELD(*(&lbl_80312040 + (M2C_FIELD(arg0, s32 *, 0x30) * 4)), u8 *, 0x41);
-    if ((s32) M2C_FIELD(arg0, s32 *, 0x3C) < (s32) M2C_FIELD(arg0, s32 *, 0x40)) {
-        M2C_FIELD(arg0, s32 *, 0x44) = 0;
+    extern void *lbl_80312040[];
+    s32 idx = *(s32 *)((u8 *)arg0 + 0x30);
+    u8 *entry = (u8 *)lbl_80312040[idx];
+    *(s32 *)((u8 *)arg0 + 0x34) = 0;
+    *(s32 *)((u8 *)arg0 + 0x3C) = entry[0x41];
+    if (*(s32 *)((u8 *)arg0 + 0x3C) < *(s32 *)((u8 *)arg0 + 0x40)) {
+        *(s32 *)((u8 *)arg0 + 0x44) = 0;
         return;
     }
-    M2C_FIELD(arg0, s32 *, 0x44) = 4;
+    *(s32 *)((u8 *)arg0 + 0x44) = 4;
 }
 
 void fn_8007AF48(void *arg0) {
