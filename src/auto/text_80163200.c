@@ -2870,6 +2870,26 @@ void fn_80169E74(void *arg0) {
     fn_8016E92C(arg0);
 }
 
+void fn_80169EB4(void *arg0) {
+    void fn_8000A430(void *);
+    void *fn_8013BFFC(void *);
+    void fn_80024398(void *, void *, s32);
+    u32 fn_8013FF94(void *, s32, s32);
+    void fn_801658DC(u32, void *);
+    extern u8 lbl_80277BC0[];
+    void *tmp;
+    u32 result;
+
+    fn_8000A430(*(void **)((u8 *)arg0 + 0x4C));
+    tmp = fn_8013BFFC(lbl_80277BC0 + 0xC5);
+    *((u8 *)tmp + 0x24) = 1;
+    fn_80024398(tmp, arg0, 0);
+    result = fn_8013FF94(arg0, -0x1000, 0);
+    if (result != 0) {
+        fn_801658DC(result, lbl_80277BC0 + 0xDD);
+    }
+}
+
 void fn_80169F30(void *arg0) {
     M2C_UNK fn_8000C070(void *, s32);
     M2C_UNK fn_8000A420(void *);
