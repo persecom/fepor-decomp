@@ -326,12 +326,14 @@ u8 fn_8005B7A4(u8 *arg0) {
     return 0;
 }
 
-s32 fn_8005B888(void) {
+u8 fn_8005B888(s32 arg0) {
     extern void *lbl_803672F4;
+    struct { u8 pad[0x3f]; u8 f; } *e;
     if (lbl_803672F4 == NULL) {
         return 0;
     }
-    return M2C_FIELD(lbl_803672F4, s32 *, 0x4000);
+    e = (void *)((u8 *)lbl_803672F4 + (arg0 << 6));
+    return e->f;
 }
 
 void *fn_8005B8AC(s32 arg0) {
@@ -1750,17 +1752,16 @@ void fn_8005E644(void *arg0) {
 #pragma use_lmw_stmw reset
 
 #pragma dont_inline reset
-void fn_8005EB5C(u8 *arg0, u8 *arg1) {
-    u8 temp_r5;
-
-    temp_r5 = arg1[0];
-    arg0[0x88] = temp_r5;
-    temp_r5 = arg1[1];
-    arg0[0x89] = temp_r5;
-    temp_r5 = arg1[2];
-    arg0[0x8A] = temp_r5;
-    temp_r5 = arg1[3];
-    arg0[0x8B] = temp_r5;
+void fn_8005EB5C(u8 *dst, u8 *src) {
+    u8 b, a;
+    a = src[0];
+    b = src[1];
+    dst[0x88] = a;
+    a = src[2];
+    dst[0x89] = b;
+    b = src[3];
+    dst[0x8A] = a;
+    dst[0x8B] = b;
 }
 
 void fn_8005EB80(s32 arg0, s32 arg1) {
@@ -2109,16 +2110,21 @@ loop_5:
     return 0;
 }
 
-void *fn_8005F410(void *arg0) {
-    if (arg0 == NULL) {
-        return NULL;
+#pragma peephole off
+void fn_8005F410(void *arg0) {
+    void *next;
+    for (;;) {
+        next = *(void **)((u8 *)arg0 + 4);
+        if (next == NULL) {
+            return;
+        }
+        if (*(void **)((u8 *)next + 0x8c) == NULL) {
+            return;
+        }
+        arg0 = next;
     }
-    if (*(void **)((char *)arg0 + 0x8c) == NULL) {
-        return arg0;
-    }
-    return fn_8005F410(*(void **)((char *)arg0 + 0x8c));
 }
-
+#pragma peephole on
 void fn_8005F434(void *arg0, void *arg1, void *arg2)
 {
     extern void *fn_8006D910(void *, void *);
@@ -2210,11 +2216,11 @@ void fn_8005F780(void *arg0, s8 arg1) {
     M2C_FIELD(arg0, s8 *, 0x84) = arg1;
 }
 
-void fn_8005F788(void *arg0, s8 arg1, u8 arg2) {
-    M2C_FIELD(arg0, s8 *, 0x86) = arg1;
-    M2C_FIELD(arg0, u8 *, 0x85) = (u8) (1 << arg1);
+void fn_8005F788(u8 *arg0, s32 arg1, u8 arg2) {
+    arg0[0x86] = arg1;
+    arg0[0x85] = (u8)(1 << arg1);
     if (arg2 != 0) {
-        M2C_FIELD(arg0, u8 *, 0x85) = (u8) (M2C_FIELD(arg0, u8 *, 0x85) | 0xF0);
+        arg0[0x85] |= 0xF0;
     }
 }
 
@@ -7358,20 +7364,14 @@ s32 fn_80072320(void) {
 }
 
 s32 fn_80072328(void *arg0) {
-    s16 left;
-    s16 right;
-    s16 *selected;
-
-    left = *(s16 *)((u8 *)arg0 + 0x12);
-    right = *(s16 *)((u8 *)arg0 + 0x10);
-
-    if (left >= right) {
-        selected = (s16 *)((u8 *)arg0 + 0x12);
+    s16 v12 = *(s16 *)((u8 *)arg0 + 0x12);
+    s16 v10 = *(s16 *)((u8 *)arg0 + 0x10);
+    if (v12 < v10) {
+        arg0 = (u8 *)arg0 + 0x12;
     } else {
-        selected = (s16 *)((u8 *)arg0 + 0x10);
+        arg0 = (u8 *)arg0 + 0x10;
     }
-
-    return *selected;
+    return *(s16 *)arg0;
 }
 
 s32 fn_8007234C(void) {
