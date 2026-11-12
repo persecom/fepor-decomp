@@ -2457,6 +2457,17 @@ void fn_80130920(void) {
     fn_80225058(0xF8, 0x60, 0x120, 0x120);
 }
 
+void *fn_80130AE4(void *unused, s32 arg1) {
+    extern u16 lbl_80275AC0[];
+
+    switch (arg1) {
+    case 1:
+        return (u8 *)lbl_80275AC0 + 0x232;
+    default:
+        return (u8 *)lbl_80275AC0 + 0x247;
+    }
+}
+
 void fn_80130B10(s32 unused, s32 kind, s32 *a, s32 *b, s32 *c, s32 *d) {
     switch (kind) {
     case 0:
