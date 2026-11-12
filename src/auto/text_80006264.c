@@ -1084,9 +1084,9 @@ void fn_80007870(f32 arg0) {
     *(f32 *)(ptr + 0x8) = arg0;
 }
 
-void fn_80007884(void *arg0, u32 arg1) {
-    *(void**)0x80367140 = arg0;
-    *(u16*)(0x80367140 + 0x28) = (u16)arg1;
+void fn_80007884(void) {
+    extern u8 *lbl_80367140;
+    *(s16 *)(lbl_80367140 + 0x92) += 1;
 }
 
 #pragma use_lmw_stmw on
@@ -1114,7 +1114,7 @@ void fn_80007898(u8 arg0) {
         *(s32 *)((u8 *)lbl_80367140 + 0x18) = tmp;
         self = lbl_80367140;
         node = *(void **)((u8 *)self + 0xC);
-        while (node != 0) {
+        while (node) {
             if (*(u32 *)((u8 *)node + 8) == *(u32 *)((u8 *)self + 0x18)) {
                 if (fn_80006264((u8 *)node + 0x10, (u8 *)self + 0x20, 0x70) == 0) {
                     if (*(void **)((u8 *)lbl_80367140 + 0xC) != node)
@@ -1192,7 +1192,7 @@ void fn_80007898(u8 arg0) {
         *(u8 *)((u8 *)entry + 4) = arg0;
         *(u8 *)((u8 *)entry + 5) = (u8)size;
         *(f32 *)((u8 *)entry + 8) = ftmp;
-        *(s32 *)((u8 *)entry + 0xC) = neg1;
+        *(s32 *)((u8 *)entry + 0xC) = (unsigned)neg1;
         {
             void *head;
             head = *(void **)((u8 *)lbl_80367140 + 0xC);
@@ -1225,8 +1225,8 @@ void fn_80007898(u8 arg0) {
             ctx = lbl_80367140;
             f0 = lbl_80368B98;
             e = *(void **)((u8 *)*(void **)((u8 *)ctx + 0xC) + 4);
-            *(f32 *)((u8 *)e + 0x1C) = f1;
             *(f32 *)((u8 *)e + 0x20) = f0;
+            *(f32 *)((u8 *)e + 0x1C) = f1;
             *(s16 *)((u8 *)e + 0x24) = z;
             *(s16 *)((u8 *)e + 0x26) = z;
             p = fn_8018D900(1);
