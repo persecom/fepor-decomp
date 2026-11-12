@@ -9104,13 +9104,12 @@ void *fn_801772C8(void) {
 
 u8 fn_801772D8(void) {
     extern u8 lbl_80330708[];
-    u8 var_r4;
+    s32 result = 0;
 
-    var_r4 = 0;
     if (lbl_80330708[0x51] != 0) {
-        var_r4 = 2;
+        result = 2;
     }
-    return var_r4;
+    return (u8)result;
 }
 
 void fn_80177404(void) {
@@ -10596,16 +10595,15 @@ void fn_8017A574(u8 **arg0, u32 arg1) {
     *p = arg1;
 }
 
-void fn_8017A5C4(void *arg0, u8 arg1) {
-    u8 *temp_r5;
-    u8 *temp_r5_2;
+void fn_8017A5C4(void *arg0, u16 arg1) {
+    u8 *p;
 
-    temp_r5 = M2C_FIELD(arg0, u8 **, 4);
-    M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r5 + 1);
-    *temp_r5 = (u8) (arg1 >> 8U);
-    temp_r5_2 = M2C_FIELD(arg0, u8 **, 4);
-    M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r5_2 + 1);
-    *temp_r5_2 = arg1;
+    p = *(u8 **)((u8 *)arg0 + 4);
+    *(u8 **)((u8 *)arg0 + 4) = p + 1;
+    *p = (u8)(arg1 >> 8);
+    p = *(u8 **)((u8 *)arg0 + 4);
+    *(u8 **)((u8 *)arg0 + 4) = p + 1;
+    *p = (u8)arg1;
 }
 
 void fn_8017A5EC(void *arg0, s8 arg1) {
