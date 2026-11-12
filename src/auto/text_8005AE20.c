@@ -4352,18 +4352,45 @@ s32 fn_80065EE8(void *arg0)
     return result;
 }
 
-s32 fn_80066124(s32 arg0, s32 arg1) {
-    s32 temp_r3;
+void fn_80066124(u32 arg0) {
+    extern void *lbl_803672F8;
+    u8 *p;
 
-    temp_r3 = arg0;
-    if (arg1 == 0) {
-        return arg0;
+    if (arg0 != 0) {
+        goto end;
     }
-    temp_r3 = M2C_FIELD(arg0, s32 *, 0x8);
-    if (temp_r3 < 0) {
-        return -arg1;
+    p = lbl_803672F8;
+    if (p == NULL) {
+        return;
     }
-    return arg1;
+    *(s16 *)(p + 0x118) = 0;
+    *(s32 *)(p + 0x11C) = 0;
+    *(s32 *)(p + 0x130) = 0;
+    *(s32 *)(p + 0x144) = 0;
+    *(s32 *)(p + 0x158) = 0;
+    *(s32 *)(p + 0x16C) = 0;
+    *(s32 *)(p + 0x120) = 0;
+    *(s32 *)(p + 0x134) = 0;
+    *(s32 *)(p + 0x148) = 0;
+    *(s32 *)(p + 0x15C) = 0;
+    *(s32 *)(p + 0x170) = 0;
+    *(s32 *)(p + 0x124) = 0;
+    *(s32 *)(p + 0x138) = 0;
+    *(s32 *)(p + 0x14C) = 0;
+    *(s32 *)(p + 0x160) = 0;
+    *(s32 *)(p + 0x174) = 0;
+    *(s32 *)(p + 0x128) = 0;
+    *(s32 *)(p + 0x13C) = 0;
+    *(s32 *)(p + 0x150) = 0;
+    *(s32 *)(p + 0x164) = 0;
+    *(s32 *)(p + 0x178) = 0;
+    *(s32 *)(p + 0x12C) = 0;
+    *(s32 *)(p + 0x140) = 0;
+    *(s32 *)(p + 0x154) = 0;
+    *(s32 *)(p + 0x168) = 0;
+    *(s32 *)(p + 0x17C) = 0;
+end:
+    return;
 }
 
 void fn_800661A8(void *arg0) {
@@ -5151,20 +5178,23 @@ return 0;
 }
 #pragma opt_loop_invariants reset
 
-s32 fn_80068CFC(void* arg0, s32 arg1) {
-    void* r28 = arg0;
-    s32 r30 = 0;
-    s32 r31 = 0;
-loop_4:
-    if (r30 >= *(s32*)((u8*)r28 + 0x54)) {
-        return 0;
+s32 fn_80068CFC(void *arg0, s32 arg1) {
+    s32 fn_802342B8(void *, s32);
+    s32 offset;
+    s32 i;
+    void *base;
+
+    offset = 0;
+    i = 0;
+    while (i < *(u16 *)((u8 *)arg0 + 0x54)) {
+        base = *(void **)((u8 *)arg0 + 0x34);
+        if (fn_802342B8(*(void **)((u8 *)base + offset), arg1) == 0) {
+            return 1;
+        }
+        offset += 0x20;
+        i += 1;
     }
-    if (fn_802342B8(*(u32*)((u8*)r28 + 0x34 + r31), arg1) == 0) {
-        return 1;
-    }
-    r31 += 0x20;
-    r30 += 1;
-    goto loop_4;
+    return 0;
 }
 
 void fn_80069010(s32 *arg0, void *arg1) {
