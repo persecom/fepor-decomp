@@ -1,6 +1,8 @@
 /* Functions from 0x800C40F4 to 0x801035C8, found by decomp-toolkit. */
 #include "common.h"
 #include "structs.h"
+typedef struct HeapC55 HeapC55;
+struct HeapC55 { u32 unk0, unk4; HeapC55 *prev, *next; u32 size; HeapC55 *owner, *free; u32 extent; };
 static inline u8 relation_is_one(void *a, void *b) {
     u8 fn_80015610(void *, void *);
     return fn_80015610(a, b) == 1;
@@ -2028,7 +2030,6 @@ extern "C" void fn_800CE214(void *self, void *stat) {
     s32 i;
     u8 ok;
     s32 tmp;
-    void *entry;
     u8 *p;
     u8 found;
     s32 ctr;
@@ -2107,6 +2108,7 @@ extern "C" void fn_800CE214(void *self, void *stat) {
 
     tmp = *(s32 *)((u8 *)self + 0x204);
     if (tmp > 1 && ok != 0) {
+        void *entry;
         u32 *s;
         u32 *d;
         s32 k;
@@ -2131,9 +2133,9 @@ extern "C" void fn_800CE214(void *self, void *stat) {
         fn_80199240();
     }
 
-    ctr = *(s32 *)((u8 *)stat + 0x50);
     p = (u8 *)stat;
     found = 0;
+    ctr = *(s32 *)((u8 *)stat + 0x50);
     for (; ctr > 0; ctr--) {
         tmp = *(s32 *)(p + 0x30);
         if (tmp >= 0 && tmp <= 0x13 && tmp != 7 && tmp != 9 && tmp != 5) {
@@ -10878,7 +10880,9 @@ extern f64 lbl_8036A088;
     u8 ux, uy;
     u8 bx, by;
     s32 var_r31;
+    void *self;
 
+    self = arg0;
     base = (u8 *)lbl_80330EAC;
     unit2 = base + 0x2E0;
     var_r31 = 0;
@@ -10939,13 +10943,13 @@ extern f64 lbl_8036A088;
         }
     }
     if (arg1 != 0) {
-        var_r31 = (s32)(lbl_8036A06C * ((f32)var_r31 * (f32)*(s8 *)((u8 *)arg0 + 0xB)));
+        var_r31 = (s32)(lbl_8036A06C * ((f32)var_r31 * (f32)*(s8 *)((u8 *)self + 0xB)));
         if (var_r31 <= 0) {
             temp_r30 = fn_800F834C(lbl_80330EAC);
             temp_r31 = fn_800F8344(lbl_80330EAC);
             t_y = (s16)fn_800F833C(temp_r31);
-            arg0 = (void *)(t_y + 4);
-            flag2 = (s16)fn_800F833C(temp_r30) >= (s32)arg0;
+            self = (void *)(t_y + 4);
+            flag2 = (s16)fn_800F833C(temp_r30) >= (s32)self;
             temp_ret = fn_800F8328(fn_8001CB64(fn_801A7FF4(temp_r30)), 0x20ULL);
             flag_u8 = (u8)flag2 | (u8)(temp_ret != 0);
             var_r25 = (s16)fn_800F8320(temp_r30) - (s16)fn_800F8318(temp_r31);
