@@ -4,6 +4,7 @@
 typedef struct F43Pos { u8 x, y; u16 id; } F43Pos;
 typedef struct F43Eval { void **vtable; void *entry, *unit; F43Pos *pos; } F43Eval;
 typedef struct F43Range { void *vtable; s32 value; } F43Range;
+typedef struct { s32 a; s32 b; } PairAB;
 typedef struct HeapC55 HeapC55;
 struct HeapC55 { u32 unk0, unk4; HeapC55 *prev, *next; u32 size; HeapC55 *owner, *free; u32 extent; };
 static inline u8 relation_is_one(void *a, void *b) {
