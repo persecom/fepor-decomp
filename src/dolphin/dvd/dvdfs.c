@@ -531,6 +531,7 @@ void fn_8020D1A0(void) {
 }
 
 s32 fn_8020D1C8(u32 arg0) {
+    /* CategorizeError */
     extern void *executing_80368598;
     extern u32 lbl_803685C8;
     extern s32 lbl_803685CC;
