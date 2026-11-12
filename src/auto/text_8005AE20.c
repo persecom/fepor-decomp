@@ -3838,6 +3838,48 @@ do_switch:
     return lbl_8036920C * (f32)var_r4;
 }
 
+u8 fn_80064BBC(void *arg0, s16 arg1, void *arg2, f32 farg0)
+{
+    void fn_80064C4C(void *, void *, f32);
+
+    u8 *base;
+    u8 *node;
+    void *entry;
+    u16 offset;
+
+    if (arg0 == 0) {
+        base = 0;
+    } else {
+        node = *(u8 **)arg0;
+
+        if (node != 0) {
+            base = *(u8 **)(node + 8);
+        } else {
+            base = 0;
+        }
+    }
+
+    if (base == 0) {
+        return 0;
+    }
+
+    offset = ((u16 *)*(void **)(base + 4))[arg1];
+
+    if (offset == 0xFFFF) {
+        entry = 0;
+    } else {
+        entry = base + offset;
+    }
+
+    if (entry == 0) {
+        return 0;
+    }
+
+    fn_80064C4C(entry, arg2, farg0);
+
+    return 1;
+}
+
 void fn_80064C4C(void *arg0, void *arg1, f32 farg0) {
     s32 temp_r10;
     s32 temp_r11;
@@ -6688,12 +6730,46 @@ s32 fn_8006F398(void) {
     return 0x14;
 }
 
-void fn_8006F514(void *arg0) {
-    M2C_UNK fn_8008B1B0(M2C_UNK, M2C_UNK);
-    M2C_FIELD(M2C_FIELD(arg0, void **, 4), M2C_UNK (**)(), 0x7C)();
+#pragma cplusplus on
+extern "C" void fn_8006F514(void *arg0) {
+    void fn_8008B1B0(s32, s32);
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual void v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual void v25() = 0;
+        virtual void v26() = 0;
+        virtual void v27() = 0;
+        virtual void v28() = 0;
+        virtual void v29() = 0;
+    };
+    ((Obj *)arg0)->v29();
     fn_8008B1B0(0, 0);
 }
-
+#pragma cplusplus reset
 void fn_8006F6A4(s32 arg0, u32 arg1, u32 arg2, u32 arg3) {
     extern u32 lbl_80311CE0[];
     extern s8 lbl_80366DE8;
