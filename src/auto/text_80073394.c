@@ -366,3 +366,13 @@ void fn_80073E04(s32 arg0) {
     fn_80024398((M2C_UNK *)lbl_80311F40, arg0, 0);
 }
 
+void fn_80073E34(s32 arg0) {
+    void fn_80024398(void *, s32, s32);
+    extern u8 lbl_80367414;
+    u8 *p;
+
+    p = lbl_802EF4C8;
+    p[8] = 0;
+    fn_80024398(&lbl_80367414, arg0, 0);
+}
+
