@@ -675,6 +675,17 @@ void fn_800758A4(void) {
     fn_8000E0E4(&lbl_8026C0B8[0x22A / sizeof(u16)]);
 }
 
+s32 fn_800758D0(void) {
+    u64 *fn_8001CB64(void *);
+    void *fn_800285C0(void *);
+    extern u8 lbl_802EF4C8[];
+
+    if (*fn_8001CB64(fn_800285C0(lbl_802EF4C8)) & 0x20000000000ULL) {
+        return 2;
+    }
+    return 0;
+}
+
 #pragma cplusplus on
 #pragma use_lmw_stmw on
 extern "C" void fn_80166AE8(s32, s32, s32, void *);
