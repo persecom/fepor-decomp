@@ -184,8 +184,8 @@ void fn_8014D204(Obj *arg0, s8 arg1, s8 arg2) {
     arg0->count = arg0->count + 1;
 }
 
-void fn_8014D244(s32 arg0, u8 arg1, s8 arg2) {
-    *(u8*)((arg0 + arg1) & 0xFFFFFF00) = (u8)arg2;
+void fn_8014D244(u8 *arg0, u8 arg1, u8 arg2) {
+    arg0[arg1 + 0x14] = arg2;
 }
 
 void fn_8014D254(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
