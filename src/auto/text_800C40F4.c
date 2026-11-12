@@ -292,10 +292,10 @@ static inline const u32 *StrMin(const u32 *a, const u32 *b) {
     return (*b < *a) ? b : a;
 }
 
-/* list object helpers (construct, destroy, get item) */
-void fn_800E01C8(void *);
-void fn_800E0140(void *, s32);
-void fn_800E8A88(void *, f32);
+  /* list object helpers (construct, destroy, get item) */
+  void fn_800E01C8(void *);
+  /* fn_800E0140 declared at definition */
+  void fn_800E8A88(void *, f32);
 s32 fn_802342B8(); /* strcmp */
 
 /* std::equal on chars */
