@@ -132,37 +132,40 @@ s32 fn_8014A98C(s32 arg0, s32 arg1, void *arg2)
     return 0;
 }
 
-void fn_8014AA18(void) {
-    // Analyzing the function from assembly:
-    // It appears to be setting up some data structure based on loop conditions
-    
-    s32 r11 = 3;
-    s32 r9 = 10;
-    s32 r8 = 0;
-    
-    while (r8 < 4) {
-        s32 temp_r0 = r11 + r8;
-        
-        if (temp_r0 < 10) {
-            if (r9 == 10) {
-                // Do nothing specific - it's not used
-            } else {
-                // Do nothing specific - it's not used 
-            }
-        } else {
-            if (r9 == 12) {
-                // Do nothing specific - it's not used
-            } else {
-                // Do nothing specific - it's not used
-            }
-        }
-        
-        r8 += 1;
-    }
-    
-    return;
-}
+#pragma cplusplus on
+extern "C" s32 fn_8014AA18(void *arg0, void *arg1, void *arg2) {
+    void *fn_8000D2BC(s32);
+    void fn_80024398(void *, void *, s32);
+    extern s32 lbl_80367B10;
+    extern void *lbl_80367B14;
+    extern u8 lbl_80367B34;
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9(void *, void *) = 0;
+    };
+    s32 index;
+    s32 entry;
 
+    index = *(u8 *)((u8 *)arg2 + 0x3A) + (s8)lbl_80367B0D * 0x18;
+    lbl_80367B10 = index;
+    if (index >= lbl_80367B04) {
+        return 0;
+    }
+    entry = ((s32 *)lbl_80367B00)[index];
+    lbl_80367B14 = fn_8000D2BC(entry);
+    ((Obj *)arg0)->v9(arg1, arg2);
+    fn_80024398(&lbl_80367B34, arg1, 0);
+    return 0;
+}
+#pragma cplusplus reset
 s32 fn_8014AC68(void) {
     extern void *lbl_80367240;
     extern u8 lbl_80367B0D;
