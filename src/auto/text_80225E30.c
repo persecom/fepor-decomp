@@ -819,9 +819,9 @@ void fn_80227FD0(s32 arg0) {
     lbl_8033CA40[0] = arg0;
 }
 
-extern u16 lbl_8033CA40;
-u16 fn_80227FDC(void) {
-    return lbl_8033CA40;
+s32 fn_80227FDC(void) {
+    extern s32 lbl_8033CA40[];
+    return lbl_8033CA40[0];
 }
 
 void fn_802283A8(void) {
