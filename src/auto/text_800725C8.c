@@ -4,13 +4,14 @@ extern u16 lbl_801D3B14[];
 extern void *lbl_801D8A28;
 extern void *lbl_801D8A30;
 
-void fn_800725C8(M2C_UNK **arg0) {
-    extern M2C_UNK lbl_8028459C;
-    extern M2C_UNK lbl_80285FE8;
-    *arg0 = &lbl_8028459C;
-    *arg0 = &lbl_80285FE8 + 0x628;
-    *arg0 = &lbl_80285FE8 + 0x2FC;
-    *arg0 = &lbl_80285FE8 + 0xC;
+void fn_800725C8(void **arg0) {
+    extern u8 lbl_80285FE8[];
+    extern u8 lbl_8028459C[];
+    u8 *base = lbl_80285FE8;
+    *arg0 = lbl_8028459C;
+    *arg0 = base + 0x628;
+    *arg0 = base + 0x2FC;
+    *arg0 = base + 0xC;
 }
 
 extern u8 lbl_80286860[16];
@@ -138,6 +139,14 @@ void fn_80072954(void *arg0) {
     extern u8 lbl_80330708[];
     lbl_80330708[0x54] |= 0x80;
     fn_801D3B14(arg0);
+}
+
+void fn_800729FC(void *arg0) {
+    extern u8 lbl_802EF4C8[];
+    void fn_80073C44(void *);
+    u8 *p = lbl_802EF4C8;
+    p[8] = 1;
+    fn_80073C44(arg0);
 }
 
 void fn_80072A2C(void *arg0) {
