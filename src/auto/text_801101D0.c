@@ -4363,9 +4363,15 @@ void *fn_8011BE04(void) {
     return (u8 *)lbl_80274508 + 0x3ED;
 }
 
-void *fn_8011BE14(void) {
-    extern void *lbl_80274508;
-    return (char *)&lbl_80274508 + 0x3F0;
+s32 fn_8011BE14(void) {
+    u32 fn_8000D354(void *);
+    extern u8 lbl_80274508[];
+    extern u8 lbl_80367A48;
+
+    if (fn_8000D354(lbl_80274508 + 0x3f9) == 0) {
+        return 3;
+    }
+    return (u8)(lbl_80367A48 == 0x84);
 }
 
 s32 fn_8011BE60(void) {
