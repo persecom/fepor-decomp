@@ -2040,21 +2040,21 @@ void fn_8010913C(void *arg0) {
     }
 }
 
-extern u16 lbl_8028F390;
-s32 fn_80109180(s32 arg0, u32 arg1) {
-    s32 fn_8000CAF0(u16 *, u32);
-    s32 fn_80109F88(s32);
+void *fn_80109180(s32 arg0, u32 arg1) {
+    void *fn_8000CAF0(void *, u32);
+    void fn_80109F88(void *, s32);
+    extern u8 lbl_8028F390[];
+    void *result;
+    u32 n;
 
-    u32 var_r4;
-    s32 temp_r31;
-
-    if (arg1 == 0U) {
-        arg1 = 3U;
+    n = arg1;
+    if (n != 0U) {
+    } else {
+        n = 3U;
     }
-
-    temp_r31 = fn_8000CAF0(&lbl_8028F390, arg1);
-    fn_80109F88(arg0);
-    return temp_r31;
+    result = fn_8000CAF0(lbl_8028F390, n);
+    fn_80109F88(result, arg0);
+    return result;
 }
 
 void fn_801091D8(void *arg0)
@@ -2290,14 +2290,17 @@ u8 fn_80109B48(void *arg0) {
 
 void fn_80109B54(void *arg0, f32 farg0) {
     extern f32 lbl_8036A140;
-    f32 mul;
+    void *p;
+    u32 byte;
 
-    *(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 8) = farg0;
-    mul = lbl_8036A140;
-    *(f32 *)((u8 *)arg0 + 0x34) = (f32)*(u8 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 4);
-    *(f32 *)((u8 *)arg0 + 0x38) =
-        *(f32 *)((u8 *)arg0 + 0x34) /
-        (mul * *(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 8));
+    p = *(void **)((u8 *)arg0 + 0x30);
+    *(f32 *)((u8 *)p + 8) = farg0;
+    farg0 = lbl_8036A140;
+    p = *(void **)((u8 *)arg0 + 0x30);
+    byte = *(u8 *)((u8 *)p + 4);
+    *(f32 *)((u8 *)arg0 + 0x34) = (f32)byte;
+    p = *(void **)((u8 *)arg0 + 0x30);
+    *(f32 *)((u8 *)arg0 + 0x38) = *(f32 *)((u8 *)arg0 + 0x34) / (farg0 * *(f32 *)((u8 *)p + 8));
 }
 
 f32 fn_80109BA8(void *arg0) {
@@ -5535,29 +5538,24 @@ void fn_8010FD70(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
     *(u8*)(temp_r9 + 0x7) = arg4;
 }
 
-void fn_8010FDB8(s32 arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
-    s32 *temp_r8;
-    u32 temp_r9;
-    u8 temp_r10;
+void fn_8010FDB8(void *arg0, s8 arg1, s8 arg2, s8 arg3, void *src) {
+    char *entry;
+    u16 half;
+    u8 byte;
 
-    temp_r8 = (s32*)(arg0 + ((*(s32*)(arg0 + 0x200)) << 3));
-    *(u8*)(temp_r8 + 0x0) = arg1;
-    *(u8*)(temp_r8 + 0x1) = arg2;
-    *(u8*)(temp_r8 + 0x2) = 7;
-    *(u8*)(temp_r8 + 0x3) = arg3;
-    *(u8*)(temp_r8 + 0xA) = 0;
-
-    temp_r9 = *(u32*)(arg0 + 0x200);
-    *(u32*)(arg0 + 0x200) = temp_r9 + 1;
-
-    temp_r10 = *(u8*)(arg0 + 0xE);
-    *(u8*)(temp_r8 + 0x4) = temp_r10;
-
-    temp_r10 = *(u8*)(arg0 + 0x18);
-    *(u8*)(temp_r8 + 0x5) = temp_r10;
-
-    *(u8*)(temp_r8 + 0x6) = 0;
-    *(u8*)(temp_r8 + 0x7) = 0;
+    half = *(u16 *)((char *)src + 0xE);
+    entry = (char *)arg0 + (*(s32 *)((char *)arg0 + 0x200) << 3);
+    byte = *(u8 *)((char *)src + 0x18);
+    *(u8 *)(entry + 0) = arg1;
+    *(u8 *)(entry + 1) = arg2;
+    *(u8 *)(entry + 2) = 7;
+    *(u8 *)(entry + 3) = arg3;
+    *(u8 *)(entry + 0xA) = 0;
+    *(s32 *)((char *)arg0 + 0x200) = *(s32 *)((char *)arg0 + 0x200) + 1;
+    *(u8 *)(entry + 4) = half;
+    *(u8 *)(entry + 5) = byte;
+    *(u8 *)(entry + 6) = 0;
+    *(u8 *)(entry + 7) = 0;
 }
 
 void fn_8010FE08(void *arg0, s8 arg1, s8 arg2, u8 arg3) {
