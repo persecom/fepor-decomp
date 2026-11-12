@@ -421,21 +421,24 @@ loop_test:
 #pragma use_lmw_stmw reset
 
 void fn_80163C98(s32 *arg0, void *arg1) {
-    s16 temp_r0;
-    s16 var_r0;
-    s16 var_r5;
+    s32 *fn_8013F748(void *, s32 *, s16 *);
+    s32 spC;
+    struct { s16 x; s16 y; } sp8;
+    s16 temp;
+    s16 var0;
+    s16 var5;
 
-    temp_r0 = *(s16 *)((u8 *)arg1 + 0x4C);
-    if (temp_r0 < 0) {
-        var_r0 = 0;
-        var_r5 = 0;
+    temp = *(s16 *)((u8 *)arg1 + 0x4C);
+    if (temp < 0) {
+        var0 = 0;
+        var5 = 0;
     } else {
-        var_r5 = *(s16 *)((u8 *)arg1 + 0x64);
-        var_r0 = (*(s16 *)((u8 *)arg1 + 0x54) * (temp_r0 & 3)) + *(s16 *)((u8 *)arg1 + 0x66);
+        var5 = *(s16 *)((u8 *)arg1 + 0x64);
+        var0 = (s16)(*(s16 *)((u8 *)arg1 + 0x54) * (temp & 3) + *(s16 *)((u8 *)arg1 + 0x66));
     }
-    *(s16 *)((u8 *)arg1 + 0x8) = var_r5;
-    *(s16 *)((u8 *)arg1 + 0xA) = var_r0;
-    *arg0 = *(s32 *)fn_8013F748(arg1, (void *)((u8 *)arg1 + 0x4C));
+    sp8.x = var5;
+    sp8.y = var0;
+    *arg0 = *fn_8013F748(arg1, &spC, &sp8.x);
 }
 
 void fn_80163E50(void *arg0) {
@@ -8880,21 +8883,19 @@ void fn_80176968(void *arg0) {
 
 void *fn_801769C0(void *arg0, s16 arg1) {
     M2C_UNK fn_800C428C(void *);
-    extern M2C_UNK lbl_80291FF8;
-    extern M2C_UNK lbl_802920E0;
-    extern M2C_UNK lbl_80294B38;
-    extern M2C_UNK lbl_80294BD0;
-    s32 temp_cr0_eq;
+    extern u8 lbl_80294B38[];
+    extern u8 lbl_80294BD0[];
+    extern u8 lbl_80291FF8[];
+    extern u8 lbl_802920E0[];
 
-    temp_cr0_eq = arg0 == NULL;
-    if (temp_cr0_eq == 0) {
-        M2C_FIELD(arg0, M2C_UNK **, 4) = &lbl_80294B38;
-        if (temp_cr0_eq == 0) {
-            M2C_FIELD(arg0, M2C_UNK **, 4) = &lbl_80294BD0;
-            if (temp_cr0_eq == 0) {
-                M2C_FIELD(arg0, M2C_UNK **, 4) = &lbl_80291FF8;
-                if (temp_cr0_eq == 0) {
-                    M2C_FIELD(arg0, M2C_UNK **, 4) = &lbl_802920E0;
+    if (arg0 != NULL) {
+        M2C_FIELD(arg0, void **, 4) = lbl_80294B38;
+        if (arg0 != NULL) {
+            M2C_FIELD(arg0, void **, 4) = lbl_80294BD0;
+            if (arg0 != NULL) {
+                M2C_FIELD(arg0, void **, 4) = lbl_80291FF8;
+                if (arg0 != NULL) {
+                    M2C_FIELD(arg0, void **, 4) = lbl_802920E0;
                 }
             }
         }
