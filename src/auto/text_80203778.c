@@ -219,7 +219,7 @@ s32 PPCMfhid2(void) {
     return 0x392;
 }
 
-void PPCMthid2(void) {
+void PPCMthid2(u32 arg0) {
     M2C_ERROR(/* unknown instruction: mtspr HID2, $r3 */);
 }
 
