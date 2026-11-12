@@ -996,6 +996,25 @@ s16 fn_80164CAC(void *arg0) {
     return ret;
 }
 
+s16 fn_80164D24(void *arg0) {
+    u32 *fn_80037BD0(s32, s32);
+    s8 i;
+    s32 ret;
+
+    i = 0;
+    while (i < 4) {
+        if (*fn_80037BD0(*(s32 *)((u8 *)arg0 + 0x58), i) == 0) {
+            break;
+        }
+        i++;
+    }
+    ret = -1;
+    if (i < 4) {
+        ret = i;
+    }
+    return ret;
+}
+
 #pragma scheduling reset
 s16 fn_80164FBC(void *arg0, s16 arg1) {
     for (; arg1 >= 0; arg1--) {
