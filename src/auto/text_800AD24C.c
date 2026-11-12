@@ -8622,7 +8622,7 @@ extern u16 lbl_80317338[];
 extern u16 lbl_80317338[4976];
 
 u16 fn_800AF704(s32 arg0) {
-    return lbl_80317338[0x13C * arg0 + 0xF8 / 2];
+    return *(u16 *)(*(u8 **)((u8 *)lbl_80317338 + 0xF8) + arg0 * 0x13C);
 }
 
 void fn_800AF71C(s32 arg0, u16 arg1) {
