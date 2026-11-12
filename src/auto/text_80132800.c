@@ -11236,6 +11236,49 @@ void fn_80149C64(void *arg0) {
     }
 }
 
+#pragma cplusplus on
+extern "C" void fn_80149C94(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    struct Obj {
+        u8 pad[8];
+        virtual s32 v0();
+        virtual s32 v1();
+        virtual s32 v2();
+        virtual s32 v3();
+        virtual s32 v4();
+        virtual s32 v5();
+        virtual s32 v6();
+        virtual s32 v7();
+        virtual s32 v8();
+        virtual s32 v9();
+        virtual s32 v10();
+        virtual s32 v11();
+        virtual s32 v12();
+        virtual s32 v13();
+        virtual s32 v14();
+        virtual s32 v15();
+        virtual s32 v16();
+        virtual s32 v17();
+        virtual s32 v18();
+        virtual s32 v19();
+        virtual s32 v20();
+        virtual s32 v21();
+        virtual s32 v22();
+        virtual s32 v23();
+    };
+    u8 fn_800B1E98(u16, s32, s32, s32);
+    void fn_800B1D0C(s32, s32);
+    void fn_800B1DEC(s32, s16);
+    s8 b;
+
+    *(u8 *)((u8 *)arg0 + 4) = fn_800B1E98((u16)((Obj *)arg0)->v23(), 0, arg1, arg2);
+    b = *(s8 *)((u8 *)arg0 + 4);
+    if (b >= 0) {
+        fn_800B1D0C((s32)b, arg3);
+        fn_800B1DEC((s32)*(s8 *)((u8 *)arg0 + 4), (s16)arg4);
+    }
+}
+#pragma cplusplus reset
+
 void fn_80149D1C(void *arg0) {
     void fn_800B1E44(s32);
     s32 temp;
