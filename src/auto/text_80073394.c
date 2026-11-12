@@ -67,15 +67,13 @@ s32 fn_80073474(s32 unused, s32 arg1) {
 }
 
 u8 fn_800734B0(void) {
-    u8 fn_801E3620(M2C_UNK *);
-    extern M2C_UNK lbl_80331FB8;
-    u8 var_r3;
+    u8 fn_801E3620(void *);
+    extern u8 lbl_80331FB8[];
 
-    var_r3 = 2;
-    if (fn_801E3620(&lbl_80331FB8) != 0) {
-        var_r3 = 0;
+    if (fn_801E3620(lbl_80331FB8) != 0) {
+        return 0;
     }
-    return var_r3;
+    return 2;
 }
 
 void fn_800734EC(void) {
@@ -340,8 +338,12 @@ void fn_80073C74(s32 arg0) {
 }
 
 void fn_80073CA4(void) {
-    fn_8003BE50(lbl_802EF4C8);
-    fn_8003A398(lbl_802EF4C8);
+    void fn_8003BE50(void *);
+    void fn_8003A398(void *);
+    void fn_800F0A3C(void);
+    extern u8 lbl_802EF4C8[24];
+    fn_8003BE50(*(void **)lbl_802EF4C8);
+    fn_8003A398(*(void **)lbl_802EF4C8);
     fn_800F0A3C();
 }
 
