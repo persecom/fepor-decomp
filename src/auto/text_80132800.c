@@ -3294,12 +3294,23 @@ void fn_80138D14(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x18) = h;
 }
 
-void fn_80138D44(void *arg0) {
-    s16 *ptr = (s16 *)arg0;
-    ptr[0x12/2] = 3;
-    ptr[0x14/2] = 5;
-    ptr[0x16/2] = (s16) ((s16) (ptr[0xE/2] - ptr[0xA/2]) - 3);
-    ptr[0x18/2] = (s16) ((s16) (ptr[0x10/2] - ptr[0xC/2]) - 5);
+void fn_80138D44(u8 *arg0) {
+    s16 x1, x0, y1, y0;
+    s16 dx, dy;
+
+    y0 = *(s16 *)(arg0 + 0xC);
+    y1 = *(s16 *)(arg0 + 0x10);
+    x0 = *(s16 *)(arg0 + 0xA);
+    x1 = *(s16 *)(arg0 + 0xE);
+
+    dy = (s16)(y1 - y0);
+    *(s16 *)(arg0 + 0x12) = 3;
+    dx = (s16)(x1 - x0);
+    dy = (s16)(dy - 5);
+    *(s16 *)(arg0 + 0x14) = 5;
+    dx = (s16)(dx - 3);
+    *(s16 *)(arg0 + 0x16) = dx;
+    *(s16 *)(arg0 + 0x18) = dy;
 }
 
 void fn_80138D88(void *arg0) {
@@ -5803,17 +5814,55 @@ s32 fn_8013E470(void) {
     return 0x1C;
 }
 
-void fn_8013E478(void *arg0) {
-    M2C_UNK fn_80009B80(M2C_UNK);
-    M2C_UNK fn_80009C0C(f32);
+#pragma cplusplus on
+extern "C" void fn_8013E478(void *arg0) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual void v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual void v25() = 0;
+        virtual void v26() = 0;
+        virtual void v27() = 0;
+        virtual void v28() = 0;
+        virtual void v29() = 0;
+        virtual void v30() = 0;
+    };
+    void fn_8000A258(void);
+    void fn_80009C0C(f32);
+    void fn_80009B80(s32);
+    void fn_8000A248(void);
     extern f32 lbl_8036A6D0;
-    M2C_FIELD(M2C_FIELD(arg0, void **, 4), M2C_UNK (**)(), 0x80)();
+
+    ((Obj *)arg0)->v30();
     fn_8000A258();
     fn_80009C0C(lbl_8036A6D0);
     fn_80009B80(0x80);
     fn_8000A248();
 }
-
+#pragma cplusplus reset
 void fn_8013E4BC(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, u8 *, 9) = (u8) (M2C_FIELD(arg0, u8 *, 9) | arg1);
 }
@@ -6416,26 +6465,21 @@ void fn_8013FC14(s16 *dst, s16 *src) {
     d->y = y;
 }
 
-void fn_8013FC28(void *arg0, void *arg1, void *arg2)
-{
-    struct Pair {
-        s16 x;
-        s16 y;
-    };
+#pragma scheduling off
+void fn_8013FC28(s32 *dst, s32 *src, s16 *off) {
+    s16 local[2];
+    s16 b, y, x, a;
 
-    struct Pair value;
-    struct Pair *offset;
-
-    value = *(struct Pair *)arg1;
-    offset = (struct Pair *)arg2;
-
-    value.x += offset->x;
-    value.y += offset->y;
-
-    *(struct Pair *)arg0 = value;
+    *(s32 *)local = *src;
+    a = off[0];
+    b = off[1];
+    x = local[0] + a;
+    y = local[1] + b;
+    local[0] = x;
+    local[1] = y;
+    *dst = *(s32 *)local;
 }
-
-#pragma scheduling reset
+#pragma scheduling on
 void fn_8013FC64(void) {
 
 }
@@ -8396,6 +8440,37 @@ void fn_80145DDC(void *arg0) {
 void fn_80145E9C(void) {
     M2C_UNK fn_800B28FC();
     fn_800B28FC();
+}
+
+void *fn_80145EBC(void *arg0) {
+    extern u8 lbl_80276BC8[];
+
+    void *fn_8000D2BC(void *);
+    s32 fn_802342B8(void *, void *);
+
+    u8 *table;
+    u8 *entry;
+    s32 count;
+    s32 index;
+
+    table = (u8 *)fn_8000D2BC(lbl_80276BC8 + 0x94);
+
+    count = *(s32 *)table;
+    entry = table + 4;
+    index = 0;
+
+    while (index < count) {
+        if (*(void **)entry != NULL) {
+            if (fn_802342B8(*(void **)entry, arg0) == 0) {
+                return entry;
+            }
+        }
+
+        index++;
+        entry += 8;
+    }
+
+    return NULL;
 }
 
 s32 fn_80145F58(void *arg0, void **arg1) {
