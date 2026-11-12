@@ -197,8 +197,7 @@ loop_1:
     goto loop_1;
 }
 
-u32 PPCMtmmcr0(void) {
-    return 0;
+void PPCMtmmcr0(u32 arg0) {
 }
 
 void PPCMtpmc3(void) {
@@ -1451,16 +1450,202 @@ void __OSGetExecParams(s32 *arg0) {
     }
 }
 
-void fn_802068D4(void) {
-    s32 r31;
-    s32 r30;
-    u32 r29;
+s32 fn_802068D4(void) {
+    u32 fn_80204DE0(u32, u32);
+    void fn_8020EB10(void *, u32, s32, s32, s32, s32);
+    s32 fn_8020EF60(void *);
+    s32 fn_8020F40C(void);
+    void fn_802089A4(s32);
+    extern s32 lbl_803684B4;
 
-    r31 = 0x18;
-    r30 = 0x1C;
-    r29 = 0;
-    
-    __OSArenaLo_80366F30 = (u32)&r31;
+    u8 sp8[0x38];
+    u32 buf;
+
+    if (lbl_803684B4 != 0) {
+        return lbl_803684B4;
+    }
+    if (*(s32 *)0x800030F4 != 0) {
+        buf = fn_80204DE0(0x40, 0x20);
+        fn_8020EB10(sp8, buf, 0x40, *(s32 *)0x800030F4, 0, 0);
+        do {
+            if (fn_8020F40C() == 0) {
+                fn_802089A4(0);
+            }
+        } while (fn_8020EF60(sp8) != 0);
+        lbl_803684B4 = *(s32 *)0x800030F4 + *(s32 *)(buf + 0x38);
+    } else {
+        lbl_803684B4 = 0x2440;
+    }
+    return lbl_803684B4;
+}
+
+void fn_80206998(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
+    BOOL OSDisableInterrupts(void);
+    void OSEnableInterrupts(void);
+    void DVDInit(void);
+    void __OSMaskInterrupts(s32);
+    void __OSUnmaskInterrupts(s32);
+    void OSSetArenaLo(void *);
+    void ICInvalidateRange(void *, s32);
+    void ICFlashInvalidate(void);
+    void *fn_80204DE0(s32, s32);
+    void fn_80206658(void *, s32, s32);
+    void fn_802067E0(s32);
+    void fn_8020681C(void *, s32, s32);
+    s32 fn_802068D4(void);
+    void fn_80206888(void);
+    void fn_802089A4(s32);
+    void fn_8020EB10(void *, void *, s32, s32, s32, s32);
+    void fn_8020ED90(void *, s32);
+    s32 fn_8020EF60(void *);
+    void fn_8020F058(s32);
+    void fn_8020F068(void);
+    u8 *fn_8020F404(void);
+    s32 fn_8020F40C(void);
+    void fn_8020F504(void *);
+    void fn_8021382C(s32);
+    void fn_80213AEC(s32);
+    void fn_80213B18(s32);
+    s32 fn_80234278(void *, void *, s32);
+    void *memcpy(void *, void *, u32);
+    int OSReport(void *msg, ...);
+    extern s32 __OSIsGcam;
+    extern s32 lbl_803684B0;
+    extern s32 lbl_803684B4;
+    extern char lbl_8029C2D8[];
+
+    typedef void (*CB0)(void *, void *);
+    typedef s32 (*CB1)(void **, s32 *, s32 *);
+    typedef s32 (*CB2)(void);
+    typedef void (*SetupFn)(CB0 *, CB1 *, CB2 *);
+
+    u8 spDC[0x34];
+    s32 spD4;
+    s32 spD0;
+    void *spCC;
+    CB2 spC8;
+    CB1 spC4;
+    CB0 spC0;
+    u8 sp8C[0x34];
+    u8 sp5C[0x30];
+    u8 sp2C[0x30];
+    s32 var_r27;
+    s32 temp_r28;
+    void *temp_r31;
+    void *temp_r30;
+    void *temp_r3;
+    s32 var_r0;
+    s32 aligned;
+
+    var_r27 = arg0;
+    OSDisableInterrupts();
+    temp_r31 = fn_80204DE0(0x1C, 1);
+    *(s32 *)temp_r31 = 1;
+    *(s32 *)((u8 *)temp_r31 + 4) = arg1;
+    *(s32 *)((u8 *)temp_r31 + 0xC) = arg2;
+    *(s32 *)((u8 *)temp_r31 + 0x10) = arg3;
+    *(s32 *)((u8 *)temp_r31 + 0x14) = arg4;
+    if (arg4 == 0) {
+        *(void **)((u8 *)temp_r31 + 0x18) = fn_80204DE0(0x2000, 1);
+        fn_80206658(*(void **)((u8 *)temp_r31 + 0x18), arg5, arg6);
+    }
+    DVDInit();
+    fn_8020F058(1);
+    fn_8020F068();
+    lbl_803684B0 = 0;
+    fn_8020F504(fn_80206888);
+    __OSMaskInterrupts(-0x20);
+    __OSUnmaskInterrupts(0x400);
+    OSEnableInterrupts();
+
+    do {
+        if (fn_8020F40C() == 0)
+            fn_802089A4(0);
+    } while (lbl_803684B0 != 1);
+
+    if (__OSIsGcam == 0) {
+        if (fn_8020F404()[8] != 0)
+            var_r0 = 1;
+        else
+            var_r0 = 0;
+        if (var_r0 != 0) {
+            fn_80213AEC(0);
+            fn_80213B18(0);
+            fn_8020ED90(spDC, 0);
+            do {
+                if (fn_8020F40C() == 0)
+                    fn_802089A4(0);
+            } while (fn_8020EF60(spDC) != 0);
+            fn_8021382C(0);
+        }
+    }
+
+    temp_r30 = fn_80204DE0(0x20, 0x20);
+    fn_8020681C(temp_r30, 0x20, fn_802068D4());
+    aligned = (*(s32 *)((u8 *)temp_r30 + 0x14) + 0x1F) & ~0x1F;
+    fn_8020681C((void *)0x81200000, aligned, fn_802068D4() + 0x20);
+    ICInvalidateRange((void *)0x81200000, aligned);
+
+    if (fn_80234278(temp_r30, lbl_8029C2D8, 0xA) > 0)
+        var_r0 = 1;
+    else
+        var_r0 = 0;
+
+    if (var_r0 != 0) {
+        if ((u32)(var_r27 + 0x10000) == 0xFFFFU) {
+            if (lbl_803684B4 == 0) {
+                if (*(s32 *)0x800030F4 != 0) {
+                    temp_r3 = fn_80204DE0(0x40, 0x20);
+                    fn_8020EB10(sp5C, temp_r3, 0x40, *(s32 *)0x800030F4, 0, 0);
+                    do {
+                        if (fn_8020F40C() == 0)
+                            fn_802089A4(0);
+                    } while (fn_8020EF60(sp5C) != 0);
+                    lbl_803684B4 = *(s32 *)0x800030F4 + *(s32 *)((u8 *)temp_r3 + 0x38);
+                } else {
+                    lbl_803684B4 = 0x2440;
+                }
+            }
+            var_r27 = lbl_803684B4 + *(s32 *)((u8 *)temp_r30 + 0x14) + 0x20;
+        }
+        *(s32 *)((u8 *)temp_r31 + 8) = var_r27;
+        ((SetupFn)*(void **)((u8 *)temp_r30 + 0x10))(&spC0, &spC4, &spC8);
+        temp_r3 = fn_80204DE0(0x1C, 1);
+        memcpy(temp_r3, temp_r31, 0x1C);
+        *(void **)0x800030F0 = temp_r3;
+        spC0((void *)OSReport, (void *)0x80000000);
+        OSSetArenaLo(temp_r3);
+
+        while (spC4(&spCC, &spD0, &spD4) != 0) {
+            fn_8020EB10(sp2C, spCC, spD0, spD4, 0, 0);
+            do {
+                if (fn_8020F40C() == 0)
+                    fn_802089A4(0);
+            } while (fn_8020EF60(sp2C) != 0);
+        }
+
+        temp_r28 = spC8();
+        temp_r3 = fn_80204DE0(0x1C, 1);
+        memcpy(temp_r3, temp_r31, 0x1C);
+        *(void **)0x800030F0 = temp_r3;
+        *(s32 *)0xCC003024 = 7;
+        OSDisableInterrupts();
+        fn_802067E0(temp_r28);
+    } else {
+        *(s32 *)0x812FDFF0 = arg2;
+        *(s32 *)0x812FDFEC = arg3;
+        *(u8 *)0x800030E2 = 1;
+        aligned = (*(s32 *)((u8 *)temp_r30 + 0x18) + 0x1F) & ~0x1F;
+        fn_8020EB10(sp8C, (void *)0x81300000, aligned, fn_802068D4() + *(s32 *)((u8 *)temp_r30 + 0x14) + 0x20, 0, 0);
+        do {
+            if (fn_8020F40C() == 0)
+                fn_802089A4(0);
+        } while (fn_8020EF60(sp8C) != 0);
+        ICInvalidateRange((void *)0x81300000, aligned);
+        OSDisableInterrupts();
+        ICFlashInvalidate();
+        fn_802067E0(0x81300000);
+    }
 }
 
 int fn_80206FB8(u16 encode, u16 code) {
