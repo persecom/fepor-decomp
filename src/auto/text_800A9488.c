@@ -378,6 +378,26 @@ void *fn_800A9E00(void) {
     return (void *)((u32)lbl_8026E470 + 0xCC);
 }
 
+s32 fn_800A9E10(void *arg0) {
+    u32 fn_80019ED0(s32);
+    extern void *lbl_80367240;
+    u32 flags;
+    s32 delta;
+
+    flags = *(u32 *)((u8 *)lbl_80367240 + 0x10);
+    if (flags & 0x01000001) {
+        delta = -1;
+    }
+    if (flags & 0x02000002) {
+        delta = 1;
+    }
+    if (fn_80019ED0((s8)((u8 *)arg0)[4] + delta) == 0) {
+        return 0;
+    }
+    ((u8 *)arg0)[4] = ((u8 *)arg0)[4] + delta;
+    return 0;
+}
+
 s32 fn_800AA078(void *arg0) {
     s32 fn_8000CEE4(M2C_UNK);
     void fn_80016DE0(void);
