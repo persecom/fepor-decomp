@@ -11938,28 +11938,23 @@ void fn_800536E4(void *arg0, void *arg1) {
     }
 }
 
-s32 fn_800536FC(s32 arg0)
-{
-    void fn_80053750(void);
+void *fn_800536FC(u16 arg0) {
+    void fn_80053750(void *, void *);
     void fn_8000A388(void *, void *, void *);
     extern u8 lbl_80285990[];
-
     struct {
         u16 value;
         u16 padding;
-        s32 result;
+        void *result;
     } data;
 
-    data.value = (u16)arg0;
-    data.result = 0;
-
-    fn_8000A388(
-        lbl_80285990,
-        (void *)fn_80053750,
-        &data
-    );
-
-    return data.result;
+    data.value = arg0;
+    data.result = NULL;
+    fn_8000A388(lbl_80285990, fn_80053750, &data);
+    if (data.result != NULL) {
+        return data.result;
+    }
+    return NULL;
 }
 
 void fn_80053750(void *arg0, void *arg1) {
