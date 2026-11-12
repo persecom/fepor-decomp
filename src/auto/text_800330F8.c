@@ -9830,43 +9830,39 @@ void fn_8004B588(u8 *arg0)
 void fn_8004B8F8(int arg0, int arg1, float arg2, float arg3)
 {
     extern u8 *lbl_803672CC;
-
-    u8 *pool;
     u8 *node;
+    u8 *pool;
     u8 *head;
 
-    pool = lbl_803672CC;
-    node = *(u8 **)*(u8 **)(pool + 8);
+    node = *(u8 **)(*(u8 **)(lbl_803672CC + 8));
 
-    if (node != 0) {
+    if (node == 0) {
+        node = 0;
+    } else {
+        pool = lbl_803672CC;
         head = *(u8 **)(pool + 0x10);
-
         *(u8 **)(node + 4) = head;
         *(u32 *)(node + 0) = 0;
-
         head = *(u8 **)(pool + 0x10);
-
         if (head != 0) {
             *(u8 **)(head + 0) = node;
         }
-
         if (*(u8 **)(pool + 0xC) == 0) {
             *(u8 **)(pool + 0xC) = node;
         }
-
         *(u8 **)(pool + 0x10) = node;
-
         *(u8 **)(pool + 8) += 4;
         ++*(u32 *)(pool + 0x14);
     }
 
-    if (node != 0) {
-        *(float *)(node + 0xC) = arg2;
-        *(float *)(node + 0x10) = arg3;
-        *(u16 *)(node + 0xA) = arg0;
-        *(u8 *)(node + 9) = 0;
-        *(u8 *)(node + 8) = arg1;
+    if (node == 0) {
+        return;
     }
+    *(float *)(node + 0xC) = arg2;
+    *(float *)(node + 0x10) = arg3;
+    *(u16 *)(node + 0xA) = arg0;
+    *(u8 *)(node + 9) = 0;
+    *(u8 *)(node + 8) = arg1;
 }
 
 #pragma use_lmw_stmw reset
@@ -9936,6 +9932,25 @@ void fn_8004BCCC(void *arg0, s32 arg1) {
     fn_8017A5EC(arg1, 0);
 }
 
+void fn_8004BD1C(void *arg0, f32 *out, f32 scale) {
+    extern f32 lbl_80368FCC;
+    extern f32 lbl_80368FF4;
+    f32 a;
+    f32 b;
+    u8 *p;
+
+    a = lbl_80368FCC;
+    p = *(u8 **)((u8 *)arg0 + 0x17c);
+    b = a;
+    if (p != NULL) {
+        a = (f32)(s8)p[0xa];
+        b = (f32)(s8)p[0xb];
+    }
+    out[0] = a * scale * lbl_80368FF4;
+    out[1] = b * scale * lbl_80368FF4;
+    out[2] = lbl_80368FCC * scale * lbl_80368FF4;
+}
+
 f32 fn_8004BDA8(void *arg0, f32 farg0, f32 farg1) {
     f32 fn_80059440(f32, f32, f32, f32);
     extern f32 lbl_80368FF8;
@@ -9991,14 +10006,26 @@ void fn_8004BF24(void *arg0)
     }
 }
 
-s32 fn_8004BF80(s32 arg0, s32 arg1) {
-    if (arg0 < 0) {
-        arg0 = -arg0;
+s32 fn_8004BF80(void *arg0) {
+    void *fn_80060664(void *);
+    void *ret;
+    u8 *sub;
+
+    if ((*(u8 *)((u8 *)arg0 + 3) & 2) == 0) {
+        return 1;
     }
-    if (arg1 < 0) {
-        arg1 = -arg1;
+    if ((*(u32 *)((u8 *)arg0 + 0x1A0) & 0x010000DC) != 0) {
+        return 1;
     }
-    return (arg0 >= arg1) ? (arg0 - arg1) : (arg1 - arg0);
+    sub = (u8 *)arg0 + 0x1C;
+    ret = fn_80060664(sub);
+    if (ret == NULL) {
+        return 1;
+    }
+    if (*(s32 *)((u8 *)ret + 0x10) != 0) {
+        return 1;
+    }
+    return (*(u32 *)sub >> 4) & 1;
 }
 
 u8 fn_8004C00C(void *arg0) {
