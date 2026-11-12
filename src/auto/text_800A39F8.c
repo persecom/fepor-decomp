@@ -959,6 +959,43 @@ void fn_800A5BB4(s32 arg0) {
     }
 }
 
+void fn_800A5C00(void *arg0)
+{
+    extern u8 lbl_8026E1B0[];
+
+    extern void fn_80234450(void *, const char *);
+    extern s32 fn_80231D94(char *, const char *, ...);
+    extern void fn_802343E0(void *, const char *);
+    extern void fn_8005C8B4(void *);
+
+    u8 *obj;
+    char buffer[0x10];
+
+    obj = (u8 *)arg0;
+
+    *(u32 *)(obj + 0x38) = 0;
+
+    fn_80234450(
+        obj + 0x44,
+        (const char *)lbl_8026E1B0 + 0x2E
+    );
+
+    fn_80231D94(
+        buffer,
+        (const char *)lbl_8026E1B0 + 0x42,
+        *(u32 *)(obj + 0x30)
+    );
+
+    fn_802343E0(obj + 0x44, buffer);
+
+    fn_802343E0(
+        obj + 0x44,
+        (const char *)lbl_8026E1B0 + 0x45
+    );
+
+    fn_8005C8B4(obj + 0x44);
+}
+
 extern u16 lbl_802B9E80;
 s32 fn_800A5C88(void) {
     extern u16 lbl_8028C678[];
