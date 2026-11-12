@@ -5753,10 +5753,16 @@ void fn_80162018(void) {
 }
 
 void fn_80162054(void) {
+    void fn_8006EEFC(void *, void *);
+    extern M2C_UNK lbl_803680C8;
+    extern M2C_UNK lbl_803680CC;
+    extern s32 lbl_803680D0;
     extern u32 lbl_80293AD8[];
-    
-    fn_8005C8B4(lbl_80293AD8[2]);
-    fn_8005C8B4(lbl_80293AD8[3]);
+
+    if (lbl_803680D0++ == 0) {
+        fn_8006EEFC(&lbl_803680C8, (void *)lbl_80293AD8[2]);
+        fn_8006EEFC(&lbl_803680CC, (void *)lbl_80293AD8[3]);
+    }
 }
 
 s32 fn_801620AC(void) {
