@@ -22,6 +22,44 @@ void fn_80120CE0(void *arg0) {
     lbl_80367110 &= 0xFFFFFFFD;
 }
 
+void fn_80120CFC(u16 *arg0) {
+    u32 fn_8000BCA4(void *);
+    void *fn_8000C0C0(void *);
+    extern void *lbl_80367240;
+    extern u8 lbl_80274CE0[];
+    extern u32 lbl_80367110;
+    extern u8 lbl_80290200[];
+    s32 buttons;
+    void *obj;
+    u8 flag;
+    u8 v;
+
+    if (!(*arg0 & 8)) {
+        buttons = *(s32 *)((u8 *)lbl_80367240 + 4);
+        if ((buttons & (*(s32 *)((u8 *)lbl_80367240 + 8) ^ buttons) & 0x200) &&
+            fn_8000BCA4(lbl_80274CE0 + 0x34) == 0) {
+            if (lbl_80367110 & 3) {
+                flag = 0;
+            } else {
+                obj = fn_8000C0C0(lbl_80290200);
+                if (obj == NULL) {
+                    flag = 0;
+                } else {
+                    v = *(u8 *)((u8 *)obj + 0x50);
+                    if (v == 0 || v == 0xFF) {
+                        flag = 0;
+                    } else {
+                        flag = 1;
+                    }
+                }
+            }
+            if (flag == 0 && arg0[1] >= 3) {
+                *arg0 |= 4;
+            }
+        }
+    }
+}
+
 void fn_80120DD4(void *arg0, s32 arg1) {
     void *fn_8000CAF0(void *, s32);
     extern u8 lbl_8029023C[];
