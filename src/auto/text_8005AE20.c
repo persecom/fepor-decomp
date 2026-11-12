@@ -77,14 +77,12 @@ static inline u8 *FindEntryByName(char *name) {
 }
 
 static inline u32 FindUnk48(void *arg0) {
-    void *current = arg0;
-
-    while (current != NULL) {
-        u32 temp = M2C_FIELD(current, u32 *, 0x48);
+    while (arg0 != NULL) {
+        u32 temp = M2C_FIELD(arg0, u32 *, 0x48);
         if (temp != 0U) {
             return temp;
         }
-        current = M2C_FIELD(current, void **, 4);
+        arg0 = M2C_FIELD(arg0, void **, 4);
     }
     return 0U;
 }
@@ -878,45 +876,40 @@ void fn_8005CBC8(void) {
     fn_8005C8D8();
 }
 
+#pragma global_optimizer off
 void *fn_8005CEC0(void) {
-    extern u8 lbl_802F04E0;
-    s32 var_ctr;
-    s32 var_ctr_2;
-    s32 var_r3;
-    s32 var_r4;
-    u8 *var_r31;
-    u8 *var_r3_2;
+    void fn_8005C8D8(s32);
+    extern u8 lbl_802F04E0[];
+    s32 i;
+    s32 j;
+    unsigned ctr;
+    u8 *base;
 
-    var_r4 = 0;
-    var_r31 = &lbl_802F04E0;
-    var_r3_2 = &lbl_802F04E0;
-    var_ctr = 0x400;
-loop_1:
-    if ((s8) *var_r3_2 == 0) {
-        return &lbl_802F04E0 + (var_r4 * 0x7C);
-    }
-    var_r3_2 += 0x7C;
-    var_r4 += 1;
-    var_ctr -= 1;
-    if (var_ctr == 0) {
-        fn_8005C8D8(-1);
-        var_r3 = 0;
-        var_ctr_2 = 0x400;
-loop_5:
-        if ((s8) *var_r31 == 0) {
-            return &lbl_802F04E0 + (var_r3 * 0x7C);
+    i = 0;
+    base = lbl_802F04E0;
+    {
+        u8 *e;
+        e = base;
+        for (ctr = 0x400; ctr > 0; ctr--) {
+            if ((s8)*e == 0) {
+                return lbl_802F04E0 + i * 0x7C;
+            }
+            e += 0x7C;
+            i += 1;
         }
-        var_r31 += 0x7C;
-        var_r3 += 1;
-        var_ctr_2 -= 1;
-        if (var_ctr_2 == 0) {
-            return NULL;
-        }
-        goto loop_5;
     }
-    goto loop_1;
+    fn_8005C8D8(-1);
+    j = 0;
+    for (ctr = 0x400; ctr > 0; ctr--) {
+        if ((s8)*base == 0) {
+            return lbl_802F04E0 + j * 0x7C;
+        }
+        base += 0x7C;
+        j += 1;
+    }
+    return NULL;
 }
-
+#pragma global_optimizer on
 void fn_8005D690(u8 *);
 void fn_8005D1DC(char *name) {
     fn_8005D690(FindEntryByName(name));
@@ -1631,33 +1624,37 @@ u32 fn_8005E55C(void) {
 
 #pragma dont_inline on
 void *fn_8005E594(s8 arg0, u32 arg1, char *arg2) {
-    M2C_UNK fn_800056CC(char *, ...);
-    u32 fn_800C44F4(s8);
-    void *fn_800C4604(s8, u32, char *, u32);
-    M2C_UNK fn_800C4384(void);
+    void fn_800056CC(char *, ...);
+    u32 fn_800C44F4(s32);
+    void *fn_800C4604(s32, u32, char *, u32);
+    void fn_800C4384(void);
     unsigned long strlen(const char *);
-    extern char lbl_8026B330[];
-    void *var_r31;
-    s32 var_r0;
+    extern u8 lbl_8026B330[];
+    u32 a1;
+    char *a2;
+    void *result;
+    s32 ofs;
 
-    fn_800056CC(lbl_8026B330 + 0x230, arg1, arg2);
-    fn_8005BC8C(arg0);
-    if (fn_800C44F4(arg0) < arg1) {
-        var_r31 = NULL;
+    result = (void *)(s32)arg0;
+    a2 = arg2;
+    a1 = arg1;
+    fn_800056CC((char *)(lbl_8026B330 + 0x230));
+    fn_8005BC8C((s8)(s32)result);
+    if (fn_800C44F4((s32)result) < a1) {
+        result = NULL;
     } else {
-        var_r0 = strlen(arg2) - 15;
-        if (var_r0 < 0) {
-            var_r0 = 0;
+        ofs = strlen(a2) - 0xF;
+        if (ofs < 0) {
+            ofs = 0;
         }
-        var_r31 = fn_800C4604(arg0, arg1, arg2 + var_r0, arg1);
+        result = fn_800C4604((s32)result, a1, a2 + ofs, a1);
     }
-    if (var_r31 == NULL) {
+    if (result == NULL) {
         fn_800C4384();
     }
-    return var_r31;
+    return result;
 }
-
-#pragma use_lmw_stmw on
+#pragma dont_inline reset
 void fn_8005E644(void *arg0) {
     void fn_8005F12C(void *, void *);
     void fn_8005F230(void *);
@@ -2768,6 +2765,47 @@ u32 fn_80060690(void *arg0) {
         current = *(void **)((char *)current + 4);
     }
     return 0U;
+}
+
+s32 fn_8006135C(void *arg0, void *name) {
+    u8 fn_8006D980(void *, void *);
+    void *node;
+    void *entry;
+    s32 i;
+    void *cur;
+
+    cur = arg0;
+    goto check;
+body:
+    node = *(void **)((u8 *)cur + 0x40);
+    if (node == NULL) {
+        goto follow;
+    }
+    goto found;
+follow:
+    cur = *(void **)((u8 *)cur + 4);
+check:
+    if (cur != NULL) {
+        goto body;
+    }
+    node = NULL;
+found:
+    entry = *(void **)((u8 *)node + 0xC);
+    i = 0;
+    goto inner_check;
+inner:
+    if (*(u32 *)((u8 *)entry + 0xC) & 0x80000000U) {
+        if (fn_8006D980(*(void **)((u8 *)entry + 0xF0), name) != 0) {
+            return i;
+        }
+    }
+    i += 1;
+    entry = (void *)((u8 *)entry + 0xF4);
+inner_check:
+    if (i < *(s32 *)((u8 *)node + 8)) {
+        goto inner;
+    }
+    return -1;
 }
 
 void fn_8006140C(void *arg0) {
@@ -4102,6 +4140,65 @@ s32 fn_80064F24(s16 *arr, s32 key, s32 n) {
     }
 done:
     return mid;
+}
+
+s32 fn_800653C8(void ***arg0, u16 *out) {
+    void **mid;
+    u8 *base;
+    u8 *entry;
+    u8 *walk;
+    u16 *table;
+    u16 offset;
+    u16 lim;
+    s32 tmp;
+    s32 result;
+    s32 i;
+    s32 j;
+    s32 index;
+    s32 diff1;
+    s32 diff2;
+    s32 mask;
+
+    if (arg0 == NULL) {
+        base = NULL;
+    } else {
+        mid = *arg0;
+        if (mid != NULL) {
+            base = *mid;
+        } else {
+            base = NULL;
+        }
+    }
+    if (base == NULL) {
+        return 0;
+    }
+
+    tmp = 0x10000 - 1;
+    result = 0;
+    i = 0;
+    lim = (u16)tmp;
+    index = 0;
+
+    while (i < (s32)*(u16 *)base) {
+        j = 0;
+        table = *(u16 **)(base + 4);
+        offset = *(u16 *)((u8 *)table + index);
+        diff1 = offset - lim;
+        diff2 = lim - offset;
+        mask = ~(diff1 | diff2) >> 31;
+        entry = (u8 *)(((s32)base + offset) & ~mask);
+        walk = entry;
+        while (j < (s32)*(u16 *)(entry + 2)) {
+            *out = *(u16 *)(walk + 4);
+            result += 1;
+            walk += 2;
+            j += 1;
+            out += 1;
+        }
+        index += 2;
+        i += 1;
+    }
+    return result;
 }
 
 #pragma dont_inline reset
@@ -7340,6 +7437,7 @@ void fn_800708B0(void *arg0, void *arg1) {
 
 #pragma cplusplus on
 extern "C" void *fn_8000B908(u8);
+#pragma cplusplus on
 extern "C" void fn_80070B3C(void *arg0, void *arg1) {
     struct Obj {
         u8 pad[4];
@@ -7389,7 +7487,7 @@ extern "C" void fn_80070B3C(void *arg0, void *arg1) {
         }
     }
 }
-
+#pragma cplusplus reset
 extern "C" void fn_80070BF4(s32 arg0, void *arg1) {
     void *fn_80037BD0(s32, u8);
     extern s32 lbl_802EF4C8[];
