@@ -48,6 +48,7 @@ typedef struct {
 } Unk80037BD0;
 
 extern u8 lbl_80289EB8[16];
+extern u8 lbl_8026CFE8[72];
 
 extern f32 lbl_803697E0;
 extern f32 lbl_803697E4;
