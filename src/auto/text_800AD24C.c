@@ -4635,19 +4635,33 @@ s32 fn_800B98B8(s32 arg0)
     return 1;
 }
 
+#pragma optimization_level 2
 void fn_800B995C(void *arg0) {
-    void **temp_r3;
-    s32 temp_r5;
-    s32 temp_r4;
+    s32 base;
+    s32 shift;
+    s32 mask;
+    s32 flags;
 
-    temp_r3 = (void **)arg0;
-    temp_r5 = *(s32 *)((char *)temp_r3[0x15] + 8);
-    temp_r4 = 0x100;
-    if (!(temp_r5 & (temp_r4 << 0)) && !(temp_r5 & (temp_r4 << 1)) && !(temp_r5 & (temp_r4 << 2))) {
-        fn_8000C188();
+    base = 0x100;
+    shift = 0;
+    mask = base << shift;
+    flags = *(s32 *)(*(u8 **)((u8 *)arg0 + 0x54) + 8);
+    if ((flags & mask) != 0) {
+        return;
     }
+    shift = 1;
+    mask = base << shift;
+    if ((flags & mask) != 0) {
+        return;
+    }
+    shift = 2;
+    mask = base << shift;
+    if ((flags & mask) != 0) {
+        return;
+    }
+    fn_8000C188();
 }
-
+#pragma optimization_level 4
 s32 fn_800B99B8(void *arg0, void *arg1)
 {
     extern s32 lbl_80367110;
@@ -6687,15 +6701,20 @@ u8 fn_800BD610(s32 arg0) {
     return *(u8 *)((u8 *)temp_r3 + 0x198);
 }
 
-void fn_800BDA9C(void *arg0, void *arg1)
+void fn_800BDA9C(u8 *arg0, void *arg1)
 {
     extern u8 fn_8017A9DC(void *);
-
+    u8 *a0;
+    void *a1;
     s32 i;
 
-    for (i = 0; i < 12; i++) {
-        *((u8 *)arg0 + 0x300 + i) = fn_8017A9DC(arg1);
-    }
+    a0 = arg0;
+    a1 = arg1;
+    i = 0;
+    do {
+        a0[i + 0x300] = fn_8017A9DC(a1);
+        i++;
+    } while (i < 12);
 }
 
 void fn_800BDAF8(void *arg0, void *arg1)
