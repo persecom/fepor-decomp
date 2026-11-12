@@ -5279,10 +5279,13 @@ return lbl_80367300;
 extern u16 lbl_80285E88[0x20];
 s32 fn_80069E7C(void) {
     extern u8 lbl_80367300;
-    if (lbl_80367300 == 0) {
+    extern u16 lbl_80285E88[0x20];
+    u8 n;
+    n = lbl_80367300;
+    if (n == 0) {
         return 0;
     }
-    return lbl_80285E88[(u32)(lbl_80367300 * 4) >> 10];
+    return *(s32 *)((char *)lbl_80285E88 + (n << 2) - 4);
 }
 
 void fn_80069F04(s32 arg0) {
@@ -6922,10 +6925,10 @@ extern "C" void fn_80070B3C(void *arg0, void *arg1) {
     }
 }
 
-void fn_80070BF4(void *arg1) {
-    M2C_UNK fn_80037BD0(s32, u8);
-    extern s32 lbl_802EF4C8;
-    fn_80037BD0(lbl_802EF4C8, M2C_FIELD(arg1, u8 *, 0x3A));
+extern "C" void fn_80070BF4(s32 arg0, void *arg1) {
+    void *fn_80037BD0(s32, u8);
+    extern s32 lbl_802EF4C8[];
+    fn_80037BD0(lbl_802EF4C8[0], *(u8 *)((char *)arg1 + 0x3A));
 }
 
 #pragma cplusplus reset
