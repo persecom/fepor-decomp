@@ -8815,18 +8815,18 @@ void fn_8004983C(void *arg0) {
     f32 temp_f2;
     f32 temp_f3;
 
-    *(s32 *)((char *)arg0 + 0x40) = 0;
-    *(f32 *)((char *)arg0 + 0x44) = *(f32 *)((char *)*(void **)((char *)arg0 + 0x30) + 8);
-    *(f32 *)((char *)arg0 + 0x48) = *(f32 *)((char *)arg0 + 0x38);
-    temp_f3 = *(f32 *)((char *)arg0 + 0x44);
-    temp_f2 = *(f32 *)((char *)arg0 + 0x48);
-    if ((f32) fabsf(temp_f3 - temp_f2) > lbl_80368F74) {
+    *(s32 *)((u8 *)arg0 + 0x40) = 0;
+    *(f32 *)((u8 *)arg0 + 0x44) = *(f32 *)(*(u8 **)((u8 *)arg0 + 0x30) + 8);
+    *(f32 *)((u8 *)arg0 + 0x48) = *(f32 *)((u8 *)arg0 + 0x38);
+    temp_f3 = *(f32 *)((u8 *)arg0 + 0x44);
+    temp_f2 = *(f32 *)((u8 *)arg0 + 0x48);
+    if ((f32)__fabs((f64)(temp_f3 - temp_f2)) > lbl_80368F74) {
         if (temp_f3 < temp_f2) {
-            *(f32 *)((char *)arg0 + 0x44) = temp_f3 + lbl_80368F78;
+            *(f32 *)((u8 *)arg0 + 0x44) = temp_f3 + lbl_80368F78;
             return;
         }
         if (temp_f3 > temp_f2) {
-            *(f32 *)((char *)arg0 + 0x48) = temp_f2 + lbl_80368F78;
+            *(f32 *)((u8 *)arg0 + 0x48) = temp_f2 + lbl_80368F78;
         }
     }
 }
@@ -9937,12 +9937,19 @@ f32 fn_8004BDA8(void *arg0, f32 farg0, f32 farg1) {
 }
 
 f32 fn_8004BE18(void *arg0, void *arg1) {
-    f32 fn_80059440(f32, f32);
+    f32 fn_80059440(f32, f32, f32, f32);
     extern f32 lbl_80368FF8;
-    if ((M2C_FIELD(arg1, f32 *, 4) == M2C_FIELD(arg0, f32 *, 4)) && (M2C_FIELD(arg1, f32 *, 8) == M2C_FIELD(arg0, f32 *, 8))) {
-        return (f32) M2C_FIELD(arg0, s16 *, 0x15C) / lbl_80368FF8;
+    f32 y1;
+    f32 y0;
+    f32 x1;
+
+    y1 = *(f32 *)((char *)arg1 + 4);
+    y0 = *(f32 *)((char *)arg0 + 4);
+    x1 = *(f32 *)((char *)arg1 + 8);
+    if (y1 == y0 && x1 == *(f32 *)((char *)arg0 + 8)) {
+        return (f32)*(s16 *)((char *)arg0 + 0x15C) / lbl_80368FF8;
     }
-    return fn_80059440(M2C_FIELD(arg0, f32 *, 4), M2C_FIELD(arg0, f32 *, 8));
+    return fn_80059440(y0, *(f32 *)((char *)arg0 + 8), y1, x1);
 }
 
 void fn_8004BE88(void *arg0, u8 arg1) {
@@ -11209,26 +11216,23 @@ void fn_80050C50(void *arg0, f32 farg0, f32 farg1) {
 void fn_80050E14(void)
 {
     extern u8 *lbl_803672CC;
-
-    u8 *obj;
-    u8 *base;
-    u8 *table;
     s32 i;
     s32 offset;
     s32 tableOffset;
+    u8 *obj;
     s32 count;
+    u8 *table;
+    u8 *base;
 
     obj = lbl_803672CC;
-
     if (obj == 0) {
         return;
     }
 
-    *(s32 *)(obj + 0x14) = 0;
-
     i = 0;
-    offset = 0;
-    tableOffset = 0;
+    *(s32 *)(obj + 0x14) = i;
+    offset = i;
+    tableOffset = i;
 
     while (i < *(s32 *)(obj + 0x18)) {
         base = *(u8 **)obj;
@@ -11247,8 +11251,8 @@ void fn_80050E14(void)
     *(u32 *)(table + count * 4) = 0;
 
     *(void **)(obj + 8) = *(void **)(obj + 4);
-    *(s32 *)(obj + 0xC) = 0;
-    *(s32 *)(obj + 0x10) = 0;
+    *(s32 *)(obj + 0xC) = i - i;
+    *(s32 *)(obj + 0x10) = i - i;
 }
 
 #pragma global_optimizer off
