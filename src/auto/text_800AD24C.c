@@ -4585,6 +4585,26 @@ s32 fn_800B95B4(u32 arg0, s32 arg1) {
     return 1;
 }
 
+s32 fn_800B9724(u32 arg0, s32 arg1, s32 arg2) {
+    void *fn_801CF760(u32);
+    void fn_801D03E4(void *, s32, s32);
+    extern s32 lbl_80367110;
+    void *p;
+
+    if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
+        return 0;
+    }
+    if (lbl_80367110 & 1) {
+        return 0;
+    }
+    p = fn_801CF760(arg0);
+    if (p == NULL) {
+        return 0;
+    }
+    fn_801D03E4(p, arg1, arg2 != 0);
+    return 1;
+}
+
 s32 fn_800B97B8(u32 arg0, s32 arg1) {
     void *fn_801CF760(u32);
     M2C_UNK fn_801D041C(void *, s32);
