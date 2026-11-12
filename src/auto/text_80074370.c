@@ -125,20 +125,20 @@ void fn_800748E8(void) {
     extern u64 lbl_8036746C;
     extern void *lbl_80367468;
     s32 index;
-    void *p;
+    void *result;
     void *obj;
     u8 value;
 
     index = (s8)lbl_802EF4C8[0xA];
     if (index == 4) {
-        p = &lbl_8036746C;
+        result = &lbl_8036746C;
     } else {
-        p = fn_80037BD0(lbl_80367468,
-            index + ((*fn_8001CB64(&lbl_8036746C) & 5ULL) ? 0 : 4));
+        result = fn_80037BD0(lbl_80367468,
+            ((*fn_8001CB64(&lbl_8036746C) & 5ULL) ? 0 : 4) + index);
     }
-    obj = *(void **)p;
+    obj = *(void **)result;
     if (obj != NULL) {
-        value = ((u8 *)obj)[0x15];
+        value = *((u8 *)obj + 0x15);
     } else {
         value = 0;
     }
@@ -1216,33 +1216,37 @@ s32 fn_800765BC(s32 arg0, s32 arg1, void *arg2) {
     void fn_8004A224(void);
     extern u8 lbl_802EF4C8[];
     extern u8 lbl_802CA518[];
-
-    u8 var_r0;
-    void *temp_r29;
-    u8 var_r31;
+    u8 a;
+    void *p;
+    s32 b;
 
     fn_80070EE0();
-    if (*(u8 *)((u8 *)arg2 + 0x39) != 0) {
+    p = arg2;
+    if (*(u8 *)((u8 *)p + 0x39) != 0) {
         return 0;
     }
-    temp_r29 = *(void **)lbl_802EF4C8;
     {
-        void *field0 = *(void **)fn_80037BBC(temp_r29, *(u8 *)((u8 *)arg2 + 0x3A));
-        if (field0 != NULL) {
-            var_r0 = *(u8 *)((u8 *)field0 + 0x1D);
+        u8 idx = *(u8 *)((u8 *)p + 0x3A);
+        void *f;
+        s32 tmp;
+        p = *(void **)lbl_802EF4C8;
+        f = *(void **)fn_80037BBC(p, idx);
+        if (f != 0) {
+            tmp = ((u8 *)f)[0x1D];
         } else {
-            var_r0 = 0;
+            tmp = 0;
         }
-        if (field0 != NULL) {
-            var_r31 = (u8)fn_8001DDBC();
+        a = (u8)tmp;
+        if (f != 0) {
+            b = (u8)fn_8001DDBC();
         } else {
-            var_r31 = 0;
+            b = 0;
         }
     }
     fn_80022DAC(lbl_802CA518, 5, -1);
     fn_80022DAC(lbl_802CA518, 8, 0);
     fn_80022FD8(lbl_802CA518, 6);
-    fn_8002011C(lbl_802CA518, *(u8 *)((u8 *)temp_r29 + 0x19E), *(u8 *)((u8 *)temp_r29 + 0x19F), var_r0, var_r31);
+    fn_8002011C(lbl_802CA518, ((u8 *)p)[0x19E], ((u8 *)p)[0x19F], a, (u8)b);
     fn_8004A224();
     return 0;
 }
