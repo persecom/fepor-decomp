@@ -3229,10 +3229,10 @@ s32 fn_800B6E00(s32 arg0) {
         var = 7;
         break;
     }
-    lbl_80330708[0x54] = (u8)var;
+    *(u8 *)(lbl_80330708 + 0x54) = var;
     fn_8002D780(2, lbl_80330708);
     fn_8000BD98(lbl_8026ECB8 + 0x98b);
-    fn_8000BF00(&lbl_8028E7F8);
+    fn_8000BF00(lbl_8028E7F8);
     return 1;
 }
 
@@ -7120,42 +7120,31 @@ s16 fn_800BE798(s32 arg0) {
     return *(s16 *)(entry + 0x18);
 }
 
-void fn_800BE800(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
-{
-    s32 r30;
-    s32 r31;
-    s32 r4;
-    s32 r5;
-    s32 r0;
-    
-    r30 = arg0;
-    r31 = arg1;
-    
-    if (r30 == 0)
-    {
-        r4 = r31;
+s32 fn_800BE800(s32 arg0) {
+    void *fn_80013B60(void *);
+    void fn_80013778(s32, void *);
+    s32 fn_80013880(void);
+    extern u8 lbl_8031FFC0[];
+    u8 *entry;
+    s32 count;
+    s32 kind;
+    s32 result;
+
+    kind = 0xE;
+    entry = fn_80013B60(0);
+    count = 0;
+    while (entry != 0) {
+        if (entry[0xC] == kind) {
+            if (count++ == arg0) {
+                break;
+            }
+        }
+        entry = fn_80013B60(entry);
     }
-    else
-    {
-        r5 = arg2 * arg3;
-        r4 = r31 + r5;
-    }
-    
-    if (r4 < 0)
-    {
-        r0 = -r4;
-    }
-    else
-    {
-        r0 = r4;
-    }
-    
-    if (r0 >= 0x10000)
-    {
-        r0 = 0xFFFF;
-    }
-    
-    arg0 = r0;
+    lbl_8031FFC0[0xa] = 1;
+    fn_80013778(0, entry);
+    result = fn_80013880();
+    return result != 0;
 }
 
 extern u8 lbl_80317334[];
@@ -7299,20 +7288,33 @@ void fn_800BF494(void) {
     return;
 }
 
-s32 fn_800BF574(void) {
-    s32 var_r31;
-    s32 result;
-    
-    // Call function 1
-    var_r31 = fn_80013B60(0);
-    if (var_r31 == 0) {
+s32 fn_800BF574(s32 arg0) {
+    void *fn_80013B60(void *);
+    void *fn_8000CAA0(void *, s32);
+    s32 fn_800BF694(void);
+    u8 *entry;
+    u8 found;
+    void *obj;
+    s32 kind;
+
+    kind = 0xF;
+    entry = fn_80013B60(0);
+    while (entry != 0) {
+        if (entry[0xC] == kind) {
+            found = 1;
+            goto check;
+        }
+        entry = fn_80013B60(entry);
+    }
+    found = 0;
+check:
+    if (found == 0) {
         return 0;
     }
-    
-    // Call second function based on condition - simpler approach
-    result = fn_80013778(var_r31);
-    
-    return result;
+    obj = fn_8000CAA0(lbl_8028D544, arg0);
+    *(s32 *)((u8 *)obj + 0x34) = 0xF;
+    *(s32 *)((u8 *)obj + 0x38) = (s32)fn_800BF694;
+    return 1;
 }
 
 void fn_800BF604(void) {
