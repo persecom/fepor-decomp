@@ -202,10 +202,12 @@ void fn_800AD6AC(void *arg0) {
 void fn_800AD700(void *arg0) {
     void fn_8014CBD8(void *, f32, f32);
     extern u8 lbl_80330708[];
+    void *unit;
+    s8 *py;
 
-    fn_8014CBD8(lbl_80330708,
-        (f32)*(s8 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x19E),
-        (f32)*(s8 *)((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x19F));
+    unit = *(void **)((u8 *)arg0 + 0x30);
+    py = (s8 *)((u8 *)unit + 0x19F);
+    fn_8014CBD8(lbl_80330708, (f32)py[-1], (f32)py[0]);
 }
 
 void fn_800AD92C(s32 arg0) {
@@ -4307,9 +4309,9 @@ s32 fn_800B9060(u32 arg0) {
 
 s32 fn_800B90C4(u32 arg0) {
     extern s32 lbl_80367110;
-    s32 fn_801CF760(void);
+    u32 fn_801CF760(void);
     void fn_801CFCB4(void);
-    
+
     if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
         return 0;
     }
