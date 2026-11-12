@@ -77,12 +77,14 @@ static inline u8 *FindEntryByName(char *name) {
 }
 
 static inline u32 FindUnk48(void *arg0) {
-    while (arg0 != NULL) {
-        u32 temp = M2C_FIELD(arg0, u32 *, 0x48);
+    void *current;
+    u32 temp;
+
+    for (current = arg0; current != NULL; current = M2C_FIELD(current, void **, 4)) {
+        temp = M2C_FIELD(current, u32 *, 0x48);
         if (temp != 0U) {
             return temp;
         }
-        arg0 = M2C_FIELD(arg0, void **, 4);
     }
     return 0U;
 }
@@ -2693,7 +2695,7 @@ u32 fn_80060520(void *arg0) {
     return 0U;
 found:
     if (((u8 *)fn_80068548())[3] & 1) {
-        var_r31 += CalcUnk48Size((void *)FindUnk48(var_r30));
+        var_r31 += (((M2C_FIELD(M2C_FIELD(FindUnk48(var_r30), void **, 0x48), s16 *, 0xA) * 12) + 31) & ~31) / 2 * 2;
     }
     return var_r31;
 }
