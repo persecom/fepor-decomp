@@ -245,6 +245,13 @@ void fn_8014D3B4(void *arg0) {
     }
 }
 
+void fn_8014D678(void *arg0) {
+ *(s32 *)((u8 *)arg0 + 0x64) = 0;
+ *(s32 *)((u8 *)arg0 + 0x60) = 0;
+ lbl_80330708[0x55] = 0;
+ lbl_80330708[0x51] = 0;
+}
+
 void fn_8014D698(void *arg0, u8 arg1, u8 arg2, s32 arg3, u8 arg4) {
     void *fn_8000D2BC(void *);
     void fn_80016DE0(void);
