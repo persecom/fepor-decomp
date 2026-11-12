@@ -3090,6 +3090,32 @@ void fn_80127084(void) {
     fn_800F1BFC();
 }
 
+void *fn_801270A4(void) {
+    void *fn_8000BCA4(void *);
+    void fn_8000B950(void *, void (*)(void *));
+    void fn_80127150(void *);
+    extern u8 lbl_80275048[];
+    extern void *lbl_80367A68;
+    void *var;
+
+    lbl_80367A68 = 0;
+    var = fn_8000BCA4(lbl_80275048 + 0x467);
+    if (var == NULL) {
+        var = fn_8000BCA4(lbl_80275048 + 0x15B);
+        if (var == NULL) {
+            var = fn_8000BCA4(lbl_80275048 + 0x479);
+            if (var == NULL) {
+                var = fn_8000BCA4(lbl_80275048 + 0x484);
+            }
+        }
+    }
+    fn_8000B950(var, fn_80127150);
+    if (lbl_80367A68 != NULL) {
+        return lbl_80367A68;
+    }
+    return var;
+}
+
 void fn_80127150(void *arg0) {
     extern void *lbl_80367A68;
     if (((u8) M2C_FIELD(arg0, u8 *, 0x2D) == 0) && (M2C_FIELD(arg0, u8 *, 0x2C) & 2)) {
