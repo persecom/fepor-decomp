@@ -99,14 +99,15 @@ void fn_800907B8(void *arg0) {
     void fn_8008BA80(void *, s32, s32, u8);
     void fn_8008BBF8(s32, s32, s32, s32, u8, s32);
     void fn_8008CD64(f32);
-    void fn_8008D510(void *, s32, s32, s32);
-    void *fn_80037BBC(void *, s32);
-    s32 fn_8001C0C8(void *);
+    void fn_8008D510(s32, s32, s32, s32);
+    s32 fn_80037BBC(void *, s32);
+    s32 fn_8001C0C8(void);
     extern f32 lbl_80369768;
 
     s32 offset;
-    void *temp;
+    s32 temp;
     s32 i;
+    s32 id;
 
     fn_8008BA80(arg0, 0, 0, 1);
     fn_8008BBF8(0, 0x20, 0x108, 0x88, *(u8 *)(*(u8 **)((u8 *)arg0 + 0x190) + 8), 0x9A);
@@ -115,7 +116,8 @@ void fn_800907B8(void *arg0) {
     i = 0;
     do {
         temp = fn_80037BBC(arg0, i);
-        fn_8008D510(temp, fn_8001C0C8(temp), 0x1C, offset);
+        id = fn_8001C0C8();
+        fn_8008D510(temp, id, 0x1C, offset);
         i += 1;
         offset += 0x1C;
     } while (i < 4);
