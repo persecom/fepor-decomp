@@ -10227,11 +10227,9 @@ void fn_800E29E0(void *arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(arg0, s32 *, 0x4C) = arg2;
 }
 
-void fn_800E29EC(void *arg0, void *arg1) {
-    s32 temp_r5 = *(s32 *)arg1;
-    
-    *(s32 *)((u8 *)arg0 + 0x48) = temp_r5;
-    *(s32 *)((u8 *)arg0 + 0x4C) = *(s32 *)((u8 *)arg1 + 0x4);
+void fn_800E29EC(void *arg0, s32 *arg1) {
+    typedef struct { s32 a; s32 b; } Pair;
+    *(Pair *)((u8 *)arg0 + 0x48) = *(Pair *)arg1;
 }
 
 extern f32 lbl_80369F00;
