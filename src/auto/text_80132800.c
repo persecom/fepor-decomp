@@ -7775,10 +7775,38 @@ extern "C" void *fn_8013FF94(void *arg0, s16 arg1, u8 arg2) {
 }
 #pragma cplusplus reset
 
-M2C_UNK fn_8014004C(void *arg0) {
-    return fn_8000CAA0(arg0, 0x0);
-}
+#pragma cplusplus on
+extern "C" void fn_8014004C(void *arg0, void *arg1) {
+    struct Obj {
+        virtual void destroy(s32) = 0;
+        s32 refcount;
+    };
+    void fn_8013FC68(void *, void *, void *);
+    void *found;
+    u32 ret;
+    u8 *node;
+    u8 *sentinel;
 
+    if (arg1 != NULL) {
+        sentinel = (u8 *)arg0 + 0x38;
+        node = *(u8 **)(sentinel + 4);
+        while (node != sentinel && *(void **)(node + 8) != arg1) {
+            node = *(u8 **)(node + 4);
+        }
+        if (node != sentinel) {
+            found = node;
+            fn_8013FC68(&ret, (u8 *)arg0 + 0x34, &found);
+            if (arg1 != NULL) {
+                if (--((Obj *)arg1)->refcount == 0) {
+                    if (arg1 != NULL) {
+                        ((Obj *)arg1)->destroy(1);
+                    }
+                }
+            }
+        }
+    }
+}
+#pragma cplusplus reset
 void fn_801400F4(void *arg0, void *arg1) {
     u32 sp10;
     u32 spC;
@@ -9402,6 +9430,39 @@ extern "C" void *fn_80144A0C(void *arg0, s16 arg1) {
     }
     return arg0;
 }
+
+extern "C" void fn_80144A74(void *arg0) {
+    void fn_80144B1C(void *, void *);
+    void fn_80144B5C(void *, void *);
+    void fn_80144B38(void *, void *, s32);
+    void *fn_80144D74(void *);
+    s32 *fn_80144D7C(void *);
+    void fn_80144D80(void *);
+    struct Node {
+        struct Node *prev;
+        struct Node *next;
+    };
+    Node *tmp;
+    void *sentinel;
+    Node *node;
+    s32 *count;
+
+    sentinel = (u8 *)arg0 + 4;
+    node = *(Node **)((u8 *)arg0 + 8);
+    if (node != (Node *)sentinel) {
+        fn_80144B1C(node, *(void **)sentinel);
+        while (node != (Node *)sentinel) {
+            fn_80144D80(arg0);
+            fn_80144B5C(arg0, (u8 *)node + 8);
+            tmp = node;
+            node = node->next;
+            fn_80144B38(fn_80144D74(arg0), tmp, 1);
+            count = fn_80144D7C(arg0);
+            *count -= 1;
+        }
+    }
+}
+
 #pragma cplusplus off
 void fn_80144B1C(void **arg0, void *arg1) {
     M2C_FIELD(*arg0, void ***, 4) = (void **) M2C_FIELD(arg1, void ***, 4);
