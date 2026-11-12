@@ -116,15 +116,16 @@ s32 fn_80074A30(void) {
 }
 
 s32 fn_80074A38(void) {
-    M2C_UNK fn_80029C08(s32);
-    u8 fn_80105BC0(s32, M2C_UNK);
-    extern s32 lbl_802EF4C8;
+    u8 fn_80105BC0(void *, s32);
+    void fn_80029C08(void *);
+    extern u8 lbl_802EF4C8[];
     extern s32 lbl_802EF4E0;
-    if (fn_80105BC0(lbl_802EF4C8 + 0x1BC, 0x18) == 0) {
+
+    if (fn_80105BC0(*(u8 **)lbl_802EF4C8 + 0x1BC, 0x18) == 0) {
         return 3;
     }
-    fn_80029C08(lbl_802EF4C8);
-    return 2 & ~((s32) (-lbl_802EF4E0 | lbl_802EF4E0) >> 0x1F);
+    fn_80029C08(*(u8 **)lbl_802EF4C8);
+    return 2 & ~((s32)(-lbl_802EF4E0 | lbl_802EF4E0) >> 31);
 }
 
 #pragma cplusplus on
@@ -419,6 +420,19 @@ void fn_800750D8(s32 arg0, void *arg1) {
     extern s32 lbl_802EF4C8[];
     
     fn_80037BD0(lbl_802EF4C8[1], *(u8*)((char*)arg1 + 0x3A));
+}
+
+s32 fn_80075108(s32 arg0, s32 arg1, s32 arg2) {
+    extern u8 lbl_802EF4C8[24];
+    s32 *fn_80037BD0(s32, u8);
+    u8 fn_8003DAC4(s32, s32 *);
+    s32 *temp;
+
+    temp = fn_80037BD0(*(s32 *)(lbl_802EF4C8 + 4), (u8)arg2);
+    if ((u32)*temp == 0U) {
+        return 3;
+    }
+    return (fn_8003DAC4(*(s32 *)lbl_802EF4C8, temp) == 0) ? 2 : 0;
 }
 
 s32 fn_80075178(void *arg1, void *arg2) {
@@ -2379,30 +2393,29 @@ void fn_80079300(void *arg0, s8 arg1) {
 }
 
 void *fn_80079380(s8 arg0) {
-    extern void *lbl_80312040;
-    s32 var_ctr;
-    s32 var_r6;
+    extern void *lbl_80312040[];
     void **var_r4;
+    s32 var_r6;
+    s32 var_ctr;
     void *temp_r5;
 
     if (arg0 < 0) {
         return NULL;
     }
-    var_r4 = &lbl_80312040;
+    var_r4 = lbl_80312040;
     var_r6 = 0;
     var_ctr = 8;
-loop_3:
-    temp_r5 = *var_r4;
-    if ((temp_r5 != NULL) && (arg0 == (s8) (((u8*)temp_r5)[0x43]))) {
-        return (&lbl_80312040)[var_r6];
-    }
-    var_r4 += 1;
-    var_r6 += 1;
-    var_ctr -= 1;
-    if (var_ctr == 0) {
-        return NULL;
-    }
-    goto loop_3;
+    do {
+        temp_r5 = *var_r4;
+        if (temp_r5 != NULL) {
+            if (arg0 == (s8)((u8 *)temp_r5)[0x43]) {
+                return lbl_80312040[var_r6];
+            }
+        }
+        var_r4 += 1;
+        var_r6 += 1;
+    } while (--var_ctr);
+    return NULL;
 }
 
 void fn_8007947C(void *arg0) {
