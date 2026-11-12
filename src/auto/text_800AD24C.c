@@ -2105,6 +2105,41 @@ void fn_800B4060(void) {
     fn_800AECC0();
 }
 
+void fn_800B4080(void) {
+    void fn_800B22D8(void);
+    void fn_800AF0B4(void);
+    s32 fn_8024B7DC(void *);
+    void fn_8024B714(u32);
+    extern u8 lbl_80317338[];
+    s32 off;
+    u8 *sys;
+    s32 i;
+    u8 *entry;
+    u8 *p;
+
+    fn_800B22D8();
+    i = 0;
+    sys = lbl_80317338;
+    entry = *(u8 **)(sys + 0xF4);
+    off = i;
+    while (i < 0x28) {
+        if (*(u16 *)entry != 0) {
+            entry[9] = (u8)(entry[9] + 1);
+            if ((u32)(fn_8024B7DC(*(void **)(*(u8 **)(sys + 0xF4) + off + 0xC)) + 0x10000) == 0xFFFFU) {
+                p = *(u8 **)(sys + 0xF4) + off;
+                if (*(u16 *)p != 0) {
+                    fn_8024B714(*(u32 *)(p + 0xC));
+                    *(u16 *)p = 0;
+                }
+            }
+        }
+        i += 1;
+        entry += 0x14;
+        off += 0x14;
+    }
+    fn_800AF0B4();
+}
+
 void fn_800B412C(void) {
 void fn_800B47F0(void);
 extern u8 lbl_80312BD0[], lbl_8026EB70[];
@@ -3439,38 +3474,36 @@ s32 fn_800B727C(void) {
 }
 
 s32 fn_800B72CC(void) {
-    M2C_UNK fn_80016DE0();
-    M2C_UNK fn_8002297C(M2C_UNK *);
-    M2C_UNK fn_800BDED8(void *);
-    M2C_UNK fn_800C32A4(M2C_UNK *);
-    M2C_UNK fn_800C341C(M2C_UNK *);
-    s32 fn_800C4638(M2C_UNK, void *, M2C_UNK, M2C_UNK);
-    M2C_UNK fn_8010FF90(M2C_UNK *);
-    M2C_UNK fn_801A7CDC(M2C_UNK *);
-    M2C_UNK fn_801E38E0(M2C_UNK *, s32);
-    extern M2C_UNK lbl_8026ECB8;
-    extern M2C_UNK lbl_802CA518;
-    extern M2C_UNK lbl_803200AC;
-    extern M2C_UNK lbl_803206EC;
-    extern M2C_UNK lbl_8032BB58;
-    extern M2C_UNK lbl_80330708;
-    extern M2C_UNK lbl_80330EAC;
+    void fn_800162B8(void);
+    void fn_80016DE0(void);
+    void fn_8002297C(void *);
+    void fn_800BDED8(void *);
+    void fn_800C32A4(void *);
+    void fn_800C341C(void *);
+    s32 fn_800C4638(s32, void *, s32);
+    void fn_8010FF90(void *);
+    void fn_801A7CDC(void *);
+    void fn_801E38E0(void *, s32);
+    extern u8 lbl_8026ECB8[];
+    extern u8 lbl_802CA518[];
+    extern u8 lbl_803200AC[];
+    extern u8 lbl_803206EC[];
+    extern u8 lbl_8032BB58[];
+    extern u8 lbl_80330708[];
+    extern u8 lbl_80330EAC[];
     extern s32 lbl_80367840;
-    M2C_UNK sp8;
-    s32 temp_r3;
+    u8 sp[0x70];
 
-    temp_r3 = fn_800C4638(0xA000, &lbl_8026ECB8 + 0x996, 0, 0x10000);
-    lbl_80367840 = temp_r3;
-    fn_801E38E0(&sp8, temp_r3);
+    fn_801E38E0(sp, lbl_80367840 = fn_800C4638(0xA000, lbl_8026ECB8 + 0x996, 0));
     fn_800162B8();
-    fn_801A7CDC(&lbl_80330EAC);
+    fn_801A7CDC(lbl_80330EAC);
     fn_80016DE0();
-    fn_8002297C(&lbl_802CA518);
-    fn_800BDED8(&lbl_80330708 + 0xB4);
-    fn_8010FF90(&lbl_8032BB58);
-    fn_800C341C(&lbl_803200AC);
-    fn_800C32A4(&lbl_803206EC);
-    fn_8002297C(&lbl_802CA518);
+    fn_8002297C(lbl_802CA518);
+    fn_800BDED8(lbl_80330708 + 0xB4);
+    fn_8010FF90(lbl_8032BB58);
+    fn_800C341C(lbl_803200AC);
+    fn_800C32A4(lbl_803206EC);
+    fn_8002297C(lbl_802CA518);
     return 1;
 }
 
@@ -8921,20 +8954,24 @@ extern f32 lbl_80369CCC;
 extern f32 lbl_80369CB0;
 extern f32 lbl_80369CD0;
 void fn_800AFC54(s32 arg0) {
-    u16 *temp_r5;
+    u8 *sys;
+    u8 *entry;
+    s32 rate;
     f32 var_f2;
 
-    temp_r5 = &lbl_80317338[(arg0 * 0x13C)];
-    if (*temp_r5 != 0) {
-        var_f2 = (f32) temp_r5[0x30] / lbl_80369CC8;
+    sys = (u8 *)lbl_80317338;
+    entry = *(u8 **)(sys + 0xF8) + arg0 * 0x13C;
+    rate = *(u16 *)(sys + 0x120);
+    if (*(u16 *)entry != 0) {
+        var_f2 = (f32)rate / lbl_80369CC8;
         if (var_f2 < lbl_80369CCC) {
             var_f2 = lbl_80369CCC;
         }
-        *temp_r5 = (*temp_r5 & 0x7FFF);
-        temp_r5[0x6] = (f32) ((temp_r5[0x3] - temp_r5[0x4]) / var_f2);
-        *temp_r5 = (*temp_r5 | 0x10);
-        *temp_r5 = (*temp_r5 & 0xFFDF);
-        *temp_r5 = (*temp_r5 & 0xFFBF);
+        *(u16 *)entry = *(u16 *)entry & ~2;
+        *(f32 *)(entry + 0x18) = (*(f32 *)(entry + 0xC) - *(f32 *)(entry + 0x10)) / var_f2;
+        *(u16 *)entry = *(u16 *)entry | 0x10;
+        *(u16 *)entry = *(u16 *)entry & ~0x20;
+        *(u16 *)entry = *(u16 *)entry & ~0x40;
     }
 }
 
