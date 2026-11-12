@@ -291,7 +291,7 @@ void fn_8014CAD4(void *arg0, f32 farg0, f32 farg1) {
     f32 fn_80023068(void *);
     *(f32 *)((u8 *)arg0 + 0x52C) = farg0;
     *(f32 *)((u8 *)arg0 + 0x530) = farg1;
-    *(f32 *)((u8 *)arg0 + 0x53C) = fn_80023068(&lbl_802CA518);
+    *(f32 *)((u8 *)arg0 + 0x53C) = fn_80023068(lbl_802CA518);
 }
 
 void fn_8014CBD8(void *arg0, f32 farg0, f32 farg1) {
