@@ -8201,6 +8201,35 @@ s32 fn_80046F14(void *arg0, s32 arg1) {
     return 1;
 }
 
+s32 fn_80047178(void *arg0, s32 arg1, s32 arg2) {
+    u8 ok;
+    s32 count;
+    s32 i;
+    s32 base;
+    u8 *entry;
+
+    count = *(s16 *)((u8 *)arg0 + 0x6);
+    for (i = count - 1; i >= 0; i--) {
+        base = *(s32 *)((u8 *)arg0 + 0x14);
+        entry = (u8 *)base + i * 0xB4;
+        {
+            s32 flags = *(s32 *)((u8 *)*(s32 *)(entry + 0x10) + 0xBC);
+            if (!(flags & 0x90)) {
+                if (arg1 >= *(s8 *)(entry + 0x4) && arg1 <= *(s8 *)(entry + 0x6) &&
+                    arg2 >= *(s8 *)(entry + 0x5) && arg2 <= *(s8 *)(entry + 0x7)) {
+                    ok = 1;
+                } else {
+                    ok = 0;
+                }
+                if (ok != 0) {
+                    return base + i * 0xB4;
+                }
+            }
+        }
+    }
+    return 0;
+}
+
 s32 fn_8004721C(void *arg0, s32 arg1, s32 arg2, u32 arg3, s32 arg4) {
     u8 *entry;
     s32 base;
@@ -9610,22 +9639,31 @@ s32 fn_8004AFB4(void *arg0, s32 arg1) {
     return (M2C_FIELD(arg0, s32 *, 0x10) & (1 << arg1)) != 0;
 }
 
-M2C_UNK *fn_8004AFD4(void *arg0, s32 arg1) {
-    M2C_UNK fn_800056A0(M2C_UNK);
-    M2C_UNK fn_80231D94(M2C_UNK *, void *, void *, s32, s32, s32, M2C_UNK *);
-    extern M2C_UNK lbl_8026A9B0;
-    extern M2C_UNK lbl_80285880;
-    extern M2C_UNK lbl_802858C4;
-    extern M2C_UNK lbl_802EFFC8;
-    s32 var_r31;
+char *fn_8004AFD4(void *arg0, s32 arg1) {
+    void fn_800056A0(s32);
+    void fn_80231D94(void *, void *, ...);
+    extern u8 lbl_8026A9B0[];
+    extern s32 lbl_80285880[];
+    extern s32 lbl_802858C4[];
+    extern u8 lbl_802EFFC8[];
+    void *self;
+    s32 idx;
 
-    var_r31 = arg1;
-    if (!(M2C_FIELD(arg0, s32 *, 0x10) & (1 << var_r31))) {
-        var_r31 = 6;
+    self = arg0;
+    idx = arg1;
+    if (!(*(s32 *)((u8 *)self + 0x10) & (1 << idx))) {
+        idx = 6;
         fn_800056A0(0);
     }
-    fn_80231D94(&lbl_802EFFC8, &lbl_8026A9B0 + 0x9C, &lbl_8026A9B0 + 0xA8, M2C_FIELD(arg0, s32 *, 4), *(&lbl_80285880 + (var_r31 * 4)), *(&lbl_802858C4 + (M2C_FIELD(arg0, u8 *, 8) * 4)), &lbl_8026A9B0);
-    return &lbl_802EFFC8;
+    fn_80231D94(
+        lbl_802EFFC8,
+        lbl_8026A9B0 + 0x9C,
+        lbl_8026A9B0 + 0xA8,
+        *(s32 *)((u8 *)self + 4),
+        lbl_80285880[idx],
+        lbl_802858C4[*(u8 *)((u8 *)self + 8)]
+    );
+    return (char *)lbl_802EFFC8;
 }
 
 #pragma opt_strength_reduction off
@@ -11945,44 +11983,51 @@ void fn_80053260(void *arg0)
 }
 #pragma use_lmw_stmw reset
 
+#pragma use_lmw_stmw on
 void fn_800535B0(void *arg0) {
-    M2C_UNK fn_800056CC(void *, s32);
-    s32 fn_8004AF30(u16);
-    s32 fn_8005F8E4(u16 *);
-    s8 fn_80146BE4();
-    M2C_UNK fn_8014746C(s8, M2C_UNK);
-    extern M2C_UNK lbl_8026AC0C;
-    u16 sp8;
-    s32 temp_r30;
-    s32 temp_r3;
-    s32 var_r28;
-    s8 temp_r3_2;
-    u16 *var_r29;
-    void *temp_r4;
+    void fn_800056CC(void *, ...);
+    void *fn_8004AF30(u16);
+    s32 fn_8005F8E4(void *, u16 *);
+    s8 fn_80146BE4(void *);
+    void fn_8014746C(s8, s32);
+    extern u8 lbl_8026AC0C[];
 
-    temp_r4 = M2C_FIELD(arg0, void **, 0x30);
-    M2C_FIELD(temp_r4, s8 *, 3) = 0x1E;
-    if ((u32) M2C_FIELD(temp_r4, u32 *, 0x5C) != 0U) {
-        temp_r30 = fn_8005F8E4(&sp8);
-        var_r29 = &sp8;
-        var_r28 = 0;
-loop_6:
-        if (var_r28 < temp_r30) {
-            temp_r3 = fn_8004AF30(*var_r29);
-            if (temp_r3 != 0) {
-                temp_r3_2 = fn_80146BE4();
-                if (temp_r3_2 >= 0) {
-                    fn_800056CC(&lbl_8026AC0C + 0x106, temp_r3);
-                    fn_8014746C(temp_r3_2, 0xFA);
+    u16 buf[0x40];
+    u8 *strBase;
+    s32 count;
+    u16 *p;
+    s32 i;
+    void *unit;
+    s8 slot;
+    void *inner;
+    void *list;
+
+    inner = *(void **)((u8 *)arg0 + 0x30);
+    list = *(void **)((u8 *)inner + 0x5C);
+    *((u8 *)inner + 3) = 0x1E;
+    if (list != NULL) {
+        count = fn_8005F8E4(list, buf);
+        p = buf;
+        i = 0;
+        strBase = lbl_8026AC0C;
+        goto check;
+        do {
+            unit = fn_8004AF30(*p);
+            if (unit != NULL) {
+                slot = fn_80146BE4(unit);
+                if (slot >= 0) {
+                    fn_800056CC(strBase + 0x106, unit);
+                    fn_8014746C(slot, 0xFA);
                 }
             }
-            var_r29 += 2;
-            var_r28 += 1;
-            goto loop_6;
-        }
+            p++;
+            i++;
+        check:
+            ;
+        } while (i < count);
     }
 }
-
+#pragma use_lmw_stmw reset
 void fn_80053658(void *arg0, s32 arg1, s32 arg2) {
     u8 *p;
 
