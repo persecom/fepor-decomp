@@ -240,6 +240,38 @@ void fn_80072B04(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x34) = fn_8000E0E4(lbl_8026BE40 + 0x127);
 }
 
+void fn_80072B6C(void *arg0)
+{
+    void fn_801E2594(void *);
+    s32 fn_800EB774(void);
+    void fn_801DDBA8(void *, u8 *, s32, s32, s32);
+    s32 fn_8000E0E4(u8 *);
+    void fn_8000C070(void *, s32);
+    extern u8 lbl_803682F0;
+    extern u8 lbl_8026BE40[];
+    extern u16 lbl_80311D50[];
+    s32 r;
+
+    fn_801E2594(&lbl_803682F0);
+    r = fn_800EB774();
+    switch (r) {
+    case -3:
+        fn_801DDBA8(lbl_80311D50, lbl_8026BE40 + 0x12D, 0, 1, 0);
+        *(s32 *)((u8 *)arg0 + 0x34) = fn_8000E0E4(lbl_8026BE40 + 0x13B);
+        fn_8000C070(arg0, 0xA);
+        return;
+    default:
+        fn_801DDBA8(lbl_80311D50, lbl_8026BE40 + 0x141, 0, 1, 0);
+        *(s32 *)((u8 *)arg0 + 0x34) = fn_8000E0E4(lbl_8026BE40 + 0x13B);
+        fn_8000C070(arg0, 0xA);
+        return;
+    case 0:
+    case -66:
+        lbl_80311D50[1] = 0xC8;
+        return;
+    }
+}
+
 void fn_80072C64(void *arg0)
 {
     void fn_801E047C(void *, void *);
