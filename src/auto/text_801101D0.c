@@ -1523,6 +1523,19 @@ void fn_80113F88(void *arg0) {
     fn_80050C90(M2C_FIELD(arg0, s32 *, 0x30));
 }
 
+void fn_80114078(void *arg0) {
+    s32 n;
+
+    *(u8 *)((u8 *)arg0 + 0x184) = 1;
+    fn_80113298(arg0, (u8 *)lbl_80273DF8 + 0x498, *(s32 *)((u8 *)arg0 + 0x188) * 2, 0, 1);
+    n = strlen((char *)lbl_80273DF8 + 0x1C);
+    fn_800C96F8((u8 *)arg0 + 0x160, (char *)lbl_80273DF8 + 0x1C, n);
+    n = strlen((char *)lbl_80273DF8 + 0x1C);
+    fn_800C96F8((u8 *)arg0 + 0x16C, (char *)lbl_80273DF8 + 0x1C, n);
+    *(u8 *)((u8 *)arg0 + 0x1A4) = 1;
+    *(u8 *)((u8 *)arg0 + 0x1A6) = 1;
+}
+
 #pragma cplusplus on
 #pragma global_optimizer off
 extern "C" void fn_80114124(void *arg0, s32 arg1) {
@@ -2528,6 +2541,33 @@ void fn_80116FE8(void)
 {
     // Start with a minimal stub that matches the prologue and epilogue structure.
     // This will be expanded as I get more confident about how this code actually works.
+}
+
+void *fn_801179DC(void *arg0, s16 arg1) {
+    void fn_800D6374(void *, void *);
+    void fn_800C9A60(void *, s32);
+    void fn_800E5F84(void *, s32);
+    void fn_800C428C(void *);
+    extern u16 lbl_8028F6C8[];
+    u8 *p;
+
+    if (arg0 != NULL) {
+        p = (u8 *)arg0;
+        *(void **)(p + 0x40) = lbl_8028F6C8;
+        if (p + 0x1BC)
+            if (p + 0x1BC)
+                if (*(void **)(p + 0x1C0))
+                    fn_800D6374(p + 0x1BC, *(void **)(p + 0x1C0));
+        fn_800C9A60(p + 0x178, -1);
+        fn_800C9A60(p + 0x16C, -1);
+        fn_800C9A60(p + 0x160, -1);
+        fn_800C9A60(p + 0x154, -1);
+        fn_800E5F84(arg0, 0);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
 }
 
 #pragma use_lmw_stmw on
