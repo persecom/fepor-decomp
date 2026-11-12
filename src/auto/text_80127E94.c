@@ -876,20 +876,21 @@ void fn_8012A240(void) {
 }
 
 void fn_8012A45C(void *arg0) {
-    extern f32 fn_8012AA68;
-    u32 temp_r0;
-    void *temp_r4;
+    void fn_8000C070(void *, s32);
+    void fn_80183E3C(s32, void *, void *, s32, s32, s32);
+    s32 fn_8012AA68(void *);
+    void *sub;
+    u32 id;
 
-    temp_r4 = *(void **)((char *)arg0 + 0x30);
-    temp_r0 = *(u32 *)((char *)temp_r4 + 4);
-    if (temp_r0 == 0U) {
-        fn_8000C070(1);
+    sub = *(void **)((u8 *)arg0 + 0x30);
+    id = *(u32 *)((u8 *)sub + 4);
+    if (id == 0) {
+        fn_8000C070(arg0, 1);
         return;
     }
-    
-    fn_80183E3C(temp_r0, &fn_8012AA68, 
-               (s32)*(f32 *)((char *)temp_r4 + 0x10), 
-               (s32)*(f32 *)((char *)temp_r4 + 0x14), 0);
+    fn_80183E3C(id, (void *)fn_8012AA68, arg0,
+                (s32)*(f32 *)((u8 *)sub + 0x10),
+                (s32)*(f32 *)((u8 *)sub + 0x14), 0);
 }
 
 void fn_8012A4CC(void *arg0) {
