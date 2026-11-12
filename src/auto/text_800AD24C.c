@@ -4864,20 +4864,14 @@ void fn_800B9C38(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     extern f32 lbl_80369D08;
     extern f32 lbl_80369D0C;
     extern f32 lbl_80369D10;
-    f32 a2;
-    f32 a1;
-    f32 s;
-    f32 d10;
-    f32 d0c;
-    f32 d08;
+    f32 scale;
+    f32 t1;
+    f32 t2;
 
-    d08 = lbl_80369D08;
-    d0c = lbl_80369D0C;
-    s = (f32) arg3 / d08;
-    a1 = (f32) arg1;
-    d10 = lbl_80369D10;
-    a2 = (f32) arg2;
-    fn_800B9CD4(arg0, (s32) -(a1 * s - d0c), (s32) -(a2 * s - d10), arg4, arg5);
+    scale = (f32)arg3 / lbl_80369D08;
+    t1 = (f32)arg1;
+    t2 = (f32)arg2;
+    fn_800B9CD4(arg0, (s32)(lbl_80369D0C - t1 * scale), (s32)(lbl_80369D10 - t2 * scale), arg4, arg5);
 }
 
 s32 fn_800B9EA8(u8* arg0, u8* arg1, s32 arg2)
@@ -6318,7 +6312,26 @@ s32 fn_800BCC44(void) {
     }
     return (*(s32 *)((u8 *)temp_r3 + 0x1A0) & 8) == 0;
 }
+
 #pragma peephole reset
+s32 fn_800BCC88(u8 arg0) {
+    u8 fn_80105BC0(void *, s32);
+    extern u8 lbl_802B14E4[];
+    void *var_r31;
+
+    if (arg0 != 0) {
+        var_r31 = lbl_802B14E4 + ((arg0 - 1) * 0x280);
+    } else {
+        var_r31 = NULL;
+    }
+    if ((var_r31 == NULL) || ((u32) *(u32 *)((u8 *)var_r31 + 0x188) == 0U)) {
+        return 0;
+    }
+    if (fn_80105BC0((u8 *)var_r31 + 0x1BC, 9) != 0) {
+        return 2;
+    }
+    return fn_80105BC0((void *)((u32)var_r31 + 0x1BC), 8) != 0;
+}
 extern u8 lbl_802EF4C8[24];
 u8 fn_800BCD24(void) {
     return lbl_802EF4C8[9];
@@ -6893,35 +6906,27 @@ void fn_800BDDCC(void *arg0, s32 arg1) {
     } while (--n);
 }
 
-void fn_800BDE40(u32 *arg0, s32 arg1) {
+void fn_800BDE40(void *arg0, s32 arg1) {
     s32 fn_8000D598(s32);
-    s32 temp_r31;
-    s32 var_ctr;
-    s32 var_r30;
-    u32 *temp_r29;
-    u32 *var_r3;
-    void *temp_r5;
+    void *self;
+    s32 i;
+    u32 *p;
+    s32 off;
+    s32 bitbase;
 
-    var_r3 = arg0;
-    var_r30 = 0;
-    temp_r29 = var_r3;
-    var_ctr = 0x60;
-loop_1:
-    if ((u32) *var_r3 == 0U) {
-        temp_r31 = var_r30 * 4;
-        *(temp_r29 + temp_r31) = arg1;
-        M2C_FIELD((temp_r29 + temp_r31), s32 *, 0x180) = fn_8000D598(arg1);
-        temp_r5 = temp_r29 + (var_r30 >> 3);
-        M2C_FIELD(temp_r5, u8 *, 0x300) = (u8) (M2C_FIELD(temp_r5, u8 *, 0x300) & ~(1 << (var_r30 & 7)));
-        return;
+    self = arg0;
+    p = (u32 *)arg0;
+    for (i = 0; i < 0x60; i++) {
+        if (*p == 0) {
+            off = i << 2;
+            *(s32 *)((s32)self + off) = arg1;
+            *(s32 *)((s32)self + off + 0x180) = fn_8000D598(arg1);
+            bitbase = (s32)self + (i >> 3);
+            *(u8 *)(bitbase + 0x300) = *(u8 *)(bitbase + 0x300) & ~(1 << (i & 7));
+            return;
+        }
+        p++;
     }
-    var_r3 += 4;
-    var_r30 += 1;
-    var_ctr -= 1;
-    if (var_ctr == 0) {
-        return;
-    }
-    goto loop_1;
 }
 
 void fn_800BDED8(void *arg0) {
