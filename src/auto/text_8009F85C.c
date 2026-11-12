@@ -2247,11 +2247,12 @@ void *fn_800A3724(void) {
     return (u8 *)lbl_8026D8D8 + 0x7CD;
 }
 
-s32 fn_800A3734(s32 arg1) {
+s32 fn_800A3734(s32 unused, s32 arg1) {
     void *fn_800241C8(s32);
-    M2C_UNK fn_80108C80(void *, s32, M2C_UNK *);
-    extern M2C_UNK lbl_8026D8D8;
-    fn_80108C80(&lbl_8026D8D8 + 0x7D3, M2C_FIELD(fn_800241C8(arg1), s32 *, 0x18), &lbl_8026D8D8);
+    void fn_80108C80(void *, s32, void *);
+    extern u8 lbl_8026D8D8[];
+
+    fn_80108C80(lbl_8026D8D8 + 0x7D3, *(s32 *)((u8 *)fn_800241C8(arg1) + 0x18), lbl_8026D8D8);
     return 6;
 }
 
