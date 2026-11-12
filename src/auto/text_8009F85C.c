@@ -1203,6 +1203,34 @@ s32 fn_800A1078(void) {
     return 0;
 }
 
+char *fn_800A10C0(void) {
+    void fn_80231D94(void *, void *, ...);
+    extern u8 lbl_80330708[];
+    extern char lbl_80312270[];
+    extern u8 lbl_8026D8D8[];
+    void *var_r5;
+
+    switch (lbl_80330708[0xA6]) {
+    case 0:
+        var_r5 = lbl_8026D8D8 + 0x5CA;
+        break;
+    case 1:
+        var_r5 = lbl_8026D8D8 + 0x5D1;
+        break;
+    case 2:
+        var_r5 = lbl_8026D8D8 + 0x5D6;
+        break;
+    case 3:
+        var_r5 = lbl_8026D8D8 + 0x5DD;
+        break;
+    default:
+        var_r5 = NULL;
+        break;
+    }
+    fn_80231D94(lbl_80312270, lbl_8026D8D8 + 0x5E2, var_r5);
+    return lbl_80312270;
+}
+
 s32 fn_800A1178(void)
 {
   extern u8 *lbl_80367240;
