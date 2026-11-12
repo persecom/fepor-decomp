@@ -3050,10 +3050,26 @@ void fn_80131F70(void)
     return;
 }
 
-void fn_80132018(s32 arg0)
-{
-    if (arg0 > 7) {
-        return;
+void *fn_80132018(s32 arg0, u32 arg1) {
+    extern u8 lbl_80275AC0[];
+    switch (arg1) {
+    case 1:
+        return &lbl_80275AC0[0x42B];
+    case 2:
+        return &lbl_80275AC0[0x43E];
+    case 3:
+        return &lbl_80275AC0[0x452];
+    case 4:
+        return &lbl_80275AC0[0x466];
+    case 5:
+        return &lbl_80275AC0[0x47B];
+    case 6:
+        return &lbl_80275AC0[0x48F];
+    case 7:
+        return &lbl_80275AC0[0x4A2];
+    case 0:
+    default:
+        return &lbl_80275AC0[0x247];
     }
 }
 
