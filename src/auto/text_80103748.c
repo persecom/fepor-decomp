@@ -566,8 +566,11 @@ void fn_80104410(void *arg0) {
 }
 
 void fn_8010446C(u8 *arg0) {
-    u8 temp = *arg0 & ~0xE0;
-    *arg0 = temp;
+    struct {
+        u8 hi : 3;
+        u8 lo : 5;
+    } *p = (void *)arg0;
+    p->hi = 0;
 }
 
 void fn_80104480(void *arg0) {
