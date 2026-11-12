@@ -688,6 +688,7 @@ u8 fn_8009326C(void *arg0, void *arg1) {
 }
 
 s32 fn_8009339C(void *arg0, void *arg1) {
+    u8 fn_800940B0(void *, void *);
     s32 temp_r4;
     s32 temp_r7;
     u8 var_r6;
