@@ -777,8 +777,16 @@ void fn_8009A584(void) {
 }
 
 void fn_8009A5BC(void) {
-    if (fn_8000C0C0(&lbl_80289EB8) != 0U) {
-        fn_8000C070(0x1);
+    extern u8 lbl_80289EB8[16];
+    extern void *fn_8000C0C0(void *);
+    extern void fn_8000C070(void *, int);
+
+    void *result;
+
+    result = fn_8000C0C0(lbl_80289EB8);
+
+    if (result != 0) {
+        fn_8000C070(result, 1);
     }
 }
 
