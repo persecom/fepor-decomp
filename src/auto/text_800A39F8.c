@@ -2165,6 +2165,18 @@ u8 *fn_800A8704(void *arg0) {
     return lbl_80312A80;
 }
 
+u8 *fn_800A876C(void *arg0) {
+    void fn_80234450(void *, void *);
+    void fn_802343E0(void *, char *);
+    char *strchr(const char *, int);
+    char *temp;
+
+    fn_80234450(lbl_80312A80, (u8 *)lbl_8026E408 + 0x2C);
+    temp = strchr(*(char **)arg0, 0x5F);
+    fn_802343E0(lbl_80312A80, temp + 1);
+    return lbl_80312A80;
+}
+
 s32 fn_800A883C(void *arg0, s32 arg1) {
     u8 val;
     u8 *p = &val;
