@@ -549,11 +549,13 @@ void fn_8009E6F0(void) {
 }
 
 void fn_8009E71C(void) {
-    s32 OSGetTick(M2C_UNK *);
-    M2C_UNK fn_800070C8(void *, void *, void *, void *);
-    extern M2C_UNK lbl_80312100;
-    M2C_FIELD(&lbl_80312100, s32 *, 0xC) = (s32) (OSGetTick(&lbl_80312100) - M2C_FIELD(&lbl_80312100, s32 *, 0xC));
-    fn_800070C8(&lbl_80312100 + 0xB8, &lbl_80312100 + 0xBC, &lbl_80312100 + 0xBE, &lbl_80312100 + 0xC0);
+    u32 OSGetTick(void);
+    void fn_800070C8(void *, void *, void *, void *);
+    extern u8 lbl_80312100[];
+    u8 *p = lbl_80312100;
+
+    *(u32 *)(p + 0xC) = OSGetTick() - *(u32 *)(p + 0xC);
+    fn_800070C8(p + 0xB8, p + 0xBC, p + 0xBE, p + 0xC0);
 }
 
 void fn_8009E774(void) {
