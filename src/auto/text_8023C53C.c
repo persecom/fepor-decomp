@@ -1070,6 +1070,23 @@ void fn_80243F14(void *arg0, u8 *arg1) {
     M2C_FIELD(arg0, u8 **, 0) = (u8 *) (M2C_FIELD(arg0, u8 **, 0) + 1);
 }
 
+static inline u32 SynthFindVoice(u32 arg0) {
+    extern SynthVoice *lbl_80368970;
+    extern SynthVoice *lbl_80368974;
+    SynthVoice *p;
+    for (p = lbl_80368974; p != NULL; p = p->next) {
+        if (p->vid == (arg0 & 0x7FFFFFFF)) {
+            return p->id | (arg0 & 0x80000000);
+        }
+    }
+    for (p = lbl_80368970; p != NULL; p = p->next) {
+        if (p->vid == (arg0 & 0x7FFFFFFF)) {
+            return p->id | (arg0 & 0x80000000);
+        }
+    }
+    return -1;
+}
+
 u32 fn_80243F50(u32 arg0) {
     extern SynthVoice *lbl_80368970;
     extern SynthVoice *lbl_80368974;
