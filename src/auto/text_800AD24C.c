@@ -4553,35 +4553,23 @@ s32 fn_800B97B8(u32 arg0, s32 arg1) {
     return 1;
 }
 
-s32 fn_800B983C(void *arg0, void *arg1)
-{
+s32 fn_800B983C(u32 arg0, s32 arg1) {
     extern s32 lbl_80367110;
+    void *fn_801CF760(void);
+    void fn_801D0444(void *, s32);
+    void *tmp;
 
-    extern void *fn_801CF760(void *);
-    extern void fn_801D0444(void *, void *);
-
-    void *result;
-
-    if ((u32)arg0 < 0x80000000) {
+    if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
         return 0;
     }
-
-    if ((u32)arg0 >= 0x81800000) {
-        return 0;
-    }
-
     if (lbl_80367110 & 1) {
         return 0;
     }
-
-    result = fn_801CF760(arg0);
-
-    if (result == 0) {
+    tmp = fn_801CF760();
+    if (tmp == 0) {
         return 0;
     }
-
-    fn_801D0444(result, arg1);
-
+    fn_801D0444(tmp, arg1);
     return 1;
 }
 
