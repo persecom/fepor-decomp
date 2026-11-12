@@ -3856,6 +3856,21 @@ s32 fn_800B8298(s8 arg0, s8 arg1) {
     return 1;
 }
 
+s32 fn_800B8340(s32 arg0, s32 arg1, s32 arg2) {
+    void *fn_8010FEEC(void *, s8, s8, s32, s32);
+    extern u8 lbl_8032BB58[];
+    u8 *temp_r3;
+    s32 t2;
+
+    t2 = arg2;
+    temp_r3 = fn_8010FEEC(lbl_8032BB58, arg0, arg1, 4, 0);
+    temp_r3[4] = t2;
+    temp_r3[5] = t2;
+    temp_r3[6] = 0;
+    temp_r3[7] = 0;
+    return 1;
+}
+
 s32 fn_800B841C(u8 arg0, u8 arg1, u8 arg2) {
     M2C_UNK fn_8000CAA0(M2C_UNK *, s32, M2C_UNK *);
     M2C_UNK fn_80033418(void *);
