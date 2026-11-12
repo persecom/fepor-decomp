@@ -2306,6 +2306,23 @@ s32 fn_800790CC(void) {
     return 0;
 }
 
+void fn_800790D4(s32 arg0, s32 arg1) {
+    void *fn_8000CA64(void *, s32);
+    void fn_8000C068(void *, s32);
+    extern u8 lbl_80288CAC[];
+    extern void fn_80079138(void);
+    void *temp_r3;
+
+    temp_r3 = fn_8000CA64(lbl_80288CAC, arg1);
+    *(s32 *)((char *)temp_r3 + 0x30) = arg0;
+    *(s32 *)((char *)temp_r3 + 0x34) = 0;
+    *(s32 *)((char *)temp_r3 + 0x38) = 8;
+    *(s16 *)((char *)temp_r3 + 0x28) = 8;
+    *(s32 *)((char *)temp_r3 + 0x3C) = 0xFF;
+    *(s32 *)((char *)temp_r3 + 0x40) = 0;
+    fn_8000C068(temp_r3, (s32)fn_80079138);
+}
+
 void fn_80079138(void *arg0) {
     extern void *lbl_80312040[];
     void fn_8000C60C(void *);
