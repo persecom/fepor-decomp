@@ -853,13 +853,15 @@ void *fn_800A0638(void) {
 }
 
 s32 fn_800A0648(void) {
-    M2C_UNK fn_800056CC(void *);
-    M2C_UNK fn_8000D048();
-    extern M2C_UNK lbl_8026D8D8;
+    void fn_800056A0(s32);
+    s32 fn_800056CC(const char *, ...);
+    void fn_8000D048(void);
+    extern u16 lbl_8026D8D8[];
+
     fn_800056A0(0);
-    fn_800056CC(&lbl_8026D8D8 + 0x496);
+    fn_800056CC((const char *)((u8 *)lbl_8026D8D8 + 0x496));
     fn_8000D048();
-    fn_800056CC(&lbl_8026D8D8 + 0x4AD);
+    fn_800056CC((const char *)((u8 *)lbl_8026D8D8 + 0x4AD));
     return 5;
 }
 
