@@ -994,6 +994,20 @@ void fn_801650DC(void *arg0) {
     *(s16 *)((char *)arg0 + 0x18) = 0x12A;
 }
 
+void *fn_80165100(void *arg0, s16 arg1) {
+    void fn_8013F2A4(void *, s32);
+    void fn_800C428C(void *);
+    extern u8 lbl_80293BB8[];
+    if (arg0 != NULL) {
+        *(void **)arg0 = lbl_80293BB8;
+        fn_8013F2A4(arg0, 0);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+
 void *fn_80165160(void *arg0, s16 arg1) {
     M2C_UNK fn_8013F2A4(void *, s32);
     M2C_UNK fn_800C428C(void *);
