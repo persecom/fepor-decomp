@@ -2033,8 +2033,8 @@ f32 fn_800A30E0(void) {
 }
 
 void *fn_800A30E8(void) {
-    extern u16 lbl_8026D8D8;
-    return (u16*)((u32)&lbl_8026D8D8 + 0x71C*2);
+    extern u16 lbl_8026D8D8[];
+    return (u8 *)lbl_8026D8D8 + 0x71c;
 }
 
 extern void *fn_800241C8(s32);
