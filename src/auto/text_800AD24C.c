@@ -4963,8 +4963,8 @@ s32 fn_800BA69C(u8 arg0, s32 arg1) {
 }
 
 s32 fn_800BA75C(s8 arg0, s8 arg1, s8 arg2) {
-    extern M2C_UNK lbl_802CA518;
-    M2C_FIELD((&lbl_802CA518 + arg0 + (arg1 << 6)), s8 *, 0x100D) = arg2;
+    extern u8 lbl_802CA518[];
+    lbl_802CA518[arg0 + (arg1 << 6) + 0x100D] = (u8)arg2;
     return 0;
 }
 
