@@ -137,22 +137,28 @@ void fn_80128134(void) {
     fn_8000E0E4((u8 *)lbl_80275048 + 0x5CD);
 }
 
-void fn_80128160(s32 arg1, s32 arg2) {
-    void *fn_8000CAF0(M2C_UNK *, u32, M2C_UNK *);
-    u32 fn_801090C0();
-    extern M2C_UNK lbl_802905C0;
+void fn_80128160(s32 arg0, s32 arg1, s32 arg2) {
+    void *fn_8000CAF0(void *, u32);
+    u32 fn_801090C0(s32);
+    extern u8 lbl_802905C0[];
     extern f32 lbl_8036A3C0;
     extern f32 lbl_8036A3C4;
     u32 temp_r3;
-    void *temp_r3_2;
+    void *obj;
+    f32 f40;
+    f32 f44;
+    f32 f3c;
 
-    temp_r3 = fn_801090C0();
+    temp_r3 = fn_801090C0(arg0);
     if (temp_r3 != 0U) {
-        temp_r3_2 = fn_8000CAF0(&lbl_802905C0, temp_r3, &lbl_802905C0);
-        M2C_FIELD(temp_r3_2, s32 *, 0x38) = arg1;
-        M2C_FIELD(temp_r3_2, f32 *, 0x3C) = (f32) arg2;
-        M2C_FIELD(temp_r3_2, f32 *, 0x40) = (f32) lbl_8036A3C0;
-        M2C_FIELD(temp_r3_2, f32 *, 0x44) = (f32) lbl_8036A3C4;
+        obj = fn_8000CAF0(lbl_802905C0, temp_r3);
+        f40 = lbl_8036A3C0;
+        f44 = lbl_8036A3C4;
+        f3c = (f32)arg2;
+        *(s32 *)((u8 *)obj + 0x38) = arg1;
+        *(f32 *)((u8 *)obj + 0x3C) = f3c;
+        *(f32 *)((u8 *)obj + 0x40) = f40;
+        *(f32 *)((u8 *)obj + 0x44) = f44;
     }
 }
 
@@ -1216,19 +1222,24 @@ void fn_8012ADAC(s32 arg0, s32 arg1, u32 arg2) {
 }
 #pragma use_lmw_stmw reset
 void fn_8012AEC4(void *arg0) {
-    void *temp_r3;
-    void *temp_r3_2;
+    u8 fn_80040824(void);
+    void *fn_80040844(void);
+    void fn_80044450(void *, s32);
+    void fn_8005F7B0(void *, s32);
+    void fn_80049D08(void *);
+    void *p;
 
-    fn_8005F7B0((u8 *)arg0 + 0x4C, 0);
-    temp_r3 = (u8 *)arg0 + 0x38;
-    *(u8 *)((u8 *)temp_r3 + 0x2) |= 1;
-    fn_8005F7B0((u8 *)arg0 + 0x50, 0xFF);
-    temp_r3_2 = (u8 *)arg0 + 0x3C;
-    *(u8 *)((u8 *)temp_r3_2 + 0x2) &= 0xFE;
-    fn_80049D08((u8 *)arg0 + 0x3C);
-    if (fn_80040824() != 0) {
-        fn_80040844();
-        fn_80044450(1);
+    p = *(void **)((u8 *)arg0 + 0x38);
+    fn_8005F7B0((u8 *)p + 0x14, 0);
+    p = *(void **)((u8 *)arg0 + 0x38);
+    *(u8 *)((u8 *)p + 2) |= 1;
+    p = *(void **)((u8 *)arg0 + 0x3C);
+    fn_8005F7B0((u8 *)p + 0x14, 0xFF);
+    p = *(void **)((u8 *)arg0 + 0x3C);
+    *(u8 *)((u8 *)p + 2) &= ~1;
+    fn_80049D08(*(void **)((u8 *)arg0 + 0x3C));
+    if ((u8)fn_80040824() != 0) {
+        fn_80044450(fn_80040844(), 1);
     }
 }
 
