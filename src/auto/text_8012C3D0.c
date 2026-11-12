@@ -2537,6 +2537,17 @@ s32 fn_80130C54(void *arg1, s32 arg2) {
     }
 }
 
+void *fn_80130CB0(void *unused, s32 arg1) {
+    extern u16 lbl_80275AC0[];
+
+    switch (arg1) {
+    case 1:
+        return (u8 *)lbl_80275AC0 + 0x267;
+    default:
+        return (u8 *)lbl_80275AC0 + 0x247;
+    }
+}
+
 void fn_80130CDC(s32 unused, s32 kind, s32 *a, s32 *b, s32 *c, s32 *d) {
     switch (kind) {
     case 0:
