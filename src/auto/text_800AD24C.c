@@ -6136,6 +6136,14 @@ s32 fn_800BCB24(s32 arg0) {
     return ((s16 *)lbl_80330708)[arg0];
 }
 
+s32 fn_800BCB38(s32 arg0, s32 arg1) {
+    void fn_8014CA98(void *, s32, s32);
+    extern u16 lbl_80330708[700];
+
+    fn_8014CA98(lbl_80330708, arg0, arg1);
+    return 1;
+}
+
 extern u16 lbl_80330708[];
 s32 fn_800BCB70(void) {
     return *(s32*)(((char*)&lbl_80330708) + 0x18);
