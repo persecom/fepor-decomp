@@ -2047,9 +2047,8 @@ s32 fn_800A30F8(s32 arg0, s32 arg1) {
 }
 
 void *fn_800A3128(void) {
-    extern u16 lbl_8026D8D8;
-    void *addr = &lbl_8026D8D8;
-    return (char *)addr + 0x725;
+    extern u16 lbl_8026D8D8[];
+    return (u8 *)lbl_8026D8D8 + 0x725;
 }
 
 s32 fn_800A3138(s32 unused, s32 arg1) {
