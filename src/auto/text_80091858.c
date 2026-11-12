@@ -59,3 +59,20 @@ void fn_80091858(void) {
     fn_8000BF00(lbl_80289A38);
 }
 
+void fn_800918B0(void) {
+    extern void *lbl_803120A0[];
+    extern s32 lbl_803674F8;
+    s32 val;
+    s32 i;
+
+    if (lbl_803674F8 == 0) {
+        return;
+    }
+    val = 0x14;
+    for (i = lbl_803674F8 - 1; i >= 0; i--) {
+        *(s16 *)((u8 *)lbl_803120A0[i] + 0x28) = val;
+        val += 4;
+    }
+    lbl_803674F8 = 0;
+}
+
