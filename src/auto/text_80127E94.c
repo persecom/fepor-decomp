@@ -1115,9 +1115,9 @@ void fn_8012A530(void *arg0) {
 #pragma global_optimizer reset
 #pragma use_lmw_stmw reset
 
-s32 fn_8012AA68(void) {
-    M2C_UNK fn_8000C070(M2C_UNK);
-    fn_8000C070(1);
+s32 fn_8012AA68(void *arg0) {
+    void fn_8000C070(void *, s32);
+    fn_8000C070(arg0, 1);
     return 1;
 }
 
