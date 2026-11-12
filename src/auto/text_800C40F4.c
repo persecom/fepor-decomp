@@ -9901,6 +9901,34 @@ int fn_800E0340(void *arg0, void *arg1, void *arg2)
     return (difference < 0) ? 1 : 0;
 }
 
+#pragma use_lmw_stmw on
+s32 *fn_800E060C(s32 *arg0, s32 *arg1, s32 *arg2) {
+    s32 fn_800DF6B0(void *);
+    s32 *start;
+    s32 *keyp;
+    s32 count;
+    s32 mid;
+    s32 *ptr;
+    s32 elem;
+    s32 key;
+
+    start = arg0;
+    count = arg1 - start;
+    keyp = arg2;
+    while (count > 0) {
+        mid = count / 2;
+        ptr = start + mid;
+        elem = *ptr;
+        key = fn_800DF6B0((void *)*keyp);
+        if (fn_800DF6B0((void *)elem) <= key) {
+            start = ptr + 1;
+            count -= mid + 1;
+        } else {
+            count = mid;
+        }
+    }
+    return start;
+}
 s32 *fn_800E0728(s32 *a, s32 *b, s32 *c, s32 d, s32 e, void *f, void *g, u8 h) {
     return a + e;
 }
@@ -11097,6 +11125,39 @@ void fn_800E45D8(void *arg0, s32 *arg1) {
     typedef struct { s32 a; s32 b; } Pair;
     *(Pair *)((u8 *)arg0 + 0x58) = *(Pair *)arg1;
 }
+
+#pragma cplusplus on
+extern "C" void *fn_800E45EC(void *arg0, s16 arg1) {
+    void fn_800DF724(void *, s32);
+    void fn_800C428C(void *);
+    extern u16 lbl_8028E148[];
+    extern u16 lbl_8028E090[];
+    struct Child {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1(s32) = 0;
+    };
+    void *child;
+
+    if (arg0 != NULL) {
+        *(void **)((u8 *)arg0 + 0x40) = lbl_8028E148;
+        child = *(void **)((u8 *)arg0 + 0xa0);
+        if (child != NULL) {
+            if (child != NULL) {
+                ((Child *)child)->v1(1);
+            }
+        }
+        if (arg0 != NULL) {
+            *(void **)((u8 *)arg0 + 0x40) = lbl_8028E090;
+            fn_800DF724(arg0, 0);
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+#pragma cplusplus reset
 
 #pragma cplusplus on
 #pragma use_lmw_stmw on
