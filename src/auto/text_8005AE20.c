@@ -4537,12 +4537,14 @@ void fn_8006CF60(void *arg0) {
     mesh = *(void **)((u8 *)arg0 + 0x48);
     DCFlushRange(*(void **)((u8 *)arg0 + 0x6c), *(u16 *)((u8 *)mesh + 0x4c) * 6 + *(u16 *)((u8 *)mesh + 0x4e) * 3);
 }
-void fn_8006D52C(s32 arg0) {
-    M2C_ERROR(/* unknown instruction: mtspr GQR6, $r4 */);
+void fn_8006D52C(register s32 arg0) {
+    register u32 gqr = ((u32)arg0 << 16) + (u32)arg0;
+    *(volatile u32 *)0 = gqr;
 }
 
-void fn_8006D53C(s32 arg0) {
-    M2C_ERROR(/* unknown instruction: mtspr GQR7, $r4 */);
+void fn_8006D53C(register s32 arg0) {
+    register u32 gqr = ((u32)arg0 << 16) + (u32)arg0;
+    *(volatile u32 *)0 = gqr;
 }
 
 void fn_8006D54C(s32 arg1, s32 arg2, s32 arg3) {
@@ -6036,8 +6038,8 @@ s16 fn_800721E8(void *arg0) {
 }
 
 void *fn_800721F0(void) {
-    extern u16 lbl_8026BB84;
-    return (u8 *)*(u32 *)&lbl_8026BB84 + 0x46;
+    extern u16 lbl_8026BB84[];
+    return (u8 *)lbl_8026BB84 + 0x46;
 }
 
 s32 fn_80072200(void) {
