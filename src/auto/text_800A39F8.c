@@ -1290,9 +1290,9 @@ void fn_800A6578(void) {
 }
 
 void fn_800A65A4(s32 arg0) {
-    M2C_UNK fn_80183BE4(s32, s32, s32 *);
-    extern s32 lbl_802EF4C8;
-    fn_80183BE4(lbl_802EF4C8, arg0, &lbl_802EF4C8);
+    void fn_80183BE4(void *, s32);
+    extern u8 lbl_802EF4C8[];
+    fn_80183BE4(*(void **)lbl_802EF4C8, arg0);
 }
 
 s32 fn_800A65D4(s32 arg0) {
@@ -1608,6 +1608,28 @@ void fn_800A70A0(void *arg0) {
     s32 fn_8006D948(void *);
     extern u8 lbl_8026E378[];
     *(s32 *)((char *)arg0 + 0x40) = fn_8006D948(lbl_8026E378 + 0x28);
+}
+
+void fn_800A70DC(void *self)
+{
+    extern f32 lbl_80369AB0;
+    extern f32 lbl_80369AB4;
+    extern f32 lbl_80369AB8;
+    extern f64 lbl_80369AF8;
+    void fn_8004E670(f32 *, void *, s32);
+
+    f32 sp48[3];
+    f32 x;
+    f32 y;
+
+    if (*(void **)((u8 *)self + 0x30) == NULL) {
+        return;
+    }
+    fn_8004E670(sp48, *(void **)((u8 *)self + 0x30), 1);
+    x = lbl_80369AB0 + sp48[0];
+    y = lbl_80369AB0 + sp48[1];
+    *(s16 *)((u8 *)self + 0x44) = (s16)(x - lbl_80369AB4);
+    *(s16 *)((u8 *)self + 0x46) = (s16)(y - lbl_80369AB8);
 }
 
 #pragma use_lmw_stmw on
