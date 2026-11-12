@@ -1583,6 +1583,43 @@ void fn_80124424(void *self) {
     }
 }
 
+void fn_801248E4(void *arg0) {
+    extern u8 lbl_80274F74[];
+
+    void fn_800C426C(void *);
+    void fn_800C428C(void *);
+    void fn_801479C4(void *, s32);
+    void fn_8006D8E8(void *);
+
+    u8 *obj;
+    u8 *data;
+    void *ptr;
+
+    obj = (u8 *)arg0;
+    data = *(u8 **)(obj + 0x58);
+
+    if (data != NULL) {
+        ptr = *(void **)data;
+
+        if (ptr != NULL) {
+            fn_800C426C((u8 *)ptr - 0x10);
+            *(void **)data = NULL;
+        }
+
+        ptr = *(void **)(data + 4);
+
+        if (ptr != NULL) {
+            fn_800C426C(ptr);
+            *(void **)(data + 4) = NULL;
+        }
+
+        fn_800C428C(data);
+    }
+
+    fn_801479C4(lbl_80274F74 + 0x94, 0xFA);
+    fn_8006D8E8(*(void **)(obj + 0x54));
+}
+
 #pragma use_lmw_stmw on
 #pragma peephole off
 void fn_8012497C(void *arg0) {
@@ -2241,15 +2278,23 @@ void fn_80125AE0(void *arg0) {
     }
 }
 
+#pragma scheduling off
 void fn_80125B94(void *arg0) {
     extern f32 lbl_8036A30C;
-    extern f32 lbl_8036A35C;
     extern f32 lbl_8036A3B0;
-    *(f32*)((char*)arg0 + 0x4c) = lbl_8036A30C;
-    *(f32*)((char*)arg0 + 0x34) = lbl_8036A3B0;
-    *(f32*)((char*)arg0 + 0x30) = lbl_8036A35C;
-}
+    extern f32 lbl_8036A35C;
+    f32 a;
+    f32 b;
+    f32 c;
 
+    b = lbl_8036A3B0;
+    a = lbl_8036A30C;
+    *(f32 *)((u8 *)arg0 + 0x4C) = a;
+    c = lbl_8036A35C;
+    *(f32 *)((u8 *)arg0 + 0x34) = b;
+    *(f32 *)((u8 *)arg0 + 0x30) = c;
+}
+#pragma scheduling on
 s32 fn_80125BB0(void) {
     void *fn_8000C0C0(M2C_UNK *, M2C_UNK *);
     s32 fn_80069D58();
@@ -2791,9 +2836,8 @@ s32 fn_80126DE8(u8 arg0) {
 }
 
 s32 fn_80126E20(void) {
-    M2C_UNK fn_8000CAF0(M2C_UNK *, M2C_UNK);
-    extern M2C_UNK lbl_80290550;
-    fn_8000CAF0(&lbl_80290550, 3);
+    extern u16 lbl_80290550[];
+    fn_8000CAF0(lbl_80290550, 3);
     return 1;
 }
 
