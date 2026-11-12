@@ -162,23 +162,33 @@ s32 fn_80103998(void) {
 }
 
 s32 fn_801039A0(void *, void *, void *arg2) {
-    void *fn_8000BCA4(void *, void *, void *, void *);
-    void fn_8000C070(void *, s32);
+    s32 fn_8000BCA4(void *);
+    void fn_8000C070(s32, s32);
     void fn_800A8400(void);
-    void fn_80168E90(void *);
+    void fn_80168E90(s32);
     extern u8 lbl_802734D0[];
     extern u8 lbl_802CA518[];
     extern u8 lbl_802EF4C8[];
     extern u8 lbl_80330708[];
-    void *temp_r31;
-    void *temp_r5;
+    s32 temp_r31;
+    u8 *temp_r5;
+    u8 *table;
+    u8 *dst;
+    u8 *str;
+    f32 f1;
+    f32 f0;
 
-    if ((u8) M2C_FIELD(arg2, u8 *, 0x39) == 2) {
+    if ((u8)M2C_FIELD(arg2, u8 *, 0x39) == 2) {
         return 0x10;
     }
-    temp_r5 = (u8 *)lbl_802CA518 + (s8)(s32)*(f32 *)((u8 *)lbl_80330708 + 0x534) + (((s32)((s8)(s32)*(f32 *)((u8 *)lbl_80330708 + 0x538))) << 6);
-    *(u8 *)((u8 *)lbl_802EF4C8 + 0x14) = *(u8 *)((u8 *)temp_r5 + 0xD);
-    temp_r31 = fn_8000BCA4((u8 *)lbl_802734D0 + 0xC4, lbl_802EF4C8, temp_r5, lbl_802CA518);
+    table = lbl_802CA518;
+    dst = lbl_802EF4C8;
+    f1 = *(f32 *)(lbl_80330708 + 0x534);
+    str = lbl_802734D0;
+    f0 = *(f32 *)(lbl_80330708 + 0x538);
+    temp_r5 = table + (s8)(s32)f1 + (((s32)(s8)(s32)f0) << 6);
+    dst[0x14] = temp_r5[0xD];
+    temp_r31 = fn_8000BCA4(str + 0xC4);
     fn_800A8400();
     fn_8000C070(temp_r31, 0);
     fn_80168E90(temp_r31);
@@ -601,26 +611,57 @@ void fn_801042A8(void *arg0, u32 arg1, s32 arg2) {
     }
 }
 
-s32 fn_80104338(u8 arg0) {
-    switch (arg0) {
-    case 0: return 0x10;
-    case 1: return 0x11;
-    case 2: return 0x12;
-    case 3: return 0x13;
-    case 4: return 0x15;
-    case 5: return 0x17;
-    case 6: return 0x16;
-    case 7: return 0x18;
-    case 8: return 0x14;
-    case 9: return 0x10;
-    case 10: return 0x11;
-    case 11: return 0x12;
-    case 12: return 0x13;
-    case 13: return 0x15;
-    case 14: return 0x17;
-    case 15: return 0x16;
+s32 fn_80104338(void *arg0, u32 arg1) {
+    struct { u8 hi:3; u8 lo:5; } *p;
+    struct { u16 hi:6; u16 mid:3; u16 lo:7; } *h;
+    struct { u8 hi:1; u8 mid:3; u8 lo:4; } *q;
+    struct { u8 a:3; u8 b:3; u8 c:2; } *r;
+    struct { u8 hi:5; u8 lo:3; } *s;
+    struct { u8 hi:3; u8 lo:5; } *t;
+    struct { u8 a:3; u8 b:3; u8 c:2; } *u;
+
+    switch (arg1) {
+    case 0:
+        p = arg0;
+        return p->hi;
+    case 1:
+        return 0;
+    case 2:
+        h = arg0;
+        return h->mid;
+    case 3:
+        q = (void *)((u8 *)arg0 + 1);
+        return q->mid;
+    case 4:
+        r = arg0;
+        return r->b;
+    case 5:
+        s = (void *)((u8 *)arg0 + 1);
+        return s->lo;
+    case 6:
+        return 0;
+    case 7:
+        return 0;
+    case 8:
+        return 0;
+    case 9:
+        return 0;
+    case 10:
+        return 0;
+    case 11:
+        return 0;
+    case 12:
+        return 0;
+    case 13:
+        return 0;
+    case 14:
+        t = (void *)((u8 *)arg0 + 2);
+        return t->hi;
+    case 15:
+        u = (void *)((u8 *)arg0 + 2);
+        return u->b;
     }
-    return 0;
+    return -1;
 }
 
 extern u32 lbl_8028F210[];
