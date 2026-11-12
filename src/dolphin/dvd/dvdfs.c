@@ -1369,7 +1369,64 @@ void fn_802100F4(u32 arg0) {
     }
 }
 
-#pragma peephole off
+#pragma optimization_level 3
+void fn_802102F8(void){
+extern u8 lbl_8029D2C8[],lbl_8033A068[];extern s32 lbl_80368600,lbl_80368604,lbl_80368608;extern const char *lbl_80366F90;
+extern s16 lbl_80368626;extern u32 CurrTvMode_8036864C;extern u8 lbl_8036860C[8];
+void OSRegisterVersion(const char*);void *__OSLockSram(void);void __OSUnlockSram(s32);
+void OSInitThreadQueue(void*);void __OSSetInterruptHandler(s32,void(*)(void));void __OSUnmaskInterrupts(u32);void fn_8020FD50(void);
+u8 *data=lbl_8029D2C8,*v=lbl_8033A068;volatile u16 *regs=(volatile u16*)0xcc002000;volatile u16 *controlp;
+u16 *tim;u32 *modep,*progp;u16 control;u32 tv,mode; s16 maxx,x,zero; s32 divisor,parity,y,limit,high,low,tmp;
+if(!lbl_80368600){
+OSRegisterVersion(lbl_80366F90);lbl_80368600=1;lbl_80368620=(void*)1;
+controlp=(volatile u16*)0xcc002000;if(!(*++controlp&1))fn_802100F4(0);
+lbl_80368604=0;lbl_80368634=0;lbl_80368630=0;lbl_80368644=0;lbl_80368640=0;lbl_80368628=0;lbl_80368638=0;lbl_80368608=0;
+regs[39]=*(u16*)(data+0x1c0)|((*(u16*)(data+0x1c2)<<10)&0xfc00);
+regs[38]=((s32)*(u16*)(data+0x1c2)>>6)|(*(u16*)(data+0x1c4)<<4);
+regs[41]=*(u16*)(data+0x1c6)|((*(u16*)(data+0x1c8)<<10)&0xfc00);
+regs[40]=((s32)*(u16*)(data+0x1c8)>>6)|(*(u16*)(data+0x1ca)<<4);
+regs[43]=*(u16*)(data+0x1cc)|((*(u16*)(data+0x1ce)<<10)&0xfc00);
+regs[42]=((s32)*(u16*)(data+0x1ce)>>6)|(*(u16*)(data+0x1d0)<<4);
+regs[45]=*(u16*)(data+0x1d2)|(*(u16*)(data+0x1d4)<<8);
+regs[44]=*(u16*)(data+0x1d6)|(*(u16*)(data+0x1d8)<<8);
+regs[47]=*(u16*)(data+0x1da)|(*(u16*)(data+0x1dc)<<8);
+regs[46]=*(u16*)(data+0x1de)|(*(u16*)(data+0x1e0)<<8);
+regs[49]=*(u16*)(data+0x1e2)|(*(u16*)(data+0x1e4)<<8);
+regs[48]=*(u16*)(data+0x1e6)|(*(u16*)(data+0x1e8)<<8);
+regs[51]=*(u16*)(data+0x1ea)|(*(u16*)(data+0x1ec)<<8);
+regs[50]=*(u16*)(data+0x1ee)|(*(u16*)(data+0x1f0)<<8);
+
+regs[0x70/2]=640;
+*(s16*)&lbl_80368624=(s8)((u8*)__OSLockSram())[0x10];lbl_80368626=0;__OSUnlockSram(0);
+control=*controlp;progp=(u32*)(v+0x114);modep=(u32*)(v+0x118);*progp=(control>>2)&1;*modep=(control>>8)&3;
+if(*(u32*)0x800000cc==1&&*modep==0)*modep=5;
+tv=*modep;if(tv==3)tv=0;
+*(VITiming**)(v+0x144)=fn_8021004C(tv*4+*progp);
+*(u16*)(v+0x2)=control;lbl_80368648=*(u16**)(v+0x144);CurrTvMode_8036864C=*modep;
+tim=lbl_80368648;*(u16*)(v+0xf4)=640;*(u16*)(v+0xf6)=(tim[1]*2)&0xfffe;
+*(u16*)(v+0xf0)=(720-*(u16*)(v+0xf4))/2;*(u16*)(v+0xf2)=0;
+maxx=720-*(u16*)(v+0xf4);x=*(s16*)(v+0xf0)+*(s16*)&lbl_80368624;
+if(x>maxx){}else{zero=0;if(x>=0)zero=x;maxx=zero;}
+*(u16*)(v+0xf8)=maxx;
+if(*(u32*)(v+0x110)==0)divisor=2;else divisor=1;
+parity=*(u16*)(v+0xf2)&1;y=(s16)*(u16*)(v+0xf2)+lbl_80368626;if(y<=parity)y=parity;*(u16*)(v+0xfa)=y;
+limit=(s16)tim[1]*2-parity;
+tmp=*(s16*)(v+0xf2)+((s16)*(u16*)(v+0xf6)+lbl_80368626);if(tmp-limit>0)high=tmp-limit;else high=0;
+tmp=*(s16*)(v+0xf2)+lbl_80368626;if(tmp-parity<0)low=tmp-parity;else low=0;
+*(u16*)(v+0xfc)=*(u16*)(v+0xf6)+low-high;
+tmp=*(s16*)(v+0xf2)+lbl_80368626;if(tmp-parity<0)low=tmp-parity;else low=0;
+*(u16*)(v+0xfe)=*(u16*)(v+0x108)-low/divisor;
+tmp=*(s16*)(v+0xf2)+((s16)*(u16*)(v+0xf6)+lbl_80368626);if(tmp-limit>0)high=tmp-limit;else high=0;
+tmp=*(s16*)(v+0xf2)+lbl_80368626;if(tmp-parity<0)low=tmp-parity;else low=0;
+*(u16*)(v+0x100)=*(u16*)(v+0x10c)+low/divisor-high/divisor;
+*(u16*)(v+0x102)=640;*(u16*)(v+0x104)=(tim[1]*2)&0xfffe;
+*(u16*)(v+0x106)=0;*(u16*)(v+0x108)=0;*(u16*)(v+0x10a)=640;*(u16*)(v+0x10c)=(tim[1]*2)&0xfffe;
+*(u32*)(v+0x110)=0;v[0x11c]=v[0x11d]=v[0x11e]=40;v[0x12c]=0;*(u32*)(v+0x130)=1;*(u32*)(v+0x134)=0;
+OSInitThreadQueue(lbl_8036860C);regs[0x30/2]=regs[0x30/2]&0x7fff;regs[0x34/2]=regs[0x34/2]&0x7fff;
+lbl_80368614=0;lbl_80368618=0;__OSSetInterruptHandler(24,fn_8020FD50);__OSUnmaskInterrupts(0x80);
+}
+}
+#pragma optimization_level 4
 void fn_802107A8(void) {
     extern u32 lbl_80368604;
     extern u8 lbl_8036860C;

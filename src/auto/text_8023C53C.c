@@ -2337,7 +2337,38 @@ void fn_8024C84C(u32 arg0) {
     }
 }
 
-#pragma dont_inline on
+#pragma global_optimizer off
+u32 fn_8024C97C(s8 a,s32 b,s32 c,s32 d,s8 e,s8 f,s8 g,s8 h,u8 p,u8 q,u32 flags,s32 data,s32 extra,s16 *coef){
+extern u8 lbl_8034D4B8[],lbl_803689C4[8];extern u32 lbl_803689C0,lbl_803689A4;
+void fn_8026372C(void);void fn_802636F4(void);s32 fn_8024CE1C(s32,s32);u32 fn_8024E100(u32);void fn_80261C98(s32,void*,void*);u32 fn_80262290(s32);
+u8 *state,*slot,*scan,*base;u32 next,id,j,index; s32 offset,size,k;u8 voice; s8 pan,span;
+fn_8026372C();
+base=lbl_8034D4B8;scan=base;for(index=0;index<64;scan+=0x68,index++){if(scan[0xc]==0)break;}
+if(index!=64){
+next=lbl_803689C0;
+do{
+id=next++;if(id==0xffffffffU)id=next++;
+scan=base;for(j=0;j<64;scan+=0x68,j++){if(scan[0xc]&&id==*(u32*)(scan+4))break;}
+}while(j!=64);
+offset=index*0x68;lbl_803689C0=next;slot=lbl_8034D4B8+offset;
+*(u32*)(slot+4)=id;*(u32*)(slot+8)=flags;
+size=fn_8024CE1C(c,flags);
+slot=lbl_8034D4B8+offset;*(s32*)(slot+0x14)=b;*(s32*)(slot+0x18)=c;*(s32*)(slot+0x1c)=size;*(s32*)(slot+0x10)=data;*(s32*)(slot+0x4c)=-1;
+if(flags&1){if(coef){*(s16*)(slot+44)=coef[0];*(s16*)(slot+46)=coef[1];*(s16*)(slot+48)=coef[2];*(s16*)(slot+50)=coef[3];*(s16*)(slot+52)=coef[4];*(s16*)(slot+54)=coef[5];*(s16*)(slot+56)=coef[6];*(s16*)(slot+58)=coef[7];*(s16*)(slot+60)=coef[8];*(s16*)(slot+62)=coef[9];*(s16*)(slot+64)=coef[10];*(s16*)(slot+66)=coef[11];*(s16*)(slot+68)=coef[12];*(s16*)(slot+70)=coef[13];*(s16*)(slot+72)=coef[14];*(s16*)(slot+74)=coef[15];*(s16*)(slot+0x24)=8;} (lbl_8034D4B8+offset)[0xd]=1;}else slot[0xd]=0;
+slot=lbl_8034D4B8+offset;*(s32*)(slot+0x54)=d;slot[0x60]=q;slot[0x58]=a;slot[0x59]=e;slot[0x5c]=h;slot[0x5d]=p;slot[0x5e]=f;slot[0x5f]=g;
+span=g;pan=f;
+if(lbl_803689A4&1){pan=0x40;span=0;}else if(!(lbl_803689A4&2))span=0;
+slot=lbl_8034D4B8+offset;slot[0x5a]=pan;slot[0x5b]=span;slot[0x61]=lbl_803689C4[0];
+if(lbl_803689C4[0])fn_80261C98(*(s32*)(lbl_803689C4+4),slot+0x62,slot+0x64);
+else{*(s16*)(slot+0x64)=0;*(s16*)(slot+0x62)=0;}
+slot=lbl_8034D4B8+offset;*(s32*)(slot+0x50)=extra;*(s32*)(lbl_8034D4B8+offset)=-1;slot[0xc]=3;state=slot+0xc;
+voice=(u8)fn_80262290(size);(lbl_8034D4B8+offset)[0xe]=voice;
+if(voice!=0xff){if(!(flags&0x10000)&&!fn_8024E100(id))id=-1;}else id=-1;
+if(id==0xffffffffU)*state=0;
+}else id=-1;
+fn_802636F4();return id;
+}
+#pragma global_optimizer on
 s32 fn_8024CE1C(s32 arg0, s32 arg1)
 {
     u32 value;

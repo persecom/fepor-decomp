@@ -1193,6 +1193,178 @@ void fn_802291A4(void *b) {
     fn_80226698(b, &msg, sizeof(msg));
 }
 
+#pragma use_lmw_stmw on
+#pragma optimization_level 1
+s32 fn_802294F0(u32 arg0, u32 arg1, s32 arg2, s32 *arg3, s32 arg4) {
+void fn_802264B4(s32, s32 *);
+s32 fn_80226700(s32, s32, s32);
+void fn_80228858(u32 *, s32);
+extern u32 lbl_80282760[];
+extern u32 lbl_80282788[];
+extern u8 gTRKExceptionStatus_8029E574[];
+extern u8 lbl_8033CFB4[];
+
+    typedef void (*Thunk)(void *, void *);
+    struct {
+        s32 sp8;
+        s32 vals[2];
+        s32 saved[4];
+        u32 buf4[10];
+        u32 buf3[10];
+        u32 buf2[10];
+        u32 buf1[10];
+        u32 buf0[10];
+        u32 gap[4];
+    } st;
+    s32 s3, s2, s1, s0;
+    u32 *p4;
+    u32 *tmpl;
+    u32 tr;
+    u8 *status;
+    u32 op;
+    s32 err;
+    u32 *src;
+
+    if (arg1 > 0x1F) {
+        return 0x701;
+    }
+
+    status = gTRKExceptionStatus_8029E574;
+    {
+        u32 *t = lbl_80282760;
+        st.buf0[0] = t[0];
+        s0 = *(s32 *)status;
+        s3 = *(s32 *)(status + 0xC);
+        st.buf0[1] = t[1];
+        s1 = *(s32 *)(status + 4);
+        st.buf0[9] = t[9];
+        s2 = *(s32 *)(status + 8);
+        st.saved[0] = s0;
+        st.saved[1] = s1;
+        st.saved[2] = s2;
+        st.saved[3] = s3;
+        status[0xD] = 0;
+        st.buf0[2] = t[2];
+        st.buf0[3] = t[3];
+        st.buf0[4] = t[4];
+        st.buf0[5] = t[5];
+        st.buf0[6] = t[6];
+        st.buf0[7] = t[7];
+        st.buf0[8] = t[8];
+        st.buf0[0] = 0x7C98E2A6;
+        st.buf0[1] = 0x90830000;
+        st.buf0[9] = 0x4E800020;
+        fn_80228858(st.buf0, 0x28);
+        ((Thunk)st.buf0)(&st.sp8, lbl_8033CFB4);
+    }
+
+    {
+        u32 *t = lbl_80282760;
+        st.buf1[1] = t[1];
+        st.buf1[0] = t[0];
+        st.buf1[9] = t[9];
+        st.sp8 |= 0xA0000000;
+        st.buf1[2] = t[2];
+        st.buf1[3] = t[3];
+        st.buf1[4] = t[4];
+        st.buf1[5] = t[5];
+        st.buf1[6] = t[6];
+        st.buf1[7] = t[7];
+        st.buf1[8] = t[8];
+        st.buf1[0] = 0x80830000;
+        st.buf1[1] = 0x7C98E3A6;
+        st.buf1[9] = 0x4E800020;
+        fn_80228858(st.buf1, 0x28);
+        ((Thunk)st.buf1)(&st.sp8, lbl_8033CFB4);
+    }
+
+    {
+        u32 *t = lbl_80282760;
+        st.buf2[1] = t[1];
+        st.buf2[0] = t[0];
+        st.buf2[9] = t[9];
+        st.sp8 = 0;
+        st.buf2[2] = t[2];
+        st.buf2[3] = t[3];
+        st.buf2[4] = t[4];
+        st.buf2[5] = t[5];
+        st.buf2[6] = t[6];
+        st.buf2[7] = t[7];
+        st.buf2[8] = t[8];
+        st.buf2[0] = 0x80830000;
+        st.buf2[1] = 0x7C90E3A6;
+        st.buf2[9] = 0x4E800020;
+        fn_80228858(st.buf2, 0x28);
+        ((Thunk)st.buf2)(&st.sp8, lbl_8033CFB4);
+    }
+
+    tr = arg0 << 21;
+    *arg3 = 0;
+    tmpl = st.buf3;
+    p4 = st.buf4;
+    err = 0;
+    while (arg0 <= arg1 && err == 0) {
+        if (arg4 != 0) {
+            src = lbl_80282788;
+            op = tr | 0xE0030000;
+            tmpl[0] = src[0];
+            tmpl[1] = src[1];
+            tmpl[2] = src[2];
+            tmpl[3] = src[3];
+            tmpl[4] = src[4];
+            tmpl[5] = src[5];
+            tmpl[6] = src[6];
+            tmpl[7] = src[7];
+            tmpl[8] = src[8];
+            tmpl[9] = src[9];
+            if (arg4 != 0) {
+                op = tr | 0xF0030000;
+            }
+            tmpl[0] = op;
+            tmpl[9] = 0x4E800020;
+            fn_80228858(tmpl, 0x28);
+            ((Thunk)tmpl)(st.vals, lbl_8033CFB4);
+            err = fn_80226700(arg2, st.vals[0], st.vals[1]);
+        } else {
+            fn_802264B4(arg2, st.vals);
+            src = lbl_80282788;
+            op = tr | 0xE0030000;
+            p4[0] = src[0];
+            p4[1] = src[1];
+            p4[2] = src[2];
+            p4[3] = src[3];
+            p4[4] = src[4];
+            p4[5] = src[5];
+            p4[6] = src[6];
+            p4[7] = src[7];
+            p4[8] = src[8];
+            p4[9] = src[9];
+            if (arg4 != 0) {
+                op = tr | 0xF0030000;
+            }
+            p4[0] = op;
+            p4[9] = 0x4E800020;
+            fn_80228858(p4, 0x28);
+            ((Thunk)p4)(st.vals, lbl_8033CFB4);
+            err = 0;
+        }
+        tr += 0x200000;
+        arg0 += 1;
+        *arg3 += 8;
+    }
+
+    if (status[0xD] != 0) {
+        err = 0x702;
+        *arg3 = 0;
+    }
+    status = gTRKExceptionStatus_8029E574;
+    *(s32 *)(status + 0) = st.saved[0];
+    *(s32 *)(status + 4) = st.saved[1];
+    *(s32 *)(status + 8) = st.saved[2];
+    *(s32 *)(status + 0xC) = st.saved[3];
+    return err + (s32)(st.gap[0] & 0);
+}
+#pragma optimization_level reset
 s32 fn_80229FA4(s32 arg0, u32 arg1, s32 arg2, s32 *arg3, s32 arg4) {
     extern u16 gTRKExceptionStatus_8029E574[4];
     extern u16 gTRKBigEndian;

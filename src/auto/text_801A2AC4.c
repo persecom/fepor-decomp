@@ -1240,6 +1240,27 @@ void fn_801A6C18(s32 arg0, u8 arg1, u8 arg2) {
     fn_80033E70(self + 0x8A0);
 }
 
+void fn_801A6F34(void *arg0, void *arg1)
+{
+    extern void fn_801A601C(void *, void *, void *, s32);
+    extern void fn_801A6C18(void *, void *, s32);
+    extern void fn_80034068(void *, s32, s32);
+
+    u8 *obj;
+
+    obj = (u8 *)arg0;
+
+    fn_801A601C(obj, obj, obj + 0x2E0, 0);
+
+    fn_801A6C18(obj, arg1, 1);
+
+    obj[0xCA4] = 0;
+
+    fn_801A601C(obj, obj, obj + 0x2E0, 0);
+
+    fn_80034068(obj + 0x8A0, 0x54, 0);
+}
+
 #pragma opt_strength_reduction off
 void fn_801A6FB4(void *arg0, void *arg1, void *arg2) {
     void *fn_8001CB64(void *);

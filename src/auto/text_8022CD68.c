@@ -658,6 +658,50 @@ void fn_8022E804(void *dst, f64 x) {
     fn_80230944(dst, dig, sp38);
     *(s8 *)dst = sign;
 }
+
+void fn_8022EBB8(RuntimeDecimal *out,RuntimeDecimal *left,RuntimeDecimal *right){
+s32 offset,n,len,index,round;u8 *base,*p,*rbase,*tail,*q,*borrow,*end;u8 removed;
+{u32 *dst=(u32*)out,*src=(u32*)left;dst[0]=src[0];dst[1]=src[1];dst[2]=src[2];dst[3]=src[3];dst[4]=src[4];dst[5]=src[5];dst[6]=src[6];dst[7]=src[7];dst[8]=src[8];dst[9]=src[9];*(u16*)(dst+10)=*(u16*)(src+10);}
+if(!right->digits[0])return;
+n=out->length;if(n<right->length)n=right->length;
+offset=out->exponent-right->exponent;n+=offset;if(n>36)n=36;
+while(out->length<n){out->digits[out->length++]=0;}
+base=out->digits;p=base+n;len=right->length+offset;if(len<n)p=base+len;
+rbase=right->digits;q=rbase+(p-base-offset);tail=q;
+while(p>base&&q>rbase){
+--p;--q;
+if(*p<*q){
+borrow=p-1;while(*borrow==0)--borrow;
+for(;borrow!=p;borrow++){--*borrow;borrow[1]+=10;}
+}
+*p-=*q;
+}
+index=tail-rbase;
+if(index<right->length){
+round=0;
+if(*tail<5)round=1;
+else if(*tail==5){
+q=tail+1;end=right->digits+right->length;
+for(;q<end;q++){if(*q)goto trim;}
+p=base+index+offset-1;
+if(*p&1)round=1;
+}
+if(round){
+if(*p<1){borrow=p-1;while(*borrow==0)--borrow;for(;borrow!=p;borrow++){--*borrow;borrow[1]+=10;}}
+--*p;
+}
+}
+trim:
+p=base;while(*p==0)++p;
+if(p>base){removed=p-base;out->exponent-=removed;end=base+out->length;
+for(;p<end;p++,base++)*base=*p;
+out->length-=removed;
+}
+base=out->digits;p=base+out->length;
+while(p>base){if(*--p)break;}
+out->length=p-base+1;
+}
+
 extern s32 D_8022EF64;
 void fn_8022F0B4(void) {
     u8* temp_r3;

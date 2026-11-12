@@ -1,6 +1,6 @@
 # Fire Emblem: Path of Radiance
 
-[![Code Progress]][progress] [![Data Progress]][progress]
+[![Code Progress]][progress] [![Data Progress]][progress] [![Functions](https://bytematch.dev/persecom/fepor-decomp.svg?mode=shield&label=Functions&measure=matched_functions)](https://bytematch.dev/persecom/fepor-decomp)
 
 [Code Progress]: https://bytematch.dev/persecom/fepor-decomp.svg?measure=matched_code_percent&label=Code&version=GFEE01
 [Data Progress]: https://bytematch.dev/persecom/fepor-decomp.svg?measure=matched_data_percent&label=Data&version=GFEE01
