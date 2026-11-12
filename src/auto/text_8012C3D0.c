@@ -61,19 +61,15 @@ extern "C" void fn_8012C3E8(void *arg0) {
     ((Obj *)arg0)->v29();
 }
 #pragma cplusplus reset
-M2C_UNK *fn_8012C414(void) {
+char *fn_8012C414(void) {
     u8 fn_80109B0C(s32);
-    M2C_UNK fn_80231D94(M2C_UNK *, void *, u8, M2C_UNK *);
+    void fn_80231D94(void *, void *, ...);
     extern s32 lbl_80367A88;
     extern u8 lbl_802758F8[];
-    extern M2C_UNK lbl_8032FE60;
+    extern char lbl_8032FE60[];
 
-    u8 temp_r5 = fn_80109B0C(lbl_80367A88);
-    void *temp_r4 = &lbl_802758F8[0x10A];
-    M2C_UNK *temp_r3 = &lbl_8032FE60;
-
-    fn_80231D94(temp_r3, temp_r4, temp_r5, temp_r3);
-    return temp_r3;
+    fn_80231D94(lbl_8032FE60, lbl_802758F8 + 0x10a, (u8)fn_80109B0C(lbl_80367A88));
+    return lbl_8032FE60;
 }
 
 void *fn_8012C460(void) {
