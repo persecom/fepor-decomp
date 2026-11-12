@@ -1970,16 +1970,19 @@ void fn_80108F38(void) {
 }
 
 void fn_80108F58(void *arg0) {
-    M2C_UNK fn_800AA1CC(void *);
+    void fn_800AA1CC(void *);
     void *fn_80109180(s32, void *);
     extern f32 lbl_8036A130;
-    void *temp_r3;
+    f32 f;
+    void *p;
 
-    M2C_FIELD(arg0, void **, 0x34) = fn_80109180(M2C_FIELD(arg0, s32 *, 0x30), arg0);
-    M2C_FIELD(M2C_FIELD(arg0, void **, 0x34), f32 *, 0x38) = (f32) lbl_8036A130;
-    temp_r3 = M2C_FIELD(arg0, void **, 0x34);
-    M2C_FIELD(temp_r3, f32 *, 0x3C) = (f32) lbl_8036A130;
-    fn_800AA1CC(temp_r3);
+    *(void **)((char *)arg0 + 0x34) = fn_80109180(*(s32 *)((char *)arg0 + 0x30), arg0);
+    f = lbl_8036A130;
+    p = *(void **)((char *)arg0 + 0x34);
+    *(f32 *)((char *)p + 0x38) = f;
+    p = *(void **)((char *)arg0 + 0x34);
+    *(f32 *)((char *)p + 0x3C) = f;
+    fn_800AA1CC(p);
 }
 
 void fn_80108FA8(void) {
