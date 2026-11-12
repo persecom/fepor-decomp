@@ -5711,6 +5711,42 @@ void fn_8016EF58(void *arg0) {
     fn_8000C070(arg0, M2C_FIELD(arg0, u8 *, 0x65));
 }
 
+#pragma cplusplus on
+extern "C" void fn_8016F014(void *arg0) {
+    void fn_8013AD70(void *, s32);
+    void *fn_8013AC54(void *);
+    void fn_80138808(void *, void *);
+    extern u8 lbl_80330708[];
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11(void *) = 0;
+    };
+    void *inner;
+
+    inner = *(void **)((u8 *)arg0 + 0x40);
+    fn_8013AD70(inner, *(s32 *)(lbl_80330708 + 0xAC));
+    switch ((s32)*(u8 *)((u8 *)arg0 + 0x65)) {
+    case 0xB:
+        ((Obj *)*(void **)((u8 *)arg0 + 0x50))->v11(fn_8013AC54(inner));
+        break;
+    default:
+        ((Obj *)*(void **)((u8 *)arg0 + 0x4C))->v11(fn_8013AC54(inner));
+        fn_80138808(*(void **)((u8 *)arg0 + 0x44), fn_8013AC54(inner));
+        break;
+    }
+}
+#pragma cplusplus reset
+
 void fn_8016F0C4(void *arg0) {
     M2C_UNK fn_8000C070(void *, u8);
     fn_8000C070(arg0, *(u8 *)((char *)arg0 + 0x65));
