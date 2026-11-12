@@ -5773,9 +5773,7 @@ void fn_80040854(void *arg0)
 
     void *ptr;
 
-    ptr = arg0;
-
-    if (ptr == 0) {
+    if ((ptr = arg0) == 0) {
         ptr = lbl_803672AC;
     }
 
