@@ -1305,6 +1305,21 @@ void fn_8005DFB8(void *arg0) {
     fn_8020AEC4(lbl_803672EC);
 }
 
+void fn_8005E014(void *arg0) {
+    void fn_8020AEC4(u8 *);
+    extern u8 lbl_8030F4E0[];
+    extern volatile u8 lbl_803672EB;
+    extern u8 lbl_803672EC[8];
+    u8 *entry;
+
+    entry = lbl_8030F4E0 + lbl_803672EB * 0xC;
+    entry[0] = 1;
+    *(void **)(entry + 4) = arg0;
+    *(s32 *)(entry + 8) = 0;
+    lbl_803672EB = (lbl_803672EB + 1) & 0x3F;
+    fn_8020AEC4(lbl_803672EC);
+}
+
 void fn_8005E070(s32 arg0, void *arg1) {
     extern u16 lbl_8030F4E0;
     extern u8 lbl_803672EB;
