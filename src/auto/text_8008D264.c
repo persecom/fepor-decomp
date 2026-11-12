@@ -214,9 +214,9 @@ void fn_8008D6D8(void *arg0) {
 }
 
 void fn_8008D7EC(void *arg0) {
-    M2C_UNK fn_8000C188();
+    M2C_UNK fn_8000C188(void *);
     M2C_FIELD(arg0, u8 *, 0x3A) = (u8) (M2C_FIELD(arg0, u8 *, 0x3A) + M2C_FIELD(arg0, u8 *, 0x3C));
-    if ((s8) M2C_FIELD(arg0, u8 *, 0x3B) == (s8) M2C_FIELD(arg0, u8 *, 0x3A)) {
-        fn_8000C188();
+    if ((s8) M2C_FIELD(arg0, u8 *, 0x3A) == (s8) M2C_FIELD(arg0, u8 *, 0x3B)) {
+        fn_8000C188(arg0);
     }
 }
