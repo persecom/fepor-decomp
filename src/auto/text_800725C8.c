@@ -123,10 +123,13 @@ void fn_800728C8(void) {
 }
 
 void fn_80072900(s32 arg0) {
-    extern s32 lbl_802EF4C8;
-    extern s32 lbl_8036737C;
+    void fn_80024398(void *, s32, s32);
+    extern u8 lbl_802EF4C8[24];
+    extern u8 lbl_8036737C;
+    u8 *p;
 
-    *(volatile u8 *) (lbl_802EF4C8 + 8) = 0;
+    p = lbl_802EF4C8;
+    p[8] = 0;
     fn_80024398(&lbl_8036737C, arg0, 0);
 }
 
