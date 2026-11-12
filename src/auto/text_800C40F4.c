@@ -2118,8 +2118,11 @@ extern "C" void fn_800CE214(void *self, void *stat) {
     r29 = fn_80116580(*(void **)stat);
     r30 = fn_8011654C(*(void **)stat);
     ok = 1;
-    if (*(s32 *)((u8 *)stat + 0x18) != 0xB) {
-        *(s32 *)((u8 *)stat + 0x18) = 0;
+    {
+        s32 cur = *(s32 *)((u8 *)stat + 0x18);
+        if (cur != 0xB) {
+            *(s32 *)((u8 *)stat + 0x18) = 0;
+        }
     }
     i = 0;
     *(s32 *)((u8 *)stat + 0x1C) = 0;
@@ -2191,8 +2194,7 @@ extern "C" void fn_800CE214(void *self, void *stat) {
         u32 *d = (u32 *)(copy - 4);
         void *entry = (u8 *)*(void **)((u8 *)self + 0x208)
             + (*(s32 *)((u8 *)self + 0x204) - 1) * 0x58;
-        u32 *s = (u32 *)entry;
-        s--;
+        u32 *s = (u32 *)((u8 *)entry - 4);
         for (; k != 0; k--) {
             d[1] = s[1];
             s += 2;
@@ -10133,6 +10135,7 @@ lbl_8032AC58[0x65C]=1;
 }
 
 extern s8 lbl_8032AC58[];
+void fn_800F1C24(void *);
 void fn_800F1BFC(void) {
     fn_800F1C24(&lbl_8032AC58);
 }
@@ -10531,6 +10534,72 @@ fn_800FB96C(action,(s8)bx,(s8)by,0,(s8)(bx+dx2),(s8)(by+dy2),-1,0,0);
 }
 return lbl_8032B3C0[0x21C];
 }
+
+#pragma opt_strength_reduction off
+#pragma opt_loop_invariants off
+#pragma use_lmw_stmw on
+#pragma opt_common_subs off
+#pragma opt_common_subs on
+u8 fn_800F43D8(s32 arg0,u8 arg1){
+extern u8 lbl_802EF4C8[],lbl_802CA518[],lbl_8032B3C0[],lbl_8032BB58[],lbl_802EF4E0[],lbl_80284E20[],lbl_8028E6C8[],lbl_8028E6D8[];
+extern char lbl_80272DB0[];
+u8 fn_80105BC0(void *,s32);void fn_80022DAC(void *,s32,s32);void fn_80022FD8(void *,s32);
+void fn_800FE2A0(void *,s32,s32);s8 fn_8003A398(void *);u8 fn_800FE84C(s8,s8);
+void *fn_8010FF24(void *,s8,s8,s32);void *fn_80019E04(void *);void *fn_80019E24(u8);
+void fn_8002F728(void *);u8 fn_8001DDBC(void *);void fn_800FDDBC(s8,s8,u8,u8,s32);
+void fn_8001EF80(void *,u8,u8,u8);void fn_8002C47C(void *,s8);void *fn_8002F658(void *,s32);
+void fn_8002C6F4(void *,s8,s8);void fn_800FB96C(u8,s8,s8,void *,s8,s8,s8,s32,s32);
+u8 *map,*ctx; s32 rowOffset;u8 *row; s32 xmin,xmax,ymax;
+s32 callback; F43Eval eval; F43Range pred; struct {F43Pos pos;s32 pad;s32 score;} result;
+s16 bestY,bestX;u16 bestItem;u8 bestToY,bestToX;
+s32 index,score,x,y,ymin; s32 cx,cy,r;u8 ix,iy,kind,id;u8 *self,*entry,*candidate,*item,*list,*tile,*point;
+callback=arg0;ctx=lbl_802EF4C8;map=lbl_802CA518;self=*(u8**)ctx;ctx[8]=arg1;
+if(!fn_80105BC0(self+0x1bc,0x4f))return 0;
+if((lbl_8032B3C0[1]&2)||(*(u32*)(self+0x254)&0x03000000)){
+fn_80022DAC(map,5,-1);fn_80022FD8(map,5);(*(u16**)(map+0x14190))[*(s8*)(self+0x19e)+(*(s8*)(self+0x19f)<<6)]=0;
+}else fn_800FE2A0(self,5,-1);
+cx=*(s8*)(self+0x19e);cy=*(s8*)(self+0x19f);score=(s32)0x80000000;
+r=fn_8003A398(self);
+xmin=cx-r;if(xmin<(s8)lbl_802CA518[8])xmin=(s8)lbl_802CA518[8];
+ymin=cy-r;if(ymin<(s8)lbl_802CA518[9])ymin=(s8)lbl_802CA518[9];
+xmax=cx+r;if(xmax>(s8)lbl_802CA518[10]-1)xmax=(s8)lbl_802CA518[10]-1;
+ymax=cy+r;if(ymax>(s8)lbl_802CA518[11]-1)ymax=(s8)lbl_802CA518[11]-1;
+map=lbl_802CA518;
+for(y=ymin;y<=ymax;y++){rowOffset=(s8)y<<6;row=map+rowOffset;
+for(x=xmin;x<=xmax;x++){
+if(M2C_FIELD((u8*)((s32)map+((s8)x+rowOffset)*2),s16 *,0x610E)<0)continue;
+tile=row+(s8)x;
+if(*(s8*)(tile+0xe18e)||fn_800FE84C((s8)x,(s8)y)||tile[0xd])continue;
+entry=fn_8010FF24(lbl_8032BB58,(s8)x,(s8)y,7);
+if(!entry||!entry[5]||entry[4]!=*(u16*)((u8*)fn_80019E04(lbl_80272DB0+0xce)+0xe))continue;
+candidate=fn_8010FF24(lbl_8032BB58,(s8)(s16)x,(s8)(s16)y,7);
+pred.vtable=lbl_80284E20;pred.vtable=lbl_8028E6D8;pred.value=callback;
+fn_8002F728(lbl_802EF4E0);fn_80022FD8(lbl_802CA518,6);
+item=fn_80019E24(candidate[4]);iy=candidate[1];kind=item[0x1d];ix=candidate[0];
+fn_800FDDBC((s8)ix,(s8)iy,kind,(u8)fn_8001DDBC(item),6);
+fn_8001EF80(lbl_802CA518,candidate[0],candidate[1],candidate[3]);
+fn_8002C47C(&pred,(s8)item[0x1d]);
+list=lbl_802EF4E0;
+if(*(s32*)list){result.pos.id=entry[4];
+for(index=0;index<*(s32*)list;index++){
+point=fn_8002F658(list,index);result.pos.x=point[0];result.pos.y=point[1];
+ix=(s8)result.pos.x;iy=(s8)result.pos.y;
+eval.vtable=(void**)lbl_80284E20;id=lbl_802CA518[(s8)ix+((s8)iy<<6)+0xd];
+eval.vtable=(void**)lbl_8028E6C8;eval.entry=entry;eval.unit=self;eval.pos=&result.pos;result.score=0;
+if(id){void *unit=0;if(id)unit=lbl_802B14E4+(id-1)*0x280;((void(*)(void*,void*))eval.vtable[2])(&eval,unit);}
+fn_8002C6F4(&eval,(s8)ix,(s8)iy);
+if(result.score>score){bestToX=result.pos.x;score=result.score;bestToY=result.pos.y;bestX=(s16)x;bestItem=result.pos.id;bestY=(s16)y;}
+}
+}
+}
+}
+if((u32)(score+0x80000000U)!=0)fn_800FB96C(ctx[8],(s8)bestX,(s8)bestY,0,(s8)bestToX,(s8)bestToY,(s8)bestItem,0,0);
+return lbl_8032B3C0[0x21c];
+}
+#pragma opt_common_subs on
+#pragma opt_loop_invariants reset
+#pragma opt_strength_reduction reset
+
 #pragma opt_loop_invariants reset
 #pragma use_lmw_stmw reset
 #pragma opt_strength_reduction reset
@@ -10937,7 +11006,6 @@ extern f64 lbl_8036A088;
 
     u8 *unit2;
     u8 *base;
-    u8 *tmp;
     void **list;
     void *wpn;
     s32 dy;
@@ -10953,6 +11021,7 @@ extern f64 lbl_8036A088;
     s32 *var_r3;
     void *temp_r30;
     void *temp_r31;
+    s16 t_y;
     s32 flag2;
     s32 var_r25;
     f32 temp_f1;
@@ -10964,10 +11033,9 @@ extern f64 lbl_8036A088;
     void *temp_r3;
     s32 var_r31;
 
-    tmp = (u8 *)lbl_80330EAC;
-    unit2 = tmp + 0x2E0;
+    base = (u8 *)lbl_80330EAC;
+    unit2 = base + 0x2E0;
     var_r31 = 0;
-    base = tmp;
     list = fn_801A7FF4(unit2);
     uy = unit2[0x19F];
     ux = unit2[0x19E];
