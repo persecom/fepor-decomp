@@ -2703,6 +2703,19 @@ void fn_801181F8(s32 arg0) {
     }
 }
 
+void fn_8011824C(s32 arg0) {
+    void fn_8000E0E4(void *);
+    void fn_80024398(void *, s32, s32);
+    void *fn_8013BFFC(void);
+    extern char lbl_80274508[];
+    void *tmp;
+
+    fn_8000E0E4(lbl_80274508 + 0x162);
+    tmp = fn_8013BFFC();
+    *((u8 *)tmp + 0x24) = 1;
+    fn_80024398(tmp, arg0, 0);
+}
+
 void fn_8011829C(void *arg0) {
     void fn_80018AE4(void);
     void fn_8000C070(void *, s32);
