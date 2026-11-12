@@ -1097,8 +1097,8 @@ void fn_8007676C(void) {
 }
 
 s32 fn_800767FC(void) {
-    extern u16 lbl_802EF4C8;
-    *(u8 *)&lbl_802EF4C8 = 0x2E;
+    extern u8 lbl_802EF4C8[24];
+    lbl_802EF4C8[8] = 0x2E;
     return 5;
 }
 
