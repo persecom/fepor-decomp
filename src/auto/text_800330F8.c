@@ -8118,28 +8118,30 @@ done:
 
 void *fn_80046EB8(void *arg0, void *arg1)
 {
+    s32 n;
+    s32 i;
+    s32 off;
     u8 *base;
-    s32 index;
 
     if (arg1 == 0) {
         return 0;
     }
 
-    index = *(s16 *)((u8 *)arg0 + 6) - 1;
-
-    if (index < 0) {
+    n = *(s16 *)((u8 *)arg0 + 6) - 1;
+    i = n + 1;
+    off = n * 0xB4;
+    if (n < 0) {
         return 0;
     }
 
-    base = *(u8 **)((u8 *)arg0 + 0x14);
-
     do {
-        if (*(void **)(base + index * 0xB4 + 0x10) == arg1) {
-            return base + index * 0xB4;
+        base = *(u8 **)((u8 *)arg0 + 0x14);
+        if (*(void **)(base + off + 0x10) == arg1) {
+            return base + n * 0xB4;
         }
-
-        index--;
-    } while (index >= 0);
+        off -= 0xB4;
+        n -= 1;
+    } while (--i);
 
     return 0;
 }
@@ -8834,32 +8836,19 @@ void fn_8004983C(void *arg0) {
     }
 }
 
-void fn_80049A3C(int arg0, int arg1) {
-    if (arg0 >= 0 && arg1 >= 0) {
-        void** vtable_ptr = (void**)&lbl_803672A8;
-        void* ptr3 = vtable_ptr[arg0];
-        void* ptr4 = vtable_ptr[arg1];
-        
-        if (ptr3 != NULL && ptr4 != NULL) {
-            int val3_0x19C = *(int*)((char*)ptr3 + 0x19C);
-            int val4_0x19C = *(int*)((char*)ptr4 + 0x19C);
-            
-            if (val3_0x19C >= 0 && val4_0x19C >= 0) {
-                int temp1 = *(int*)((char*)ptr3 + 0x194);
-                int temp2 = *(int*)((char*)ptr4 + 0x194);
-                int diff = temp2 - temp1;  
-                
-                if (diff >= 0) {
-                    int val3_0x198 = *(int*)((char*)ptr3 + 0x198);
-                    int val4_0x198 = *(int*)((char*)ptr4 + 0x198);
-                    int diff2 = val3_0x198 - val4_0x198;
-                    
-                    if (diff2 >= 0) {
-                        int val3_0x190 = *(int*)((char*)ptr3 + 0x190);
-                        *(int*)((char*)ptr4 + 0x190) = val3_0x190;
-                    }
-                }
-            }
+void fn_80049A3C(void *arg0)
+{
+    void fn_8005FEE8(void *, f32);
+    extern f32 lbl_80368EE4;
+    extern f32 lbl_80368F2C;
+    f32 zero;
+
+    if (*(u8 *)((u8 *)arg0 + 0x48) == 0) {
+        zero = lbl_80368EE4;
+        if (*(f32 *)((u8 *)*(void **)((u8 *)arg0 + 0x34) + 0x5c) > zero) {
+            fn_8005FEE8((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x14, lbl_80368F2C);
+        } else {
+            fn_8005FEE8((u8 *)*(void **)((u8 *)arg0 + 0x30) + 0x14, zero);
         }
     }
 }
