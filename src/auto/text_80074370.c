@@ -1350,6 +1350,20 @@ s32 fn_80076DBC(void) {
     return 3;
 }
 
+s32 fn_80076E38(void) {
+    u8 fn_80105BC0(void *, s32);
+    extern u8 lbl_802EF4C8[];
+
+    if (fn_80105BC0(*(u8 **)lbl_802EF4C8 + 0x1BC, 9) != 0) {
+        u8 *p = lbl_802EF4C8;
+        p[8] = 0x2B;
+    } else {
+        u8 *p = lbl_802EF4C8;
+        p[8] = 0x12;
+    }
+    return 5;
+}
+
 s32 fn_80076E9C(void) {
     extern u8 lbl_802EF4C8[];
     u8 *p = lbl_802EF4C8;
