@@ -2240,26 +2240,23 @@ s32 fn_80078F88(void *arg0)
 {
     extern u8 lbl_8036723A;
 
-    u8 *obj;
     u8 *data;
-    void (*callback)(void);
-
-    obj = (u8 *)arg0;
+    void (*callback)(void *);
 
     if (lbl_8036723A == 9) {
-        data = *(u8 **)(obj + 4);
-        callback = *(void (**)(void))(data + 4);
+        data = *(u8 **)((u8 *)arg0 + 4);
+        callback = *(void (**)(void *))(data + 4);
 
-        *(u8 **)(obj + 4) = data + 8;
+        *(u8 **)((u8 *)arg0 + 4) = data + 8;
 
-        callback();
+        callback(arg0);
 
-        data = *(u8 **)(obj + 4);
-        *(u8 **)(obj + 4) = data - 8;
+        data = *(u8 **)((u8 *)arg0 + 4);
+        *(u8 **)((u8 *)arg0 + 4) = data - 8;
     }
 
-    data = *(u8 **)(obj + 4);
-    *(u8 **)(obj + 4) = data + 8;
+    data = *(u8 **)((u8 *)arg0 + 4);
+    *(u8 **)((u8 *)arg0 + 4) = data + 8;
 
     return 1;
 }
