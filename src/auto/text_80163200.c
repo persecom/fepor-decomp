@@ -1498,29 +1498,27 @@ s32 fn_801660A8(void) {
     return (M2C_FIELD(&lbl_80330708, u8 *, 0x10) * 7) + 0x39A81;
 }
 
-u32 fn_8016614C(s32 arg0) {
+u32 fn_8016614C(void *arg0, s32 arg1) {
     extern u8 lbl_80330708[];
-    s32 temp_r0;
-    u32 temp_r3;
     u32 var_r6;
+    u32 temp;
 
-    temp_r0 = arg0 * 4;
-    var_r6 = *(u32*)(temp_r0 + 0x14);
-    if (arg0 == 2) {
+    var_r6 = *(u32 *)((s32)arg0 + (arg1 * 4) + 0x14);
+    if (arg1 == 2) {
         return var_r6;
     }
-    if (arg0 == 3) {
-        arg0 = 2;
+    if (arg1 == 3) {
+        arg1 = 2;
     }
-    if (*(u8*)(0xA6 + lbl_80330708) == 1) {
-        temp_r3 = *(u32*)(arg0 * 4 + 0x24);
-        if (temp_r3 != 0U) {
-            var_r6 = temp_r3;
+    if (*(u8 *)(lbl_80330708 + 0xA6) == 1) {
+        temp = *(u32 *)((s32)arg0 + (arg1 * 4) + 0x24);
+        if (temp != 0U) {
+            var_r6 = temp;
         }
-    } else if (*(u8*)(0xA6 + lbl_80330708) == 2) {
-        temp_r3 = *(u32*)(arg0 * 4 + 0x30);
-        if (temp_r3 != 0U) {
-            var_r6 = temp_r3;
+    } else if (*(u8 *)(lbl_80330708 + 0xA6) == 2) {
+        temp = *(u32 *)((s32)arg0 + (arg1 * 4) + 0x30);
+        if (temp != 0U) {
+            var_r6 = temp;
         }
     }
     return var_r6;
@@ -10658,6 +10656,25 @@ void *fn_8017A294(void *arg0, s16 arg1) {
     }
     return arg0;
 }
+
+#pragma cplusplus on
+extern "C" void fn_8017A310(void *arg0, void *arg1) {
+    void *fn_801FFD74(void *, void *);
+    void fn_801FFD5C(void *, s32, void *, void *);
+    void fn_801FFD6C(void *);
+    extern u8 lbl_80278778[];
+    struct Obj {
+        u8 pad[0x10];
+        virtual void *v0() = 0;
+        virtual void *v1() = 0;
+    };
+    void *temp;
+
+    temp = fn_801FFD74(arg1, lbl_80278778);
+    fn_801FFD5C(*(void **)arg0, 1, ((Obj *)arg0)->v1(), temp);
+    fn_801FFD6C(temp);
+}
+#pragma cplusplus reset
 
 void fn_8017A38C(u8 **arg0, u8 *arg1) {
     u8 *p;
