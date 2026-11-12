@@ -13312,38 +13312,31 @@ void fn_8017F5EC(void *arg0) {
 }
 
 void fn_8017F650(void *arg0) {
-    f32 fn_8000A258(f32, f32);
-    f32 fn_8009822C(f32 *, s32);
-    f32 fn_80009D74(f32, f32, f32, f32);
-    u8 fn_80009B8C(u8);
-    void fn_8000A248();
-    void fn_80007898(s32);
-    void fn_800075D8();
+    void fn_800075D8(void);
     void fn_8000770C(f32, f32, f32, f32, f32, f32);
-    void fn_80007884();
-    void fn_80009B28();
+    void fn_80007884(void);
+    void fn_80007898(s32);
+    void fn_80009B28(void);
+    void fn_80009B8C(u8);
+    void fn_80009D74(f32, f32, f32, f32);
+    void fn_80009F90(s32, s32, s32);
+    void fn_8000A248(void);
+    void fn_8000A258(void);
+    void fn_8009822C(void *, s32);
     extern f32 lbl_8036AC30;
     extern f32 lbl_8036AC48;
     extern f32 lbl_8036AC74;
     extern f32 lbl_8036AC7C;
     extern f32 lbl_8036AC8C;
     extern f32 lbl_8036AC90;
-
-    f32 sp1C;
-    f32 sp18;
-    f32 sp14;
-    f32 sp8;
+    struct { f32 x, y, z; } sp14, sp8;
 
     fn_8009822C(&sp8, *(s32 *)((u8 *)arg0 + 0x30));
     sp14 = sp8;
-    sp18 = *(f32 *)((u8 *)arg0 + 0xC);
-    sp1C = *(f32 *)((u8 *)arg0 + 0x10);
-    fn_8000A258(sp1C, sp8);
-    sp14 += *(f32 *)((u8 *)arg0 + 0x38);
-    fn_80009D74(sp14, sp18, lbl_8036AC7C, lbl_8036AC48);
-    *(s32 *)((u8 *)arg0 + 0x34) = 0xA;
-    *(s32 *)((u8 *)arg0 + 0x34) = 0x11;
-    fn_80009B8C(*(u8 *)((u8 *)arg0 + 0x40));
+    fn_8000A258();
+    fn_80009D74(sp14.x + *(f32 *)((u8 *)arg0 + 0x38), sp14.y, lbl_8036AC7C, lbl_8036AC48);
+    fn_80009F90(*(s32 *)((u8 *)arg0 + 0x34), 0xA, 0x11);
+    fn_80009B8C((u8)*(u32 *)((u8 *)arg0 + 0x40));
     fn_8000A248();
     fn_80007898(1);
     fn_8000770C(lbl_8036AC8C, lbl_8036AC30, lbl_8036AC30, lbl_8036AC30, lbl_8036AC90, lbl_8036AC74);
