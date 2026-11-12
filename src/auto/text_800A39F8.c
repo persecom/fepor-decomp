@@ -1583,6 +1583,32 @@ void fn_800A6B70(void *arg0) {
     }
 }
 
+void fn_800A6C24(void *arg0) {
+    extern u8 lbl_80330708[];
+    extern u8 lbl_802CA518[];
+    extern u8 lbl_802B14E4[];
+    void fn_8000C070(void *, s32);
+    s8 sx;
+    s8 sy;
+    u8 id;
+    void *unit;
+
+    sx = (s8)*(f32 *)(lbl_80330708 + 0x524);
+    sy = (s8)*(f32 *)(lbl_80330708 + 0x528);
+    id = lbl_802CA518[sx + (sy << 6) + 0xD];
+    if (id != 0) {
+        unit = lbl_802B14E4 + (id - 1) * 0x280;
+    } else {
+        unit = NULL;
+    }
+
+    *(void **)((u8 *)arg0 + 0x30) = unit;
+
+    if (*(void **)((u8 *)arg0 + 0x30) == NULL) {
+        fn_8000C070(arg0, 7);
+    }
+}
+
 void fn_800A6CC4(void *arg0) {
     f32 fn_80059F64(f32, f32, f32, f32);
     void fn_8000C188(void *);
