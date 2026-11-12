@@ -577,14 +577,17 @@ void fn_80129984(s32 arg0, s32 arg1) {
 }
 
 void fn_80129A48(void *arg0) {
+    void *entry;
+    char *walk;
     s32 i;
-    void **temp_r4;
 
     *(s32 *)((char *)arg0 + 0x54) = 0;
-    for (i = 0; i < *(s32 *)((char *)arg0 + 0x50); i++) {
-        temp_r4 = (void **)((char *)arg0 + 0x30);
-        *temp_r4 = (void *)((char *)*temp_r4 + 4);
-        *(u8 *)((char *)*temp_r4 + 0x2) &= 0xFC;
+    walk = arg0;
+    for (i = 0; i < *(s32 *)((char *)arg0 + 0x50);) {
+        entry = *(void **)(walk + 0x30);
+        walk += 4;
+        i += 1;
+        *(u8 *)((char *)entry + 2) &= 0xFC;
     }
 }
 
