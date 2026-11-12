@@ -1,6 +1,9 @@
 /* Functions from 0x800C40F4 to 0x801035C8, found by decomp-toolkit. */
 #include "common.h"
 #include "structs.h"
+typedef struct F43Pos { u8 x, y; u16 id; } F43Pos;
+typedef struct F43Eval { void **vtable; void *entry, *unit; F43Pos *pos; } F43Eval;
+typedef struct F43Range { void *vtable; s32 value; } F43Range;
 typedef struct HeapC55 HeapC55;
 struct HeapC55 { u32 unk0, unk4; HeapC55 *prev, *next; u32 size; HeapC55 *owner, *free; u32 extent; };
 static inline u8 relation_is_one(void *a, void *b) {
@@ -512,6 +515,49 @@ if(n<64){p=block->next;head=self->free;if(p)p->prev=block->prev;p=block->prev;if
 else{block->size=n;block=(HeapC55*)((u8*)block+n);block->size=-size;block->owner=self;}
 head=self->owner;tail=head;if(head){while(tail->next)tail=tail->next;}block->next=0;block->prev=tail;if(tail)tail->next=block;if(!head)head=block;self->owner=head;return block;
 }
+
+#pragma global_optimizer off
+#pragma use_lmw_stmw on
+s32 fn_800C5A48(s32 arg0,s32 bytes){
+HeapC55 *self=(HeapC55*)arg0;
+void fn_800056CC(void *,...);void fn_8005BC8C(s8);
+extern u8 lbl_802700D8[];extern u8 lbl_80320B88[];
+HeapC55 *h; HeapC55 **table; u32 ext; s32 i,mb; HeapC55 *block; HeapC55 **base; u32 size; HeapC55 *p,*best,*head,*tail;u32 limit,n;u8 *lo,*hi;
+if(bytes<0)return (s32)fn_800C55B0(self,-bytes);
+size=(bytes+0x3f)&~31;
+best=0;limit=0x7fffffff;for(p=self->free;p;p=p->next){n=p->size;if(n<=limit){if(n>=size){limit=n;best=p;}}}block=best;
+if(!best){mb=24; if((u32)lbl_80367860>0x81800000U)mb=48;
+fn_800056CC(lbl_802700D8+0x18);
+n=mb<<20; fn_800056CC(lbl_802700D8+0x1a,0x80000000U,n+0x80000000U,n);
+hi=(u8*)lbl_80367864;lo=(u8*)lbl_80367860;fn_800056CC(lbl_802700D8+0x46,lo,hi,hi-lo);
+if(lbl_80367868)lo=(u8*)lbl_80367868+((HeapC55*)lbl_80367868)->extent;else lo=(u8*)lbl_80367860;
+hi=(u8*)lbl_8036786C; if(hi){}else hi=(u8*)lbl_80367864;
+fn_800056CC(lbl_802700D8+0x7a,lo,hi,hi-lo);
+base=(HeapC55**)lbl_80320B88;table=base;for(i=0;i<16;i++,table++){h=*table;if(h){ext=h->extent;
+fn_800056CC(lbl_802700D8+0x18);fn_800056CC(lbl_802700D8+0xa2);
+fn_800056CC(lbl_802700D8+0xd4,i,h,(u8*)h+ext,ext,(u8*)*table+4);
+}}
+table=base;for(i=0;i<16;i++,table++){if(*table==self)goto found;}i=-1;found:fn_8005BC8C((s8)i);
+best=0;limit=0x7fffffff;for(p=self->free;p;p=p->next){n=p->size;if(n<=limit){if(n>=size){limit=n;best=p;}}}block=best;
+mb=24; if((u32)lbl_80367860>0x81800000U)mb=48;
+fn_800056CC(lbl_802700D8+0x18);
+n=mb<<20; fn_800056CC(lbl_802700D8+0x1a,0x80000000U,n+0x80000000U,n);
+hi=(u8*)lbl_80367864;lo=(u8*)lbl_80367860;fn_800056CC(lbl_802700D8+0x46,lo,hi,hi-lo);
+if(lbl_80367868)lo=(u8*)lbl_80367868+((HeapC55*)lbl_80367868)->extent;else lo=(u8*)lbl_80367860;
+hi=(u8*)lbl_8036786C; if(hi){}else hi=(u8*)lbl_80367864;
+fn_800056CC(lbl_802700D8+0x7a,lo,hi,hi-lo);
+for(i=0;i<16;i++,table++){h=*table;if(h){ext=h->extent;
+fn_800056CC(lbl_802700D8+0x18);fn_800056CC(lbl_802700D8+0xa2);
+fn_800056CC(lbl_802700D8+0xd4,i,h,(u8*)h+ext,ext,(u8*)*table+4);
+}}
+}
+n=block->size-size;
+if(n<64){p=block->next;head=self->free;if(p)p->prev=block->prev;p=block->prev;if(p)p->next=block->next;else head=block->next;self->free=head;block->owner=self;}
+else{block->size=size;p=(HeapC55*)((u8*)block+size);block->owner=self;p->size=n;p->prev=block->prev;p->next=block->next;if(p->next)p->next->prev=p;if(p->prev)p->prev->next=p;else self->free=p;}
+head=self->owner;block->next=head;block->prev=0;if(head)head->prev=block;self->owner=block;return (s32)block;
+}
+#pragma global_optimizer on
+
 #pragma global_optimizer on
 void fn_800C5EF8(s32 arg0) {
     void fn_8000CAA0(void *, s32);
@@ -2081,9 +2127,10 @@ extern "C" void fn_800CE214(void *self, void *stat) {
     *(s32 *)((u8 *)stat + 0x24) = 0;
     {
         s16 *stream = *(s16 **)((u8 *)self + 0x1FC);
-        s32 idx = *stream;
-        n = (s8)*(s16 *)((u8 *)stream + idx * 4 + 6);
+        s16 idx = *stream;
+        s16 val = *(s16 *)((u8 *)stream + idx * 4 + 6);
         *stream = (s16)(idx + 1);
+        n = (s8)val;
     }
 
     while (i < n) {
@@ -2142,9 +2189,10 @@ extern "C" void fn_800CE214(void *self, void *stat) {
     if (*(s32 *)((u8 *)self + 0x204) > 1 && ok != 0) {
         s32 k = 11;
         u32 *d = (u32 *)(copy - 4);
-        u8 *entry = (u8 *)*(void **)((u8 *)self + 0x208)
+        void *entry = (u8 *)*(void **)((u8 *)self + 0x208)
             + (*(s32 *)((u8 *)self + 0x204) - 1) * 0x58;
-        u32 *s = (u32 *)(entry - 4);
+        u32 *s = (u32 *)entry;
+        s--;
         for (; k != 0; k--) {
             d[1] = s[1];
             s += 2;
@@ -2152,7 +2200,7 @@ extern "C" void fn_800CE214(void *self, void *stat) {
             d[0] = s[0];
         }
         if (*(s32 *)((u8 *)stat + 0x10) == *(s32 *)(copy + 0x10)) {
-            *(s32 *)(entry + 0x2C) = 1;
+            *(s32 *)((u8 *)entry + 0x2C) = 1;
             *(s32 *)((u8 *)stat + 0x28) = 1;
         }
     }
@@ -10887,10 +10935,9 @@ extern s32 lbl_80366E6C;
 extern f32 lbl_8036A06C, lbl_8036A078, lbl_8036A07C, lbl_8036A080, lbl_8036A090;
 extern f64 lbl_8036A088;
 
-    s32 var_r31;
-    s32 flag;
     u8 *unit2;
     u8 *base;
+    u8 *tmp;
     void **list;
     void *wpn;
     s32 dy;
@@ -10898,6 +10945,7 @@ extern f64 lbl_8036A088;
     u8 lo;
     u8 hi;
     u8 in_range;
+    s32 flag;
     f32 var_f1;
     f32 var_f1_2;
     f32 temp_f0;
@@ -10911,12 +10959,15 @@ extern f64 lbl_8036A088;
     f32 temp_f0_2;
     u64 temp_ret;
     u8 flag_u8;
-    u8 ux, uy, bx, by;
+    u8 ux, uy;
+    u8 bx, by;
     void *temp_r3;
+    s32 var_r31;
 
-    base = (u8 *)lbl_80330EAC;
-    unit2 = base + 0x2E0;
+    tmp = (u8 *)lbl_80330EAC;
+    unit2 = tmp + 0x2E0;
     var_r31 = 0;
+    base = tmp;
     list = fn_801A7FF4(unit2);
     uy = unit2[0x19F];
     ux = unit2[0x19E];
