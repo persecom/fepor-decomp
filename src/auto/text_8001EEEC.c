@@ -2154,8 +2154,8 @@ s32 fn_800255A0(void) {
     return 0x10;
 }
 
-s32 fn_800255A8(s32 *arg0, s32 arg1) {
-    return arg0[arg1 << 2];
+s32 fn_800255A8(s32 **arg0, s32 arg1) {
+    return (*arg0)[arg1];
 }
 
 void fn_800255B8(void) {
