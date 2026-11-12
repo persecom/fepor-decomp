@@ -5465,11 +5465,25 @@ void fn_8010F970(void) {
     }
 }
 
-void fn_8010F9BC(s32 arg0)
-{
-    if (arg0 < 0) {
-        arg0 = 0;
+void *fn_8010F9BC(void *arg0, s8 arg1, s8 arg2, u8 arg3) {
+    s32 count;
+    s32 i;
+    char *p;
+    s32 dx;
+    s32 dy;
+
+    count = *(s32 *)((char *)arg0 + 0x200);
+    p = (char *)arg0;
+    for (i = 0; i < count; i++, p += 8) {
+        dx = arg1 - *(s8 *)(p + 0);
+        dy = arg2 - *(s8 *)(p + 1);
+        if (dx * dx + dy * dy <= 1) {
+            if (arg3 == 0 || arg3 == *(u8 *)(p + 2)) {
+                return p;
+            }
+        }
     }
+    return NULL;
 }
 
 extern u8 lbl_803679E0;
