@@ -2342,6 +2342,26 @@ s32 fn_80136D80(void) {
     return 0x20;
 }
 
+#pragma cplusplus on
+extern "C" void *fn_80136E00(void *arg0, s16 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    extern u8 lbl_80295478[];
+    extern void fn_800C428C(void *);
+    if (arg0 != NULL) {
+        *(void **)arg0 = lbl_80295478;
+        ((Obj *)arg0)->v2();
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+#pragma cplusplus reset
+
 s32 fn_80136E68(void) {
     return 1;
 }
