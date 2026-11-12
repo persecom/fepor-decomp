@@ -9967,12 +9967,12 @@ void fn_800E0F2C(s32 *begin, s32 *end)
 {
     s32 fn_800DF6B0(void *);
 
-    s32 *cur;
+    s32 other;
+    register s32 *cur;
+    s32 key;
+    register long value;
     s32 *prev;
     s32 *hole;
-    s32 value;
-    s32 other;
-    s32 key;
 
     if (begin != end) {
         for (cur = begin + 1; cur < end; cur++) {
