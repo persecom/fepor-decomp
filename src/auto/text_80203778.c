@@ -1450,6 +1450,7 @@ void __OSGetExecParams(s32 *arg0) {
     }
 }
 
+#pragma peephole off
 s32 fn_802068D4(void) {
     u32 fn_80204DE0(u32, u32);
     void fn_8020EB10(void *, u32, s32, s32, s32, s32);
@@ -1467,18 +1468,18 @@ s32 fn_802068D4(void) {
     if (*(s32 *)0x800030F4 != 0) {
         buf = fn_80204DE0(0x40, 0x20);
         fn_8020EB10(sp8, buf, 0x40, *(s32 *)0x800030F4, 0, 0);
-        do {
+        while (fn_8020EF60(sp8) != 0) {
             if (fn_8020F40C() == 0) {
                 fn_802089A4(0);
             }
-        } while (fn_8020EF60(sp8) != 0);
+        }
         lbl_803684B4 = *(s32 *)0x800030F4 + *(s32 *)(buf + 0x38);
     } else {
         lbl_803684B4 = 0x2440;
     }
     return lbl_803684B4;
 }
-
+#pragma peephole on
 void fn_80206998(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
     BOOL OSDisableInterrupts(void);
     void OSEnableInterrupts(void);
