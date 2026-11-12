@@ -8803,20 +8803,19 @@ extern "C" void fn_80143B24(void *arg0) {
     };
     typedef void (Slot::*PTMF)();
     extern PTMF lbl_802922F0;
-    PTMF p[2];
-    PTMF t;
+    PTMF meth[2];
     Slot *it;
-    Slot *end;
+    u8 *p;
 
-    memset((u8 *)arg0 + 0x4E, 0, 0x16);
-    memset((u8 *)arg0 + 0x64, 0, 0x16);
-    t = lbl_802922F0;
-    p[0] = t;
-    p[1] = t;
-    it = (Slot *)((u8 *)arg0 + 0x90);
-    end = (Slot *)((u8 *)arg0 + 0x114);
-    while (it != end) {
-        (it->*p[0])();
+    p = (u8 *)arg0;
+    memset(p + 0x4E, 0, 0x16);
+    memset(p + 0x64, 0, 0x16);
+    meth[1] = lbl_802922F0;
+    meth[0] = meth[1];
+    it = (Slot *)(p + 0x90);
+    p += 0x114;
+    while (it != (Slot *)p) {
+        (it->*meth[0])();
         it++;
     }
 }
