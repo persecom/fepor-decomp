@@ -10877,19 +10877,50 @@ void fn_8014876C(void *arg0, s8 arg1, s32 arg2) {
 extern f64 lbl_8036A788;
 #pragma cplusplus on
 extern "C" void fn_801487D0(void *arg0, s16 arg1) {
+    struct Obj {
+        u8 pad[8];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual void v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual u8 v25() = 0;
+    };
     extern f32 lbl_8036A7A0;
+    s32 temp;
     s16 var_r31;
-    void *temp_r4;
+    u8 t;
 
-    if (M2C_FIELD(M2C_FIELD(arg0, void **, 8), u8 (**)(), 0x6c)() != 0) {
-        var_r31 = (s16) ((f32) arg1 / lbl_8036A7A0);
+    if (((Obj *)arg0)->v25() != 0) {
+        temp = (s32)((f32)arg1 / lbl_8036A7A0);
+        var_r31 = (s16)temp;
         if (var_r31 <= 0) {
             var_r31 = 1;
         }
-        temp_r4 = M2C_FIELD(arg0, void **, 8); 
-        M2C_FIELD(M2C_FIELD(temp_r4, void **, 0x18), M2C_UNK (**)(void *), 0) (arg0);
-        M2C_FIELD(arg0, s8 *, 0x28) = 0;
-        M2C_FIELD(arg0, u8 *, 0x29) = (u8) M2C_FIELD(arg0, u8 *, 0x2A);
+        ((Obj *)arg0)->v4();
+        t = M2C_FIELD(arg0, u8 *, 0x2A);
+        M2C_FIELD(arg0, u8 *, 0x28) = 0;
+        M2C_FIELD(arg0, u8 *, 0x29) = t;
         M2C_FIELD(arg0, s16 *, 0x2E) = var_r31;
         M2C_FIELD(arg0, s16 *, 0x2C) = 0;
     }
