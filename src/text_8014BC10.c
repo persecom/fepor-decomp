@@ -224,6 +224,45 @@ u8 fn_8014BC10(void *arg0) {
     return (u8)(0x45 - score / 3);
 }
 
+unsigned int fn_8014C078(void *arg0) {
+    void *fn_80019F04(u8);
+    extern u8 lbl_802CA264[];
+    u8 id;
+    s32 n;
+    void *p;
+    void *tbl;
+    s32 grade;
+
+    id = *(u8 *)((u8 *)arg0 + 0x10);
+    if (id < 0x5A) {
+        return 0x2D;
+    }
+    n = 0;
+    p = *(void **)(lbl_802CA264 + 0x48);
+    while (p != NULL) {
+        u32 flags1a0 = *(u32 *)((u8 *)p + 0x1A0);
+        p = *(void **)((u8 *)p + 0x184);
+        if (flags1a0 & 0x8000) {
+            n += 1;
+        }
+    }
+    tbl = fn_80019F04(id);
+    grade = 0x45;
+    if (n <= *(u8 *)((u8 *)tbl + 0x5B)) {
+        grade = 0x44;
+        if (n <= *(u8 *)((u8 *)tbl + 0x5A)) {
+            grade = 0x43;
+            if (n <= *(u8 *)((u8 *)tbl + 0x59)) {
+                grade = 0x42;
+                if (n <= *(u8 *)((u8 *)tbl + 0x58)) {
+                    grade = 0x41;
+                }
+            }
+        }
+    }
+    return grade;
+}
+
 unsigned int fn_8014C12C(void *arg0)
 {
   void *fn_80019F04(u8);
