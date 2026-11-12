@@ -6717,15 +6717,20 @@ void fn_800BDA9C(u8 *arg0, void *arg1)
     } while (i < 12);
 }
 
-void fn_800BDAF8(void *arg0, void *arg1)
+void fn_800BDAF8(u8 *arg0, void *arg1)
 {
     extern void fn_8017A5EC(void *, s32);
-
+    u8 *a0;
+    void *a1;
     s32 i;
 
-    for (i = 0; i < 12; i++) {
-        fn_8017A5EC(arg1, *((u8 *)arg0 + 0x300 + i));
-    }
+    a0 = arg0;
+    a1 = arg1;
+    i = 0;
+    do {
+        fn_8017A5EC(a1, a0[i + 0x300]);
+        i++;
+    } while (i < 12);
 }
 
 void fn_800BDB54(s32 arg0, s32 arg1) {
