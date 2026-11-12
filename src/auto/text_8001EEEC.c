@@ -685,7 +685,6 @@ void fn_800213D0(void *map, u8 x, u8 y, u16 range, s32 flagA, s32 flagB)
     u8 uid;
     u8 *unit;
     u8 *cls;
-    u8 gate;
 
     ((u8 *)map + 0x20000)[0x4EE0] = 0;
     *(u16 *)((u8 *)map + 0x24EE2) = range;
@@ -711,7 +710,7 @@ void fn_800213D0(void *map, u8 x, u8 y, u16 range, s32 flagA, s32 flagB)
     costs = *(s16 **)((u8 *)map + 0x14190);
     costs[(s8)x + ((s8)y << 6)] = 0;
 
-    if (!((u8)flagA != 0 && (u8)flagB != 0)) {
+    if ((u8)flagB == 0 || (u8)flagA == 0) {
         ((u8 *)map + 0x20000)[0x4EE8] = 0;
         if ((u8)flagB != 0) {
             ((u8 *)map + 0x20000)[0x4EE8] |= 1;
@@ -752,16 +751,15 @@ void fn_800213D0(void *map, u8 x, u8 y, u16 range, s32 flagA, s32 flagB)
                     cell = (u8 *)map + (s8)nx + (((s8)ny - 1) << 6);
                     tid = cell[0x100D];
                     uid = cell[0xD];
-                                          neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
-                      if (uid != 0) {
-                          unit = lbl_802B14E4 + (uid - 1) * 0x280;
-                          cls = *(u8 **)(unit + 0x190);
-                          gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
-                          if (gate != 0) {
-                              goto c20_s;
-                          }
-                      }
-                      have = (u16)costs[(s8)nx + (((s8)ny - 1) << 6)];
+                    neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
+                    if (uid != 0) {
+                        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
+                        cls = *(u8 **)(unit + 0x190);
+                        if (((u8 *)map + 0x20000)[0x4EE4 + cls[8]] != 0) {
+                            goto c20_s;
+                        }
+                    }
+                    have = (u16)costs[(s8)nx + (((s8)ny - 1) << 6)];
                     if (neu < have && neu <= *(u16 *)((u8 *)map + 0x24EE2)) {
                         edc = *(u8 **)((u8 *)map + 0x24EDC);
                         edc[0] = nx;
@@ -778,7 +776,7 @@ void fn_800213D0(void *map, u8 x, u8 y, u16 range, s32 flagA, s32 flagB)
                         costs[(s8)nx + (((s8)ny - 1) << 6)] = (s16)neu;
                     }
                 }
-c20_s:
+            c20_s:
                 if (flags & 0x4) {
                     ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
                     nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
@@ -789,10 +787,9 @@ c20_s:
                     uid = cell[0xD];
                     neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
                     if (uid != 0) {
-                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
                         cls = *(u8 **)(unit + 0x190);
-                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
-                        if (gate != 0) {
+                        if (((u8 *)map + 0x20000)[0x4EE4 + cls[8]] != 0) {
                             goto c20_w;
                         }
                     }
@@ -813,7 +810,7 @@ c20_s:
                         costs[(s8)nx + (((s8)ny + 1) << 6)] = (s16)neu;
                     }
                 }
-c20_w:
+            c20_w:
                 if (flags & 0x1) {
                     ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
                     nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
@@ -824,10 +821,9 @@ c20_w:
                     uid = cell[0xD];
                     neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
                     if (uid != 0) {
-                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
                         cls = *(u8 **)(unit + 0x190);
-                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
-                        if (gate != 0) {
+                        if (((u8 *)map + 0x20000)[0x4EE4 + cls[8]] != 0) {
                             goto c20_e;
                         }
                     }
@@ -848,7 +844,7 @@ c20_w:
                         costs[((s8)nx - 1) + ((s8)ny << 6)] = (s16)neu;
                     }
                 }
-c20_e:
+            c20_e:
                 if (flags & 0x2) {
                     ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
                     nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
@@ -859,10 +855,9 @@ c20_e:
                     uid = cell[0xD];
                     neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
                     if (uid != 0) {
-                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
                         cls = *(u8 **)(unit + 0x190);
-                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
-                        if (gate != 0) {
+                        if (((u8 *)map + 0x20000)[0x4EE4 + cls[8]] != 0) {
                             break;
                         }
                     }
@@ -891,10 +886,9 @@ c20_e:
                     uid = cell[0xD];
                     neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
                     if (uid != 0) {
-                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
                         cls = *(u8 **)(unit + 0x190);
-                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
-                        if (gate != 0) {
+                        if (((u8 *)map + 0x20000)[0x4EE4 + cls[8]] != 0) {
                             goto c8_w;
                         }
                     }
@@ -915,7 +909,7 @@ c20_e:
                         costs[(s8)nx + (((s8)ny - 1) << 6)] = (s16)neu;
                     }
                 }
-c8_w:
+            c8_w:
                 if (flags & 0x1) {
                     ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
                     nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
@@ -926,10 +920,9 @@ c8_w:
                     uid = cell[0xD];
                     neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
                     if (uid != 0) {
-                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
                         cls = *(u8 **)(unit + 0x190);
-                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
-                        if (gate != 0) {
+                        if (((u8 *)map + 0x20000)[0x4EE4 + cls[8]] != 0) {
                             goto c8_e;
                         }
                     }
@@ -950,7 +943,7 @@ c8_w:
                         costs[((s8)nx - 1) + ((s8)ny << 6)] = (s16)neu;
                     }
                 }
-c8_e:
+            c8_e:
                 if (flags & 0x2) {
                     ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
                     nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
@@ -961,10 +954,9 @@ c8_e:
                     uid = cell[0xD];
                     neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
                     if (uid != 0) {
-                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
                         cls = *(u8 **)(unit + 0x190);
-                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
-                        if (gate != 0) {
+                        if (((u8 *)map + 0x20000)[0x4EE4 + cls[8]] != 0) {
                             break;
                         }
                     }
@@ -993,10 +985,9 @@ c8_e:
                     uid = cell[0xD];
                     neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
                     if (uid != 0) {
-                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
                         cls = *(u8 **)(unit + 0x190);
-                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
-                        if (gate != 0) {
+                        if (((u8 *)map + 0x20000)[0x4EE4 + cls[8]] != 0) {
                             goto c4_w;
                         }
                     }
@@ -1017,7 +1008,7 @@ c8_e:
                         costs[(s8)nx + (((s8)ny + 1) << 6)] = (s16)neu;
                     }
                 }
-c4_w:
+            c4_w:
                 if (flags & 0x1) {
                     ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
                     nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
@@ -1028,10 +1019,9 @@ c4_w:
                     uid = cell[0xD];
                     neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
                     if (uid != 0) {
-                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
                         cls = *(u8 **)(unit + 0x190);
-                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
-                        if (gate != 0) {
+                        if (((u8 *)map + 0x20000)[0x4EE4 + cls[8]] != 0) {
                             goto c4_e;
                         }
                     }
@@ -1052,7 +1042,7 @@ c4_w:
                         costs[((s8)nx - 1) + ((s8)ny << 6)] = (s16)neu;
                     }
                 }
-c4_e:
+            c4_e:
                 if (flags & 0x2) {
                     ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
                     nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
@@ -1063,10 +1053,9 @@ c4_e:
                     uid = cell[0xD];
                     neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
                     if (uid != 0) {
-                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
                         cls = *(u8 **)(unit + 0x190);
-                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
-                        if (gate != 0) {
+                        if (((u8 *)map + 0x20000)[0x4EE4 + cls[8]] != 0) {
                             break;
                         }
                     }
@@ -1095,10 +1084,9 @@ c4_e:
                     uid = cell[0xD];
                     neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
                     if (uid != 0) {
-                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
                         cls = *(u8 **)(unit + 0x190);
-                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
-                        if (gate != 0) {
+                        if (((u8 *)map + 0x20000)[0x4EE4 + cls[8]] != 0) {
                             goto c1_s;
                         }
                     }
@@ -1119,7 +1107,7 @@ c4_e:
                         costs[(s8)nx + (((s8)ny - 1) << 6)] = (s16)neu;
                     }
                 }
-c1_s:
+            c1_s:
                 if (flags & 0x4) {
                     ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
                     nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
@@ -1130,10 +1118,9 @@ c1_s:
                     uid = cell[0xD];
                     neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
                     if (uid != 0) {
-                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
                         cls = *(u8 **)(unit + 0x190);
-                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
-                        if (gate != 0) {
+                        if (((u8 *)map + 0x20000)[0x4EE4 + cls[8]] != 0) {
                             goto c1_w;
                         }
                     }
@@ -1154,7 +1141,7 @@ c1_s:
                         costs[(s8)nx + (((s8)ny + 1) << 6)] = (s16)neu;
                     }
                 }
-c1_w:
+            c1_w:
                 if (flags & 0x1) {
                     ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
                     nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
@@ -1165,10 +1152,9 @@ c1_w:
                     uid = cell[0xD];
                     neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
                     if (uid != 0) {
-                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
                         cls = *(u8 **)(unit + 0x190);
-                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
-                        if (gate != 0) {
+                        if (((u8 *)map + 0x20000)[0x4EE4 + cls[8]] != 0) {
                             break;
                         }
                     }
@@ -1197,10 +1183,9 @@ c1_w:
                     uid = cell[0xD];
                     neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
                     if (uid != 0) {
-                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
                         cls = *(u8 **)(unit + 0x190);
-                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
-                        if (gate != 0) {
+                        if (((u8 *)map + 0x20000)[0x4EE4 + cls[8]] != 0) {
                             goto c2_s;
                         }
                     }
@@ -1221,7 +1206,7 @@ c1_w:
                         costs[(s8)nx + (((s8)ny - 1) << 6)] = (s16)neu;
                     }
                 }
-c2_s:
+            c2_s:
                 if (flags & 0x4) {
                     ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
                     nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
@@ -1232,10 +1217,9 @@ c2_s:
                     uid = cell[0xD];
                     neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
                     if (uid != 0) {
-                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
                         cls = *(u8 **)(unit + 0x190);
-                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
-                        if (gate != 0) {
+                        if (((u8 *)map + 0x20000)[0x4EE4 + cls[8]] != 0) {
                             goto c2_e;
                         }
                     }
@@ -1256,7 +1240,7 @@ c2_s:
                         costs[(s8)nx + (((s8)ny + 1) << 6)] = (s16)neu;
                     }
                 }
-c2_e:
+            c2_e:
                 if (flags & 0x2) {
                     ny = (*(u8 **)((u8 *)map + 0x24ED8))[1];
                     nx = (*(u8 **)((u8 *)map + 0x24ED8))[0];
@@ -1267,10 +1251,9 @@ c2_e:
                     uid = cell[0xD];
                     neu = (u16)(oldc + *(u16 *)((u8 *)map + 0x14214 + (tid << 1)));
                     if (uid != 0) {
-                        unit = lbl_802B14E4 + (uid - 1) * 0x280;
+                        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
                         cls = *(u8 **)(unit + 0x190);
-                        gate = ((u8 *)map + 0x20000)[0x4EE4 + cls[8]];
-                        if (gate != 0) {
+                        if (((u8 *)map + 0x20000)[0x4EE4 + cls[8]] != 0) {
                             break;
                         }
                     }
@@ -1679,8 +1662,13 @@ void fn_80022DAC(s32 arg0, s32 arg1) {
     }
 }
 
-s32 fn_80022FB0(u16 arg0) {
-    return arg0 + (arg0 << 0x10);
+s32 fn_80022FB0(u32 arg0) {
+    u32 lo;
+    u32 hi;
+    lo = arg0 & 0xFFFF;
+    hi = arg0 << 16;
+    lo = lo + hi;
+    return lo;
 }
 
 s32 fn_80022FC4(void) {
