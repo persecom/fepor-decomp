@@ -3240,8 +3240,8 @@ void fn_80028824(s32 arg0) {
 }
 
 s32 fn_80028854(void) {
-    extern s32 lbl_802EF4C8;
-    return lbl_802EF4C8;
+    extern u8 lbl_802EF4C8[];
+    return *(s32 *)lbl_802EF4C8;
 }
 extern u8 lbl_802EF438[];
 #include "common.h"
