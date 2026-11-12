@@ -3080,11 +3080,10 @@ void fn_8007B01C(void *arg0) {
 void fn_8007B044(void*p){f32 fn_800067BC(s32,f32,f32,f32,f32);void fn_8000C188(void*);extern u8 lbl_80312040[];s32 i=*(s32*)((u8*)p+0x60);void*obj=*(void**)(lbl_80312040+i*4);s32 v=fn_800067BC(0,(f32)*(s32*)((u8*)p+0x68),(f32)*(s32*)((u8*)p+0x64),0,0);*(s8*)((u8*)obj+0x42)=v;if(*(s32*)((u8*)p+0x64)==*(s32*)((u8*)p+0x68))fn_8000C188(p);else ++*(s32*)((u8*)p+0x68);}
 
 void fn_8007B104(void *arg0) {
-    extern u16 lbl_80312040[8];
-    s32 temp_r5 = *(s32*)((char*)arg0 + 0x60);
-    s32 temp_r4 = (s32)lbl_80312040;
-    *(s32*)((char*)arg0 + 0x68) = 0;
-    *(u8*)(temp_r4 + (temp_r5 << 2) + 0x42) = 0;
+    extern void *lbl_80312040[];
+    void *ptr = lbl_80312040[*(s32 *)((char *)arg0 + 0x60)];
+    *(s32 *)((char *)arg0 + 0x68) = 0;
+    *(u8 *)((char *)ptr + 0x42) = 0;
 }
 
 void fn_8007B128(void *arg0) {
