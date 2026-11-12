@@ -3221,25 +3221,25 @@ block_19:
     }
 }
 
-s8 fn_8013236C(void **arg1, s32 arg2) {
-    u8 fn_800386B0();
-    s8 fn_8003B2D0();
+s32 fn_8013236C(s32 unused, void **arg1, s32 arg2) {
+    u8 fn_800386B0(void *);
+    s8 fn_8003B2D0(void *);
     void *temp_r3;
 
     temp_r3 = *arg1;
-    switch (arg2) {                                 /* irregular */
-    case 1:
-        return -(s8) M2C_FIELD(M2C_FIELD(temp_r3, void **, 0x18C), u16 *, 0x38);
-    case 3:
-        return (s8) fn_800386B0();
-    case 5:
-        return fn_8003B2D0();
-    case 4:
-        return (s8) M2C_FIELD(temp_r3, u8 *, 0x1A8);
-    case 2:
-        return (s8) M2C_FIELD(temp_r3, u8 *, 0x19A);
+    switch (arg2) {
     case 0:
-        return -(s8) M2C_FIELD(M2C_FIELD(temp_r3, void **, 0x188), u16 *, 0x5A);
+        return -*(u16 *)((u8 *)*(void **)((u8 *)temp_r3 + 0x188) + 0x5A);
+    case 1:
+        return -*(u16 *)((u8 *)*(void **)((u8 *)temp_r3 + 0x18C) + 0x38);
+    case 2:
+        return *(s8 *)((u8 *)temp_r3 + 0x19A);
+    case 3:
+        return (u8)fn_800386B0(temp_r3);
+    case 4:
+        return *(s8 *)((u8 *)temp_r3 + 0x1A8);
+    case 5:
+        return fn_8003B2D0(temp_r3);
     default:
         return 0;
     }
