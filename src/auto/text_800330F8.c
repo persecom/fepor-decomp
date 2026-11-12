@@ -9586,15 +9586,12 @@ char *fn_8004B078(void *arg0, s32 arg1)
 }
 
 void *fn_8004B0C8(void *arg0) {
-    void fn_80231D94(void *, void *, void *, s32, void *);
-    extern void *lbl_8026A9B0;
-    extern void *lbl_802EFFC8;
-    
-    char *ptr1 = (char *)&lbl_8026A9B0 + 0xBC;
-    char *ptr2 = (char *)&lbl_8026A9B0 + 0xA8;
-    fn_80231D94(&lbl_802EFFC8, ptr1, ptr2, *(s32 *)((char *)arg0 + 4), &lbl_802EFFC8);
-    
-    return &lbl_802EFFC8;
+    void fn_80231D94(void *, void *, ...);
+    extern u8 lbl_8026A9B0[];
+    extern u8 lbl_802EFFC8[];
+
+    fn_80231D94(lbl_802EFFC8, lbl_8026A9B0 + 0xBC, lbl_8026A9B0 + 0xA8, *(s32 *)((u8 *)arg0 + 4));
+    return lbl_802EFFC8;
 }
 
 extern u16 lbl_8026A9B0[40];
