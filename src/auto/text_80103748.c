@@ -1013,6 +1013,40 @@ void fn_80104BF4(void* arg0, void* arg1) {
     }
 }
 
+s32 fn_80104D90(void) {
+    void *fn_8005C84C(void *);
+    extern u8 lbl_80273788[];
+    extern u8 lbl_8032BB44[20];
+    extern void *lbl_803679C0;
+    u16 *p;
+    u32 n;
+    u16 off;
+    u8 *ctx;
+    u16 sum;
+    u8 *file;
+    u8 *base;
+
+    file = fn_8005C84C(lbl_80273788);
+    ctx = lbl_8032BB44;
+    *(u8 **)(ctx + 4) = file;
+    sum = *(u16 *)(file + 0x8) + *(u16 *)(file + 0xA);
+    *(u16 *)(file + 0x12) = sum;
+    *(u16 *)(file + 0x10) = sum;
+    off = *(u16 *)(file + 0x22);
+    n = (*(u32 *)(file + 0x24) - off) >> 4;
+    *(u32 *)(ctx + 8) = n;
+    p = (u16 *)(*(u8 **)(ctx + 4) + off + ((n - 1) * 0x10));
+    while (*p == 0) {
+        p = (u16 *)((u8 *)p - 0x10);
+        *(u32 *)(ctx + 8) -= 1;
+    }
+    off = *(u16 *)(file + 0x22);
+    base = lbl_8032BB44;
+    lbl_803679C0 = base;
+    *(u8 **)(base + 0xC) = *(u8 **)(ctx + 4) + off;
+    return 1;
+}
+
 u32 fn_80104E40(void) {
     extern void *lbl_803679C0;
     u8 *ptr;
@@ -1086,6 +1120,31 @@ end:
     return 0;
 }
 
+void *fn_80105284(void *arg0, void *arg1) {
+    void *fn_8005C84C(void *);
+    u8 *file;
+    u16 sum;
+    u16 off;
+    u32 n;
+    u16 *p;
+
+    *(u8 **)((u8 *)arg0 + 4) = fn_8005C84C(arg1);
+    file = *(u8 **)((u8 *)arg0 + 4);
+    sum = *(u16 *)(file + 0x8) + *(u16 *)(file + 0xA);
+    *(u16 *)(file + 0x12) = sum;
+    *(u16 *)(file + 0x10) = sum;
+    off = *(u16 *)(file + 0x22);
+    n = (*(u32 *)(file + 0x24) - off) >> 4;
+    *(u32 *)((u8 *)arg0 + 8) = n;
+    p = (u16 *)(*(u8 **)((u8 *)arg0 + 4) + *(u16 *)(file + 0x22) + ((*(u32 *)((u8 *)arg0 + 8) - 1) * 0x10));
+    while (*p == 0) {
+        p = (u16 *)((u8 *)p - 0x10);
+        *(u32 *)((u8 *)arg0 + 8) -= 1;
+    }
+    *(u8 **)((u8 *)arg0 + 0xC) = *(u8 **)((u8 *)arg0 + 4) + *(u16 *)(file + 0x22);
+    return *(void **)((u8 *)arg0 + 4);
+}
+
 void *fn_80105334(void *arg0, s16 arg1) {
     void fn_8005C7E8(void *);
     void fn_800C428C(void *);
@@ -1124,53 +1183,57 @@ void fn_801053CC(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0xC) = 0;
 }
 
+#pragma use_lmw_stmw on
 s32 fn_801053E4(s32 arg0, s32 arg1, u16 *arg2, u8 (*arg3)(s32, u16)) {
-    s32 temp_r29;
-    s32 temp_r30;
-    s32 var_r26;
-    s32 var_r31;
+    s32 count;
+    s32 mid_ptr;
+    s32 mid;
+    s32 lo;
+    u8 (*pred)(s32, u16);
+    u16 *key_ptr;
 
-    var_r26 = arg0;
-    var_r31 = (s32) (arg1 - var_r26) / 16;
-loop_4:
-    if (var_r31 > 0) {
-        temp_r29 = (s32) (((u32) var_r31 >> 0x1FU) + var_r31) >> 1;
-        temp_r30 = var_r26 + (temp_r29 * 0x10);
-        if (arg3(temp_r30, *arg2) != 0) {
-            var_r26 = temp_r30 + 0x10;
-            var_r31 -= temp_r29 + 1;
+    lo = arg0;
+    key_ptr = arg2;
+    pred = arg3;
+    count = (arg1 - lo) / 16;
+    while (count > 0) {
+        mid = count / 2;
+        mid_ptr = lo + mid * 16;
+        if (pred(mid_ptr, *key_ptr) != 0) {
+            lo = mid_ptr + 0x10;
+            count -= mid + 1;
         } else {
-            var_r31 = temp_r29;
+            count = mid;
         }
-        goto loop_4;
     }
-    return var_r26;
+    return lo;
 }
-
+#pragma use_lmw_stmw on
 s32 fn_80105474(s32 arg0, s32 arg1, s32 *arg2, u8 (*arg3)(s32, u16)) {
-    s32 temp_r28;
-    s32 temp_r29;
-    s32 temp_r31;
-    s32 var_r26;
-    s32 var_r30;
+    s32 lo;
+    u8 (*pred)(s32, u16);
+    s32 mid;
+    s32 mid_ptr;
+    s32 count;
+    s32 key;
 
-    var_r26 = arg0;
-    temp_r31 = *arg2;
-    var_r30 = (s32) (arg1 - var_r26) / 16;
-loop_4:
-    if (var_r30 > 0) {
-        temp_r28 = (s32) (((u32) var_r30 >> 0x1FU) + var_r30) >> 1;
-        temp_r29 = var_r26 + (temp_r28 * 0x10);
-        if (arg3(temp_r29, (u16) temp_r31) != 0) {
-            var_r26 = temp_r29 + 0x10;
-            var_r30 -= temp_r28 + 1;
+    lo = arg0;
+    count = arg1 - lo;
+    key = *arg2;
+    pred = arg3;
+    count /= 16;
+    while (count > 0) {
+        mid = count / 2;
+        mid_ptr = lo + (mid << 4);
+        if (pred(mid_ptr, (u16)key) != 0) {
+            lo = mid_ptr + 0x10;
+            count -= mid + 1;
         } else {
-            var_r30 = temp_r28;
+            count = mid;
         }
-        goto loop_4;
     }
-    return var_r26;
+    return lo;
 }
-
+#pragma use_lmw_stmw reset
 extern u16 lbl_802734D0;
 extern u32 jumptable_8028F290[];
