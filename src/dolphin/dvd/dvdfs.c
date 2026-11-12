@@ -699,6 +699,7 @@ void fn_8020D27C(u32 arg0) {
 }
 
 void fn_8020D4E0(u32 arg0) {
+    /* cbForUnrecoveredError */
     void DVDReset(void);
     void __DVDStoreErrorCode(u32);
     void cbForStateError(u32);
