@@ -9854,24 +9854,22 @@ void *fn_80145EBC(void *arg0) {
     void *fn_8000D2BC(void *);
     s32 fn_802342B8(void *, void *);
 
-    u8 *table;
-    s32 index;
-    u8 *entry;
     s32 count;
+    u8 *entry;
+    s32 index;
+    u8 *table;
 
     table = (u8 *)fn_8000D2BC(lbl_80276BC8 + 0x94);
     entry = table + 4;
     count = *(s32 *)table;
     index = 0;
-
     while (index < count) {
         if (*(void **)entry != NULL) {
             if (fn_802342B8(*(void **)entry, arg0) == 0) {
                 return entry;
             }
         }
-
-        index++;
+        index += 1;
         entry += 8;
     }
 
@@ -11441,14 +11439,40 @@ void fn_80149DB0(void) {
 
 }
 
-void fn_80149DB4(void *arg0) {
-    M2C_FIELD(M2C_FIELD(arg0, void **, 8), M2C_UNK (**)(u8), 0x28)(M2C_FIELD(arg0, u8 *, 0xD));
-    M2C_FIELD(M2C_FIELD(arg0, void **, 8), M2C_UNK (**)(void *, u8), 0x20)(arg0, M2C_FIELD(arg0, u8 *, 0xE));
-    M2C_FIELD(M2C_FIELD(arg0, void **, 8), M2C_UNK (**)(void *, u8), 0x24)(arg0, M2C_FIELD(arg0, u8 *, 0xF));
-    M2C_FIELD(M2C_FIELD(arg0, void **, 8), M2C_UNK (**)(void *, u8), 0x3C)(arg0, M2C_FIELD(arg0, u8 *, 0x10));
-    M2C_FIELD(M2C_FIELD(arg0, void **, 8), M2C_UNK (**)(void *, s16), 0x38)(arg0, M2C_FIELD(arg0, s16 *, 0x12));
+#pragma cplusplus on
+extern "C" void fn_80149DB4(void *arg0) {
+    struct Obj {
+        u8 pad[8];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6(u8) = 0;
+        virtual void v7(u8) = 0;
+        virtual void v8(u8) = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12(s16) = 0;
+        virtual void v13(u8) = 0;
+        u8 unkC;
+        u8 unkD;
+        u8 unkE;
+        u8 unkF;
+        u8 unk10;
+        u8 unk11;
+        s16 unk12;
+    };
+    Obj *self = (Obj *)arg0;
+    self->v8(self->unkD);
+    self->v6(self->unkE);
+    self->v7(self->unkF);
+    self->v13(self->unk10);
+    self->v12(self->unk12);
 }
-
+#pragma cplusplus reset
 void fn_80149E50(void) {
 
 }
