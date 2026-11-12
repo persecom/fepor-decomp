@@ -2660,17 +2660,29 @@ s32 fn_80131020(s32 arg0, s32 arg1)
     return 0;
 }
 
-void *fn_801310F4(s32 arg1) {
-    extern u32 jumptable_80291210[];
+void *fn_801310F4(s32 arg0, u32 arg1) {
     extern u8 lbl_80275AC0[];
-    
-    if (arg1 >= 8) {
-        // Return default case (offset 0x247 from lbl_80275AC0)
+    switch (arg1) {
+    case 1:
+        return &lbl_80275AC0[0x27B];
+    case 2:
+        return &lbl_80275AC0[0x28D];
+    case 3:
+        return &lbl_80275AC0[0x29F];
+    case 4:
+        return &lbl_80275AC0[0x2B1];
+    case 5:
+        return &lbl_80275AC0[0x2C3];
+    case 6:
+        return &lbl_80275AC0[0x2D5];
+    case 7:
+        return &lbl_80275AC0[0x2E7];
+    case 8:
+        return &lbl_80275AC0[0x2F9];
+    case 0:
+    default:
         return &lbl_80275AC0[0x247];
     }
-    
-    // Jump table access
-    return (void *) jumptable_80291210[arg1];
 }
 
 s32 fn_801311A4(void* arg0, void** arg1, s32 arg2) {
