@@ -2184,26 +2184,19 @@ void fn_80136168(void *arg0, s16 arg1, s16 arg2, s32 unused, void *arg4, u8 arg5
 
     s32 sp8;
     s32 flag;
-    s16 x;
-    s16 y;
-    s32 str;
 
-    (void)unused;
     flag = arg5 != 0;
     fn_8000A258();
-    fn_8000A174(0, (u16)(*(s32 *)((u8 *)arg0 + 0x34) | 0x13));
+    fn_8000A174(0, (u16)(*(u32 *)((u8 *)arg0 + 0x34) | 0x13));
     fn_8000A248();
-    str = fn_8010586C(arg4);
-    y = arg2;
-    x = arg1;
-    fn_8001019C((s16)(x + 0x20), (s16)(y + 4), flag, lbl_80276720 + 0x1D, str);
+    fn_8001019C((s16)(arg1 + 0x20), (s16)(arg2 + 4), flag, lbl_80276720 + 0x1D, fn_8010586C(arg4));
     fn_80007898(6);
     sp8 = *fn_8018D900(flag);
     fn_80007668(&sp8);
     fn_80007220(1, lbl_8036A5E0);
-    fn_80006B18((s16)(x + 0x20), (s16)(y + 8), 0, 0, ((u8 *)arg4)[0x1A]);
+    fn_80006B18((s16)(arg1 + 0x20), (s16)(arg2 + 8), 0, 0, ((u8 *)arg4)[0x1A]);
     fn_80007884();
-    fn_8005AC24(lbl_802F0350, x, y, ((u8 *)arg4)[0x19]);
+    fn_8005AC24(lbl_802F0350, arg1, arg2, ((u8 *)arg4)[0x19]);
 }
 
 s32 fn_80136268(void *arg0, void *arg1) {
@@ -5124,6 +5117,72 @@ s16 fn_8013B330(void *arg0) {
 s16 fn_8013B35C(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0xD4);
 }
+
+#pragma cplusplus on
+extern "C" void *fn_8013B364(void *arg0, s16 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    typedef struct {
+        u32 unk0;
+        ListNode node;
+    } DtorList;
+    typedef struct Owner {
+        void *vtbl;
+        u8 pad4[0x6C];
+        DtorList list;
+        u8 pad80[4];
+        void *sub84;
+        u8 pad88[0x24];
+        void *subAC;
+    } Owner;
+    void fn_8013BA08(void *, void *, void *, void *);
+    void fn_8013F2A4(void *, s32);
+    void fn_800C428C(void *);
+    extern u8 lbl_80291AC8[];
+    extern u8 lbl_80291B70[];
+    extern u8 lbl_80295478[];
+
+    ListNode *sp10;
+    ListNode *spC;
+    u8 sp8[4];
+    ListNode *end;
+    Owner *a0;
+
+    a0 = (Owner *)arg0;
+    if (arg0 != NULL) {
+        a0->vtbl = lbl_80291AC8;
+        if (arg0 != NULL) {
+            a0->vtbl = lbl_80291B70;
+            if (&a0->subAC != NULL) {
+                a0->subAC = lbl_80295478;
+                ((Obj *)&a0->subAC)->v2();
+            }
+            if (&a0->sub84 != NULL) {
+                a0->sub84 = lbl_80295478;
+                ((Obj *)&a0->sub84)->v2();
+            }
+            if (&a0->list != NULL) {
+                if (&a0->list != NULL) {
+                    if (&a0->list != NULL) {
+                        end = &a0->list.node;
+                        sp10 = end;
+                        spC = end->next;
+                        fn_8013BA08(sp8, &a0->list, &spC, &sp10);
+                    }
+                }
+            }
+            fn_8013F2A4(arg0, 0);
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+#pragma cplusplus reset
 
 void fn_8013B594(void *arg0, s16 arg1) {
     M2C_FIELD(arg0, s16 *, 0xD4) = arg1;
