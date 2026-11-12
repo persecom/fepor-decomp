@@ -2545,18 +2545,16 @@ f32 fn_80060468(void *arg0) {
 }
 
 u32 fn_80060470(void *arg0) {
-    void *var_r3;
-    
-    var_r3 = arg0;
-loop_1:
-    if (var_r3 == NULL) {
-        return 0U;
+    void *current = arg0;
+
+    while (current != NULL) {
+        u32 temp = *(u32 *)((char *)current + 0x64);
+        if (temp != 0U) {
+            return temp;
+        }
+        current = *(void **)((char *)current + 4);
     }
-    if (*(u32 *)((u8 *)var_r3 + 0x64) != 0U) {
-        return *(u32 *)((u8 *)var_r3 + 0x64);
-    }
-    var_r3 = *(void **)((u8 *)var_r3 + 4);
-    goto loop_1;
+    return 0U;
 }
 
 u32 fn_8006049C(void *arg0) {
