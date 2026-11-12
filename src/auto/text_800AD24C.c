@@ -3914,6 +3914,36 @@ extern "C" s32 fn_800B7D08(s32 arg0, s32 arg1) {
     }
     return 1;
 }
+
+extern "C" s32 fn_800B7DB4(s32 arg0, s32 arg1) {
+    struct Obj {
+        u8 pad[8];
+        virtual u8 v0() = 0;
+        u8 flag;
+        u8 pad2[0x23];
+    };
+    extern Obj lbl_8032FF08[];
+    void fn_80146B00(void);
+    void fn_80148980(void *, s16);
+    u8 ok;
+    Obj *obj;
+
+    ok = 0;
+    obj = &lbl_8032FF08[(u8)arg0];
+    if (obj->flag & 1) {
+        if (obj->v0()) {
+            ok = 1;
+        }
+    }
+    if (ok) {
+        fn_80148980(obj, (s16)arg1);
+    }
+    if (arg0 == 0) {
+        fn_80146B00();
+    }
+    return 1;
+}
+
 #pragma cplusplus reset
 s32 fn_800B7E60(s32 arg0, u32 arg1, s32 arg2) {
     void fn_8014832C(s32, void *, s32, s32);
