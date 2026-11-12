@@ -2656,21 +2656,17 @@ u32 fn_80060638(void *arg0) {
     return 0U;
 }
 
-s32 fn_80060664(void *arg0) {
-    void **var_r3;
-    u32 temp_r0;
+u32 fn_80060664(void *arg0) {
+    void *current = arg0;
 
-    var_r3 = (void **)arg0;
-loop_4:
-    if (var_r3 == NULL) {
-        return 0U;
+    while (current != NULL) {
+        u32 temp = *(u32 *)((char *)current + 0x44);
+        if (temp != 0U) {
+            return temp;
+        }
+        current = *(void **)((char *)current + 4);
     }
-    temp_r0 = M2C_FIELD(var_r3, u32 *, 0x44);
-    if (temp_r0 != 0U) {
-        return temp_r0;
-    }
-    var_r3 = M2C_FIELD(var_r3, void **, 4);
-    goto loop_4;
+    return 0U;
 }
 
 s32 fn_80060690(void *arg0) {
