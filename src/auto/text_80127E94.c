@@ -320,21 +320,21 @@ s32 fn_80128710(void) {
 }
 
 u8 fn_80128718(void *arg0, s32 arg1) {
-    void fn_800FB96C(s32, s8, s8, void *, s8, s8, s8, s32);
-    u8 fn_801025BC(s16 *, s16 *);
-    extern void *lbl_8032B3C0;
+    void fn_800FB96C(s32, s8, s8, void *, s8, s8, s8, s32, s32);
+    u8 fn_801025BC(void *, s16 *, s16 *);
+    extern u8 lbl_8032B3C0[];
+    struct { u8 hi:3; u8 lo:5; } *bf;
     s16 sp12;
     s16 sp10;
-    s32 sp8;
 
-    if (!(((u8)(*(u8 *)((char *)arg0 + 0x1A4) >> 5U)) & 7)) {
+    bf = (void *)((char *)arg0 + 0x1A4);
+    if (!bf->hi) {
         return 0U;
     }
-    if (fn_801025BC(&sp12, &sp10) != 0) {
-        sp8 = 0;
-        fn_800FB96C(4, (s8)sp12, (s8)sp10, arg0, (s8)sp12, (s8)sp10, (s8)((char *)arg1 + 4), 0);
+    if (fn_801025BC(arg0, &sp12, &sp10) != 0) {
+        fn_800FB96C(4, (s8)sp12, (s8)sp10, arg0, (s8)sp12, (s8)sp10, (s8)(arg1 + 4), 0, 0);
     }
-    return *(u8 *)((char *)lbl_8032B3C0 + 0x21C);
+    return lbl_8032B3C0[0x21C];
 }
 
 s32 fn_801287B8(void) {
