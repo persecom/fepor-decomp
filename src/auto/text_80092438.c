@@ -752,32 +752,32 @@ u8 fn_800934CC(void *arg0, void *arg1) {
             if (ok == 0) {
                 result = 0;
             } else if (fn_800940B0(arg0, arg1) == 0) {
-                result = 0;
-            } else {
-                result = 1;
-            }
-        }
-        return result;
-    }
-    if (flags & 4) {
-        if (!(flags & 4)) {
-        } else {
-            if (flags & 0x200) {
-                if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
-                    ok = 1;
-                } else {
-                    ok = 0;
-                }
-            } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
-            } else if (flags & 2) {
-                ok = result;
-            } else if (flags & 4) {
-                ok = result;
-            } else if (flags & 0x40) {
-            }
-            if (ok == 0) {
-                result = 0;
-            } else if (fn_800940B0(arg0, arg1) == 0) {
+                  result = 0;
+              } else {
+                  result = 1;
+              }
+          }
+          return result;
+      }
+      if (flags & 4) {
+          if (!(flags & 4)) {
+          } else {
+              if (flags & 0x200) {
+                  if (fn_80105BC0((u8 *)arg0 + 0x1BC, 9) != 0) {
+                      ok = 1;
+                  } else {
+                      ok = 0;
+                  }
+              } else if (((*(u8 *)((u8 *)arg0 + 0x1A5) >> 4) & 7) == 0) {
+              } else if (flags & 2) {
+                  ok = result;
+              } else if (flags & 4) {
+                  ok = result;
+              } else if (flags & 0x40) {
+              }
+              if (ok == 0) {
+                  result = 0;
+              } else if ((fn_800940B0(arg0, arg1) == 0)) {
                 result = 0;
             } else {
                 result = 1;
