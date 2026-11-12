@@ -1805,17 +1805,37 @@ void fn_801086CC(void *arg0) {
     fn_800C9A60(&sp8, -1);
 }
 
-void fn_80108718(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
-    M2C_UNK fn_800D7254();
-    void *temp_r3;
-    void **vt;
-
+#pragma cplusplus on
+extern "C" void fn_80108718(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    void fn_800D7254(void);
+    struct Obj {
+        u8 pad[0x40];
+        virtual void v0(s32, s32, s32) = 0;
+        virtual void v1(s32, s32, s32) = 0;
+        virtual void v2(s32, s32, s32) = 0;
+        virtual void v3(s32, s32, s32) = 0;
+        virtual void v4(s32, s32, s32) = 0;
+        virtual void v5(s32, s32, s32) = 0;
+        virtual void v6(s32, s32, s32) = 0;
+        virtual void v7(s32, s32, s32) = 0;
+        virtual void v8(s32, s32, s32) = 0;
+        virtual void v9(s32, s32, s32) = 0;
+        virtual void v10(s32, s32, s32) = 0;
+        virtual void v11(s32, s32, s32) = 0;
+        virtual void v12(s32, s32, s32) = 0;
+        virtual void v13(s32, s32, s32) = 0;
+        virtual void v14(s32, s32, s32) = 0;
+        virtual void v15(s32, s32, s32) = 0;
+        virtual void v16(s32, s32, s32) = 0;
+        virtual void v17(s32, s32, s32) = 0;
+        virtual void v18(s32, s32, s32) = 0;
+        virtual void v19(s32, s32, s32) = 0;
+        virtual void v20(s32, s32, s32) = 0;
+    };
     fn_800D7254();
-    temp_r3 = M2C_FIELD(arg0, void **, 0x424);
-    vt = M2C_FIELD(temp_r3, void **, 0x40);
-    ((M2C_UNK (*)(void *, s32, s32, s32)) vt[22])(temp_r3, arg1, arg2, arg3);
+    (*(Obj **)((u8 *)arg0 + 0x424))->v20(arg1, arg2, arg3);
 }
-
+#pragma cplusplus reset
 s32 fn_80108948(void) {
     M2C_UNK fn_800D758C(s32);
     extern s32 lbl_803679D0;
