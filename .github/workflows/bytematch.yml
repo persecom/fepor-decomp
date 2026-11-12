@@ -1,0 +1,42 @@
+name: ByteMatch Progress
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  progress:
+    name: GFEE01 Progress Report
+    runs-on: [self-hosted, Linux, X64]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Prepare original game files
+        shell: bash
+        run: |
+          mkdir -p orig
+          ln -s "$HOME/Decomp/fire-emblem-gc-us-gfee01/orig/GFEE01" orig/GFEE01
+          test -d orig/GFEE01
+
+      - name: Configure project
+        run: python3 configure.py --version GFEE01
+
+      - name: Generate objdiff report
+        run: ninja build/GFEE01/report.json
+
+      - name: Upload ByteMatch report
+        uses: actions/upload-artifact@v4
+        with:
+          name: GFEE01_report
+          path: build/GFEE01/report.json
+          if-no-files-found: error
