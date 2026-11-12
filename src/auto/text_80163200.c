@@ -2410,9 +2410,7 @@ extern "C" void *fn_8016915C(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4)
 }
 #pragma cplusplus reset
 
-u32 fn_8016947C(void) {
-    extern u8 lbl_80330708[];
-
+extern "C" u32 fn_8016947C(void) {
     return lbl_80330708[0x55] != 0;
 }
 
