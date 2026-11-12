@@ -3768,13 +3768,16 @@ void fn_8011AB98(void) {
 }
 
 void fn_8011ABC0(s32 arg0) {
-    M2C_UNK fn_8000E0E4(void *, M2C_UNK *);
-    M2C_UNK fn_80024398(s32, M2C_UNK);
-    void *fn_8013BFFC();
-    extern M2C_UNK lbl_80274508;
-    fn_8000E0E4(&lbl_80274508 + 0x17C, &lbl_80274508);
-    M2C_FIELD(fn_8013BFFC(), s8 *, 0x24) = 1;
-    fn_80024398(arg0, 0);
+    void fn_8000E0E4(void *);
+    void fn_80024398(void *, s32, s32);
+    void *fn_8013BFFC(void);
+    extern char lbl_80274508[];
+    void *tmp;
+
+    fn_8000E0E4(lbl_80274508 + 0x17c);
+    tmp = fn_8013BFFC();
+    *((u8 *)tmp + 0x24) = 1;
+    fn_80024398(tmp, arg0, 0);
 }
 
 s32 fn_8011AC10(void) {
