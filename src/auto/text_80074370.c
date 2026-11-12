@@ -192,6 +192,18 @@ extern "C" void fn_80074AE4(void *arg0, s32 arg1, void *arg2) {
     ((Obj *)arg0)->v17();
     fn_8001003C(*(s16 *)((u8 *)arg2 + 0x30), *(s16 *)((u8 *)arg2 + 0x32), (u8)flag, 1, 0, ((Obj *)arg0)->v1(), lbl_80369394, lbl_803693A8);
 }
+
+extern "C" s32 fn_80074B78(s32 arg0, s32 arg1, void *arg2) {
+    extern u8 lbl_802EF4C8[];
+    u8 *p;
+    if (*((u8 *)arg2 + 0x39) != 0) {
+        return 0x10;
+    }
+    p = lbl_802EF4C8;
+    p[0xA] = *((u8 *)arg2 + 0x3A);
+    return 5;
+}
+
 #pragma cplusplus reset
 s32 fn_80074BA4(void **arg0) {
     M2C_UNK fn_800299B8(s32);
@@ -311,6 +323,18 @@ extern "C" void fn_80074E4C(void *arg0, s32 arg1, void *arg2) {
     ((Obj *)arg0)->v17();
     fn_8008D510(fn_80037BD0(lbl_802EF4C8[1], *(u8 *)((u8 *)arg2 + 0x3A)), *(u8 *)((u8 *)arg2 + 0x39) == 0, *(s16 *)((u8 *)arg2 + 0x30), *(s16 *)((u8 *)arg2 + 0x32));
 }
+
+extern "C" s32 fn_80074EB0(s32 arg0, s32 arg1, void *arg2) {
+    extern u8 lbl_802EF4C8[];
+    u8 *p;
+    if (*((u8 *)arg2 + 0x39) != 0) {
+        return 0x10;
+    }
+    p = lbl_802EF4C8;
+    p[0x14] = *((u8 *)arg2 + 0x3A);
+    return 5;
+}
+
 #pragma cplusplus reset
 void fn_80074EDC(s32 arg0, void *arg1) {
     extern s32 lbl_802EF4C8[];
