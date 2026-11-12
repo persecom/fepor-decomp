@@ -103,20 +103,15 @@ s32 fn_8012C470(void) {
     return 0;
 }
 
-M2C_UNK *fn_8012C4F0(void) {
+char *fn_8012C4F0(void) {
     u8 fn_80109B24(s32);
-    M2C_UNK fn_80231D94(M2C_UNK *, void *, u8, M2C_UNK *);
-    extern M2C_UNK lbl_802758F8;
-    extern M2C_UNK lbl_8032FE60;
+    void fn_80231D94(void *, void *, ...);
     extern s32 lbl_80367A88;
-    
-    s32 r3 = lbl_80367A88;
-    u8 r5 = fn_80109B24(r3);
-    void *r4 = &lbl_802758F8 + 0x13C;
-    M2C_UNK *r3_ptr = &lbl_8032FE60;
-    
-    fn_80231D94(r3_ptr, r4, r5, r3_ptr);
-    return r3_ptr;
+    extern u8 lbl_802758F8[];
+    extern char lbl_8032FE60[];
+
+    fn_80231D94(lbl_8032FE60, lbl_802758F8 + 0x13C, (u8)fn_80109B24(lbl_80367A88));
+    return lbl_8032FE60;
 }
 
 void *fn_8012C53C(void) {
