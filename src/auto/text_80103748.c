@@ -280,6 +280,24 @@ s32 fn_80103C14(void) {
     return 0;
 }
 
+s32 fn_80103C1C(void) {
+    s32 fn_8000BCA4(void *);
+    void fn_8000C070(s32, s32);
+    void fn_8000CAA0(void *, s32);
+    void fn_800A8400(void);
+    extern char lbl_802734D0[];
+    extern struct { u8 pad[0x100]; } lbl_8028EB10;
+    s32 temp_r31;
+
+    temp_r31 = fn_8000BCA4(lbl_802734D0 + 0xC4);
+    if (temp_r31 != 0) {
+        fn_800A8400();
+        fn_8000C070(temp_r31, 0);
+    }
+    fn_8000CAA0(&lbl_8028EB10, temp_r31);
+    return 6;
+}
+
 void *fn_80103C7C(void) {
     extern u16 lbl_802734D0[];
     return (u8 *)lbl_802734D0 + 0x18c;
