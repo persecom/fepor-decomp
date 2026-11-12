@@ -1471,6 +1471,44 @@ void fn_80166228(void) {
     fn_80013D4C();
 }
 
+void fn_80166258(void) {
+    extern u8 lbl_802778A8[];
+    extern u16 lbl_803680E8;
+
+    void *fn_80019F04(void);
+    void fn_80231D94(void *, const char *, ...);
+    void fn_80013E24(void *);
+    s32 fn_8003FCCC(void *);
+    void fn_8005C4C4(void *, s32);
+
+    u8 buffer[0x20];
+    u8 *obj;
+
+    obj = (u8 *)fn_80019F04();
+
+    fn_80231D94(
+        buffer,
+        (char *)(lbl_802778A8 + 0xCE),
+        *(u32 *)(obj + 8)
+    );
+
+    fn_80013E24(buffer);
+
+    if (*(u32 *)(obj + 0x0C) == 0) {
+        lbl_803680E8 = 0;
+    } else {
+        fn_80231D94(
+            buffer,
+            (char *)(lbl_802778A8 + 0xDD),
+            *(u32 *)(obj + 0x0C)
+        );
+
+        lbl_803680E8 = fn_8003FCCC(buffer);
+    }
+
+    fn_8005C4C4(buffer, 4);
+}
+
 void *fn_801662F0(void **arg0) {
     extern u16 lbl_802778A8[];
     void *fn_8000E0E4(void *);
@@ -10576,6 +10614,32 @@ void fn_8017A5EC(void *arg0, s8 arg1) {
     s8 **temp_r5 = (s8 **)((u8*)arg0 + 4);
     *temp_r5 += 1;
     **temp_r5 = arg1;
+}
+
+s32 fn_8017A6C4(void *arg0, void *arg1) {
+    u8 *temp_r5;
+    u8 *temp_r5_2;
+    u8 *temp_r5_3;
+    u8 *temp_r5_4;
+
+    temp_r5 = M2C_FIELD(arg0, u8 **, 4);
+    M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r5 + 1);
+    if ((s8) *temp_r5 == (s8) M2C_FIELD(arg1, u8 *, 0)) {
+        temp_r5_2 = M2C_FIELD(arg0, u8 **, 4);
+        M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r5_2 + 1);
+        if ((s8) *temp_r5_2 == (s8) M2C_FIELD(arg1, u8 *, 1)) {
+            temp_r5_3 = M2C_FIELD(arg0, u8 **, 4);
+            M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r5_3 + 1);
+            if ((s8) *temp_r5_3 == (s8) M2C_FIELD(arg1, u8 *, 2)) {
+                temp_r5_4 = M2C_FIELD(arg0, u8 **, 4);
+                M2C_FIELD(arg0, u8 **, 4) = (u8 *) (temp_r5_4 + 1);
+                if ((s8) *temp_r5_4 == (s8) M2C_FIELD(arg1, u8 *, 3)) {
+                    return 1;
+                }
+            }
+        }
+    }
+    return 0;
 }
 
 void *fn_8017A764(void *arg0, s32 arg1) {
