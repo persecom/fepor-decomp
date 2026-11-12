@@ -448,29 +448,37 @@ void fn_80099AD0(void *arg0) {
     }
 }
 
+#pragma use_lmw_stmw on
 void fn_80099BF8(void *arg0) {
-    s32 temp_r26;
-    s32 temp_r29;
-    s32 var_r27;
-    s32 arg0_0;
+    s32 fn_800971F8(s16);
+    s32 fn_80096EEC(s32 *, s32);
+    void *fn_8000CAA0(void *, void *);
+    void fn_8000C070(void *, s32);
+    extern u8 lbl_80289C38[];
+    s32 buf[19];
+    s32 flags;
+    s32 count;
+    void *chain;
+    s32 i;
+    s32 val;
+    void *obj;
 
-    temp_r29 = fn_800971F8(M2C_FIELD(arg0, s16 *, 0x46));
-    arg0_0 = fn_80096EEC((s32 (*)[]) &arg0, temp_r29);
-    var_r27 = 0;
-loop_4:
-    if (var_r27 < arg0_0) {
-        temp_r26 = ((s32*)(&arg0))[arg0_0 - (var_r27 + 1)];
-        if ((u32) (temp_r26 + 0xFFFC0000) != 0U) {
-            *(s32*)((char*)arg0 + 0x60) = temp_r26;
+    flags = fn_800971F8(*(s16 *)((u8 *)arg0 + 0x46));
+    count = fn_80096EEC(buf, flags);
+    chain = arg0;
+    for (i = 0; i < count; i++) {
+        val = buf[count - (i + 1)];
+        if (val != 0x40000) {
+            obj = fn_8000CAA0(lbl_80289C38, chain);
+            *(s32 *)((u8 *)obj + 0x60) = val;
+            chain = obj;
         }
-        var_r27 += 1;
-        goto loop_4;
     }
-    if (temp_r29 & 2) {
+    if (flags & 2) {
         fn_8000C070(arg0, 6);
     }
 }
-
+#pragma use_lmw_stmw off
 void fn_80099CA4(void *arg0) {
     void *fn_80095BB0(s32);
     void *fn_80095FF8(s32);
