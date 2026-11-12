@@ -977,6 +977,25 @@ void fn_80164BF0(s32 *arg0, void *arg1) {
     *arg0 = *fn_8013F748(arg1, &spC, &sp8);
 }
 
+s16 fn_80164CAC(void *arg0) {
+    u32 *fn_80037BD0(s32, s32);
+    s8 i;
+    s32 ret;
+
+    i = 4;
+    while (i < 8) {
+        if (*fn_80037BD0(*(s32 *)((u8 *)arg0 + 0x58), i) == 0) {
+            break;
+        }
+        i++;
+    }
+    ret = -1;
+    if (i < 8) {
+        ret = i;
+    }
+    return ret;
+}
+
 #pragma scheduling reset
 s16 fn_80164FBC(void *arg0, s16 arg1) {
     for (; arg1 >= 0; arg1--) {
@@ -10402,28 +10421,34 @@ void *fn_80179D70(void *arg0, s16 arg1) {
     return arg0;
 }
 
-void *fn_80179F8C(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
-    void *fn_8017A000(void *, s16 *, s16 *, s16);
-      extern u16 lbl_80291B1C;
+#pragma cplusplus on
+extern "C" void *fn_80179F8C(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
+    void *fn_8017A000(void *, s16 *, s16 *, s32);
+    extern u8 lbl_80291B1C[];
+    struct Obj {
+        virtual void m08() = 0;
+        virtual void m0C() = 0;
+        virtual void m10() = 0;
+        virtual void m14() = 0;
+        virtual void m18() = 0;
+        virtual void m1C() = 0;
+        virtual void m20() = 0;
+        virtual void m24() = 0;
+        virtual void m28() = 0;
+    };
+    s16 ab[2];
+    s16 cd[2];
 
-      s16 spA;
-      s16 spC;
-      s16 spE;
-      s16 sp8;
-
-      sp8 = arg3;
-      spC = arg1;
-      spE = arg2;
-      spA = arg4;
-
-      fn_8017A000(arg0, &spC, &sp8, (s16)arg5);
-    *(u16 **)arg0 = &lbl_80291B1C;
-    *(u16 *)((char *)arg0 + 0xD4) = 1;
-    (*(void (**)(void *, u16 *))(*(u32 **)arg0 + 0x0A))(arg0, &lbl_80291B1C);
+    cd[0] = arg3;
+    ab[0] = arg1;
+    ab[1] = arg2;
+    cd[1] = arg4;
+    fn_8017A000(arg0, ab, cd, arg5);
+    *(void **)arg0 = lbl_80291B1C;
+    *(s16 *)((u8 *)arg0 + 0xD4) = 1;
+    ((Obj *)arg0)->m28();
     return arg0;
 }
-
-#pragma cplusplus on
 extern "C" void *fn_8017A000(void *arg0, s16 *arg1, s16 *arg2, s16 arg3) {
     void fn_80142060(void *);
     void fn_8013BBF8(void *);
@@ -11956,18 +11981,22 @@ void fn_8017CE1C(void *self, void *arg1) {
 }
 
 void fn_8017D4B8(s32 *arg0, void *arg1) {
-    s32 *fn_8013F748(void *, M2C_UNK *, s16 *, s16, s32, s16, void *);
-    M2C_UNK spC;
-    s16 r6;
+    s32 *fn_8013F748(void *, s32 *, s16 *);
+    s16 sp8;
+    s16 spA;
+    s32 spC;
     s16 r8;
-    s32 r7;
+    s16 r7;
+    s16 r6;
+    s16 r0;
 
     r8 = *(s16 *)((u8 *)arg1 + 0xC);
+    r7 = *(s16 *)((u8 *)arg1 + 0x10);
     r6 = *(s16 *)((u8 *)arg1 + 0xA);
-    r7 = (s16) (*(s16 *)((u8 *)arg1 + 0x10) - r8) >> 1;
-    *(s16 *)((u8 *)arg1 + 0xa) = (s16) r7;
-    *(s16 *)((u8 *)arg1 + 0x8) = (s16) ((s16) (*(s16 *)((u8 *)arg1 + 0xE) - r6)) >> 2;
-    *arg0 = *fn_8013F748(arg1, &spC, (s16 *)((u8 *)arg1 + 0x8), r6, r7, r8, arg1);
+    r0 = *(s16 *)((u8 *)arg1 + 0xE);
+    spA = (s16)((s16)(r7 - r8) >> 1);
+    sp8 = (s16)((s16)(r0 - r6) >> 2);
+    *arg0 = *fn_8013F748(arg1, &spC, &sp8);
 }
 
 s16 fn_8017D52C(struct { u8 pad[0x40]; s32 f40; } *arg0, s16 arg1) {
