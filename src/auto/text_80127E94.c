@@ -886,19 +886,19 @@ void fn_8012A45C(void *arg0) {
 }
 
 void fn_8012A4CC(void *arg0) {
-    M2C_UNK fn_80040844();
-    M2C_UNK fn_80044450(M2C_UNK);
-    M2C_UNK fn_800C4588(void **);
-    void *temp_r3;
+    u8 fn_80040824(void);
+    void *fn_80040844(void);
+    void fn_80044450(void *, s32);
+    void fn_800C4588(void *);
+    void *inner;
 
-    temp_r3 = *M2C_FIELD(arg0, void ***, 0x30);
-    M2C_FIELD(temp_r3, u8 *, 2) = (u8) (M2C_FIELD(temp_r3, u8 *, 2) | 1);
-    if (fn_80040824(temp_r3) != 0) {
-        fn_80040844();
-        fn_80044450(1);
+    inner = **(void ***)((u8 *)arg0 + 0x30);
+    *(u8 *)((u8 *)inner + 2) |= 1;
+    if ((u8)fn_80040824() != 0) {
+        fn_80044450(fn_80040844(), 1);
     }
-    fn_800C4588(M2C_FIELD(arg0, void ***, 0x30));
-    M2C_FIELD(arg0, void ***, 0x30) = NULL;
+    fn_800C4588(*(void **)((u8 *)arg0 + 0x30));
+    *(void **)((u8 *)arg0 + 0x30) = NULL;
 }
 
 #pragma use_lmw_stmw on
