@@ -2006,48 +2006,49 @@ void fn_80108F58(void *arg0) {
 }
 
 void fn_80108FA8(void) {
-    void **r29;
-    s32 r31;
-    
-    r29 = (void**)fn_8000D2BC();
-    r31 = 0;
-    
-loop_1:
-    if (r31 < *(u8*)((u8*)r29 + 0x4)) {
-        u32 *temp_r3_2 = *(u32**)((u8*)r29 + 0x14);
-        if ((s32)*((u8**)temp_r3_2)[0] != 1) {
-            // do nothing
-        } else {
-            fn_8005C8B4(*((s32*)((u8**)temp_r3_2)[0] + 2));
-        }
-        r29 += 1;
-        r31 += 1;
-        goto loop_1;
+    void *fn_8000D2BC(void);
+    void fn_8005C8B4(s32);
+    s32 i;
+    void *entry;
+    void *list;
+    s8 *ptr;
+
+    list = fn_8000D2BC();
+    i = 0;
+    entry = list;
+    goto check;
+loop:
+    ptr = *(s8 **)((char *)entry + 0x14);
+    if (*ptr != 1) {
+    } else {
+        fn_8005C8B4(*(s32 *)(ptr + 8));
+    }
+    entry = (char *)entry + 4;
+    i += 1;
+check:
+    if (i < *(u8 *)((char *)list + 4)) {
+        goto loop;
     }
 }
 
-s32 fn_801090C0(u8 *arg0)
+s32 fn_801090C0(s8 *arg0)
 {
     extern s32 lbl_803679DC;
-    extern u8 *lbl_803679D8;
+    extern s8 *lbl_803679D8;
     extern u8 lbl_8028F390[];
+    void fn_8011D484(s8 *);
+    void fn_8010913C(void);
+    void fn_8000BF6C(void *, void (*)(void));
+    void *tbl;
 
-    extern void fn_8011D484(void *);
-    extern void fn_8010913C(void);
-    extern void fn_8000BF6C(void *, void *);
-
-    if (arg0[0] == 'T' &&
-        arg0[1] == 'B' &&
-        arg0[2] == 'G' &&
-        (s8)arg0[3] == 0) {
+    if (arg0[0] == 0x54 && arg0[1] == 0x42 && arg0[2] == 0x47 && arg0[3] == 0) {
         fn_8011D484(arg0);
     } else {
         lbl_803679DC = 0;
+        tbl = lbl_8028F390;
         lbl_803679D8 = arg0;
-
-        fn_8000BF6C(lbl_8028F390, (void *)fn_8010913C);
+        fn_8000BF6C(tbl, fn_8010913C);
     }
-
     return lbl_803679DC;
 }
 
@@ -2851,7 +2852,7 @@ void fn_8010ABC0(void *arg0)
 {
     void fn_8006EEFC(void *, void *);
     void fn_8005C4C4(void *, s32);
-    s32 fn_8006EBA4(void *, s32);
+    u8 fn_8006EBA4(void *, s32);
 
     u8 *obj;
     u8 flags;
@@ -2865,7 +2866,7 @@ void fn_8010ABC0(void *arg0)
             fn_8005C4C4(*(void **)(obj + 0x08), 4);
         }
 
-        if (fn_8006EBA4(*(void **)(obj + 0x0C), obj[0x12]) != 0) {
+        if ((u8)fn_8006EBA4(*(void **)(obj + 0x0C), obj[0x12]) != 0) {
             flags = obj[0x10];
             obj[0x10] = flags | 2;
             obj[0x11] = 0;
