@@ -2233,6 +2233,15 @@ void *fn_800A36D8(void) {
     return (u8 *)lbl_8026D8D8 + 0x7B3;
 }
 
+s32 fn_800A36E8(s32 unused, s32 arg1) {
+    void *fn_800241C8(s32);
+    void fn_80108C80(void *, s32, void *);
+    extern u8 lbl_8026D8D8[];
+
+    fn_80108C80(lbl_8026D8D8 + 0x7BF, *(s32 *)((u8 *)fn_800241C8(arg1) + 0x18), lbl_8026D8D8);
+    return 6;
+}
+
 void *fn_800A3724(void) {
     extern u16 lbl_8026D8D8[];
     return (u8 *)lbl_8026D8D8 + 0x7CD;
