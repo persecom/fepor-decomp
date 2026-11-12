@@ -2449,7 +2449,7 @@ void fn_80169550(void *arg0) {
     void fn_8012C964(void *);
     extern u8 lbl_80330708[];
     *(s32 *)(lbl_80330708 + 0xB0) = *(s32 *)((u8 *)arg0 + 0x30);
-    fn_8012C964(lbl_80330708);
+    fn_8012C964(arg0);
 }
 
 void fn_80169580(void) {
