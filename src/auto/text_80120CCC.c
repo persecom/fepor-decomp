@@ -55,14 +55,56 @@ void fn_80120E4C(void *arg0) {
     }
 }
 
-void fn_80120F94(void)
-{
-    extern unsigned short lbl_80367A58;
-    extern unsigned short lbl_80367110;
+void fn_80120F0C(void) {
+    extern u16 lbl_80367A58;
+    extern u32 lbl_80367110;
     extern u8 lbl_80290200[];
 
+    void *fn_8000C0C0(void *);
+    void fn_8000C60C(void *);
+    void fn_8000C188(void *);
+
+    u16 *flags;
+    u16 saved0;
+    u16 saved1;
+    void *obj;
+
+    flags = &lbl_80367A58;
+
+    saved0 = flags[0];
+    saved1 = flags[1];
+
+    lbl_80367110 |= 2;
+
+    if ((saved0 & 0x40) == 0) {
+        obj = fn_8000C0C0(lbl_80290200);
+
+        if (obj != NULL) {
+            if ((lbl_80367110 & 3) != 0) {
+                fn_8000C60C(obj);
+            } else {
+                fn_8000C188(obj);
+            }
+        }
+    }
+
+    flags[0] = saved0;
+    flags[1] = saved1;
+}
+
+void fn_80120F94(void)
+{
+    void *fn_8000C0C0(void *);
+    void fn_8000C60C(void);
+    void fn_8000C188(void);
+    extern u16 lbl_80367A58;
+    extern u32 lbl_80367110;
+    extern u8 lbl_80290200[];
+    void *p;
+
     if ((lbl_80367A58 & 0x0040) == 0) {
-        if (fn_8000C0C0(lbl_80290200) != 0) {
+        p = fn_8000C0C0(lbl_80290200);
+        if (p != NULL) {
             if ((lbl_80367110 & 3) != 0) {
                 fn_8000C60C();
             } else {
@@ -791,29 +833,24 @@ void fn_801229F8(void *arg0) {
     }
 }
 
-void fn_80122A2C(void *arg0, u8 arg1)
-{
-    u8 *base;
-    u8 *entry;
-    u8 *buffer;
+void fn_80122A2C(void *arg0, u8 arg1) {
     s32 index;
     s32 count;
+    void *row;
+    u8 *dst;
+    u8 z;
 
-    base = (u8 *)arg0;
-
-    index = (s8)base[0x47];
-    count = (s8)base[0x45];
-
+    z = 0;
+    index = (s8)*(u8 *)((u8 *)arg0 + 0x47);
+    count = (s8)*(u8 *)((u8 *)arg0 + 0x45);
     index %= count;
-
-    entry = *(u8 **)(base + 0x30 + (index << 2));
-    buffer = *(u8 **)(entry + 0x40);
-
-    *(u32 *)(entry + 0x40) = (u32)(buffer + 1);
-    *buffer = arg1;
-
-    buffer = *(u8 **)(entry + 0x40);
-    *buffer = 0;
+    arg0 = (u8 *)arg0 + (index << 2);
+    row = *(void **)((u8 *)arg0 + 0x30);
+    dst = *(u8 **)((u8 *)row + 0x40);
+    *(u8 **)((u8 *)row + 0x40) = dst + 1;
+    *dst = arg1;
+    dst = *(u8 **)((u8 *)row + 0x40);
+    *dst = z;
 }
 
 void fn_80122A74(s32 unused, s16 *p) {
