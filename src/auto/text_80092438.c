@@ -776,20 +776,21 @@ u8 fn_800934CC(void *arg0, void *arg1) {
                   ok = result;
               } else if (flags & 0x40) {
               }
-              if (ok == 0) {
-                  result = 0;
-              } else if ((fn_800940B0(arg0, arg1) == 0)) {
-                result = 0;
-            } else {
-                result = 1;
+                              if (ok == 0) {
+                    result = 0;
+                } else if (fn_800940B0(arg0, arg1) == 0)
+                {
+                    result = 0;
+                } else {
+                    result = 1;
+                }
             }
+            return result;
         }
-        return result;
-    }
-    return 0;
-}
-
-u8 fn_80093708(void *arg0, void *arg1) {
+        return 0;
+  }
+  
+  u8 fn_80093708(void *arg0, void *arg1) {
     u8 fn_800940B0(void *, void *);
     u8 fn_80105BC0(void *, s32);
     struct { unsigned ok : 8; unsigned result : 8; } t;
