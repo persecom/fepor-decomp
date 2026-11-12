@@ -1116,6 +1116,10 @@ u8 fn_80093DA8(void *arg0, void *arg1) {
     return 0;
 }
 
+u8 fn_800940B0(void *arg0, void *arg1) {
+    return 0;
+}
+
 s32 fn_80094614(void* arg0, void* arg1) {
     s32 r5;
     s32 r7;
