@@ -916,7 +916,8 @@ u32 fn_80104E40(void) {
 
 extern void *lbl_803679C0;
 u16 fn_80104E58(void) {
-    return *(u16 *)((char *)lbl_803679C0 + 0xC);
+    extern void *lbl_803679C0;
+    return *(u16 *)((u8 *)(*(void **)((u8 *)lbl_803679C0 + 4)) + 0xC);
 }
 
 extern u16 lbl_80366E80;
