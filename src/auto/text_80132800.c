@@ -5629,6 +5629,46 @@ extern "C" void fn_8013E218(void *arg0, void *arg1) {
         *(s16 *)((u32)p + 0x32) += ((Obj *)arg0)->v32();
     }
 }
+
+extern "C" void fn_8013E2C8(void *arg0) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual void v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual void v25() = 0;
+        virtual void v26() = 0;
+        virtual void v27() = 0;
+        virtual void v28() = 0;
+        virtual void v29(s32) = 0;
+    };
+    if (arg0 != NULL) {
+        ((Obj *)arg0)->v29(1);
+    }
+}
+
 #pragma cplusplus reset
 
 void fn_8013E300(void) {
