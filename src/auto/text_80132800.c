@@ -11,6 +11,13 @@ virtual s32 item(void *)=0; virtual void row(s16,s16,s32,void *,s32)=0;
 virtual void v16()=0; virtual void prepare()=0;
 };
 struct Menu42Callback { void (Menu42::*method)(s32); s32 arg; };
+static inline void Menu42Visit(void *first, void *last, Menu42Callback cb) {
+while(first!=last) {
+Menu42 *obj=*(Menu42 **)((u8*)first+8);
+(obj->*cb.method)(cb.arg);
+first=*(void **)((u8*)first+4);
+}
+}
 #pragma cplusplus reset
 #include "common.h"
 #include "dolphin/os.h"
@@ -6281,6 +6288,122 @@ extern "C" void fn_80142C00(void *self, void *other) {
     fn_80009B80(0x80);
     fn_8000A248();
 }
+
+#pragma cplusplus on
+#pragma use_lmw_stmw on
+extern "C" void fn_80142ED0(void *arg0, s32 arg1) {
+void fn_8013F748(void *,s16 *,s16 *);
+void fn_8013F920(void *);
+void fn_8000A258(void); void fn_8000A248(void);
+void fn_80009BC0(void (*)(void *),s16 *);
+void fn_80009C0C(f32); void fn_80009B98(void);
+void fn_8000A174(s32,s32);
+void *fn_8000E0E4(void *);
+s32 fn_80010B78(void *,s32,f32);
+void fn_8001019C(s16,s16,s32,void *,...);
+void *fn_8003A064(void *); void *fn_8003A114(void *);
+void *fn_8007BA4C(void *,s32);
+void fn_8007B4D8(s16,s16,s32,void *);
+void fn_8007B990(void *);
+extern f32 lbl_8036A770,lbl_8036A75C,lbl_8036A760,lbl_80367098,lbl_8036A758,lbl_8036A748;
+extern u8 lbl_80276B3C[];
+extern void (Menu42::*lbl_802922FC)(s32);
+Menu42Callback cb, copy;
+s16 rows,index,count,scroll,sign,x,y,row,end,n;
+s32 ypos,remaining,page;
+u8 *table,*slot,*node,*selected,*sprite,*child,*endnode;
+s16 *rect;
+Menu42 *self=(Menu42*)arg0;
+s32 arg=arg1;
+self->prepare();
+self->draw(arg);
+rect=(s16*)((u8*)self+0x114);
+{
+s16 h=M2C_FIELD(self,s16*,0x18)-M2C_FIELD(self,s16*,0x14);
+s16 w=M2C_FIELD(self,s16*,0x16)-M2C_FIELD(self,s16*,0x12);
+rect[0]=0;rect[1]=0;rect[2]=w;rect[3]=h;
+}
+fn_8013F748(self,rect,rect);
+rect+=2; fn_8013F748(self,rect,rect);
+page=self->page();
+rows=M2C_FIELD(self,s16*,0x80);
+slot=(u8*)self+page*2;
+index=M2C_FIELD(slot,s16*,0x4e);
+table=(u8*)self+page*12+0x90;
+count=(s16)M2C_FIELD(table,s32*,0);
+fn_8000A258();
+fn_80009BC0(fn_8013F920,(s16*)((u8*)self+0x114));
+fn_80009C0C(lbl_8036A770);
+fn_8000A248();
+scroll=(s16)M2C_FIELD(self,f32*,0x84);
+if(M2C_FIELD(self,f32*,0x84)<lbl_8036A75C) {
+M2C_FIELD(self,f32*,0x84)+=lbl_8036A760;
+if(M2C_FIELD(self,f32*,0x84)>=-lbl_80367098) M2C_FIELD(self,f32*,0x84)=lbl_8036A75C;
+} else if(M2C_FIELD(self,f32*,0x84)>lbl_8036A75C) {
+M2C_FIELD(self,f32*,0x84)-=lbl_8036A760;
+if(M2C_FIELD(self,f32*,0x84)<=lbl_80367098) M2C_FIELD(self,f32*,0x84)=lbl_8036A75C;
+}
+if(scroll<0) sign=-1; else sign=scroll>0;
+if(sign>0 && index>0) --index;
+node=M2C_FIELD(table,u8**,8); n=index;
+if(index>=0) {while(n>0) {node=M2C_FIELD(node,u8**,4);--n;}}
+else {while(n<0){node=M2C_FIELD(node,u8**,0);++n;}}
+y=M2C_FIELD(self,s16*,0x8e)+M2C_FIELD(self,s16*,0x8a)+4;
+x=M2C_FIELD(self,s16*,0x8c)+M2C_FIELD(self,s16*,0x88);
+row=(-sign & ~sign)>>31;
+end=rows;
+if(sign<0) ++end;
+ypos=y+(row<<5);remaining=count-index;
+for(;row<end;++row,ypos+=32) {
+if(row>=remaining) break;
+self->row(x,(s16)(scroll+ypos),-1,node+8,self->item(node+8));
+node=M2C_FIELD(node,u8**,4);
+}
+page=self->page();
+table=(u8*)self+page*12+0x90;
+if(M2C_FIELD(table,u32*,0)==0) selected=0;
+else {
+node=M2C_FIELD(table,u8**,8);
+n=M2C_FIELD((u8*)self+page*2,s16*,0x64);
+if(n>=0){while(n>0){node=M2C_FIELD(node,u8**,4);--n;}}
+else {while(n<0){node=M2C_FIELD(node,u8**,0);++n;}}
+selected=node+8;
+}
+if(selected==0) {
+void *text=fn_8000E0E4(lbl_80276B3C+0x39);
+s16 width=M2C_FIELD(self,s16*,0x16)-M2C_FIELD(self,s16*,0x12);
+s16 left=(width-fn_80010B78(text,-1,lbl_8036A758))>>1;
+fn_8000A258();fn_8000A174(0,0x13);fn_8000A248();
+fn_8001019C((s16)(left+M2C_FIELD(self,s16*,0x8c)),y,0,text);
+}
+if(selected && M2C_FIELD(self,s32*,0x11c) && M2C_FIELD(selected,void**,4)) {
+s16 cx=(M2C_FIELD(self,s16*,0x8c)+(s16)(M2C_FIELD(self,s16*,0x16)-M2C_FIELD(self,s16*,0x12)))>>1;
+s16 cy=M2C_FIELD(self,s16*,0x8e)+(s16)(M2C_FIELD(self,s16*,0x18)-M2C_FIELD(self,s16*,0x14));
+s32 mode=M2C_FIELD(self,s32*,0x11c);
+if(mode==1 || mode==2) sprite=(u8*)fn_8007BA4C(fn_8003A064(M2C_FIELD(selected,void**,4)),0x100);
+else sprite=(u8*)fn_8007BA4C(fn_8003A114(M2C_FIELD(selected,void**,4)),0x100);
+M2C_FIELD(sprite,u16*,0x46)&=0xfffe;
+M2C_FIELD(sprite,u16*,0x46)|=(s16)(M2C_FIELD(self,s16*,0xa)+((s16)(M2C_FIELD(self,s16*,0xe)-M2C_FIELD(self,s16*,0xa))>>1))<0x130;
+fn_8000A258();fn_80009C0C(lbl_8036A748);fn_8000A248();
+if(M2C_FIELD(self,s32*,0x11c)==2) cy+=M2C_FIELD(M2C_FIELD(sprite,void**,0x34),s16*,0x1e);
+fn_8007B4D8(cx,cy,0x7f,sprite);fn_8007B990(sprite);
+}
+fn_8000A258();fn_80009B98();fn_8000A248();
+child=M2C_FIELD(self,u8**,0x48);
+M2C_FIELD(child,s16*,0x3c)=count<<5;
+M2C_FIELD(child,s16*,0x3e)=rows<<5;
+M2C_FIELD(child,s16*,0x40)=(M2C_FIELD(slot,s16*,0x4e)<<5)-scroll;
+endnode=(u8*)self+0x40;
+cb.method=lbl_802922FC;cb.arg=arg;
+copy=cb;
+for(node=M2C_FIELD(self,u8**,0x44);node!=endnode;node=M2C_FIELD(node,u8**,4)) {
+Menu42 *obj=M2C_FIELD(node,Menu42**,8);
+(obj->*cb.method)(cb.arg);
+}
+}
+#pragma use_lmw_stmw reset
+#pragma cplusplus reset
+
 #pragma cplusplus reset
 #pragma use_lmw_stmw reset
 
