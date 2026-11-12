@@ -781,52 +781,14 @@ s32 fn_8005C3C4(char *name) {
     return 1;
 }
 
-void fn_8005C4C4(u8 *arg0, s32 arg1) {
-    s32 fn_802342B8(u8 *, M2C_UNK *);
-    extern M2C_UNK lbl_802F04E0;
-    M2C_UNK *var_r27;
-    s32 var_r30;
-    u32 var_r29;
-    u8 *temp_r28;
-    u8 *var_r3;
-    u8 temp_r4;
-    u8 temp_r4_2;
-    void *var_r3_2;
-
-    var_r3 = arg0;
-    if ((s32) *var_r3 == 0x2F) {
-        var_r3 += 1;
-    }
-    temp_r28 = var_r3;
-    var_r29 = 0;
-loop_7:
-    temp_r4 = *var_r3;
-    if ((s8) temp_r4 != 0) {
-        if (((s8) temp_r4 >= 0x41) && ((s8) temp_r4 <= 0x5A)) {
-            *var_r3 += 0x20;
-        }
-        temp_r4_2 = *var_r3;
-        var_r3 += 1;
-        var_r29 = (s8) temp_r4_2 + (var_r29 * 0x25);
-        goto loop_7;
-    }
-    var_r30 = 0;
-    var_r27 = &lbl_802F04E0;
-loop_9:
-    if ((var_r29 == (u32) M2C_FIELD(var_r27, u32 *, 0x2C)) && (fn_802342B8(temp_r28, var_r27) == 0)) {
-        var_r3_2 = &lbl_802F04E0 + (var_r30 * 0x7C);
-    } else {
-        var_r30 += 1;
-        var_r27 += 0x7C;
-        if (var_r30 >= 0x400) {
-            var_r3_2 = NULL;
-        } else {
-            goto loop_9;
-        }
-    }
-    M2C_FIELD(var_r3_2, u16 *, 0x30) = (u16) (M2C_FIELD(var_r3_2, u16 *, 0x30) | arg1);
+#pragma no_register_save_helpers on
+#pragma use_lmw_stmw on
+void fn_8005C4C4(char *name, s32 flags) {
+    u8 *e = FindEntryByName(name);
+    s32 v = *(u16 *)(e + 0x30);
+    v |= flags;
+    *(u16 *)(e + 0x30) = v;
 }
-
 void fn_8005C5A8(char *name) {
     u8 *e = FindEntryByName(name);
     u16 v = *(u16 *)(e + 0x30);
@@ -5065,6 +5027,51 @@ s32 fn_80067058(s32 arg0) {
     return ((temp_r3 - 0x10) * 3) + 0x50;
 }
 
+void fn_80067304(void *arg0) {
+    typedef struct { f32 x, y, z; } Vec3;
+    extern Vec3 lbl_8026B744;
+    extern Vec3 lbl_8026B750;
+    extern f32 lbl_80369224;
+    extern f32 lbl_80369228;
+    extern s32 lbl_8036C444;
+    extern s32 lbl_8036C448;
+    Vec3 a;
+    Vec3 b;
+    f32 f20;
+    f32 f24;
+    u32 col1;
+    u32 col2;
+
+    a = lbl_8026B744;
+    *(f32 *)((u8 *)arg0 + 0x14) = a.x;
+    *(f32 *)((u8 *)arg0 + 0x18) = a.y;
+    *(f32 *)((u8 *)arg0 + 0x1C) = a.z;
+
+    f20 = lbl_80369224;
+    f24 = lbl_80369228;
+
+    b = lbl_8026B750;
+    *(f32 *)((u8 *)arg0 + 0x08) = b.x;
+    *(f32 *)((u8 *)arg0 + 0x0C) = b.y;
+    *(f32 *)((u8 *)arg0 + 0x10) = b.z;
+    *(f32 *)((u8 *)arg0 + 0x20) = f20;
+
+    col1 = lbl_8036C444;
+    ((u8 *)arg0)[0] = ((u8 *)&col1)[0];
+    ((u8 *)arg0)[1] = ((u8 *)&col1)[1];
+    ((u8 *)arg0)[2] = ((u8 *)&col1)[2];
+    ((u8 *)arg0)[3] = ((u8 *)&col1)[3];
+
+    col2 = lbl_8036C448;
+    ((u8 *)arg0)[4] = ((u8 *)&col2)[0];
+    ((u8 *)arg0)[5] = ((u8 *)&col2)[1];
+    ((u8 *)arg0)[6] = ((u8 *)&col2)[2];
+    ((u8 *)arg0)[7] = ((u8 *)&col2)[3];
+
+    *(f32 *)((u8 *)arg0 + 0x24) = f24;
+    *(f32 *)((u8 *)arg0 + 0x28) = f24;
+}
+
 void fn_800673E4(void *arg0, void *arg1) {
     typedef struct { s32 x; s32 y; } Pair;
     Pair t;
@@ -6459,10 +6466,11 @@ s32 fn_8006D948(s32 arg0) {
     return sp8;
 }
 
-s32 fn_8006D980(u8 *s, u8 *pat)
+s32 fn_8006D980(char *s, char *pat)
 {
-    u8 *m;
+    char *m;
     u8 c;
+    s8 t;
 
     if (s == 0) {
         return 0;
@@ -6470,13 +6478,13 @@ s32 fn_8006D980(u8 *s, u8 *pat)
     if (pat != 0) {
         m = 0;
         for (;;) {
-            c = *s;
+            c = *(u8 *)s;
             if ((s8)c == 0) {
                 return 0;
             }
             if (m != 0) {
                 if ((s8)c == (s8)*m) {
-                    if ((s8)m[1] == 0) {
+                    if (m[1] == 0) {
                         if (s[1] == 0x5f) {
                             return 1;
                         }
@@ -6487,26 +6495,23 @@ s32 fn_8006D980(u8 *s, u8 *pat)
                     m = 0;
                 }
             } else {
+                t = (s8)c;
                 s++;
-                if ((s8)c == 0x5f) {
+                if (t == 0x5f) {
                     m = pat;
                 }
             }
         }
     }
-    c = *s;
+    c = *(u8 *)s;
     s++;
-    if (c != 0x5f) {
+    if ((s8)c != 0x5f) {
         return 0;
     }
-    for (;;) {
-        c = *s;
-        if ((s8)c == 0) {
-            break;
-        }
+    while (*s != 0) {
         s++;
     }
-    return (u8)((s8)s[-1] == 0x5f);
+    return (u8)(s[-1] == 0x5f);
 }
 
 void fn_8006DA5C(s32 *arg0, s32 arg1) {
