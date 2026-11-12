@@ -4603,12 +4603,12 @@ void fn_800673E4(void *arg0, void *arg1) {
     }
 }
 
-void fn_80067440(void) {
-    extern s32 lbl_80366DDC;
-    if (lbl_80366DDC != 0) {
-        return;
+void *fn_80067440(s32 arg0) {
+    extern void *lbl_80366DDC;
+    if (lbl_80366DDC == NULL) {
+        return NULL;
     }
-    lbl_80366DDC = 0;
+    return (u8 *)lbl_80366DDC + arg0 * 0x2c;
 }
 
 #pragma peephole off
