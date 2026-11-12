@@ -2336,6 +2336,68 @@ s16 fn_801366E4(void *arg0) {
     return (s16) ((s32) ((s16) (M2C_FIELD(arg0, s16 *, 0x18) - M2C_FIELD(arg0, s16 *, 0x14)) - M2C_FIELD(arg0, s16 *, 0x5E)) / 32);
 }
 
+#pragma cplusplus on
+extern "C" void *fn_8013670C(void *arg0, s16 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    typedef struct {
+        u32 unk0;
+        ListNode node;
+    } DtorList;
+    typedef struct Owner {
+        void *vtbl;
+        u8 pad4[0x64];
+        DtorList list;
+        u8 pad78[4];
+        void *sub7C;
+        u8 pad80[0x24];
+        void *subA4;
+    } Owner;
+    void fn_80136F2C(void *, void *, void *, void *);
+    void fn_8013F2A4(void *, s32);
+    void fn_800C428C(void *);
+    extern u8 lbl_80291944[];
+    extern u8 lbl_80295478[];
+
+    ListNode *sp10;
+    ListNode *spC;
+    u8 sp8[4];
+    ListNode *end;
+    Owner *a0;
+
+    a0 = (Owner *)arg0;
+    if (arg0 != NULL) {
+        a0->vtbl = lbl_80291944;
+        if (&a0->subA4 != NULL) {
+            a0->subA4 = lbl_80295478;
+            ((Obj *)&a0->subA4)->v2();
+        }
+        if (&a0->sub7C != NULL) {
+            a0->sub7C = lbl_80295478;
+            ((Obj *)&a0->sub7C)->v2();
+        }
+        if (&a0->list != NULL) {
+            if (&a0->list != NULL) {
+                if (&a0->list != NULL) {
+                    end = &a0->list.node;
+                    sp10 = end;
+                    spC = end->next;
+                    fn_80136F2C(sp8, &a0->list, &spC, &sp10);
+                }
+            }
+        }
+        fn_8013F2A4(arg0, 0);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+#pragma cplusplus reset
+
 #pragma use_lmw_stmw on
 #pragma cplusplus on
 extern "C" void *fn_80136AC4(void *arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
@@ -4921,6 +4983,50 @@ void fn_8013B69C(void *arg0, s16 arg1) {
 s16 fn_8013B6A4(void *arg0) {
     return M2C_FIELD(arg0, s16 *, 0xD4);
 }
+
+#pragma cplusplus on
+extern "C" void *fn_8013B7E8(void *arg0, s16 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    extern u8 lbl_80291B70[];
+    extern u8 lbl_80295478[];
+    void fn_8013BA08(void *, void *, void *, void *);
+    void fn_8013F2A4(void *, s32);
+    void fn_800C428C(void *);
+    ListNode *sp10;
+    ListNode *spC;
+    u8 sp8[4];
+
+    if (arg0 != NULL) {
+        *(void **)arg0 = lbl_80291B70;
+        if ((u8 *)arg0 + 0xAC != NULL) {
+            *(void **)((u8 *)arg0 + 0xAC) = lbl_80295478;
+            ((Obj *)((u8 *)arg0 + 0xAC))->v2();
+        }
+        if ((u8 *)arg0 + 0x84 != NULL) {
+            *(void **)((u8 *)arg0 + 0x84) = lbl_80295478;
+            ((Obj *)((u8 *)arg0 + 0x84))->v2();
+        }
+        if ((u8 *)arg0 + 0x70 != NULL) {
+            if ((u8 *)arg0 + 0x70 != NULL) {
+                if ((u8 *)arg0 + 0x70 != NULL) {
+                    sp10 = (ListNode *)((u8 *)arg0 + 0x74);
+                    spC = *(ListNode **)((u8 *)arg0 + 0x78);
+                    fn_8013BA08(sp8, (u8 *)arg0 + 0x70, &spC, &sp10);
+                }
+            }
+        }
+        fn_8013F2A4(arg0, 0);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+#pragma cplusplus reset
 
 void fn_8013BA08(void **ret, s32 *list, void **start, void **end) {
     struct Node {
