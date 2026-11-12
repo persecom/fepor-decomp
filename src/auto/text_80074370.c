@@ -1620,12 +1620,17 @@ void fn_8007788C(void) {
 }
 
 s32 fn_800778B8(void) {
-    u8 fn_800BE968(M2C_UNK, u8, u8);
-    extern M2C_UNK lbl_802EF4C8;
-    if ((s8) M2C_FIELD(&lbl_802EF4C8, u8 *, 0x12) != 0) {
+    u8 fn_800BE968(s32, u8, u8);
+    extern u8 lbl_802EF4C8[];
+    u8 *p;
+    u8 *obj;
+
+    p = lbl_802EF4C8;
+    if ((s8)p[0x12] != 0) {
         return 3;
     }
-    return 3 & -((fn_800BE968(9, M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 0), u8 *, 0x19E), M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 0), u8 *, 0x19F)) == 0) & 1);
+    obj = *(u8 **)p;
+    return (fn_800BE968(9, obj[0x19E], obj[0x19F]) == 0) ? 3 : 0;
 }
 
 s32 fn_8007791C(void) {
