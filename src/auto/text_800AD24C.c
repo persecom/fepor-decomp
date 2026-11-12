@@ -3301,8 +3301,9 @@ u8 fn_800B719C(u8 arg0) {
     return fn_800F32A4();
 }
 
-void *fn_800B7200(void) {
-    return (u8 *)0x8031FFC4;
+u8 fn_800B7200(void) {
+    extern u8 lbl_8031FFC0[];
+    return lbl_8031FFC0[0xa];
 }
 
 s32 fn_800B7210(void) {
