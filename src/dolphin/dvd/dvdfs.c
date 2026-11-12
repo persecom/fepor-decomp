@@ -562,6 +562,7 @@ s32 fn_8020D1C8(u32 arg0) {
 }
 
 void fn_8020D27C(u32 arg0) {
+    /* cbForStateGettingError */
     void __DVDStoreErrorCode(u32);
     void DVDReset(void);
     void cbForStateError(u32);
@@ -602,19 +603,23 @@ void fn_8020D27C(u32 arg0) {
         cbForStateError(0);
         return;
     }
+
     if (arg0 & 2) {
         __DVDStoreErrorCode(0x01234567);
         DVDLowStopMotor(cbForStateError);
         return;
     }
+
     temp_r29 = *(u32 *)0xCC006020;
     temp_r28 = temp_r29 & 0xFF000000;
     temp_r31 = fn_8020D1C8(temp_r29);
+
     if (temp_r31 == 1) {
         __DVDStoreErrorCode(temp_r29);
         DVDLowStopMotor(cbForStateError);
         return;
     }
+
     if ((u32)(temp_r31 - 2) <= 1) {
         var_r4 = 0;
     } else if (temp_r28 == 0x01000000) {
@@ -626,6 +631,7 @@ void fn_8020D27C(u32 arg0) {
     } else {
         var_r4 = 5;
     }
+
     if (lbl_803685B8 != 0) {
         zero = 0;
         ResumeFromHere_803685C0 = var_r4;
@@ -633,46 +639,60 @@ void fn_8020D27C(u32 arg0) {
         lbl_803685B8 = zero;
         executing_80368598 = DummyCommandBlock_80339F80;
         temp_r30->state = 0xA;
+
         if (temp_r30->callback != NULL) {
             temp_r30->callback(-3, temp_r30);
         }
+
         if (lbl_803685BC != NULL) {
             lbl_803685BC((void *)0, temp_r30);
         }
+
         stateReady();
         var_r0 = 1;
     } else {
         var_r0 = 0;
     }
+
     if (var_r0 == 0) {
         if (temp_r31 == 2) {
             __DVDStoreErrorCode(temp_r29);
             fn_8020D5BC();
             return;
         }
+
         if (temp_r31 == 3) {
             if ((temp_r29 & 0xFFFFFF) == 0x031100) {
-                fn_8020BD68(*(u32 *)((u8 *)executing_80368598 + 0x10), (void *)fn_8020D4E0, executing_80368598);
+                fn_8020BD68(
+                    *(u32 *)((u8 *)executing_80368598 + 0x10),
+                    (void *)fn_8020D4E0,
+                    executing_80368598
+                );
                 return;
             }
+
             lbl_803685E0(executing_80368598);
             return;
         }
+
         if (temp_r28 == 0x01000000) {
             ((DVDReadyCommand *)executing_80368598)->state = 5;
             fn_8020DD7C();
             return;
         }
+
         if (temp_r28 == 0x02000000) {
             ((DVDReadyCommand *)executing_80368598)->state = 3;
             fn_8020DC14();
             return;
         }
+
         if (temp_r28 == 0x03000000) {
             ((DVDReadyCommand *)executing_80368598)->state = 4;
             fn_8020DD7C();
             return;
         }
+
         __DVDStoreErrorCode(0x01234567);
         DVDLowStopMotor(cbForStateError);
     }
