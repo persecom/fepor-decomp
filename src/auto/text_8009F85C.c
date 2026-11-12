@@ -809,9 +809,8 @@ u32 fn_800A0568(void) {
 }
 
 void *fn_800A0584(void) {
-    extern u16 lbl_8026D8D8;
-    void *ptr = &lbl_8026D8D8;
-    return (void *)((u32)ptr + 0x444);
+    extern u16 lbl_8026D8D8[];
+    return (u8 *)lbl_8026D8D8 + 0x444;
 }
 
 s32 fn_800A0594(void) {
