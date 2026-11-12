@@ -5695,8 +5695,8 @@ void *fn_8013E3D4(void *arg0, s16 arg1) {
 }
 
 void *fn_8013E440(void) {
-    extern void *lbl_80276908;
-    return (char *)lbl_80276908 + 0x9F;
+    extern u16 lbl_80276908[];
+    return (u8 *)lbl_80276908 + 0x9f;
 }
 
 s32 fn_8013E450(void) {
@@ -6269,14 +6269,13 @@ void fn_8013FC00(void *arg0, void *arg1) {
 }
 
 #pragma scheduling off
-void fn_8013FC14(void *arg0, void *arg1) {
-    s16 src0;
-    s16 src1;
-
-    src0 = *(s16 *)((u8 *)arg1 + 0);
-    src1 = *(s16 *)((u8 *)arg1 + 2);
-    *(s16 *)((u8 *)arg0 + 0) = src0;
-    *(s16 *)((u8 *)arg0 + 2) = src1;
+void fn_8013FC14(s16 *dst, s16 *src) {
+    s16 b;
+    s16 a;
+    a = src[0];
+    b = src[1];
+    dst[0] = a;
+    dst[1] = b;
 }
 
 void fn_8013FC28(void *arg0, void *arg1, void *arg2)
