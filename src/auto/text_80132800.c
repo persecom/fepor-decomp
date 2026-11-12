@@ -5902,8 +5902,8 @@ s32 fn_8013E7E8(s32 unused, void *arg1) {
 }
 
 void *fn_8013E7F4(void) {
-    extern u16 lbl_80276908;
-    return (u16 *)((u32)&lbl_80276908 + 0x13e);
+    extern u16 lbl_80276908[];
+    return (u8 *)lbl_80276908 + 0x9f;
 }
 
 void *fn_8013E804(void) {
