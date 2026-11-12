@@ -70,9 +70,11 @@ void fn_80098C04(void *arg0) {
     u8 fn_801A2690();
     extern u8 lbl_802EF4C8[];
     extern u8 lbl_80330EAC[];
-    u8 *base;
+    s8 *p;
     s32 var_r31;
     u32 temp_r3;
+    s32 a;
+    s32 b;
 
     M2C_FIELD(arg0, s8 *, 0x40) = 0;
     M2C_FIELD(arg0, s8 *, 0x41) = 0;
@@ -91,8 +93,10 @@ void fn_80098C04(void *arg0) {
         M2C_FIELD(arg0, s8 *, 0x34) = 1;
         temp_r3 = fn_80040844();
         if (temp_r3 != 0U) {
-            base = lbl_802EF4C8;
-            M2C_FIELD(arg0, s32 *, 0x30) = fn_8004721C(temp_r3, (s8) base[0xF], (s8) base[0x10], 0x1000, 0x10);
+            p = (s8 *)lbl_802EF4C8;
+            a = p[0xF];
+            b = p[0x10];
+            M2C_FIELD(arg0, s32 *, 0x30) = fn_8004721C(temp_r3, a, b, 0x1000, 0x10);
         } else {
             M2C_FIELD(arg0, s32 *, 0x30) = 0;
         }
