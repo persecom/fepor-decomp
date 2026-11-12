@@ -2315,12 +2315,11 @@ void fn_800A3964(void *arg0) {
     *(void **)arg0 = lbl_8028A478;
 }
 
-void fn_800A3980(void **arg0) {
-    extern u32* lbl_8028459C;
-    extern u32* lbl_8028A42C;
-    
-    *(u32*)arg0 = (u32)lbl_8028459C;
-    *((u32*)arg0 + 1) = (u32)lbl_8028A42C;
+void fn_800A3980(void *arg0) {
+    extern u8 lbl_8028459C[];
+    extern u8 lbl_8028A42C[];
+    *(void **)arg0 = lbl_8028459C;
+    *(void **)arg0 = lbl_8028A42C;
 }
 extern u16 lbl_8026D8D8;
 extern u16 lbl_8026D8D8;
