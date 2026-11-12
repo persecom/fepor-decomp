@@ -2433,16 +2433,28 @@ s32 fn_800B4FF8(u8 *arg0, u8 *arg1) {
     return 0;
 }
 
-s32 fn_800B503C(void *arg0, s32 arg1) {
-    s32 temp_r4 = M2C_FIELD(arg0, s32 *, 0x74);
-    
-    if (temp_r4 == 0) {
-        return 0;
+void fn_800B503C(void) {
+    void *fn_800C4638(s32, void *, s32);
+    void *memset(void *, s32, u32);
+    s32 fn_8020A558(void *, void *, s32, void *, s32, s32, s32);
+    void fn_8020A9E0(void *);
+    void OSReport(char *, ...);
+    void fn_800B50E4(void);
+    extern u8 lbl_8026EC50[];
+    extern u8 *lbl_80367820;
+    extern u8 lbl_80319EC0[];
+    extern u8 lbl_80319BA8[];
+    void *ptr;
+
+    ptr = fn_800C4638(0x9800, lbl_8026EC50 + 0x3A, 0);
+    lbl_80367820 = ptr;
+    memset(ptr, 0, 0x9800);
+    if (fn_8020A558(lbl_80319BA8, fn_800B50E4, 0, lbl_80319EC0 + 0x4000, 0x4000, 0x10, 1) == 0) {
+        OSReport((char *)(lbl_8026EC50 + 0x3B));
+        for (;;) {
+        }
     }
-    if ((*(u16*)(arg1 + 0x98) - 1U) > 0xFFFF) {
-        return 0;
-    }
-    return temp_r4;
+    fn_8020A9E0(lbl_80319BA8);
 }
 
 void fn_800B50E4(void) {
