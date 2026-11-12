@@ -1255,20 +1255,20 @@ void fn_800B1CB0(s32 arg0, s32 arg1)
 void fn_800B1D0C(s32 arg0, s32 arg1)
 {
     extern u8 lbl_80317338[];
-    extern void fn_8024B654(s32, s32, s32);
+    void fn_8024B654(s32, s32, s32);
+    u8 *base;
+    s32 off;
+    u32 value;
 
-    u8 *entry;
-    s32 value;
+    base = *(u8 **)(lbl_80317338 + 0xF4);
+    off = arg0 * 0x14;
+    value = *(u32 *)(base + off + 0xC);
 
-    entry = *(u8 **)(lbl_80317338 + 0xF4) + arg0 * 0x14;
-    value = *(s32 *)(entry + 0xC);
-
-    if (value != -1) {
+    if (value != 0xFFFFFFFFu) {
         if ((u8)arg1 > 0x7F) {
             arg1 = 0x7F;
         }
-
-        fn_8024B654(value, 0x5B, arg1);
+        fn_8024B654((s32)value, 0x5B, arg1);
     }
 }
 
