@@ -914,36 +914,26 @@ void fn_801517C8(void *arg0) {
 }
 
 void fn_801517F4(void *arg0) {
-    extern f32 lbl_8036A850;
     extern f32 lbl_8036A860;
-
-    f32 fn_802031E8(f32 *, f32 *);
-    f32 fn_80203270(f32 *, f32 *);
+    void fn_802031E8(f32 *, f32 *);
+    f64 fn_80203270(f32 *, f32 *);
     f64 fn_80238788(f64);
-
-    u8 *obj;
     f32 vec1[3];
     f32 vec2[3];
-    f32 dot;
-    f32 angle;
+    f32 *p;
+    f32 dx;
 
-    obj = (u8 *)arg0;
-
-    vec1[0] = *(f32 *)(obj + 0xB4) - *(f32 *)(obj + 0x48);
-    vec1[1] = lbl_8036A850;
-    vec1[2] = lbl_8036A850;
-
-    vec2[0] = vec1[0];
-    vec2[1] = *(f32 *)(obj + 0xB8) - *(f32 *)(obj + 0x4C);
-    vec2[2] = *(f32 *)(obj + 0xBC) - *(f32 *)(obj + 0x50);
-
-    fn_802031E8(vec1, vec1);
+    p = vec1;
+    dx = *(f32 *)((u8 *)arg0 + 0xB4) - *(f32 *)((u8 *)arg0 + 0x48);
+    p[1] = 0.0f;
+    p[2] = 0.0f;
+    p[0] = dx;
+    vec2[0] = dx;
+    vec2[1] = *(f32 *)((u8 *)arg0 + 0xB8) - *(f32 *)((u8 *)arg0 + 0x4C);
+    vec2[2] = *(f32 *)((u8 *)arg0 + 0xBC) - *(f32 *)((u8 *)arg0 + 0x50);
+    fn_802031E8(p, p);
     fn_802031E8(vec2, vec2);
-
-    dot = fn_80203270(vec1, vec2);
-    angle = (f32)fn_80238788(dot);
-
-    *(f32 *)(obj + 0x54) = lbl_8036A860 * angle;
+    *(f32 *)((u8 *)arg0 + 0x54) = lbl_8036A860 * (f32)fn_80238788(fn_80203270(vec1, vec2));
 }
 
 void fn_80151894(void *arg0) {
