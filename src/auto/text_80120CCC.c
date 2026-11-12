@@ -296,16 +296,14 @@ extern "C" void fn_80121754(void) {
         virtual void v6(s32) = 0;
     };
     Obj *obj;
-    Obj **slot;
 
-    slot = (Obj **)&lbl_8032BDE8[0x4018];
-    obj = *slot;
-    if (*slot != NULL) {
+    obj = *(Obj **)&lbl_8032BDE8[0x4018];
+    if (obj != NULL) {
         if (obj != NULL) {
             obj->v6(1);
         }
-        *slot = (Obj *)0;
     }
+    *(Obj **)&lbl_8032BDE8[0x4018] = (Obj *)0;
 }
 #pragma cplusplus reset
 
@@ -614,18 +612,24 @@ void fn_80122170(u32 *arg0) {
     }
 }
 
-void fn_801221E4(void *arg0)
+void fn_801221E4(s32 arg0)
 {
-    extern unsigned short lbl_80367A58;
-    extern unsigned short lbl_80367110;
+    void fn_80120CFC(u16 *);
+    void fn_80120C2C(void);
+    void fn_8000C188(s32);
+    extern u16 lbl_80367A58;
+    extern u32 lbl_80367110;
 
-    fn_80120CFC(lbl_80367A58);
+    fn_80120CFC(&lbl_80367A58);
     fn_80120C2C();
 
-    if ((lbl_80367A58 & 0x0200) == 0 &&
-        (lbl_80367110 & 3) != 0) {
-        fn_8000C188(arg0);
+    if (lbl_80367A58 & 0x0200) {
+        return;
     }
+    if ((lbl_80367110 & 3) == 0) {
+        return;
+    }
+    fn_8000C188(arg0);
 }
 
 void fn_80122238(void *arg0)
