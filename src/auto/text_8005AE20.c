@@ -2581,39 +2581,14 @@ u32 fn_800604C8(void *arg0) {
 
 u32 fn_800604F4(void *arg0) {
     void *current = arg0;
-    u32 r0;
 
-    if (current == NULL) {
-        return 0U;
+    while (current != NULL) {
+        u32 temp = *(u32 *)((char *)current + 0x6C);
+        if (temp != 0U) {
+            return temp;
+        }
+        current = *(void **)((char *)current + 4);
     }
-
-    r0 = M2C_FIELD(current, u32 *, 0x6C);
-    if (r0 != 0U) {
-        return r0;
-    }
-    current = M2C_FIELD(current, void **, 4);
-    if (current == NULL) {
-        return 0U;
-    }
-
-    r0 = M2C_FIELD(current, u32 *, 0x6C);
-    if (r0 != 0U) {
-        return r0;
-    }
-    current = M2C_FIELD(current, void **, 4);
-    if (current == NULL) {
-        return 0U;
-    }
-
-    r0 = M2C_FIELD(current, u32 *, 0x6C);
-    if (r0 != 0U) {
-        return r0;
-    }
-    current = M2C_FIELD(current, void **, 4);
-    if (current == NULL) {
-        return 0U;
-    }
-
     return 0U;
 }
 
