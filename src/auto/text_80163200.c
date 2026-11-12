@@ -5600,6 +5600,7 @@ void fn_8016ECDC(void) {
 
 void fn_8016ED6C(s32 arg0) {
     M2C_UNK fn_80183BE4(void *, s32);
+    u8 fn_80091D74(void *);
     void *temp_r31;
     void *temp_r30;
 
