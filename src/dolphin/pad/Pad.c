@@ -776,6 +776,71 @@ s32 fn_80213904(void) {
     return *(s32 *)0xCC006C00 & 1;
 }
 
+void fn_80213914(u32 arg0) {
+    u32 fn_802139F4(void);
+    u32 fn_80213B08(void);
+    u32 fn_80213B34(void);
+    u32 fn_80213ADC(void);
+    void fn_80213AEC(u32);
+    void fn_80213B18(u32);
+    u32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(u32);
+    void fn_80213E30(void);
+
+    volatile u32 *reg;
+    u32 old0;
+    u32 old1;
+    u32 old2;
+    u32 old3;
+    u32 interrupts;
+    u32 value;
+
+    if (arg0 != fn_802139F4()) {
+        reg = (volatile u32 *)0xCC006C00;
+
+        value = *reg;
+        *reg = value & ~0x40;
+
+        if (arg0 == 0) {
+            old0 = fn_80213B08();
+            old1 = fn_80213B34();
+            old2 = *reg & 1;
+            old3 = fn_80213ADC();
+
+            fn_80213AEC(0);
+            fn_80213B18(0);
+
+            interrupts = OSDisableInterrupts();
+
+            fn_80213E30();
+
+            value = *reg;
+            value &= ~0x20;
+            value |= 0x20;
+            *reg = value;
+
+            value = *reg;
+            value &= ~2;
+            value |= old3 << 1;
+            *reg = value;
+
+            value = *reg;
+            value &= ~1;
+            value |= old2;
+            *reg = value;
+
+            value = *reg;
+            value |= 0x40;
+            *reg = value;
+
+            OSRestoreInterrupts(interrupts);
+
+            fn_80213AEC(old0);
+            fn_80213B18(old1);
+        }
+    }
+}
+
 s32 fn_802139F4(void) {
     return (((u32) *(u32 *)0xCC006C00 >> 6U) & 1) ^ 1;
 }
@@ -868,6 +933,75 @@ void fn_80214338(void) {
 
 s32 fn_80214358(void) {
     return *(u16 *)0xCC00500A & 0x20;
+}
+
+extern u32 lbl_803686E0;
+extern u32 lbl_803686E4;
+void DCFlushRange(void *, u32);
+void DCInvalidateRange(void *, u32);
+void *memset(void *, int, u32);
+void fn_802037B0(void);
+void fn_80214368(void) {
+    volatile u16 *regs;
+    u32 *bufA;
+    u32 *bufB;
+    u32 fill0;
+    u32 fill1;
+    u32 *slots[6];
+    u32 saved[6];
+    u32 tmp;
+    u32 i;
+    u8 stack[0x2C0] __attribute__((aligned(32)));
+    typedef struct { u8 pad[0xA]; u16 val; } PadReg;
+    volatile PadReg *p;
+    u16 v;
+
+    regs = __PADRegs;
+    if ((regs[0x0B] & 1) == 0) {
+        return;
+    }
+
+    fill0 = 0xDEADBEF;
+    fill1 = 0xBAD0BAD0;
+    bufA = (u32 *)((u32)stack + 0x1E0);
+    bufB = (u32 *)((u32)stack + 0x1A0);
+    for (i = 0; i < 8; i++) {
+        bufA[i] = fill0;
+        bufB[i] = fill1;
+    }
+
+    lbl_803686E0 = 0x100;
+    regs[9] = (u16)((regs[9] & ~0x3F) | 0x23);
+
+    slots[0] = (u32 *)((u32)stack + 0x20);
+    slots[1] = (u32 *)((u32)stack + 0x60);
+    slots[2] = (u32 *)((u32)stack + 0xA0);
+    slots[3] = (u32 *)((u32)stack + 0xC0);
+    slots[4] = (u32 *)((u32)stack + 0xE0);
+    slots[5] = (u32 *)((u32)stack + 0x160);
+
+    DCFlushRange(bufA, 0x20);
+    DCFlushRange(bufB, 0x20);
+    lbl_803686E4 = 0;
+    DCInvalidateRange(slots[4], 0x20);
+
+    regs[0x10] = (u16)((regs[0x10] & 0xFC00) | ((u32)slots[4] >> 16));
+    regs[0x11] = (u16)((regs[0x11] & 0x001F) | (u16)(u32)slots[4]);
+    regs[0x12] = (u16)((regs[0x12] & 0xFC00) | 0x10);
+    regs[0x13] = (u16)((regs[0x13] & 0x001F) | 0);
+    regs[0x14] = regs[0x14] | 0x8000;
+    regs[0x14] = (u16)(regs[0x14] & 0x03FF);
+    regs[0x15] = (u16)((regs[0x15] & 0x001F) | 0x20);
+
+    p = (volatile PadReg *)regs;
+    if ((p->val & 0x400) == 0) {
+        v = p->val;
+        p->val = (u16)((v & ~0x77) | 0x20);
+        fn_802037B0();
+    } else {
+        memset(slots[5], 0, 0x20);
+        DCFlushRange(slots[5], 0x20);
+    }
 }
 
 void fn_80215C5C(void) {

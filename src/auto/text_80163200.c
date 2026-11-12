@@ -5798,6 +5798,25 @@ void fn_8016F4D0(void *arg0) {
     fn_8000C188(arg0);
 }
 
+void fn_8016F55C(void *arg0) {
+    void fn_8000A408(void *);
+    void fn_8013FED0(void *);
+    void fn_80231D94(void *, void *, ...);
+    s32 fn_8000D354(void *);
+    void fn_80190D9C(void *, s32);
+    extern u16 lbl_80278080[];
+    extern u8 lbl_80330708[];
+    s32 base;
+    void *fmt;
+
+    fn_8000A408(*(void **)((u8 *)arg0 + 0x5C));
+    fn_8013FED0(arg0);
+    base = (s32)lbl_80278080;
+    fmt = (void *)(base + 0x16C);
+    fn_80231D94(fmt, (void *)(base + 0x17C), lbl_80330708[0x10]);
+    fn_80190D9C(arg0, fn_8000D354(fmt));
+}
+
 void fn_8016F5DC(void *arg0) {
     M2C_UNK fn_8013FF00(void *, s32);
     s32 fn_8013FF94(void *, M2C_UNK, M2C_UNK);

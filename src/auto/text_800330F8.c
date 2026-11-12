@@ -11411,11 +11411,49 @@ void fn_800508C4(void* arg0, s32 arg1, s32 arg2) {
     }
 }
 
-void fn_80050AB8(s8 arg0) {
-    extern void *lbl_80367100;
-    *(u16*)((char*)lbl_80367100 + 0x18) = (u16)arg0;
-}
+#pragma global_optimizer off
+void *fn_80050AB8(void *arg0) {
+    void fn_800056A0(s32);
+    void *fn_8000D354(void *);
+    u8 fn_80105BC0(void *, s32);
+    extern u8 lbl_8026AB18[];
+    void *result;
+    void *base;
+    s32 idx;
+    void *r;
 
+    r = *(void **)((u8 *)arg0 + 0x18C);
+    base = r;
+    if (*(u8 *)((u8 *)arg0 + 3) & 4) {
+        r = *(void **)((u8 *)r + 0xC);
+        if (r != 0) {
+            r = fn_8000D354(r);
+        } else {
+            r = 0;
+        }
+        base = r;
+    }
+    idx = 0;
+    if (fn_80105BC0((u8 *)arg0 + 0x1BC, 8) != 0) {
+        if (fn_80105BC0((u8 *)base + 0x1C, 9) != 0) {
+            idx = 1;
+        }
+    } else if (fn_80105BC0((u8 *)base + 0x1C, 2) != 0) {
+        idx = 1;
+    }
+    result = *(void **)((u8 *)arg0 + 0x188);
+    result = (void *)((u8 *)result + (idx * 4));
+    result = *(void **)((u8 *)result + 0x5C);
+    if (result == 0) {
+        result = *(void **)((u8 *)base + 0x18);
+        if (result == 0) {
+            fn_800056A0(0);
+            result = lbl_8026AB18 + 0x52;
+        }
+    }
+    return result;
+}
+#pragma global_optimizer on
 void fn_80050BA8(s32 arg0) {
     M2C_UNK fn_8005F788(s32);
     fn_8005F788(arg0 + 0x1C);

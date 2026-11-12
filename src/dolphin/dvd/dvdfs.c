@@ -919,6 +919,62 @@ void fn_8020D8D4(void) {
     fn_8020BAD0(BB2_80339F40, 0x20, 0x420, fn_8020DA08);
 }
 
+void fn_8020D90C(u32 arg0) {
+    void __DVDStoreErrorCode(u32);
+    void DVDReset(void);
+    void cbForStateError(u32);
+    void DVDLowStopMotor(void (*)(u32));
+    void fn_8020DD7C(void);
+
+    extern s32 lbl_803685CC;
+    extern u32 lbl_803685B8;
+    extern s32 ResumeFromHere_803685C0;
+    extern void *executing_80368598;
+    extern u8 DummyCommandBlock_80339F80[];
+    extern void (*lbl_803685BC)(void *, void *);
+
+    DVDReadyCommand *block;
+
+    if (arg0 == 0x10) {
+        __DVDStoreErrorCode(0x01234568);
+        DVDReset();
+        cbForStateError(0);
+        return;
+    }
+
+    if (arg0 & 2) {
+        __DVDStoreErrorCode(0x01234567);
+        DVDLowStopMotor(cbForStateError);
+        return;
+    }
+
+    lbl_803685CC = 0;
+
+    if (lbl_803685B8 != 0) {
+        block = (DVDReadyCommand *)executing_80368598;
+
+        ResumeFromHere_803685C0 = 1;
+        executing_80368598 = DummyCommandBlock_80339F80;
+        lbl_803685B8 = 0;
+
+        block->state = 10;
+
+        if (block->callback != 0) {
+            block->callback(-3, block);
+        }
+
+        if (lbl_803685BC != 0) {
+            lbl_803685BC(0, block);
+        }
+
+        stateReady();
+        return;
+    }
+
+    ((DVDReadyCommand *)executing_80368598)->state = 6;
+    fn_8020DD7C();
+}
+
 void AlarmHandler(void *alarm, void *context) {
     void DVDReset(void);
     void DCInvalidateRange(void *, u32);

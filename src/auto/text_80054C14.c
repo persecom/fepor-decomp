@@ -296,28 +296,22 @@ void fn_80054C14(void* arg0)
     __builtin_unreachable();
 }
 
-void *fn_80055204(void *arg0, s32 arg1)
-{
-    u8 *ptr;
-    u8 *base;
+void *fn_80055204(void *arg0, s32 arg1) {
+    u8 *p;
 
     if (arg0 == 0) {
         return 0;
     }
-
-    ptr = (u8 *)arg0 + 0x28C;
-
-    if (ptr == 0) {
+    arg0 = (u8 *)arg0 + 0x28C;
+    if (arg0 == 0) {
         return 0;
     }
-
-    base = *(u8 **)ptr;
-
-    if (base == 0) {
-        return 0;
+    arg0 = *(void **)arg0;
+    if (arg0 != 0) {
+        p = (u8 *)arg0 + (arg1 << 2);
+        return *(void **)(p + 0x40);
     }
-
-    return *(void **)(base + 0x40 + (arg1 << 2));
+    return 0;
 }
 
 #pragma global_optimizer off

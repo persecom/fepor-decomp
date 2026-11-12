@@ -299,6 +299,41 @@ loop_5:
     return var_r0;
 }
 
+s32 fn_802267FC(void *arg0, void *arg1, u32 arg2)
+{
+    void fn_80003488(void *, void *, s32);
+
+    u32 offset;
+    u32 remaining;
+    u32 length;
+    s32 result;
+
+    result = 0;
+    length = arg2;
+
+    if (length == 0) {
+        return 0;
+    }
+
+    offset = *(u32 *)((u8 *)arg0 + 0xC);
+    remaining = *(u32 *)((u8 *)arg0 + 8) - offset;
+
+    if (length > remaining) {
+        result = 0x302;
+        length = remaining;
+    }
+
+    fn_80003488(
+        arg1,
+        (u8 *)arg0 + offset + 0x10,
+        length
+    );
+
+    *(u32 *)((u8 *)arg0 + 0xC) += length;
+
+    return result;
+}
+
 s32 fn_80226888(void *arg0, u8 *arg1, u32 arg2) {
     s32 temp_r3;
     s32 var_r31;
@@ -1515,7 +1550,6 @@ u8 fn_8022A4E0(s32 command, s32 file_handle, s32 *length_ptr, s32 buffer_ptr) {
 }
 
 void fn_8022A4E8(void) {
-    return;
 }
 
 void InitMetroTRK_BBA(void) {

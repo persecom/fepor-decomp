@@ -3,18 +3,19 @@
 #include "common.h"
 
 void fn_8005ADE4(void) {
-    extern u16 lbl_80285C18[36];
-    extern u16 lbl_802F0308[36];
-    extern u16 lbl_802F0350[36];
-    extern u16 lbl_80285CCC[38];
-    extern u16 lbl_80285C84[36];
+    extern u8 lbl_80285C18[];
+    extern u8 lbl_802F0308[];
+    extern u8 lbl_80285CCC[];
+    extern u8 lbl_802F0350[];
+    extern u8 lbl_80285C84[];
+    void *a = lbl_80285C18;
+    void *b = lbl_802F0308;
+    void *c = lbl_80285CCC;
+    void *d = lbl_802F0350;
+    void *e = lbl_80285C84;
 
-    s32 r7 = (s32)lbl_80285C18;
-    s32 r6 = (s32)lbl_802F0308;
-    s32 r5 = (s32)lbl_802F0350;
-    
-    lbl_802F0308[22] = (u16)r7;
-    lbl_802F0350[22] = (u16)r7;
-    lbl_802F0308[22] = (u16)r5;
-    lbl_802F0350[22] = (u16)r6;
+    *(void **)((u8 *)b + 0x44) = a;
+    *(void **)((u8 *)d + 0x44) = a;
+    *(void **)((u8 *)b + 0x44) = c;
+    *(void **)((u8 *)d + 0x44) = e;
 }

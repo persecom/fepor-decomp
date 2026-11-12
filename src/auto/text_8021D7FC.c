@@ -156,6 +156,535 @@ void *fn_8021D8F8(u32 arg0)
     return result;
 }
 
+#pragma use_lmw_stmw on
+void *GXInit(void *base, u32 size) {
+    void OSRegisterVersion(char *);
+    void GXSetMisc(u32, u32);
+    void __GXFifoInit(void);
+    void GXInitFifoBase(void *, void *, u32);
+    void GXSetCPUFifo(void *);
+    void GXSetGPFifo(void *);
+    void OSRegisterResetFunction(void *);
+    void __GXPEInit(void);
+    u32 PPCMfhid2(void);
+    void PPCMtwpar(u32);
+    void PPCMthid2(u32);
+    void __GXFlushTextureState(void);
+    void __GXInitRevisionBits(void);
+    void GXInitTexCacheRegion(void *, u8, u32, u8, u32, u8);
+    void GXInitTlutRegion(void *, u32, u32);
+    void __GXSetIndirectMask(u32);
+    void __GXSetTmemConfig(u32);
+    void __GXInitGX(void);
+    extern char *__GXVersion;
+    extern u8 *__GXData;
+    extern u16 *__cpReg;
+    extern void *__piReg;
+    extern void *__peReg;
+    extern void *__memReg;
+    extern u8 FifoObj_8033A440[];
+    extern u8 GXResetFuncInfo_8029DDCC[];
+    extern u32 GXTexRegionAddrTable_8029DD0C[];
+
+    static u32 resetFuncRegistered;
+    void *fifo;
+    u8 *gx;
+    u32 i;
+    u32 hid;
+    u32 freq;
+    u32 *table;
+    u32 regOff;
+    u32 idx;
+    u32 a;
+    u32 b;
+    volatile u8 *wf8;
+    volatile u32 *wf32;
+
+    fifo = FifoObj_8033A440;
+    OSRegisterVersion(__GXVersion);
+    gx = __GXData;
+    gx[0x5A8] = 0;
+    gx[0x5A9] = 1;
+    gx[0x5AA] = 1;
+    *(u32 *)(gx + 0x594) = 0;
+    *(u32 *)(gx + 0x598) = 0;
+    GXSetMisc(1, 0);
+    __cpReg = (u16 *)0xCC000000;
+    __piReg = (void *)0xCC003000;
+    __peReg = (void *)0xCC001000;
+    __memReg = (void *)0xCC004000;
+    __GXFifoInit();
+    GXInitFifoBase(fifo, base, size);
+    GXSetCPUFifo(fifo);
+    GXSetGPFifo(fifo);
+    if (resetFuncRegistered == 0) {
+        OSRegisterResetFunction(GXResetFuncInfo_8029DDCC);
+        resetFuncRegistered = 1;
+    }
+    __GXPEInit();
+    hid = PPCMfhid2();
+    PPCMtwpar(0xC008000);
+    PPCMthid2(hid | 0x40000000);
+
+    gx = __GXData;
+    *(u32 *)(gx + 0x204) = 0;
+    *(u32 *)(gx + 0x204) = __rlwimi(*(u32 *)(gx + 0x204), 0, 24, 0, 7);
+    a = 0xC0;
+    *(u32 *)(gx + 0x124) = 0xFF;
+    b = 0xC1;
+    *(u32 *)(gx + 0x124) = __rlwimi(*(u32 *)(gx + 0x124), 0xF, 24, 0, 7);
+    *(u32 *)(gx + 0x7C) = 0;
+    *(u32 *)(gx + 0x7C) = __rlwimi(*(u32 *)(gx + 0x7C), 0x22, 24, 0, 7);
+
+    regOff = 0;
+    idx = 0;
+    for (i = 0; i < 8; i++) {
+        u32 h = idx >> 1;
+        u32 o130 = regOff + 0x130;
+        u32 o170 = regOff + 0x170;
+        u32 o100 = (h << 2) + 0x100;
+        u32 o1b0 = (h << 2) + 0x1B0;
+        u32 o554 = regOff + 0x554;
+        *(u32 *)(gx + o130) = 0;
+        *(u32 *)(gx + o170) = 0;
+        *(u32 *)(gx + o100) = 0;
+        *(u32 *)(gx + o554) = 0xFF;
+        *(u32 *)(gx + o130) = __rlwimi(*(u32 *)(gx + o130), a, 24, 0, 7);
+        idx += 1;
+        h = idx >> 1;
+        *(u32 *)(gx + o170) = __rlwimi(*(u32 *)(gx + o170), b, 24, 0, 7);
+        *(u32 *)(gx + o1b0) = __rlwimi(*(u32 *)(gx + o1b0), (idx - 1) / 2 + 0xF6, 24, 0, 7);
+        a += 2;
+        b += 2;
+        *(u32 *)(gx + o100) = __rlwimi(*(u32 *)(gx + o100), (idx - 1) / 2 + 0x28, 24, 0, 7);
+        regOff += 4;
+        o130 = regOff + 0x130;
+        o170 = regOff + 0x170;
+        o100 = (h << 2) + 0x100;
+        o1b0 = (h << 2) + 0x1B0;
+        o554 = regOff + 0x554;
+        *(u32 *)(gx + o130) = 0;
+        *(u32 *)(gx + o170) = 0;
+        *(u32 *)(gx + o100) = 0;
+        *(u32 *)(gx + o554) = 0xFF;
+        *(u32 *)(gx + o130) = __rlwimi(*(u32 *)(gx + o130), a, 24, 0, 7);
+        a += 2;
+        *(u32 *)(gx + o170) = __rlwimi(*(u32 *)(gx + o170), b, 24, 0, 7);
+        b += 2;
+        *(u32 *)(gx + o1b0) = __rlwimi(*(u32 *)(gx + o1b0), h + 0xF6, 24, 0, 7);
+        *(u32 *)(gx + o100) = __rlwimi(*(u32 *)(gx + o100), h + 0x28, 24, 0, 7);
+        regOff += 4;
+        idx += 1;
+    }
+
+    *(u32 *)(gx + 0x120) = 0;
+    *(u32 *)(gx + 0x120) = __rlwimi(*(u32 *)(gx + 0x120), 0x27, 24, 0, 7);
+    {
+        u32 off2 = 0;
+        u32 c = 0x30;
+        u32 d = 0x31;
+        for (i = 0; i < 2; i++) {
+            u32 n;
+            for (n = 0; n < 4; n++) {
+                u32 oB8 = off2 + 0xB8;
+                u32 oD8 = off2 + 0xD8;
+                *(u32 *)(gx + oB8) = 0;
+                *(u32 *)(gx + oD8) = 0;
+                *(u32 *)(gx + oB8) = __rlwimi(*(u32 *)(gx + oB8), c, 24, 0, 7);
+                c += 2;
+                *(u32 *)(gx + oD8) = __rlwimi(*(u32 *)(gx + oD8), d, 24, 0, 7);
+                d += 2;
+                off2 += 4;
+            }
+        }
+    }
+
+    gx = __GXData;
+    *(u32 *)(gx + 0xF8) = __rlwimi(*(u32 *)(gx + 0xF8), 0x20, 24, 0, 7);
+    *(u32 *)(gx + 0xFC) = __rlwimi(*(u32 *)(gx + 0xFC), 0x21, 24, 0, 7);
+    *(u32 *)(gx + 0x1D0) = __rlwimi(*(u32 *)(gx + 0x1D0), 0x41, 24, 0, 7);
+    *(u32 *)(gx + 0x1D4) = __rlwimi(*(u32 *)(gx + 0x1D4), 0x42, 24, 0, 7);
+    *(u32 *)(gx + 0x1D8) = __rlwimi(*(u32 *)(gx + 0x1D8), 0x40, 24, 0, 7);
+    *(u32 *)(gx + 0x1DC) = __rlwimi(*(u32 *)(gx + 0x1DC), 0x43, 24, 0, 7);
+    *(u32 *)(gx + 0x1FC) = __rlwimi(*(u32 *)(gx + 0x1FC), 0, 7, 23, 24);
+    *(f32 *)(gx + 0x510) = 16777216.0f;
+    *(f32 *)(gx + 0x50C) = 0.0f;
+    *(u32 *)(gx + 0x5AC) = 0;
+    gx[0x5AB] = 0;
+
+    freq = *(u32 *)0x800000F8 / 500U;
+    __GXFlushTextureState();
+    wf8 = (volatile u8 *)0xCC008000;
+    wf32 = (volatile u32 *)0xCC008000;
+    *wf8 = 0x61;
+    *wf32 = (freq >> 11) | 0x69000400;
+    __GXFlushTextureState();
+    *wf8 = 0x61;
+    *wf32 = (freq / 4224U) | 0x46000200;
+    __GXInitRevisionBits();
+
+    {
+        u32 *tbl = GXTexRegionAddrTable_8029DD0C;
+        u32 roff = 0;
+        for (i = 0; i < 8; i++) {
+            gx = __GXData;
+            GXInitTexCacheRegion(gx + 0x208 + roff, 0, tbl[0], 0, tbl[8], 0);
+            gx = __GXData;
+            GXInitTexCacheRegion(gx + 0x288 + roff, 0, tbl[16], 0, tbl[24], 0);
+            gx = __GXData;
+            GXInitTexCacheRegion(gx + 0x308 + roff, 1, tbl[32], 0, tbl[40], 0);
+            tbl += 1;
+            roff += 0x10;
+        }
+    }
+
+    {
+        u32 tmem = 0xC0000;
+        u32 roff = 0;
+        for (i = 0; i < 16; i++) {
+            gx = __GXData;
+            GXInitTlutRegion(gx + 0x388 + roff, tmem, 0x10);
+            tmem += 0x2000;
+            roff += 0x10;
+        }
+        tmem = 0xE0000;
+        for (i = 0; i < 4; i++) {
+            gx = __GXData;
+            GXInitTlutRegion(gx + 0x388 + ((i + 0x10) << 4), tmem, 0x40);
+            tmem += 0x8000;
+        }
+    }
+
+    *(u16 *)((u8 *)__cpReg + 6) = 0;
+    gx = __GXData;
+    *(u32 *)(gx + 0x5A4) = __rlwimi(*(u32 *)(gx + 0x5A4), 0, 4, 24, 27);
+    wf8 = (volatile u8 *)0xCC008000;
+    wf32 = (volatile u32 *)0xCC008000;
+    *wf8 = 8;
+    *wf8 = 0x20;
+    *wf32 = *(u32 *)(gx + 0x5A4);
+    *wf8 = 0x10;
+    *wf32 = 0x1006;
+    *wf32 = 0;
+    *wf8 = 0x61;
+    *wf32 = 0x23000000;
+    *wf8 = 0x61;
+    *wf32 = 0x24000000;
+    *wf8 = 0x61;
+    *wf32 = 0x67000000;
+    __GXSetIndirectMask(0);
+    __GXSetTmemConfig(2);
+    __GXInitGX();
+    return fifo;
+}
+
+void __GXInitGX(void) {
+    s32 VIGetTvFormat(void);
+    void fn_802217AC(void *, s32);
+    void fn_802201A8(s32, s32, s32, s32, s32, s32);
+    void fn_80220428(s32);
+    void fn_8021FBB8(void);
+    void fn_80220198(void);
+    void fn_80220154(s32, void *, s32);
+    void fn_8021FE4C(s32, void *);
+    void fn_80220F44(s32, s32);
+    void fn_80220F84(s32, s32);
+    void fn_80220FC4(s32, s32, s32);
+    void fn_80224D7C(f32 *, s32);
+    void fn_80224DCC(f32 *, s32);
+    void fn_80224E1C(s32);
+    void fn_80224E50(f32 *, s32, s32);
+    void fn_80224FEC(f32, f32, f32, f32, f32, f32);
+    void fn_80224CF0(void *);
+    void fn_80221034(s32);
+    void fn_8022100C(s32);
+    void fn_80225158(s32);
+    void fn_80225058(s32, s32, u16, u16);
+    void fn_80225118(s32, s32);
+    void fn_80222334(s32);
+    void fn_80222370(s32, s32, s32, s32, s32, s32, s32);
+    void fn_80222164(s32, void *);
+    void fn_8022224C(s32, void *);
+    void fn_80222EB4(void);
+    void fn_80222EFC(void *);
+    void fn_80222F10(void *);
+    void fn_80222644(void *, void *, s32, s32, s32, s32, s32, s32);
+    void fn_80222C50(void *, s32);
+    void fn_80223F2C(s32, s32, s32, s32);
+    void fn_802240C8(s32);
+    void fn_802239D0(s32, s32);
+    void fn_80223E5C(s32, s32, s32, s32, s32);
+    void fn_80223EA0(s32, s32, s32);
+    void fn_80223CDC(s32, s32);
+    void fn_80223D38(s32, s32);
+    void fn_80223D94(s32, s32, s32);
+    void fn_80223DDC(s32, s32, s32, s32, s32);
+    void fn_802238CC(s32);
+    void fn_802238A8(s32);
+    void fn_80223678(s32, s32, s32);
+    void fn_802240F0(s32, void *, f32, f32, f32, f32);
+    void fn_802244B4(s32, s32, s32);
+    void fn_802245D8(s32, s32, s32, s32);
+    void fn_8022462C(s32);
+    void fn_80224658(s32);
+    void fn_80224684(s32, s32, s32);
+    void fn_802246B8(s32);
+    void fn_802247C0(s32);
+    void fn_802247EC(s32, s32);
+    void fn_802246EC(s32, s32);
+    void fn_80224828(s32, s32);
+    void fn_80224860(u8, s32);
+    void fn_802211D0(s32, s32, u16, u16);
+    void fn_802212C8(u16, u16);
+    void fn_802216E0(u16, f32);
+    void fn_80221450(s32);
+    void fn_80221824(u8, void *, s32, void *);
+    void fn_80221A2C(s32);
+    void fn_8022142C(s32);
+    void fn_80221D34(void);
+    void fn_80220AD0(s32);
+    void fn_80220A54(s32);
+    void fn_80220B0C(s32);
+    void fn_80220A6C(s32, s32, s32, s32);
+    void fn_80220A20(s32, s32);
+    void fn_80220A34(s32);
+    void fn_80220AE8(s32, s32);
+    void fn_80220B24(s32, s32, s32);
+    void fn_80225204(s32, s32);
+    void fn_80225BF4(void);
+    void fn_8021D7FC(void);
+    void *fn_8021D8F8(u32);
+    extern u8 *__GXData;
+    extern u8 lbl_8029DBA0[];
+    extern GXRenderModeObj lbl_8029DFA8;
+    extern GXRenderModeObj lbl_8029E020;
+    extern GXRenderModeObj lbl_8029E05C;
+    extern GXRenderModeObj lbl_8029DFE4;
+    extern s32 lbl_8036BCB4;
+    extern s32 lbl_8036BCB8;
+    extern s32 lbl_8036BCBC;
+    extern f32 lbl_8036BCC0;
+    extern f32 lbl_8036BCC4;
+
+    s32 sp28;
+    s32 sp24;
+    s32 sp20;
+    s32 sp1C;
+    s32 sp18;
+    s32 sp14;
+    s32 sp10;
+    s32 spC;
+    s32 sp8;
+    f32 mtx[3][4];
+    u8 texObj[0x20];
+    u8 *base;
+    GXRenderModeObj *rmode;
+    u32 i;
+    s32 xfbm;
+
+    base = lbl_8029DBA0;
+    sp28 = lbl_8036BCB4;
+    sp24 = lbl_8036BCB8;
+    sp20 = lbl_8036BCBC;
+
+    switch (VIGetTvFormat()) {
+    case 0:
+        rmode = &lbl_8029DFA8;
+        break;
+    case 1:
+        rmode = &lbl_8029E020;
+        break;
+    case 5:
+        rmode = &lbl_8029E05C;
+        break;
+    case 2:
+        rmode = &lbl_8029DFE4;
+        break;
+    default:
+        rmode = &lbl_8029DFA8;
+        break;
+    }
+
+    sp1C = sp28;
+    fn_802217AC(&sp1C, 0xFFFFFF);
+
+    fn_802201A8(0, 1, 4, 0x3C, 0, 0x7D);
+    fn_802201A8(1, 1, 5, 0x3C, 0, 0x7D);
+    fn_802201A8(2, 1, 6, 0x3C, 0, 0x7D);
+    fn_802201A8(3, 1, 7, 0x3C, 0, 0x7D);
+    fn_802201A8(4, 1, 8, 0x3C, 0, 0x7D);
+    fn_802201A8(5, 1, 9, 0x3C, 0, 0x7D);
+    fn_802201A8(6, 1, 0xA, 0x3C, 0, 0x7D);
+    fn_802201A8(7, 1, 0xB, 0x3C, 0, 0x7D);
+
+    fn_80220428(1);
+    fn_8021FBB8();
+    fn_80220198();
+
+    i = 9;
+    do {
+        fn_80220154(i, __GXData, 0);
+        i += 1;
+    } while (i <= 0x18);
+
+    i = 0;
+    do {
+        fn_8021FE4C(i, base + 0x80);
+        i += 1;
+    } while (i < 8);
+
+    fn_80220F44(6, 0);
+    fn_80220F84(6, 0);
+    fn_80220FC4(0, 0, 0);
+    fn_80220FC4(1, 0, 0);
+    fn_80220FC4(2, 0, 0);
+    fn_80220FC4(3, 0, 0);
+    fn_80220FC4(4, 0, 0);
+    fn_80220FC4(5, 0, 0);
+    fn_80220FC4(6, 0, 0);
+    fn_80220FC4(7, 0, 0);
+
+    mtx[0][0] = lbl_8036BCC0;
+    mtx[0][1] = 0.0f;
+    mtx[0][2] = 0.0f;
+    mtx[0][3] = 0.0f;
+    mtx[1][0] = 0.0f;
+    mtx[1][1] = lbl_8036BCC0;
+    mtx[1][2] = 0.0f;
+    mtx[1][3] = 0.0f;
+    mtx[2][0] = 0.0f;
+    mtx[2][1] = 0.0f;
+    mtx[2][2] = lbl_8036BCC0;
+    mtx[2][3] = 0.0f;
+
+    fn_80224D7C(&mtx[0][0], 0);
+    fn_80224DCC(&mtx[0][0], 0);
+    fn_80224E1C(0);
+    fn_80224E50(&mtx[0][0], 0x3C, 0);
+    fn_80224E50(&mtx[0][0], 0x7D, 0);
+
+    fn_80224FEC(0.0f, 0.0f, (f32)rmode->fbWidth, (f32)rmode->xfbHeight, 0.0f, lbl_8036BCC0);
+    fn_80224CF0(base + 0x150);
+    fn_80221034(0);
+    fn_8022100C(2);
+    fn_80225158(0);
+    fn_80225058(0, 0, rmode->fbWidth, rmode->efbHeight);
+    fn_80225118(0, 0);
+    fn_80222334(0);
+
+    fn_80222370(4, 0, 0, 1, 0, 0, 2);
+    sp18 = sp24;
+    fn_80222164(4, &sp18);
+    sp14 = sp20;
+    fn_8022224C(4, &sp14);
+    fn_80222370(5, 0, 0, 1, 0, 0, 2);
+    sp10 = sp24;
+    fn_80222164(5, &sp10);
+    spC = sp20;
+    fn_8022224C(5, &spC);
+
+    fn_80222EB4();
+    fn_80222EFC(fn_8021D7FC);
+    fn_80222F10(fn_8021D8F8);
+
+    fn_80222644(texObj, base + 0x60, 4, 4, 3, 0, 0, 0);
+    fn_80222C50(texObj, 0);
+    fn_80222C50(texObj, 1);
+    fn_80222C50(texObj, 2);
+    fn_80222C50(texObj, 3);
+    fn_80222C50(texObj, 4);
+    fn_80222C50(texObj, 5);
+    fn_80222C50(texObj, 6);
+    fn_80222C50(texObj, 7);
+
+    fn_80223F2C(0, 0, 0, 4);
+    fn_80223F2C(1, 1, 1, 4);
+    fn_80223F2C(2, 2, 2, 4);
+    fn_80223F2C(3, 3, 3, 4);
+    fn_80223F2C(4, 4, 4, 4);
+    fn_80223F2C(5, 5, 5, 4);
+    fn_80223F2C(6, 6, 6, 4);
+    fn_80223F2C(7, 7, 7, 4);
+    fn_80223F2C(8, 0xFF, 0xFF, 0xFF);
+    fn_80223F2C(9, 0xFF, 0xFF, 0xFF);
+    fn_80223F2C(0xA, 0xFF, 0xFF, 0xFF);
+    fn_80223F2C(0xB, 0xFF, 0xFF, 0xFF);
+    fn_80223F2C(0xC, 0xFF, 0xFF, 0xFF);
+    fn_80223F2C(0xD, 0xFF, 0xFF, 0xFF);
+    fn_80223F2C(0xE, 0xFF, 0xFF, 0xFF);
+    fn_80223F2C(0xF, 0xFF, 0xFF, 0xFF);
+
+    fn_802240C8(1);
+    fn_802239D0(0, 3);
+    fn_80223E5C(7, 0, 0, 7, 0);
+    fn_80223EA0(0, 0x11, 0);
+
+    i = 0;
+    do {
+        fn_80223CDC(i, 6);
+        fn_80223D38(i, 0);
+        fn_80223D94(i, 0, 0);
+        i += 1;
+    } while (i < 0x10);
+
+    fn_80223DDC(0, 0, 1, 2, 3);
+    fn_80223DDC(1, 0, 0, 0, 3);
+    fn_80223DDC(2, 1, 1, 1, 3);
+    fn_80223DDC(3, 2, 2, 2, 3);
+
+    i = 0;
+    do {
+        fn_802238CC(i);
+        i += 1;
+    } while (i < 0x10);
+
+    fn_802238A8(0);
+    fn_80223678(0, 0, 0);
+    fn_80223678(1, 0, 0);
+    fn_80223678(2, 0, 0);
+    fn_80223678(3, 0, 0);
+
+    sp8 = sp24;
+    fn_802240F0(0, &sp8, 0.0f, lbl_8036BCC0, lbl_8036BCC4, lbl_8036BCC0);
+    fn_802244B4(0, 0, 0);
+    fn_802245D8(0, 4, 5, 0);
+    fn_8022462C(1);
+    fn_80224658(1);
+    fn_80224684(1, 3, 1);
+    fn_802246B8(1);
+    fn_802247C0(1);
+    fn_802247EC(0, 0);
+    fn_802246EC(0, 0);
+    fn_80224828(1, 1);
+
+    if (rmode->xFBmode == (s32)(rmode->xfbHeight * 2)) {
+        xfbm = 1;
+    } else {
+        xfbm = 0;
+    }
+    fn_80224860(rmode->field_rendering, xfbm);
+    fn_802211D0(0, 0, rmode->fbWidth, rmode->efbHeight);
+    fn_802212C8(rmode->fbWidth, rmode->efbHeight);
+    fn_802216E0(rmode->xfbHeight, (f32)rmode->xfbHeight / (f32)rmode->efbHeight);
+    fn_80221450(3);
+    fn_80221824(rmode->aa, &rmode->sample_pattern[0][0], 1, rmode->vfilter);
+    fn_80221A2C(0);
+    fn_8022142C(0);
+    fn_80221D34();
+    fn_80220AD0(1);
+    fn_80220A54(1);
+    fn_80220B0C(0);
+    fn_80220A6C(0, 0, 1, 0xF);
+    fn_80220A20(7, 0);
+    fn_80220A34(1);
+    fn_80220AE8(0, 0);
+    fn_80220B24(1, 7, 1);
+    fn_80225204(0x23, 0x16);
+    fn_80225BF4();
+}
+
+#pragma use_lmw_stmw reset
+
 void fn_8021EB88(s32 arg0, void *arg1)
 {
     extern u8 *__GXData;
@@ -779,6 +1308,42 @@ void fn_80220428(u32 arg0) {
 
     value = *(u32 *)((u8 *)gx_data + 0x5AC);
     *(u32 *)((u8 *)gx_data + 0x5AC) = value | 4;
+}
+
+void GXSetMisc(s32 arg0, u32 arg1) {
+    extern u8 *__GXData;
+
+    u8 *gx;
+    u16 value;
+
+    switch (arg0) {
+    case 0:
+        return;
+
+    case 1:
+        gx = __GXData;
+
+        *(u16 *)(gx + 4) = (u16)arg1;
+
+        value = *(u16 *)(gx + 4);
+        *(u16 *)(gx + 0) = (value == 0);
+        *(u16 *)(gx + 2) = 1;
+
+        if (*(u16 *)(gx + 4) != 0) {
+            *(u32 *)(gx + 0x5AC) |= 8;
+        }
+        return;
+
+    case 2:
+        gx = __GXData;
+        gx[0x5A9] = (arg1 != 0);
+        return;
+
+    case 3:
+        gx = __GXData;
+        gx[0x5AA] = (arg1 != 0);
+        return;
+    }
 }
 
 int fn_802204F8(void)

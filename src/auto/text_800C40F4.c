@@ -19644,6 +19644,46 @@ sort:
     }
 }
 
+void fn_800FF0D4(s32 *arg0, s32 *arg1, u8 (*arg2)(s32, s32)) {
+    s32 *current;
+    s32 *end;
+    s32 *best;
+    s32 *scan;
+    s32 temp;
+
+    current = arg0;
+
+    if (current == arg1) {
+        return;
+    }
+
+    end = arg1 - 1;
+
+    do {
+        best = current;
+
+        if (current != arg1) {
+            scan = current + 1;
+
+            while (scan != arg1) {
+                if (arg2(*scan, *best) != 0) {
+                    best = scan;
+                }
+
+                scan++;
+            }
+        }
+
+        if (best != current) {
+            temp = *best;
+            *best = *current;
+            *current = temp;
+        }
+
+        current++;
+    } while (current < end);
+}
+
 void fn_800FF178(void) {
     extern u8 lbl_802EF4C8[];
     extern u8 lbl_8032B3C0[];

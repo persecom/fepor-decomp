@@ -413,21 +413,21 @@ void fn_80017C1C(void *arg0, f32 farg0) {
     typedef struct { s32 x, y, z; } Vec;
     Vec sp74, sp68, sp5C, sp50, sp44, sp38, sp2C, sp20, sp14, sp8;
     s32 hole[8];
-    Vec *vp;
-    Vec *src;
+    s32 n;
+    register Vec *src;
     Vec *out;
     Vec def;
-    void *pt;
-    void *self;
-    void *cam;
-    s32 i;
-    s32 n;
-    s32 ctr;
-    s32 key;
     s32 prevKey;
+    void *self;
+    s32 i;
+    void *cam;
+    Vec *vp;
+    f32 denom;
+    s32 key;
+    void *pt;
     s32 delta;
     f32 t;
-    f32 denom;
+    s32 ctr;
     f32 prev_f;
 
     n = *((u8 *)arg0 + 0x45);
@@ -454,7 +454,7 @@ void fn_80017C1C(void *arg0, f32 farg0) {
                         *(f32 *)&sp38.y = *(f32 *)((u8 *)pt + 0xC);
                         *(f32 *)&sp38.z = *(f32 *)((u8 *)pt + 0x10);
                     } else {
-                        prevKey = *(s32 *)((u8 *)pt - 0x10);
+                        register prevKey = *(s32 *)((u8 *)pt - 0x10);
                         delta = key - prevKey;
                         denom = (f32)delta;
                         prev_f = (f32)prevKey;
@@ -464,7 +464,7 @@ void fn_80017C1C(void *arg0, f32 farg0) {
                             t = (farg0 - prev_f) / denom;
                         }
                         {
-                            void *p0 = (i >= 2) ? (void *)((u8 *)pt - 0x28) : (void *)((u8 *)pt - 0x14);
+                            void *p0 = (2 <= i) ? (void *)((u8 *)pt - 0x28) : (void *)((u8 *)pt - 0x14);
                             void *p2 = (i < n - 1) ? (void *)((u8 *)pt + 0x14) : pt;
                             *(f32 *)&sp38.x = fn_80059500(*(f32 *)((u8 *)p0 + 8), *(f32 *)((u8 *)pt - 0xC), *(f32 *)((u8 *)pt + 8), *(f32 *)((u8 *)p2 + 8), t);
                             *(f32 *)&sp38.y = fn_80059500(*(f32 *)((u8 *)p0 + 0xC), *(f32 *)((u8 *)pt - 8), *(f32 *)((u8 *)pt + 0xC), *(f32 *)((u8 *)p2 + 0xC), t);
@@ -498,7 +498,7 @@ void fn_80017C1C(void *arg0, f32 farg0) {
     }
 
     n = *((u8 *)self + 0x46);
-    if (((u32)(-(s32)n | n) >> 31) != 0) {
+    if (((u32)(-n | n) >> 31) != 0) {
         src = (Vec *)lbl_80268318;
         def = *src;
         vp = &sp8; *vp = def;
@@ -513,7 +513,7 @@ void fn_80017C1C(void *arg0, f32 farg0) {
             for (ctr = n; ctr != 0; ctr--) {
                 key = *(s32 *)((u8 *)pt + 4);
                 if ((f32)key >= farg0) {
-                    if (i == 0) {
+                    if (!i) {
                         *(f32 *)&sp20.x = *(f32 *)((u8 *)pt + 8);
                         *(f32 *)&sp20.y = *(f32 *)((u8 *)pt + 0xC);
                         *(f32 *)&sp20.z = *(f32 *)((u8 *)pt + 0x10);
@@ -528,7 +528,7 @@ void fn_80017C1C(void *arg0, f32 farg0) {
                             t = (farg0 - prev_f) / denom;
                         }
                         {
-                            void *p0 = (i >= 2) ? (void *)((u8 *)pt - 0x28) : (void *)((u8 *)pt - 0x14);
+                            void *p0 = (2 <= i) ? (void *)((u8 *)pt - 0x28) : (void *)((u8 *)pt - 0x14);
                             void *p2 = (i < n - 1) ? (void *)((u8 *)pt + 0x14) : pt;
                             *(f32 *)&sp20.x = fn_80059500(*(f32 *)((u8 *)p0 + 8), *(f32 *)((u8 *)pt - 0xC), *(f32 *)((u8 *)pt + 8), *(f32 *)((u8 *)p2 + 8), t);
                             *(f32 *)&sp20.y = fn_80059500(*(f32 *)((u8 *)p0 + 0xC), *(f32 *)((u8 *)pt - 8), *(f32 *)((u8 *)pt + 0xC), *(f32 *)((u8 *)p2 + 0xC), t);
@@ -539,7 +539,7 @@ void fn_80017C1C(void *arg0, f32 farg0) {
                     out = &sp50;
                     goto second_store;
                 }
-                i += 1;
+                ++i;
                 pt = (u8 *)pt + 0x14;
             }
             {

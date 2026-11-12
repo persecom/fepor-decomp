@@ -60,48 +60,52 @@ s32 fn_80103818(void) {
 
 s32 fn_80103820(void) {
     s32 fn_8000BCA4(void *);
-    M2C_UNK fn_8000C070(s32, M2C_UNK);
-    M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
-    M2C_UNK fn_800A8400();
-    extern M2C_UNK lbl_802734D0;
-    extern M2C_UNK lbl_802845E8;
-    extern M2C_UNK lbl_8028EAD8;
-    extern M2C_UNK lbl_8028ED04;
-    extern M2C_UNK lbl_8028ED80;
-    extern M2C_UNK lbl_8028EDD4;
-    extern M2C_UNK lbl_8028EE28;
+    void fn_8000C070(s32, s32);
+    void fn_80024398(void *, s32, s32);
+    void fn_800A8400(void);
+    extern u8 lbl_802734D0[];
+    extern u8 lbl_802845E8[];
+    extern u8 lbl_8028EAD8[];
+    extern u8 lbl_8028ED04[];
+    extern u8 lbl_8028ED80[];
+    extern u8 lbl_8028EDD4[];
+    extern u8 lbl_8028EE28[];
     extern u8 lbl_80367964;
-    extern M2C_UNK *lbl_80367968;
+    extern void *lbl_80367968;
     extern u8 lbl_8036796C;
-    extern M2C_UNK *lbl_80367970;
+    extern void *lbl_80367970;
     extern u8 lbl_80367974;
-    extern M2C_UNK *lbl_80367978;
+    extern void *lbl_80367978;
     extern u8 lbl_8036797C;
-    extern M2C_UNK lbl_80367980;
+    extern void *lbl_80367980[2];
     s32 temp_r31;
+    u8 *p;
 
-    temp_r31 = fn_8000BCA4(&lbl_802734D0 + 0xC4);
+    temp_r31 = fn_8000BCA4((u8 *)lbl_802734D0 + 0xC4);
     fn_800A8400();
     fn_8000C070(temp_r31, 0);
-    if ((s8) lbl_80367964 == 0) {
+    if ((s8)lbl_80367964 == 0) {
+        p = lbl_8028EE28;
         lbl_80367964 = 1;
-        lbl_80367968 = &lbl_8028EE28;
+        lbl_80367968 = p;
     }
-    if ((s8) lbl_8036796C == 0) {
+    if ((s8)lbl_8036796C == 0) {
+        p = lbl_8028EDD4;
         lbl_8036796C = 1;
-        lbl_80367970 = &lbl_8028EDD4;
+        lbl_80367970 = p;
     }
-    if ((s8) lbl_80367974 == 0) {
+    if ((s8)lbl_80367974 == 0) {
+        p = lbl_8028ED80;
         lbl_80367974 = 1;
-        lbl_80367978 = &lbl_8028ED80;
+        lbl_80367978 = p;
     }
-    if ((s8) lbl_8036797C == 0) {
-        M2C_FIELD(&lbl_80367980, M2C_UNK **, 4) = &lbl_802845E8;
-        M2C_FIELD(&lbl_80367980, M2C_UNK **, 0) = &lbl_8028EAD8;
-        M2C_FIELD(&lbl_80367980, M2C_UNK **, 4) = &lbl_8028ED04;
+    if ((s8)lbl_8036797C == 0) {
+        lbl_80367980[1] = lbl_802845E8;
+        lbl_80367980[0] = lbl_8028EAD8;
+        lbl_80367980[1] = lbl_8028ED04;
         lbl_8036797C = 1;
     }
-    fn_80024398(&lbl_80367980, temp_r31, 0);
+    fn_80024398(lbl_80367980, temp_r31, 0);
     return 6;
 }
 

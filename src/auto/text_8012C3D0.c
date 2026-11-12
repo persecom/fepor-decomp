@@ -2524,6 +2524,43 @@ void fn_80130920(void) {
     fn_80225058(0xF8, 0x60, 0x120, 0x120);
 }
 
+void fn_80130950(void *unused, void *arg1, f32 farg0, f32 farg1) {
+    void fn_8000A258(void);
+    void fn_80009D74(f32, f32, f32, f32);
+    void fn_80009BC0(void (*)(void), s32);
+    void fn_80009B8C(s32);
+    void fn_8000A248(void);
+    void *fn_80105C5C(void *, u8);
+    void fn_8005AC24(void *, s32, s32);
+    void fn_80130920(void);
+    extern f32 lbl_8036A500;
+    extern f32 lbl_8036A50C;
+    extern u8 lbl_802F0350[];
+    s32 base;
+    s32 off;
+    s32 unit;
+    s32 i;
+    void *temp;
+
+    fn_8000A258();
+    fn_80009D74(farg0, farg1, lbl_8036A500, lbl_8036A50C);
+    fn_80009BC0(fn_80130920, 0);
+    fn_80009B8C(0xFF);
+    fn_8000A248();
+    unit = (s32)*(void **)arg1;
+    off = 0x102;
+    base = (s32)lbl_802F0350;
+    i = 0;
+    do {
+        temp = fn_80105C5C((void *)(unit + 0x1BC), (u8)i);
+        if (temp != NULL && *(u8 *)((u8 *)temp + 0x19) != 0) {
+            fn_8005AC24((void *)base, off, 0);
+            off += 0x20;
+        }
+        i += 1;
+    } while (i < 0x62);
+}
+
 s32 fn_80130A40(void *arg0, void *arg1, s32 arg2) {
     void *fn_80105C5C(void *, u8);
     s32 count;

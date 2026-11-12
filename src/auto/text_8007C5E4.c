@@ -139,50 +139,41 @@ s32 fn_8007C74C(void) {
     return 0;
 }
 
+#pragma global_optimizer off
 s32 fn_8007C8F4(void)
 {
-    extern u8 *lbl_80367488;
-
+    extern void *lbl_80367488;
     u8 *obj;
     u8 *entry;
     u16 flags;
-    u16 value;
+    s32 value;
 
-    obj = lbl_80367488;
+    obj = (u8 *)lbl_80367488;
+    value = 0x20;
     entry = *(u8 **)(obj + 0x50);
 
-    if (entry == 0) {
+    if (!entry) {
         return 0;
     }
 
     flags = *(u16 *)(obj + 0x46);
-    value = 0x20;
-
     if (flags & 0x20) {
         value = 0x40;
     }
-
     if (flags & 0x40) {
         value = 0x80;
     }
-
     if (flags & 0x80) {
         value = 0;
     }
 
-    *(u16 *)(obj + 0x46) =
-        *(u16 *)(obj + 0x46) & ~0xE0;
-
+    *(u16 *)(obj + 0x46) = *(u16 *)(obj + 0x46) & ~0xE0;
     *(u16 *)(entry + 0x36) = 1;
-
-    obj = lbl_80367488;
-
-    *(u16 *)(obj + 0x46) =
-        *(u16 *)(obj + 0x46) | value;
-
+    obj = (u8 *)lbl_80367488;
+    *(u16 *)(obj + 0x46) = *(u16 *)(obj + 0x46) | (u16)value;
     return 0;
 }
-
+#pragma global_optimizer on
 extern void* lbl_80367488;
 extern s32 lbl_803693C0;
 extern s32 lbl_803693C4;

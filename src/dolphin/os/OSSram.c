@@ -228,6 +228,48 @@ s32 fn_802098F8(void) {
     return (scb[0x13 / 2] >> 7) & 1;
 }
 
+void fn_80209968(u32 arg0) {
+    extern u16 Scb_80339420[];
+
+    u32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(u32);
+    s32 fn_8020931C(s32, s32);
+
+    volatile u8 *scb;
+    volatile u32 *lock;
+    u32 interrupts;
+    u32 mode;
+    u32 flags;
+
+    scb = (volatile u8 *)Scb_80339420;
+    mode = (arg0 & 1) << 7;
+
+    interrupts = OSDisableInterrupts();
+
+    lock = (volatile u32 *)(scb + 0x48);
+
+    if (*lock != 0) {
+        OSRestoreInterrupts(interrupts);
+        return;
+    }
+
+    *(volatile u32 *)(scb + 0x44) = interrupts;
+    *lock = 1;
+
+    flags = scb[0x13];
+
+    if ((flags & 0x80) == mode) {
+        fn_8020931C(0, 0);
+    } else {
+        scb[0x13] = flags & ~0x80;
+
+        flags = scb[0x13];
+        scb[0x13] = flags | mode;
+
+        fn_8020931C(1, 0);
+    }
+}
+
 s32 fn_80209A78(void) {
     u16 *scb_ptr;
     u16 temp_r0;

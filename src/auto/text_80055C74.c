@@ -186,12 +186,10 @@ void fn_800565B8(void *arg0) {
     extern f32 lbl_80369130;
     extern f32 lbl_80369134;
     f32 temp_f0;
-    f32 frac;
 
     fn_80067708(4, 4, fn_800566D4, arg0);
     temp_f0 = lbl_80369134 - (f32) (s8) M2C_FIELD(arg0, u8 *, 0x35);
-    frac = (lbl_80369130 * (temp_f0 * temp_f0)) / (lbl_80369134 * lbl_80369134);
-    M2C_FIELD(arg0, s8 *, 0x34) = (s8) (lbl_80369108 + (lbl_80369130 - frac));
+    M2C_FIELD(arg0, s8 *, 0x34) = (s8) (lbl_80369108 + (lbl_80369130 - ((lbl_80369130 * (temp_f0 * temp_f0)) / (lbl_80369134 * lbl_80369134))));
     M2C_FIELD(arg0, u8 *, 0x35) = (u8) (M2C_FIELD(arg0, u8 *, 0x35) + M2C_FIELD(arg0, u8 *, 0x36));
     if ((s8) M2C_FIELD(arg0, u8 *, 0x35) > 0xA) {
         M2C_FIELD(arg0, u8 *, 0x35) = 0xA;

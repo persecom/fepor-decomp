@@ -1231,6 +1231,36 @@ extern "C" void fn_8002C194(void *arg0, s8 arg1) {
         ((Visitor *)&obj)->apply(*(void **)((u8 *)arg0 + 0x194));
     }
 }
+
+void fn_8002C3D8(void *arg0, void *arg1) {
+    u8 fn_80093088(void *);
+    void fn_8002F6E8(void *, u8, u8, u8, s32);
+    extern u8 lbl_802EF4E0[];
+
+    void *child;
+
+    child = *(void **)((u8 *)arg0 + 4);
+
+    if (*(u32 *)((u8 *)arg1 + 0x190) ==
+            *(u32 *)((u8 *)child + 0x190) &&
+        (!fn_80093088(child) || !fn_80093088(arg1))) {
+        fn_8002F6E8(
+            lbl_802EF4E0,
+            *(u8 *)((u8 *)arg1 + 0x19E),
+            *(u8 *)((u8 *)arg1 + 0x19F),
+            *(u8 *)((u8 *)arg1 + 0x198),
+            0
+        );
+    }
+
+    if (*(u32 *)((u8 *)arg1 + 0x1A0) & 2) {
+        (*(void (***)(void *, void *))arg0)[2](
+            arg0,
+            *(void **)((u8 *)arg1 + 0x194)
+        );
+    }
+}
+
 #pragma use_lmw_stmw reset
 #pragma cplusplus reset
 
@@ -2616,6 +2646,31 @@ void fn_8002FAB0(void *arg0) {
         fn_801475FC(lbl_802695F0 + 0x10C, 0x64);
         lbl_8036723A = 9;
         fn_8000C070(arg0, 0x63);
+    }
+}
+
+void fn_8002FC64(u32 arg0, s32 arg1, s32 arg2, u8 arg3) {
+    s32 *fn_8018D900(s32);
+    void fn_8005C8B4(void *);
+    u8 fn_8005BA10(void *);
+    void fn_8006EEFC(s32 *, void *);
+    void fn_8006EDA0(s32 *);
+    extern u8 lbl_80330708[];
+    extern u8 lbl_802695F0[];
+    s32 sp6C;
+    s32 sp68;
+
+    sp6C = *fn_8018D900(1);
+    if (arg0 != 0 && ((lbl_80330708[0x9D] >> 6) & 3) != 2) {
+        fn_8005C8B4(lbl_802695F0 + 0x11C);
+        if (fn_8005BA10(lbl_802695F0 + 0x11C) != 0) {
+            fn_8006EEFC(&sp68, lbl_802695F0 + 0x11C);
+            (void)arg1;
+            (void)arg2;
+            (void)arg3;
+            (void)sp6C;
+            fn_8006EDA0(&sp68);
+        }
     }
 }
 

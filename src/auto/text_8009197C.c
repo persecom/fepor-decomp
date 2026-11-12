@@ -348,14 +348,14 @@ void fn_8009204C(void *arg0, void *arg1) {
 }
 
 s32 fn_80092198(u8 *arg0, s32 arg1) {
-    u8 fn_80105BC0(u8 *, s32);
     void fn_8001EDB8(u8 *, s32);
     extern u8 lbl_80330708[1400];
-    u8 sp8;
+    s32 slot;
+    u8 fn_80105BC0(u8 *, s32);
     s32 result;
     u8 mask;
-    u8 *p;
-    s32 slot;
+    register u8 *p;
+    u8 sp8;
 
     mask = arg1;
     p = arg0;
@@ -369,14 +369,12 @@ s32 fn_80092198(u8 *arg0, s32 arg1) {
             slot = *(s32 *)(p + 0x1EC);
             if (((u32)(-slot | slot) >> 31) != 0) {
                 fn_8001EDB8(&sp8, slot);
-                if ((u8)(sp8 & mask) == 0) {
-                    goto next;
+                if ((u8)(sp8 & mask) != 0) {
+                    break;
                 }
-                goto done;
-            next:
                 result += 1;
                 p += 8;
-                if (result < 4) {
+                if (4 > result) {
                     continue;
                 }
             }
@@ -384,7 +382,6 @@ s32 fn_80092198(u8 *arg0, s32 arg1) {
             break;
         }
     }
-    done:
     return result;
 }
 

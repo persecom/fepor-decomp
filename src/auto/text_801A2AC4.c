@@ -642,6 +642,41 @@ s32 fn_801A4A88(struct unit *arg0) {
     return r31;
 }
 
+void fn_801A4B40(void *arg0, s32 arg1) {
+    s32 fn_8003B2D0(void *);
+    s32 fn_800AA76C(s32, s32, s32);
+    void fn_800381EC(void *, s32);
+    void fn_80034068(void *, s32, s32);
+
+    u8 *obj;
+    s32 original;
+    s32 result;
+    s32 current;
+
+    obj = (u8 *)arg0;
+
+    original = obj[0x488];
+
+    current = fn_8003B2D0(obj + 0x2E0);
+
+    result = fn_800AA76C(
+        (s8)original,
+        (s8)current,
+        (s8)arg1
+    );
+
+    current = (s8)obj[0x488];
+
+    fn_800381EC(
+        obj + 0x2E0,
+        (s8)result + current
+    );
+
+    fn_80034068(obj + 0x8A0, 0x20, 0);
+    fn_80034068(obj + 0x8A0, 0x15, (s8)result);
+    fn_80034068(obj + 0x8A0, 0x50, 0);
+}
+
 void fn_801A4BE0(void *arg0) {
     extern u8 lbl_8032BB58[516];
     void fn_801A9AF8(void *);

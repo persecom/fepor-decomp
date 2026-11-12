@@ -635,6 +635,313 @@ loop_4:
     return var_r3;
 }
 
+#pragma use_lmw_stmw on
+s32 fn_802180DC(s32 chan, void *out) {
+    u32 OSGetTick(void);
+    void DCFlushRange(void *, u32);
+    void DCInvalidateRange(void *, u32);
+    s32 fn_80217D68(u32);
+    s32 fn_80217ED4(s32, u32, void *, s32, s32);
+    s32 fn_80218018(void);
+    void fn_80216050(void *, void *, s32);
+    extern void fn_80218C34;
+    extern void fn_80218CA4;
+    extern u16 lbl_8033A200[];
+    extern u8 lbl_8029DA00[];
+    extern u32 lbl_80366FE8;
+
+    u8 *card;
+    u8 *work;
+    void *buf;
+    u32 aligned;
+    u32 aligned2;
+    u32 seed;
+    u32 scramble;
+    s32 tick;
+    s32 n;
+    u32 i;
+    u32 rem;
+    u32 ctr;
+    u32 t;
+    s32 left;
+    u32 spA4[5];
+    u32 w0, w1, w2, w3, w4;
+
+    card = (u8 *)lbl_8033A200 + chan * 0x110;
+    work = card + 0x30;
+    buf = *(void **)(card + 0x80);
+    aligned = ((u32)buf + 0x2F) & ~0x1Fu;
+    aligned2 = aligned + 0x20;
+
+    lbl_80366FE8 = OSGetTick();
+    lbl_80366FE8 = lbl_80366FE8 * 0x41C64E6D + 0x3039;
+    seed = (0x7FEC8000u | ((lbl_80366FE8 >> 16) & 0x7FFF)) & 0xFFFFF000u;
+
+    tick = fn_80218018();
+    if (fn_80217ED4(chan, seed, spA4, tick, 0) < 0) {
+        return -3;
+    }
+
+    n = (tick << 3) + 1;
+    i = 0;
+    scramble = seed;
+    if (n != 0) {
+        if ((u32)n > 8) {
+            rem = (u32)n - 8;
+            ctr = (rem + 7) >> 3;
+            if (rem != 0) {
+                do {
+                    t = ~((scramble >> 23) ^ ((scramble >> 15) ^ (scramble ^ (scramble >> 7))));
+                    scramble = (scramble >> 1) | ((t << 30) & 0x40000000);
+                    t = ~((scramble >> 23) ^ ((scramble >> 15) ^ (scramble ^ (scramble >> 7))));
+                    scramble = ((scramble >> 1) & 0x3FFFFFFF) | ((t << 30) & 0x40000000);
+                    t = ~((scramble >> 23) ^ ((scramble >> 15) ^ (scramble ^ (scramble >> 7))));
+                    scramble = ((scramble >> 1) & 0x3FFFFFFF) | ((t << 30) & 0x40000000);
+                    t = ~((scramble >> 23) ^ ((scramble >> 15) ^ (scramble ^ (scramble >> 7))));
+                    scramble = ((scramble >> 1) & 0x3FFFFFFF) | ((t << 30) & 0x40000000);
+                    t = ~((scramble >> 23) ^ ((scramble >> 15) ^ (scramble ^ (scramble >> 7))));
+                    scramble = ((scramble >> 1) & 0x3FFFFFFF) | ((t << 30) & 0x40000000);
+                    t = ~((scramble >> 23) ^ ((scramble >> 15) ^ (scramble ^ (scramble >> 7))));
+                    scramble = ((scramble >> 1) & 0x3FFFFFFF) | ((t << 30) & 0x40000000);
+                    t = ~((scramble >> 23) ^ ((scramble >> 15) ^ (scramble ^ (scramble >> 7))));
+                    scramble = ((scramble >> 1) & 0x3FFFFFFF) | ((t << 30) & 0x40000000);
+                    t = ~((scramble >> 23) ^ ((scramble >> 15) ^ (scramble ^ (scramble >> 7))));
+                    scramble = ((scramble >> 1) & 0x3FFFFFFF) | ((t << 30) & 0x40000000);
+                    i += 8;
+                } while (--ctr);
+            }
+        }
+        left = (s32)((u32)n - i);
+        if (i < (u32)n) {
+            do {
+                t = ~((scramble >> 23) ^ ((scramble >> 15) ^ (scramble ^ (scramble >> 7))));
+                scramble = (scramble >> 1) | ((t << 30) & 0x40000000);
+            } while (--left);
+        }
+    }
+    t = ~((scramble >> 23) ^ ((scramble >> 15) ^ (scramble ^ (scramble >> 7))));
+    scramble |= t << 31;
+    *(u32 *)(card + 0x2C) = scramble;
+    *(u32 *)(card + 0x2C) = fn_80217D68(*(u32 *)(card + 0x2C));
+
+    tick = fn_80218018();
+    if (fn_80217ED4(chan, 0, spA4, tick + 0x14, 1) < 0) {
+        return -3;
+    }
+
+    scramble = *(u32 *)(card + 0x2C);
+    w0 = spA4[0] ^ scramble;
+    {
+        s32 c = 4;
+        do {
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+        } while (--c);
+    }
+    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+    scramble |= t >> 31;
+    *(u32 *)(card + 0x2C) = scramble;
+
+    scramble = *(u32 *)(card + 0x2C);
+    w1 = spA4[1] ^ scramble;
+    {
+        s32 c = 4;
+        do {
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+        } while (--c);
+    }
+    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+    scramble |= t >> 31;
+    *(u32 *)(card + 0x2C) = scramble;
+
+    scramble = *(u32 *)(card + 0x2C);
+    w2 = spA4[2] ^ scramble;
+    {
+        s32 c = 4;
+        do {
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+        } while (--c);
+    }
+    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+    scramble |= t >> 31;
+    *(u32 *)(card + 0x2C) = scramble;
+
+    scramble = *(u32 *)(card + 0x2C);
+    w3 = spA4[3] ^ scramble;
+    {
+        s32 c = 4;
+        do {
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+        } while (--c);
+    }
+    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+    scramble |= t >> 31;
+    *(u32 *)(card + 0x2C) = scramble;
+
+    scramble = *(u32 *)(card + 0x2C);
+    w4 = spA4[4] ^ scramble;
+    n = tick << 3;
+    i = 0;
+    if (n != 0) {
+        if ((u32)n > 8) {
+            rem = (u32)n - 8;
+            ctr = (rem + 7) >> 3;
+            if (rem != 0) {
+                do {
+                    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                    scramble = (scramble << 1) | ((t >> 30) & 2);
+                    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                    scramble = (scramble << 1) | ((t >> 30) & 2);
+                    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                    scramble = (scramble << 1) | ((t >> 30) & 2);
+                    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                    scramble = (scramble << 1) | ((t >> 30) & 2);
+                    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                    scramble = (scramble << 1) | ((t >> 30) & 2);
+                    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                    scramble = (scramble << 1) | ((t >> 30) & 2);
+                    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                    scramble = (scramble << 1) | ((t >> 30) & 2);
+                    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                    scramble = (scramble << 1) | ((t >> 30) & 2);
+                    i += 8;
+                } while (--ctr);
+            }
+        }
+        left = (s32)((u32)n - i);
+        if (i < (u32)n) {
+            do {
+                t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+                scramble = (scramble << 1) | ((t >> 30) & 2);
+            } while (--left);
+        }
+    }
+    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+    scramble |= t >> 31;
+    *(u32 *)(card + 0x2C) = scramble;
+
+    /* final 0x21-step and DMA setup */
+    scramble = *(u32 *)(card + 0x2C);
+    i = 0;
+    {
+        s32 c = 4;
+        do {
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+            i += 8;
+        } while (--c);
+    }
+    left = 0x21 - (s32)i;
+    if (i < 0x21u) {
+        do {
+            t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+            scramble = (scramble << 1) | ((t >> 30) & 2);
+        } while (--left);
+    }
+    t = ~((scramble << 23) ^ ((scramble << 15) ^ (scramble ^ (scramble << 7))));
+    scramble |= t >> 31;
+    *(u32 *)(card + 0x2C) = scramble;
+
+    *(u32 *)aligned = w3;
+    *(u32 *)(aligned + 4) = w4;
+    *(u32 *)buf = aligned;
+    *(u32 *)((u8 *)buf + 4) = 8;
+    *(u32 *)((u8 *)buf + 0xC) = aligned2;
+    *(u32 *)((u8 *)buf + 8) = 0;
+    DCFlushRange((void *)aligned, 8);
+    DCInvalidateRange((void *)aligned2, 4);
+    DCFlushRange(buf, 0x10);
+
+    work[4] = 0xFF;
+    *(void **)(work + 0xC) = (void *)((u32)lbl_8029DA00 + 0x80000000);
+    *(u32 *)(work + 0x10) = 0x160;
+    *(u32 *)(work + 0x14) = 0;
+    *(u32 *)(work + 0x24) = 0x10;
+    *(void **)(work + 0x28) = &fn_80218C34;
+    *(u32 *)(work + 0x2C) = 0;
+    *(void **)(work + 0x30) = &fn_80218CA4;
+    *(u32 *)(work + 0x34) = 0;
+    fn_80216050(work, &fn_80218C34, 0x10);
+
+    *(u32 *)out = w0;
+    *((u32 *)out + 1) = w1;
+    *((u32 *)out + 2) = w2;
+    return 0;
+}
+
 void fn_80218C34(void *arg0)
 {
     extern void fn_80215F78(u32);
@@ -1345,6 +1652,153 @@ s32 fn_8021A1B8(s32 arg0) {
     }
 }
 
+#pragma use_lmw_stmw on
+s32 fn_8021A244(s32 chan, s32 *outSize, void (*callback)(s32, s32))
+{
+    void *memcpy(void *, const void *, u32);
+    void *memset(void *, s32, u32);
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    s32 fn_80217B18(s32, void **);
+    s32 fn_80217BD0(void *, s32);
+    s32 fn_80219A70(void *);
+    s32 fn_80219CF4(void *, s32 *);
+    s32 fn_80219F34(void *, s32 *);
+    void fn_802198C0(u16 *, s32, u16 *, u16 *);
+    s32 fn_802197FC(s32, s32);
+    s32 fn_802195B0(s32, void *, void *);
+
+    void *card;
+    u8 *blockDir[2];
+    u8 *blockFat[2];
+    s32 altFat;
+    s32 altDir;
+    s32 cBlock;
+    s32 flagDirty;
+    s32 flagDir;
+    s32 flagFat;
+    s32 ret;
+    u8 *base;
+    u16 *scratch;
+    u8 *dir;
+    s32 i;
+    u16 block;
+    u16 len;
+    u16 next;
+    u16 *fat;
+    u16 *sp;
+    u16 freeCount;
+    u16 idx;
+    u16 limit;
+    u16 cnt;
+    s32 irq;
+
+    flagFat = 0;
+    flagDir = 0;
+    flagDirty = 0;
+    if (outSize != 0) {
+        *outSize = 0;
+    }
+    ret = fn_80217B18(chan, &card);
+    if (ret < 0) {
+        return ret;
+    }
+    ret = fn_80219A70(card);
+    if (ret < 0) {
+        return fn_80217BD0(card, ret);
+    }
+    cBlock = fn_80219CF4(card, &altDir);
+    cBlock += fn_80219F34(card, &altFat);
+    if (cBlock > 1) {
+        return fn_80217BD0(card, -6);
+    }
+    base = *(u8 **)((u8 *)card + 0x80);
+    blockDir[0] = base + 0x2000;
+    blockFat[0] = base + 0x6000;
+    blockDir[1] = base + 0x4000;
+    blockFat[1] = base + 0x8000;
+    if (cBlock == 1) {
+        if (*(void **)((u8 *)card + 0x84) == 0) {
+            *(u8 **)((u8 *)card + 0x84) = blockDir[altDir];
+            memcpy(blockDir[altDir], blockDir[altDir ^ 1], 0x2000);
+            flagDir = 1;
+        } else {
+            *(u8 **)((u8 *)card + 0x88) = blockFat[altFat];
+            memcpy(blockFat[altFat], blockFat[altFat ^ 1], 0x2000);
+            flagFat = 1;
+        }
+    }
+    scratch = (u16 *)blockFat[altFat ^ 1];
+    memset(scratch, 0, 0x2000);
+    for (i = 0; i < 0x7F; i++) {
+        dir = *(u8 **)((u8 *)card + 0x84) + (i * 0x40);
+        if (*dir != 0xFF) {
+            block = *(u16 *)(dir + 0x36);
+            len = 0;
+            do {
+                if ((u32)block < 5 || (u32)block >= *(u16 *)((u8 *)card + 0x10)) {
+                    return fn_80217BD0(card, -6);
+                }
+                cnt = scratch[block] + 1;
+                scratch[block] = cnt;
+                if ((u32)cnt > 1) {
+                    return fn_80217BD0(card, -6);
+                }
+                next = (*(u16 **)((u8 *)card + 0x88))[block];
+                len++;
+                if ((u32)next == 0xFFFF) {
+                    break;
+                }
+            } while ((u32)len < *(u16 *)(dir + 0x38));
+            if ((u32)len != *(u16 *)(dir + 0x38) || (u32)next != 0xFFFF) {
+                return fn_80217BD0(card, -6);
+            }
+        }
+    }
+    sp = scratch + 5;
+    freeCount = 0;
+    for (idx = 5, i = 0xA; (u32)idx < *(u16 *)((u8 *)card + 0x10); idx++, i += 2, sp++) {
+        next = *(u16 *)(*(u8 **)((u8 *)card + 0x88) + i);
+        if (*sp == 0) {
+            if (next != 0) {
+                *(u16 *)(*(u8 **)((u8 *)card + 0x88) + i) = 0;
+                flagDirty = 1;
+            }
+            freeCount++;
+        } else if (((u32)next < 5 || (u32)next >= *(u16 *)((u8 *)card + 0x10)) && (u32)next != 0xFFFF) {
+            return fn_80217BD0(card, -6);
+        }
+    }
+    fat = *(u16 **)((u8 *)card + 0x88);
+    if (freeCount != fat[3]) {
+        fat[3] = freeCount;
+        flagDirty = 1;
+    }
+    if (flagDirty != 0) {
+        fat = *(u16 **)((u8 *)card + 0x88);
+        fn_802198C0(fat + 2, 0x1FFC, fat, fat + 1);
+    }
+    memcpy(blockFat[altFat ^ 1], blockFat[altFat], 0x2000);
+    if (flagDir != 0) {
+        if (outSize != 0) {
+            *outSize = 0x2000;
+        }
+        return fn_802197FC(chan, (s32)callback);
+    }
+    if ((flagFat | flagDirty) != 0) {
+        if (outSize != 0) {
+            *outSize = 0x2000;
+        }
+        return fn_802195B0(chan, *(void **)((u8 *)card + 0x88), callback);
+    }
+    fn_80217BD0(card, 0);
+    if (callback != 0) {
+        irq = OSDisableInterrupts();
+        callback(chan, 0);
+        OSRestoreInterrupts(irq);
+    }
+    return 0;
+}
 void fn_8021A7D4(void *arg0, s32 arg1) {
     void fn_8021A244(void *, void *, s32);
     s32 sp10;
@@ -1579,9 +2033,164 @@ void fn_8021B2B8(s32 arg0, s32 arg1) {
     fn_80217BD0(card, result);
     callback(chan, result);
 }
-#pragma dont_inline reset
 
-#pragma dont_inline on
+#pragma use_lmw_stmw on
+s32 fn_8021B3FC(s32 chan, s16 arg1, void *callback)
+{
+    s32 fn_80217B18(s32, void **);
+    void *memset(void *, s32, u32);
+    void *__OSLockSram(void);
+    void __OSUnlockSram(s32);
+    u8 *__OSLockSramEx(void);
+    void __OSUnlockSramEx(s32);
+    s64 OSGetTime(void);
+    s64 fn_8022CB50(s64, s32);
+    void fn_802198C0(void *, u32, void *, void *);
+    void fn_80205110(void *, u32);
+    s32 fn_8021791C(s32, s32, void *, void *);
+    void fn_80217BD0(void *, s32);
+    extern void fn_80216994(void);
+    extern void fn_8021B2B8(void);
+
+    void *card;
+    u8 *work;
+    u16 dsp;
+    void *sram;
+    s64 time;
+    u32 *timeParts;
+    u32 timeLo;
+    u32 timeHi;
+    s64 seed;
+    u8 *flash;
+    u8 *p;
+    s16 i;
+    s16 limit;
+    u8 *block;
+    void *cb;
+    s32 result;
+
+    result = fn_80217B18(chan, &card);
+    if (result < 0) {
+        return result;
+    }
+
+    work = *(u8 **)((u8 *)card + 0x80);
+    memset(work, 0xFF, 0x2000);
+    dsp = *(u16 *)0xCC00206E;
+    *(s16 *)(work + 0x24) = arg1;
+
+    sram = __OSLockSram();
+    *(u32 *)(work + 0x14) = *(u32 *)((u8 *)sram + 0xC);
+    *(u32 *)(work + 0x18) = *(u8 *)((u8 *)sram + 0x12);
+    __OSUnlockSram(0);
+
+    time = OSGetTime();
+    timeParts = (u32 *)&time;
+    timeHi = timeParts[0];
+    timeLo = timeParts[1];
+    seed = time;
+    flash = __OSLockSramEx() + chan * 0xC;
+    p = flash;
+    i = 0;
+    limit = 4;
+
+    while (i < limit) {
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        work[i] = (u8)((u32)seed + *p);
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        seed &= 0x7FFF;
+
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        work[i + 1] = (u8)((u32)seed + flash[i + 1]);
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        seed &= 0x7FFF;
+
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        work[i + 2] = (u8)((u32)seed + flash[i + 2]);
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        seed &= 0x7FFF;
+
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        work[i + 3] = (u8)((u32)seed + flash[i + 3]);
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        seed &= 0x7FFF;
+
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        work[i + 4] = (u8)((u32)seed + flash[i + 4]);
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        seed &= 0x7FFF;
+
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        work[i + 5] = (u8)((u32)seed + flash[i + 5]);
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        seed &= 0x7FFF;
+
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        work[i + 6] = (u8)((u32)seed + flash[i + 6]);
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        seed &= 0x7FFF;
+
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        work[i + 7] = (u8)((u32)seed + flash[i + 7]);
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        seed &= 0x7FFF;
+
+        p += 8;
+        i += 8;
+    }
+
+    p = flash + i;
+    while (i < 0xC) {
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        work[i] = (u8)((u32)seed + *p);
+        seed = fn_8022CB50(seed * 0x41C64E6D + 0x3039, 16);
+        seed &= 0x7FFF;
+        p += 1;
+        i += 1;
+    }
+
+    __OSUnlockSramEx(0);
+    *(u32 *)(work + 0x1C) = dsp;
+    i = 0;
+    *(u32 *)(work + 0x10) = timeLo;
+    *(u32 *)(work + 0xC) = timeHi;
+    *(s16 *)(work + 0x20) = 0;
+    *(u16 *)(work + 0x22) = *(u16 *)((u8 *)card + 8);
+    fn_802198C0(work, 0x1FC, work + 0x1FC, work + 0x1FE);
+
+    while (i < 2) {
+        block = *(u8 **)((u8 *)card + 0x80) + ((i + 1) << 13);
+        memset(block, 0xFF, 0x2000);
+        *(s16 *)(block + 0x1FFA) = i;
+        fn_802198C0(block, 0x1FFC, block + 0x1FFC, block + 0x1FFE);
+        i += 1;
+    }
+
+    i = 0;
+    while (i < 2) {
+        block = *(u8 **)((u8 *)card + 0x80) + ((i + 3) << 13);
+        memset(block, 0, 0x2000);
+        *(s16 *)(block + 4) = i;
+        *(s16 *)(block + 6) = *(u16 *)((u8 *)card + 0x10) - 5;
+        *(s16 *)(block + 8) = 4;
+        fn_802198C0(block + 4, 0x1FFC, block, block + 2);
+        i += 1;
+    }
+
+    if (callback != 0) {
+        cb = callback;
+    } else {
+        cb = (void *)fn_80216994;
+    }
+    *(void **)((u8 *)card + 0xD0) = cb;
+    fn_80205110(*(void **)((u8 *)card + 0x80), 0xA000);
+    *(u32 *)((u8 *)card + 0x28) = 0;
+    result = fn_8021791C(chan, *(s32 *)((u8 *)card + 0xC) * *(s32 *)((u8 *)card + 0x28), (void *)fn_8021B2B8, card);
+    if (result < 0) {
+        fn_80217BD0(card, result);
+    }
+    return result;
+}
 void fn_8021BA54(s32 arg0, s32 arg1) {
     s32 fn_8021B3FC(s32, u16, s32);
     fn_8021B3FC(arg0, fn_80217AD8(), arg1);

@@ -57,20 +57,25 @@ void fn_8009A61C(s32 arg0) {
     fn_8000CAF0(lbl_80289EB8, arg0);
 }
 
+#pragma scheduling off
 void fn_8009A648(void *arg0) {
     extern f32 lbl_803697E0;
-    M2C_FIELD(arg0, s8 *, 0x3E) = 0;
-    M2C_FIELD(arg0, f32 *, 0x30) = (f32) lbl_803697E0;
-    M2C_FIELD(arg0, s8 *, 0x3D) = 0;
+    f32 f;
+    s32 z;
+    z = 0;
+    f = lbl_803697E0;
+    ((u8 *)arg0)[0x3E] = z;
+    *(f32 *)((u8 *)arg0 + 0x30) = f;
+    ((u8 *)arg0)[0x3D] = z;
 }
-
-void fn_8009A660(void *arg0) {
+#pragma scheduling on
+void fn_8009A660(u8 *arg0) {
     extern f32 lbl_803697E4;
-    *(u8 *)((u8 *)arg0 + 0x3E) = *(u8 *)((u8 *)arg0 + 0x40);
-    *(f32 *)((u8 *)arg0 + 0x30) = lbl_803697E4;
-    *(u8 *)((u8 *)arg0 + 0x3D) = *(u8 *)((u8 *)arg0 + 0x3F);
+    arg0[0x3E] = arg0[0x40];
+    *(f32 *)(arg0 + 0x30) = lbl_803697E4;
+    arg0[0x3D] = arg0[0x3F];
 }
-
+#pragma scheduling on
 void fn_8009A67C(void *arg0) {
     f32 fn_80059F64(u8, u8, f32, f32, f32, f32);
     f32 fn_8005A028(M2C_UNK, u8, f32, f32, f32, f32);
@@ -401,8 +406,8 @@ void fn_8009B028(void *arg0, u32 arg1, s32 arg2, f32 farg0, f32 farg1) {
     void fn_8001019C(s16, s32, s32, ...);
     s32 fn_80010B78(void *, s32, f32);
     void *fn_80019DBC(s32);
-    void fn_8005926C(s32, s32, s32, s32, s32, s32, s32, s32);
     void *fn_80019E04(void *);
+    void fn_8005926C(s32, s32, s32, s32, s32, s32, s32, s32);
     void *fn_8005B73C(void *);
     void fn_8009B55C(u32, s32, f32, f32);
     void *fn_8010F9BC(void *, s8, s8, s32);
@@ -416,18 +421,16 @@ void fn_8009B028(void *arg0, u32 arg1, s32 arg2, f32 farg0, f32 farg1) {
     extern f32 lbl_80369864;
     extern f32 lbl_80369868;
     extern f32 lbl_8036986C;
-    extern f32 lbl_80369874;
     extern f32 lbl_80369870;
+    extern f32 lbl_80369874;
     extern f32 lbl_80369878;
-
-    typedef struct { u8 pad[0x4C]; void *p; } Slot;
 
     void *unit;
     void *str;
     u32 tex;
-    s32 y;
-    s32 x;
     void *self;
+    s32 x;
+    s32 y;
     s32 kind;
     void *obj;
     void *walk;
@@ -451,7 +454,7 @@ void fn_8009B028(void *arg0, u32 arg1, s32 arg2, f32 farg0, f32 farg1) {
     }
     unit = fn_80019DBC(kind);
     if (kind != 0x21) {
-        if (0x21 > kind) {
+        if (kind < 0x21) {
             if (kind != 0x1C) {
                 if (kind < 0x1C) {
                     if (kind == 9) {
@@ -463,7 +466,7 @@ void fn_8009B028(void *arg0, u32 arg1, s32 arg2, f32 farg0, f32 farg1) {
             }
             goto case_common;
         }
-        if (0x2D <= kind) {
+        if (kind >= 0x2D) {
             goto block_22;
         }
         if (kind >= 0x2B) {
@@ -509,7 +512,8 @@ case_2b:
         walk = self;
         for (i = 0; i < 4; i++) {
             if (*(u16 *)((u8 *)walk + 0x42) == *(u8 *)((u8 *)obj + 4)) {
-                str = ((Slot *)((u8 *)self + (i << 2)))->p;
+                walk = (u8 *)self + (i << 2);
+                str = ((void **)walk)[0x13];
                 break;
             }
             walk = (u8 *)walk + 2;
