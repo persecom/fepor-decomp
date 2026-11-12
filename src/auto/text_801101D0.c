@@ -2632,6 +2632,20 @@ void fn_80117CCC(void) {
     }
 }
 
+void fn_80117D20(s32 arg0) {
+    void fn_8014C7C0(void *, s32);
+    void fn_80013A90(void *);
+    void fn_800138F4(void);
+    void fn_800C08AC(void *, s32);
+    extern s32 lbl_80330708[];
+    extern u8 lbl_80274508[];
+
+    fn_8014C7C0(lbl_80330708, 0);
+    fn_80013A90(lbl_80274508 + 0x138);
+    fn_800138F4();
+    fn_800C08AC(lbl_80274508 + 0x150, arg0);
+}
+
 BOOL fn_80117D80(s32 arg0, s32 arg1)
 {
     s32 temp_r3;
