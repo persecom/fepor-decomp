@@ -586,6 +586,68 @@ u8 *fn_8001FC7C(void *arg0, u8 *arg1, s8 arg2, s8 arg3) {
     return start;
 }
 
+void fn_8002011C(void *arg0, s8 arg1, s8 arg2, u8 arg3, u8 arg4)
+{
+    void fn_80022DAC(void *, s32, s32);
+    s8 x;
+    void *self;
+    s8 y;
+
+    x = arg1;
+    self = arg0;
+    y = arg2;
+
+    ((u8 *)self + 0x20000)[0x4EE0] = 0;
+    *(u16 *)((u8 *)self + 0x24EE2) = arg4;
+    *(void **)((u8 *)self + 0x24ED8) = (u8 *)self + 0x242D8;
+    *(void **)((u8 *)self + 0x24EDC) = (u8 *)self + 0x248D8;
+    ((u8 *)self + 0x20000)[0x4EE9] = arg3;
+
+    (*(u8 **)((u8 *)self + 0x24EDC))[0] = (u8)x;
+    (*(u8 **)((u8 *)self + 0x24EDC))[1] = (u8)y;
+    (*(u8 **)((u8 *)self + 0x24EDC))[2] = 0x20;
+    *(u16 *)(*(u8 **)((u8 *)self + 0x24EDC) + 4) = 0;
+    *(u8 **)((u8 *)self + 0x24EDC) = *(u8 **)((u8 *)self + 0x24EDC) + 6;
+    (*(u8 **)((u8 *)self + 0x24EDC))[2] = 0x10;
+
+    fn_80022DAC(self, 0xB, -1);
+
+    (*(s16 **)((u8 *)self + 0x14190))[(s8)x + ((s8)y << 6)] = 0;
+
+    for (;;) {
+        u8 slot;
+        u8 *ed8;
+        u8 *edc;
+
+        slot = ((u8 *)self + 0x20000)[0x4EE0];
+        *(void **)((u8 *)self + 0x24EDC) = (u8 *)self + slot * 0x600 + 0x242D8;
+        ((u8 *)self + 0x20000)[0x4EE0] = (u8)(slot ^ 1);
+        slot = ((u8 *)self + 0x20000)[0x4EE0];
+        *(void **)((u8 *)self + 0x24ED8) = (u8 *)self + slot * 0x600 + 0x242D8;
+        ((u8 *)self + 0x20000)[0x4EE1] = 0;
+
+        ed8 = *(u8 **)((u8 *)self + 0x24ED8);
+        if (ed8[2] == 0x10) {
+            break;
+        }
+
+        do {
+            switch (ed8[2]) {
+            case 0x20:
+            case 0x8:
+            case 0x4:
+            case 0x1:
+            case 0x2:
+                break;
+            }
+            edc = *(u8 **)((u8 *)self + 0x24EDC);
+            edc[2] = 0x10;
+            ed8 += 6;
+            *(u8 **)((u8 *)self + 0x24ED8) = ed8;
+        } while (ed8[2] != 0x10);
+    }
+}
+
 void fn_8002134C(struct unit* arg0)
 {
     u16* temp_r5;
@@ -601,6 +663,16 @@ void fn_8002134C(struct unit* arg0)
     // Load u16 value from array at offset 0x1C and store back to arg0 + 0x18 
     value = temp_r5[0x1C/sizeof(u16)];
     *(u16*)((char*)arg0 + 0x18) = value;
+}
+
+void fn_800213D0(void *map, u8 x, u8 y, u16 range, s32 a, s32 b)
+{
+    (void)map;
+    (void)x;
+    (void)y;
+    (void)range;
+    (void)a;
+    (void)b;
 }
 
 void fn_80022748(void *arg0, void *arg1) {
