@@ -7349,7 +7349,7 @@ s32 fn_800BFECC(void *arg0)
         return 0;
     }
 
-    return value == *(void **)(unit + 0x188);
+    return *(void **)(unit + 0x188) == value;
 }
 
 extern s32 lbl_80367FCC;
