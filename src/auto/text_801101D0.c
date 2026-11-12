@@ -4112,12 +4112,34 @@ void fn_8011B5FC(void *arg0, void *arg1) {
     fn_8000A248();
 }
 
-s16 fn_8011B710(void *arg0) {
-    s16 (*func)(void) = (s16 (*)(void)) M2C_FIELD(M2C_FIELD(arg0, void **, 4), void **, 0x50);
-    s16 temp_r3 = func();
-    return (0x260 - temp_r3) >> 1;
+#pragma cplusplus on
+extern "C" s16 fn_8011B710(void *arg0) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual s16 v18() = 0;
+    };
+    s16 temp = ((Obj *)arg0)->v18();
+    return (s16)((0x260 - temp) >> 1);
 }
-
+#pragma cplusplus reset
 s32 fn_8011B74C(void) {
     return 0x40;
 }
@@ -4836,17 +4858,23 @@ void fn_8011CB6C(void *arg0, s32 arg1, s32 arg2) {
     }
 }
 
-void fn_8011CC04(void *arg0) {
-    s32 temp_r4;
-    s32 var_r0;
+void fn_8011CC04(u8 *arg0) {
+    s32 a;
+    s32 b;
+    s32 t1;
+    s32 t2;
+    s32 t3;
 
-    M2C_FIELD(arg0, s8 *, 0xF0) = 1;
-    var_r0 = M2C_FIELD(arg0, s32 *, 0xB0);
-    temp_r4 = M2C_FIELD(arg0, s32 *, 0xF8);
-    if (var_r0 > temp_r4) {
-        var_r0 = temp_r4;
+    arg0[0xF0] = 1;
+    a = *(s32 *)(arg0 + 0xB0);
+    b = *(s32 *)(arg0 + 0xF8);
+    if (a > b) {
+        a = b;
     }
-    M2C_FIELD(arg0, s32 *, 0x64) = (s32) (M2C_FIELD(arg0, s32 *, 0xC8) + ((var_r0 * 0x10) + 2));
+    t1 = a * 0x10;
+    t2 = *(s32 *)(arg0 + 0xC8);
+    t3 = t1 + 2;
+    *(s32 *)(arg0 + 0x64) = t2 + t3;
 }
 
 void fn_8011D014(void *arg0) {
