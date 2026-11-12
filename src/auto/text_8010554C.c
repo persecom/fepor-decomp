@@ -2044,15 +2044,14 @@ void *fn_80109180(s32 arg0, u32 arg1) {
     void *fn_8000CAF0(void *, u32);
     void fn_80109F88(void *, s32);
     extern u8 lbl_8028F390[];
+    void *tbl;
     void *result;
-    u32 n;
 
-    n = arg1;
-    if (n != 0U) {
-    } else {
-        n = 3U;
+    tbl = lbl_8028F390;
+    if (arg1 == 0U) {
+        arg1 = 3U;
     }
-    result = fn_8000CAF0(lbl_8028F390, n);
+    result = fn_8000CAF0(tbl, arg1);
     fn_80109F88(result, arg0);
     return result;
 }
@@ -5603,35 +5602,20 @@ void *fn_8010FEEC(void *arg0, s8 arg1, s8 arg2, s8 arg3, s8 arg4) {
 }
 
 void *fn_8010FF24(void *arg0, s8 arg1, s8 arg2, u8 arg3) {
-    void **ptr_list = (void **)arg0;
-    s32 counter;
+    s32 count;
     s32 i;
+    char *p;
 
-    counter = *(s32 *)((u8 *)ptr_list + 0x200);  // Load counter from offset 0x200 
-    if (counter <= 0) {
-        return NULL;
-    }
-
-    for (i = 0; i < counter; i++) {
-        void *current = ptr_list[i];
-        s8 field0 = *(s8 *)((u8 *)current + 0x0);  // Load s8 value at offset 0x0
-        s8 field1 = *(s8 *)((u8 *)current + 0x1);  // Load s8 value at offset 0x1
-        u8 field2 = *(u8 *)((u8 *)current + 0x2);  // Load u8 value at offset 0x2
-
-        if (arg1 == field0 && arg2 == field1) {
-            if (arg3 != 0) {
-                if (arg3 == field2) {
-                    return current;
-                }
-                goto block_6;  
+    count = *(s32 *)((char *)arg0 + 0x200);
+    p = (char *)arg0;
+    for (i = 0; i < count; i++, p += 8) {
+        if (arg1 == *(s8 *)(p + 0) && arg2 == *(s8 *)(p + 1)) {
+            if (arg3 == 0 || arg3 == *(u8 *)(p + 2)) {
+                return p;
             }
-            return current;
         }
-block_6:
-        ;  // Empty body for label
     }
-
-    return NULL;  // No match found in loop
+    return NULL;
 }
 
 s32 fn_8010FF88(void *arg0) {
