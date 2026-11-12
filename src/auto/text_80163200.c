@@ -13066,22 +13066,17 @@ void fn_8017F744(void *arg0) {
 }
 
 void fn_8017F7D4(void *arg0) {
-    f32 fn_8005A028(M2C_UNK, s32, f32, f32, f32, f32);
+    f32 fn_8005A028(s32, s32, f32, f32, f32, f32);
     void fn_8000C188(void *);
-    extern f32 lbl_8036AC30;
-    extern f32 lbl_8036AC40;
-    extern f32 lbl_8036AC4C;
-    extern f32 lbl_8036AC58;
-    extern f32 lbl_8036AC94;
-    f32 temp_f1;
-    s32 temp_r4;
+    s32 old;
+    f32 temp;
 
-    temp_r4 = M2C_FIELD(arg0, s32 *, 0x3C);
-    M2C_FIELD(arg0, s32 *, 0x3C) = (s32) (temp_r4 + 1 + 0);
-    temp_f1 = fn_8005A028(2, temp_r4, lbl_8036AC30, lbl_8036AC58, lbl_8036AC40, (f32) M2C_FIELD(arg0, s32 *, 0x3C)) - lbl_8036AC94;
-    M2C_FIELD(arg0, f32 *, 0x38) = (f32) ((temp_f1 * temp_f1) - lbl_8036AC4C);
-    if ((s32) M2C_FIELD(arg0, s32 *, 0x3C) >= 0xA) {
-        M2C_FIELD(arg0, s32 *, 0x3C) = 0;
+    old = *(s32 *)((u8 *)arg0 + 0x3C);
+    *(s32 *)((u8 *)arg0 + 0x3C) = old + 1;
+    temp = fn_8005A028(2, old, 0.0f, 8.0f, 10.0f, (f32)*(s32 *)((u8 *)arg0 + 0x3C)) - 4.0f;
+    *(f32 *)((u8 *)arg0 + 0x38) = (temp * temp) - 16.0f;
+    if (*(s32 *)((u8 *)arg0 + 0x3C) >= 10) {
+        *(s32 *)((u8 *)arg0 + 0x3C) = 0;
         fn_8000C188(arg0);
     }
 }
