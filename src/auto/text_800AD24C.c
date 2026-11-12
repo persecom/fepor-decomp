@@ -6191,10 +6191,11 @@ u8 fn_800BCD34(void) {
 
 u8 fn_800BCD58(void) {
     extern u8 lbl_802EF4C8[24];
-    if (lbl_802EF4C8 != NULL) {
-        return lbl_802EF4C8[0x198];
+    u8 *p = *(u8 **)lbl_802EF4C8;
+    if (p != NULL) {
+        return p[0x198];
     }
-    return 0U;
+    return 0;
 }
 
 s32 fn_800BCD7C(u8 arg0) {
