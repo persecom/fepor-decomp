@@ -1579,12 +1579,13 @@ void fn_800A1D28(s32 arg0, s32 arg1, void *arg2) {
 }
 
 extern u16 lbl_8026D878[];
-void fn_800A207C(void)
-{
-    u32* ptr = (u32*)lbl_8026D878;
-    ptr[0] = 0;
-    ptr[1] = 0;
-    ptr[2] = 0;
+void *fn_800A207C(s32 unused, void *arg1) {
+    typedef struct { void *e[18]; } Tbl;
+    extern u16 lbl_8026D878[];
+    Tbl t;
+
+    t = *(Tbl *)lbl_8026D878;
+    return t.e[*(u8 *)((u8 *)arg1 + 0x3a)];
 }
 
 void fn_800A2410(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
