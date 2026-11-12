@@ -401,6 +401,36 @@ void fn_8020CD40(void) {
     fn_8020AEC4(&__DVDThreadQueue);
 }
 
+s32 fn_8020CE24(void *arg0, void *arg1) {
+    u8 *dir;
+    u8 *entry;
+    u32 loc;
+
+    dir = (u8 *)arg0;
+    entry = (u8 *)arg1;
+
+    loc = *(u32 *)(dir + 4);
+
+    if (loc <= *(u32 *)dir ||
+        loc >= *(u32 *)(dir + 8)) {
+        return 0;
+    }
+
+    *(u32 *)entry = loc;
+    *(u32 *)(entry + 4) = entryIsDir(loc);
+    *(char **)(entry + 8) =
+        FstStringStart_80368580 + stringOff(loc);
+
+    if (entryIsDir(loc)) {
+        *(u32 *)(dir + 4) =
+            FstStart_8036857C[loc].nextEntryOrLength;
+    } else {
+        *(u32 *)(dir + 4) = loc + 1;
+    }
+
+    return 1;
+}
+
 s32 fn_8020CEC8(void) {
     return 1;
 }
@@ -410,20 +440,87 @@ void fn_8020CED0(void) {
 }
 
 void DVDInit(void) {
-    __OSStopAudioSystem();
-    OSInitThreadQueue((void *)0x803397EC);
-}
+    extern s32 DVDInitialized_803685DC;
+    extern const char *__DVDVersion;
+    extern u32 MotorState_803685D8;
+    extern u8 *bootInfo_803685A0;
+    extern s32 FirstTimeInBootrom_803685D4;
+    extern void *__DVDThreadQueue;
 
-void fn_8020CFAC(void)
-{
-    s32 i;
-    for (i = 0; i < 0x200; i++)
-    {
-        if ((*(u16*)(0x803685A0 + i * 2) & 0x10) != 0)
-        {
-            *(u16*)(0x803685A0 + i * 2) = 0;
+    extern void __DVDInitWA(void);
+    extern void __DVDInterruptHandler(s16, OSContext *);
+    extern void __fstLoad(void);
+
+    if (DVDInitialized_803685DC == 0) {
+        OSRegisterVersion(__DVDVersion);
+        DVDInitialized_803685DC = 1;
+
+        __DVDFSInit();
+        __DVDClearWaitingQueue();
+        __DVDInitWA();
+
+        MotorState_803685D8 = 0;
+        bootInfo_803685A0 = (u8 *)0x80000000;
+        IDShouldBe_8036859C = bootInfo_803685A0;
+
+        __OSSetInterruptHandler(0x15, __DVDInterruptHandler);
+        __OSUnmaskInterrupts(0x400);
+        OSInitThreadQueue((void *)&__DVDThreadQueue);
+
+        *(volatile u32 *)0xCC006000 = 0x2A;
+        *(volatile u32 *)0xCC006004 = 0;
+
+        if (*(u32 *)(bootInfo_803685A0 + 0x20) == 0xE5207C22) {
+            OSReport("load fst\n");
+            __fstLoad();
+        } else if (*(u32 *)(bootInfo_803685A0 + 0x20) != 0x0D15EA5E) {
+            FirstTimeInBootrom_803685D4 = 1;
         }
     }
+}
+
+void fn_8020CFAC(void) {
+    extern void (*lbl_803685E0)(void *);
+    extern u8 *bootInfo_803685A0;
+    extern u16 BB2_80339F40[];
+    extern s32 lbl_80366F74;
+    extern char lbl_8029D0DC[];
+
+    void fn_8020602C(void *, s32, char *, ...);
+    s32 fn_8020BAD0(void *, u32, u32, void (*)(u32));
+    void fn_8020D040(u32);
+
+    u8 *bootInfo;
+    u8 *bb2;
+
+    bootInfo = bootInfo_803685A0;
+    bb2 = (u8 *)BB2_80339F40;
+
+    lbl_803685E0 = (void (*)(void *))fn_8020CFAC;
+
+    if (*(u32 *)(bootInfo + 0x3C) < *(u32 *)(bb2 + 8)) {
+        fn_8020602C(
+            &lbl_80366F74,
+            0x295,
+            lbl_8029D0DC
+        );
+    }
+
+    fn_8020BAD0(
+        *(void **)(bootInfo + 0x38),
+        (*(u32 *)(bb2 + 8) + 0x1F) & ~0x1F,
+        *(u32 *)(bb2 + 4),
+        fn_8020D040
+    );
+}
+
+void fn_8020D16C(void) {
+    M2C_UNK DVDReset();
+    M2C_UNK __DVDStoreErrorCode(M2C_UNK);
+    M2C_UNK cbForStateError(M2C_UNK);
+    __DVDStoreErrorCode(0x01234568);
+    DVDReset();
+    cbForStateError(0);
 }
 
 void fn_8020D1A0(void) {
@@ -812,6 +909,294 @@ void stateReady(void) {
 void stateBusy_8020E178(void) {
     // Implementation based on analysis of neighboring functions.
     // The exact structure is inferred from similar functions in the codebase.
+}
+
+void fn_8020E4B8(u32 arg0) {
+    void __DVDStoreErrorCode(u32);
+    void DVDReset(void);
+    void cbForStateError(u32);
+    void DVDLowStopMotor(void (*)(u32));
+    void DVDLowWaitCoverClose(void (*)(void));
+    void cbForStateMotorStopped(void);
+    void stateReady(void);
+    void stateBusy_8020E178(void *);
+    void fn_8020BF58(void *);
+    void fn_8020C080(u32, u32, u32, void (*)(u32));
+    void fn_8020D27C(u32);
+    extern u16 BB2_80339F40[];
+    extern volatile u32 CurrCommand_803685B4;
+    extern s32 lbl_803685CC;
+    extern s32 ResetRequired_803685D0;
+    extern u32 lbl_803685B8;
+    extern void *executing_80368598;
+    extern s32 ResumeFromHere_803685C0;
+    extern void (*lbl_803685BC)(void *, void *);
+    extern u32 lbl_80366F7C;
+    extern s32 MotorState_803685D8;
+    extern u32 lbl_8029D154[];
+    extern s32 lbl_803685AC;
+
+    typedef struct DVDReadyCommand {
+        u8 pad[8];
+        s32 command;
+        s32 state;
+        u32 unk10;
+        u32 unk14;
+        u32 unk18;
+        u32 unk1C;
+        u32 unk20;
+        u8 pad24[4];
+        void (*callback)(s32, void *);
+    } DVDReadyCommand;
+
+    DVDReadyCommand *block;
+    u8 *base;
+    u32 cmd;
+    s32 flag;
+    s32 zero;
+    u32 *di;
+    u32 *tbl;
+    u32 val;
+
+    base = (u8 *)BB2_80339F40;
+    di = (u32 *)0xCC006000;
+
+    if (arg0 == 0x10) {
+        __DVDStoreErrorCode(0x01234568);
+        DVDReset();
+        cbForStateError(0);
+        return;
+    }
+
+    if (CurrCommand_803685B4 == 3 || CurrCommand_803685B4 == 0xF) {
+        if (arg0 & 2) {
+            __DVDStoreErrorCode(0x01234567);
+            DVDLowStopMotor(cbForStateError);
+            return;
+        }
+        zero = 0;
+        lbl_803685CC = zero;
+        if (CurrCommand_803685B4 == 0xF) {
+            ResetRequired_803685D0 = 1;
+        }
+        if (lbl_803685B8 != 0) {
+            ResumeFromHere_803685C0 = 7;
+            block = (DVDReadyCommand *)executing_80368598;
+            lbl_803685B8 = zero;
+            executing_80368598 = base + 0x40;
+            block->state = 0xA;
+            if (block->callback != NULL) {
+                block->callback(-3, block);
+            }
+            if (lbl_803685BC != NULL) {
+                lbl_803685BC((void *)0, block);
+            }
+            stateReady();
+            flag = 1;
+        } else {
+            flag = 0;
+        }
+        if (flag == 0) {
+            ((DVDReadyCommand *)executing_80368598)->state = 7;
+            DVDLowWaitCoverClose(cbForStateMotorStopped);
+        }
+        return;
+    }
+
+    cmd = CurrCommand_803685B4;
+    if (cmd == 1 || (cmd - 4) <= 1 || cmd == 0xE) {
+        flag = 1;
+    } else if (cmd == lbl_80366F7C) {
+        flag = 1;
+    } else {
+        flag = 0;
+    }
+    if (flag != 0) {
+        block = (DVDReadyCommand *)executing_80368598;
+        block->unk20 = block->unk20 + (block->unk1C - di[6]);
+    }
+
+    if (arg0 & 8) {
+        zero = 0;
+        block = (DVDReadyCommand *)executing_80368598;
+        lbl_803685B8 = zero;
+        executing_80368598 = base + 0x40;
+        block->state = 0xA;
+        if (block->callback != NULL) {
+            block->callback(-3, block);
+        }
+        if (lbl_803685BC != NULL) {
+            lbl_803685BC((void *)0, block);
+        }
+        stateReady();
+        return;
+    }
+
+    if (arg0 & 1) {
+        zero = 0;
+        lbl_803685CC = zero;
+        if (CurrCommand_803685B4 == 0x10) {
+            block = (DVDReadyCommand *)executing_80368598;
+            MotorState_803685D8 = 1;
+            executing_80368598 = base + 0x40;
+            block->state = zero;
+            if (block->callback != NULL) {
+                block->callback(0, block);
+            }
+            stateReady();
+            return;
+        }
+        if (lbl_803685B8 != 0) {
+            ResumeFromHere_803685C0 = zero;
+            block = (DVDReadyCommand *)executing_80368598;
+            lbl_803685B8 = zero;
+            executing_80368598 = base + 0x40;
+            block->state = 0xA;
+            if (block->callback != NULL) {
+                block->callback(-3, block);
+            }
+            if (lbl_803685BC != NULL) {
+                lbl_803685BC((void *)0, block);
+            }
+            stateReady();
+            flag = 1;
+        } else {
+            flag = 0;
+        }
+        if (flag != 0) {
+            return;
+        }
+        cmd = CurrCommand_803685B4;
+        if (cmd == 1 || (cmd - 4) <= 1 || cmd == 0xE) {
+            flag = 1;
+        } else if (cmd == lbl_80366F7C) {
+            flag = 1;
+        } else {
+            flag = 0;
+        }
+        if (flag != 0) {
+            block = (DVDReadyCommand *)executing_80368598;
+            if (block->unk20 != block->unk14) {
+                stateBusy_8020E178(block);
+                return;
+            }
+            executing_80368598 = base + 0x40;
+            block->state = 0;
+            if (block->callback != NULL) {
+                block->callback((s32)block->unk20, block);
+            }
+            stateReady();
+            return;
+        }
+        cmd = CurrCommand_803685B4;
+        if ((cmd - 9) <= 3) {
+            flag = 1;
+        } else {
+            tbl = lbl_8029D154;
+            if (cmd == *tbl) {
+                flag = 1;
+            } else {
+                tbl++;
+                if (cmd == *tbl) {
+                    flag = 1;
+                } else if (cmd == tbl[1]) {
+                    flag = 1;
+                } else {
+                    flag = 0;
+                }
+            }
+        }
+        if (flag != 0) {
+            if (CurrCommand_803685B4 == 0xB || CurrCommand_803685B4 == 0xA) {
+                val = di[8] << 2;
+            } else {
+                val = di[8];
+            }
+            block = (DVDReadyCommand *)executing_80368598;
+            executing_80368598 = base + 0x40;
+            block->state = 0;
+            if (block->callback != NULL) {
+                block->callback((s32)val, block);
+            }
+            stateReady();
+            return;
+        }
+        if (CurrCommand_803685B4 == 6) {
+            block = (DVDReadyCommand *)executing_80368598;
+            if (block->unk1C == 0) {
+                if (di[8] & 1) {
+                    executing_80368598 = base + 0x40;
+                    block->state = 9;
+                    if (block->callback != NULL) {
+                        block->callback(-2, block);
+                    }
+                    stateReady();
+                    return;
+                }
+                lbl_803685AC = 0;
+                block->unk1C = 1;
+                fn_8020C080(0, ((DVDReadyCommand *)executing_80368598)->unk14,
+                            ((DVDReadyCommand *)executing_80368598)->unk10, fn_8020E4B8);
+                return;
+            }
+            executing_80368598 = base + 0x40;
+            block->state = 0;
+            if (block->callback != NULL) {
+                block->callback(0, block);
+            }
+            stateReady();
+            return;
+        }
+        block = (DVDReadyCommand *)executing_80368598;
+        executing_80368598 = base + 0x40;
+        block->state = 0;
+        if (block->callback != NULL) {
+            block->callback(0, block);
+        }
+        stateReady();
+        return;
+    }
+
+    if (CurrCommand_803685B4 == 0xE) {
+        __DVDStoreErrorCode(0x01234567);
+        DVDLowStopMotor(cbForStateError);
+        return;
+    }
+
+    if (CurrCommand_803685B4 == 1 || CurrCommand_803685B4 == 4 || CurrCommand_803685B4 == 5 ||
+        CurrCommand_803685B4 == 0xE) {
+        block = (DVDReadyCommand *)executing_80368598;
+        if (block->unk20 == block->unk14) {
+            zero = 0;
+            if (lbl_803685B8 != 0) {
+                ResumeFromHere_803685C0 = zero;
+                lbl_803685B8 = zero;
+                executing_80368598 = base + 0x40;
+                block->state = 0xA;
+                if (block->callback != NULL) {
+                    block->callback(-3, block);
+                }
+                if (lbl_803685BC != NULL) {
+                    lbl_803685BC((void *)0, block);
+                }
+                stateReady();
+                flag = 1;
+            } else {
+                flag = 0;
+            }
+            if (flag == 0) {
+                block = (DVDReadyCommand *)executing_80368598;
+                executing_80368598 = base + 0x40;
+                block->state = 0;
+                if (block->callback != NULL) {
+                    block->callback((s32)block->unk20, block);
+                }
+                stateReady();
+            }
+            return;
+        }
+    }
+    fn_8020BF58(fn_8020D27C);
 }
 
 s32 fn_8020EB10(void *arg0, u32 arg1, u32 arg2, u32 arg3, u32 arg4, s32 arg5)
@@ -1540,6 +1925,298 @@ void fn_802107A8(void) {
         OSRestoreInterrupts(enabled);
     }
 }
+
+#pragma use_lmw_stmw on
+void fn_80210C70(void *arg0) {
+    BOOL OSDisableInterrupts(void);
+    void OSRestoreInterrupts(BOOL);
+    void OSReport(char *, ...);
+    void fn_8020602C(void *, s32, char *, ...);
+    VITiming *fn_8021004C(u32);
+    void fn_802107FC(void *, void *, void *, void *, void *);
+    void fn_80210AD0(u16, u16, u8, u16, u16, u16, u16, u16);
+    extern u8 lbl_8029D2C8[];
+    extern u8 lbl_8033A068[];
+    extern char lbl_80366F94[];
+    extern u32 lbl_80368658;
+    extern u32 lbl_80368660;
+    extern s16 lbl_80368626;
+
+    void *self;
+    u8 *data;
+    u8 *v;
+    BOOL irq;
+    u32 *progp;
+    u32 tv;
+    u32 mode;
+    u32 tmp;
+    VITiming *tm;
+    u16 *pF2, *pF4, *p102, *p10A, *p10C, *p106, *p108, *pF6, *pFA, *pFC;
+    u32 *p110, *p134, *p118;
+    s16 maxx, x;
+    s32 divisor, parity, y, limit, high, low, tmpi;
+    u16 val, r2, r6c;
+    u32 r0;
+
+    self = arg0;
+    data = lbl_8029D2C8;
+    v = lbl_8033A068;
+    irq = OSDisableInterrupts();
+    progp = (u32 *)(v + 0x114);
+    tmp = *(u32 *)self & 3;
+    if (*progp != tmp) {
+        lbl_80368628 = (void *)1;
+        *progp = tmp;
+    }
+    tv = *(u32 *)0x800000CC;
+    mode = *(u32 *)self >> 2;
+    if (mode == 4 && lbl_80368660 == 0) {
+        lbl_80368660 = 1;
+        OSReport((char *)(data + 0x270));
+        OSReport((char *)(data + 0x29c));
+        OSReport((char *)(data + 0x2c8));
+        OSReport((char *)(data + 0x2f4));
+        OSReport((char *)(data + 0x320));
+        OSReport((char *)(data + 0x34c));
+        OSReport((char *)(data + 0x270));
+    }
+    if (tv == 2) {
+        goto path_02;
+    } else if (tv >= 2) {
+        if (tv == 5) {
+            goto path_157;
+        } else if (tv < 5) {
+            goto path_err;
+        } else if (tv >= 8) {
+            goto path_err;
+        } else {
+            goto path_157;
+        }
+    } else if (tv == 0) {
+        goto path_02;
+    } else if (tv >= 0) {
+        goto path_157;
+    } else {
+        goto path_err;
+    }
+path_02:
+    if (mode == 0 || mode == 2 || (mode - 6) <= 1) {
+        goto path_ok;
+    }
+    goto path_err;
+path_157:
+    if (mode == 1 || mode == 5) {
+        goto path_ok;
+    }
+path_err:
+    fn_8020602C(lbl_80366F94, 0x7bb, (char *)(data + 0x378), tv, mode);
+path_ok:
+    p118 = (u32 *)(v + 0x118);
+    if (mode == 0 || mode == 2) {
+        *p118 = tv;
+    } else {
+        *p118 = mode;
+    }
+    *(u16 *)(v + 0xf0) = *(u16 *)((u8 *)self + 0xa);
+    if (*progp == 1) {
+        val = (u16)((*(u16 *)((u8 *)self + 0xc) * 2) & 0xfffe);
+    } else {
+        val = *(u16 *)((u8 *)self + 0xc);
+    }
+    *(u16 *)(v + 0xf2) = val;
+    pF2 = (u16 *)(v + 0xf2);
+    pF4 = (u16 *)(v + 0xf4);
+    p102 = (u16 *)(v + 0x102);
+    p110 = (u32 *)(v + 0x110);
+    p10A = (u16 *)(v + 0x10a);
+    p10C = (u16 *)(v + 0x10c);
+    p106 = (u16 *)(v + 0x106);
+    p108 = (u16 *)(v + 0x108);
+    *pF4 = *(u16 *)((u8 *)self + 0xe);
+    *p102 = *(u16 *)((u8 *)self + 4);
+    *(u16 *)(v + 0x104) = *(u16 *)((u8 *)self + 8);
+    *p110 = *(u32 *)((u8 *)self + 0x14);
+    *p10A = *p102;
+    *p10C = *(u16 *)(v + 0x104);
+    *p106 = 0;
+    *p108 = 0;
+    if (*progp == 2) {
+        val = *p10C;
+    } else if (*progp == 3) {
+        val = *p10C;
+    } else if (*p110 == 0) {
+        val = (u16)((*p10C * 2) & 0xfffe);
+    } else {
+        val = *p10C;
+    }
+    pF6 = (u16 *)(v + 0xf6);
+    *pF6 = val;
+    p134 = (u32 *)(v + 0x134);
+    if (*progp == 3) {
+        *p134 = 1;
+    } else {
+        *p134 = 0;
+    }
+    tm = fn_8021004C((*p118 << 2) + *progp);
+    *(VITiming **)(v + 0x144) = tm;
+    maxx = (s16)(0x2d0 - *pF4);
+    x = (s16)*(u16 *)(v + 0xf0) + *(s16 *)&lbl_80368624;
+    if (x > maxx) {
+    } else {
+        if (x < 0) {
+            x = 0;
+        }
+        maxx = x;
+    }
+    *(u16 *)(v + 0xf8) = maxx;
+    if (*p110 == 0) {
+        divisor = 2;
+    } else {
+        divisor = 1;
+    }
+    parity = *pF2 & 1;
+    y = (s16)*pF2 + lbl_80368626;
+    if (y > parity) {
+    } else {
+        y = (s16)parity;
+    }
+    pFA = (u16 *)(v + 0xfa);
+    *pFA = y;
+    limit = ((s16)tm->unk2 * 2) - parity;
+    tmpi = (s16)*pF2 + ((s16)*pF6 + lbl_80368626);
+    if (tmpi - limit > 0) {
+        high = tmpi - limit;
+    } else {
+        high = 0;
+    }
+    tmpi = (s16)*pF2 + lbl_80368626;
+    if (tmpi - parity < 0) {
+        low = tmpi - parity;
+    } else {
+        low = 0;
+    }
+    pFC = (u16 *)(v + 0xfc);
+    *pFC = (u16)(*pF6 + low - high);
+    tmpi = (s16)*pF2 + lbl_80368626;
+    if (tmpi - parity < 0) {
+        low = tmpi - parity;
+    } else {
+        low = 0;
+    }
+    *(u16 *)(v + 0xfe) = (u16)(*p108 - low / divisor);
+    tmpi = (s16)*pF2 + ((s16)*pF6 + lbl_80368626);
+    if (tmpi - limit > 0) {
+        high = tmpi - limit;
+    } else {
+        high = 0;
+    }
+    tmpi = (s16)*pF2 + lbl_80368626;
+    if (tmpi - parity < 0) {
+        low = tmpi - parity;
+    } else {
+        low = 0;
+    }
+    *(u16 *)(v + 0x100) = (u16)(*p10C + low / divisor - high / divisor);
+    if (lbl_80368620 == 0) {
+        *p118 = 3;
+    }
+    if ((tm->unk18 % 2) != 0) {
+        val = tm->unk1A;
+    } else {
+        val = 0;
+    }
+    *(u16 *)(v + 0x32) = (u16)(val + 1);
+    lbl_80368634 = lbl_80368634;
+    lbl_80368630 = (void *)((u32)lbl_80368630 | 0x40);
+    *(u16 *)(v + 0x30) = (u16)(((tm->unk18 / 2) + 1) | 0x1000);
+    lbl_80368634 = lbl_80368634;
+    lbl_80368630 = (void *)((u32)lbl_80368630 | 0x80);
+    r2 = *(u16 *)(v + 2);
+    r6c = *(u16 *)(v + 0x6c);
+    if (*progp == 2 || *progp == 3) {
+        r2 = (u16)((r2 & ~4) | 4);
+        r6c = (u16)((r6c & ~1) | 1);
+    } else {
+        r2 = (u16)((r2 & ~4) | ((*progp << 2) & 4));
+        r6c = (u16)(r6c & ~1);
+    }
+    r2 = (u16)((r2 & ~8) | (*p134 << 3));
+    if (*p118 == 1 || (*p118 - 2) <= 1) {
+        r2 = (u16)((r2 & 0xFCFF) | (*p118 << 8));
+    } else {
+        r2 = (u16)(r2 & 0xFCFF);
+    }
+    *(u16 *)(v + 2) = r2;
+    *(u16 *)(v + 0x6c) = r6c;
+    lbl_80368634 = lbl_80368634;
+    lbl_80368630 = (void *)((u32)lbl_80368630 | 0x40000000);
+    lbl_80368634 = (void *)((u32)lbl_80368634 | 0x200);
+    lbl_80368630 = lbl_80368630;
+    if (*p134 != 0) {
+        val = (u16)(*p10A * 2);
+    } else {
+        val = *p10A;
+    }
+    if (val < *pF4) {
+        *(u16 *)(v + 0x4a) = (u16)(((*pF4 + ((val << 8) - 1)) / *pF4) | 0x1000);
+        lbl_80368634 = (void *)((u32)lbl_80368634 | 0x04000000);
+        lbl_80368630 = lbl_80368630;
+        *(u16 *)(v + 0x70) = val;
+        lbl_80368634 = (void *)((u32)lbl_80368634 | 0x80);
+        lbl_80368630 = lbl_80368630;
+    } else {
+        *(u16 *)(v + 0x4a) = 0x100;
+        lbl_80368634 = (void *)((u32)lbl_80368634 | 0x04000000);
+        lbl_80368630 = lbl_80368630;
+    }
+    *(u16 *)(v + 6) = tm->unk1A;
+    lbl_80368634 = lbl_80368634;
+    lbl_80368630 = (void *)((u32)lbl_80368630 | 0x10000000);
+    *(u16 *)(v + 4) = (u16)(tm->unk1E | (tm->unk1D << 8));
+    lbl_80368634 = lbl_80368634;
+    lbl_80368630 = (void *)((u32)lbl_80368630 | 0x20000000);
+    r0 = (tm->unk1F + *(u16 *)(v + 0xf8)) - 0x28;
+    *(u16 *)(v + 0xa) = (u16)(tm->unk1C | ((r0 << 7) & 0xFF80));
+    lbl_80368634 = lbl_80368634;
+    lbl_80368630 = (void *)((u32)lbl_80368630 | 0x04000000);
+    *(u16 *)(v + 8) = (u16)((r0 >> 9) | (((tm->unk20 + *(u16 *)(v + 0xf8) + 0x28) - (0x2d0 - *pF4)) * 2));
+    lbl_80368634 = lbl_80368634;
+    lbl_80368630 = (void *)((u32)lbl_80368630 | 0x08000000);
+    *(u16 *)(v + 0x16) = (u16)(tm->unkC | (tm->unk10 << 5));
+    lbl_80368634 = lbl_80368634;
+    lbl_80368630 = (void *)((u32)lbl_80368630 | 0x100000);
+    *(u16 *)(v + 0x14) = (u16)(tm->unkE | (tm->unk14 << 5));
+    lbl_80368634 = lbl_80368634;
+    lbl_80368630 = (void *)((u32)lbl_80368630 | 0x200000);
+    *(u16 *)(v + 0x1a) = (u16)(tm->unkD | (tm->unk12 << 5));
+    lbl_80368634 = lbl_80368634;
+    lbl_80368630 = (void *)((u32)lbl_80368630 | 0x40000);
+    *(u16 *)(v + 0x18) = (u16)(tm->unkF | (tm->unk16 << 5));
+    lbl_80368634 = lbl_80368634;
+    lbl_80368630 = (void *)((u32)lbl_80368630 | 0x80000);
+    v[0x11c] = (u8)((*p102 + 0xf) / 16);
+    if (*p110 == 0) {
+        v[0x11d] = v[0x11c];
+    } else {
+        v[0x11d] = (u8)((v[0x11c] << 1) & 0xfe);
+    }
+    v[0x12c] = (u8)(*p106 % 16);
+    v[0x11e] = (u8)((v[0x12c] + (*p10A + 0xf)) / 16);
+    *(u16 *)(v + 0x48) = (u16)(v[0x11d] | (v[0x11e] << 8));
+    lbl_80368634 = (void *)((u32)lbl_80368634 | 0x08000000);
+    lbl_80368630 = lbl_80368630;
+    if (lbl_80368658 != 0) {
+        fn_802107FC(v + 0xf0, v + 0x124, v + 0x128, v + 0x13c, v + 0x140);
+    }
+    {
+        u32 sp8 = *(u32 *)(v + 0x130);
+        (void)sp8;
+        fn_80210AD0(*pFA, *pFC, tm->unk0, tm->unk2, tm->unk4, tm->unk6, tm->unk8, tm->unkA);
+    }
+    OSRestoreInterrupts(irq);
+}
+#pragma use_lmw_stmw reset
+
 #pragma peephole on
 s32 fn_80211690(void) {
     extern s32 lbl_80368604;
