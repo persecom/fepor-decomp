@@ -918,10 +918,16 @@ void fn_800076AC(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
     ptr[0xF] = arg3;
 }
 
-f32 fn_800076CC(void* arg0) {
-    f32 val = *(f32*)((char*)arg0 + 0x1C);
-    *(f32*)((char*)arg0 + 0x2C) = val;
-    return val;
+void fn_800076CC(void) {
+ extern void *lbl_80367140;
+ u8 *ptr;
+ f32 temp;
+ ptr = (u8 *)lbl_80367140;
+ ptr = *(u8 **)(ptr + 0xC);
+ ptr = *(u8 **)(ptr + 4);
+ temp = *(f32 *)(ptr + 0x1C);
+ *(f32 *)(ptr + 0x1C) = *(f32 *)(ptr + 0x2C);
+ *(f32 *)(ptr + 0x2C) = temp;
 }
 
 void fn_800076EC(void) {
