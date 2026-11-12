@@ -9,7 +9,7 @@ extern s32 lbl_80367A88;
 
 extern f32 lbl_8036A3C0;
 extern f32 lbl_8036A3C4;
-extern f32 lbl_8036A3C8;
+extern f64 lbl_8036A3C8;
 extern f64 lbl_8036A418;
 
 #pragma cplusplus on
@@ -156,22 +156,21 @@ void fn_80128160(s32 arg1, s32 arg2) {
     }
 }
 
-void fn_80128268(s32 arg1, s32 arg2) {
-    void *fn_8000CAF0(M2C_UNK *, u32, M2C_UNK *);
-    u32 fn_801090C0();
-    extern M2C_UNK lbl_802905C0;
+void fn_80128268(s32 arg0, s32 arg1, s32 arg2) {
+    void *fn_8000CAF0(void *, u32);
+    u32 fn_801090C0(s32);
+    extern u8 lbl_802905C0[];
     extern f32 lbl_8036A3C0;
-    extern f32 lbl_8036A3C8;
     u32 temp_r3;
-    void *temp_r3_2;
+    void *obj;
 
-    temp_r3 = fn_801090C0();
+    temp_r3 = fn_801090C0(arg0);
     if (temp_r3 != 0U) {
-        temp_r3_2 = fn_8000CAF0(&lbl_802905C0, temp_r3, &lbl_802905C0);
-        M2C_FIELD(temp_r3_2, s32 *, 0x38) = arg1;
-        M2C_FIELD(temp_r3_2, f32 *, 0x3C) = (f32) arg2;
-        M2C_FIELD(temp_r3_2, f32 *, 0x40) = (f32) lbl_8036A3C0;
-        M2C_FIELD(temp_r3_2, f32 *, 0x44) = (f32) lbl_8036A3C0;
+        obj = fn_8000CAF0(lbl_802905C0, temp_r3);
+        *(s32 *)((u8 *)obj + 0x38) = arg1;
+        *(f32 *)((u8 *)obj + 0x3C) = (f32)arg2;
+        *(f32 *)((u8 *)obj + 0x40) = lbl_8036A3C0;
+        *(f32 *)((u8 *)obj + 0x44) = lbl_8036A3C0;
     }
 }
 
