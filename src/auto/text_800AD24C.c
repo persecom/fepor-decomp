@@ -7085,31 +7085,25 @@ s32 fn_800BE57C(void *arg0)
     return 0;
 }
 
-void fn_800BE728(s32 arg0)
-{
-    extern void *fn_80013B60(s32);
-    extern void fn_800C273C(void *, u32);
-
+void fn_800BE728(s32 arg0) {
+    void *fn_80013B60(void *);
+    void fn_800C273C(void *, u32);
     u8 *entry;
     s32 count;
-    s16 value;
+    s32 kind;
 
-    entry = (u8 *)fn_80013B60(0);
+    kind = 0xE;
+    entry = fn_80013B60(0);
     count = 0;
-
     while (entry != 0) {
-        if (entry[0xC] == 0xE) {
+        if (entry[0xC] == kind) {
             if (count++ == arg0) {
                 break;
             }
         }
-
-        entry = (u8 *)fn_80013B60(0);
+        entry = fn_80013B60(entry);
     }
-
-    value = *(s16 *)(entry + 0x16);
-
-    fn_800C273C(entry, (u16)value);
+    fn_800C273C(entry, (u16)*(s16 *)(entry + 0x16));
 }
 
 s16 fn_800BE798(s32 arg0) {
