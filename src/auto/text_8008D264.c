@@ -51,30 +51,33 @@ extern Vec4 lbl_8026CD50;
 
 #pragma scheduling reset
 
-void fn_8008D264(void *arg0, u8 arg1, s32 arg2, s16 arg3, f32 farg0) {
+#pragma use_lmw_stmw on
+void fn_8008D264(void *arg0, u8 arg1, s32 arg2, s32 arg3, f32 farg0) {
+    void fn_8005AC24(void *, s32, s32, s32);
     void fn_8000A174(s32, s32);
     void fn_8000A248(void);
     void fn_8000A258(void);
     void fn_8001019C(s16, s16, u8, void *, ...);
-    s16 fn_80010B78(void *, s32, f32);
+    s32 fn_80010B78(void *, s32, f32);
     void *fn_8001CB64(void *);
     u32 fn_8001D2A4(void *);
-    u8 fn_8001D2C8(void *);
+    s32 fn_8001D2C8(void *);
     void fn_80231D94(void *, void *, s32, ...);
     extern u16 lbl_8026CD08[];
     extern u8 lbl_802F0308[];
     extern f32 lbl_8036973C;
     extern f64 lbl_80369740;
     char sp8[0x10];
-    u8 var_r25;
+    s16 temp_r31;
     u8 var_r26;
-    u8 var_r3;
+    u32 var_r3;
+    s32 var_color;
     u8 var_r4;
     u8 var_r0;
     void *temp_r3;
-    s16 temp_r31;
-    u32 temp_r26;
-    u8 temp_r30;
+    s32 temp_r26;
+    u8 var_r25;
+    struct { unsigned b:8; } t;
     u64 flags;
     s32 scaled;
 
@@ -85,20 +88,24 @@ void fn_8008D264(void *arg0, u8 arg1, s32 arg2, s16 arg3, f32 farg0) {
         scaled = (s32)(farg0 * (f32)(u16)fn_8001D2A4(arg0));
         fn_80231D94(sp8, (u8 *)lbl_8026CD08 + 0x2F, scaled);
         temp_r31 = fn_80010B78(sp8, -1, lbl_8036973C);
-        temp_r26 = *(s32 *)(lbl_80330708 + 0x18);
         var_r25 = arg1 != 0;
+        temp_r26 = *(s32 *)(lbl_80330708 + 0x18);
         scaled = (s32)(farg0 * (f32)(u16)fn_8001D2A4(arg0));
         if (temp_r26 < scaled) {
             var_r25 = 0;
         }
-        fn_8001019C((s16)(arg2 + (0x10E - temp_r31)), arg3, var_r25, sp8);
-        var_r3 = 0;
-        temp_r30 = arg1 != 0;
-        if (arg1 != 0) {
-            var_r3 = 4;
+        fn_8001019C((s16)(arg2 + (0x10E - temp_r31)), (s16)arg3, var_r25, sp8);
+        {
+            s32 cond = arg1;
+            t.b = cond != 0;
+            var_color = 0;
+            if (cond != 0) {
+                var_color = 4;
+            }
         }
-        var_r26 = temp_r30;
-        if (temp_r30 == 1 && (*(u8 *)((u8 *)arg0 + 5) & 0x3F)) {
+        var_r3 = (u8)var_color;
+        var_r26 = t.b;
+        if (t.b == 1 && (*(u8 *)((u8 *)arg0 + 5) & 0x3F)) {
             var_r26 = 4;
         }
         if ((*(u8 *)((u8 *)arg0 + 5) >> 6) & 1) {
@@ -107,30 +114,15 @@ void fn_8008D264(void *arg0, u8 arg1, s32 arg2, s16 arg3, f32 farg0) {
         fn_8000A258();
         fn_8000A174(0, 0x13);
         fn_8000A248();
-        fn_8001019C((s16)(arg2 + 0x18), arg3, var_r26, (u8 *)lbl_8026CD08 + 0x21, fn_8001D2C8(arg0));
-        temp_r3 = fn_8001CB64(arg0);
-        flags = *(u64 *)temp_r3;
+        fn_8001019C((s16)(arg2 + 0x18), (s16)arg3, var_r26, (u8 *)lbl_8026CD08 + 0x21, fn_8001D2C8(arg0));
+        flags = *(u64 *)fn_8001CB64(arg0);
         if ((flags & ((0x100ULL << 32) | 0x10)) == 0) {
-            fn_8001019C((s16)(arg2 + 0xA2), arg3, temp_r30, (u8 *)lbl_8026CD08 + 0x34, *(u8 *)((u8 *)arg0 + 4));
-            temp_r3 = *(void **)arg0;
-            if (temp_r3 != NULL) {
-                var_r4 = *((u8 *)temp_r3 + 0x18);
-            } else {
-                var_r4 = 0;
-            }
-            fn_8001019C((s16)(arg2 + 0xBC), arg3, var_r3, (u8 *)lbl_8026CD08 + 0x3A, var_r4);
+            fn_8001019C((s16)(arg2 + 0xA2), (s16)arg3, t.b, (u8 *)lbl_8026CD08 + 0x34, *(u8 *)((u8 *)arg0 + 4));
+            fn_8001019C((s16)(arg2 + 0xBC), (s16)arg3, var_r3, (u8 *)lbl_8026CD08 + 0x3A, (u8)(*(void **)arg0 != NULL ? *((u8 *)*(void **)arg0 + 0x18) : 0));
         }
-        temp_r3 = *(void **)arg0;
-        if (temp_r3 != NULL) {
-            var_r0 = *((u8 *)temp_r3 + 0x15);
-        } else {
-            var_r0 = 0;
-        }
-        fn_8005AC24(lbl_802F0308, arg2, arg3, var_r0 + 0x61);
+        fn_8005AC24(lbl_802F0308, arg2, arg3, (u8)(*(void **)arg0 != NULL ? *((u8 *)*(void **)arg0 + 0x15) : 0) + 0x61);
     }
 }
-
-#pragma use_lmw_stmw on
 void fn_8008D510(void *arg0, u8 arg1, s32 arg2, s32 arg3) {
     void fn_8000A174(s32, s32);
     void fn_8000A248(void);
