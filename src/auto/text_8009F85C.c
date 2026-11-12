@@ -2332,7 +2332,7 @@ extern u16 lbl_8026D8D8;
 extern u16 lbl_8026D8D8;
 extern u16 lbl_8026D8D8;
 extern u16 lbl_8026D8D8;
-extern u16 lbl_803200AC;
+extern u8 lbl_803200AC[];
 #include "global.h"
 extern u32* lbl_80367240;
 extern u8 lbl_80330708[];
@@ -2345,6 +2345,6 @@ extern u16 lbl_80312270;
 extern u8 lbl_80330708[1400];
 #include "global.h"
 
-extern u16 lbl_803200AC;
+extern u8 lbl_803200AC[];
 extern u16 lbl_80367100;
 extern s32 fn_800C3468(u16*);
