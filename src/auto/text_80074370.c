@@ -1415,6 +1415,14 @@ s32 fn_80077214(void) {
     return fn_800AA288(0) == 0 ? 3 : 0;
 }
 
+s32 fn_800772AC(s32 arg0, s32 arg1) {
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_80311FB0[];
+    lbl_802EF4C8[8] = 0x20;
+    fn_80024398(lbl_80311FB0, arg1, 0);
+    return 4;
+}
+
 void fn_800772EC(void) {
     extern u16 lbl_8026C0B8[];
     fn_8000E0E4((u8 *)lbl_8026C0B8 + 0x377);
@@ -3416,12 +3424,10 @@ void fn_8007C378(void) {
 #pragma peephole reset
 void fn_8007C3BC(void) {
     extern u8 lbl_8026C640[];
-    u32 fn_8000D354();
-    u32 x;
+    unsigned int fn_8000D354();
 
-    x = fn_8000D354();
-    switch (x) {
-    case 0:
+    switch ((unsigned int)fn_8000D354()) {
+    case 0U:
         fn_8000D354(lbl_8026C640 + 0xEF);
         break;
     }
