@@ -8697,6 +8697,31 @@ res2:
         M2C_FIELD(entry, u8 *, 2) |= 0x80;
     }
 }
+
+#pragma use_lmw_stmw on
+void fn_80048478(void *arg0, void *arg1, u32 arg2, u32 arg3) {
+    void fn_80069F2C(void *, void *);
+    s32 i;
+    u8 *entry;
+    u32 flags;
+    u8 bits;
+
+    if (*(u32 *)((u8 *)arg0 + 0x64) & 0x40000000) {
+        entry = *(u8 **)((u8 *)arg0 + 0x14);
+        i = 0;
+        while (i < *(s16 *)((u8 *)arg0 + 6)) {
+            flags = *(u32 *)(*(u8 **)(entry + 0x10) + 0xBC);
+            bits = entry[2];
+            if (!(flags & arg3) && (arg2 == 0 || (flags & arg2)) && !(bits & 1) && !(bits & 0x80)) {
+                fn_80069F2C(arg1, entry + 0x14);
+            }
+            i += 1;
+            entry += 0xB4;
+        }
+    }
+}
+#pragma use_lmw_stmw reset
+
 #pragma opt_peephole reset
 #pragma opt_loop_invariants reset
 #pragma use_lmw_stmw reset
