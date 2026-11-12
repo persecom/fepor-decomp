@@ -225,6 +225,40 @@ s32 __register_fragment(s32 arg0, s32 arg1) {
     return -1;
 }
 
+void fn_8022CF78(void) {
+    extern s32 __aborting;
+    extern s32 __atexit_curr_func;
+    extern void (*__atexit_funcs[])(void);
+    extern void (*__console_exit)(void);
+
+    void fn_802340D8(s32);
+    void __begin_critical_region(s32);
+    void __end_critical_region(s32);
+    void __kill_critical_regions(void);
+    void _ExitProcess(void);
+
+    fn_802340D8(1);
+
+    __aborting = 1;
+
+    __begin_critical_region(0);
+
+    while (__atexit_curr_func > 0) {
+        __atexit_curr_func--;
+        __atexit_funcs[__atexit_curr_func]();
+    }
+
+    __end_critical_region(0);
+    __kill_critical_regions();
+
+    if (__console_exit != 0) {
+        __console_exit();
+        __console_exit = 0;
+    }
+
+    _ExitProcess();
+}
+
 void fn_8022D014(void *arg0)
 {
     extern u8 lbl_803687E8;
@@ -1414,6 +1448,38 @@ s32 fn_80231F48(char *s, const char *fmt, va_list args) {
     return n;
 }
 
+s32 vprintf(const char *format, void *args) {
+    extern u8 __files[];
+    extern s32 __FileWrite();
+
+    s32 fwide(void *, s32);
+    void __begin_critical_region(s32);
+    void __end_critical_region(s32);
+    s32 __pformatter(void *, void *, const char *, void *);
+
+    void *stream;
+    s32 result;
+
+    stream = __files + 0x50;
+
+    if (fwide(stream, -1) < 0) {
+        __begin_critical_region(2);
+
+        result = __pformatter(
+            (void *)__FileWrite,
+            stream,
+            format,
+            args
+        );
+
+        __end_critical_region(2);
+    } else {
+        result = -1;
+    }
+
+    return result;
+}
+
 s32 fn_80232058(void *stream, const char *format, ...)
 {
     s32 fwide(void *, s32);
@@ -2023,8 +2089,12 @@ char *parse_format_80233B44(char *format, void *ap, void *out)
     } f;
     char *p;
     s32 c;
+    s32 cont;
     s32 *vp;
     s32 v;
+
+    c = (s8)format[1];
+    p = format + 1;
 
     f.sign = 0;
     f.just = 1;
@@ -2034,10 +2104,8 @@ char *parse_format_80233B44(char *format, void *ap, void *out)
     f.width = 0;
     f.precision = 0;
 
-    p = format + 1;
-    c = (s8)format[1];
     if (c == '%') {
-        f.conv = '%';
+        f.conv = (u8)c;
         *(u32 *)out = *(u32 *)&f.just;
         *(u32 *)((u8 *)out + 4) = *(u32 *)&f.size;
         *(s32 *)((u8 *)out + 8) = 0;
@@ -2046,6 +2114,7 @@ char *parse_format_80233B44(char *format, void *ap, void *out)
     }
 
     for (;;) {
+        cont = 1;
         switch (c) {
         case '-':
             f.just = 0;
@@ -2067,11 +2136,14 @@ char *parse_format_80233B44(char *format, void *ap, void *out)
             }
             break;
         default:
-            goto after_flags;
+            cont = 0;
+            break;
+        }
+        if (cont == 0) {
+            break;
         }
         c = (s8)*++p;
     }
-after_flags:
 
     if (c == '*') {
         vp = __va_arg(ap, 1);
@@ -2117,6 +2189,7 @@ after_flags:
         }
     }
 
+    cont = 1;
     if (c == 'h') {
         f.size = 2;
         if ((s8)p[1] == 'h') {
@@ -2133,6 +2206,11 @@ after_flags:
         }
     } else if (c == 'L') {
         f.size = 5;
+    } else {
+        cont = 0;
+    }
+    if (cont != 0) {
+        c = (s8)*++p;
     }
 
     f.conv = (u8)c;
@@ -2188,13 +2266,7 @@ after_flags:
     case 'n':
         if (f.size == 3) {
             f.size = 6;
-        } else if (f.prec_set != 0) {
-            if (f.size == 0) {
-                /* ok */
-            } else {
-                f.conv = 0xFF;
-            }
-        } else if (f.size != 0) {
+        } else if (f.prec_set != 0 || f.size != 0) {
             f.conv = 0xFF;
         }
         break;
