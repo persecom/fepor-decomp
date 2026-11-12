@@ -10949,16 +10949,18 @@ s32 fn_8004FA88(void *arg0) {
 
 void fn_8004FE58(void *arg0) {
     extern f32 lbl_80368FCC;
-    M2C_FIELD(arg0, s8 *, 3) = 0;
-    M2C_FIELD(arg0, s16 *, 0x15C) = 0;
-    M2C_FIELD(arg0, s16 *, 0) = 0;
-    M2C_FIELD(arg0, s16 *, 0x16E) = -1;
-    M2C_FIELD(arg0, s8 *, 0x16D) = -1;
-    M2C_FIELD(arg0, s8 *, 0x16C) = -1;
-    M2C_FIELD(arg0, f32 *, 0x170) = (f32) lbl_80368FCC;
-    M2C_FIELD(arg0, f32 *, 0x174) = (f32) lbl_80368FCC;
-    M2C_FIELD(arg0, f32 *, 0x178) = (f32) lbl_80368FCC;
-    M2C_FIELD(arg0, s32 *, 0x17C) = 0;
+    f32 f;
+    *(u8 *)((u8 *)arg0 + 3) = 0;
+    f = lbl_80368FCC;
+    *(s16 *)((u8 *)arg0 + 0x15C) = 0;
+    *(s16 *)arg0 = 0;
+    *(s16 *)((u8 *)arg0 + 0x16E) = -1;
+    *(s8 *)((u8 *)arg0 + 0x16D) = -1;
+    *(s8 *)((u8 *)arg0 + 0x16C) = -1;
+    *(f32 *)((u8 *)arg0 + 0x170) = f;
+    *(f32 *)((u8 *)arg0 + 0x174) = f;
+    *(f32 *)((u8 *)arg0 + 0x178) = f;
+    *(s32 *)((u8 *)arg0 + 0x17C) = 0;
 }
 
 void fn_8004FE90(void *arg0, s8 arg1) {
