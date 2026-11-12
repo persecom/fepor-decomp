@@ -3,8 +3,7 @@
 #include "common.h"
 
 void fn_800A399C(void) {
-    extern void *lbl_8028C488;
+    extern u8 lbl_8028C488[];
     extern void *lbl_80367798;
-
     lbl_80367798 = lbl_8028C488;
 }
