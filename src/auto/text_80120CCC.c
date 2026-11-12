@@ -2792,8 +2792,12 @@ void fn_80126C44(void) {
     lbl_80367110 &= ~0x800;
 }
 
-void fn_80126C54(u16 *arg0) {
-    *arg0 = (*arg0 & ~0x130) | 0xD0;
+void fn_80126C54(void *arg0) {
+    void fn_8011D908(void *, void *);
+    extern u8 lbl_80275048[];
+    extern s32 lbl_80367110;
+    lbl_80367110 |= 0x800;
+    fn_8011D908(lbl_80275048 + 0x44e, arg0);
 }
 
 s32 fn_80126C90(void) {
