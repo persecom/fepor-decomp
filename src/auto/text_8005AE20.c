@@ -3896,7 +3896,7 @@ do_switch:
     return lbl_8036920C * (f32)var_r4;
 }
 
-u8 fn_80064BBC(void *arg0, s16 arg1, void *arg2, f32 farg0)
+u8 fn_80064BBC(void *arg0, s32 arg1, void *arg2, f32 farg0)
 {
     void fn_80064C4C(void *, void *, f32);
 
@@ -6997,15 +6997,15 @@ s32 fn_800704F0(s32 arg0, s32 arg1, s32 arg2)
 }
 
 extern u16 lbl_80286860[];
-void fn_800708B0(s32 arg0, void *arg1) {
+void fn_800708B0(void *arg0, void *arg1) {
     void *fn_8000C0C0(void *);
     void fn_8018DC58(void);
     extern u16 lbl_80286860[];
     extern u8 lbl_80366DE9;
-    u32 temp;
+    void *p;
 
-    temp = *(u32 *)((u8 *)arg1 + 0x18);
-    if (temp == (u32)fn_8000C0C0(&lbl_80286860)) {
+    p = *(void **)((u8 *)arg1 + 0x18);
+    if (p == fn_8000C0C0(&lbl_80286860)) {
         fn_8018DC58();
         *(s8 *)&lbl_80366DE9 = -1;
     }
