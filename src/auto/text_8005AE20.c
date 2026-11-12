@@ -774,9 +774,9 @@ void fn_8005C870(void) {
     fn_8005D330();
 }
 
-void fn_8005C890(void) {
-    extern void fn_8005D330(int);
-    fn_8005D330(0x0C);
+void fn_8005C890(s32 arg0) {
+    extern void fn_8005D330(s32, s32);
+    fn_8005D330(arg0, 0xC);
 }
 
 void fn_8005C8B4(s32 arg0) {
