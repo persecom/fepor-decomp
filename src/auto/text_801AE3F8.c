@@ -1,6 +1,13 @@
 /* Functions from 0x801AE3F8 to 0x801B3220, found by decomp-toolkit. */
 #include "common.h"
 #include "global.h"
+#pragma cplusplus on
+struct SetupMenuObj {
+ virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+ virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+ virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(s32); virtual void v12(s32);
+};
+#pragma cplusplus reset
 extern u16 lbl_802917D0;
 extern struct unk_struct lbl_80331C6C;
 
