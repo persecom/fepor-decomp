@@ -2950,11 +2950,12 @@ s32 fn_80126F7C(void) {
 }
 
 s32 fn_80126FA0(s32 arg0) {
-    u32 fn_8000BCA4(void *, M2C_UNK *);
-    M2C_UNK fn_8011D87C(s32);
-    M2C_UNK fn_8011D908(s32, M2C_UNK);
-    extern M2C_UNK lbl_80275048;
-    if (fn_8000BCA4(&lbl_80275048 + 0x472, &lbl_80275048) != 0U) {
+    void *fn_8000BCA4(void *);
+    void fn_8011D87C(s32);
+    void fn_8011D908(s32, s32);
+    extern u8 lbl_80275048[];
+
+    if (fn_8000BCA4(lbl_80275048 + 0x472) != NULL) {
         fn_8011D87C(arg0);
         return 1;
     }
