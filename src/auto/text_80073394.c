@@ -53,14 +53,16 @@ void *fn_80073464(void) {
     return lbl_8026BE40 + 0x203;
 }
 
-s32 fn_80073474(s32 arg1) {
+s32 fn_80073474(s32 unused, s32 arg1) {
     void *fn_800241C8(s32);
-    M2C_UNK fn_8000CAA0(M2C_UNK *, s32);
-    extern M2C_UNK lbl_80286EF0;
-    
-    void *ptr = fn_800241C8(arg1);
-    s32 val = *(s32 *)((char *)ptr + 0x18);
-    fn_8000CAA0((M2C_UNK *)&lbl_80286EF0, val);
+    void fn_8000CAA0(void *, s32);
+    extern u8 lbl_80286EF0[];
+    void *p;
+    void *lbl;
+
+    p = fn_800241C8(arg1);
+    lbl = lbl_80286EF0;
+    fn_8000CAA0(lbl, *(s32 *)((u8 *)p + 0x18));
     return 5;
 }
 
