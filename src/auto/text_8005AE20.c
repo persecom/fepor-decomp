@@ -6215,8 +6215,8 @@ s32 fn_8007239C(void) {
 }
 
 void *fn_800723A4(void) {
-    extern void *lbl_8026BB84;
-    return (char *)&lbl_8026BB84 + 0xC2;
+    extern u16 lbl_8026BB84[];
+    return (u8 *)lbl_8026BB84 + 0xC2;
 }
 
 void *fn_800723B4(void) {
