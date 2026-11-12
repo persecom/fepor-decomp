@@ -10012,9 +10012,9 @@ extern "C" void fn_80147188(s32 arg0) {
 s32 fn_80147578(void *, s32, f32, f32, f32);
 
 void fn_80147548(void *arg0, f32 *arg1, s32 arg2) {
-    void fn_80147578(void *, s32, f32, f32, f32);
+    void fn_80147578(void *, f32, f32, f32, s32);
 
-    fn_80147578(arg0, arg2, arg1[0], arg1[1], arg1[2]);
+    fn_80147578(arg0, arg1[0], arg1[1], arg1[2], arg2);
 }
 
 s32 fn_80147578(void *arg0, s32 arg1, f32 farg0, f32 farg1, f32 farg2) {
@@ -11034,8 +11034,8 @@ void fn_80149918(void *arg0) {
 }
 
 s32 fn_80149940(void *arg0) {
-    s32 temp = *(u8*)((uintptr_t)arg0 + 4);
-    return fn_800AF704((s8)temp) != 0;
+    s32 fn_800AF704(s32);
+    return fn_800AF704(*(s8 *)((char *)arg0 + 4)) != 0;
 }
 
 s32 fn_80149974(void *arg0) {
