@@ -332,6 +332,24 @@ M2C_FIELD(self,u8 *,0x43)=0;
 if(fn_8004BF80(unit)) {fn_80184C7C(unit,8,4,0); fn_8000C188(self);}
 }
 
+void fn_8009991C(void *arg0) {
+    s32 fn_80098140(void);
+    void *fn_800984FC(void **);
+    s32 fn_8001B9F4(void);
+    void fn_80184578(s32, s32 *, void *);
+    void fn_80184C7C(s32, s32, s32, s32);
+
+    s32 unit;
+    s32 sp8;
+
+    unit = fn_80098140();
+    if (fn_800984FC(*(void ***)((u8 *)arg0 + 0x38)) != NULL) {
+        sp8 = fn_8001B9F4();
+        fn_80184578(unit, &sp8, arg0);
+    }
+    fn_80184C7C(unit, *(s16 *)((u8 *)arg0 + 0x44), 8, 0);
+}
+
 void fn_80099994(void *arg0) {
     void fn_8004FC70(s32);
     u8 fn_800504FC(s32, s32);
