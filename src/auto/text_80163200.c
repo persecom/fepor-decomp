@@ -38,8 +38,8 @@ typedef struct Unk8016F694_Outer {
     Unk8016F694_Inner *inner;
 } Unk8016F694_Outer;
 extern u8 lbl_80330708[];
-extern u16 lbl_803680E8;
-extern f32 lbl_8036AC2C;
+  extern void *lbl_803680E8;
+  extern f32 lbl_8036AC2C;
 extern f32 lbl_8036AC30;
 extern f32 lbl_8036AC34;
 extern f32 lbl_8036AC40;
@@ -1567,12 +1567,11 @@ void fn_80166228(void) {
 
 void fn_80166258(void) {
     extern u8 lbl_802778A8[];
-    extern u16 lbl_803680E8;
 
     void *fn_80019F04(void);
     void fn_80231D94(void *, const char *, ...);
     void fn_80013E24(void *);
-    s32 fn_8003FCCC(void *);
+    void *fn_8003FCCC(void *);
     void fn_8005C4C4(void *, s32);
 
     u8 buffer[0x20];
@@ -1589,7 +1588,7 @@ void fn_80166258(void) {
     fn_80013E24(buffer);
 
     if (*(u32 *)(obj + 0x0C) == 0) {
-        lbl_803680E8 = 0;
+        *(void **)&lbl_803680E8 = NULL;
     } else {
         fn_80231D94(
             buffer,
@@ -1597,7 +1596,7 @@ void fn_80166258(void) {
             *(u32 *)(obj + 0x0C)
         );
 
-        lbl_803680E8 = fn_8003FCCC(buffer);
+        *(void **)&lbl_803680E8 = fn_8003FCCC(buffer);
     }
 
     fn_8005C4C4(buffer, 4);
