@@ -3369,8 +3369,9 @@ void fn_8007C018(void *arg0) {
     }
 }
 
-void fn_8007C318(u16 arg1) {
-    fn_80225058(arg1 >> 0x10, 0, arg1 & 0xFFFF, 0x1E0);
+void fn_8007C318(s32 unused, u32 arg1) {
+    void fn_80225058(u32, s32, u32, s32);
+    fn_80225058(arg1 >> 16, 0, arg1 & 0xFFFF, 0x1E0);
 }
 
 void fn_8007C34C(void) {
