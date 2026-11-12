@@ -3890,7 +3890,6 @@ extern "C" s32 fn_800B7D08(s32 arg0, s32 arg1) {
     struct Obj {
         u8 pad[8];
         virtual u8 v0() = 0;
-        virtual u8 v1() = 0;
         u8 flag;
         u8 pad2[0x23];
     };
@@ -3903,7 +3902,7 @@ extern "C" s32 fn_800B7D08(s32 arg0, s32 arg1) {
     ok = 0;
     obj = &lbl_8032FF08[(u8)arg0];
     if (obj->flag & 1) {
-        if (obj->v1()) {
+        if (obj->v0()) {
             ok = 1;
         }
     }
