@@ -401,8 +401,8 @@ s32 fn_800A0068(s32 arg0, s32 arg1) {
 }
 
 void *fn_800A0094(void) {
-    extern u16 lbl_8026D8D8;
-    return (char *)&lbl_8026D8D8 + 0x38E;
+    extern u16 lbl_8026D8D8[];
+    return (u8 *)lbl_8026D8D8 + 0x38E;
 }
 
 extern s32 lbl_803676D4;
