@@ -10595,15 +10595,10 @@ void fn_8017A574(u8 **arg0, u32 arg1) {
     *p = arg1;
 }
 
-void fn_8017A5C4(void *arg0, u16 arg1) {
-    u8 *p;
-
-    p = *(u8 **)((u8 *)arg0 + 4);
-    *(u8 **)((u8 *)arg0 + 4) = p + 1;
-    *p = (u8)(arg1 >> 8);
-    p = *(u8 **)((u8 *)arg0 + 4);
-    *(u8 **)((u8 *)arg0 + 4) = p + 1;
-    *p = (u8)arg1;
+void fn_8017A5C4(u8 **arg0, u16 arg1) {
+    u8 **pp = &arg0[1];
+    *(*pp)++ = (u8)(arg1 >> 8);
+    *(*pp)++ = (u8)arg1;
 }
 
 void fn_8017A5EC(void *arg0, s8 arg1) {
