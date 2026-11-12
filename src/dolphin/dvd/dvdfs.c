@@ -889,10 +889,10 @@ void fn_8020D838(void) {
 
 void fn_8020D8D4(void) {
     extern u16 BB2_80339F40[16];
-    extern void *fn_8020DA08;
-    void fn_8020BAD0(u16 *, s32, s32, void **);
-    
-    fn_8020BAD0(BB2_80339F40, 0x20, 0x420, &fn_8020DA08);
+    void fn_8020DA08(u32);
+    void fn_8020BAD0(u16 *, s32, s32, void (*)(u32));
+
+    fn_8020BAD0(BB2_80339F40, 0x20, 0x420, fn_8020DA08);
 }
 
 void AlarmHandler(void *alarm, void *context) {
