@@ -174,6 +174,33 @@ s32 fn_8010568C(s32 arg0) {
     return 0;
 }
 
+s32 fn_80105710(void *arg0) {
+    u8 fn_80019CC0(void *);
+    s32 fn_80019E04(void *);
+    s32 off;
+    s32 i;
+    u8 status;
+
+    if (*(u8 *)((u8 *)arg0 + 0x1B) == 0) {
+        return 0;
+    }
+    i = 0;
+    off = 0;
+    while (i < *(u8 *)((u8 *)arg0 + 0x1B)) {
+        status = fn_80019CC0(*(void **)((u8 *)*(void **)((u8 *)arg0 + 0x20) + off));
+        switch (status) {
+        case 3:
+            return fn_80019E04(*(void **)((u8 *)*(void **)((u8 *)arg0 + 0x20) + (i * 4)));
+        case 0:
+        default:
+            break;
+        }
+        off += 4;
+        i += 1;
+    }
+    return 0;
+}
+
 void *fn_801057BC(void *arg0) {
     extern u8 lbl_802738A8[];
     void *fn_8000E0E4(u32);
