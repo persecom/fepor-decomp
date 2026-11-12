@@ -3296,12 +3296,12 @@ s32 fn_800B70EC(s32 arg0)
 }
 
 s32 fn_800B7140(u32 arg0) {
-    M2C_UNK fn_801070FC(u32);
-    M2C_UNK fn_80107294(M2C_UNK);
+    void fn_801070FC(u32);
+    void fn_80107294(u32, s32);
     if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
         return 0;
     }
-    fn_80107294(5);
+    fn_80107294(arg0, 5);
     fn_801070FC(arg0);
     return 1;
 }
