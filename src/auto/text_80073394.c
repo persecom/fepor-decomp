@@ -249,22 +249,20 @@ void fn_800739A8(void) {
 
 void fn_800739E8(void *arg0)
 {
-    extern u32 lbl_80367468;
+    extern void *lbl_80367468;
 
-    s32 fn_80091D74(void *);
+    u8 fn_80091D74(void *);
     void fn_80183BE4(void *, void *);
 
-    u8 *ptr;
+    void *ptr;
 
-    ptr = (u8 *)lbl_80367468;
+    ptr = lbl_80367468;
 
-    if ((*(u32 *)(ptr + 0x1A0) & 0x00800000) != 0) {
-        if ((u8)fn_80091D74(ptr) != 0) {
-            return;
+    if ((*(u32 *)((u8 *)ptr + 0x1A0) & 0x00800000) != 0) {
+        if (fn_80091D74(ptr) == 0) {
+            fn_80183BE4(lbl_80367468, arg0);
         }
     }
-
-    fn_80183BE4((void *)lbl_80367468, arg0);
 }
 
 void fn_80073A3C(void) {
