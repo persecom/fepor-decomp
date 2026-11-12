@@ -603,12 +603,23 @@ void fn_80122114(void *arg0, u8 arg1)
     base[(((u8)(index + 0x100)) << 6) + offset] = 0;
 }
 
-void fn_80122170(u32 *arg0) {
-    u32 temp_r3;
-    
-    // Direct read of the 16-bit value at offset 0x4000
-    if ((*(u16 *)((u8 *)arg0 + 0x4000) & 0x4000) == 0) {
-        *(u32 *)((u8 *)arg0 + 0x4000) = (*(u32 *)((u8 *)arg0 + 0x4000) | 0x40000000);
+void fn_80122170(void *arg0, void *arg1, u16 arg2) {
+    extern u16 lbl_80367A58;
+    extern s32 lbl_80367110;
+    extern u8 lbl_80330708[];
+    extern u8 lbl_802902D8[];
+    void *fn_8000CAA0(void *, void *);
+    void *entry;
+    s32 flags;
+
+    if (!(lbl_80367A58 & 0x200)) {
+        flags = lbl_80367110;
+        if ((flags & 3) == 0) {
+            if ((flags & 0x2000) || (u32)((((u8 *)lbl_80330708)[0x9c] >> 3) & 3) != 3) {
+                entry = fn_8000CAA0(lbl_802902D8, arg1);
+                *(u16 *)((char *)entry + 0x28) = arg2;
+            }
+        }
     }
 }
 
@@ -2914,15 +2925,16 @@ s32 fn_80126E80(void) {
 }
 
 s32 fn_80126EB0(s32 arg0, s32 arg1) {
-    M2C_UNK fn_80013E24(s32);
-    s8 fn_8005BA00();
-    M2C_UNK fn_8005BA08(s8);
-    M2C_UNK fn_8005C4C4(s32, M2C_UNK);
-    s8 fn_800C4740();
+    void fn_80013E24(s32);
+    s8 fn_8005BA00(void);
+    void fn_8005BA08(s8);
+    void fn_8005C4C4(s32, s32);
+    void fn_8003FCCC(s32);
+    s32 fn_800C4740(void);
     s8 temp_r31;
 
     temp_r31 = fn_8005BA00();
-    fn_8005BA08(fn_800C4740());
+    fn_8005BA08((s8)fn_800C4740());
     fn_80013E24(arg0);
     fn_8005C4C4(arg0, 4);
     fn_8003FCCC(arg1);
