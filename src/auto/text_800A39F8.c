@@ -2134,14 +2134,14 @@ void fn_800A8524(void *arg0, void *arg1)
 }
 
 s32 fn_800A883C(void *arg0, s32 arg1) {
-    u8 r0;
-    if (arg1 != 0) {
-        r0 = *(u8 *)((u8 *)arg0 + 0x43) & 0xF;
+    u8 val;
+    u8 *p = &val;
+    if (arg1 == 0) {
+        *p = (*(u8 *)((u8 *)arg0 + 0x43) >> 4) & 0xF;
     } else {
-        r0 = (*(u8 *)((u8 *)arg0 + 0x43) >> 4) & 0xF;
+        *p = *(u8 *)((u8 *)arg0 + 0x43) & 0xF;
     }
-    *(u8 *)((u8 *)arg0 + 0x8) = r0;
-    return r0 << 0x18;
+    return *p << 24;
 }
 
 s32 fn_800A886C(u8 *arg0) {
@@ -2392,6 +2392,25 @@ void fn_800A8C4C(void *arg0) {
         fn_80007884();
     }
 }
+
+void fn_800A8F94(s32 arg0) {
+    void *fn_80109180(void *, s32);
+    void fn_80148618(void *, s32);
+    extern u8 lbl_8026E470[];
+    extern f32 lbl_80369C08;
+    extern f32 lbl_80369BA8;
+    void *temp;
+    f32 a;
+    f32 b;
+
+    temp = fn_80109180(lbl_8026E470 + 0x96, arg0);
+    a = lbl_80369C08;
+    b = lbl_80369BA8;
+    *(f32 *)((u8 *)temp + 0x40) = a;
+    *(f32 *)((u8 *)temp + 0x44) = b;
+    fn_80148618(lbl_8026E470 + 0x73, 0x1F4);
+}
+
 #pragma optimization_level reset
 #pragma opt_common_subs reset
 void fn_800A8FE8(s32 arg0) {
@@ -2430,12 +2449,15 @@ void fn_800A90B4(void) {
 }
 
 void fn_800A90E4(s32 arg0) {
-    extern void* lbl_80367240;
-    extern u16 lbl_8026E470;
+    void fn_801475FC(void *, s32);
+    void fn_8000C188(s32);
+    extern void *lbl_80367240;
+    extern u8 lbl_8026E470[];
+    s32 temp_r3;
 
-    s32 temp_r3 = *(s32*)((u8*)lbl_80367240 + 4);
-    if (temp_r3 & (*(s32*)((u8*)lbl_80367240 + 8) ^ temp_r3) & 0x1F70) {
-        fn_801475FC((u8*)&lbl_8026E470 + 0x82, 0x64);
+    temp_r3 = *(s32 *)((u8 *)lbl_80367240 + 4);
+    if (temp_r3 & (*(s32 *)((u8 *)lbl_80367240 + 8) ^ temp_r3) & 0x1F70) {
+        fn_801475FC(lbl_8026E470 + 0x82, 0x64);
         fn_8000C188(arg0);
     }
 }
