@@ -4736,29 +4736,32 @@ s32 fn_800B983C(u32 arg0, s32 arg1) {
     return 1;
 }
 
-s32 fn_800B98B8(s32 arg0)
-{
-    s32 temp_r3;
-    s32 var_r3;
+s32 fn_800B98B8(u32 arg0) {
+    extern s32 lbl_80367110;
+    extern u8 lbl_8028D1C4[];
+    extern u8 lbl_80320060[];
+    void *fn_801CF760(void);
+    void *fn_800C0658(void);
+    void *fn_8000CAA0(void *, void *);
+    void fn_80013864(void);
+    void fn_80013874(void *);
+    void *tmp;
+    void *obj;
 
-    temp_r3 = arg0 & 0xFFFF;
-    if (temp_r3 == 0) {
+    if ((arg0 < 0x80000000U) || (arg0 >= 0x81800000U)) {
         return 0;
     }
-    var_r3 = temp_r3;
-    for (; ; ) {
-        if ((var_r3 & 1) != 0) {
-            var_r3 = (var_r3 >> 1) & 0x7FFF;
-            if (var_r3 == 0) {
-                return 0;
-            }
-        } else {
-            var_r3 = var_r3 >> 1;
-        }
-        if (var_r3 == 0) {
-            break;
-        }
+    if (lbl_80367110 & 1) {
+        return 0;
     }
+    tmp = fn_801CF760();
+    if (tmp == 0) {
+        return 0;
+    }
+    obj = fn_8000CAA0(lbl_8028D1C4, fn_800C0658());
+    fn_80013864();
+    fn_80013874(lbl_80320060);
+    *(void **)((u8 *)obj + 0x54) = tmp;
     return 1;
 }
 
@@ -6871,37 +6874,26 @@ s32 fn_800BDB9C(s32 arg0, s32 arg1) {
 
 #pragma use_lmw_stmw on
 void fn_800BDBC8(s32 arg0, s32 arg1) {
-    s32 fn_8000D598(s32);
-    s32 fn_802342B8(s32, s32);
     s32 var_r30;
     u32 temp_r31;
     s32 temp_r5;
     s32 var_r29;
-    s32 result;
 
     temp_r31 = fn_8000D598(arg1);
     var_r29 = arg0;
     var_r30 = 0;
 loop_1:
-    if (temp_r31 != *(u32 *)(var_r29 + 0x180)) {
-        goto next;
+    if ((temp_r31 == *(u32 *)(var_r29 + 0x180)) && (fn_802342B8(*(s32 *)var_r29, arg1) == 0)) {
+
+    } else {
+        var_r30 += 1;
+        var_r29 += 4;
+        if (var_r30 >= 0x60) {
+            var_r30 = -1;
+        } else {
+            goto loop_1;
+        }
     }
-    result = fn_802342B8(*(s32 *)var_r29, arg1);
-    switch (result) {
-    default:
-        goto next;
-    case 0:
-        break;
-    }
-    goto after;
-next:
-    var_r30 += 1;
-    var_r29 += 4;
-    if (var_r30 < 0x60) {
-        goto loop_1;
-    }
-    var_r30 = -1;
-after:
     if (var_r30 >= 0) {
         temp_r5 = arg0 + (var_r30 >> 3);
         *(u8 *)(temp_r5 + 0x300) = *(u8 *)(temp_r5 + 0x300) & ~(1 << (var_r30 & 7));
