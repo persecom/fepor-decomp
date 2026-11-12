@@ -1186,20 +1186,17 @@ void fn_800B1B80(s32 arg0, s16 arg1)
 
     u8 *base;
     s32 value;
-    s32 amount;
 
     base = *(u8 **)(lbl_80317338 + 0xF4);
     value = *(s32 *)(base + arg0 * 0x14 + 0xC);
 
-    if (value != -1) {
-        amount = (s16)arg1;
-
-        if (amount == 0) {
+    if ((u32)value + 0x10000 != 0xFFFFU) {
+        if (arg1 == 0) {
             fn_8024B828(value, 0, 0);
-        } else if (amount >= 0x3E80) {
+        } else if (arg1 >= 0x3E80) {
             fn_8024B828(value, 0, 0);
         } else {
-            fn_8024B828(value, 1, amount);
+            fn_8024B828(value, 1, arg1);
         }
     }
 }
