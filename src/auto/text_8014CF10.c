@@ -92,11 +92,16 @@ extern u8 lbl_8032BB58[];
 #include "global.h"
 extern u8 lbl_80330708[];
 
-void fn_8014CF10(s8* arg0, s8 arg1, s8 arg2) {
-    s8 temp = *arg0;
-    *(arg0 + (temp * 2 + 0x545)) = arg1;
-    *(arg0 + (temp * 2 + 0x546)) = arg2;
-    *arg0 = temp + 1;
+void fn_8014CF10(Obj *arg0, s8 arg1, s8 arg2) {
+    {
+        s8 idx = arg0->count;
+        arg0->entries[idx].a = arg1;
+    }
+    {
+        s8 idx = arg0->count;
+        arg0->entries[idx].b = arg2;
+    }
+    arg0->count = arg0->count + 1;
 }
 
 #pragma opt_strength_reduction off
