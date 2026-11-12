@@ -19946,6 +19946,21 @@ void fn_801001B8(s32 a0, s32 a1, s32 a2, s32 a3) {
     fn_80100284(a0, 2, a1, a2, a3);
 }
 
+s32 fn_801001F0(void *arg0) {
+    void *fn_80019E04(void *);
+    s32 result;
+
+    result = 0;
+    if (arg0 == fn_80019E04((char *)&lbl_80273304 + 0xCE)) {
+        result = 1;
+    } else if (arg0 == fn_80019E04((char *)&lbl_80273304 + 0xDE)) {
+        result = 2;
+    } else if (arg0 == fn_80019E04((char *)&lbl_80273304 + 0xEA)) {
+        result = 0x80;
+    }
+    return result;
+}
+
 #pragma use_lmw_stmw on
 s32 fn_80100284(void *arg0, u8 arg1, u32 arg2, s16 *arg3, s16 *arg4) {
     u8 fn_80015610(s32, s32);
