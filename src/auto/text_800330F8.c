@@ -9531,20 +9531,15 @@ s32 fn_8004AF30(u16 arg0) {
     return fn_80146B10();
 }
 
-s32 fn_8004AF74(s32 arg0, s32 arg1) {
-    u8 temp_r3;
-
-    temp_r3 = *(u8 *)(arg0 + arg1 + 0xC);
-    if ((temp_r3 >> 6) == 0) {
-        s32 var_r0 = (temp_r3 << 0x1A);
-        s32 var_r3_2 = temp_r3 >> 0x1F;
-        if ((((var_r0 - var_r3_2) + var_r3_2) & 0xFFFFFFFC) < 0x20) {
-            return 1;
-        }
+#pragma peephole off
+s32 fn_8004AF74(u8 *arg0, s32 arg1) {
+    s32 v = (arg0 + arg1)[0xc];
+    if (!(v / 64) && (v % 64) < 0x20) {
+        return 1;
     }
     return 0;
 }
-
+#pragma peephole on
 s32 fn_8004AFB4(void *arg0, s32 arg1) {
     return (M2C_FIELD(arg0, s32 *, 0x10) & (1 << arg1)) != 0;
 }
@@ -11188,11 +11183,12 @@ void fn_80050BF4(void* arg0, s32 arg1) {
 }
 
 void fn_80050C50(void *arg0, f32 farg0, f32 farg1) {
-    f32 fn_80023430(M2C_UNK *);
-    extern M2C_UNK lbl_802CA518;
-    M2C_FIELD(arg0, f32 *, 4) = farg0;
-    M2C_FIELD(arg0, f32 *, 8) = farg1;
-    M2C_FIELD(arg0, f32 *, 0xC) = fn_80023430(&lbl_802CA518);
+    f32 fn_80023430(void *);
+    extern u8 lbl_802CA518[];
+
+    *(f32 *)((u8 *)arg0 + 4) = farg0;
+    *(f32 *)((u8 *)arg0 + 8) = farg1;
+    *(f32 *)((u8 *)arg0 + 0xC) = fn_80023430(lbl_802CA518);
 }
 
 void fn_80050E14(void)
