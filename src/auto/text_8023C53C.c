@@ -1343,9 +1343,61 @@ done:
     return NULL;
 }
 
+#pragma dont_inline on
 s32 fn_80246288(s32 arg0, s32 arg1)
 {
     return (arg0 + 1) * (arg1 + 1);
+}
+#pragma dont_inline reset
+
+s32 fn_80246EBC(u8 arg0,u32 arg1){
+void fn_80247F1C(s32,u8,s32);
+extern u32 lbl_80368960;extern f32 lbl_8036C1B0,lbl_8036C1B4,lbl_8036C1B8;extern f64 lbl_8036C1C0;
+f64 fn_802387A8(f64,f64);f64 fn_802381A4(f64);
+u32 changed=0;u32 off=arg0*0x38;StreamTempo *tempo=(StreamTempo*)((u8*)lbl_80368968+off+0x1508);
+StreamTempo *t;StreamQueueNode *node;u32 time;u32 i,j;u32 *event;f32 f;
+goto check;
+for(;;){
+if(node){tempo->head=node->next;if(tempo->head)tempo->head->prev=0;}
+if(!node){
+if(!changed)return 0;
+changed=0;tempo->active^=1;
+tempo->buffers[tempo->active*2+1]=*(u32*)(*(u8**)((u8*)lbl_80368968+0x118)+0x14+arg0*4);
+tempo->buffers[tempo->active*2]=tempo->buffers[(tempo->active^1)*2];
+t=(StreamTempo*)((u8*)lbl_80368968+off+0x1508);
+if(t->start){
+t->cursor=t->start;
+t=(StreamTempo*)((u8*)lbl_80368968+off+0x1508);
+if(t->start){
+while((event=t->cursor)[0]!=0xffffffffU){
+if(event[0]>t->buffers[t->active*2+1])break;
+if(*(u32*)(*(u8**)((u8*)lbl_80368968+0x118)+0x10)&0x40000000){
+t->value=event[1];fn_80247F1C(event[1]>>10,(u8)lbl_80368960,arg0);
+}else{fn_80247F1C(event[1],(u8)lbl_80368960,arg0);t->value=t->cursor[1]<<10;}
+t->cursor+=2;
+}
+}
+t=(StreamTempo*)((u8*)lbl_80368968+off+0x1508);
+f=lbl_8036C1B0*((f32)t->value*(f32)arg1)*(lbl_8036C1B4*(f32)t->scale);
+t->timing[t->active*2]=fn_8022C568((f32)fn_802387A8(lbl_8036C1B8*f,lbl_8036C1C0));
+t->timing[t->active*2+1]=(s32)(f32)fn_802381A4(f);
+}
+tempo->count++;
+if(!lbl_80368968->voices){
+for(i=0;i<64;i++){node=fn_80246070((u8)i);if(node)StreamQueueInsert((StreamQueueNode**)((u8*)lbl_80368968+0x1524),node);}
+}else{
+for(j=0;j<64;j++){if(arg0==lbl_80368968->voices[j]){
+node=fn_80246070((u8)j);if(node){t=(StreamTempo*)((u8*)lbl_80368968+off+0x1508);StreamQueueInsert(&t->head,node);}
+}}
+}
+}else{
+node=((StreamQueueNode*(*)(StreamQueueNode*,u8,u32*))fn_80246288)(node,arg0,&changed);
+if(node)StreamQueueInsert(&tempo->head,node);
+}
+check:
+node=tempo->head;time=node?node->time:0;
+if(time>tempo->buffers[tempo->active*2+1])return 1;
+}
 }
 
 void fn_80247D74(void)
