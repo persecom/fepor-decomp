@@ -7885,6 +7885,60 @@ void *fn_801403F0(void *arg0) {
     return arg0;
 }
 
+#pragma cplusplus on
+extern "C" void fn_801405E0(void *arg0) {
+    struct Obj {
+        virtual void destroy(s32) = 0;
+        s32 refcount;
+    };
+    typedef struct {
+        u32 unk0;
+        ListNode node;
+    } DtorList;
+    typedef struct Owner {
+        u8 pad[0x34];
+        DtorList list;
+    } Owner;
+    void fn_8013FC68(void *, void *, void *);
+    void fn_80136F2C(void *, void *, void *, void *);
+
+    void *found;
+    u8 ret[4];
+    ListNode *sp10;
+    ListNode *spC;
+    u8 sp8[4];
+    ListNode *end;
+    Owner *a0;
+    Obj *obj;
+
+    a0 = (Owner *)arg0;
+    if (arg0 != NULL) {
+        if (arg0 != NULL) {
+            while (a0->list.unk0 != 0) {
+                obj = (Obj *)a0->list.node.prev->val;
+                if (obj != NULL) {
+                    if (--obj->refcount == 0 && obj != NULL) {
+                        obj->destroy(1);
+                    }
+                }
+                found = a0->list.node.prev;
+                fn_8013FC68(ret, &a0->list, &found);
+            }
+            if (&a0->list != NULL) {
+                if (&a0->list != NULL) {
+                    if (&a0->list != NULL) {
+                        end = &a0->list.node;
+                        sp10 = end;
+                        spC = end->next;
+                        fn_80136F2C(sp8, &a0->list, &spC, &sp10);
+                    }
+                }
+            }
+        }
+    }
+}
+#pragma cplusplus reset
+
 void fn_801406B0(s32 arg0, s32 arg1, s32 arg2)
 {
     s32 temp_r3;
@@ -9640,6 +9694,7 @@ extern "C" void fn_80144EAC(void *arg0, void *arg1, void *arg2, void *arg3) {
     Node *pos;
     Node *n;
     void *list;
+    Pair *dst;
 
     list = (s32 *)arg1 + 1;
     node = (Node *)fn_800C42D8(0x10);
@@ -9647,10 +9702,11 @@ extern "C" void fn_80144EAC(void *arg0, void *arg1, void *arg2, void *arg3) {
         fn_80232058(__files + 0xA0, lbl_80276B3C + 0x72, __files);
         fn_8022CF78();
     }
+    dst = &node->value;
     {
         Holder h(list, node);
-        if (&h.node->value != 0) {
-            h.node->value = *(Pair *)arg3;
+        if (dst != 0) {
+            *dst = *(Pair *)arg3;
         }
         pos = *(Node **)arg2;
         n = h.node;
