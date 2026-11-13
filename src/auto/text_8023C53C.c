@@ -14148,8 +14148,14 @@ start:
 
 void fn_802627D4(void) {
     extern u8 lbl_80363F28[];
-    while ((u8) lbl_80363F28[0x281] != 0)
-        ;
+    typedef struct {
+        u8 pad[0x280];
+        volatile u8 next;
+        volatile u8 count;
+    } Queue;
+    Queue *q = (Queue *)lbl_80363F28;
+    while (q->count != 0) {
+    }
 }
 
 void fn_802627EC(u32 arg0)
