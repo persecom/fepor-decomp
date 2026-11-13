@@ -147,6 +147,8 @@ static void SetTimeoutAlarm(s64 timeout) {
     OSSetAlarm(AlarmForTimeout_80339ED8, timeout, AlarmHandlerForTimeout);
 }
 
+void __DVDLowSetWAType(u32 type, u32 location);
+
 void __DVDInitWA(void) {
     extern s32 NextCommandNumber_80368574;
     
@@ -477,16 +479,17 @@ BOOL fn_8020BD68(u32 offset, void *callback) {
     return TRUE;
 }
 
-s32 DVDLowWaitCoverClose(s32 arg0) {
-    extern s32 Callback_80368538;
+BOOL DVDLowWaitCoverClose(void *callback) {
+    extern void *Callback_80368538;
     extern s32 WaitingCoverClose_8036854C;
-    
-    Callback_80368538 = arg0;
-    WaitingCoverClose_8036854C = 1;
-    StopAtNextInt_80368530 = 0;
-    *(u32 *)0xCC006004 = 2;
-    
-    return 1;
+    volatile u32 *di;
+
+    Callback_80368538 = callback;
+    WaitingCoverClose_8036854C = TRUE;
+    di = __DIRegs;
+    StopAtNextInt_80368530 = FALSE;
+    di[1] = 2;
+    return TRUE;
 }
 
 void DVDLowStopMotor(void) {
@@ -677,18 +680,21 @@ BOOL fn_8020C2FC(void) {
     return TRUE;
 }
 
-s32 fn_8020C310(void) {
-    extern s32 Callback_80368538;
+#pragma scheduling off
+void *fn_8020C310(void) {
+    extern void *Callback_80368538;
     extern s32 WaitingCoverClose_8036854C;
-    s32 temp_r3;
+    void *cb;
+    u32 base;
 
-    *(s32 *)0xCC006004 = 0;
-    temp_r3 = Callback_80368538;
+    base = 0xCC000000;
+    *(u32 *)(base + 0x6004) = 0;
+    cb = Callback_80368538;
     WaitingCoverClose_8036854C = 0;
     Callback_80368538 = 0;
-    return temp_r3;
+    return cb;
 }
-
+#pragma scheduling on
 s32 fn_8020C370(void *arg0) {
     extern u8 lbl_80339F00[];
 
