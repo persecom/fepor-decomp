@@ -10898,38 +10898,33 @@ void fn_8004E9D8(void *arg0, s32 arg1) {
 }
 
 void fn_8004EA60(void *arg0, s32 arg1) {
-    void fn_800616A0(void *);
-    void fn_80184F20(void *);
-    void fn_8005C7E8(u32);
-    extern f32 lbl_80368FCC;
-    u8 temp;
-    u32 p;
-
-    fn_800616A0((u8 *)arg0 + 0xBC);
-    temp = *((u8 *)arg0 + 3);
-    if ((temp & 2) != 0) {
-        *((u8 *)arg0 + 3) = (u8)(temp & ~2);
-        fn_80184F20(arg0);
-        fn_800616A0((u8 *)arg0 + 0x1C);
-        p = *(u32 *)((u8 *)arg0 + 0x164);
-        if (p != 0) {
-            fn_8005C7E8(p);
-        }
-        *(u32 *)((u8 *)arg0 + 0x164) = 0;
-        *(u32 *)((u8 *)arg0 + 0x17C) = 0;
-        if ((u8)arg1 != 0) {
-            *((u8 *)arg0 + 3) = 0;
-            *(s16 *)((u8 *)arg0 + 0x15C) = 0;
-            *(s16 *)arg0 = 0;
-            *(s16 *)((u8 *)arg0 + 0x16E) = -1;
-            *((u8 *)arg0 + 0x16D) = -1;
-            *((u8 *)arg0 + 0x16C) = -1;
-            *(f32 *)((u8 *)arg0 + 0x170) = lbl_80368FCC;
-            *(f32 *)((u8 *)arg0 + 0x174) = lbl_80368FCC;
-            *(f32 *)((u8 *)arg0 + 0x178) = lbl_80368FCC;
-            *(u32 *)((u8 *)arg0 + 0x17C) = 0;
-        }
-    }
+void fn_800616A0(void *); void fn_80184F20(void *); void fn_8005C7E8(u32);
+extern f32 lbl_80368FCC;
+u8 temp; u32 p;
+fn_800616A0((u8 *)arg0+0xBC);
+temp=*((u8 *)arg0+3);
+if(temp & 2) {
+*((u8 *)arg0+3)=(u8)(temp & ~2);
+fn_80184F20(arg0); fn_800616A0((u8 *)arg0+0x1C);
+p=*(u32 *)((u8 *)arg0+0x164);
+if(p) fn_8005C7E8(p);
+*(u32 *)((u8 *)arg0+0x164)=0;
+*(u32 *)((u8 *)arg0+0x17C)=0;
+if((u8)arg1) {
+f32 zero;
+*((u8 *)arg0+3)=0;
+zero=lbl_80368FCC;
+*(s16 *)((u8 *)arg0+0x15C)=0;
+*(s16 *)arg0=0;
+*(s16 *)((u8 *)arg0+0x16E)=-1;
+*((s8 *)arg0+0x16D)=-1;
+*((s8 *)arg0+0x16C)=-1;
+*(f32 *)((u8 *)arg0+0x170)=zero;
+*(f32 *)((u8 *)arg0+0x174)=zero;
+*(f32 *)((u8 *)arg0+0x178)=zero;
+*(u32 *)((u8 *)arg0+0x17C)=0;
+}
+}
 }
 
 #pragma use_lmw_stmw on
