@@ -8,7 +8,7 @@ struct SetupMenuObj {
  virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(s32); virtual void v12(s32);
 };
 #pragma cplusplus reset
-extern u16 lbl_802917D0;
+extern u8 lbl_802917D0[];
 extern struct unk_struct lbl_80331C6C;
 
 void *fn_801AE3F8(u32 arg0) {
