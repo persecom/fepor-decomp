@@ -19241,6 +19241,7 @@ void fn_800FA510(void *arg0) {
     u8 *obj;
     u8 *state;
     void (*cb)(void *);
+    void *tmp;
 
     obj = (u8 *)arg0;
     state = (u8 *)lbl_803678F8;
@@ -19248,7 +19249,8 @@ void fn_800FA510(void *arg0) {
     if (fn_8000CEE4(0x64) <= *(s32 *)(state + 4)) {
         cb = *(u32 *)(state + 0x14) == 0 ? fn_800FB5C8
             : (*(s32 *)(state + 0x10) != 0 ? fn_800FB494 : fn_800FB548);
-        fn_801AA064(obj, fn_8000D2BC(*(void **)((u8 *)lbl_803678F8 + 0x18)), cb);
+        tmp = fn_8000D2BC(*(void **)((u8 *)lbl_803678F8 + 0x18));
+        fn_801AA064(obj, tmp, cb);
     }
 
     if (lbl_803678F4 == 0) {
