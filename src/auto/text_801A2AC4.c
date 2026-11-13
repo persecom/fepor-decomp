@@ -625,7 +625,6 @@ void fn_801A49AC(void *arg0)
     extern void fn_801A8010(void *);
 
     u8 *obj;
-    void *result;
 
     obj = (u8 *)arg0;
 
@@ -637,9 +636,7 @@ void fn_801A49AC(void *arg0)
 
     fn_80034068(obj + 0x8A0, 0x54, 0);
 
-    result = fn_801A7FF4(obj);
-
-    fn_801A895C(obj, result);
+    fn_801A895C(obj, fn_801A7FF4(obj));
 
     fn_801A8010(obj);
 }
