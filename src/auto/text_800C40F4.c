@@ -2391,21 +2391,14 @@ struct LocalState st;
         }
     }
 }
-void fn_800CA59C(void *arg0, u32 arg1, void *arg2)
+void fn_800CA59C(u8 *arg0, u32 arg1, void *arg2)
 {
     extern void fn_800CA5FC(void *, void *);
-    u8 *ptr;
-    u32 count;
-    void *a2;
 
-    ptr = (u8 *)arg0;
-    count = arg1;
-    a2 = arg2;
-
-    while (count != 0) {
-        fn_800CA5FC(ptr, a2);
-        ptr += 0xC;
-        count--;
+    while (arg1 != 0) {
+        fn_800CA5FC(arg0, arg2);
+        arg0 += 0xC;
+        arg1--;
     }
 }
 
