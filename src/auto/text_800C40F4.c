@@ -12833,26 +12833,18 @@ extern "C" void fn_800E7FB4(void *arg0, String *arg1) {
     ((Obj *)arg0)->v2(lbl_80272230 + 0x34, fn_800C93EC(arg1));
 }
 
-void fn_800E8008(void *arg0, void *arg1)
-{
-    extern u8 lbl_80272230[];
+extern "C" void fn_800E8008(void *arg0, void *arg1) {
+    void *fn_800C93EC(void *);
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2(char *, void *) = 0;
+        virtual void v3(char *, void *) = 0;
+    };
+    extern char lbl_80272230[];
 
-    void *result;
-    void *object;
-    void (*callback)(void *, void *, void *);
-
-    result = fn_800C93EC(arg1);
-
-    object = *(void **)((u8 *)arg0 + 0x10);
-    callback = *(void (**)(void *, void *, void *))(
-        (u8 *)object + 0x14
-    );
-
-    callback(
-        arg0,
-        lbl_80272230 + 0x10,
-        result
-    );
+    ((Obj *)arg0)->v3(lbl_80272230 + 0x10, fn_800C93EC(arg1));
 }
 
 #pragma dont_inline reset
@@ -18741,25 +18733,23 @@ s32 fn_800FB60C(void *arg0) {
     return (r & 0xFF) == 0;
 }
 
-void fn_800FB918(void *arg0, s32 arg1, s32 *arg2) {
-    s32 *temp_r6;
-    s32 temp_r7;
-    s32 var_r4;
-    void *var_r3;
+void fn_800FB918(void *arg0, void *arg1, s32 *arg2) {
+    s32 count;
+    s32 mid;
+    s32 *mid_ptr;
+    s32 key;
 
-    var_r3 = arg0;
-    var_r4 = (s32) (arg1 - (s32)var_r3) / 8;
-loop_4:
-    if (var_r4 > 0) {
-        temp_r7 = (s32) (((u32) var_r4 >> 0x1FU) + var_r4) >> 1;
-        temp_r6 = (s32*)var_r3 + (temp_r7 * 8);
-        if ((s32) *temp_r6 < (s32) *arg2) {
-            var_r3 = temp_r6 + 8;
-            var_r4 -= temp_r7 + 1;
+    key = *arg2;
+    count = ((s32)arg1 - (s32)arg0) / 8;
+    while (count > 0) {
+        mid = count / 2;
+        mid_ptr = (s32 *)((u8 *)arg0 + (mid * 8));
+        if (*mid_ptr < key) {
+            arg0 = (u8 *)mid_ptr + 8;
+            count -= mid + 1;
         } else {
-            var_r4 = temp_r7;
+            count = mid;
         }
-        goto loop_4;
     }
 }
 
