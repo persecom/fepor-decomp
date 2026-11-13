@@ -947,18 +947,31 @@ s32 fn_801A9FD0(void) {
     return 0;
 }
 
-s32 fn_801A9FD8(void *arg0) {
-    u32 temp = *(u32 *)((u8 *)arg0 + 0x1A0);
-    s32 bit = (s32)((temp >> 12) & 1);
-    return -bit & ~bit;
-}
+#pragma optimization_level 1
+s32 fn_801A9FD8(void *arg0)
+{
+    s32 z;
+    s32 x;
 
+    x = *(s32 *)((u8 *)arg0 + 0x1A0);
+    z = 0;
+    x = (x >> 12) & 1;
+    return z & ~-x;
+}
+#pragma optimization_level reset
 s32 fn_801A9FF0(void) {
     return 0;
 }
 
 s32 fn_801A9FF8(void) {
     return 0;
+}
+
+void fn_801AA000(s32 unused, void *arg1) {
+    extern u8 lbl_8027B808[];
+    void fn_800F3860(void *, void *, s32);
+
+    fn_800F3860(arg1, lbl_8027B808 + 0x1D, 0x1D);
 }
 
 s32 fn_801AA034(void) {
@@ -1006,17 +1019,14 @@ void fn_801AA1B0(void *arg0) {
     }
 }
 
-void fn_801AAD74(void *arg0) {
+void fn_801AAD74(void *arg0)
+{
     void fn_801AA228(void *);
 
     if (*(s16 *)((char *)arg0 + 0x32) == 0) {
-        goto end;
+    } else {
+        fn_801AA228(arg0);
     }
-    goto body;
-body:
-    fn_801AA228(arg0);
-end:
-    ;
 }
 
 #pragma optimization_level 4
