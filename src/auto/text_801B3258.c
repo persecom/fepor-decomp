@@ -4793,20 +4793,17 @@ if((obj=(void *)fn_8013FF94(self,-0x1000,0))!=0) fn_801658DC(obj,(void *)text);
 s32 fn_801C13F0(void) {
     u8 fn_800BE800(s32);
     u8 fn_800BE890(s32);
-    s32 fn_800BE914();
-    
-    s32 temp_r31 = fn_800BE914();
-    s32 var_r30 = 0;
-    
-loop_5:
-    if (var_r30 >= temp_r31) {
-        return 0;
+    s32 fn_800BE914(void);
+    s32 n;
+    s32 i;
+
+    n = fn_800BE914();
+    for (i = 0; i < n; i++) {
+        if (fn_800BE800(i) != 0 && fn_800BE890(i) == 0) {
+            return 1;
+        }
     }
-    if ((fn_800BE800(var_r30) != 0) && (fn_800BE890(var_r30) == 0)) {
-        return 1;
-    }
-    var_r30 += 1;
-    goto loop_5;
+    return 0;
 }
 
 s32 fn_801C1464(s32 arg0) {
