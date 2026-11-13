@@ -361,68 +361,29 @@ s32 fn_8005B760(s32 arg0) {
 }
 
 u8 fn_8005B7A4(u8 *s) {
-    extern u32 lbl_802F03A8[0x4D];
-    u32 hash;
-    u8 b;
-    u32 *p;
-    s32 i;
-    s32 ctr;
-
-    hash = 0;
-    while ((b = *s, (s8)b != 0)) {
-        hash = hash + b;
-        s++;
-        hash <<= 4;
-    }
-
-    p = lbl_802F03A8;
-    i = 0;
-    for (ctr = 0x4D; ctr != 0; ctr--) {
-        if (hash == *p) {
-            if (i == 0x21) {
-                goto ret1c;
-            }
-            if (i >= 0x21) {
-                goto retu8;
-            }
-            if (i == 9) {
-                goto ret1c;
-            }
-            goto retu8;
-        }
-        p++;
-        i++;
-    }
-    return 0;
-ret1c:
-    return 0x1C;
-retu8:
-    return (u8)i;
+extern u32 lbl_802F03A8[0x4D];
+u32 hash; u8 b; u32 *p; s32 i; s32 ctr;
+hash=0;
+while((b=*s,(s8)b!=0)) { hash+=b; s++; hash<<=4;}
+p=lbl_802F03A8; i=0;
+for(ctr=0x4D;ctr!=0;ctr--) {
+if(hash==*p) {
+switch(i) { case 9: case 0x21: return 0x1C; default: return (u8)i; }
+}
+p++; i++;
+}
+return 0;
 }
 
 void fn_8005B820(void) {
-    void *fn_80019DBC(u8);
-    extern u32 lbl_802F03A8[];
-    u32 *out;
-    u8 *entry;
-    s32 i;
-    u32 acc;
-    u8 *s;
-    u8 b;
-
-    entry = fn_80019DBC(0);
-    out = lbl_802F03A8;
-    for (i = 0x4D; i != 0; i--) {
-        s = *(u8 **)entry;
-        acc = 0;
-        while ((b = *s, (s8)b != 0)) {
-            acc = (acc + b) << 4;
-            s++;
-        }
-        *out = acc;
-        out++;
-        entry += 0xC;
-    }
+void *fn_80019DBC(u8); extern u32 lbl_802F03A8[];
+u32 *out; u8 *entry; s32 i; u32 acc; u8 *s; u8 b;
+entry=fn_80019DBC(0); out=lbl_802F03A8;
+for(i=0x4D;i!=0;i--) {
+s=*(u8 **)entry; acc=0;
+while((b=*s,(s8)b!=0)) {acc+=b; s++; acc<<=4;}
+*out++=acc; entry+=0xC;
+}
 }
 
 u8 fn_8005B888(s32 arg0) {
@@ -7894,13 +7855,9 @@ s32 fn_80070EE0(void *arg0, s32 unused, s32 arg2) {
     extern u8 lbl_802EF4C8[];
     extern u8 lbl_80330EAC[];
     void fn_801A6FB4(void *, s32, s32);
-    s32 saved;
-    s32 result;
-
-    (void)unused;
-    saved = *(s32 *)lbl_802EF4C8;
-    result = (*(s32 (**)(void *, s32))((u8 *)*(void **)arg0 + 0x48))(arg0, arg2);
-    fn_801A6FB4(lbl_80330EAC, saved, result);
+    s32 (**vtable)(void *, s32) = *(s32 (***)(void *, s32))arg0;
+    s32 saved = *(s32 *)lbl_802EF4C8;
+    fn_801A6FB4(lbl_80330EAC, saved, vtable[18](arg0, arg2));
     return 0;
 }
 
