@@ -9651,29 +9651,25 @@ void fn_800DF700(s32 arg0, s32 arg1) {
     fn_800C9B6C(arg0, arg1 + 4);
 }
 
-void *fn_800DF724(void *arg0, s32 arg1)
-{
+void *fn_800DF724(void *arg0, s16 arg1) {
     extern u8 lbl_8028DFC8[];
-    extern void fn_800C9A60(void *, s32);
-    extern void fn_800C428C(void *);
+    void fn_800C9A60(void *, s32);
+    void fn_800C428C(void *);
+    void *self;
+    s16 n;
 
-    u8 *obj;
-
-    obj = (u8 *)arg0;
-
-    if (obj != 0) {
-        *(void **)(obj + 0x40) = lbl_8028DFC8;
-
-        fn_800C9A60(obj + 0x1C, -1);
-        fn_800C9A60(obj + 0x10, -1);
-        fn_800C9A60(obj + 0x4, -1);
-
-        if ((s16)arg1 > 0) {
-            fn_800C428C(obj);
+    n = arg1;
+    self = arg0;
+    if (self != NULL) {
+        *(void **)((u8 *)self + 0x40) = lbl_8028DFC8;
+        fn_800C9A60((u8 *)self + 0x1C, -1);
+        fn_800C9A60((u8 *)self + 0x10, -1);
+        fn_800C9A60((u8 *)self + 0x4, -1);
+        if (n > 0) {
+            fn_800C428C(self);
         }
     }
-
-    return obj;
+    return self;
 }
 
 #pragma cplusplus on
