@@ -319,6 +319,7 @@ void fn_80019E04(void) {
     fn_8000D354();
 }
 
+#pragma dont_inline on
 s32 fn_80019E24(s32 arg0) {
     extern s32 lbl_803671E4;
     if (arg0 == 0) {
@@ -326,6 +327,7 @@ s32 fn_80019E24(s32 arg0) {
     }
     return lbl_803671E4 + ((arg0 - 1) * 0x48);
 }
+#pragma dont_inline reset
 
 void fn_80019E48(void) {
     M2C_UNK fn_8000D354();
