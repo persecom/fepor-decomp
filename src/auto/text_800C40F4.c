@@ -432,6 +432,7 @@ loop_1:
 s32 fn_800C44F4(s32 arg0) {
     extern void *lbl_80367870;
     extern void *lbl_80320B88[];
+
     u8 *node;
     u32 max;
     u32 value;
@@ -439,33 +440,29 @@ s32 fn_800C44F4(s32 arg0) {
     if (arg0 < 0) {
         max = 0;
         node = *(u8 **)((u8 *)lbl_80367870 + 0x18);
-        goto check1;
-    body1:
-        value = *(u32 *)(node + 0x10);
-        if ((max << __cntlzw(max ^ value)) >> 31)
-            goto done1;
-        max = value;
-        node = *(u8 **)(node + 0x0C);
-    check1:
-        if (node != NULL)
-            goto body1;
-    done1:
+
+        while (node != NULL) {
+            value = *(u32 *)(node + 0x10);
+            if (!((max << __cntlzw(max ^ value)) >> 31)) {
+                max = value;
+            }
+            node = *(u8 **)(node + 0x0C);
+        }
+
         return max - 0x20;
     }
 
     max = 0;
     node = *(u8 **)((u8 *)lbl_80320B88[arg0] + 0x18);
-    goto check2;
-body2:
-    value = *(u32 *)(node + 0x10);
-    if ((max << __cntlzw(max ^ value)) >> 31)
-        goto done2;
-    max = value;
-    node = *(u8 **)(node + 0x0C);
-check2:
-    if (node != NULL)
-        goto body2;
-done2:
+
+    while (node != NULL) {
+        value = *(u32 *)(node + 0x10);
+        if (!((max << __cntlzw(max ^ value)) >> 31)) {
+            max = value;
+        }
+        node = *(u8 **)(node + 0x0C);
+    }
+
     return max - 0x20;
 }
 
