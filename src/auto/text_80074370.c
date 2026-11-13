@@ -49,43 +49,40 @@ s32 fn_80074758(s32 arg0, s32 arg1, void *arg2) {
 
 #pragma cplusplus on
 extern "C" void fn_800747AC(void *arg0, s32 arg1, void *arg2) {
-    struct Obj {
-        virtual void v0() = 0;
-        virtual void v1() = 0;
-        virtual void v2() = 0;
-        virtual void v3() = 0;
-        virtual void v4() = 0;
-        virtual void v5() = 0;
-        virtual void v6() = 0;
-        virtual void v7() = 0;
-        virtual void v8() = 0;
-        virtual void v9() = 0;
-        virtual void v10() = 0;
-        virtual void v11() = 0;
-        virtual void v12() = 0;
-        virtual void v13() = 0;
-        virtual void v14() = 0;
-        virtual void v15() = 0;
-        virtual void v16() = 0;
-        virtual void v17() = 0;
-    };
-    u64 *fn_8001CB64(void *);
-    void *fn_80037BD0(void *, s32);
-    void fn_8008D510(void *, bool, s16, s16);
-    extern u64 lbl_8036746C;
-    extern void *lbl_80367468;
-    void *result;
-    s32 index;
-
-    ((Obj *)arg0)->v17();
-    index = ((u8 *)arg2)[0x3A];
-    if (index == 4) {
-        result = &lbl_8036746C;
-    } else {
-        result = fn_80037BD0(lbl_80367468,
-            index + ((*fn_8001CB64(&lbl_8036746C) & 5ULL) ? 0 : 4));
-    }
-    fn_8008D510(result, ((u8 *)arg2)[0x39] == 0, *(s16 *)((u8 *)arg2 + 0x30), *(s16 *)((u8 *)arg2 + 0x32));
+struct Obj { virtual void v0() = 0;
+virtual void v1() = 0;
+virtual void v2() = 0;
+virtual void v3() = 0;
+virtual void v4() = 0;
+virtual void v5() = 0;
+virtual void v6() = 0;
+virtual void v7() = 0;
+virtual void v8() = 0;
+virtual void v9() = 0;
+virtual void v10() = 0;
+virtual void v11() = 0;
+virtual void v12() = 0;
+virtual void v13() = 0;
+virtual void v14() = 0;
+virtual void v15() = 0;
+virtual void v16() = 0;
+virtual void v17() = 0; };
+u64 *fn_8001CB64(void *);
+void *fn_80037BD0(void *, s32);
+void fn_8008D510(void *, bool, s16, s16);
+extern u64 lbl_8036746C;
+extern void *lbl_80367468;
+void *result;
+s32 index;
+((Obj *)arg0)->v17();
+index=((u8 *)arg2)[0x3A];
+if(index==4) result=&lbl_8036746C;
+else {
+u64 flags=*fn_8001CB64(&lbl_8036746C);
+void *base=lbl_80367468;
+result=fn_80037BD0(base, ((flags & 5ULL)?0:4)+index);
+}
+fn_8008D510(result,((u8 *)arg2)[0x39]==0,*(s16 *)((u8 *)arg2+0x30),*(s16 *)((u8 *)arg2+0x32));
 }
 #pragma cplusplus reset
 
@@ -249,11 +246,16 @@ extern "C" void fn_80074AE4(void *arg0, s32 arg1, void *arg2) {
 }
 
 extern "C" s32 fn_80074B78(s32 arg0, s32 arg1, void *arg2) {
- extern u8 lbl_802EF4C8[];
- u8 value=*((u8 *)arg2+0x39);
- if (value) return 0x10;
- { u8 value=*((u8 *)arg2+0x3A); u8 *p=lbl_802EF4C8+0xA; *p=value; }
- return 5;
+    extern u8 lbl_802EF4C8[];
+    u8 *p;
+    u8 v;
+    if (*((u8 *)arg2 + 0x39) != 0) {
+        return 0x10;
+    }
+    v = *((u8 *)arg2 + 0x3A);
+    p = lbl_802EF4C8;
+    p[0xA] = v;
+    return 5;
 }
 
 #pragma cplusplus reset
@@ -1052,10 +1054,16 @@ s32 fn_800760E4(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 s32 fn_80076148(s32 arg0, s32 arg1, void *arg2) {
- extern u8 lbl_802EF4C8[];
- if (*((u8 *)arg2+0x39)==2) return 0x10;
- *((char *)lbl_802EF4C8+10)=*((char *)arg2+0x3A);
- return 5;
+    extern u8 lbl_802EF4C8[];
+    u8 *p;
+    s32 ret;
+    if (*((u8 *)arg2 + 0x39) == 2) {
+        return 0x10;
+    }
+    p = lbl_802EF4C8;
+    p[0xA] = *((u8 *)arg2 + 0x3A);
+    ret = 5;
+    return ret;
 }
 
 #pragma cplusplus on
@@ -1136,17 +1144,25 @@ s32 fn_80076380(s32 arg0, s32 arg1, void *arg2) {
     return 5;
 }
 
+#pragma global_optimizer off
 void fn_80076398(void) {
- void fn_8010FF24(void *,u8,u8,s32);
- void fn_8010FA2C(void);
- extern u8 lbl_802EF4C8[]; extern u8 lbl_8032BB58[];
- u8 *ptr=*(u8 **)lbl_802EF4C8;
- u8 coords[2];
- coords[1]=ptr[0x19F]; coords[0]=ptr[0x19E];
- fn_8010FF24(lbl_8032BB58,coords[0],coords[1],7);
- fn_8010FA2C();
-}
+    void fn_8010FF24(void *, u8, u8, s32);
+    void fn_8010FA2C(void);
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_8032BB58[];
+    u8 *base;
+    void *ptr;
+    u8 a;
+    u8 b;
 
+    base = lbl_802EF4C8;
+    ptr = *(void **)base;
+    a = *((u8 *)ptr + 0x19F);
+    b = *((u8 *)ptr + 0x19E);
+    fn_8010FF24(lbl_8032BB58, b, a, 7);
+    fn_8010FA2C();
+}
+#pragma global_optimizer reset
 s32 fn_800763DC(void){void*fn_80019E24(u8);s32 fn_8001DDBC(void);void fn_8001EF80(void*,u8,u8,u8);void fn_8002011C(void*,u8,u8,u8,s32);void fn_8004A224(void);void fn_80070EE0(void);void*fn_8010FF24(void*,u8,u8,s32);extern u8 lbl_802CA518[],lbl_802EF4C8[],lbl_8032BB58[];u8*p;u8 a,b,c;fn_80070EE0();p=fn_8010FF24(lbl_8032BB58,lbl_802EF4C8[13],lbl_802EF4C8[14],7);a=*((u8*)fn_80019E24(p[4])+29);b=p[1];c=p[0];fn_8002011C(lbl_802CA518,c,b,a,fn_8001DDBC());fn_8001EF80(lbl_802CA518,p[0],p[1],p[3]);fn_8004A224();return 0;}
 
 s32 fn_80076494(void) {
