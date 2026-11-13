@@ -7869,14 +7869,18 @@ void fn_800DBB58(f32 *arg0, u8 *arg1) {
     arg0[2] = value2;
 }
 
-void fn_800DBB74(void *arg0, void *arg1) {
-    f32 a = *(f32 *)(((u8 *)arg1) + 0x54);
-    f32 b = *(f32 *)(((u8 *)arg1) + 0x58);
-    f32 c = *(f32 *)(((u8 *)arg1) + 0x5C);
-    
-    *(f32 *)(((u8 *)arg0) + 0x0) = a;
-    *(f32 *)(((u8 *)arg0) + 0x4) = b;
-    *(f32 *)(((u8 *)arg0) + 0x8) = c;
+void fn_800DBB74(f32 *arg0, u8 *arg1) {
+    f32 value0;
+    f32 value1;
+    f32 value2;
+
+    value2 = *(volatile f32 *)(arg1 + 0x5C);
+    value1 = *(volatile f32 *)(arg1 + 0x58);
+    value0 = *(volatile f32 *)(arg1 + 0x54);
+
+    arg0[0] = value0;
+    arg0[1] = value1;
+    arg0[2] = value2;
 }
 
 void fn_800DBB90(f32 *arg0, u8 *arg1) {
