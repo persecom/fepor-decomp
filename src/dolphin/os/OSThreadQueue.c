@@ -143,6 +143,16 @@ void __OSReschedule(void) {
     }
 }
 
+void fn_8020A51C(void) {
+    BOOL OSDisableInterrupts(void);
+    BOOL OSRestoreInterrupts(BOOL level);
+    BOOL enabled;
+
+    enabled = OSDisableInterrupts();
+    SelectThread_8020A2C4(1);
+    OSRestoreInterrupts(enabled);
+}
+
 void fn_8020A740(void *arg0) {
     void **r3 = (void **)arg0;
     void **r4 = (void **)M2C_FIELD(arg0, void **, 0x2DC);
