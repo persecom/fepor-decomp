@@ -8270,11 +8270,41 @@ void fn_800DC494(void *arg0, s32 arg1) {
     }
 }
 
-void fn_800DC518(void* this, float arg1)
+void fn_800DC518(void *arg0, void *arg1, void *arg2)
 {
-    if (lbl_803678BC != 0) {
-        void (*func_ptr)(void*) = (void (*)(void*))(*(u32*)((char*)this + 0x24));
-        func_ptr(this);
+    extern void fn_800CA18C(void *, void *, s32, void *);
+    extern void fn_800C9BC4(void *, void *, s32, void *);
+
+    u8 *obj;
+    u8 *source;
+    u8 *destination;
+    void *value;
+
+    obj = (u8 *)arg0;
+    value = arg2;
+
+    source = *(u8 **)(obj + 0xB4);
+    source += *(s32 *)(obj + 0xB0) * 0xC;
+
+    fn_800CA18C(
+        obj + 0xAC,
+        source,
+        1,
+        arg1
+    );
+
+    destination = *(u8 **)(obj + 0xC0);
+    destination += *(s32 *)(obj + 0xBC) * 4;
+
+    fn_800C9BC4(
+        obj + 0xB8,
+        destination,
+        1,
+        &value
+    );
+
+    if (*(s32 *)(obj + 0x110) < 0) {
+        *(s32 *)(obj + 0x110) = 0;
     }
 }
 
