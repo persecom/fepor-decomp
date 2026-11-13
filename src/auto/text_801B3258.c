@@ -8922,20 +8922,18 @@ void *fn_801CBFD0(void *arg0, s16 arg1) {
     return arg0;
 }
 
-void fn_801CC030(void *arg0) {
-    u32 temp_r4;
-    u32 temp_r5;
-    u32 var_ctr;
-
-    temp_r4 = M2C_FIELD(arg0, u32 *, 8);
-    temp_r5 = temp_r4 + (M2C_FIELD(arg0, s32 *, 4) << 5);
-    var_ctr = (u32) ((temp_r5 + 0x1F) - temp_r4) >> 5U;
-    if (temp_r5 > temp_r4) {
-        do {
-            var_ctr -= 1;
-        } while (var_ctr != 0);
+void fn_801CC030(u32 *arg0) {
+    u32 start;
+    u32 end;
+    u32 ctr;
+    start = arg0[2];
+    end = start + (arg0[1] << 5);
+    ctr = (end + 0x1F - start) >> 5;
+    if (end > start) {
+        for (; ctr != 0; ctr--) {
+        }
     }
-    M2C_FIELD(arg0, s32 *, 4) = 0;
+    arg0[1] = 0;
 }
 
 #pragma cplusplus on
@@ -10568,19 +10566,20 @@ void fn_801CFD40(u8 *arg0, s32 arg1) {
     }
 }
 
+#pragma global_optimizer off
 void fn_801CFD60(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s8 arg4) {
     s32 temp_r8;
 
     temp_r8 = arg1 * 8;
     temp_r8 += 0xEC;
-    temp_r8 += arg0;
+    temp_r8 = arg0 + temp_r8;
     *(u8 *)(temp_r8 + 0x0) = 1;
     *(u16 *)(temp_r8 + 0x2) = arg2;
     *(u16 *)(temp_r8 + 0x4) = arg3;
     *(u8 *)(temp_r8 + 0x6) = arg4;
     *(u8 *)(temp_r8 + 0x7) = 0;
 }
-
+#pragma global_optimizer on
 void fn_801CFD8C(s32 arg0, s32 arg1, u8 arg2) {
     u32 temp_r4;
 
