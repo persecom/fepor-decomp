@@ -3848,11 +3848,13 @@ void fn_8002863C(void) {
 
 }
 
-extern M2C_UNK lbl_80284668;
+extern u8 lbl_80284668[];
 s32 fn_80028640(void) {
-    s32 fn_8000C0C0(M2C_UNK *);
-    extern M2C_UNK lbl_80284668;
-    return fn_8000C0C0(&lbl_80284668) != 0;
+    s32 fn_8000C0C0(void *);
+    s32 v;
+
+    v = fn_8000C0C0(lbl_80284668);
+    return v != 0;
 }
 
 void fn_80028674(void) {
