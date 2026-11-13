@@ -2781,29 +2781,15 @@ void fn_80079300(void *arg0, s8 arg1) {
 }
 
 void *fn_80079380(s8 arg0) {
-    extern void *lbl_80312040[];
-    void **var_r4;
-    s32 var_r6;
-    s32 var_ctr;
-    void *temp_r5;
-
-    if (arg0 < 0) {
-        return NULL;
-    }
-    var_r4 = lbl_80312040;
-    var_r6 = 0;
-    var_ctr = 8;
-    do {
-        temp_r5 = *var_r4;
-        if (temp_r5 != NULL) {
-            if (arg0 == (s8)((u8 *)temp_r5)[0x43]) {
-                return lbl_80312040[var_r6];
-            }
-        }
-        var_r4 += 1;
-        var_r6 += 1;
-    } while (--var_ctr);
-    return NULL;
+extern void *lbl_80312040[];
+void **p; void *v; s32 i;
+if(arg0<0) return NULL;
+p=lbl_80312040;
+for(i=0;i<8;p++,i++) {
+v=*p;
+if(v && arg0==*(s8 *)((u8 *)v+0x43)) return lbl_80312040[i];
+}
+return NULL;
 }
 
 void fn_800793EC(void *arg0, s32 arg1) {
