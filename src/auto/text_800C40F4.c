@@ -2625,6 +2625,40 @@ void *fn_800CA6C8(void *arg0, s16 arg1) {
     return arg0;
 }
 
+void fn_800CA728(void *arg0, char *begin, char *end) {
+    s32 fn_800C42D8(s32);
+    void fn_80232058(void *, const char *, ...);
+    void fn_8022CF78(void);
+    void *memcpy(void *, const void *, u32);
+    extern char __files[];
+    extern char lbl_80270350[];
+    extern u8 lbl_80366E42;
+
+    char *buf;
+    s32 len;
+    char *b;
+    void *self;
+
+    b = begin;
+    self = arg0;
+    *(void **)((u8 *)arg0 + 8) = 0;
+    *(u32 *)((u8 *)arg0 + 0) = 0;
+    *(u32 *)((u8 *)arg0 + 4) = 0;
+    if (b != end) {
+        len = (s32)end - (s32)b;
+        *(u32 *)((u8 *)self + 4) = (len + 3) - (len & 3);
+        buf = (char *)fn_800C42D8(*(s32 *)((u8 *)self + 4) + 1);
+        if (buf == 0) {
+            fn_80232058(__files + 0xA0, lbl_80270350 + 0x7C);
+            fn_8022CF78();
+        }
+        *(char **)((u8 *)self + 8) = buf;
+        memcpy(*(char **)((u8 *)self + 8), b, len);
+        *(u32 *)self = len;
+        *(u8 *)(*(char **)((u8 *)self + 8) + len) = lbl_80366E42;
+    }
+}
+
 void fn_800CA91C(void *arg0)
 {
     extern void fn_800C428C(void *);
