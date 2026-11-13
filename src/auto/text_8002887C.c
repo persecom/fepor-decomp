@@ -1487,16 +1487,21 @@ void fn_8002CBDC(void *unused, s32 x, s32 y)
 {
     extern u8 lbl_802CA518[];
     extern u8 lbl_802EF4E0[];
-    extern s16 fn_8002134C(void);
+    extern s16 fn_8002134C(void *);
     extern void fn_8002F6E8(void *, s32, s32, s32, s32);
 
+    u8 *base;
     s32 r31;
     s32 r30;
+    u8 *cell;
 
+    base = lbl_802CA518;
     r31 = y;
     r30 = x;
-    if (lbl_802CA518[(s8)r30 + ((s8)r31 << 6) + 0xD] == 0) {
-        if (fn_8002134C() <= 0x7530) {
+    cell = base + (s8)r30;
+    cell += (s8)r31 << 6;
+    if (cell[0xD] == 0) {
+        if (fn_8002134C(base) <= 0x7530) {
             fn_8002F6E8(lbl_802EF4E0, r30, r31, 0, 0);
         }
     }
@@ -2746,6 +2751,7 @@ void fn_8002FAB0(void *arg0) {
     }
 }
 
+#pragma dont_inline on
 void fn_8002FC64(u32 arg0, s32 arg1, s32 arg2, u8 arg3) {
     s32 *fn_8018D900(s32);
     void fn_8005C8B4(void *);
