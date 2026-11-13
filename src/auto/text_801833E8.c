@@ -4157,15 +4157,26 @@ void fn_80190258(void *arg0) {
     ptr[0x18/2] = (ptr[0xA/2] - ptr[0xE/2]) - 0x2;
 }
 
-void fn_801903D8(void *arg0, s32 arg1) {
-    if (*(u8 *)((u8 *)arg0 + 0x44) != 0) {
-        void (**vtable_ptr)(void) = (void (**)(void))(*(u32 **)((u8 *)arg0 + 0x0) + 0xB);
-        (*vtable_ptr)();
-    }
-    (*(void (**)(void *, s32))(*(u32 **)((u8 *)arg0 + 0x0) + 0xC))(arg0, arg1);
-}
-
 #pragma cplusplus on
+extern "C" void fn_801903D8(void *arg0, s32 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10(s32) = 0;
+    };
+    if (*(u8 *)((u8 *)arg0 + 0x44) != 0) {
+        ((Obj *)arg0)->v9();
+    }
+    ((Obj *)arg0)->v10(arg1);
+}
 extern "C" void fn_80190590(void *arg0) {
     void fn_80159898(s32, s32, s16, s16, s32, s32);
     struct Obj {
