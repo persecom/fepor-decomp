@@ -12718,14 +12718,26 @@ s32 fn_802609A4(void *arg0) {
     return fn_802601EC(arg0, (u8 *)arg0 + 0x3D4, *(u8 *)((u8 *)arg0 + 0x121), *(u8 *)((u8 *)arg0 + 0x122));
 }
 
-void fn_802609EC(struct unit* param_1)
+s32 fn_802609EC(void *arg0)
 {
-    s32 r4;
-    
-    if ((param_1->unk_0x8 & 0x400) != 0)
-        param_1->unk_0xC = param_1->unk_0xC | 0x8000;
-    else
-        param_1->unk_0xC = param_1->unk_0xC & 0xFFFF7FFF;
+    s32 fn_802601EC(void *, void *, u8, u8);
+    u32 flags;
+
+    flags = *(u32 *)((u8 *)arg0 + 0x220);
+
+    if ((flags & 0x2000) == 0) {
+        return *(u16 *)((u8 *)arg0 + 0x418);
+    }
+
+    flags &= ~0x2000;
+    *(u32 *)((u8 *)arg0 + 0x220) = flags;
+
+    return fn_802601EC(
+        arg0,
+        (u8 *)arg0 + 0x3f8,
+        *(u8 *)((u8 *)arg0 + 0x121),
+        *(u8 *)((u8 *)arg0 + 0x122)
+    );
 }
 
 s32 fn_80260A34(void *arg0)
