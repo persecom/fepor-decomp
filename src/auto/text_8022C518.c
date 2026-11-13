@@ -371,4 +371,4 @@ typedef struct {
     u32* data1;
     u32* data2;
 } SomeStruct;
-typedef struct { u32 hi; u32 lo; } UL64;
+
