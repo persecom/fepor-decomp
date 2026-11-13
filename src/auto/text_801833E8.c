@@ -1152,6 +1152,32 @@ void fn_80186080(void *arg0) {
     }
 }
 
+void fn_80186260(void *arg0) {
+    s32 fn_8005F894(void *, s32);
+    void fn_8005FEE8(void *, f32);
+    void fn_8000C070(void *, s32);
+    void fn_8004BE88(void *, s32);
+    void *node;
+    s32 val;
+
+    node = *(void **)((u8 *)*(void **)((u8 *)*(void **)((u8 *)arg0 + 0x34) + 0x30) + 0x5C);
+    if (node != NULL) {
+        switch (*(u16 *)((u8 *)arg0 + 0x38) & 5) {
+        case 1:
+            val = fn_8005F894(node, 8);
+            fn_8005FEE8(node, (f32)val);
+            fn_8000C070(arg0, 1);
+            break;
+        default:
+            fn_8000C070(arg0, 0);
+            break;
+        }
+        if (*(u16 *)((u8 *)arg0 + 0x38) & 0x10) {
+            fn_8004BE88(*(void **)((u8 *)arg0 + 0x30), 0);
+        }
+    }
+}
+
 void fn_80186318(void *arg0) {
     s32 fn_80053C30(void *, void *);
     void fn_800536B0(s32, f32, f32, f32);
