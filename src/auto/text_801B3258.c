@@ -1862,17 +1862,15 @@ void fn_801B9748(void *a) {
     fn_8017A9F0(q, x, a, q);
 }
 
-void fn_801B97C8(void) {
-    extern u8 lbl_802EF4C8[24];
-    
-    u8 temp_r0 = *(u8*)((u32)&lbl_802EF4C8 + 8);
-    switch ((s32)temp_r0) {
-        case 0x81:
-            fn_8000C188();
-            return;
-        case 0x80:
-            fn_8000C070(0x18);
-            return;
+void fn_801B97C8(s32 arg0) {
+    extern u8 lbl_802EF4C8[];
+    switch ((s32)lbl_802EF4C8[8]) {
+    case 0x81:
+        fn_8000C188(arg0);
+        return;
+    case 0x80:
+        fn_8000C070(arg0, 0x18);
+        return;
     }
 }
 
