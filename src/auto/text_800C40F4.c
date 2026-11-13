@@ -18927,6 +18927,34 @@ void fn_800FA6CC(void *arg0) {
     }
 }
 
+void fn_800FA844(void *arg0) {
+    extern void *lbl_803678F8;
+    extern s32 lbl_803678F4;
+    s32 fn_8000CEE4(s32);
+    void fn_8010F7B4(void *, void (*)(void *));
+    void fn_800FB5C8(void *);
+    void fn_800FB548(void *);
+    void fn_800FB494(void *);
+    u8 *state;
+    u8 *obj;
+    void (*cb)(void *);
+
+    obj = (u8 *)arg0;
+    state = (u8 *)lbl_803678F8;
+
+    if (fn_8000CEE4(0x64) <= *(s32 *)(state + 4)) {
+        cb = *(u32 *)(state + 0x14) == 0 ? fn_800FB5C8
+            : (*(s32 *)(state + 0x10) != 0 ? fn_800FB494 : fn_800FB548);
+        fn_8010F7B4(obj, cb);
+    }
+
+    if (lbl_803678F4 == 0) {
+        obj[0x250]++;
+    } else {
+        obj[0x251]++;
+    }
+}
+
 #pragma peephole on
 void fn_800FA8F0(void *arg0) {
     extern void *lbl_803678F8;
