@@ -95,6 +95,25 @@ void fn_801A2AC4(void) {
     r4_reg = r31_reg + 0x118;
           fn_8000D3EC((void*)r3_reg, (void*)r4_reg);
   }
+
+s32 fn_801A2C30(s32 arg0) {
+    void fn_801A75DC(void *, s32, s32);
+    void fn_801A49AC(void *, u8);
+    void fn_80036150(void *);
+    void fn_8019C85C(s32, s32);
+    extern u16 lbl_802EF4C8[];
+    extern u16 lbl_80330EAC[];
+    u8 *base;
+
+    fn_801A75DC(lbl_80330EAC, *(s32 *)lbl_802EF4C8, -1);
+    fn_801A49AC(lbl_80330EAC, *(u8 *)((u8 *)lbl_802EF4C8 + 0xA));
+    fn_80036150(lbl_80330EAC);
+    base = (u8 *)lbl_80330EAC;
+    ((struct { u8 pad:3; u8 mid:3; u8 lo:2; } *)(base + 0x1A6))->mid = 4;
+    fn_8019C85C(arg0, 0);
+    return 0;
+}
+
   
   s32 fn_801A2CC0(void) {
     s32 fn_801044E0(s32);
