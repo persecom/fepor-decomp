@@ -1167,34 +1167,54 @@ void fn_8001B134(void) {
     fn_800056CC(lbl_80268510 + 0x2CD);
 }
 #pragma global_optimizer reset
-u32 fn_8001B84C(u32 arg0) {
-    u32 result = 0;
-    
-    if (arg0 == 0) {
-        return 0x0;
-    }
-    
-    // Try to reverse the logic directly
-    result = ((arg0 & 0xFF000000) >> 24);
-    result |= ((arg0 & 0x00FF0000) >> 8);
-    result |= ((arg0 & 0x0000FF00) << 8);
-    result |= ((arg0 & 0x000000FF) << 24);
-    
-    return result;
+f32 fn_8001B84C(u8 **arg0)
+{
+    u8 *data;
+    u8 *next;
+    u32 b2;
+    u32 b1;
+    u32 b0;
+    u32 b3;
+    u32 mid;
+    u32 value;
+
+    data = *arg0;
+    b2 = data[2];
+    next = data + 4;
+    b1 = data[1];
+    b0 = data[0];
+    b2 <<= 8;
+    b1 <<= 16;
+    b3 = data[3];
+    mid = b1 + b2;
+    b0 <<= 24;
+    mid = mid + b3;
+    *arg0 = next;
+    value = b0 + mid;
+    return *(f32 *)&value;
 }
 
-void fn_8001B894(void* arg0) {
-    u32* ptr = (u32*)arg0;
-    u32 value = *ptr;
-    
-    // Extract individual bytes
-    u8 byte0 = (value >> 24) & 0xFF;
-    u8 byte1 = (value >> 16) & 0xFF;
-    u8 byte2 = (value >> 8) & 0xFF;
-    u8 byte3 = value & 0xFF;
-    
-    // Rearrange bytes and store back
-    *ptr = (byte3 << 24) | (byte2 << 16) | (byte1 << 8) | byte0;
+u32 fn_8001B894(u8 **arg0)
+{
+    u8 *data;
+    u32 b0;
+    u32 b1;
+    u32 b2;
+    u32 b3;
+    u32 mid;
+
+    data = *arg0;
+    if (data == 0) {
+        return 0;
+    }
+    b2 = data[2];
+    b1 = data[1];
+    b0 = data[0];
+    b3 = data[3];
+    mid = (b1 << 16) + (b2 << 8);
+    mid = mid + b3;
+    *arg0 = data + 4;
+    return (b0 << 24) + mid;
 }
 
 u32 fn_8001B8E0(u8 **arg0) {
@@ -1295,9 +1315,9 @@ void fn_8001BCF4(void *arg0) {
     s32 fn_800C2EF8(u8 *, s32, u8 *);
     extern u8 lbl_803206EC[];
     extern u8 lbl_80268820[];
-    if (((u8 *)arg0)[5] & 0x3F) {
-        s32 r = fn_800C2EF8(lbl_803206EC, ((u8 *)arg0)[5] & 0x3F, lbl_80268820 + 0x3B);
-        ((u8 *)arg0)[5] = (u8)(((u8 *)arg0)[5] & 0xC0) | (r & 0x3F);
+    u8 mask = ((u8 *)arg0)[5] & 0x3F;
+    if (mask) {
+        ((u8 *)arg0)[5] = (u8)((((u8 *)arg0)[5] & ~0x3F) | (fn_800C2EF8(lbl_803206EC, mask, lbl_80268820 + 0x3B) & 0x3F));
     }
 }
 
