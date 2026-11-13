@@ -490,6 +490,39 @@ void fn_8014DE70(s32 arg0) {
     fn_8000CAA0(lbl_802937EC, arg0);
 }
 
+#pragma global_optimizer off
+void fn_8014DEA8(void) {
+    void fn_800C426C(s32);
+    void fn_8005B918(char *);
+    u8 fn_8005B888(s32);
+    s32 fn_8005B8AC(s32);
+    s32 fn_8005B8CC(void);
+    void fn_8005B8E8(void);
+    void fn_80231D94(char *, char *, ...);
+    void fn_8005C7C8(char *);
+    void fn_800056CC(char *, ...);
+    extern s32 lbl_80367B74;
+    extern s32 lbl_80367B70;
+    extern s32 lbl_80367B78;
+    extern u8 lbl_80277238[];
+    char buffer[0x20];
+    s32 i;
+
+    fn_800C426C(lbl_80367B74);
+    fn_800C426C(lbl_80367B70);
+    lbl_80367B78 = 0;
+    lbl_80367B70 = 0;
+    fn_8005B918((char *)lbl_80277238 + 0x28);
+    for (i = 0; i < fn_8005B8CC(); i++) {
+        if (fn_8005B888(i) == 0) {
+            fn_80231D94(buffer, (char *)lbl_80277238 + 0x2D, fn_8005B8AC(i));
+            fn_8005C7C8(buffer);
+            fn_800056CC((char *)lbl_80277238 + 0x35, buffer);
+        }
+    }
+    fn_8005B8E8();
+}
+#pragma global_optimizer reset
 void fn_8014DF68(void *arg0)
 {
     extern u8 lbl_8036723A;
