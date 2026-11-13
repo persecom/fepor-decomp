@@ -2900,9 +2900,12 @@ loop_5:
 }
 
 s32 fn_8000B474(void *arg0) {
-    void **ptr = (void **)arg0;
-    ptr[1] = (void *)((u32)ptr[1] + 4);
-    ptr[4] = (void *)0x8000B4D0;
+    void fn_8000B4D0(void);
+    void **temp_r4;
+
+    M2C_FIELD(arg0, void **, 0x10) = (void *)fn_8000B4D0;
+    temp_r4 = (void **)M2C_FIELD(arg0, void **, 4);
+    M2C_FIELD(arg0, void **, 4) = (void *)((u32)temp_r4 + 4);
     return 0;
 }
 
