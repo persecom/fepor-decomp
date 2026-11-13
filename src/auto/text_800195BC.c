@@ -1307,8 +1307,22 @@ s32 *fn_8001BC18(void *arg0) {
 }
 
 extern u8 lbl_80268330;
-void fn_8001BC5C(void) {
-    *(u8*)0x80268330 = 0;
+void fn_8001BC5C(void *arg0, u8 a, u8 b, u8 c, u8 d) {
+    s32 fn_800C29E8(u8 *, s32, void *);
+    s32 fn_800C3260(u8 *);
+    extern u8 lbl_803206EC[];
+    extern u32 lbl_8036C408;
+    u32 sp8;
+
+    if (!(((u8 *)arg0)[5] & 0x3F)) {
+        ((u8 *)arg0)[5] = (u8)((((u8 *)arg0)[5] & ~0x3F) | (fn_800C3260(lbl_803206EC) & 0x3F));
+    }
+    sp8 = lbl_8036C408;
+    ((u8 *)&sp8)[0] = a;
+    ((u8 *)&sp8)[1] = b;
+    ((u8 *)&sp8)[2] = c;
+    ((u8 *)&sp8)[3] = d;
+    ((u8 *)arg0)[5] = (u8)((((u8 *)arg0)[5] & ~0x3F) | (fn_800C29E8(lbl_803206EC, ((u8 *)arg0)[5] & 0x3F, &sp8) & 0x3F));
 }
 
 void fn_8001BCF4(void *arg0) {
@@ -2141,36 +2155,33 @@ s32 fn_8001D5F4(void *arg0, u8 arg1) {
     return 0;
 }
 
-s32 fn_8001D780(void *arg0, void *arg1) {
-    extern u8 lbl_803206EC[];
-
+s32 fn_8001D780(void *arg0, void *arg1)
+{
     void *fn_8000D354(void *);
     void fn_800C3220(void *, s32);
+    extern u8 lbl_803206EC[];
+    typedef struct {
+        u8 pad : 1;
+        u8 flag : 1;
+        u8 rest : 6;
+    } Bit6;
+    Bit6 *bf;
+    s32 mask;
+    void *result;
 
-    u8 *obj;
-    u8 *result;
-    u8 flags;
-
-    obj = (u8 *)arg0;
-    result = (u8 *)fn_8000D354(arg1);
-
-    *(u32 *)obj = 0;
-    obj[4] = 0;
-
-    obj[5] &= ~0x80;
-    obj[5] &= ~0x40;
-
-    flags = obj[5] & 0x3F;
-
-    if (flags != 0) {
-        fn_800C3220(lbl_803206EC, flags);
+    result = fn_8000D354(arg1);
+    *(s32 *)arg0 = 0;
+    *((u8 *)arg0 + 4) = 0;
+    bf = (Bit6 *)((u8 *)arg0 + 5);
+    bf->pad = 0;
+    bf->flag = 0;
+    mask = *((u8 *)arg0 + 5) & 0x3F;
+    if (mask != 0) {
+        fn_800C3220(lbl_803206EC, mask);
+        bf->rest = 0;
     }
-
-    obj[5] &= ~0x3F;
-
-    *(void **)obj = result;
-    obj[4] = result[0x18];
-
+    *(void **)arg0 = result;
+    *((u8 *)arg0 + 4) = *((u8 *)result + 0x18);
     return 1;
 }
 
