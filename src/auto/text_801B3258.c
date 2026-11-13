@@ -17963,6 +17963,36 @@ u32 fn_801E417C(void *arg0) {
     return size;
 }
 
+s32 fn_801E4194(void *arg0) {
+    void *fn_800C4638(s32, void *, s32);
+    void fn_800EC1F8(void);
+    u32 fn_800EC0A4(void *, void *, s32);
+    void fn_800C4588(void *);
+    void fn_800056CC(char *, ...);
+    extern u8 lbl_8027E980[];
+    void *buf;
+    u8 *p;
+    u32 ver;
+
+    if ((u32)(*(u32 *)((u8 *)arg0 + 0x40) + 0xB9BB0000) != 0x384AU) {
+        return 0;
+    }
+    ver = 0x20050201U;
+    p = (u8 *)arg0 + 0x70;
+    *(u32 *)((u8 *)arg0 + 0x44) = ver;
+    if (p) {
+        if ((u32)(*(u32 *)p + 0xB9BB0000) == 0x384AU) {
+            *(u32 *)(p + 4) = ver;
+        }
+    }
+    buf = fn_800C4638(0x400, lbl_8027E980 + 0x14E, 0);
+    fn_800EC1F8();
+    *(u32 *)((u8 *)arg0 + 0x50) = fn_800EC0A4(buf, p, *(s32 *)((u8 *)arg0 + 0x4C) - 0x70);
+    fn_800C4588(buf);
+    fn_800056CC((char *)(lbl_8027E980 + 0x1E9), *(u32 *)((u8 *)arg0 + 0x50));
+    return 1;
+}
+
 s32 fn_801E434C(void *arg0) {
     if ((u32) (M2C_FIELD(arg0, s32 *, 0x40) + 0xB9BB0000) != 0x384AU) {
         return 0;
