@@ -5157,25 +5157,27 @@ void *fn_801FC518(void *arg0, void *arg1, s32 arg2, s32 arg3, u16 *arg4);
 void fn_801FC43C(void *arg0, void *arg1, u16 *arg2) {
     extern u8 lbl_80366F08;
     extern u8 lbl_80366F09;
-    u16 *p;
-    void *parent;
+    void *key;
     void *found;
-    s32 flag6;
-    u16 key;
-    s32 flag5;
+    void *parent;
     void *node;
+    u16 *p;
+    s32 flag6;
+    s32 flag5;
+    void *self;
 
+    self = arg0;
     p = arg2;
     parent = (u8 *)arg1 + 4;
     found = NULL;
     flag6 = 1;
-    key = *arg2;
+    key = (void *)(u32)*arg2;
     flag5 = 1;
     node = *(void **)((u8 *)arg1 + 4);
 
     while (node != NULL) {
         parent = node;
-        if (key < *(u16 *)((u8 *)node + 0xC)) {
+        if ((u32)key < *(u16 *)((u8 *)node + 0xC)) {
             node = *(void **)node;
             flag5 = 1;
         } else {
@@ -5187,11 +5189,11 @@ void fn_801FC43C(void *arg0, void *arg1, u16 *arg2) {
     }
 
     if (found == NULL || *(u16 *)((u8 *)found + 0xC) < *p) {
-        *(void **)arg0 = fn_801FC518(arg1, parent, flag5, flag6, arg2);
-        *((u8 *)arg0 + 4) = lbl_80366F08;
+        *(void **)self = fn_801FC518(arg1, parent, flag5, flag6, arg2);
+        *((u8 *)self + 4) = lbl_80366F08;
     } else {
-        *(void **)arg0 = found;
-        *((u8 *)arg0 + 4) = lbl_80366F09;
+        *(void **)self = found;
+        *((u8 *)self + 4) = lbl_80366F09;
     }
 }
 #pragma opt_common_subs on
