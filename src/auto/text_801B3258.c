@@ -17754,25 +17754,63 @@ void fn_801E32C4(s32 unused, s32 arg1) {
     fn_800E9AE4(arg1);
 }
 
-u8 fn_801E3308(s32 arg0) {
-    u8 *ptr = (u8*) arg0;
+#pragma global_optimizer off
+#pragma opt_strength_reduction off
+u8 fn_801E3308(u8 *p)
+{
     s32 count = 0;
-    s32 i, j;
-    
-    for (i = 0; i < 3; i++) {
-        for (j = 0; j < 10; j++) {
-            if (ptr[0x12 + j] != 0) {
-                count++;
-            } else {
-                break;
-            }
-        }
-        ptr += 0xA;
-    }
-    
-    return (u8) (count + 1);
-}
+    s32 off = 0;
+    s32 i;
+    s32 idx;
 
+    for (i = 0; i < 3; i++) {
+        idx = off + 0x12;
+        if (p[idx] == 0)
+            goto end;
+        count += 1;
+        idx = off + 0x13;
+        if (p[idx] == 0)
+            goto end;
+        count += 1;
+        idx = off + 0x14;
+        if (p[idx] == 0)
+            goto end;
+        count += 1;
+        idx = off + 0x15;
+        if (p[idx] == 0)
+            goto end;
+        count += 1;
+        idx = off + 0x16;
+        if (p[idx] == 0)
+            goto end;
+        count += 1;
+        idx = off + 0x17;
+        if (p[idx] == 0)
+            goto end;
+        count += 1;
+        idx = off + 0x18;
+        if (p[idx] == 0)
+            goto end;
+        count += 1;
+        idx = off + 0x19;
+        if (p[idx] == 0)
+            goto end;
+        count += 1;
+        idx = off + 0x1a;
+        if (p[idx] == 0)
+            goto end;
+        count += 1;
+        idx = off + 0x1b;
+        if (p[idx] == 0)
+            goto end;
+        count += 1;
+        off += 0xa;
+    }
+end:
+    return (u8)(count + 1);
+}
+#pragma opt_strength_reduction on
+#pragma global_optimizer on
 s32 fn_801E33F4(void *arg0) {
     return M2C_FIELD(arg0, u16 *, 0x10) & 1;
 }
