@@ -6351,11 +6351,14 @@ void fn_800D6874(void) {
 
 }
 
-void fn_800D6878(void *arg0) {
-    M2C_FIELD(arg0, s32 *, 0x0) = 0;
-    M2C_FIELD(arg0, s32 *, 0x4) = 0;
-    M2C_FIELD(arg0, s16 *, 0xC) = 0;
-    M2C_FIELD(arg0, s16 *, 0xE) = 0;
+void fn_800D6878(u8 *arg0, u8 *arg1) {
+    u8 b;
+
+    b = *arg1;
+    *(s32 *)arg0 = 0;
+    *(s32 *)(arg0 + 4) = 0;
+    arg0[8] = b;
+    *(u8 **)(arg0 + 0xC) = arg0 + 4;
 }
 
 #pragma use_lmw_stmw on
@@ -18757,8 +18760,11 @@ block_23:
 }
 
 void fn_800FBF54(void) {
-    extern void *lbl_802EF4C8;
-    M2C_FIELD(lbl_802EF4C8, s32 *, 0x1A0) = (s32) (M2C_FIELD(lbl_802EF4C8, s32 *, 0x1A0) | 1);
+    extern u8 lbl_802EF4C8[24];
+    u32 *p;
+
+    p = *(u32 **)lbl_802EF4C8;
+    p[0x1A0 / 4] |= 1;
 }
 
 void fn_800FC150(void) {
