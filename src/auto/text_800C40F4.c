@@ -18737,14 +18737,36 @@ void fn_800FB308(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x251) = (u8) (M2C_FIELD(arg0, u8 *, 0x251) + 1);
 }
 
-void fn_800FB334(s32 arg0) {
-    if (arg0 < 0) {
-        arg0 = 0;
+s32 fn_800FB334(void *arg0)
+{
+    extern u8 *lbl_803678F8;
+    extern u8 lbl_802EF4C8[];
+
+    extern s32 fn_802342B8(void *, void *);
+    extern s32 fn_80015610(void *, void *);
+
+    u8 *obj;
+    u8 *other;
+    s32 result;
+
+    obj = (u8 *)arg0;
+    other = *(u8 **)lbl_802EF4C8;
+
+    result = fn_802342B8(
+        *(void **)(lbl_803678F8 + 0x14),
+        **(void ***)(obj + 0x18c)
+    );
+
+    if (result == 0) {
+        return 0;
     }
-    
-    if (arg0 >= 0x28) {
-        arg0 = 0x27;
-    }
+
+    result = fn_80015610(
+        *(void **)(obj + 0x190),
+        *(void **)(other + 0x190)
+    );
+
+    return ((u8)result == 1);
 }
 
 s32 fn_800FB3AC(void *arg0) {
