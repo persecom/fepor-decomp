@@ -14643,9 +14643,19 @@ s32 fn_800ED754(void) {
     return 0;
 }
 
-void fn_800ED77C(void) {
-    lbl_803678BC = 0;
-    lbl_803678BD = 0;
+s32 fn_800ED77C(void) {
+    void fn_800E56CC(void *);
+    void fn_800D75C4(void *);
+    extern void *lbl_803678C8;
+    extern void *lbl_80367918;
+    void *p;
+
+    p = *(void **)((u8 *)lbl_803678C8 + 0x440);
+    if (p != NULL) {
+        fn_800E56CC(p);
+    }
+    fn_800D75C4(lbl_80367918);
+    return 0;
 }
 
 s32 fn_800ED7B8(void)
