@@ -14687,14 +14687,15 @@ s32 fn_800ED7B8(void)
 
 extern u16* lbl_803678C8;
 s32 fn_800ED800(void) {
-    u16* temp_r4;
-    
-    temp_r4 = (u16*)((char*)lbl_803678C8 + 0x424);
-    *temp_r4 -= 1;
-    if ((s16)*temp_r4 < 0) {
-        *temp_r4 = 0;
+    extern u16 *lbl_803678C8;
+    void *inner;
+
+    inner = *(void **)((u8 *)lbl_803678C8 + 0x424);
+    *(s32 *)((u8 *)inner + 0xB4) = *(s32 *)((u8 *)inner + 0xB4) - 1;
+    if (*(s32 *)((u8 *)inner + 0xB4) < 0) {
+        *(s32 *)((u8 *)inner + 0xB4) = 0;
     }
-    lbl_803678C8[0x450 / 2] = 8;
+    *(s32 *)((u8 *)lbl_803678C8 + 0x450) = 8;
     return 0;
 }
 
