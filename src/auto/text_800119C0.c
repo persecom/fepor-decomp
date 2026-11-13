@@ -1825,23 +1825,19 @@ void fn_800163F8(void)
     void fn_8004EB14(u8 *, s32);
     extern u8 lbl_802B14E4[];
     u8 sp8[8];
-    u8 *flags;
-    u8 *base;
     s32 i;
     u8 *unit;
 
     fn_80015320(3, sp8);
-    base = sp8;
-    flags = lbl_802B14E4;
     i = 1;
     do {
         if ((u8)i != 0) {
-            unit = flags + ((u8)i - 1) * 0x280;
+            unit = lbl_802B14E4 + ((u8)i - 1) * 0x280;
         } else {
             unit = NULL;
         }
         if (*(u32 *)(unit + 0x188) != 0) {
-            if (base[(*(u8 **)(unit + 0x190))[8]] != 0) {
+            if (sp8[(*(u8 **)(unit + 0x190))[8]] != 0) {
                 fn_8004EB14(unit, 0);
             }
         }
