@@ -13023,13 +13023,17 @@ f32 fn_800E9018(void *arg0) {
     return M2C_FIELD(arg0, f32 *, 0x104);
 }
 
-void fn_800E9020(void *arg0, void *arg1) {
-    f32 *src = (f32 *)arg1;
-    f32 *dst = (f32 *)arg0;
-    
-    dst[0x39] = src[0];
-    dst[0x3A] = src[1];
-    dst[0x3B] = src[2];
+void fn_800E9020(u8 *arg0, f32 *arg1) {
+    f32 a;
+    f32 b;
+    f32 c;
+
+    a = *(volatile f32 *)&arg1[0];
+    b = *(volatile f32 *)&arg1[1];
+    *(f32 *)(arg0 + 0xE4) = a;
+    c = *(volatile f32 *)&arg1[2];
+    *(f32 *)(arg0 + 0xE8) = b;
+    *(f32 *)(arg0 + 0xEC) = c;
 }
 
 u8 fn_800E903C(void *arg0) {
