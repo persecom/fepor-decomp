@@ -509,14 +509,16 @@ void fn_800C4664(s32 arg0) {
     node->size += arg0;
 }
 
+#pragma global_optimizer off
 void fn_800C469C(char *arg0)
 {
-    extern s32 lbl_80320B88[];
-    extern s32 lbl_80367870;
+    s32 fn_802342B8(char *, s32);
+    extern u32 lbl_80320B88[];
+    extern u32 lbl_80367870;
 
     s32 i;
-    s32 *table;
-    s32 entry;
+    u32 *table;
+    u32 entry;
 
     i = 0;
     table = lbl_80320B88;
@@ -525,7 +527,7 @@ void fn_800C469C(char *arg0)
         entry = *table;
 
         if (entry != 0) {
-            if (fn_802342B8(arg0, entry + 4) == 0) {
+            if (fn_802342B8(arg0, (s32)(entry + 4)) == 0) {
                 lbl_80367870 = lbl_80320B88[i];
                 break;
             }
@@ -535,7 +537,7 @@ void fn_800C469C(char *arg0)
         table++;
     }
 }
-
+#pragma global_optimizer reset
 void fn_800C4728(s32 arg0) {
     extern s32 lbl_80320B88[];
     extern s32 lbl_80367870;
@@ -5926,22 +5928,26 @@ void fn_800D5894(void **arg0) {
     }
 }
 
-void fn_800D58C0(s32 *arg0) {
-    char *str;
-    s32 ret;
-    
-    str = (char *)&lbl_802704F8 + 0x1B0;
-    fn_800C9ABC(arg0, str, &str);
-    
-    str = (char *)&lbl_802704F8 + 0x66B;
-    fn_800C992C(arg0, str, strlen(str));
-    
-    fn_800C93EC(arg0);
-    ret = fn_8005C82C(8);
-    *arg0 = ret;
-    fn_800C9A60(arg0, -1);
-}
+#pragma dont_inline on
+#pragma global_optimizer off
+void fn_800D58C0(void **arg0)
+{
+    extern char lbl_802704F8[];
+    s32 strlen(char *);
+    void *fn_800C93EC(void *);
+    void *fn_8005C82C(void *, s32);
+    void *out;
+    u32 str[3];
+    u32 scratch;
 
+    out = arg0;
+    fn_800C9ABC(str, lbl_802704F8 + 0x1B0, &scratch);
+    fn_800C992C(str, lbl_802704F8 + 0x66B, strlen(lbl_802704F8 + 0x66B));
+    *(void **)out = fn_8005C82C(fn_800C93EC(str), 8);
+    fn_800C9A60(str, -1);
+}
+#pragma global_optimizer reset
+#pragma dont_inline reset
 s32 fn_800D5948(u32 *arg0, char *arg1, u32 arg2, u32 arg3) {
     u32 size;
     char *data;
