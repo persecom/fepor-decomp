@@ -19,9 +19,9 @@ void *fn_800119E0(void *arg0, s16 arg1) {
     void fn_800C428C(void *);
     extern u16 lbl_80283EFC[];
     extern u16 lbl_80283948[];
-    typedef struct { void *vt; u32 unk4; } Obj;
-    Obj *obj = (Obj *)arg0;
+    struct { void *vt; u32 unk4; } *obj;
 
+    obj = arg0;
     if (obj != NULL) {
         obj->vt = lbl_80283EFC;
         if (obj != NULL) {
@@ -221,32 +221,29 @@ s32 fn_80013AE8(void *arg0, void *arg1, u8 arg2)
     extern s16 lbl_8036719C;
     extern u8 *lbl_803671A0;
     extern s32 lbl_803671A8;
-
-    extern void fn_8000D3EC(void *, void *);
-
-    s32 index;
+    void fn_8000D3EC(void *, void *);
+    s16 index;
+    s16 limit;
     s16 next;
-    u8 *entry;
+    u8 *base;
+    void *entry;
 
     index = lbl_8036719E;
+    limit = lbl_8036719C;
     next = index + 1;
-    entry = lbl_803671A0 + (index << 4);
-
+    base = lbl_803671A0;
     lbl_8036719E = next;
-
-    if (next > lbl_8036719C) {
+    entry = (index << 4) + base;
+    if (next > limit) {
         lbl_803671A8 = 9;
         return 0;
     }
-
-    *(void **)(entry + 0x0) = arg0;
-    *(void **)(entry + 0x4) = arg1;
-    *(u32 *)(entry + 0x8) = 0;
-    entry[0xD] = arg2;
-    entry[0xC] = 0;
-
+    *(void **)((u8 *)entry + 0) = arg0;
+    *(void **)((u8 *)entry + 4) = arg1;
+    *(u32 *)((u8 *)entry + 8) = 0;
+    ((u8 *)entry)[0xD] = arg2;
+    ((u8 *)entry)[0xC] = 0;
     fn_8000D3EC(arg0, entry);
-
     return 1;
 }
 
@@ -2058,18 +2055,34 @@ void fn_800167E4(void *arg0)
     fn_8022C1E8(list2, fn_8001C5F8, 8, 4);
 }
 
-s32 fn_800169A8(s32 arg0, s16 arg1) {
-    M2C_UNK fn_800C428C(s32);
-    M2C_UNK fn_8022C1E8(s32, M2C_UNK *, M2C_UNK, M2C_UNK);
-    extern M2C_UNK fn_8001C5F8;
-    s32 temp_cr0_eq;
+void *fn_800169A8(void *arg0, s16 arg1)
+{
+    void fn_800C428C(void *);
+    void fn_8022C1E8(void *, void (*)(void), s32, s32);
+    void fn_8001C5F8(void);
 
-    temp_cr0_eq = arg0 == 0;
-    if (temp_cr0_eq == 0) {
-        if ((temp_cr0_eq == 0) && (temp_cr0_eq == 0) && (temp_cr0_eq == 0) && (temp_cr0_eq == 0) && (temp_cr0_eq == 0) && (temp_cr0_eq == 0)) {
-            fn_8022C1E8(arg0 + 0x1EC, &fn_8001C5F8, 8, 4);
-            fn_8022C1E8(arg0 + 0x1CC, &fn_8001C5F8, 8, 4);
+    if (arg0 != NULL) {
+        if (arg0 == NULL) {
+            goto after;
         }
+        if (arg0 == NULL) {
+            goto after;
+        }
+        if (arg0 == NULL) {
+            goto after;
+        }
+        if (arg0 == NULL) {
+            goto after;
+        }
+        if (arg0 == NULL) {
+            goto after;
+        }
+        if (arg0 == NULL) {
+            goto after;
+        }
+        fn_8022C1E8((u8 *)arg0 + 0x1EC, fn_8001C5F8, 8, 4);
+        fn_8022C1E8((u8 *)arg0 + 0x1CC, fn_8001C5F8, 8, 4);
+    after:
         if (arg1 > 0) {
             fn_800C428C(arg0);
         }
