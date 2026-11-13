@@ -2477,8 +2477,8 @@ end:
 #pragma cplusplus reset
 
 s32 fn_8002F468(void) {
-    extern u16 lbl_80330708;
-    lbl_80330708 = 0xF;
+    extern u8 lbl_80330708[];
+    lbl_80330708[0x51D] = 0xF;
     return 9;
 }
 
