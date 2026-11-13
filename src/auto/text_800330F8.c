@@ -192,17 +192,39 @@ void fn_800331D4(u8 *arg0, s32 arg1) {
     }
 }
 
-void fn_8003333C(void *arg0,s32 arg1) {
-    u8 *ptr = (u8*)arg0;
-    u16 *base = (u16*)(ptr + 0x20);
-    u8 count = ptr[0x60];
-    
-    s32 offset = count + arg1;
-    base[offset] |= 1;
-    base[offset + 1] |= 1;
-    base[offset + 2] |= 1;
-    base[offset + 3] |= 1;
-    base[offset + 4] |= 1;
+void fn_8003333C(u8 *arg0, s32 arg1) {
+#pragma scheduling off
+    s32 t1;
+    s32 t2;
+    s32 t3;
+    s32 t4;
+    s32 idx;
+    u8 *p;
+
+    t1 = arg1 + 1;
+    t2 = arg1 + 2;
+    t3 = arg1 + 3;
+    idx = arg0[0x60] + arg1;
+    t4 = arg1 + 4;
+    p = arg0 + (idx * 2);
+    *(u16 *)(p + 0x20) |= 1;
+
+    idx = arg0[0x60] + t1;
+    p = arg0 + (idx * 2);
+    *(u16 *)(p + 0x20) |= 1;
+
+    idx = arg0[0x60] + t2;
+    p = arg0 + (idx * 2);
+    *(u16 *)(p + 0x20) |= 1;
+
+    idx = arg0[0x60] + t3;
+    p = arg0 + (idx * 2);
+    *(u16 *)(p + 0x20) |= 1;
+
+    idx = arg0[0x60] + t4;
+    p = arg0 + (idx * 2);
+    *(u16 *)(p + 0x20) |= 1;
+#pragma scheduling reset
 }
 
 void fn_800333DC(u8 *arg0, s32 arg1) {
@@ -4237,50 +4259,52 @@ void* fn_8003CE88(void* arg0, s32 arg1, void* arg2) {
     return arg2;
 }
 
-u8 fn_8003CFF0(s32 arg0, s32 arg1) {
-    s32 fn_80038128(s32, s32);
-    s8 fn_8003A778(s32);
-    s8 fn_8003AF28(s32);
-    s8 fn_8003AFA0();
-    s32 temp_r31_2;
-    s32 var_r0;
-    s8 temp_r30;
-    s8 temp_r31;
+u8 fn_8003CFF0(void *arg0, void *arg1) {
+    s32 fn_8003AFA0(void *);
+    s32 fn_8003A778(void *);
+    s32 fn_8003AF28(void *);
+    u8 fn_80038128(void *, void *);
+    s32 t;
+    s32 scaled;
+    s32 u;
+    s32 sum;
+    s32 v;
 
-    temp_r31 = fn_8003AFA0();
-    temp_r31_2 = (temp_r31 - fn_8003A778(arg1)) * 5;
-    temp_r30 = fn_8003AF28(arg0);
-    var_r0 = (temp_r31_2 + temp_r30 + 0x1E) - ((fn_80038128(arg0, arg1) * 2) & 0x1FE);
-    if (var_r0 > 0x64) {
-        var_r0 = 0x64;
+    t = (s8)fn_8003AFA0(arg0);
+    scaled = (t - (s8)fn_8003A778(arg1)) * 5;
+    u = (s8)fn_8003AF28(arg0);
+    sum = scaled + u;
+    v = (sum + 0x1E) - ((u8)fn_80038128(arg0, arg1) << 1);
+    if (v > 0x64) {
+        v = 0x64;
     }
-    if (var_r0 < 0) {
-        var_r0 = 0;
+    if (v < 0) {
+        v = 0;
     }
-    return (u8) var_r0;
+    return (u8)v;
 }
 
 u8 fn_8003D094(s32 arg0, u8 arg1) {
-    u8 var_r31;
+    s32 v;
+    u8 fn_80105BC0(s32, s32);
 
     if (arg1 == 0) {
-        return 0U;
+        return 0;
     }
-    var_r31 = arg1;
-    if (fn_80105BC0(arg0 + 0x1BC, 0xB) != 0) {
-        var_r31 *= 2;
+    v = arg1;
+    if ((u8)fn_80105BC0(arg0 + 0x1BC, 0xB) != 0) {
+        v <<= 1;
     }
-    if (fn_80105BC0(arg0 + 0x1BC, 0x4B) != 0) {
-        s32 temp = (var_r31 * 7) / 10;
-        var_r31 = temp;
-        if ((s32) var_r31 < 1) {
-            var_r31 = 1;
+    if ((u8)fn_80105BC0(arg0 + 0x1BC, 0x4B) != 0) {
+        v = (v * 7) / 10;
+        if (v < 1) {
+            v = 1;
         }
     }
-    if ((s32) var_r31 > 0x64) {
-        var_r31 = 0x64;
+    if (v > 0x64) {
+        v = 0x64;
     }
-    return var_r31;
+    return (u8)v;
 }
 
 #pragma opt_strength_reduction off
