@@ -5308,34 +5308,30 @@ void fn_801C29E8(s32 arg0) {
 }
 
 void fn_801C2A3C(void *arg0) {
-    u32 fn_801090C0(u32);
-    void fn_8000C60C(void);
+    void *fn_801090C0(void *);
+    void fn_8000C60C(void *);
     void fn_8006EDA0(void *);
     void fn_80161F7C(void);
-    void fn_8003F670(u32);
+    void fn_8003F670(void *);
     void fn_800C4588(void *);
+    void *obj;
+    void *p;
 
-    u32 *obj = *(u32 **)((u8 *)arg0 + 0x30);
-
-    u32 p = obj[0x30/4];
-    if (p && fn_801090C0(p)) {
-        fn_801090C0(p);
-        fn_8000C60C();
+    obj = *(void **)((u8 *)arg0 + 0x30);
+    if (*(void **)((u8 *)obj + 0x30) != NULL) {
+        if (fn_801090C0(*(void **)((u8 *)obj + 0x30)) != NULL) {
+            fn_8000C60C(fn_801090C0(*(void **)((u8 *)obj + 0x30)));
+        }
     }
-    
-    fn_801090C0(obj[0x2c/4]);
-    fn_8000C60C();
-
-    p = obj[0x38/4];
-    if (p) {
-        void (*method)(void *, s32) = (void (*)(void *, s32))(*(u32 *)(*(u32 *)(p + 0x2c) + 0x20));
-        method((void *)p, 1);
+    fn_8000C60C(fn_801090C0(*(void **)((u8 *)obj + 0x2C)));
+    p = *(void **)((u8 *)obj + 0x38);
+    if (p != NULL) {
+        (*(void (**)(void *, s32))(*(u8 **)((u8 *)p + 0x2C) + 0x20))(p, 1);
     }
-    
-    fn_8006EDA0((void *)obj);
+    fn_8006EDA0(obj);
     fn_80161F7C();
-    fn_8003F670(obj[4/4]);
-    fn_800C4588((void *)obj);
+    fn_8003F670(*(void **)((u8 *)obj + 4));
+    fn_800C4588(obj);
 }
 
 #pragma cplusplus on
@@ -7192,15 +7188,19 @@ void fn_801C76E8(void) {
     void *fn_8000C0C0(void *);
     void fn_80067708(s32, s32, void (*)(void), s32);
     void fn_801C7598(void), fn_801C7604(void), fn_801C7644(void);
-    
-    void *x = fn_8000C0C0(lbl_802981D0);
-    if (x != NULL) {
-        s32 *p = *(s32 **)((u8 *)x + 0x30);
-        if (p != NULL) {
-            fn_80067708(3, 0, fn_801C7598, 0);
-            fn_80067708(1, 4, fn_801C7644, *p);
-            fn_80067708(2, 0, fn_801C7604, 0);
-        }
+    void *x;
+    s32 *p;
+
+    x = fn_8000C0C0(lbl_802981D0);
+    if (x == NULL) {
+        p = NULL;
+    } else {
+        p = *(s32 **)((u8 *)x + 0x30);
+    }
+    if (p != NULL) {
+        fn_80067708(3, 0, fn_801C7598, 0);
+        fn_80067708(1, 4, fn_801C7644, *p);
+        fn_80067708(2, 0, fn_801C7604, 0);
     }
 }
 
