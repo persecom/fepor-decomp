@@ -2140,6 +2140,26 @@ void fn_80016ADC(void) {
     } while ((s32) var_r29 <= 0x9F);
 }
 
+void *fn_80016B7C(u32 arg0) {
+    extern u8 lbl_802B14E4[];
+    u8 *p;
+    s32 i;
+    u32 v;
+
+    if (arg0 == 0U) {
+        return NULL;
+    }
+    p = lbl_802B14E4;
+    for (i = 0; i < 0x9F; i++) {
+        v = *(u32 *)(p + 0x188);
+        if (v != 0U && v == arg0) {
+            return &lbl_802B14E4[i * 0x280];
+        }
+        p += 0x280;
+    }
+    return NULL;
+}
+
 void *fn_80016BDC(void) {
     u32 fn_8000D354(void);
     extern u8 lbl_802B14E4[];
