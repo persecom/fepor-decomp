@@ -12869,9 +12869,10 @@ void *fn_800E80D8(void *arg0, void *arg1, void *arg2)
     return result;
 }
 
-void fn_800E8154(void *arg0) {
-    M2C_FIELD(M2C_FIELD(arg0, void **, 0x10), M2C_UNK (**)(), 0x38)();
-    M2C_FIELD(M2C_FIELD(arg0, void **, 0x10), M2C_UNK (**)(void *), 8)(arg0);
+void fn_800E8154(void *arg0)
+{
+    (*(void (**)(void *))(*(u8 **)((u8 *)arg0 + 0x10) + 0x38))(arg0);
+    (*(void (**)(void *))(*(u8 **)((u8 *)arg0 + 0x10) + 0x8))(arg0);
 }
 
 void *fn_800E8488(void *arg0, s32 arg1)
@@ -13474,15 +13475,28 @@ void fn_800E9B10(void) {
 }
 
 void fn_800E9B80(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    extern u16 lbl_8028E420[];
-    extern u16 lbl_80320C20[];
+    struct CardWork {
+        u8 workArea[0xA000];
+        s32 chan;
+        volatile s32 result;
+        s32 sectorSize;
+        s32 unkA00C;
+        s32 unkA010;
+        s32 unkA014;
+        u8 unkA018;
+        u8 unkA019;
+        u8 busy;
+        u8 padA01B[0x19];
+        s32 unkA034;
+    };
+    extern struct CardWork lbl_80320C20;
+    extern u8 lbl_8028E420[];
 
-    *(u16*)&lbl_80320C20[0x501A] = (u16)arg0;
-    *(u16*)&lbl_80320C20[0x5006] = (u16)arg1;  
-    *(u16*)&lbl_80320C20[0x5008] = (u16)arg2;
-    *(u16*)&lbl_80320C20[0x500A] = (u16)arg3;
-    
-    fn_8000CAA0(lbl_8028E420, arg4, lbl_8028E420, (u32*)&lbl_80320C20[0x10000]);
+    lbl_80320C20.unkA034 = arg0;
+    lbl_80320C20.unkA00C = arg1;
+    lbl_80320C20.unkA010 = arg2;
+    lbl_80320C20.unkA014 = arg3;
+    fn_8000CAA0(lbl_8028E420, arg4);
 }
 
 void fn_800E9CE4(s32 arg0) {
