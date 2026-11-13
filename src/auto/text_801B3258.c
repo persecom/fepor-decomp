@@ -3862,6 +3862,42 @@ extern "C" void fn_801BCFF4(void *arg0) {
     }
     (void)pad;
 }
+
+extern "C" void fn_801BD28C(void *arg0) {
+    void *fn_8013FF94(void *, s32, s32);
+    void fn_8014027C(void *, void *, s16 *, s32);
+    void fn_801658DC(void *, void *);
+    void fn_8013FF00(void *, void *);
+    extern u8 lbl_8027C698[];
+    struct { s16 x; s16 y; } spC;
+    struct { s16 x; s16 y; } sp8;
+    void *obj;
+    void *child;
+    void *p;
+    s16 tmp;
+
+    obj = fn_8013FF94(arg0, 0x80, 0);
+    if (*(s16 *)((u8 *)obj + 0xC) < 0x28) {
+        spC.x = *(s16 *)((u8 *)obj + 0xA);
+        spC.y = 0x28;
+        fn_8014027C(arg0, obj, &spC.x, 0);
+    }
+    *(s32 *)((u8 *)obj + 0x48) = 1;
+    fn_801658DC(obj, lbl_8027C698 + 0x227);
+    child = *(void **)((u8 *)arg0 + 0x5C);
+    if (*(s16 *)((u8 *)child + 0xA) != 0x118) {
+        tmp = *(s16 *)((u8 *)child + 0xC);
+        sp8.x = 0x118;
+        sp8.y = tmp;
+        fn_8014027C(arg0, child, &sp8.x, 0);
+    }
+    fn_8013FF00(arg0, *(void **)((u8 *)arg0 + 0x5C));
+    p = fn_8013FF94(arg0, -0x1000, 0);
+    if (p != NULL) {
+        fn_801658DC(p, lbl_8027C698 + 0x23B);
+    }
+}
+
 #pragma cplusplus reset
 
 void fn_801BD37C(void *arg0) {
