@@ -12071,7 +12071,7 @@ void fn_801A27F8(void *arg0) {
 #include "common.h"
 
 extern s32 lbl_8036AF6C;
-extern u8 lbl_80367298[];
+extern u8 lbl_80367298;
 #include "common.h"
 extern u16 lbl_80291AC8[];
 #include "global.h"
