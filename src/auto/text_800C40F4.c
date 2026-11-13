@@ -18867,17 +18867,14 @@ void fn_800FC4C8(void *unused, void *arg1) {
     }
 }
 
-void fn_800FC504(struct unit *arg0) {
-    arg0->pad_0x0[0] = 0;
-    arg0->pad_0x0[1] = 0;
-    arg0->pad_0x0[0x10] = 0;
-    arg0->pad_0x0[0x11] = 0;
-    arg0->pad_0x0[0x12] = 0;
-    arg0->pad_0x0[0x13] = 0;
-    arg0->pad_0x0[0x14] = 0x80;
-    arg0->pad_0x0[0x15] = 0x80;
-    arg0->pad_0x0[0x16] = 0x80;
-    arg0->pad_0x0[0x17] = 0xFF;
+void fn_800FC504(void) {
+    void fn_800C4588(void *);
+    extern u8 lbl_8032B3C0[];
+    extern void *lbl_80367904;
+
+    lbl_8032B3C0[1] = 0;
+    fn_800C4588(lbl_80367904);
+    lbl_80367904 = NULL;
 }
 
 void fn_800FC540(void) {
