@@ -31,3 +31,4 @@ void fn_80019558(void) {
     M2C_FIELD(p2, void **, 0x74) = lbl_8028420C;
     M2C_FIELD(p3, void **, 0x74) = lbl_802841F4;
 }
+
