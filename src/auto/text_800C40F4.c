@@ -11566,6 +11566,44 @@ extern "C" void fn_800E4178(void *arg0, void *arg1) {
     };
     ((Obj *)arg0)->v17(*(s32 *)arg1, *(s32 *)((u8 *)arg1 + 4));
 }
+
+#pragma cplusplus on
+extern "C" void fn_800E4330(void *arg0, void *arg1) {
+    struct Obj10 {
+        u8 pad[0x10];
+        virtual void *v0() = 0;
+        virtual void *v1() = 0;
+        virtual void *v2(char *, char *) = 0;
+    };
+    struct Obj40 {
+        u8 pad[0x40];
+        virtual void v0(void *) = 0;
+        virtual void v1(void *) = 0;
+        virtual void v2(void *) = 0;
+        virtual void v3(void *) = 0;
+    };
+    char *fn_800C93EC(void *);
+    u8 fn_800DF6A8(void *);
+    extern char lbl_80271FC0[];
+    void *res;
+    void *inner;
+
+    if (*(u8 *)((u8 *)arg0 + 0x3C) != 0) {
+        res = ((Obj10 *)*(void **)arg0)->v2(
+            lbl_80271FC0,
+            fn_800C93EC((u8 *)arg0 + 0x1C)
+        );
+        if (res != 0 && (u8)fn_800DF6A8(res) != 0 &&
+            *(u8 *)((u8 *)arg0 + 0x2C) != 0) {
+            inner = *(void **)((u8 *)arg0 + 0x54);
+            if (inner == 0 || (u8)fn_800DF6A8(inner) != 0) {
+                ((Obj40 *)arg0)->v3(arg1);
+            }
+        }
+    }
+}
+#pragma cplusplus reset
+
 #pragma cplusplus reset
 void fn_800E43E8(void) {
 
@@ -19309,25 +19347,23 @@ s32 fn_800FB45C(void *arg0) {
 }
 
 s32 fn_800FB494(void *arg0) {
-    extern u8 *lbl_803678F8;
-    extern u8 lbl_802EF4C8[];
-    s32 fn_802342B8(void *, void *);
+    extern void *lbl_803678F8;
+    s32 fn_802342B8(u8 *, u8 *);
     s32 fn_80015610(void *, void *);
+    extern u8 lbl_802EF4C8[];
 
-    void *key;
-    void **list;
-    void *other;
-    void *item;
+    register u8 *name;
+    u8 **list;
+    register u8 *entry;
     u8 found;
-    void *p188;
+    void *other;
 
-    p188 = *(void **)((u8 *)arg0 + 0x188);
-    list = *(void ***)(lbl_803678F8 + 0x14);
+    list = M2C_FIELD(lbl_803678F8, u8 ***, 0x14);
     other = *(void **)lbl_802EF4C8;
-    key = *(void **)p188;
+    name = *M2C_FIELD(arg0, u8 ***, 0x188);
 
-    while ((item = *list++) != NULL) {
-        if (fn_802342B8(item, key) == 0) {
+    while ((entry = *list++) != NULL) {
+        if (fn_802342B8(entry, name) == 0) {
             found = 1;
             goto checked;
         }
@@ -19335,12 +19371,12 @@ s32 fn_800FB494(void *arg0) {
     found = 0;
 
 checked:
-    if (found != 0) {
+    if (found) {
         return 0;
     }
 
-    return (u8)fn_80015610(*(void **)((u8 *)arg0 + 0x190),
-                           *(void **)((u8 *)other + 0x190)) == 1;
+    return (u8)fn_80015610(M2C_FIELD(arg0, void **, 0x190),
+                          M2C_FIELD(other, void **, 0x190)) == 1;
 }
 
 s32 fn_800FB548(void *arg0)
