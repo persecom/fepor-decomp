@@ -1767,25 +1767,17 @@ typedef struct {
 } Map_802CA518;
 extern Map_802CA518 lbl_802CA518;
 
-f32 fn_800233D0(void *arg0, s8 arg1, s8 arg2, u8 arg3) {
-    f32 var_f1;
-    f32 var_f2;
-    f32 var_f0;
+f32 fn_800233D0(void *arg0, s8 arg1, s8 arg2, u8 arg3)
+{
+    u8 *base;
+    u8 *row;
+    s32 index;
 
-    s32 temp_r6 = (s32)arg3;
-    s32 temp_r7 = (s32)arg2;
-    s32 temp_r5 = (s32)arg1;
-    
-    temp_r5 = (temp_r7 << 6) + temp_r5;
-    temp_r6 = (temp_r6 << 2) + temp_r5;
-    
-    var_f0 = *(f32 *)((char *)arg0 + 0x42D4 + (temp_r6 << 1));
-    var_f2 = *(f32 *)0x80368D80;
-    var_f1 = *(f32 *)0x80330708; // This address is loaded in the instruction
-    var_f1 = var_f1 - var_f2;
-    var_f1 = var_f1 * var_f0;
-
-    return var_f1;
+    base = (u8 *)arg0 + 0x20000;
+    row = (u8 *)arg0 + 0x10000;
+    index = arg1 + (arg2 << 6);
+    index = (u8)arg3 + (index << 2);
+    return (f32)*(s16 *)(row + (index << 1) + 0x42D4) * *(f32 *)(base - 0x3D2C);
 }
 
 #pragma fp_contract on
@@ -3197,18 +3189,18 @@ void fn_80026130(void) {
 }
 
 void fn_80026204(void) {
-    extern u16 lbl_802EF4E0;
-    s32 temp_r3;
-    void *temp_r4;
+    void fn_8002F658(s32 *, s32);
+    void *fn_8002F740(void);
+    extern s32 lbl_802EF4E0[];
+    s32 i;
+    void *obj;
+    s32 flags;
 
-    temp_r3 = 0;
-loop_2:
-    if (temp_r3 < (s32) lbl_802EF4E0) {
-        fn_8002F658(&lbl_802EF4E0, temp_r3);
-        temp_r4 = (void *)fn_8002F740();
-        temp_r3 += 1;
-        M2C_FIELD(temp_r4, s32 *, 0x1A0) = (s32) (M2C_FIELD(temp_r4, s32 *, 0x1A0) & 0xFFFFFFFE);
-        goto loop_2;
+    for (i = 0; i < lbl_802EF4E0[0]; i++) {
+        fn_8002F658(lbl_802EF4E0, i);
+        obj = fn_8002F740();
+        flags = *(s32 *)((u8 *)obj + 0x1A0);
+        *(s32 *)((u8 *)obj + 0x1A0) = flags & ~1;
     }
 }
 
