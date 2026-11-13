@@ -1857,8 +1857,8 @@ extern "C" void fn_801B9500(void *arg0) {
 #pragma cplusplus reset
 void fn_801B9748(void *a) {
     void *fn_8013FF94(void *, s32, s32);
-    s32 fn_80019DF0(u8, void *);
-    void fn_8017A9F0(void *, s32, void *, void *);
+    s32 fn_80019DF0(u8);
+    void fn_8017A9F0(void *, s32, void *);
     extern u8 lbl_802EF4C8[];
     extern f32 lbl_8036B2DC;
 
@@ -1867,15 +1867,15 @@ void fn_801B9748(void *a) {
     s32 x;
 
     p = fn_8013FF94(a, 0x82, 0);
-    *(f32 *)((char *)p + 0x30) = lbl_8036B2DC;
+    *(f32 *)((u8 *)p + 0x30) = lbl_8036B2DC;
 
     p = fn_8013FF94(a, 0x108, 0);
-    *(f32 *)((char *)p + 0x30) = lbl_8036B2DC;
+    *(f32 *)((u8 *)p + 0x30) = lbl_8036B2DC;
 
-    q = *(void **)((char *)a + 0x60);
-    x = fn_80019DF0(lbl_802EF4C8[0x14], lbl_802EF4C8);
-    *(u8 *)((char *)q + 0x3c) = 0;
-    fn_8017A9F0(q, x, a, q);
+    x = fn_80019DF0(lbl_802EF4C8[0x14]);
+    q = *(void **)((u8 *)a + 0x60);
+    *(u8 *)((u8 *)q + 0x3C) = 0;
+    fn_8017A9F0(q, x, a);
 }
 
 void fn_801B97C8(s32 arg0) {
