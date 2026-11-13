@@ -10252,29 +10252,26 @@ void fn_800E0FBC(void *arg0, s32 arg1)
 {
     extern s32 lbl_80366E60;
     extern u8 lbl_803687D0;
-    extern void *fn_800C4240(s32, void *);
-
-    s32 count;
+    void *fn_800C4240(s32, void *);
+    void *out;
     s32 allocated;
+    s32 count;
     void *result;
 
+    out = arg0;
     count = arg1;
-    allocated = lbl_80366E60;
     result = 0;
-
+    allocated = lbl_80366E60;
     while (count > 0) {
-        result = fn_800C4240(count << 2, &lbl_803687D0);
-
+        result = fn_800C4240(count * 4, &lbl_803687D0);
         if (result != 0) {
             allocated = count;
             break;
         }
-
-        count = (count + ((u32)count >> 31)) >> 1;
+        count = count / 2;
     }
-
-    *(void **)arg0 = result;
-    *(s32 *)((u8 *)arg0 + 4) = allocated;
+    *(void **)out = result;
+    *(s32 *)((u8 *)out + 4) = allocated;
 }
 
 #pragma cplusplus on
