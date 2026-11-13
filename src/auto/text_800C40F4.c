@@ -18763,30 +18763,24 @@ u32 fn_800FA600(void *arg0, u32 arg1, u32 arg2, u32 arg3) {
     return *(u32 *)((char *)arg0 + 0xE8);
 }
 
+#pragma peephole on
 void fn_800FA8F0(void *arg0) {
     extern void *lbl_803678F8;
     extern s32 lbl_803678F4;
 
     s32 fn_8000CEE4(s32);
-    void fn_800F5504(void *, s32);
-    void fn_800FB3AC(void);
-    void fn_800FB334(void);
+    u8 fn_800F5504(u8 (*)(void *), u8);
+    u8 fn_800FB3AC(void *);
+    u8 fn_800FB334(void *);
 
     u8 *obj;
     u8 *state;
-    void *callback;
 
     obj = (u8 *)arg0;
     state = (u8 *)lbl_803678F8;
 
     if (fn_8000CEE4(0x64) <= *(s32 *)(state + 4)) {
-        callback = fn_800FB3AC;
-
-        if (*(s32 *)(state + 0x10) != 0) {
-            callback = fn_800FB334;
-        }
-
-        fn_800F5504(callback, 0xF);
+        fn_800F5504(*(s32 *)(state + 0x10) != 0 ? fn_800FB334 : fn_800FB3AC, 0xF);
     }
 
     if (lbl_803678F4 == 0) {
@@ -18795,7 +18789,7 @@ void fn_800FA8F0(void *arg0) {
         obj[0x251]++;
     }
 }
-
+#pragma peephole reset
 void fn_800FAA50(void *arg0) {
     extern s32 lbl_803678F4;
     if ((s32) lbl_803678F4 == 0) {
