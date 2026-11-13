@@ -1341,15 +1341,21 @@ s32 fn_80015648(u8 arg0, u8 arg1) {
     return 2;
 }
 
-void fn_80015680(void **arg0) {
-    void *var_r4;
+s32 fn_80015680(void **arg0) {
+    s32 count;
+    void *node;
 
-    var_r4 = *arg0;
+    node = *arg0;
+    count = 0;
+    goto loop_2;
+loop_1:
+    node = *(void **)((s32)node + 0x184);
+    count += 1;
 loop_2:
-    if (var_r4 != NULL) {
-        var_r4 = *(void **)((s32)var_r4 + 0x184);
-        goto loop_2;
+    if (node != NULL) {
+        goto loop_1;
     }
+    return count;
 }
 
 void fn_800156A0(void *arg0, void *arg1) {
