@@ -11899,8 +11899,7 @@ void fn_801D0444(u8 *arg0, s32 arg1) {
         return;
     }
     arg0 += arg1 * 2;
-    arg1 = 0;
-    *(s16 *)(arg0 + 0xe) = (s16)arg1;
+    *(s16 *)(arg0 + 0xe) = 0;
 }
 
 void fn_801D0460(void *arg0, s32 arg1) {

@@ -554,10 +554,9 @@ void fn_80266A5C(s32 arg0, s32 arg1, M2C_UNK *arg2) {
 }
 
 void fn_80266B38(s32 arg0) {
-    extern u16 lbl_803669A0[];
-    s32 temp = arg0 << 8;
-    u16 *ptr = &lbl_803669A0[temp + 0x24];
-    fn_8020AEC4(ptr);
+    extern u8 lbl_803669A0[];
+    void fn_8020AEC4(void *);
+    fn_8020AEC4((void *)((s32)lbl_803669A0 + (arg0 << 8) + 0x24));
 }
 
 u32 fn_80266B6C(s32 arg0)

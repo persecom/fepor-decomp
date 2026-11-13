@@ -21598,6 +21598,85 @@ void fn_800FE398(u8 *unit, s32 arg1, s32 arg2) {
     }
     fn_800213D0(map, unit[0x19E], unit[0x19F], (u16)slot, t14, t15);
 }
+
+#pragma use_lmw_stmw on
+void fn_800FE490(s32 arg0, s32 arg1, u8 *unit, s32 arg3, s32 arg4) {
+    void fn_800213D0(void *, s8, s8, u16, s32, s32);
+    void fn_80022748(void *, void *);
+    void fn_800227D0(void *, s32, s32);
+    void fn_800227F8(void *, void *);
+    void fn_80022FD8(void *, s32);
+    s8 fn_8003A398(void *);
+    u8 fn_80105BC0(void *, s32);
+    extern u8 lbl_802CA518[];
+    u8 *map;
+    s32 t14;
+    s32 slot;
+    s32 mode;
+
+    map = lbl_802CA518;
+    mode = arg3;
+    t14 = fn_80105BC0(unit + 0x1BC, 0x14) != 0;
+    arg3 = fn_80105BC0(unit + 0x1BC, 0x15) != 0;
+    fn_80022FD8(lbl_802CA518, mode);
+    fn_800227F8(lbl_802CA518, *(void **)(unit + 0x18C));
+    fn_80022748(lbl_802CA518, *(void **)(unit + 0x190));
+    if (*(u32 *)(unit + 0x254) & 0x20000) {
+        fn_800227D0(map, 0x37, 0x30);
+    }
+    if (arg4 != -1) {
+        slot = arg4;
+    } else {
+        slot = (s8)fn_8003A398(unit);
+    }
+    fn_800213D0(map, (s8)arg0, (s8)arg1, (u16)slot, t14, arg3);
+}
+#pragma use_lmw_stmw reset
+
+#pragma use_lmw_stmw on
+void fn_800FE590(s32 arg0, s32 arg1, u8 *unit, s32 arg3, s32 arg4)
+{
+    void fn_800213D0(void *, s8, s8, u16, s32, s32);
+    void fn_80022748(void *, s32);
+    void fn_800227D0(void *, s32, s32);
+    void fn_800227F8(void *, void *);
+    void fn_80022FD8(void *, s32);
+    s8 fn_8003A398(void *);
+    u8 fn_80105BC0(void *, s32);
+    extern u8 lbl_802CA518[];
+    u8 *map;
+    s32 a4;
+    u8 *u;
+    s32 a1;
+    s32 a0;
+    s32 t14;
+    s32 a3;
+    s32 t15;
+    s32 slot;
+
+    map = lbl_802CA518;
+    a4 = arg4;
+    u = unit;
+    a1 = arg1;
+    a0 = arg0;
+    a3 = arg3;
+    t14 = fn_80105BC0(u + 0x1BC, 0x14) != 0;
+    t15 = fn_80105BC0(u + 0x1BC, 0x15) != 0;
+    fn_80022FD8(lbl_802CA518, a3);
+    fn_800227F8(lbl_802CA518, *(void **)(u + 0x18C));
+    fn_80022748(lbl_802CA518, 0);
+    if (*(u32 *)(u + 0x254) & 0x20000) {
+        fn_800227D0(map, 0x37, 0x30);
+    }
+    if (a4 != -1) {
+        slot = a4;
+    } else {
+        slot = (s8)fn_8003A398(u);
+    }
+    fn_800213D0(map, (s8)a0, (s8)a1, (u16)slot, t14, t15);
+}
+#pragma use_lmw_stmw reset
+
 #pragma use_lmw_stmw reset
 
 void fn_800FE690(s32 arg0, s32 arg1, void *arg2, s32 arg3, s32 arg4, s32 arg5) {

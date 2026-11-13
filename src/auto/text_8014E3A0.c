@@ -669,13 +669,13 @@ s32 fn_801506AC(void* arg0) {
 #pragma use_lmw_stmw on
 void fn_80150F38(void *arg0) {
     void fn_800C4588(void *);
+    long i;
+    register int off;
     void *self;
-    s32 i;
-    void *meta;
     void *work;
-    s32 off;
-    s32 z0;
-    s32 z1;
+    u32 z1;
+    register void *z0;
+    void *meta;
 
     self = arg0;
     work = *(void **)((u8 *)arg0 + 0x54);
@@ -684,13 +684,13 @@ void fn_80150F38(void *arg0) {
         if (*(void **)((u8 *)work + 0x38) != NULL) {
             off = 0;
             i = 0;
-            z0 = off;
+            z0 = (void *)off;
             z1 = off;
             while (i < (s32)*(u16 *)((u8 *)meta + 6)) {
                 fn_800C4588(*(void **)((u8 *)*(void **)((u8 *)work + 0x38) + off));
                 i += 1;
-                *(s32 *)((u8 *)*(void **)((u8 *)work + 0x38) + off) = z0;
-                *(s32 *)((u8 *)*(void **)((u8 *)work + 0x38) + off) = z1;
+                *(void **)((u8 *)*(void **)((u8 *)work + 0x38) + off) = z0;
+                *(void **)((u8 *)*(void **)((u8 *)work + 0x38) + off) = (void *)z1;
                 off += 4;
             }
             fn_800C4588(*(void **)((u8 *)work + 0x38));
@@ -5602,25 +5602,14 @@ void fn_80161AA8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 *arg5) {
     void fn_80007790(f32, f32, f32, f32, f32);
     void fn_80007668(s32 *);
     void fn_80007884(void);
-    extern f64 lbl_8036A868;
     extern f32 lbl_8036A870;
     s32 sp8;
-    f32 a;
-    f32 b;
-    f32 c;
-    f32 d;
-    f32 base;
 
     fn_8000A258();
     fn_8000A174(0, (u16)(arg4 | 2));
     fn_8000A248();
     fn_80007898(4);
-    a = (f32)arg0;
-    b = (f32)arg1;
-    c = (f32)arg2;
-    d = (f32)arg3;
-    base = lbl_8036A870;
-    fn_80007790(base + a, base + b, base + c, base + d, base);
+    fn_80007790(lbl_8036A870 + (f32)arg0, lbl_8036A870 + (f32)arg1, lbl_8036A870 + (f32)arg2, lbl_8036A870 + (f32)arg3, lbl_8036A870);
     sp8 = *arg5;
     fn_80007668(&sp8);
     fn_80007884();

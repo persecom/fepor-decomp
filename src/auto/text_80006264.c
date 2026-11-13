@@ -25,11 +25,14 @@ s32 fn_80006264(u32 *a, u32 *b, u32 n) {
 }
 
 void fn_80006298(u32 *dst, u32 val, u32 n) {
-    n >>= 2;
-    dst--;
+    u32 *p;
+    u32 c;
+    c = n >> 2;
+    p = dst;
+    p--;
     do {
-        *++dst = val;
-    } while (--n);
+        *++p = val;
+    } while (--c);
 }
 
 void fn_800062B0(u32 *arg0, u32 arg1, u32 arg2) {

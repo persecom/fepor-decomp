@@ -474,51 +474,97 @@ s32 fn_80096B80(void) {
 
 s32 fn_80096C18(void)
 {
-    extern u8 lbl_80330EAC[];
-    extern u8 lbl_803120C0[];
-    extern u8 *lbl_80367504;
-    extern u8 *lbl_80367500;
-    extern f32 lbl_803697BC;
+  extern u8 lbl_80330EAC[];
+  extern u8 lbl_803120C0[];
+  extern u8 *lbl_80367504;
+  u8 *new_var[2];
+  extern f32 lbl_803697BC;
+  if ((*((u32 *) (lbl_80330EAC + 0xCAC))) & 0x100)
+  {
+    new_var[0] = lbl_803120C0 + 0x14;
+  }
+  else
+    if (lbl_80367504 != NULL)
+  {
+    new_var[0] = lbl_80367504;
+  }
+  else
+  {
+    new_var[0] = new_var[1];
+  }
+  if (new_var[1] == NULL)
+  {
+    return 0;
+  }
+  return lbl_803697BC == (*((f32 *) (new_var[0] + 0x10)));
+}
 
-    u8 *ptr;
+u8 fn_80096C78(s32 arg0)
+{
+  extern u8 lbl_80330EAC[];
+  s16 saved;
+  unsigned char new_var;
+  s16 *idx;
+  s32 count;
+  new_var = ((s16) arg0) + 1;
+  count = 0;
+  idx = (s16 *) (lbl_80330EAC + 0x8A0);
+  saved = *idx;
+  *idx = (s16) arg0;
+  *idx = (s16) new_var;
+  for (;;)
+  {
+    switch (((u8 *) idx)[((*idx) * 4) + 4])
+    {
+      case 0:
 
-    if (*(u32 *)(lbl_80330EAC + 0xCAC) & 0x100) {
-        ptr = lbl_803120C0 + 0x14;
-    } else if ((ptr = lbl_80367504) != NULL) {
-    } else {
-        ptr = lbl_80367500;
+      case 0x20:
+
+      case 0x21:
+
+      case 0x22:
+
+      case 0x24:
+
+      case 0x37:
+
+      case 0x38:
+
+      case 0x39:
+        if (1)
+      {
+      }
+
+      case 0x3D:
+
+      case 0x3F:
+
+      case 0x40:
+
+      case 0x41:
+
+      case 0x42:
+
+      case 0x48:
+        goto done;
+
+      case 0x50:
+
+      case 0x51:
+
+      case 0x52:
+        ++count;
+        break;
+
     }
 
-    if (ptr == NULL) {
-        return 0;
-    }
+    *idx += 1;
+  }
 
-    return lbl_803697BC == *(f32 *)(ptr + 0x10);
-}
+  done:
+  *idx = saved;
 
-u8 fn_80096C78(s32 arg0) {
-extern u8 lbl_80330EAC[];
-s16 saved;
-s16 *idx;
-s32 count;
-count = 0;
-idx = (s16 *)(lbl_80330EAC + 0x8A0);
-saved = *idx;
-*idx = (s16)arg0;
-*idx = (s16)((s16)arg0 + 1);
-for (;;) {
-switch (((u8 *)idx)[*idx * 4 + 4]) {
-case 0: case 0x20: case 0x21: case 0x22: case 0x24:
-case 0x37: case 0x38: case 0x39: case 0x3D:
-case 0x3F: case 0x40: case 0x41: case 0x42: case 0x48:
-goto done;
-case 0x50: case 0x51: case 0x52: ++count; break;
-}
-*idx += 1;
-}
-done:
-*idx = saved;
-return (u8)(count >= 2);
+  return (u8) (count >= 2);
 }
 
 s32 fn_80096EEC(s32 *arg0, u32 arg1) {
@@ -604,41 +650,47 @@ s32 fn_80096EEC(s32 *arg0, u32 arg1) {
     return var_r5;
 }
 
-s32 fn_800970C8(s16 arg0) {
-    extern u8 lbl_80330EAC[];
-    s16 *idx;
+s32 fn_800970C8(s32 arg0) {
+    typedef struct {
+        u8 pad[0x8A0];
+        s16 idx;
+    } Scr;
+    extern Scr lbl_80330EAC;
+    Scr *s;
     s16 saved;
     s32 result;
     s16 n;
     s32 c;
 
-    idx = (s16 *)(lbl_80330EAC + 0x8A0);
+    s = &lbl_80330EAC;
     result = -1;
-    saved = *idx;
-    *idx = arg0;
-    *idx = arg0 + 1;
+    saved = s->idx;
+    s->idx = (s16)arg0;
+    s->idx = (s16)arg0 + 1;
     for (;;) {
-        n = *idx;
-        c = ((u8 *)idx)[(n << 2) + 4];
+        n = s->idx;
+        c = *((u8 *)s + 0x8A0 + (n << 2) + 4);
         switch (c) {
         case 0:
-            *idx = n + 1;
+            s->idx = n + 1;
             continue;
         case 0x20:
         case 0x21:
         case 0x22:
         case 0x24:
-            return result;
+            break;
         case 0x50:
         case 0x51:
         case 0x52:
-            result = ((u8 *)idx)[(n << 2) + 4];
-            return result;
+            result = *((u8 *)s + 0x8A0 + (n << 2) + 4);
+            break;
         default:
-            *idx = saved;
-            return result;
+            s->idx = saved;
+            break;
         }
+        break;
     }
+    return result;
 }
 
 s32 fn_80097168(s32 arg0) {
@@ -873,7 +925,7 @@ void fn_8009799C(void) {
 }
 
 void fn_800979FC(void) {
-    s8 fn_8004ABD4(void *, s32, s32);
+    s8 fn_8004ABD4(void *, s32);
     extern u8 lbl_80330EAC[];
     extern u8 lbl_803120C0[];
     u8 *it;
@@ -895,7 +947,7 @@ void fn_800979FC(void) {
             }
             ca8 = *(s32 *)(tbl + 0xCA8);
             *(u8 *)((u8 *)*(void **)((u8 *)*(void **)it + 0x280) + 0x16C) =
-                fn_8004ABD4(q, ca8 < 1, ca8);
+                fn_8004ABD4(q, (u32)ca8 < 1U);
         }
         it += 0x14;
     }

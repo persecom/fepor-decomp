@@ -129,15 +129,17 @@ f32 fn_80202574(f64 farg0, f64 farg1, f64 farg2) {
 
 void fn_802025C0(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
     extern f32 lbl_8036BC3C;
-    
-    *(f32*)((u8*)arg0 + 0x0) = farg0;
-    *(f32*)((u8*)arg0 + 0x4) = lbl_8036BC3C;
-    *(f32*)((u8*)arg0 + 0xC) = lbl_8036BC3C;
-    *(f32*)((u8*)arg0 + 0x14) = farg1;
-    *(f32*)((u8*)arg0 + 0x18) = lbl_8036BC3C;
-    *(f32*)((u8*)arg0 + 0x20) = lbl_8036BC3C;
-    *(f32*)((u8*)arg0 + 0x28) = farg2;
-    *(f32*)((u8*)arg0 + 0x2C) = lbl_8036BC3C;
+    f64 zero;
+
+    zero = lbl_8036BC3C;
+    *(f32 *)((u8 *)arg0 + 0x0) = farg0;
+    *(f64 *)((u8 *)arg0 + 0x4) = zero;
+    *(f64 *)((u8 *)arg0 + 0xC) = zero;
+    *(f32 *)((u8 *)arg0 + 0x14) = farg1;
+    *(f64 *)((u8 *)arg0 + 0x18) = zero;
+    *(f64 *)((u8 *)arg0 + 0x20) = zero;
+    *(f32 *)((u8 *)arg0 + 0x28) = farg2;
+    *(f32 *)((u8 *)arg0 + 0x2C) = (f32)zero;
 }
 
 void fn_802026E4(f32 *out, f32 *arg1, f32 *arg2, f32 *arg3) {
@@ -290,11 +292,15 @@ void fn_80202B3C(void *arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 far
     M2C_FIELD(arg0, f32 *, 0x3C) = (f32) lbl_8036BC58;
 }
 
-void fn_80202BD4(f32* src, f32* dst) {
-    *(u64*)&dst[0] = *(u64*)&src[0];
-    *(u64*)&dst[2] = *(u64*)&src[2];
-    *(u64*)&dst[4] = *(u64*)&src[4];
-    *(u64*)&dst[6] = *(u64*)&src[6];
+void fn_80202BD4(f64* src, f64* dst) {
+    dst[0] = src[0];
+    dst[1] = src[1];
+    dst[2] = src[2];
+    dst[3] = src[3];
+    dst[4] = src[4];
+    dst[5] = src[5];
+    dst[6] = src[6];
+    dst[7] = src[7];
 }
 
 f32 fn_80202C18(void) {
@@ -492,6 +498,25 @@ void fn_802031CC(void *arg0, void *arg1) {
     b[0] = c;
     c = a[1] * 0.5;
     b[1] = c;
+}
+
+void fn_802031E8(f32 *src, f32 *dst) {
+    extern f32 lbl_8036BC70;
+    extern f32 lbl_8036BC74;
+    f32 x = src[0];
+    f32 y = src[1];
+    f32 z = src[2];
+    f32 mag = x * x + y * y + z * z;
+    f32 r = lbl_8036BC70;
+    f32 half = lbl_8036BC74;
+    f32 est = 1.0f / (f32)__frsqrte(mag);
+    /* placeholder scalar path */
+    (void)r;
+    (void)half;
+    (void)est;
+    dst[0] = x;
+    dst[1] = y;
+    dst[2] = z;
 }
 
 f32 fn_8020322C(void *arg0) {

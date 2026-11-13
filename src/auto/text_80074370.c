@@ -733,22 +733,24 @@ s32 fn_8007565C(void) {
 }
 
 #pragma cplusplus on
-s32 fn_80075784(void *arg0, void *arg1, s32 arg2) {
-    void **fn_80037BD0(void *, u8);
+s32 fn_80075784(s32 arg0, s32 arg1, s32 arg2) {
+    extern u8 lbl_802EF4C8[24];
+    s32 *fn_80037BD0(s32, u8);
     u8 fn_800939FC(void *);
-    extern void *lbl_802EF4C8[];
-    void *temp_r4;
+    s32 *ret;
+    s32 obj;
     u8 val;
 
-    temp_r4 = *fn_80037BD0(lbl_802EF4C8[0], arg2);
-    if (temp_r4 == NULL) {
+    ret = fn_80037BD0(*(s32 *)lbl_802EF4C8, (u8)arg2);
+    obj = *ret;
+    if ((u32)obj == 0U) {
         return 3;
     }
-    val = (temp_r4 != NULL) ? *(u8 *)((char *)temp_r4 + 0x12) : 0xC;
+    val = (obj != 0) ? *(u8 *)((char *)obj + 0x12) : 0xC;
     if (val == 7) {
         return 2;
     }
-    return (fn_800939FC(lbl_802EF4C8[0]) == 0) ? 2 : 0;
+    return (fn_800939FC(*(void **)lbl_802EF4C8) == 0) ? 2 : 0;
 }
 
 extern "C" s32 fn_80075814(s32 arg0, s32 arg1, void *arg2) {

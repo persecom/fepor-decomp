@@ -1617,6 +1617,7 @@ void fn_800892E8(void *arg0) {
     void *tmp;
     f32 f38;
     f32 f3c;
+
     obj = (u8 *)arg0;
     *(s32 *)(obj + 0x48) = 0;
     size = fn_80222420(0x260, 0x1C0, 4, 0, 0);
@@ -1626,8 +1627,8 @@ void fn_800892E8(void *arg0) {
     fn_802228D8(obj + 0x4C, 0, 0, 0, 0, 0, lbl_80369690, lbl_80369690, lbl_80369690);
     tmp = fn_8000CAF0(lbl_80289998, 6);
     *(void **)((u8 *)tmp + 0x54) = arg0;
-    f3c = lbl_803696AC;
     f38 = lbl_803696A8;
+    f3c = lbl_803696AC;
     *(f32 *)(obj + 0x38) = f38;
     *(f32 *)(obj + 0x3C) = f3c;
     *(u16 *)(obj + 0x34) = 0;
@@ -1663,25 +1664,34 @@ void fn_80089460(void *arg0) {
     fn_8000BFEC(fn_80089490);
 }
 
+#pragma optimization_level 2
 void fn_80089490(void *arg0) {
     extern u8 lbl_80289950[];
     void fn_8000A408(void *);
     u8 *tbl = lbl_80289950;
     void *v;
-    s32 offset;
-    if (*(u8 *)((u8 *)arg0 + 0x2B) == 0x7B) return;
+    void *p;
+
+    if (*(u8 *)((u8 *)arg0 + 0x2B) == 0x7B) {
+        return;
+    }
     v = *(void **)arg0;
-    offset = 0x7C;
-    if (v == tbl + offset) return;
-    offset = 0;
-    if (v == tbl + offset) return;
-    offset = 0x58;
-    if (v == tbl + offset) return;
-    offset = 0x48;
-    if (v == tbl + offset) return;
+    if (v == tbl + 0x7C) {
+        return;
+    }
+    p = tbl + 0;
+    if (v == p) {
+        return;
+    }
+    if (v == tbl + 0x58) {
+        return;
+    }
+    if (v == tbl + 0x48) {
+        return;
+    }
     fn_8000A408(arg0);
 }
-
+#pragma optimization_level reset
 s32 fn_800894F8(void) {
     void fn_8000BF00(void *);
     extern u8 lbl_802899C0[];
@@ -1713,25 +1723,27 @@ void fn_80089554(void) {
     fn_80007884();
 }
 
+#pragma peephole on
 void fn_800895B8(void) {
-void *fn_8000CAF0(void *, s32);
-extern u8 lbl_80289950[];
-extern u16 *lbl_803674E0;
-extern void *lbl_803674E4;
-extern void *lbl_803674E8;
-extern void *lbl_803674EC;
-u8 (*base)[0x18] = (u8 (*)[0x18])lbl_80289950;
-void *tmp;
-lbl_803674E0 = fn_8000CAF0(base[0], 7);
-lbl_803674E4 = fn_8000CAF0((u8 *)base + 0x58, 7);
-tmp = fn_8000CAF0(base[1], 7);
-lbl_803674E8 = tmp;
-*(s16 *)((u8 *)tmp + 0x32) = 0;
-tmp = fn_8000CAF0(base[2], 7);
-lbl_803674EC = tmp;
-*(s16 *)((u8 *)tmp + 0x32) = 0;
-}
+    void *fn_8000CAF0(void *, s32);
+    extern u8 lbl_80289950[];
+    extern u16 *lbl_803674E0;
+    extern void *lbl_803674E4;
+    extern void *lbl_803674E8;
+    extern void *lbl_803674EC;
+    void *base;
+    void *tmp;
 
+    base = lbl_80289950;
+    lbl_803674E0 = fn_8000CAF0(base, 7);
+    lbl_803674E4 = fn_8000CAF0((u8 *)base + 0x58, 7);
+    tmp = fn_8000CAF0((u8 *)base + 0x18, 7);
+    lbl_803674E8 = tmp;
+    *(s16 *)((u8 *)tmp + 0x32) = 0;
+    tmp = fn_8000CAF0((u8 *)base + 0x30, 7);
+    lbl_803674EC = tmp;
+    *(s16 *)((u8 *)tmp + 0x32) = 0;
+}
 u16 fn_80089634(void) {
     extern void *lbl_803674E4;
     return M2C_FIELD(lbl_803674E4, u16 *, 0x32);
@@ -1894,18 +1906,14 @@ void fn_80089980(s32 arg0)
 
 void fn_800899D4(s32 arg0)
 {
-    extern f64 lbl_80369688;
     extern f32 lbl_803696C8;
     extern void *lbl_803674EC;
-    u8 *ptr;
-    union { f64 d; struct { u32 hi; u32 lo; } w; } conv;
+    u8 *ptr = (u8 *)lbl_803674EC;
+    f32 div = lbl_803696C8;
 
-    ptr = (u8 *)lbl_803674EC;
-    conv.w.hi = 0x43300000;
-    conv.w.lo = (u32)arg0 ^ 0x80000000;
     *(u16 *)(ptr + 0x32) = 1;
     *(u16 *)(ptr + 0x34) = 0;
-    *(u16 *)(ptr + 0x36) = (u16)(s32)((f32)(conv.d - lbl_80369688) / lbl_803696C8);
+    *(u16 *)(ptr + 0x36) = (u16)(s32)((f32)arg0 / div);
 }
 
 void fn_80089A28(void *arg0) {
@@ -2116,14 +2124,14 @@ s32 fn_80089ED8(void) {
 
 void fn_80089F00(u8 arg0,u8 arg1,u8 arg2,s32 arg3,s32 arg4) {
 extern f32 lbl_803696C8; extern void *lbl_803674E8; extern u32 lbl_8036C470;
-u8 *ptr; f32 div; f32 x; f32 y; union { u32 w; u8 b[4]; } color;
-x=(f32)arg3; y=(f32)arg4; div=lbl_803696C8; ptr=(u8*)lbl_803674E8;
+u8 *ptr; f32 div; union { u32 w; u8 b[4]; } color;
+div=lbl_803696C8; ptr=(u8*)lbl_803674E8;
 *(u16*)(ptr+0x32)=1;
 color.w=lbl_8036C470;
 color.b[0]=arg0; color.b[1]=arg1; color.b[2]=arg2;
 ptr[0x34]=color.b[0]; ptr[0x35]=color.b[1]; ptr[0x36]=color.b[2]; ptr[0x37]=color.b[3];
-*(u16*)(ptr+0x38)=0; *(u16*)(ptr+0x3A)=(s32)(x/div);
-*(u16*)(ptr+0x3C)=0; *(u16*)(ptr+0x3E)=(s32)(y/div);
+*(u16*)(ptr+0x38)=0; *(u16*)(ptr+0x3A)=(s32)((f32)arg3/div);
+*(u16*)(ptr+0x3C)=0; *(u16*)(ptr+0x3E)=(s32)((f32)arg4/div);
 }
 
 void fn_80089FA8(void *arg0) {

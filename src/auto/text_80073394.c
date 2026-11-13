@@ -70,10 +70,10 @@ u8 fn_800734B0(void) {
     u8 fn_801E3620(void *);
     extern u8 lbl_80331FB8[];
 
-    if (fn_801E3620(lbl_80331FB8) != 0) {
-        return 0;
+    if (fn_801E3620(lbl_80331FB8) == 0) {
+        return 2;
     }
-    return 2;
+    return 0;
 }
 
 void fn_800734EC(void) {

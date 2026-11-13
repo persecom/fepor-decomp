@@ -70,13 +70,20 @@
   }
 
 void fn_8009EAB4(s32 arg0) {
-extern s32 lbl_803682F0; s32 fn_800056CC(const char*,...); s32 fn_800EB774(void); void fn_801E0B48(void*,s8,s8,s32);
-s8 x,y; s32 qx,qy;
-if(fn_800EB774()!=0) { fn_800056CC((const char*)(lbl_8026D8D8+0x178)); return; }
-x=(s8)(s32)*(f32*)(lbl_80330708+0x524);
-y=(s8)(s32)*(f32*)(lbl_80330708+0x528);
-qx=x%5; qy=y%5;
-fn_801E0B48(&lbl_803682F0,(s8)qx,(s8)qy,arg0);
+    extern s32 lbl_803682F0;
+    s32 fn_800056CC(const char *, ...);
+    s32 fn_800EB774(void);
+    void fn_801E0B48(void *, s8, s8, s32);
+    s32 a;
+    s32 b;
+
+    if (fn_800EB774() != 0) {
+        fn_800056CC((const char *)(lbl_8026D8D8 + 0x178));
+        return;
+    }
+    a = (s8)(s32)*(f32 *)(lbl_80330708 + 0x524);
+    b = (s8)(s32)*(f32 *)(lbl_80330708 + 0x528);
+    fn_801E0B48(&lbl_803682F0, (s8)(a % 5), (s8)(b % 5), arg0);
 }
 
   

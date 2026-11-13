@@ -247,15 +247,16 @@ void fn_8014C7C0(void *arg0, char *arg1) {
     char buffer[0x40];
     char *str;
 
-    str = arg1;
-    if (str == NULL) {
+    if ((str = arg1) == NULL) {
         void *tmp = fn_80019F04(*(u8 *)((u8 *)arg0 + 0x10));
         str = *(char **)((u8 *)tmp + 4);
         if (str == NULL) {
             *((u8 *)arg0 + 0x504) = 0;
             goto after_copy;
         }
+        goto copy;
     }
+copy:
     fn_80234450((char *)((u8 *)arg0 + 0x504), str);
 after_copy:
     fn_80231D94(buffer, (char *)lbl_80277060 + 0x155, str);
@@ -276,10 +277,10 @@ s32 fn_8014CA54(s32 arg0, s32 arg1) {
 }
 
 void fn_8014CA68(s32 arg0, s32 arg1) {
-    void fn_8000E0E4(s32, s32);
-    s32 t = arg1 * 0xC;
-    s32 u = t + 0x20;
-    fn_8000E0E4(arg0 + u, t);
+ void fn_8000E0E4(s32, s32);
+ s32 t=arg1*12;
+ u8 *p=(u8*)(t+0x20);
+ fn_8000E0E4((s32)&p[arg0],t);
 }
 
 void fn_8014CA98(s32 arg0, s32 arg1, u32 arg2) {
@@ -298,25 +299,22 @@ void fn_8014CAD4(void *arg0, f32 farg0, f32 farg1) {
 
 void fn_8014CB14(void *arg0, void *arg1) {
     f32 fn_80023068(void *, f32, f32);
+    extern u8 lbl_802CA518[];
     extern f32 lbl_8036A7F0;
-    s8 a;
-    s8 b;
     f32 temp_f31;
     f32 temp_f30;
-    void *self;
 
-    a = *(s8 *)((u8 *)arg1 + 0x19E);
-    b = *(s8 *)((u8 *)arg1 + 0x19F);
-    self = arg0;
-    temp_f31 = (f32)a + lbl_8036A7F0;
-    temp_f30 = (f32)b + lbl_8036A7F0;
-    *(f32 *)((u8 *)self + 0x524) = temp_f31;
-    *(f32 *)((u8 *)self + 0x528) = temp_f30;
-    *(f32 *)((u8 *)self + 0x52C) = temp_f31;
-    *(f32 *)((u8 *)self + 0x530) = temp_f30;
-    *(f32 *)((u8 *)self + 0x53C) = fn_80023068(lbl_802CA518, temp_f31, temp_f30);
-    *(f32 *)((u8 *)self + 0x534) = temp_f31;
-    *(f32 *)((u8 *)self + 0x538) = temp_f30;
+    temp_f30 = (s8)((u8 *)arg1)[0x19F];
+    temp_f31 = (s8)((u8 *)arg1)[0x19E];
+    temp_f31 += lbl_8036A7F0;
+    temp_f30 += lbl_8036A7F0;
+    *(f32 *)((u8 *)arg0 + 0x524) = temp_f31;
+    *(f32 *)((u8 *)arg0 + 0x528) = temp_f30;
+    *(f32 *)((u8 *)arg0 + 0x52C) = temp_f31;
+    *(f32 *)((u8 *)arg0 + 0x530) = temp_f30;
+    *(f32 *)((u8 *)arg0 + 0x53C) = fn_80023068(lbl_802CA518, temp_f31, temp_f30);
+    *(f32 *)((u8 *)arg0 + 0x534) = temp_f31;
+    *(f32 *)((u8 *)arg0 + 0x538) = temp_f30;
 }
 
 void fn_8014CBD8(void *arg0, f32 farg0, f32 farg1) {

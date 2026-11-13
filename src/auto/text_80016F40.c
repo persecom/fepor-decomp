@@ -1229,45 +1229,36 @@ extern "C" void fn_80018B24(void) {
     fn_8006785C(0, fn_800193D8, r31);
 }
 
-void fn_80018E0C(void)
+extern "C" void fn_80018E0C(void)
 {
+    void fn_801475FC(void *, s32);
     extern u8 lbl_803671C0;
     extern u8 lbl_803671C8;
     extern s32 lbl_803671C4;
     extern u8 lbl_802CA2C8[];
     extern u8 lbl_80268330[];
-
-    void fn_801475FC(void *, s32);
-
-    s32 value;
-    s32 index;
     u8 *base;
+    s32 index;
 
     base = lbl_802CA2C8;
-
     if (lbl_803671C0 == 0) {
-        value = (s32)lbl_803671C8;
-        value++;
-        index = value % 2;
-
-        lbl_803671C8 = (u8)index;
-
+        index = (lbl_803671C8 + 1) % 2;
+        lbl_803671C8 = index;
         switch (index) {
         case 0:
-            lbl_803671C4 = (s32)(base + 0);
+            lbl_803671C4 = (s32)base + 0;
             break;
         case 1:
-            lbl_803671C4 = (s32)(base + 0x78);
+            lbl_803671C4 = (s32)base + 0x78;
             break;
         case 2:
-            lbl_803671C4 = (s32)(base + 0xF0);
+            lbl_803671C4 = (s32)base + 0xF0;
             break;
         case 3:
-            lbl_803671C4 = (s32)(base + 0x16C);
+            lbl_803671C4 = (s32)base + 0x16C;
             break;
         }
     }
-
     fn_801475FC(lbl_80268330 + 0x18C, 0x64);
 }
 

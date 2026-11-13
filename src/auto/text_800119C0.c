@@ -123,12 +123,94 @@ void fn_80011A5C(void *arg0)
     *(u32 **)(context + 0x18) = stack + 1;
 }
 
-s32 fn_80011EDC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
-{
-    // Simple implementation to test basic structure 
-    return 0;
+void fn_80011EDC(void *arg0) {
+    void fn_800142B0(s32);
+    extern void *lbl_80367180;
+    u8 op;
+
+    lbl_80367180 = arg0;
+    *(u8 *)((u8 *)arg0 + 0x1C) = 0;
+    fn_800142B0(0);
+    for (;;) {
+        op = *(*(u8 **)((u8 *)lbl_80367180 + 0xC))++;
+        if (op > 0x41) {
+            continue;
+        }
+        switch (op) {
+        default:
+            break;
+        }
+    }
 }
 
+#pragma scheduling off
+void fn_80013778(void *arg0, u8 *arg1) {
+    extern void *lbl_803671A4;
+    extern void *lbl_80367198;
+    extern void *lbl_80367180;
+
+    s32 base;
+    s32 i;
+    s32 *p;
+    s32 *sp;
+    s32 val;
+    void *table;
+    u8 *inner;
+    s32 zero;
+    void *ctx;
+    s8 d;
+    s16 lim;
+
+    if (arg0 == NULL) {
+        arg0 = lbl_803671A4;
+    }
+
+    d = (s8)arg1[0xd];
+    zero = 0;
+    inner = *(u8 **)(arg1 + 8);
+    lim = *(s16 *)(arg1 + 0x12);
+    base = *(s32 *)((u8 *)arg0 + 0x18) - (d * 4);
+    *(s32 *)((u8 *)arg0 + 0x18) = base + (lim * 4);
+    table = (u8 *)lbl_80367198 + (*(u16 *)(inner + 0x20) * 4);
+
+    i = (s8)arg1[0xd];
+    p = (s32 *)(base + (i * 4));
+    for (; i < *(s16 *)(arg1 + 0x12); i++) {
+        *p = zero;
+        p++;
+    }
+
+    lbl_80367180 = arg0;
+
+    sp = *(s32 **)((u8 *)arg0 + 0x18);
+    val = *(s32 *)((u8 *)arg0 + 0xc);
+    *(s32 **)((u8 *)arg0 + 0x18) = sp + 1;
+    *sp = val;
+
+    ctx = lbl_80367180;
+    val = *(s32 *)((u8 *)arg0 + 8);
+    sp = *(s32 **)((u8 *)ctx + 0x18);
+    *(s32 **)((u8 *)ctx + 0x18) = sp + 1;
+    *sp = val;
+
+    ctx = lbl_80367180;
+    val = *(s32 *)((u8 *)arg0 + 0x10);
+    sp = *(s32 **)((u8 *)ctx + 0x18);
+    *(s32 **)((u8 *)ctx + 0x18) = sp + 1;
+    *sp = val;
+
+    ctx = lbl_80367180;
+    val = *(s32 *)((u8 *)arg0 + 0x14);
+    sp = *(s32 **)((u8 *)ctx + 0x18);
+    *(s32 **)((u8 *)ctx + 0x18) = sp + 1;
+    *sp = val;
+
+    *(s32 *)((u8 *)arg0 + 0xc) = *(s32 *)(arg1 + 4);
+    *(void **)((u8 *)arg0 + 8) = arg1;
+    *(void **)((u8 *)arg0 + 0x10) = table;
+    *(s32 *)((u8 *)arg0 + 0x14) = base;
+}
+#pragma scheduling reset
 void fn_80013864(void) {
     extern void *lbl_803671A4;
     M2C_FIELD(lbl_803671A4, s8 *, 0x1C) = 1;
@@ -1733,9 +1815,8 @@ void fn_80015DEC(void) {
     extern u8 lbl_802B14E4[];
     extern f32 lbl_80368C78;
     u8 sp8[8];
-    s32 temp;
-    u8 *unit;
     s32 i;
+    void *unit;
 
     fn_80015320(3, sp8);
     i = 1;
@@ -1745,8 +1826,8 @@ void fn_80015DEC(void) {
         } else {
             unit = NULL;
         }
-        if ((M2C_FIELD(unit, u32 *, 0x188) != 0) && (sp8[M2C_FIELD(M2C_FIELD(unit, void **, 0x190), u8 *, 8)] != 0)) {
-            fn_80050C50(lbl_80368C78 + (f32)(s32)M2C_FIELD(unit, f32 *, 4), lbl_80368C78 + (f32)(s32)M2C_FIELD(unit, f32 *, 8), lbl_80368C78);
+        if ((*(u32 *)((u8 *)unit + 0x188) != 0) && (sp8[*(u8 *)(*(u8 **)((u8 *)unit + 0x190) + 8)] != 0)) {
+            fn_80050C50(lbl_80368C78 + (f32)(s32)*(f32 *)((u8 *)unit + 4), lbl_80368C78 + (f32)(s32)*(f32 *)((u8 *)unit + 8), lbl_80368C78);
         }
         i += 1;
     } while (i <= 0x9F);
@@ -1944,6 +2025,7 @@ void fn_80016498(void)
     } while (i <= 0x9F);
 }
 
+#pragma use_lmw_stmw on
 void fn_80016538(void)
 {
     extern u8 lbl_802CA264[];
@@ -1953,37 +2035,35 @@ void fn_80016538(void)
     extern void fn_800056CC(const char *, ...);
     extern s32 fn_800A8A88(void *);
 
-    u8 *slot;
     u8 *node;
-    char *strings;
     s32 index;
-    s32 value;
-    s32 result;
-    s32 field;
+    u8 *slot;
+    u8 byte2;
     u8 byte0;
     u8 byte1;
-    u8 byte2;
+    s32 field;
+    char *strings;
+    s32 value;
+    s32 result;
+    void *ptr;
 
     slot = lbl_802CA264;
     index = 0;
     strings = lbl_802680A8;
 
-    value = fn_80015680(slot);
-
-    fn_800056CC(strings + 0x23, index, value);
-
     do {
-        node = *(u8 **)slot;
+        value = fn_80015680(slot);
+        fn_800056CC(strings + 0x23, index, value);
 
+        node = *(u8 **)slot;
         while (node != 0) {
-            if (*(void **)(node + 0x188) != 0) {
+            ptr = *(void **)(node + 0x188);
+            if (ptr != 0) {
                 field = *(s32 *)(node + 0x1A0);
                 byte1 = *(u8 *)(node + 0x19F);
                 byte0 = *(u8 *)(node + 0x19E);
                 byte2 = *(u8 *)(node + 0x198);
-
-                result = fn_800A8A88(*(void **)(node + 0x188));
-
+                result = fn_800A8A88(ptr);
                 fn_800056CC(
                     strings + 0x3B,
                     byte2,
@@ -1993,28 +2073,22 @@ void fn_80016538(void)
                     result
                 );
             } else {
-                byte0 = *(u8 *)(node + 0x19E);
-                byte1 = *(u8 *)(node + 0x19F);
-                byte2 = *(u8 *)(node + 0x198);
-                field = *(s32 *)(node + 0x1A0);
-
                 fn_800056CC(
-                    strings + 0x59,
-                    byte2,
-                    (s8)byte0,
-                    (s8)byte1,
-                    field
+                    lbl_802680A8 + 0x59,
+                    *(u8 *)(node + 0x198),
+                    (s8)*(u8 *)(node + 0x19E),
+                    (s8)*(u8 *)(node + 0x19F),
+                    *(s32 *)(node + 0x1A0)
                 );
             }
-
             node = *(u8 **)(node + 0x184);
         }
 
-        index++;
+        index += 1;
         slot += 0xC;
     } while (index < 8);
 }
-
+#pragma use_lmw_stmw reset
 void fn_80016628(s32 arg0) {
     M2C_UNK fn_80015718(M2C_UNK *, M2C_UNK *);
     M2C_UNK fn_800158A0(M2C_UNK *);

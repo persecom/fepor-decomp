@@ -142,36 +142,35 @@ s32 fn_8007C74C(void) {
 #pragma global_optimizer off
 s32 fn_8007C8F4(void)
 {
-    extern void *lbl_80367488;
-    u8 *obj;
-    u8 *entry;
-    u16 flags;
-    s32 value;
-
-    obj = (u8 *)lbl_80367488;
-    value = 0x20;
-    entry = *(u8 **)(obj + 0x50);
-
-    if (!entry) {
-        return 0;
-    }
-
-    flags = *(u16 *)(obj + 0x46);
-    if (flags & 0x20) {
-        value = 0x40;
-    }
-    if (flags & 0x40) {
-        value = 0x80;
-    }
-    if (flags & 0x80) {
-        value = 0;
-    }
-
-    *(u16 *)(obj + 0x46) = *(u16 *)(obj + 0x46) & ~0xE0;
-    *(u16 *)(entry + 0x36) = 1;
-    obj = (u8 *)lbl_80367488;
-    *(u16 *)(obj + 0x46) = *(u16 *)(obj + 0x46) | (u16)value;
+  extern void *lbl_80367488;
+  u8 *obj;
+  u16 flags;
+  s32 value;
+  obj = (u8 *) lbl_80367488;
+  value = 0x20;
+  obj = *((u8 **) (obj + 0x50));
+  if (!obj)
+  {
     return 0;
+  }
+  flags = *((u16 *) (obj + 0x46));
+  if (flags & 0x20)
+  {
+    value = 0x40;
+  }
+  if (flags & 0x40)
+  {
+    value = 0x80;
+  }
+  if (flags & 0x80)
+  {
+    value = 0;
+  }
+  *((u16 *) (obj + 0x46)) = ((*((u16 *) (obj + 0x46))) & (~0xE0)) & 0xFFFFFFFF;
+  *((u16 *) (obj + 0x36)) = 1;
+  ;
+  *((u16 *) (((u8 *) lbl_80367488) + 0x46)) = (*((u16 *) (((u8 *) lbl_80367488) + 0x46))) | ((u16) value);
+  return 0;
 }
 #pragma global_optimizer on
 extern void* lbl_80367488;

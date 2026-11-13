@@ -513,22 +513,20 @@ u8 fn_80092C50(void *arg0, u8 arg1, u8 arg2) {
 }
 
 u8 fn_80092F38(void *arg0) {
-    u8 out;
     u8 var_r4;
 
     var_r4 = 0;
-    if (*(u32 *)((u8 *)arg0 + 0x1EC) != 0) {
+    if (M2C_FIELD(arg0, u32 *, 0x1EC) != 0) {
         var_r4 = 1;
     }
-    if (*(u32 *)((u8 *)arg0 + 0x1F4) != 0) {
+    if (M2C_FIELD(arg0, u32 *, 0x1F4) != 0) {
         var_r4 = (u8)var_r4 + 1;
     }
-    if (*(u32 *)((u8 *)arg0 + 0x1FC) != 0) {
+    if (M2C_FIELD(arg0, u32 *, 0x1FC) != 0) {
         var_r4 = (u8)var_r4 + 1;
     }
-    if (*(u32 *)((u8 *)arg0 + 0x204) != 0) {
-        out = (u8)var_r4 + 1;
-        var_r4 = out;
+    if (M2C_FIELD(arg0, u32 *, 0x204) != 0) {
+        var_r4 = (u8)var_r4 + 1;
     }
     return var_r4;
 }
@@ -573,40 +571,76 @@ s32 fn_80093010(void *arg0, void *arg1)
     return -1;
 }
 
-s32 fn_80093088(void *arg0) {
-    void *fn_80037BBC(void *, s32);
-    s32 i;
-    s32 r;
-    s32 ok;
-
-    i = 0;
-loop:
-    if (*(u32 *)fn_80037BBC(arg0, i) == 0) {
-
-    } else {
-        i += 1;
-        if (i >= 4) {
-            i = -1;
-        } else {
-            goto loop;
-        }
+s32 fn_80093088(void *arg0)
+{
+  void *fn_80037BBC(void *, s32);
+  s32 i;
+  u32 new_var3;
+  int new_var2;
+  s32 r;
+  int new_var;
+  unsigned char ok;
+  new_var = 3;
+  i = 0;
+  loop:
+  if ((*((u32 *) fn_80037BBC(arg0, i))) == 0)
+  {
+  }
+  else
+  {
+    i += 1;
+    if (i >= 4)
+    {
+      i = (ok = -1);
     }
-    ok = i == 0;
-    if (ok) {
-        if (*(u32 *)((u8 *)arg0 + 0x1ec) == 0) {
-            r = 0;
-        } else if (*(u32 *)((u8 *)arg0 + 0x1f4) == 0) {
-            r = 1;
-        } else if (*(u32 *)((u8 *)arg0 + 0x1fc) == 0) {
-            r = 2;
-        } else if (*(u32 *)((u8 *)arg0 + 0x204) == 0) {
-            r = 3;
-        } else {
-            r = -1;
-        }
-        return r == 0;
+    else
+    {
+      goto loop;
     }
-    return ok;
+  }
+
+  r = i == 0;
+  ok = r;
+  new_var = !i;
+  if (ok)
+  {
+    new_var3 = *((u32 *) (((u8 *) arg0) + 0x1ec));
+    new_var2 = 2;
+    if (!new_var3)
+    {
+      r = 0;
+      if (((!i) && new_var) && (!i))
+      {
+      }
+    }
+    else
+      if ((*((u32 *) (((u8 *) arg0) + 0x1f4))) == 0)
+    {
+      if (new_var)
+      {
+      }
+      r = 1;
+    }
+    else
+      if ((*((u32 *) (((u8 *) arg0) + 0x1fc))) == 0)
+    {
+      r = new_var2;
+      if (1)
+      {
+      }
+    }
+    else
+      if ((*((u32 *) (((u8 *) arg0) + 0x204))) == 0)
+    {
+      r = new_var;
+    }
+    else
+    {
+      r = -1;
+    }
+    return r == 0;
+  }
+  return r;
 }
 
 void fn_80093154(s32 arg0, s32 arg1, s32 arg2) {

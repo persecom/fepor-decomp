@@ -4105,6 +4105,7 @@ done:
     return mid;
 }
 
+#pragma global_optimizer off
 s32 fn_800653C8(void ***arg0, u16 *out) {
     void **mid;
     u8 *base;
@@ -4127,7 +4128,7 @@ s32 fn_800653C8(void ***arg0, u16 *out) {
     } else {
         mid = *arg0;
         if (mid != NULL) {
-            base = *mid;
+            base = (u8 *)*mid;
         } else {
             base = NULL;
         }
@@ -4143,13 +4144,13 @@ s32 fn_800653C8(void ***arg0, u16 *out) {
     index = 0;
 
     while (i < (s32)*(u16 *)base) {
-        j = 0;
         table = *(u16 **)(base + 4);
+        j = 0;
         offset = *(u16 *)((u8 *)table + index);
-        diff1 = offset - lim;
-        diff2 = lim - offset;
+        diff1 = (s32)offset - (s32)lim;
+        diff2 = (s32)lim - (s32)offset;
         mask = ~(diff1 | diff2) >> 31;
-        entry = (u8 *)(((s32)base + offset) & ~mask);
+        entry = (u8 *)(((s32)base + (s32)offset) & ~mask);
         walk = entry;
         while (j < (s32)*(u16 *)(entry + 2)) {
             *out = *(u16 *)(walk + 4);
@@ -4163,9 +4164,7 @@ s32 fn_800653C8(void ***arg0, u16 *out) {
     }
     return result;
 }
-
-#pragma dont_inline reset
-#pragma inline_depth(0)
+#pragma global_optimizer reset
 
 s32 fn_80065484(void ***arg0, s32 arg1, u16 arg2) {
     void **mid;

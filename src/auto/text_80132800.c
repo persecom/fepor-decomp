@@ -10144,8 +10144,8 @@ extern "C" void fn_801451BC(void) {
     s8 ca;
     s32 i;
 
-    entry = (Entry *)lbl_803301A8;
     str = (s8 *)(lbl_80276BC8 + 0x8a);
+    entry = (Entry *)lbl_803301A8;
     i = 0;
     do {
         if (entry->flags & 1) {
@@ -10195,81 +10195,22 @@ void fn_801452E8(void) {
 }
 
 s32 fn_80145308(void) {
-    extern u8 lbl_80276BC8[];
-    extern u8 lbl_803301A8[1344];
-    typedef struct {
-        s8 **names;
-        u8 pad[8];
-        u8 flags;
-        u8 pad2[0x23];
-    } Entry;
-    Entry *entry;
-    s8 *str;
-    s8 *a;
-    s8 *b;
-    s8 ca;
-    s32 i;
-    s32 n;
-    u8 flg;
-
-    str = (s8 *)((u8 *)lbl_80276BC8 + 0x8a);
-    entry = (Entry *)lbl_803301A8;
-    i = 0;
-    n = 0xE;
-    do {
-        if (entry->flags & 1) {
-            a = str;
-            b = (s8 *)*entry->names;
-            goto check_b;
-        loop:
-            ca = *(s8 *)((u8 *)a);
-            if (ca == 0) {
-                return 1;
-            }
-            {
-                s8 cb = *(s8 *)((u8 *)b);
-                a += 1;
-                b += 1;
-                if (ca != cb) {
-                    goto next1;
-                }
-            }
-        check_b:
-            if (*(s8 *)((u8 *)b) != 0) {
-                goto loop;
-            }
-        }
-    next1:
-        flg = *((u8 *)entry + 0x3c);
-        entry = (Entry *)((u8 *)entry + 0x30);
-        if (flg & 1) {
-            a = str;
-            b = (s8 *)*entry->names;
-            goto check_b2;
-        loop2:
-            ca = *(s8 *)((u8 *)a);
-            if (ca == 0) {
-                return 1;
-            }
-            {
-                s8 cb = *(s8 *)((u8 *)b);
-                a += 1;
-                b += 1;
-                if (ca != cb) {
-                    goto next2;
-                }
-            }
-        check_b2:
-            if (*(s8 *)((u8 *)b) != 0) {
-                goto loop2;
-            }
-        }
-    next2:
-        entry = (Entry *)((u8 *)entry + 0x30);
-        i += 1;
-        n -= 1;
-    } while (n != 0);
-    return 0;
+extern u8 lbl_80276BC8[]; extern u8 lbl_803301A8[1344];
+s8 *str=(s8*)lbl_80276BC8+0x8a;
+Anim *entry;
+s32 i;
+for(i=0,entry=(Anim*)lbl_803301A8;i<28;entry++,i++){
+if(entry->flags&1){
+s8 *b; s8 *a;
+a=str;
+b=**(s8***)entry;
+while(*b){
+if(!*a)return 1;
+if(*a++ != *b++)break;
+}
+}
+}
+return 0;
 }
 
 void fn_801453F0(void) {
@@ -11224,9 +11165,8 @@ extern "C" void fn_801478D0(s32 arg0) {
     u8 flags;
 
     a = (s16)arg0;
-    entry = lbl_8032FFC8;
     i = 0;
-    do {
+    for (entry = lbl_8032FFC8; i < 0xA; entry += 0x30, ++i) {
         flags = entry[0xC];
         if (flags & 1) {
             if ((s16)arg0 <= 0) {
@@ -11244,9 +11184,7 @@ extern "C" void fn_801478D0(s32 arg0) {
                 entry[0xC] = entry[0xC] | 8;
             }
         }
-        i += 1;
-        entry += 0x30;
-    } while (i < 0xA);
+    }
 }
 #pragma cplusplus reset
 s32 fn_80147B24(f32 farg0, f32 farg1, f32 farg2) {
@@ -11416,8 +11354,8 @@ extern "C" void fn_80147EBC(s16 arg0) {
     s32 temp;
     u8 t;
 
-    a = arg0;
     p = lbl_8032FF08;
+    a = arg0;
     i = 0;
     do {
         if ((*(u8 *)((u8 *)p + 0xC) & 1) && p->v25() != 0) {
@@ -11504,20 +11442,20 @@ extern "C" void fn_801480D8(s16 arg0) {
     s16 raw;
     s32 a;
     s16 val;
-    Obj *p;
+    register u8 *p;
     s32 i;
     s32 temp;
     u8 flags;
 
+    p = (u8 *)lbl_8032FF08;
     raw = arg0;
     a = raw;
-    p = lbl_8032FF08;
     i = 0;
     do {
-        flags = *(u8 *)((u8 *)p + 0xC);
+        flags = p[0xC];
         if (flags & 1) {
             if (raw <= 0) {
-                p->v2();
+                ((Obj *)p)->v2();
             } else if (!(flags & 8)) {
                 temp = (s32)((f32)a / lbl_8036A7A0);
                 val = (s16)temp;
@@ -11528,11 +11466,11 @@ extern "C" void fn_801480D8(s16 arg0) {
                 *(u8 *)((u8 *)p + 0x29) = 0;
                 *(s16 *)((u8 *)p + 0x2E) = val;
                 *(s16 *)((u8 *)p + 0x2C) = 0;
-                *(u8 *)((u8 *)p + 0xC) = (u8)(*(u8 *)((u8 *)p + 0xC) | 8);
+                p[0xC] = (u8)(p[0xC] | 8);
             }
         }
         i += 1;
-        p = (Obj *)((u8 *)p + 0x30);
+        p += 0x30;
     } while (i < 4);
 }
 #pragma cplusplus reset

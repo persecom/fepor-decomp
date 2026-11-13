@@ -8214,28 +8214,25 @@ s32 fn_80255FB0(u32 arg0) {
 int fn_80256000(u32 arg0)
 {
     extern void *lbl_80368A44;
-
     void *object;
     u32 field;
     u32 value;
 
     object = lbl_80368A44;
-
     while (object != 0) {
         field = *(u32 *)((u8 *)object + 0xC);
+        goto compare;
+    compare:
         if (field == arg0) {
             return *(int *)((u8 *)object + 8);
         }
-
         value = *(u32 *)((u8 *)lbl_803689A8 + ((u8)field * 0x458) + 0xEC);
-
         if ((u32)(value + 0x10000) == 0xFFFFU) {
             object = *(void **)object;
         } else {
             break;
         }
     }
-
     return -1;
 }
 
@@ -9212,13 +9209,11 @@ s32 fn_80257820(u16 arg0) {
 }
 
 void fn_80257940(s32 arg0) {
-    f64 fn_802387C8();
-    s32 fn_8022C568();
+    f64 fn_802387C8(f64, f32, f32);
     extern f64 lbl_8036C280;
     extern f32 lbl_8036C288;
     extern f32 lbl_8036C28C;
-
-    fn_8022C568((f32)fn_802387C8(lbl_8036C280, lbl_8036C288 * (f32)arg0) * lbl_8036C28C);
+    fn_8022C568(lbl_8036C28C * (f32) fn_802387C8(lbl_8036C280, lbl_8036C288 * (f32) arg0, lbl_8036C288));
 }
 
 s32 fn_80257998(u8 *arg0) {
@@ -13206,19 +13201,26 @@ void *fn_802612A0(void *key, void *base, s32 count, s32 stride, s32 (*cmp)(void 
     return NULL;
 }
 
-f64 fn_80261344(f32 farg0) {
-    extern f32 lbl_802831B8[3];
-    f64 temp_f3;
-    f64 temp_f3_2;
-    f64 temp_f3_3;
+f64 fn_80261344(f32 x) {
+    extern f32 lbl_802831B8[];
+    extern f32 lbl_802831B0[];
+    extern f32 lbl_802831B4[];
+    f64 zero;
+    f64 three;
+    f64 half;
+    f64 guess;
 
-    temp_f3_2 = __frsqrte(farg0);
-    if (farg0 != lbl_802831B8[0]) {
-        temp_f3_3 = temp_f3_2 * (f64)lbl_802831B8[1] * -(((f64)farg0 * (temp_f3_2 * temp_f3_2)) - (f64)lbl_802831B8[2]);
-        temp_f3 = temp_f3_3 * (f64)lbl_802831B8[1] * -(((f64)farg0 * (temp_f3_3 * temp_f3_3)) - (f64)lbl_802831B8[2]);
-        return (f64)farg0 * (temp_f3 * (f64)lbl_802831B8[1] * -(((f64)farg0 * (temp_f3 * temp_f3)) - (f64)lbl_802831B8[2]));
+    zero = lbl_802831B8[0];
+    three = lbl_802831B0[0];
+    half = lbl_802831B4[0];
+    guess = __frsqrte(x);
+    if (x == (f32)zero) {
+        return x;
     }
-    return (f64)farg0;
+    guess = half * guess * (three - x * (guess * guess));
+    guess = half * guess * (three - x * (guess * guess));
+    guess = half * guess * (three - x * (guess * guess));
+    return x * guess;
 }
 
 f32* fn_80261398(void) {

@@ -7215,23 +7215,39 @@ void fn_80043B44(void* arg0, s32 arg1) {
 
 s32 fn_80043D18(s32 unused, s32 x, s32 y, f32 *out) {
     extern void *lbl_803672A8;
+    extern f64 lbl_80368EF8;
     extern f32 lbl_80368F00;
     extern f32 lbl_80368EE4;
     f32 *p;
+    f32 hi;
+    f32 p2;
     f32 scale;
     f32 half;
+    f32 p0;
+    f32 fx;
+    f32 fy;
+    f32 t;
+    f32 p3;
+    f32 p1;
     f32 zero;
-    f32 hi;
     f32 a;
     f32 b;
 
     p = lbl_803672A8;
     hi = p[4];
-    scale = hi / p[2];
+    p2 = p[2];
+    scale = hi / p2;
     half = lbl_80368F00;
+    p0 = p[0];
+    fx = (f32)x;
+    t = p0 - p2 * half;
+    p3 = p[3];
+    fy = (f32)y;
+    a = (half + fx) - t;
+    p1 = p[1];
     zero = lbl_80368EE4;
-    a = (half + (f32)x) - (p[0] - p[2] * half);
-    b = (half + (f32)y) - (p[1] - p[3] * half);
+    t = p1 - p3 * half;
+    b = (half + fy) - t;
     out[0] = scale * a;
     out[1] = scale * b;
     out[2] = zero;
@@ -8614,33 +8630,39 @@ s32 fn_80046F14(void *arg0, s32 arg1) {
     return 1;
 }
 
-s32 fn_80047178(void *arg0, s32 arg1, s32 arg2) {
-    u8 ok;
-    s32 count;
-    s32 i;
-    s32 base;
-    u8 *entry;
-
-    count = *(s16 *)((u8 *)arg0 + 0x6);
-    for (i = count - 1; i >= 0; i--) {
-        base = *(s32 *)((u8 *)arg0 + 0x14);
-        entry = (u8 *)base + i * 0xB4;
+s32 fn_80047178(void *arg0, s32 arg1, s32 arg2)
+{
+  s32 i;
+  u8 *entry;
+  s32 base;
+  s32 count;
+  u8 ok;
+  count = *((s16 *) (((u8 *) arg0) + 0x6));
+  for (i = count - 1; i >= 0; i--)
+  {
+    base = *((s32 *) (((u8 *) arg0) + 0x14));
+    entry = ((u8 *) base) + (i * 0xB4);
+    {
+      s32 flags = *((s32 *) (((u8 *) (*((s32 *) (entry + 0x10)))) + 0xBC));
+      if (!(flags & 0x90))
+      {
+        if ((((arg1 >= (*((s8 *) (entry + 0x4)))) && (arg1 <= (*((s8 *) (entry + 0x6))))) && (arg2 >= (*((s8 *) (entry + 0x5))))) && (arg2 <= (*((s8 *) (entry + 0x7)))))
         {
-            s32 flags = *(s32 *)((u8 *)*(s32 *)(entry + 0x10) + 0xBC);
-            if (!(flags & 0x90)) {
-                if (arg1 >= *(s8 *)(entry + 0x4) && arg1 <= *(s8 *)(entry + 0x6) &&
-                    arg2 >= *(s8 *)(entry + 0x5) && arg2 <= *(s8 *)(entry + 0x7)) {
-                    ok = 1;
-                } else {
-                    ok = 0;
-                }
-                if (ok != 0) {
-                    return base + i * 0xB4;
-                }
-            }
+          ok = 1;
         }
+        else
+        {
+          ok = 0;
+        }
+        if (ok != 0)
+        {
+          return base + (i * 0xB4);
+        }
+      }
     }
-    return 0;
+  }
+
+  return 0;
 }
 
 s32 fn_8004721C(void *arg0, s32 arg1, s32 arg2, u32 arg3, s32 arg4) {
@@ -9341,21 +9363,30 @@ void fn_8004982C(void *arg0) {
 void fn_8004983C(void *arg0) {
     extern f32 lbl_80368F74;
     extern f32 lbl_80368F78;
-    f32 temp_f2;
-    f32 temp_f3;
+    struct Obj {
+        u8 pad[0x30];
+        f32 *ptr;
+        u8 pad2[4];
+        f32 unk38;
+        u8 pad3[4];
+        s32 flag;
+        f32 a;
+        f32 b;
+    };
+    struct Obj *obj = (struct Obj *)arg0;
+    f32 diff;
 
-    *(s32 *)((u8 *)arg0 + 0x40) = 0;
-    *(f32 *)((u8 *)arg0 + 0x44) = *(f32 *)(*(u8 **)((u8 *)arg0 + 0x30) + 8);
-    *(f32 *)((u8 *)arg0 + 0x48) = *(f32 *)((u8 *)arg0 + 0x38);
-    temp_f3 = *(f32 *)((u8 *)arg0 + 0x44);
-    temp_f2 = *(f32 *)((u8 *)arg0 + 0x48);
-    if ((f32)__fabs((f64)(temp_f3 - temp_f2)) > lbl_80368F74) {
-        if (temp_f3 < temp_f2) {
-            *(f32 *)((u8 *)arg0 + 0x44) = temp_f3 + lbl_80368F78;
+    obj->flag = 0;
+    obj->a = obj->ptr[2];
+    obj->b = obj->unk38;
+    diff = (f32)__fabs((f64)(obj->a - obj->b));
+    if (diff > lbl_80368F74) {
+        if (obj->a < obj->b) {
+            obj->a = obj->a + lbl_80368F78;
             return;
         }
-        if (temp_f3 > temp_f2) {
-            *(f32 *)((u8 *)arg0 + 0x48) = temp_f2 + lbl_80368F78;
+        if (obj->a > obj->b) {
+            obj->b = obj->b + lbl_80368F78;
         }
     }
 }
@@ -11855,14 +11886,15 @@ void fn_80050C50(void *arg0, f32 farg0, f32 farg1) {
     *(f32 *)((u8 *)arg0 + 0xC) = fn_80023430(lbl_802CA518);
 }
 
+#pragma peephole off
 void fn_80050E14(void)
 {
     extern u8 *lbl_803672CC;
     s32 i;
     s32 offset;
     s32 tableOffset;
+    s32 n;
     u8 *obj;
-    s32 count;
     u8 *table;
     u8 *base;
 
@@ -11876,27 +11908,22 @@ void fn_80050E14(void)
     offset = i;
     tableOffset = i;
 
-    while (i < *(s32 *)(obj + 0x18)) {
+    for (; i < (n = *(s32 *)(obj + 0x18)); ) {
         base = *(u8 **)obj;
+        i += 1;
         table = *(u8 **)(obj + 4);
-
-        *(u32 *)(table + tableOffset) = (u32)(base + offset);
-
-        i++;
+        *(u32 *)(table + tableOffset) = (u32)base + offset;
         offset += 0x14;
         tableOffset += 4;
     }
 
-    count = *(s32 *)(obj + 0x18);
     table = *(u8 **)(obj + 4);
-
-    *(u32 *)(table + count * 4) = 0;
-
+    *(u32 *)(table + (n * 4)) = 0;
     *(void **)(obj + 8) = *(void **)(obj + 4);
-    *(s32 *)(obj + 0xC) = i - i;
-    *(s32 *)(obj + 0x10) = i - i;
+    *(s32 *)(obj + 0xC) = 0;
+    *(s32 *)(obj + 0x10) = 0;
 }
-
+#pragma peephole on
 void fn_80050E80(void)
 {
     void fn_800162B8(void);
