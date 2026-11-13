@@ -8504,8 +8504,10 @@ s32 fn_8019A7A8(void *arg0) {
 
 void fn_8019A7E8(s32 arg0) {
     extern u16 lbl_80296DF0[];
-    fn_8000CAA0((u16*)lbl_80296DF0, arg0, (u16*)lbl_80296DF0);
-    fn_8019D51C(0, 0);
+    void *fn_8000CAA0(void *, s32);
+    void fn_8019D51C(void *, s32, s32);
+
+    fn_8019D51C(fn_8000CAA0(lbl_80296DF0, arg0), 0, 0);
 }
 
 #pragma use_lmw_stmw on
