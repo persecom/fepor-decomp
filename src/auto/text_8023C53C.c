@@ -13572,12 +13572,16 @@ void fn_80261934(u8 arg0, void *arg1, s32 arg2)
 }
 
 void fn_80261AE0(s32 arg0, s32 arg1, s32 arg2) {
-    extern u16 lbl_80368AA0;
-    s32 temp_r6;
+    typedef struct {
+        u8 pad[0x94];
+        s32 unk94;
+        s32 unk98;
+        u8 pad2[0xF8 - 0x9C];
+    } Entry;
+    extern Entry *lbl_80368AA0;
 
-    temp_r6 = arg0 * 0xF8;
-    *(s32 *)((u8 *)(&lbl_80368AA0) + temp_r6 + 0x94) = arg1;
-    *(s32 *)((u8 *)(&lbl_80368AA0) + temp_r6 + 0x98) = arg2;
+    lbl_80368AA0[arg0].unk94 = arg1;
+    lbl_80368AA0[arg0].unk98 = arg2;
 }
 
 u8 fn_80261B00(s32 arg0) {
