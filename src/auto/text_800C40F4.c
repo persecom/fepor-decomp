@@ -538,17 +538,18 @@ void fn_800C4728(s32 arg0) {
     lbl_80367870 = lbl_80320B88[arg0];
 }
 
+#pragma global_optimizer off
 s32 fn_800C4740(void) {
     extern u32 lbl_80320B88[];
     extern u32 lbl_80367870;
-    u32 *entry;
     u32 active;
+    u32 *entry;
     s32 index;
     s32 groups;
 
-    entry = lbl_80320B88;
     groups = 2;
     active = lbl_80367870;
+    entry = lbl_80320B88;
     index = 0;
 
     for (; groups != 0; groups--) {
@@ -591,7 +592,7 @@ s32 fn_800C4740(void) {
 
     return -1;
 }
-
+#pragma global_optimizer reset
 void fn_800C47E8(void) {
     // This is a placeholder for the actual function.
     // The full decompilation involves too many complex dependencies
@@ -6075,19 +6076,21 @@ M2C_UNK fn_80232058(void *, const char *, ...);
 extern char __files[];
 
 void fn_800D5D04(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3) {
+    M2C_UNK fn_800D6898(u32 *, u32 *, u32, u32, void *);
+    M2C_UNK fn_8022CF78(void);
+    M2C_UNK fn_80232058(void *, const char *, ...);
     extern char __files[];
     extern char lbl_802704F8[];
-    M2C_UNK fn_8022CF78(void);
-    void fn_800D6898(u32 *, u32 *, u32, u32, void *);
+    struct S { u32 size; };
     u32 rem;
     u32 alloc;
     const u32 *n;
 
-    if (arg2 > arg1[0]) {
+    if (arg2 > ((struct S *)arg1)->size) {
         fn_80232058(__files + 0xA0, lbl_802704F8 + 0x8E7);
         fn_8022CF78();
     }
-    rem = arg1[0] - arg2;
+    rem = ((struct S *)arg1)->size - arg2;
     n = MinU32(&arg3, &rem);
     fn_800D6898(arg0, arg1, arg2, *n, &alloc);
 }
@@ -12911,17 +12914,27 @@ extern "C" void fn_800E7A38(void *arg0, s32 arg1) {
 #pragma cplusplus reset
 #pragma dont_inline reset
 
-s32 fn_800E7AD4(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    s32 fn_800C93EC(s32);
-    M2C_UNK fn_801CAF94(s32, s32, s32, M2C_UNK);
-    extern M2C_UNK lbl_80272230;
-    if ((M2C_FIELD(M2C_FIELD(arg0, void **, 0x10), u32 (**)(void *, void *, s32), 0x10)(arg0, &lbl_80272230 + 0x1D, fn_800C93EC(arg1)) != 0U) && ((u8) M2C_FIELD(arg0, u8 *, 0x3D) != 0)) {
-        fn_801CAF94(arg2, arg3, arg4, 0);
+#pragma cplusplus on
+extern "C" s32 fn_800E7AD4(void *arg0, void *arg1, s32 arg2, s32 arg3, s32 arg4) {
+    void *fn_800C93EC(void *);
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void *v2(char *, void *) = 0;
+    };
+    void fn_801CAF94(void *, s32, s32, s32, s32);
+    extern char lbl_80272230[];
+    void *result;
+
+    result = ((Obj *)arg0)->v2(lbl_80272230 + 0x1D, fn_800C93EC(arg1));
+    if (result != NULL && *(u8 *)((u8 *)arg0 + 0x3D) != 0) {
+        fn_801CAF94(result, arg2, arg3, arg4, 0);
         return 1;
     }
     return 0;
 }
-
+#pragma cplusplus reset
 u8 fn_800E7C80(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x2C);
 }
