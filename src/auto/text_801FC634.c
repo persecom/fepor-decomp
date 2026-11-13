@@ -913,12 +913,26 @@ s32 fn_801FF04C(void) {
 }
 
 void fn_801FF060(void *arg0) {
-    s32 temp_r3;
+    s32 OSDisableInterrupts(void);
+    void OSRestoreInterrupts(s32);
+    s32 OSDisableScheduler(void);
+    s32 OSEnableScheduler(void);
+    void fn_8005BA08(s8);
+    void fn_8005C870(void *, s32);
+    extern u8 lbl_80281F00[];
+    s32 temp_r31;
+    s32 temp_r31_2;
 
-    temp_r3 = *(s32 *)((char *)arg0 + 0x48);
-    if (temp_r3 != 0) {
-        *(s32 *)((char *)arg0 + 0x48) = temp_r3 - 1;
-    }
+    temp_r31 = OSDisableInterrupts();
+    OSDisableScheduler();
+    OSRestoreInterrupts(temp_r31);
+    fn_8005BA08((s8)M2C_FIELD(arg0, s32 *, 0x38));
+    fn_8005C870(lbl_80281F00 + 0x4D, 0);
+    fn_8005C870(lbl_80281F00 + 0x64, 0);
+    fn_8005BA08((s8)M2C_FIELD(arg0, s32 *, 0x34));
+    temp_r31_2 = OSDisableInterrupts();
+    OSEnableScheduler();
+    OSRestoreInterrupts(temp_r31_2);
 }
 
 void fn_801FF0F8(void *arg0) {
