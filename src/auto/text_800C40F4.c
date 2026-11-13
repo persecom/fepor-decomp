@@ -13781,15 +13781,22 @@ s32 fn_800E8BC4(void *arg0) {
     return 0;
 }
 
-void fn_800E8BF8(float* r4, float* r5, float* r6) {
-    // Function signature determined based on the target assembly and common function
-    // conventions in this project.
-    
-    float const_val = 0.0f;
-    
-    if (*r4 == const_val || *r5 == const_val || *r6 != const_val) {
-        fn_800F7130();
+void fn_800E8BF8(u8 *self, f32 *vec, f32 *vec2, s32 arg3, f32 farg0) {
+    extern f32 lbl_80369F78;
+    void fn_800DF44C(void *, s32, f32, f32, f32);
+    void fn_800DF41C(void *, f32 *, f32 *, f32);
+    void fn_800DF410(f32 *, f32 *);
+    f32 x;
+
+    x = vec[0];
+    if (lbl_80369F78 != x || lbl_80369F78 != vec[1] || lbl_80369F78 != vec[2]) {
+        fn_800DF44C(self + 0x134, arg3, x, vec[1], vec[2]);
     }
+    fn_800DF44C(self + 0x194, arg3, vec2[0], vec2[1], vec2[2]);
+    fn_800DF44C(self + 0x254, arg3, farg0, lbl_80369F78, lbl_80369F78);
+    fn_800DF41C(self + 0x134, (f32 *)(self + 0xf0), (f32 *)(self + 0xf4), *(f32 *)(self + 0xf8));
+    fn_800DF41C(self + 0x194, (f32 *)(self + 0x54), (f32 *)(self + 0x58), *(f32 *)(self + 0x5c));
+    fn_800DF410((f32 *)(self + 0x254), (f32 *)(self + 0x104));
 }
 
 #pragma cplusplus on
@@ -14533,13 +14540,13 @@ void fn_800EA808(void) {
         fn_8021C02C(lbl_80320C20.fileInfo);
         lbl_80320C20.unkA019 = 0;
     }
-    if (lbl_80320C20.unkA018 != 0) {
+    if (lbl_80320C20.unkA018 != 0 && lbl_80320C20.unkA018 != 0) {
         fn_8021B20C(lbl_80320C20.chan);
         lbl_80320C20.unkA018 = 0;
     }
     lbl_80320C20.tick = OSGetTick() - lbl_80320C20.tick;
     tickRate = *(volatile u32 *)0x800000F8;
-    conv = (u32)(((u64)0x10624dd3ULL * (tickRate >> 2)) >> 32) >> 6;
+    conv = (tickRate >> 2) / 1000U;
     fn_800056CC(lbl_802725D8 + 0xC5, lbl_80320C20.tick / conv);
 }
 
@@ -14834,38 +14841,50 @@ void fn_800EB374(s32 arg0) {
 }
 
 s32 fn_800EB428(s32 arg0) {
-    M2C_UNK fn_8000C070(s32, M2C_UNK);
-    s32 fn_8021A8C8(s32, M2C_UNK, void *);
-    extern M2C_UNK lbl_80320C20;
-    s32 var_r3;
-    u8 var_r3_2;
-    u8 var_r4;
+    struct CardWork {
+        u8 workArea[0xA000];
+        s32 chan;
+        volatile s32 result;
+        s32 sectorSize;
+        s32 unkA00C;
+        s32 unkA010;
+        s32 unkA014;
+        u8 unkA018;
+        u8 unkA019;
+        u8 busy;
+    };
+    s32 fn_8021A8C8(s32, s32, void *);
+    void fn_8000C070(s32, s32);
+    extern struct CardWork lbl_80320C20;
+    u8 flag;
+    u8 ok;
+    s32 ret;
 
-    M2C_FIELD(&lbl_80320C20, s32 *, 0xA000) = 0;
-    M2C_FIELD(&lbl_80320C20, s8 *, 0xA018) = 0;
-    M2C_FIELD(&lbl_80320C20, s8 *, 0xA019) = 0;
-    M2C_FIELD(&lbl_80320C20, u8 *, 0xA01A) = 0U;
-    var_r4 = 0;
-    M2C_FIELD(&lbl_80320C20, s32 *, 0xA004) = fn_8021A8C8(M2C_FIELD(&lbl_80320C20, s32 *, 0xA000), 0, &lbl_80320C20 + 0xA008);
-    if (((s32) M2C_FIELD(&lbl_80320C20, s32 *, 0xA004) == -1) || ((u8) M2C_FIELD(&lbl_80320C20, u8 *, 0xA01A) != 0)) {
-        var_r4 = 1;
+    lbl_80320C20.chan = 0;
+    lbl_80320C20.unkA018 = 0;
+    lbl_80320C20.unkA019 = 0;
+    lbl_80320C20.busy = 0;
+    lbl_80320C20.result = fn_8021A8C8(lbl_80320C20.chan, 0, &lbl_80320C20.sectorSize);
+    flag = 0;
+    if (lbl_80320C20.result == -1 || lbl_80320C20.busy != 0) {
+        flag = 1;
     }
-    if (var_r4 != 0) {
+    if (flag != 0) {
         return 1;
     }
-    var_r3_2 = 0;
-    if (((s32) M2C_FIELD(&lbl_80320C20, s32 *, 0xA004) == 0) && ((u8) M2C_FIELD(&lbl_80320C20, u8 *, 0xA01A) == 0)) {
-        var_r3_2 = 1;
+    ok = 0;
+    if (lbl_80320C20.result == 0 && lbl_80320C20.busy == 0) {
+        ok = 1;
     }
-    if (var_r3_2 == 0) {
+    if (ok == 0) {
         fn_8000C070(arg0, 0x63);
         return 1;
     }
-    var_r3 = 0;
-    if (((s32) M2C_FIELD(&lbl_80320C20, s32 *, 0xA004) == -1) || ((u8) M2C_FIELD(&lbl_80320C20, u8 *, 0xA01A) != 0)) {
-        var_r3 = 1;
+    ret = 0;
+    if (lbl_80320C20.result == -1 || lbl_80320C20.busy != 0) {
+        ret = 1;
     }
-    return var_r3;
+    return ret;
 }
 
 s32 fn_800EB520(char *arg0) {
@@ -17567,6 +17586,7 @@ void fn_800F2E70(void) {
 
 s32 fn_800F32A4(u8 *arg) {
 extern u8 lbl_802CA518[];
+void fn_800FE2A0(void *, s32, s32);
 u8 fn_800FE84C(s8,s8);
 u8 *arg0; u8 flags[8]; void **weapon; u8 *map; u8 *unit; s32 row; u8 *p; s32 id; s32 y; s32 x;  u8 *q; s32 dist,dy; u8 a,b; u8 range,outside,cx,cy,r,t;
 if ((M2C_FIELD(arg,u16*,0x1A4)>>7 & 7) || (M2C_FIELD(arg,u8*,0x1A5)&7) || (M2C_FIELD(arg,u32*,0x1A0)&0x9D)) return 0;
