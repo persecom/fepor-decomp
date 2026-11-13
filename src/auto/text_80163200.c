@@ -7199,8 +7199,8 @@ void fn_80171B18(void *arg0) {
 #pragma cplusplus on
 extern "C" void fn_80171C0C(void *arg0) {
     struct Obj {
-        virtual void v0() = 0;
         virtual void v1() = 0;
+        virtual void v0() = 0;
         virtual void v2() = 0;
         virtual void v3() = 0;
         virtual void v4() = 0;
@@ -7223,37 +7223,37 @@ extern "C" void fn_80171C0C(void *arg0) {
     extern u32 lbl_802EF4C8[];
     extern u8 lbl_80330EAC[];
 
-    void *r31;
-    void *r30;
-    s16 r29;
-    void *r28;
-    s16 var_r3;
     void *tmp44;
+    void *self;
+    register s16 saved;
+    void *unit;
     s8 t;
+    void *obj;
+    s16 var_r3;
 
-    r30 = arg0;
-    r31 = *(void **)((u8 *)r30 + 0x4C);
-    r29 = *(s16 *)((u8 *)r31 + 0x4C);
+    self = arg0;
+    obj = *(void **)((u8 *)self + 0x4C);
+    saved = *(s16 *)((u8 *)obj + 0x4C);
     fn_80027038(lbl_802EF4C8);
-    r28 = (void *)lbl_802EF4C8[0];
-    ((Obj *)r31)->v11(r28);
-    t = (s8)fn_8003B2D0(r28);
-    fn_800381EC(r28, t);
-    tmp44 = *(void **)((u8 *)r30 + 0x44);
+    unit = (void *)lbl_802EF4C8[0];
+    ((Obj *)obj)->v11(unit);
+    t = (s8)fn_8003B2D0(unit);
+    fn_800381EC(unit, t);
+    tmp44 = *(void **)((u8 *)self + 0x44);
     if (*(u32 *)(lbl_80330EAC + 0xcac) & 0x10) {
-        fn_80138808(tmp44, r28);
-        fn_80050C90(r28);
+        fn_80138808(tmp44, unit);
+        fn_80050C90(unit);
     }
-    var_r3 = fn_80164FBC(r31, r29);
-    if (var_r3 < 0) {
-        var_r3 = fn_80164E78(r31, r29);
+    var_r3 = fn_80164FBC(obj, saved);
+    if (0 > var_r3) {
+        var_r3 = fn_80164E78(obj, saved);
     }
-    if (var_r3 >= 0) {
-        *(s16 *)((u8 *)r31 + 0x4C) = var_r3;
-        fn_8000C070(r30, 0x1A);
+    if (0 <= var_r3) {
+        *(s16 *)((u8 *)obj + 0x4C) = var_r3;
+        fn_8000C070(self, 0x1A);
         return;
     }
-    fn_8000C070(r30, 0x1C);
+    fn_8000C070(self, 0x1C);
 }
 #pragma cplusplus reset
 
