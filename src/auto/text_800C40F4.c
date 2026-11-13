@@ -7081,16 +7081,19 @@ void fn_800D8928(String *arg0, const String *arg1, u32 pos, u32 n) {
     return;
 }
 
-void fn_800D8D94(void *arg0, s32 arg2, s32 arg3) {
-    M2C_UNK fn_800E5270(s32, M2C_UNK *, M2C_UNK *, s32);
-    M2C_UNK sp14;
-    M2C_UNK sp8;
+void fn_800D8D94(void *arg0, void *arg1, void *arg2, s32 arg3)
+{
+    void fn_800C9B6C(void *, void *);
+    void fn_800E5270(void *, void *, void *, s32);
+    void fn_800C9A60(void *, s32);
+    u32 sp14[3];
+    u32 sp8[3];
 
-    fn_800C9B6C(&sp14);
-    fn_800C9B6C(&sp8, arg2);
-    fn_800E5270(M2C_FIELD(arg0, s32 *, 0x10), &sp14, &sp8, arg3);
-    fn_800C9A60(&sp8, -1);
-    fn_800C9A60(&sp14, -1);
+    fn_800C9B6C(sp14, arg1);
+    fn_800C9B6C(sp8, arg2);
+    fn_800E5270(*(void **)((u8 *)arg0 + 0x10), sp14, sp8, arg3);
+    fn_800C9A60(sp8, -1);
+    fn_800C9A60(sp14, -1);
 }
 
 #pragma use_lmw_stmw on
