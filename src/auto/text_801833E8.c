@@ -8449,8 +8449,17 @@ void fn_80199DE8(void *arg0) {
     fn_8014CBD8(lbl_80330708, (f32)(s8)((u8 *)arg0)[0x3C], (f32)(s8)((u8 *)arg0)[0x3D]);
 }
 
-s32 fn_8019A01C(void *arg0) {
-    return *(s32 *)((u8 *)arg0 + 0x34);
+void fn_8019A01C(void *arg0) {
+    u8 fn_8005F9B8(void *, s32);
+    void fn_8000C188(void *);
+    u32 *flags;
+
+    flags = (u32 *)(*(u8 **)((u8 *)arg0 + 0x34) + 0x14);
+    if (fn_8005F9B8(flags, 0x12)) {
+        fn_8000C188(arg0);
+    } else if (*flags & 0x10) {
+        fn_8000C188(arg0);
+    }
 }
 
 void fn_8019A088(void *arg0) {
