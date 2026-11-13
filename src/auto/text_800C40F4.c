@@ -18851,21 +18851,16 @@ void fn_800FA2B4(void *arg0) {
     s32 fn_800FB494(void *);
     u8 *obj;
     u8 *state;
-    s32 (*fn)(void *);
 
     obj = (u8 *)arg0;
     state = (u8 *)lbl_803678F8;
 
     if (fn_8000CEE4(0x64) <= *(s32 *)(state + 4)) {
-        if (*(u32 *)(state + 0x14) == 0) {
-            fn = fn_800FB5C8;
-        } else {
-            fn = fn_800FB548;
-            if (*(s32 *)(state + 0x10) != 0) {
-                fn = fn_800FB494;
-            }
-        }
-        fn_800F3F50((s32)fn, 0x2E);
+        fn_800F3F50(
+            (s32)(*(u32 *)(state + 0x14) == 0
+                      ? fn_800FB5C8
+                      : (*(s32 *)(state + 0x10) != 0 ? fn_800FB494 : fn_800FB548)),
+            0x2E);
     }
 
     if (lbl_803678F4 == 0) {
