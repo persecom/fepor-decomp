@@ -66,45 +66,39 @@ s32 fn_801EAA88(void) {
     return fn_8000C0C0(&lbl_8029A164) != 0;
 }
 
-void *fn_801EAABC(s32 arg0, u32 arg1) {
-    extern s32 lbl_802CA264[];
-    u32 r8;
-    u32 temp_r5;
-    u32 temp_r9;
-    u32 temp_r7;
-    
-    // Initial setup
-    r8 = 0x18; // Loop counter
-    
-    while (r8 != 0) {
-        r8--;
-        
-        // Access array elements with offset calculation and compare arg0 to one field
-        temp_r5 = *(u32 *)((char *)lbl_802CA264 + (r8 * 0x1C) + 8);
-        if (temp_r5 == arg0) {
-            u32 r3 = arg1;
-            
-            // Additional check based on a condition
-            r3 += 0x80000000U; // add 0x80000000 to arg1
-            
-            if (r3 <= 0xFFFFFF) {
-                // Return the element at offset + 0xC (as u32 pointer dereference)
-                return (void *)*((u32 *)((char *)lbl_802CA264 + (r8 * 0x1C) + 0xC));
-            }
-            
-            temp_r9 = *(u32 *)((char *)lbl_802CA264 + (r8 * 0x1C) + 0x18);
-            if (temp_r9 < arg1) {
-                return (void *)(lbl_802CA264 + (r8 * 0x1C) + 0x18);  // Return address of the element
-            }
-            
-            temp_r7 = *(u32 *)((char *)lbl_802CA264 + (r8 * 0x1C) + 0x10);
-            if (temp_r7 == 0) {
-                return (void *)*((u32 *)((char *)lbl_802CA264 + (r8 * 0x1C) + 0x14));
-            }
-        }
+void *fn_801EAABC(char *arg0, void *arg1) {
+    extern u8 lbl_802CA264[];
+    extern char lbl_8027EE08[];
+    s32 fn_80015680(void *);
+    void *fn_8000CAA0(void *, void *);
+    void *fn_8000CAF0(void *, void *);
+    void fn_801403F0(void *);
+    void fn_800C9ABC(void *, char *, void *);
+    void fn_800C96F8(void *, char *, s32);
+    s32 strlen(char *);
+    void *obj;
+    s32 len;
+    s32 sp8;
+
+    if (fn_80015680(lbl_802CA264 + 0x3C) == 0) {
+        return NULL;
     }
-    
-    return NULL;
+
+    if (arg1 != NULL) {
+        obj = fn_8000CAA0(lbl_8029A164, arg1);
+    } else {
+        obj = fn_8000CAF0(lbl_8029A164, arg1);
+    }
+
+    if (obj != NULL) {
+        fn_801403F0(obj);
+        fn_800C9ABC((u8 *)obj + 0x40, lbl_8027EE08 + 0x147, &sp8);
+        *(s32 *)((u8 *)obj + 0x4C) = 0;
+    }
+
+    len = strlen(arg0);
+    fn_800C96F8((u8 *)obj + 0x40, arg0, len);
+    return obj;
 }
 
 s32 fn_801EAB90(s32 unused, void *obj) {
@@ -488,25 +482,50 @@ void fn_801EB7A8(s32 arg0) {
     }
 }
 
-void fn_801EBB00(s32 arg0) {
-    M2C_UNK fn_8000E0E4(void *);
-    M2C_UNK fn_80024398(M2C_UNK *, s32, M2C_UNK);
-    M2C_UNK fn_80091A1C();
-    extern u8 lbl_80278BB8;
-    extern u8 lbl_802EF4C8;
-    extern M2C_UNK lbl_80368208;
-    
-    s32 r31 = arg0; // This is just a convention, not necessarily the exact register assignment
-    
-    if (lbl_802EF4C8 == 0x32) {
-        fn_8000E0E4(&lbl_80278BB8 + 0xF8);
-        fn_80091A1C();
-    } else {
-        fn_8000E0E4(&lbl_80278BB8 + 0x102);
-        fn_80091A1C();
+void fn_801EBB00(void *arg0) {
+    void fn_801EBE88(void);
+    void fn_800C93EC(void *);
+    void fn_80106BCC(void);
+    void fn_800A8400(void);
+    void fn_8002297C(void *);
+    void fn_80161F7C(void);
+    void fn_8003F670(void *);
+    void fn_80018AE4(void);
+    void fn_80018B04(void);
+    void fn_800C9A60(void *, s32);
+    void fn_80140304(void *, s32);
+    extern u8 lbl_802CA264[];
+    extern u8 lbl_802CA518[];
+    extern u8 lbl_803671C0;
+    void *iter;
+    void *next;
+    u32 flags;
+
+    iter = *(void **)(lbl_802CA264 + 0xC);
+    while (iter != NULL) {
+        flags = *(u32 *)((u8 *)iter + 0x1A0);
+        next = *(void **)((u8 *)iter + 0x184);
+        *(u32 *)((u8 *)iter + 0x1A0) = flags & ~0x800;
+        iter = next;
     }
-    
-    fn_80024398(&lbl_80368208, r31, 0);
+    fn_801EBE88();
+    fn_800C93EC((u8 *)arg0 + 0x40);
+    fn_80106BCC();
+    fn_800A8400();
+    fn_8002297C(lbl_802CA518);
+    fn_80161F7C();
+    fn_8003F670(*(void **)((u8 *)arg0 + 0x4C));
+    goto end;
+    fn_80018AE4();
+    if (lbl_803671C0 == 0) {
+        if (arg0 == NULL) {
+            return;
+        }
+        fn_800C9A60((u8 *)arg0 + 0x40, -1);
+        fn_80140304(arg0, 0);
+    }
+end:
+    fn_80018B04();
 }
 
 #pragma use_lmw_stmw on
