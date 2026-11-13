@@ -14455,11 +14455,15 @@ s32 fn_800ECCB8(void) {
     return 0;
 }
 
-void fn_800ECCE4(void* this) {
-    void** temp = (void**)((u8*)this + 0x14);
-    if (*temp != 0) {
-        *temp = 0;
-    }
+s32 fn_800ECCE4(void) {
+    void *fn_800DC3B0(void *);
+    void fn_800DC494(void *, void *);
+    extern void *lbl_803678C0;
+    void *temp;
+
+    temp = fn_800DC3B0(*(void **)((u8 *)lbl_803678C0 + 0x478));
+    fn_800DC494(*(void **)((u8 *)lbl_803678C0 + 0x478), temp);
+    return 0;
 }
 
 void *fn_800ECF40(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
