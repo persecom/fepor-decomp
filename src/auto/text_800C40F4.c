@@ -12736,37 +12736,20 @@ extern "C" void fn_800E7DA4(void *arg0, void *arg1) {
 
     ((Obj *)arg0)->v2(lbl_80272230 + 0x2E, fn_800C93EC(arg1));
 }
-#pragma cplusplus reset
-void fn_800E7DF8(void *arg0, void *arg1)
-{
-    void *fn_800C93EC(void *);
-    extern u8 lbl_80272230[];
-
-    struct VTable {
-        u8 pad[0x10];
-        void (*callback)(void *, void *, void *);
-    };
-
-    struct Object {
-        u8 pad[0x10];
-        struct VTable *vtable;
-    };
-
-    struct Object *obj;
-    void *value;
-
-    obj = (struct Object *)arg0;
-
-    value = fn_800C93EC(arg1);
-
-    obj->vtable->callback(
-        arg0,
-        lbl_80272230 + 0x3C,
-        value
-    );
-}
-
 #pragma cplusplus on
+extern "C" void fn_800E7DF8(void *arg0, void *arg1) {
+    void *fn_800C93EC(void *);
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2(char *, void *) = 0;
+    };
+    extern char lbl_80272230[];
+
+    ((Obj *)arg0)->v2(lbl_80272230 + 0x3C, fn_800C93EC(arg1));
+}
+#pragma cplusplus reset
 extern "C" void fn_800E7E4C(void *arg0, void *arg1) {
     void *fn_800C93EC(void *);
     struct Obj {
