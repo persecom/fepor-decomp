@@ -355,18 +355,17 @@ s32 fn_80006AC0(u8 *arg0) {
     return t;
 }
 
-s32 fn_80006AF4(s32 arg0) {
-    s32 var_r11;
-    s32 *var_r3;
-    s32 var_ctr;
+s32 fn_80006AF4(s32 *arg0) {
+    s32 sum;
+    s32 n;
 
-    var_r3 = (s32 *)arg0 - 1;
-    var_r11 = 0;
-    var_ctr = 0x1c;
+    arg0--;
+    sum = 0;
+    n = 0x1c;
     do {
-        var_r11 += *var_r3++;
-    } while (--var_ctr != 0);
-    return var_r11;
+        sum += *++arg0;
+    } while (--n);
+    return sum;
 }
 
 void fn_80006B18(s32 arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4)
@@ -2006,10 +2005,10 @@ void fn_8000A280(void) {
 }
 
 void fn_8000A284(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
-    *(f32*)((u8*)lbl_80367140 + 0x98) = arg0;
-    *(f32*)((u8*)lbl_80367140 + 0x94) = arg1;
-    *(f32*)((u8*)lbl_80367140 + 0xa0) = arg2;
-    *(f32*)((u8*)lbl_80367140 + 0x9c) = arg3;
+    *(f32 *)(*(u8 **)&lbl_80367140 + 0x98) = arg0;
+    *(f32 *)(*(u8 **)&lbl_80367140 + 0x94) = arg1;
+    *(f32 *)(*(u8 **)&lbl_80367140 + 0xa0) = arg2;
+    *(f32 *)(*(u8 **)&lbl_80367140 + 0x9c) = arg3;
 }
 
 void *fn_8000A2A8(u32 arg0) {
