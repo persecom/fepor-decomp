@@ -2926,14 +2926,18 @@ void fn_8018CFA4(s32 arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4) {
         *(s32 *)((u8 *)temp_r3 + 0x3C) = arg2;
     }
 }
-void fn_8018D218(void *arg0) {
-    extern u16 lbl_802797C0[6];
-    void *temp_r5;
-    
-    temp_r5 = M2C_FIELD(arg0, void **, 0x44);
-    M2C_FIELD(temp_r5, f32 *, 0x58) = *(f32*)&lbl_802797C0[0];
-    M2C_FIELD(temp_r5, f32 *, 0x5C) = *(f32*)&lbl_802797C0[1];
-    M2C_FIELD(temp_r5, f32 *, 0x60) = *(f32*)&lbl_802797C0[2];
+void fn_8018D218(void *arg0)
+{
+    typedef struct { f32 x, y, z; } Vec3;
+    extern Vec3 lbl_802797C0;
+    Vec3 a;
+    void *p;
+
+    p = *(void **)((u8 *)arg0 + 0x44);
+    a = lbl_802797C0;
+    *(f32 *)((u8 *)p + 0x58) = a.x;
+    *(f32 *)((u8 *)p + 0x5C) = a.y;
+    *(f32 *)((u8 *)p + 0x60) = a.z;
 }
 
 void fn_8018D25C(void *arg0) {
