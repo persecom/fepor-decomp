@@ -935,15 +935,25 @@ void fn_801FF060(void *arg0) {
     OSRestoreInterrupts(temp_r31_2);
 }
 
+#pragma global_optimizer off
 void fn_801FF0F8(void *arg0) {
-    s32 temp_r3;
+    u8 fn_8005BA10(void *);
+    u32 fn_8003FCCC(void *);
+    void fn_8000C188(void *);
+    void fn_8006EEFC(void *, void *);
+    extern u8 lbl_80281F00[];
+    extern u32 lbl_80368438;
 
-    temp_r3 = *(s32 *)((char *)arg0 + 0x48);
-    if (temp_r3 != 0) {
-        *(s32 *)((char *)arg0 + 0x48) = temp_r3 - 1;
+    if (!fn_8005BA10(lbl_80281F00 + 0x4D) || !fn_8005BA10(lbl_80281F00 + 0x64)) {
+        return;
     }
+    if (lbl_80368438 == 0) {
+        fn_8006EEFC(&lbl_80368438, lbl_80281F00 + 0x4D);
+    }
+    M2C_FIELD(arg0, u32 *, 0x30) = fn_8003FCCC(lbl_80281F00 + 0x64);
+    fn_8000C188(arg0);
 }
-
+#pragma global_optimizer reset
 void fn_801FF2D0(void) {
     extern u8 lbl_802EF4C8[];
     extern s32 lbl_803682A4;
