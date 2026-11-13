@@ -13597,8 +13597,14 @@ u8 fn_80261B14(s32 arg0) {
 }
 
 u16 fn_80261B28(s32 arg0) {
-    extern s32 lbl_80368AA0;
-    return M2C_FIELD((lbl_80368AA0 + (arg0 * 0xF8)), u16 *, 0x70);
+    typedef struct {
+        u8 pad[0x70];
+        u16 unk70;
+        u8 pad2[0xF8 - 0x72];
+    } Entry;
+    extern Entry *lbl_80368AA0;
+
+    return lbl_80368AA0[arg0].unk70;
 }
 
 s32 fn_80261B3C(s32 arg0) {
