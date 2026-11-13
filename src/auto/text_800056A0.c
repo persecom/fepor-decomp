@@ -176,17 +176,11 @@ void fn_80005D88(void) {
 }
 
 void fn_80005DC8(void) {
-    extern s32 lbl_80330708;
-    s32 *temp_r6;
+    unsigned long long fn_80006798(void);
+    extern u8 lbl_80330708[];
 
-    fn_80006798();
-    temp_r6 = &lbl_80330708 + 0x17;
-    *(temp_r6 + 1) += (u32) *(temp_r6 + 2);
-    *(temp_r6 + 3) += *(temp_r6 + 4);
-    fn_80006798();
-    temp_r6 = &lbl_80330708 + 0x19;
-    *(temp_r6 + 1) += (u32) *(temp_r6 + 2);
-    *(temp_r6 + 3) += *(temp_r6 + 4);
+    *(unsigned long long *)(lbl_80330708 + 0x58) += fn_80006798();
+    *(unsigned long long *)(lbl_80330708 + 0x60) += fn_80006798();
 }
 
 u8 fn_80005E2C(void) {
