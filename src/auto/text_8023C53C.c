@@ -13715,9 +13715,11 @@ void fn_80261C40(s32 arg0, s32 arg1) {
     } Entry;
     extern Entry *lbl_80368AA0;
     extern u16 lbl_803670C0;
+    Entry *e;
 
-    lbl_80368AA0[arg0].unkCC = ((u16 *)&lbl_803670C0)[arg1 & 0xFF];
-    lbl_80368AA0[arg0].unk24 |= 0x100;
+    e = &lbl_80368AA0[arg0];
+    e->unkCC = ((u16 *)&lbl_803670C0)[arg1 & 0xFF];
+    e->unk24 |= 0x100;
 }
 
 s32 fn_80261C6C(s32 arg0) {
