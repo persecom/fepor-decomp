@@ -2886,13 +2886,98 @@ void fn_800CAF74(void *arg0) {
 }
 
 void fn_800CB070(String *arg0) {
-    (void)arg0;
+    void fn_800C9ABC(void *, char *, void *);
+    void fn_800C96F8(String *, char *, u32);
+    void *fn_800C9A60(void *, s16);
+    void fn_800C9B6C(void *, void *);
+    void fn_80231D94(char *, char *, ...);
+    s32 strlen(char *);
+    s32 fn_8001D2C8(void);
+    extern char lbl_802704F8[];
+    extern u8 lbl_80367878;
+    extern void *lbl_8036787C;
+    extern u32 lbl_80330EAC[];
+    char buf[0x40];
+    String str;
+    void *scratch;
+    String *out;
+    u32 tmp;
+    u8 **slot;
+    u8 *entry;
+
+    out = arg0;
+    fn_800C9ABC(&str, lbl_802704F8 + 0x1B0, &scratch);
+    if (lbl_80367878 != 0) {
+        tmp = (u32)((char *)lbl_8036787C + 0x100);
+        fn_800C96F8(&str, (char *)tmp, strlen((char *)tmp));
+    } else {
+        slot = (u8 **)((u8 *)lbl_80330EAC + 0x28C);
+        if (slot != NULL) {
+            entry = *slot;
+            if (entry != NULL) {
+                if (entry != NULL) {
+                    tmp = entry[0x15];
+                } else {
+                    tmp = 0;
+                }
+                fn_80231D94(buf, lbl_802704F8 + 0x1B1, (u8)tmp + 0x60, fn_8001D2C8());
+                fn_800C96F8(&str, buf, strlen(buf));
+            }
+        }
+    }
+    fn_800C9B6C(out, &str);
+    fn_800C9A60(&str, -1);
 }
 
-void fn_800CB27C(void** arg0) {
-    if (arg0 != NULL) {
-        (*(void (**)(void **))lbl_802B14E4)(arg0);
+void *fn_800CB27C(void) {
+    u64 *fn_8001CB64(void *);
+    u8 fn_80105BC0(void *, s32);
+    extern u8 lbl_80367878;
+    extern u8 *lbl_8036787C;
+    extern u32 lbl_80330EAC[];
+    u8 *base;
+    void **slot;
+    void *obj;
+    void *inner;
+    s8 *p;
+    u64 bits;
+
+    if (lbl_80367878 != 0) {
+        p = (s8 *)((u8 *)lbl_8036787C + 0x1A8);
+        if (*p != 0) {
+            return p;
+        }
+        return 0;
     }
+
+    base = (u8 *)lbl_80330EAC;
+    slot = (void **)(base + 0x56C);
+    bits = *fn_8001CB64(slot);
+    if ((bits & 0x20000000000ULL) != 0) {
+        base += 0x49C;
+        if (fn_80105BC0(base, 8) != 0) {
+            if (fn_80105BC0(base, 9) == 0) {
+                return 0;
+            }
+        }
+    }
+
+    if (slot == NULL) {
+        return 0;
+    }
+    obj = *slot;
+    if (obj == NULL) {
+        return 0;
+    }
+    if (obj != NULL) {
+        inner = *(void **)obj;
+    } else {
+        inner = 0;
+    }
+    if (inner != NULL) {
+        return (u8 *)inner + 4;
+    }
+    return 0;
 }
 
 void fn_800CB484(void *arg0, void *arg1)
@@ -8527,6 +8612,50 @@ void* fn_800DC0BC(void* arg0, s32 arg2, s32 arg3) {
     return arg0;
 }
 
+extern "C" void *fn_800DC1E4(void *arg0, void *arg1, void *arg2, void *arg3)
+{
+    extern char lbl_802716A8[];
+    extern u8 lbl_8028DF20[];
+    extern f32 lbl_80369E90;
+    extern f32 lbl_80369E94;
+    extern void fn_800C9ABC(void *, char *, void *);
+    extern void *fn_800DFAE0(void *, void *, void *, void *, void *);
+    extern void *fn_800C9A60(void *, s32);
+
+    u8 str1C[12];
+    u8 str10[12];
+    u32 scratchC;
+    u32 scratch8;
+    char *strings;
+    f32 zero;
+    f32 one;
+
+    strings = lbl_802716A8;
+    fn_800C9ABC(str1C, strings + 4, &scratchC);
+    fn_800C9ABC(str10, lbl_802716A8 + 0xA, &scratch8);
+    fn_800DFAE0(arg0, arg1, str1C, arg2, str10);
+    fn_800C9A60(str10, -1);
+    fn_800C9A60(str1C, -1);
+
+    *(void **)((u8 *)arg0 + 0x40) = lbl_8028DF20;
+    one = lbl_80369E94;
+    *(s32 *)((u8 *)arg0 + 0x28) = -0x31;
+    zero = lbl_80369E90;
+    ((u8 *)arg0)[0x3C] = 0;
+    *(void **)((u8 *)arg0 + 0x48) = arg3;
+    *(s32 *)((u8 *)arg0 + 0x64) = 0;
+    *(s32 *)((u8 *)arg0 + 0x60) = 0;
+    *(f32 *)((u8 *)arg0 + 0x6C) = one;
+    *(f32 *)((u8 *)arg0 + 0x70) = zero;
+    *(f32 *)((u8 *)arg0 + 0x4C) = zero;
+    *(f32 *)((u8 *)arg0 + 0x54) = zero;
+    *(f32 *)((u8 *)arg0 + 0x50) = zero;
+    *(f32 *)((u8 *)arg0 + 0x58) = zero;
+    *(f32 *)((u8 *)arg0 + 0x68) = zero;
+    *(s32 *)((u8 *)arg0 + 0x5C) = 0;
+    return arg0;
+}
+
 #pragma cplusplus reset
 void *fn_800DC2E4(void *arg0, s16 arg1) {
 #pragma global_optimizer off
@@ -10350,7 +10479,7 @@ extern "C" s32 fn_800DFC68(void *arg0, void *arg1, const char *arg2, const char 
     s32 off;
     u32 match;
     s32 i;
-    s32 n;
+    s32 count;
     u8 flag;
     List *list;
     Cb *cb;
@@ -10367,7 +10496,7 @@ extern "C" s32 fn_800DFC68(void *arg0, void *arg1, const char *arg2, const char 
         flag = 1;
     }
     match = (u8)flag != 0;
-    n = 0;
+    count = 0;
     i = 0;
     off = 0;
     while (i < list->count) {
@@ -10375,13 +10504,13 @@ extern "C" s32 fn_800DFC68(void *arg0, void *arg1, const char *arg2, const char 
         if (fn_800DF298(item, name) != 0) {
             if (match != 0 || fn_800DF258(item, filter) != 0) {
                 cb->v5(item);
-                n += 1;
+                count += 1;
             }
         }
         i += 1;
         off += 4;
     }
-    return n;
+    return count;
 }
 #pragma use_lmw_stmw reset
 #pragma cplusplus reset
@@ -11927,6 +12056,63 @@ extern "C" void fn_800E43EC(void *arg0) {
         *(s32 *)((u8 *)arg0 + 0x4C) = *(s32 *)((u8 *)arg0 + 0x5C) + v.y;
     }
 }
+
+#pragma cplusplus on
+#pragma use_lmw_stmw on
+extern "C" void *fn_800E4454(void *arg0, String *arg1) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void *v4(s32) = 0;
+    };
+    void fn_800DF6DC(String *, void *);
+    s32 fn_800C9400(String *, u32, u32, char *, u32);
+    void *fn_800C9A60(String *, s32);
+    String str;
+    void *self;
+    String *key;
+    s32 i;
+    u8 found;
+    void *child;
+    Obj *list;
+    s32 n;
+
+    self = arg0;
+    key = arg1;
+    if (*(Obj **)((u8 *)self + 0xA0) != 0) {
+        i = 0;
+        goto cond;
+        do {
+            n = list != 0 ? *(s32 *)((u8 *)list + 4) : 0;
+            if (i < n) {
+                child = list->v4(i);
+            } else {
+                child = 0;
+            }
+            fn_800DF6DC(&str, child);
+            found = 0;
+            if (str.size == key->size &&
+                fn_800C9400(&str, 0, str.size, key->data, key->size) == 0) {
+                found = 1;
+            }
+            fn_800C9A60(&str, -1);
+            if (found != 0) {
+                return child;
+            }
+            i += 1;
+        cond:
+            list = *(Obj **)((u8 *)self + 0xA0);
+            n = list != 0 ? *(s32 *)((u8 *)list + 4) : 0;
+        } while (i < n);
+    }
+    return 0;
+}
+#pragma use_lmw_stmw reset
+#pragma cplusplus reset
+
 #pragma cplusplus reset
 #pragma cplusplus on
 extern "C" void fn_800E4550(void *arg0, void *arg1) {
@@ -13489,6 +13675,61 @@ extern "C" s32 fn_800E7AD4(void *arg0, void *arg1, s32 arg2, s32 arg3, s32 arg4)
     }
     return 0;
 }
+
+#pragma cplusplus on
+#pragma dont_inline on
+extern "C" s32 fn_800E7B80(void *arg0, void *arg1) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual s32 v10(void *, char *, s32) = 0;
+    };
+    extern char lbl_80272230[];
+    void fn_800DF6DC(u8 *, void *);
+    s32 fn_800C9400(u8 *, u32, u32, char *, u32);
+    void fn_800C9A60(void *, s32);
+    void fn_800E9044(void *);
+    void fn_800E9050(void *);
+    u8 match;
+    s32 count;
+    u32 key;
+    void *item;
+    s32 i;
+    u8 str[0xC];
+    u8 list[0x14];
+
+    fn_800E01C8(list);
+    count = ((Obj *)arg0)->v10(list, lbl_80272230 + 0x16, 0);
+    key = *(u32 *)arg1;
+    for (i = 0; i < count; i++) {
+        item = (void *)fn_800DFFF4(list, i);
+        fn_800DF6DC(str, item);
+        match = 0;
+        if (*(u32 *)str == key && fn_800C9400(str, 0, *(u32 *)str, *(char **)((u8 *)arg1 + 8), key) == 0) {
+            match = 1;
+        }
+        fn_800C9A60(str, -1);
+        if (match != 0) {
+            fn_800E9050(item);
+        } else {
+            fn_800E9044(item);
+        }
+    }
+    fn_800E0140(list, -1);
+    return 1;
+}
+#pragma dont_inline reset
+#pragma cplusplus reset
+
 #pragma cplusplus reset
 u8 fn_800E7C80(void *arg0) {
     return M2C_FIELD(arg0, u8 *, 0x2C);
