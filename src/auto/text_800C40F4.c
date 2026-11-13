@@ -12625,17 +12625,26 @@ loop_2:
     }
 }
 
-void fn_800E7970(void *arg0) {
+#pragma dont_inline on
+#pragma cplusplus on
+extern "C" void fn_800E7970(void *arg0) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void *v4(s32) = 0;
+    };
+    void fn_800DF5E0(void *);
     s32 i;
-    void **temp_r12;
 
     for (i = 0; i < *(s32 *)((char *)arg0 + 4); i++) {
-        temp_r12 = *(void***)((char*)arg0 + 0x10);
-        temp_r12 = *(void***)((char*)temp_r12 + 0x18);
-        fn_800DF5E0(((void *(*)(void *, s32))temp_r12)(arg0, i));
+        fn_800DF5E0(((Obj *)arg0)->v4(i));
     }
 }
-
+#pragma cplusplus reset
+#pragma dont_inline reset
 void fn_800E7A38(void *arg0, s32 arg1) {
     M2C_UNK fn_800DF638(s32);
     s32 var_r31;
