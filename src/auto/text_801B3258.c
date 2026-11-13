@@ -8280,36 +8280,39 @@ s32 fn_801C9C5C(void) {
 }
 
 s32 fn_801C9CBC(void) {
-    extern u16 lbl_803682B8[];
-    void fn_800C9758(void *,void *,s32,s32);
-    void fn_800C9A60(void *,s32);
-    void fn_801C9D94(void *,void *);
-    void fn_801CAF58(s32,void *);
-    s32 fn_8011C984(s32,s32);
+    extern void *lbl_803682B8;
+    void fn_800C9758(void *, void *, s32, s32);
+    void fn_800C9A60(void *, s32);
+    void fn_801C9D94(void *, void *);
+    void fn_801CAF58(void *, void *);
+    s32 fn_8011C984(s32, s32);
     s32 fn_8011C9E4(s32);
-    
-    // The function properly handles the stack frame with its exact offsets
-    s32 a[2];
-    s32 b[2];
-    s32 temp_r3;
-    
-    // Initialize arrays
-    a[0] = 0;
-    a[1] = 0;
-    b[0] = 0;
-    b[1] = 0;
-    
-    // Load memory from global with offset and use properly
-    temp_r3 = fn_8011C9E4(*(s32 *)((char *)lbl_803682B8 + 0x430));
-    temp_r3 = fn_8011C984(*(s32 *)((char *)lbl_803682B8 + 0x430), temp_r3);
-    
-    // Call functions with array addresses
-    fn_801C9D94((void *)a, (void *)lbl_803682B8);  // a[2], lbl_803682B8  
-    fn_800C9758((void *)b, (void *)a, 0, -1);       // b[2], a[2], 0, -1
-    fn_800C9A60((void *)a, -1);                     // a[2], -1
-    fn_801CAF58(temp_r3, (void *)b);                // temp_r3, b[2]
-    fn_800C9A60((void *)b, -1);                    // b[2], -1
-    
+
+    struct Str {
+        u32 size;
+        u32 cap;
+        char *data;
+    };
+    struct Str sp14;
+    struct Str sp8;
+    void *obj;
+    s32 handle;
+
+    sp14.cap = 0;
+    obj = lbl_803682B8;
+    sp14.size = 0;
+    sp14.data = 0;
+    sp14.cap = 0;
+
+    handle = fn_8011C984(*(s32 *)((u8 *)obj + 0x430),
+                         fn_8011C9E4(*(s32 *)((u8 *)obj + 0x430)));
+
+    fn_801C9D94(&sp8, lbl_803682B8);
+    fn_800C9758(&sp14, &sp8, 0, -1);
+    fn_800C9A60(&sp8, -1);
+    fn_801CAF58((void *)handle, &sp14);
+    fn_800C9A60(&sp14, -1);
+
     return 0;
 }
 
