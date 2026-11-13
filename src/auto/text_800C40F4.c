@@ -4868,7 +4868,7 @@ extern "C" void *fn_800D38BC(void *arg0)
     void fn_80113648(void *, f32);
     char *fn_800A8A88(const char *);
     void fn_800DB1FC(void *, void *);
-    void fn_800CB070(void);
+    void fn_800CB070(String *);
     void fn_800CAF74(void *, void *);
     void fn_80033418(void *);
     void fn_800555EC(char *, s32);
@@ -10350,7 +10350,7 @@ extern "C" s32 fn_800DFC68(void *arg0, void *arg1, const char *arg2, const char 
     s32 off;
     u32 match;
     s32 i;
-    s32 count;
+    s32 n;
     u8 flag;
     List *list;
     Cb *cb;
@@ -10367,7 +10367,7 @@ extern "C" s32 fn_800DFC68(void *arg0, void *arg1, const char *arg2, const char 
         flag = 1;
     }
     match = (u8)flag != 0;
-    count = 0;
+    n = 0;
     i = 0;
     off = 0;
     while (i < list->count) {
@@ -10375,13 +10375,13 @@ extern "C" s32 fn_800DFC68(void *arg0, void *arg1, const char *arg2, const char 
         if (fn_800DF298(item, name) != 0) {
             if (match != 0 || fn_800DF258(item, filter) != 0) {
                 cb->v5(item);
-                count += 1;
+                n += 1;
             }
         }
         i += 1;
         off += 4;
     }
-    return count;
+    return n;
 }
 #pragma use_lmw_stmw reset
 #pragma cplusplus reset
