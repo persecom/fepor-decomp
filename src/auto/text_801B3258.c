@@ -5056,6 +5056,36 @@ void fn_801C1BC0(s8 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, s32 arg5) {
 }
 
 #pragma use_lmw_stmw on
+void fn_801C1C64(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6)
+{
+    void *fn_8000CAF0(void *, s32);
+    extern u8 lbl_80297FF8[];
+    extern f32 lbl_8036B328;
+    extern f64 lbl_8036B330;
+    void *obj;
+    f32 div;
+    s8 n1;
+    u8 z;
+    s16 v0;
+    s16 v1;
+    s16 v2;
+
+    obj = fn_8000CAF0(lbl_80297FF8, arg6);
+    div = lbl_8036B328;
+    n1 = -1;
+    z = 0;
+    v0 = (s16)((f32)arg3 / div);
+    v1 = (s16)((f32)arg4 / div);
+    v2 = (s16)((f32)arg5 / div);
+    *(s16 *)((u8 *)obj + 0x3C) = arg0;
+    *(s16 *)((u8 *)obj + 0x3E) = arg1;
+    *(s32 *)((u8 *)obj + 0x44) = arg2;
+    *(s8 *)((u8 *)obj + 0x30) = n1;
+    *(s16 *)((u8 *)obj + 0x36) = v0;
+    *(s16 *)((u8 *)obj + 0x38) = v1;
+    *(s16 *)((u8 *)obj + 0x3A) = v2;
+    *(u8 *)((u8 *)obj + 0x48) = z;
+}
 void fn_801C1D54(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4) {
     void *fn_8000CAF0(void *, s32);
     extern u8 lbl_8029801C[];
@@ -10747,6 +10777,57 @@ extern "C" void fn_801CF018(void *arg0) {
     ((Obj *)arg0)->v6();
 }
 
+extern "C" void fn_801CF044(void *arg0) {
+    void fn_801475FC(void *, s32);
+    extern u8 lbl_8027DED8[];
+    extern s32 lbl_80367110;
+    extern void *lbl_80367240;
+    u8 skip;
+    s32 flags;
+    s16 old;
+    s16 now;
+    void *pad;
+    s32 buttons;
+    s32 held;
+    s32 edge;
+    s32 tmp;
+
+    skip = 0;
+    flags = lbl_80367110;
+    old = *(s16 *)((u8 *)arg0 + 0x3C);
+    if ((flags & 0x10) && !(flags & 0x20)) {
+        skip = 1;
+    }
+    if (skip == 0) {
+        pad = lbl_80367240;
+        now = *(s16 *)((u8 *)arg0 + 0x3C);
+        buttons = *(s32 *)((u8 *)pad + 0xC);
+        held = *(s32 *)((u8 *)pad + 4);
+        edge = held & (*(s32 *)((u8 *)pad + 8) ^ held);
+        if (buttons & 0x08000008) {
+            if (old == 0) {
+                if (buttons == edge) {
+                    *(s16 *)((u8 *)arg0 + 0x3C) = 3;
+                }
+            } else {
+                *(s16 *)((u8 *)arg0 + 0x3C) = (s16)(now - 1);
+            }
+        } else if (buttons & 0x04000004) {
+            tmp = old;
+            if (tmp == 3) {
+                if (buttons == edge) {
+                    *(s16 *)((u8 *)arg0 + 0x3C) = 0;
+                }
+            } else {
+                *(s16 *)((u8 *)arg0 + 0x3C) = (s16)(now + 1);
+            }
+        }
+        if (now != *(s16 *)((u8 *)arg0 + 0x3C)) {
+            fn_801475FC(lbl_8027DED8 + 0x2C, 0x64);
+        }
+    }
+}
+
 #pragma cplusplus on
 void fn_801CF324(void *arg0, s32 arg1) {
     void fn_80152DE0(s32, s32, u8, s32, s32);
@@ -12696,6 +12777,71 @@ void fn_801D2E9C(void) {
     void fn_80059C2C(int, int, int, int, int);
     fn_80059C2C(0, 0, 0x260, 0x1C0, 0);
 }
+
+#pragma cplusplus on
+extern "C" void *fn_801D2ED0(void *arg0, s16 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    typedef struct DtorNode {
+        struct DtorNode *prev;
+        struct DtorNode *next;
+    } DtorNode;
+    typedef struct {
+        u32 unk0;
+        DtorNode node;
+    } DtorList;
+    typedef struct Owner {
+        void *vtbl;
+        u8 pad4[0x68];
+        DtorList list;
+        void *sub78;
+        u8 pad7C[0x24];
+        void *subA0;
+    } Owner;
+    void fn_801C1824(void *, void *, void *, void *);
+    void fn_8013F2A4(void *, s32);
+    void fn_800C428C(void *);
+    extern u8 lbl_8029998C[];
+    extern u8 lbl_80295478[];
+
+    DtorNode *sp10;
+    DtorNode *spC;
+    u8 sp8[4];
+    DtorNode *end;
+    Owner *a0;
+
+    a0 = (Owner *)arg0;
+    if (arg0) {
+        a0->vtbl = lbl_8029998C;
+        if (&a0->subA0) {
+            a0->subA0 = lbl_80295478;
+            ((Obj *)&a0->subA0)->v2();
+        }
+        if (&a0->sub78) {
+            a0->sub78 = lbl_80295478;
+            ((Obj *)&a0->sub78)->v2();
+        }
+        if (&a0->list) {
+            if (&a0->list) {
+                if (&a0->list) {
+                    end = &a0->list.node;
+                    sp10 = end;
+                    spC = end->next;
+                    fn_801C1824(sp8, &a0->list, &spC, &sp10);
+                }
+            }
+        }
+        fn_8013F2A4(arg0, 0);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+#pragma cplusplus reset
 
 s16 fn_801D2FC0(void *arg0) {
     s16 a = M2C_FIELD(arg0, s16 *, 0x16);
