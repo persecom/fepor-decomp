@@ -628,41 +628,38 @@ s32 fn_80014398(void *arg0) {
 }
 
 s32 fn_80014400(void *arg0) {
-    s32 temp_r31;
-    void *temp_r3;
+    u32 fn_8000D354(s32);
+    void fn_8000C070(void *, s32);
+    void *ptr;
+    u32 word0;
+    s32 word1;
+    s16 hi;
 
-    temp_r3 = *(void **)((u8 *)arg0 + 4);
-    temp_r31 = *(u16 *)((u8 *)temp_r3 + 0); // Load the 16-bit value directly
-    *(void **)((u8 *)arg0 + 4) = (void *) ((u8 *)temp_r3 + 8);
-    if (fn_8000D354(temp_r31) == 0U) {
-        return 1;
+    ptr = *(void **)((u8 *)arg0 + 4);
+    word0 = *(u32 *)ptr;
+    word1 = *(s32 *)((u8 *)ptr + 4);
+    *(void **)((u8 *)arg0 + 4) = (u8 *)ptr + 8;
+    hi = (s16)(word0 >> 16);
+    if (fn_8000D354(word1) == 0U) {
+        fn_8000C070(arg0, hi & 0xFF);
     }
-    fn_800C08AC(temp_r31, arg0);
-    return 0;
+    return 1;
 }
 
-s32 fn_80014468(void *arg0)
-{
-    extern void *fn_8000D354(void *);
-    extern void fn_8000C070(void *, s32);
+s32 fn_80014468(void *arg0) {
+    u32 fn_8000D354(s32);
+    void fn_8000C070(void *, s32);
+    void *ptr;
+    s16 hi;
+    s32 word1;
 
-    u8 *obj;
-    u8 *data;
-    s32 index;
-    void *value;
-
-    obj = (u8 *)arg0;
-    data = *(u8 **)(obj + 4);
-
-    index = (s16)(*(u32 *)data >> 16);
-    value = *(void **)(data + 4);
-
-    *(u8 **)(obj + 4) = data + 8;
-
-    if (fn_8000D354(value) != 0) {
-        fn_8000C070(obj, (u8)index);
+    ptr = *(void **)((u8 *)arg0 + 4);
+    hi = (s16)(*(u32 *)ptr >> 16);
+    word1 = *(s32 *)((u8 *)ptr + 4);
+    *(void **)((u8 *)arg0 + 4) = (u8 *)ptr + 8;
+    if (fn_8000D354(word1) != 0U) {
+        fn_8000C070(arg0, hi & 0xFF);
     }
-
     return 1;
 }
 
