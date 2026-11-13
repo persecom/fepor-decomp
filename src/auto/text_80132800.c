@@ -11300,7 +11300,7 @@ found:
 }
 
 #pragma cplusplus on
-extern "C" void fn_801478D0(s16 arg0) {
+extern "C" void fn_801478D0(s32 arg0) {
     struct Obj {
         u8 pad[8];
         virtual void v0() = 0;
@@ -11310,35 +11310,35 @@ extern "C" void fn_801478D0(s16 arg0) {
     extern u8 lbl_8032FFC8[];
     extern f32 lbl_8036A7A0;
     s16 a;
-    Obj *entry;
+    u8 *entry;
     s32 i;
     s32 temp;
     s16 var_r5;
     u8 flags;
 
-    a = arg0;
-    entry = (Obj *)lbl_8032FFC8;
+    a = (s16)arg0;
+    entry = lbl_8032FFC8;
     i = 0;
     do {
-        flags = *((u8 *)entry + 0xC);
+        flags = entry[0xC];
         if (flags & 1) {
-            if (arg0 <= 0) {
-                entry->v2();
+            if ((s16)arg0 <= 0) {
+                ((Obj *)entry)->v2();
             } else if (!(flags & 8)) {
                 temp = (s32)((f32)a / lbl_8036A7A0);
                 var_r5 = (s16)temp;
                 if (var_r5 <= 0) {
                     var_r5 = 1;
                 }
-                *((u8 *)entry + 0x28) = *((u8 *)entry + 0x16);
-                *((u8 *)entry + 0x29) = 0;
-                *((s16 *)((u8 *)entry + 0x2E)) = var_r5;
-                *((s16 *)((u8 *)entry + 0x2C)) = 0;
-                *((u8 *)entry + 0xC) = (u8)(*((u8 *)entry + 0xC) | 8);
+                entry[0x28] = entry[0x16];
+                entry[0x29] = 0;
+                *(s16 *)(entry + 0x2E) = var_r5;
+                *(s16 *)(entry + 0x2C) = 0;
+                entry[0xC] = entry[0xC] | 8;
             }
         }
         i += 1;
-        entry = (Obj *)((u8 *)entry + 0x30);
+        entry += 0x30;
     } while (i < 0xA);
 }
 #pragma cplusplus reset
@@ -11583,6 +11583,52 @@ void fn_80147FA8(s16 arg0) {
         var_r30 = (struct Unk30 *)((u8 *)var_r30 + 0x30);
     } while (var_r29 < 4);
 }
+
+#pragma cplusplus on
+extern "C" void fn_801480D8(s16 arg0) {
+    struct Obj {
+        u8 pad[8];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    extern Obj lbl_8032FF08[];
+    extern f32 lbl_8036A7A0;
+    s16 raw;
+    s32 a;
+    s16 val;
+    Obj *p;
+    s32 i;
+    s32 temp;
+    u8 flags;
+
+    raw = arg0;
+    a = raw;
+    p = lbl_8032FF08;
+    i = 0;
+    do {
+        flags = *(u8 *)((u8 *)p + 0xC);
+        if (flags & 1) {
+            if (raw <= 0) {
+                p->v2();
+            } else if (!(flags & 8)) {
+                temp = (s32)((f32)a / lbl_8036A7A0);
+                val = (s16)temp;
+                if (val <= 0) {
+                    val = 1;
+                }
+                *(u8 *)((u8 *)p + 0x28) = *(u8 *)((u8 *)p + 0x16);
+                *(u8 *)((u8 *)p + 0x29) = 0;
+                *(s16 *)((u8 *)p + 0x2E) = val;
+                *(s16 *)((u8 *)p + 0x2C) = 0;
+                *(u8 *)((u8 *)p + 0xC) = (u8)(*(u8 *)((u8 *)p + 0xC) | 8);
+            }
+        }
+        i += 1;
+        p = (Obj *)((u8 *)p + 0x30);
+    } while (i < 4);
+}
+#pragma cplusplus reset
 
 #pragma use_lmw_stmw on
 #pragma cplusplus on

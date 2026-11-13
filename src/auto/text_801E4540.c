@@ -1640,6 +1640,42 @@ void fn_801E7D18(void *arg0) {
     fn_8000A248();
 }
 
+void fn_801E7FC0(void *arg0) {
+    s32 fn_800102BC(s32, s32, f32);
+    void fn_8008BF68(s16, s16, s32);
+    s32 fn_801E4A60(void *, s8);
+    extern f32 lbl_8036B6E8;
+    void *self;
+    s8 row;
+    s8 v;
+    s16 x;
+    s16 y;
+    s32 flag;
+    s32 y1;
+
+    self = arg0;
+    v = (s8)fn_801E4A60(self, (s8)*(u8 *)((u8 *)self + 0x32));
+    row = (s8)(v - (*(s16 *)((u8 *)self + 0x38) / 32));
+    y = (s16)((0x20 - fn_800102BC(-1, v, lbl_8036B6E8)) >> 1);
+    x = *(s16 *)((u8 *)self + 0x3C);
+    y = (s16)((s16)(y + 0x62) + (row << 5));
+    if (x < 0 || *(s16 *)((u8 *)self + 0x3E) < 0) {
+        *(s16 *)((u8 *)self + 0x3C) = 0x28;
+        *(s16 *)((u8 *)self + 0x3E) = y;
+    } else {
+        y1 = y + 1;
+        *(s16 *)((u8 *)self + 0x3C) = (s16)((x + 0x29) >> 1);
+        *(s16 *)((u8 *)self + 0x3E) = (s16)((y1 + *(s16 *)((u8 *)self + 0x3E)) >> 1);
+    }
+    flag = 0;
+    x = *(s16 *)((u8 *)self + 0x3C);
+    y = *(s16 *)((u8 *)self + 0x3E);
+    if (*(u8 *)((u8 *)self + 0x2D) == 0 && *(u8 *)((u8 *)self + 0x2E) == 0) {
+        flag = 1;
+    }
+    fn_8008BF68(x, y, flag);
+}
+
 void fn_801E80B4(void *arg0) {
     u8 fn_801E8B38(void *, void *, s8);
     s32 fn_80230BCC(s32);
@@ -2458,6 +2494,69 @@ void fn_801E97D4(void *arg0) {
         fn_8000C188(arg0);
     }
 }
+
+void fn_801E9864(void *arg0)
+{
+    typedef struct Owner {
+        u8 pad[0x50];
+        u32 list;
+        void *node;
+        void *next;
+    } Owner;
+    extern u8 lbl_8036835C;
+    extern u8 lbl_8036835D;
+    extern u8 lbl_8036835E;
+    extern u8 lbl_8036835F;
+    extern u8 lbl_80368360;
+    extern s16 lbl_80368362;
+    extern s16 lbl_80368364;
+    extern s16 lbl_80368368;
+    void fn_8003F670(void *);
+    void fn_8006D8E8(void *);
+    void fn_80056A04(void *, s32);
+    void fn_80136F2C(void *, void *, void *, void *);
+    Owner *self;
+    s16 *p68;
+    void *obj;
+    void (**vtbl)(void *, s32);
+    void *sp10;
+    void *spC;
+    u8 sp8[4];
+    void *end;
+
+    self = (Owner *)arg0;
+    p68 = &lbl_80368368;
+    lbl_8036835C = *(u8 *)((u8 *)arg0 + 0x30);
+    lbl_8036835D = *(u8 *)((u8 *)arg0 + 0x31);
+    lbl_8036835E = *(u8 *)((u8 *)arg0 + 0x32);
+    lbl_8036835F = *(u8 *)((u8 *)arg0 + 0x33);
+    lbl_80368360 = *(u8 *)((u8 *)arg0 + 0x34);
+    lbl_80368362 = *(s16 *)((u8 *)arg0 + 0x36);
+    lbl_80368364 = *(s16 *)((u8 *)arg0 + 0x38);
+    lbl_80368368 = *(s16 *)((u8 *)arg0 + 0x3C);
+    p68[1] = *(s16 *)((u8 *)arg0 + 0x3E);
+    fn_8003F670(*(void **)((u8 *)arg0 + 0x40));
+    fn_8006D8E8(*(void **)((u8 *)arg0 + 0x64));
+    obj = *(void **)((u8 *)arg0 + 0x5C);
+    if (obj != NULL) {
+        vtbl = *(void (***)(void *, s32))((u8 *)obj + 0x2C);
+        vtbl[8](obj, 1);
+    }
+    fn_80056A04(*(void **)((u8 *)arg0 + 0x60), 1);
+    if (arg0 != NULL) {
+        if (&self->list != NULL) {
+            if (&self->list != NULL) {
+                if (&self->list != NULL) {
+                    end = &self->node;
+                    sp10 = end;
+                    spC = self->next;
+                    fn_80136F2C(sp8, &self->list, &spC, &sp10);
+                }
+            }
+        }
+    }
+}
+
 #pragma optimization_level reset
 void fn_801E9958(void) {
     M2C_UNK fn_801E9978();
@@ -2815,10 +2914,44 @@ void fn_801EA018(s32 *arg0, u8 *arg1) {
     }
 }
 
-void fn_801EA430(void) {
-    // This is an empty placeholder function for the purpose of this example.
-    // The actual implementation would need to be filled in with the correct logic,
-    // based on the assembly code shown by claim_function and objdiff output.
+void fn_801EA430(void *arg0) {
+    void fn_800C428C(void *);
+    void *head;
+    void *cur;
+    void *end;
+    void *node;
+    void *a;
+
+    head = (u8 *)arg0 + 4;
+    cur = *(void **)((u8 *)arg0 + 8);
+    while (cur != head) {
+        if ((s8)*(u8 *)*(void **)((u8 *)cur + 8) < 0) {
+            end = *(void **)((u8 *)cur + 4);
+            while (end != head) {
+                if ((s8)*(u8 *)*(void **)((u8 *)end + 8) >= 0) {
+                    break;
+                }
+                end = *(void **)((u8 *)end + 4);
+            }
+            if (cur != end) {
+                a = *(void **)end;
+                *(void **)((u8 *)*(void **)cur + 4) = *(void **)((u8 *)a + 4);
+                **(void ***)((u8 *)a + 4) = *(void **)cur;
+                while (cur != end) {
+                    node = cur;
+                    cur = *(void **)((u8 *)cur + 4);
+                    fn_800C428C(node);
+                    *(s32 *)arg0 = *(s32 *)arg0 - 1;
+                }
+            }
+            if (end == head) {
+                return;
+            }
+            cur = *(void **)((u8 *)end + 4);
+        } else {
+            cur = *(void **)((u8 *)cur + 4);
+        }
+    }
 }
 /* Functions from 0x801E4540 to 0x801EA8C0, found by decomp-toolkit. */
 #include "common.h"

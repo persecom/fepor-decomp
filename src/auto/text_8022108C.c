@@ -842,14 +842,17 @@ void fn_8022224C(s32 arg0, void *arg1) {
     }
 }
 
-void fn_80222334(void)
-{
-    u32 temp_r3;
-    u32 var_r3;
-    
-    temp_r3 = OSGetTime();
-    var_r3 = (temp_r3 & 0xFFFF) + 0x41F;
-    if (var_r3 < 0)
-        var_r3 += 0x10000;
-}
+#pragma scheduling off
+void fn_80222334(u32 arg0) {
+    u32 lo;
+    u32 reg;
 
+    lo = (u8)arg0;
+    reg = M2C_FIELD(__GXData, u32 *, 0x204);
+    M2C_FIELD(__GXData, u32 *, 0x204) = __rlwimi(reg, arg0, 4, 25, 27);
+    GXWGFifo.u8 = 0x10;
+    GXWGFifo.u32 = 0x1009;
+    GXWGFifo.u32 = lo;
+    M2C_FIELD(__GXData, u32 *, 0x5AC) |= 4;
+}
+#pragma scheduling on

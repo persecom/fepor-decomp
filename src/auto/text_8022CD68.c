@@ -302,6 +302,79 @@ void fn_8022D084(void *heap, void *ptr) {
     }
 }
 
+void fn_8022D0DC(void *heap, void *ptr, u32 size) {
+    typedef struct PoolBlock {
+        struct PoolBlock *prev;
+        struct PoolBlock *next;
+        u32 slotSize;
+        void *freeSlots;
+        u32 usedSlots;
+    } PoolBlock;
+    typedef struct {
+        PoolBlock *head;
+        PoolBlock *tail;
+    } SizeClass;
+
+    extern const u32 lbl_80282B60[];
+    void fn_8022D234(void **, void *);
+
+    const u32 *limit;
+    u32 index;
+    u8 *slot;
+    SizeClass *sizeClass;
+    PoolBlock *block;
+
+    limit = lbl_80282B60;
+    index = 0;
+    while (size > *limit) {
+        limit++;
+        index++;
+    }
+
+    slot = (u8 *)ptr - 4;
+    sizeClass = (SizeClass *)((u8 *)heap + (index * 8 + 4));
+    block = *(PoolBlock **)slot;
+
+    if (block->freeSlots == NULL && sizeClass->tail != block) {
+        if (sizeClass->head == block) {
+            sizeClass->tail = sizeClass->tail->prev;
+            sizeClass->head = sizeClass->head->prev;
+        } else {
+            block->prev->next = block->next;
+            block->next->prev = block->prev;
+            block->next = sizeClass->tail;
+            block->prev = block->next->prev;
+            block->prev->next = block;
+            block->next->prev = block;
+            sizeClass->tail = block;
+        }
+    }
+
+    *(void **)ptr = block->freeSlots;
+    block->freeSlots = slot;
+
+    if (--block->usedSlots == 0) {
+        if (sizeClass->tail == block) {
+            sizeClass->tail = block->next;
+        }
+        if (sizeClass->head == block) {
+            sizeClass->head = block->prev;
+        }
+
+        block->prev->next = block->next;
+        block->next->prev = block->prev;
+
+        if (sizeClass->tail == block) {
+            sizeClass->tail = NULL;
+        }
+        if (sizeClass->head == block) {
+            sizeClass->head = NULL;
+        }
+
+        fn_8022D234((void **)heap, block);
+    }
+}
+
 void fn_8022CDD0(void *);
 #pragma global_optimizer off
 #pragma opt_strength_reduction off

@@ -5122,17 +5122,18 @@ void *fn_80067440(s32 arg0) {
     return (u8 *)lbl_80366DDC + arg0 * 0x2c;
 }
 
-#pragma peephole off
+#pragma optimization_level 1
 void fn_80067460(void *arg0) {
     extern u8 lbl_80311B04[];
-    extern u8 *lbl_80366DDC;
-    u8 *p;
-    if (arg0 == NULL) {
-        p = lbl_80311B04;
-        lbl_80366DDC = p;
+    extern void *lbl_80366DDC;
+    if (arg0 != NULL) {
+        return;
+    } else {
+        lbl_80366DDC = lbl_80311B04;
+        return;
     }
 }
-#pragma peephole on
+#pragma optimization_level reset
 s32 fn_80067478(void) {
     extern s32 lbl_80366DDC;
     return lbl_80366DDC;

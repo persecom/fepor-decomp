@@ -160,6 +160,19 @@ BOOL __OSCallResetFunctions(BOOL final) {
     return TRUE;
 }
 
+void Reset(u32 resetCode) {
+    volatile u32 *pi = (volatile u32 *)0xCC003000;
+    u32 t1, t2;
+
+    t1 = *(volatile u32 *)0x800000F8;
+    do {
+        t2 = *(volatile u32 *)0x800000F8;
+    } while ((t2 - t1) < 0x1124U);
+    pi[9] = 3;
+    pi[9] = resetCode;
+    for (;;) {}
+}
+
 void fn_8020A824(void *thread);
 
 #pragma peephole off

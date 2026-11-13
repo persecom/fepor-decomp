@@ -2123,6 +2123,45 @@ extern "C" void fn_801B9500(void *arg0) {
         M2C_FIELD(arg0, void **, 0x60) = NULL;
     }
 }
+
+extern "C" void fn_801B9654(void *arg0) {
+    void *fn_8013FF94(void *, s32, s32);
+    void fn_8017BB94(void *);
+    u32 fn_8017BC94(void *);
+    void fn_80140258(void *, void *, s16 *, s32);
+    void fn_8000C070(void *, s32);
+    extern f32 lbl_8036B2D8;
+    struct { s16 x; s16 y; } spC;
+    struct { s16 x; s16 y; } sp8;
+    void *list;
+    void *obj82;
+    void *obj108;
+    s16 tmp;
+    f32 f;
+    s32 one;
+
+    list = *(void **)((u8 *)arg0 + 0x60);
+    obj82 = fn_8013FF94(arg0, 0x82, 0);
+    obj108 = fn_8013FF94(arg0, 0x108, 0);
+    fn_8017BB94(list);
+    if (fn_8017BC94(list) == 0) {
+        spC.x = *(s16 *)((u8 *)obj82 + 0xA);
+        spC.y = -0x3A;
+        fn_80140258(arg0, obj82, &spC.x, 0);
+        tmp = *(s16 *)((u8 *)obj108 + 0xC);
+        sp8.x = 0x260;
+        sp8.y = tmp;
+        fn_80140258(arg0, obj108, &sp8.x, 1);
+        fn_8000C070(arg0, 0x11);
+    } else {
+        one = 1;
+        f = lbl_8036B2D8;
+        *(u8 *)((u8 *)list + 0x3C) = one;
+        *(f32 *)((u8 *)obj82 + 0x30) = f;
+        *(f32 *)((u8 *)obj108 + 0x30) = f;
+    }
+}
+
 #pragma cplusplus reset
 void fn_801B9748(void *a) {
     void *fn_8013FF94(void *, s32, s32);

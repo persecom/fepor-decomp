@@ -9191,6 +9191,32 @@ s32 fn_800C2D74(Unk800C2ACC *arr, s32 idx, u8 val) {
     return idx;
 }
 
+char *fn_800C2E3C(void *arg0, s32 index) {
+    extern f32 lbl_80369D58;
+    extern f32 lbl_80369D5C;
+    extern f32 lbl_80369D60;
+    extern char lbl_80270088[];
+    extern char lbl_80320B6C[];
+    s32 fn_80010B78(void *, s32, f32);
+    s32 fn_80231D94(char *, const char *, ...);
+    s32 offset;
+    char *text;
+    s16 width;
+
+    offset = (index - 1) * 0x18 + 1;
+    text = (char *)arg0 + offset;
+    width = (s16)fn_80010B78(text, -1, lbl_80369D58);
+
+    if (width < 0x70) {
+        return text;
+    }
+
+    fn_80231D94(lbl_80320B6C, lbl_80270088 + 8,
+                (u8)(s32)(lbl_80369D5C * (lbl_80369D60 / (f32)width)),
+                text);
+    return lbl_80320B6C;
+}
+
 s32 fn_800C30CC(s32 arg0, s32 arg1) {
     return arg0 + ((arg1 - 1) * 0x18);
 }

@@ -1409,6 +1409,38 @@ void fn_80186BC0(void *arg0) {
         fn_8004FE90(*(void **)((u8 *)arg0 + 0x30), (u8)*(s32 *)((u8 *)arg0 + 0x38));
     }
 }
+
+void fn_80186E10(void *arg0) {
+    f32 fn_8005A028(s32, void *, f32, f32, f32, f32);
+    void fn_80050C50(void *, f32, f32);
+    void fn_8005F7B0(void *, u8);
+    void fn_8000C188(void *);
+    extern f32 lbl_8036ACF8;
+    extern f32 lbl_8036AD00;
+    extern f32 lbl_8036ACEC;
+    extern f32 lbl_8036ACF4;
+    void *p34;
+    void *p30;
+    void *r31;
+    s32 r30;
+    f32 f31;
+    f32 tmp;
+
+    *(f32 *)((u8 *)arg0 + 0x44) = *(f32 *)((u8 *)arg0 + 0x44) + lbl_8036ACF8;
+    p34 = *(void **)((u8 *)arg0 + 0x34);
+    r31 = (u8 *)p34 + 0x1C;
+    r30 = (s32)fn_8005A028(2, p34, lbl_8036AD00, lbl_8036ACEC, lbl_8036ACF4, *(f32 *)((u8 *)arg0 + 0x44));
+    p30 = *(void **)((u8 *)arg0 + 0x30);
+    f31 = fn_8005A028(2, p30, *(f32 *)((u8 *)arg0 + 0x38), *(f32 *)((u8 *)p30 + 4), lbl_8036ACF4, *(f32 *)((u8 *)arg0 + 0x44));
+    p30 = *(void **)((u8 *)arg0 + 0x30);
+    tmp = fn_8005A028(2, p30, *(f32 *)((u8 *)arg0 + 0x3C), *(f32 *)((u8 *)p30 + 8), lbl_8036ACF4, *(f32 *)((u8 *)arg0 + 0x44));
+    fn_80050C50(*(void **)((u8 *)arg0 + 0x34), f31, tmp);
+    fn_8005F7B0(r31, (u8)r30);
+    if (*(f32 *)((u8 *)arg0 + 0x44) == lbl_8036ACF4) {
+        fn_8000C188(arg0);
+    }
+}
+
 #pragma opt_strength_reduction on
 
 void fn_8018715C(void *arg0) {
@@ -2185,28 +2217,30 @@ void fn_8018A7FC(void *arg0)
 }
 
 void fn_8018A824(void *arg0) {
-    s32 temp_r4;
-    s32 temp_r3;
-    f32 temp_f1;
-    f32 temp_f31;
-    
-    if ((u8) *(u8*)((char*)arg0 + 0x64) != 0) {
-        *(s32*)((char*)arg0 + 0x34) = *(s32*)((char*)arg0 + 0x34) + 1;
+    void fn_8000C188(void *);
+    f32 fn_8005A028(s32, f32, f32, f32, f32);
+    extern f32 lbl_8036AD28;
+    extern f32 lbl_8036ACEC;
+    f32 f31;
+    f32 f1;
+    f32 z;
+    void *p;
+
+    if (*(u8 *)((u8 *)arg0 + 0x64)) {
+        *(s32 *)((u8 *)arg0 + 0x34) = *(s32 *)((u8 *)arg0 + 0x34) + 1;
+        *(s32 *)((u8 *)arg0 + 0x34) = *(s32 *)((u8 *)arg0 + 0x34) + 1;
     }
-    *(s32*)((char*)arg0 + 0x34) = *(s32*)((char*)arg0 + 0x34) + 1;
-    if (*(s32*)((char*)arg0 + 0x34) >= 0xA) {
-        *(s32*)((char*)arg0 + 0x34) = 0xA;
+    if (*(s32 *)((u8 *)arg0 + 0x34) >= 0xA) {
+        *(s32 *)((u8 *)arg0 + 0x34) = 0xA;
         fn_8000C188(arg0);
     }
-    
-    temp_r4 = *(s32*)((char*)arg0 + 0x34);
-    temp_f31 = fn_8005A028(2, temp_r4, *(f32*)((char*)arg0 + 0x54), *(f32*)((char*)arg0 + 0x4C), 10.0f, (f32)temp_r4);
-    temp_f1 = fn_8005A028(2, (s32)*(u16*)((char*)arg0 + 0x58), *(f32*)((char*)arg0 + 0x50), 10.0f, (f32)temp_r4);
-    
-    temp_r3 = *(s32*)((char*)arg0 + 0x30);
-    *(f32*)((char*)temp_r3 + 0x10) = temp_f31;
-    *(f32*)((char*)temp_r3 + 0x14) = temp_f1;
-    *(f32*)((char*)temp_r3 + 0x18) = 0.0f;
+    f31 = fn_8005A028(2, *(f32 *)((u8 *)arg0 + 0x54), *(f32 *)((u8 *)arg0 + 0x4C), lbl_8036AD28, (f32)*(s32 *)((u8 *)arg0 + 0x34));
+    f1 = fn_8005A028(2, *(f32 *)((u8 *)arg0 + 0x58), *(f32 *)((u8 *)arg0 + 0x50), lbl_8036AD28, (f32)*(s32 *)((u8 *)arg0 + 0x34));
+    p = *(void **)((u8 *)arg0 + 0x30);
+    z = lbl_8036ACEC;
+    *(f32 *)((u8 *)p + 0x10) = f31;
+    *(f32 *)((u8 *)p + 0x14) = f1;
+    *(f32 *)((u8 *)p + 0x18) = z;
 }
 
 #pragma cplusplus off
@@ -8491,35 +8525,30 @@ void fn_8019914C(void *arg0, void *arg1, void *arg2, void *arg3) {
     void *fn_80151D50(void *, void *, void *, void *, void *, void *, s32);
     void fn_801518B4(void *, void *);
     extern u8 lbl_8027A858[];
-    s32 sp24[3];
-    s32 sp18[3];
+    struct Vec3 { s32 x, y, z; };
+    struct Vec3 sp24;
+    struct Vec3 sp18;
     u8 spC[0xC];
     u8 sp8[4];
     void *obj;
     s8 flag;
-    void *mgr;
-    void (*method)(void *, void *);
 
     flag = 0;
     obj = fn_800C42D8(0xC8);
     if (obj != NULL) {
-        sp24[0] = ((s32 *)arg2)[0];
-        sp24[1] = ((s32 *)arg2)[1];
-        sp24[2] = ((s32 *)arg2)[2];
-        sp18[0] = ((s32 *)arg1)[0];
-        sp18[1] = ((s32 *)arg1)[1];
-        sp18[2] = ((s32 *)arg1)[2];
+        sp24 = *(struct Vec3 *)arg2;
+        sp18 = *(struct Vec3 *)arg1;
         fn_800C9ABC(spC, (char *)(lbl_8027A858 + 0x76), sp8);
         flag = 1;
-        obj = fn_80151D50(obj, *(void **)((u8 *)arg0 + 0xAC), spC, (u8 *)arg0 + 0x12C, sp18, sp24, 1);
+        obj = fn_80151D50(obj, *(void **)((u8 *)arg0 + 0xAC), spC, (u8 *)arg0 + 0x12C, &sp18, &sp24, 1);
     }
     *(void **)((u8 *)arg0 + 0x144) = obj;
-    if (flag != 0) {
+    if (flag) {
         fn_800C9A60(spC, -1);
     }
-    mgr = *(void **)((u8 *)arg0 + 0xAC);
-    method = ((void (**)(void *, void *))*(void **)((u8 *)mgr + 0x10))[0x1C / 4];
-    method(mgr, *(void **)((u8 *)arg0 + 0x144));
+    (*(void (***)(void *, void *))((u8 *)*(void **)((u8 *)arg0 + 0xAC) + 0x10))[7](
+        *(void **)((u8 *)arg0 + 0xAC),
+        *(void **)((u8 *)arg0 + 0x144));
     fn_801518B4(*(void **)((u8 *)arg0 + 0x144), arg3);
 }
 

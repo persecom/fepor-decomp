@@ -961,38 +961,41 @@ void fn_800076EC(void) {
     *(f32 *)(ptr + 0x28) = temp;
 }
 
-void fn_8000770C(
-    float arg0,
-    float arg1,
-    float arg2,
-    float arg3,
-    float arg4,
-    float arg5
-)
+void fn_8000770C(f32 a, f32 b, f32 c, f32 d, f32 e, f32 f)
 {
-    extern void *lbl_80367140;
-    extern float lbl_80368B98;
-    extern float lbl_80368B94;
+    extern u8 *lbl_80367140;
+    extern f32 lbl_80368B98;
+    extern f32 lbl_80368B94;
+    void *p;
+    f32 t0, t1, t2, t3;
+    f32 c98, c94;
 
-    void *object;
+    p = lbl_80367140;
+    t0 = a + e;
+    t1 = b + f;
+    c98 = lbl_80368B98;
+    p = *(void **)((u8 *)p + 0xC);
+    t2 = c + e;
+    c94 = lbl_80368B94;
+    p = *(void **)((u8 *)p + 4);
+    t3 = d + f;
 
-    object = *(void **)((u8 *)lbl_80367140 + 0xC);
-    object = *(void **)((u8 *)object + 4);
+    *(f32 *)((u8 *)p + 0x10) = a;
+    *(f32 *)((u8 *)p + 0x20) = t0;
+    *(f32 *)((u8 *)p + 0x14) = b;
+    *(f32 *)((u8 *)p + 0x24) = t1;
+    *(f32 *)((u8 *)p + 0x1C) = c98;
+    *(f32 *)((u8 *)p + 0x18) = c98;
+    *(f32 *)((u8 *)p + 0x2C) = c94;
+    *(f32 *)((u8 *)p + 0x28) = c94;
 
-    *(float *)((u8 *)object + 0x10) = arg0;
-    *(float *)((u8 *)object + 0x14) = arg1;
-    *(float *)((u8 *)object + 0x18) = arg2;
-    *(float *)((u8 *)object + 0x1C) = arg3;
+    p = *(void **)(lbl_80367140 + 0xC);
+    p = *(void **)((u8 *)p + 4);
 
-    *(float *)((u8 *)object + 0x20) = arg0 + arg4;
-    *(float *)((u8 *)object + 0x24) = arg1 + arg5;
-    *(float *)((u8 *)object + 0x28) = arg2 + arg4;
-    *(float *)((u8 *)object + 0x2C) = arg3 + arg5;
-
-    *(float *)((u8 *)object + 0x18) = arg2;
-    *(float *)((u8 *)object + 0x1C) = arg3;
-    *(float *)((u8 *)object + 0x28) = arg2 + arg4;
-    *(float *)((u8 *)object + 0x2C) = arg3 + arg5;
+    *(f32 *)((u8 *)p + 0x18) = c;
+    *(f32 *)((u8 *)p + 0x1C) = d;
+    *(f32 *)((u8 *)p + 0x28) = t2;
+    *(f32 *)((u8 *)p + 0x2C) = t3;
 }
 
 void fn_80007770(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
@@ -3912,6 +3915,36 @@ s32 fn_8000CE68(s32 arg0) {
     lbl_80367150[1] = lbl_80367150[0];
     lbl_80367150[0] = temp_r6;
     return ((s32) (temp_r0 * 0x64) / 65536) < arg0;
+}
+
+s32 fn_8000CEE4(s32 arg0) {
+    extern u16 lbl_80367150;
+    u16 *st;
+    s32 s0;
+    s32 s1;
+    s32 s2;
+    s32 t4;
+    s32 combined;
+    u16 t6;
+
+    st = &lbl_80367150;
+    s0 = st[0];
+    s2 = st[2];
+    s1 = st[1];
+    t4 = (s2 * 2) & 0xFFFE;
+    combined = (s1 << 11) + (s0 >> 5);
+    st[2] = t4;
+    t6 = (u16)combined;
+    if (s1 & 0x8000) {
+        st[2] = t4 + 1;
+    }
+    t6 ^= st[2];
+    s1 = st[1];
+    s0 = st[0];
+    st[2] = s1;
+    st[1] = s0;
+    st[0] = t6;
+    return (arg0 * t6) / 65536;
 }
 
 void fn_8000CF4C(s32 arg0) {

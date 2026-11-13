@@ -1836,36 +1836,41 @@ void fn_801F6164(s32 unused, s32 arg1) {
     M2C_FIELD(lbl_803683F4, s32 *, 0x3C) = arg1;
 }
 
-void fn_801F6170(void *arg0) {
-    extern s32 lbl_80280B48[4];
-    
+#pragma global_optimizer off
+void fn_801F6170(void *arg0)
+{
+    extern u32 lbl_80280B48[4];
+    u32 fn_8023C410(u32);
+    void fn_8000C188(void *);
+    u32 local[4];
+    u32 tmp[4];
     s32 i;
-    s32 temp_r5;
-    s32 *ptr;
+    u32 *p;
 
-    M2C_FIELD(arg0, u8 *, 0x4C) = 1;
-    
+    *(u8 *)((u8 *)arg0 + 0x4C) = 1;
+
+    local[0] = lbl_80280B48[0];
+    local[1] = lbl_80280B48[1];
+    local[2] = lbl_80280B48[2];
+    local[3] = lbl_80280B48[3];
+
+    p = local;
     for (i = 0; i < 4; i++) {
-        ptr = &M2C_FIELD(arg0, s32 *, 0x18 + (i << 2));
-        
-        M2C_FIELD(arg0, s32 *, 0x18) = lbl_80280B48[0];
-        M2C_FIELD(arg0, s32 *, 0x1C) = lbl_80280B48[1];
-        M2C_FIELD(arg0, s32 *, 0x20) = lbl_80280B48[2];
-        M2C_FIELD(arg0, s32 *, 0x24) = lbl_80280B48[3];
-        
-        if (fn_8023C410(*ptr, lbl_80280B48[1], lbl_80280B48[0]) == 4) {
-            temp_r5 = lbl_80280B48[i];
-            
-            M2C_FIELD(arg0, s32 *, 0x38) = temp_r5;
-            M2C_FIELD(arg0, s32 *, 0x3C) = 2;
-            M2C_FIELD(arg0, s16 *, 0x48) = 0;
-            
-            fn_8000C188(arg0, 2, temp_r5, i << 2, lbl_80280B48[3], lbl_80280B48[2], lbl_80280B48[1], lbl_80280B48[0]);
+        if (fn_8023C410(p[0]) == 0x40000) {
+            tmp[0] = lbl_80280B48[0];
+            tmp[1] = lbl_80280B48[1];
+            tmp[2] = lbl_80280B48[2];
+            tmp[3] = lbl_80280B48[3];
+            *(u32 *)((u8 *)arg0 + 0x38) = tmp[i];
+            *(s32 *)((u8 *)arg0 + 0x3C) = 2;
+            *(s16 *)((u8 *)arg0 + 0x48) = 0;
+            fn_8000C188(arg0);
             return;
         }
+        p++;
     }
 }
-
+#pragma global_optimizer on
 void fn_801F6260(void *arg0) {
     *(u8 *)((u8 *)arg0 + 0x4C) = 0;
     fn_8005C7C8((u8 *)&lbl_80280B58 + 0x18C);
@@ -4753,54 +4758,57 @@ u32 fn_801FB9CC(void *arg0, u16 arg1) {
     return *(u16 *)((u8 *)arg0 + 0x120) < arg1;
 }
 
-s32 fn_801FB9E0(u8 *arg0) {
+#pragma opt_common_subs off
+s32 fn_801FB9E0(u8 *arg0)
+{
     u16 fn_802072A0(s32);
-    s32 var_r31;
-    u8 *var_r30;
-    u8 temp_r3;
-    u8 ch;
-    u8 temp_r0;
-    u8 temp_r0_2;
-    u8 var_r0;
 
     if ((s8)*arg0 == 0) {
         return 0;
     }
-    var_r30 = arg0;
-    var_r31 = 0x18;
-    goto loop_check;
-loop_body:
-    ch = temp_r3;
-    if ((s8)ch == 0xA) {
-        var_r31 += 0x18;
-        var_r30 += 1;
-        goto loop_check;
-    }
-    if (fn_802072A0(ch) != 1) {
-        var_r30 += 1;
-        goto loop_check;
-    }
-    temp_r0 = var_r30[0];
-    if ((((temp_r0 >= 0x81U) && (temp_r0 <= 0x9FU)) || ((temp_r0 >= 0xE0U) && (temp_r0 <= 0xFCU)))
-        && (((temp_r0_2 = var_r30[1], temp_r0_2 >= 0x40U) && (temp_r0_2 <= 0x7EU))
-            || ((temp_r0_2 >= 0x80U) && (temp_r0_2 <= 0xFCU)))) {
-        var_r0 = 1;
-    } else {
-        var_r0 = 0;
-    }
-    if (var_r0 == 0) {
-        var_r30 += 1;
-    } else {
-        var_r30 += 2;
-    }
-loop_check:
-    temp_r3 = *var_r30;
-    if ((s8)temp_r3 != 0) {
-        goto loop_body;
-    }
-    return var_r31;
-}
+    {
+        s32 var_r31;
+        u8 *var_r30;
+        u8 temp_r3;
+        u8 temp_r0;
+        u8 temp_r0_2;
+        u8 var_r0;
 
+        var_r30 = arg0;
+        var_r31 = 0x18;
+        goto loop_check;
+    loop_body:
+        if ((s32)(s8)temp_r3 == 0xA) {
+            var_r31 += 0x18;
+            var_r30 += 1;
+            goto loop_check;
+        }
+        if (fn_802072A0(temp_r3) != 1) {
+            var_r30 += 1;
+            goto loop_check;
+        }
+        temp_r0 = var_r30[0];
+        if ((((temp_r0 >= 0x81U) && (temp_r0 <= 0x9FU)) || ((temp_r0 >= 0xE0U) && (temp_r0 <= 0xFCU)))
+            && (((temp_r0_2 = var_r30[1], temp_r0_2 >= 0x40U) && (temp_r0_2 <= 0x7EU))
+                || ((temp_r0_2 >= 0x80U) && (temp_r0_2 <= 0xFCU)))) {
+            var_r0 = 1;
+        } else {
+            var_r0 = 0;
+        }
+        if (var_r0 == 0) {
+            var_r30 += 1;
+        } else {
+            var_r30 += 2;
+        }
+    loop_check:
+        temp_r3 = *var_r30;
+        if ((s8)temp_r3 != 0) {
+            goto loop_body;
+        }
+        return var_r31;
+    }
+}
+#pragma opt_common_subs on
 extern u16 lbl_8029B520[];
 s32 fn_801FBC30(s32 arg0) {
     return ((s32 **)lbl_8029B520)[1][arg0];

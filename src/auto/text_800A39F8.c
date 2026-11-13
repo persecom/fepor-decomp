@@ -2641,17 +2641,9 @@ void fn_800A9174(void) {
     extern f32 lbl_80369BB0;
     extern u8 lbl_802842B8[];
     extern u8 lbl_802842A4[];
-    struct {
-        void *ptr;
-        u8 *cur;
-        s32 unk8;
-        u8 flag;
-        u8 pad[3];
-        void *vt;
-    } tmp;
     s32 b;
-    s32 a;
-
+    u32 a;
+    struct { void *ptr; u8 *cur; s32 unk8; u8 flag; u8 pad[3]; void *vt; } tmp;
     fn_8017A764(&tmp, lbl_8026E470 + 0xb5, 0);
     tmp.cur += 4;
     a = fn_8017A950(&tmp);

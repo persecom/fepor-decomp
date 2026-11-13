@@ -1451,27 +1451,27 @@ loop_22:
     return var_r8;
 }
 
+#pragma global_optimizer off
 s32 fn_80036DE0(void *arg0, void *arg1)
 {
-    u8 *obj;
-    u8 *table;
-    u32 value;
     s32 index;
+    u32 value;
+    u8 *obj;
     s32 offset;
+    u8 *table;
     s32 count;
 
-    obj = *(u8 **)((u8 *)arg0 + 0x188);
-    value = *(u32 *)((u8 *)arg1 + 0x188);
-
     index = 0;
-    offset = 0;
+    value = *(u32 *)((u8 *)arg1 + 0x188);
+    obj = *(u8 **)((u8 *)arg0 + 0x188);
+    offset = index;
 
     goto check;
 
 loop:
     table = *(u8 **)(obj + 0x50);
 
-    if (value == *(u32 *)(table + offset + 8)) {
+    if (*(u32 *)(table + offset + 8) == value) {
         return (s8)index;
     }
 
@@ -1481,10 +1481,11 @@ loop:
 check:
     table = *(u8 **)(obj + 0x50);
 
-    if (table != 0) {
-        count = (u8)*(u32 *)(table + 4);
-    } else {
+    if (table == NULL) {
         count = 0;
+    } else {
+        count = (u8)*(u32 *)(table + 4);
+        count = (u8)count;
     }
 
     if (index < count) {
@@ -1493,38 +1494,43 @@ check:
 
     return -1;
 }
-
+#pragma global_optimizer on
 s32 fn_80036E48(void *arg0, u32 arg1)
 {
+    s32 offset;
+    s32 index;
     u8 *obj;
     u8 *table;
-    s32 index;
-    s32 offset;
     s32 count;
 
     obj = *(u8 **)((u8 *)arg0 + 0x188);
     index = 0;
     offset = 0;
 
-    while (1) {
-        table = *(u8 **)(obj + 0x50);
+    goto check;
 
-        if (table != 0) {
-            count = *(u32 *)(table + 4) & 0xFF;
-        } else {
-            count = 0;
-        }
+loop:
+    table = *(u8 **)(obj + 0x50);
 
-        if (index >= count) {
-            break;
-        }
+    if (*(u32 *)(table + offset + 8) == arg1) {
+        return (s8)index;
+    }
 
-        if (*(u32 *)(table + offset + 8) == arg1) {
-            return (s8)index;
-        }
+    offset += 8;
+    index++;
 
-        offset += 8;
-        index++;
+check:
+    table = *(u8 **)(obj + 0x50);
+
+    if (table == NULL) {
+        count = 0;
+    } else {
+        count = (u8)*(u32 *)(table + 4);
+        count = (u8)count;
+    }
+
+    if (index < count) {
+        goto loop;
     }
 
     return -1;

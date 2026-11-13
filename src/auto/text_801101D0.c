@@ -5102,6 +5102,46 @@ void *fn_8011C69C(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
     return self;
 }
 
+void *fn_8011C8DC(void *arg0, s16 arg1) {
+#pragma global_optimizer off
+    extern u8 lbl_8028FDD0[];
+    void fn_800C428C(void *);
+    void *fn_800CA6C8(void *, s16);
+    void fn_800E45EC(void *, s16);
+
+    u8 *self = (u8 *)arg0;
+    void *buffer;
+
+    if (self != NULL) {
+        *(void **)(self + 0x40) = lbl_8028FDD0;
+
+        if ((uintptr_t)self + 0xB8U != 0) {
+            if ((uintptr_t)self + 0xB8U != 0) {
+                if ((uintptr_t)self + 0xB8U != 0) {
+                    buffer = *(void **)(self + 0xC0);
+                    if (buffer != NULL) {
+                        fn_800C428C(buffer);
+                    }
+                }
+            }
+        }
+
+        if ((uintptr_t)self + 0xACU != 0) {
+            if ((uintptr_t)self + 0xACU != 0) {
+                fn_800CA6C8(self + 0xAC, 0);
+            }
+        }
+
+        fn_800E45EC(self, 0);
+        if (arg1 > 0) {
+            fn_800C428C(self);
+        }
+    }
+
+    return self;
+#pragma global_optimizer reset
+}
+
 void *fn_8011C984(void *arg0, u32 arg1) {
     u32 count;
     void **array;

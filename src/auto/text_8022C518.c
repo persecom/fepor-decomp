@@ -295,37 +295,26 @@ s32 __mod2u(s32 arg0, u32 arg1, s32 arg2, s32 arg3) {
 
 typedef struct { u32 hi; u32 lo; } UL64;
 
-UL64 fn_8022CB08(u32 hi, u32 lo, s32 s) {
-    UL64 r;
-    r.hi = (hi << s) | (lo >> (0x20 - s)) | (lo << (s - 0x20));
-    r.lo = lo << s;
-    return r;
+s32 fn_8022CB08(s32 arg0, u32 arg1, s32 arg2) {
+    return (arg0 << arg2) | (arg1 >> (0x20 - arg2)) | (arg1 << (arg2 - 0x20));
 }
 
-u32 fn_8022CB2C(u32 arg0, u32 arg1, s32 arg2) {
-    u32 r8;
-    u32 r10;
-    
-    r8 = 0x20 - arg2;
-    r10 = arg1 >> r8;
-    r10 = arg0 | (arg1 << arg2);
-    r10 = arg1 >> r8;
-    return r10;
+u32 fn_8022CB2C(u32 hi, u32 lo, s32 s) {
+    return (lo >> s) | (hi << (0x20 - s)) | (hi >> (s - 0x20));
 }
 
-u32 fn_8022CB50(s32 arg0, u32 arg1, s32 arg2) {
-    s32 r8 = 0x20 - arg2;
-    s32 r9 = 0x20 - arg2;
-    u32 r4 = arg1 >> arg2;
-    u32 r10 = arg0 << r8;
-    r4 |= r10;
-    
-    if ((arg2 - 0x20) < 0) {
-        s32 r10 = arg0 >> r9;
-        r4 |= r10;
+u32 fn_8022CB50(s32 hi, u32 lo, s32 s) {
+    s32 r8 = 0x20 - s;
+    s32 r9 = s - 0x20;
+    u32 r4 = lo >> s;
+    r4 |= (u32)hi << r8;
+    {
+        s32 r10 = hi >> r9;
+        if (r9 > 0) {
+            r4 |= (u32)r10;
+        }
     }
-    
-    return r4;
+    return (hi >> s, r4);
 }
 
 f32 fn_8022CB78(s32 arg0, u32 arg1) {

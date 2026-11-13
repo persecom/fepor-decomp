@@ -497,75 +497,28 @@ s32 fn_80096C18(void)
 }
 
 u8 fn_80096C78(s32 arg0) {
-    extern u8 lbl_80330EAC[];
-    u8 *base;
-    s16 *idx;
-    s16 saved;
-    s32 count;
-    s32 c;
-
-    base = lbl_80330EAC;
-    count = 0;
-    idx = (s16 *)(base + 0x8A0);
-    saved = *(s16 *)(base + 0x8A0);
-    *idx = (s16)arg0;
-    *idx = (s16)((s16)arg0 + 1);
-    for (;;) {
-        c = ((u8 *)idx)[*idx * 4 + 4];
-        if (c != 0x3D) {
-            if (c < 0x3D) {
-                if (c != 0x23) {
-                    if (c < 0x23) {
-                        if (c != 0) {
-                            if (c < 0) {
-                                goto cont;
-                            }
-                            if (c >= 0x20) {
-                                break;
-                            }
-                            goto cont;
-                        }
-                        break;
-                    }
-                    if (c < 0x37) {
-                        if (c >= 0x25) {
-                            goto cont;
-                        }
-                        break;
-                    }
-                    if (c >= 0x3A) {
-                        goto cont;
-                    }
-                    break;
-                }
-                goto cont;
-            }
-            if (c != 0x48) {
-                if (c < 0x48) {
-                    if (c >= 0x43) {
-                        goto cont;
-                    }
-                    if (c >= 0x3F) {
-                        break;
-                    }
-                    goto cont;
-                }
-                if (c >= 0x53) {
-                    goto cont;
-                }
-                if (c >= 0x50) {
-                    count += 1;
-                }
-                goto cont;
-            }
-            break;
-        }
-        break;
-    cont:
-        *idx = (s16)(*idx + 1);
-    }
-    *idx = saved;
-    return (u8)(count >= 2);
+extern u8 lbl_80330EAC[];
+s16 saved;
+s16 *idx;
+s32 count;
+count = 0;
+idx = (s16 *)(lbl_80330EAC + 0x8A0);
+saved = *idx;
+*idx = (s16)arg0;
+*idx = (s16)((s16)arg0 + 1);
+for (;;) {
+switch (((u8 *)idx)[*idx * 4 + 4]) {
+case 0: case 0x20: case 0x21: case 0x22: case 0x24:
+case 0x37: case 0x38: case 0x39: case 0x3D:
+case 0x3F: case 0x40: case 0x41: case 0x42: case 0x48:
+goto done;
+case 0x50: case 0x51: case 0x52: ++count; break;
+}
+*idx += 1;
+}
+done:
+*idx = saved;
+return (u8)(count >= 2);
 }
 
 s32 fn_80096EEC(s32 *arg0, u32 arg1) {

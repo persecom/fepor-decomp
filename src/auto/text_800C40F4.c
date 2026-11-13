@@ -549,6 +549,44 @@ void fn_800C4728(s32 arg0) {
     lbl_80367870 = lbl_80320B88[arg0];
 }
 
+s32 fn_800C4740(void) {
+    extern s32 lbl_80320B88[];
+    extern s32 lbl_80367870;
+    const s32 *entry;
+    s32 active;
+    s32 index;
+    s32 groups;
+
+    entry = lbl_80320B88;
+    active = lbl_80367870;
+    index = 0;
+    groups = 2;
+
+    do {
+        if (*entry == active) return index;
+
+        index++;
+        if (*++entry == active) return index;
+        index++;
+        if (*++entry == active) return index;
+        index++;
+        if (*++entry == active) return index;
+        index++;
+        if (*++entry == active) return index;
+        index++;
+        if (*++entry == active) return index;
+        index++;
+        if (*++entry == active) return index;
+        index++;
+        if (*++entry == active) return index;
+
+        entry++;
+        index++;
+    } while (--groups != 0);
+
+    return -1;
+}
+
 void fn_800C47E8(void) {
     // This is a placeholder for the actual function.
     // The full decompilation involves too many complex dependencies
@@ -18462,6 +18500,39 @@ s32 fn_800FB45C(void *arg0) {
     extern void *lbl_803678F8;
     
     return fn_802342B8(((s32*)lbl_803678F8)[0x14/4], ((s32**)arg0)[0x188/4][0], lbl_803678F8) == 0;
+}
+
+s32 fn_800FB494(void *arg0) {
+    extern void *lbl_803678F8;
+    extern u8 lbl_802EF4C8[];
+    s32 fn_802342B8(u8 *, u8 *);
+    s32 fn_80015610(void *, void *);
+
+    u8 **list;
+    void *other;
+    u8 *name;
+    u8 *entry;
+    u8 found;
+
+    list = M2C_FIELD(lbl_803678F8, u8 ***, 0x14);
+    other = *(void **)lbl_802EF4C8;
+    name = *M2C_FIELD(arg0, u8 ***, 0x188);
+
+    while ((entry = *list++) != NULL) {
+        if (fn_802342B8(entry, name) == 0) {
+            found = 1;
+            goto checked;
+        }
+    }
+    found = 0;
+
+checked:
+    if (found != 0) {
+        return 0;
+    }
+
+    return (u8)fn_80015610(M2C_FIELD(arg0, void **, 0x190),
+                          M2C_FIELD(other, void **, 0x190)) == 1;
 }
 
 s32 fn_800FB548(s32 arg0, s32 arg1) {

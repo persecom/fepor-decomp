@@ -361,17 +361,13 @@ s32 fn_801A3478(s32 arg0) {
     extern u8 lbl_80330EAC[];
     u8 *ctx;
     u8 *base;
-    void *p0;
-    void *p1;
 
     ctx = lbl_802EF4C8;
-    p0 = *(void **)ctx;
-    p1 = *(void **)(ctx + 4);
-    fn_801A7794(lbl_80330EAC, p0, p1);
-    fn_801A49AC(lbl_80330EAC, lbl_802EF4C8[0xA]);
+    fn_801A7794(lbl_80330EAC, *(void **)ctx, *(void **)(ctx + 4));
+    fn_801A49AC(lbl_80330EAC, *(u8 *)((u8 *)lbl_802EF4C8 + 0xA));
     if (fn_8000CE68(fn_8003CFF0(*(void **)lbl_802EF4C8, *(void **)(ctx + 4))) != 0
         && fn_8003C7D0(*(void **)(ctx + 4)) == 0) {
-        base = lbl_80330EAC;
+        base = (u8 *)lbl_80330EAC;
         ((struct { u8 pad:1; u8 mid:3; u8 lo:4; } *)(base + 0x485))->mid = 5;
         fn_801A4A24(lbl_80330EAC, 1);
     } else {

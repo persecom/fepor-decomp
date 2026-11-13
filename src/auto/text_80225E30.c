@@ -266,6 +266,63 @@ void fn_802264B4(void* arg0, void** arg1)
     }
 }
 
+s32 fn_8022659C(void *buffer, const u32 *words, s32 count) {
+    extern u16 gTRKBigEndian;
+    void fn_80003488(void *, void *, s32);
+    u8 *base;
+    const u32 *bigEndian;
+    u32 word;
+    u8 reversed[4];
+    u8 *src;
+    u32 position;
+    u32 remaining;
+    u32 size;
+    s32 error;
+    s32 result;
+    s32 i;
+
+    base = (u8 *)buffer;
+    bigEndian = (const u32 *)(const void *)&gTRKBigEndian;
+    i = 0;
+    result = 0;
+
+    while (result == 0 && i < count) {
+        word = *words;
+        if (*bigEndian != 0) {
+            src = (u8 *)&word;
+        } else {
+            reversed[0] = ((u8 *)&word)[3];
+            reversed[1] = ((u8 *)&word)[2];
+            reversed[2] = ((u8 *)&word)[1];
+            reversed[3] = ((u8 *)&word)[0];
+            src = reversed;
+        }
+
+        position = *(u32 *)(base + 0xC);
+        size = 4;
+        error = 0;
+        remaining = 0x880U - position;
+        if (remaining < size) {
+            error = 0x301;
+            size = remaining;
+        }
+
+        if (size == 1) {
+            base[position + 0x10] = *src;
+        } else {
+            fn_80003488(base + (position + 0x10), src, size);
+        }
+
+        *(u32 *)(base + 0xC) += size;
+        *(u32 *)(base + 0x8) = *(volatile u32 *)(base + 0xC);
+        result = error;
+        words++;
+        i++;
+    }
+
+    return result;
+}
+
 s32 fn_80226698(void *arg0, u8 *arg1, s32 arg2) {
     s32 var_r0;
     s32 var_r7;
@@ -859,6 +916,28 @@ s32 fn_80227FDC(void) {
     return lbl_8033CA40[0];
 }
 
+void fn_80227FEC(const u8 *bytes, s32 count) {
+    void MWTRACE(u8, char *, ...);
+    extern char lbl_8028269C[];
+    extern char lbl_802826A4[];
+
+    char *byteFormat;
+    char *lineEnd;
+    s32 i;
+
+    byteFormat = lbl_8028269C;
+    lineEnd = lbl_802826A4;
+
+    for (i = 0; i < count; i++, bytes++) {
+        MWTRACE(8, byteFormat, *bytes);
+        if (i % 16 == 15) {
+            MWTRACE(8, lineEnd);
+        }
+    }
+
+    MWTRACE(8, lbl_802826A4);
+}
+
 void fn_802283A8(void) {
     u32 var_r30;
     s32 var_r29;
@@ -1401,27 +1480,41 @@ extern u8 lbl_8033CFB4[];
 }
 #pragma optimization_level reset
 s32 fn_80229FA4(s32 arg0, u32 arg1, s32 arg2, s32 *arg3, s32 arg4) {
-    extern u16 gTRKExceptionStatus_8029E574[4];
-    extern u16 gTRKBigEndian;
-    s32 temp_r12;
-    s32 var_r3;
+    typedef struct {
+        u32 words[4];
+    } ExceptionStatus;
+
+    extern u8 gTRKExceptionStatus_8029E574[0x10];
+    ExceptionStatus saved;
+    u8 *status;
+    u32 *registers;
+    s32 count;
+    s32 result;
 
     if (arg1 > 0x24U) {
         return 0x701;
     }
-    temp_r12 = (arg1 - arg0) + 1;
-    gTRKExceptionStatus_8029E574[0xD/2] = 0U;
-    *arg3 = temp_r12 * 4;
+
+    status = gTRKExceptionStatus_8029E574;
+    saved = *(ExceptionStatus *)status;
+    count = (arg1 - arg0) + 1;
+    status[0xD] = 0;
+    registers = (u32 *)gTRKCPUState + arg0;
+    *arg3 = count * 4;
+
     if (arg4 != 0) {
-        var_r3 = fn_8022659C(arg2, temp_r12);
+        result = fn_8022659C((void *)arg2, registers, count);
     } else {
-        var_r3 = fn_8022632C(arg2, temp_r12);
+        result = fn_8022632C((void *)arg2, registers, count);
     }
-    if ((u8) gTRKExceptionStatus_8029E574[0xD/2] != 0) {
-        var_r3 = 0x702;
+
+    if (status[0xD] != 0) {
+        result = 0x702;
         *arg3 = 0;
     }
-    return var_r3;
+
+    *(ExceptionStatus *)gTRKExceptionStatus_8029E574 = saved;
+    return result;
 }
 
 s32 fn_8022A098(u32 *arg0, u32 arg1) {

@@ -181,6 +181,37 @@ s32 fn_80216F88(s32 arg0) {
     return 0;
 }
 
+void fn_80217034(void *alarm, void *context) {
+    extern u16 lbl_8033A200[];
+    void fn_80239298(s32, void *);
+
+    u8 *base = (u8 *)lbl_8033A200;
+    u8 *card;
+    s32 chan;
+    void (*callback)(s32, s32);
+
+    (void)context;
+
+    card = base;
+    chan = 0;
+    if (alarm != base + 0xE0) {
+        card = base + 0x110;
+        chan = 1;
+        if (alarm != base + 0x1F0) {
+            chan = 2;
+        }
+    }
+
+    if (*(s32 *)card != 0) {
+        fn_80239298(chan, NULL);
+        callback = *(void (**)(s32, s32))(card + 0xCC);
+        if (callback != 0) {
+            *(void (**)(s32, s32))(card + 0xCC) = 0;
+            callback(chan, -5);
+        }
+    }
+}
+
 s32 fn_802170D8(s32 chan) {
     extern u16 lbl_8033A200[];
     s32 EXISelect(s32, s32, s32);
@@ -3069,6 +3100,70 @@ s32 fn_8021D004(s32 arg0, s32 arg1, s32 arg2) {
     }
     
           return -0x80;
+}
+
+s32 fn_8021D118(s32 chan, s32 fileNo, void *stat, s32 callback) {
+#pragma dont_inline on
+#pragma use_lmw_stmw off
+
+    s32 card;
+    s32 result;
+    u32 address;
+    u32 ticksPerSecond;
+    u8 *status = (u8 *)stat;
+    CardDirEntry *entry;
+
+    if (fileNo < 0 || fileNo >= 0x7F) {
+        goto invalid;
+    }
+
+    address = *(u32 *)(status + 0x30);
+    if (address + 0x10000U != 0xFFFFU && address >= 0x200U) {
+        goto invalid;
+    }
+
+    address = *(u32 *)(status + 0x38);
+    if (address + 0x10000U == 0xFFFFU || (address & 0x1FFFU) <= 0x1FC0U) {
+        goto valid;
+    }
+
+invalid:
+    return -0x80;
+
+valid:
+    result = fn_80217B18(chan, &card);
+    if (result < 0) {
+        return result;
+    }
+
+    entry = (CardDirEntry *)((u8 *)fn_8021965C((void *)card) + (fileNo << 6));
+    result = fn_8021BB98((void *)card, entry);
+    if (result < 0) {
+        return fn_80217BD0((void *)card, result);
+    }
+
+    entry->unk7 = status[0x2E];
+    entry->unk2C = *(s32 *)(status + 0x30);
+    entry->unk30 = *(u16 *)(status + 0x34);
+    entry->unk32 = *(u16 *)(status + 0x36);
+    entry->unk3C = *(s32 *)(status + 0x38);
+    fn_8021CE0C(entry, stat);
+
+    if ((u32)entry->unk2C + 0x10000U == 0xFFFFU) {
+        entry->unk32 = (entry->unk32 & ~3U) | 1U;
+    }
+
+    ticksPerSecond = *(u32 *)0x800000F8 >> 2;
+    entry->unk28 = (s32)(OSGetTime() / ticksPerSecond);
+
+    result = fn_802197FC(chan, callback);
+    if (result < 0) {
+        fn_80217BD0((void *)card, result);
+    }
+    return result;
+
+#pragma use_lmw_stmw reset
+#pragma dont_inline reset
 }
 
 void fn_8021D28C(s32 arg0) {

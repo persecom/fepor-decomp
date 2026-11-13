@@ -352,7 +352,7 @@ void fn_80073CE4(s32 arg0) {
     u8 fn_80091D74(void *);
     void fn_80183BE4(void *, s32);
     extern u8 lbl_802EF4C8[24];
-    register u8 flags;
+    u8 flags;
 
     flags = 0;
     if (fn_80105BC0((u8 *)*(void **)lbl_802EF4C8 + 0x1BC, 9) != 0) {

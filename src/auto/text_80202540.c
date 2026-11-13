@@ -487,9 +487,11 @@ void fn_802031A8(float *arg0, float *arg1, float *arg2) {
 void fn_802031CC(void *arg0, void *arg1) {
     f64* a = (f64*)arg0;
     f64* b = (f64*)arg1;
-    b[0] = a[0] * 0.5;
-    b[1] = a[1] * 0.5;
-    return;
+    f64 c;
+    c = a[0] * 0.5; 
+    b[0] = c;
+    c = a[1] * 0.5;
+    b[1] = c;
 }
 
 f32 fn_8020322C(void *arg0) {

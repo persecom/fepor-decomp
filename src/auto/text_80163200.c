@@ -3237,6 +3237,98 @@ void fn_8016A1BC(void *arg0) {
     }
 }
 
+void fn_8016A400(void *arg0) {
+    typedef struct {
+        void *field00;
+        void *table;
+        s16 field08;
+        s16 field0A;
+        s16 field0C;
+        s16 field0E;
+        s16 field10;
+        s16 field12;
+        s16 field14;
+        s16 field16;
+        f32 field18;
+        s16 field1C;
+        s16 field1E;
+    } Config;
+
+    void *fn_80169948();
+    s32 fn_80024398(void *, void *, s32);
+    M2C_UNK fn_8000C5B8();
+    void *fn_800C42D8(s32);
+
+    extern u8 lbl_802845E8[];
+    extern u16 lbl_802920E0[76];
+    extern u8 lbl_80293D64[];
+    extern u16 lbl_802940AC[76];
+    extern u8 lbl_80294144[];
+    extern u8 lbl_80294194[];
+    extern s8 lbl_803680F0;
+    extern void *lbl_803680F4;
+    extern s8 lbl_803680F8;
+    extern void *lbl_803680FC;
+    extern f32 lbl_8036A9C0;
+    extern f32 lbl_8036A9D0;
+    extern f32 lbl_8036A9D4;
+
+    void *config;
+    void *parent;
+    void *child;
+    volatile Config *init;
+
+    config = fn_80169948();
+    M2C_FIELD(config, f32 *, 0x18) = lbl_8036A9C0;
+    M2C_FIELD(config, s16 *, 0x1E) = 0;
+    parent = (void *)fn_80024398(config, arg0, 0);
+    fn_8000C5B8(parent);
+
+    M2C_FIELD(parent, u8 *, 0x62) = 1;
+    M2C_FIELD(parent, u8 *, 0x61) = 0;
+    M2C_FIELD(arg0, void **, 0x4C) = parent;
+
+    if (lbl_803680F0 == 0) {
+        lbl_803680F0 = 1;
+        lbl_803680F4 = lbl_80294194;
+    }
+    if (lbl_803680F8 == 0) {
+        lbl_803680F8 = 1;
+        lbl_803680FC = lbl_80294144;
+    }
+
+    config = fn_800C42D8(0x20);
+    init = (volatile Config *)config;
+    if (config != NULL) {
+        init->table = lbl_802845E8;
+        init->field00 = lbl_80293D64;
+        init->table = lbl_802920E0;
+        init->field08 = 0;
+        init->field0A = 0;
+        init->field0C = 0x80;
+        init->field0E = 0;
+        init->field10 = 2;
+        init->field12 = 0xC;
+        init->field14 = 0x10;
+        init->field16 = 0;
+        init->field18 = lbl_8036A9D0;
+        init->field1C = 0x20;
+        init->field1E = 4;
+        init->table = lbl_802940AC;
+    }
+
+    init->field08 = 0x9E;
+    init->field0A = 0x8C;
+    init->field0C = 0x8A;
+    init->field14 = 0;
+    init->field18 = lbl_8036A9D4;
+    init->field1E = 4;
+
+    child = (void *)fn_80024398(config, parent, 0);
+    M2C_FIELD(child, u8 *, 0x61) = 0;
+    M2C_FIELD(arg0, void **, 0x50) = child;
+}
+
 void fn_8016A57C(void *arg0) {
     s32 fn_801090C0(void *);
     void *p;
@@ -14739,6 +14831,32 @@ extern "C" void fn_80180084(void *arg0)
         }
     }
 }
+
+extern "C" void fn_8018054C(void *arg0) {
+    void *fn_8013FF94(void *, s32, s32);
+    void fn_801658DC(void *, void *);
+    void fn_8013FF00(void *, void *);
+    void *fn_8000E0E4(void *);
+    extern u8 lbl_802789F0[];
+    void *a;
+    void *b;
+    void *tmp;
+
+    a = fn_8013FF94(arg0, 0x81, 0);
+    b = fn_8013FF94(arg0, 0x82, 0);
+    *(u8 *)((u8 *)a + 0x4C) = 1;
+    *(u8 *)((u8 *)b + 0x4C) = 1;
+    a = fn_8013FF94(arg0, 0x80, 0);
+    fn_801658DC(a, lbl_802789F0 + 0xA4);
+    *(s32 *)((u8 *)a + 0x48) = 1;
+    fn_8013FF00(arg0, b);
+    a = fn_8000E0E4(lbl_802789F0 + 0xBA);
+    tmp = fn_8013FF94(arg0, -0x1000, 0);
+    if (tmp != NULL) {
+        fn_801658DC(tmp, a);
+    }
+}
+
 #pragma cplusplus reset
 #pragma peephole reset
 #pragma use_lmw_stmw reset
@@ -15303,16 +15421,16 @@ extern "C" void fn_80181354(void *arg0) {
     extern u8 lbl_802789F0[];
     extern s32 lbl_80367110;
     extern void *lbl_80367240;
-    s32 tmp;
+    long buttons;
     s32 edge;
     s32 held;
-    s32 buttons;
-    s32 count;
+    u8 skip;
+    s32 tmp;
     s32 flags;
-    s16 now;
+    unsigned count;
     s32 cur;
     s16 old;
-    u8 skip;
+    register s16 now;
 
     skip = 0;
     flags = lbl_80367110;
@@ -15322,14 +15440,14 @@ extern "C" void fn_80181354(void *arg0) {
     if ((flags & 0x10) && !(flags & 0x20)) {
         skip = 1;
     }
-    if (skip == 0) {
+    if (!skip) {
         now = *(s16 *)((u8 *)arg0 + 0x4E);
         buttons = *(s32 *)((u8 *)lbl_80367240 + 0xC);
         held = *(s32 *)((u8 *)lbl_80367240 + 4);
         edge = held & (*(s32 *)((u8 *)lbl_80367240 + 8) ^ held);
         if (buttons & 0x08000008) {
             if (old == 0) {
-                if (buttons == edge) {
+                if ((int)buttons == edge) {
                     tmp = cur;
                     tmp += now;
                     tmp -= 1;
@@ -15342,7 +15460,7 @@ extern "C" void fn_80181354(void *arg0) {
             tmp = cur - 1;
             if (tmp == old) {
                 if (buttons == edge) {
-                    *(s16 *)((u8 *)arg0 + 0x4E) = (s16)(now - tmp);
+                    *(s16 *)((u8 *)arg0 + (unsigned)0x4E) = (s16)(now - tmp);
                 }
             } else {
                 *(s16 *)((u8 *)arg0 + 0x4E) = (s16)(now + 1);

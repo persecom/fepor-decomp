@@ -397,9 +397,9 @@ void fn_8009233C(u8 *arg0, u8 *arg1) {
     u8 fn_80105BC0(u8 *, s32);
     void fn_8001EDB8(u8 *, s32);
     u8 sp8;
-    s32 flags;
     s32 i;
     u8 *p;
+    s32 flags;
 
     flags = 0;
     if (fn_80105BC0(arg1 + 0x1BC, 0x5B) != 0) {
