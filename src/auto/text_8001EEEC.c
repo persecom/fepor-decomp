@@ -684,21 +684,29 @@ void fn_8002011C(void *arg0, s8 arg1, s8 arg2, u8 arg3, u8 arg4)
     }
 }
 
-void fn_8002134C(struct unit* arg0)
-{
-    u16* temp_r5;
-    u16 value;
-    
-    if (arg0 == NULL) {
-        return;
+s16 fn_8002134C(u8 *map, s8 x, s8 y) {
+    extern u8 lbl_802B14E4[];
+    u8 *cell;
+    u8 *hi;
+    u8 tid;
+    u8 uid;
+    s16 val;
+    u8 *unit;
+    u8 *cls;
+
+    hi = map + 0x10000;
+    cell = map + x + (y << 6);
+    tid = cell[0x100D];
+    uid = cell[0xD];
+    val = (s16)*(u16 *)(hi + (tid << 1) + 0x4214);
+    if (uid != 0) {
+        unit = (uid != 0) ? lbl_802B14E4 + (uid - 1) * 0x280 : NULL;
+        cls = *(u8 **)(unit + 0x190);
+        if ((map + 0x20000)[cls[8] + 0x4EE4] != 0) {
+            return 0x7FFE;
+        }
     }
-    
-    // Load pointer at arg0 + 0x34, then dereference it
-    temp_r5 = *(u16**)((char*)arg0 + 0x34);
-    
-    // Load u16 value from array at offset 0x1C and store back to arg0 + 0x18 
-    value = temp_r5[0x1C/sizeof(u16)];
-    *(u16*)((char*)arg0 + 0x18) = value;
+    return val;
 }
 
 void fn_800213D0(void *map, u8 x, u8 y, u16 range, s32 flagA, s32 flagB)
@@ -1321,42 +1329,36 @@ void fn_800213D0(void *map, u8 x, u8 y, u16 range, s32 flagA, s32 flagB)
     }
 }
 
-void fn_80022748(void *arg0, void *arg1) {
-    u8 temp_r0;
+void fn_80022748(u8 *map, u8 *arg1) {
+    u8 v;
 
     if (arg1 == NULL) {
-        M2C_FIELD(arg0, s8 *, 0x24EE4) = 0;
-        M2C_FIELD(arg0, s8 *, 0x24EE5) = 0;
-        M2C_FIELD(arg0, s8 *, 0x24EE6) = 0;
-        M2C_FIELD(arg0, s8 *, 0x24EE7) = 0;
+        map += 0x20000;
+        map[0x4EE4] = 0;
+        map[0x4EE5] = 0;
+        map[0x4EE6] = 0;
+        map[0x4EE7] = 0;
         return;
     }
-    temp_r0 = M2C_FIELD(arg1, u8 *, 8);
-    if ((s32) temp_r0 != 1) {
-        if ((s32) temp_r0 < 1) {
-            if ((s32) temp_r0 < 0) {
-                return;
-            }
-            /* Duplicate return node #7. Try simplifying control flow for better match */
-            M2C_FIELD(arg0, s8 *, 0x24EE4) = 0;
-            M2C_FIELD(arg0, s8 *, 0x24EE5) = 1;
-            M2C_FIELD(arg0, s8 *, 0x24EE6) = 0;
-            M2C_FIELD(arg0, s8 *, 0x24EE7) = 0;
-            return;
-        }
-        if ((s32) temp_r0 < 4) {
-            M2C_FIELD(arg0, s8 *, 0x24EE4) = 0;
-            M2C_FIELD(arg0, s8 *, 0x24EE5) = 1;
-            M2C_FIELD(arg0, s8 *, 0x24EE6) = 0;
-            M2C_FIELD(arg0, s8 *, 0x24EE7) = 0;
-            return;
-        }
-        return;
+    v = arg1[8];
+    switch (v) {
+    case 0:
+    case 2:
+    case 3:
+        map += 0x20000;
+        map[0x4EE4] = 0;
+        map[0x4EE5] = 1;
+        map[0x4EE6] = 0;
+        map[0x4EE7] = 0;
+        break;
+    case 1:
+        map += 0x20000;
+        map[0x4EE4] = 1;
+        map[0x4EE5] = 0;
+        map[0x4EE6] = 1;
+        map[0x4EE7] = 1;
+        break;
     }
-    M2C_FIELD(arg0, s8 *, 0x24EE4) = 1;
-    M2C_FIELD(arg0, s8 *, 0x24EE5) = 0;
-    M2C_FIELD(arg0, s8 *, 0x24EE6) = 1;
-    M2C_FIELD(arg0, s8 *, 0x24EE7) = 1;
 }
 
 #pragma scheduling off
@@ -3638,15 +3640,26 @@ void fn_80026E2C(s32 arg0) {
 }
 
 void fn_80026E88(s32 arg0) {
-    M2C_UNK fn_8003EA24(void *, u8, u8);
-    M2C_UNK fn_80183D7C(void *, s32, s8, s8, s32);
-    extern M2C_UNK lbl_802EF4C8;
-    s32 temp_r30;
+    void fn_8003EA24(void *, u8, u8);
+    void fn_80183D7C(void *, s32, s8, s8, s32);
+    typedef struct {
+        void *unit;
+        s32 unk04;
+        u8 pad[7];
+        u8 unk0F;
+        u8 unk10;
+    } Ctx;
+    extern Ctx lbl_802EF4C8;
+    Ctx *ctx;
+    void *unit;
+    s32 saved;
 
-    temp_r30 = M2C_FIELD(M2C_FIELD(&lbl_802EF4C8, void **, 0), s32 *, 0x194);
-    M2C_FIELD(&lbl_802EF4C8, s32 *, 4) = temp_r30;
-    fn_8003EA24(M2C_FIELD(&lbl_802EF4C8, void **, 0), M2C_FIELD(&lbl_802EF4C8, u8 *, 0xF), M2C_FIELD(&lbl_802EF4C8, u8 *, 0x10));
-    fn_80183D7C(M2C_FIELD(&lbl_802EF4C8, void **, 0), temp_r30, (s8) M2C_FIELD(&lbl_802EF4C8, u8 *, 0xF), (s8) M2C_FIELD(&lbl_802EF4C8, u8 *, 0x10), arg0);
+    ctx = &lbl_802EF4C8;
+    unit = ctx->unit;
+    saved = *(s32 *)((u8 *)unit + 0x194);
+    ctx->unk04 = saved;
+    fn_8003EA24(unit, ctx->unk0F, ctx->unk10);
+    fn_80183D7C(lbl_802EF4C8.unit, saved, (s8)ctx->unk0F, (s8)ctx->unk10, arg0);
 }
 
 void fn_80026F08(void)
