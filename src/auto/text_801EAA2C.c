@@ -695,10 +695,14 @@ u8 fn_801EC3AC(void) {
     return (u8) (lbl_803683B8 == 0x86);
 }
 
-s32 fn_801EC3C0(void *arg1) {
-    extern u16 lbl_802EF4C8;
-    *(u8*)((char*)arg1 + 0x18) = 1;
-    *(u8*)((char*)&lbl_802EF4C8 + 8) = 0x86;
+s32 fn_801EC3C0(s32 unused, u8 *arg1) {
+    extern u8 lbl_802EF4C8[24];
+    u8 *p;
+    u8 *obj;
+    obj = *(u8 **)(arg1 + 0x18);
+    obj[0x54] = 1;
+    p = lbl_802EF4C8;
+    p[8] = 0x86;
     return 5;
 }
 
