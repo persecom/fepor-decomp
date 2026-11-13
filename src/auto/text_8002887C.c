@@ -2266,6 +2266,29 @@ void fn_8002E408(s32 arg0) {
     }
 }
 
+void fn_8002E444(void) {
+    u8 fn_80105BC0(void *, s32);
+    void fn_8014CBD8(void *, f32, f32);
+    extern struct {
+        void *head;
+        s32 unk4;
+        s32 unk8;
+    } lbl_802CA264[];
+    extern u8 lbl_80330708[];
+    void *p;
+
+    if (lbl_80330708[0x11] == 0 && !((lbl_80330708[0x9E] >> 6) & 1)) {
+        for (p = lbl_802CA264[lbl_80330708[0x11]].head; p != NULL; p = *(void **)((u8 *)p + 0x184)) {
+            if (fn_80105BC0((u8 *)p + 0x1BC, 0)) {
+                break;
+            }
+        }
+        if (p != NULL) {
+            fn_8014CBD8(lbl_80330708, (s8)*((u8 *)p + 0x19E), (s8)*((u8 *)p + 0x19F));
+        }
+    }
+}
+
 void fn_8002E510(void) {
     u8 fn_80105BC0(void *, M2C_UNK);
     void fn_8014CBD8(void *, f32, f32);
