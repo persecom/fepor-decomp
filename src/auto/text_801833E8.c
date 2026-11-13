@@ -4476,17 +4476,19 @@ void fn_801910B4(void *arg0)
 }
 
 void fn_80191138(void *arg0) {
-    M2C_UNK fn_8011D79C(s32);
-    u32 fn_8013FF94(void *, M2C_UNK, M2C_UNK, void *);
-    M2C_UNK fn_801658DC(s32);
-    s32 temp_r31;
-    void *temp_r6;
+    void fn_8011D79C(s32);
+    void *fn_8013FF94(void *, s32, s32);
+    void fn_801658DC(void *, s32);
+    void *inner;
+    s32 saved;
+    void *ret;
 
-    fn_8011D79C(M2C_FIELD(M2C_FIELD(arg0, void **, 0x68), s32 *, 0x40));
-    temp_r6 = M2C_FIELD(arg0, void **, 0x68);
-    temp_r31 = M2C_FIELD(temp_r6, s32 *, 0x58);
-    if (fn_8013FF94(arg0, -0x1000, 0, temp_r6) != 0U) {
-        fn_801658DC(temp_r31);
+    fn_8011D79C(*(s32 *)(*(u8 **)((u8 *)arg0 + 0x68) + 0x40));
+    inner = *(void **)((u8 *)arg0 + 0x68);
+    saved = *(s32 *)((u8 *)inner + 0x58);
+    ret = fn_8013FF94(arg0, -0x1000, 0);
+    if (ret != NULL) {
+        fn_801658DC(ret, saved);
     }
 }
 
@@ -11780,17 +11782,19 @@ void fn_801A251C(void) {
 }
 
 void fn_801A2570(void) {
-    M2C_UNK fn_800C1060();
+    void fn_800C1060(void);
     extern u8 lbl_80367289;
-    u8 temp_r0;
-    u8 var_r5;
+    u8 f;
+    u8 t;
 
-    var_r5 = 1;
-    temp_r0 = lbl_80367289 - 1;
-    if (((u32) ((1 | ~temp_r0) - ((u32) (1 - temp_r0) >> 1U)) >> 0x1FU) == 0) {
-        var_r5 = 0;
+#pragma optimization_level 1
+    f = 1;
+    t = (u8)(lbl_80367289 - 1);
+    if (((u32)((f | ~t) - ((u32)(f - t) >> 1)) >> 31) == 0) {
+        f = 0;
     }
-    if (var_r5 != 0) {
+#pragma optimization_level reset
+    if (f != 0) {
         fn_800C1060();
     }
 }
