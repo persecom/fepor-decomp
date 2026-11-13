@@ -17256,7 +17256,7 @@ s32 fn_801E434C(void *arg0) {
     }
     return M2C_FIELD(arg0, s32 *, 0x44) == 0x20050201;
 }
-extern u16 lbl_80299E10;
+extern u8 lbl_80299E10[];
 extern u8 lbl_80331FB8[];
 #include "global.h"
 extern u16 lbl_802842A4[5];
