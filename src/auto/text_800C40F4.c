@@ -10039,28 +10039,20 @@ void *fn_800E0020(void *arg0, const char *arg1, const char *arg2) {
 void *fn_800E00B0(void *arg0, const char *arg1, const char *arg2) {
     u8 fn_800DF298(void *, const char *);
     u8 fn_800DF258(void *, const char *);
-
     void *entry;
     s32 offset;
     s32 index;
-
     index = 0;
     offset = 0;
-
     while (index < *(s32 *)((u8 *)arg0 + 4)) {
-        entry = *(void **)(*(u8 **)((u8 *)arg0 + 8) + offset);
-
-        if (fn_800DF298(entry, arg1)) {
-            entry = *(void **)(*(u8 **)((u8 *)arg0 + 8) + offset);
-            if (fn_800DF258(entry, arg2)) {
+        if (fn_800DF298(*(void **)(*(u8 **)((u8 *)arg0 + 8) + offset), arg1)) {
+            if (fn_800DF258(*(void **)(*(u8 **)((u8 *)arg0 + 8) + offset), arg2)) {
                 return *(void **)(*(u8 **)((u8 *)arg0 + 8) + offset);
             }
         }
-
         index++;
         offset += 4;
     }
-
     return 0;
 }
 
