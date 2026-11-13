@@ -1757,9 +1757,10 @@ void fn_801B93F4(void *arg0) {
     }
 }
 
-void fn_801B94DC(void *arg0) {
-    u8 val = *(u8 *)((u8 *)arg0 + 0x44);
-    fn_8000C070(val);
+void fn_801B94DC(void *arg0)
+{
+    void fn_8000C070(void *, u8);
+    fn_8000C070(arg0, *(u8 *)((char *)arg0 + 0x44));
 }
 
 #pragma cplusplus on
@@ -5037,6 +5038,29 @@ void fn_801C1A18(s8 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 
     *(s16 *)((u8 *)obj + 0x3A) = 0;
     *(u8 *)((u8 *)obj + 0x48) = 1;
 }
+
+#pragma use_lmw_stmw on
+void fn_801C1AC8(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
+    void *fn_8000CAF0(void *, s32);
+    extern u8 lbl_80297FF8[];
+    extern f32 lbl_8036B328;
+    extern f64 lbl_8036B330;
+    void *obj;
+    f32 div;
+
+    obj = fn_8000CAF0(lbl_80297FF8, arg7);
+    div = lbl_8036B328;
+    (void)lbl_8036B330;
+    *(s16 *)((u8 *)obj + 0x3C) = arg0;
+    *(s16 *)((u8 *)obj + 0x3E) = arg1;
+    *(s16 *)((u8 *)obj + 0x40) = arg2;
+    *(s32 *)((u8 *)obj + 0x44) = arg3;
+    *(s8 *)((u8 *)obj + 0x30) = -1;
+    *(s16 *)((u8 *)obj + 0x36) = (s16)((f32)arg4 / div);
+    *(s16 *)((u8 *)obj + 0x38) = (s16)((f32)arg5 / div);
+    *(s16 *)((u8 *)obj + 0x3A) = (s16)((f32)arg6 / div);
+    *(u8 *)((u8 *)obj + 0x48) = 1;
+}
 void fn_801C1BC0(s8 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, s32 arg5) {
     void *fn_8000CAF0(void *, s32);
     extern u8 lbl_80297FF8[];
@@ -7002,50 +7026,49 @@ void fn_801C6CBC(u32 *arg0, s32 arg1, s32 arg2, s32 arg3)
     u8 *entry;
     u8 *source;
     u8 *dest;
-    u32 value;
-    u32 temp;
+    struct { u32 temp; u32 value; } s;
+    u32 val;
 
     entry = (u8 *)fn_8000C0C0(lbl_802981F4);
-
-    if (entry != 0) {
+    if (entry != NULL) {
         if (*(s32 *)(entry + 0x38) < arg3) {
             return;
         }
-
         fn_8000C070(entry, 0);
+    } else {
+        entry = (u8 *)fn_8000CAF0(lbl_802981F4, arg2);
     }
 
-    entry = (u8 *)fn_8000CAF0(lbl_802981F4, arg2);
-
-    *(u32 *)(entry + 0x30) = 0;
+    {
+        u32 zero = 0;
+        val = *arg0;
+        *(u32 *)(entry + 0x30) = zero;
+    }
     *(s32 *)(entry + 0x34) = arg1;
+    s.value = val;
     *(s32 *)(entry + 0x38) = arg3;
 
-    value = *arg0;
-
     source = (u8 *)fn_8000C0C0(lbl_802981D0);
-
-    if (source == 0) {
-        dest = 0;
+    if (source == NULL) {
+        dest = NULL;
     } else {
         dest = *(u8 **)(source + 0x30);
     }
 
-    if (dest == 0) {
+    if (dest == NULL) {
         return;
     }
 
     dest[0x288] = dest[0x284];
+    s.temp = s.value;
     dest[0x289] = dest[0x285];
     dest[0x28A] = dest[0x286];
     dest[0x28B] = dest[0x287];
 
-    temp = value;
-
-    dest[0x284] = ((u8 *)&temp)[0];
-    dest[0x285] = ((u8 *)&temp)[1];
-    dest[0x286] = ((u8 *)&temp)[2];
-    dest[0x287] = ((u8 *)&temp)[3];
+    dest[0x284] = ((u8 *)&s.temp)[0];
+    dest[0x285] = ((u8 *)&s.temp)[1];
+    dest[0x286] = ((u8 *)&s.temp)[2];
+    dest[0x287] = ((u8 *)&s.temp)[3];
 }
 
 void fn_801C6DB8(u32 arg0)
