@@ -96,17 +96,14 @@ extern "C" void fn_80019604(void *arg0) {
 }
 #pragma cplusplus reset
 
-f32 fn_800197B4(s32 arg1) {
-    extern s32 lbl_80268308[];
-    extern f32 lbl_80268308_f32[];
-    s32 temp_r4 = arg1 << 2;
-    s32 *temp_r3 = (s32 *) &lbl_80268308 + temp_r4;
-    f32 *sp = (f32 *) (((char *) &lbl_80268308) + 0x8);
-    sp[0] = *(f32 *)temp_r3;
-    sp[1] = *(f32 *)(temp_r3 + 1);
-    sp[2] = *(f32 *)(temp_r3 + 2);
-    sp[3] = *(f32 *)(temp_r3 + 3);
-    return sp[arg1];
+f32 fn_800197B4(s32 unused, s32 idx) {
+    u32 local[4];
+    extern u32 lbl_80268308[4];
+    local[0] = lbl_80268308[0];
+    local[1] = lbl_80268308[1];
+    local[2] = lbl_80268308[2];
+    local[3] = lbl_80268308[3];
+    return ((f32 *)local)[idx];
 }
 
 void *fn_800197F4(void) {
@@ -1196,21 +1193,23 @@ void fn_8001B894(void* arg0) {
     *ptr = (byte3 << 24) | (byte2 << 16) | (byte1 << 8) | byte0;
 }
 
-s32 fn_8001B8E0(void **arg0) {
-    u8 *temp_r7;
-    s32 r5, r4, r6, r0;
-    
-    temp_r7 = *arg0;
-    r5 = temp_r7[0];
-    r4 = temp_r7[1];
-    r6 = temp_r7[2];
-    r0 = temp_r7[3];
-    *arg0 = temp_r7 + 4;
-    r5 = r5 << 24;
-    r4 = r4 << 16;
-    r6 = r6 << 8;
-    r0 = r0 + r6 + r4 + r5;
-    return r0;
+u32 fn_8001B8E0(u8 **arg0) {
+    u8 *data;
+    u32 b0;
+    u32 b1;
+    u32 b2;
+    u32 b3;
+    u32 value;
+
+    data = *arg0;
+    b2 = data[2];
+    b1 = data[1];
+    b0 = data[0];
+    b3 = data[3];
+    value = (b1 << 16) + (b2 << 8);
+    value = value + b3;
+    *arg0 = data + 4;
+    return (b0 << 24) + value;
 }
 
 u16 fn_8001B91C(u8 **arg0) {
