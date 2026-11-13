@@ -9311,15 +9311,23 @@ void fn_8019C0C0(void *arg0, void *arg1)
     );
 }
 
-void fn_8019C110(s32 arg0, s32 arg1) {
+void fn_8019C110(void *arg0, void *arg1)
+{
+    void *fn_8000CAA0(void *, void *);
+    void fn_8019D51C(void *, void *, const char *);
+
     extern u8 lbl_80296C00[];
     extern u8 lbl_8027AA38[];
 
-    void *fn_8000CAA0(void *, s32);
-    void fn_8019D51C(s32, void *);
+    void *result;
 
-    fn_8000CAA0(lbl_80296C00, arg0);
-    fn_8019D51C(arg1, lbl_8027AA38 + 0x1E8);
+    result = fn_8000CAA0(lbl_80296C00, arg0);
+
+    fn_8019D51C(
+        result,
+        arg1,
+        (const char *)(lbl_8027AA38 + 0x1E8)
+    );
 }
 
 extern s32* lbl_80367240;
