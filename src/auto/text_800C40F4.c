@@ -6399,22 +6399,15 @@ u32 *fn_800D6898(u32 *arg0, u32 *arg1, u32 arg2, u32 arg3, void *arg4)
 }
 #pragma use_lmw_stmw reset
 
-void fn_800D6940(void *arg0) {
-    s32 r4;
-    s32 r5;
-    s32 r6;
-    s32 r7;
+void fn_800D6940(u32 *arg0) {
+    u8 (*start)[0x58];
+    u8 (*end)[0x58];
 
-    r4 = M2C_FIELD(arg0, s32 *, 4);
-    r5 = M2C_FIELD(arg0, u32 *, 8);
-    r6 = r5 + (r4 * 0x58);
-    r7 = ((r6 + 0x57) - r5) / 0x58;
-    if (r6 > r5) {
-        do {
-            r7 -= 1;
-        } while (r7 != 0);
+    start = (u8 (*)[0x58])arg0[2];
+    end = start + arg0[1];
+    for (; start < end; start++) {
     }
-    M2C_FIELD(arg0, s32 *, 4) = 0;
+    arg0[1] = 0;
 }
 
 void fn_800D697C(u8 *arg0, u32 arg1, s32 arg2) {
@@ -6832,6 +6825,29 @@ s32 fn_800D7C5C(void) {
     extern void *lbl_803678C8;
     fn_800D758C(lbl_803678A8);
     fn_800D758C(lbl_803678C8);
+    return 0;
+}
+
+s32 fn_800D7C8C(void)
+{
+    void *fn_800DC3C0(void *);
+    void fn_800DA5AC(void *, s32);
+    void fn_800D75C4(void *);
+
+    extern u32 lbl_803678A8;
+    extern u32 lbl_803678C8;
+
+    void *result;
+    u8 *ptr;
+
+    ptr = (u8 *)lbl_803678A8;
+
+    result = fn_800DC3C0(*(void **)(ptr + 0x424));
+
+    fn_800DA5AC(result, 1);
+
+    fn_800D75C4((void *)lbl_803678C8);
+
     return 0;
 }
 
