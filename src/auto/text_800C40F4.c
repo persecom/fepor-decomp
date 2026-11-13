@@ -17691,31 +17691,32 @@ return lbl_8032B3C0[0x21c];
 
 #pragma use_lmw_stmw reset
 
-void fn_800F488C(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
-{
-    if (arg0 < 0) {
-        arg0 = -arg0;
-    }
+void fn_800F488C(void *arg0, void *arg1) {
+    u8 fn_80015610(void *, void *);
+    u8 fn_800F7E78(void *, void *);
+    struct {
+        u8 x;
+        u8 y;
+        u16 item;
+        void *unit;
+        s32 score;
+    } result;
+    u8 *p4;
+    s32 same;
 
-    if (arg1 < 0) {
-        arg1 = -arg1;
-    }
-
-    if (arg2 < 0) {
-        arg2 = -arg2;
-    }
-
-    if (arg3 < 0) {
-        arg3 = -arg3;
-    }
-
-    arg0 = arg0 + arg2;
-    arg1 = arg1 + arg3;
-
-    if (arg0 >= arg1) {
-        arg0 = arg0;
-    } else {
-        arg0 = arg1;
+    same = ((u8)fn_80015610(*(void **)(*(u8 **)((u8 *)arg0 + 8) + 0x190),
+                           *(void **)((u8 *)arg1 + 0x190)) == 1);
+    p4 = *(u8 **)((u8 *)arg0 + 4);
+    result.x = p4[0];
+    result.y = p4[1];
+    result.unit = arg1;
+    result.item = *(u16 *)(*(u8 **)((u8 *)arg0 + 0xC) + 2);
+    if (fn_800F7E78(*(void **)((u8 *)arg0 + 8), &result)) {
+        if ((u8)same != 0) {
+            *(s32 *)(*(u8 **)((u8 *)arg0 + 0xC) + 8) += result.score;
+        } else {
+            *(s32 *)(*(u8 **)((u8 *)arg0 + 0xC) + 8) -= result.score;
+        }
     }
 }
 
