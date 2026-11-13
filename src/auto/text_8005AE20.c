@@ -5944,20 +5944,19 @@ s32 fn_80069E7C(void)
 }
 
 #pragma global_optimizer off
-s32 fn_80069EA8(void)
-{
+void *fn_80069EA8(void) {
     extern u8 lbl_80367300;
     extern u8 lbl_8026B7F8[];
     extern u16 lbl_80285E88[0x20];
-    void fn_8006DA64(void *, s32, void *);
+    void fn_8006DA64(const char *, s32, const char *);
+    void **entry;
     u8 idx;
-
-    if (lbl_80367300 >= 0x10) {
-        fn_8006DA64(lbl_8026B7F8 + 1, 0x2C, lbl_8026B7F8 + 0x3F);
-    }
-    idx = lbl_80367300;
-    lbl_80367300 = idx + 1;
-    return ((s32 *)lbl_80285E88)[idx];
+    if (lbl_80367300 >= 0x10)
+        fn_8006DA64((const char *)lbl_8026B7F8+1,0x2C,(const char *)lbl_8026B7F8+0x3F);
+    idx=lbl_80367300;
+    entry=&((void **)lbl_80285E88)[idx];
+    lbl_80367300 = ++idx;
+    return *entry;
 }
 #pragma global_optimizer on
 void fn_80069F04(s32 arg0) {
