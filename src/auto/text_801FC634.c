@@ -701,21 +701,22 @@ void fn_801FE488(void *arg0) {
 }
 #pragma opt_common_subs reset
 void fn_801FE520(void *arg0) {
-    M2C_UNK fn_8000E0E4(s32);
-    s16 fn_800102BC(M2C_UNK, f32);
-    s16 fn_80010B78(M2C_UNK, f32);
+    void *fn_8000E0E4(void *);
+    s32 fn_80010B78(void *, s32, f32);
+    s32 fn_800102BC(s32, f32);
     extern f32 lbl_8036BB58;
-    s16 temp_r31;
-    s16 temp_r3;
+    void *self;
+    s16 tw;
+    s16 th;
 
-    fn_8000E0E4(M2C_FIELD(arg0, s32 *, 0x34));
-    temp_r31 = fn_80010B78(-1, lbl_8036BB58);
-    temp_r3 = fn_800102BC(-1, lbl_8036BB58);
-    M2C_FIELD(arg0, s16 *, 0x3E) = (s16) (temp_r31 + 0x20);
-    M2C_FIELD(arg0, s16 *, 0x40) = (s16) (temp_r3 + 0x40);
-    M2C_FIELD(arg0, s16 *, 0x38) = (s16) ((s32) (0x260 - M2C_FIELD(arg0, s16 *, 0x3E)) >> 1);
-    M2C_FIELD(arg0, s16 *, 0x3A) = (s16) ((s32) (0x1C0 - M2C_FIELD(arg0, s16 *, 0x40)) >> 1);
-    M2C_FIELD(arg0, s16 *, 0x3C) = 0xA;
+    self = arg0;
+    tw = (s16)fn_80010B78(fn_8000E0E4(*(void **)((u8 *)self + 0x34)), -1, lbl_8036BB58);
+    th = (s16)fn_800102BC(-1, lbl_8036BB58);
+    *(s16 *)((u8 *)self + 0x3E) = (s16)(tw + 0x20);
+    *(s16 *)((u8 *)self + 0x40) = (s16)(th + 0x40);
+    *(s16 *)((u8 *)self + 0x38) = (s16)((0x260 - *(s16 *)((u8 *)self + 0x3E)) >> 1);
+    *(s16 *)((u8 *)self + 0x3A) = (s16)((0x1C0 - *(s16 *)((u8 *)self + 0x40)) >> 1);
+    *(s16 *)((u8 *)self + 0x3C) = 0xA;
 }
 
 #pragma use_lmw_stmw on
@@ -995,19 +996,54 @@ void fn_801FF3E8(void *arg0) {
     fn_80166D8C();
 }
 
-void fn_801FF480(void *arg0) {
-    M2C_UNK fn_801FE84C(M2C_UNK, M2C_UNK, s32, s32, s32 *);
+#pragma cplusplus on
+extern "C" void fn_801FF480(void *arg0) {
+    void fn_801FE84C(s32, s32, s32, s32, s32 *);
     extern s32 lbl_8036BB50;
+    struct Obj {
+        u8 pad[4];
+        virtual void v0();
+        virtual void v1();
+        virtual void v2();
+        virtual void v3();
+        virtual void v4();
+        virtual void v5();
+        virtual void v6();
+        virtual void v7();
+        virtual void v8();
+        virtual void v9();
+        virtual void v10();
+        virtual void v11();
+        virtual void v12();
+        virtual void v13();
+        virtual void v14();
+        virtual void v15();
+        virtual void v16();
+        virtual void v17();
+        virtual s32 v18();
+        virtual s32 v19();
+        virtual void v20();
+        virtual void v21();
+        virtual void v22();
+        virtual void v23();
+        virtual void v24();
+        virtual void v25();
+        virtual void v26();
+        virtual void v27();
+        virtual void v28();
+        virtual void v29();
+        virtual void v30();
+    };
     s32 sp8;
-    s32 temp_r31;
+    s16 temp_r31;
+    Obj *self = (Obj *)arg0;
 
-    M2C_FIELD(M2C_FIELD(arg0, void **, 4), M2C_UNK (**)(), 0x80)();
+    self->v30();
     sp8 = lbl_8036BB50;
-    temp_r31 = M2C_FIELD(M2C_FIELD(arg0, void **, 4), s32 (**)(void *), 0x54)(arg0);
-    fn_801FE84C(0, 0, M2C_FIELD(M2C_FIELD(arg0, void **, 4), s32 (**)(void *), 0x50)(arg0), temp_r31, &sp8);
+    temp_r31 = self->v19();
+    fn_801FE84C(0, 0, self->v18(), temp_r31, &sp8);
 }
-
-#pragma use_lmw_stmw on
+#pragma cplusplus reset
 void fn_801FF6B8(void *arg0, void *arg1) {
     u32 OSGetTick(void);
     void fn_80007668(s32 *);
