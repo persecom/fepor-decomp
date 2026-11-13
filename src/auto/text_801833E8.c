@@ -177,6 +177,35 @@ s32 fn_8018361C(void) {
     return 4;
 }
 
+void fn_80183624(void **arg0) {
+    u8 *fn_8014C5A8(void *, u8);
+    s32 *fn_8018D900(u8);
+    void fn_80007668(s32 *);
+    extern u8 lbl_80330708;
+    extern u8 lbl_803681F0;
+    s32 sp8;
+    u8 *temp;
+    u8 saved;
+    u8 mode;
+
+    mode = 3;
+    if (lbl_803681F0 == 0x32) {
+        mode = 0;
+    }
+    temp = fn_8014C5A8(&lbl_80330708, mode);
+    if (temp != NULL) {
+        saved = *temp;
+        if (saved == ((u8 (*)(void **))(*(void **)((u8 *)*arg0 + 0x54)))(arg0)) {
+            mode = 6;
+            if (lbl_803681F0 == 0x32) {
+                mode = 7;
+            }
+            sp8 = *fn_8018D900(mode);
+            fn_80007668(&sp8);
+        }
+    }
+}
+
 #pragma cplusplus on
 extern "C" s32 fn_801836D4(void *arg0) {
     struct Obj {
@@ -3804,23 +3833,23 @@ void fn_8018EC8C(void *arg0, s16 arg1, u8 arg2) {
 #pragma opt_strength_reduction reset
 #pragma use_lmw_stmw reset
 
-void fn_8018EFE0(void *arg0, s32 arg1) {
-    s32 fn_8000E0E4(void *, M2C_UNK *);
-    M2C_UNK fn_8001019C(s16, s16, M2C_UNK, s32);
-    s32 fn_800102BC(M2C_UNK, s16, s16, f32);
-    s16 fn_80010B78(M2C_UNK, f32);
-    extern M2C_UNK lbl_80279C40;
+void fn_8018EFE0(void *arg0, s16 arg1) {
+    void *fn_8000E0E4(void *);
+    void fn_8001019C(s16, s16, s32, ...);
+    s32 fn_800102BC(s32, f32);
+    s16 fn_80010B78(void *, s32, f32);
+    extern u8 lbl_80279C40[];
     extern f32 lbl_8036ADF0;
-    s16 temp_r30;
-    s16 temp_r3;
-    s16 temp_r4;
-    s32 temp_r31;
+    void *str;
+    s16 y;
+    s16 h;
+    s16 t;
 
-    temp_r31 = fn_8000E0E4(&lbl_80279C40 + 0xA0, &lbl_80279C40);
-    temp_r3 = fn_80010B78(-1, lbl_8036ADF0);
-    temp_r4 = M2C_FIELD(arg0, s16 *, 0x12);
-    temp_r30 = (s16) ((s32) ((s16) (M2C_FIELD(arg0, s16 *, 0x16) - temp_r4) - temp_r3) >> 1);
-    fn_8001019C(temp_r30, (s16) (arg1 + (s16) ((s32) (0x1C - fn_800102BC(-1, temp_r4, temp_r3, lbl_8036ADF0)) >> 1)), 2, temp_r31);
+    str = fn_8000E0E4(lbl_80279C40 + 0xA0);
+    h = fn_80010B78(str, -1, lbl_8036ADF0);
+    t = *(s16 *)((u8 *)arg0 + 0x12);
+    y = (s16)(((s16)(*(s16 *)((u8 *)arg0 + 0x16) - t) - h) >> 1);
+    fn_8001019C(y, (s16)(arg1 + (s16)((0x1C - fn_800102BC(-1, lbl_8036ADF0)) >> 1)), 2, str);
 }
 
 #pragma cplusplus on
