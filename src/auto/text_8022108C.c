@@ -252,8 +252,9 @@ void fn_802212C8(s32 arg0) {
     __GXData[0x1E8/2] = (__GXData[0x1E8/2] & ~0xFF000000) | 0x4D000000;
 }
 
-u32 fn_8022142C(void) {
-    return lbl_80368770 + (lbl_80368738 * 2);
+void fn_8022142C(u32 arg0) {
+    M2C_FIELD(__GXData, u32 *, 0x1EC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1EC), arg0, 12, 18, 19);
+    M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC), 0, 12, 18, 19);
 }
 
 void fn_80221450(u32 arg0)
