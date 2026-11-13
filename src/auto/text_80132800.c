@@ -8064,6 +8064,60 @@ void fn_80141040(void)
     return;
 }
 
+#pragma cplusplus on
+extern "C" void fn_801411AC(void *arg0) {
+    struct Obj {
+        virtual void destroy(s32) = 0;
+        s32 refcount;
+    };
+    typedef struct {
+        u32 unk0;
+        ListNode node;
+    } DtorList;
+    typedef struct Owner {
+        u8 pad[0x34];
+        DtorList list;
+    } Owner;
+    void fn_8013FC68(void *, void *, void *);
+    void fn_80136F2C(void *, void *, void *, void *);
+
+    void *found;
+    u8 ret[4];
+    ListNode *sp10;
+    ListNode *spC;
+    u8 sp8[4];
+    ListNode *end;
+    Owner *a0;
+    Obj *obj;
+
+    a0 = (Owner *)arg0;
+    if (arg0 != NULL) {
+        if (arg0 != NULL) {
+            while (a0->list.unk0 != 0) {
+                obj = (Obj *)a0->list.node.prev->val;
+                if (obj != NULL) {
+                    if (--obj->refcount == 0 && obj != NULL) {
+                        obj->destroy(1);
+                    }
+                }
+                found = a0->list.node.prev;
+                fn_8013FC68(ret, &a0->list, &found);
+            }
+            if (&a0->list != NULL) {
+                if (&a0->list != NULL) {
+                    if (&a0->list != NULL) {
+                        end = &a0->list.node;
+                        sp10 = end;
+                        spC = end->next;
+                        fn_80136F2C(sp8, &a0->list, &spC, &sp10);
+                    }
+                }
+            }
+        }
+    }
+}
+#pragma cplusplus reset
+
 void fn_8014127C(void *arg0) {
     extern f32 lbl_8036A730;
     extern f32 lbl_8036A740;
