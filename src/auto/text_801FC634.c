@@ -130,6 +130,50 @@ void fn_801FC95C(void) {
     fn_8006EDA0(&lbl_80368418);
 }
 
+void fn_801FC980(u32 arg0, f32 farg0)
+{
+    void *fn_8000CAF0(void *, u32);
+    void fn_8006EEFC(void *, void *);
+    extern u8 lbl_8029B590[];
+    extern char lbl_80281EC8[];
+    extern u8 lbl_80368418;
+    extern f32 lbl_8036BADC;
+    extern f32 lbl_8036BB00;
+    u8 fe;
+    void *obj;
+    f32 f;
+
+    f = farg0;
+    if (arg0 == 0) {
+        arg0 = 3;
+    }
+    obj = fn_8000CAF0(lbl_8029B590, arg0);
+    if (f <= lbl_8036BADC) {
+        f = lbl_8036BB00;
+    }
+    *(f32 *)((u8 *)obj + 0x48) = f;
+    fe = 0xfe;
+    *(s8 *)((u8 *)obj + 0x34) = -3;
+    *(s8 *)((u8 *)obj + 0x35) = -1;
+    *(u8 *)((u8 *)obj + 0x36) = fe;
+    *(u8 *)((u8 *)obj + 0x37) = fe;
+    *(u8 *)((u8 *)obj + 0x38) = fe;
+    *(u8 *)((u8 *)obj + 0x39) = 0x5a;
+    *(u8 *)((u8 *)obj + 0x3a) = 1;
+    *(s16 *)((u8 *)obj + 0x32) = 0;
+    *(s16 *)((u8 *)obj + 0x30) = 0;
+    *(s8 *)((u8 *)obj + 0x40) = -6;
+    *(s8 *)((u8 *)obj + 0x41) = -2;
+    *(u8 *)((u8 *)obj + 0x42) = 0x36;
+    *(u8 *)((u8 *)obj + 0x43) = 0x3f;
+    *(u8 *)((u8 *)obj + 0x44) = 0x55;
+    *(u8 *)((u8 *)obj + 0x45) = 1;
+    *(u8 *)((u8 *)obj + 0x46) = 2;
+    *(s16 *)((u8 *)obj + 0x3e) = 0;
+    *(s16 *)((u8 *)obj + 0x3c) = 0;
+    fn_8006EEFC(&lbl_80368418, lbl_80281EC8 + 0x23);
+}
+
 void fn_801FCC44(void) {
     M2C_UNK fn_8006EDA0(M2C_UNK *);
     extern M2C_UNK lbl_80368418;
