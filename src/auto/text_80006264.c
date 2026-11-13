@@ -575,8 +575,21 @@ end:
 }
 
 extern f64 lbl_80368C28;
-s32 fn_800070C8(s32 arg0) {
-    return (arg0 * 0x22) & 0xFFFF;
+void fn_800070C8(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
+    extern u8 *lbl_80367140;
+
+    if (arg0 != NULL) {
+        *arg0 = *(s32 *)(lbl_80367140 + 0xA4);
+    }
+    if (arg1 != NULL) {
+        *arg1 = *(s16 *)(lbl_80367140 + 0x92);
+    }
+    if (arg2 != NULL) {
+        *arg2 = *(s16 *)(lbl_80367140 + 0x90);
+    }
+    if (arg3 != NULL) {
+        *arg3 = *(s32 *)(lbl_80367140 + 8) - *(s32 *)lbl_80367140;
+    }
 }
 
 void fn_80007124(u8 *arg0,u8*a,u8*b,u8*c){u32*g=(u32*)0x80367140;u32*ctx=*(u32**)((u8*)g+0xc);u8*dst=(u8*)ctx[1];u8*s=arg0;u32 n=1,len;u8*out,*src;if(!s)s=(u8*)0x80366da4;while((s8)*s++){n++;}len=(n+3)&0xfc;if(len>0xd4)len=0xd4;out=(u8*)*(u32*)((u8*)g+8);*(u32*)((u8*)g+8)=(u32)(out+len);src=arg0;while((s8)*src){*out++=*src++;}*out=0;dst[5]+=len;dst[0x18]=dst[0xc];dst[0x19]=dst[0xd];dst[0x1a]=dst[0xe];dst[0x1b]=dst[0xf];}
