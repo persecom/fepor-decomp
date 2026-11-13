@@ -9736,9 +9736,17 @@ extern "C" void *fn_800DFAE0(void *arg0, void *arg1, const String *arg2, const S
 #pragma cplusplus reset
 
 void fn_800DFC2C(void *arg0, s32 a1, s32 a2, s32 a3, s32 a4, s32 a5, s32 a6, s32 a7, u8 arg8) {
+    void fn_800E01EC(s32, s32, u8 *);
+    u8 sp8;
     u8 spC;
-    spC = arg8;
-    fn_800E01EC(*(s32 *)((u8 *)arg0 + 8), (*(s32 *)((u8 *)arg0 + 8) + (*(s32 *)((u8 *)arg0 + 4) << 2)), &spC);
+    s32 base;
+    s32 idx;
+
+    sp8 = arg8;
+    spC = sp8;
+    idx = *(s32 *)((u8 *)arg0 + 4);
+    base = *(s32 *)((u8 *)arg0 + 8);
+    fn_800E01EC(base, base + (idx << 2), &spC);
 }
 
 #pragma cplusplus on
@@ -9827,11 +9835,11 @@ extern "C" void fn_800DFE74(void *arg0, s32 idx) {
 #pragma cplusplus reset
 
 void fn_800DFFB8(void *arg0, s32 arg1) {
-    M2C_UNK fn_800C9BC4(s32, M2C_UNK, s32 *);
+    void fn_800C9BC4(void *, void *, s32, s32 *);
     s32 sp8;
 
     sp8 = arg1;
-    fn_800C9BC4(M2C_FIELD(arg0, s32 *, 8) + (M2C_FIELD(arg0, s32 *, 4) * 4), 1, &sp8);
+    fn_800C9BC4(arg0, (u8 *)*(void **)((u8 *)arg0 + 8) + (*(s32 *)((u8 *)arg0 + 4) << 2), 1, &sp8);
 }
 
 s32 fn_800DFFF4(void *arg0, s32 arg1) {
