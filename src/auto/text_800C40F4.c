@@ -14038,11 +14038,10 @@ void fn_800EB7E4(void) {
 
 void fn_800EB80C(void) {
     s32 fn_80217C34(s32);
-    extern u16 lbl_80320C20[];
-    
-    u32 tmp = fn_80217C34(*(u32*)(lbl_80320C20 + 0xA000));
-    *(u32*)(lbl_80320C20 + 0xA004) = tmp;
-    *(u8*)(lbl_80320C20 + 0xA01A) = 0;
+    extern u8 lbl_80320C20[];
+
+    *(u32 *)(lbl_80320C20 + 0xA004) = fn_80217C34(*(s32 *)(lbl_80320C20 + 0xA000));
+    lbl_80320C20[0xA01A] = 0;
 }
 
 s32 fn_800EB854(void) {
