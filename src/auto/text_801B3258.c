@@ -4375,7 +4375,21 @@ s32 fn_801BE92C(void *arg0) {
     return 0;
 }
 
-void *fn_801BEB24(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
+#pragma cplusplus on
+extern "C" void *fn_801BEB24(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
+    struct Obj {
+        virtual void m08() = 0;
+        virtual void m0C() = 0;
+        virtual void m10() = 0;
+        virtual void m14() = 0;
+        virtual void m18() = 0;
+        virtual void m1C() = 0;
+        virtual void m20() = 0;
+        virtual void m24() = 0;
+        virtual void m28() = 0;
+    };
+    void fn_801BEB9C(void *, s16 *, s16 *, s16);
+    extern u8 lbl_802918A0[];
     s16 spC[2];
     s16 sp8[2];
 
@@ -4383,10 +4397,13 @@ void *fn_801BEB24(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
     spC[0] = arg1;
     spC[1] = arg2;
     sp8[0] = 0x108;
-
     fn_801BEB9C(arg0, spC, sp8, arg4);
+    *(void **)arg0 = lbl_802918A0;
+    *(s32 *)((u8 *)arg0 + 0xCC) = 0;
+    ((Obj *)arg0)->m28();
     return arg0;
 }
+#pragma cplusplus reset
 
 #pragma cplusplus on
 #pragma global_optimizer off
