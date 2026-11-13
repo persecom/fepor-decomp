@@ -9020,10 +9020,26 @@ void *fn_800DE99C(void *arg0, s32 arg1)
     return obj;
 }
 
-void fn_800DE9FC(void *arg0) {
-    void **ptr = (void **) arg0;
-    if (ptr != 0) {
-        ptr[1] = ptr[0];
+void fn_800DE9FC(void **arg0)
+{
+    void **cur;
+    void **node;
+    void **parent;
+
+    cur = (void **)*arg0;
+    cur = (void **)cur[1];
+    if (cur != NULL) {
+        while (*cur != NULL) {
+            cur = (void **)*cur;
+        }
+        *arg0 = cur;
+        return;
+    }
+    *arg0 = cur;
+    node = (void **)*arg0;
+    parent = (void **)((u32)node[2] & ~1);
+    if (node == (void **)*parent) {
+        *arg0 = parent;
     }
 }
 
@@ -11113,19 +11129,34 @@ extern "C" void fn_800E4078(void *arg0, s32 arg1, s32 arg2) {
         cb(arg0, arg1, arg2);
     }
 }
-#pragma cplusplus reset
-void fn_800E4110(void *arg0, s32 arg1, s32 arg2) {
-    M2C_UNK (*temp_r12)();
-    void *o = arg0;
+extern "C" void fn_800E4110(void *arg0, s32 arg1, s32 arg2) {
+    struct Obj {
+        u8 pad[0x40];
+        virtual void v0(s32, s32) = 0;
+        virtual void v1(s32, s32) = 0;
+        virtual void v2(s32, s32) = 0;
+        virtual void v3(s32, s32) = 0;
+        virtual void v4(s32, s32) = 0;
+        virtual void v5(s32, s32) = 0;
+        virtual void v6(s32, s32) = 0;
+        virtual void v7(s32, s32) = 0;
+        virtual void v8(s32, s32) = 0;
+        virtual void v9(s32, s32) = 0;
+        virtual void v10(s32, s32) = 0;
+        virtual void v11(s32, s32) = 0;
+        virtual void v12(s32, s32) = 0;
+        virtual void v13(s32, s32) = 0;
+        virtual void v14(s32, s32) = 0;
+    };
     *(u8 *)((u8 *)arg0 + 0x71) = 1;
     *(u8 *)((u8 *)arg0 + 0x72) = 0;
     *(s32 *)((u8 *)arg0 + 0x74) = arg1;
     *(s32 *)((u8 *)arg0 + 0x78) = arg2;
     *(s32 *)((u8 *)arg0 + 0x7C) = *(s32 *)((u8 *)arg0 + 0x58);
     *(s32 *)((u8 *)arg0 + 0x80) = *(s32 *)((u8 *)arg0 + 0x5C);
-    temp_r12 = M2C_FIELD(M2C_FIELD(o, void **, 0x40), M2C_UNK (**)(M2C_UNK), 0x38);
-    temp_r12();
+    ((Obj *)arg0)->v14(arg1, arg2);
 }
+#pragma cplusplus reset
 
 void fn_800E4164(void) {
 
