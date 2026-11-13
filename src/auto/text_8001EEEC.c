@@ -3545,17 +3545,18 @@ void fn_80026994(void) {
     fn_8003BE50(*(void **)(lbl_802EF4C8 + 4));
 }
 
-s32 fn_800269C0(s32 arg0) {
+s32 fn_800269C0(s32 arg0)
+{
     u8 fn_8003C038(void *);
     void fn_80183BE4(void *, s32);
-    extern u16 lbl_802EF4C8;
-    extern u16 lbl_80330EAC;
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_80330EAC[];
     void *temp_r31;
 
-    if (*(u32 *)((u8 *)&lbl_80330EAC + 0xCAC) & 0x100) {
+    if (*(u32 *)(lbl_80330EAC + 0xCAC) & 0x100) {
         return 0;
     }
-    temp_r31 = *(void **)((u8 *)&lbl_802EF4C8 + 4);
+    temp_r31 = *(void **)(lbl_802EF4C8 + 4);
     if ((s8)*(u8 *)((u8 *)temp_r31 + 0x1A8) == 0) {
         return 0;
     }
