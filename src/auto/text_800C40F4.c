@@ -10057,9 +10057,12 @@ void fn_800E0A94(void *arg0, void *arg1, s32 *arg2, u32 arg3, s32 *arg4) {
 }
 
 void fn_800E0EE0(s32 *left, s32 *mid, s32 *end) {
-    s32 *p = mid;
+    s32 tmp;
+    s32 *p;
+
+    p = mid;
     for (;;) {
-        s32 tmp = *left;
+        tmp = *left;
         *left = *p;
         left++;
         *p = tmp;
