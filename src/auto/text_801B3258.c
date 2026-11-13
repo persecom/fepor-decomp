@@ -14151,12 +14151,7 @@ void fn_801DDDE8(s32 arg0, s32 arg1) {
 #pragma scheduling off
 void fn_801DDE44(void *arg0) {
     extern f32 lbl_8036B630;
-    f32 addend;
-    f32 cur;
-
-    addend = lbl_8036B630;
-    cur = *(f32 *)((u8 *)arg0 + 0x30);
-    *(f32 *)((u8 *)arg0 + 0x30) = cur + addend;
+    *(f32 *)((u8 *)arg0 + 0x30) += lbl_8036B630;
     if (*(f32 *)((u8 *)arg0 + 0x30) >= *(f32 *)((u8 *)arg0 + 0x34)) {
         fn_8000C188();
     }
@@ -15743,21 +15738,16 @@ void fn_801E1498(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 
 void fn_801E1540(u8 **arg0, void *arg1, s32 arg2, u8 arg3, u8 arg4);
 
-void fn_801E14F4(void *arg0)
-{
-    extern void *lbl_803682F0;
+void fn_801E14F4(void *arg0) {
+    u8 fn_800EB788(void);
+    void fn_801E1540(void *, void *, s32, s32, s32);
+    extern u16 lbl_803682F0;
 
-    if ((u8)fn_800EB788() != 0) {
+    if (fn_800EB788() != 0) {
         return;
     }
 
-    fn_801E1540(
-        (u8 **)&lbl_803682F0,
-        arg0,
-        *(s32 *)((u8 *)arg0 + 0x60),
-        (u8)*(s32 *)((u8 *)arg0 + 0x64),
-        (u8)*(s32 *)((u8 *)arg0 + 0x68)
-    );
+    fn_801E1540(&lbl_803682F0, arg0, *(s32 *)((u8 *)arg0 + 0x60), *(s32 *)((u8 *)arg0 + 0x64), *(s32 *)((u8 *)arg0 + 0x68));
 }
 
 #pragma use_lmw_stmw on
