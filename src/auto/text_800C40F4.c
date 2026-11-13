@@ -12766,23 +12766,20 @@ void fn_800E7DF8(void *arg0, void *arg1)
     );
 }
 
-void fn_800E7E4C(s32 arg0, s32 arg1) {
-    extern s32 lbl_80367870;
-    extern s32 lbl_80367874;
-    extern s32 lbl_80367878;
-    
-    if (arg0 < 0) {
-        arg0 = -arg0;
-    }
-    
-    if (arg1 < 0) {
-        arg1 = -arg1;
-    }
-    
-    lbl_80367870 = arg0;
-    lbl_80367874 = arg1;
-    lbl_80367878 = 0x10000 - (arg0 + arg1);
+#pragma cplusplus on
+extern "C" void fn_800E7E4C(void *arg0, void *arg1) {
+    void *fn_800C93EC(void *);
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2(char *, void *) = 0;
+    };
+    extern char lbl_80272230[];
+
+    ((Obj *)arg0)->v2(lbl_80272230 + 0x6, fn_800C93EC(arg1));
 }
+#pragma cplusplus reset
 
 #pragma cplusplus on
 #pragma dont_inline on
