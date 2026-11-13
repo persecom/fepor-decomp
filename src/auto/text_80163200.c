@@ -11883,6 +11883,52 @@ s32 fn_8017B8F8(s32 unused, s32 arg1) {
     return arg1 != 0;
 }
 
+s32 fn_8017BC94(void *arg0) {
+    u8 fn_80105BC0(void *, u8);
+    void *fn_80105C5C(void *, u8);
+    void *self;
+    void *base;
+    s32 count;
+    s32 i;
+    void *p;
+    u8 r;
+    u8 r2;
+
+    self = arg0;
+    base = *(void **)((u8 *)self + 0x4C);
+    count = 0;
+    i = 0;
+    do {
+        p = fn_80105C5C((u8 *)base + 0x1BC, (u8)i);
+        if (p != NULL) {
+            if (*(u8 *)((u8 *)p + 0x19) != 0) {
+                if (*(u8 *)((u8 *)p + 0x19) != 0) {
+                    r = fn_80105BC0(
+                        (u8 *)*(void **)((u8 *)*(void **)((u8 *)self + 0x4C) + 0x18C) + 0x1C,
+                        *(u8 *)((u8 *)p + 0x18));
+                } else {
+                    r = 0;
+                }
+                if (r == 0) {
+                    if (*(u8 *)((u8 *)p + 0x19) != 0) {
+                        r2 = 0;
+                        if (*(u8 *)((u8 *)p + 0x19) != 0 && *(u8 *)((u8 *)p + 0x1A) == 0) {
+                            r2 = 1;
+                        }
+                    } else {
+                        r2 = 0;
+                    }
+                    if (r2 == 0) {
+                        count += 1;
+                    }
+                }
+            }
+        }
+        i += 1;
+    } while (i < 0x62);
+    return count;
+}
+
 s32 fn_8017BD58(void *arg0) {
     u8 fn_80105BC0(void *, u8);
     void *fn_80105C5C(void *, u8);
@@ -12639,6 +12685,52 @@ u32 fn_8017D6D8(void *arg0) {
     }
     return var_r3;
 }
+
+#pragma cplusplus on
+extern "C" void *fn_8017D800(void *arg0, s16 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    struct Owner {
+        void *vtbl;
+        u8 pad4[0x40];
+        void *sub44;
+        u8 pad48[0x24];
+        void *sub6c;
+    };
+    void fn_800C428C(void *);
+    extern u8 lbl_80295448[];
+    extern u8 lbl_80295478[];
+    extern u8 lbl_80292230[];
+    extern u8 lbl_8028FDB0[];
+    Owner *self;
+
+    self = (Owner *)arg0;
+    if (arg0 != NULL) {
+        self->vtbl = lbl_80295448;
+        if (&self->sub6c != NULL) {
+            self->sub6c = lbl_80295478;
+            ((Obj *)&self->sub6c)->v2();
+        }
+        if (&self->sub44 != NULL) {
+            self->sub44 = lbl_80295478;
+            ((Obj *)&self->sub44)->v2();
+        }
+        if (arg0 != NULL) {
+            self->vtbl = lbl_80292230;
+            if (arg0 != NULL) {
+                self->vtbl = lbl_8028FDB0;
+            }
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+#pragma cplusplus reset
 
 #pragma cplusplus on
 extern "C" void fn_8017D9D8(void *arg0, s32 arg1, s32 arg2, f32 farg0, f32 farg1, f32 farg2) {
