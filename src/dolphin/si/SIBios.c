@@ -763,6 +763,26 @@ void fn_8023B818(void) {
     __SIRegs[14] = 0x80000000;
 }
 
+u32 SISetXY(s32 chan, s32 xy) {
+    BOOL OSDisableInterrupts(void);
+    BOOL OSRestoreInterrupts(BOOL);
+    extern u32 Si_8029EFAC[];
+    BOOL enabled;
+    u32 *p;
+    u32 cmd;
+
+    cmd = chan << 16;
+    cmd |= xy << 8;
+    enabled = OSDisableInterrupts();
+    p = &Si_8029EFAC[1];
+    *p &= 0xFC0000FF;
+    *p |= cmd;
+    cmd = *p;
+    __SIRegs[12] = cmd;
+    OSRestoreInterrupts(enabled);
+    return cmd;
+}
+
 u32 fn_8023B930(u32 type) {
     extern u32 Si_8029EFAC[];
     BOOL enabled;
