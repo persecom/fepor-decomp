@@ -4444,16 +4444,16 @@ extern "C" void fn_80190920(void *arg0) {
         virtual void v6() = 0;
         virtual void v7() = 0;
         virtual void v8() = 0;
-        virtual void v9() = 0;
+        virtual s32 v9(void *) = 0;
         virtual void v10() = 0;
-        virtual s32 v11(void *) = 0;
+        virtual void v11() = 0;
     };
     s16 t46;
     void *p3c;
     s16 t4a;
     s16 y;
 
-    ((Obj *)arg0)->v5();
+    ((Obj *)arg0)->v3();
     t46 = *(s16 *)((u8 *)arg0 + 0x46);
     y = (s16)((t46 - fn_800102BC(-1, lbl_8036ADFC)) >> 1);
     p3c = *(void **)((u8 *)arg0 + 0x3C);
@@ -4463,7 +4463,7 @@ extern "C" void fn_80190920(void *arg0) {
         fn_8000A258();
         fn_80009C0C(lbl_8036AE18);
         fn_8000A248();
-        fn_8008D510(p3c, ((Obj *)arg0)->v11(p3c), t4a, y);
+        fn_8008D510(p3c, ((Obj *)arg0)->v9(p3c), t4a, y);
     }
 }
 #pragma cplusplus reset
