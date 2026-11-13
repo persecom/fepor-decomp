@@ -6404,8 +6404,8 @@ extern "C" void fn_8016FD08(void *arg0) {
 
     obj = *(void **)((u8 *)arg0 + 0x4C);
     *(u8 *)((u8 *)obj + 0x48) = 1;
-    *(void **)((u8 *)obj + 0x70) = (void *)fn_8016FDA4;
     val = lbl_802EF4C8[0];
+    *(void **)((u8 *)obj + 0x70) = (void *)fn_8016FDA4;
     *(s32 *)((u8 *)obj + 0x74) = val;
     *(s16 *)((u8 *)obj + 0x4C) = fn_80164E78(obj, 0, val);
     fn_8013FF00(arg0, obj);
