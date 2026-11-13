@@ -1158,6 +1158,11 @@ void fn_80228D00(f64 *arg0)
     // Just a placeholder that has the same structure but not exact operations
 }
 
+void TRKTargetSetInputPendingPtr(s32 arg0) {
+    extern u16 gTRKState[0xA4];
+    *(s32 *)((u8 *)gTRKState + 0xA0) = arg0;
+}
+
 s32 fn_80228DF8(void) {
     extern u8 gTRKState[];
     *(s32 *)(gTRKState + 0x98) = 1;
