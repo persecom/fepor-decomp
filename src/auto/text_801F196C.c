@@ -2877,6 +2877,32 @@ void fn_801F8850(s32 arg0) {
     fn_800C08AC((u8 *)lbl_80281028 + 0x20E, arg0, lbl_80281028);
 }
 
+#pragma global_optimizer off
+void fn_801F8880(void) {
+    void fn_800C50FC();
+    s32 fn_800C52C8(void);
+    void fn_800C469C(void *);
+    void fn_80013E24(void *);
+    void *fn_8003FCCC(void *);
+    void fn_8005C84C(void *);
+    void fn_80050F64(void);
+    extern u8 lbl_80281028[];
+    extern u8 lbl_8029B41C[];
+    extern void *lbl_80368408;
+    extern void *lbl_8036840C;
+    extern u8 lbl_80367708;
+
+    fn_800C50FC(lbl_80281028 + 0x215, 0x180000);
+    fn_800C50FC(lbl_80281028 + 0x220, fn_800C52C8(), lbl_80281028);
+    fn_800C469C(lbl_80281028 + 0x215);
+    fn_80013E24(lbl_80281028 + 0x22C);
+    lbl_80368408 = fn_8003FCCC(*(void **)(lbl_8029B41C + 4));
+    lbl_8036840C = fn_8003FCCC(lbl_80281028 + 0x23F);
+    fn_8005C84C(lbl_80281028 + 0x1FE);
+    fn_80050F64();
+    lbl_80367708 = 0;
+}
+#pragma global_optimizer on
 void fn_801F892C(void) {
     M2C_UNK fn_8002D4B8();
     fn_8002D4B8();
