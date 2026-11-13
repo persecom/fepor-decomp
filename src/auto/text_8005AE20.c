@@ -2368,53 +2368,7 @@ void fn_8005F8E4(void *arg0) {
     fn_800653C8(GetListField44(arg0));
 }
 
-u16 fn_8005F92C(void *arg0, u16 *arg1) {
-    s32 var_ctr;
-    u16 *var_r7;
-    u16 temp_r0;
-    u16 temp_r6;
-    void *var_r3;
-
-    var_r3 = arg0;
-    var_ctr = 2;
-loop_1:
-    temp_r6 = ((u16*)var_r3)[0x7C/2];
-    if (temp_r6 != -1) {
-        var_r7 = arg1;
-loop_6:
-        temp_r0 = *var_r7;
-        if (temp_r0 == -1) {
-            goto block_7;
-        }
-        if (temp_r0 == temp_r6) {
-            return temp_r6;
-        }
-        var_r7 += 1;
-        goto loop_6;
-    }
-block_7:
-    temp_r6 = ((u16*)var_r3)[0x7E/2];
-    if (temp_r6 != -1) {
-        var_r7 = arg1;
-loop_12:
-        temp_r0 = *var_r7;
-        if (temp_r0 == -1) {
-            goto block_13;
-        }
-        if (temp_r0 == temp_r6) {
-            return temp_r6;
-        }
-        var_r7 += 1;
-        goto loop_12;
-    }
-block_13:
-    var_r3 = (u8*)var_r3 + 4;
-    var_ctr -= 1;
-    if (var_ctr == 0) {
-        return 0xFFFF;
-    }
-    goto loop_1;
-}
+u16 fn_8005F92C(void *arg0,u16 *arg1){ s32 i; u16 v; u16 *p; for(i=0;i<4;i++){v=((u16*)arg0)[0x3e+i]; if(v!=0xffff){for(p=arg1;*p!=0xffff;p++){if(*p==v)return v;}}} return 0xffff;}
 
 #pragma peephole off
 s32 fn_8005F9B8(void *arg0, u16 arg1) {
