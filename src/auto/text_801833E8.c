@@ -5975,14 +5975,19 @@ void fn_80193FE0(void *arg0)
 
 #pragma cplusplus reset
 void fn_80194064(void *arg0) {
-    s32 temp_r31;
-    void *temp_r6;
+    void fn_8011D79C(s32);
+    void *fn_8013FF94(void *, s32, s32);
+    void fn_801658DC(void *, s32);
+    void *inner;
+    s32 saved;
+    void *ret;
 
-    fn_8011D79C(M2C_FIELD(M2C_FIELD(arg0, void **, 0x44), s32 *, 0x20));
-    temp_r6 = M2C_FIELD(arg0, void **, 0x44);
-    temp_r31 = M2C_FIELD(temp_r6, s32 *, 0x34);
-    if (fn_8013FF94(arg0, -0x1000, 0, temp_r6) != 0U) {
-        fn_801658DC(temp_r31);
+    fn_8011D79C(*(s32 *)(*(u8 **)((u8 *)arg0 + 0x44) + 0x20));
+    inner = *(void **)((u8 *)arg0 + 0x44);
+    saved = *(s32 *)((u8 *)inner + 0x34);
+    ret = fn_8013FF94(arg0, -0x1000, 0);
+    if (ret != NULL) {
+        fn_801658DC(ret, saved);
     }
 }
 
