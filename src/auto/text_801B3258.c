@@ -4245,8 +4245,7 @@ void *fn_801BE748(s32 arg0) {
 
 void fn_801BE7CC(void) {
     extern u16 lbl_8027C698[];
-    void *ptr = lbl_8027C698;
-    fn_8000E0E4((u8 *)ptr + 0x37c);
+    fn_8000E0E4((u8 *)lbl_8027C698 + 0xDF);
 }
 
 void *fn_801BE7F8(void){extern u8 lbl_8027C698[];return lbl_8027C698+0x29b;}
