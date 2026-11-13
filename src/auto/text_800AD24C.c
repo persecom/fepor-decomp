@@ -5405,13 +5405,15 @@ s32 fn_800BA298(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     }
     var_f1 = (f32)arg3;
     var_f2 = (f32)arg4;
-    if (arg1 < 8) {
-        if (arg1 >= 5) {
-            var_f2 *= lbl_80369D00;
-            if (arg3 != 123456789) {
-                var_f1 *= lbl_80369D00;
-            }
+    switch (arg1) {
+    case 5:
+    case 6:
+    case 7:
+        var_f2 *= lbl_80369D00;
+        if (arg3 != 123456789) {
+            var_f1 *= lbl_80369D00;
         }
+        break;
     }
     fn_80109448(tmp, arg1, arg2, var_f1, var_f2, (f32)arg5);
     return 1;
