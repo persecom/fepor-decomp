@@ -819,6 +819,34 @@ s32 fn_801B70C8(void) {
     return sum;
 }
 
+s32 fn_801B7188(void) {
+    void fn_800056CC(const char *, ...);
+    void fn_800152F8(s32, s32, s32, s32, s32, s32, s32, s32, void *);
+    extern u8 lbl_8027C370[];
+    extern u8 lbl_802B14E4[];
+    u8 buf[8];
+    u8 *unit;
+    s32 count;
+    s32 i;
+
+    count = 0;
+    fn_800056CC((const char *)(lbl_8027C370 + 0x19C));
+    fn_800152F8(1, 0, 0, 0, 0, 1, 0, 0, buf);
+    for (i = 1; i <= 0x9F; i++) {
+        if ((u8)i != 0) {
+            unit = lbl_802B14E4 + ((u8)i - 1) * 0x280;
+        } else {
+            unit = NULL;
+        }
+        if (*(u32 *)(unit + 0x188) != 0
+            && buf[*(u8 *)(*(u8 **)(unit + 0x190) + 8)] != 0
+            && (*(u32 *)(unit + 0x1A0) & 0x4000)) {
+            count += 1;
+        }
+    }
+    return count;
+}
+
 s32 fn_801B7260(void) {
     void fn_800056CC(const char *, ...);
     void fn_800152F8(s32, s32, s32, s32, s32, s32, s32, s32, void *);
