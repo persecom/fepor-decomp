@@ -3342,13 +3342,11 @@ void fn_80026678(void *arg0) {
 }
 
 void fn_800266E4(s32 arg0) {
-    extern s32 *lbl_802EF4C8;
-    extern void *lbl_80330EAC;
-    
-    s32 val1 = *(s32*)lbl_802EF4C8;
-    void *ptr2 = lbl_80330EAC;
-    
-    fn_80034A8C(ptr2, val1, 0xA, arg0, 1);
+    extern void *lbl_802EF4C8[];
+    extern u8 lbl_80330EAC[];
+    void fn_80034A8C(void *, void *, s32, s32, s32);
+
+    fn_80034A8C(lbl_80330EAC, lbl_802EF4C8[0], 0xA, arg0, 1);
 }
 
 void fn_80026724(void *arg0) {
