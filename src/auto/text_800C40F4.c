@@ -6598,10 +6598,16 @@ void *fn_800D7060(void *arg0, s16 arg1) {
 
 void fn_800D74FC(void *arg0) {
     extern void *lbl_80367240;
-    s32 temp_r4;
+    s32 buttons;
+    s32 prev;
+    s32 repeat;
+    void (*meth)(void *, s32, s32, s32);
 
-    temp_r4 = M2C_FIELD(lbl_80367240, s32 *, 4);
-    M2C_FIELD(M2C_FIELD(arg0, void **, 0xC), M2C_UNK (**)(s32, s32, s32), 0xC)(temp_r4, temp_r4 & (M2C_FIELD(lbl_80367240, s32 *, 8) ^ temp_r4), M2C_FIELD(lbl_80367240, s32 *, 0xC));
+    buttons = *(s32 *)((u8 *)lbl_80367240 + 4);
+    prev = *(s32 *)((u8 *)lbl_80367240 + 8);
+    repeat = *(s32 *)((u8 *)lbl_80367240 + 0xC);
+    meth = *(void (**)(void *, s32, s32, s32))(*(u8 **)((u8 *)arg0 + 0xC) + 0xC);
+    meth(arg0, buttons, buttons & (prev ^ buttons), repeat);
 }
 
 void fn_800D7540(void *arg0) {
@@ -10759,16 +10765,15 @@ void fn_800E35F4(void *arg0, s32 arg1, void *uv, void *rect, s32 arg4, s32 arg5,
     }
 }
 
-#pragma use_lmw_stmw reset
-s32 fn_800E378C(s32 arg0, s32 arg1) {
-    void *temp_r3;
-    
-    temp_r3 = fn_800C93EC((void*)arg1);
-    fn_8006EEFC(arg0 + 0x48, (s32)temp_r3);
-    
+#pragma dont_inline on
+s32 fn_800E378C(u8 *arg0, void *arg1) {
+    void *fn_800C93EC(void *);
+    void fn_8006EEFC(void *, void *);
+
+    fn_8006EEFC(arg0 + 0x48, fn_800C93EC(arg1));
     return 1;
 }
-
+#pragma dont_inline reset
 extern Struct_8014589C D_8014589C;
 u32 fn_800E37CC(u32 arg0, u32 arg1)
 {
