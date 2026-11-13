@@ -169,13 +169,13 @@ s32 fn_80074A38(void) {
     u8 fn_80105BC0(void *, s32);
     void fn_80029C08(void *);
     extern u8 lbl_802EF4C8[];
-    extern s32 lbl_802EF4E0;
+    extern struct { s32 n; u8 pad[2004]; } lbl_802EF4E0;
 
     if (fn_80105BC0(*(u8 **)lbl_802EF4C8 + 0x1BC, 0x18) == 0) {
         return 3;
     }
     fn_80029C08(*(u8 **)lbl_802EF4C8);
-    return 2 & ~((s32)(-lbl_802EF4E0 | lbl_802EF4E0) >> 31);
+    return lbl_802EF4E0.n ? 0 : 2;
 }
 
 #pragma cplusplus on
@@ -1127,14 +1127,20 @@ extern "C" void fn_80076174(void *arg0, void *arg1) {
 }
 #pragma cplusplus off
 s32 fn_8007633C(void) {
- extern u8 lbl_802EF4C8[];
- extern u8 lbl_8032BB58[];
- void fn_8010FF24(void *,u8,u8,s32);
- u8 *p=*(u8 **)lbl_802EF4C8;
- s32 y=p[0x19F];
- s32 x=p[0x19E];
- fn_8010FF24(lbl_8032BB58,x,y,7);
- return 0;
+    void fn_8010FF24(void *, u8, u8, s32);
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_8032BB58[];
+    u8 *base;
+    void *ptr;
+    u8 a;
+    u8 b;
+
+    base = lbl_802EF4C8;
+    ptr = *(void **)base;
+    a = *((u8 *)ptr + 0x19F);
+    b = *((u8 *)ptr + 0x19E);
+    fn_8010FF24(lbl_8032BB58, b, a, 7);
+    return 0;
 }
 
 s32 fn_80076380(s32 arg0, s32 arg1, void *arg2) {
@@ -3586,14 +3592,16 @@ void fn_8007AD6C(void *arg0) {
 void fn_8007ADC8(s32 index) {
     extern void *lbl_80312040[];
     void fn_8000C60C(void *);
+    void **base;
     void *p;
 
-    p = lbl_80312040[index];
+    base = lbl_80312040;
+    p = base[index];
     if (p == NULL) {
         return;
     }
     fn_8000C60C(p);
-    lbl_80312040[index] = NULL;
+    base[index] = NULL;
 }
 
 void fn_8007AE18(void *arg0)
