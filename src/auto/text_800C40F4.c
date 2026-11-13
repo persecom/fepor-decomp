@@ -2863,9 +2863,9 @@ void fn_800CAF74(void *arg0) {
     char buf[0x40];
     String str;
     u8 scratch;
-    u8 ch;
     char *p;
     void *obj;
+    u8 ch;
     void *self;
 
     self = arg0;
@@ -5925,14 +5925,8 @@ extern "C" void *fn_800D38BC(void *arg0)
     fn_800DB1FC(orderedLookup0, &assignedName0);
     fn_800C9A60(&assignedName0, -1);
 
-    /* The target uses the return value of fn_800CB070 as a String.
-       Its current implementation is void(void), so this placeholder
-       is only a compile-stage approximation. */
-    assignedName1.size = 0;
-    assignedName1.cap = 0;
-    assignedName1.data = 0;
-    fn_800CB070();
-    fn_800DB1FC(orderedLookup1, &assignedName1);
+    ((void (*)(String *))fn_800CB070)(&assignedName1);
+      fn_800DB1FC(orderedLookup1, &assignedName1);
     fn_800C9A60(&assignedName1, -1);
 
     /* Next ~50 instructions: the remaining two name assignments. */
@@ -10326,6 +10320,71 @@ void fn_800DFC2C(void *arg0) {
     base = *(s32 *)((u8 *)arg0 + 8);
     fn_800E01EC(base, base + (idx << 2), &spC);
 }
+
+#pragma cplusplus on
+#pragma use_lmw_stmw on
+extern "C" s32 fn_800DFC68(void *arg0, void *arg1, const char *arg2, const char *arg3) {
+    u8 fn_800DF298(void *, const char *);
+    u8 fn_800DF258(void *, const char *);
+    s32 fn_802342B8(const char *, const char *);
+    extern char lbl_80271B50[];
+    struct Cb {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5(void *) = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+    };
+    struct List {
+        void *unk0;
+        s32 count;
+        void **items;
+    };
+    void *item;
+    s32 off;
+    u32 match;
+    s32 i;
+    s32 count;
+    u8 flag;
+    List *list;
+    Cb *cb;
+    const char *name;
+    const char *filter;
+
+    cb = (Cb *)arg1;
+    list = (List *)arg0;
+    name = arg2;
+    filter = arg3;
+    cb->v9();
+    flag = 0;
+    if (filter == 0 || fn_802342B8(filter, lbl_80271B50) == 0) {
+        flag = 1;
+    }
+    match = (u8)flag != 0;
+    count = 0;
+    i = 0;
+    off = 0;
+    while (i < list->count) {
+        item = *(void **)((u8 *)list->items + off);
+        if (fn_800DF298(item, name) != 0) {
+            if (match != 0 || fn_800DF258(item, filter) != 0) {
+                cb->v5(item);
+                count += 1;
+            }
+        }
+        i += 1;
+        off += 4;
+    }
+    return count;
+}
+#pragma use_lmw_stmw reset
+#pragma cplusplus reset
 
 #pragma cplusplus on
 extern "C" void fn_800DFD64(void *arg0) {
