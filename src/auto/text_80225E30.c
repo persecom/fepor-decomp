@@ -266,63 +266,68 @@ void fn_802264B4(void* arg0, void** arg1)
     }
 }
 
-s32 fn_8022659C(void *buffer, const u32 *words, s32 count) {
-    extern u16 gTRKBigEndian;
-    void fn_80003488(void *, void *, s32);
-    u8 *base;
-    const u32 *bigEndian;
+#pragma use_lmw_stmw on
+s32 fn_8022659C(void *buffer, u32 *words, s32 count) {
+    extern u8 gTRKBigEndian[];
+    void fn_80003488(void *, void *, u32);
+    s32 error;
+    u32 size;
+    void *base;
+    s32 i;
+    u32 *srcWords;
+    s32 *endian;
+    u32 rev;
     u32 word;
-    u8 reversed[4];
     u8 *src;
     u32 position;
     u32 remaining;
-    u32 size;
-    s32 error;
     s32 result;
-    s32 i;
+    u32 off;
 
-    base = (u8 *)buffer;
-    bigEndian = (const u32 *)(const void *)&gTRKBigEndian;
+    base = buffer;
+    srcWords = words;
+    endian = (s32 *)gTRKBigEndian;
     i = 0;
     result = 0;
 
     while (result == 0 && i < count) {
-        word = *words;
-        if (*bigEndian != 0) {
+        word = *srcWords;
+        if (*endian != 0) {
             src = (u8 *)&word;
         } else {
-            reversed[0] = ((u8 *)&word)[3];
-            reversed[1] = ((u8 *)&word)[2];
-            reversed[2] = ((u8 *)&word)[1];
-            reversed[3] = ((u8 *)&word)[0];
-            src = reversed;
+            ((u8 *)&rev)[0] = ((u8 *)&word)[3];
+            ((u8 *)&rev)[1] = ((u8 *)&word)[2];
+            ((u8 *)&rev)[2] = ((u8 *)&word)[1];
+            ((u8 *)&rev)[3] = ((u8 *)&word)[0];
+            src = (u8 *)&rev;
         }
 
-        position = *(u32 *)(base + 0xC);
+        position = *(u32 *)((u8 *)base + 0xC);
         size = 4;
         error = 0;
         remaining = 0x880U - position;
-        if (remaining < size) {
+        if (remaining < 4U) {
             error = 0x301;
             size = remaining;
         }
 
         if (size == 1) {
-            base[position + 0x10] = *src;
+            *((u8 *)base + (position + 0x10)) = *src;
         } else {
-            fn_80003488(base + (position + 0x10), src, size);
+            off = position + 0x10;
+            fn_80003488((u8 *)base + off, src, size);
         }
 
-        *(u32 *)(base + 0xC) += size;
-        *(u32 *)(base + 0x8) = *(volatile u32 *)(base + 0xC);
+        *(u32 *)((u8 *)base + 0xC) = *(u32 *)((u8 *)base + 0xC) + size;
+        *(u32 *)((u8 *)base + 0x8) = *(u32 *)((u8 *)base + 0xC);
         result = error;
-        words++;
-        i++;
+        srcWords += 1;
+        i += 1;
     }
 
     return result;
 }
-
+#pragma use_lmw_stmw reset
 s32 fn_80226698(void *arg0, u8 *arg1, s32 arg2) {
     s32 var_r0;
     s32 var_r7;
@@ -1479,42 +1484,49 @@ extern u8 lbl_8033CFB4[];
     return err + (s32)(st.gap[0] & 0);
 }
 #pragma optimization_level reset
-s32 fn_80229FA4(s32 arg0, u32 arg1, s32 arg2, s32 *arg3, s32 arg4) {
-    typedef struct {
-        u32 words[4];
-    } ExceptionStatus;
-
-    extern u8 gTRKExceptionStatus_8029E574[0x10];
-    ExceptionStatus saved;
-    u8 *status;
-    u32 *registers;
-    s32 count;
-    s32 result;
-
-    if (arg1 > 0x24U) {
-        return 0x701;
-    }
-
-    status = gTRKExceptionStatus_8029E574;
-    saved = *(ExceptionStatus *)status;
-    count = (arg1 - arg0) + 1;
-    status[0xD] = 0;
-    registers = (u32 *)gTRKCPUState + arg0;
-    *arg3 = count * 4;
-
-    if (arg4 != 0) {
-        result = fn_8022659C((void *)arg2, registers, count);
-    } else {
-        result = fn_8022632C((void *)arg2, registers, count);
-    }
-
-    if (status[0xD] != 0) {
-        result = 0x702;
-        *arg3 = 0;
-    }
-
-    *(ExceptionStatus *)gTRKExceptionStatus_8029E574 = saved;
-    return result;
+s32 fn_80229FA4(s32 arg0, u32 arg1, s32 arg2, s32 *arg3, s32 arg4)
+{
+  u32 *new_var3;
+  s32 new_var;
+  int new_var2;
+  typedef struct 
+  {
+    u32 words[4];
+  } ExceptionStatus;
+  extern u8 gTRKExceptionStatus_8029E574[0x10];
+  ExceptionStatus saved;
+  u8 *status;
+  u32 *registers;
+  s32 count;
+  s32 result;
+  if (arg1 > 0x24U)
+  {
+    return 0x701;
+  }
+  status = gTRKExceptionStatus_8029E574;
+  saved = *((ExceptionStatus *) status);
+  count = (arg1 - arg0) + 1;
+  new_var3 = ((u32 *) gTRKCPUState) + arg0;
+  status[0xD] = 0;
+  registers = new_var3;
+  *arg3 = count * 4;
+  if (arg4 != 0)
+  {
+    new_var = count;
+    result = fn_8022659C((void *) arg2, registers, new_var);
+  }
+  else
+  {
+    result = fn_8022632C((void *) arg2, registers, new_var);
+  }
+  new_var2 = status[0xD] != 0;
+  if (new_var2)
+  {
+    result = 0x702;
+    *arg3 = 0;
+  }
+  *((ExceptionStatus *) gTRKExceptionStatus_8029E574) = saved;
+  return result;
 }
 
 s32 fn_8022A098(u32 *arg0, u32 arg1) {
@@ -1903,9 +1915,9 @@ u8 fn_8022B490(void) {
     return (u8)(*(u16*)((char*)&lbl_8033CFE0));
 }
 
-void fn_8022B4A0(s8 arg0) {
-    extern u16 lbl_8033CFE0;
-    lbl_8033CFE0 = (u16)arg0;
+void fn_8022B4A0(u8 arg0) {
+    extern u8 lbl_8033CFE0[];
+    lbl_8033CFE0[0] = arg0;
 }
 
 s32 fn_8022B4AC(s32 arg0) {
