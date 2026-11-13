@@ -4426,33 +4426,35 @@ void fn_801FB548(u32 *arg0) {
     arg0[1] = 0;
 }
 #pragma global_optimizer on
-void fn_801FB580(void *arg0, void *arg1, void *arg2)
+void fn_801FB580(u32 *arg0, void **arg1, void *arg2)
 {
-    void *list;
-    void *sentinel;
-    void *next;
-    void *prev;
+    struct ListNode {
+        struct ListNode *prev;
+        struct ListNode *next;
+    };
+    struct ListNode *list;
+    struct ListNode *sentinel;
+    struct ListNode *next;
+    struct ListNode *prev;
 
     if (*(u32 *)arg2 == 0) {
         return;
     }
 
-    list = *(void **)arg1;
-    sentinel = (u8 *)arg2 + 4;
-    next = *(void **)((u8 *)arg2 + 8);
-    prev = *(void **)((u8 *)arg2 + 4);
+    sentinel = (struct ListNode *)((u8 *)arg2 + 4);
+    list = *(struct ListNode **)arg1;
+    next = sentinel->next;
+    prev = sentinel->prev;
 
-    *(void **)((u8 *)sentinel + 4) = sentinel;
-    *(void **)sentinel = sentinel;
+    sentinel->next = sentinel;
+    sentinel->prev = sentinel;
 
-    *(void **)((u8 *)*(void **)list + 4) = next;
-    *(void **)next = *(void **)list;
+    list->prev->next = next;
+    next->prev = list->prev;
+    list->prev = prev;
+    prev->next = list;
 
-    *(void **)list = prev;
-    *(void **)((u8 *)prev + 4) = list;
-
-    *(u32 *)arg0 = *(u32 *)arg0 + *(u32 *)arg2;
-
+    *arg0 = *arg0 + *(u32 *)arg2;
     *(u32 *)arg2 = 0;
 }
 
