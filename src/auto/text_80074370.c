@@ -2792,29 +2792,12 @@ if(v && arg0==*(s8 *)((u8 *)v+0x43)) return lbl_80312040[i];
 return NULL;
 }
 
-void fn_800793EC(void *arg0, s32 arg1) {
-    void *fn_8000D354(void *);
-    void *fn_802002F0(void *);
-    void fn_80200270(void *);
-    void fn_80009EB0(void *, s32, s32, s32);
-    extern u8 lbl_8026C640[];
-    void *node;
-    u32 idx;
-
-    node = fn_8000D354(arg0);
-    if (node == 0) {
-        goto fallback;
-    }
-    goto joined;
-fallback:
-    node = fn_8000D354(lbl_8026C640 + 0xEF);
-joined:
-    idx = *(u16 *)((u8 *)node + 0x1A);
-    if (idx == 0xFFFF) {
-        idx = 0;
-    }
-    fn_80009EB0(fn_802002F0(arg0), idx, 0, arg1);
-    fn_80200270(arg0);
+void fn_800793EC(void *arg0,s32 arg1){
+void *fn_8000D354(void *); void *fn_802002F0(void *); void fn_80200270(void *); void fn_80009EB0(void *,s32,s32,s32); extern u8 lbl_8026C640[];
+s32 idx; void *node;
+node=fn_8000D354(arg0); node=node ? node : fn_8000D354(lbl_8026C640+0xef);
+idx=*(u16*)((u8*)node+0x1a); if(idx==65535)idx=0;
+fn_80009EB0(fn_802002F0(arg0),idx,0,arg1); fn_80200270(arg0);
 }
 
 void fn_8007947C(void *arg0) {
