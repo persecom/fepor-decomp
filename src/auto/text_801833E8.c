@@ -9855,6 +9855,34 @@ void fn_8019CAB4(void *arg0) {
     }
 }
 
+void fn_8019CB5C(void *arg0) {
+    void *fn_80053C30(void *, void *);
+    void fn_800536CC(void *, void *);
+    void fn_800536D8(void *, void *);
+    void fn_8005306C(void *);
+    void fn_80053658(void *, s32, void *);
+    extern void fn_8019CD40(void);
+    void *temp;
+    void *p;
+
+    temp = fn_80053C30((u8 *)arg0 + 0x41, arg0);
+    if (temp) {
+        p = *(void **)((u8 *)arg0 + 0x30);
+        if (p) {
+            fn_800536CC(temp, *(void **)p);
+        }
+        p = *(void **)((u8 *)arg0 + 0x34);
+        if (p) {
+            fn_800536D8(temp, *(void **)p);
+        }
+        fn_8005306C(temp);
+        *(void **)((u8 *)*(void **)((u8 *)temp + 0x30) + 0x40) = fn_8019CD40;
+        fn_80053658(temp, 0, arg0);
+        p = *(void **)((u8 *)temp + 0x30);
+        *(u32 *)((u8 *)p + 8) |= 0x400;
+    }
+}
+
 s32 fn_8019CC04(void *arg0) {
     u8 fn_8005F9B8(void *, s32);
     void *temp_r4;
