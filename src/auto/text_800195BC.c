@@ -1927,27 +1927,29 @@ s32 fn_8001CCE4(u8 arg0) {
     }
 }
 
-M2C_UNK *fn_8001CDE4(u8 arg0) {
-    extern M2C_UNK lbl_80268820;
+void *fn_8001CDE4(u8 arg0)
+{
+    extern u8 lbl_80268820[];
+
     if (arg0 >= 0xFBU) {
-        return (M2C_UNK *)(((u32)&lbl_80268820) + 0x41);
+        return lbl_80268820 + 0x41;
     }
     if (arg0 >= 0xB5U) {
-        return (M2C_UNK *)(((u32)&lbl_80268820) + 6);
+        return lbl_80268820 + 0x6;
     }
     if (arg0 >= 0x79U) {
-        return (M2C_UNK *)(((u32)&lbl_80268820) + 4);
+        return lbl_80268820 + 0x4;
     }
     if (arg0 >= 0x47U) {
-        return (M2C_UNK *)(((u32)&lbl_80268820) + 2);
+        return lbl_80268820 + 0x2;
     }
     if (arg0 >= 0x1FU) {
-        return (M2C_UNK *)(((u32)&lbl_80268820) + 0x43);
+        return lbl_80268820 + 0x43;
     }
     if (arg0 >= 1U) {
-        return (M2C_UNK *)(((u32)&lbl_80268820) + 0x45);
+        return lbl_80268820 + 0x45;
     }
-    return &lbl_80268820;
+    return lbl_80268820;
 }
 
 #pragma peephole off
