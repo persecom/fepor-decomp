@@ -14500,6 +14500,49 @@ void fn_800EA7CC(s32 arg0, s32 arg1) {
     fn_8000CAA0(lbl_8028E358, arg1);
 }
 
+void fn_800EA808(void) {
+    struct CardWork {
+        u8 workArea[0xA000];
+        s32 chan;
+        volatile s32 result;
+        s32 sectorSize;
+        s32 unkA00C;
+        s32 unkA010;
+        s32 unkA014;
+        u8 unkA018;
+        u8 unkA019;
+        u8 busy;
+        u8 padA01B;
+        u8 fileInfo[0x14];
+        u32 tick;
+        s32 unkA034;
+    };
+    s32 OSGetTick(void);
+    void fn_800C4588(u32 *);
+    void fn_8021C02C(void *);
+    void fn_8021B20C(s32);
+    void fn_800056CC(void *, ...);
+    extern struct CardWork lbl_80320C20;
+    extern u8 lbl_802725D8[];
+    u32 tickRate;
+    u32 conv;
+
+    fn_800C4588((u32 *)lbl_80320C20.unkA034);
+    lbl_80320C20.unkA034 = 0;
+    if (lbl_80320C20.unkA019 != 0) {
+        fn_8021C02C(lbl_80320C20.fileInfo);
+        lbl_80320C20.unkA019 = 0;
+    }
+    if (lbl_80320C20.unkA018 != 0) {
+        fn_8021B20C(lbl_80320C20.chan);
+        lbl_80320C20.unkA018 = 0;
+    }
+    lbl_80320C20.tick = OSGetTick() - lbl_80320C20.tick;
+    tickRate = *(volatile u32 *)0x800000F8;
+    conv = (u32)(((u64)0x10624dd3ULL * (tickRate >> 2)) >> 32) >> 6;
+    fn_800056CC(lbl_802725D8 + 0xC5, lbl_80320C20.tick / conv);
+}
+
 #pragma use_lmw_stmw on
 void fn_800EA8F4(s32 arg0) {
     void fn_8000C070(s32, s32);
@@ -14607,6 +14650,50 @@ void fn_800EA8F4(s32 arg0) {
         if (*(s32 *)(base - 0x5FFC) < 0) {
             fn_8000C070(self, 0x63);
             *(base2 - 0x5FE6) = 0;
+        }
+    }
+}
+
+void fn_800EAC7C(s32 arg0) {
+    struct CardWork {
+        u8 workArea[0xA000];
+        s32 chan;
+        volatile s32 result;
+        s32 sectorSize;
+        s32 unkA00C;
+        s32 unkA010;
+        s32 unkA014;
+        u8 unkA018;
+        u8 unkA019;
+        u8 busy;
+        u8 unkA01B;
+        u8 fileInfo[0x14];
+    };
+    void fn_800EB80C(void);
+    void fn_8000C070(s32, s32);
+    s32 fn_8021D6D8(s32, s32, u8 *);
+    s32 fn_8021D718(s32, s32, u8, void *);
+    extern struct CardWork lbl_80320C20;
+    u8 sp8;
+    u8 skip;
+    s32 temp;
+
+    if (lbl_80320C20.result < 0) {
+        fn_8000C070(arg0, 0x63);
+        lbl_80320C20.busy = 0;
+        skip = 1;
+    } else {
+        skip = 0;
+    }
+    if (skip == 0) {
+        temp = *(s32 *)&lbl_80320C20.fileInfo[4];
+        fn_8021D6D8(lbl_80320C20.chan, temp, &sp8);
+        sp8 |= 8;
+        lbl_80320C20.busy = 1;
+        lbl_80320C20.result = fn_8021D718(lbl_80320C20.chan, temp, sp8, fn_800EB80C);
+        if (lbl_80320C20.result < 0) {
+            fn_8000C070(arg0, 0x63);
+            lbl_80320C20.busy = 0;
         }
     }
 }
@@ -19005,11 +19092,11 @@ void fn_800F8780(void *arg0) {
     void fn_800FB548(void *);
     void fn_800FB494(void *);
 
-    void *self;
     void *state;
     void (*cb)(void *);
+    s32 index;
+    s32 ret;
 
-    self = arg0;
     state = lbl_803678F8;
     if (*(u32 *)((u8 *)state + 0x14) == 0) {
         cb = fn_800FB5C8;
@@ -19019,13 +19106,14 @@ void fn_800F8780(void *arg0) {
             cb = fn_800FB494;
         }
     }
-    *(s32 *)&lbl_8032B3C0[(*(s32 *)((u8 *)state + 4) << 2) + 8] =
-        fn_800FFC58(cb, self, *(s32 *)((u8 *)state + 0xC) != 0,
-                    (f32)*(s32 *)((u8 *)state + 8) / lbl_8036A0A0);
+    ret = fn_800FFC58(cb, arg0, *(s32 *)((u8 *)state + 0xC) != 0,
+                      (f32)*(s32 *)((u8 *)state + 8) / lbl_8036A0A0);
+    index = *(s32 *)((u8 *)state + 4);
+    *(s32 *)&lbl_8032B3C0[(index << 2) + 8] = ret;
     if (lbl_803678F4 == 0) {
-        ((u8 *)self)[0x250]++;
+        ((u8 *)arg0)[0x250]++;
     } else {
-        ((u8 *)self)[0x251]++;
+        ((u8 *)arg0)[0x251]++;
     }
 }
 
