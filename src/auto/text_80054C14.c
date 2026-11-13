@@ -297,19 +297,17 @@ void fn_80054C14(void* arg0)
 }
 
 void *fn_80055204(void *arg0, s32 arg1) {
-    u8 *p;
-
     if (arg0 == 0) {
         return 0;
     }
-    arg0 = (u8 *)arg0 + 0x28C;
+    arg0 = (void *)((u8 *)arg0 + 0x28C);
     if (arg0 == 0) {
         return 0;
     }
     arg0 = *(void **)arg0;
     if (arg0 != 0) {
-        p = (u8 *)arg0 + (arg1 << 2);
-        return *(void **)(p + 0x40);
+        arg0 = (void *)((u8 *)arg0 + (arg1 << 2));
+        return *(void **)((u8 *)arg0 + 0x40);
     }
     return 0;
 }
