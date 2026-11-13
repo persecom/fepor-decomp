@@ -11780,13 +11780,12 @@ void fn_801A26CC(void *arg0) {
     }
 }
 
-void fn_801A2730(s32 arg0) {
-    extern u32 fn_801A27F8;
-    s32 temp_r3 = 4;
-    s32 temp_r4 = 2;
-    s32 temp_r5 = (s32)&fn_801A27F8;
-    s32 temp_r6 = arg0;
-    fn_80067708(temp_r3, temp_r4, (u32 *)temp_r5, temp_r6);
+void fn_801A2730(void *arg0)
+{
+    void fn_80067708(s32, s32, void (*)(void *), void *);
+    void fn_801A27F8(void *);
+
+    fn_80067708(4, 2, fn_801A27F8, arg0);
 }
 
 void fn_801A2764(void *arg0) {
