@@ -11,21 +11,15 @@ extern s32 lbl_802AEE20[5]; // array of 5 pointers
 extern f64 lbl_80368C28;    // global float constant
 extern u16 jumptable_80283AE8[];
 
-s32 fn_80006264(s32 arg0, s32 arg1, u32 arg2) {
-    u32 *var_r3;
-    u32 *var_r4;
-    u32 var_ctr;
-
-    var_r3 = (u32 *)(arg0 - 4);
-    var_r4 = (u32 *)(arg1 - 4);
-    var_ctr = arg2 >> 2U;
-
+s32 fn_80006264(u32 *a, u32 *b, u32 n) {
+    a--;
+    n >>= 2;
+    b--;
     do {
-        if (*(var_r3++) != *(var_r4++)) {
+        if (*++a != *++b) {
             return 1;
         }
-    } while (--var_ctr != 0);
-
+    } while (--n);
     return 0;
 }
 
@@ -875,9 +869,26 @@ void fn_80007648(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
     *(f32 *)(ptr + 0x3C) = arg3;
 }
 
-void fn_80007668(s32 arg0, s32 arg1) {
-    u16 *ptr = (u16*)0x80367140;
-    ptr[arg0] = arg1;
+void fn_80007668(u8 *src) {
+    extern void *lbl_80367140;
+    u8 *base;
+    u8 *ptr;
+    u8 a;
+    u8 b;
+    u8 c;
+    u8 d;
+
+    base = (u8 *)lbl_80367140;
+    a = src[0];
+    base = *(u8 **)(base + 0xC);
+    b = src[1];
+    ptr = *(u8 **)(base + 0x4);
+    c = src[2];
+    ptr[0xC] = a;
+    d = src[3];
+    ptr[0xD] = b;
+    ptr[0xE] = c;
+    ptr[0xF] = d;
 }
 
 void fn_80007698(u8 arg0) {
@@ -1864,10 +1875,12 @@ void fn_80009B98(void) {
 }
 
 void fn_80009BC0(s32 arg0, s32 arg1) {
-    u16* ptr = (u16*)lbl_80367140;
-    ptr[0x16] = arg0;
-    ptr[0x18] = arg1;
-    ptr[0x10] = (ptr[0x10] & 0x8FFF) | 0x2000;
+    extern u16 lbl_80367140;
+
+    *(u32 *)(*(u8 **)&lbl_80367140 + 0x2c) = arg0;
+    *(u32 *)(*(u8 **)&lbl_80367140 + 0x30) = arg1;
+    *(u16 *)(*(u8 **)&lbl_80367140 + 0x20) &= ~0x7000;
+    *(u16 *)(*(u8 **)&lbl_80367140 + 0x20) |= 0x2000;
 }
 
 void fn_80009BF4(f32 farg0) {
