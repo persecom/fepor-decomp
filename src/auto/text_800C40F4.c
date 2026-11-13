@@ -9680,7 +9680,7 @@ extern "C" void fn_800DF60C(void *arg0) {
 }
 
 #pragma cplusplus on
-extern "C" void fn_800DF638(s32 arg0) {
+extern "C" void fn_800DF638(void *arg0, s32 unused) {
     struct Obj {
         u8 pad[0x40];
         virtual void v0() = 0;
