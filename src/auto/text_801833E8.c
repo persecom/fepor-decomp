@@ -421,22 +421,23 @@ void fn_80183DEC(s32 arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(proc, s32 *, 0x34) = arg1;
 }
 
+#pragma use_lmw_stmw on
 void fn_80183E3C(s32 arg0, s32 arg1, s32 arg2, s8 arg3, s8 arg4, s32 arg5) {
-    void *fn_8000CA64(void *, s32, void *);
-    
+    void *fn_8000CA64(void *, s32);
+    extern u16 lbl_80295C60[];
     void *temp_r3;
-    
-    temp_r3 = fn_8000CA64(lbl_80295C60, arg5, lbl_80295C60);
-    M2C_FIELD(temp_r3, s32 *, 0x30) = arg0;
-    M2C_FIELD(temp_r3, s32 *, 0x34) = 0;
-    M2C_FIELD(temp_r3, s8 *, 0x3A) = arg3;
-    M2C_FIELD(temp_r3, s8 *, 0x3B) = arg4;
-    M2C_FIELD(temp_r3, s32 *, 0x40) = arg1;
-    M2C_FIELD(temp_r3, s32 *, 0x44) = arg2;
-    M2C_FIELD(temp_r3, s8 *, 0x48) = 0;
-    M2C_FIELD(temp_r3, s8 *, 0x49) = 0;
-}
 
+    temp_r3 = fn_8000CA64(lbl_80295C60, arg5);
+    *(s32 *)((u8 *)temp_r3 + 0x30) = arg0;
+    *(s32 *)((u8 *)temp_r3 + 0x34) = 0;
+    *((u8 *)temp_r3 + 0x3A) = (u8)arg3;
+    *((u8 *)temp_r3 + 0x3B) = (u8)arg4;
+    *(s32 *)((u8 *)temp_r3 + 0x40) = arg1;
+    *(s32 *)((u8 *)temp_r3 + 0x44) = arg2;
+    *((u8 *)temp_r3 + 0x48) = 0;
+    *((u8 *)temp_r3 + 0x49) = 0;
+}
+#pragma use_lmw_stmw reset
 void fn_80183EAC(s32 arg0, s32 arg1, s8 arg2, s8 arg3, s32 arg4) {
     void *fn_8000CA64(void *, s32);
     extern u16 lbl_80295C60[];
@@ -10921,18 +10922,18 @@ s32 fn_801A0100(u8 arg0, u8 arg1, u8 arg2) {
     void fn_80013864(void);
     s32 value;
     s32 copy;
-    u8 *dst;
+    u8 *p;
 
     value = lbl_8036AF6C;
     ((u8 *)&value)[0] = arg0;
     ((u8 *)&value)[1] = arg1;
     ((u8 *)&value)[2] = arg2;
     copy = value;
-    dst = &lbl_80367298;
-    dst[0] = ((u8 *)&copy)[0];
-    dst[1] = ((u8 *)&copy)[1];
-    dst[2] = ((u8 *)&copy)[2];
-    dst[3] = ((u8 *)&copy)[3];
+    p = (u8 *)&copy;
+    (&lbl_80367298)[0] = p[0];
+    (&lbl_80367298)[1] = p[1];
+    (&lbl_80367298)[2] = p[2];
+    (&lbl_80367298)[3] = p[3];
     fn_80040844();
     fn_80045C68();
     fn_80013864();
