@@ -12381,19 +12381,19 @@ void fn_801D3B14(void *arg0)
 }
 
 void fn_801D3B7C(s32 arg0) {
-    void *fn_8000CAA0(void *, s32, void *, void *, s32);
+    void *fn_8000CAA0(void *, s32);
     extern u8 lbl_80299CC4[];
     extern u8 lbl_80331FB8[];
     extern s32 lbl_803682E0;
-    
-    *(s32*)(lbl_80331FB8 + 0x0) = -1;
-    *(s32*)(lbl_80331FB8 + 0x4) = -1;
-    *(u8*)(lbl_80331FB8 + 0x44) = 1;
-    
-    fn_8000CAA0(lbl_80299CC4, arg0, lbl_80299CC4, lbl_80331FB8, -1);
-    
-    *(s32*)(lbl_80331FB8 + 0x34) = 0;
-    *(s32*)(&lbl_803682E0) = 0;
+    u8 *p = lbl_80331FB8;
+    void *ret;
+
+    *(s32 *)(p + 0) = -1;
+    *(s32 *)(p + 4) = -1;
+    p[0x44] = 1;
+    ret = fn_8000CAA0(lbl_80299CC4, arg0);
+    *(s32 *)((u8 *)ret + 0x34) = 0;
+    lbl_803682E0 = 0;
 }
 
 void fn_801D3BD0(void *arg0) {
