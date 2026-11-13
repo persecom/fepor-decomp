@@ -19309,23 +19309,25 @@ s32 fn_800FB45C(void *arg0) {
 }
 
 s32 fn_800FB494(void *arg0) {
-    extern void *lbl_803678F8;
+    extern u8 *lbl_803678F8;
     extern u8 lbl_802EF4C8[];
-    s32 fn_802342B8(u8 *, u8 *);
+    s32 fn_802342B8(void *, void *);
     s32 fn_80015610(void *, void *);
 
-    u8 **list;
+    void *key;
+    void **list;
     void *other;
-    u8 *name;
-    u8 *entry;
+    void *item;
     u8 found;
+    void *p188;
 
-    list = M2C_FIELD(lbl_803678F8, u8 ***, 0x14);
+    p188 = *(void **)((u8 *)arg0 + 0x188);
+    list = *(void ***)(lbl_803678F8 + 0x14);
     other = *(void **)lbl_802EF4C8;
-    name = *M2C_FIELD(arg0, u8 ***, 0x188);
+    key = *(void **)p188;
 
-    while ((entry = *list++) != NULL) {
-        if (fn_802342B8(entry, name) == 0) {
+    while ((item = *list++) != NULL) {
+        if (fn_802342B8(item, key) == 0) {
             found = 1;
             goto checked;
         }
@@ -19337,8 +19339,8 @@ checked:
         return 0;
     }
 
-    return (u8)fn_80015610(M2C_FIELD(arg0, void **, 0x190),
-                          M2C_FIELD(other, void **, 0x190)) == 1;
+    return (u8)fn_80015610(*(void **)((u8 *)arg0 + 0x190),
+                           *(void **)((u8 *)other + 0x190)) == 1;
 }
 
 s32 fn_800FB548(void *arg0)
@@ -21014,6 +21016,38 @@ void fn_800FFA78(void *arg0) {
         fn_801848D8(M2C_FIELD(&lbl_802EF4C8, s32 *, 0), (s32) M2C_FIELD(arg0, f32 *, 0x30), (s32) M2C_FIELD(arg0, f32 *, 0x34), 0x10);
     }
 }
+
+#pragma use_lmw_stmw on
+void fn_800FFB4C(void *arg0, s16 arg1, s16 arg2) {
+    void fn_8002F728(void *);
+    void fn_8002C6F4(void *, s8, s8);
+    extern u8 lbl_80284E20[];
+    extern u8 lbl_8028EAB8[];
+    extern u8 lbl_802EF4E0[];
+
+    void **pp;
+    void *vtbl;
+    s32 x;
+    s32 y;
+
+    pp = &vtbl;
+    vtbl = lbl_80284E20;
+    vtbl = lbl_8028EAB8;
+    fn_8002F728(lbl_802EF4E0);
+
+    if (arg2 < 0) {
+        y = *(s8 *)((u8 *)arg0 + 0x19F);
+    } else {
+        y = arg2;
+    }
+    if (arg1 < 0) {
+        x = *(s8 *)((u8 *)arg0 + 0x19E);
+    } else {
+        x = arg1;
+    }
+    fn_8002C6F4(pp, (s8)x, (s8)y);
+}
+#pragma use_lmw_stmw reset
 
 void fn_800FFC00(s32 arg0, s32 arg1) {
     void fn_8002C47C(void *, s32);
