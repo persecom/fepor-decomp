@@ -10623,6 +10623,26 @@ void fn_8019D4F4(void *arg0) {
     fn_8004FC70(M2C_FIELD(arg0, s32 *, 0x30), 5);
 }
 
+void fn_8019D6C8(void) {
+    void fn_80013AE8(void *, void *, s32);
+    extern u8 lbl_8027AC44[];
+    void fn_8019D9BC(void);
+    void fn_8019D958(void);
+    void fn_8019D8CC(void);
+    void fn_8019D850(void);
+    void fn_8019D930(void);
+    void fn_8019D7A8(void);
+    void fn_8019D90C(void);
+
+    fn_80013AE8(lbl_8027AC44 + 0xDF, fn_8019D9BC, 5);
+    fn_80013AE8(lbl_8027AC44 + 0xF0, fn_8019D958, 2);
+    fn_80013AE8(lbl_8027AC44 + 0x100, fn_8019D8CC, 2);
+    fn_80013AE8(lbl_8027AC44 + 0x110, fn_8019D850, 5);
+    fn_80013AE8(lbl_8027AC44 + 0x120, fn_8019D930, 1);
+    fn_80013AE8(lbl_8027AC44 + 0x132, fn_8019D7A8, 0);
+    fn_80013AE8(lbl_8027AC44 + 0x141, fn_8019D90C, 0);
+}
+
 s32 fn_8019D7A8(void) {
     extern s32 lbl_80367110;
     extern u8 lbl_80296F50[];
