@@ -2269,48 +2269,17 @@ s32 fn_800B36D8(s32 arg0) {
 }
 
 u8 *fn_800B3F8C(s32 arg0, u32 arg1) {
-    extern u8 lbl_80317338[];
-    extern void *lbl_80367814;
-    void fn_800062EC(u8 *);
-    u8 *base;
-    u8 *dst;
-    u8 *src;
-    u32 size;
-    u32 q;
-
-    base = lbl_80317338;
-    size = arg1;
-    dst = *(u8 **)(base + 0x444);
-    src = (u8 *)lbl_80367814 + arg0;
-    if ((arg1 & 7) == 0) {
-        fn_800062EC(dst);
-    } else if (size != 0) {
-        q = size >> 3;
-        if (q != 0) {
-            do {
-                dst[0] = src[0];
-                dst[1] = src[1];
-                dst[2] = src[2];
-                dst[3] = src[3];
-                dst[4] = src[4];
-                dst[5] = src[5];
-                dst[6] = src[6];
-                dst[7] = src[7];
-                src += 8;
-                dst += 8;
-            } while (--q != 0);
-            size &= 7;
-            if (size == 0) {
-                return *(u8 **)(base + 0x444);
-            }
-        }
-        do {
-            *dst = *src;
-            src += 1;
-            dst += 1;
-        } while (--size != 0);
-    }
-    return *(u8 **)(base + 0x444);
+extern u8 lbl_80317338[];
+extern void *lbl_80367814;
+void fn_800062EC(u8 *, u8 *, u32);
+u8 *base=lbl_80317338;
+u8 *dst=*(u8 **)(base+0x444);
+u8 *src=(u8*)lbl_80367814+arg0;
+if((arg1 & 7)==0) fn_800062EC(dst,src,arg1);
+else {
+for(;arg1!=0;arg1--) *dst++=*src++;
+}
+return *(u8 **)(base+0x444);
 }
 
 #pragma global_optimizer on
