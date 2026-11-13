@@ -353,19 +353,17 @@ void fn_80073CE4(s32 arg0) {
     void fn_80183BE4(void *, s32);
     extern u8 lbl_802EF4C8[24];
     u8 flags;
-
     flags = 0;
-    if (fn_80105BC0((u8 *)*(void **)lbl_802EF4C8 + 0x1BC, 9) != 0) {
-        flags |= 1;
-    }
-    if (fn_80091D74(*(void **)lbl_802EF4C8) != 0) {
-        flags |= 2;
-    }
-    switch (flags) {
+    if (fn_80105BC0((u8 *)*(void **)lbl_802EF4C8 + 0x1BC, 9) != 0) flags |= 1;
+    if (fn_80091D74(*(void **)lbl_802EF4C8) != 0) flags |= 2;
+    switch ((s32)flags) {
     case 3:
         fn_8003C15C(*(void **)lbl_802EF4C8);
         fn_8000C60C(arg0);
         break;
+    case 0:
+    case 1:
+    case 2:
     default:
         fn_80183BE4(*(void **)lbl_802EF4C8, arg0);
         break;
