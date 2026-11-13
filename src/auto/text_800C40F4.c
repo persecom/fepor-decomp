@@ -6352,13 +6352,17 @@ void fn_800D6874(void) {
 }
 
 void fn_800D6878(u8 *arg0, u8 *arg1) {
+    s32 zero;
     u8 b;
+    u8 *ptr;
 
+    zero = 0;
     b = *arg1;
-    *(s32 *)arg0 = 0;
-    *(s32 *)(arg0 + 4) = 0;
+    *(s32 *)arg0 = zero;
+    ptr = arg0 + 4;
+    *(s32 *)(arg0 + 4) = zero;
     arg0[8] = b;
-    *(u8 **)(arg0 + 0xC) = arg0 + 4;
+    *(u8 **)(arg0 + 0xC) = ptr;
 }
 
 #pragma use_lmw_stmw on
@@ -9936,12 +9940,14 @@ extern "C" void *fn_800E0140(void *arg0, s16 arg1)
 }
 #pragma cplusplus reset
 void fn_800E01C8(void *arg0) {
-    extern M2C_UNK lbl_8028DFE8;
-    *(u32 *)((u8 *)arg0 + 0x10) = (u32) (&lbl_8028DFE8);
-    *(u32 *)((u8 *)arg0 + 0) = 0;
-    *(u32 *)((u8 *)arg0 + 4) = 0;
-    *(u32 *)((u8 *)arg0 + 8) = 0;
-    *(u32 *)((u8 *)arg0 + 0xC) = 0;
+    extern u8 lbl_8028DFE8[56];
+    u32 *p = (u32 *)arg0;
+
+    p[4] = (u32)lbl_8028DFE8;
+    p[0] = 0;
+    p[1] = 0;
+    p[2] = 0;
+    p[3] = 0;
 }
 
 int fn_800E0340(void *arg0, void *arg1, void *arg2)
