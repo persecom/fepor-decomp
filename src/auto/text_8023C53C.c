@@ -2669,15 +2669,12 @@ void fn_80247D74(void)
     /* Rest of your existing function */
 }
 
-void fn_80247F1C(s32 arg0, u8 arg1, s32 arg2) {
-    extern u16 lbl_8034BED0[];
-    u8 var_r3;
-    
-    var_r3 = arg1;
-    if (var_r3 == 0xFF) {
-        var_r3 = 8;
+void fn_80247F1C(u32 arg0, u8 arg1, u8 arg2) {
+    extern u8 lbl_8034BED0[];
+    if (arg1 == 0xFF) {
+        *(u32 *)(lbl_8034BED0 + ((u8)8 << 6) + (arg2 << 2)) =
+            ((arg0 << 3) * 0x600u) / 240u;
     }
-    lbl_8034BED0[((var_r3 << 3) * 0x600) + ((arg2 << 2) & 0x3FC)] = arg0;
 }
 
 s32 fn_80247F60(void *arg0) {
@@ -4593,13 +4590,10 @@ void fn_8024C7F8(void *arg0, s8 arg1, s8 arg2, s8 arg3) {
 }
 
 void fn_8024C808(void *arg0, u8 arg1, u8 arg2, u8 arg3,
-                 u8 arg4, u8 arg5, u8 arg6)
+                 u8 arg4, u8 arg5)
 {
     extern u32 lbl_803689A4;
-
     u32 flags;
-    u8 value5;
-    u8 value6;
 
     *(u8 *)((u8 *)arg0 + 0x59) = arg1;
     *(u8 *)((u8 *)arg0 + 0x5C) = arg4;
@@ -4608,18 +4602,15 @@ void fn_8024C808(void *arg0, u8 arg1, u8 arg2, u8 arg3,
     *(u8 *)((u8 *)arg0 + 0x5F) = arg3;
 
     flags = lbl_803689A4;
-    value5 = 0x40;
-    value6 = 0;
-
     if ((flags & 1) != 0) {
-        value5 = 0x40;
-        value6 = 0;
+        arg2 = 0x40;
+        arg3 = 0;
     } else if ((flags & 2) == 0) {
-        value6 = 0;
+        arg3 = 0;
     }
 
-    *(u8 *)((u8 *)arg0 + 0x5A) = value5;
-    *(u8 *)((u8 *)arg0 + 0x5B) = value6;
+    *(u8 *)((u8 *)arg0 + 0x5A) = arg2;
+    *(u8 *)((u8 *)arg0 + 0x5B) = arg3;
 }
 
 void fn_8024C84C(u32 arg0) {
@@ -14922,9 +14913,12 @@ int fn_802636F4(void) {
 
 int fn_8026372C(void) {
     extern u16 lbl_80368AFC;
-    extern BOOL lbl_80368AF8;
+    extern s32 lbl_80368AF8;
+    s32 count;
 
-    if (lbl_80368AFC++ == 0) {
+    count = lbl_80368AFC;
+    lbl_80368AFC = count + 1;
+    if ((u16)count == 0) {
         lbl_80368AF8 = OSDisableInterrupts();
     }
 }
