@@ -1433,40 +1433,52 @@ void *fn_80165B40(void *arg0, s16 arg1) {
     return arg0;
 }
 
-void *fn_80165BAC(void *arg0, s32 arg2) {
-    M2C_UNK fn_80041514(s32);
-    M2C_UNK fn_800C8DCC(M2C_UNK *, s32, s32 *);
-    s32 fn_800C93EC(s32 *);
-    M2C_UNK fn_800C9A60(s32 *, M2C_UNK);
-    M2C_UNK fn_800C9ABC(s32 *, void *, M2C_UNK *);
-    M2C_UNK fn_800DF7A0();
-    extern M2C_UNK lbl_802777C8;
-    extern M2C_UNK lbl_80293CB0;
+void *fn_80165BAC(void *arg0, void *arg1, void *arg2) {
+    s32 fn_80040844(void);
+    void fn_80041514(s32, void *);
+    void fn_800C8DCC(void *, void *, void *);
+    void *fn_800C93EC(void *);
+    void fn_800C9A60(void *, s16);
+    void fn_800C9ABC(void *, void *, void *);
+    void fn_800C96F8(void *, void *, s32);
+    void fn_800DF7A0(void *, void *, void *);
+    s32 strlen(char *);
+    extern u8 lbl_802777C8[];
+    extern void *lbl_80293CB0[];
     extern s8 lbl_803680E0;
-    M2C_UNK sp24;
-    s32 sp20;
-    s32 sp1C;
-    s32 sp18;
-    s32 spC;
-    M2C_UNK sp8;
-    s32 temp_r31;
 
-    fn_800DF7A0();
-    M2C_FIELD(arg0, M2C_UNK **, 0x40) = &lbl_80293CB0;
-    sp1C = 0;
-    sp18 = 0;
-    sp20 = 0;
-    sp1C = 0;
-    fn_800C9ABC(&spC, &lbl_802777C8 + 0x2D, &sp8);
-    fn_800C8DCC(&sp24, arg2, &spC);
-    fn_800C96F8(&sp18, &sp24, strlen(&sp24));
+    typedef struct {
+        u32 size;
+        u32 cap;
+        char *data;
+    } String;
+
+    char sp24[0x24];
+    String sp18;
+    String spC;
+    u8 sp8[4];
+    void *self;
+    void *a2;
+    void *temp;
+
+    self = arg0;
+    a2 = arg2;
+    fn_800DF7A0(arg0, arg1, arg2);
+    *(void **)((u8 *)self + 0x40) = lbl_80293CB0;
+    sp18.cap = 0;
+    sp18.size = 0;
+    sp18.data = 0;
+    sp18.cap = 0;
+    fn_800C9ABC(&spC, lbl_802777C8 + 0x2D, sp8);
+    fn_800C8DCC(sp24, a2, &spC);
+    a2 = sp24;
+    fn_800C96F8(&sp18, a2, strlen((char *)a2));
     fn_800C9A60(&spC, -1);
-    temp_r31 = fn_800C93EC(&sp18);
-    fn_80040844();
-    fn_80041514(temp_r31);
+    temp = fn_800C93EC(&sp18);
+    fn_80041514(fn_80040844(), temp);
     lbl_803680E0 = 1;
     fn_800C9A60(&sp18, -1);
-    return arg0;
+    return self;
 }
 
 #pragma use_lmw_stmw on
