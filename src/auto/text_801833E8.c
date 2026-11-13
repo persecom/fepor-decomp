@@ -4071,20 +4071,21 @@ void *fn_80190074(void *arg0, s16 arg1) {
 }
 
 void fn_801900E0(void *arg0) {
-    s16 a, b, c, d;
-    s16 h, w;
+    s16 a, b, c, d, h, w, two;
 
     *(s16 *)((u8 *)arg0 + 0x40) = 0x18;
+    two = 2;
     *(s16 *)((u8 *)arg0 + 0x42) = 0;
     a = *(s16 *)((u8 *)arg0 + 0xc);
     b = *(s16 *)((u8 *)arg0 + 0x10);
     c = *(s16 *)((u8 *)arg0 + 0xa);
     d = *(s16 *)((u8 *)arg0 + 0xe);
     h = (s16)(b - a);
-    w = (s16)(d - c);
-    *(s16 *)((u8 *)arg0 + 0x12) = 2;
+    w = d - c;
+    *(s16 *)((u8 *)arg0 + 0x12) = two;
+    w = (s16)w;
     h -= 2;
-    *(s16 *)((u8 *)arg0 + 0x14) = 2;
+    *(s16 *)((u8 *)arg0 + 0x14) = two;
     w -= 2;
     *(s16 *)((u8 *)arg0 + 0x16) = w;
     *(s16 *)((u8 *)arg0 + 0x18) = h;
@@ -9338,11 +9339,23 @@ extern void* fn_800536CC(s32);
 extern void* fn_800536D8(void*, s32);
 extern void* fn_80053C30(s32, void*);
 s32 fn_8019CC04(void *arg0);
-extern void* lbl_8027AA38;
-extern void* lbl_80296C00;
-void fn_8019C160(s32 arg0, s32 arg1) {
-    fn_8000CAA0(&lbl_80296C00, arg0, &lbl_80296C00);
-    fn_8019D51C(arg1, &lbl_8027AA38 + 0x1F5);
+void fn_8019C160(void *arg0, void *arg1)
+{
+    void *fn_8000CAA0(void *, void *);
+    void fn_8019D51C(void *, void *, const char *);
+
+    extern u8 lbl_80296C00[];
+    extern u8 lbl_8027AA38[];
+
+    void *result;
+
+    result = fn_8000CAA0(lbl_80296C00, arg0);
+
+    fn_8019D51C(
+        result,
+        arg1,
+        (const char *)(lbl_8027AA38 + 0x1F5)
+    );
 }
 
 void fn_8019C1B0(void *arg0) {
