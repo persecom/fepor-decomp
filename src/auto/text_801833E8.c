@@ -8643,11 +8643,14 @@ void fn_8019AB90(void *arg0) {
 }
 
 void fn_8019ABBC(void *arg0) {
-    s16 r4_val = *(s16 *)((char *)arg0 + 0x6A);
-    s16 r5_val = *(s16 *)((char *)arg0 + 0x68);
-    
-    if (r5_val >= (r4_val - 4)) {
-        fn_8000C188();
+    void fn_8000C188(void *);
+    s16 a;
+    s16 b;
+
+    a = *(s16 *)((u8 *)arg0 + 0x6A);
+    b = *(s16 *)((u8 *)arg0 + 0x68);
+    if (b >= a - 4) {
+        fn_8000C188(arg0);
     }
 }
 
