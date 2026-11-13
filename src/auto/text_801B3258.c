@@ -10560,16 +10560,9 @@ x=(s8)p[0x10c]; if(x) p[0x10c]=3;
 x=(s8)p[0x114]; if(x) p[0x114]=3; }
 
 void fn_801CFD40(u8 *arg0, s32 arg1) {
-    u8 *base;
-    u32 offset;
-    s8 value;
-
-    base = arg0;
-    offset = (arg1 << 3) + 0xEC;
-    value = *(s8 *)(base + offset);
-
-    if (value != 0) {
-        *(base + offset) = 3;
+    arg1 = (arg1 << 3) + 0xEC;
+    if ((s8)arg0[arg1] != 0) {
+        arg0[arg1] = 3;
     }
 }
 
@@ -10597,13 +10590,12 @@ void fn_801CFD8C(s32 arg0, s32 arg1, u8 arg2) {
     *(u8*)(arg0 + temp_r4) &= 0xFFFFFFFD;
 }
 
-void fn_801CFDBC(s32 arg0, s32 arg1) {
-    s32 temp_r4;
-    
-    temp_r4 = (arg1 * 0xE) + 0x60;
-    *(u8*)(arg0 + temp_r4) |= 1;
+#pragma opt_strength_reduction off
+void fn_801CFDBC(void *arg0, s32 arg1) {
+    struct Ent { u8 flag; u8 pad[0xD]; };
+    ((struct Ent *)((u8 *)arg0 + 0x60))[arg1].flag |= 1;
 }
-
+#pragma opt_strength_reduction on
 void fn_801CFDD4(void *a)
 {
     u8* p = (u8*)a;
@@ -10742,12 +10734,13 @@ void fn_801D041C(void *arg0, u8 arg1) {
     M2C_FIELD(arg0, s32 *, 8) = (s32) (M2C_FIELD(arg0, s32 *, 8) | 4);
 }
 
-void fn_801D0444(s32 arg0, s32 arg1) {
+void fn_801D0444(u8 *arg0, s32 arg1) {
     if (arg1 >= 3) {
         return;
     }
-    *(s16*)(arg0 + (arg1 * 2)) = 0;
-    *(s16*)(arg0 + 0xE) = 0;
+    arg0 += arg1 * 2;
+    arg1 = 0;
+    *(s16 *)(arg0 + 0xe) = (s16)arg1;
 }
 
 void fn_801D0460(void *arg0, s32 arg1) {
