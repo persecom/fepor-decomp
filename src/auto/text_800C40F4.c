@@ -407,32 +407,25 @@ s32 fn_800C42D8(s32 arg0) {
     return fn_800C5A48(lbl_80367870, arg0) + 0x20;
 }
 
-s32 fn_800C4304(void *arg0) {
-    s32 fn_802342B8(void *, u32);
-    extern u32 lbl_80320B88[];
+s32 fn_800C4304(s32 arg0) {
+    extern u8 lbl_80320B88[];
     s32 idx;
     u32 *p;
     u32 v;
 
     idx = 0;
-    p = lbl_80320B88;
-loop:
+    p = (u32 *)lbl_80320B88;
+loop_1:
     v = *p;
-    if (v == 0) {
-        goto next;
+    if ((v == 0U) || (fn_802342B8(arg0, v + 4) != 0)) {
+        idx += 1;
+        p += 1;
+        if (idx >= 0x10) {
+            idx = -1;
+        } else {
+            goto loop_1;
+        }
     }
-    if (fn_802342B8(arg0, v + 4) != 0) {
-        goto next;
-    }
-    goto done;
-next:
-    idx += 1;
-    p += 1;
-    if (idx < 0x10) {
-        goto loop;
-    }
-    idx = -1;
-done:
     return idx;
 }
 
@@ -6517,29 +6510,32 @@ void fn_800D6C1C(void *arg0, void *arg1)
     *(u32*)((char*)arg1 + 8) &= ~1;
 }
 
-void fn_800D6E0C(void *arg0, void **arg1) {
-    s32 temp_r4_2;
-    void *temp_r4;
-    void *temp_r5;
+void fn_800D6E0C(void *arg0, void **arg1)
+{
+    void *next;
+    void *child;
+    u32 flags;
+    u32 parent;
 
-    temp_r5 = M2C_FIELD(arg0, void **, 0);
-    if ((void *) *arg1 == arg0) {
-        *arg1 = temp_r5;
+    next = *(void **)arg0;
+    if (*arg1 == arg0) {
+        *arg1 = next;
     }
-    M2C_FIELD(arg0, void **, 0) = (void *) M2C_FIELD(temp_r5, void **, 4);
-    temp_r4 = M2C_FIELD(temp_r5, void **, 4);
-    if (temp_r4 != NULL) {
-        M2C_FIELD(temp_r4, s32 *, 8) = (s32) ((s32) arg0 | (M2C_FIELD(temp_r4, s32 *, 8) & 1));
+    *(void **)arg0 = *(void **)((u8 *)next + 4);
+    child = *(void **)((u8 *)next + 4);
+    if (child != NULL) {
+        *(u32 *)((u8 *)child + 8) = (u32)arg0 | (*(u32 *)((u8 *)child + 8) & 1);
     }
-    M2C_FIELD(temp_r5, s32 *, 8) = (s32) ((M2C_FIELD(temp_r5, s32 *, 8) & ~0xFFFFFFFE) | (M2C_FIELD(arg0, s32 *, 8) & 0xFFFFFFFE));
-    temp_r4_2 = M2C_FIELD(arg0, s32 *, 8) & 0xFFFFFFFE;
-    if (arg0 == (void *) M2C_FIELD(temp_r4_2, void **, 0)) {
-        M2C_FIELD(temp_r4_2, void **, 0) = temp_r5;
+    flags = *(u32 *)((u8 *)arg0 + 8);
+    *(u32 *)((u8 *)next + 8) = (flags & ~1) | (*(u32 *)((u8 *)next + 8) & 1);
+    parent = *(u32 *)((u8 *)arg0 + 8) & ~1;
+    if (arg0 == *(void **)parent) {
+        *(void **)parent = next;
     } else {
-        M2C_FIELD(temp_r4_2, void **, 4) = temp_r5;
+        *(void **)(parent + 4) = next;
     }
-    M2C_FIELD(temp_r5, void **, 4) = arg0;
-    M2C_FIELD(arg0, s32 *, 8) = (s32) ((s32) temp_r5 | (M2C_FIELD(arg0, s32 *, 8) & 1));
+    *(void **)((u8 *)next + 4) = arg0;
+    *(u32 *)((u8 *)arg0 + 8) = (u32)next | (*(u32 *)((u8 *)arg0 + 8) & 1);
 }
 
 void fn_800D6E8C(void *arg0, void **arg1) {
