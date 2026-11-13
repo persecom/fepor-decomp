@@ -1730,14 +1730,16 @@ void fn_801F5E74(void *arg0) {
 }
 
 void fn_801F5F58(void *arg0) {
-    extern u32 *lbl_803683F0;
-    u32 temp_r6;
+    extern s8 *lbl_803683F0;
+    u32 v;
+    s8 *p;
 
-    temp_r6 = *(u32 *)((char *)arg0 + 0x40);
-    if (((u32) (temp_r6 >> 0x18U) == (u32) (s8) *(u8 *)((char *)lbl_803683F0 + 0)) && ((u8) (temp_r6 >> 0x10U) == (u32) (s8) *(u8 *)((char *)lbl_803683F0 + 1)) && ((u8) (temp_r6 >> 8U) == (u32) (s8) *(u8 *)((char *)lbl_803683F0 + 2)) && ((u8) temp_r6 == (u32) (s8) *(u8 *)((char *)lbl_803683F0 + 3))) {
-        *(u32 *)((char *)arg0 + 0x40) = -1U;
+    v = *(u32 *)((u8 *)arg0 + 0x40);
+    p = lbl_803683F0;
+    if ((v >> 24) == (u32)p[0] && ((v >> 16) & 0xFF) == (u32)p[1] && ((v >> 8) & 0xFF) == (u32)p[2] && (v & 0xFF) == (u32)p[3]) {
+        *(u32 *)((u8 *)arg0 + 0x40) = -1;
     } else {
-        fn_8000C070(2);
+        fn_8000C070(arg0, 2);
     }
 }
 
