@@ -13466,12 +13466,17 @@ void fn_800E9A10(s32 arg0) {
 }
 
 void fn_800E9A94(void) {
-    M2C_UNK fn_800EBF58();
     s32 fn_8021CDC4(s32, void *, void *);
-    extern M2C_UNK lbl_802725D8;
-    extern M2C_UNK lbl_80320C20;
+    void fn_800EBF58(void);
+    extern u16 lbl_80320C20[];
+    extern u8 lbl_802725D8[];
+
     fn_800EBF58();
-    M2C_FIELD(&lbl_80320C20, s32 *, 0xA004) = fn_8021CDC4(M2C_FIELD(&lbl_80320C20, s32 *, 0xA000), &lbl_802725D8 + 0x70, &lbl_80320C20 + 0x10000);
+    *(s32 *)((u8 *)lbl_80320C20 + 0xA004) = fn_8021CDC4(
+        *(s32 *)((u8 *)lbl_80320C20 + 0xA000),
+        lbl_802725D8 + 0x70,
+        (u8 *)lbl_80320C20 + 0x10000
+    );
 }
 
 extern u8 lbl_8028E484[16];
