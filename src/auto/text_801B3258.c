@@ -925,45 +925,31 @@ s32 fn_801B73DC(void) {
 }
 
 s32 fn_801B7488(void) {
+    void fn_800056CC(void *, ...);
+    s32 fn_802342B8(void *, void *);
     extern u8 lbl_8027C370[];
     extern u8 lbl_802CA264[];
-
-    void fn_800056CC(const char *, ...);
-    s32 fn_802342B8(const char *, const char *);
-
     u8 *base;
-    u8 *node;
-    u8 *entry;
-    u8 *next;
+    void *next;
+    void *entry;
     s32 count;
+    void *node;
 
     count = 0;
-
-    fn_800056CC((char *)lbl_8027C370 + 0x1E8);
-
+    fn_800056CC(lbl_8027C370 + 0x1E8);
+    node = *(void **)(lbl_802CA264 + 0xC);
     base = lbl_8027C370;
-    node = *(u8 **)(lbl_802CA264 + 0xC);
-
     while (node != NULL) {
-        entry = *(u8 **)(node + 0x18C);
-        next = *(u8 **)(node + 0x184);
-
-        if (fn_802342B8(*(char **)entry,
-                         (char *)(base + 0x1F1)) == 0) {
-            count++;
-        } else if (fn_802342B8(*(char **)entry,
-                                (char *)(base + 0x1FC)) == 0) {
-            count++;
-        } else if (fn_802342B8(*(char **)entry,
-                                (char *)(base + 0x207)) == 0) {
-            count++;
+        entry = *(void **)((u8 *)node + 0x18C);
+        next = *(void **)((u8 *)node + 0x184);
+        if (fn_802342B8(*(void **)entry, base + 0x1F1) == 0
+            || fn_802342B8(*(void **)entry, base + 0x1FC) == 0
+            || fn_802342B8(*(void **)entry, base + 0x207) == 0) {
+            count += 1;
         }
-
         node = next;
     }
-
-    fn_800056CC((char *)lbl_8027C370 + 0x214, count);
-
+    fn_800056CC(lbl_8027C370 + 0x214, count);
     return count;
 }
 
