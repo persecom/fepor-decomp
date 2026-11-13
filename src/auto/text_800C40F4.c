@@ -9451,35 +9451,46 @@ void fn_800DF478(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
     M2C_FIELD(arg0, f32 *, 8) = farg2;
 }
 
-void fn_800DF494(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
+void fn_800DF494(f32 *arg0, f32 x, f32 y, f32 z) {
     extern f32 lbl_80369EA0;
     extern f32 lbl_80369EB0;
     extern f32 lbl_80369EB4;
     extern f32 lbl_80369EB8;
-    M2C_FIELD(arg0, f32 *, 0xC) = farg0;
-    M2C_FIELD(arg0, f32 *, 0) = farg0;
-    M2C_FIELD(arg0, f32 *, 0x10) = farg1;
-    M2C_FIELD(arg0, f32 *, 4) = farg1;
-    M2C_FIELD(arg0, f32 *, 0x14) = farg2;
-    M2C_FIELD(arg0, f32 *, 8) = farg2;
-    M2C_FIELD(arg0, f32 *, 0x18) = (f32) lbl_80369EA0;
-    M2C_FIELD(arg0, f32 *, 0x1C) = (f32) lbl_80369EA0;
-    M2C_FIELD(arg0, f32 *, 0x20) = (f32) lbl_80369EB0;
-    M2C_FIELD(arg0, f32 *, 0x24) = (f32) lbl_80369EB4;
-    M2C_FIELD(arg0, f32 *, 0x28) = (f32) lbl_80369EB8;
-    M2C_FIELD(arg0, s32 *, 0x2C) = 0;
-    M2C_FIELD(arg0, f32 *, 0x54) = farg0;
-    M2C_FIELD(arg0, f32 *, 0x48) = farg0;
-    M2C_FIELD(arg0, f32 *, 0x3C) = farg0;
-    M2C_FIELD(arg0, f32 *, 0x30) = farg0;
-    M2C_FIELD(arg0, f32 *, 0x58) = farg1;
-    M2C_FIELD(arg0, f32 *, 0x4C) = farg1;
-    M2C_FIELD(arg0, f32 *, 0x40) = farg1;
-    M2C_FIELD(arg0, f32 *, 0x34) = farg1;
-    M2C_FIELD(arg0, f32 *, 0x5C) = farg2;
-    M2C_FIELD(arg0, f32 *, 0x50) = farg2;
-    M2C_FIELD(arg0, f32 *, 0x44) = farg2;
-    M2C_FIELD(arg0, f32 *, 0x38) = farg2;
+    f32 a;
+    f32 b;
+    f32 c;
+    f32 d;
+    s32 zero;
+
+    zero = 0;
+    arg0[3] = x;
+    d = lbl_80369EA0;
+    arg0[0] = x;
+    c = lbl_80369EB0;
+    arg0[4] = y;
+    b = lbl_80369EB4;
+    arg0[1] = y;
+    a = lbl_80369EB8;
+    arg0[5] = z;
+    arg0[2] = z;
+    arg0[6] = d;
+    arg0[7] = d;
+    arg0[8] = c;
+    arg0[9] = b;
+    arg0[10] = a;
+    *(s32 *)&arg0[11] = zero;
+    arg0[21] = x;
+    arg0[18] = x;
+    arg0[15] = x;
+    arg0[12] = x;
+    arg0[22] = y;
+    arg0[19] = y;
+    arg0[16] = y;
+    arg0[13] = y;
+    arg0[23] = z;
+    arg0[20] = z;
+    arg0[17] = z;
+    arg0[14] = z;
 }
 
 void fn_800DF50C(f32 *arg0) {
@@ -9487,37 +9498,36 @@ void fn_800DF50C(f32 *arg0) {
     extern f32 lbl_80369EBC;
     extern f32 lbl_80369EC0;
     extern f32 lbl_80369EC4;
-    f32 vals[3];
-    f32 zero;
+    f32 vals[4];
 
-    zero = lbl_80369EA0;
-    vals[0] = lbl_80369EBC;
-    arg0[5] = zero;
-    vals[1] = lbl_80369EC0;
-    arg0[4] = zero;
-    vals[2] = lbl_80369EC4;
-    arg0[3] = zero;
-    arg0[2] = zero;
-    arg0[1] = zero;
-    arg0[0] = zero;
-    arg0[6] = zero;
-    arg0[7] = zero;
-    arg0[8] = vals[0];
-    arg0[9] = vals[1];
-    arg0[10] = vals[2];
+    vals[0] = lbl_80369EA0;
+    vals[3] = lbl_80369EBC;
+    arg0[5] = vals[0];
+    vals[2] = lbl_80369EC0;
+    arg0[4] = vals[0];
+    vals[1] = lbl_80369EC4;
+    arg0[3] = vals[0];
+    arg0[2] = vals[0];
+    arg0[1] = vals[0];
+    arg0[0] = vals[0];
+    arg0[6] = vals[0];
+    arg0[7] = vals[0];
+    arg0[8] = vals[3];
+    arg0[9] = vals[2];
+    arg0[10] = vals[1];
     *(s32 *)&arg0[11] = 0;
-    arg0[21] = zero;
-    arg0[18] = zero;
-    arg0[15] = zero;
-    arg0[12] = zero;
-    arg0[22] = zero;
-    arg0[19] = zero;
-    arg0[16] = zero;
-    arg0[13] = zero;
-    arg0[23] = zero;
-    arg0[20] = zero;
-    arg0[17] = zero;
-    arg0[14] = zero;
+    arg0[21] = vals[0];
+    arg0[18] = vals[0];
+    arg0[15] = vals[0];
+    arg0[12] = vals[0];
+    arg0[22] = vals[0];
+    arg0[19] = vals[0];
+    arg0[16] = vals[0];
+    arg0[13] = vals[0];
+    arg0[23] = vals[0];
+    arg0[20] = vals[0];
+    arg0[17] = vals[0];
+    arg0[14] = vals[0];
 }
 
 #pragma cplusplus on
