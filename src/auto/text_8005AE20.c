@@ -871,6 +871,7 @@ void fn_8005CBC8(void) {
 void *fn_8005CEC0(void) {
     void fn_8005C8D8(s32);
     extern u8 lbl_802F04E0[];
+    u8 *e;
     s32 i;
     s32 j;
     unsigned ctr;
@@ -878,16 +879,13 @@ void *fn_8005CEC0(void) {
 
     i = 0;
     base = lbl_802F04E0;
-    {
-        u8 *e;
-        e = base;
-        for (ctr = 0x400; ctr > 0; ctr--) {
-            if ((s8)*e == 0) {
-                return lbl_802F04E0 + i * 0x7C;
-            }
-            e += 0x7C;
-            i += 1;
+    e = base;
+    for (ctr = 0x400; ctr > 0; ctr--) {
+        if ((s8)*e == 0) {
+            return lbl_802F04E0 + i * 0x7C;
         }
+        e += 0x7C;
+        i += 1;
     }
     fn_8005C8D8(-1);
     j = 0;
@@ -7436,27 +7434,30 @@ void fn_8006F09C(void *arg0, void *arg1, void *arg2)
     result = fn_800C0658();
     fn_80024398(base + 0x80, result, 0);
 }
-#pragma opt_strength_reduction on
-#pragma global_optimizer on
+#pragma global_optimizer off
 void fn_8006F10C(s32 arg0, s32 arg1) {
     extern u8 lbl_80311CA8[];
-    u32 r31;
-    u32 r6;
-    u32 r7;
-    
-    r31 = (u32)lbl_80311CA8;
-    r6 = r31 + 0x4C;
-    r7 = r31 + 0x6C;
-    
-    *(u8 **)(u32)r7 = (u8 *)r6;
-    *(u8 **)((u32)r7 + 4) = (u8 *)(r6 + 8);
-    *(s32 *)(r6 + 4) = arg0;
-    *(s32 *)(r6 + 0xC) = arg1;
-    *(s32 *)(r7 + 8) = 0;
-    
-    fn_80024398((u8 *)r31 + 0x80, fn_800C0658((u8 *)r6 + 8, (u8 *)r6, (u8 *)r7), 0);
-}
+    s32 fn_800C0658(void);
+    void fn_80024398(void *, s32, s32);
+    struct Row { s32 a; s32 b; s32 c; s32 d; };
+    struct Ent { void *a; void *b; void *c; };
+    u8 *base;
+    struct Row *table;
+    struct Ent *entries;
 
+    base = lbl_80311CA8;
+    table = (struct Row *)(base + 0x4C);
+    entries = (struct Ent *)(base + 0x6C);
+
+    entries->a = table;
+    table->b = arg0;
+    entries->b = &table->c;
+    table->d = arg1;
+    entries->c = 0;
+
+    fn_80024398(base + 0x80, fn_800C0658(), 0);
+}
+#pragma global_optimizer reset
 s32 fn_8006F2B8(s32 arg0, s32 arg1) {
     M2C_UNK fn_80121630(s32);
     fn_80121630(arg1);
