@@ -133,11 +133,13 @@ s32 fn_801A2E68(void) {
 }
 
 void fn_801A2EA0(s32 arg0) {
-    extern u16 lbl_802EF4C8;
+    void fn_80026770(void *, s8 *);
+    void fn_800319E8(s32);
+    extern u8 lbl_802EF4C8[];
     s8 sp8;
 
     sp8 = 0x43;
-    fn_80026770(&lbl_802EF4C8, &sp8);
+    fn_80026770(lbl_802EF4C8, &sp8);
     fn_800319E8(arg0);
 }
 
