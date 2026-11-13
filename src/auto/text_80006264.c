@@ -2750,16 +2750,20 @@ s32 fn_8000AFB4(void *arg0) {
     return 0;
 }
 
-void fn_8000AFD4(void *arg0)
-{
-    u32 *data = *(u32 **)((u8 *)arg0 + 4);
-    s32 value = (s16)(data[0] >> 16);
-    void (*callback)(s32, u32) = (void (*)(s32, u32))data[1];
-    u32 arg1 = data[2];
+void fn_8000AFD4(void *arg0) {
+    u32 *entry;
+    u32 value;
+    s16 argument;
+    u32 arg1;
+    void (*callback)(void *, u32, s16);
 
-    *(u32 *)((u8 *)arg0 + 4) = (u32)(data + 3);
-
-    callback(value, arg1);
+    entry = *(u32 **)((u8 *)arg0 + 4);
+    value = entry[0];
+    callback = (void (*)(void *, u32, s16))entry[1];
+    arg1 = entry[2];
+    argument = (s16)(value >> 16);
+    *(u32 **)((u8 *)arg0 + 4) = entry + 3;
+    callback(arg0, arg1, argument);
 }
 
 void fn_8000B018(void *arg0) {
