@@ -799,27 +799,26 @@ s32 fn_801B7488(void) {
     return count;
 }
 
-s32 fn_801B7564(s32 arg0) {
-    extern u16 lbl_8027C370[];
-    extern u16 lbl_802CA264[];
+s32 fn_801B7564(void *arg0) {
+    void fn_800056CC(void *, ...);
+    s32 fn_802342B8(void *, void *);
+    extern u8 lbl_8027C370[];
+    extern u8 lbl_802CA264[];
+    void *next;
+    s32 count;
+    void *node;
 
-    s32 temp_r30;
-    void *temp_r31;
-    void *var_r5;
-    
-    temp_r30 = 0;
-    fn_800056CC((void *) (lbl_8027C370 + 0x21C), (void *) lbl_8027C370);
-    var_r5 = *(void **) (lbl_802CA264 + 0xC);
-loop_4:
-    if (var_r5 != NULL) {
-        temp_r31 = *(void **) ((u8 *) var_r5 + 0x184);
-        if (fn_802342B8(*(s32 **) ((u8 *) var_r5 + 0x188), arg0) == 0) {
-            temp_r30 += 1;
+    count = 0;
+    fn_800056CC(lbl_8027C370 + 0x21C);
+    node = *(void **)(lbl_802CA264 + 0xC);
+    while (node != NULL) {
+        next = *(void **)((u8 *)node + 0x184);
+        if (fn_802342B8(*(void **)(*(void **)((u8 *)node + 0x188)), arg0) == 0) {
+            count += 1;
         }
-        var_r5 = temp_r31;
-        goto loop_4;
+        node = next;
     }
-    return temp_r30;
+    return count;
 }
 
 s32 fn_801B75F4(void)
