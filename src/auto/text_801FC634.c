@@ -49,6 +49,38 @@ static u32 lbl_80339308[8];
 static s16 lbl_80339328[8];
 static s16 lbl_80339338[8];
 
+void fn_801FC634(u32 arg0, f32 farg0)
+{
+    void *fn_8000CAF0(void *, u32);
+    void fn_8006EEFC(void *, void *);
+    extern u8 lbl_8029B5B0[];
+    extern char lbl_80281EC8[];
+    extern u8 lbl_80368418;
+    extern f32 lbl_8036BADC;
+    extern f32 lbl_8036BAD8;
+    void *obj;
+    f32 f;
+
+    f = farg0;
+    if (arg0 == 0) {
+        arg0 = 3;
+    }
+    obj = fn_8000CAF0(lbl_8029B5B0, arg0);
+    if (f <= lbl_8036BADC) {
+        f = lbl_8036BAD8;
+    }
+    *(f32 *)((u8 *)obj + 0x44) = f;
+    *(s16 *)((u8 *)obj + 0x34) = -2;
+    *(s16 *)((u8 *)obj + 0x36) = 0;
+    *(u8 *)((u8 *)obj + 0x38) = 0;
+    *(u8 *)((u8 *)obj + 0x39) = 0x45;
+    *(s16 *)((u8 *)obj + 0x3E) = -6;
+    *(s16 *)((u8 *)obj + 0x40) = 0;
+    *(u8 *)((u8 *)obj + 0x42) = 0;
+    *(u8 *)((u8 *)obj + 0x43) = 0x55;
+    fn_8006EEFC(&lbl_80368418, lbl_80281EC8 + 0x13);
+}
+
 void fn_801FC790(void *arg0) {
     u8 fn_8005BA10(void *);
     void fn_8000C188(void *);
@@ -1004,23 +1036,42 @@ void fn_801FF3AC(void *arg0) {
     M2C_FIELD(arg0, s32 *, 0x28) = 0;
 }
 
-void fn_801FF3E8(void *arg0) {
-    s32 r5;
-    
-    fn_8013CD7C();
-    r5 = *(s32*)((char*)arg0 + 0x28);
-    r5 = r5 + 1;
-    *(s32*)((char*)arg0 + 0x28) = r5;
-    
-    if (r5 < *(s32*)((char*)arg0 + 0x2C)) {
+#pragma cplusplus on
+extern "C" void fn_801FF3E8(void *arg0, void *arg1) {
+    extern u8 lbl_80330D68[];
+    u8 fn_80166D8C(void *);
+    void fn_801673D0(void *);
+    void *fn_8000B908(u8);
+    void fn_80024B6C(void);
+    struct Handler {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9(void *, void *) = 0;
+    };
+    u32 *cntp;
+
+    cntp = (u32 *)((u8 *)arg0 + 0x28);
+    if (++*cntp < *(u32 *)((u8 *)arg0 + 0x2C)) {
         return;
     }
-    
-    // Call the complex function
-    fn_80166D8C();
+    if (fn_80166D8C(lbl_80330D68)) {
+        void *entry;
+        u8 *a1;
+        fn_801673D0(lbl_80330D68);
+        a1 = (u8 *)arg1;
+        entry = fn_8000B908(a1[0x40 + (s8)a1[0x62]]);
+        (*(Handler **)((u8 *)entry + 0x34))->v9(arg1, entry);
+    } else {
+        fn_80024B6C();
+    }
 }
-
-#pragma cplusplus on
 extern "C" void fn_801FF480(void *arg0) {
     void fn_801FE84C(s32, s32, s32, s32, s32 *);
     extern s32 lbl_8036BB50;
