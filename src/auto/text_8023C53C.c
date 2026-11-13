@@ -13361,8 +13361,14 @@ u8 fn_802616EC(void) {
 }
 
 s32 fn_802616F4(s32 arg0) {
-    extern s32 lbl_80368AA0;
-    return ((u8 *)(lbl_80368AA0 + arg0 * 0xF8))[0xF0] != 0;
+    typedef struct {
+        u8 pad[0xF0];
+        u8 unkF0;
+        u8 pad2[0xF8 - 0xF1];
+    } Entry;
+    extern Entry *lbl_80368AA0;
+
+    return lbl_80368AA0[arg0].unkF0 != 0;
 }
 
 void fn_80261714(s32 arg0) {
