@@ -64,23 +64,24 @@ void fn_800062EC(u32 *dst, u32 *src, u32 n) {
 }
 
 void fn_80006314(void) {
-    M2C_UNK OSInitThreadQueue(M2C_UNK *);
-    s32 fn_80209FD4();
-    M2C_UNK fn_8020A558(M2C_UNK *, M2C_UNK *, M2C_UNK, void *, M2C_UNK, M2C_UNK, M2C_UNK);
-    M2C_UNK fn_8020A9E0(M2C_UNK *);
-    extern M2C_UNK fn_80006388;
-    extern M2C_UNK lbl_802A53C0;
-    extern M2C_UNK lbl_802A56D8;
+    void OSInitThreadQueue(void *);
+    s32 fn_80209FD4(void);
+    void fn_8020A558(void *, void (*)(void), s32, void *, s32, s32, s32);
+    void fn_8020A9E0(void *);
+    void fn_80006388(void);
+    extern u8 lbl_802A53C0[];
+    extern u8 lbl_802A56D8[];
     extern s8 lbl_80367130;
     extern s8 lbl_80367131;
     extern s32 lbl_80367134;
-    extern M2C_UNK lbl_80367138;
+    extern u8 lbl_80367138;
+
     lbl_80367131 = 0;
     lbl_80367130 = 0;
     OSInitThreadQueue(&lbl_80367138);
     lbl_80367134 = fn_80209FD4();
-    fn_8020A558(&lbl_802A53C0, &fn_80006388, 0, &lbl_802A56D8 + 0x1000, 0x1000, 0x10, 1);
-    fn_8020A9E0(&lbl_802A53C0);
+    fn_8020A558(lbl_802A53C0, fn_80006388, 0, lbl_802A56D8 + 0x1000, 0x1000, 0x10, 1);
+    fn_8020A9E0(lbl_802A53C0);
 }
 
 void fn_80006388(void) {
