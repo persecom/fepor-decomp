@@ -562,11 +562,13 @@ s32 fn_80222EFC(s32 arg0) {
 }
 
 s32 fn_80222F10(s32 arg0) {
-    s32 temp_r0;
-    
-    temp_r0 = *(u16*)__GXData;
-    *(u16*)__GXData = (u16)arg0;
-    return temp_r0;
+    u32 *p;
+    s32 old;
+
+    p = (u32 *)((u8 *)__GXData + 0x4CC);
+    old = *p;
+    *p = (u32)arg0;
+    return old;
 }
 
 void fn_80222F24(u32 arg0, u32 arg1)
