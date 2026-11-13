@@ -10217,6 +10217,28 @@ s32 fn_80178664(void) {
     return 0;
 }
 
+s32 fn_8017866C(s32 arg0, void *arg1, void *arg2) {
+    void *fn_8000CAA0(void *, void *);
+    extern u8 lbl_80294580[];
+    extern u16 lbl_80278080[];
+    extern u32 lbl_802EF4C8[];
+    void *obj;
+    f32 x;
+    f32 y;
+
+    if (*(u8 *)((u8 *)arg2 + 0x39) == 2) {
+        x = (f32)(*(s16 *)((u8 *)arg1 + 0x30) + *(s16 *)((u8 *)arg2 + 0x30));
+        y = (f32)(*(s16 *)((u8 *)arg1 + 0x32) + *(s16 *)((u8 *)arg2 + 0x32));
+        obj = fn_8000CAA0(lbl_80294580, arg1);
+        *(f32 *)((u8 *)obj + 0x30) = x;
+        *(f32 *)((u8 *)obj + 0x34) = y;
+        *(void **)((u8 *)obj + 0x54) = (u8 *)lbl_80278080 + 0x5D6;
+        return 0;
+    }
+    *((u8 *)lbl_802EF4C8 + 8) = 0x80;
+    return 6;
+}
+
 #pragma cplusplus on
 extern "C" void fn_8017873C(void *arg0) {
     void fn_80152414(s32, s32, s32);
