@@ -48,23 +48,23 @@ void fn_8002887C(void) {
     fn_8003B69C(temp_r29);
 }
 
+#pragma global_optimizer off
 void fn_800288E4(void) {
     s8 fn_80146C94(void *);
     void fn_80147EBC(s32);
     void fn_801481CC(void *, s32);
     void fn_8014876C(void *, s32, s32);
     void fn_80146AF0(void);
-    extern u16 lbl_80269070[];
+    extern u8 lbl_80269070[];
     extern u16 lbl_8032FF08[];
-    s32 r3 = (s32)&lbl_80269070[0xE6];
-    if (fn_80146C94((void *)r3) != -1) {
+    if (fn_80146C94((u8 *)lbl_80269070 + 0xE6) != -1) {
         fn_80147EBC(0x3E8);
         fn_8014876C(lbl_8032FF08, 0x64, 0x3E8);
-        fn_801481CC((void *)r3, 0x190);
+        fn_801481CC((u8 *)lbl_80269070 + 0xE6, 0x190);
         fn_80146AF0();
     }
 }
-
+#pragma global_optimizer on
 void fn_80028950(void) {
     void fn_8014CBD8(void *, f32, f32);
     void fn_80183A90(void *);
