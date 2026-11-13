@@ -3728,20 +3728,18 @@ loop_27:
 }
 
 #pragma cplusplus reset
-void fn_800CF27C(s32 arg2) {
+void fn_800CF27C(s32 arg0, s32 arg1, s32 arg2)
+{
     extern s32 lbl_80367884;
-    u8 spF;
-    u8 spE;
-    u8 spD;
-    u8 spC;
-    u8 *sp8;
+    u8 tmp[4];
+    u32 color;
 
-    spC = 0x80;
-    spD = 0x80;
-    spE = 0x80;
-    spF = 0xFF;
-    sp8 = &spC;
-    fn_801C6CBC(sp8, lbl_80367884, arg2, 0x80);
+    tmp[0] = 0x80;
+    tmp[1] = 0x80;
+    tmp[2] = 0x80;
+    tmp[3] = 0xFF;
+    color = *(u32 *)tmp;
+    fn_801C6CBC(&color, arg1, lbl_80367884, arg2);
 }
 
 void fn_800CF500(s32* arg0) {
@@ -10058,28 +10056,25 @@ void fn_800E0A94(void *arg0, void *arg1, s32 *arg2, u32 arg3, s32 *arg4) {
     // It's a placeholder until more structural understanding is gained
 }
 
-void fn_800E0EE0(s32 *arg0, s32 *arg1, u32 arg2) {
-    s32 temp_r6;
-    s32 *var_r3 = arg0;
-    s32 *var_r4 = arg1;
-    s32 *var_r7 = arg1;
-
-loop_1:
-    temp_r6 = *var_r3;
-    *var_r3 = *var_r7;
-    var_r3 += 1;
-    *var_r7 = temp_r6;
-    var_r7 += 1;
-    if (var_r3 != var_r4) {
-        if (var_r7 == (s32*)arg2) {
-            var_r7 = arg1;
+void fn_800E0EE0(s32 *left, s32 *mid, s32 *end) {
+    s32 *p = mid;
+    for (;;) {
+        s32 tmp = *left;
+        *left = *p;
+        left++;
+        *p = tmp;
+        if (left == mid) {
+            p++;
+            if (p == end) {
+                return;
+            }
+            mid = p;
+        } else {
+            p++;
+            if (p == end) {
+                p = mid;
+            }
         }
-        goto loop_1;
-    }
-    var_r7 += 1;
-    if (var_r7 != (s32*)arg2) {
-        var_r4 = var_r7;
-        goto loop_1;
     }
 }
 
