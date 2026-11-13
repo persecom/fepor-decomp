@@ -107,6 +107,40 @@ void *fn_801EAABC(s32 arg0, u32 arg1) {
     return NULL;
 }
 
+s32 fn_801EAB90(s32 unused, void *obj) {
+    extern u8 lbl_802CA264[];
+    extern s32 lbl_802EF4E0[];
+    u32 flags;
+    void *node;
+    s32 count;
+    u32 nf;
+    s32 ret;
+
+    flags = *(u32 *)((u8 *)obj + 0x1A0);
+    ret = 0;
+    if (flags & 0x400000) {
+        *(u32 *)((u8 *)obj + 0x1A0) = flags & ~0x400000;
+        return 1;
+    }
+    if (flags & 0x200000) {
+        return 0;
+    }
+    count = 0;
+    node = *(void **)(lbl_802CA264 + 0x3C);
+    while (node != NULL) {
+        nf = *(u32 *)((u8 *)node + 0x1A0);
+        node = *(void **)((u8 *)node + 0x184);
+        if (nf & 0x400000) {
+            count += 1;
+        }
+    }
+    if (count >= lbl_802EF4E0[0]) {
+        return ret;
+    }
+    *(u32 *)((u8 *)obj + 0x1A0) = *(u32 *)((u8 *)obj + 0x1A0) | 0x400000;
+    return 1;
+}
+
 void fn_801EAC14(void *arg0) {
     M2C_UNK fn_8000C070(void *, u8);
     fn_8013FEC0();
@@ -1167,22 +1201,19 @@ void fn_801EC7B8(void) {
 
 extern void *lbl_803683C0;
 void *fn_801ECE40(s32 arg0) {
-    void *r30;
-    u32 r31;
+    extern void *lbl_803683C0;
+    void *node;
+    u32 id;
 
-    r31 = fn_8000D598();
-    r30 = *(void **)lbl_803683C0;
-loop_1:
-    if (r30 == NULL) {
-        return NULL;
+    id = fn_8000D598();
+    for (node = lbl_803683C0; node != NULL; node = *(void **)((u8 *)node + 0x60)) {
+        if (*(s32 *)((u8 *)node + 0x64) != 0 &&
+            *(u32 *)((u8 *)node + 0x54) == id &&
+            fn_802342B8((u8 *)node + 0x28, arg0) == 0) {
+            return node;
+        }
     }
-    if ((((u32)*(u32 *)((char *)r30 + 0x64)) != 0) &&
-        (*(u32 *)((char *)r30 + 0x54) == r31) &&
-        (fn_802342B8((char *)r30 + 0x28, arg0) == 0)) {
-        return r30;
-    }
-    r30 = *(void **)((char *)r30 + 0x60);
-    goto loop_1;
+    return NULL;
 }
 
 #pragma use_lmw_stmw on
