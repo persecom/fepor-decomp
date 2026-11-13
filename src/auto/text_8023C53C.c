@@ -14907,28 +14907,24 @@ int fn_802636C8(void) {
 }
 
 int fn_802636F4(void) {
+    int OSRestoreInterrupts(int);
     extern u16 lbl_80368AFC;
-    extern u32 lbl_80368AF8;
+    extern int lbl_80368AF8;
     int count;
-
     count = lbl_80368AFC;
-    count--;
+    count -= 1;
     lbl_80368AFC = count;
-
-    if ((count & 0xFFFF) == 0) {
-        OSRestoreInterrupts(lbl_80368AF8);
+    if ((u16)count == 0) {
+        return OSRestoreInterrupts(lbl_80368AF8);
     }
+    return count;
 }
 
 int fn_8026372C(void) {
     extern u16 lbl_80368AFC;
-    extern u32 lbl_80368AF8;
-    u16 count;
+    extern BOOL lbl_80368AF8;
 
-    count = lbl_80368AFC;
-    lbl_80368AFC = count + 1;
-
-    if (count == 0) {
+    if (lbl_80368AFC++ == 0) {
         lbl_80368AF8 = OSDisableInterrupts();
     }
 }
