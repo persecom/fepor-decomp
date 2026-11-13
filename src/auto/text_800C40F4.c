@@ -20071,6 +20071,11 @@ void fn_800FF3C4(void *arg0)
         fn_800271C8(p, arg0);
         break;
 
+    case 0:
+    case 1:
+    case 35:
+        break;
+
     case 2:
     case 3:
     case 5:
@@ -20084,13 +20089,8 @@ void fn_800FF3C4(void *arg0)
     case 41:
     case 42:
     case 43:
-        fn_800271C8(p, arg0);
-        break;
-
-    case 0:
-    case 1:
-    case 35:
     default:
+        fn_800271C8(p, arg0);
         break;
     }
 }
