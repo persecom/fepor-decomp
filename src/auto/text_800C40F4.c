@@ -10036,47 +10036,32 @@ void *fn_800E0020(void *arg0, const char *arg1, const char *arg2) {
     return NULL;
 }
 #pragma use_lmw_stmw reset
-void fn_800E00B0(s32 arg0, s32 arg1, s32* arg2)
-{
-    s32 temp_r3;
-    s32 temp_r4;
-    s32 temp_r5;
+void *fn_800E00B0(void *arg0, const char *arg1, const char *arg2) {
+    u8 fn_800DF298(void *, const char *);
+    u8 fn_800DF258(void *, const char *);
 
-    if (arg0 == 0 || arg1 == 0) {
-        *arg2 = 0;
-        return;
-    }
-    
-    if (*(u16*)((char*)arg0 + 0x10) != 0) {
-        if (*(s32*)((char*)arg0 + 0x8) < *(s32*)((char*)arg0 + 0xC)) {
-            temp_r3 = *(s32*)((char*)arg0 + 0x8);
-            temp_r4 = *(s32*)((char*)arg0 + 0xC);
-            if (temp_r3 >= temp_r4) {
-                *arg2 = 0;
-                return;
-            }
-        } else {
-            temp_r5 = *(s32*)((char*)arg0 + 0x8);
-            if (temp_r5 >= *(s32*)((char*)arg0 + 0xC)) {
-                *arg2 = 0;
-                return;
+    void *entry;
+    s32 offset;
+    s32 index;
+
+    index = 0;
+    offset = 0;
+
+    while (index < *(s32 *)((u8 *)arg0 + 4)) {
+        entry = *(void **)(*(u8 **)((u8 *)arg0 + 8) + offset);
+
+        if (fn_800DF298(entry, arg1)) {
+            entry = *(void **)(*(u8 **)((u8 *)arg0 + 8) + offset);
+            if (fn_800DF258(entry, arg2)) {
+                return *(void **)(*(u8 **)((u8 *)arg0 + 8) + offset);
             }
         }
+
+        index++;
+        offset += 4;
     }
 
-    { 
-        s32 var_r31 = *(s32*)((char*)arg0 + 0x4);
-        if (var_r31 >= 0 && var_r31 < *(s32*)((char*)arg0 + 0xC)) {
-            var_r31 = *(s32*)((char*)arg0 + 0x8);
-            if (var_r31 <= *(s32*)((char*)arg0 + 0xC)) {
-                *arg2 = 1;
-                return;
-            }
-        }
-    }
-    
-    *arg2 = 0;
-    return;
+    return 0;
 }
 
 #pragma cplusplus on
