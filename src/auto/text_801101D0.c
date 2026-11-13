@@ -5108,37 +5108,25 @@ void *fn_8011C8DC(void *arg0, s16 arg1) {
     void fn_800C428C(void *);
     void *fn_800CA6C8(void *, s16);
     void fn_800E45EC(void *, s16);
+    u8 *p;
 
-    u8 *self = (u8 *)arg0;
-    void *buffer;
-
-    if (self != NULL) {
-        *(void **)(self + 0x40) = lbl_8028FDD0;
-
-        if ((uintptr_t)self + 0xB8U != 0) {
-            if ((uintptr_t)self + 0xB8U != 0) {
-                if ((uintptr_t)self + 0xB8U != 0) {
-                    buffer = *(void **)(self + 0xC0);
-                    if (buffer != NULL) {
-                        fn_800C428C(buffer);
-                    }
-                }
-            }
-        }
-
-        if ((uintptr_t)self + 0xACU != 0) {
-            if ((uintptr_t)self + 0xACU != 0) {
-                fn_800CA6C8(self + 0xAC, 0);
-            }
-        }
-
-        fn_800E45EC(self, 0);
+    if (arg0 != NULL) {
+        p = (u8 *)arg0;
+        *(void **)(p + 0x40) = lbl_8028FDD0;
+        if (p + 0xB8)
+            if (p + 0xB8)
+                if (p + 0xB8)
+                    if (*(void **)(p + 0xC0))
+                        fn_800C428C(*(void **)(p + 0xC0));
+        if (p + 0xAC)
+            if (p + 0xAC)
+                fn_800CA6C8(p + 0xAC, 0);
+        fn_800E45EC(arg0, 0);
         if (arg1 > 0) {
-            fn_800C428C(self);
+            fn_800C428C(arg0);
         }
     }
-
-    return self;
+    return arg0;
 #pragma global_optimizer reset
 }
 
