@@ -11328,7 +11328,8 @@ extern "C" void fn_800E43EC(void *arg0) {
     }
 }
 #pragma cplusplus reset
-void fn_800E4550(void *arg0, void *arg1)
+#pragma cplusplus on
+extern "C" void fn_800E4550(void *arg0, void *arg1)
 {
     extern void *fn_800C42D8(s32);
     extern void *fn_800E01C8(void *);
@@ -11359,6 +11360,7 @@ void fn_800E4550(void *arg0, void *arg1)
         callback(ptr, arg1);
     }
 }
+#pragma cplusplus reset
 
 void fn_800E45CC(void *arg0, s32 arg1, s32 arg2) {
     M2C_FIELD(arg0, s32 *, 0x58) = arg1;
