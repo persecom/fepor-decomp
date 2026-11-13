@@ -7210,6 +7210,7 @@ s32 fn_80196420(s32 arg0, void *arg1) {
     return 1;
 }
 
+#pragma opt_common_subs off
 s32 fn_801964C8(s32 arg0) {
     s32 *fn_800285C0(void *);
     void fn_8003708C(s32, s32);
@@ -7222,10 +7223,11 @@ s32 fn_801964C8(s32 arg0) {
     temp = *fn_800285C0(lbl_802EF4C8);
     fn_8003708C(*(s32 *)lbl_802EF4C8, temp + 0x1F);
     fn_80094A08(*(s32 *)lbl_802EF4C8, *(s8 *)&lbl_802EF4C8[0xA]);
-    fn_8009127C(temp, arg0, ((*(u32 *)(lbl_80330EAC + 0xCAC) |= 0x2000), (void *)lbl_80330EAC));
+    *(u32 *)(lbl_80330EAC + 0xCAC) |= 0x2000;
+    fn_8009127C(temp, arg0, lbl_80330EAC);
     return 1;
 }
-
+#pragma opt_common_subs on
 s32 fn_80196558(void *arg0, void *arg1) {
     s8 fn_8003A778(void *);
     s8 fn_8003AA40(void *);
@@ -8453,21 +8455,24 @@ void fn_80199B88(void *arg0, s32 arg1) {
 }
 
 void fn_80199C2C(void) {
-    M2C_UNK fn_8000BF00(void *);
-    extern M2C_UNK lbl_802968E8;
-    fn_8000BF00(&lbl_802968E8 + 0x50);
-    fn_8000BF00(&lbl_802968E8 + 0x88);
-    fn_8000BF00(&lbl_802968E8 + 0xFC);
-    fn_8000BF00(&lbl_802968E8 + 0x138);
-    fn_8000BF00(&lbl_802968E8 + 0x198);
-    fn_8000BF00(&lbl_802968E8 + 0x238);
-    fn_8000BF00(&lbl_802968E8 + 0x2B0);
-    fn_8000BF00(&lbl_802968E8 + 0x318);
-    fn_8000BF00(&lbl_802968E8 + 0x3C4);
-    fn_8000BF00(&lbl_802968E8 + 0x410);
-    fn_8000BF00(&lbl_802968E8 + 0x474);
-    fn_8000BF00(&lbl_802968E8 + 0x508);
-    fn_8000BF00(&lbl_802968E8 + 0x5EC);
+    void fn_8000BF00(void *);
+    extern u8 lbl_802968E8[];
+    s32 base;
+
+    base = (s32)lbl_802968E8;
+    fn_8000BF00((void *)(base + 0x50));
+    fn_8000BF00((void *)(base + 0x88));
+    fn_8000BF00((void *)(base + 0xFC));
+    fn_8000BF00((void *)(base + 0x138));
+    fn_8000BF00((void *)(base + 0x198));
+    fn_8000BF00((void *)(base + 0x238));
+    fn_8000BF00((void *)(base + 0x2B0));
+    fn_8000BF00((void *)(base + 0x318));
+    fn_8000BF00((void *)(base + 0x3C4));
+    fn_8000BF00((void *)(base + 0x410));
+    fn_8000BF00((void *)(base + 0x474));
+    fn_8000BF00((void *)(base + 0x508));
+    fn_8000BF00((void *)(base + 0x5EC));
 }
 
 void fn_80199CC0(s32 arg0) {
