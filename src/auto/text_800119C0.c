@@ -1733,62 +1733,59 @@ void fn_800160D4(void) {
     }
 }
 
-void fn_80016180(void) {
-    M2C_UNK fn_80015320(M2C_UNK, M2C_UNK *);
-    M2C_UNK fn_80050C90();
-    extern M2C_UNK lbl_802B14E4;
-    M2C_UNK sp8;
-    u8 var_r29;
-    void *var_r3;
+void fn_80016180(void)
+{
+    void fn_80015320(s32, u8 *);
+    void fn_80050C90(u8 *);
+    extern u8 lbl_802B14E4[];
+    u8 sp8[8];
+    s32 i;
+    u8 *base;
+    u8 *flags;
+    u8 *unit;
 
-    fn_80015320(3, &sp8);
-    var_r29 = 1;
+    fn_80015320(3, sp8);
+    flags = sp8;
+    base = lbl_802B14E4;
+    i = 1;
     do {
-        if (var_r29 != 0) {
-            var_r3 = &lbl_802B14E4 + ((var_r29 - 1) * 0x280);
+        if ((u8)i != 0) {
+            unit = base + ((u8)i - 1) * 0x280;
         } else {
-            var_r3 = NULL;
+            unit = NULL;
         }
-        if (((u32) M2C_FIELD(var_r3, u32 *, 0x188) != 0U) && ((u8) *(&sp8 + M2C_FIELD(M2C_FIELD(var_r3, void **, 0x190), u8 *, 8)) != 0)) {
-            fn_80050C90();
+        if (*(u32 *)(unit + 0x188) != 0) {
+            if (flags[(*(u8 **)(unit + 0x190))[8]] != 0) {
+                fn_80050C90(unit);
+            }
         }
-        var_r29 += 1;
-    } while ((s32) var_r29 <= 0x9F);
+        i += 1;
+    } while (i <= 0x9F);
 }
 
 void fn_8001621C(void) {
-    M2C_UNK fn_8004EA60(M2C_UNK);
-    extern u16 lbl_802CA264[];
-    void *temp_r31;
-    void *temp_r31_2;
-    void *temp_r31_3;
-    void *var_r3;
-    void *var_r3_2;
-    void *var_r3_3;
+    void fn_8004EA60(void *, s32);
+    extern u8 lbl_802CA264[];
+    void *node;
+    void *next;
 
-    var_r3 = M2C_FIELD(&lbl_802CA264, void **, 0x3C);
-loop_2:
-    if (var_r3 != NULL) {
-        temp_r31 = M2C_FIELD(var_r3, void **, 0x184);
-        fn_8004EA60(0);
-        var_r3 = temp_r31;
-        goto loop_2;
+    node = *(void **)(lbl_802CA264 + 0x3C);
+    while (node != NULL) {
+        next = *(void **)((u8 *)node + 0x184);
+        fn_8004EA60(node, 0);
+        node = next;
     }
-    var_r3_2 = M2C_FIELD(&lbl_802CA264, void **, 0x48);
-loop_5:
-    if (var_r3_2 != NULL) {
-        temp_r31_2 = M2C_FIELD(var_r3_2, void **, 0x184);
-        fn_8004EA60(0);
-        var_r3_2 = temp_r31_2;
-        goto loop_5;
+    node = *(void **)(lbl_802CA264 + 0x48);
+    while (node != NULL) {
+        next = *(void **)((u8 *)node + 0x184);
+        fn_8004EA60(node, 0);
+        node = next;
     }
-    var_r3_3 = M2C_FIELD(&lbl_802CA264, void **, 0x54);
-loop_8:
-    if (var_r3_3 != NULL) {
-        temp_r31_3 = M2C_FIELD(var_r3_3, void **, 0x184);
-        fn_8004EA60(0);
-        var_r3_3 = temp_r31_3;
-        goto loop_8;
+    node = *(void **)(lbl_802CA264 + 0x54);
+    while (node != NULL) {
+        next = *(void **)((u8 *)node + 0x184);
+        fn_8004EA60(node, 0);
+        node = next;
     }
 }
 
