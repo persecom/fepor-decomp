@@ -7913,10 +7913,18 @@ void fn_800DBBAC(f32 *arg0, u8 *arg1) {
     arg0[2] = value2;
 }
 
-void fn_800DBBC8(f32 *arg0, f32 *arg1) {
-    arg0[0] = arg1[0x14];
-    arg0[1] = arg1[0x13];
-    arg0[2] = arg1[0x12];
+void fn_800DBBC8(f32 *arg0, u8 *arg1) {
+    f32 value0;
+    f32 value1;
+    f32 value2;
+
+    value2 = *(volatile f32 *)(arg1 + 0x50);
+    value1 = *(volatile f32 *)(arg1 + 0x4C);
+    value0 = *(volatile f32 *)(arg1 + 0x48);
+
+    arg0[0] = value0;
+    arg0[1] = value1;
+    arg0[2] = value2;
 }
 
 void *fn_800DBE34(void *arg0) {
