@@ -1874,21 +1874,23 @@ void fn_801F661C(s32 arg0) {
 
 void fn_801F6670(void *arg0)
 {
-    void *object;
-
-    object = *(void **)((u8 *)arg0 + 0x30);
+    void fn_80161F7C(void);
+    void fn_8000C60C(void *);
+    void fn_8006EDA0(void *);
+    void fn_800C4588(void *);
+    struct {
+        u8 pad[0x10];
+        void *unk10;
+    } *work = *(void **)((u8 *)arg0 + 0x30);
 
     fn_80161F7C();
-
-    if (*(u32 *)((u8 *)arg0 + 0x34) != 0) {
-        fn_8000C60C();
+    if (*(void **)((u8 *)arg0 + 0x34) != NULL) {
+        fn_8000C60C(*(void **)((u8 *)arg0 + 0x34));
     }
-
-    if (*(u32 *)((u8 *)object + 0x10) != 0) {
-        fn_8006EDA0((u8 *)object + 0x10);
+    if (work->unk10 != NULL) {
+        fn_8006EDA0(&work->unk10);
     }
-
-    fn_800C4588(object);
+    fn_800C4588(work);
 }
 
 extern s32 lbl_80368400;
