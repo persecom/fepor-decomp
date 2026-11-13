@@ -3875,17 +3875,19 @@ s32 fn_8024ACB0(u8 arg0) {
 }
 
 void fn_8024AD04(u8 arg0, u8 arg1) {
+    typedef struct {
+        u8 pad[0x2D];
+        u8 unk2D;
+        u8 pad2[0x30 - 0x2E];
+    } Entry;
     extern u8 lbl_80368978;
     extern f32 lbl_8034C324[];
+    Entry *tbl;
 
-    u8 *ptr;
-
-    if (lbl_80368978 == 0) {
-        return;
+    if (lbl_80368978 != 0) {
+        tbl = (Entry *)lbl_8034C324;
+        tbl[arg0].unk2D = arg1;
     }
-
-    ptr = (u8 *)lbl_8034C324 + (arg0 * 0x30);
-    ptr[0x2D] = arg1;
 }
 
 void fn_80255054(void *arg0);
@@ -13703,11 +13705,19 @@ void fn_80261BC8(s32 arg0, u32 arg1)
     *(u8 *)(entry + 0xE8) = lbl_80368AD0;
 }
 
-s32 fn_80261C40(s32 arg0, s32 arg1) {
-    if (arg1 == 0) {
-        return (lbl_803670C0 & 0xFFFF);
-    }
-    return (lbl_803670C0 >> 0x10);
+void fn_80261C40(s32 arg0, s32 arg1) {
+    typedef struct {
+        u8 pad[0x24];
+        u32 unk24;
+        u8 pad2[0xCC - 0x28];
+        u16 unkCC;
+        u8 pad3[0xF8 - 0xCE];
+    } Entry;
+    extern Entry *lbl_80368AA0;
+    extern u16 lbl_803670C0;
+
+    lbl_80368AA0[arg0].unkCC = ((u16 *)&lbl_803670C0)[arg1 & 0xFF];
+    lbl_80368AA0[arg0].unk24 |= 0x100;
 }
 
 s32 fn_80261C6C(s32 arg0) {
