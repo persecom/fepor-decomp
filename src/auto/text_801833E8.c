@@ -9169,17 +9169,18 @@ void fn_8019BCC0(s32 arg0, s32 arg1, s32 arg2) {
     temp_r31[0x5C] = 0;
 }
 
-void fn_8019BD30(void *arg0) {
-    M2C_UNK fn_80098110();
-    M2C_UNK fn_80183AB4(u16, s8, s8, void *);
-    u16 var_r4;
+void fn_8019BD30(u8 *arg0) {
+    s32 fn_80098110(void);
+    void fn_80183AB4(s32, u16, s32, s32, s32);
+    s32 ret;
+    u16 flags;
 
-    fn_80098110();
-    var_r4 = 0x10;
-    if ((u8) M2C_FIELD(arg0, u8 *, 0x5C) != 0) {
-        var_r4 = 0x10 | 0x20;
+    ret = fn_80098110();
+    flags = 0x10;
+    if (arg0[0x5c] != 0) {
+        flags |= 0x20;
     }
-    fn_80183AB4(var_r4, (s8) M2C_FIELD(arg0, u8 *, 0x5D), (s8) M2C_FIELD(arg0, u8 *, 0x5E), arg0);
+    fn_80183AB4(ret, flags, (s8)arg0[0x5d], (s8)arg0[0x5e], (s32)arg0);
 }
 
 void fn_8019BD8C(s32 arg0, s32 arg1) {
@@ -10286,15 +10287,25 @@ s32 fn_8019E6B4(void) {
     return 1;
 }
 
-void fn_8019E764(u32 arg0, void *arg1) {
-    u32 temp_r3;
-    if (arg1 != 0) {
-        M2C_FIELD(arg1, u32 *, 0x1C) = arg0;
-        temp_r3 = M2C_FIELD(arg1, u32 *, 0x20);
-        if (temp_r3 != 0) {
-            ((void (*)(u32))((void **)(temp_r3))[0x48])(arg0);
-        }
+s32 fn_8019E764(void) {
+    extern s32 lbl_80367110;
+    extern u8 lbl_80297058[];
+
+    void *fn_8000CAA0(void *, s32);
+    void fn_80013864(void);
+    void fn_8005376C(void);
+    u8 fn_800537E8(void);
+    s32 fn_800C0658(void);
+
+    if (lbl_80367110 & 1) {
+        fn_8005376C();
+        return 0;
     }
+    if (fn_800537E8() != 0) {
+        fn_8000CAA0(lbl_80297058, fn_800C0658());
+        fn_80013864();
+    }
+    return 1;
 }
 
 void fn_8019E7C0(void *arg0)
@@ -11789,17 +11800,18 @@ void fn_801A251C(void) {
 void fn_801A2570(void) {
     void fn_800C1060(void);
     extern u8 lbl_80367289;
-    u8 f;
-    u8 t;
+    s32 var_r5;
+    s32 temp_r0;
+    s32 t;
 
-#pragma optimization_level 1
-    f = 1;
-    t = (u8)(lbl_80367289 - 1);
-    if (((u32)((f | ~t) - ((u32)(f - t) >> 1)) >> 31) == 0) {
-        f = 0;
+    var_r5 = 1;
+    temp_r0 = (u8)(lbl_80367289 - 1);
+    t = ~temp_r0;
+    t = var_r5 | t;
+    if (((u32)(t - ((u32)(var_r5 - temp_r0) >> 1)) >> 31) == 0) {
+        var_r5 = 0;
     }
-#pragma optimization_level reset
-    if (f != 0) {
+    if ((u8)var_r5 != 0) {
         fn_800C1060();
     }
 }
