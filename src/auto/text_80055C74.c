@@ -1638,28 +1638,21 @@ f32 fn_8005A028(s32 arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3) {
 }
 
 void fn_8005A1E8(void *arg0, f32 *arg1, f32 *arg2) {
-    void *fn_80068548(void);
-    void fn_80225034(f32 *);
-    void fn_80224AD8(void *, f32 *, f32 *, f32 *, f32 *, f32 *, f32, f32, f32);
-    extern f32 lbl_80369108;
-    f32 vals[7];
-    f32 sp8[6];
-    void *obj;
-
-    obj = arg0;
-    if (obj == NULL) {
-        obj = fn_80068548();
-    }
-    vals[0] = lbl_80369108;
-    vals[1] = *(f32 *)((u8 *)obj + 0x24);
-    vals[2] = *(f32 *)((u8 *)obj + 0x2C);
-    vals[3] = *(f32 *)((u8 *)obj + 0x38);
-    vals[4] = *(f32 *)((u8 *)obj + 0x3C);
-    vals[5] = *(f32 *)((u8 *)obj + 0x4C);
-    vals[6] = *(f32 *)((u8 *)obj + 0x50);
-    fn_80225034(sp8);
-    fn_80224AD8((u8 *)obj + 0xA4, vals, sp8, arg2, arg2 + 1, arg2 + 2,
-                arg1[0], arg1[1], arg1[2]);
+void *fn_80068548(void);
+void fn_80225034(f32 *);
+void fn_80224AD8(void *, f32 *, f32 *, f32 *, f32 *, f32 *, f32, f32, f32);
+extern f32 lbl_80369108;
+f32 vals[7]; f32 sp8[6];
+if(arg0==NULL) arg0=fn_80068548();
+vals[0]=lbl_80369108;
+vals[1]=*(f32 *)((u8 *)arg0+36);
+vals[2]=*(f32 *)((u8 *)arg0+44);
+vals[3]=*(f32 *)((u8 *)arg0+56);
+vals[4]=*(f32 *)((u8 *)arg0+60);
+vals[5]=*(f32 *)((u8 *)arg0+76);
+vals[6]=*(f32 *)((u8 *)arg0+80);
+fn_80225034(sp8);
+fn_80224AD8((u8 *)arg0+0xA4,vals,sp8,arg2,arg2+1,arg2+2,arg1[0],arg1[1],arg1[2]);
 }
 
 #include "global.h"
