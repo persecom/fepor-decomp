@@ -279,6 +279,37 @@ s8 fn_801E4A60(void *arg0, u8 arg1) {
     return var_r5;
 }
 
+#pragma global_optimizer off
+void fn_801E4C48(void *arg0, s8 arg1) {
+    void *fn_8000E0E4(void *);
+    void fn_80056AE0(void *, void *);
+    void fn_80057860(void *, s16);
+    void fn_801E4CF8(void *);
+    extern u8 lbl_8027EB78[];
+    s32 zero;
+    s16 t;
+
+    *(u8 *)((u8 *)arg0 + 0x30) = (u8)arg1;
+    fn_801E4CF8(arg0);
+    zero = 0;
+    *(u8 *)((u8 *)arg0 + 0x31) = (u8)zero;
+    switch (zero) {
+    case 0:
+        fn_80056AE0(*(void **)((u8 *)arg0 + 0x60), fn_8000E0E4(lbl_8027EB78 + 0x182));
+        break;
+    case 1:
+        fn_80056AE0(*(void **)((u8 *)arg0 + 0x60), fn_8000E0E4(lbl_8027EB78 + 0x18D));
+        break;
+    }
+    *(u8 *)((u8 *)arg0 + 0x32) = 0;
+    *(u8 *)((u8 *)arg0 + 0x33) = 0;
+    *(u8 *)((u8 *)arg0 + 0x34) = 0;
+    *(s16 *)((u8 *)arg0 + 0x36) = 0;
+    *(s16 *)((u8 *)arg0 + 0x38) = 0;
+    t = *(s16 *)((u8 *)arg0 + 0x36);
+    fn_80057860(*(void **)((u8 *)arg0 + 0x5C), t);
+}
+#pragma global_optimizer on
 void fn_801E4CF8(void *arg0) {
     M2C_UNK fn_801E4D54();
     M2C_UNK fn_801E4E8C();
@@ -2467,6 +2498,37 @@ skip_sub:
     fn_80059208(fn_801E50E4, arg0);
     fn_80059208(fn_801E7D18, arg0);
 }
+
+void fn_801E9B80(void *arg0) {
+    u8 fn_8005BA10(void *);
+    s32 fn_8003FCCC(void *);
+    s32 fn_8006D948(void *);
+    void fn_8000C188(void *);
+    extern u32 lbl_80299FA8[];
+    extern u32 lbl_80299FC4[];
+    extern u8 lbl_8027EB78[];
+    u32 *a;
+    u32 *b;
+
+    a = lbl_80299FA8;
+    if (fn_8005BA10((void *)a[1]) == 0) {
+        return;
+    }
+    b = lbl_80299FC4;
+    if (fn_8005BA10((void *)b[1]) == 0) {
+        return;
+    }
+    if (fn_8005BA10(&lbl_8027EB78[0x22f]) != 0) {
+        *(s32 *)((u8 *)arg0 + 0x40) = fn_8003FCCC((void *)a[1]);
+        *(s32 *)((u8 *)arg0 + 0x64) = fn_8006D948((void *)b[1]);
+        fn_8000C188(arg0);
+    } else {
+        goto end;
+    }
+end:
+    ;
+}
+
 #pragma global_optimizer reset
 #pragma use_lmw_stmw reset
 
