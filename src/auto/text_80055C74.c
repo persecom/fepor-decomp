@@ -1598,43 +1598,13 @@ return a + diff*x/y;
 }
 
 f32 fn_8005A028(s32 arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3) {
-    f32 temp_f0;
-    f32 temp_f2;
-    f32 var_f4;
-    f32 var_f5;
-    s32 temp_r4;
-    s32 var_ctr_2;
-    s32 var_r5;
-    u32 var_ctr;
-
-    temp_f0 = farg2 - farg3;
-    var_f5 = farg2;
-    var_r5 = 1;
-    temp_f2 = farg1 - farg0;
-    var_f4 = temp_f0;
-    if (arg0 > 1) {
-        temp_r4 = arg0 - 8;
-        if ((s32) (arg0 - 1) > 8) {
-            var_ctr = (u32) (temp_r4 + 6) >> 3U;
-            if (temp_r4 > 1) {
-                do {
-                    var_r5 += 8;
-                    var_f4 = var_f4 * temp_f0 * temp_f0 * temp_f0 * temp_f0 * temp_f0 * temp_f0 * temp_f0 * temp_f0;
-                    var_f5 = var_f5 * farg2 * farg2 * farg2 * farg2 * farg2 * farg2 * farg2 * farg2;
-                    var_ctr -= 1;
-                } while (var_ctr != 0);
-            }
-        }
-        var_ctr_2 = arg0 - var_r5;
-        if (var_r5 < arg0) {
-            do {
-                var_f4 *= temp_f0;
-                var_f5 *= farg2;
-                var_ctr_2 -= 1;
-            } while (var_ctr_2 != 0);
-        }
-    }
-    return farg0 + (temp_f2 - ((temp_f2 * var_f4) / var_f5));
+f32 step=farg2-farg3;
+f32 diff=farg1-farg0;
+f32 x=step;
+f32 y=farg2;
+s32 i;
+for(i=1;i<arg0;i++) {x*=step; y*=farg2;}
+return farg0+(diff-diff*x/y);
 }
 
 void fn_8005A1E8(void *arg0, f32 *arg1, f32 *arg2) {
