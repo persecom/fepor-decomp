@@ -9939,18 +9939,17 @@ extern "C" void fn_800DFDF4(void *arg0, void *arg1) {
 
     off = 0;
     n = ((List *)arg0)->count;
-    if (n > 0) {
-        do {
-            items = ((List *)arg0)->items;
-            if (*(Obj **)((u8 *)items + off) == (Obj *)arg1) {
-                fn_800DD87C(arg0, (s32)((u8 *)items + off));
-                if (arg1 != NULL) {
-                    ((Obj *)arg1)->v4(1);
-                }
-                break;
+    for (; n > 0; n--) {
+        items = ((List *)arg0)->items;
+        if (*(Obj **)((u8 *)items + off) == (Obj *)arg1) {
+            off = (s32)items + off;
+            fn_800DD87C(arg0, off);
+            if (arg1 != NULL) {
+                ((Obj *)arg1)->v4(1);
             }
-            off += 4;
-        } while (--n != 0);
+            break;
+        }
+        off += 4;
     }
 }
 #pragma cplusplus reset
