@@ -10432,11 +10432,12 @@ s32 fn_801CF5FC(void *arg0) {
 }
 
 s32 fn_801CF614(void *arg0) {
-    s16 temp = *(s16 *)((u8 *)arg0 + 0x3C);
-    if (temp == 0) {
-        return 0;
+    s16 temp;
+    temp = *(s16 *)((u8 *)arg0 + 0x3C);
+    if (temp != 0) {
+        return -1;
     }
-    return -1;
+    return 0;
 }
 
 void *fn_801CF6F4(void *arg0, s16 arg1) {
