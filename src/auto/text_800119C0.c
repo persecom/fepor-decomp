@@ -712,26 +712,16 @@ s32 fn_800145E0(void *arg0) {
     return 1;
 }
 
-s32 fn_8001462C(void *arg0)
-{
-    extern void fn_8008A290(s32, s32);
-
-    u8 *obj;
-    u32 *data;
-    u32 value;
+s32 fn_8001462C(void *arg0) {
+    void fn_8008A290(s32, s32);
+    void *ptr;
     s32 index;
 
-    obj = (u8 *)arg0;
-    data = *(u32 **)(obj + 4);
-
-    value = data[0];
-    index = (value >> 16) & 0xFF;
-
-    fn_8008A290(index, data[1]);
-
-    *(u8 **)(obj + 4) += 8;
-
-    return index == 7;
+    ptr = *(void **)((u8 *)arg0 + 4);
+    index = (u8)(*(u32 *)ptr >> 16);
+    fn_8008A290(index, *(s32 *)((u8 *)ptr + 4));
+    *(void **)((u8 *)arg0 + 4) = (void *)((u8 *)*(void **)((u8 *)arg0 + 4) + 8);
+    return index != 7;
 }
 
 s32 fn_80014690(void *arg0)
