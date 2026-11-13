@@ -9872,6 +9872,64 @@ void *fn_8014488C(void *arg0, s16 arg1) {
 }
 
 #pragma cplusplus on
+extern "C" void *fn_80144918(void *arg0, s16 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    struct Sub40 {
+        u8 pad[0x44];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    struct Owner {
+        void *vtbl;
+        u8 pad4[0x3C];
+        u8 sub40[0x48];
+        void *sub88;
+        u8 pad8c[0x24];
+        void *subB0;
+    };
+    void fn_800C428C(void *);
+    extern u8 lbl_802924DC[];
+    extern u8 lbl_80295478[];
+    extern u8 lbl_80292504[];
+    extern u8 lbl_80292230[];
+    extern u8 lbl_8028FDB0[];
+    Owner *self;
+
+    self = (Owner *)arg0;
+    if (arg0 != NULL) {
+        self->vtbl = lbl_802924DC;
+        if (&self->subB0 != NULL) {
+            self->subB0 = lbl_80295478;
+            ((Obj *)&self->subB0)->v2();
+        }
+        if (&self->sub88 != NULL) {
+            self->sub88 = lbl_80295478;
+            ((Obj *)&self->sub88)->v2();
+        }
+        if (&self->sub40[0] != NULL) {
+            *(void **)((u8 *)self + 0x84) = lbl_80292504;
+            ((Sub40 *)&self->sub40[0])->v2();
+        }
+        if (arg0 != NULL) {
+            self->vtbl = lbl_80292230;
+            if (arg0 != NULL) {
+                self->vtbl = lbl_8028FDB0;
+            }
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+#pragma cplusplus reset
+
+#pragma cplusplus on
 extern "C" void *fn_80144A0C(void *arg0, s16 arg1) {
     struct Obj {
         u8 pad[0x44];
@@ -10108,6 +10166,66 @@ void fn_8014519C(void) {
     M2C_UNK fn_800B2D94();
     fn_800B2D94();
 }
+
+#pragma cplusplus on
+extern "C" void fn_801451BC(void) {
+    struct Obj {
+        u8 pad[8];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    typedef struct {
+        s8 **names;
+        u8 pad[8];
+        u8 flags;
+        u8 pad2[0x23];
+    } Entry;
+    extern u8 lbl_80276BC8[];
+    extern u8 lbl_803301A8[1344];
+    void fn_800B3194(void);
+
+    Entry *entry;
+    s8 *str;
+    s8 *b;
+    s8 *a;
+    s8 ca;
+    s32 i;
+
+    entry = (Entry *)lbl_803301A8;
+    str = (s8 *)(lbl_80276BC8 + 0x8a);
+    i = 0;
+    do {
+        if (entry->flags & 1) {
+            a = str;
+            b = (s8 *)*entry->names;
+            goto loop;
+        loop:
+            ca = *a;
+            if (ca == 0) {
+                if ((s8)i >= 0) {
+                    Obj *obj = (Obj *)(lbl_803301A8 + (s8)i * 0x30);
+                    if (*((u8 *)obj + 0xC) & 1) {
+                        obj->v2();
+                    }
+                }
+            } else {
+                s8 cb = *b;
+                a += 1;
+                b += 1;
+                if (ca == cb) {
+                    if (*b != 0) {
+                        goto loop;
+                    }
+                }
+            }
+        }
+        i += 1;
+        entry = (Entry *)((u8 *)entry + 0x30);
+    } while (i < 0x1C);
+    fn_800B3194();
+}
+#pragma cplusplus reset
 
 void fn_801452A8(void) {
     M2C_UNK fn_800B3248();
@@ -11181,35 +11299,49 @@ found:
     return slot;
 }
 
-void fn_801478D0(s16 arg0) {
-    extern u16 lbl_8032FFC8[240];
-    
+#pragma cplusplus on
+extern "C" void fn_801478D0(s16 arg0) {
+    struct Obj {
+        u8 pad[8];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    extern u8 lbl_8032FFC8[];
+    extern f32 lbl_8036A7A0;
+    s16 a;
+    Obj *entry;
     s32 i;
-    u8 *ptr;
-    
-    ptr = (u8 *)&lbl_8032FFC8[0];
-    for (i = 0; i < 0xA; i++) {
-        if ((ptr[0xC] & 1) != 0) {
+    s32 temp;
+    s16 var_r5;
+    u8 flags;
+
+    a = arg0;
+    entry = (Obj *)lbl_8032FFC8;
+    i = 0;
+    do {
+        flags = *((u8 *)entry + 0xC);
+        if (flags & 1) {
             if (arg0 <= 0) {
-                void (*func)(u8 *) = (void (*)(u8 *))(*(u32 **)(ptr + 8) + 4);
-                func(ptr);
-            } else if ((ptr[0xC] & 8) == 0) {
-                s16 temp;
-                temp = (s16)((f32)arg0 / 1.0f); // Using 1.0f since there's no global for the value
-                if (temp <= 0) {
-                    temp = 1;
+                entry->v2();
+            } else if (!(flags & 8)) {
+                temp = (s32)((f32)a / lbl_8036A7A0);
+                var_r5 = (s16)temp;
+                if (var_r5 <= 0) {
+                    var_r5 = 1;
                 }
-                ptr[0x28] = ptr[0x16];
-                ptr[0x29] = 0;
-                ptr[0x2E] = temp;
-                ptr[0x2C] = 0;
-                ptr[0xC] = ptr[0xC] | 8;
+                *((u8 *)entry + 0x28) = *((u8 *)entry + 0x16);
+                *((u8 *)entry + 0x29) = 0;
+                *((s16 *)((u8 *)entry + 0x2E)) = var_r5;
+                *((s16 *)((u8 *)entry + 0x2C)) = 0;
+                *((u8 *)entry + 0xC) = (u8)(*((u8 *)entry + 0xC) | 8);
             }
         }
-        ptr += 0x30;
-    }
+        i += 1;
+        entry = (Obj *)((u8 *)entry + 0x30);
+    } while (i < 0xA);
 }
-
+#pragma cplusplus reset
 s32 fn_80147B24(f32 farg0, f32 farg1, f32 farg2) {
     s32 fn_80147B9C(void);
     extern u8 lbl_8032FFC8[];
@@ -11336,32 +11468,70 @@ found:
     return slot;
 }
 
-void fn_80147EBC(s16 arg0) {
-    extern M2C_UNK lbl_8032FF08;
+#pragma opt_common_subs off
+#pragma cplusplus on
+extern "C" void fn_80147EBC(s16 arg0) {
+    struct Obj {
+        u8 pad[8];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual void v20() = 0;
+        virtual void v21() = 0;
+        virtual void v22() = 0;
+        virtual void v23() = 0;
+        virtual void v24() = 0;
+        virtual u8 v25() = 0;
+    };
+    extern Obj lbl_8032FF08[];
     extern f32 lbl_8036A7A0;
-    M2C_UNK *var_r29;
-    s16 var_r30;
-    s32 var_r28;
+    s32 a;
+    s16 val;
+    Obj *p;
+    s32 i;
+    s32 temp;
+    u8 t;
 
-    var_r29 = &lbl_8032FF08;
-    var_r28 = 0;
+    a = arg0;
+    p = lbl_8032FF08;
+    i = 0;
     do {
-        if ((M2C_FIELD(var_r29, u8 *, 0xC) & 1) && (M2C_FIELD(M2C_FIELD(var_r29, void **, 8), u8 (**)(M2C_UNK *), 0x6C)(var_r29) != 0)) {
-            var_r30 = (s16) ((f32) arg0 / lbl_8036A7A0);
-            if (var_r30 <= 0) {
-                var_r30 = 1;
+        if ((*(u8 *)((u8 *)p + 0xC) & 1) && p->v25() != 0) {
+            temp = (s32)((f32)a / lbl_8036A7A0);
+            val = (s16)temp;
+            if (val <= 0) {
+                val = 1;
             }
-            M2C_FIELD(M2C_FIELD(var_r29, void **, 8), M2C_UNK (**)(M2C_UNK *), 0x18)(var_r29);
-            M2C_FIELD(var_r29, s8 *, 0x28) = 0;
-            M2C_FIELD(var_r29, u8 *, 0x29) = (u8) M2C_FIELD(var_r29, u8 *, 0x2A);
-            M2C_FIELD(var_r29, s16 *, 0x2E) = var_r30;
-            M2C_FIELD(var_r29, s16 *, 0x2C) = 0;
+            p->v4();
+            t = *(u8 *)((u8 *)p + 0x2A);
+            *(u8 *)((u8 *)p + 0x28) = 0;
+            *(u8 *)((u8 *)p + 0x29) = t;
+            *(s16 *)((u8 *)p + 0x2E) = val;
+            *(s16 *)((u8 *)p + 0x2C) = 0;
         }
-        var_r28 += 1;
-        var_r29 += 0x30;
-    } while (var_r28 < 4);
+        i += 1;
+        p = (Obj *)((u8 *)p + 0x30);
+    } while (i < 4);
 }
-
+#pragma cplusplus reset
+#pragma opt_common_subs reset
 void fn_80147FA8(s16 arg0) {
     extern struct Unk30 {
         u8 pad_0x0[8];
