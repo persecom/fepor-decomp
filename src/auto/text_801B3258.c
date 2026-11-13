@@ -784,6 +784,7 @@ s32 fn_801B73DC(void) {
     s32 fn_802342B8(void *, void *);
     extern u8 lbl_8027C370[];
     extern u8 lbl_802CA264[];
+    u8 *base;
     void *next;
     s32 count;
     void *node;
@@ -791,9 +792,10 @@ s32 fn_801B73DC(void) {
     count = 0;
     fn_800056CC(lbl_8027C370 + 0x1C0);
     node = *(void **)(lbl_802CA264 + 0xC);
+    base = lbl_8027C370;
     while (node != NULL) {
         next = *(void **)((u8 *)node + 0x184);
-        if (fn_802342B8(*(void **)(*(void **)((u8 *)node + 0x188)), lbl_8027C370 + 0x1CB) == 0) {
+        if (fn_802342B8(*(void **)(*(void **)((u8 *)node + 0x188)), base + 0x1CB) == 0) {
             count += 1;
         }
         node = next;
