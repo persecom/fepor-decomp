@@ -1001,6 +1001,44 @@ void fn_801F3890(void) {
     }
 }
 
+#pragma cplusplus on
+extern "C" void fn_801F3C1C(void *arg0) {
+    void fn_8006EDA0(void *);
+    void fn_80161F7C(void);
+    void fn_80057A10(void *, s32);
+    void fn_800C4588(void *);
+    struct Obj {
+        u8 pad[0x2C];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6(s32) = 0;
+    };
+    void *obj;
+    Obj *p;
+
+    obj = *(void **)((u8 *)arg0 + 0x30);
+    if (*(u32 *)((u8 *)obj + 4) != 0) {
+        if (*(u32 *)((u8 *)obj + 4) != 0) {
+            fn_8006EDA0((u8 *)obj + 4);
+            *(u32 *)((u8 *)obj + 4) = 0;
+        }
+    }
+    fn_8006EDA0(obj);
+    fn_80161F7C();
+    fn_80057A10(*(void **)((u8 *)obj + 0xDC), 1);
+    fn_80057A10(*(void **)((u8 *)obj + 0xE0), 1);
+    p = *(Obj **)((u8 *)obj + 0xE4);
+    if (p != NULL) {
+        p->v6(1);
+    }
+    fn_800C4588(obj);
+}
+#pragma cplusplus reset
+
 void fn_801F3CB0(s32 arg0) {
     extern u8 lbl_8027F868[];
     s32 fn_8005C6A0(void *);
@@ -1377,24 +1415,32 @@ void fn_801F5374(void* arg0) {
     }
 }
 
-void fn_801F53E0(void *arg0) {
-    extern u8 lbl_803682F0[];
-    
-    s32 fn_800EB774();
-    void fn_801E2594();
-    void fn_8000E0E4();
-    void fn_801DDBA8();
-    void fn_801475FC();
+void fn_801F53E0(void *arg0)
+{
+    extern u8 lbl_803682F0;
 
     fn_801E2594(&lbl_803682F0);
+
     if (fn_800EB774() == 0) {
-        // Call to fn_801DDBA8 in original - skipped for now
+        fn_801DDBA8(
+            *(void **)((u8 *)arg0 + 0x50),
+            fn_8000E0E4((u8 *)lbl_80280B58 + 0x6A),
+            0,
+            0,
+            0
+        );
         return;
     }
-    
-    // We'll not fully expand because there are structure references and data
-    // we're not sure about; let's just cover the function flow part with minimal matches
-    fn_801475FC(0x80280B58 + 0x77, 0x64);
+
+    fn_801475FC((u8 *)lbl_80280B58 + 0x77, 0x64);
+
+    fn_801DDBA8(
+        *(void **)((u8 *)arg0 + 0x50),
+        fn_8000E0E4((u8 *)lbl_80280B58 + 0x8A),
+        0,
+        1,
+        0
+    );
 }
 
 void fn_801F5484(void *arg0)
