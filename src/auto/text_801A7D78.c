@@ -81,6 +81,42 @@ u16 *fn_801A7FF4(void *arg0) {
     return (u16 *)((u8 *)arg0 + 0x284);
 }
 
+void fn_801A8010(void *arg0) {
+    u64 *fn_8001CB64(void *);
+    u8 fn_8001DDE8(s32);
+    extern u16 lbl_80367218;
+    u64 *p;
+    void *base;
+    s8 flag;
+
+    flag = *(s8 *)((u8 *)arg0 + 0x2C8);
+    if (flag > 0) {
+        if (flag <= 0) {
+            base = &lbl_80367218;
+        } else {
+            base = (u8 *)arg0 + 0x284;
+        }
+        p = fn_8001CB64(base);
+        if ((*p & 0x100ULL) == 0) {
+            if (*(u8 *)((u8 *)arg0 + 0x295) == 0x52) {
+                if (*(s8 *)((u8 *)arg0 + 0x2C8) <= 0) {
+                    base = &lbl_80367218;
+                } else {
+                    base = (u8 *)arg0 + 0x284;
+                }
+                if (fn_8001DDE8(*(s32 *)base) == 0) {
+                    return;
+                }
+            }
+            flag = *(s8 *)((u8 *)arg0 + 0x2C8);
+            *(u8 *)((u8 *)arg0 + 0x2C8) = (u8)(flag - 1);
+            if (*(s8 *)((u8 *)arg0 + 0x2C8) == 0) {
+                *(u8 *)((u8 *)arg0 + 0x2C7) = 1;
+            }
+        }
+    }
+}
+
 void fn_801A80D8(void *arg0, s32 *arg1, s32 *arg2, s32 *arg3);
 
 #pragma use_lmw_stmw on
@@ -362,37 +398,40 @@ void fn_801A8B48(s32 arg0) {
 }
 
 void fn_801A8CB8(void *arg0, void *arg1) {
-    M2C_UNK fn_800368C8(void *, s32, void *);
-    M2C_UNK fn_80036E48(void *, s32);
+    void fn_800368C8(void *, s32, void *);
+    void fn_80036E48(void *, s32);
     s32 fn_80036F5C(void *, s32);
     void *fn_80036FD0(void *, s32);
     u8 fn_8003701C(void *);
     u8 fn_80038128(void *, void *);
-    M2C_UNK fn_8003B8D4(void *);
-    void *temp_r3;
-    void *temp_r3_2;
-    s32 var_r31;
-    s32 var_r30;
+    void fn_8003B8D4(void *);
+    s32 i;
+    void *unit;
+    s32 val;
 
-    var_r31 = 0;
-    M2C_FIELD(arg1, s8 *, 9) = 0;
-    M2C_FIELD(arg1, s8 *, 8) = 0;
-    M2C_FIELD(arg1, s8 *, 7) = 0;
-    M2C_FIELD(arg1, s8 *, 6) = 0;
-    M2C_FIELD(arg1, s8 *, 5) = 0;
-    M2C_FIELD(arg1, s8 *, 4) = 0;
+    i = 0;
+    *(u8 *)((u8 *)arg1 + 9) = 0;
+    *(u8 *)((u8 *)arg1 + 8) = 0;
+    *(u8 *)((u8 *)arg1 + 7) = 0;
+    *(u8 *)((u8 *)arg1 + 6) = 0;
+    *(u8 *)((u8 *)arg1 + 5) = 0;
+    *(u8 *)((u8 *)arg1 + 4) = 0;
 
-loop_6:
-    if (var_r31 < (s32) fn_8003701C(arg0)) {
-        temp_r3 = fn_80036FD0(arg0, var_r31);
-        if ((temp_r3 != NULL) && ((u32) M2C_FIELD(arg0, u32 *, 0x190) == (u32) M2C_FIELD(temp_r3, u32 *, 0x190)) && (fn_80038128(arg0, temp_r3) <= 3U)) {
-            fn_80036E48(temp_r3, M2C_FIELD(arg0, s32 *, 0x188));
-            var_r30 = fn_80036F5C(arg0, var_r31);
-            fn_800368C8(arg0, var_r30, arg1);
-            fn_800368C8(temp_r3, var_r30, arg1);
+    for (; i < (s32)fn_8003701C(arg0); i++) {
+        unit = fn_80036FD0(arg0, i);
+        if (unit == NULL) {
+            continue;
         }
-        var_r31 += 1;
-        goto loop_6;
+        if (*(u32 *)((u8 *)arg0 + 0x190) != *(u32 *)((u8 *)unit + 0x190)) {
+            continue;
+        }
+        if ((u8)fn_80038128(arg0, unit) > 3) {
+            continue;
+        }
+        fn_80036E48(unit, *(s32 *)((u8 *)arg0 + 0x188));
+        val = fn_80036F5C(arg0, i);
+        fn_800368C8(arg0, val, arg1);
+        fn_800368C8(unit, val, arg1);
     }
     fn_8003B8D4(arg1);
 }
@@ -981,6 +1020,39 @@ s32 fn_801AA034(void) {
 void fn_801AA03C(s32 unused, s32 arg1) {
     void fn_800F5504(s32, s32);
     fn_800F5504(arg1, 0x15);
+}
+
+u8 fn_801AA064(void *arg0, void *arg1, void *arg2) {
+    u8 fn_80105BC0(void *, s32);
+    extern s32 lbl_80297278[];
+    extern u8 lbl_8032B3C0[];
+    s32 *entry;
+    void (*handler)(void *, void *);
+    u8 key;
+
+    key = *(u8 *)((u8 *)arg1 + 0x18);
+    if (fn_80105BC0((u8 *)arg0 + 0x1BC, key) != 0) {
+        entry = lbl_80297278;
+        goto check;
+        do {
+            if ((s32)key == entry[0]) {
+                if (handler == NULL) {
+                } else {
+                    goto found;
+                }
+            }
+            entry += 2;
+        check:
+            handler = (void (*)(void *, void *))entry[1];
+        } while (handler != NULL);
+    }
+    entry = NULL;
+found:
+    if (entry == NULL) {
+        return 0;
+    }
+    ((void (*)(void *, void *))entry[1])(arg0, arg2);
+    return lbl_8032B3C0[0x21C];
 }
 
 extern u8 lbl_802973C8[16];
