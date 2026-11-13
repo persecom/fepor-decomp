@@ -3456,22 +3456,22 @@ void fn_8018DD0C(void *arg0)
     }
 }
 
-void fn_8018DD3C(s32 arg0) {
-    s32 fn_8005C6A0(void *, void *);
-    s32 fn_8006EEFC(s32, void *);
-    void fn_8000C188(s32);
-    void fn_80059208(void *, s32);
-    
-    extern u16 lbl_80279B1C[];
-    extern void *fn_8018DE24;
-    
-    if (fn_8005C6A0(&lbl_80279B1C[0x105], &lbl_80279B1C[0]) & 0x2000) {
-        fn_8006EEFC(arg0 + 0x34, &lbl_80279B1C[0x105]);
+#pragma global_optimizer off
+void fn_8018DD3C(void *arg0) {
+    u16 fn_8005C6A0(char *);
+    void fn_8006EEFC(void *, void *);
+    void fn_8000C188(void *);
+    void fn_80059208(void *, void *);
+    void fn_8018DE24(void *);
+    extern u8 lbl_80279B1C[];
+
+    if (fn_8005C6A0((char *)lbl_80279B1C + 0x105) & 0x2000) {
+        fn_8006EEFC((char *)arg0 + 0x34, (char *)lbl_80279B1C + 0x105);
         fn_8000C188(arg0);
-        fn_80059208(&fn_8018DE24, arg0);
+        fn_80059208(fn_8018DE24, arg0);
     }
 }
-
+#pragma global_optimizer on
 void fn_8018DDA8(void *arg0) {
     M2C_UNK fn_8005C8B4(void *, M2C_UNK *, M2C_UNK, M2C_UNK, f32);
     extern M2C_UNK lbl_80279B1C;
@@ -4420,6 +4420,36 @@ void *fn_80190B50(void *arg0, s16 arg1) {
         }
     }
     return arg0;
+}
+
+void fn_80190BBC(void *arg0) {
+    s16 eight;
+    s16 two;
+    s16 tmp;
+    s16 c;
+    s16 t10;
+    s16 a;
+    s16 e;
+    s16 d1;
+    s16 d2;
+    s16 s18;
+
+    two = 2;
+    eight = 8;
+    tmp = (s16)(*(s16 *)((u8 *)arg0 + 0x4C) * 2 + *(s16 *)((u8 *)arg0 + 0x46));
+    *(s16 *)((u8 *)arg0 + 0x10) = (s16)(*(s16 *)((u8 *)arg0 + 0xC) + (s16)(tmp + 0x10));
+
+    c = *(s16 *)((u8 *)arg0 + 0xC);
+    t10 = *(s16 *)((u8 *)arg0 + 0x10);
+    a = *(s16 *)((u8 *)arg0 + 0xA);
+    e = *(s16 *)((u8 *)arg0 + 0xE);
+    d1 = (s16)(t10 - c);
+    *(s16 *)((u8 *)arg0 + 0x12) = two;
+    d2 = (s16)(e - a);
+    s18 = (s16)(d1 - 8);
+    *(s16 *)((u8 *)arg0 + 0x14) = eight;
+    *(s16 *)((u8 *)arg0 + 0x16) = (s16)(d2 - 2);
+    *(s16 *)((u8 *)arg0 + 0x18) = s18;
 }
 
 s32 fn_80190D9C(s32 arg0, s32 arg1, s32 arg2) {
