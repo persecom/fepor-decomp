@@ -293,8 +293,13 @@ s32 __mod2u(s32 arg0, u32 arg1, s32 arg2, s32 arg3) {
     return (s32) r7;
 }
 
-s32 fn_8022CB08(s32 arg0, u32 arg1, s32 arg2) {
-    return (arg0 << arg2) | (arg1 >> (0x20 - arg2)) | (arg1 << (arg2 - 0x20));
+typedef struct { u32 hi; u32 lo; } UL64;
+
+UL64 fn_8022CB08(u32 hi, u32 lo, s32 s) {
+    UL64 r;
+    r.hi = (hi << s) | (lo >> (0x20 - s)) | (lo << (s - 0x20));
+    r.lo = lo << s;
+    return r;
 }
 
 u32 fn_8022CB2C(u32 arg0, u32 arg1, s32 arg2) {
