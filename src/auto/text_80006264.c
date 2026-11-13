@@ -58,18 +58,14 @@ void fn_800062CC(u32 *dst, u32 *src, u32 n) {
     } while (--n);
 }
 
-void fn_800062EC(s32 arg0, s32 arg1, u32 arg2) {
-    s32 *dst = (s32*)(arg0 - 4);
-    s32 *src = (s32*)(arg1 - 4);
-    u32 count = arg2 >> 3U;
-    
-    if (count != 0) {
-        do {
-            *dst++ = *src++;
-            *dst++ = *src++;
-            count--;
-        } while (count != 0);
-    }
+void fn_800062EC(u32 *dst, u32 *src, u32 n) {
+    dst--;
+    n >>= 3;
+    src--;
+    do {
+        *++dst = *++src;
+        *++dst = *++src;
+    } while (--n);
 }
 
 void fn_80006314(void) {
@@ -1860,10 +1856,11 @@ void fn_80009B8C(s8 arg0) {
 }
 
 void fn_80009B98(void) {
-    u16* ptr = (u16*)0x80367140;
-    ptr[0x2C/2] = 0;
-    ptr[0x30/2] = 0;
-    ptr[0x20/2] = (u16)(ptr[0x20/2] & 0x7FF);
+    extern u16 lbl_80367140;
+
+    *(u32 *)(*(u8 **)&lbl_80367140 + 0x2c) = 0;
+    *(u32 *)(*(u8 **)&lbl_80367140 + 0x30) = 0;
+    *(u16 *)(*(u8 **)&lbl_80367140 + 0x20) &= ~0x7000;
 }
 
 void fn_80009BC0(s32 arg0, s32 arg1) {
