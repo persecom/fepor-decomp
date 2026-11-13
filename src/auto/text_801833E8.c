@@ -11586,6 +11586,28 @@ s32 fn_8019FCD0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     return 1;
 }
 
+s32 fn_8019FD40(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    void *fn_8000C0C0(void *);
+    void fn_80017840(s32, s32, f32, f32, f32);
+    extern u8 lbl_80296F90[];
+    void *temp;
+    s32 scale;
+    f32 fscale;
+
+    temp = fn_8000C0C0(lbl_80296F90);
+    if (temp != NULL) {
+        scale = *(s32 *)((u8 *)temp + 0x3C);
+    } else {
+        scale = 1;
+    }
+    fscale = (f32)scale;
+    fn_80017840(0, arg0,
+                0.5f + (f32)arg1 / fscale,
+                0.5f + (f32)arg2 / fscale,
+                (f32)arg3 / fscale);
+    return 1;
+}
+
 s32 fn_8019FE2C(void) {
     M2C_UNK fn_800C0658();
     M2C_UNK fn_800177E0();
