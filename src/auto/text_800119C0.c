@@ -443,6 +443,44 @@ s32 fn_80013F6C(void *arg0, s32 arg1) {
     return 1;
 }
 
+s32 fn_80014000(s32 arg0, s32 arg1) {
+    void *fn_800C4638(s32, void *, s32);
+    extern u8 lbl_80267E28[];
+    extern s16 lbl_80367194;
+    extern s32 lbl_803671A8;
+    extern s32 lbl_80367190;
+    extern s16 lbl_80367196;
+    extern void *lbl_80367198;
+    extern s16 lbl_8036719C;
+    extern s16 lbl_8036719E;
+    extern void *lbl_803671A0;
+    s32 a;
+    s32 b;
+    void *temp;
+
+    a = arg0;
+    b = arg1;
+    lbl_80367194 = a;
+    lbl_803671A8 = 0;
+    lbl_80367190 = 0;
+    lbl_80367196 = 0;
+    temp = fn_800C4638(a << 2, lbl_80267E28, 0);
+    lbl_80367198 = temp;
+    if (temp == 0) {
+        lbl_803671A8 = 4;
+        return 0;
+    }
+    lbl_8036719C = b;
+    lbl_8036719E = 0;
+    temp = fn_800C4638(b << 4, lbl_80267E28, 0);
+    lbl_803671A0 = temp;
+    if (temp == 0) {
+        lbl_803671A8 = 4;
+        return 0;
+    }
+    return 1;
+}
+
 void fn_800140B4(void *arg0, u8 arg1) {
     void fn_8000D3EC(void *, void *);
     extern u16 lbl_80367196;
@@ -1394,8 +1432,6 @@ void fn_80015718(void *arg0, void *arg1) {
     }
     if (kind >= 0) {
         goto case04;
-    } else {
-        goto done_sw;
     }
     goto done_sw;
 case04:
@@ -1423,29 +1459,36 @@ void fn_800157DC(void *arg0, void *arg1) {
     void fn_8003B6C4(void *, void *);
     void *list;
     void *node;
-    u8 kind;
+    s32 kind;
     void *head;
 
     list = arg0;
     node = arg1;
     fn_8003B6C4(node, list);
     kind = *(u8 *)((u8 *)list + 8);
-    switch (kind) {
-    case 0:
-    case 1:
-    case 2:
-    case 3:
-    case 4:
-        *(u32 *)((u8 *)node + 0x1A0) &= ~0x18;
-        break;
-    case 5:
-        *(u32 *)((u8 *)node + 0x1A0) |= 0x18;
-        *(u32 *)((u8 *)node + 0x1A0) &= ~0x8;
-        break;
-    case 6:
-        *(u32 *)((u8 *)node + 0x1A0) |= 0x8;
-        break;
+    if (kind == 6) {
+        goto case6;
     }
+    if (kind >= 6) {
+        goto done_sw;
+    }
+    if (kind >= 5) {
+        goto case5;
+    }
+    if (kind >= 0) {
+        goto case04;
+    }
+    goto done_sw;
+case04:
+    *(u32 *)((u8 *)node + 0x1A0) &= ~0x18;
+    goto done_sw;
+case5:
+    *(u32 *)((u8 *)node + 0x1A0) |= 0x18;
+    *(u32 *)((u8 *)node + 0x1A0) &= ~0x8;
+    goto done_sw;
+case6:
+    *(u32 *)((u8 *)node + 0x1A0) |= 0x8;
+done_sw:
     head = *(void **)list;
     if (head == NULL) {
         *(void **)list = node;
@@ -1535,36 +1578,40 @@ void fn_8001598C(void)
 
 void fn_80015A2C(void *arg0) {
     void fn_8000C188(void *);
-    void fn_80015320(s32, void *, s32);
-    u8 fn_8004F128();
+    void fn_80015320(s32, u8 *, s32);
+    u8 fn_8004F128(void *);
     extern u8 lbl_802B14E4[];
     u8 sp8[8];
     s32 temp;
-    s32 var_r30;
-    void *var_r3;
-    u8 var_r0;
+    s32 i;
+    u8 *unit;
+    u8 *sub;
+    u8 ok;
 
     temp = *(s32 *)((u8 *)arg0 + 0x60);
     *(s32 *)((u8 *)arg0 + 0x60) = temp + 1;
     fn_80015320(5, sp8, temp);
-    var_r30 = 1;
-loop_1:
-    if ((u8)var_r30 != 0) {
-        var_r3 = lbl_802B14E4 + ((u8)var_r30 - 1) * 0x280;
-    } else {
-        var_r3 = NULL;
-    }
-    if ((*(u32 *)((u8 *)var_r3 + 0x188) != 0) && (sp8[*(u8 *)(*(u8 **)((u8 *)var_r3 + 0x190) + 8)] != 0) && (fn_8004F128() == 0)) {
-        var_r0 = 0;
-    } else {
-        var_r30 += 1;
-        if ((s32)var_r30 > 0x9F) {
-            var_r0 = 1;
+    i = 1;
+    do {
+        if ((u8)i != 0) {
+            unit = lbl_802B14E4 + ((u8)i - 1) * 0x280;
         } else {
-            goto loop_1;
+            unit = NULL;
         }
-    }
-    if ((var_r0 != 0) || (*(s32 *)((u8 *)arg0 + 0x60) > 0x4650)) {
+        if (*(u32 *)(unit + 0x188) != 0) {
+            sub = *(u8 **)(unit + 0x190);
+            if (sp8[sub[8]] != 0) {
+                if (fn_8004F128(unit) == 0) {
+                    ok = 0;
+                    goto after;
+                }
+            }
+        }
+        i += 1;
+    } while (i <= 0x9F);
+    ok = 1;
+after:
+    if (ok != 0 || *(s32 *)((u8 *)arg0 + 0x60) > 0x4650) {
         fn_8000C188(arg0);
     }
 }
