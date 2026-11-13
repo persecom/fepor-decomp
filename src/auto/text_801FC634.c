@@ -1534,18 +1534,22 @@ void fn_802006B8(void *arg0) {
 }
 #pragma opt_common_subs reset
 void fn_80200750(void *arg0) {
+    void *fn_8000E0E4(void *);
+    s32 fn_80010B78(void *, s32, f32);
+    s32 fn_800102BC(s32, f32);
     extern f32 lbl_8036BBD8;
-    s16 temp_r31;
-    s16 temp_r3;
+    void *self;
+    s16 tw;
+    s16 th;
 
-    fn_8000E0E4(M2C_FIELD(arg0, s32 *, 0x34));
-    temp_r31 = fn_80010B78(-1, lbl_8036BBD8);
-    temp_r3 = fn_800102BC(-1, lbl_8036BBD8);
-    M2C_FIELD(arg0, s16 *, 0x3E) = (s16) (temp_r31 + 0x20);
-    M2C_FIELD(arg0, s16 *, 0x40) = (s16) (temp_r3 + 0x40);
-    M2C_FIELD(arg0, s16 *, 0x38) = (s16) ((s32) (0x260 - M2C_FIELD(arg0, s16 *, 0x3E)) >> 1);
-    M2C_FIELD(arg0, s16 *, 0x3A) = (s16) ((s32) (0x1C0 - M2C_FIELD(arg0, s16 *, 0x40)) >> 1);
-    M2C_FIELD(arg0, s16 *, 0x3C) = 0xA;
+    self = arg0;
+    tw = (s16)fn_80010B78(fn_8000E0E4(*(void **)((u8 *)self + 0x34)), -1, lbl_8036BBD8);
+    th = (s16)fn_800102BC(-1, lbl_8036BBD8);
+    *(s16 *)((u8 *)self + 0x3E) = (s16)(tw + 0x20);
+    *(s16 *)((u8 *)self + 0x40) = (s16)(th + 0x40);
+    *(s16 *)((u8 *)self + 0x38) = (s16)((0x260 - *(s16 *)((u8 *)self + 0x3E)) >> 1);
+    *(s16 *)((u8 *)self + 0x3A) = (s16)((0x1C0 - *(s16 *)((u8 *)self + 0x40)) >> 1);
+    *(s16 *)((u8 *)self + 0x3C) = 0xA;
 }
 
 void fn_802007E0(void *arg0) {
