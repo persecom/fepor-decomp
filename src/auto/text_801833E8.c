@@ -10913,17 +10913,30 @@ s32 fn_801A0060(s32 arg0, s32 arg1, s32 arg2) {
     return 1;
 }
 
-extern s32 lbl_8036AF6C;
-extern u8 lbl_80367298[];
-void fn_801A0100(s8 arg0, s8 arg1, s8 arg2) {
-    lbl_80367298[0] = arg0;
-    lbl_80367298[1] = arg1;
-    lbl_80367298[2] = arg2;
-    lbl_80367298[3] = lbl_8036AF6C;
+s32 fn_801A0100(u8 arg0, u8 arg1, u8 arg2) {
+    extern s32 lbl_8036AF6C;
+    extern u8 lbl_80367298;
+    void fn_80040844(void);
+    void fn_80045C68(void);
+    void fn_80013864(void);
+    s32 value;
+    s32 copy;
+    u8 *dst;
 
-    fn_80040844(arg2, arg1, arg0, lbl_80367298);
+    value = lbl_8036AF6C;
+    ((u8 *)&value)[0] = arg0;
+    ((u8 *)&value)[1] = arg1;
+    ((u8 *)&value)[2] = arg2;
+    copy = value;
+    dst = &lbl_80367298;
+    dst[0] = ((u8 *)&copy)[0];
+    dst[1] = ((u8 *)&copy)[1];
+    dst[2] = ((u8 *)&copy)[2];
+    dst[3] = ((u8 *)&copy)[3];
+    fn_80040844();
     fn_80045C68();
     fn_80013864();
+    return 1;
 }
 
 int fn_801A016C(u8 arg0, u8 arg1, u8 arg2)
