@@ -4981,18 +4981,19 @@ void fn_801C18FC(s32 arg0) {
     fn_8000A388(lbl_80297FF8, (void *)fn_801C19E4, &lbl_80368280, c);
 }
 
-void fn_801C1970(s8 arg0, s32 arg1) {
-    M2C_UNK fn_8000A388(M2C_UNK *, M2C_UNK *, M2C_UNK *, M2C_UNK *, f32);
-    extern M2C_UNK fn_801C19E4;
-    extern M2C_UNK lbl_80297FF8;
-    extern M2C_UNK lbl_80368280;
+void fn_801C1970(s8 arg0, s32 arg1)
+{
+    void fn_8000A388(void *, void *, void *, void *);
+    extern void fn_801C19E4(void *, s32);
+    extern u8 lbl_80297FF8[];
+    extern s8 lbl_80368280;
     extern f32 lbl_8036B328;
-    f32 temp_f1;
+    f32 temp;
 
-    M2C_FIELD(&lbl_80368280, s8 *, 0) = arg0;
-    temp_f1 = (f32) arg1;
-    M2C_FIELD(&lbl_80368280, s32 *, 4) = (s32) (temp_f1 / lbl_8036B328);
-    fn_8000A388(&lbl_80297FF8, &fn_801C19E4, &lbl_80368280, &lbl_80368280, temp_f1);
+    lbl_80368280 = arg0;
+    temp = (f32)arg1 / lbl_8036B328;
+    *(s32 *)((char *)&lbl_80368280 + 4) = (s32)temp;
+    fn_8000A388(lbl_80297FF8, (void *)fn_801C19E4, &lbl_80368280, &lbl_80368280);
 }
 
 void fn_801C19E4(u8 *arg0, u8 *arg1) {
@@ -10513,8 +10514,8 @@ void fn_801CFA44(void *arg0)
     extern void fn_8000C60C(void *);
     extern void fn_801C18FC(s32);
 
-    u8 *ptr;
     s32 i;
+    u8 *ptr;
     s32 zero;
 
     zero = 0;
@@ -10531,8 +10532,8 @@ void fn_801CFA44(void *arg0)
             *(s32 *)(ptr + 0x2C) = zero;
         }
 
-        i++;
         ptr += 8;
+        i++;
     } while (i < 7);
 
     fn_801C18FC(1);
@@ -11920,32 +11921,34 @@ s32 fn_801D2A38(void *arg0) {
         struct Node *next;
         s32 unk8;
     };
-    struct Node *var_r4;
-    s16 var_r3;
+    s32 tmp;
+    s16 n;
+    struct Node *node;
 
     if (*(u32 *)((u8 *)arg0 + 0x6C) == 0) {
         return 0;
     }
-    var_r4 = *(struct Node **)((u8 *)arg0 + 0x74);
-    var_r3 = *(s16 *)((u8 *)arg0 + 0x4E);
-    if (var_r3 >= 0) {
+    tmp = *(s16 *)((u8 *)arg0 + 0x4E);
+    node = *(struct Node **)((u8 *)arg0 + 0x74);
+    n = (s16)tmp;
+    if (n >= 0) {
         goto loop_pos;
         do {
-            var_r4 = var_r4->next;
-            var_r3 -= 1;
+            node = node->next;
+            n -= 1;
         loop_pos:
             ;
-        } while (var_r3 > 0);
+        } while (n > 0);
     } else {
         goto loop_neg;
         do {
-            var_r4 = var_r4->prev;
-            var_r3 += 1;
+            node = node->prev;
+            n += 1;
         loop_neg:
             ;
-        } while (var_r3 < 0);
+        } while (n < 0);
     }
-    return fn_800BE890(var_r4->unk8);
+    return fn_800BE890(node->unk8);
 }
 
 int fn_801D2AAC(void *arg0) {
@@ -13728,8 +13731,27 @@ void fn_801DBD84(struct efUnit* arg0)
     memset((u8*)arg0 + 0x60, 0, 0x1C); 
 }
 
-s32 fn_801DBFF8(void) {
-    return 0;
+s32 fn_801DBFF8(void)
+{
+    void *fn_801E2324(void *, s32);
+    extern s32 lbl_803682F0;
+    s32 i;
+    s32 count;
+    void *obj;
+
+    count = 0;
+    for (i = 0; i < 5; i++) {
+        obj = fn_801E2324(&lbl_803682F0, i);
+        if (obj != NULL) {
+            if (*((u8 *)obj + 0x60) != 2) {
+                obj = NULL;
+            }
+        }
+        if (obj != NULL) {
+            count += 1;
+        }
+    }
+    return count;
 }
 
 void *fn_801DC070(void *arg0)
