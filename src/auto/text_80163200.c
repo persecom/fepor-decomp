@@ -10250,24 +10250,46 @@ extern "C" void fn_80178AFC(void *unused, u8 *arg1) {
     }
 }
 
-#pragma cplusplus reset
-void fn_80178B98(void *arg0, s16 arg1) {
-    s32 temp_r3;
-    s32 var_r29;
-
-    temp_r3 = *(s32 *)((char *)arg0 + 0x78);
-    if (temp_r3 != 0) {
-        var_r29 = temp_r3 - 1;
-        if ((var_r29 < 0) || (var_r29 > 0x1F)) {
-            var_r29 = 0;
-        }
-        *(s16 *)((char *)arg0 + 0x7C) = var_r29;
-    }
-    *(s16 *)((char *)arg0 + 0x80) = arg1;
-    *(s16 *)((char *)arg0 + 0x82) = arg1;
-}
-
 #pragma cplusplus on
+extern "C" void fn_80178B98(void *arg0, void *arg1) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual s32 v16() = 0;
+        virtual void v17() = 0;
+        virtual s16 v18() = 0;
+    };
+    void *fn_8000B908(u8);
+    s32 i;
+    void *p;
+    s16 quot;
+    s16 a;
+    u8 *a1 = (u8 *)arg1;
+
+    for (i = 0; i < (s8)a1[0x60]; i++) {
+        p = fn_8000B908(a1[0x40 + i]);
+        a = (*(Obj **)(a1 + 0x3C))->v18();
+        quot = (s16)(a / ((s8)a1[0x60] + 1));
+        *(s16 *)((u32)p + 0x30) = (i + 1) * quot + (*(Obj **)(a1 + 0x3C))->v16();
+        *(s16 *)((u32)p + 0x32) = 0;
+    }
+}
+#pragma cplusplus reset
 extern "C" M2C_UNK fn_80009D74(f32, f32, f32, f32);
 extern "C" M2C_UNK fn_80009B8C(u8);
 extern "C" M2C_UNK fn_80009B80(u8);
