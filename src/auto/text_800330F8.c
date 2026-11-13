@@ -3932,21 +3932,42 @@ s32 fn_8003B938(u8 arg0) {
 }
 
 extern s32 gGameState;
-void fn_8003B9AC(void) {
-    if (gGameState != 0) {
-        gGameState = 0;
-    }
+void fn_8003B9AC(u32 arg0) {
+    void fn_8000E0E4(void *);
+    extern u16 lbl_8026A458[];
+    u8 *s;
 
-    switch(gGameState) {
-    case 0:
-        return;
+    switch ((u8)arg0) {
     case 1:
-        gGameState = 2;
-        return;
+        s = (u8 *)lbl_8026A458 + 0x8;
+        break;
     case 2:
-        gGameState = 3;
-        return;
+        s = (u8 *)lbl_8026A458 + 0xF;
+        break;
+    case 3:
+        s = (u8 *)lbl_8026A458 + 0x16;
+        break;
+    case 4:
+        s = (u8 *)lbl_8026A458 + 0x1D;
+        break;
+    case 5:
+        s = (u8 *)lbl_8026A458 + 0x25;
+        break;
+    case 6:
+        s = (u8 *)lbl_8026A458 + 0x2B;
+        break;
+    case 7:
+        s = (u8 *)lbl_8026A458 + 0x33;
+        break;
+    case 8:
+        s = (u8 *)lbl_8026A458 + 0x3A;
+        break;
+    case 0:
+    default:
+        s = (u8 *)lbl_8026A458 + 0x43;
+        break;
     }
+    fn_8000E0E4(s);
 }
 
 extern u16 lbl_8026A458[];
@@ -4662,6 +4683,34 @@ void fn_8003D70C(s32 arg0) {
     factor = 0x64 - (0xA - fn_8000CEE4(0x14));
     *(u8 *)(arg0 + 0x1B2) = *(u8 *)(arg0 + 0x1B2) + (s7 * factor) / 10000;
 }
+
+s32 fn_8003DBA8(s32 arg0, void *arg1) {
+    u64 *fn_8001CB64(void *);
+    u8 fn_8001D37C(void *);
+    s32 fn_8003B258(void);
+    s32 fn_800955BC(s32);
+    s32 fn_80095614(s32);
+    s8 lim;
+
+    if (((*(u8 *)((u8 *)arg1 + 5) >> 7) & 1) != 0) {
+        return 2;
+    }
+    lim = (s8)fn_8003B258();
+    if ((s32)fn_8001D37C(arg1) >= (s32)lim) {
+        return 1;
+    }
+    if ((*fn_8001CB64(arg1) & 5ULL) != 0) {
+        if (fn_80095614(arg0) < 0) {
+            return 3;
+        }
+    } else {
+        if (fn_800955BC(arg0) < 0) {
+            return 3;
+        }
+    }
+    return 0;
+}
+
 s32 fn_8003DC80(s32 arg0, s32 arg1) {
     s8 fn_8003AEB0(s32);
     s32 temp_r31;
