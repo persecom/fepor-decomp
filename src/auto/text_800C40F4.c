@@ -7675,8 +7675,10 @@ String fn_800DAAF0(s32 arg1) {
     return fn_800DAB24(lbl_803678B8, arg1);
 }
 
-void fn_800DAB24(void *arg1, s32 arg2) {
-    fn_800C9B6C(M2C_FIELD(arg1, s32 *, 0x3C) + (arg2 * 0xC));
+void fn_800DAB24(void *arg0, void *arg1, s32 arg2) {
+    void fn_800C9B6C(void *, void *);
+
+    fn_800C9B6C(arg0, *(u8 **)((u8 *)arg1 + 0x3C) + arg2 * 0xC);
 }
 
 void *fn_800DB18C(void *arg0, s16 arg1) {
