@@ -14046,10 +14046,14 @@ int fn_80262510(int arg0) {
 }
 
 s32 fn_80262538(s32 arg0) {
-    extern s32 lbl_80368AA0;
-    s32 base = lbl_80368AA0;
-    s32 o = arg0 * 0xF8;
-    return ((u8 *)(base + o))[0xF0] == 1;
+    typedef struct {
+        u8 pad[0xF0];
+        u8 unkF0;
+        u8 pad2[0xF8 - 0xF1];
+    } Entry;
+    extern Entry *lbl_80368AA0;
+
+    return lbl_80368AA0[arg0].unkF0 == 1;
 }
 
 void fn_80262558(void *arg0) {
