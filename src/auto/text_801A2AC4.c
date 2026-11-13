@@ -449,101 +449,26 @@ void fn_801A3B40(void *item, s32 arg1, s32 arg2) {
     }
 }
 
-s32 fn_801A3E24(s32 arg0)
-{
-    s32 temp_r3;
-    s32 result = 0;
+s32 fn_801A3E24(void *arg0) {
+    void *fn_80019E04(void *);
+    extern u8 lbl_8027B368[];
 
-    if (arg0 < 0 || arg0 > 16)
-        return 0;
-
-    switch (arg0)
-    {
-        case 0:
-            return 0x00000000;
-        case 1:
-            temp_r3 = fn_80019E04(0x00000000);
-            if (temp_r3 == arg0)
-                result = 0x00000001;
-            break;
-        case 2:
-            temp_r3 = fn_80019E04(0x00000008);
-            if (temp_r3 == arg0)
-                result = 0x00000001;
-            break;
-        case 3:
-            temp_r3 = fn_80019E04(0x00000010);
-            if (temp_r3 == arg0)
-                result = 0x00000001;
-            break;
-        case 4:
-            temp_r3 = fn_80019E04(0x00000018);
-            if (temp_r3 == arg0)
-                result = 0x00000001;
-            break;
-        case 5:
-            temp_r3 = fn_80019E04(0x00000020);
-            if (temp_r3 == arg0)
-                result = 0x00000001;
-            break;
-        case 6:
-            temp_r3 = fn_80019E04(0x00000028);
-            if (temp_r3 == arg0)
-                result = 0x00000001;
-            break;
-        case 7:
-            temp_r3 = fn_80019E04(0x00000030);
-            if (temp_r3 == arg0)
-                result = 0x00000001;
-            break;
-        case 8:
-            temp_r3 = fn_80019E04(0x00000038);
-            if (temp_r3 == arg0)
-                result = 0x00000001;
-            break;
-        case 9:
-            temp_r3 = fn_80019E04(0x00000040);
-            if (temp_r3 == arg0)
-                result = 0x00000001;
-            break;
-        case 10:
-            temp_r3 = fn_80019E04(0x00000048);
-            if (temp_r3 == arg0)
-                result = 0x00000001;
-            break;
-        case 11:
-            temp_r3 = fn_80019E04(0x00000050);
-            if (temp_r3 == arg0)
-                result = 0x00000001;
-            break;
-        case 12:
-            temp_r3 = fn_80019E04(0x00000058);
-            if (temp_r3 == arg0)
-                result = 0x00000001;
-            break;
-        case 13:
-            temp_r3 = fn_80019E04(0x00000060);
-            if (temp_r3 == arg0)
-                result = 0x00000001;
-            break;
-        case 14:
-            temp_r3 = fn_80019E04(0x00000068);
-            if (temp_r3 == arg0)
-                result = 0x00000001;
-            break;
-        case 15:
-            temp_r3 = fn_80019E04(0x00000070);
-            if (temp_r3 == arg0)
-                result = 0x00000001;
-            break;
-        case 16:
-            temp_r3 = fn_80019E04(0x00000078);
-            if (temp_r3 == arg0)
-                result = 0x00000001;
-            break;
+    if (arg0 == fn_80019E04(lbl_8027B368 + 0x1E6)) {
+        return 0xA;
     }
-
-    return result;
+    if (arg0 == fn_80019E04(lbl_8027B368 + 0x1EF)) {
+        return 0x14;
+    }
+    if (arg0 == fn_80019E04(lbl_8027B368 + 0x1FA)) {
+        return 0x50;
+    }
+    if (arg0 == fn_80019E04(lbl_8027B368 + 0x206)) {
+        return 0xA;
+    }
+    if (arg0 == fn_80019E04(lbl_8027B368 + 0x211)) {
+        return 0xA;
+    }
+    return (arg0 == fn_80019E04(lbl_8027B368 + 0x21D)) ? 0x50 : 0;
 }
 
 s32 fn_801A3F14(void *self) {
