@@ -187,41 +187,25 @@ void fn_800AD554(UnkAD554 *arg0) {
     void fn_8002629C(void *, void *);
     void fn_800264BC(void *, void *);
     extern u8 lbl_802EF4C8[];
-    s16 idx;
-    s16 count;
+    s32 idx;
+    s32 count;
     void *ptr;
     u8 kind;
-
     idx = arg0->cursor;
     arg0->cursor = idx + 1;
     count = arg0->count;
-    if (count >= 0xC) {
-        ptr = NULL;
-    } else {
-        ptr = arg0->entries[idx];
-    }
+    if (count >= 0xC) ptr = NULL;
+    else ptr = arg0->entries[idx];
     if (ptr == NULL) {
         fn_8000C070(arg0, 0x63);
         return;
     }
-    if (count >= 0xC) {
-        ptr = NULL;
-    } else {
-        ptr = arg0->entries[idx];
-    }
-    fn_800283C8(lbl_802EF4C8, ptr);
-    if (arg0->count >= 0xC) {
-        kind = 0;
-    } else {
-        kind = arg0->kinds[idx];
-    }
+    fn_800283C8(lbl_802EF4C8, count >= 0xC ? NULL : arg0->entries[idx]);
+    if (arg0->count >= 0xC) kind = 0;
+    else kind = arg0->kinds[idx];
     switch (kind) {
-    case 1:
-        fn_8002629C(lbl_802EF4C8, arg0);
-        break;
-    case 2:
-        fn_800264BC(lbl_802EF4C8, arg0);
-        break;
+    case 1: fn_8002629C(lbl_802EF4C8, arg0); break;
+    case 2: fn_800264BC(lbl_802EF4C8, arg0); break;
     }
 }
 
