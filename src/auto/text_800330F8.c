@@ -5201,8 +5201,8 @@ void fn_8003EAE8(void *arg0, void *arg1) {
 #pragma use_lmw_stmw reset
 
 void *fn_8003F1AC(s32 arg0) {
-    extern u16 lbl_802CA264;
-    return (void*)((char*)&lbl_802CA264 + (arg0 * 0x18));
+    extern u8 lbl_802CA264[];
+    return lbl_802CA264 + arg0 * 0xC;
 }
 
 u8 fn_8003F1C0(void *arg0) {
@@ -10054,32 +10054,12 @@ void fn_8004BCCC(void *arg0, s32 arg1) {
 
 #pragma global_optimizer off
 void fn_8004BD1C(void *arg0, f32 *out, f32 scale) {
-    extern f32 lbl_80368FCC;
-    extern f32 lbl_80368FF4;
-    f32 a;
-    f32 b;
-    f32 k;
-    f32 t;
-    u8 *p;
-
-    a = lbl_80368FCC;
-    p = *(u8 **)((u8 *)arg0 + 0x17c);
-    b = a;
-    if (p != NULL) {
-        a = (f32)(s8)p[0xa];
-        b = (f32)(s8)p[0xb];
-    }
-    a = a * scale;
-    k = lbl_80368FF4;
-    b = b * scale;
-    t = lbl_80368FCC;
-    a = a * k;
-    t = t * scale;
-    b = b * k;
-    out[0] = a;
-    t = t * k;
-    out[1] = b;
-    out[2] = t;
+extern f32 lbl_80368FCC; extern f32 lbl_80368FF4;
+f32 a,b,k,t,x,y; u8 *p;
+a=lbl_80368FCC; p=*(u8 **)((u8 *)arg0+0x17c); b=a;
+if(p){ a=(f32)(s8)p[0xa]; b=(f32)(s8)p[0xb]; }
+x=a*scale; k=lbl_80368FF4; y=b*scale; t=lbl_80368FCC;
+x=x*k; t=t*scale; y=y*k; out[0]=x; t=t*k; out[1]=y; out[2]=t;
 }
 #pragma global_optimizer on
 f32 fn_8004BDA8(void *arg0, f32 farg0, f32 farg1) {
