@@ -1368,27 +1368,66 @@ extern "C" void fn_8002C47C(void *arg0, s32 arg1) {
         y += 1;
     }
 }
-#pragma cplusplus reset
-#pragma use_lmw_stmw reset
-void fn_8002C530(s32 arg0) {
-    extern u16 lbl_802CA518[];
+#pragma use_lmw_stmw on
+extern "C" void fn_8002C530(void *arg0, s32 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2(void *) = 0;
+    };
+    extern u8 lbl_802CA518[];
     extern u8 lbl_802B14E4[];
-    
-    s32 temp_r3;
-    s32 temp_r4;
-    s32 temp_r5;
+    void *self;
+    s32 x;
+    s32 y;
+    s8 thresh;
+    u8 *map2;
+    s32 row;
+    s32 scratch;
+    u8 *map;
+    u8 *maprow;
+    u8 *cell;
+    s32 byteOff;
+    s16 *arr;
+    u8 id;
+    void *unit;
 
-    temp_r3 = (arg0 + 0x1A0);
-    temp_r4 = *(s16*)(lbl_802CA518 + temp_r3 * 0x10);
-    temp_r5 = lbl_802B14E4[temp_r3];
-    
-    if (temp_r5 != 0) {
-        *(u16*)((u32)temp_r4 + 0x1C) = 0x14;
+    map = lbl_802CA518;
+    self = arg0;
+    thresh = (s8)arg1;
+    maprow = map;
+    y = 0;
+    map2 = map + 0x10000;
+    row = 0;
+    while ((s8)y < *(s32 *)(map + 4)) {
+        scratch = row;
+        cell = maprow;
+        byteOff = row * 2;
+        x = 0;
+        while ((s8)x < *(s32 *)map) {
+            arr = *(s16 **)(map2 + 0x4190);
+            if (*(s16 *)((u8 *)arr + byteOff) >= thresh) {
+                id = cell[0xD];
+                if (id != 0) {
+                    if (id != 0) {
+                        unit = lbl_802B14E4 + (id - 1) * 0x280;
+                    } else {
+                        unit = 0;
+                    }
+                    ((Obj *)self)->v2(unit);
+                }
+            }
+            scratch += 1;
+            byteOff += 2;
+            cell += 1;
+            x += 1;
+        }
+        row += 0x40;
+        maprow += 0x40;
+        y += 1;
     }
 }
-
-#pragma cplusplus on
-#pragma use_lmw_stmw on
+#pragma use_lmw_stmw reset
 extern "C" void fn_8002C618(void *arg0, s8 arg1, s8 arg2) {
     extern s32 lbl_802CA518[];
     struct Visitor {
@@ -2015,28 +2054,24 @@ void fn_8002D82C(void) {
 }
 
 void fn_8002D854(s32 arg0) {
+    s8 fn_80146C94(u8 *);
+    void fn_8000C188(s32);
     extern u8 lbl_80269210[];
-    
-    if (fn_80146C94(lbl_80269210 + 0x1E3, lbl_80269210) != -1) {
-        return;
+    u8 flag;
+
+    if ((s8)fn_80146C94(lbl_80269210 + 0x1E3) != -1
+        || (s8)fn_80146C94(lbl_80269210 + 0x1F1) != -1
+        || (s8)fn_80146C94(lbl_80269210 + 0x1FF) != -1
+        || (s8)fn_80146C94(lbl_80269210 + 0x20D) != -1
+        || (s8)fn_80146C94(lbl_80269210 + 0x21B) != -1
+        || (s8)fn_80146C94(lbl_80269210 + 0x22B) != -1) {
+        flag = 1;
+    } else {
+        flag = 0;
     }
-    if (fn_80146C94(lbl_80269210 + 0x1F1) != -1) {
-        return;
+    if (flag == 0) {
+        fn_8000C188(arg0);
     }
-    if (fn_80146C94(lbl_80269210 + 0x1FF) != -1) {
-        return;
-    }
-    if (fn_80146C94(lbl_80269210 + 0x20D) != -1) {
-        return;
-    }
-    if (fn_80146C94(lbl_80269210 + 0x21B) != -1) {
-        return;
-    }
-    if (fn_80146C94(lbl_80269210 + 0x22B) != -1) {
-        return;
-    }
-    
-    fn_8000C188(arg0);
 }
 
 #pragma optimization_level 1
