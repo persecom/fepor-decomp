@@ -1789,30 +1789,20 @@ void fn_800C8CB4(String *arg0, void *arg1) {
 
 void fn_800C8D58(void *arg0, void *arg1)
 {
-    u8 *table;
-    u8 *source;
+    typedef struct { u32 a, b, c, d, e, f, g, h; } Block;
+    u8 *p;
     s32 index;
-    u32 *dst;
 
-    table = *(u8 **)((u8 *)arg1 + 0x1C);
+    p = *(u8 **)((u8 *)arg1 + 0x1C);
     index = *(s32 *)((u8 *)arg1 + 0x24);
 
-    if (table != 0 && index < *(s32 *)table) {
-        source = *(u8 **)(table + 4) + index * 0x38;
+    if (p != 0 && index < *(s32 *)p) {
+        p = *(u8 **)(p + 4) + index * 0x38;
     } else {
-        source = 0;
+        p = 0;
     }
 
-    dst = (u32 *)arg0;
-
-    dst[0] = *(u32 *)(source + 0x18);
-    dst[1] = *(u32 *)(source + 0x1C);
-    dst[2] = *(u32 *)(source + 0x20);
-    dst[3] = *(u32 *)(source + 0x24);
-    dst[4] = *(u32 *)(source + 0x28);
-    dst[5] = *(u32 *)(source + 0x2C);
-    dst[6] = *(u32 *)(source + 0x30);
-    dst[7] = *(u32 *)(source + 0x34);
+    *(Block *)arg0 = *(Block *)(p + 0x18);
 }
 
 s32 fn_800C8EFC(void *arg0) {
@@ -8675,6 +8665,7 @@ void *fn_800DDB94(void *arg0)
     extern void fn_800C9A60(void *, s32);
 
     u32 temp[3];
+    void *source;
     void *result;
 
     temp[1] = 0;
@@ -8682,15 +8673,19 @@ void *fn_800DDB94(void *arg0)
     temp[2] = 0;
     temp[1] = 0;
 
+    source = fn_800D59CC((u8 *)arg0 + 0x68);
+
     fn_800C9758(
         temp,
-        (void *)((u32)fn_800D59CC((u8 *)arg0 + 0x68) + 0xC),
+        (u8 *)source + 0xC,
         0,
         -1
     );
 
     result = fn_800C93EC(temp);
+
     fn_800C9A60(temp, -1);
+
     return result;
 }
 
