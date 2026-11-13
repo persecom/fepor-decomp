@@ -10970,6 +10970,50 @@ void *fn_801CF760(void *arg0) {
     return NULL;
 }
 
+void fn_801CF7F0(void *arg0, void *arg1) {
+    s32 fn_802342B8(void *, void *);
+    void fn_801CFAB8(void *, u8, void *);
+    void fn_8005C8B4(void *);
+    void *fn_8000CAF0(void *, void *);
+    void fn_801FC980(void *, f32);
+    extern u8 lbl_802997CC[];
+    extern u16 lbl_80331D00[];
+    extern u8 lbl_8027DF20[];
+    extern u8 lbl_8029992C[];
+    extern f32 lbl_8036B568;
+    u8 *row;
+    u8 *p;
+    u8 *slot;
+    s32 i;
+    s32 ctr;
+    f32 f;
+
+    row = lbl_802997CC;
+    for (;;) {
+        if (fn_802342B8(arg0, *(void **)row) == 0) {
+            break;
+        }
+        row += 0x10;
+    }
+    p = (u8 *)lbl_80331D00;
+    i = 0;
+    for (ctr = 2; ctr != 0; ctr--) {
+        if ((*(s32 *)(p + 8) & 1) == 0) {
+            slot = (u8 *)lbl_80331D00 + i * 0x15C;
+            fn_801CFAB8(slot, (u8)i, row);
+            fn_8005C8B4(lbl_8027DF20 + 0x13E);
+            fn_8005C8B4(slot + 0x12C);
+            *(void **)(slot + 0x150) = fn_8000CAF0(lbl_8029992C, arg1);
+            f = lbl_8036B568;
+            *(u8 *)(*(u8 **)(slot + 0x150) + 0x30) = i;
+            fn_801FC980(*(void **)(slot + 0x150), f);
+            return;
+        }
+        p += 0x15C;
+        i += 1;
+    }
+}
+
 void fn_801CF8E4(void *arg0)
 {
     void *record;
@@ -14088,24 +14132,43 @@ void fn_801D8C0C(void *arg0, s16 arg1)
   *((s16 *) (((char *) arg0) + 2)) = 0x64;
 }
 
-void fn_801D8C64(s32 arg0, s32 arg1)
+#pragma use_lmw_stmw on
+#pragma opt_common_subs off
+void fn_801D8C64(void *arg0, s16 arg1, s16 arg2)
 {
-    s32 temp_r3;
-    s32 *temp_r4;
-    
-    temp_r3 = fn_800C4638(0);
-    temp_r4 = (s32 *)temp_r3;
-    *temp_r4 = 0;
-    *(temp_r4 + 1) = 0;
-    *(temp_r4 + 2) = 0;
-    
-    *(u16 *)((char *)arg0 + 0x0) = 0;
-    *(u16 *)((char *)arg0 + 0x2) = (u16)arg1;
-    *(u16 *)((char *)arg0 + 0x8) = 0;
-    *(u16 *)((char *)arg0 + 0xa) = (u16)arg0;
-    *(u16 *)((char *)arg0 + 0x18) = 0;
-}
+    extern u32 lbl_8027E228[12];
+    extern u8 lbl_8027E258[];
+    void *fn_8000E0E4(u32);
+    void fn_80234450(void *, u8 *);
+    void fn_802343E0(void *, void *);
+    u32 stack[12];
+    void *tmp;
+    s16 idx;
 
+    stack[0] = lbl_8027E228[0];
+    stack[1] = lbl_8027E228[1];
+    stack[2] = lbl_8027E228[2];
+    stack[3] = lbl_8027E228[3];
+    stack[4] = lbl_8027E228[4];
+    stack[5] = lbl_8027E228[5];
+    stack[6] = lbl_8027E228[6];
+    stack[7] = lbl_8027E228[7];
+    stack[8] = lbl_8027E228[8];
+    stack[9] = lbl_8027E228[9];
+    stack[10] = lbl_8027E228[10];
+    stack[11] = lbl_8027E228[11];
+    memset(arg0, 0, 0x34);
+    *(s16 *)((u8 *)arg0 + 2) = 0;
+    *(s16 *)((u8 *)arg0 + 0) = 0;
+    *(s16 *)((u8 *)arg0 + 0xa) = arg1;
+    *(s16 *)((u8 *)arg0 + 8) = arg2;
+    *(s16 *)((u8 *)arg0 + 2) = 0x64;
+    fn_80234450((u8 *)arg0 + 0x18, lbl_8027E258 + 0x5bb);
+    idx = *(s16 *)((u8 *)arg0 + 8);
+    tmp = fn_8000E0E4(stack[idx]);
+    fn_802343E0((u8 *)arg0 + 0x18, tmp);
+}
+#pragma opt_common_subs on
 void fn_801D8D58(void *arg0) {
     M2C_FIELD(arg0, s16 *, 2) = 0;
     M2C_FIELD(arg0, s16 *, 0) = 0;
