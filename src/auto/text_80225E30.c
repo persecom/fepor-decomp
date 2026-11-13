@@ -1911,8 +1911,8 @@ s32 TRKTargetContinue(void) {
 }
 
 u8 fn_8022B490(void) {
-    extern u16 lbl_8033CFE0;
-    return (u8)(*(u16*)((char*)&lbl_8033CFE0));
+    extern u8 lbl_8033CFE0[];
+    return lbl_8033CFE0[0];
 }
 
 void fn_8022B4A0(u8 arg0) {
