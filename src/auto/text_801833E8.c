@@ -4425,48 +4425,31 @@ extern "C" void fn_801908B8(void *arg0, s32 arg1) {
     ((Obj *)arg0)->v11(arg1);
 }
 #pragma cplusplus reset
-#pragma cplusplus on
-extern "C" void fn_80190920(void *arg0) {
-    void fn_80009C0C(f32);
-    void fn_8000A248(void);
-    void fn_8000A258(void);
-    s32 fn_800102BC(s32, f32);
-    void fn_8008D510(void *, s32, s32, s32);
+void fn_80190920(void *arg0) {
+    M2C_UNK fn_80009C0C(f32);
+    M2C_UNK fn_8000A248();
+    M2C_UNK fn_8000A258();
+    s32 fn_800102BC(M2C_UNK, f32);
+    M2C_UNK fn_8008D510(u32, s32, s16, s16);
     extern f32 lbl_8036ADFC;
     extern f32 lbl_8036AE18;
-    struct Obj {
-        virtual void v0() = 0;
-        virtual void v1() = 0;
-        virtual void v2() = 0;
-        virtual void v3() = 0;
-        virtual void v4() = 0;
-        virtual void v5() = 0;
-        virtual void v6() = 0;
-        virtual void v7() = 0;
-        virtual void v8() = 0;
-        virtual s32 v9(void *) = 0;
-        virtual void v10() = 0;
-        virtual void v11() = 0;
-    };
-    s16 t46;
-    void *p3c;
-    s16 t4a;
-    s16 y;
+    s16 temp_r29;
+    s16 temp_r31;
+    s16 temp_r31_2;
+    u32 temp_r30;
 
-    ((Obj *)arg0)->v3();
-    t46 = *(s16 *)((u8 *)arg0 + 0x46);
-    y = (s16)((t46 - fn_800102BC(-1, lbl_8036ADFC)) >> 1);
-    p3c = *(void **)((u8 *)arg0 + 0x3C);
-    t4a = *(s16 *)((u8 *)arg0 + 0x4A);
-    y = (s16)(y + *(s16 *)((u8 *)arg0 + 0x4C));
-    if (p3c != NULL) {
+    M2C_FIELD(M2C_FIELD(arg0, void **, 0), M2C_UNK (**)(), 0x14)();
+    temp_r31 = M2C_FIELD(arg0, s16 *, 0x46);
+    temp_r30 = M2C_FIELD(arg0, u32 *, 0x3C);
+    temp_r31_2 = M2C_FIELD(arg0, s16 *, 0x4A);
+    temp_r29 = (s16) ((s32) (temp_r31 - fn_800102BC(-1, lbl_8036ADFC)) >> 1) + M2C_FIELD(arg0, s16 *, 0x4C);
+    if (temp_r30 != 0U) {
         fn_8000A258();
         fn_80009C0C(lbl_8036AE18);
         fn_8000A248();
-        fn_8008D510(p3c, ((Obj *)arg0)->v9(p3c), t4a, y);
+        fn_8008D510(temp_r30, M2C_FIELD(M2C_FIELD(arg0, void **, 0), s32 (**)(void *, u32), 0x2C)(arg0, temp_r30), temp_r31_2, temp_r29);
     }
 }
-#pragma cplusplus reset
 
 s32 fn_801909E4(void *arg0, s32 *arg1) {
     s32 fn_80093DA8(void *, s32);
