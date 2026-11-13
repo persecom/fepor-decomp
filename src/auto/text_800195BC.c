@@ -1725,6 +1725,27 @@ u32 fn_8001C914(u32 arg0)
     }
 }
 
+u32 fn_8001C9BC(void *arg0) {
+    void fn_80234450(void *, s32);
+    void fn_802343E0(void *, void *);
+    u32 fn_8000D354(void *);
+    extern void *lbl_80367230;
+    extern u8 lbl_802CA4FC[];
+    extern u8 lbl_80268820[];
+    u32 ret;
+
+    if (lbl_80367230 != arg0) {
+        lbl_80367230 = arg0;
+        fn_80234450(lbl_802CA4FC, *(s32 *)arg0);
+        fn_802343E0(lbl_802CA4FC, lbl_80268820 + 0x3C);
+    }
+    ret = fn_8000D354(lbl_802CA4FC);
+    if (ret == 0) {
+        return 0;
+    }
+    return ret;
+}
+
 s32 fn_8001CA2C(void *arg0) {
     void *temp_r6;
     s32 temp_r8;
