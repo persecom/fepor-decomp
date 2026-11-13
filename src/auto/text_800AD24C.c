@@ -3772,21 +3772,23 @@ s32 fn_800B74AC(void) {
         u8 pad[3];
         void *vtbl;
     } w;
+    u8 *pw;
     void *p;
 
     p = fn_800C4638(0xA000, lbl_8026ECB8 + 0x996, 0);
-    w.vtbl = lbl_802842A4;
-    w.cur = NULL;
-    w.start = NULL;
-    w.size = 0;
-    w.owned = 0;
+    pw = (u8 *)&w;
+    *(void **)(pw + 16) = lbl_802842A4;
+    *(void **)(pw + 4) = NULL;
+    *(void **)pw = NULL;
+    *(u32 *)(pw + 8) = 0;
+    pw[12] = 0;
     lbl_80367840 = (s32)p;
-    w.vtbl = lbl_80284C98;
-    w.owned = 0;
-    w.start = p;
-    w.cur = p;
-    w.size = 0x100000;
-    fn_80016A3C(&w);
+    *(void **)(pw + 16) = lbl_80284C98;
+    pw[12] = 0;
+    *(void **)pw = p;
+    *(void **)(pw + 4) = p;
+    *(u32 *)(pw + 8) = 0x100000;
+    fn_80016A3C(pw);
     fn_800C2980(lbl_803206EC, &w);
     w.vtbl = lbl_80284C98;
     w.vtbl = lbl_802842A4;
@@ -6421,31 +6423,33 @@ s32 fn_800BC29C(u8 arg0) {
     u8 fn_80105BC0(void *, s32);
     void fn_80184C7C(void *, s32, s32, s32);
     extern u8 lbl_802B14E4[];
-    s8 slot;
-    void *unit;
+    void *var_r31;
+    s8 var_r30;
     void *item;
+    u8 t;
 
     if (arg0 != 0) {
-        unit = lbl_802B14E4 + ((arg0 - 1) * 0x280);
+        var_r31 = lbl_802B14E4 + ((arg0 - 1) * 0x280);
     } else {
-        unit = NULL;
+        var_r31 = NULL;
     }
-    if ((unit == NULL) || (*(u32 *)((u8 *)unit + 0x188) == 0U)) {
+    if ((var_r31 == NULL) || (*(u32 *)((u8 *)var_r31 + 0x188) == 0U)) {
         return 0;
     }
-    if (fn_80105BC0((u8 *)unit + 0x1BC, 8) != 0) {
+    if (fn_80105BC0((u8 *)var_r31 + 0x1BC, 8) != 0) {
         return -1;
     }
-    slot = (s8)fn_80037E00(unit);
-    if (slot < 0) {
+    var_r30 = (s8)fn_80037E00(var_r31);
+    if (var_r30 < 0) {
         return -1;
     }
-    item = fn_80037BBC(unit, slot);
-    ((ItemFlagBits *)((u8 *)item + 5))->flag = 0;
-    if ((slot >= 0) && (slot <= 3)) {
-        fn_80184C7C(unit, 0, 4, 0);
+    item = fn_80037BBC(var_r31, var_r30);
+    t = *((u8 *)item + 5);
+    *((u8 *)item + 5) = (u8)__rlwimi(t, 0, 7, 24, 24);
+    if ((var_r30 >= 0) && (var_r30 <= 3)) {
+        fn_80184C7C(var_r31, 0, 4, 0);
     }
-    return slot;
+    return var_r30;
 }
 
 s8 fn_800BC380(u8 arg0) {
