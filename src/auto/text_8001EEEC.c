@@ -2020,6 +2020,26 @@ outer_test:
         goto outer;
     }
 }
+
+void fn_80023D14(void *arg0) {
+    void *fn_80040844(void);
+    s32 fn_80047AF8(void *);
+    void fn_80022DAC(void *, s32, s32);
+    void fn_80044450(void *, s32);
+    void *cam;
+
+    cam = fn_80040844();
+    *(s32 *)arg0 = *(s16 *)cam;
+    *(s32 *)((u8 *)arg0 + 4) = *(s16 *)((u8 *)cam + 2);
+    *(u8 *)((u8 *)arg0 + 8) = fn_80047AF8(cam);
+    *(u8 *)((u8 *)arg0 + 0xA) = *(s32 *)arg0 - fn_80047AF8(cam);
+    *(u8 *)((u8 *)arg0 + 9) = fn_80047AF8(cam);
+    *(u8 *)((u8 *)arg0 + 0xB) = *(s32 *)((u8 *)arg0 + 4) - fn_80047AF8(cam);
+    *(s32 *)((char *)arg0 + 0x14190) = (s32)arg0 + 0x610E;
+    fn_80022DAC(arg0, 0, 0);
+    fn_80044450(cam, 1);
+}
+
 #pragma use_lmw_stmw reset
 #pragma global_optimizer on
 void fn_80023DC0(void) {
@@ -3860,25 +3880,27 @@ void fn_8002833C(void *arg0, void *arg1) {
 #pragma peephole off
 void fn_800283C8(void *arg0, void *arg1) {
     s8 fn_8003A398(void *);
+    void *self;
     u8 *map;
 
-    M2C_FIELD(arg0, void **, 0) = arg1;
-    M2C_FIELD(arg0, u8 *, 0xB) = (u8)M2C_FIELD(arg1, u8 *, 0x19E);
-    M2C_FIELD(arg0, u8 *, 0xC) = (u8)M2C_FIELD(arg1, u8 *, 0x19F);
-    M2C_FIELD(arg0, s8 *, 0x11) = fn_8003A398(arg1);
+    *(void **)arg0 = arg1;
+    self = arg0;
+    *((u8 *)self + 0xB) = *((u8 *)arg1 + 0x19E);
+    *((u8 *)self + 0xC) = *((u8 *)arg1 + 0x19F);
+    *((s8 *)self + 0x11) = fn_8003A398(arg1);
     map = (u8 *)&lbl_802CA518;
-    M2C_FIELD(arg0, s32 *, 4) = 0;
-    M2C_FIELD(arg0, s8 *, 8) = 0;
-    M2C_FIELD(arg0, s8 *, 0xA) = -1;
-    M2C_FIELD(arg0, s8 *, 0xD) = -1;
-    M2C_FIELD(arg0, s8 *, 0xE) = -1;
-    M2C_FIELD(arg0, s8 *, 0xF) = -1;
-    M2C_FIELD(arg0, s8 *, 0x10) = -1;
-    M2C_FIELD(arg0, s8 *, 0x14) = 0;
-    M2C_FIELD(arg0, s8 *, 0x15) = 0;
-    M2C_FIELD(arg0, s8 *, 0x12) = 0;
-    M2C_FIELD(arg0, s8 *, 0x16) = 0;
-    map[(s8)M2C_FIELD(arg0, u8 *, 0xB) + ((s8)M2C_FIELD(arg0, u8 *, 0xC) << 6) + 0xD] = 0;
+    *(s32 *)((u8 *)self + 4) = 0;
+    *((u8 *)self + 8) = 0;
+    *((s8 *)self + 0xA) = -1;
+    *((s8 *)self + 0xD) = -1;
+    *((s8 *)self + 0xE) = -1;
+    *((s8 *)self + 0xF) = -1;
+    *((s8 *)self + 0x10) = -1;
+    *((u8 *)self + 0x14) = 0;
+    *((u8 *)self + 0x15) = 0;
+    *((u8 *)self + 0x12) = 0;
+    *((u8 *)self + 0x16) = 0;
+    map[(s8)*((u8 *)self + 0xB) + ((s8)*((u8 *)self + 0xC) << 6) + 0xD] = 0;
 }
 #pragma peephole reset
 void fn_8002846C(void *arg0) {
