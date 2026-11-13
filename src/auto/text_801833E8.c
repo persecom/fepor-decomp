@@ -3614,11 +3614,29 @@ void fn_8018DE24(void *arg0) {
     }
 }
 
-void fn_8018E98C(void **arg0, s32 arg1) {
-    M2C_FIELD(*arg0, M2C_UNK (**)(), 0x3C)();
-    M2C_FIELD(*arg0, M2C_UNK (**)(void **, s32), 0x40)(arg0, arg1);
+#pragma cplusplus on
+extern "C" void fn_8018E98C(void *arg0, s32 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14(s32) = 0;
+    };
+    ((Obj *)arg0)->v13();
+    ((Obj *)arg0)->v14(arg1);
 }
-
+#pragma cplusplus reset
 void fn_8018EBC0(void *arg0, s16 arg1) {
     void *fn_8001C76C(void *);
     s32 fn_8001D2C8(void *);
@@ -11742,6 +11760,22 @@ void fn_801A24C4(void *arg0) {
     temp_r3 = fn_8000C0C0(lbl_80296FA8);
     if (((u32)(-temp_r3 | temp_r3) >> 31) == 0 && fn_80183974() == 0) {
         fn_8000C188(arg0);
+    }
+}
+
+void fn_801A251C(void) {
+    void *fn_8000C0C0(u8 *);
+    void *fn_8000CAF0(u8 *, s32);
+    u32 fn_80127C48(void);
+    s32 fn_800C0658(void);
+    extern u8 lbl_80296FA8[];
+
+    if (fn_8000C0C0(lbl_80296FA8) == 0) {
+        u32 var_r3 = fn_80127C48();
+        if (var_r3 == 0) {
+            var_r3 = fn_800C0658();
+        }
+        fn_8000CAF0(lbl_80296FA8, var_r3);
     }
 }
 
