@@ -7660,9 +7660,10 @@ String fn_800DAA60(s32 arg1) {
     return fn_800DAA94(lbl_803678B8, arg1);
 }
 
-void fn_800DAA94(void *arg1, s32 arg2) {
-    void *temp = *(void**)((char*)arg1 + 0x48);
-    fn_800C9B6C((char*)temp + (arg2 * 0xC));
+void fn_800DAA94(void *arg0, u8 *arg1, s32 arg2) {
+    void fn_800C9B6C(void *, void *);
+
+    fn_800C9B6C(arg0, *(u8 **)(arg1 + 0x48) + arg2 * 0xC);
 }
 
 void fn_800DAAC0(s32 arg0, s32 arg1) {
