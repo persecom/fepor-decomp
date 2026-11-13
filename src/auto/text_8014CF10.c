@@ -229,6 +229,49 @@ void fn_8014D2B0(void *arg0, u8 arg1) {
     }
 }
 
+s32 fn_8014D2CC(void *arg0) {
+    u16 fn_8001D2A4(void *);
+    u32 *fn_80037BD0(void *, s32);
+    void *next;
+    s32 sum;
+    u32 *p;
+
+    sum = *(s32 *)((u8 *)arg0 + 0x18);
+    {
+        void *node;
+        s32 i;
+
+        node = *(void **)lbl_802CA264;
+        while (node != NULL) {
+            next = *(void **)((u8 *)node + 0x184);
+            for (i = 0; i < 8; i++) {
+                p = fn_80037BD0(node, i);
+                if (*p != 0) {
+                    sum += (fn_8001D2A4(p) >> 1) & 0x7FFF;
+                }
+            }
+            node = next;
+        }
+    }
+    {
+        void *node;
+        s32 i;
+
+        node = *(void **)((u8 *)lbl_802CA264 + 0x3C);
+        while (node != NULL) {
+            next = *(void **)((u8 *)node + 0x184);
+            for (i = 0; i < 8; i++) {
+                p = fn_80037BD0(node, i);
+                if (*p != 0) {
+                    sum += (fn_8001D2A4(p) >> 1) & 0x7FFF;
+                }
+            }
+            node = next;
+        }
+    }
+    return sum;
+}
+
 void fn_8014D3B4(void *arg0) {
     u8 temp_r0;
 
