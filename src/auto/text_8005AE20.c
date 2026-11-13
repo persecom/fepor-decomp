@@ -229,30 +229,26 @@ s32 fn_8005B42C(u32 *arg0, u32 arg1) {
     return (u32) *arg0 <= arg1;
 }
 
+#pragma use_lmw_stmw on
 s32 fn_8005B448(s32 arg0, s32 arg1, s32 *arg2, u8 (*arg3)(s32, s32)) {
     s32 count;
     s32 mid_ptr;
     s32 mid;
-    u8 (*pred)(s32, s32);
-    s32 *key_ptr;
-    s32 lo;
 
-    lo = arg0;
-    key_ptr = arg2;
-    pred = arg3;
-    count = (arg1 - lo) / 8;
+    count = (arg1 - arg0) / 8;
     while (count > 0) {
         mid = count / 2;
-        mid_ptr = lo + mid * 8;
-        if (pred(mid_ptr, *key_ptr) != 0) {
-            lo = mid_ptr + 8;
+        mid_ptr = arg0 + (mid * 8);
+        if (arg3(mid_ptr, *arg2) != 0) {
+            arg0 = mid_ptr + 8;
             count -= mid + 1;
         } else {
             count = mid;
         }
     }
-    return lo;
+    return arg0;
 }
+#pragma use_lmw_stmw off
 
 #pragma global_optimizer off
 s32 fn_8005B4D8(s32 arg0) {
