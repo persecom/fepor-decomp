@@ -832,17 +832,20 @@ void fn_80007588(void)
 }
 
 void fn_800075D8(void) {
-    void *temp_r3;
+    extern void *lbl_80367140;
+    void *object;
 
-    temp_r3 = *(void **)(*(u32 **)((u32 *)0x80367140 + 0xC) + 0x1);
-    ((f32*)temp_r3)[0x30 / 4] = ((f32*)temp_r3)[0x20 / 4];
-    ((f32*)temp_r3)[0x34 / 4] = ((f32*)temp_r3)[0x14 / 4];
-    ((f32*)temp_r3)[0x40 / 4] = ((f32*)temp_r3)[0x10 / 4];
-    ((f32*)temp_r3)[0x44 / 4] = ((f32*)temp_r3)[0x24 / 4];
-    ((f32*)temp_r3)[0x38 / 4] = ((f32*)temp_r3)[0x28 / 4];
-    ((f32*)temp_r3)[0x3C / 4] = ((f32*)temp_r3)[0x1C / 4];
-    ((f32*)temp_r3)[0x48 / 4] = ((f32*)temp_r3)[0x18 / 4];
-    ((f32*)temp_r3)[0x4C / 4] = ((f32*)temp_r3)[0x2C / 4];
+    object = *(void **)((u8 *)lbl_80367140 + 0xC);
+    object = *(void **)((u8 *)object + 4);
+
+    *(f32 *)((u8 *)object + 0x30) = *(f32 *)((u8 *)object + 0x20);
+    *(f32 *)((u8 *)object + 0x34) = *(f32 *)((u8 *)object + 0x14);
+    *(f32 *)((u8 *)object + 0x40) = *(f32 *)((u8 *)object + 0x10);
+    *(f32 *)((u8 *)object + 0x44) = *(f32 *)((u8 *)object + 0x24);
+    *(f32 *)((u8 *)object + 0x38) = *(f32 *)((u8 *)object + 0x28);
+    *(f32 *)((u8 *)object + 0x3C) = *(f32 *)((u8 *)object + 0x1C);
+    *(f32 *)((u8 *)object + 0x48) = *(f32 *)((u8 *)object + 0x18);
+    *(f32 *)((u8 *)object + 0x4C) = *(f32 *)((u8 *)object + 0x2C);
 }
 
 void fn_80007628(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
