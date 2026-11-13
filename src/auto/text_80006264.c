@@ -12,11 +12,16 @@ extern f64 lbl_80368C28;    // global float constant
 extern u16 jumptable_80283AE8[];
 
 s32 fn_80006264(u32 *a, u32 *b, u32 n) {
+    u32 t1;
+    u32 t2;
+
     a--;
     n >>= 2;
     b--;
     do {
-        if (*++a != *++b) {
+        t1 = *++a;
+        t2 = *++b;
+        if (t1 != t2) {
             return 1;
         }
     } while (--n);
@@ -869,26 +874,33 @@ void fn_80007648(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
     *(f32 *)(ptr + 0x3C) = arg3;
 }
 
-void fn_80007668(u8 *src) {
-    extern void *lbl_80367140;
-    u8 *base;
-    u8 *ptr;
-    u8 a;
-    u8 b;
-    u8 c;
-    u8 d;
-
-    base = (u8 *)lbl_80367140;
-    a = src[0];
-    base = *(u8 **)(base + 0xC);
-    b = src[1];
-    ptr = *(u8 **)(base + 0x4);
-    c = src[2];
-    ptr[0xC] = a;
-    d = src[3];
-    ptr[0xD] = b;
-    ptr[0xE] = c;
-    ptr[0xF] = d;
+void fn_80007668(u8 *src)
+{
+  extern void *lbl_80367140;
+  u8 *base;
+  u8 a;
+  u8 b;
+  u8 *new_var;
+  u8 c;
+  u8 *new_var2;
+  u8 *ptr;
+  u8 d;
+  base = (u8 *) lbl_80367140;
+  new_var = src;
+  a = new_var[0];
+  base = *((u8 **) (base + 0xC));
+  new_var2 = new_var;
+  b = new_var2[1];
+  ptr = *((u8 **) (base + 0x4));
+  if ((c && c) && c)
+  {
+  }
+  c = new_var[2];
+  ptr[0xC] = a;
+  d = src[3];
+  ptr[0xD] = b;
+  ptr[0xE] = c;
+  ptr[0xF] = d;
 }
 
 void fn_80007698(u8 arg0) {
