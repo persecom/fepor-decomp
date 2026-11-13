@@ -9735,15 +9735,14 @@ extern "C" void *fn_800DFAE0(void *arg0, void *arg1, const String *arg2, const S
 #pragma dont_inline reset
 #pragma cplusplus reset
 
-void fn_800DFC2C(void *arg0, s32 a1, s32 a2, s32 a3, s32 a4, s32 a5, s32 a6, s32 a7, u8 arg8) {
+void fn_800DFC2C(void *arg0) {
     void fn_800E01EC(s32, s32, u8 *);
-    u8 sp8;
     u8 spC;
+    u32 pad;
     s32 base;
     s32 idx;
 
-    sp8 = arg8;
-    spC = sp8;
+    spC = *(u8 *)&pad;
     idx = *(s32 *)((u8 *)arg0 + 4);
     base = *(s32 *)((u8 *)arg0 + 8);
     fn_800E01EC(base, base + (idx << 2), &spC);
@@ -18856,6 +18855,16 @@ void fn_800FC49C(s32 arg0) {
     void fn_8000CAA0(void *, s32);
     extern u8 lbl_8028E758[16];
     fn_8000CAA0(lbl_8028E758, arg0);
+}
+
+void fn_800FC4C8(void *unused, void *arg1) {
+    extern u8 lbl_8032B3C0[];
+
+    if (*(u32 *)((u8 *)arg1 + 0x254) & 0x03000000) {
+        lbl_8032B3C0[1] |= 2;
+    } else {
+        lbl_8032B3C0[1] &= ~2;
+    }
 }
 
 void fn_800FC504(struct unit *arg0) {
