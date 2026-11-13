@@ -2770,12 +2770,16 @@ void fn_8000B018(void *arg0) {
     func(arg0, arg1);
 }
 
-void fn_8000B050(void *arg0) {
-    void **p = (void **)((char *)arg0 + 4);
-    u32 *node = *p;
-    u32 word = *(u32 *)((char *)node + 8);
-    *p = (void *)((char *)node + 0xC);
-    ((void (*)(void *, s16, s16))word)(arg0, (s16)word, (s16)(word >> 16));
+void fn_8000B050(void *arg0)
+{
+  u32 new_var;
+  s32 *node = ((s32 **) arg0)[1];
+  u32 word = (u32) node[2];
+  void (*func)(void *, s16, s16) = (void (*)(void *, s16, s16)) word;
+  new_var = word;
+  ((s32 **) arg0)[1] = node + 3;
+  word = (s16) new_var;
+  func(arg0, word, (s16) (new_var >> 16));
 }
 
 void fn_8000B090(void *arg0) {
