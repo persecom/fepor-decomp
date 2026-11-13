@@ -2806,20 +2806,20 @@ s32 fn_8000B0D0(void *arg0)
     return 1;
 }
 
-int fn_8000B128(void *arg0)
+s32 fn_8000B128(void *arg0)
 {
     void *object;
-    int (*callback)(void);
+    u8 (*callback)(void *);
 
     object = *(void **)((u8 *)arg0 + 4);
-    callback = *(int (**)(void))((u8 *)object + 4);
+    callback = *(u8 (**)(void *))((u8 *)object + 4);
 
-    if ((u8)callback() == 0) {
+    if (callback(arg0) != 0) {
         return 0;
     }
 
+    object = *(void **)((u8 *)arg0 + 4);
     *(void **)((u8 *)arg0 + 4) = (u8 *)object + 8;
-
     return 1;
 }
 
