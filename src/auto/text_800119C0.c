@@ -1272,32 +1272,30 @@ void fn_80015320(u8 arg0, u8 *arg1) {
 char *fn_80015574(s32 arg0)
 {
     extern u8 lbl_80268018[];
+    char *base;
+    char *result;
 
     switch ((u32)arg0) {
     case 0:
         return (char *)lbl_80268018 + 0x58;
-
     case 1:
         return (char *)lbl_80268018 + 0x5F;
-
     case 2:
         return (char *)lbl_80268018 + 0x65;
-
     case 3:
         return (char *)lbl_80268018 + 0x6B;
-
     case 5:
         return (char *)lbl_80268018 + 0x73;
-
     case 6:
         return (char *)lbl_80268018 + 0x7A;
-
     case 4:
     default:
+        base = (char *)lbl_80268018;
+        result = base + 0x83;
         if (arg0 >= 0) {
-            return (char *)lbl_80268018 + 0x83;
+            return result;
         }
-        return (char *)lbl_80268018 + 0x7F;
+        return base + 0x7F;
     }
 }
 
