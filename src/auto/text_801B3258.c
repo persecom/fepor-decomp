@@ -369,51 +369,41 @@ void fn_801B6064(s32 unused, s16 *p) {
 #pragma opt_common_subs reset
 
 s32 fn_801B6098(s32 arg0) {
-    void fn_801B32C8(void *);
-    extern u16 lbl_80330EAC[];
-    
-    s32 temp_r0;
-    u8 temp_r0_2;
-    u8 temp_r0_3;
-    void *temp_r3;
-    void *var_r3;
+    void fn_801B32C8(void *, s32);
+    extern u8 lbl_80330EAC[];
+    u32 flags;
+    u8 ok;
+    void *obj;
+    u8 byte;
 
-    temp_r0 = *(s32 *)((char *)&lbl_80330EAC + 0xCAC);
-    if ((temp_r0 >> 4) & 1) {
-        temp_r0 = 0;
-    } else if (temp_r0 & 0x800) {
-        temp_r0 = 1;
+    flags = *(u32 *)(lbl_80330EAC + 0xCAC);
+    if ((flags >> 4) & 1) {
+        ok = 0;
+    } else if (flags & 0x800) {
+        ok = 1;
     } else {
-        temp_r0 = 0;
+        ok = 0;
     }
-
-    if (temp_r0 == 0) {
+    if (ok == 0) {
         return 0;
     }
-
-    var_r3 = *(void **)((char *)&lbl_80330EAC + 0x280);
-    if (var_r3 != NULL) {
-        temp_r3 = *(void **)((char *)var_r3 + 0x190);
-        temp_r0_2 = *(u8 *)((char *)temp_r3 + 8);
-        if (temp_r0_2 != 0 && temp_r0_2 != 5) {
-            goto block_11;
-        }
-    } else {
-block_11:
-        var_r3 = *(void **)((char *)&lbl_80330EAC + 0x560);
-        if (var_r3 != NULL) {
-            temp_r3 = *(void **)((char *)var_r3 + 0x190);
-            temp_r0_3 = *(u8 *)((char *)temp_r3 + 8);
-            if (temp_r0_3 != 0 && temp_r0_3 != 5) {
-                goto block_15;
-            }
-        } else {
-block_15:
-            var_r3 = NULL;
+    obj = *(void **)(lbl_80330EAC + 0x280);
+    if (obj != NULL) {
+        byte = *((u8 *)*(void **)((u8 *)obj + 0x190) + 8);
+        if (byte == 0 || byte == 5) {
+            goto do_call;
         }
     }
-
-    fn_801B32C8(var_r3);
+    obj = *(void **)(lbl_80330EAC + 0x560);
+    if (obj != NULL) {
+        byte = *((u8 *)*(void **)((u8 *)obj + 0x190) + 8);
+        if (byte == 0 || byte == 5) {
+            goto do_call;
+        }
+    }
+    obj = NULL;
+do_call:
+    fn_801B32C8(obj, arg0);
     return 1;
 }
 
@@ -828,6 +818,33 @@ s32 fn_801B70C8(void) {
     }
     return sum;
 }
+
+s32 fn_801B7260(void) {
+    void fn_800056CC(const char *, ...);
+    void fn_800152F8(s32, s32, s32, s32, s32, s32, s32, s32, void *);
+    extern u8 lbl_8027C370[];
+    extern u8 lbl_802B14E4[];
+    u8 buf[8];
+    u8 *unit;
+    s32 i;
+
+    fn_800056CC((const char *)(lbl_8027C370 + 0x19C));
+    fn_800152F8(1, 0, 0, 0, 0, 1, 0, 0, buf);
+    for (i = 1; i <= 0x9F; i++) {
+        if ((u8)i != 0) {
+            unit = lbl_802B14E4 + ((u8)i - 1) * 0x280;
+        } else {
+            unit = NULL;
+        }
+        if (*(u32 *)(unit + 0x188) != 0
+            && buf[*(u8 *)(*(u8 **)(unit + 0x190) + 8)] != 0
+            && !(*(u32 *)(unit + 0x1A0) & 0x4000)) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
 #pragma use_lmw_stmw reset
 s32 fn_801B7330(void) {
     void fn_800056CC(void *, ...);
@@ -3556,6 +3573,37 @@ void fn_801BCC60(s32 arg0) {
     fn_801A4BE0(lbl_80330EAC);
     if (*(u32 *)(lbl_80330EAC + 0xCAC) & 0x10) {
         fn_801ED970(saved, arg0);
+    }
+}
+
+void fn_801BCCC4(void *arg0) {
+    void *fn_8013FF94(void *, s32, s32);
+    void fn_801658DC(void *, void *);
+    s32 fn_8017D52C(void *, s16);
+    void fn_80034A8C(void *, s32, u8, void *, s32);
+    void fn_8014004C(void *, void *);
+    extern u8 lbl_8027C698[];
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_80330708[];
+    extern u8 lbl_80330EAC[];
+    void *p;
+    void *obj;
+    s32 v;
+    s32 saved;
+    void *base;
+
+    p = fn_8013FF94(arg0, 0x80, 0);
+    fn_801658DC(p, lbl_8027C698 + 0x1CE);
+    obj = *(void **)((u8 *)arg0 + 0x5C);
+    base = lbl_80330708;
+    v = *(s32 *)lbl_802EF4C8;
+    saved = *(s32 *)((u8 *)base + 0x1C);
+    *(s32 *)((u8 *)base + 0x1C) = saved - fn_8017D52C(obj, *(s16 *)((u8 *)obj + 0x3E));
+    fn_80034A8C(lbl_80330EAC, v, (u8)*(s16 *)((u8 *)obj + 0x3E), arg0, 0);
+    *(s16 *)((u8 *)base + 0x70) = 0;
+    p = fn_8013FF94(arg0, -0x1000, 0);
+    if (p != NULL) {
+        fn_8014004C(arg0, p);
     }
 }
 
