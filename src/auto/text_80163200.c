@@ -10127,6 +10127,29 @@ s32 fn_8017838C(void) {
     temp_r4 = fn_8014D8DC(lbl_80330708);
     return temp_r4 ? 0 : 2;
 }
+
+s32 fn_801783CC(s32 arg0, void *arg1, void *arg2) {
+    void *fn_8000CAA0(void *, void *);
+    extern u8 lbl_80294580[];
+    extern u16 lbl_80278080[];
+    extern u32 lbl_802EF4C8[];
+    void *obj;
+    f32 x;
+    f32 y;
+
+    if (*(u8 *)((u8 *)arg2 + 0x39) == 2) {
+        x = (f32)(*(s16 *)((u8 *)arg1 + 0x30) + *(s16 *)((u8 *)arg2 + 0x30));
+        y = (f32)(*(s16 *)((u8 *)arg1 + 0x32) + *(s16 *)((u8 *)arg2 + 0x32));
+        obj = fn_8000CAA0(lbl_80294580, arg1);
+        *(f32 *)((u8 *)obj + 0x30) = x;
+        *(f32 *)((u8 *)obj + 0x34) = y;
+        *(void **)((u8 *)obj + 0x54) = (u8 *)lbl_80278080 + 0x569;
+        return 0;
+    }
+    *((u8 *)lbl_802EF4C8 + 8) = 0x82;
+    return 6;
+}
+
 #pragma opt_strength_reduction reset
 void fn_8017849C(void) {
     extern u16 lbl_80278080[];
