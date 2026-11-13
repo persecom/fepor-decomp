@@ -12643,6 +12643,24 @@ extern "C" void fn_800E7970(void *arg0) {
         fn_800DF5E0(((Obj *)arg0)->v4(i));
     }
 }
+
+extern "C" void fn_800E79D4(void *arg0) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void *v4(s32) = 0;
+    };
+    void fn_800DF60C(void *);
+    s32 i;
+
+    for (i = 0; i < *(s32 *)((char *)arg0 + 4); i++) {
+        fn_800DF60C(((Obj *)arg0)->v4(i));
+    }
+}
+
 #pragma cplusplus reset
 #pragma dont_inline reset
 void fn_800E7A38(void *arg0, s32 arg1) {
