@@ -2074,6 +2074,27 @@ void fn_8002D854(s32 arg0) {
     }
 }
 
+void fn_8002D940(s32 arg0) {
+    s8 fn_80146C94(u8 *);
+    void fn_8000C188(s32);
+    extern u8 lbl_80269210[];
+    u8 flag;
+
+    if ((s8)fn_80146C94(lbl_80269210 + 0x1E3) != -1
+        || (s8)fn_80146C94(lbl_80269210 + 0x1F1) != -1
+        || (s8)fn_80146C94(lbl_80269210 + 0x1FF) != -1
+        || (s8)fn_80146C94(lbl_80269210 + 0x20D) != -1
+        || (s8)fn_80146C94(lbl_80269210 + 0x21B) != -1
+        || (s8)fn_80146C94(lbl_80269210 + 0x22B) != -1) {
+        flag = 1;
+    } else {
+        flag = 0;
+    }
+    if (flag == 1) {
+        fn_8000C188(arg0);
+    }
+}
+
 #pragma optimization_level 1
 #pragma cplusplus on
 extern "C" void fn_8002DA30(void)
