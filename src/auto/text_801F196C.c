@@ -3487,25 +3487,21 @@ void fn_801F99C4(void *arg0) {
     *(u16 *)((u8 *)temp_r29 + 0x28) = 0xF0;
 }
 
-void fn_801F9C8C(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
-{
-    if (arg0 == 0)
-        arg0 = 1;
-    if (arg1 == 0)
-        arg1 = 1;
+void fn_801F9C8C(void *arg0) {
+    void fn_8000C070(void *, s32);
+    void fn_8000C60C(void *);
+    s32 v;
 
-    if (arg0 != 0 && arg1 != 0)
-    {
-        arg2 = arg2 / arg0;
-        arg3 = arg3 / arg1;
-    }
-
-    if ((arg0 == 0 || arg1 == 0) || (arg2 == 0 && arg3 == 0))
-    {
-        arg0 = 0;
-        arg1 = 0;
-        arg2 = 0;
-        arg3 = 0;
+    v = *(u8 *)((u8 *)arg0 + 0x54) - 1;
+    *(u8 *)((u8 *)arg0 + 0x54) = v;
+    if ((s8)v == 0) {
+        fn_8000C070(arg0, 2);
+    } else {
+        arg0 = (u8 *)arg0 + ((v & 1) << 3);
+        arg0 = *(void **)((u8 *)arg0 + 0x58);
+        if (arg0 != NULL) {
+            fn_8000C60C(arg0);
+        }
     }
 }
 
@@ -3739,18 +3735,20 @@ void fn_801FA478(void *arg0) {
     }
 }
 
-void fn_801FA4B8(s32 arg0, s32 unused) {
+void fn_801FA4B8(s32 arg0, s32 arg1) {
     extern u8 lbl_8029B2F4[];
     extern f32 lbl_8036BA00;
-    void *fn_8000CAF0(void *);
+    void *fn_8000CAF0(void *, s32);
     void *temp;
+    f32 f;
     s32 zero;
 
-    temp = fn_8000CAF0(lbl_8029B2F4);
+    temp = fn_8000CAF0(lbl_8029B2F4, arg1);
     if (temp != NULL) {
         zero = 0;
+        f = lbl_8036BA00;
         *(s32 *)((u8 *)temp + 0x30) = zero;
-        *(f32 *)((u8 *)temp + 0x38) = lbl_8036BA00;
+        *(f32 *)((u8 *)temp + 0x38) = f;
         *(s32 *)((u8 *)temp + 0x44) = arg0;
     }
 }
