@@ -8597,47 +8597,27 @@ void fn_80142814(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 *arg4, s32 arg5) {
 }
 
 s32 fn_8014284C(s32 unused, void **arg1) {
-    void *fn_8001CB64(void **);
-    void *p;
-    u8 kind;
-    void *temp;
-
-    p = *arg1;
-    if (p != NULL) {
-        kind = *(u8 *)((u8 *)p + 0x12);
-    } else {
-        kind = 0xC;
-    }
-    switch (kind) {
-    case 0:
-        return 0;
-    case 1:
-        return 1;
-    case 2:
-        return 2;
-    case 3:
-        return 3;
-    case 4:
-        return 4;
-    case 5:
-        return 5;
-    case 6:
-        return 6;
-    case 7:
-        temp = fn_8001CB64(arg1);
-        if ((((*(s32 *)((u8 *)temp + 4) & 3) ^ 0) | ((*(s32 *)temp & 0) ^ 0)) != 0) {
-            return 7;
-        }
-        return 8;
-    case 8:
-        return 8;
-    case 9:
-        return 9;
-    case 10:
-        return 10;
-    default:
-        return 12;
-    }
+void *fn_8001CB64(void **);
+s32 result=12;
+void *p=*arg1;
+u8 kind;
+if(p)kind=*(u8*)((u8*)p+0x12);else kind=12;
+switch(kind){
+case 0:result=0;break;
+case 1:result=1;break;
+case 2:result=2;break;
+case 3:result=3;break;
+case 4:result=4;break;
+case 5:result=5;break;
+case 6:result=6;break;
+case 7:
+if((*(u64*)fn_8001CB64(arg1)&3ULL)!=0){result=7;break;}
+case 8:result=8;break;
+case 9:result=9;break;
+case 10:result=10;break;
+case 11:case 12:result=12;break;
+}
+return result;
 }
 
 #pragma cplusplus on
@@ -9740,43 +9720,27 @@ extern "C" void fn_80144698(void *arg0) {
 #pragma cplusplus reset
 extern void fn_801446C4(void *arg0);
 void fn_801446C4(void *arg0) {
-    void *fn_800C42D8(s32);
-    void fn_8013692C(void *, s32, s32, s32, s32, s32);
-    void fn_8013F0F0(void *, void *);
-    void fn_8013F1A0(void *, void *);
-    void *child;
-    s16 a;
-    s16 b;
-    s16 c;
-    s16 d;
-
-    a = *(s16 *)((u8 *)arg0 + 0xC);
-    b = *(s16 *)((u8 *)arg0 + 0x10);
-    c = *(s16 *)((u8 *)arg0 + 0xA);
-    d = *(s16 *)((u8 *)arg0 + 0xE);
-    *(s16 *)((u8 *)arg0 + 0x12) = 3;
-    b = (s16)(b - a);
-    a = (s16)(d - c);
-    *(s16 *)((u8 *)arg0 + 0x14) = 6;
-    *(s16 *)((u8 *)arg0 + 0x16) = (s16)(a - 3);
-    *(s16 *)((u8 *)arg0 + 0x18) = (s16)(b - 6);
-
-    if (*(void **)((u8 *)arg0 + 0x48) != NULL) {
-        fn_8013F0F0(arg0, *(void **)((u8 *)arg0 + 0x48));
-    }
-    child = fn_800C42D8(0x9C);
-    if (child != NULL) {
-        fn_8013692C(
-            child,
-            (s16)((s16)(*(s16 *)((u8 *)arg0 + 0x16) - *(s16 *)((u8 *)arg0 + 0x12)) - 0xC),
-            0,
-            9,
-            (s16)(*(s16 *)((u8 *)arg0 + 0x18) - *(s16 *)((u8 *)arg0 + 0x14)),
-            *(s16 *)((u8 *)arg0 + 0x22) - 5);
-    }
-    *(void **)((u8 *)arg0 + 0x48) = child;
-    *(s32 *)((u8 *)*(void **)((u8 *)arg0 + 0x48) + 0x48) = 1;
-    fn_8013F1A0(arg0, *(void **)((u8 *)arg0 + 0x48));
+void *fn_800C42D8(s32);
+void *fn_8013692C(void *, s32, s32, s32, s32, s32);
+void fn_8013F0F0(void *, void *); void fn_8013F1A0(void *, void *);
+void *child;
+s16 d,c,b,a;
+a=*(s16*)((u8*)arg0+0xc);
+b=*(s16*)((u8*)arg0+0x10);
+c=*(s16*)((u8*)arg0+0xa);
+d=*(s16*)((u8*)arg0+0xe);
+b=(s16)(b-a);
+*(s16*)((u8*)arg0+0x12)=3;
+a=(s16)(d-c);
+*(s16*)((u8*)arg0+0x14)=6;
+*(s16*)((u8*)arg0+0x16)=a-3;
+*(s16*)((u8*)arg0+0x18)=b-6;
+if(*(void**)((u8*)arg0+0x48)) fn_8013F0F0(arg0,*(void**)((u8*)arg0+0x48));
+child=fn_800C42D8(0x9c);
+if(child)child=fn_8013692C(child,(s16)(*(s16*)((u8*)arg0+0x16)-*(s16*)((u8*)arg0+0x12))-12,0,9,(s16)(*(s16*)((u8*)arg0+0x18)-*(s16*)((u8*)arg0+0x14)),*(s16*)((u8*)arg0+0x22)-5);
+*(void**)((u8*)arg0+0x48)=child;
+*(s32*)((u8*)*(void**)((u8*)arg0+0x48)+0x48)=1;
+fn_8013F1A0(arg0,*(void**)((u8*)arg0+0x48));
 }
 
 void fn_801447A4(void *arg0, s32 arg1) {
