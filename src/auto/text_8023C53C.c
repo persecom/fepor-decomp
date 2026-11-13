@@ -13722,8 +13722,21 @@ void fn_80261C40(s32 arg0, s32 arg1) {
     e->unk24 |= 0x100;
 }
 
-s32 fn_80261C6C(s32 arg0) {
-    return *(u32*)((char*)lbl_803670C8 + (arg0 * 4)) & 0xFFFFFF;
+void fn_80261C6C(s32 arg0, s32 arg1) {
+    typedef struct {
+        u8 pad[0x24];
+        u32 unk24;
+        u8 pad2[0xCE - 0x28];
+        u16 unkCE;
+        u8 pad3[0xF8 - 0xD0];
+    } Entry;
+    extern Entry *lbl_80368AA0;
+    extern u32 lbl_803670C8;
+    Entry *e;
+
+    e = &lbl_80368AA0[arg0];
+    e->unkCE = ((u16 *)&lbl_803670C8)[arg1 & 0xFF];
+    e->unk24 |= 0x80;
 }
 
 void fn_80261D90(s32 arg0, u8 arg1, u16 arg2, u16 arg3)
