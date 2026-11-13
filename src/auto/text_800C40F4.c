@@ -12786,30 +12786,25 @@ void fn_800E7C88(void *arg0) {
     M2C_FIELD(arg0, s8 *, 0x2C) = 1;
 }
 
-void fn_800E7C94(void *arg0, void *arg1, s32 arg2, f32 arg3)
-{
-    extern char lbl_80272230[];
+#pragma cplusplus on
+extern "C" void fn_800E7C94(void *arg0, void *arg1, s32 arg2, f32 arg3) {
     void *fn_800C93EC(void *);
-    void *self;
-    s32 n;
-    f32 f;
-    void *value;
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void *v2(char *, void *) = 0;
+    };
+    extern char lbl_80272230[];
     void *result;
-    void *(*callback)(void *, char *, void *);
 
-    self = arg0;
-    n = arg2;
-    f = arg3;
-    value = fn_800C93EC(arg1);
-    callback = *(void *(**)(void *, char *, void *))(
-        *(u8 **)((u8 *)self + 0x10) + 0x10
-    );
-    result = callback(self, lbl_80272230 + 6, value);
+    result = ((Obj *)arg0)->v2(lbl_80272230 + 0x6, fn_800C93EC(arg1));
     if (result != NULL) {
-        *(f32 *)((u8 *)result + 0x70) = f;
-        *(s32 *)((u8 *)result + 0x74) = n;
+        *(f32 *)((u8 *)result + 0x70) = arg3;
+        *(s32 *)((u8 *)result + 0x74) = arg2;
     }
 }
+#pragma cplusplus reset
 
 #pragma cplusplus on
 #pragma dont_inline on
@@ -12972,10 +12967,14 @@ extern "C" void *fn_800E805C(void *arg0, void *arg1, void *arg2) {
         virtual void v1() = 0;
         virtual void *v2(void *, void *) = 0;
     };
+    void *self;
+    void *str1;
     void *result;
 
+    self = arg0;
+    str1 = arg1;
     result = fn_800C93EC(arg2);
-    result = ((Obj *)arg0)->v2(fn_800C93EC(arg1), result);
+    result = ((Obj *)self)->v2(fn_800C93EC(str1), result);
     if (result != NULL) {
         fn_800DF664(result);
     }
