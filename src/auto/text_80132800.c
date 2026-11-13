@@ -7914,9 +7914,9 @@ s32 fn_80140B04(s32 arg0) {
 void fn_80140D98(void *arg0) {
     extern f32 lbl_8036A730;
     extern f64 lbl_8036A738;
-    f32 temp_f3;
-    f32 temp_f4;
     f32 var_f2;
+    f32 temp_f4;
+    f32 temp_f3;
     s32 temp_r0;
     u32 temp_r7;
     void *var_r3;
@@ -7925,7 +7925,7 @@ void fn_80140D98(void *arg0) {
     (void)lbl_8036A738;
     temp_r7 = *(u32 *)((u8 *)arg0 + 0x34);
     if (temp_r7 != 0U) {
-        var_r4 = *(void **)((u8 *)*(void **)((u8 *)arg0 + 0x38) + 8);
+        var_r4 = *(void **)(*(u8 **)((u8 *)arg0 + 0x38) + 8);
     } else {
         var_r4 = NULL;
     }
@@ -7939,9 +7939,11 @@ void fn_80140D98(void *arg0) {
     case 1:
         var_f2 = temp_f3 * (lbl_8036A730 / temp_f4);
         break;
+    default:
+        break;
     }
     if (temp_r7 != 0U) {
-        var_r3 = *(void **)((u8 *)*(void **)((u8 *)arg0 + 0x38) + 8);
+        var_r3 = *(void **)(*(u8 **)((u8 *)arg0 + 0x38) + 8);
     } else {
         var_r3 = NULL;
     }
@@ -8705,6 +8707,69 @@ void fn_80143570(void *arg0) {
         fn_80144B60((u8 *)arg0 + (i * 0xC + 0x90), e);
     }
 }
+
+#pragma cplusplus on
+extern "C" s16 fn_801435E0(void *arg0, u32 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual s32 v12() = 0;
+    };
+    struct Node {
+        struct Node *prev;
+        struct Node *next;
+        u32 key;
+    };
+    struct S {
+        u8 f;
+        u32 v;
+    };
+    struct S a;
+    struct S b;
+    u8 *table;
+    struct Node *sentinel;
+    struct Node *head;
+    struct Node *node;
+    s32 idx;
+    s32 i;
+    void *self;
+
+    self = arg0;
+    idx = ((Obj *)self)->v12();
+    if (idx == 0xC) {
+        return -1;
+    }
+    a.v = arg1;
+    a.f = a.f;
+    table = (u8 *)self + idx * 0xC + 0x90;
+    sentinel = (struct Node *)(table + 4);
+    head = *(struct Node **)(table + 8);
+    b = a;
+    node = head;
+    while (node != sentinel && node->key != arg1) {
+        node = node->next;
+    }
+    i = -1;
+    if (node != (struct Node *)(table + 4)) {
+        i = 0;
+        while (head != node) {
+            head = head->next;
+            i += 1;
+        }
+    }
+    return (s16)i;
+}
+#pragma cplusplus reset
 
 void *fn_801436AC(void) {
     extern u16 lbl_80276008[];
@@ -9547,6 +9612,59 @@ void fn_80144E34(ListIter *ret, List *list, ListIter *it) {
     ret->node = next;
 }
 
+#pragma cplusplus on
+extern "C" void fn_80144EAC(void *arg0, void *arg1, void *arg2, void *arg3) {
+    void *fn_800C42D8(s32);
+    void fn_800C428C(void *);
+    void fn_80232058(void *, void *, ...);
+    void fn_8022CF78(void);
+    extern char __files[];
+    extern char lbl_80276B3C[];
+    struct Pair { s32 a; s32 b; };
+    struct Node {
+        Node *prev;
+        Node *next;
+        Pair value;
+    };
+    struct Holder {
+        void *list;
+        Node *node;
+        Holder(void *l, Node *n) : list(l), node(n) {}
+        ~Holder() {
+            if (node != 0) {
+                fn_800C428C(node);
+            }
+        }
+    };
+    Node *node;
+    Node *pos;
+    Node *n;
+    void *list;
+
+    list = (s32 *)arg1 + 1;
+    node = (Node *)fn_800C42D8(0x10);
+    if (node == 0) {
+        fn_80232058(__files + 0xA0, lbl_80276B3C + 0x72, __files);
+        fn_8022CF78();
+    }
+    {
+        Holder h(list, node);
+        if (&h.node->value != 0) {
+            h.node->value = *(Pair *)arg3;
+        }
+        pos = *(Node **)arg2;
+        n = h.node;
+        h.node = 0;
+        pos->prev->next = n;
+        n->prev = pos->prev;
+        pos->prev = n;
+        n->next = pos;
+        (*(s32 *)arg1)++;
+        *(void **)arg0 = n;
+    }
+}
+#pragma cplusplus reset
+
 int fn_8014510C(void *arg0) {
     u32 *ptr;
 
@@ -9705,6 +9823,38 @@ void fn_80145520(void) {
     b = lbl_8036A77C;
     *(f32 *)((u8 *)temp_r3 + 0x30) = a;
     *(f32 *)((u8 *)temp_r3 + 0x34) = b;
+    *(f32 *)((u8 *)temp_r3 + 0x38) = (f32)lbl_80367AEE;
+}
+
+void fn_801455B8(s32 arg0) {
+    void fn_8000BF00(void *);
+    void *fn_8000CAF0(void *, s32);
+    extern u8 lbl_80292558[];
+    extern u8 lbl_80367AEE;
+    extern f32 lbl_8036A778;
+    extern f64 lbl_8036A788;
+    extern f64 lbl_8036A780;
+    s32 base;
+    void *temp_r3;
+    s32 arg;
+
+    (void)lbl_8036A788;
+    (void)lbl_8036A780;
+    base = (s32)lbl_80292558;
+    arg = arg0;
+    fn_8000BF00((void *)(base + 0x28));
+    fn_8000BF00((void *)(base + 0x3C));
+    fn_8000BF00((void *)(base + 0x50));
+    fn_8000BF00((void *)(base + 0x64));
+    fn_8000BF00((void *)(base + 0x78));
+    fn_8000BF00((void *)(base + 0x8C));
+    if (arg == 0) {
+        lbl_80367AEE = 0;
+        return;
+    }
+    temp_r3 = fn_8000CAF0((void *)(base + 0x50), 3);
+    *(f32 *)((u8 *)temp_r3 + 0x30) = lbl_8036A778;
+    *(f32 *)((u8 *)temp_r3 + 0x34) = (f32)arg;
     *(f32 *)((u8 *)temp_r3 + 0x38) = (f32)lbl_80367AEE;
 }
 
