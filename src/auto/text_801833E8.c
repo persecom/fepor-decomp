@@ -4071,25 +4071,23 @@ void *fn_80190074(void *arg0, s16 arg1) {
 }
 
 void fn_801900E0(void *arg0) {
-    s32 r3 = (s32)arg0;
-    s16 r4, r5, r6, r7;
-    
-    *(s16 *)(r3 + 0x40) = 0x18;
-    *(s16 *)(r3 + 0x42) = 0;
-    r7 = *(s16 *)(r3 + 0xc);
-    r6 = *(s16 *)(r3 + 0x10);
-    r5 = *(s16 *)(r3 + 0xa);
-    r4 = *(s16 *)(r3 + 0xe);
-    r6 = r7 - r6;
-    r6 = (s16) r6;
-    r4 = r5 - r4;
-    *(s16 *)(r3 + 0x12) = 2;
-    r4 = (s16) r4;
-    r6 = r6 - 2;
-    *(s16 *)(r3 + 0x14) = 2;
-    r4 = r4 - 2;
-    *(s16 *)(r3 + 0x16) = r4;
-    *(s16 *)(r3 + 0x18) = r6;
+    s16 a, b, c, d;
+    s16 h, w;
+
+    *(s16 *)((u8 *)arg0 + 0x40) = 0x18;
+    *(s16 *)((u8 *)arg0 + 0x42) = 0;
+    a = *(s16 *)((u8 *)arg0 + 0xc);
+    b = *(s16 *)((u8 *)arg0 + 0x10);
+    c = *(s16 *)((u8 *)arg0 + 0xa);
+    d = *(s16 *)((u8 *)arg0 + 0xe);
+    h = (s16)(b - a);
+    w = (s16)(d - c);
+    *(s16 *)((u8 *)arg0 + 0x12) = 2;
+    h -= 2;
+    *(s16 *)((u8 *)arg0 + 0x14) = 2;
+    w -= 2;
+    *(s16 *)((u8 *)arg0 + 0x16) = w;
+    *(s16 *)((u8 *)arg0 + 0x18) = h;
 }
 
 void *fn_80190130(void *arg0, s16 arg1) {
@@ -4360,12 +4358,21 @@ void fn_80190A1C(void *arg0) {
 }
 
 void fn_80190B00(void *arg0) {
+    s16 t0, t1, t2, t3, w, h;
     M2C_FIELD(arg0, s16 *, 0x46) = 0;
     M2C_FIELD(arg0, s16 *, 0x48) = 0;
+    t0 = M2C_FIELD(arg0, s16 *, 0xC);
+    t1 = M2C_FIELD(arg0, s16 *, 0x10);
+    t2 = M2C_FIELD(arg0, s16 *, 0xA);
+    t3 = M2C_FIELD(arg0, s16 *, 0xE);
+    h = (s16)(t1 - t0);
     M2C_FIELD(arg0, s16 *, 0x12) = 2;
+    w = (s16)(t3 - t2);
+    h -= 8;
     M2C_FIELD(arg0, s16 *, 0x14) = 8;
-    M2C_FIELD(arg0, s16 *, 0x16) = (s16) ((s16) (M2C_FIELD(arg0, s16 *, 0xE) - M2C_FIELD(arg0, s16 *, 0xA)) - 2);
-    M2C_FIELD(arg0, s16 *, 0x18) = (s16) ((s16) (M2C_FIELD(arg0, s16 *, 0x10) - M2C_FIELD(arg0, s16 *, 0xC)) - 8);
+    w -= 2;
+    M2C_FIELD(arg0, s16 *, 0x16) = w;
+    M2C_FIELD(arg0, s16 *, 0x18) = h;
 }
 
 void *fn_80190B50(void *arg0, s16 arg1) {
@@ -9187,14 +9194,20 @@ void fn_8019BDD4(void *arg0) {
 
 void fn_8019BE54(void *arg0, void *arg1)
 {
+    void *fn_8000CAA0(void *, void *);
+    void fn_8019D51C(void *, void *, const char *);
+
     extern u8 lbl_80296C74[];
     extern u8 lbl_8027AA38[];
 
-    fn_8000CAA0(lbl_80296C74, arg0);
+    void *result;
+
+    result = fn_8000CAA0(lbl_80296C74, arg0);
 
     fn_8019D51C(
+        result,
         arg1,
-        lbl_8027AA38 + 0x1C6
+        (const char *)(lbl_8027AA38 + 0x1C6)
     );
 }
 
