@@ -492,6 +492,27 @@ BOOL DVDLowWaitCoverClose(void *callback) {
     return TRUE;
 }
 
+BOOL fn_8020BE28(void *addr, void *callback) {
+    extern void *Callback_80368538;
+    u32 timeout;
+
+    Callback_80368538 = callback;
+    StopAtNextInt_80368530 = 0;
+
+    __DIRegs[2] = 0xA8000040;
+    __DIRegs[3] = 0;
+    __DIRegs[4] = 0x20;
+    __DIRegs[5] = (u32)addr;
+    __DIRegs[6] = 0x20;
+    __DIRegs[7] = 3;
+
+    timeout = (*(u32 *)0x800000F8 >> 2) * 10;
+    OSCreateAlarm(AlarmForTimeout_80339ED8);
+    OSSetAlarm(AlarmForTimeout_80339ED8, (s64)timeout, AlarmHandlerForTimeout);
+
+    return TRUE;
+}
+
 void DVDLowStopMotor(void) {
     OSDisableInterrupts();
     lbl_803685E8 = 0;
