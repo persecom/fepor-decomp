@@ -4685,6 +4685,33 @@ s32 fn_801BE92C(void *arg0) {
     return 0;
 }
 
+s32 fn_801BEA38(void *arg0, void *arg1, void *arg2) {
+    void fn_80176888(void *, void *, f32, f32);
+    extern u8 lbl_8027C698[];
+    extern u8 lbl_802EF4C8[];
+    f32 x;
+    f32 y;
+
+    if (*(u8 *)((u8 *)arg2 + 0x39) == 2) {
+        x = (f32)(*(s16 *)((u8 *)arg1 + 0x30) + *(s16 *)((u8 *)arg2 + 0x30));
+        y = (f32)(*(s16 *)((u8 *)arg1 + 0x32) + *(s16 *)((u8 *)arg2 + 0x32));
+        switch (*(s8 *)((u8 *)arg0 + 4)) {
+        case -1:
+            fn_80176888(lbl_8027C698 + 0x2E3, arg1, x, y);
+            break;
+        case -2:
+            fn_80176888(lbl_8027C698 + 0x18C, arg1, x, y);
+            break;
+        case -3:
+            fn_80176888(lbl_8027C698 + 0x2FA, arg1, x, y);
+            break;
+        }
+        return 0;
+    }
+    lbl_802EF4C8[8] = 0x82;
+    return 5;
+}
+
 #pragma cplusplus on
 extern "C" void *fn_801BEB24(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
     struct Obj {
