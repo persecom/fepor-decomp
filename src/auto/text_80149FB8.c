@@ -87,14 +87,14 @@ void fn_8014A160(void *arg0) {
     extern f32 lbl_8036A7B8;
     extern f32 lbl_8036A7BC;
     extern u8 lbl_80276F00[];
-    extern void fn_8000A258(void);
-    extern double fn_80009D74(f32, f32, f32, f32);
-    extern void fn_8000A174(s32, s32);
-    extern void fn_8000A248(void);
-    extern void fn_8001019C(s32, s32, s32, void *);
-    extern void *fn_801090C0(void *);
-    extern void fn_80109C1C(void *, s32);
-    extern void fn_80109C80(void *, s32);
+    void fn_8000A258(void);
+    void fn_80009D74(f32, f32, f32, f32);
+    void fn_8000A174(s32, s32);
+    void fn_8000A248(void);
+    void fn_8001019C(s32, s32, s32, void *, ...);
+    void *fn_801090C0(void *);
+    void fn_80109C1C(void *, s32);
+    void fn_80109C80(void *, s32);
 
     fn_8000A258();
     fn_80009D74(lbl_8036A7B8, lbl_8036A7B8, lbl_8036A7B8, lbl_8036A7BC);
