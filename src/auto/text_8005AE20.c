@@ -427,12 +427,10 @@ void fn_8005B820(void) {
 
 u8 fn_8005B888(s32 arg0) {
     extern void *lbl_803672F4;
-    struct { u8 pad[0x3f]; u8 f; } *e;
-    if (lbl_803672F4 == NULL) {
-        return 0;
-    }
-    e = (void *)((u8 *)lbl_803672F4 + (arg0 << 6));
-    return e->f;
+    struct Entry { u8 pad[0x3f]; u8 f; };
+    struct Entry *entries = lbl_803672F4;
+    if (entries == NULL) return 0;
+    return entries[arg0].f;
 }
 
 void *fn_8005B8AC(s32 arg0) {
@@ -6518,9 +6516,8 @@ void fn_8006D52C(s32 arg0) {
     *(volatile u32 *)0 = gqr;
 }
 
-void fn_8006D53C(s32 arg0) {
-    register u32 gqr;
-    gqr = ((u32)arg0 << 16) + (u32)arg0;
+void fn_8006D53C(register s32 arg0) {
+    register u32 gqr = ((u32)arg0 << 16) + (u32)arg0;
     *(volatile u32 *)0 = gqr;
 }
 
