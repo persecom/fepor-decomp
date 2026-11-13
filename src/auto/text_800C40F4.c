@@ -7876,22 +7876,24 @@ void fn_800DB9E8(f32 *arg0, void *arg1) {
     arg0[2] = z;
 }
 
-void fn_800DBA50(void *arg0, void *arg1) {
-    f32 f0;
-    f32 f1;
-    f32 f2;
+void fn_800DBA50(f32 *arg0, void *arg1) {
+    void *fn_80067FD0(void);
+    void fn_8020310C(void *, f32 *, f32 *);
+    f32 sp[3];
+    f32 z;
+    f32 y;
+    f32 x;
 
-    f0 = *(f32 *)(((u8 *)arg1) + 0x48);
-    f1 = *(f32 *)(((u8 *)arg1) + 0x4C);
-    f2 = *(f32 *)(((u8 *)arg1) + 0x50);
-    
-    fn_80067FD0();
-    
-    fn_8020310C(&f0, &f0);
-    
-    *(f32 *)(((u8 *)arg0) + 0) = f0;
-    *(f32 *)(((u8 *)arg0) + 4) = f1;
-    *(f32 *)(((u8 *)arg0) + 8) = f2;
+    sp[0] = *(f32 *)((u8 *)arg1 + 0x48);
+    sp[1] = *(f32 *)((u8 *)arg1 + 0x4C);
+    sp[2] = *(f32 *)((u8 *)arg1 + 0x50);
+    fn_8020310C(fn_80067FD0(), sp, sp);
+    y = sp[1];
+    z = sp[2];
+    x = sp[0];
+    arg0[0] = x;
+    arg0[1] = y;
+    arg0[2] = z;
 }
 
 void fn_800DBAB8(void *arg0, void *arg1) {
