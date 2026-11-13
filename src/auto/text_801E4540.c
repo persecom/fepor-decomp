@@ -2671,9 +2671,9 @@ void fn_801E9D68(void) {
 
     u8 *base;
     u32 v84;
-    u32 v88;
-    u32 v8c;
     u32 v90;
+    u32 v8c;
+    u32 v88;
 
     base = lbl_80330708;
     v84 = *(u32 *)(base + 0x84);
