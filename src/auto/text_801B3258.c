@@ -8925,12 +8925,12 @@ void *fn_801CBFD0(void *arg0, s16 arg1) {
 void fn_801CC030(u32 *arg0) {
     u32 start;
     u32 end;
-    u32 ctr;
+    s32 ctr;
     start = arg0[2];
     end = start + (arg0[1] << 5);
-    ctr = (end + 0x1F - start) >> 5;
+    ctr = (s32)((end + 0x1F - start) >> 5);
     if (end > start) {
-        for (; ctr != 0; ctr--) {
+        for (; ctr > 0; ctr--) {
         }
     }
     arg0[1] = 0;
@@ -9685,23 +9685,29 @@ lookup:
     return (int)(lbl_8027DD60 + 0x16);
 }
 
-void fn_801CD508(s32 arg0) {
-    extern u8 *lbl_802984C0;
-    u8 **var_r0;
-    u8 **var_r5;
+s32 fn_801CD508(s32 arg0) {
+    extern u8 *lbl_802984C0[];
+    s32 count;
+    u8 **table;
 
-    var_r0 = NULL;
-    if (arg0 != 0) {
+    count = 0;
+    table = (u8 **)count;
 
-    } else {
-        var_r0 = &lbl_802984C0;
+    if (arg0 == 0) {
+        goto init_table;
     }
-    var_r5 = var_r0;
-loop_5:
-    if ((s32) **var_r5 != 0xA) {
-        var_r5 += 4;
-        goto loop_5;
+    goto search;
+
+init_table:
+    table = lbl_802984C0;
+    goto search;
+
+search:
+    while ((s32)**table != 0xA) {
+        table += 1;
+        count += 1;
     }
+    return count;
 }
 
 s32 fn_801CD5CC(s32 arg0, s32 arg1) {
@@ -14142,15 +14148,20 @@ void fn_801DDDE8(s32 arg0, s32 arg1) {
     *(f32 *)((u8 *)temp_r3 + 0x34) = (f32)arg0;
 }
 
+#pragma scheduling off
 void fn_801DDE44(void *arg0) {
     extern f32 lbl_8036B630;
-    *(f32*)((char*)arg0 + 0x30) += lbl_8036B630;
-    
-    if (*(f32*)((char*)arg0 + 0x30) == *(f32*)((char*)arg0 + 0x34)) {
+    f32 addend;
+    f32 cur;
+
+    addend = lbl_8036B630;
+    cur = *(f32 *)((u8 *)arg0 + 0x30);
+    *(f32 *)((u8 *)arg0 + 0x30) = cur + addend;
+    if (*(f32 *)((u8 *)arg0 + 0x30) >= *(f32 *)((u8 *)arg0 + 0x34)) {
         fn_8000C188();
     }
 }
-
+#pragma scheduling on
 void fn_801DDE88(s16 arg0, s16 arg1, s32 arg2) {
     M2C_UNK fn_80007818(f32, f32, f32, f32);
     M2C_UNK fn_80007838(f32, f32, f32, f32);
@@ -16956,10 +16967,12 @@ void fn_801E329C(void *arg0) {
     fn_800EA7CC(M2C_FIELD(arg0, s32 *, 0x54), arg0);
 }
 
-void fn_801E32C4(s32 arg1) {
-    extern u16 lbl_8027E980[];
-    u16* temp = &lbl_8027E980[0x1AD];
-    fn_800056CC(temp);
+void fn_801E32C4(s32 unused, s32 arg1) {
+    extern u8 lbl_8027E980[];
+    void fn_800056CC(char *, ...);
+    void fn_800E9AE4(s32);
+
+    fn_800056CC((char *)(lbl_8027E980 + 0x1AD));
     fn_800E9AE4(arg1);
 }
 
