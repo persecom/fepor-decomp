@@ -5925,7 +5925,7 @@ extern "C" void *fn_800D38BC(void *arg0)
     fn_800DB1FC(orderedLookup0, &assignedName0);
     fn_800C9A60(&assignedName0, -1);
 
-    ((void (*)(String *))fn_800CB070)(&assignedName1);
+    fn_800CB070(&assignedName1);
       fn_800DB1FC(orderedLookup1, &assignedName1);
     fn_800C9A60(&assignedName1, -1);
 
