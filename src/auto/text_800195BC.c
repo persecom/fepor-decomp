@@ -1731,13 +1731,31 @@ void fn_8001C7F0(void *unused, void *arg1, void *arg2) {
     }
 }
 
-void fn_8001C878(u32 arg0, u32 arg1, u32 arg2)
-{
-    extern u32 lbl_80367230;
-    
-    if (lbl_80367230 == arg1) {
-        *(u32*)arg0 = arg2;
+s32 fn_8001C878(void *unused, void *arg1, void *arg2) {
+    void fn_80234450(void *, s32);
+    void fn_802343E0(void *, void *);
+    u32 fn_8000D354(void *);
+    extern void *lbl_80367230;
+    extern u8 lbl_802CA4FC[];
+    extern u8 lbl_80268820[];
+    void (*cb)(void *);
+    u32 ret;
+
+    if (lbl_80367230 != arg1) {
+        lbl_80367230 = arg1;
+        fn_80234450(lbl_802CA4FC, *(s32 *)arg1);
+        fn_802343E0(lbl_802CA4FC, lbl_80268820 + 0x3C);
     }
+    ret = fn_8000D354(lbl_802CA4FC);
+    if (ret == 0) {
+        cb = *(void (**)(void *))((u8 *)ret + 0x8);
+        if (cb != NULL) {
+            cb(arg2);
+            return 1;
+        }
+        return 0;
+    }
+    return 1;
 }
 
 u32 fn_8001C914(u32 arg0)
@@ -2585,9 +2603,20 @@ void fn_8001EDA0(u8 *arg0) {
     }
 }
 
-void fn_8001EDB8(void *arg0, s32 arg1) {
-    /* This is a placeholder to see if the structure works */
-    *(u8*)arg0 = 0;
+void fn_8001EDB8(u8 *out, void *key) {
+    void *fn_80019E04(void *);
+    extern u8 lbl_80268820[];
+    s32 flags;
+
+    flags = 0;
+    if (key == fn_80019E04(lbl_80268820 + 0x41A)) {
+        flags |= 1;
+    } else if (key == fn_80019E04(lbl_80268820 + 0x42A)) {
+        flags |= 2;
+    } else if (key == fn_80019E04(lbl_80268820 + 0x436)) {
+        flags |= 0x80;
+    }
+    *out = (u8)flags;
 }
 
 extern void *lbl_80367204;
