@@ -7840,8 +7840,11 @@ void fn_8014017C(s32 arg0, void *arg1, void *arg2, s32 arg3) {
     void fn_80140830(s32, void *, void *, struct Vec, struct Vec, s32);
     extern struct Vec lbl_802922E4;
     extern struct Vec lbl_802922D8;
-
-    fn_80140830(arg0, arg1, arg2, lbl_802922D8, lbl_802922E4, arg3);
+    struct Vec b;
+    struct Vec a;
+    a.x = lbl_802922E4.x; a.y = lbl_802922E4.y; a.z = lbl_802922E4.z;
+    b.x = lbl_802922D8.x; b.y = lbl_802922D8.y; b.z = lbl_802922D8.z;
+    fn_80140830(arg0, arg1, arg2, b, a, arg3);
 }
 
 void fn_80140210(void *arg0, void *arg1, void *arg2) {
@@ -9050,10 +9053,10 @@ extern "C" s16 fn_801435E0(void *arg0, u32 arg1) {
     struct S {
         u8 f;
         u32 v;
+        S(u8 flag, u32 value) : f(flag), v(value) {}
     };
-    struct S a;
-    struct S b;
-    u8 *table;
+    u8 flag;
+    s32 table;
     struct Node *sentinel;
     struct Node *head;
     struct Node *node;
@@ -9066,14 +9069,13 @@ extern "C" s16 fn_801435E0(void *arg0, u32 arg1) {
     if (idx == 0xC) {
         return -1;
     }
-    a.v = arg1;
-    a.f = a.f;
-    table = (u8 *)self + idx * 0xC + 0x90;
+    S a(flag, arg1);
+    table = (s32)self + idx * 0xC + 0x90;
     sentinel = (struct Node *)(table + 4);
     head = *(struct Node **)(table + 8);
-    b = a;
+    S b = a;
     node = head;
-    while (node != sentinel && node->key != arg1) {
+    while (node != sentinel && node->key != b.v) {
         node = node->next;
     }
     i = -1;
@@ -9090,44 +9092,26 @@ extern "C" s16 fn_801435E0(void *arg0, u32 arg1) {
 
 #pragma cplusplus on
 extern "C" void fn_801436AC(void *arg0, void *arg1) {
-    void fn_80144E34(ListIter *, List *, ListIter *);
-    struct Pair {
-        u8 f;
-        u32 v;
-    };
-    List *list;
-    ListNode *sentinel;
-    ListNode *node;
-    ListIter ret;
-    ListIter it;
-    Pair a;
-    Pair b;
-    s32 i;
-    u8 *cursor;
-    s16 *slot;
-    s32 size;
-
-    cursor = (u8 *)arg0;
-    a.v = (u32)arg1;
-    a.f = a.f;
-    for (i = 0; i < 11; i++, cursor += 0xC) {
-        list = (List *)(cursor + 0x90);
-        sentinel = (ListNode *)((u8 *)list + 4);
-        node = *(ListNode **)((u8 *)list + 8);
-        b = a;
-        while (node != sentinel && node->val != arg1) {
-            node = node->next;
-        }
-        if (node != (ListNode *)((u8 *)list + 4)) {
-            it.node = node;
-            fn_80144E34(&ret, list, &it);
-            size = list->size;
-            slot = (s16 *)((u8 *)arg0 + 0x64 + (i << 1));
-            if (!((u32)*slot < (u32)size)) {
-                *slot = (s16)(size - 1);
-            }
-        }
-    }
+void fn_80144E34(ListIter *, List *, ListIter *);
+struct Pair { u8 f; u32 v; Pair(u8 flag,u32 value):f(flag),v(value){} Pair(const Pair &p) { *(u32*)this=*(const u32*)&p; v=p.v; } };
+u8 flag;
+ListIter ret,it;
+u8 *cursor=(u8*)arg0;
+for(s32 i=0;i<11;cursor+=12,i++) {
+Pair a(flag,(u32)arg1);
+List *list=(List*)(cursor+0x90);
+ListNode *sentinel=(ListNode*)((u8*)list+4);
+ListNode *node=*(ListNode**)(cursor+0x98);
+Pair b=a;
+while(node!=sentinel && node->val!=(void*)b.v) node=node->next;
+if(node!=(ListNode*)((u8*)list+4)) {
+it.node=node;
+fn_80144E34(&ret,list,&it);
+s16 *slot=(s16*)((u8*)arg0+0x64+(i<<1));
+if((u32)*slot >= (u32)list->size) *slot=list->size-1;
+break;
+}
+}
 }
 #pragma cplusplus reset
 void fn_80143784(void **arg0, void *arg1) {
@@ -10073,11 +10057,10 @@ extern "C" void fn_80144EAC(void *arg0, void *arg1, void *arg2, void *arg3) {
     void fn_8022CF78(void);
     extern char __files[];
     extern char lbl_80276B3C[];
-    struct Pair { s32 a; s32 b; };
     struct Node {
         Node *prev;
         Node *next;
-        Pair value;
+        s32 data[2];
     };
     struct Holder {
         void *list;
@@ -10093,7 +10076,7 @@ extern "C" void fn_80144EAC(void *arg0, void *arg1, void *arg2, void *arg3) {
     Node *pos;
     Node *n;
     void *list;
-    Pair *dst;
+    s32 *dst;
 
     list = (s32 *)arg1 + 1;
     node = (Node *)fn_800C42D8(0x10);
@@ -10101,11 +10084,16 @@ extern "C" void fn_80144EAC(void *arg0, void *arg1, void *arg2, void *arg3) {
         fn_80232058(__files + 0xA0, lbl_80276B3C + 0x72, __files);
         fn_8022CF78();
     }
-    dst = &node->value;
     {
         Holder h(list, node);
+        dst = &h.node->data[0];
         if (dst != 0) {
-            *dst = *(Pair *)arg3;
+            s32 b;
+            s32 a;
+            a = ((s32 *)arg3)[0];
+            b = ((s32 *)arg3)[1];
+            dst[1] = b;
+            dst[0] = a;
         }
         pos = *(Node **)arg2;
         n = h.node;
@@ -10329,8 +10317,8 @@ void fn_801453F0(void) {
     extern f32 lbl_8036A77C;
     s32 base;
     void *temp_r3;
-    f32 a;
     f32 b;
+    f32 a;
 
     base = (s32)lbl_80292558;
     fn_8000BF00((void *)(base + 0x28));
@@ -10344,7 +10332,7 @@ void fn_801453F0(void) {
     b = lbl_8036A77C;
     *(f32 *)((u8 *)temp_r3 + 0x30) = a;
     *(f32 *)((u8 *)temp_r3 + 0x34) = b;
-    *(f32 *)((u8 *)temp_r3 + 0x38) = (f32)lbl_80367AEE;
+    *(f32 *)((u8 *)temp_r3 + 0x38) = (f32)(u32)lbl_80367AEE;
 }
 
 void fn_80145488(void) {
@@ -10355,7 +10343,7 @@ void fn_80145488(void) {
     extern f32 lbl_8036A778;
     extern f32 lbl_8036A77C;
     s32 base;
-    void *temp_r3;
+    f32 *temp_r3;
     f32 a;
     f32 b;
     f32 c;
@@ -10367,40 +10355,23 @@ void fn_80145488(void) {
     fn_8000BF00((void *)(base + 0x64));
     fn_8000BF00((void *)(base + 0x78));
     fn_8000BF00((void *)(base + 0x8C));
-    temp_r3 = fn_8000CAF0((void *)(base + 0x78), 3);
+    temp_r3 = (f32 *)fn_8000CAF0((void *)(base + 0x78), 3);
     a = lbl_8036A778;
     b = lbl_8036A77C;
-    *(f32 *)((u8 *)temp_r3 + 0x30) = a;
-    *(f32 *)((u8 *)temp_r3 + 0x34) = b;
+    temp_r3[12] = a;
+    temp_r3[13] = b;
     c = (f32)lbl_80367AEE;
-    *(f32 *)((u8 *)temp_r3 + 0x38) = c;
+    temp_r3[14] = c;
 }
 
 void fn_80145520(void) {
-    void fn_8000BF00(void *);
-    void *fn_8000CAF0(void *, s32);
-    extern u8 lbl_80292558[];
-    extern u8 lbl_80367AEE;
-    extern f32 lbl_8036A778;
-    extern f32 lbl_8036A77C;
-    s32 base;
-    void *temp_r3;
-    f32 a;
-    f32 b;
-
-    base = (s32)lbl_80292558;
-    fn_8000BF00((void *)(base + 0x28));
-    fn_8000BF00((void *)(base + 0x3C));
-    fn_8000BF00((void *)(base + 0x50));
-    fn_8000BF00((void *)(base + 0x64));
-    fn_8000BF00((void *)(base + 0x78));
-    fn_8000BF00((void *)(base + 0x8C));
-    temp_r3 = fn_8000CAF0((void *)(base + 0x64), 3);
-    a = lbl_8036A778;
-    b = lbl_8036A77C;
-    *(f32 *)((u8 *)temp_r3 + 0x30) = a;
-    *(f32 *)((u8 *)temp_r3 + 0x34) = b;
-    *(f32 *)((u8 *)temp_r3 + 0x38) = (f32)lbl_80367AEE;
+void fn_8000BF00(void *); void *fn_8000CAF0(void *, s32);
+extern u8 lbl_80292558[]; extern u8 lbl_80367AEE;
+extern f32 lbl_8036A778; extern f32 lbl_8036A77C;
+s32 base=(s32)lbl_80292558; f32 *p; f32 a,b;
+fn_8000BF00((void*)(base+0x28)); fn_8000BF00((void*)(base+0x3c)); fn_8000BF00((void*)(base+0x50)); fn_8000BF00((void*)(base+0x64)); fn_8000BF00((void*)(base+0x78)); fn_8000BF00((void*)(base+0x8c));
+p=fn_8000CAF0((void*)(base+0x64),3);
+b=lbl_8036A77C; a=lbl_8036A778; p[12]=a; p[13]=b; p[14]=(f32)lbl_80367AEE;
 }
 
 void fn_801455B8(s32 arg0) {
@@ -10470,7 +10441,7 @@ void fn_8014571C(void) {
     extern f32 lbl_8036A778;
     extern f32 lbl_8036A77C;
     s32 base;
-    void *temp_r3;
+    struct Values { u8 pad[0x30]; f32 x,y,z; } *temp_r3;
     f32 a;
     f32 b;
 
@@ -10484,9 +10455,9 @@ void fn_8014571C(void) {
     temp_r3 = fn_8000CAF0((void *)(base + 0x28), 3);
     a = lbl_8036A778;
     b = lbl_8036A77C;
-    *(f32 *)((u8 *)temp_r3 + 0x30) = a;
-    *(f32 *)((u8 *)temp_r3 + 0x34) = b;
-    *(f32 *)((u8 *)temp_r3 + 0x38) = (f32)lbl_80367AEE;
+    temp_r3->x = a;
+    temp_r3->y = b;
+    temp_r3->z = (f32)lbl_80367AEE;
 }
 
 void fn_801457B4(void) {
@@ -10746,6 +10717,7 @@ s32 fn_80146B10(s32 arg0) {
     void *fn_8000D2BC(void *);
     void fn_800056A0(s32);
     extern u8 lbl_80276BC8[];
+    s32 *header;
     s32 *table;
     s32 count;
     s32 lo;
@@ -10754,11 +10726,11 @@ s32 fn_80146B10(s32 arg0) {
     s32 key;
     s32 result;
 
-    table = (s32 *)fn_8000D2BC(lbl_80276BC8 + 0x30b);
-    count = *table;
-    table++;
+    header = (s32 *)fn_8000D2BC(lbl_80276BC8 + 0x30b);
+    count = *header;
     lo = 0;
     hi = count - 1;
+    table = header + 1;
     while (lo <= hi) {
         mid = lo + ((hi - lo) >> 1);
         key = table[mid * 2];
@@ -11112,48 +11084,25 @@ extern "C" void fn_80147188(s32 arg0) {
 
 #pragma cplusplus on
 extern "C" void fn_8014746C(s8 arg0, s16 arg1) {
-    struct Obj {
-        u8 pad[8];
-        virtual void v0() = 0;
-        virtual void v1() = 0;
-        virtual void v2() = 0;
-    };
-    extern u8 lbl_803301A8[1344];
-    extern f32 lbl_8036A7A0;
-    Obj *entry;
-    u8 *flags_ptr;
-    u8 flags;
-    s32 off;
-    s32 temp;
-    s16 var_r5;
-
-    if (arg0 < 0) {
-        return;
-    }
-    off = arg0 * 0x30;
-    entry = (Obj *)(lbl_803301A8 + off);
-    flags_ptr = (u8 *)entry + 0xC;
-    flags = *flags_ptr;
-    if (!(flags & 1)) {
-        return;
-    }
-    if (arg1 <= 0) {
-        ((Obj *)(lbl_803301A8 + off))->v2();
-        return;
-    }
-    if (!(flags & 8)) {
-        temp = (s32)((f32)arg1 / lbl_8036A7A0);
-        var_r5 = (s16)temp;
-        if (var_r5 <= 0) {
-            var_r5 = 1;
-        }
-        entry = (Obj *)(lbl_803301A8 + off);
-        *((u8 *)entry + 0x28) = *((u8 *)entry + 0x16);
-        *((u8 *)entry + 0x29) = 0;
-        *((s16 *)((u8 *)entry + 0x2E)) = var_r5;
-        *((s16 *)((u8 *)entry + 0x2C)) = 0;
-        *flags_ptr = (u8)(*flags_ptr | 8);
-    }
+struct Obj { u8 pad[8]; virtual void v0()=0; virtual void v1()=0; virtual void v2()=0; };
+extern u8 lbl_803301A8[1344]; extern f32 lbl_8036A7A0;
+Anim *entry; s16 duration; u8 flags; s32 off; u8 *flags_ptr;
+if(arg0<0)return;
+off=arg0*0x30;
+flags_ptr=(u8*)((s32)lbl_803301A8+off);
+flags=*(flags_ptr+=0xc);
+if(!(flags&1))return;
+if(arg1<=0){((Obj*)(lbl_803301A8+off))->v2();return;}
+if(!(flags&8)){
+duration=(s16)(s32)((f32)arg1/lbl_8036A7A0);
+if(duration<=0)duration=1;
+entry=(Anim*)((u32)lbl_803301A8+off);
+entry->start=entry->cur;
+entry->end=0;
+entry->frames=duration;
+entry->frame=0;
+*flags_ptr|=8;
+}
 }
 #pragma cplusplus reset
 
@@ -11163,9 +11112,11 @@ extern "C" void fn_8014746C(s8 arg0, s16 arg1) {
 s32 fn_80147578(void *, s32, f32, f32, f32);
 
 void fn_80147548(void *arg0, f32 *arg1, s32 arg2) {
-    void fn_80147578(void *, f32, f32, f32, s32);
-
-    fn_80147578(arg0, arg1[0], arg1[1], arg1[2], arg2);
+ void fn_80147578(void *, f32, f32, f32, s32);
+ f32 z=arg1[2];
+ f32 y=arg1[1];
+ f32 x=arg1[0];
+ fn_80147578(arg0,x,y,z,arg2);
 }
 
 s32 fn_80147578(void *arg0, s32 arg1, f32 farg0, f32 farg1, f32 farg2) {
