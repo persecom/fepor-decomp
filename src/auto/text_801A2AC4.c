@@ -242,6 +242,25 @@ s32 fn_801A32C0(void) {
     return lbl_802EF4E0[0] != 0;
 }
 
+s32 fn_801A32F8(s32 arg0) {
+    void fn_801A7794(void *, void *, void *);
+    void fn_801A49AC(void *, u8);
+    void fn_80036150(void *);
+    void **fn_800285C0(void *);
+    void fn_801A3B40(void *, s32, s32);
+    extern u16 lbl_802EF4C8[];
+    extern u16 lbl_80330EAC[];
+    u8 *base;
+
+    fn_801A7794(lbl_80330EAC, *(void **)lbl_802EF4C8, *(void **)((u8 *)lbl_802EF4C8 + 4));
+    fn_801A49AC(lbl_80330EAC, *(u8 *)((u8 *)lbl_802EF4C8 + 0xA));
+    base = (u8 *)lbl_80330EAC;
+    ((struct { u8 hi:3; u8 lo:5; } *)(base + 0x486))->hi = 7;
+    fn_80036150(lbl_80330EAC);
+    fn_801A3B40(*fn_800285C0(lbl_802EF4C8), arg0, 0);
+    return 0;
+}
+
 s32 fn_801A3668(void) {
     void fn_8002AA34(void);
     extern s32 lbl_802EF4E0[];
