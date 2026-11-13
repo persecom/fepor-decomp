@@ -12,18 +12,14 @@ extern f64 lbl_80368C28;    // global float constant
 extern u16 jumptable_80283AE8[];
 
 s32 fn_80006264(u32 *a, u32 *b, u32 n) {
-    u32 t1;
-    u32 t2;
-
     a--;
     n >>= 2;
     b--;
     do {
-        t1 = *++a;
-        t2 = *++b;
-        if (t1 != t2) {
-            return 1;
+        if (*++a == *++b) {
+            continue;
         }
+        return 1;
     } while (--n);
     return 0;
 }
@@ -3772,16 +3768,16 @@ void fn_8000C6AC(void *arg0) {
     }
 }
 
-void fn_8000CA64(u32 arg1) {
-    M2C_UNK fn_8000CAA0();
-    M2C_UNK fn_8000CAF0();
+void fn_8000CA64(u32 unused, u32 arg1) {
+    void fn_8000CAA0(void);
+    void fn_8000CAF0(void);
     u32 var_r4;
 
     var_r4 = arg1;
     if (var_r4 == 0U) {
         var_r4 = 3U;
     }
-    if ((s32) var_r4 < 0) {
+    if ((s32)var_r4 < 0) {
         fn_8000CAA0();
         return;
     }
