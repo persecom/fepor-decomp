@@ -18903,22 +18903,21 @@ void fn_800FA6CC(void *arg0) {
     extern void *lbl_803678F8;
     extern s32 lbl_803678F4;
     s32 fn_8000CEE4(s32);
-    void fn_8018D4CC(void *, void *);
+    void fn_8018D4CC(void *, void (*)(void *));
     void fn_800FB5C8(void *);
     void fn_800FB548(void *);
     void fn_800FB494(void *);
-    u8 *obj;
     u8 *state;
+    u8 *obj;
+    void (*cb)(void *);
 
     obj = (u8 *)arg0;
     state = (u8 *)lbl_803678F8;
 
     if (fn_8000CEE4(0x64) <= *(s32 *)(state + 4)) {
-        fn_8018D4CC(
-            arg0,
-            *(u32 *)(state + 0x14) == 0
-                ? (void *)fn_800FB5C8
-                : (*(s32 *)(state + 0x10) != 0 ? (void *)fn_800FB494 : (void *)fn_800FB548));
+        cb = *(u32 *)(state + 0x14) == 0 ? fn_800FB5C8
+            : (*(s32 *)(state + 0x10) != 0 ? fn_800FB494 : fn_800FB548);
+        fn_8018D4CC(obj, cb);
     }
 
     if (lbl_803678F4 == 0) {
@@ -19205,6 +19204,43 @@ s32 fn_800FB60C(void *arg0) {
     extern u8 lbl_802EF4C8[];
     s32 r = fn_80015610(*(s32 *)((u8 *)arg0 + 0x190), *(s32 *)((u8 *)*(void **)lbl_802EF4C8 + 0x190));
     return (r & 0xFF) == 0;
+}
+
+u8 fn_800FB6FC(void) {
+    extern u8 lbl_802EF4C8[];
+    extern u8 *lbl_803678F8;
+    extern u8 lbl_803678F0;
+    extern s32 lbl_803678F4;
+    extern u8 lbl_8032B3C0[];
+    extern u8 lbl_80273000[];
+    void *fn_8000D354(void *);
+    void *fn_800FB918(void *, void *, s32 *, u8 *);
+
+    u8 *obj;
+    u8 *entry;
+    s32 key;
+    u8 flag;
+    s32 val;
+    void *ret;
+
+    obj = *(u8 **)lbl_802EF4C8;
+    entry = (u8 *)fn_8000D354(*(void **)(obj + 0x238));
+    lbl_803678F8 = entry;
+    lbl_803678F0 = 0;
+    lbl_803678F4 = 0;
+    entry = entry + obj[0x250] * 0x1C;
+    lbl_803678F8 = entry;
+
+    val = *(s32 *)(entry + 8);
+    if (val != 0) {
+        *(s16 *)(lbl_8032B3C0 + 4) = (s16)val;
+    }
+
+    key = *(s32 *)entry;
+    ret = fn_800FB918(lbl_80273000, lbl_80273000 + 0x1A0, &key, &flag);
+    (*(void (**)(void *, void *))((u8 *)ret + 4))(obj, ret);
+
+    return lbl_803678F0;
 }
 
 void fn_800FB918(void *arg0, void *arg1, s32 *arg2) {
