@@ -1896,12 +1896,37 @@ s32 fn_8001CBA0(u8 *arg0) {
 }
 #pragma peephole reset
 #pragma scheduling reset
-void fn_8001CC48(void *arg0, void *arg1) {
-    u32* r3 = (u32*)arg0;
-    u32* r4 = (u32*)arg1;
-    
-    *(r3 + 0x0) = *(r4 + 0x0);
-    *(r3 + 0x1) = *(r4 + 0x1);
+void fn_8001CC48(u8 *dst, u8 *src) {
+    s32 i;
+
+    for (i = 0; i < 8; i++) {
+        switch ((s8)src[i]) {
+        case 'S':
+            dst[i] = 0xFB;
+            break;
+        case 'A':
+            dst[i] = 0xB5;
+            break;
+        case 'B':
+            dst[i] = 0x79;
+            break;
+        case 'C':
+            dst[i] = 0x47;
+            break;
+        case 'D':
+            dst[i] = 0x1F;
+            break;
+        case 'E':
+            dst[i] = 0x01;
+            break;
+        case '-':
+            dst[i] = 0;
+            break;
+        case '*':
+            dst[i] = 0;
+            break;
+        }
+    }
 }
 
 s32 fn_8001CCE4(u8 arg0) {
