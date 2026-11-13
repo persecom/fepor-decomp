@@ -1307,16 +1307,19 @@ void fn_8002C530(s32 arg0) {
 }
 
 void fn_8002C8E0(void) {
-    void *fn_8010FF24(void *, s32);
-    void *fn_8002F6E8(void *, u8, u8, s32, s32);
-    extern M2C_UNK lbl_8032BB58;
-    extern M2C_UNK lbl_802EF4E0;
+    void *fn_8010FF24(void *, s8, s8, u8);
+    void fn_8002F6E8(void *, u8, u8, s32, s32);
+    extern u8 lbl_8032BB58[];
+    extern u8 lbl_802EF4E0[];
+    void *ptr;
+    s8 x;
+    s8 y;
 
-    void *ptr_r3;
-
-    ptr_r3 = fn_8010FF24((void *)lbl_8032BB58, 4);
-    if ((ptr_r3 != NULL) && (*(u8 *)((char*)ptr_r3 + 4) != 0)) {
-        fn_8002F6E8((void *)lbl_802EF4E0, *(u8 *)ptr_r3, *(u8 *)((char*)ptr_r3 + 1), 0, 4);
+    ptr = fn_8010FF24(lbl_8032BB58, x, y, 4);
+    if (ptr != NULL) {
+        if (*(u8 *)((char *)ptr + 4) != 0) {
+            fn_8002F6E8(lbl_802EF4E0, *(u8 *)ptr, *(u8 *)((char *)ptr + 1), 0, 4);
+        }
     }
 }
 
