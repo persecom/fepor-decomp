@@ -207,28 +207,21 @@ loop_cond:
 }
 
 void fn_800065B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    void fn_8020AEC4(u8 *);
     extern u8 lbl_80367131;
     extern u8 lbl_802A51C0[];
-    extern u8 lbl_80367138[];
-    
-    void *temp_r7;
-    s32 temp_r8;
-    s32 temp_r9;
+    extern u8 lbl_80367138[8];
+    u8 *entry;
+    u8 idx;
 
-    // Exactly follow target's register usage and instructions
-    temp_r9 = lbl_80367131;
-    temp_r8 = (s8) temp_r9 * 0x10;
-    
-    temp_r7 = &lbl_802A51C0[0];
-    temp_r7 = (u8*)temp_r7 + temp_r8;
-    
-    *(s32*)temp_r7 = arg0;
-    *(s32*)((char*)temp_r7 + 4) = arg1;
-    *(s32*)((char*)temp_r7 + 8) = arg2;
-    *(s32*)((char*)temp_r7 + 0xC) = arg3;
-    
-    lbl_80367131 = (temp_r9 + 1) & 0x1F;
-    fn_8020AEC4(lbl_80367138, temp_r7, temp_r8, temp_r9);
+    idx = lbl_80367131;
+    *(s32 *)(lbl_802A51C0 + (s8)idx * 0x10) = arg0;
+    entry = lbl_802A51C0 + (s8)idx * 0x10;
+    *(s32 *)(entry + 4) = arg1;
+    *(s32 *)(entry + 8) = arg2;
+    *(s32 *)(entry + 0xC) = arg3;
+    lbl_80367131 = (idx + 1) & 0x1F;
+    fn_8020AEC4(lbl_80367138);
 }
 
 void fn_80006608(s16 *arg0) {
@@ -3381,23 +3374,25 @@ void fn_8000C068(void *arg0, s32 arg1) {
     M2C_FIELD(arg0, s32 *, 8) = arg1;
 }
 
-void fn_8000C070(void *arg0, u8 arg1) {
-    u32 *var_r6;
-    u32 temp_r5;
+void fn_8000C070(void *arg0, u32 arg1)
+{
+    u32 node;
+    u32 *ptr;
 
-    var_r6 = *(u32 **)arg0;
-loop_1:
-    temp_r5 = *var_r6;
-    if (temp_r5 == 0) {
+    ptr = *(u32 **)arg0;
+    goto load;
+loop:
+    if ((node & 0xFFF) == 1 && (s16)(node >> 16) == (s32)(u8)arg1) {
+        *(u32 **)((u8 *)arg0 + 4) = ptr;
+        *(s32 *)((u8 *)arg0 + 0x10) = 0;
         return;
     }
-    if (((u32)(temp_r5 & 0xFFF) == 1) && ((s16)(temp_r5 >> 0x10U) == (s32)arg1)) {
-        *(u32 **)((char *)arg0 + 4) = var_r6;
-        *(s32 *)((char *)arg0 + 0x10) = 0;
-        return;
+    ptr = (u32 *)((u8 *)ptr + ((node & 0x0F000000) >> 22));
+load:
+    node = *ptr;
+    if (node != 0) {
+        goto loop;
     }
-    var_r6 += (temp_r5 >> 0xAU) & 0x3C;
-    goto loop_1;
 }
 
 u32 *fn_8000C0C0(u32 arg0) {
