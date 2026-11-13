@@ -7879,6 +7879,63 @@ void fn_801402E4(void) {
     fn_80141D94();
 }
 
+#pragma cplusplus on
+extern "C" void *fn_80140304(void *arg0, s16 arg1) {
+    struct Obj {
+        virtual void destroy(s32) = 0;
+        s32 refcount;
+    };
+    typedef struct {
+        u32 unk0;
+        ListNode node;
+    } DtorList;
+    typedef struct Owner {
+        u8 pad[0x34];
+        DtorList list;
+    } Owner;
+    void fn_8013FC68(void *, void *, void *);
+    void fn_80136F2C(void *, void *, void *, void *);
+    void fn_800C428C(void *);
+
+    void *found;
+    u8 ret[4];
+    ListNode *sp10;
+    ListNode *spC;
+    u8 sp8[4];
+    ListNode *end;
+    Owner *a0;
+    Obj *obj;
+
+    a0 = (Owner *)arg0;
+    if (arg0 != NULL) {
+        while (a0->list.unk0 != 0) {
+            obj = (Obj *)a0->list.node.prev->val;
+            if (obj != NULL) {
+                if (--obj->refcount == 0 && obj != NULL) {
+                    obj->destroy(1);
+                }
+            }
+            found = a0->list.node.prev;
+            fn_8013FC68(ret, &a0->list, &found);
+        }
+        if (&a0->list != NULL) {
+            if (&a0->list != NULL) {
+                if (&a0->list != NULL) {
+                    end = &a0->list.node;
+                    sp10 = end;
+                    spC = end->next;
+                    fn_80136F2C(sp8, &a0->list, &spC, &sp10);
+                }
+            }
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+#pragma cplusplus reset
+
 void *fn_801403F0(void *arg0) {
     *(u8 *)((uintptr_t)arg0 + 0x30) = 0;
     fn_80142060((char *)arg0 + 0x34);
@@ -8536,6 +8593,50 @@ void fn_80142814(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 *arg4, s32 arg5) {
     fn_8008D000(*arg4, arg5, arg1, arg2);
 }
 
+s32 fn_8014284C(s32 unused, void **arg1) {
+    void *fn_8001CB64(void **);
+    void *p;
+    u8 kind;
+    void *temp;
+
+    p = *arg1;
+    if (p != NULL) {
+        kind = *(u8 *)((u8 *)p + 0x12);
+    } else {
+        kind = 0xC;
+    }
+    switch (kind) {
+    case 0:
+        return 0;
+    case 1:
+        return 1;
+    case 2:
+        return 2;
+    case 3:
+        return 3;
+    case 4:
+        return 4;
+    case 5:
+        return 5;
+    case 6:
+        return 6;
+    case 7:
+        temp = fn_8001CB64(arg1);
+        if ((((*(s32 *)((u8 *)temp + 4) & 3) ^ 0) | ((*(s32 *)temp & 0) ^ 0)) != 0) {
+            return 7;
+        }
+        return 8;
+    case 8:
+        return 8;
+    case 9:
+        return 9;
+    case 10:
+        return 10;
+    default:
+        return 12;
+    }
+}
+
 #pragma cplusplus on
 extern "C" void fn_80142934(void *arg0, s32 arg1) {
     extern u8 lbl_80292314[];
@@ -8987,11 +9088,48 @@ extern "C" s16 fn_801435E0(void *arg0, u32 arg1) {
 }
 #pragma cplusplus reset
 
-void *fn_801436AC(void) {
-    extern u16 lbl_80276008[];
-    return &lbl_80276008[0x2B0];
-}
+#pragma cplusplus on
+extern "C" void fn_801436AC(void *arg0, void *arg1) {
+    void fn_80144E34(ListIter *, List *, ListIter *);
+    struct Pair {
+        u8 f;
+        u32 v;
+    };
+    List *list;
+    ListNode *sentinel;
+    ListNode *node;
+    ListIter ret;
+    ListIter it;
+    Pair a;
+    Pair b;
+    s32 i;
+    u8 *cursor;
+    s16 *slot;
+    s32 size;
 
+    cursor = (u8 *)arg0;
+    a.v = (u32)arg1;
+    a.f = a.f;
+    for (i = 0; i < 11; i++, cursor += 0xC) {
+        list = (List *)(cursor + 0x90);
+        sentinel = (ListNode *)((u8 *)list + 4);
+        node = *(ListNode **)((u8 *)list + 8);
+        b = a;
+        while (node != sentinel && node->val != arg1) {
+            node = node->next;
+        }
+        if (node != (ListNode *)((u8 *)list + 4)) {
+            it.node = node;
+            fn_80144E34(&ret, list, &it);
+            size = list->size;
+            slot = (s16 *)((u8 *)arg0 + 0x64 + (i << 1));
+            if (!((u32)*slot < (u32)size)) {
+                *slot = (s16)(size - 1);
+            }
+        }
+    }
+}
+#pragma cplusplus reset
 void fn_80143784(void **arg0, void *arg1) {
     extern void *lbl_8036C4E8;
     extern void *lbl_8036C4EC;
@@ -9614,7 +9752,48 @@ extern "C" void fn_80144698(void *arg0) {
     };
     ((Obj *)arg0)->v10();
 }
+
 #pragma cplusplus reset
+extern void fn_801446C4(void *arg0);
+void fn_801446C4(void *arg0) {
+    void *fn_800C42D8(s32);
+    void fn_8013692C(void *, s32, s32, s32, s32, s32);
+    void fn_8013F0F0(void *, void *);
+    void fn_8013F1A0(void *, void *);
+    void *child;
+    s16 a;
+    s16 b;
+    s16 c;
+    s16 d;
+
+    a = *(s16 *)((u8 *)arg0 + 0xC);
+    b = *(s16 *)((u8 *)arg0 + 0x10);
+    c = *(s16 *)((u8 *)arg0 + 0xA);
+    d = *(s16 *)((u8 *)arg0 + 0xE);
+    *(s16 *)((u8 *)arg0 + 0x12) = 3;
+    b = (s16)(b - a);
+    a = (s16)(d - c);
+    *(s16 *)((u8 *)arg0 + 0x14) = 6;
+    *(s16 *)((u8 *)arg0 + 0x16) = (s16)(a - 3);
+    *(s16 *)((u8 *)arg0 + 0x18) = (s16)(b - 6);
+
+    if (*(void **)((u8 *)arg0 + 0x48) != NULL) {
+        fn_8013F0F0(arg0, *(void **)((u8 *)arg0 + 0x48));
+    }
+    child = fn_800C42D8(0x9C);
+    if (child != NULL) {
+        fn_8013692C(
+            child,
+            (s16)((s16)(*(s16 *)((u8 *)arg0 + 0x16) - *(s16 *)((u8 *)arg0 + 0x12)) - 0xC),
+            0,
+            9,
+            (s16)(*(s16 *)((u8 *)arg0 + 0x18) - *(s16 *)((u8 *)arg0 + 0x14)),
+            *(s16 *)((u8 *)arg0 + 0x22) - 5);
+    }
+    *(void **)((u8 *)arg0 + 0x48) = child;
+    *(s32 *)((u8 *)*(void **)((u8 *)arg0 + 0x48) + 0x48) = 1;
+    fn_8013F1A0(arg0, *(void **)((u8 *)arg0 + 0x48));
+}
 
 void fn_801447A4(void *arg0, s32 arg1) {
     extern s32 lbl_80367AE0;
@@ -9945,20 +10124,82 @@ void fn_801452E8(void) {
     fn_800B2E78();
 }
 
-s32 fn_80145308(s32 arg0, s32 arg1) {
-    extern u8 lbl_80276008[];
-    
-    s32 var_r3 = 0;
+s32 fn_80145308(void) {
+    extern u8 lbl_80276BC8[];
+    extern u8 lbl_803301A8[1344];
+    typedef struct {
+        s8 **names;
+        u8 pad[8];
+        u8 flags;
+        u8 pad2[0x23];
+    } Entry;
+    Entry *entry;
+    s8 *str;
+    s8 *a;
+    s8 *b;
+    s8 ca;
     s32 i;
-    
-    for (i = 0; i < 0x94; i++) {
-        if (lbl_80276008[arg0 + i] == arg1) {
-            var_r3 = i;
-            break;
+    s32 n;
+    u8 flg;
+
+    str = (s8 *)((u8 *)lbl_80276BC8 + 0x8a);
+    entry = (Entry *)lbl_803301A8;
+    i = 0;
+    n = 0xE;
+    do {
+        if (entry->flags & 1) {
+            a = str;
+            b = (s8 *)*entry->names;
+            goto check_b;
+        loop:
+            ca = *(s8 *)((u8 *)a);
+            if (ca == 0) {
+                return 1;
+            }
+            {
+                s8 cb = *(s8 *)((u8 *)b);
+                a += 1;
+                b += 1;
+                if (ca != cb) {
+                    goto next1;
+                }
+            }
+        check_b:
+            if (*(s8 *)((u8 *)b) != 0) {
+                goto loop;
+            }
         }
-    }
-    
-    return var_r3;
+    next1:
+        flg = *((u8 *)entry + 0x3c);
+        entry = (Entry *)((u8 *)entry + 0x30);
+        if (flg & 1) {
+            a = str;
+            b = (s8 *)*entry->names;
+            goto check_b2;
+        loop2:
+            ca = *(s8 *)((u8 *)a);
+            if (ca == 0) {
+                return 1;
+            }
+            {
+                s8 cb = *(s8 *)((u8 *)b);
+                a += 1;
+                b += 1;
+                if (ca != cb) {
+                    goto next2;
+                }
+            }
+        check_b2:
+            if (*(s8 *)((u8 *)b) != 0) {
+                goto loop2;
+            }
+        }
+    next2:
+        entry = (Entry *)((u8 *)entry + 0x30);
+        i += 1;
+        n -= 1;
+    } while (n != 0);
+    return 0;
 }
 
 void fn_801453F0(void) {
@@ -10383,6 +10624,46 @@ void fn_80146B00(void) {
     lbl_80367AF8 |= 1;
 }
 
+s32 fn_80146B10(s32 arg0) {
+    void *fn_8000D2BC(void *);
+    void fn_800056A0(s32);
+    extern u8 lbl_80276BC8[];
+    s32 *table;
+    s32 count;
+    s32 lo;
+    s32 hi;
+    s32 mid;
+    s32 key;
+    s32 result;
+
+    table = (s32 *)fn_8000D2BC(lbl_80276BC8 + 0x30b);
+    count = *table;
+    table++;
+    lo = 0;
+    hi = count - 1;
+    while (lo <= hi) {
+        mid = lo + ((hi - lo) >> 1);
+        key = table[mid * 2];
+        if (key < arg0) {
+            lo = mid + 1;
+        } else if (key > arg0) {
+            hi = mid - 1;
+        } else {
+            return table[mid * 2 + 1];
+        }
+    }
+    result = 0;
+    for (; count > 0; count--) {
+        if ((u32)table[0] == (u32)arg0) {
+            result = table[1];
+            break;
+        }
+        table += 2;
+    }
+    fn_800056A0(0);
+    return result;
+}
+
 #pragma use_lmw_stmw on
 #pragma cplusplus on
 extern "C" s8 fn_80146BE4(void *arg0) {
@@ -10718,6 +10999,54 @@ extern "C" void fn_80147188(s32 arg0) {
 
     fn_800B3194();
 }
+
+#pragma cplusplus on
+extern "C" void fn_8014746C(s8 arg0, s16 arg1) {
+    struct Obj {
+        u8 pad[8];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    extern u8 lbl_803301A8[1344];
+    extern f32 lbl_8036A7A0;
+    Obj *entry;
+    u8 *flags_ptr;
+    u8 flags;
+    s32 off;
+    s32 temp;
+    s16 var_r5;
+
+    if (arg0 < 0) {
+        return;
+    }
+    off = arg0 * 0x30;
+    entry = (Obj *)(lbl_803301A8 + off);
+    flags_ptr = (u8 *)entry + 0xC;
+    flags = *flags_ptr;
+    if (!(flags & 1)) {
+        return;
+    }
+    if (arg1 <= 0) {
+        ((Obj *)(lbl_803301A8 + off))->v2();
+        return;
+    }
+    if (!(flags & 8)) {
+        temp = (s32)((f32)arg1 / lbl_8036A7A0);
+        var_r5 = (s16)temp;
+        if (var_r5 <= 0) {
+            var_r5 = 1;
+        }
+        entry = (Obj *)(lbl_803301A8 + off);
+        *((u8 *)entry + 0x28) = *((u8 *)entry + 0x16);
+        *((u8 *)entry + 0x29) = 0;
+        *((s16 *)((u8 *)entry + 0x2E)) = var_r5;
+        *((s16 *)((u8 *)entry + 0x2C)) = 0;
+        *flags_ptr = (u8)(*flags_ptr | 8);
+    }
+}
+#pragma cplusplus reset
+
 #pragma cplusplus reset
 #pragma use_lmw_stmw reset
 
