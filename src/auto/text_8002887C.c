@@ -1387,6 +1387,36 @@ void fn_8002C530(s32 arg0) {
     }
 }
 
+#pragma cplusplus on
+#pragma use_lmw_stmw on
+extern "C" void fn_8002C618(void *arg0, s8 arg1, s8 arg2) {
+    extern s32 lbl_802CA518[];
+    struct Visitor {
+        virtual void v0(s8, s8) = 0;
+        virtual void visit(s8, s8) = 0;
+    };
+    register s8 y;
+    s8 x;
+
+    y = arg2;
+    x = arg1;
+
+    if (y - 1 >= 0) {
+        ((Visitor *)arg0)->visit(x, y - 1);
+    }
+    if (x + 1 < lbl_802CA518[0]) {
+        ((Visitor *)arg0)->visit(x + 1, y);
+    }
+    if (y + 1 < lbl_802CA518[1]) {
+        ((Visitor *)arg0)->visit(x, y + 1);
+    }
+    if (x - 1 >= 0) {
+        ((Visitor *)arg0)->visit(x - 1, y);
+    }
+}
+#pragma use_lmw_stmw reset
+#pragma cplusplus reset
+
 void fn_8002C8E0(void) {
     void *fn_8010FF24(void *, s8, s8, u8);
     void fn_8002F6E8(void *, u8, u8, s32, s32);
@@ -1899,6 +1929,40 @@ void fn_8002D548(void) {
         void fn_8002F6E8(void *, u8, u8, s32, s32);
         fn_8002F6E8((void *)lbl_802EF4E0, *(u8 *)ptr_r3, *(u8 *)((char*)ptr_r3 + 1), 0, 4);
     }
+}
+
+void fn_8002D648(void *arg0) {
+    extern u16 lbl_80284E78[];
+    extern u16 lbl_80284E30[];
+    extern u8 lbl_80330708[];
+    extern struct { u32 unk0; u32 unk4; } lbl_803682F0;
+    void *fn_8000CAA0(void *, void *);
+    void *fn_8000CAF0(void *, void *);
+    void fn_8000C070(void *, s32);
+    void fn_80006220(s32);
+    void fn_8014C7C0(void *, void *);
+    void fn_801E379C(u32);
+    void fn_801E2594(void *);
+    void fn_8014CBD8(void *, f32, f32);
+    void fn_800187F0(void);
+    void fn_8014C798(void *);
+    void fn_800163F8(void);
+    void fn_80016180(void);
+    void *r;
+
+    r = fn_8000CAA0(lbl_80284E78, arg0);
+    fn_8000C070(r, 4);
+    fn_8000CAF0(lbl_80284E30, r);
+    fn_80006220(0x10);
+    fn_8014C7C0(lbl_80330708, lbl_80330708 + 0x504);
+    fn_801E379C(lbl_803682F0.unk4);
+    fn_801E2594(&lbl_803682F0);
+    fn_8014CBD8(lbl_80330708, (f32)(s8)lbl_80330708[0x52], (f32)(s8)lbl_80330708[0x53]);
+    fn_800187F0();
+    fn_8014C798(lbl_80330708);
+    fn_800163F8();
+    fn_80016180();
+    fn_800187F0();
 }
 
 void fn_8002D72C(void *arg0) {
