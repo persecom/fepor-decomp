@@ -156,15 +156,17 @@ void fn_8000D5C8(void) {
     }
 }
 
-void fn_8000D864(s32 arg0, s32 arg1) {
-    extern u16 lbl_802AED10[];
-    void fn_80234450(void *, s32);
-    s32 strlen(s32);
+void fn_8000D864(s32 arg0, char *arg1) {
+    void fn_80234450(char *, char *);
+    s32 strlen(char *);
+    extern u8 lbl_802AED10[];
+    u8 *temp_r31;
+    char *temp_r30;
 
-    s32 temp_r5 = arg0 * 0x44;
-    u16* temp_r31 = &lbl_802AED10[temp_r5];
-    *temp_r31 = strlen(arg1);
-    fn_80234450(temp_r31 + 1, arg1);
+    temp_r31 = lbl_802AED10 + (arg0 * 0x44);
+    temp_r30 = arg1;
+    *(s32 *)temp_r31 = strlen(temp_r30);
+    fn_80234450((char *)(temp_r31 + 4), temp_r30);
 }
 
 void *fn_8000D8BC(s32 arg0, char *arg1) {
