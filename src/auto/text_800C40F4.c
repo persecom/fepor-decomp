@@ -2018,19 +2018,15 @@ s32 fn_800C9400(String *arg0, u32 pos, u32 n, char *s, u32 n2) {
     u32 rest;
     const u32 *q;
     s32 cmp;
-    u32 size;
 
-    size = *(u32 *)arg0;
-    if (pos <= size) {
-        goto body;
+    if (pos > arg0->size) {
+        fn_80232058(__files + 0xA0, lbl_80270350 + 0x1D);
+        fn_8022CF78();
     }
-    fn_80232058(__files + 0xA0, lbl_80270350 + 0x1D);
-    fn_8022CF78();
-body:
-    rest = *(u32 *)arg0 - pos;
+    rest = arg0->size - pos;
     len = *StrMin(&rest, &n);
     q = StrMin(&len, &n2);
-    cmp = fn_80231944(*(char **)((u8 *)arg0 + 8) + pos, s, *q);
+    cmp = fn_80231944(arg0->data + pos, s, *q);
     if (cmp == 0) {
         if (len < n2) {
             return -1;
@@ -22538,12 +22534,12 @@ extern u8 lbl_802CA518[];
     }
 }
 void fn_80101448(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
-    fn_800FE2A0(arg0, 5, arg7);
+    fn_800FE2A0((void *)arg0, 5, arg7);
     fn_80101530(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 }
 
 void fn_801014BC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
-    fn_800FE2A0(arg0, 5, arg7);
+    fn_800FE2A0((void *)arg0, 5, arg7);
     fn_80101960(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 }
 
