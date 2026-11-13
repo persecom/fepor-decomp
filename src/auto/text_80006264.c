@@ -253,7 +253,21 @@ s32 fn_80006650(s16 *arg0, s16 *arg1) {
     return arg1[3] >= arg0[1];
 }
 
-void fn_800066B4(s32 arg0,s32 *arg1,s32 *arg2,s32 *arg3,s32 *arg4,s32 *arg5,s32 *arg6){u32 fn_8022C7E0(u32,u32,u32);u32 n;u32 t;n=fn_8022C7E0(0,*(u32*)0x800000f8>>2,0x80000000);t=n/60;*arg4=n-t*60;n=t/60;*arg3=t-n*60;*arg2=n;}
+void fn_800066B4(s32 hi, u32 lo, s32 *hours, s32 *mins, s32 *secs) {
+    s32 __div2i(s32, s32, s32, s32);
+    s32 *s;
+    s32 *h;
+    s32 *m;
+    u32 total;
+
+    m = mins;
+    h = hours;
+    s = secs;
+    total = (u32)__div2i(hi, lo, 0, *(u32 *)0x800000F8 >> 2);
+    *s = total % 60;
+    *m = (total / 60) % 60;
+    *h = total / 3600;
+}
 
 void fn_80006754(void)
 {
@@ -3694,16 +3708,36 @@ void fn_8000C5E0(void *arg0) {
 int fn_8000C60C(void *arg0) {
     extern u32 lbl_802ADADC[8];
     int fn_8000C6AC(void);
-    u32 *p=(u32*)arg0,*q,idx;
-    if(arg0){
-        q=(u32*)p[8]; if(q)q[9]=p[9];
-        q=(u32*)p[9]; if(q)q[8]=p[8];
-        idx=p[6];
-        if(idx>8){q=(u32*)idx;if(q[7]==(u32)arg0)q[7]=p[9];}
-        else if((u32)arg0==lbl_802ADADC[idx])lbl_802ADADC[idx]=p[9];
-        p[8]=0;p[9]=0;fn_8000C6AC();
+    u32 *p = (u32 *)arg0;
+    u32 *q;
+    u32 idx;
+    u32 head;
+
+    if (arg0) {
+        q = (u32 *)p[8];
+        if (q) {
+            q[9] = p[9];
+        }
+        q = (u32 *)p[9];
+        if (q) {
+            q[8] = p[8];
+        }
+        idx = p[6];
+        if (idx > 8) {
+            q = (u32 *)idx;
+            if (q[7] == (u32)arg0) {
+                q[7] = p[9];
+            }
+        } else {
+            head = lbl_802ADADC[idx];
+            if (head == (u32)arg0) {
+                lbl_802ADADC[idx] = p[9];
+            }
+        }
+        p[8] = 0;
+        p[9] = 0;
+        fn_8000C6AC();
     }
-    return 0;
 }
 
 void fn_8000C6AC(void *arg0) {
