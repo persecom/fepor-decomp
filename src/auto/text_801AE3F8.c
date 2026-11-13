@@ -2179,9 +2179,11 @@ void fn_801B3150(void *arg0) {
     *(s16 *)(obj + 0x18) = width - 8;
 }
 
-void **fn_801B31E4(void **arg0) {
-    fn_80134E48();
-    *arg0 = (void**)&lbl_802917D0;
+void *fn_801B31E4(void *arg0) {
+    void fn_80134E48(void *);
+
+    fn_80134E48(arg0);
+    *(void **)arg0 = lbl_802917D0;
     return arg0;
 }
 extern s32 lbl_80367110;
