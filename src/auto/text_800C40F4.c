@@ -11329,35 +11329,29 @@ extern "C" void fn_800E43EC(void *arg0) {
 }
 #pragma cplusplus reset
 #pragma cplusplus on
-extern "C" void fn_800E4550(void *arg0, void *arg1)
-{
-    extern void *fn_800C42D8(s32);
-    extern void *fn_800E01C8(void *);
+extern "C" void fn_800E4550(void *arg0, void *arg1) {
+    struct Obj10 {
+        u8 pad[0x10];
+        virtual void *v0() = 0;
+        virtual void *v1() = 0;
+        virtual void *v2(char *, char *) = 0;
+        virtual void *v3() = 0;
+        virtual void *v4() = 0;
+        virtual void v5(void *) = 0;
+    };
+    void *fn_800C42D8(s32);
+    void *fn_800E01C8(void *);
+    void *tmp;
 
-    u8 *obj;
-    u8 *ptr;
-    void (**vtable)(void *, void *);
-    void (*callback)(void *, void *);
-
-    obj = (u8 *)arg0;
-
-    if (*(void **)(obj + 0xA0) == 0) {
-        ptr = (u8 *)fn_800C42D8(0x14);
-
-        if (ptr != 0) {
-            ptr = (u8 *)fn_800E01C8(ptr);
+    if (*(void **)((u8 *)arg0 + 0xA0) == 0) {
+        tmp = fn_800C42D8(0x14);
+        if (tmp != 0) {
+            tmp = fn_800E01C8(tmp);
         }
-
-        *(void **)(obj + 0xA0) = ptr;
+        *(void **)((u8 *)arg0 + 0xA0) = tmp;
     }
-
     if (arg1 != 0) {
-        ptr = *(u8 **)(obj + 0xA0);
-
-        vtable = *(void (***)(void *, void *))(ptr + 0x10);
-        callback = *(void (**)(void *, void *))((u8 *)vtable + 0x1C);
-
-        callback(ptr, arg1);
+        ((Obj10 *)*(void **)((u8 *)arg0 + 0xA0))->v5(arg1);
     }
 }
 #pragma cplusplus reset
