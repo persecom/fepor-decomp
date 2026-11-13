@@ -8326,12 +8326,14 @@ void fn_800C09E4(s32 arg0) {
 }
 
 void fn_800C0A24(void *arg0) {
+    void fn_80013778(s32, void *);
+    void fn_80018AF4(void);
     extern u32 lbl_80367110;
 
     fn_80013778(0, *(void **)((u8 *)arg0 + 0x30));
     fn_80018AF4();
 
-    lbl_80367110 &= ~0x20000000;
+    lbl_80367110 &= ~0x4;
 }
 
 void fn_800C0A60(void *arg0)
