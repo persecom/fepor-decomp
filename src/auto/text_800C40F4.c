@@ -2394,15 +2394,16 @@ struct LocalState st;
 void fn_800CA59C(void *arg0, u32 arg1, void *arg2)
 {
     extern void fn_800CA5FC(void *, void *);
-
     u8 *ptr;
     u32 count;
+    void *a2;
 
     ptr = (u8 *)arg0;
     count = arg1;
+    a2 = arg2;
 
     while (count != 0) {
-        fn_800CA5FC(ptr, arg2);
+        fn_800CA5FC(ptr, a2);
         ptr += 0xC;
         count--;
     }
@@ -8999,25 +9000,22 @@ loop_check:
     return self;
 }
 
-void *fn_800DE99C(void *arg0, s32 arg1)
-{
-    extern void fn_800C428C(void *);
+void *fn_800DE99C(void *arg0, s16 arg1) {
+    void fn_800C428C(void *);
 
-    u8 *obj;
-
-    obj = (u8 *)arg0;
-
-    if (obj != 0) {
-        if (*(void **)(obj + 8) != 0) {
-            fn_800C428C(*(void **)(obj + 8));
+    if (arg0 != NULL) {
+        if (arg0 == NULL) {
+            goto after;
         }
-
-        if ((s16)arg1 > 0) {
-            fn_800C428C(obj);
+        if (M2C_FIELD(arg0, void **, 8) != NULL) {
+            fn_800C428C(M2C_FIELD(arg0, void **, 8));
+        }
+    after:
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
         }
     }
-
-    return obj;
+    return arg0;
 }
 
 #pragma peephole off
@@ -9489,15 +9487,16 @@ extern "C" void fn_800DF584(void *arg0) {
         u8 pad[0x2C];
         u8 flag_2c;
     };
-    Obj *self = (Obj *)arg0;
-    Other **pp;
     Other *other;
 
-    if (self->flag_3c != 0) {
-        pp = (Other **)((u8 *)arg0 + 0x38);
-        other = *pp;
-        if (other != NULL && other->flag_2c != 0 && self->flag_2c != 0) {
-            self->v3();
+    if (((Obj *)arg0)->flag_3c != 0) {
+        other = (Other *)((Obj *)arg0)->field_38;
+        if (other != NULL) {
+            if (other->flag_2c != 0) {
+                if (((Obj *)arg0)->flag_2c != 0) {
+                    ((Obj *)arg0)->v3();
+                }
+            }
         }
     }
 }
