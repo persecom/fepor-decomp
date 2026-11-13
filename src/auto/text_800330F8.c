@@ -1594,8 +1594,15 @@ void fn_80036FD0(void *arg0, s32 arg1) {
     fn_80016B7C((s32)M2C_FIELD(temp_r3_2, void **, 8));
 }
 
-s32 fn_80037004(void *arg0, s32 arg1) {
-    return M2C_FIELD((M2C_FIELD(M2C_FIELD(arg0, void **, 0x188), s32 *, 0x50) + (arg1 * 8)), s32 *, 8);
+s32 fn_80037004(void *arg0, s32 idx) {
+    void *a;
+    s32 off;
+    u8 *b;
+    a = *(void **)((u8 *)arg0 + 0x188);
+    off = idx * 8;
+    b = *(u8 **)((u8 *)a + 0x50);
+    b += off;
+    return *(s32 *)(b + 8);
 }
 
 u8 fn_8003701C(void *arg0) {
