@@ -8001,28 +8001,38 @@ void fn_800DBA50(f32 *arg0, void *arg1) {
     arg0[2] = z;
 }
 
-void fn_800DBAB8(void *arg0, void *arg1) {
+void fn_800DBAB8(f32 *arg0, void *arg1) {
     extern f32 lbl_80369E70;
     extern f32 lbl_80369E80;
     extern f32 lbl_80369E84;
-    f32 sp14[3];
-    f32 temp_f1;
-    f32 temp_f0;
+    void fn_80202300(void *, s32, f32);
+    void fn_802029C4(void *, f32 *, f32 *);
+    f32 vec[3];
+    f32 mtx[3][4];
+    f32 y;
+    f32 z;
+    f32 x;
+    f32 c70;
+    f32 c80;
+    f32 c84;
 
-    sp14[0] = lbl_80369E70;
-    sp14[1] = lbl_80369E70;
-    sp14[2] = lbl_80369E80;
-    
-    fn_80202300(sp14, 0x59, lbl_80369E84 * *(f32*)((u8*)arg1 + 0x58), lbl_80369E70);
-    fn_802029C4(sp14, &sp14[0], &sp14[0]);
-    
-    *(f32*)((u8*)arg1 + 0x60) = sp14[0];
-    *(f32*)((u8*)arg1 + 0x64) = sp14[1];
-    *(f32*)((u8*)arg1 + 0x68) = sp14[2];
-    
-    *(f32*)((u8*)arg0 + 0x0) = sp14[0];
-    *(f32*)((u8*)arg0 + 0x4) = sp14[1];
-    *(f32*)((u8*)arg0 + 0x8) = sp14[2];
+    c70 = lbl_80369E70;
+    c80 = lbl_80369E80;
+    c84 = lbl_80369E84;
+    vec[0] = c70;
+    vec[1] = c70;
+    vec[2] = c80;
+    fn_80202300(mtx, 0x59, c84 * *(f32 *)((u8 *)arg1 + 0x58));
+    fn_802029C4(mtx, vec, vec);
+    *(f32 *)((u8 *)arg1 + 0x60) = vec[0];
+    *(f32 *)((u8 *)arg1 + 0x64) = vec[1];
+    *(f32 *)((u8 *)arg1 + 0x68) = vec[2];
+    z = *(f32 *)((u8 *)arg1 + 0x68);
+    y = *(f32 *)((u8 *)arg1 + 0x64);
+    x = *(f32 *)((u8 *)arg1 + 0x60);
+    arg0[0] = x;
+    arg0[1] = y;
+    arg0[2] = z;
 }
 
 void fn_800DBB58(f32 *arg0, u8 *arg1) {
@@ -12861,7 +12871,7 @@ extern "C" void fn_800E7A38(void *arg0, s32 arg1) {
 
     *(u8 *)((char *)arg0 + 0x2C) = 0;
     for (i = 0; i < *(s32 *)((char *)arg0 + 4); i++) {
-        ((void (*)(void *, s32))fn_800DF638)(((Obj *)arg0)->v4(i), arg1);
+        fn_800DF638(((Obj *)arg0)->v4(i), arg1);
     }
     ((Obj *)arg0)->v0();
     *(s32 *)((char *)arg0 + 0x44) += 1;
@@ -20165,43 +20175,38 @@ sort:
 }
 
 void fn_800FF0D4(s32 *arg0, s32 *arg1, u8 (*arg2)(s32, s32)) {
-    s32 *current;
-    s32 *end;
     s32 *best;
     s32 *scan;
+    s32 *end;
     s32 temp;
 
-    current = arg0;
-
-    if (current == arg1) {
+    if (arg0 == arg1) {
         return;
     }
 
     end = arg1 - 1;
 
-    do {
-        best = current;
+    while (arg0 < end) {
+        best = arg0;
 
-        if (current != arg1) {
-            scan = current + 1;
-
+        if (arg0 != arg1) {
+            scan = arg0 + 1;
             while (scan != arg1) {
                 if (arg2(*scan, *best) != 0) {
                     best = scan;
                 }
-
                 scan++;
             }
         }
 
-        if (best != current) {
+        if (best != arg0) {
             temp = *best;
-            *best = *current;
-            *current = temp;
+            *best = *arg0;
+            *arg0 = temp;
         }
 
-        current++;
-    } while (current < end);
+        arg0++;
+    }
 }
 
 void fn_800FF178(void) {
