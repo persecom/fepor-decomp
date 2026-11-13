@@ -621,6 +621,41 @@ s32 fn_800C52C8(void) {
     return (s32)lbl_8036786C;
 }
 
+void fn_800C5300(void) {
+    s32 OSGetArenaLo(void);
+    s32 OSGetArenaHi(void);
+    void fn_800056CC(void *, ...);
+    extern u8 lbl_802700D8[];
+    extern u32 lbl_80320B88[];
+    u32 *p;
+    u8 *base;
+
+    lbl_80367860 = (u32 *)OSGetArenaLo();
+    lbl_80367864 = (u32)OSGetArenaHi();
+    p = lbl_80320B88;
+    base = lbl_802700D8;
+    p[0] = 0;
+    p[1] = 0;
+    p[2] = 0;
+    p[3] = 0;
+    p[4] = 0;
+    p[5] = 0;
+    p[6] = 0;
+    p[7] = 0;
+    p[8] = 0;
+    p[9] = 0;
+    p[10] = 0;
+    p[11] = 0;
+    p[12] = 0;
+    p[13] = 0;
+    p[14] = 0;
+    lbl_80367868 = 0;
+    lbl_8036786C = 0;
+    p[15] = 0;
+    fn_800056CC(base + 0x13D);
+    fn_800056CC(base + 0x152, lbl_80367860, lbl_80367864);
+}
+
 #pragma global_optimizer off
 #pragma use_lmw_stmw on
 void *fn_800C55B0(HeapC55 *self,s32 bytes){
@@ -19246,17 +19281,19 @@ u8 fn_800FB6FC(void) {
 
     u8 *obj;
     u8 *entry;
-    s32 key;
-    u8 flag;
     s32 val;
-    void *ret;
+    s32 off;
+    u8 flag;
+    s32 key;
+    s32 gap;
 
     obj = *(u8 **)lbl_802EF4C8;
     entry = (u8 *)fn_8000D354(*(void **)(obj + 0x238));
     lbl_803678F8 = entry;
+    off = obj[0x250] * 0x1C;
     lbl_803678F0 = 0;
     lbl_803678F4 = 0;
-    entry = entry + obj[0x250] * 0x1C;
+    entry += off;
     lbl_803678F8 = entry;
 
     val = *(s32 *)(entry + 8);
@@ -19265,8 +19302,9 @@ u8 fn_800FB6FC(void) {
     }
 
     key = *(s32 *)entry;
-    ret = fn_800FB918(lbl_80273000, lbl_80273000 + 0x1A0, &key, &flag);
-    (*(void (**)(void *, void *))((u8 *)ret + 4))(obj, ret);
+    flag = *(u8 *)&gap;
+    entry = (u8 *)fn_800FB918(lbl_80273000, lbl_80273000 + 0x1A0, &key, &flag);
+    (*(void (**)(void *, void *))(entry + 4))(obj, entry);
 
     return lbl_803678F0;
 }
