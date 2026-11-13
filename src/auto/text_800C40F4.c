@@ -18560,12 +18560,17 @@ s32 fn_800F7994(s32 arg0, s8 arg1, s8 arg2) {
     void *fn_80019DBC(u8);
     u8 fn_80105BC0(s32, u32);
     extern u8 lbl_802CA518[];
+    s32 self;
     void *terrain;
     u8 *tp;
     s32 sum;
+    u8 *cell;
 
-    terrain = fn_80019DBC(M2C_FIELD(lbl_802CA518 + arg1 + (arg2 << 6), u8 *, 0x100D));
-    if (fn_80105BC0((s32)((u8 *)arg0 + 0x1BC), 4) != 0) {
+    cell = lbl_802CA518 + arg1;
+    cell = cell + (arg2 << 6);
+    self = arg0;
+    terrain = fn_80019DBC(cell[0x100D]);
+    if (fn_80105BC0(self + 0x1BC, 4) != 0) {
         tp = M2C_FIELD(terrain, u8 **, 8);
         sum = (s8)tp[3] + (s8)tp[4];
         sum += (s8)tp[5];
@@ -19611,6 +19616,50 @@ void fn_800FAD94(void) {
     // From the target assembly, it seems like there are some calls being made
     // to other functions within this file or elsewhere. For now, writing out
     // a very basic version without calling any other functions:
+}
+
+void fn_800FAEA4(void *arg0)
+{
+    extern u8 *lbl_803678F8;
+    extern s32 lbl_803678F4;
+
+    extern void *fn_8000D354(void *);
+
+    long count;
+    long index;
+    u8 *obj;
+    u8 *entry;
+
+    obj = (u8 *)arg0;
+    index = 0;
+
+    count = *(s32 *)(lbl_803678F8 + 0x10);
+
+    if (lbl_803678F4 == 0) {
+        entry = (u8 *)fn_8000D354(*(void **)(obj + 0x238));
+    } else {
+        entry = (u8 *)fn_8000D354(*(void **)(obj + 0x23C));
+    }
+
+    if (count) {
+        while (*(s32 *)entry != 0 ||
+               *(s32 *)(entry + 0xC) != count) {
+            entry += 0x1C;
+            index++;
+        }
+
+        if (!lbl_803678F4) {
+            obj[0x250] = index;
+        } else {
+            obj[0x251] = index;
+        }
+    } else {
+        if (!lbl_803678F4) {
+            obj[0x250] = 0;
+        } else {
+            obj[0x251] = 0;
+        }
+    }
 }
 
 void fn_800FB074(void *arg0)
