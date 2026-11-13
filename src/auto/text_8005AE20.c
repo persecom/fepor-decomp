@@ -5237,9 +5237,9 @@ void fn_80067EDC(void *arg0)
     p = arg0;
     if (p == NULL) {
         p = lbl_803672F8;
-        if (p == NULL) {
-            return;
-        }
+    }
+    if (p == NULL) {
+        return;
     }
     bit = *(u16 *)p & 1;
     negbit = -bit;
@@ -5253,9 +5253,9 @@ void fn_80067EDC(void *arg0)
     fn_80201FC4(p + 0xA4);
     if (p == NULL) {
         p = lbl_803672F8;
-        if (p == NULL) {
-            return;
-        }
+    }
+    if (p == NULL) {
+        return;
     }
     fn_80225058(*(u16 *)(p + 0x1C), *(u16 *)(p + 0x1E), *(u16 *)(p + 0x20), *(u16 *)(p + 0x22));
     fn_80224FEC(*(f32 *)(p + 4), *(f32 *)(p + 8), *(f32 *)(p + 0xC), *(f32 *)(p + 0x10), *(f32 *)(p + 0x14), *(f32 *)(p + 0x18));
