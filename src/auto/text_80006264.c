@@ -232,8 +232,8 @@ void fn_800065B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 }
 
 void fn_80006608(s16 *arg0) {
-    s16 x;
     s16 y;
+    s16 x;
     s16 dx;
 
     x = arg0[0];
@@ -1969,20 +1969,13 @@ void *fn_80009E44(f32 *arg0) {
     return *(u8 **)&lbl_80367140 + 0x60;
 }
 #pragma peephole on
-s32 fn_80009E64(s32 arg0, s32 arg1, u32 arg2) {
-    u32* r3_ptr = (u32*)(arg0 - 4);
-    u32* r4_ptr = (u32*)(arg1 - 4);
-    
-    while (arg2 != 0) {
-        if (*r3_ptr != *r4_ptr) {
-            return 0;
-        }
-        r3_ptr++;
-        r4_ptr++;
-        arg2 -= 4;
-    }
+void fn_80009E64(void *src, f32 farg0) {
+    void fn_80201FF0(void *, void *);
+    extern u16 lbl_80367140;
 
-    return 1;
+    fn_80201FF0(src, *(u8 **)&lbl_80367140 + 0x60);
+    *(f32 *)(*(u8 **)&lbl_80367140 + 0x28) = farg0;
+    *(u16 *)(*(u8 **)&lbl_80367140 + 0x20) = (u16)(*(u16 *)(*(u8 **)&lbl_80367140 + 0x20) & ~0x800);
 }
 
 void fn_80009EB0(s8 arg0) {
