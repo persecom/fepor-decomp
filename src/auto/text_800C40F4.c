@@ -12871,18 +12871,28 @@ void *fn_800E80D8(void *arg0, void *arg1, void *arg2)
     return result;
 }
 
-void fn_800E8154(void *arg0)
-{
-    u8 *obj;
-    void (*fn)(void *);
-
-    obj = (u8 *)arg0;
-    fn = *(void (**)(void *))(*(u8 **)(obj + 0x10) + 0x38);
-    fn(obj);
-    fn = *(void (**)(void *))(*(u8 **)(obj + 0x10) + 0x8);
-    fn(obj);
+#pragma cplusplus on
+extern "C" void fn_800E8154(void *arg0) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+    };
+    ((Obj *)arg0)->v12();
+    ((Obj *)arg0)->v0();
 }
-
+#pragma cplusplus reset
 void *fn_800E8488(void *arg0, s32 arg1)
 {
     extern u8 lbl_8028E200[];
