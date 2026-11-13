@@ -9755,35 +9755,51 @@ extern "C" void fn_801CD2AC(void *arg0) {
 }
 #pragma cplusplus reset
 
-void *fn_801CD318(void *arg0) {
-    void *fn_8000CAA0(void *, s32, void *);
-    void fn_801403F0(void);
-    extern void lbl_80297C14;
-    extern void lbl_80297E78;
-    extern void lbl_802EF4C8;
-    extern s8 lbl_80368274;
+#pragma cplusplus on
+extern "C" void *fn_801CD318(void *arg0, s16 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    struct Owner {
+        void *vtbl;
+        u8 pad4[0x58];
+        void *sub5c;
+        u8 pad60[0x24];
+        void *sub84;
+    };
+    void fn_800C428C(void *);
+    extern u8 lbl_80298448[];
+    extern u8 lbl_80295478[];
+    extern u8 lbl_80292230[];
+    extern u8 lbl_8028FDB0[];
+    Owner *self;
 
-    void *temp_r3;
-    
-    temp_r3 = fn_8000CAA0(&lbl_80297C14, (s32)arg0, &lbl_80297C14);
-    if (temp_r3 != NULL) {
-        *(void **)((char *)temp_r3 + 0x40) = &lbl_80297E78;
-        *(s32 *)((char *)temp_r3 + 0x48) = 0;
-        *(s32 *)((char *)temp_r3 + 0x4C) = 0;
-        *(s32 *)((char *)temp_r3 + 0x50) = 0;
-        *(s32 *)((char *)temp_r3 + 0x54) = 0;
-        *(s32 *)((char *)temp_r3 + 0x58) = 0;
-        *(s32 *)((char *)temp_r3 + 0x5C) = 0;
-        *(s32 *)((char *)temp_r3 + 0x60) = 0;
-        *(s32 *)((char *)temp_r3 + 0x64) = 0;
-        *(s32 *)((char *)temp_r3 + 0x68) = 0;
-        *(s32 *)((char *)temp_r3 + 0x6C) = 0;
-        lbl_80368274 = 0x80;
+    self = (Owner *)arg0;
+    if (arg0 != NULL) {
+        self->vtbl = lbl_80298448;
+        if (&self->sub84 != NULL) {
+            self->sub84 = lbl_80295478;
+            ((Obj *)&self->sub84)->v2();
+        }
+        if (&self->sub5c != NULL) {
+            self->sub5c = lbl_80295478;
+            ((Obj *)&self->sub5c)->v2();
+        }
+        if (arg0 != NULL) {
+            self->vtbl = lbl_80292230;
+            if (arg0 != NULL) {
+                self->vtbl = lbl_8028FDB0;
+            }
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
     }
-    fn_8000C070(temp_r3, 0xB);
-    return temp_r3;
+    return arg0;
 }
-
+#pragma cplusplus reset
 s32 fn_801CD3E4(void) {
     return 0x24;
 }
