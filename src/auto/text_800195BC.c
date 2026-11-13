@@ -278,10 +278,14 @@ extern "C" void fn_800199F8(void *arg0) {
     fn_8000A274((s32)(lbl_80368D28 - lbl_80368D2C * (f32)*(u8 *)(*(u8 **)lbl_80367240 + 7)));
 }
 #pragma cplusplus reset
-f32 fn_80019C80(s32 arg1) {
-    extern f32 lbl_802682F8[4];
-    f32 *ptr = &lbl_802682F8[arg1];
-    return *ptr;
+f32 fn_80019C80(s32 unused, s32 idx) {
+    u32 local[4];
+    extern u32 lbl_802682F8[4];
+    local[0] = lbl_802682F8[0];
+    local[1] = lbl_802682F8[1];
+    local[2] = lbl_802682F8[2];
+    local[3] = lbl_802682F8[3];
+    return ((f32 *)local)[idx];
 }
 
 void *fn_80019CC0(void *arg0) {
