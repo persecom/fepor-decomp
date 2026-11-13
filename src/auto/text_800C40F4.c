@@ -12848,24 +12848,27 @@ extern "C" void fn_800E79D4(void *arg0) {
     }
 }
 
+extern "C" void fn_800E7A38(void *arg0, s32 arg1) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void *v4(s32) = 0;
+    };
+    s32 i;
+
+    *(u8 *)((char *)arg0 + 0x2C) = 0;
+    for (i = 0; i < *(s32 *)((char *)arg0 + 4); i++) {
+        ((void (*)(void *, s32))fn_800DF638)(((Obj *)arg0)->v4(i), arg1);
+    }
+    ((Obj *)arg0)->v0();
+    *(s32 *)((char *)arg0 + 0x44) += 1;
+}
+
 #pragma cplusplus reset
 #pragma dont_inline reset
-void fn_800E7A38(void *arg0, s32 arg1) {
-    M2C_UNK fn_800DF638(s32);
-    s32 var_r31;
-
-    var_r31 = 0;
-    M2C_FIELD(arg0, s8 *, 0x2C) = 0;
-loop_2:
-    if (var_r31 < (s32) M2C_FIELD(arg0, s32 *, 4)) {
-        M2C_FIELD(M2C_FIELD(arg0, void **, 0x10), M2C_UNK (**)(void *, s32), 0x18)(arg0, var_r31);
-        fn_800DF638(arg1);
-        var_r31 += 1;
-        goto loop_2;
-    }
-    M2C_FIELD(M2C_FIELD(arg0, void **, 0x10), M2C_UNK (**)(void *), 8)(arg0);
-    M2C_FIELD(arg0, s32 *, 0x44) = (s32) (M2C_FIELD(arg0, s32 *, 0x44) + 1);
-}
 
 s32 fn_800E7AD4(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 fn_800C93EC(s32);
@@ -19937,28 +19940,32 @@ void fn_800FE770(s8 arg0, s8 arg1, u32 arg2, s32 arg3, u16 arg4) {
 }
 
 u8 fn_800FE84C(s8 arg0, s8 arg1) {
-    extern u8 lbl_80330708[1400];
-    extern u8 lbl_802CA518[151280];
+    extern u8 lbl_80330708[];
+    extern u8 lbl_802CA518[];
     u8 temp_r4;
     u8 var_r5;
     u8 var_r6;
     u8 var_r7;
+    u8 *p;
 
-    if ((u8) lbl_80330708[0x11] != 2) {
-        return 0U;
+    if (lbl_80330708[0x11] != 2) {
+        return 0;
     }
+
     var_r6 = 1;
-    var_r5 = 1;
-    var_r7 = 1;
-    
-    temp_r4 = lbl_802CA518[arg0 + (arg1 * 64) + 0x100D];
-    if ((temp_r4 - 0x26) < 1U) {
+    p = lbl_802CA518 + arg0;
+    var_r5 = var_r6;
+    p = p + (arg1 << 6);
+    var_r7 = var_r6;
+    temp_r4 = p[0x100D];
+
+    if ((u8)(temp_r4 - 0x26) < 1) {
         var_r7 = 0;
     }
-    if ((var_r7 == 0) && (temp_r4 != 0x28)) {
+    if (var_r7 == 0 && temp_r4 != 0x28) {
         var_r5 = 0;
     }
-    if ((var_r5 == 0) && (temp_r4 != 0x2A)) {
+    if (var_r5 == 0 && temp_r4 != 0x2A) {
         var_r6 = 0;
     }
     return var_r6;
