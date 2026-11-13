@@ -539,39 +539,55 @@ void fn_800C4728(s32 arg0) {
 }
 
 s32 fn_800C4740(void) {
-    extern s32 lbl_80320B88[];
-    extern s32 lbl_80367870;
-    const s32 *entry;
-    s32 active;
+    extern u32 lbl_80320B88[];
+    extern u32 lbl_80367870;
+    u32 *entry;
+    u32 active;
     s32 index;
     s32 groups;
 
     entry = lbl_80320B88;
+    groups = 2;
     active = lbl_80367870;
     index = 0;
-    groups = 2;
 
-    do {
-        if (*entry == active) return index;
+    for (; groups != 0; groups--) {
+        if (*entry == active) {
+            return index;
+        }
 
-        index++;
-        if (*++entry == active) return index;
-        index++;
-        if (*++entry == active) return index;
-        index++;
-        if (*++entry == active) return index;
-        index++;
-        if (*++entry == active) return index;
-        index++;
-        if (*++entry == active) return index;
-        index++;
-        if (*++entry == active) return index;
-        index++;
-        if (*++entry == active) return index;
+        index += 1;
+        if (*++entry == active) {
+            return index;
+        }
+        index += 1;
+        if (*++entry == active) {
+            return index;
+        }
+        index += 1;
+        if (*++entry == active) {
+            return index;
+        }
+        index += 1;
+        if (*++entry == active) {
+            return index;
+        }
+        index += 1;
+        if (*++entry == active) {
+            return index;
+        }
+        index += 1;
+        if (*++entry == active) {
+            return index;
+        }
+        index += 1;
+        if (*++entry == active) {
+            return index;
+        }
 
-        entry++;
-        index++;
-    } while (--groups != 0);
+        entry += 1;
+        index += 1;
+    }
 
     return -1;
 }
@@ -8229,17 +8245,32 @@ void* fn_800DC0BC(void* arg0, s32 arg2, s32 arg3) {
 }
 
 #pragma cplusplus reset
-void fn_800DC2E4(void *arg0) {
-    M2C_FIELD(arg0, s8 *, 0) = 0;
-    M2C_FIELD(arg0, s8 *, 1) = 0;
-    M2C_FIELD(arg0, s8 *, 0x13) = 0;
-    M2C_FIELD(arg0, s8 *, 0x12) = 0;
-    M2C_FIELD(arg0, s8 *, 0x11) = 0;
-    M2C_FIELD(arg0, s8 *, 0x10) = 0;
-    M2C_FIELD(arg0, s8 *, 0x16) = 0x80;
-    M2C_FIELD(arg0, s8 *, 0x15) = 0x80;
-    M2C_FIELD(arg0, s8 *, 0x14) = 0x80;
-    M2C_FIELD(arg0, s8 *, 0x17) = 0xFF;
+void *fn_800DC2E4(void *arg0, s16 arg1) {
+#pragma global_optimizer off
+    extern u8 lbl_8028DF48[];
+    void fn_800C428C(void *);
+    void *fn_800CA6C8(void *, s16);
+    void fn_800E45EC(void *, s16);
+    u8 *p;
+
+    if (arg0 != NULL) {
+        p = (u8 *)arg0;
+        *(void **)(p + 0x40) = lbl_8028DF48;
+        if (p + 0xB8)
+            if (p + 0xB8)
+                if (p + 0xB8)
+                    if (*(void **)(p + 0xC0))
+                        fn_800C428C(*(void **)(p + 0xC0));
+        if (p + 0xAC)
+            if (p + 0xAC)
+                fn_800CA6C8(p + 0xAC, 0);
+        fn_800E45EC(arg0, 0);
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+#pragma global_optimizer reset
 }
 
 void *fn_800DC38C(void *arg0, u32 arg1) {
