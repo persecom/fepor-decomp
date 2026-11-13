@@ -2539,36 +2539,42 @@ void fn_80024D18(s32 unused, void *arg1) {
 }
 
 extern u32 lbl_80367240;
-void fn_80024D74(void *arg0) {
-    u32 r0;
-    u32 r3;
-    u32 r5;
-    
-    // Load global pointer and data from arg0 + 0x4
-    r3 = *(u32*)((char*)arg0 + 0x4);
-    
-    // Perform AND operation with 0x300, check if result is zero
-    r0 = r3 & 0x300;
-    if (r0 == 0) {
+#pragma cplusplus on
+extern "C" void fn_80024D74(s32 unused, void *arg1) {
+    void *fn_8000B908(u8);
+    struct Item {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void *v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12(void *, void *) = 0;
+    };
+    struct Row {
+        u8 pad[0x40];
+        u8 id;
+    };
+    void *item;
+    struct Row *row;
+    u8 idx_u;
+    s32 idx;
+
+    if ((((u32 *)lbl_80367240)[1] & 0x3000003U) == 0) {
         return;
     }
-    
-    // Load byte from arg0 + 0x62, extend sign and add to arg0
-    r0 = *(u8*)((char*)arg0 + 0x62);
-    r0 = (s8)r0;
-    r3 = (u32)((char*)arg0 + r0);
-    
-    // Call function with result
-    fn_8000B908(r3);
-    
-    // Load arg0 + 0x34
-    r5 = *(u32*)((char*)arg0 + 0x34);
-    
-    // Call virtual function via pointer (ptr at r5 + 0x38)  
-    ((void (*)(void))*(u32*)(*(u32*)r5 + 0x38))();
+    idx_u = *((u8 *)arg1 + 0x62);
+    idx = (s8)idx_u;
+    row = (struct Row *)((u8 *)arg1 + idx);
+    item = fn_8000B908(row->id);
+    (*(Item **)((u8 *)item + 0x34))->v12(arg1, item);
 }
-
-#pragma cplusplus on
 extern "C" void fn_80024DE4(s32 unused, void *arg1) {
     void *fn_8000B908(u8);
     void fn_801475FC(void *, s32);
@@ -3524,13 +3530,12 @@ void fn_80026A54(void) {
 
 s32 fn_80026A80(s32 arg0) {
     u8 fn_8003C038(void *);
-    M2C_UNK fn_80183BE4(void *, s32);
-    extern void *lbl_802EF4C8;
+    void fn_80183BE4(void *, s32);
+    extern u8 lbl_802EF4C8[];
+    void *temp_r31;
 
-    void *temp_r31 = lbl_802EF4C8;
-    void *temp_r30 = (void *)arg0;
-
-    if ((s8) *(u8 *)((u8 *)temp_r31 + 0x1A8) == 0) {
+    temp_r31 = *(void **)lbl_802EF4C8;
+    if ((s8)*(u8 *)((u8 *)temp_r31 + 0x1A8) == 0) {
         return 0;
     }
     if (fn_8003C038(temp_r31) == 0) {
@@ -3930,17 +3935,19 @@ void fn_800286C8(void *arg0) {
 }
 
 void fn_80028724(void) {
-    u8 fn_800BDD08(void *, void *, M2C_UNK *);
-    M2C_UNK fn_80146AF0();
-    M2C_UNK fn_8014876C(M2C_UNK *, M2C_UNK, M2C_UNK);
-    M2C_UNK fn_801487D0(M2C_UNK *, M2C_UNK);
-    extern M2C_UNK lbl_80268E40;
-    extern M2C_UNK lbl_8032FF08;
-    extern M2C_UNK lbl_80330708;
-    if (fn_800BDD08(&lbl_80330708 + 0xB4, &lbl_80268E40 + 0x21E, &lbl_80330708) == 0) {
+    u8 fn_800BDD08(void *, void *, void *);
+    void fn_80146AF0(void);
+    void fn_801487D0(void *, s32);
+    void fn_8014876C(void *, s32, s32);
+    extern u8 lbl_80268E40[];
+    extern u8 lbl_8032FF08[];
+    extern u8 lbl_80330708[];
+    u8 *buf = lbl_8032FF08;
+
+    if (fn_800BDD08(lbl_80330708 + 0xB4, lbl_80268E40 + 0x21E, lbl_80330708) == 0) {
         fn_80146AF0();
-        fn_801487D0(&lbl_8032FF08, 0x3E8);
-        fn_8014876C(&lbl_8032FF08, 0x64, 0x3E8);
+        fn_801487D0(buf, 0x3E8);
+        fn_8014876C(buf, 0x64, 0x3E8);
     }
 }
 
