@@ -182,14 +182,19 @@ void fn_801AE7C0(void *arg0) {
 }
 
 void fn_801AE81C(void *arg0) {
-    s32 temp_r31;
-    void *temp_r6;
+    void fn_8011D79C(s32);
+    void *fn_8013FF94(void *, s32, s32);
+    void fn_801658DC(void *, s32);
+    void *inner;
+    s32 saved;
+    void *ret;
 
-    fn_8011D79C(M2C_FIELD(M2C_FIELD(arg0, void **, 0x6C), s32 *, 0x58));
-    temp_r6 = M2C_FIELD(arg0, void **, 0x6C);
-    temp_r31 = M2C_FIELD(temp_r6, s32 *, 0x88);
-    if (fn_8013FF94(arg0, -0x1000, 0, temp_r6) != 0U) {
-        fn_801658DC(temp_r31);
+    fn_8011D79C(*(s32 *)(*(u8 **)((u8 *)arg0 + 0x6C) + 0x58));
+    inner = *(void **)((u8 *)arg0 + 0x6C);
+    saved = *(s32 *)((u8 *)inner + 0x88);
+    ret = fn_8013FF94(arg0, -0x1000, 0);
+    if (ret != NULL) {
+        fn_801658DC(ret, saved);
     }
 }
 
