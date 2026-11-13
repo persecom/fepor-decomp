@@ -1805,6 +1805,37 @@ void fn_801F5FE0(void *arg0) {
     fn_8000C188(arg0);
 }
 
+void fn_801F60B0(void *arg0) {
+    void fn_8000C070(void *, s32);
+    void fn_8000C188(void *);
+    s32 fn_8026573C(void *, u8 *);
+    void fn_802658B0(void *, void *, s32, void *, void *, void *, void *);
+    void fn_801F6164(s32, s32);
+    extern void *lbl_803683F4;
+    void *tmp;
+    s32 ret;
+
+    if (*(u32 *)((u8 *)arg0 + 0x3C) == 0) {
+        fn_8000C188(arg0);
+        *(s16 *)((u8 *)arg0 + 0x48) = 0;
+        *(u8 *)((u8 *)arg0 + 0x4A) = 0x64;
+        return;
+    }
+    *(u8 *)((u8 *)arg0 + 0x4C) = 2;
+    lbl_803683F4 = arg0;
+    tmp = *(void **)((u8 *)arg0 + 0x38);
+    fn_802658B0(tmp, tmp, 1,
+                *(void **)((u8 *)arg0 + 0x30),
+                *(void **)((u8 *)arg0 + 0x34),
+                (u8 *)arg0 + 0x4B,
+                &fn_801F6164);
+    ret = fn_8026573C(*(void **)((u8 *)arg0 + 0x38), (u8 *)arg0 + 0x4A);
+    *(s16 *)((u8 *)arg0 + 0x48) = (s16)(*(s16 *)((u8 *)arg0 + 0x48) + 1);
+    if (*(s16 *)((u8 *)arg0 + 0x48) > 0xF0 && ret == 0) {
+        fn_8000C070(arg0, 1);
+    }
+}
+
 void fn_801F6164(s32 unused, s32 arg1) {
     extern void *lbl_803683F4;
     M2C_FIELD(lbl_803683F4, s32 *, 0x3C) = arg1;
