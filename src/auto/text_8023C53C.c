@@ -99,7 +99,7 @@ s32 fn_8022C568(f32 arg0);
 void fn_80261934(u8 arg0, void *arg1, s32 arg2);
 void fn_8026146C(s32 *);
 void fn_8025FFC8(void *arg0, u8 arg1, s32 arg2, u8 arg3, u8 arg4, u8 arg5);
-s32 fn_80255FB0(void);
+s32 fn_80255FB0();
 extern void func_80013934(s32 arg0);
 extern s32 lbl_803689A8;
 extern u16 lbl_803548B8;
@@ -15777,12 +15777,17 @@ void fn_80264B7C(void *arg0) {
     fn_802649AC();
 }
 
-s32 fn_80264BA4(void) {
-    s32 OSGetTick();
-    s32 temp_r31;
-    
-    temp_r31 = OSGetTick() - lbl_80368B0C;
-    return (temp_r31 * 8) / (lbl_800000F8 / 500000);
+s32 fn_80264BA4(void *arg0) {
+    void fn_80263800(void *);
+    void *p;
+
+    p = *(void **)((u8 *)arg0 + 0x30);
+    if (p != NULL) {
+        fn_80263800(p);
+    }
+    fn_80263800(*(void **)((u8 *)arg0 + 0x34));
+    fn_80263800(*(void **)((u8 *)arg0 + 0x38));
+    return 1;
 }
 
 f32 fn_80264BF0(void *arg0) {
