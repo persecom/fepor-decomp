@@ -432,43 +432,40 @@ loop_1:
 s32 fn_800C44F4(s32 arg0) {
     extern void *lbl_80367870;
     extern void *lbl_80320B88[];
-
     u8 *node;
-    u32 value;
     u32 max;
+    u32 value;
 
     if (arg0 < 0) {
-        node = *(u8 **)((u8 *)lbl_80367870 + 0x18);
         max = 0;
-
-        while (node != NULL) {
-            value = *(u32 *)(node + 0x10);
-
-            if ((max << __cntlzw(max ^ value)) >> 31) {
-                break;
-            }
-
-            max = value;
-            node = *(u8 **)(node + 0x0C);
-        }
-
+        node = *(u8 **)((u8 *)lbl_80367870 + 0x18);
+        goto check1;
+    body1:
+        value = *(u32 *)(node + 0x10);
+        if ((max << __cntlzw(max ^ value)) >> 31)
+            goto done1;
+        max = value;
+        node = *(u8 **)(node + 0x0C);
+    check1:
+        if (node != NULL)
+            goto body1;
+    done1:
         return max - 0x20;
     }
 
-    node = *(u8 **)((u8 *)lbl_80320B88[arg0] + 0x18);
     max = 0;
-
-    while (node != NULL) {
-        value = *(u32 *)(node + 0x10);
-
-        if ((max << __cntlzw(max ^ value)) >> 31) {
-            break;
-        }
-
-        max = value;
-        node = *(u8 **)(node + 0x0C);
-    }
-
+    node = *(u8 **)((u8 *)lbl_80320B88[arg0] + 0x18);
+    goto check2;
+body2:
+    value = *(u32 *)(node + 0x10);
+    if ((max << __cntlzw(max ^ value)) >> 31)
+        goto done2;
+    max = value;
+    node = *(u8 **)(node + 0x0C);
+check2:
+    if (node != NULL)
+        goto body2;
+done2:
     return max - 0x20;
 }
 
@@ -1831,14 +1828,14 @@ void fn_800C908C(void *arg0, String *arg1, s32 *arg2) {
     M2C_UNK *fn_800C93EC(void *);
     char *fn_80234450(char *, const char *);
     void fn_800C802C(void *, s32);
+    unsigned long b;
     s32 *dst;
-    s32 a;
-    s32 b;
+    long a;
 
     fn_80234450((char *)arg0 + 0x28, (char *)fn_800C93EC(arg1));
     dst = (s32 *)((char *)arg0 + 0x40);
-    a = arg2[0];
     b = arg2[1];
+    a = arg2[0];
     dst[0] = a;
     a = arg2[2];
     dst[1] = b;
@@ -2632,6 +2629,38 @@ void fn_800CB070(void) {
 void fn_800CB27C(void** arg0) {
     if (arg0 != NULL) {
         (*(void (**)(void **))lbl_802B14E4)(arg0);
+    }
+}
+
+void fn_800CB538(void *arg0, void *arg1)
+{
+    void fn_800C9ABC(void *, char *, void *);
+    void fn_800CB65C(void *, void *, void *, void *, void *);
+
+    extern void *lbl_8036787C;
+    extern u8 lbl_80367878;
+
+    String temp;
+    char *source;
+    void *scratchC;
+    void *scratch8;
+
+    if (lbl_80367878 != 0) {
+        fn_800C9ABC(arg0, (char *)lbl_8036787C + 0x168, &scratchC);
+    } else {
+        source = **(char ***)((u8 *)lbl_80330EAC + 0x46C);
+
+        fn_800C9ABC(&temp, source, &scratch8);
+
+        fn_800CB65C(
+            arg0,
+            arg1,
+            &temp,
+            (u8 *)arg1 + 0x2C,
+            (u8 *)arg1 + 0x50
+        );
+
+        fn_800C9A60(&temp, -1);
     }
 }
 
@@ -18307,17 +18336,17 @@ void fn_800F8538(void *arg0) {
 
     u8 *global;
     s32 tmp;
-    s32 index;
+    register s32 index;
     s32 ret;
 
     global = lbl_803678F8;
     tmp = *(u8 *)((u8 *)arg0 + 0x1AA);
     *(u8 *)((u8 *)arg0 + 0x1AA) = *(s32 *)(global + 0x10) + (s8)tmp;
 
-    ret = fn_8003A398(arg0);
+    ret = (s8)fn_8003A398(arg0);
 
     index = *(s32 *)(global + 4);
-    *(s32 *)(lbl_8032B3C0 + (index << 2) + 8) = (s8)ret;
+    *(s32 *)&lbl_8032B3C0[(index << 2) + 8] = ret;
 
     if (lbl_803678F4 == 0) {
         (*(u8 *)((u8 *)arg0 + 0x250))++;
@@ -20028,24 +20057,17 @@ void fn_800FEC0C(void) {
     s32 fn_800FE8E8(void *, void *);
     void fn_800FEC9C(void *, void *, void *);
 
-    s32 count;
     void **table;
+    s32 count;
 
-    fn_800FC6B0(
-        lbl_802CA264 + lbl_80330708[0x11] * 12
-    );
+    fn_800FC6B0(lbl_802CA264 + lbl_80330708[0x11] * 12);
 
     count = fn_800FE904();
-
     table = (void **)(lbl_8032B3C0 + 0x18);
 
-    fn_800FEC9C(
-        table,
-        table + count,
-        fn_800FE8E8
-    );
+    fn_800FEC9C(table, table + count, fn_800FE8E8);
 
-    table[count] = NULL;
+    *(void **)((u8 *)table + (count * 4)) = NULL;
 
     *(void **)(lbl_8032B3C0 + 0x218) = table;
 }
