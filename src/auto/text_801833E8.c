@@ -2215,13 +2215,18 @@ void fn_8018B004(void *arg0) {
 }
 
 void fn_8018B010(void *arg0) {
-    void *temp_r3;
+    void fn_80050BCC(void *, s32);
+    void *p;
+    f32 x, y, z;
 
-    fn_80050BCC(M2C_FIELD(arg0, void **, 0x30), 0xFF);
-    temp_r3 = M2C_FIELD(arg0, void **, 0x30);
-    M2C_FIELD(temp_r3, f32 *, 4) = (f32) M2C_FIELD(arg0, f32 *, 0x40);
-    M2C_FIELD(temp_r3, f32 *, 8) = (f32) M2C_FIELD(arg0, f32 *, 0x44);
-    M2C_FIELD(temp_r3, f32 *, 0xC) = (f32) M2C_FIELD(arg0, f32 *, 0x48);
+    fn_80050BCC(*(void **)((u8 *)arg0 + 0x30), 0xFF);
+    z = *(f32 *)((u8 *)arg0 + 0x48);
+    y = *(f32 *)((u8 *)arg0 + 0x44);
+    p = *(void **)((u8 *)arg0 + 0x30);
+    x = *(f32 *)((u8 *)arg0 + 0x40);
+    *(f32 *)((u8 *)p + 4) = x;
+    *(f32 *)((u8 *)p + 8) = y;
+    *(f32 *)((u8 *)p + 0xC) = z;
 }
 
 void fn_8018B060(void *arg0) {
