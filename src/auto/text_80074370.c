@@ -268,29 +268,47 @@ extern "C" s32 fn_80074B78(s32 arg0, s32 arg1, void *arg2) {
     return 5;
 }
 
-#pragma cplusplus reset
-s32 fn_80074BA4(void *arg0) {
+extern "C" s32 fn_80074BA4(void *arg0) {
+    struct Obj {
+        virtual s32 v0() = 0;
+        virtual s32 v1() = 0;
+        virtual s32 v2() = 0;
+        virtual s32 v3() = 0;
+        virtual s32 v4() = 0;
+        virtual s32 v5() = 0;
+        virtual s32 v6() = 0;
+        virtual s32 v7() = 0;
+        virtual s32 v8() = 0;
+        virtual s32 v9() = 0;
+        virtual s32 v10() = 0;
+        virtual s32 v11() = 0;
+        virtual s32 v12() = 0;
+        virtual s32 v13() = 0;
+        virtual s32 v14() = 0;
+        virtual s32 v15() = 0;
+        virtual s32 v16() = 0;
+        virtual s32 v17() = 0;
+        virtual s32 v18() = 0;
+        virtual s32 v19() = 0;
+    };
     u8 fn_80105BC0(void *, s32);
     void fn_800299B8(void *);
     extern u8 lbl_802EF4C8[];
     extern struct { s32 n; u8 pad[2004]; } lbl_802EF4E0;
-    void *slot;
     u8 *base;
-    void *vt;
     void *p;
-    s32 (*callback)(void *);
+    void *slot;
 
     base = lbl_802EF4C8;
-    vt = *(void **)arg0;
     p = *(void **)base;
-    callback = *(s32 (**)(void *))((u8 *)vt + 0x54);
     slot = (u8 *)p + 0x1BC;
-    if (fn_80105BC0(slot, callback(arg0)) == 0) {
+    if (fn_80105BC0(slot, ((Obj *)arg0)->v19()) == 0) {
         return 3;
     }
     fn_800299B8(*(void **)lbl_802EF4C8);
     return lbl_802EF4E0.n ? 0 : 2;
 }
+#pragma cplusplus reset
 
 void fn_80074C30(void *arg0) {
     extern s32 lbl_802EF4C8[];
@@ -3196,41 +3214,40 @@ void fn_8007A2A0(void *arg0) {
     M2C_FIELD(arg0, s16 *, 0x38) = 0;
 }
 
-void fn_8007A2AC(void* p) {
-    void fn_8000C070(s32);
-    void fn_8007A524(void*, s32, s32);
-    
-    s32 v = 0;
-    s16 x = *(s16*)((u8*)p + 0x38);
-    
-    // Emulate the exact control flow from the assembly
-    if (x == 9) {
-        // No action needed
-    } else {
-        if (x >= 0) {
-            if (x < 3) {
-                v = 1;
-            } else {
-                if (x >= 6) {
-                    if (x < 11) {
-                        // This path leads to a call and return
-                        fn_8000C070(1);
-                    } else {
-                        v = 1;
-                    }
-                } else {
-                    v = 2;
-                }
-            }
-        } else {
-            // x < 0 - No action, but this falls through to return
-        }
+void fn_8007A2AC(void *arg0) {
+    void fn_8000C070(void *, s32);
+    void fn_8007A524(void *, s32, s32);
+    s32 var_r31;
+
+    var_r31 = 0;
+    switch ((s16)*(s16 *)((u8 *)arg0 + 0x38)) {
+    case 0:
+    case 1:
+    case 2:
+        var_r31 = 1;
+        break;
+    case 3:
+    case 4:
+    case 5:
+        var_r31 = 2;
+        break;
+    case 6:
+    case 7:
+    case 8:
+        var_r31 = 1;
+        break;
+    case 9:
+        break;
+    case 10:
+        fn_8000C070(arg0, 1);
+        break;
+    default:
+        break;
     }
-    
-    fn_8007A524(p, v, 7);
-    fn_8007A524(p, v, 10);
-    
-    (*(s16*)((u8*)p + 0x38))++;
+
+    fn_8007A524(arg0, var_r31, 7);
+    fn_8007A524(arg0, var_r31, 0xA);
+    *(s16 *)((u8 *)arg0 + 0x38) = (s16)(*(s16 *)((u8 *)arg0 + 0x38) + 1);
 }
 
 void fn_8007A368(void *arg0) {
