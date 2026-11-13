@@ -167,14 +167,15 @@ void fn_8000D864(s32 arg0, s32 arg1) {
     fn_80234450(temp_r31 + 1, arg1);
 }
 
-void *fn_8000D8BC(s32 arg0, s32 arg1) {
-    s32 strlen(void *);
-    extern M2C_UNK lbl_802AED10;
-    void *fn_80238ABC(s32, void *, s32);
+void *fn_8000D8BC(s32 arg0, char *arg1) {
+    void fn_80238ABC(char *, char *, s32);
+    s32 strlen(char *);
+    extern u8 lbl_802AED10[];
+    u8 *temp_r31;
 
-    M2C_UNK *temp_r31 = &lbl_802AED10 + (arg0 * 0x44);
-    fn_80238ABC(arg1, temp_r31 + 4, 0xA);
-    *(s32 *)temp_r31 = strlen(temp_r31 + 4);
+    temp_r31 = lbl_802AED10 + (arg0 * 0x44);
+    fn_80238ABC(arg1, (char *)(temp_r31 + 4), 0xA);
+    *(s32 *)temp_r31 = strlen((char *)(temp_r31 + 4));
     return temp_r31 + 4;
 }
 
