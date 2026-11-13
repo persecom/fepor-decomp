@@ -4325,17 +4325,20 @@ void *fn_80190818(void *arg0, s16 arg1) {
     void fn_800616A0(void *);
     void fn_8005C7E8(void *);
     void fn_800C428C(void *);
-    extern u8 lbl_80296228[];
-    extern u8 lbl_80292230[];
-    extern u8 lbl_8028FDB0[];
+    extern void *lbl_80296228[];
+    extern void *lbl_80292230[];
+    extern void *lbl_8028FDB0[];
+    void *p;
 
     if (arg0 != NULL) {
         *(void **)arg0 = lbl_80296228;
-        if (*(void **)((u8 *)arg0 + 0x40) != NULL) {
-            fn_800616A0(*(void **)((u8 *)arg0 + 0x40));
+        p = *(void **)((u8 *)arg0 + 0x40);
+        if (p != NULL) {
+            fn_800616A0(p);
         }
-        if (*(void **)((u8 *)arg0 + 0x54) != NULL) {
-            fn_8005C7E8(*(void **)((u8 *)arg0 + 0x54));
+        p = *(void **)((u8 *)arg0 + 0x54);
+        if (p != NULL) {
+            fn_8005C7E8(p);
         }
         if (arg0 != NULL) {
             *(void **)arg0 = lbl_80292230;
