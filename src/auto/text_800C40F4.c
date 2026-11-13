@@ -3742,47 +3742,24 @@ void fn_800CF27C(s32 arg0, s32 arg1, s32 arg2)
     fn_801C6CBC(&color, arg1, lbl_80367884, arg2);
 }
 
-void fn_800CF500(s32* arg0) {
-    if ((arg0[0x15] & 0x4000000) != 0) {
-        arg0[0x1F] = 1;
-    } else {
-        arg0[0x1F] = 0;
-    }
-    
-    if ((arg0[0x15] & 0x20000000) != 0) {
-        arg0[0x28] = 1;
-    } else {
-        arg0[0x28] = 0;
-    }
-    
-    if (arg0[0x17] == 0) {
-        arg0[0x2C] = 1;
-    } else {
-        arg0[0x2C] = 0;
-    }
-    
-    if ((arg0[0x15] & 0x80000) != 0) {
-        arg0[0x3D] = 1;
-    } else {
-        arg0[0x3D] = 0;
-    }
-    
-    if ((arg0[0x15] & 0x400000) != 0) {
-        arg0[0x3E] = 1;
-    } else {
-        arg0[0x3E] = 0;
-    }
-    
-    if ((arg0[0x15] & 0x1000000) != 0) {
-        arg0[0x3F] = 1;
-    } else {
-        arg0[0x3F] = 0;
-    }
-    
-    if ((arg0[0x15] & 0x8000000) != 0) {
-        arg0[0x40] = 1;
-    } else {
-        arg0[0x40] = 0;
+void fn_800CF500(void *arg0, void *arg1, void *arg2)
+{
+    void fn_800E7AD4(void *, void *, s32, u8, u8);
+    u8 fn_80110220(void *);
+    void *self;
+    void *a1;
+    u8 v;
+
+    self = arg0;
+    a1 = arg1;
+    if (*(u8 *)((u8 *)self + 0x196) != 0) {
+        if (arg2 == NULL) {
+            v = *(u8 *)((u8 *)self + 0x178);
+            fn_800E7AD4(*(void **)((u8 *)self + 4), a1, *(s32 *)((u8 *)self + 0x174), v, v);
+        } else if ((u8)fn_80110220(arg2) == 0) {
+            v = *(u8 *)((u8 *)self + 0x178);
+            fn_800E7AD4(*(void **)((u8 *)self + 4), a1, *(s32 *)((u8 *)self + 0x174), v, v);
+        }
     }
 }
 
