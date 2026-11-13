@@ -1573,25 +1573,38 @@ check:
 s32 fn_80036EAC(void *arg0, s32 arg1) {
     s32 result;
     u8 value;
-    void *unit;
-    void *table;
+    u8 *table;
+    u8 t;
+
     result = 3;
-    table = M2C_FIELD(M2C_FIELD(arg0, void **, 0x188), void **, 0x50);
-    table = (u8 *)table + arg1 * 8 + 8;
+    table = *(u8 **)(*(u8 **)((u8 *)arg0 + 0x188) + 0x50);
+    table = table + arg1 * 8 + 8;
     if (table == NULL) {
         value = 0;
     } else {
-        unit = (u8 *)arg0 + arg1;
-        value = M2C_FIELD(unit, u8 *, 0x214);
-        if (value <= M2C_FIELD(table, u8 *, 4)) value = 0;
-        else if (value <= M2C_FIELD(table, u8 *, 5)) value = 1;
-        else if (value <= M2C_FIELD(table, u8 *, 6)) value = 2;
-        else value = 3;
+        arg0 = (u8 *)arg0 + arg1;
+        t = table[4];
+        value = *((u8 *)arg0 + 0x214);
+        if (value <= t) {
+            value = 0;
+        } else if (value <= table[5]) {
+            value = 1;
+        } else if (value <= table[6]) {
+            value = 2;
+        } else {
+            value = 3;
+        }
     }
     switch (value) {
-    case 0: result = 1; break;
-    case 1: result = 2; break;
-    case 2: result = 3; break;
+    case 0:
+        result = 1;
+        break;
+    case 1:
+        result = 2;
+        break;
+    case 2:
+        result = 3;
+        break;
     }
     return result;
 }
