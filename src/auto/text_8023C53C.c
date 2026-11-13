@@ -12151,12 +12151,13 @@ else return 0;
 }
 
 void *fn_8025FF28(u8 arg0, u8 arg1) {
-    extern u16 lbl_80363C18;
-    extern u16 lbl_80361618;
+    extern u8 lbl_80363C18[];
+    extern u8 lbl_80361618[];
+
     if (arg1 == 0xFF) {
-        return ((u16*)((u8*)&lbl_80363C18 + (arg0 * 9)));
+        return lbl_80363C18 + arg0 * 9;
     }
-    return ((u16*)((u8*)&lbl_80361618 + (arg1 * 0x90) + (arg0 * 9)));
+    return lbl_80361618 + arg1 * 0x90 + arg0 * 9;
 }
 
 void fn_8025FF6C(u8 arg0, u8 arg1) {
