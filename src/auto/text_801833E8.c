@@ -4448,18 +4448,16 @@ extern "C" void fn_80190920(void *arg0) {
         virtual void v10() = 0;
         virtual void v11() = 0;
     };
-    s32 half;
-    s16 y;
-    void *p3c;
     s16 tmp;
+    void *p3c;
+    s32 y;
 
     ((Obj *)arg0)->v3();
     tmp = *(s16 *)((u8 *)arg0 + 0x46);
-    half = tmp - fn_800102BC(-1, lbl_8036ADFC);
+    y = (s32)tmp - fn_800102BC(-1, lbl_8036ADFC);
     p3c = *(void **)((u8 *)arg0 + 0x3C);
     tmp = *(s16 *)((u8 *)arg0 + 0x4A);
-    y = (s16)(half >> 1);
-    y = (s16)(y + *(s16 *)((u8 *)arg0 + 0x4C));
+    y = (y >> 1) + *(s16 *)((u8 *)arg0 + 0x4C);
     if (p3c != NULL) {
         fn_8000A258();
         fn_80009C0C(lbl_8036AE18);
