@@ -2421,6 +2421,11 @@ void fn_800CA5FC(void) {
     fn_800CA61C();
 }
 
+String *fn_800CA61C(String *arg0, const String *arg1) {
+    String *fn_800C9758(String *, const String *, u32, u32);
+    return fn_800C9758(arg0, arg1, 0, (u32)-1);
+}
+
 void fn_800CA644(void) {
     M2C_UNK fn_800CA664();
     fn_800CA664();
