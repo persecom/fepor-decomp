@@ -16131,13 +16131,17 @@ s32 fn_80182B7C(s32 arg0) {
     return 1;
 }
 
-void fn_80182C84(void *arg0)
-{
-    void *ptr = M2C_FIELD(arg0, void **, 0x62);
-    if (ptr != 0)
-    {
-        M2C_FIELD(arg0, void **, 0x62) = 0;
+s32 fn_80182C84(void *arg0) {
+    extern u32 lbl_802EF4C8[];
+    u8 fn_80015610(s32, s32);
+    s32 fn_80105BC0(void *, s32);
+    void *other;
+
+    other = (void *)lbl_802EF4C8[0];
+    if (fn_80015610(*(s32 *)((u8 *)arg0 + 0x190), *(s32 *)((u8 *)other + 0x190)) == 1) {
+        return fn_80105BC0((u8 *)arg0 + 0x1BC, 6);
     }
+    return 0;
 }
 
 s32 fn_80182CE4(s32 arg0, s32 arg1) {
