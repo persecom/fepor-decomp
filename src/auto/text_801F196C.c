@@ -77,6 +77,15 @@ void fn_801F1DD8(s32 arg0) {
     }
 }
 
+void fn_801F1E38(void *arg0) {
+    void fn_800A5D1C(void *, s32, s32);
+    void *inner;
+    s32 idx;
+    inner = *(void **)((u8 *)arg0 + 0x30);
+    idx = *(s32 *)((u8 *)inner + 4);
+    fn_800A5D1C(*(void **)((u8 *)lbl_8029A8C8 + idx * 0xC), 0, 1);
+}
+
 void fn_801F1E78(void *arg0) {
     s32 *temp_r3;
 
@@ -4407,22 +4416,22 @@ void fn_801FB428(void *arg0, void *arg1, s32 (*compare)(void *, void *))
     }
 }
 
-void fn_801FB548(void *arg0) {
-    u32 temp_r4;
-    u32 temp_r5;
-    u32 var_ctr;
+#pragma global_optimizer off
+void fn_801FB548(u32 *arg0) {
+    u32 start;
+    u32 end;
+    u32 ctr;
 
-    temp_r4 = M2C_FIELD(arg0, u32 *, 8);
-    temp_r5 = temp_r4 + (M2C_FIELD(arg0, s32 *, 4) * 8);
-    var_ctr = (u32) ((temp_r5 + 7) - temp_r4) >> 3U;
-    if (temp_r5 > temp_r4) {
-        do {
-            var_ctr -= 1;
-        } while (var_ctr != 0);
+    start = arg0[2];
+    end = start + (arg0[1] << 3);
+    ctr = (end + 7 - start) >> 3;
+    if (end > start) {
+        for (; ctr != 0; ctr--) {
+        }
     }
-    M2C_FIELD(arg0, s32 *, 4) = 0;
+    arg0[1] = 0;
 }
-
+#pragma global_optimizer on
 void fn_801FB580(void *arg0, void *arg1, void *arg2)
 {
     void *list;
