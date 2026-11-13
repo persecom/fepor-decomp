@@ -29,31 +29,21 @@ s32 fn_80006264(s32 arg0, s32 arg1, u32 arg2) {
     return 0;
 }
 
-void fn_80006298(s32 arg0, s32 arg1, u32 arg2) {
-    s32 *var_r3;
-    u32 var_ctr;
-
-    var_r3 = (s32*)((char*)arg0 - 4);
-    var_ctr = arg2 >> 2U;
+void fn_80006298(u32 *dst, u32 val, u32 n) {
+    n >>= 2;
+    dst--;
     do {
-        var_r3++;
-        *var_r3 = arg1;
-        var_ctr--;
-    } while (var_ctr != 0);
+        *++dst = val;
+    } while (--n);
 }
 
-void fn_800062B0(u32 *arg0, u32 arg1, u32 arg2) {
-    register u32 count;
-
-    count = arg2 >> 3;
-    arg0--;
-
+void fn_800062B0(u32 *dst, u32 val, u32 n) {
+    n >>= 3;
+    dst--;
     do {
-        arg0[1] = arg1;
-        arg0++;
-        arg0[1] = arg1;
-        arg0++;
-    } while (--count != 0);
+        *++dst = val;
+        *++dst = val;
+    } while (--n);
 }
 
 void fn_800062CC(s32 arg0, s32 arg1, u32 arg2) {
@@ -316,10 +306,19 @@ void fn_80006754(void)
     lbl_80367128 = stack_hi;
 }
 
-s32 fn_80006798(void) {
-    extern s32 lbl_80367120;
-    extern s32 lbl_80367128;
-    return (lbl_80367128 - lbl_80367120) - !M2C_CARRY;
+s64 fn_80006798(void) {
+    extern u32 lbl_80367120;
+    extern u32 lbl_80367124;
+    extern u32 lbl_80367128;
+    extern u32 lbl_8036712C;
+    s64 prev;
+    s64 cur;
+
+    cur = lbl_8036712C;
+    prev = lbl_80367124;
+    cur |= (s64)lbl_80367128 << 32;
+    prev |= (s64)lbl_80367120 << 32;
+    return cur - prev;
 }
 
 s32 fn_800067B4(void) {
