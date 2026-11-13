@@ -3795,14 +3795,19 @@ void fn_8002807C(void *arg0) {
     fn_8002297C(&lbl_802CA518);
 }
 
-void fn_800280C8(s32 arg0, s32 *arg1) {
-    extern u8 lbl_802EF4C8[];
-    
-    if (arg0 >= 0x64) {
-        arg0 = 0;
+void fn_800280C8(void *arg0, s32 arg1, s32 arg2) {
+    void fn_8003816C(void *, s32, s32);
+    void fn_80050C90(void *);
+    s16 *costs;
+
+    fn_8003816C(*(void **)arg0, arg1, arg2);
+    fn_80050C90(*(void **)arg0);
+    *((u8 *)arg0 + 0xD) = (u8)arg1;
+    *((u8 *)arg0 + 0xE) = (u8)arg2;
+    if ((s8)*((u8 *)arg0 + 0x12) == 0) {
+        costs = *(s16 **)((u8 *)&lbl_802CA518 + 0x14190);
+        *((u8 *)arg0 + 0x11) = *((u8 *)arg0 + 0x11) - costs[(s8)arg1 + ((s8)arg2 << 6)];
     }
-    
-    *arg1 = *(s32 *)((char *)lbl_802EF4C8 + arg0 * 4);
 }
 
 void fn_80028160(void *arg0) {
