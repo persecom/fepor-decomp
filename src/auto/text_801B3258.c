@@ -1984,6 +1984,46 @@ void fn_801B9254(void *arg0) {
     fn_8005C8B4(lbl_8027C5E8 + 0x9C);
 }
 
+void fn_801B9300(void *arg0) {
+    void fn_8013AD70(void *, s32);
+    s32 fn_8013AC54(void *);
+    void fn_80138808(void *, s32);
+    void fn_80137EA0(void *, s32);
+    void fn_8017BB94(void *);
+    s32 fn_8017C3C8(s32);
+    void fn_8000C070(void *, u8);
+    extern u8 lbl_80330708[];
+    extern f64 lbl_8036B2D0;
+    void *r28;
+    void *r31;
+    s32 r30;
+    void *r29;
+    u8 kind;
+
+    r28 = arg0;
+    r31 = *(void **)((u8 *)r28 + 0x48);
+    fn_8013AD70(r31, *(s32 *)(lbl_80330708 + 0xB0));
+    r30 = fn_8013AC54(r31);
+    kind = *(u8 *)((u8 *)r28 + 0x44);
+    switch (kind) {
+    case 4:
+        r31 = *(void **)((u8 *)r28 + 0x54);
+        r29 = *(void **)((u8 *)r28 + 0x58);
+        fn_80138808(*(void **)((u8 *)r28 + 0x4C), r30);
+        fn_80137EA0(r31, r30);
+        *(s32 *)((u8 *)r29 + 0x3C) = r30;
+        break;
+    case 16:
+        *(s32 *)((u8 *)*(void **)((u8 *)r28 + 0x64) + 0x3C) = r30;
+        r31 = *(void **)((u8 *)r28 + 0x60);
+        *(s32 *)((u8 *)r31 + 0x4C) = r30;
+        fn_8017BB94(r31);
+        *(f32 *)((u8 *)r31 + 0x50) = (f32)fn_8017C3C8(r30);
+        break;
+    }
+    fn_8000C070(r28, *(u8 *)((u8 *)r28 + 0x44));
+}
+
 void fn_801B93F4(void *arg0) {
     void fn_8013AD70(void *, s32);
     s32 fn_8013AC54(void *);
