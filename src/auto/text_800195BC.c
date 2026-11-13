@@ -1213,12 +1213,17 @@ s32 fn_8001B8E0(void **arg0) {
     return r0;
 }
 
-u16 fn_8001B91C(void **arg0) {
-    u16 temp;
+u16 fn_8001B91C(u8 **arg0) {
+    u8 *p;
+    u32 result;
+    u8 *next;
 
-    temp = *(u16*)*arg0;
-    *arg0 = (void*)((u32)*arg0 + 2);
-    return temp;
+    p = *arg0;
+    result = p[0];
+    next = p + 2;
+    result = (result << 8) + p[1];
+    *arg0 = next;
+    return result;
 }
 
 u8 fn_8001B940(u8 **arg0) {
@@ -2200,7 +2205,7 @@ s32 fn_8001DDC4(u8 arg0) {
 }
 
 u8 fn_8001DDE8(void *arg0) {
-    return (u8) ((((M2C_FIELD(arg0, s32 *, 0x3C) & 0x40E) ^ 0) | ((M2C_FIELD(arg0, s32 *, 0x38) & 0) ^ 0)) != 0);
+    return (u8)((*(unsigned long long *)((u8 *)arg0 + 0x38) & 0x40EULL) != 0);
 }
 
 char *fn_8001E4D0(u8 arg0, u8 arg1)
