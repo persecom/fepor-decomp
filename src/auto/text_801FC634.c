@@ -81,6 +81,38 @@ void fn_801FC634(u32 arg0, f32 farg0)
     fn_8006EEFC(&lbl_80368418, lbl_80281EC8 + 0x13);
 }
 
+void fn_801FC6E0(u32 arg0, f32 farg0)
+{
+    void *fn_8000CAF0(void *, u32);
+    void fn_8006EEFC(void *, void *);
+    extern u8 lbl_8029B5B0[];
+    extern char lbl_80281EC8[];
+    extern u8 lbl_80368418;
+    extern f32 lbl_8036BADC;
+    extern f32 lbl_8036BAD8;
+    void *obj;
+    f32 f;
+
+    f = farg0;
+    if (arg0 == 0) {
+        arg0 = 3;
+    }
+    obj = fn_8000CAF0(lbl_8029B5B0, arg0);
+    if (f <= lbl_8036BADC) {
+        f = lbl_8036BAD8;
+    }
+    *(f32 *)((u8 *)obj + 0x44) = f;
+    *(s16 *)((u8 *)obj + 0x34) = -0x10;
+    *(s16 *)((u8 *)obj + 0x36) = 0;
+    *(u8 *)((u8 *)obj + 0x38) = 0x10;
+    *(u8 *)((u8 *)obj + 0x39) = 0x20;
+    *(s16 *)((u8 *)obj + 0x3E) = -0x2c;
+    *(s16 *)((u8 *)obj + 0x40) = 0;
+    *(u8 *)((u8 *)obj + 0x42) = 0x20;
+    *(u8 *)((u8 *)obj + 0x43) = 0x40;
+    fn_8006EEFC(&lbl_80368418, lbl_80281EC8 + 0x13);
+}
+
 void fn_801FC790(void *arg0) {
     u8 fn_8005BA10(void *);
     void fn_8000C188(void *);
