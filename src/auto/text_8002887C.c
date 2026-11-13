@@ -1553,18 +1553,14 @@ void fn_8002CE5C(void *arg0, void *arg1) {
 }
 
 void fn_8002CEE0(void *arg0, void *arg1) {
-    extern u16 lbl_802EF4E0[];
-    u32 r3;
-    
-    if ((r3 = *(u32*)((u8*)arg0 + 4)) != 0) {
-        r3 = *(u32*)(r3 + 0x190);
-        if (r3 == 1) {
-            void* temp_r3 = (u8*)arg1 + 0x1A4;
-            if (*(u32*)temp_r3) {
-                // Placeholder for actual call to fn_8002F6E8
-                // This would need to be fully defined with appropriate arguments and return handling
-                // but we can't easily reproduce the exact signature without more context.
-            }
+    u8 fn_80015610(s32, s32);
+    u8 fn_801044FC(void *);
+    void fn_8002F6E8(void *, u8, u8, u8, u8);
+    extern u8 lbl_802EF4E0[];
+
+    if (fn_80015610(*(s32 *)((u8 *)*(void **)((u8 *)arg0 + 4) + 0x190), *(s32 *)((u8 *)arg1 + 0x190)) != 1) {
+        if (fn_801044FC((u8 *)arg1 + 0x1A4) != 0) {
+            fn_8002F6E8(lbl_802EF4E0, *(u8 *)((u8 *)arg1 + 0x19E), *(u8 *)((u8 *)arg1 + 0x19F), *(u8 *)((u8 *)arg1 + 0x198), 0);
         }
     }
 }
