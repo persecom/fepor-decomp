@@ -2772,12 +2772,13 @@ void fn_8002FC64(u32 arg0, s32 arg1, s32 arg2, u8 arg3) {
             (void)arg2;
             (void)arg3;
             (void)sp6C;
-            fn_8006EDA0(&sp68);
-        }
-    }
-}
-
-void fn_80031508(s32 arg0) {
+                          fn_8006EDA0(&sp68);
+          }
+      }
+  }
+  #pragma dont_inline reset
+  
+  void fn_80031508(s32 arg0) {
     extern u16 lbl_802EF4C8[];
     extern u16 lbl_802EFCB8[];
     void fn_80029C08(s32);
