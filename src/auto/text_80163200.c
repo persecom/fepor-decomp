@@ -6518,6 +6518,40 @@ void fn_80170794(void *arg0) {
     M2C_FIELD(temp_r31, s16 *, 0x4C) = fn_80164E78(temp_r31, 0);
 }
 
+void fn_801707D4(void *arg0) {
+    s8 fn_80037E00(void *);
+    void fn_800951D0(void *, s32);
+    void fn_80184C7C(void *, s32, s32, s32);
+    void fn_80138808(void *, void *);
+    s16 fn_80164E78(void *, s32);
+    extern u32 lbl_802EF4C8[];
+    void *self;
+    void *temp;
+    void *temp2;
+
+    self = arg0;
+    if ((s8)fn_80037E00((void *)lbl_802EF4C8[0]) < 0) {
+        fn_800951D0((void *)lbl_802EF4C8[0], -1);
+    }
+    temp = (void *)lbl_802EF4C8[0];
+    if (temp != NULL) {
+        fn_80184C7C(temp, 0, 4, 0);
+    }
+    temp = *(void **)((u8 *)self + 0x44);
+    if (temp != NULL) {
+        temp2 = *(void **)((u8 *)temp + 0x3C);
+        if (temp2 != NULL) {
+            fn_80138808(temp, temp2);
+        }
+    }
+    temp = *(void **)((u8 *)self + 0x54);
+    *(u8 *)((u8 *)temp + 0x4C) = 0;
+    self = *(void **)((u8 *)self + 0x4C);
+    *(s32 *)((u8 *)self + 0x60) = 3;
+    *(u8 *)((u8 *)self + 0x4B) = 0;
+    *(s16 *)((u8 *)self + 0x4C) = fn_80164E78(self, 0);
+}
+
 #pragma use_lmw_stmw on
 #pragma cplusplus on
 extern "C" void fn_80170894(void *arg0) {
