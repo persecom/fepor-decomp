@@ -1708,24 +1708,24 @@ void fn_801B8B94(void *arg0) {
     fn_8000A248();
 }
 
-#pragma global_optimizer reset
+#pragma global_optimizer off
 void fn_801B91D8(void *arg0) {
     s32 fn_80059208(void *, void *);
-    s32 fn_8005C6A0(char *);
+    s32 fn_8005C6A0(void *);
     void fn_8006EEFC(void *, void *);
     void fn_8000C188(void *);
-    extern u16 lbl_8027C5E8[];
-    
+    void fn_801B8B94(void *);
+    extern u8 lbl_8027C5E8[];
     void *temp_r31;
-    
+
     temp_r31 = *(void **)((char *)arg0 + 0x30);
-    if (fn_8005C6A0((char *)lbl_8027C5E8 + 0x9C) & 0x2000) {
-        fn_8006EEFC((char *)temp_r31 + 8, (char *)lbl_8027C5E8 + 0x9C);
-        *(s32 *)((char *)arg0 + 0x34) = fn_80059208((void *)0x801B8B94, arg0);
+    if (fn_8005C6A0(lbl_8027C5E8 + 0x9C) & 0x2000) {
+        fn_8006EEFC((char *)temp_r31 + 8, lbl_8027C5E8 + 0x9C);
+        *(s32 *)((char *)arg0 + 0x34) = fn_80059208(fn_801B8B94, arg0);
         fn_8000C188(arg0);
     }
 }
-
+#pragma global_optimizer on
 void fn_801B9254(void *arg0) {
     M2C_UNK fn_8000C070(void *, M2C_UNK);
     M2C_UNK fn_8005C8B4(void *);
@@ -4388,16 +4388,17 @@ extern "C" void *fn_801BEB24(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4)
         virtual void m24() = 0;
         virtual void m28() = 0;
     };
-    void fn_801BEB9C(void *, s16 *, s16 *, s16);
+    typedef struct { s16 x; s16 y; } Pair;
+    void fn_801BEB9C(void *, Pair *, Pair *, s16);
     extern u8 lbl_802918A0[];
-    s16 spC[2];
-    s16 sp8[2];
+    Pair pC;
+    Pair p8;
 
-    sp8[1] = arg3;
-    spC[0] = arg1;
-    spC[1] = arg2;
-    sp8[0] = 0x108;
-    fn_801BEB9C(arg0, spC, sp8, arg4);
+    p8.y = arg3;
+    pC.x = arg1;
+    pC.y = arg2;
+    p8.x = 0x108;
+    fn_801BEB9C(arg0, &pC, &p8, arg4);
     *(void **)arg0 = lbl_802918A0;
     *(s32 *)((u8 *)arg0 + 0xCC) = 0;
     ((Obj *)arg0)->m28();
