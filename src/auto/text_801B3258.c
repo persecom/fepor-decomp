@@ -806,6 +806,16 @@ loop_4:
     return temp_r30;
 }
 
+s32 fn_801B7638(void)
+{
+    void fn_800056CC(const char *, ...);
+    extern u8 lbl_8027C370[];
+    extern u8 lbl_802CA264[];
+
+    fn_800056CC((char *)lbl_8027C370 + 0x22e);
+    return *(s32 *)(lbl_802CA264 + 0x48) == 0;
+}
+
 s32 fn_801B767C(void *arg0) {
     s32 var_r8;
     s32 temp_r4;
