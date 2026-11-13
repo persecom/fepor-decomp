@@ -3233,10 +3233,9 @@ void fn_801F16A0(void *arg0) {
     fn_8000E0E4(lbl_8029A710[*(u8 *)((u8 *)arg0 + 4)]);
 }
 
-s32 fn_801F16D4(void *arg2) {
-    extern u16 lbl_802EF4C8;
-    u16* ptr = &lbl_802EF4C8;
-    *(u8*)((u8*)ptr + 0x14) = *(u8*)((u8*)arg2 + 0x3A);
+s32 fn_801F16D4(s32 arg0, s32 arg1, void *arg2) {
+    extern u8 lbl_802EF4C8[];
+    lbl_802EF4C8[0x14] = *(u8 *)((u8 *)arg2 + 0x3A);
     return 5;
 }
 
