@@ -563,12 +563,25 @@ void *fn_801A4624(void *arg0) {
     return NULL;
 }
 
-void *fn_801A46BC(void *arg0, void *arg1) {
-    M2C_UNK fn_80029E58(void *, void *);
-    void *sp8;
-    
-    sp8 = (void *)fn_80029E58(arg0, arg1);
-    return sp8;
+void *fn_801A46BC(u8 *arg0) {
+    u32 flags = *(u32 *)(arg0 + 0xcac);
+
+    if (flags & 0x100) {
+        return NULL;
+    }
+    if (flags & 1) {
+        if ((s8)arg0[0x1a8] == 0) {
+            return arg0;
+        }
+        return NULL;
+    }
+    if ((s8)arg0[0x488] == 0) {
+        return arg0 + 0x2e0;
+    }
+    if ((s8)arg0[0x1a8] == 0) {
+        return arg0;
+    }
+    return NULL;
 }
 
 void fn_801A48A4(s32 arg0) {
