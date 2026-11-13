@@ -1032,28 +1032,28 @@ void fn_800077D8(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
     extern void *lbl_80367140;
     extern f32 lbl_80368B98;
     extern f32 lbl_80368B94;
-    void *object;
+    u8 *ptr;
     f32 sum_x;
     f32 sum_y;
     f32 constant1;
     f32 constant2;
 
+    ptr = (u8 *)lbl_80367140;
     sum_x = arg0 + arg2;
     sum_y = arg1 + arg3;
     constant1 = lbl_80368B98;
+    ptr = *(u8 **)(ptr + 0xC);
     constant2 = lbl_80368B94;
+    ptr = *(u8 **)(ptr + 0x4);
 
-    object = *(void **)((u8 *)lbl_80367140 + 0xC);
-    object = *(void **)((u8 *)object + 4);
-
-    *(f32 *)((u8 *)object + 0x10) = arg0;
-    *(f32 *)((u8 *)object + 0x20) = sum_x;
-    *(f32 *)((u8 *)object + 0x14) = arg1;
-    *(f32 *)((u8 *)object + 0x24) = sum_y;
-    *(f32 *)((u8 *)object + 0x1C) = constant1;
-    *(f32 *)((u8 *)object + 0x18) = constant1;
-    *(f32 *)((u8 *)object + 0x2C) = constant2;
-    *(f32 *)((u8 *)object + 0x28) = constant2;
+    *(f32 *)(ptr + 0x10) = arg0;
+    *(f32 *)(ptr + 0x20) = sum_x;
+    *(f32 *)(ptr + 0x14) = arg1;
+    *(f32 *)(ptr + 0x24) = sum_y;
+    *(f32 *)(ptr + 0x1C) = constant1;
+    *(f32 *)(ptr + 0x18) = constant1;
+    *(f32 *)(ptr + 0x2C) = constant2;
+    *(f32 *)(ptr + 0x28) = constant2;
 }
 
 void fn_80007818(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
@@ -2771,26 +2771,29 @@ void fn_8000B018(void *arg0) {
 }
 
 void fn_8000B050(void *arg0) {
-    void **vtable = (void**)((char*)arg0 + 4);
-    void *obj = *vtable;
-    *vtable = (void*)((char*)obj + 0xC);
-    ((void (*)(s16, s16))((char*)obj + 8))((s16) 0, (s16) 0);
+    s32 *node;
+    s32 *next;
+    u32 word;
+
+    node = ((s32 **)arg0)[1];
+    word = (u32)node[2];
+    next = node + 3;
+    ((s32 **)arg0)[1] = next;
+    ((void (*)(void *, s16, s16))word)(arg0, (s16)word, (s16)(word >> 16));
 }
 
 void fn_8000B090(void *arg0) {
     u32 *entry;
     u32 value;
     s16 argument;
-    void (*callback)(s16);
+    void (*callback)(void *, s16);
 
     entry = *(u32 **)((u8 *)arg0 + 4);
     value = entry[0];
-    callback = (void (*)(s16))entry[1];
-
+    callback = (void (*)(void *, s16))entry[1];
     argument = (s16)(value >> 16);
     *(u32 **)((u8 *)arg0 + 4) = entry + 2;
-
-    callback(argument);
+    callback(arg0, argument);
 }
 
 int fn_8000B0D0(void *arg0)
