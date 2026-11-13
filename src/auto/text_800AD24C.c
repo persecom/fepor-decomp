@@ -243,12 +243,14 @@ void fn_800AD6AC(void *arg0) {
 void fn_800AD700(void *arg0) {
     void fn_8014CBD8(void *, f32, f32);
     extern u8 lbl_80330708[];
-    void *unit;
-    s8 *py;
+    struct {
+        u8 pad[0x19E];
+        s8 x;
+        s8 y;
+    } *u;
 
-    unit = *(void **)((u8 *)arg0 + 0x30);
-    py = (s8 *)((u8 *)unit + 0x19F);
-    fn_8014CBD8(lbl_80330708, (f32)py[-1], (f32)py[0]);
+    u = *(void **)((u8 *)arg0 + 0x30);
+    fn_8014CBD8(lbl_80330708, (f32)u->y, (f32)u->x);
 }
 
 void fn_800AD76C(void *arg0) {
@@ -8198,9 +8200,40 @@ s32 fn_800C04B0(s32 arg0, u8 (*arg1)(void *)) {
     return count;
 }
 
-void fn_800C054C(void) {
-    // Simplified version for now
-    return;
+void fn_800C054C(void *arg0) {
+    void *fn_80013B60(void *);
+    void *fn_8000CAA0(void *, void *);
+    void fn_800BDBC8(void *, void *);
+    void fn_8000C188(void *);
+    extern u8 lbl_8028D4F8[];
+    extern u8 lbl_8026FC78[];
+    extern s32 lbl_80367110;
+
+    void *self;
+    void *saved;
+    void *entry;
+    void *tmp;
+
+    self = arg0;
+    while ((entry = *(void **)((u8 *)self + 0x30)) != 0) {
+        if ((s32)(s8)((u8 *)entry)[0xC] == *(s32 *)((u8 *)self + 0x34)) {
+            if (((u8 (*)(void *))*(void **)((u8 *)self + 0x38))(entry) != 0) {
+                saved = *(void **)((u8 *)self + 0x30);
+                tmp = fn_8000CAA0(lbl_8028D4F8, self);
+                *(void **)((u8 *)tmp + 0x30) = saved;
+                fn_800BDBC8((u8 *)lbl_80330708 + 0xB4, lbl_8026FC78 + 0x11C);
+                lbl_80367110 &= ~1;
+                *(void **)((u8 *)self + 0x30) = fn_80013B60(*(void **)((u8 *)self + 0x30));
+                if (*(void **)((u8 *)self + 0x30) == 0) {
+                    goto destroy;
+                }
+                return;
+            }
+        }
+        *(void **)((u8 *)self + 0x30) = fn_80013B60(*(void **)((u8 *)self + 0x30));
+    }
+destroy:
+    fn_8000C188(self);
 }
 
 void fn_800C0624(void *arg0) {
@@ -9140,8 +9173,8 @@ s8 fn_800C2ACC(Unk800C2ACC *arg0, s32 arg1) {
 }
 
 s32 fn_800C2AE0(Unk800C2ACC *arr, s32 idx, u8 val) {
-    u8 flag = 0;
     s32 off = idx * 0x18;
+    u8 flag = 0;
     Unk800C2ACC *p = &arr[idx];
 
     ((u8 *)p)[-5] = val;
@@ -9153,12 +9186,12 @@ s32 fn_800C2AE0(Unk800C2ACC *arr, s32 idx, u8 val) {
     if (flag) {
         u8 *q = (u8 *)arr + off;
         idx = 0;
-        q[-0x18] = (u8)idx;
-        ((u8 *)p)[-0x17] = (u8)idx;
-        ((u8 *)p)[-5] = (u8)idx;
-        q[-6] = (u8)idx;
-        q[-7] = (u8)idx;
-        q[-8] = (u8)idx;
+        q[-0x18] = idx;
+        ((u8 *)p)[-0x17] = idx;
+        ((u8 *)p)[-5] = idx;
+        q[-6] = idx;
+        q[-7] = idx;
+        q[-8] = idx;
         q[-2] = 0x80;
         q[-3] = 0x80;
         q[-4] = 0x80;
@@ -9173,8 +9206,8 @@ s8 fn_800C2BA8(s32 arg0, s32 arg1) {
 }
 
 s32 fn_800C2BBC(Unk800C2ACC *arr, s32 idx, u8 val) {
-    register s32 off;
-    register u8 flag;
+    u8 flag;
+    s32 off;
     Unk800C2ACC *p;
     u8 *q;
 
@@ -9226,37 +9259,25 @@ s8 fn_800C2C84(s32 arg0, s32 arg1) {
 
 #pragma optimization_level 2
 s32 fn_800C2C98(Unk800C2ACC *arr, s32 idx, u8 val) {
-    s32 off;
     u8 flag;
+    s32 off;
     Unk800C2ACC *p;
-    u8 *q;
-
+    {
+        u8 *pin;
+        pin = (u8 *)arr;
+        (void)pin;
+    }
     off = idx * 0x18;
     flag = 0;
     p = &arr[idx];
     ((u8 *)p)[-7] = val;
-    if ((s8)((u8 *)p)[-0x17] != 0)
-        goto done;
-    if ((s8)((u8 *)p)[-8] != 0)
-        goto done;
-    if ((s8)((u8 *)p)[-7] != 0)
-        goto done;
-    if ((s8)((u8 *)p)[-6] != 0)
-        goto done;
-    if ((s8)((u8 *)p)[-5] != 0)
-        goto done;
-    if (((u8 *)p)[-4] != 0x80)
-        goto done;
-    if (((u8 *)p)[-3] != 0x80)
-        goto done;
-    if (((u8 *)p)[-2] != 0x80)
-        goto done;
-    if (((u8 *)p)[-1] != 0xFF)
-        goto done;
-    flag = 1;
-done:
+    if ((s8)((u8 *)p)[-0x17] == 0 && (s8)((u8 *)p)[-8] == 0 && (s8)((u8 *)p)[-7] == 0 &&
+        (s8)((u8 *)p)[-6] == 0 && (s8)((u8 *)p)[-5] == 0 && ((u8 *)p)[-4] == 0x80 &&
+        ((u8 *)p)[-3] == 0x80 && ((u8 *)p)[-2] == 0x80 && ((u8 *)p)[-1] == 0xFF) {
+        flag = 1;
+    }
     if (flag) {
-        q = (u8 *)arr + off;
+        u8 *q = (u8 *)arr + off;
         idx = 0;
         q[-0x18] = (u8)idx;
         ((u8 *)p)[-0x17] = (u8)idx;
