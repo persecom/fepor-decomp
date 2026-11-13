@@ -767,23 +767,11 @@ s32 fn_800146E8(void *arg0)
 
 s32 fn_8001473C(void *arg0)
 {
-    void fn_8006785C(s32, u32, u32);
-
-    u8 *ptr;
-    u32 value;
-
-    ptr = *(u8 **)((u8 *)arg0 + 4);
-
-    value = *(u32 *)ptr;
-
-    fn_8006785C(
-        (s16)(value >> 16),
-        *(u32 *)(ptr + 4),
-        *(u32 *)(ptr + 8)
-    );
-
-    *(u8 **)((u8 *)arg0 + 4) = ptr + 0xC;
-
+    s32 *temp_r3 = (s32 *)arg0;
+    s32 *temp_r3_2 = (s32 *)temp_r3[1];
+    s16 temp_r4 = (s16)((u32)temp_r3_2[0] >> 16);
+    fn_8006785C(temp_r4, temp_r3_2[1], (void *)temp_r3_2[2]);
+    temp_r3[1] = (s32)((s32 *)temp_r3[1] + 3);
     return 1;
 }
 
