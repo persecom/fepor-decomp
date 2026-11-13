@@ -15502,14 +15502,14 @@ void *fn_801E09B4(M2C_UNK *arg0) {
     return NULL;
 }
 
-void fn_801E0B48(s32 arg1, s32 arg2, s32 arg3) {
+void fn_801E0B48(s32 unused, s32 arg1, s32 arg2, s32 arg3) {
     void *fn_8000CAA0(void *, s32);
     extern u8 lbl_80299ED8[];
-    
-    void *temp_r3;
-    temp_r3 = fn_8000CAA0(lbl_80299ED8, arg3);
-    *(s32 *) ((u8 *) temp_r3 + 0x60) = arg1;
-    *(s32 *) ((u8 *) temp_r3 + 0x64) = arg2;
+    void *obj;
+
+    obj = fn_8000CAA0(lbl_80299ED8, arg3);
+    *(s32 *)((u8 *)obj + 0x60) = arg1;
+    *(s32 *)((u8 *)obj + 0x64) = arg2;
 }
 
 void fn_801E0D30(void *arg0) {
