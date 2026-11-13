@@ -16255,6 +16255,16 @@ void fn_801E1CB4(u8 **arg0, void *arg1) {
     arg0[1] = best;
     *(u8 **)((u8 *)other + 0x54) = best;
 }
+
+void fn_801E2014(s32 unused, u8 arg1, s32 arg2) {
+    extern u8 lbl_80331FB8[];
+    extern u8 lbl_80299E10[];
+    void fn_8000CAA0(void *, s32);
+
+    lbl_80331FB8[0x47] = arg1;
+    fn_8000CAA0(lbl_80299E10, arg2);
+}
+
 void fn_801E204C(void *arg0) {
     extern u8 lbl_80330708[];
     u8 *temp_r5;
