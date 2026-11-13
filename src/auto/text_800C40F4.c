@@ -6654,18 +6654,19 @@ void fn_800D75C4(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x420) = 1;
 }
 
-s32 fn_800D75FC(s32 arg0) {
-    s32 fn_800E4454(s32, void *);
-    void fn_800C9B6C(void *);
-    void fn_800C9A60(void *, s32);
+#pragma optimization_level 2
+s32 fn_800D75FC(void *arg0) {
+    s32 fn_800E4454(s32, M2C_UNK *);
+    M2C_UNK fn_800C9B6C(M2C_UNK *);
+    M2C_UNK fn_800C9A60(M2C_UNK *, M2C_UNK);
     M2C_UNK sp8;
 
     fn_800C9B6C(&sp8);
-    arg0 = fn_800E4454(*(s32 *)(arg0 + 0x10), &sp8);
+    arg0 = (void *)fn_800E4454(M2C_FIELD(arg0, s32 *, 0x10), &sp8);
     fn_800C9A60(&sp8, -1);
-    return arg0;
+    return (s32)arg0;
 }
-
+#pragma optimization_level reset
 s32 fn_800D77B0(void) {
     M2C_UNK fn_800DA358();
     fn_800DA358();
@@ -7587,23 +7588,24 @@ extern "C" void *fn_800D9B10(void *arg0) {
 #pragma cplusplus reset
 #pragma use_lmw_stmw reset
 
+#pragma dont_inline on
 void fn_800DA2CC(void *arg0)
 {
     extern void *lbl_803678B8;
-
+    void fn_800D7540(void *);
+    void fn_800D7564(void *);
     void *object;
+    void *field;
 
     object = lbl_803678B8;
-
-    if (*(void **)((u8 *)object + 0x30) != 0) {
-        fn_800D7540(*(void **)((u8 *)object + 0x30));
+    field = *(void **)((u8 *)object + 0x30);
+    if (field != 0) {
+        fn_800D7540(field);
     }
-
     *(void **)((u8 *)object + 0x30) = arg0;
-
     fn_800D7564(*(void **)((u8 *)object + 0x30));
 }
-
+#pragma dont_inline reset
 void fn_800DA31C(void) {
     extern s8 lbl_803678BE;
     extern s8 lbl_803678BF;
@@ -12871,8 +12873,14 @@ void *fn_800E80D8(void *arg0, void *arg1, void *arg2)
 
 void fn_800E8154(void *arg0)
 {
-    (*(void (**)(void *))(*(u8 **)((u8 *)arg0 + 0x10) + 0x38))(arg0);
-    (*(void (**)(void *))(*(u8 **)((u8 *)arg0 + 0x10) + 0x8))(arg0);
+    u8 *obj;
+    void (*fn)(void *);
+
+    obj = (u8 *)arg0;
+    fn = *(void (**)(void *))(*(u8 **)(obj + 0x10) + 0x38);
+    fn(obj);
+    fn = *(void (**)(void *))(*(u8 **)(obj + 0x10) + 0x8);
+    fn(obj);
 }
 
 void *fn_800E8488(void *arg0, s32 arg1)
