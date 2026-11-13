@@ -2714,13 +2714,11 @@ void fn_80031550(s32 arg0) {
 }
 
 void fn_80031598(s32 arg0) {
-    extern u16 lbl_802EF4C8[];
+    extern u8 lbl_802EF4C8[];
     extern u8 lbl_80285088[];
-    
-    s32 val1 = *(s32 *)lbl_802EF4C8;
-    u8 val2 = fn_8001DD04(val1, (u8 *)lbl_802EF4C8);
-    s32 val3 = *(s32 *)(lbl_802EF4C8 + 4);
-    fn_8003CE88(val3, val2, (u8 *)lbl_802EF4C8);
+
+    u8 val2 = (u8)fn_8001DD04(*(s32 *)lbl_802EF4C8);
+    fn_8003CE88(*(s32 *)(lbl_802EF4C8 + 4), val2);
     fn_8004A224();
     fn_8000CAA0(lbl_80285088, arg0);
 }
