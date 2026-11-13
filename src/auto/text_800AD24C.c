@@ -305,39 +305,35 @@ void fn_800AD76C(void *arg0) {
 }
 
 void fn_800AD84C(void *arg0) {
-    void *fn_8002F62C(void *);
-    void *fn_8002F740(void);
-    void fn_801A7218(void *, void *, s32);
-    void fn_801A4958(void *);
-    s8 fn_8003B2D0(void *);
-    void fn_801A4A88(void *, s8);
-    void fn_8019B704(void *, s32);
-    extern u8 lbl_802EF4E0[];
-    extern u8 lbl_80330EAC[];
-    void *p;
-    void *eac;
-    s32 diff;
-    s32 neg;
-    void *f740;
-    u8 div;
-
-    p = fn_8002F62C(lbl_802EF4E0);
-    f740 = fn_8002F740();
-    fn_801A7218(lbl_80330EAC, f740, -1);
-    fn_801A4958(lbl_80330EAC);
-    div = *(u8 *)((u8 *)p + 3);
-    eac = lbl_80330EAC;
-    diff = (*(s16 *)((u8 *)arg0 + 0x34) - *(s16 *)((u8 *)eac + 0x29A)) / div;
-    if (diff > fn_8003B2D0(eac)) {
-        diff = fn_8003B2D0(eac);
-    }
-    if (diff < 1) {
-        diff = 1;
-    }
-    neg = -diff;
-    *(u8 *)((u8 *)arg0 + 0x3B) = (u32)(neg | diff) >> 31;
-    fn_801A4A88(lbl_80330EAC, (s8)neg);
-    fn_8019B704(arg0, 0);
+void *fn_8002F62C(void *);
+void *fn_8002F740(void);
+void fn_801A7218(void *, void *, s32);
+void fn_801A4958(void *);
+s8 fn_8003B2D0(void *);
+void fn_801A4A88(void *, s8);
+void fn_8019B704(void *, s32);
+extern u8 lbl_802EF4E0[];
+extern u8 lbl_80330EAC[];
+void *p;
+void *eac;
+s32 diff;
+s32 neg;
+void *f740;
+u8 div;
+p=fn_8002F62C(lbl_802EF4E0);
+f740=fn_8002F740();
+fn_801A7218(lbl_80330EAC,f740,-1);
+fn_801A4958(lbl_80330EAC);
+div=*((u8*)p+3);
+eac=lbl_80330EAC;
+diff=*(s16*)((u8*)arg0+0x34)-*(s16*)((u8*)eac+0x29A);
+diff/=div;
+if(diff>fn_8003B2D0(eac)) diff=fn_8003B2D0(eac);
+if(diff<1) diff=1;
+neg=-diff;
+*((u8*)arg0+0x3B)=(u32)(neg|diff)>>31;
+fn_801A4A88(lbl_80330EAC,(s8)neg);
+fn_8019B704(arg0,0);
 }
 
 void fn_800AD92C(s32 arg0) {
