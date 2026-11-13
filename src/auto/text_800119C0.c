@@ -143,15 +143,17 @@ s32 fn_80013880(void) {
 }
 
 s32 fn_800138BC(void *arg0) {
-    s32 *temp_r3;
-    extern void *lbl_80367180;
-    M2C_UNK fn_80011EDC();
+    extern s32 lbl_80367180;
+    u8 *context;
+    u32 *stack;
+    s32 fn_80011EDC();
 
-    lbl_80367180 = arg0;
-    temp_r3 = M2C_FIELD(lbl_80367180, s32 **, 0x18) - 4;
+    lbl_80367180 = (s32)arg0;
     fn_80011EDC();
-    M2C_FIELD(lbl_80367180, s32 **, 0x18) = temp_r3;
-    return *temp_r3;
+    context = (u8 *)lbl_80367180;
+    stack = *(u32 **)(context + 0x18) - 1;
+    *(u32 **)(context + 0x18) = stack;
+    return (s32)*stack;
 }
 
 u32 fn_800138F4(u32 arg0, u32 arg1) {
@@ -987,12 +989,12 @@ u8 fn_80014E70(void) {
 void fn_80014E78(void) {
     extern u8 lbl_803671B8;
     extern void fn_8020A51C(void);
-
-    fn_8020A51C();
-
-    if (lbl_803671B8 != 0) {
-        return;
-    }
+    goto start;
+    do {
+        /* spin */
+    start:
+        fn_8020A51C();
+    } while (lbl_803671B8 == 0);
 }
 
 extern u8 lbl_803671B8;
