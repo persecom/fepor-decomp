@@ -864,16 +864,14 @@ s32 fn_801FEF6C(void) {
 void *fn_801FEFA0(void) {
     void *fn_8000CAF0(void *, s32);
     s32 fn_800C4740(void);
-    s32 fn_800C4304(void *, void *);
-    extern u16 lbl_8029B5DC;
-    extern u8 lbl_80281F00;
-
+    s32 fn_800C4304(void *);
+    extern u8 lbl_8029B5DC[];
+    extern char lbl_80281F00[];
     void *temp_r31;
-    void *temp_r5;
 
-    temp_r31 = fn_8000CAF0(&lbl_8029B5DC, 3);
-    M2C_FIELD(temp_r31, s32 *, 0x34) = fn_800C4740();
-    M2C_FIELD(temp_r31, s32 *, 0x38) = fn_800C4304(&lbl_80281F00 + 0x75, &lbl_80281F00);
+    temp_r31 = fn_8000CAF0(lbl_8029B5DC, 3);
+    *(s32 *)((u8 *)temp_r31 + 0x34) = fn_800C4740();
+    *(s32 *)((u8 *)temp_r31 + 0x38) = fn_800C4304(lbl_80281F00 + 0x75);
     return temp_r31;
 }
 
