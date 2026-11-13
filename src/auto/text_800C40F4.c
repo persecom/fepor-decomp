@@ -10028,18 +10028,15 @@ void fn_800E01C8(void *arg0) {
     p[3] = 0;
 }
 
-int fn_800E0340(void *arg0, void *arg1, void *arg2)
+s32 fn_800E0340(void *arg0, void *arg1, void *arg2)
 {
-    int value1;
-    int value2;
-    int difference;
+    s32 fn_800DF6B0(void *);
+    s32 a;
+    s32 b;
 
-    value1 = fn_800DF6B0(arg1);
-    value2 = fn_800DF6B0(arg2);
-
-    difference = value2 ^ value1;
-
-    return (difference < 0) ? 1 : 0;
+    a = fn_800DF6B0(arg1);
+    b = fn_800DF6B0(arg2);
+    return a < b;
 }
 
 #pragma use_lmw_stmw on
@@ -18733,23 +18730,27 @@ s32 fn_800FB60C(void *arg0) {
     return (r & 0xFF) == 0;
 }
 
-void fn_800FB918(void *arg0, void *arg1, s32 *arg2) {
-    s32 count;
-    s32 mid;
-    s32 *mid_ptr;
+void fn_800FB918(u8 *arg0, u8 *arg1, s32 *arg2) {
+    s32 n;
+    s32 half;
+    s32 *p;
     s32 key;
 
     key = *arg2;
-    count = ((s32)arg1 - (s32)arg0) / 8;
-    while (count > 0) {
-        mid = count / 2;
-        mid_ptr = (s32 *)((u8 *)arg0 + (mid * 8));
-        if (*mid_ptr < key) {
-            arg0 = (u8 *)mid_ptr + 8;
-            count -= mid + 1;
-        } else {
-            count = mid;
-        }
+    n = (s32)(arg1 - arg0) / 8;
+    goto cond;
+body:
+    half = n / 2;
+    p = (s32 *)(arg0 + (half * 8));
+    if (*p < key) {
+        arg0 = (u8 *)p + 8;
+        n -= half + 1;
+    } else {
+        n = half;
+    }
+cond:
+    if (n > 0) {
+        goto body;
     }
 }
 
