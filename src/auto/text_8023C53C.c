@@ -8182,25 +8182,54 @@ restart:
     return isMaster ? vid : sv->unkF4;
 }
 
+s32 fn_80255FB0(u32 arg0) {
+    extern VidList *lbl_80368A44;
+    VidList *vl;
+
+    if ((u32)(arg0 + 0x10000) != 0xFFFFU) {
+        vl = lbl_80368A44;
+        goto check;
+    loop:
+        if (vl->vid != arg0)
+            goto not_eq;
+        goto done;
+    not_eq:
+        if (vl->vid > arg0)
+            goto set_null;
+        vl = vl->next;
+    check:
+        if (vl != NULL)
+            goto loop;
+        goto done;
+    set_null:
+        vl = NULL;
+    done:
+        if (vl != NULL) {
+            return (s32)vl->root;
+        }
+    }
+    return -1;
+}
+
 int fn_80256000(u32 arg0)
 {
     extern void *lbl_80368A44;
 
     void *object;
-    u32 index;
+    u32 field;
     u32 value;
 
     object = lbl_80368A44;
 
     while (object != 0) {
-        if (*(u32 *)((u8 *)object + 0xC) == arg0) {
+        field = *(u32 *)((u8 *)object + 0xC);
+        if (field == arg0) {
             return *(int *)((u8 *)object + 8);
         }
 
-        index = *(u8 *)((u8 *)object + 0xC);
-        value = *(u32 *)((u8 *)&lbl_803689A8 + (index * 0x458) + 0xEC);
+        value = *(u32 *)((u8 *)lbl_803689A8 + ((u8)field * 0x458) + 0xEC);
 
-        if ((value + 0x10000) == 0xFFFF) {
+        if ((u32)(value + 0x10000) == 0xFFFFU) {
             object = *(void **)object;
         } else {
             break;
@@ -9014,24 +9043,41 @@ s32 fn_802575A0(void *arg0) {
     return 0;
 }
 
-void fn_80257614(void *arg0) {
-    extern M2C_UNK lbl_8035A610;
-    extern M2C_UNK lbl_8035A650;
-    s32 temp_r4;
-    u8 temp_r0;
-    u8 temp_r5;
+void fn_80257614(void *arg0)
+{
+    extern u8 lbl_8035A610[];
+    extern u8 lbl_8035A650[];
 
-    temp_r4 = M2C_FIELD(arg0, s32 *, 0xF4);
-    if ((u32) (temp_r4 + 0x10000) != -1U) {
-        temp_r5 = M2C_FIELD(arg0, u8 *, 0x121);
-        if (temp_r5 != 0xFF) {
-            temp_r0 = M2C_FIELD(arg0, u8 *, 0x122);
-            if (temp_r0 == 0xFF) {
-                *(&lbl_8035A610 + (u8) temp_r4) = (u8) temp_r4;
-                return;
-            }
-            *(&lbl_8035A650 + ((temp_r0 * 0x10) & 0xFF0) + temp_r5) = (u8) temp_r4;
-        }
+    u8 *voice;
+    u32 value;
+    u8 index;
+    u8 group;
+    u8 voiceId;
+    u8 *table;
+
+    voice = (u8 *)arg0;
+
+    value = *(u32 *)(voice + 0xF4);
+
+    if (value == 0xFFFFFFFF) {
+        return;
+    }
+
+    index = *(u8 *)(voice + 0x121);
+
+    if (index == 0xFF) {
+        return;
+    }
+
+    group = *(u8 *)(voice + 0x122);
+    voiceId = (u8)value;
+
+    if (group == 0xFF) {
+        lbl_8035A610[voiceId] = voiceId;
+    } else {
+        table = lbl_8035A650 + ((u32)group << 4);
+
+        table[index] = voiceId;
     }
 }
 
@@ -13492,34 +13538,29 @@ void fn_80261730(u8 arg0, u16 arg1, void *arg2, u32 arg3,
     }
 }
 
-void fn_802618E4(int arg0)
+#pragma peephole off
+void fn_802618E4(s32 arg0)
 {
     extern u8 *lbl_80368AA0;
     extern u8 lbl_80368AD0;
-
     u8 *object;
-    u8 index;
-    u32 value;
+    u8 *q;
+    s32 off;
 
-    object = lbl_80368AA0 + (arg0 * 0xF8);
+    off = arg0 * 0xF8;
+    object = lbl_80368AA0 + off;
 
-    if (*(u8 *)(object + 0xF0) != 1) {
-        return;
+    if (object[0xF0] == 1) {
+        if (lbl_80368AD0 == 0) {
+            object[0xF2] = 1;
+            q = lbl_80368AA0;
+            q = q + off;
+            q = q + (lbl_80368AD0 << 2);
+            *(u32 *)(q + 0x24) |= 0x20;
+        }
     }
-
-    if (lbl_80368AD0 != 0) {
-        return;
-    }
-
-    object[0xF2] = 1;
-
-    index = lbl_80368AD0;
-    value = *(u32 *)(lbl_80368AA0 + (arg0 * 0xF8) + (index * 4) + 0x24);
-    value |= 0x20;
-
-    *(u32 *)(lbl_80368AA0 + (arg0 * 0xF8) + (index * 4) + 0x24) = value;
 }
-
+#pragma peephole on
 void fn_80261934(u8 arg0, void *arg1, s32 arg2)
 {
     extern u8 *lbl_80368AA0;
