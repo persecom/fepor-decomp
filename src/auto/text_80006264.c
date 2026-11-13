@@ -3333,12 +3333,27 @@ extern void *(*lbl_80366DA0)(s32);
 extern f32 lbl_80368B94, lbl_80368BB8, lbl_80368B98;
 extern u32 lbl_802ADAFC[9];
 void fn_8000B850(void *arg0) {
- u32 *obj=arg0; register u32 *table; u32 x; u32 y;
- if(obj[0] && *((u8*)obj+0x2d)==0 && *((u8*)obj+0x2e)==0 && obj[4]==0) {
- table=(u32*)lbl_802ADAFC; x=*(u32*)obj[1]; y=table[(x>>6)&7];
- if(((u8(*)(void*))(*(u32*)(y+((x&0xff)<<2))))(obj)) {
- if(obj[0] && *((u8*)obj+0x2d)==0 && *((u8*)obj+0x2e)!=0)return;
- }}
+    extern u32 lbl_802ADAFC[9];
+    u8 *self;
+    u32 *table;
+    u32 x;
+    u32 y;
+
+    self = (u8 *)arg0;
+    if (*(u32 *)self != 0 && self[0x2D] == 0 && self[0x2E] == 0 && *(void **)(self + 0x10) == NULL) {
+        table = lbl_802ADAFC;
+        for (;;) {
+            x = **(u32 **)(self + 4);
+            y = table[(x >> 8) & 7];
+            if (((u8 (*)(void *))(*(u32 *)(y + ((x & 0xFF) << 2))))(self)
+                && *(u32 *)self != 0 && self[0x2D] == 0) {
+                if (self[0x2E] == 0) {
+                    continue;
+                }
+            }
+            break;
+        }
+    }
 }
 
 void *fn_8000B908(u8 arg0) {
