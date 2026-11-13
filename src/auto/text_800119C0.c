@@ -1127,19 +1127,38 @@ void *fn_80014FF8(void *arg0) {
     }
 }
 
-s32 fn_8001512C(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
-{
-    s32 temp_r3;
-    s32 temp_r4;
-    s32 temp_r5;
-    s32 temp_r6;
+s32 fn_8001512C(u8 *arg0) {
+    u8 fn_8014D8BC(void *);
+    extern u8 lbl_80330708[];
+    extern u32 lbl_802CA264[];
+    s32 count;
+    void *node;
+    s32 kind;
 
-    temp_r3 = arg0 + 0x1F;
-    temp_r4 = (arg1 + 0x1F) >> 5;
-    temp_r5 = arg2 >> 5;
-    temp_r6 = (arg3 + 0x1F) >> 5;
-
-    return ((temp_r3 >> 5) - temp_r4) * (temp_r5 - temp_r6);
+    if ((u8)fn_8014D8BC(lbl_80330708) == 0) {
+        return 0;
+    }
+    kind = arg0[1];
+    switch (kind) {
+    case 0:
+        count = 0;
+        node = (void *)lbl_802CA264[kind * 3];
+        while (node != NULL) {
+            node = *(void **)((u8 *)node + 0x184);
+            count += 1;
+        }
+        return count > 1;
+    case 3:
+        count = 0;
+        node = (void *)lbl_802CA264[kind * 3];
+        while (node != NULL) {
+            node = *(void **)((u8 *)node + 0x184);
+            count += 1;
+        }
+        return count > 0;
+    default:
+        return 0;
+    }
 }
 
 void fn_8001520C(void *arg0, u8 arg1) {
