@@ -2789,20 +2789,20 @@ void fn_8000B090(void *arg0) {
     callback(arg0, argument);
 }
 
-int fn_8000B0D0(void *arg0)
+s32 fn_8000B0D0(void *arg0)
 {
     void *object;
-    int (*callback)(void);
+    s32 (*callback)(void *);
 
     object = *(void **)((u8 *)arg0 + 4);
-    callback = *(int (**)(void))((u8 *)object + 4);
+    callback = *(s32 (**)(void *))((u8 *)object + 4);
 
-    if ((u8)callback() != 0) {
+    if ((u8)callback(arg0) == 0) {
         return 0;
     }
 
+    object = *(void **)((u8 *)arg0 + 4);
     *(void **)((u8 *)arg0 + 4) = (u8 *)object + 8;
-
     return 1;
 }
 
