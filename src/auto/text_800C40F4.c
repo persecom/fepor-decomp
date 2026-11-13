@@ -407,25 +407,32 @@ s32 fn_800C42D8(s32 arg0) {
     return fn_800C5A48(lbl_80367870, arg0) + 0x20;
 }
 
-s32 fn_800C4304(s32 arg0) {
-    extern u8 lbl_80320B88[];
+s32 fn_800C4304(void *arg0) {
+    s32 fn_802342B8(void *, u32);
+    extern u32 lbl_80320B88[];
     s32 idx;
     u32 *p;
     u32 v;
 
     idx = 0;
-    p = (u32 *)lbl_80320B88;
-loop_1:
+    p = lbl_80320B88;
+loop:
     v = *p;
-    if ((v == 0U) || (fn_802342B8(arg0, v + 4) != 0)) {
-        idx += 1;
-        p += 1;
-        if (idx >= 0x10) {
-            idx = -1;
-        } else {
-            goto loop_1;
-        }
+    if (v == 0) {
+        goto next;
     }
+    if (fn_802342B8(arg0, v + 4) != 0) {
+        goto next;
+    }
+    goto done;
+next:
+    idx += 1;
+    p += 1;
+    if (idx < 0x10) {
+        goto loop;
+    }
+    idx = -1;
+done:
     return idx;
 }
 
@@ -18731,10 +18738,25 @@ void fn_800FAD94(void) {
     // a very basic version without calling any other functions:
 }
 
-void fn_800FB074(void* arg0, s32 arg1)
+void fn_800FB074(void *arg0)
 {
-    void** ptr = (void**)arg0;
-    *ptr = (void*)((u32)arg1 & 0xFFFF);
+    extern s32 lbl_803678F4;
+    extern u8 *lbl_803678F8;
+    extern u8 lbl_803678F0;
+    void *fn_8000D2BC(void *);
+    void *self;
+    u8 *p;
+    u8 (*cb)(void *);
+
+    self = arg0;
+    p = lbl_803678F8;
+    cb = (u8 (*)(void *))fn_8000D2BC(*(void **)(p + 0x14));
+    lbl_803678F0 = cb(*(void **)(p + 0x18));
+    if (lbl_803678F4 == 0) {
+        *(u8 *)((u8 *)self + 0x250) += 1;
+    } else {
+        *(u8 *)((u8 *)self + 0x251) += 1;
+    }
 }
 
 void fn_800FB2DC(void *arg0) {
