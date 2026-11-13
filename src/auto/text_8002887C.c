@@ -3431,28 +3431,36 @@ void fn_80031FF8(s32 arg0) {
     fn_8002EB54(lbl_802EFCD0, arg0);
 }
 
-void fn_800323BC(void *arg0, void *arg1) {
+#pragma cplusplus on
+extern "C" void fn_8000A258(void);
+extern "C" void fn_8000A248(void);
+extern "C" void fn_80009D74(f32, f32, f32, f32);
+extern "C" void fn_80009B8C(u8);
+extern "C" void fn_80090990(void *);
+extern "C" void fn_800323BC(void *arg0, void *arg1) {
     extern f32 lbl_80368E24;
     extern f32 lbl_80368E28;
-    extern f64 lbl_80368E80;
-    
-    if ((u32) M2C_FIELD(arg1, u32 *, 0x40) != 0U) {
-        s32 temp_r11;
-        s32 temp_r10;
-        s32 temp_r9;
-        
-        M2C_FIELD(M2C_FIELD(arg0, void **, 4), void (**)(s32 *, s32 *, s32 *), 8)(&temp_r11, &temp_r10, &temp_r9);
+    struct Obj {
+        u8 pad[4];
+        virtual void v0(s32 *, s32 *, s32 *) = 0;
+    };
+    s32 x;
+    s32 y;
+    s32 alpha;
+
+    if (M2C_FIELD(arg1, u32 *, 0x40) != 0) {
+        ((Obj *)arg0)->v0(&x, &y, &alpha);
         fn_8000A258();
-        fn_80009D74(temp_r11 + 0x20, (f32)(temp_r11 + 0x20), (f32)(temp_r10 + 0x30), lbl_80368E24, lbl_80368E28);
-        fn_80009B8C((u8) temp_r9);
+        fn_80009D74((f32)(x + 0x20), (f32)(y + 0x30), lbl_80368E24, lbl_80368E28);
+        fn_80009B8C((u8)alpha);
         fn_8000A248();
-        fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40));
-        fn_80090990();
+        fn_80090990((void *)fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40)));
         fn_8000A258();
         fn_80009B8C(0xFF);
         fn_8000A248();
     }
 }
+#pragma cplusplus reset
 
 #pragma cplusplus on
 extern "C" void fn_80090AA4(s32, s32);
