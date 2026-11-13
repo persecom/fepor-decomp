@@ -2752,7 +2752,7 @@ void fn_8002FAB0(void *arg0) {
 }
 
 #pragma dont_inline on
-void fn_8002FC64(u32 arg0, s32 arg1, s32 arg2, u8 arg3) {
+void fn_8002FC64(u32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 *fn_8018D900(s32);
     void fn_8005C8B4(void *);
     u8 fn_8005BA10(void *);
@@ -3490,16 +3490,18 @@ void *fn_80032D5C(void) {
 }
 
 #pragma cplusplus on
-void fn_80032DB4(void *arg0, void *arg1) {
-    M2C_UNK fn_8002FC64(s32, s32, s32);
-    s32 sp10;
-    s32 spC;
-    s32 sp8;
+extern "C" void fn_80032DB4(void *arg0, void *arg1) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0(s32 *, s32 *, s32 *) = 0;
+    };
+    s32 x;
+    s32 y;
+    s32 z;
 
-    if ((arg1 != NULL) && ((u32) M2C_FIELD(arg1, u32 *, 0x40) != 0U) && (fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40)) != 0U)) {
-        M2C_FIELD(M2C_FIELD(arg0, void **, 4), M2C_UNK (**)(void *, s32 *, s32 *, s32 *), 8)(arg0, &sp10, &spC, &sp8);
-        fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40));
-        fn_8002FC64(sp10, spC, sp8);
+    if (arg1 != NULL && M2C_FIELD(arg1, u32 *, 0x40) != 0 && fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40)) != 0) {
+        ((Obj *)arg0)->v0(&x, &y, &z);
+        fn_8002FC64(fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40)), x, y, z);
     }
 }
 #pragma cplusplus reset
