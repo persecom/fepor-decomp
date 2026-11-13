@@ -475,9 +475,7 @@ s32 fn_800C44F4(s32 arg0) {
 void fn_800C4588(void *arg0) {
     if (arg0 != NULL) {
         s32 *ptr = (s32*)arg0;
-        void *arg1 = (void*)((char*)arg0 - 0x20);
-        s32 val = ptr[-3];
-        fn_800C53B0(val, arg1);
+        fn_800C53B0(ptr[-3], (void*)((char*)arg0 - 0x20));
     }
 }
 
@@ -501,19 +499,14 @@ s32 fn_800C4638(s32 arg0) {
 }
 
 void fn_800C4664(s32 arg0) {
-    extern void *lbl_80367868;
-    void *temp_r0;
-    void *var_r4;
+    extern HeapC55 *lbl_80367868;
+    HeapC55 *g = lbl_80367868;
+    HeapC55 *node;
 
-    var_r4 = M2C_FIELD(lbl_80367868, void **, 0x18);
-loop_2:
-    temp_r0 = M2C_FIELD(var_r4, void **, 0xC);
-    if (temp_r0 != NULL) {
-        var_r4 = temp_r0;
-        goto loop_2;
+    for (node = g->free; node->next != NULL; node = node->next) {
     }
-    M2C_FIELD(lbl_80367868, s32 *, 0x1C) = (s32) (M2C_FIELD(lbl_80367868, s32 *, 0x1C) + arg0);
-    M2C_FIELD(var_r4, s32 *, 0x10) = (s32) (M2C_FIELD(var_r4, s32 *, 0x10) + arg0);
+    g->extent += arg0;
+    node->size += arg0;
 }
 
 void fn_800C469C(char *arg0)
@@ -599,19 +592,20 @@ extern u32* lbl_80367868;
 extern u32 lbl_8036786C;
 extern s32 lbl_80366DDC;
 s32 fn_800C52C8(void) {
-    s32 var_r3;
-    
-    if (lbl_80367868 != NULL) {
-        var_r3 = (u32)(lbl_80367868 + 0x1c / sizeof(u32));
+    u32 lo;
+    HeapC55 *heap;
+
+    heap = (HeapC55 *)lbl_80367868;
+    if (heap != NULL) {
+        lo = (u32)heap + heap->extent;
     } else {
-        var_r3 = (u32)lbl_80367860;
+        lo = (u32)lbl_80367860;
     }
-    
-    if (lbl_8036786C != 0) {
-        return lbl_8036786C;
-    } else {
-        return (u32)var_r3 - lbl_80367864;
+
+    if (lbl_8036786C == 0) {
+        return (s32)(lbl_80367864 - lo);
     }
+    return (s32)lbl_8036786C;
 }
 
 #pragma global_optimizer off
@@ -9163,9 +9157,18 @@ s32 fn_800DEEBC(s32 arg0) {
     return arg0 + 4;
 }
 
-void fn_800DEEC4(void *arg1) {
-    if (arg1 != NULL && *(u32 *)((u8 *)arg1 + 0x8) != 0) {
-        fn_800C428C();
+void fn_800DEEC4(void *unused, void *arg1) {
+    void fn_800C428C(void *);
+    void *p;
+
+    if (arg1 != NULL) {
+        if (arg1 == NULL) {
+            return;
+        }
+        p = *(void **)((u8 *)arg1 + 8);
+        if (p != NULL) {
+            fn_800C428C(p);
+        }
     }
 }
 
@@ -10289,23 +10292,19 @@ extern "C" void fn_800E18B4(s32 *begin, s32 *end, SortIterator out, SortCompare 
 }
 #pragma cplusplus off
 
-void fn_800E2138(void *arg0, void *arg1, s32 arg2) {
-    s32 spC;
-    s32 sp8;
-    s32 temp_r0;
-    s32 temp_r4;
-    s32 temp_r6;
+#pragma optimization_level 2
+void fn_800E2138(s32 *out, s32 *in, s32 idx) {
+    s32 sp[2];
+    s32 p;
 
-    temp_r6 = M2C_FIELD(arg1, s32 *, 0);
-    temp_r0 = temp_r6 + (arg2 * 4);
-    temp_r4 = M2C_FIELD(arg1, s32 *, 4);
-    sp8 = temp_r6;
-    M2C_FIELD(arg0, s32 *, 0) = temp_r0;
-    spC = temp_r4;
-    sp8 = temp_r0;
-    M2C_FIELD(arg0, s32 *, 4) = temp_r4;
+    sp[0] = in[0];
+    p = sp[0] + (idx << 2);
+    sp[1] = in[1];
+    out[0] = p;
+    sp[0] = p;
+    out[1] = sp[1];
 }
-
+#pragma optimization_level reset
 s32 fn_800E2168(s32 *arg0, s32 *arg1) {
     return (s32) (*arg0 - *arg1) / 4;
 }
@@ -13030,11 +13029,18 @@ void fn_800E8FCC(void *arg0, void *arg1) {
     M2C_FIELD(arg0, f32 *, 8) = (f32) M2C_FIELD(arg1, f32 *, 0xF8);
 }
 
+#pragma dont_inline on
+#pragma scheduling off
 void fn_800E8FE8(void *arg0, f32 arg1) {
-    *(f32*)((u8*)arg0 + 0x104) = arg1;
-    fn_800DF478((u8*)arg0 + 0x254, 0.0f, 0.0f, 0.0f);
-}
+    void fn_800DF478(void *, f32, f32, f32);
+    extern f32 lbl_80369F78;
+    f32 z = lbl_80369F78;
 
+    *(f32 *)((u8 *)arg0 + 0x104) = arg1;
+    fn_800DF478((u8 *)arg0 + 0x254, arg1, z, z);
+}
+#pragma scheduling reset
+#pragma dont_inline reset
 f32 fn_800E9018(void *arg0) {
     return M2C_FIELD(arg0, f32 *, 0x104);
 }
@@ -14012,14 +14018,14 @@ void fn_800EB80C(void) {
 }
 
 s32 fn_800EB854(void) {
-    u16* base = (u16*)0x80320C20;
-    if (*(u32*)((char*)base + 0x2002) == -1) {
-        return 1;
+    extern u8 lbl_80320C20[];
+    s32 result = 0;
+    if (*(s32 *)(lbl_80320C20 + 0xA004) != -1) {
+        if (lbl_80320C20[0xA01A] != 0) {
+            result = 1;
+        }
     }
-    if (*(u16*)((char*)base + 0x200E) == 0) {
-        return 1;
-    }
-    return 0;
+    return result;
 }
 
 s32 fn_800EB884(s32 arg0, s32 arg1, s32 arg2) {
