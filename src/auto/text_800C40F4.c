@@ -3276,6 +3276,20 @@ void fn_800CD5E4(void *arg0) {
     ((void (*)(void *, void *, void *))temp_r3)(temp_r3, (u16 *)lbl_802704F8 + 0x3D0, (u16 *)lbl_802704F8 + 0x3D7);
 }
 
+#pragma cplusplus on
+extern "C" s32 fn_800CD630(void *arg0) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0();
+        virtual void v1();
+        virtual s32 v2(const char *, const char *);
+        virtual void *v3(const char *, const char *);
+    };
+
+    return ((Obj *)M2C_FIELD(arg0, void **, 4))->v2((char *)lbl_802704F8 + 0x3D0, (char *)lbl_802704F8 + 0x3D7) == 0;
+}
+#pragma cplusplus reset
+
 #pragma dont_inline on
 #pragma use_lmw_stmw on
 extern "C" void *fn_800CD79C(s32 arg0,void *arg1,s32 arg2,u32 arg3,u32 arg4,s32 arg5,u8 arg6) {
@@ -14663,28 +14677,21 @@ s32 fn_800ED77C(void) {
 
 s32 fn_800ED7B8(void)
 {
-    extern u32 lbl_803678C8;
-
-    u8 *base;
-    u8 *entry;
+    extern u16 *lbl_803678C8;
+    void *inner;
     s32 count;
 
-    base = (u8 *)lbl_803678C8;
-
-    count = *(s32 *)(base + 0x450) - 1;
-    *(s32 *)(base + 0x450) = count;
-
-    if (count <= 0) {
-        entry = *(u8 **)(base + 0x424);
-
-        count = *(s32 *)(entry + 0xB4) - 1;
-        *(s32 *)(entry + 0xB4) = count;
-
-        if (*(s32 *)(entry + 0xB4) < 0) {
-            *(s32 *)(entry + 0xB4) = 0;
-        }
+    count = *(s32 *)((u8 *)lbl_803678C8 + 0x450);
+    inner = *(void **)((u8 *)lbl_803678C8 + 0x424);
+    count = count - 1;
+    *(s32 *)((u8 *)lbl_803678C8 + 0x450) = count;
+    if (count > 0) {
+        return 0;
     }
-
+    *(s32 *)((u8 *)inner + 0xB4) = *(s32 *)((u8 *)inner + 0xB4) - 1;
+    if (*(s32 *)((u8 *)inner + 0xB4) < 0) {
+        *(s32 *)((u8 *)inner + 0xB4) = 0;
+    }
     return 0;
 }
 
@@ -14702,8 +14709,22 @@ s32 fn_800ED800(void) {
     return 0;
 }
 
-void fn_800ED83C(void) {
-    *(u16**)0x803678C8 = (u16*)0x803678C8;
+s32 fn_800ED83C(void) {
+    extern u16 *lbl_803678C8;
+    void *inner;
+    s32 counter;
+
+    inner = *(void **)((u8 *)lbl_803678C8 + 0x424);
+    counter = *(s32 *)((u8 *)lbl_803678C8 + 0x450) - 1;
+    *(s32 *)((u8 *)lbl_803678C8 + 0x450) = counter;
+    if (counter > 0) {
+        return 0;
+    }
+    *(s32 *)((u8 *)inner + 0xB4) = *(s32 *)((u8 *)inner + 0xB4) + 1;
+    if (*(s32 *)((u8 *)inner + 0xB4) > *(s32 *)((u8 *)inner + 0xB0)) {
+        *(s32 *)((u8 *)inner + 0xB4) = *(s32 *)((u8 *)inner + 0xB0);
+    }
+    return 0;
 }
 
 s32 fn_800ED884(void) {
