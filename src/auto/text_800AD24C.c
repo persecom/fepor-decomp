@@ -8217,27 +8217,43 @@ int fn_800C0658(void) {
     }
 }
 
-void fn_800C068C(void *arg0) {
-    s32 *ptr = (s32 *)arg0;
-    ptr[0] = 0;
-    ptr[1] = 0;
-    ptr[2] = 0;
-    ptr[3] = 0;
-    ptr[4] = 0;
-    ptr[5] = 0;
-    ptr[6] = 0;
-    ptr[7] = 0; 
-    ptr[8] = 0;
-    ptr[9] = 0;
-    ptr[10] = 0;
-    ptr[11] = 0;
-    ptr[12] = 0;
-    ptr[13] = 0;
-    ptr[14] = 0;
-    ptr[15] = 0;
-    ptr[16] = 0;
-    ptr[17] = 0;
-    ptr[18] = 0;
+void fn_800C068C(void) {
+    void fn_8002846C(void *);
+    void fn_80127AC4(void);
+    void *fn_8000C0C0(void *);
+    void fn_8000BF00(void *);
+    void *fn_8000CAA0(void *, void *);
+    void fn_800142D4(void *);
+    void *fn_801270A4(void);
+    void fn_8000C070(void *, s32);
+    void fn_80018AE4(void);
+    extern u8 lbl_802EF4C8[24];
+    extern s32 lbl_80367110;
+    extern u8 lbl_80284E78[];
+    extern u32 lbl_80367848;
+    extern u32 lbl_8036784C;
+    extern u8 lbl_80284AC8[];
+    extern u8 lbl_80320040[];
+    extern u8 lbl_8028D4F8[];
+    void *obj;
+    void *obj2;
+
+    fn_8002846C(lbl_802EF4C8);
+    fn_80127AC4();
+    lbl_80367110 &= ~0x890;
+    obj = fn_8000C0C0(lbl_80284E78);
+    if (lbl_80367848 != 0) {
+        *(u32 *)((u8 *)obj + 4) = lbl_80367848;
+    } else {
+        fn_8000BF00(lbl_80284E78);
+    }
+    if (lbl_8036784C != 0) {
+        obj2 = fn_8000CAA0(lbl_80284AC8, obj);
+        *(u32 *)((u8 *)obj2 + 4) = lbl_8036784C;
+    }
+    fn_800142D4(lbl_80320040);
+    fn_8000C070(fn_8000CAA0(lbl_8028D4F8, fn_801270A4()), 0);
+    fn_80018AE4();
 }
 
 void fn_800C0818(u8 flag) {
@@ -9255,13 +9271,17 @@ char *fn_800C2E3C(void *arg0, s32 index) {
     extern char lbl_80320B6C[];
     s32 fn_80010B78(void *, s32, f32);
     s32 fn_80231D94(char *, const char *, ...);
+    f32 scale;
     s32 offset;
     char *text;
     s16 width;
 
-    offset = (index - 1) * 0x18 + 1;
-    text = (char *)arg0 + offset;
-    width = (s16)fn_80010B78(text, -1, lbl_80369D58);
+    scale = lbl_80369D58;
+    offset = (index - 1) * 0x18;
+    offset = offset + 1;
+    text = (char *)offset;
+    text += (u32)arg0;
+    width = (s16)fn_80010B78(text, -1, scale);
 
     if (width < 0x70) {
         return text;
@@ -9358,54 +9378,27 @@ s32 fn_800C3260(u8* arg0) {
     return 0;
 }
 
-void fn_800C32A4(void *ptr) {
-    u8 *p = (u8 *)ptr;
-    u8 z, m, f;
-    int i;
+void fn_800C32A4(u8 *p) {
+    s32 n = 0xC;
+    u8 z = 0;
+    u8 m = 0x80;
+    u8 f = 0xFF;
 
-    for (i = 0, z = 0, m = 0x80, f = 0xFF; i < 12; i++) {
-        p[0] = z;
-        p[1] = z;
-        p[0x13] = z;
-        p[0x12] = z;
-        p[0x11] = z;
-        p[0x10] = z;
-        p[0x16] = m;
-        p[0x15] = m;
-        p[0x14] = m;
-        p[0x17] = f;
-        p[0x18] = z;
-        p[0x19] = z;
-        p[0x2B] = z;
-        p[0x2A] = z;
-        p[0x29] = z;
-        p[0x28] = z;
-        p[0x2E] = m;
-        p[0x2D] = m;
-        p[0x2C] = m;
-        p[0x2F] = f;
-        p[0x30] = z;
-        p[0x31] = z;
-        p[0x43] = z;
-        p[0x42] = z;
-        p[0x41] = z;
-        p[0x40] = z;
-        p[0x46] = m;
-        p[0x45] = m;
-        p[0x44] = m;
-        p[0x47] = f;
-        p[0x48] = z;
-        p[0x49] = z;
-        p[0x5B] = z;
-        p[0x5A] = z;
-        p[0x59] = z;
-        p[0x58] = z;
-        p[0x5E] = m;
-        p[0x5D] = m;
-        p[0x5C] = m;
-        p[0x5F] = f;
+    do {
+        p[0] = z; p[1] = z;
+        p[0x13] = z; p[0x12] = z; p[0x11] = z; p[0x10] = z;
+        p[0x16] = m; p[0x15] = m; p[0x14] = m; p[0x17] = f;
+        p[0x18] = z; p[0x19] = z;
+        p[0x2B] = z; p[0x2A] = z; p[0x29] = z; p[0x28] = z;
+        p[0x2E] = m; p[0x2D] = m; p[0x2C] = m; p[0x2F] = f;
+        p[0x30] = z; p[0x31] = z;
+        p[0x43] = z; p[0x42] = z; p[0x41] = z; p[0x40] = z;
+        p[0x46] = m; p[0x45] = m; p[0x44] = m; p[0x47] = f;
+        p[0x48] = z; p[0x49] = z;
+        p[0x5B] = z; p[0x5A] = z; p[0x59] = z; p[0x58] = z;
+        p[0x5E] = m; p[0x5D] = m; p[0x5C] = m; p[0x5F] = f;
         p += 0x60;
-    }
+    } while (--n);
 }
 
 void fn_800C3364(s32 arg0, s32 arg1) {
