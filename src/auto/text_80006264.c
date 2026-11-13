@@ -2900,22 +2900,30 @@ loop_7:
     return 1;
 }
 
-s32 fn_8000B418(void *arg0) {
-    u32 *var_r5;
-    u32 temp_r6;
+s32 fn_8000B418(void *arg0)
+{
+    u32 *ptr;
+    u32 node;
+    s32 key;
+    u32 *base;
 
-    var_r5 = *(u32 **)arg0;
-loop_5:
-    temp_r6 = *var_r5;
-    if (temp_r6 != 0) {
-        if (((u32) (temp_r6 & 0xFFF) == 1) && ((s16) (temp_r6 >> 0x10U) == (s32) (u8) ((u32) *(u32 **)((char *)arg0 + 4) >> 0x10U))) {
-            *(u32 **)arg0 = var_r5;
-            *(s32 *)((char *)arg0 + 0x10) = 0;
-        } else {
-            var_r5 += (temp_r6 >> 0xAU) & 0x3C;
-            goto loop_5;
-        }
+    base = *(u32 **)((u8 *)arg0 + 4);
+    ptr = *(u32 **)arg0;
+    key = (u8)(*base >> 16);
+    goto load;
+loop:
+    if ((node & 0xFFF) == 1 && (s16)(node >> 16) == key) {
+        *(u32 **)((u8 *)arg0 + 4) = ptr;
+        *(s32 *)((u8 *)arg0 + 0x10) = 0;
+        goto done;
     }
+    ptr = (u32 *)((u8 *)ptr + ((node >> 10) & 0x3C));
+load:
+    node = *ptr;
+    if (node != 0) {
+        goto loop;
+    }
+done:
     return 1;
 }
 
