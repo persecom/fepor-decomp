@@ -2317,20 +2317,55 @@ void fn_8002E648(void) {
     fn_8014D3B4(lbl_80330708);
 }
 
-void fn_8002E670(s32 arg0, s32 arg1, s32 arg2) {
-    u8 *ptr = (u8 *)arg1;
-    ptr += 0x11;
-    if (*ptr == 0) {
+void fn_8002E670(s32 arg0) {
+    void *fn_8014C5A8(void *, u8);
+    void fn_800FC600(s32);
+    void fn_800FC63C(s32);
+    extern u8 lbl_80330708[];
+    u8 *base;
+    u8 *table;
+    void *ret;
+    s32 idx;
+
+    base = lbl_80330708;
+    table = base + 0x14;
+    idx = base[0x11];
+    if (table[idx] == 0) {
         return;
     }
-    arg2 = *(s32 *)(arg1 + 0x184);
-    while (arg2 != 0) {
-        s32 r1_val = *(s32 *)arg2;
-        if (fn_8001F4CC((void *)arg0, *(s8 *)(r1_val + 0x19E), *(s8 *)(r1_val + 0x19F))) {
-            return;
-        }
-        arg2 = *(s32 *)(arg2 + 0x184);
+    ret = fn_8014C5A8(base, (u8)idx);
+    idx = base[0x11];
+    if (idx == 3) {
+        goto case3;
     }
+    if (idx >= 3) {
+        goto end;
+    }
+    if (idx == 0) {
+        goto case0;
+    }
+    if (idx >= 0) {
+        goto case12;
+    }
+    goto end;
+case0:
+    fn_800FC600(arg0);
+    goto end;
+case3:
+    if (ret != NULL) {
+        if (*(u8 *)ret == 1) {
+            fn_800FC63C(arg0);
+        } else {
+            fn_800FC600(arg0);
+        }
+    }
+    goto end;
+case12:
+    if (table[idx] == 2) {
+        fn_800FC63C(arg0);
+    }
+end:
+    return;
 }
 
 void fn_8002E738(s32 arg0) {
