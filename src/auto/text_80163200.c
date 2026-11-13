@@ -15530,6 +15530,7 @@ u8 fn_80181B9C(void *arg0, void *arg1) {
     return ret;
 }
 
+#pragma scheduling off
 void fn_80181C40(s32 *arg0, void *arg1) {
     struct Point {
         s16 x;
@@ -15540,12 +15541,12 @@ void fn_80181C40(s32 *arg0, void *arg1) {
     struct Point in;
     s32 row;
 
-    row = M2C_FIELD(arg1, s16 *, 0x54) * M2C_FIELD(arg1, s16 *, 0x4E);
-    in.x = M2C_FIELD(arg1, s16 *, 0x56);
-    in.y = row + M2C_FIELD(arg1, s16 *, 0x58);
+    row = *(s16 *)((u8 *)arg1 + 0x54) * *(s16 *)((u8 *)arg1 + 0x4E);
+    in.x = *(s16 *)((u8 *)arg1 + 0x56);
+    in.y = row + *(s16 *)((u8 *)arg1 + 0x58);
     *(struct Point *)arg0 = *fn_8013F748(arg1, &out, &in);
 }
-
+#pragma scheduling on
 typedef struct ListNode {
     struct ListNode *prev;
     struct ListNode *next;
@@ -16170,6 +16171,24 @@ s32 fn_80182E80(s32 arg0) {
     extern u32 lbl_802EF4C8[];
 
     return arg0 == fn_80017240((u8 *)*(void **)lbl_802EF4C8 + 0x236);
+}
+
+void fn_80182EC8(s32 arg0) {
+    void *fn_8000CAA0(void *, s32);
+    s32 fn_8014C5A8(void *, s32);
+    extern u8 lbl_80295788[];
+    void *temp_r31;
+    s32 var_r3;
+
+    if (((u8 *)lbl_802EF4C8)[0x14] == 3) {
+        temp_r31 = fn_8000CAA0(lbl_80295788, arg0);
+        if (((u8 *)lbl_802EF4C8)[8] == 0x32) {
+            var_r3 = fn_8014C5A8(lbl_80330708, 0);
+        } else {
+            var_r3 = fn_8014C5A8(lbl_80330708, 3);
+        }
+        *(s32 *)((u8 *)temp_r31 + 0x30) = var_r3;
+    }
 }
 
 void fn_80182F50(void) {
