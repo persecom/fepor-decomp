@@ -19269,6 +19269,46 @@ s32 fn_800FB60C(void *arg0) {
     return (r & 0xFF) == 0;
 }
 
+u8 fn_800FB64C(void) {
+    extern u8 lbl_802EF4C8[];
+    extern u8 *lbl_803678F8;
+    extern u8 lbl_803678F0;
+    extern s32 lbl_803678F4;
+    extern u8 lbl_8032B3C0[];
+    extern u8 lbl_80273000[];
+    void *fn_8000D354(void *);
+    void *fn_800FB918(void *, void *, s32 *, u8 *);
+
+    u8 *obj;
+    u8 *entry;
+    s32 val;
+    s32 off;
+    u8 flag;
+    s32 key;
+    s32 gap;
+
+    obj = *(u8 **)lbl_802EF4C8;
+    entry = (u8 *)fn_8000D354(*(void **)(obj + 0x23C));
+    lbl_803678F8 = entry;
+    off = obj[0x251] * 0x1C;
+    lbl_803678F0 = 0;
+    lbl_803678F4 = 1;
+    entry += off;
+    lbl_803678F8 = entry;
+
+    val = *(s32 *)(entry + 8);
+    if (val != 0) {
+        *(s16 *)(lbl_8032B3C0 + 4) = (s16)val;
+    }
+
+    key = *(s32 *)entry;
+    flag = *(u8 *)&gap;
+    entry = (u8 *)fn_800FB918(lbl_80273000, lbl_80273000 + 0x1A0, &key, &flag);
+    (*(void (**)(void *, void *))(entry + 4))(obj, entry);
+
+    return lbl_803678F0;
+}
+
 u8 fn_800FB6FC(void) {
     extern u8 lbl_802EF4C8[];
     extern u8 *lbl_803678F8;
