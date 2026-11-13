@@ -2503,6 +2503,28 @@ s32 fn_8002F468(void) {
     return 9;
 }
 
+s32 fn_8002F480(void *arg0, void *arg1) {
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_802B14E4[];
+    u8 *p = *(u8 **)((u8 *)arg1 + 0x40);
+    u8 b0;
+    u8 b1;
+    u8 id;
+
+    if (p == NULL) {
+        return 0x10;
+    }
+    b1 = p[1];
+    b0 = p[0];
+    lbl_802EF4C8[0xF] = b0;
+    lbl_802EF4C8[0x10] = b1;
+    id = p[2];
+    if (id != 0) {
+        *(void **)(lbl_802EF4C8 + 4) = (id != 0) ? lbl_802B14E4 + (id - 1) * 0x280 : NULL;
+    }
+    return 5;
+}
+
 void fn_8002F4EC(void *arg0, void *arg1) {
     void fn_8004A1F0(void *);
     void fn_8014CBD8(void *, f32, f32);
