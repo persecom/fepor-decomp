@@ -8096,14 +8096,12 @@ check:
 }
 
 extern s32 lbl_80367FCC;
-s32 fn_800C0190(s32 arg0) {
-    if (arg0 < 0) {
-        return 0;
-    }
-    if (arg0 >= 8) {
-        return 0;
-    }
-    return lbl_80367FCC + (arg0 * 4);
+void fn_800C0190(void *arg0) {
+    void *fn_800C273C(void *, u16);
+    void fn_800BDD08(void *, void *, void *);
+    extern u16 lbl_80330708[700];
+
+    fn_800BDD08((u8 *)lbl_80330708 + 0xB4, fn_800C273C(arg0, (u16)*(s16 *)((u8 *)arg0 + 0x14)), lbl_80330708);
 }
 
 u32 fn_800C02D4(void *arg0) {
