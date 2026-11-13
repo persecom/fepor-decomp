@@ -37,31 +37,25 @@ void fn_80006298(u32 *dst, u32 val, u32 n) {
     } while (--n);
 }
 
-void fn_800062B0(u32 *dst, u32 val, u32 n) {
-    n >>= 3;
-    dst--;
+void fn_800062B0(u32 *arg0, u32 arg1, u32 arg2) {
+    u32 count;
+
+    count = arg2 >> 3;
+    arg0--;
+
     do {
-        *++dst = val;
-        *++dst = val;
-    } while (--n);
+        *++arg0 = arg1;
+        *++arg0 = arg1;
+    } while (--count != 0);
 }
 
-void fn_800062CC(s32 arg0, s32 arg1, u32 arg2) {
-    s32 temp_r11;
-    u32 var_ctr;
-    char *var_r3;
-    char *var_r4;
-
-    var_r3 = (char*)(arg0 - 4);
-    var_r4 = (char*)(arg1 - 4);
-    var_ctr = arg2 >> 2U;
+void fn_800062CC(u32 *dst, u32 *src, u32 n) {
+    dst--;
+    n >>= 2;
+    src--;
     do {
-        temp_r11 = *(s32*)var_r4;
-        var_r4 += 4;
-        var_r3 += 4;
-        *(s32*)var_r3 = temp_r11;
-        var_ctr -= 1;
-    } while (var_ctr != 0);
+        *++dst = *++src;
+    } while (--n);
 }
 
 void fn_800062EC(s32 arg0, s32 arg1, u32 arg2) {
@@ -1948,12 +1942,16 @@ void fn_80009D74(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
     }
 }
 
-f32 fn_80009E44(void* arg0) {
-    if (arg0 == NULL) {
-        return 0.0f;
-    } else {
-        return *(f32*)((char*)arg0 + 0x28);
+void *fn_80009E44(f32 *arg0) {
+    extern u16 lbl_80367140;
+    void *ret;
+
+    ret = arg0;
+    if (arg0 != NULL) {
+        *arg0 = *(f32 *)(*(u8 **)&lbl_80367140 + 0x28);
+        ret = *(u8 **)&lbl_80367140 + 0x60;
     }
+    return ret;
 }
 
 s32 fn_80009E64(s32 arg0, s32 arg1, u32 arg2) {
@@ -2727,10 +2725,13 @@ s32 fn_8000AF94(void *arg0) {
     return 1;
 }
 
-s32 fn_8000AFB4(void **arg0) {
-    void *temp = arg0[1];  // Load pointer from arg0[1] (field4)
-    arg0[4] = temp;       // Store it in arg0[4] (field16)
-    arg0[1] = (void *)((u8 *)temp + 8);  // Add 8 and store back in arg0[1]
+s32 fn_8000AFB4(void *arg0) {
+    void **temp_r4;
+
+    temp_r4 = (void **)M2C_FIELD(arg0, void **, 4);
+    M2C_FIELD(arg0, void **, 0x10) = (void *)temp_r4[1];
+    temp_r4 = (void **)M2C_FIELD(arg0, void **, 4);
+    M2C_FIELD(arg0, void **, 4) = (void *)((u32)temp_r4 + 8);
     return 0;
 }
 
@@ -3985,6 +3986,11 @@ void fn_8000D048(void)
     );
 
     fn_800056CC((const char *)(lbl_80267D40 + 0x13));
+}
+
+s32 fn_8000D1B4(s32 arg0) {
+    extern u8 lbl_802ADB20[];
+    return ((struct { u8 pad[8]; s32 val; u8 pad2[4]; } *)*(void **)(lbl_802ADB20 + 4))[arg0].val;
 }
 
 typedef struct HashKey {
