@@ -376,14 +376,28 @@ return 0;
 }
 
 void fn_8005B820(void) {
-void *fn_80019DBC(u8); extern u32 lbl_802F03A8[];
-u32 *out; u8 *entry; s32 i; u32 acc; u8 *s; u8 b;
-entry=fn_80019DBC(0); out=lbl_802F03A8;
-for(i=0x4D;i!=0;i--) {
-s=*(u8 **)entry; acc=0;
-while((b=*s,(s8)b!=0)) {acc+=b; s++; acc<<=4;}
-*out++=acc; entry+=0xC;
-}
+    void *fn_80019DBC(u8);
+    extern u32 lbl_802F03A8[];
+    u32 *out;
+    u8 *entry;
+    s32 i;
+    u32 acc;
+    u8 *s;
+    u8 b;
+
+    entry = fn_80019DBC(0);
+    out = lbl_802F03A8;
+    for (i = 0x4D; i != 0; i--) {
+        s = *(u8 **)entry;
+        acc = 0;
+        while ((b = *s, (s8)b != 0)) {
+            acc = (acc + b) << 4;
+            s++;
+        }
+        *out = acc;
+        out++;
+        entry += 0xC;
+    }
 }
 
 u8 fn_8005B888(s32 arg0) {
@@ -892,6 +906,7 @@ void fn_8005D1DC(char *name) {
     fn_8005D690(FindEntryByName(name));
 }
 
+#pragma global_optimizer off
 void fn_8005D2CC(u32 arg0) {
     void fn_8005D690(void *);
     extern u8 lbl_802F04E0[];
@@ -909,9 +924,7 @@ void fn_8005D2CC(u32 arg0) {
 done:
     fn_8005D690(found);
 }
-
-#pragma use_lmw_stmw on
-#pragma global_optimizer off
+#pragma global_optimizer reset
 void fn_8005D690(u8 *arg0) {
     s64 OSGetTime(void);
     void fn_8003FED8(void *);
@@ -2333,10 +2346,9 @@ void fn_8005F7E0(void *arg0, s8 arg1, s8 arg2, s8 arg3) {
 #pragma opt_strength_reduction off
 s32 fn_8005F7F0(u8 *arg0) {
     s32 i;
-    for(i=0;i<2;i++) {
-        if (((u16 *)arg0)[0x3E]!=0xFFFF) return 1;
-        if (((u16 *)arg0)[0x3F]!=0xFFFF) return 1;
-        arg0 = (u8 *)((u32 *)arg0 + 1);
+    for(i=0;i<2;i++,arg0+=4) {
+        if (*(u16 *)(arg0+0x7C)!=0xFFFF) return 1;
+        if (*(u16 *)(arg0+0x7E)!=0xFFFF) return 1;
     }
     return 0;
 }
@@ -5114,18 +5126,16 @@ void *fn_80067440(s32 arg0) {
     return (u8 *)lbl_80366DDC + arg0 * 0x2c;
 }
 
-#pragma optimization_level 1
+#pragma peephole off
 void fn_80067460(void *arg0) {
     extern u8 lbl_80311B04[];
-    extern void *lbl_80366DDC;
-
-    if (arg0 == NULL) {
+    extern u8 *lbl_80366DDC;
+    if (arg0 != NULL) {
+    } else {
         lbl_80366DDC = lbl_80311B04;
-        return;
     }
-    return;
 }
-#pragma optimization_level reset
+#pragma peephole on
 s32 fn_80067478(void) {
     extern s32 lbl_80366DDC;
     return lbl_80366DDC;
@@ -5832,22 +5842,22 @@ void fn_80069C98(void) {
         fn_802238A8(0);
     }
 }
-#pragma global_optimizer on
+#pragma global_optimizer off
 void *fn_80069CFC(void) {
     extern u8 lbl_80367304;
     extern u8 lbl_8026B7F8[];
     extern void *lbl_80285F30[];
     void fn_8006DA64(const char *, s32, const char *);
-    if (lbl_80367304 >= 4) {
-        fn_8006DA64((const char *)lbl_8026B7F8+1, 0xB5, (const char *)lbl_8026B7F8+0x74);
-    }
-    { u32 index = lbl_80367304;
-      u32 offset = (u8)index * 4;
-      index++;
-      lbl_80367304 = index;
-      return *(void **)((u8 *)lbl_80285F30 + offset); }
+    void **entry;
+    u8 idx;
+    if (lbl_80367304 >= 4)
+        fn_8006DA64((const char *)lbl_8026B7F8+1,0xB5,(const char *)lbl_8026B7F8+0x74);
+    idx=lbl_80367304;
+    entry=&lbl_80285F30[idx];
+    lbl_80367304 = ++idx;
+    return *entry;
 }
-
+#pragma global_optimizer on
 s32 fn_80069D58(void) {
     void fn_8006DA64(void *, s32, void *);
     extern u8 lbl_80367303;
@@ -7836,9 +7846,8 @@ s32 fn_80070EE0(void *arg0, s32 unused, s32 arg2) {
     extern u8 lbl_802EF4C8[];
     extern u8 lbl_80330EAC[];
     void fn_801A6FB4(void *, s32, s32);
-    s32 (**vtable)(void *, s32) = *(s32 (***)(void *, s32))arg0;
     s32 saved = *(s32 *)lbl_802EF4C8;
-    fn_801A6FB4(lbl_80330EAC, saved, vtable[18](arg0, arg2));
+    fn_801A6FB4(lbl_80330EAC, saved, (*(s32 (**)(void *, s32))((u8 *)*(void **)arg0 + 0x48))(arg0, arg2));
     return 0;
 }
 
