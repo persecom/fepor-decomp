@@ -7856,21 +7856,24 @@ void fn_800DB9D8(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
     M2C_FIELD(arg0, f32 *, 0x50) = farg2;
 }
 
-void fn_800DB9E8(void *arg0, void *arg1) {
-    M2C_UNK fn_80067FDC();
-    M2C_UNK fn_8020310C(f32 *, f32 *);
-    f32 sp10;
-    f32 spC;
-    f32 sp8;
+void fn_800DB9E8(f32 *arg0, void *arg1) {
+    void *fn_80067FDC(void);
+    void fn_8020310C(void *, f32 *, f32 *);
+    f32 sp[3];
+    f32 z;
+    f32 y;
+    f32 x;
 
-    sp8 = M2C_FIELD(arg1, f32 *, 0x48);
-    spC = M2C_FIELD(arg1, f32 *, 0x4C);
-    sp10 = M2C_FIELD(arg1, f32 *, 0x50);
-    fn_80067FDC();
-    fn_8020310C(&sp8, &sp8);
-    M2C_FIELD(arg0, f32 *, 0) = sp8;
-    M2C_FIELD(arg0, f32 *, 4) = spC;
-    M2C_FIELD(arg0, f32 *, 8) = sp10;
+    sp[0] = *(f32 *)((u8 *)arg1 + 0x48);
+    sp[1] = *(f32 *)((u8 *)arg1 + 0x4C);
+    sp[2] = *(f32 *)((u8 *)arg1 + 0x50);
+    fn_8020310C(fn_80067FDC(), sp, sp);
+    y = sp[1];
+    z = sp[2];
+    x = sp[0];
+    arg0[0] = x;
+    arg0[1] = y;
+    arg0[2] = z;
 }
 
 void fn_800DBA50(void *arg0, void *arg1) {
