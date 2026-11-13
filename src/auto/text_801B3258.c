@@ -4974,13 +4974,11 @@ void fn_801C18FC(s32 arg0) {
     extern s8 lbl_80368280;
     extern f32 lbl_8036B328;
     void *c;
-    f32 temp;
 
-    lbl_80368280 = -1;
     c = &lbl_80368280;
-    temp = (f32)arg0 / lbl_8036B328;
-    *(s32 *)((char *)c + 4) = (s32)temp;
-    fn_8000A388(lbl_80297FF8, (void *)fn_801C19E4, c, c);
+    lbl_80368280 = -1;
+    *(s32 *)((char *)c + 4) = (s32)((f32)arg0 / lbl_8036B328);
+    fn_8000A388(lbl_80297FF8, (void *)fn_801C19E4, &lbl_80368280, c);
 }
 
 void fn_801C1970(s8 arg0, s32 arg1) {
