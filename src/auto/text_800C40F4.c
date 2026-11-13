@@ -12716,30 +12716,37 @@ void fn_800E78DC(void) {
 
 }
 
-void fn_800E78E0(void *arg0) {
-    s32 *var_r31;
-    void *temp_r3;
+#pragma cplusplus on
+extern "C" void fn_800E78E0(void *arg0) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void *v4(s32) = 0;
+    };
+    struct Child {
+        u8 pad[0x40];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5(void *) = 0;
+    };
+    s32 i;
+    Child *c;
 
-    *(s32*)((char*)arg0 + 0x28) = 0x1F4;
-    var_r31 = (s32*)((char*)arg0 + 4);
-    var_r31 = (s32*)((char*)var_r31 - 1);
-loop_2:
-    if (*var_r31 >= 0) {
-        temp_r3 = *(void**)((char*)arg0 + 0x10);
-        temp_r3 = *(void**)((char*)temp_r3 + 0x18);
-        temp_r3 = ((void*(*)(void*, s32))temp_r3)(arg0, *var_r31);
-        *(s32*)((char*)temp_r3 + 0x44) = *(s32*)((char*)arg0 + 0x28);
-        temp_r3 = *(void**)((char*)temp_r3 + 0x40);
-        temp_r3 = *(void**)((char*)temp_r3 + 0x1C);
-        ((void(*)(s32))temp_r3)(*(s32*)((char*)arg0 + 0x24));
-        *var_r31 -= 1;
-        *(s32*)((char*)arg0 + 0x28) += 1;
-        goto loop_2;
+    *(s32 *)((char *)arg0 + 0x28) = 0x1F4;
+    for (i = *(s32 *)((char *)arg0 + 4) - 1; i >= 0; i--) {
+        c = (Child *)((Obj *)arg0)->v4(i);
+        *(s32 *)((char *)c + 0x44) = *(s32 *)((char *)arg0 + 0x28);
+        c->v5(*(void **)((char *)arg0 + 0x24));
+        *(s32 *)((char *)arg0 + 0x28) =
+            *(s32 *)((char *)arg0 + 0x28) + 1;
     }
 }
-
-#pragma dont_inline on
-#pragma cplusplus on
 extern "C" void fn_800E7970(void *arg0) {
     struct Obj {
         u8 pad[0x10];
@@ -18292,35 +18299,30 @@ void fn_800F8464(void *arg0)
     lbl_803678F0 = 1;
 }
 
-void fn_800F8538(void *arg0)
-{
+void fn_800F8538(void *arg0) {
     extern u8 *lbl_803678F8;
     extern s32 lbl_803678F4;
     extern u8 lbl_8032B3C0[];
-
     extern s32 fn_8003A398(void *);
 
-    u8 *obj;
     u8 *global;
-    s32 value;
+    s32 tmp;
     s32 index;
+    s32 ret;
 
-    obj = (u8 *)arg0;
     global = lbl_803678F8;
+    tmp = *(u8 *)((u8 *)arg0 + 0x1AA);
+    *(u8 *)((u8 *)arg0 + 0x1AA) = *(s32 *)(global + 0x10) + (s8)tmp;
 
-    value = (s8)obj[0x1AA];
-    value += *(s32 *)(global + 0x10);
-    obj[0x1AA] = value;
-
-    value = fn_8003A398(obj);
+    ret = fn_8003A398(arg0);
 
     index = *(s32 *)(global + 4);
-    *(s32 *)(lbl_8032B3C0 + (index << 2) + 8) = (s8)value;
+    *(s32 *)(lbl_8032B3C0 + (index << 2) + 8) = (s8)ret;
 
     if (lbl_803678F4 == 0) {
-        obj[0x250]++;
+        (*(u8 *)((u8 *)arg0 + 0x250))++;
     } else {
-        obj[0x251]++;
+        (*(u8 *)((u8 *)arg0 + 0x251))++;
     }
 }
 
