@@ -8944,6 +8944,34 @@ s32 fn_800DDAA4(s32 arg0) {
     return 0;
 }
 
+void fn_800DDAE0(void *arg0, void *arg1, void *arg2) {
+    void fn_800CB90C(String *, void *, char *);
+    void fn_800C9758(String *, String *, s32, s32);
+    void fn_800C9A60(String *, s32);
+    char *fn_800C93EC(String *);
+    void *fn_800DE73C(void *, void *);
+    s32 fn_800639B4(char *);
+    extern char lbl_80271860[];
+
+    String out;
+    String tmp;
+    char *str;
+    void *obj;
+
+    out.cap = 0;
+    out.size = 0;
+    out.data = 0;
+    out.cap = 0;
+
+    fn_800CB90C(&tmp, arg2, lbl_80271860 + 1);
+    fn_800C9758(&out, &tmp, 0, -1);
+    fn_800C9A60(&tmp, -1);
+    str = fn_800C93EC(&out);
+    obj = fn_800DE73C((u8 *)arg0 + 0x58, arg1);
+    *(s32 *)((u8 *)obj + 0xC) = fn_800639B4(str);
+    fn_800C9A60(&out, -1);
+}
+
 void *fn_800DDB94(void *arg0)
 {
     extern void *fn_800D59CC(void *);
