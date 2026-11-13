@@ -2737,15 +2737,10 @@ s32 fn_80025440(void) {
 }
 
 s32 fn_80025478(void) {
-    u8 fn_80166D8C(M2C_UNK *);
-    extern M2C_UNK lbl_80330D68;
-    s32 var_r3;
+    u8 fn_80166D8C(void *);
+    extern u8 lbl_80330D68[];
 
-    var_r3 = 9;
-    if (fn_80166D8C(&lbl_80330D68) != 0) {
-        var_r3 = 0x40;
-    }
-    return var_r3;
+    return fn_80166D8C(lbl_80330D68) ? 0x40 : 0x9;
 }
 
 #pragma cplusplus on
