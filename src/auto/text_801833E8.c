@@ -6159,6 +6159,59 @@ void fn_80193C3C(void **arg0, s32 *arg1, void **arg2, void **arg3) {
     *out = end;
 }
 
+#pragma cplusplus on
+extern "C" void fn_80193CFC(void *arg0, void *arg1, void *arg2, void *arg3) {
+    void *fn_800C42D8(s32);
+    void fn_800C428C(void *);
+    void fn_8001C690(void *, void *);
+    void fn_80232058(void *, void *, ...);
+    void fn_8022CF78(void);
+    extern char __files[];
+    extern char lbl_80279DF0[];
+    struct Node {
+        Node *prev;
+        Node *next;
+        u8 value[8];
+    };
+    struct Holder {
+        void *list;
+        Node *node;
+        Holder(void *l, Node *n) : list(l), node(n) {}
+        ~Holder() {
+            if (node != 0) {
+                fn_800C428C(node);
+            }
+        }
+    };
+    Node *node;
+    Node *pos;
+    Node *n;
+    void *list;
+
+    list = (s32 *)arg1 + 1;
+    node = (Node *)fn_800C42D8(0x10);
+    if (node == 0) {
+        fn_80232058(__files + 0xA0, lbl_80279DF0 + 0x51F, __files);
+        fn_8022CF78();
+    }
+    {
+        Holder h(list, node);
+        if (&h.node->value[0] != 0) {
+            fn_8001C690(&h.node->value[0], arg3);
+        }
+        pos = *(Node **)arg2;
+        n = h.node;
+        h.node = 0;
+        pos->prev->next = n;
+        n->prev = pos->prev;
+        pos->prev = n;
+        n->next = pos;
+        (*(s32 *)arg1)++;
+        *(void **)arg0 = n;
+    }
+}
+#pragma cplusplus reset
+
 int fn_80193DC0(void *arg0) {
     u32 *ptr;
 
