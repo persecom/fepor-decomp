@@ -10147,14 +10147,17 @@ s32 fn_8019E528(void) {
     return 0;
 }
 
-s32 fn_8019E564(s32 arg0) {
-    M2C_UNK fn_8000BF00(M2C_UNK *);
-    M2C_UNK fn_8000CAF0(M2C_UNK *, s32, M2C_UNK *);
-    extern M2C_UNK lbl_80297070;
+s32 fn_8019E564(s32 arg0)
+{
+    void fn_8000BF00(void *);
+    void fn_8000CAF0(void *, s32);
+    s32 fn_800C0658(void);
+    extern u8 lbl_80297070[];
+
     if (arg0 != 0) {
-        fn_8000CAF0(&lbl_80297070, fn_800C0658(), &lbl_80297070);
+        fn_8000CAF0(lbl_80297070, fn_800C0658());
     } else {
-        fn_8000BF00(&lbl_80297070);
+        fn_8000BF00(lbl_80297070);
     }
     return 1;
 }
