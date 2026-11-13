@@ -2924,10 +2924,20 @@ s32 fn_8000B474(void *arg0) {
     return 0;
 }
 
-s32 fn_8000B494(s32 arg0)
-{
-    s32* array = (s32*)lbl_802AEE20;
-    return array[arg0];
+s32 fn_8000B494(void *arg0) {
+    void fn_8000B4D0(void);
+    u32 *temp_r4;
+    s16 val;
+
+    temp_r4 = M2C_FIELD(arg0, u32 **, 4);
+    M2C_FIELD(arg0, u32 **, 4) = (u32 *) ((unsigned)temp_r4 + 4);
+    val = (s16) ((u32) *temp_r4 >> 0x10U);
+    if (val == 0) {
+        return 0;
+    }
+    M2C_FIELD(arg0, s16 *, 0x28) = val;
+    M2C_FIELD(arg0, void **, 0x10) = (void *)fn_8000B4D0;
+    return 0;
 }
 
 void fn_8000B4D0(void) {
