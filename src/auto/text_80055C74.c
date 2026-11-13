@@ -1589,52 +1589,12 @@ f32 fn_80059F64(f32 farg0, f32 farg1, f32 farg2, f32 farg3) {
 }
 
 f32 fn_80059F78(s32 n, f32 a, f32 b, f32 c, f32 d) {
-    f32 diff;
-    f32 y;
-    s32 i;
-    f32 x;
-    s32 t;
-    s32 k;
-
-    diff = b - a;
-    y = c;
-    i = 1;
-    x = d;
-    if (n > 1) {
-        t = n - 8;
-        if (n - 1 > 8) {
-            k = (t + 6) >> 3;
-            if (t > 1) {
-                do {
-                    x *= d;
-                    i += 8;
-                    y *= c;
-                    x *= d;
-                    y *= c;
-                    x *= d;
-                    y *= c;
-                    x *= d;
-                    y *= c;
-                    x *= d;
-                    y *= c;
-                    x *= d;
-                    y *= c;
-                    x *= d;
-                    y *= c;
-                    x *= d;
-                    y *= c;
-                } while (--k);
-            }
-        }
-        k = n - i;
-        if (i < n) {
-            do {
-                x *= d;
-                y *= c;
-            } while (--k);
-        }
-    }
-    return a + ((diff * x) / y);
+f32 diff = b-a;
+f32 x = d;
+f32 y = c;
+s32 i;
+for(i=1;i<n;i++) { x *= d; y *= c; }
+return a + diff*x/y;
 }
 
 f32 fn_8005A028(s32 arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3) {
