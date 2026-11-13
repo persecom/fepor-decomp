@@ -2903,7 +2903,30 @@ void fn_8000B1C0(void *arg0) {
     fn();
 }
 
-s32 fn_8000B1F4(void *arg0) { u32 *temp_r4; u32 *var_r4; u32 temp_r5; temp_r4=M2C_FIELD(arg0,u32 **,4); if(M2C_FIELD(temp_r4,u8 (**)(u32 *),4)(temp_r4)==0){ var_r4=M2C_FIELD(arg0,u32 **,0); loop_6: temp_r5=*var_r4; if(temp_r5==0)goto done; if((temp_r5&0xFFF)==1&&(s16)(temp_r5>>16)==(s32)(u8)((u32)*M2C_FIELD(arg0,u32 **,4)>>16)){ M2C_FIELD(arg0,u32 **,4)=var_r4;M2C_FIELD(arg0,s32 *,0x10)=0;goto done;} var_r4=(u32*)((u8*)var_r4+((temp_r5>>10)&0x3C));temp_r5=*var_r4;if(temp_r5!=0)goto loop_6;done:;}else M2C_FIELD(arg0,u32 **,4)=(u32*)((u8*)M2C_FIELD(arg0,u32 **,4)+8);return 1;}
+s32 fn_8000B1F4(void *arg0) {
+    u32 *var_r4;
+    u32 temp_r5;
+    u32 key;
+
+    if ((*(u8 (**)(void *))((u8 *)*(void **)((u8 *)arg0 + 4) + 4))(arg0) == 0) {
+        key = (**(u32 **)((u8 *)arg0 + 4) >> 16) & 0xFF;
+        var_r4 = *(u32 **)arg0;
+        goto load;
+        do {
+            if ((temp_r5 & 0xFFF) == 1 && (s16)(temp_r5 >> 16) == (s32)key) {
+                *(u32 **)((u8 *)arg0 + 4) = var_r4;
+                *(s32 *)((u8 *)arg0 + 0x10) = 0;
+                break;
+            }
+            var_r4 = (u32 *)((u8 *)var_r4 + ((temp_r5 >> 10) & 0x3C));
+        load:
+            temp_r5 = *var_r4;
+        } while (temp_r5 != 0);
+    } else {
+        *(u8 **)((u8 *)arg0 + 4) = (u8 *)*(void **)((u8 *)arg0 + 4) + 8;
+    }
+    return 1;
+}
 
 s32 fn_8000B29C(void *arg0) { u32 *temp_r4; u32 *var_r4; u32 temp_r5; temp_r4=M2C_FIELD(arg0,u32 **,4); if(M2C_FIELD(temp_r4,u8 (**)(u32 *),4)(temp_r4)!=0){ var_r4=M2C_FIELD(arg0,u32 **,0); loop_6: temp_r5=*var_r4; if(temp_r5==0)goto done; if((temp_r5&0xFFF)==1&&(s16)(temp_r5>>16)==(s32)(u8)((u32)*M2C_FIELD(arg0,u32 **,4)>>16)){ M2C_FIELD(arg0,u32 **,4)=var_r4;M2C_FIELD(arg0,s32 *,0x10)=0;goto done;} var_r4=(u32*)((u8*)var_r4+((temp_r5>>10)&0x3C));temp_r5=*var_r4;if(temp_r5!=0)goto loop_6;done:;}else M2C_FIELD(arg0,u32 **,4)=(u32*)((u8*)M2C_FIELD(arg0,u32 **,4)+8);return 1;}
 
