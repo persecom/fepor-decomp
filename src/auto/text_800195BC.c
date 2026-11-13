@@ -1491,26 +1491,36 @@ s32 fn_8001C0C8(u8 *arg0)
 }
 
 void fn_8001C15C(void *arg0, void *arg1) {
-    M2C_UNK fn_800C3220(M2C_UNK *);
+    void fn_800C3220(void *, s32);
     u16 fn_8017A9B0(void *);
-    extern M2C_UNK lbl_803206EC;
-    u16 temp_r3;
+    s32 fn_80019E24(s32);
+    extern u8 lbl_803206EC[];
+    typedef struct {
+        u8 pad : 1;
+        u8 flag : 1;
+        u8 rest : 6;
+    } Bit6;
+    Bit6 *bf;
+    s32 mask;
+    u16 temp;
 
-    temp_r3 = fn_8017A9B0(arg1);
-    if (temp_r3 == 0) {
-        M2C_FIELD(arg1, s32 *, 4) = (s32) (M2C_FIELD(arg1, s32 *, 4) + 2);
-        M2C_FIELD(arg0, u8 *, 5) = (u8) (M2C_FIELD(arg0, u8 *, 5) & ~0x3F);
-        M2C_FIELD(arg0, s32 *, 0) = 0;
-        M2C_FIELD(arg0, s8 *, 4) = 0;
-        M2C_FIELD(arg0, u8 *, 5) = (u8) (M2C_FIELD(arg0, u8 *, 5) & ~0x80);
-        M2C_FIELD(arg0, u8 *, 5) = (u8) (M2C_FIELD(arg0, u8 *, 5) & ~0x40);
-        if (M2C_FIELD(arg0, u8 *, 5) & 0x3F) {
-            fn_800C3220(&lbl_803206EC);
-            M2C_FIELD(arg0, u8 *, 5) = (u8) (M2C_FIELD(arg0, u8 *, 5) & ~0x3F);
+    temp = fn_8017A9B0(arg1);
+    if (temp == 0) {
+        *(s32 *)((u8 *)arg1 + 4) = *(s32 *)((u8 *)arg1 + 4) + 2;
+        bf = (Bit6 *)((u8 *)arg0 + 5);
+        bf->rest = 0;
+        *(s32 *)arg0 = 0;
+        *((u8 *)arg0 + 4) = 0;
+        bf->pad = 0;
+        bf->flag = 0;
+        mask = *((u8 *)arg0 + 5) & 0x3F;
+        if (mask != 0) {
+            fn_800C3220(lbl_803206EC, mask);
+            bf->rest = 0;
         }
     } else {
-        M2C_FIELD(arg0, s32 *, 0) = fn_80019E24(temp_r3);
-        M2C_FIELD(arg0, s8 *, 4) = fn_8017A9B0(arg1);
+        *(s32 *)arg0 = fn_80019E24(temp);
+        *((u16 *)arg0 + 2) = fn_8017A9B0(arg1);
     }
 }
 
