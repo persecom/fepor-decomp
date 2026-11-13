@@ -6356,17 +6356,16 @@ void fn_800D6874(void) {
 
 }
 
-void fn_800D6878(u8 *arg0, u8 *arg1) {
+void fn_800D6878(u8 *arg0, u32 arg1) {
     s32 zero;
-    u8 b;
     u8 *ptr;
 
     zero = 0;
-    b = *arg1;
+    arg1 = *(u8 *)arg1;
     *(s32 *)arg0 = zero;
     ptr = arg0 + 4;
     *(s32 *)(arg0 + 4) = zero;
-    arg0[8] = b;
+    arg0[8] = (u8)arg1;
     *(u8 **)(arg0 + 0xC) = ptr;
 }
 
@@ -13992,11 +13991,12 @@ s32 fn_800EB788(void *arg0) {
 }
 
 void fn_800EB7E4(void) {
-    extern u16 lbl_80320C20;
-    *(u8 *)((s32)&lbl_80320C20 + 0xA018) = 0;
-    *(u8 *)((s32)&lbl_80320C20 + 0xA019) = 0;
-    *(u8 *)((s32)&lbl_80320C20 + 0xA01A) = 0;
-    *(s32 *)((s32)&lbl_80320C20 + 0xA004) = -3;
+    extern u8 lbl_80320C20[41016];
+
+    lbl_80320C20[0xA018] = 0;
+    lbl_80320C20[0xA019] = 0;
+    lbl_80320C20[0xA01A] = 0;
+    *(s32 *)(lbl_80320C20 + 0xA004) = -3;
 }
 
 void fn_800EB80C(void) {
