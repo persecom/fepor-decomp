@@ -1646,25 +1646,14 @@ void fn_801ED848(void *arg0, void *arg1, void *arg2, void *arg3) {
 void fn_801ED8CC(void *arg0)
 {
     extern u8 lbl_802EF4C8[];
-    extern u32 lbl_8029A734[];
+    extern void *lbl_8029A734[];
     extern u8 lbl_8027F26C[];
+    void *fn_8000E0E4(void *);
+    void fn_8000D864(s32, void *);
+    void fn_801B79A0(void *, s32, void *, s32);
 
-    extern s32 fn_8000E0E4(void *);
-    extern void fn_8000D864(s32, s32);
-    extern void fn_801B79A0(s32, s32, void *, s32);
-
-    s32 value;
-    s32 result;
-
-    value = fn_8000E0E4(
-        (void *)lbl_8029A734[lbl_802EF4C8[0x14]]
-    );
-
-    fn_8000D864(0, value);
-
-    result = fn_8000E0E4(lbl_8027F26C + 0x17E);
-
-    fn_801B79A0(result, 0, arg0, 0);
+    fn_8000D864(0, fn_8000E0E4(lbl_8029A734[lbl_802EF4C8[0x14]]));
+    fn_801B79A0(fn_8000E0E4(lbl_8027F26C + 0x17E), 0, arg0, 0);
 }
 
 void fn_801ED940(s32 arg0) {
