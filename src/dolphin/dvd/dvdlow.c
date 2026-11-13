@@ -694,7 +694,17 @@ void *fn_8020C310(void) {
     Callback_80368538 = 0;
     return cb;
 }
+
 #pragma scheduling on
+void __DVDLowSetWAType(u32 type, u32 location) {
+    extern volatile u32 WorkAroundType_80368554;
+    extern u32 WorkAroundSeekLocation_80368558;
+
+    OSDisableInterrupts();
+    WorkAroundType_80368554 = type;
+    WorkAroundSeekLocation_80368558 = location;
+    OSRestoreInterrupts();
+}
 s32 fn_8020C370(void *arg0) {
     extern u8 lbl_80339F00[];
 
