@@ -1704,36 +1704,25 @@ void fn_801F5D14(void *arg0)
 void fn_801F5DD0(void *arg0)
 {
     u8 *object;
-    u32 flags;
+    s32 r;
 
     object = (u8 *)arg0;
 
-    if (fn_802655A8(
-            *(u32 *)(object + 0x38),
-            object + 0x4B
-        ) == 0) {
-
-        flags = object[0x4B] & 0x30;
-
-        if (flags != 0x30) {
+    r = fn_802655A8(*(u32 *)(object + 0x38), object + 0x4B);
+    if (r == 0) {
+        r = object[0x4B];
+        if ((r & 0x30) != 0x30) {
             fn_8000C070(arg0, 2);
             return;
         }
     }
-
-    if ((object[0x4B] & 0x02) != 0) {
+    if (r & 2) {
         return;
     }
 
-    if (fn_80266998(
-            *(u32 *)(object + 0x38),
-            object + 0x44,
-            object + 0x4B
-        ) == 0) {
-
-        flags = object[0x4B] & 0x30;
-
-        if (flags != 0x30) {
+    if (fn_80266998(*(u32 *)(object + 0x38), object + 0x44, object + 0x4B) == 0) {
+        r = object[0x4B];
+        if ((r & 0x30) != 0x30) {
             fn_8000C070(arg0, 2);
             return;
         }
@@ -3806,6 +3795,23 @@ void fn_801FA508(void *arg0) {
     if (x != NULL) {
         fn_8003F670(x);
     }
+}
+
+void fn_801FA534(void *arg0)
+{
+    void *fn_8003FCCC(void *);
+    s32 *fn_8000D2BC(void *);
+    extern u8 lbl_8029B2D8[];
+    extern u8 lbl_80281028[];
+    s32 *tmp;
+
+    *(void **)((u8 *)arg0 + 0x30) = fn_8003FCCC(*(void **)(lbl_8029B2D8 + 4));
+    tmp = fn_8000D2BC(lbl_80281028 + 0x373);
+    *(s32 *)((u8 *)arg0 + 0x34) = *tmp;
+    *(f32 *)((u8 *)arg0 + 0x3C) =
+        *(f32 *)((u8 *)arg0 + 0x38) + (f32)(u32)(*(s32 *)((u8 *)arg0 + 0x34) * 0x30);
+    *(f32 *)((u8 *)arg0 + 0x40) =
+        *(f32 *)((u8 *)arg0 + 0x3C) / (f32)*(s32 *)((u8 *)arg0 + 0x44);
 }
 
 __declspec(section ".rodata") static const char staff_fmt[] = "#F04%s";
