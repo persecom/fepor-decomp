@@ -1973,43 +1973,14 @@ s32 fn_800B2E78(void) {
 }
 
 s32 fn_800B2F20(s32 arg0) {
-    extern u8 lbl_80319A58[];
-    u8 *p;
-    s32 n;
-    s32 i;
-
-    arg0 = (u8)arg0 + 1;
-    p = lbl_80319A58;
-    n = 0;
-    for (i = 0; i < 2; i++) {
-        if (*p == (u8)arg0) {
-            return 1;
-        }
-        if (*++p == (u8)arg0) {
-            return 1;
-        }
-        if (*++p == (u8)arg0) {
-            return 1;
-        }
-        if (*++p == (u8)arg0) {
-            return 1;
-        }
-        if (*++p == (u8)arg0) {
-            return 1;
-        }
-        if (*++p == (u8)arg0) {
-            return 1;
-        }
-        if (*++p == (u8)arg0) {
-            return 1;
-        }
-        if (*++p == (u8)arg0) {
-            return 1;
-        }
-        p += 1;
-        n += 7;
-    }
-    return n - n;
+extern u8 lbl_80319A58[];
+s32 i;
+u8 *p = lbl_80319A58;
+arg0=(u8)arg0+1;
+for(i=0;i<16;p++,i++) {
+if(*p==(u8)arg0) return 1;
+}
+return 0;
 }
 
 extern u16 lbl_80319A18[];
