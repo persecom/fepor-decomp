@@ -2064,6 +2064,34 @@ u16 fn_8001D2A4(void* arg0) {
     return (u16)(var_r5 * *(u8*)((char*)arg0 + 4));
 }
 
+void *fn_8001D2C8(void *arg0) {
+    u8 *fn_800C2E3C(u8 *, s32);
+    void *fn_8000D354(void *);
+    void *fn_8000E0E4(void *);
+    extern u8 lbl_803206EC[];
+    u8 flag;
+    void *inner;
+    s32 mask;
+
+    if (*(void **)arg0 == NULL) {
+        return NULL;
+    }
+    mask = *((u8 *)arg0 + 5) & 0x3F;
+    if (mask != 0) {
+        flag = (u8)((s8)*fn_800C2E3C(lbl_803206EC, mask) != 0);
+    } else {
+        flag = 0;
+    }
+    if (flag == 0) {
+        inner = *(void **)arg0;
+        if (fn_8000D354(*(void **)((u8 *)inner + 4)) != NULL) {
+            return fn_8000E0E4(*(void **)((u8 *)inner + 4));
+        }
+        return *(void **)inner;
+    }
+    return fn_800C2E3C(lbl_803206EC, *((u8 *)arg0 + 5) & 0x3F);
+}
+
 u8 fn_8001D37C(void *arg0) {
     s32 fn_800C2ACC(void *, s32);
     extern u8 lbl_803206EC[];
