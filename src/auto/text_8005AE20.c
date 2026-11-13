@@ -1868,16 +1868,18 @@ void fn_8005E644(void *arg0) {
 #pragma use_lmw_stmw reset
 
 #pragma dont_inline reset
-void fn_8005EB5C(u8 *dst, u8 *src) {
-    u32 a;
-    u32 b;
-    b = src[1];
-    dst[0x88] = src[0];
-    a = src[2];
-    dst[0x89] = b;
-    b = src[3];
-    dst[0x8A] = a;
-    dst[0x8B] = b;
+void fn_8005EB5C(u8 *dst, u8 *src)
+{
+  u8 a;
+  u8 b;
+  ;
+  b = src[1];
+  dst[0x88] = src[0];
+  a = src[2];
+  dst[0x89] = b;
+  b = src[3];
+  dst[0x8A] = a;
+  dst[0x8B] = b;
 }
 
 void fn_8005EB80(s32 arg0, s32 arg1) {
@@ -5020,32 +5022,25 @@ void fn_8006720C(void *arg0) {
     u8 m14[0x30];
     void *lights;
     s32 i;
-    s32 *src;
     f32 scale;
 
-    lights = lbl_80366DDC;
-    {
-        void *a = arg0;
-        if (lights == NULL) {
-            return;
+    if ((lights = lbl_80366DDC) != NULL) {
+    scale = lbl_80369248;
+    i = 0;
+    do {
+        vec[0] = lbl_8026B75C[0];
+        vec[1] = lbl_8026B75C[1];
+        vec[2] = lbl_8026B75C[2];
+        fn_80202300(m44, 0x5A, scale * *(f32 *)((u8 *)lights + 0x28));
+        fn_80202300(m74, 0x59, scale * (-*(f32 *)((u8 *)lights + 0x24)));
+        fn_80202024(m74, m44, m14);
+        if (arg0 != NULL) {
+            fn_80202024(arg0, m14, m14);
         }
-        scale = lbl_80369248;
-        i = 0;
-        src = lbl_8026B75C;
-        do {
-            vec[0] = src[0];
-            vec[1] = src[1];
-            vec[2] = src[2];
-            fn_80202300(m44, 0x5A, scale * *(f32 *)((u8 *)lights + 0x28));
-            fn_80202300(m74, 0x59, scale * (-*(f32 *)((u8 *)lights + 0x24)));
-            fn_80202024(m74, m44, m14);
-            if (a != NULL) {
-                fn_80202024(a, m14, m14);
-            }
-            fn_802029C4(m14, vec, (u8 *)lights + 0x14);
-            i += 1;
-            lights = (u8 *)lights + 0x2C;
-        } while (i < 8);
+        fn_802029C4(m14, vec, (u8 *)lights + 0x14);
+        i += 1;
+        lights = (u8 *)lights + 0x2C;
+    } while (i < 8);
     }
 }
 
@@ -5119,18 +5114,18 @@ void *fn_80067440(s32 arg0) {
     return (u8 *)lbl_80366DDC + arg0 * 0x2c;
 }
 
-#pragma peephole off
+#pragma optimization_level 1
 void fn_80067460(void *arg0) {
     extern u8 lbl_80311B04[];
-    extern u8 *lbl_80366DDC;
-    u8 *p;
-    if (arg0 != 0) {
+    extern void *lbl_80366DDC;
+
+    if (arg0 == NULL) {
+        lbl_80366DDC = lbl_80311B04;
         return;
     }
-    p = lbl_80311B04;
-    lbl_80366DDC = p;
+    return;
 }
-#pragma peephole on
+#pragma optimization_level reset
 s32 fn_80067478(void) {
     extern s32 lbl_80366DDC;
     return lbl_80366DDC;
@@ -6398,8 +6393,8 @@ void fn_8006D52C(s32 arg0) {
     *(volatile u32 *)0 = gqr;
 }
 
-void fn_8006D53C(register s32 arg0) {
-    register u32 gqr = ((u32)arg0 << 16) + (u32)arg0;
+void fn_8006D53C(s32 arg0) {
+    u32 gqr = ((u32)arg0 << 16) + (u32)arg0;
     *(volatile u32 *)0 = gqr;
 }
 
@@ -8249,13 +8244,11 @@ s32 fn_80072320(void) {
     return 0x54;
 }
 
-s32 fn_80072328(void *arg0) {
-    s16 v12 = *(s16 *)((u8 *)arg0 + 0x12);
-    s16 v10 = *(s16 *)((u8 *)arg0 + 0x10);
-    if (v12 < v10) {
-        arg0 = (u8 *)arg0 + 0x12;
+s32 fn_80072328(u8 *arg0) {
+    if (*(s16 *)(arg0 + 0x12) < *(s16 *)(arg0 + 0x10)) {
+        arg0 += 0x12;
     } else {
-        arg0 = (u8 *)arg0 + 0x10;
+        arg0 += 0x10;
     }
     return *(s16 *)arg0;
 }
