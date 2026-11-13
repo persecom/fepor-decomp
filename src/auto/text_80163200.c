@@ -16006,6 +16006,22 @@ block_15:
     return 1;
 }
 
+s32 fn_80182670(void *arg0) {
+    void fn_800FB96C(s32, s8, s8, s32, s8, s8, s32, s32, s32);
+    u8 fn_801025BC(void *, s16 *, s16 *);
+    extern u8 lbl_8032B3C0[];
+    s16 sp12;
+    s16 sp10;
+
+    if ((lbl_8032B3C0[1] & 2) || (*(s32 *)((char *)arg0 + 0x254) & 0x03000000)) {
+        return 0;
+    }
+    if (fn_801025BC(arg0, &sp12, &sp10) == 1) {
+        fn_800FB96C(1, (s8)sp12, (s8)sp10, 0, (s8)sp12, (s8)sp10, -1, 0, 0);
+    }
+    return 1;
+}
+
 s32 fn_80182704(void *arg0) {
     struct Obj {
         u8 pad0[0x236];
