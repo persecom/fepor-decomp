@@ -3355,16 +3355,16 @@ fn_8013FF00(self,M2C_FIELD(self,void **,0x5C));
 
 #pragma cplusplus reset
 void fn_801BCC60(s32 arg0) {
-    extern s32 lbl_802EF4C8;
-    extern u16 lbl_80330EAC[];
-    
-    s32 temp_r31;
-    
-    temp_r31 = *(s32*)((char*)&lbl_802EF4C8);
-    fn_801A4BE0(lbl_80330EAC, lbl_80330EAC, &lbl_802EF4C8);
-    
-    if (lbl_80330EAC[0x6D6] & 0x10) {
-        fn_801ED970(temp_r31, arg0);
+    void fn_801A4BE0(void *);
+    void fn_801ED970(s32, s32);
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_80330EAC[];
+    s32 saved;
+
+    saved = *(s32 *)lbl_802EF4C8;
+    fn_801A4BE0(lbl_80330EAC);
+    if (*(u32 *)(lbl_80330EAC + 0xCAC) & 0x10) {
+        fn_801ED970(saved, arg0);
     }
 }
 
