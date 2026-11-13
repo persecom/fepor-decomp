@@ -21231,6 +21231,39 @@ retry_loop:
     }
 }
 
+#pragma use_lmw_stmw on
+void fn_800FE398(u8 *unit, s32 arg1, s32 arg2) {
+    void fn_800213D0(void *, u8, u8, u16, s32, s32);
+    void fn_80022748(void *, s32);
+    void fn_800227D0(void *, s32, s32);
+    void fn_800227F8(void *, void *);
+    void fn_80022FD8(void *, s32);
+    s8 fn_8003A398(void *);
+    u8 fn_80105BC0(void *, s32);
+    extern u8 lbl_802CA518[];
+    u8 *map;
+    s32 t14;
+    s32 t15;
+    s32 slot;
+
+    map = lbl_802CA518;
+    t14 = fn_80105BC0(unit + 0x1BC, 0x14) != 0;
+    t15 = fn_80105BC0(unit + 0x1BC, 0x15) != 0;
+    fn_80022FD8(lbl_802CA518, arg1);
+    fn_800227F8(lbl_802CA518, *(void **)(unit + 0x18C));
+    fn_80022748(lbl_802CA518, 0);
+    if (*(u32 *)(unit + 0x254) & 0x20000) {
+        fn_800227D0(map, 0x37, 0x30);
+    }
+    if (arg2 != -1) {
+        slot = arg2;
+    } else {
+        slot = (s8)fn_8003A398(unit);
+    }
+    fn_800213D0(map, unit[0x19E], unit[0x19F], (u16)slot, t14, t15);
+}
+#pragma use_lmw_stmw reset
+
 void fn_800FE690(s32 arg0, s32 arg1, void *arg2, s32 arg3, s32 arg4, s32 arg5) {
     void fn_80022FD8(void *, s32);
     void fn_800227F8(void *, void *);
@@ -22910,7 +22943,7 @@ s32 fn_80102360(void *arg0, s16 *arg1, s16 *arg2, s32 arg3) {
         fn_80022DAC(0x802CA518, 5, -1);
         fn_80022FD8(0x802CA518, 5);
     } else {
-        fn_800FE2A0(5, arg3);
+        fn_800FE2A0(arg0, 5, arg3);
     }
 
     temp_r23 = *(u8 *)((char *)arg0 + 0x19e);
