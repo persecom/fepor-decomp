@@ -205,17 +205,13 @@ void fn_8003333C(void *arg0,s32 arg1) {
     base[offset + 4] |= 1;
 }
 
-void fn_800333DC(void* arg0, s32 arg1) {
-    u16* r5;
-    u16* r4;
+void fn_800333DC(u8 *arg0, s32 arg1) {
+    u8 *base;
 
-    r5 = (u16*)((u8*)arg0 + 0x60);
-    r5 = (u16*)((u8*)r5 + ((*(u8*)r5 + arg1) * 2));
-    *r5 |= 0x4002;
-
-    r4 = (u16*)((u8*)arg0 + 0x60);
-    r4 = (u16*)((u8*)r4 + ((*(u8*)r4 + arg1) * 2));
-    *r4 |= 4;
+    base = arg0 + (arg0[0x60] + arg1) * 2;
+    *(u16 *)&base[0x20] |= 0x4002;
+    base = arg0 + (arg0[0x60] + arg1) * 2;
+    *(u16 *)&base[0x22] |= 4;
 }
 
 void fn_80033E70(void *arg0) {
@@ -2357,19 +2353,19 @@ u8 fn_8003863C(u8 *arg0) {
     return arg0[0x19A];
 }
 
-void fn_8003868C(void *arg0, s8 arg1) {
-    if (arg1 != -1) {
-        if (arg1 >= 0) {
-            if (arg1 > 0x64) {
-                return;
-            }
-            /* Duplicate return node #4. Try simplifying control flow for better match */
-            M2C_FIELD(arg0, s8 *, 0x19B) = arg1;
-            return;
-        }
+void fn_8003868C(void *arg0, s32 arg1) {
+    if (arg1 == 0xff) {
+        goto store;
+    }
+    if (arg1 < 0) {
         return;
     }
-    M2C_FIELD(arg0, s8 *, 0x19B) = arg1;
+    if (arg1 <= 0x64) {
+        goto store;
+    }
+    return;
+store:
+    *(u8 *)((u8 *)arg0 + 0x19B) = (u8)arg1;
 }
 
 u8 fn_800386B0(void *arg0) {
@@ -3535,27 +3531,26 @@ s8 fn_8003B2D0(void *arg0)
     return (s8)(var_r5 + var_r6);
 }
 
+#pragma opt_peephole off
 s8 fn_8003B490(void *arg0) {
     void *temp_r4;
+    s8 temp_r6_2;
     u8 temp_r5;
-    u8 temp_4b;
-    u8 temp_r6_2;
     s8 var_r3;
 
     temp_r4 = *(void **)((u8 *)arg0 + 0x18C);
     temp_r5 = *(u8 *)((u8 *)arg0 + 0x1B2);
-    temp_4b = *(u8 *)((u8 *)temp_r4 + 0x4B);
     temp_r6_2 = *(u8 *)((u8 *)temp_r4 + 0x53);
-    var_r3 = (*(u8 *)((u8 *)*(void **)((u8 *)arg0 + 0x188) + 0x24) + temp_4b) + temp_r5;
-    if (var_r3 > (s8)temp_r6_2) {
-        var_r3 = (s8)temp_r6_2;
+    var_r3 = (*(u8 *)((u8 *)*(void **)((u8 *)arg0 + 0x188) + 0x24) + *(u8 *)((u8 *)temp_r4 + 0x4B)) + temp_r5;
+    if (var_r3 > temp_r6_2) {
+        var_r3 = temp_r6_2;
     }
     if (var_r3 < 0) {
         return 0;
     }
     return var_r3;
 }
-
+#pragma opt_peephole reset
 s8 fn_8003B4D4(void *arg0) {
     void *temp_r6;
     u8 temp_r5;
@@ -3628,8 +3623,8 @@ s8 fn_8003B58C(void *arg0) {
 }
 #pragma opt_peephole reset
 s8 fn_8003B5D0(void *arg0) {
-    void *p18c;
-    s8 lim;
+    register void *p18c;
+    register s8 lim;
     u8 t;
     s8 var;
 
@@ -3666,22 +3661,22 @@ s8 fn_8003B614(void *arg0) {
 }
 
 s8 fn_8003B658(void *arg0) {
-    void *temp_r4;
-    u8 temp_r6_2;
-    u8 temp_r5;
-    s8 var_r3;
+    void *p18c;
+    s8 lim;
+    u8 t;
+    s8 var;
 
-    temp_r4 = M2C_FIELD(arg0, void **, 0x18C);
-    temp_r5 = M2C_FIELD(arg0, u8 *, 0x1AB);
-    temp_r6_2 = M2C_FIELD(temp_r4, u8 *, 0x4C);
-    var_r3 = (M2C_FIELD(M2C_FIELD(arg0, void **, 0x188), u8 *, 0x1D) + M2C_FIELD(temp_r4, u8 *, 0x44)) + temp_r5;
-    if (var_r3 > (s8) temp_r6_2) {
-        var_r3 = (s8) temp_r6_2;
+    p18c = *(void **)((u8 *)arg0 + 0x18C);
+    t = *(u8 *)((u8 *)arg0 + 0x1AB);
+    lim = *(u8 *)((u8 *)p18c + 0x4C);
+    var = (*(u8 *)((u8 *)*(void **)((u8 *)arg0 + 0x188) + 0x1D) + *(u8 *)((u8 *)p18c + 0x44)) + t;
+    if (var > lim) {
+        var = lim;
     }
-    if (var_r3 < 0) {
+    if (var < 0) {
         return 0;
     }
-    return var_r3;
+    return var;
 }
 
 void fn_8003B69C(s32 arg0) {
@@ -4529,25 +4524,32 @@ void fn_8003D70C(s32 arg0) {
 }
 s32 fn_8003DC80(s32 arg0, s32 arg1) {
     s8 fn_8003AEB0(s32);
-    s8 temp_r31;
+    s32 temp_r31;
+    s32 temp_r4;
 
-    temp_r31 = fn_8003AEB0(arg1);
-    return temp_r31 < fn_8003AEB0(arg0);
+    temp_r31 = (s8)fn_8003AEB0(arg1);
+    temp_r4 = (s8)fn_8003AEB0(arg0);
+    return temp_r31 > temp_r4;
 }
 
-void fn_8003DCDC(void *arg0, void *arg1, s32 arg2, s8 *arg3, s8 *arg4) {
-    u8 r9;
-    u8 r0;
-    u8 r8;
-    u8 r3;
+void fn_8003DCDC(u8 *arg0, u8 *arg1, s32 arg2, s8 *arg3, s8 *arg4) {
+    s32 b19e;
+    s32 a19e;
+    s32 a19f;
+    s32 b19f;
+    s32 d0;
+    s32 d1;
 
-    r9 = *(u8 *) ((u8 *) arg1 + 0x19E);
-    r0 = *(u8 *) ((u8 *) arg0 + 0x19E);
-    r8 = *(u8 *) ((u8 *) arg0 + 0x19F);
-    r3 = *(u8 *) ((u8 *) arg1 + 0x19F);
-
-    *arg3 = (arg2 * (r0 - r9)) + r9;
-    *arg4 = ((r3 - r8) * arg2) + r3;
+    b19e = arg1[0x19E];
+    a19e = arg0[0x19E];
+    b19e = (s8)b19e;
+    a19f = arg0[0x19F];
+    d0 = (s8)(b19e - a19e);
+    b19f = arg1[0x19F];
+    d1 = (s8)(b19f - a19f);
+    *arg3 = (s8)(arg2 * d0 + b19e);
+    d1 = d1 * arg2;
+    *arg4 = (s8)(d1 + arg1[0x19F]);
 }
 
 s32 fn_8003DD20(s32 arg0, s32 arg1) {
@@ -4872,7 +4874,7 @@ void fn_8003E8DC(void *arg0, void *arg1) {
 }
 
 void fn_8003EA24(void *arg0, s32 arg1, s32 arg2) {
-    void fn_8003816C(void *);
+    void fn_8003816C(void *, s32, s32);
     s32 flags;
     void *partner;
 
@@ -4882,7 +4884,7 @@ void fn_8003EA24(void *arg0, s32 arg1, s32 arg2) {
     *(s32 *)((u8 *)partner + 0x1A0) = *(s32 *)((u8 *)partner + 0x1A0) & ~4;
     *(void **)((u8 *)arg0 + 0x194) = NULL;
     *(void **)((u8 *)partner + 0x194) = NULL;
-    fn_8003816C(partner);
+    fn_8003816C(partner, arg1, arg2);
     *(s32 *)((u8 *)partner + 0x1A0) |= 1;
 }
 
