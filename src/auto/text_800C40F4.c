@@ -14683,9 +14683,7 @@ s32 fn_800ED7B8(void)
 
     count = *(s32 *)((u8 *)lbl_803678C8 + 0x450);
     inner = *(void **)((u8 *)lbl_803678C8 + 0x424);
-    count = count - 1;
-    *(s32 *)((u8 *)lbl_803678C8 + 0x450) = count;
-    if (count > 0) {
+    if ((*(s32 *)((u8 *)lbl_803678C8 + 0x450) = count - 1) > 0) {
         return 0;
     }
     *(s32 *)((u8 *)inner + 0xB4) = *(s32 *)((u8 *)inner + 0xB4) - 1;
