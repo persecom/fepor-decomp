@@ -33,19 +33,12 @@ extern struct UnkStruct_802AEE80 gUnk_802AEE80;
 extern s32 gUnknown_0x80369C84;
 extern s32 gUnknown_0x80369C88;
 
-s32 fn_8000D598(u8 *arg0) {
-    s32 var_r5;
-    u8 *var_r3;
-
-    var_r3 = arg0;
-    var_r5 = 0;
-loop_2:
-    if ((s8)*var_r3 != 0) {
-        u8 temp = *(var_r3++);
-        var_r5 = (temp + (var_r5 * 0x25));
-        goto loop_2;
+s32 fn_8000D598(s8 *arg0) {
+    s32 h = 0;
+    while (*arg0 != 0) {
+        h = *arg0++ + h * 0x25;
     }
-    return var_r5;
+    return h;
 }
 
 void fn_8000D5C8(void) {
