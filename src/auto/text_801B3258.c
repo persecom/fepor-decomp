@@ -16922,8 +16922,9 @@ void fn_801E3118(s32 *arg0,s32 arg1,u8 arg2) {
 
 void fn_801E31C8(void *arg0)
 {
-    extern void *lbl_803682F0;
-
+    void fn_801E2620(void *, s32);
+    u8 fn_800EB788(void);
+    extern u8 lbl_803682F0;
     u32 value;
 
     if ((u8)fn_800EB788() != 0) {
@@ -16931,11 +16932,7 @@ void fn_801E31C8(void *arg0)
     }
 
     value = *(u32 *)((u8 *)arg0 + 0x60);
-
-    fn_801E2620(
-        lbl_803682F0,
-        (value != 0)
-    );
+    fn_801E2620(&lbl_803682F0, value != 0);
 }
 
 void fn_801E3214(void *arg0) {
