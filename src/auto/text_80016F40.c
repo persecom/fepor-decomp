@@ -1053,14 +1053,19 @@ s32 fn_80018A08(u8 arg0) {
     return 0;
 }
 
-void fn_80018AAC(void) {
-    extern long lbl_803671C4;
-    void **vtable;
-
-    vtable = *(void ***)(lbl_803671C4 + 0x74);
-    ((void (*)(void))(*(void **)((u8 *)vtable + 0x8)))();
+#pragma cplusplus on
+extern "C" void fn_80018AAC(void) {
+    extern s32 lbl_803671C4;
+    struct Cam {
+        u8 pad[0x74];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+    };
+    ((Cam *)lbl_803671C4)->v0();
 }
-
+#pragma cplusplus off
 s32 fn_80018ADC(void) {
     extern s32 lbl_803671C4;
     return lbl_803671C4;
@@ -1255,6 +1260,36 @@ void fn_80018E0C(void)
     }
 
     fn_801475FC(lbl_80268330 + 0x18C, 0x64);
+}
+
+extern "C" void fn_80018EC0(void) {
+    extern s32 lbl_803671C4;
+    extern f32 lbl_80368CA0;
+    extern f32 lbl_80368C88;
+    extern f32 lbl_80368C8C;
+    void *p;
+    f32 f2;
+    f32 f1;
+    f32 f0;
+    s32 z;
+
+    p = (void *)lbl_803671C4;
+    if (p != NULL) {
+        f2 = lbl_80368CA0;
+        z = 0;
+        f1 = lbl_80368C88;
+        M2C_FIELD(p, f32 *, 0x28) = f2;
+        f0 = lbl_80368C8C;
+        M2C_FIELD(p, f32 *, 0x34) = f2;
+        M2C_FIELD(p, f32 *, 0x58) = f1;
+        M2C_FIELD(p, f32 *, 0x5C) = f1;
+        M2C_FIELD(p, f32 *, 0x60) = f1;
+        M2C_FIELD(p, f32 *, 0x64) = f1;
+        M2C_FIELD(p, f32 *, 0x68) = f1;
+        M2C_FIELD(p, f32 *, 0x6C) = f1;
+        M2C_FIELD(p, s32 *, 0x1C) = z;
+        M2C_FIELD(p, f32 *, 0x70) = f0;
+    }
 }
 
 #pragma cplusplus on
