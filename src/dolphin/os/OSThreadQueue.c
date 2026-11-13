@@ -369,6 +369,22 @@ s32 OSGetTick(void) {
     return M2C_ERROR(/* unknown instruction: mftb $r3, 0x10c */);
 }
 
+#pragma peephole off
+s64 __OSGetSystemTime(void) {
+    BOOL OSDisableInterrupts(void);
+    BOOL OSRestoreInterrupts(BOOL level);
+    s64 OSGetTime(void);
+    BOOL enabled;
+    s64* timeAdjustAddr;
+    s64 result;
+
+    enabled = OSDisableInterrupts();
+    timeAdjustAddr = (s64*)0x800030D8;
+    result = *timeAdjustAddr + OSGetTime();
+    OSRestoreInterrupts(enabled);
+    return result;
+}
+#pragma peephole on
 void fn_8020B0F8(s32 arg0, void *arg1) {
     extern u16 lbl_8029CEB8[];
     extern u16 lbl_8029CE88[];
