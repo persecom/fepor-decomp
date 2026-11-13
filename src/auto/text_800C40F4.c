@@ -7765,6 +7765,31 @@ void fn_800DAB24(void *arg0, void *arg1, s32 arg2) {
     fn_800C9B6C(arg0, *(u8 **)((u8 *)arg1 + 0x3C) + arg2 * 0xC);
 }
 
+void fn_800DB110(void *arg0) {
+    void fn_800056CC(char *, ...);
+    u8 *fn_800675E0(void);
+    void *fn_800C42D8(s32);
+    void *fn_800D9B10(void *);
+    void fn_8000CAA0(void *, void *);
+    extern char lbl_802711B0[];
+    extern u8 lbl_80367878;
+    extern s32 lbl_803678B8;
+    extern u8 lbl_8028DDF8[];
+    void *tmp;
+    u8 *fog;
+
+    fn_800056CC(lbl_802711B0 + 0x263);
+    lbl_80367878 = 1;
+    fog = fn_800675E0();
+    *fog = 0;
+    tmp = fn_800C42D8(0x90);
+    if (tmp != 0) {
+        tmp = fn_800D9B10(tmp);
+    }
+    lbl_803678B8 = (s32)tmp;
+    fn_8000CAA0(lbl_8028DDF8, arg0);
+}
+
 void *fn_800DB18C(void *arg0, s16 arg1) {
     void fn_800E45EC(void *, s32);
     void fn_800C428C(void *);
