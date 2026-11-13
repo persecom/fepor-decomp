@@ -7957,18 +7957,20 @@ void fn_80071D28(void *unused, void *unit) {
     void fn_8000A248(void);
     void fn_8008BF68(s32, s32, s32);
     extern f32 lbl_803692F0;
-    s32 addr;
+    u8 *addr;
     void *p;
     s16 a;
     s16 b;
     s32 flag;
 
     (void)unused;
-    addr = (s32)unit + (s8)((u8 *)unit)[0x62];
+    addr = (u8 *)unit;
+    addr += *(s8 *)(addr + 0x62);
     p = fn_8000B908(*(u8 *)(addr + 0x40));
     a = *(s16 *)((u8 *)p + 0x30);
 
-    addr = (s32)unit + (s8)((u8 *)unit)[0x62];
+    addr = (u8 *)unit;
+    addr += *(s8 *)(addr + 0x62);
     p = fn_8000B908(*(u8 *)(addr + 0x40));
     b = *(s16 *)((u8 *)p + 0x32);
 
