@@ -12584,7 +12584,6 @@ void fn_800E6DC8(void *arg0) {
 
     u8 *base;
     u8 *current;
-    void *obj;
 
     base = *(u8 **)((u8 *)arg0 + 0x8);
     current = base + *(s32 *)((u8 *)arg0 + 0x4) * 0x1C;
@@ -12592,17 +12591,16 @@ void fn_800E6DC8(void *arg0) {
     while (current > base) {
         current -= 0x1C;
 
-        if (current != 0) {
-            obj = *(void **)(current + 0x14);
-            if (obj != 0) {
-                fn_800C428C(obj);
+        if (current != NULL) {
+            if ((u8 *)current + 0xC != NULL) {
+                if (*(void **)((u8 *)current + 0x14) != NULL) {
+                    fn_800C428C(*(void **)((u8 *)current + 0x14));
+                }
             }
-        }
-
-        if (current != 0) {
-            obj = *(void **)(current + 0x8);
-            if (obj != 0) {
-                fn_800C428C(obj);
+            if (current != NULL) {
+                if (*(void **)((u8 *)current + 8) != NULL) {
+                    fn_800C428C(*(void **)((u8 *)current + 8));
+                }
             }
         }
     }
