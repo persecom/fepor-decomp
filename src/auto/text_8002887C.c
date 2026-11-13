@@ -3738,6 +3738,40 @@ extern "C" void fn_8003284C(void *arg0, void *arg1) {
 }
 
 #pragma cplusplus on
+extern "C" void fn_8003297C(void *arg0, void *arg1) {
+    extern f32 lbl_80368E24;
+    extern f32 lbl_80368E28;
+    extern u32 lbl_802EF4C8[];
+    s32 fn_8002F740(u32);
+    s32 fn_8003CFF0(s32, s32);
+    void fn_80090480(s32, s32);
+    struct Obj {
+        u8 pad[4];
+        virtual void v0(s32 *, s32 *, s32 *) = 0;
+    };
+    s32 x;
+    s32 y;
+    s32 alpha;
+    s32 saved;
+    u8 flag;
+
+    if (M2C_FIELD(arg1, u32 *, 0x40) != 0) {
+        ((Obj *)arg0)->v0(&x, &y, &alpha);
+        fn_8000A258();
+        fn_80009D74((f32)(x + 0x20), (f32)(y + 0x30), lbl_80368E24, lbl_80368E28);
+        fn_80009B8C((u8)alpha);
+        fn_8000A248();
+        saved = lbl_802EF4C8[0];
+        flag = (u8)fn_8003CFF0(saved, fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40)));
+        fn_80090480(fn_8002F740(M2C_FIELD(arg1, u32 *, 0x40)), flag);
+        fn_8000A258();
+        fn_80009B8C(0xFF);
+        fn_8000A248();
+    }
+}
+#pragma cplusplus reset
+
+#pragma cplusplus on
 extern "C" void fn_80032A74(void *arg0, void *arg1) {
     extern f32 lbl_80368E24;
     extern f32 lbl_80368E28;
