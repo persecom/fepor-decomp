@@ -3266,17 +3266,21 @@ extern "C" s32 fn_800CD590(void *arg0) {
     return 0;
 }
 
-void fn_800CD5E4(void *arg0) {
-    void *temp_r3;
-    void **vtable_entry;
-    
-    temp_r3 = *(void **)((char *)arg0 + 4);
-    vtable_entry = (void **)*(void **)((char *)temp_r3 + 0x10);
-    temp_r3 = vtable_entry[0x10 / sizeof(void *)];
-    ((void (*)(void *, void *, void *))temp_r3)(temp_r3, (u16 *)lbl_802704F8 + 0x3D0, (u16 *)lbl_802704F8 + 0x3D7);
-}
-
 #pragma cplusplus on
+extern "C" void fn_800CD5E4(void *arg0) {
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0();
+        virtual void v1();
+        virtual void *v2(const char *, const char *);
+        virtual void *v3(const char *, const char *);
+    };
+    void fn_801517C8(void);
+
+    if (((Obj *)M2C_FIELD(arg0, void **, 4))->v2((char *)lbl_802704F8 + 0x3D0, (char *)lbl_802704F8 + 0x3D7) != NULL) {
+        fn_801517C8();
+    }
+}
 extern "C" s32 fn_800CD630(void *arg0) {
     struct Obj {
         u8 pad[0x10];
