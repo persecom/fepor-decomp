@@ -73,13 +73,28 @@ typedef struct {
 } Actor;
 
 
-void fn_8001EEEC(Actor* actor) {
-    if (actor == NULL || actor->field_0x0 == 0) {
-        return;
+void fn_8001EEEC(s8 *p)
+{
+    for (;;) {
+        switch (*p) {
+        case 0:
+            *p = 0x10;
+            return;
+        case 0x34:
+            *p = 1;
+            break;
+        case 0x38:
+            *p = 8;
+            break;
+        case 0x36:
+            *p = 2;
+            break;
+        case 0x32:
+            *p = 4;
+            break;
+        }
+        p += 1;
     }
-    actor->field_0x4 = 0;
-    actor->field_0x34 = 5;
-    actor->field_0x38 = 1;
 }
 
 void fn_8001EF7C(void) {
@@ -3175,6 +3190,33 @@ void fn_80026054(s32 arg0) {
     if ((s8)lbl_80330EAC[0x488] == 0) {
         fn_800BEAC0(arg0, 0, lbl_802EF4C8[0xF], lbl_802EF4C8[0x10]);
     }
+}
+
+s32 fn_8002609C(s32 arg0)
+{
+    void fn_801EDA48(s32, s32);
+    void fn_801EDA88(s32, s32);
+    extern u8 lbl_80330EAC[];
+    u8 *chosen;
+    u8 *second;
+
+    chosen = NULL;
+    if (*(s32 *)(lbl_80330EAC + 0x1A0) & 0x40000) {
+        chosen = lbl_80330EAC;
+    }
+    second = lbl_80330EAC + 0x2E0;
+    if (*(s32 *)(second + 0x1A0) & 0x40000) {
+        chosen = second;
+    }
+    if (chosen == NULL) {
+        return 0;
+    }
+    if (*(s32 *)(lbl_80330EAC + 0xCAC) & 0x10000000) {
+        fn_801EDA48(*(s32 *)(chosen + 0x280), arg0);
+    } else {
+        fn_801EDA88(*(s32 *)(chosen + 0x280), arg0);
+    }
+    return 1;
 }
 
 void fn_80026130(void) {
