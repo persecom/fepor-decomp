@@ -2614,23 +2614,24 @@ void fn_8002F788(s32 arg0) {
     fn_8002EB54(&lbl_802EFDAC, arg0);
 }
 
-s32 *fn_8002FA54(void) {
-    M2C_UNK fn_8002BD44(s32, M2C_UNK);
-    M2C_UNK fn_8002F658(M2C_UNK);
-    u32 fn_8002F740(u32);
-    s32 *fn_8014CB14(M2C_UNK *, s32, M2C_UNK *);
-    extern s32 lbl_802EF4C8;
-    extern s32 lbl_802EF4E0;
-    extern M2C_UNK lbl_80330708;
-    s32 *var_r3;
+void fn_8002FA54(void) {
+    void fn_8002BD44(void *, s32);
+    void fn_8002F658(void *, s32);
+    s32 fn_8002F740(void);
+    void fn_8014CB14(void *, s32);
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_802EF4E0[];
+    extern u8 lbl_80330708[];
+    s32 *p;
+    s32 tmp;
 
-    fn_8002BD44(lbl_802EF4C8, 0);
-    var_r3 = &lbl_802EF4E0;
-    if ((s32) lbl_802EF4E0 != 0) {
-        fn_8002F658(0);
-        var_r3 = fn_8014CB14(&lbl_80330708, fn_8002F740(0), &lbl_80330708);
+    fn_8002BD44(*(void **)lbl_802EF4C8, 0);
+    p = (s32 *)lbl_802EF4E0;
+    if (*p != 0) {
+        fn_8002F658(p, 0);
+        tmp = fn_8002F740();
+        fn_8014CB14(lbl_80330708, tmp);
     }
-    return var_r3;
 }
 
 void fn_8002FAB0(void *arg0) {
