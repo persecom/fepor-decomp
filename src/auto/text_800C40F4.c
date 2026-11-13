@@ -379,6 +379,35 @@ void *fn_800C412C(void *arg0, s16 arg1)
     return obj;
 }
 
+#pragma use_lmw_stmw on
+void fn_800C418C(void) {
+    void fn_800056CC(const char *, ...);
+    extern void *lbl_80367870;
+    extern char lbl_802700D8[];
+
+    char *msg;
+    u8 *b;
+    u8 *a;
+    u8 *base;
+
+    base = *(u8 **)((u8 *)lbl_80367870 + 0x18);
+    a = base;
+    b = base;
+    msg = lbl_802700D8;
+    for (; a != NULL; a = *(u8 **)(a + 0xC)) {
+        for (b = base; b != NULL; b = *(u8 **)(b + 0xC)) {
+            if (a != b) {
+                if (b == a + *(s32 *)(a + 0x10)) {
+                    fn_800056CC(msg);
+                }
+                if (a == b + *(s32 *)(b + 0x10)) {
+                    fn_800056CC(msg + 0xC);
+                }
+            }
+        }
+    }
+}
+#pragma use_lmw_stmw reset
 s32 fn_800C4240(s32 arg0) {
     s32 fn_800C5A48(s32, s32);
     extern s32 lbl_80367870;
@@ -2053,6 +2082,29 @@ void *fn_800C9A60(void *arg0, s16 arg1) {
     return arg0;
 }
 
+void *fn_800C9ABC(void *arg0, char *arg1, void *arg2) {
+    struct Tag { u8 b; };
+    void fn_800CA728(void *, char *, char *, void *, struct Tag);
+    void fn_8022CF78(void);
+    void fn_80232058(void *, const char *, ...);
+    u32 strlen(const char *);
+    extern char __files[];
+    extern char lbl_80270350[];
+    struct Tag copy;
+    struct Tag home;
+    u32 len;
+
+    *(u32 *)((u8 *)arg0 + 4) = 0;
+    len = strlen(arg1);
+    if (len > (u32)-2) {
+        fn_80232058(__files + 0xA0, lbl_80270350 + 0x114);
+        fn_8022CF78();
+    }
+    home = copy;
+    fn_800CA728(arg0, arg1, arg1 + len, arg2, home);
+    return arg0;
+}
+
 fn_800C9B6C(arg0, arg1)
 void *arg0;
 void *arg1;
@@ -2678,6 +2730,41 @@ void fn_800CB070(void) {
 void fn_800CB27C(void** arg0) {
     if (arg0 != NULL) {
         (*(void (**)(void **))lbl_802B14E4)(arg0);
+    }
+}
+
+void fn_800CB484(void *arg0, void *arg1)
+{
+    void fn_800C9ABC(void *, char *, void *);
+    void fn_800CB65C(void *, void *, void *, void *, void *);
+    void *fn_800C9A60(void *, s16);
+    extern void *lbl_8036787C;
+    extern u8 lbl_80367878;
+    extern char lbl_802704F8[];
+
+    String temp;
+    char **ptr;
+    void *scratch10;
+    void *scratchC;
+    void *scratch8;
+
+    if (lbl_80367878 != 0) {
+        fn_800C9ABC(arg0, (char *)lbl_8036787C + 0x2D0, &scratch10);
+    } else {
+        ptr = *(char ***)((u8 *)lbl_80330EAC + 0x74C);
+        if (ptr == NULL) {
+            fn_800C9ABC(arg0, lbl_802704F8 + 0x1B0, &scratchC);
+        } else {
+            fn_800C9ABC(&temp, *ptr, &scratch8);
+            fn_800CB65C(
+                arg0,
+                arg1,
+                &temp,
+                (u8 *)arg1 + 0x38,
+                (u8 *)arg1 + 0x5C
+            );
+            fn_800C9A60(&temp, -1);
+        }
     }
 }
 
@@ -19329,6 +19416,46 @@ u8 fn_800FB6FC(void) {
 
     obj = *(u8 **)lbl_802EF4C8;
     entry = (u8 *)fn_8000D354(*(void **)(obj + 0x238));
+    lbl_803678F8 = entry;
+    off = obj[0x250] * 0x1C;
+    lbl_803678F0 = 0;
+    lbl_803678F4 = 0;
+    entry += off;
+    lbl_803678F8 = entry;
+
+    val = *(s32 *)(entry + 8);
+    if (val != 0) {
+        *(s16 *)(lbl_8032B3C0 + 4) = (s16)val;
+    }
+
+    key = *(s32 *)entry;
+    flag = *(u8 *)&gap;
+    entry = (u8 *)fn_800FB918(lbl_80273000, lbl_80273000 + 0x1A0, &key, &flag);
+    (*(void (**)(void *, void *))(entry + 4))(obj, entry);
+
+    return lbl_803678F0;
+}
+
+u8 fn_800FB868(void) {
+    extern u8 lbl_802EF4C8[];
+    extern u8 *lbl_803678F8;
+    extern u8 lbl_803678F0;
+    extern s32 lbl_803678F4;
+    extern u8 lbl_8032B3C0[];
+    extern u8 lbl_80273000[];
+    extern u8 lbl_80272F90[];
+    void *fn_800FB918(void *, void *, s32 *, u8 *);
+
+    u8 *obj;
+    u8 *entry;
+    s32 val;
+    s32 off;
+    u8 flag;
+    s32 key;
+    s32 gap;
+
+    obj = *(u8 **)lbl_802EF4C8;
+    entry = lbl_80272F90;
     lbl_803678F8 = entry;
     off = obj[0x250] * 0x1C;
     lbl_803678F0 = 0;
