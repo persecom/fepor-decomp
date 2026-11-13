@@ -3600,8 +3600,32 @@ void fn_8000C52C(s32 arg0) {
     *temp_r4 = arg0;
 }
 
-void* fn_8000C540(void) {
-    return (void*)0x80267CB0;
+void *fn_8000C540(void) {
+    void fn_8000C60C(void *);
+    extern void **lbl_80367148;
+    extern u8 lbl_802A66D8[];
+    void **p;
+    void *result;
+    u8 *entry;
+    s32 i;
+
+    p = lbl_80367148;
+    result = *p;
+    if (result != NULL) {
+        lbl_80367148 = p + 1;
+        return result;
+    }
+    entry = lbl_802A66D8;
+    for (i = 0x100; i != 0; i--) {
+        if (*(void **)entry != NULL) {
+            if ((entry[0x2C] & 0x10) != 0) {
+                fn_8000C60C(entry);
+                return fn_8000C540();
+            }
+        }
+        entry += 0x70;
+    }
+    return NULL;
 }
 
 void fn_8000C5B8(void *arg0) {
