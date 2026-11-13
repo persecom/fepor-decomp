@@ -164,12 +164,12 @@ u32 fn_800138F4(u32 arg0, u32 arg1) {
 void fn_80013A6C(s32 arg0) {
     extern void *lbl_80367180;
     extern s32 lbl_80367188;
-    void *obj;
+    s32 **slot;
     s32 *cursor;
 
-    obj = lbl_80367180;
-    cursor = *(s32 **)((u8 *)obj + 0x18);
-    *(s32 **)((u8 *)obj + 0x18) = (s32 *)((u8 *)cursor + 4);
+    slot = (s32 **)((u8 *)lbl_80367180 + 0x18);
+    cursor = *slot;
+    *slot = (s32 *)((u8 *)cursor + 4);
     *cursor = arg0;
     lbl_80367188 += 1;
 }
@@ -573,8 +573,10 @@ s32 fn_800142D4(s32 arg0) {
 }
 
 void fn_800142E4(void) {
-    extern u16 lbl_80284098;
-    fn_8000A440(1, (u16*)&lbl_80284098);
+    void fn_8000A440(s32, void *);
+    extern u8 lbl_80284098[];
+
+    fn_8000A440(1, lbl_80284098);
 }
 
 void fn_80014310(void *arg0, s32 arg1, void *arg2) {
