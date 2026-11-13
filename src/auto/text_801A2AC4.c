@@ -672,6 +672,37 @@ void *fn_801A46BC(u8 *arg0) {
     return NULL;
 }
 
+void fn_801A4714(void *arg0)
+{
+    extern void fn_801A96FC(void *);
+    extern void fn_801A601C(void *, void *, void *, s32);
+    extern void fn_80034068(void *, s32, s32);
+    extern void fn_801A8268(void *);
+    extern void fn_801A8010(void *);
+
+    u8 *obj;
+
+    obj = (u8 *)arg0;
+
+    *(u32 *)(obj + 0xCAC) |= 8;
+
+    fn_801A96FC(obj);
+
+    fn_801A601C(obj, obj, obj + 0x2E0, 0);
+
+    fn_80034068(obj + 0x8A0, 0x54, 0);
+
+    fn_801A8268(obj);
+
+    fn_80034068(obj + 0x8A0, 0x20, 0);
+
+    fn_80034068(obj + 0x8A0, 0x50, 0);
+
+    fn_80034068(obj + 0x8A0, 0x25, 0);
+
+    fn_801A8010(obj);
+}
+
 void fn_801A48A4(s32 arg0) {
     void fn_80034068(s32, s32, s8);
     void fn_800351FC(s32, u8, s32, s32);
