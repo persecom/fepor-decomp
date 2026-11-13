@@ -9659,11 +9659,9 @@ s32 fn_8004AF30(s32 arg0) {
 
 #pragma peephole off
 s32 fn_8004AF74(u8 *arg0, s32 arg1) {
-    s32 v = (arg0 + arg1)[0xc];
-    if (!(v / 64) && (v % 64) < 0x20) {
-        return 1;
-    }
-    return 0;
+ s32 v=(arg0+arg1)[12];
+ if ((u32)(v/64) == 0U) { if (v%64 < 32) return 1; }
+ return 0;
 }
 #pragma peephole on
 s32 fn_8004AFB4(void *arg0, s32 arg1) {
@@ -10794,14 +10792,14 @@ void fn_8004DE78(void) {
 }
 
 void fn_8004DEAC(void) {
-    M2C_UNK fn_8005956C(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, u8, M2C_UNK *, s32, f32);
+    M2C_UNK fn_8005956C(f32, M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, u8, M2C_UNK *, s32);
     M2C_UNK fn_800599D0(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK, s32);
     extern s32 lbl_803672B4;
     extern u8 lbl_803672BD;
     extern M2C_UNK lbl_803672C0;
     extern f32 lbl_80368FCC;
     fn_800599D0(0, 0, 0x260, 0x1C0, lbl_803672B4);
-    fn_8005956C(0, 0, 0x260, 0x1C0, lbl_803672BD, &lbl_803672C0, lbl_803672B4, lbl_80368FCC);
+    fn_8005956C(lbl_80368FCC, 0, 0, 0x260, 0x1C0, lbl_803672BD, &lbl_803672C0, lbl_803672B4);
 }
 
 void fn_8004DF04(void) {
