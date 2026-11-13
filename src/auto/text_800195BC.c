@@ -1307,6 +1307,7 @@ s32 *fn_8001BC18(void *arg0) {
 }
 
 extern u8 lbl_80268330;
+#pragma use_lmw_stmw on
 void fn_8001BC5C(void *arg0, u8 a, u8 b, u8 c, u8 d) {
     s32 fn_800C29E8(u8 *, s32, void *);
     s32 fn_800C3260(u8 *);
@@ -1324,7 +1325,7 @@ void fn_8001BC5C(void *arg0, u8 a, u8 b, u8 c, u8 d) {
     ((u8 *)&sp8)[3] = d;
     ((u8 *)arg0)[5] = (u8)((((u8 *)arg0)[5] & ~0x3F) | (fn_800C29E8(lbl_803206EC, ((u8 *)arg0)[5] & 0x3F, &sp8) & 0x3F));
 }
-
+#pragma use_lmw_stmw reset
 void fn_8001BCF4(void *arg0) {
     s32 fn_800C2EF8(u8 *, s32, u8 *);
     extern u8 lbl_803206EC[];
