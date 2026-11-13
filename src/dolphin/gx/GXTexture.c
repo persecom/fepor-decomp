@@ -552,13 +552,13 @@ void fn_80222EB4(void) {
 }
 
 s32 fn_80222EFC(s32 arg0) {
-    s32 temp_r0;
-    
-    // Load word from __GXData + 0x4c8, with auto-increment (lwzu)
-    temp_r0 = __GXData[0x132]; // 0x4c8 / 2 = 0x132
-    __GXData[0x132] = (u16)arg0; // Store halfword back
-    
-    return temp_r0;
+    u32 *p;
+    s32 old;
+
+    p = (u32 *)((u8 *)__GXData + 0x4C8);
+    old = *p;
+    *p = (u32)arg0;
+    return old;
 }
 
 s32 fn_80222F10(s32 arg0) {
