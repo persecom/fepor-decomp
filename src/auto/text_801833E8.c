@@ -188,7 +188,7 @@ void fn_80183624(void **arg0) {
     u8 *temp;
     u8 saved;
     s32 mode;
-    void *vt;
+    u8 (**vt)(void **);
 
     table = lbl_80330708;
     mode = 3;
@@ -198,8 +198,8 @@ void fn_80183624(void **arg0) {
     temp = fn_8014C5A8(table, (u8)mode);
     if (temp != NULL) {
         saved = *temp;
-        vt = *arg0;
-        if (saved == ((u8 (*)(void **))*(void **)((u8 *)vt + 0x54))(arg0)) {
+        vt = (u8 (**)(void **))*arg0;
+        if (saved == vt[0x15](arg0)) {
             mode = 6;
             if (lbl_803681F0 == 0x32) {
                 mode = 7;
@@ -11171,18 +11171,38 @@ s32 fn_8019FE54(void) {
     return 1;
 }
 
-void fn_8019FEB8(void *arg0, s32 arg1, s32 arg2) {
-    s32 temp_r3;
-    s32 r7;
+s32 fn_8019FEB8(void) {
+    void *fn_80018ADC(void);
+    void fn_800193CC(void *, f32);
+    extern u32 lbl_80367110;
+    extern u8 lbl_80330E90[];
+    void *p;
+    f32 f;
 
-    temp_r3 = *(s32 *)arg0;
-    if (temp_r3 != 0) {
-        // Copying 0x1EC bytes from arg0+0x158 to arg0+0x15C
-        for (r7 = 0; r7 < 0x1EC; r7 += 4) {
-            *(s32 *)((char *)arg0 + 0x15C + r7) = *(s32 *)((char *)arg0 + 0x158 + r7);
+    if (lbl_80367110 & 1) {
+        if (lbl_80330E90[0] != 0) {
+            p = fn_80018ADC();
+            if (p != NULL) {
+                f = *(f32 *)(lbl_80330E90 + 4);
+                *(f32 *)((u8 *)p + 4) = f;
+                *(f32 *)((u8 *)p + 0x10) = f;
+                f = *(f32 *)(lbl_80330E90 + 8);
+                *(f32 *)((u8 *)p + 8) = f;
+                *(f32 *)((u8 *)p + 0x14) = f;
+                fn_800193CC(p, *(f32 *)(lbl_80330E90 + 0xC));
+            }
+        }
+    } else {
+        if (lbl_80330E90[0] != 0) {
+            p = fn_80018ADC();
+            if (p != NULL) {
+                *(f32 *)((u8 *)p + 4) = *(f32 *)(lbl_80330E90 + 4);
+                *(f32 *)((u8 *)p + 8) = *(f32 *)(lbl_80330E90 + 8);
+                *(f32 *)((u8 *)p + 0xC) = *(f32 *)(lbl_80330E90 + 0xC);
+            }
         }
     }
-    return;
+    return 1;
 }
 
 s32 fn_8019FF68(void) {
