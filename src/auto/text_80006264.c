@@ -3343,14 +3343,15 @@ void fn_8000BE54(u32 arg0) {
 }
 
 void fn_8000BF00(u32 arg0) {
-    extern u16 lbl_802A66D8[];
+    extern u8 lbl_802A66D8[];
+    void fn_8000C60C(void *);
+    u8 *var_r31;
     s32 var_r30;
-    u16 *var_r31;
 
-    var_r31 = (u16*)((u32)lbl_802A66D8);
+    var_r31 = lbl_802A66D8;
     var_r30 = 0;
     do {
-        if ((u32)*var_r31 == arg0) {
+        if (*(u32 *)var_r31 == arg0) {
             fn_8000C60C(var_r31);
         }
         var_r30 += 1;
