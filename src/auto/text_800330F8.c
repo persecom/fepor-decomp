@@ -1196,7 +1196,33 @@ void fn_800351FC(void *arg0, u8 arg1, void *arg2, void *arg3) {
     }
 }
 
-#pragma use_lmw_stmw on
+#pragma global_optimizer off
+void fn_80036150(s32 arg0) {
+    u8 fn_8003D13C(s32);
+    void fn_80034068(s32, s32, s8);
+    s32 fn_800386B0(s32);
+    u8 fn_8003D094(s32, u8);
+    void fn_8014C5F4(void *, u8);
+    void fn_800351FC(s32, u8, s32, s32);
+    extern u8 lbl_80330708[];
+    u8 var_r30;
+    void *p;
+
+    if (fn_8003D13C(arg0) != 0) {
+        fn_80034068(arg0 + 0x8A0, 0x25, 0);
+        fn_80034068(arg0 + 0x8A0, 0x27, (s8)fn_800386B0(arg0));
+        p = *(void **)(arg0 + 0x28C);
+        var_r30 = fn_8003D094(arg0, (u8)(*(u16 *)((u8 *)p + 0x10) / 20 + 0xA));
+        if (var_r30 > fn_8003D13C(arg0)) {
+            var_r30 = fn_8003D13C(arg0);
+        }
+        fn_80034068(arg0 + 0x8A0, 0x28, (s8)var_r30);
+        *(u8 *)(arg0 + 0x2C9) = var_r30;
+        fn_8014C5F4(lbl_80330708, var_r30);
+        fn_800351FC(arg0, var_r30, 0, arg0 + 0x8A0);
+    }
+}
+#pragma global_optimizer reset
 void fn_80036248(s32 self) {
     extern u8 lbl_8026A120[];
     extern u8 lbl_80330708[];
@@ -4005,6 +4031,58 @@ s32 fn_8003BA80(void *arg0) {
         return 0;
     }
     return 8;
+}
+
+void fn_8003BD58(void *arg0) {
+    u8 fn_80105BC0(void *, s32);
+    void *fn_80037BBC(void *, s32);
+    void fn_8001D580(void *);
+    void *fn_8000D354(void *);
+    void fn_80094A54(void *, void *);
+    struct Bit7 {
+        u8 flag : 1;
+        u8 rest : 7;
+    };
+
+    s32 i;
+    u32 val;
+    void *cls;
+    void *obj;
+    void *slot;
+
+    if ((u8)fn_80105BC0((u8 *)arg0 + 0x1BC, 8) != 0) {
+        for (i = 0; i < 4; i++) {
+            fn_8001D580(fn_80037BBC(arg0, i));
+        }
+
+        cls = *(void **)((u8 *)arg0 + 0x18C);
+        val = 0;
+        if (*(u32 *)((u8 *)cls + 0x14) != 0) {
+            val = *(u32 *)((u8 *)cls + 0x14);
+        }
+        if (val == 0) {
+            obj = *(void **)((u8 *)cls + 0xC);
+            if (obj != 0) {
+                obj = fn_8000D354(obj);
+            } else {
+                obj = 0;
+            }
+            if (*(u32 *)((u8 *)obj + 0x14) != 0) {
+                obj = *(void **)((u8 *)*(void **)((u8 *)arg0 + 0x18C) + 0xC);
+                if (obj != 0) {
+                    obj = fn_8000D354(obj);
+                } else {
+                    obj = 0;
+                }
+                val = *(u32 *)((u8 *)obj + 0x14);
+            }
+        }
+        if (val != 0) {
+            fn_80094A54(arg0, (void *)val);
+            slot = fn_80037BBC(arg0, 0);
+            ((struct Bit7 *)((u8 *)slot + 5))->flag = 1;
+        }
+    }
 }
 
 s32 fn_8003BE50(s32 arg0)
