@@ -9007,23 +9007,16 @@ void fn_8019B79C(s32 arg0, s32 arg1) {
     }
 }
 
-s32 fn_8019B83C(void* arg0, s32 arg1) {
-    void* fn_8000CAA0(void*, s32, void*);
-    void fn_8019D51C(s32, void*);
+void fn_8019B83C(s32 arg0, s32 arg1) {
+    void *fn_8000CAA0(void *, s32);
+    void fn_8019D51C(void *, s32, void *);
     extern u8 lbl_80296D5C[];
     extern u8 lbl_8027AA38[];
-    void* temp_r31;
-    
-    // First call to fn_8000CAA0
-    temp_r31 = fn_8000CAA0(arg0, arg1, NULL);
-    
-    // Second call to fn_8019D51C  
-    fn_8019D51C(arg1, lbl_8027AA38 + 0x194);
-    
-    // Set field value
-    *(u8*)((u8*)temp_r31 + 0x5c) = 3;
-    
-    return 1;
+    void *temp_r31;
+
+    temp_r31 = fn_8000CAA0(lbl_80296D5C, arg0);
+    fn_8019D51C(temp_r31, arg1, lbl_8027AA38 + 0x194);
+    M2C_FIELD(temp_r31, u8 *, 0x5C) = 3;
 }
 
 void fn_8019B8A0(s32 arg0, s32 arg1) {
