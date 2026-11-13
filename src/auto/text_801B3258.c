@@ -9490,11 +9490,13 @@ extern "C" void fn_801CCE7C(void *arg0) {
 }
 #pragma cplusplus reset
 
-void fn_801CCEA8(void* arg0, int arg1) {
-    short val1 = *(short*)((char*)arg0 + 0x48);
-    short val2 = *(short*)((char*)arg0 + 0x4a);
-    void* vtable_ptr = *(void**)((char*)arg0 + 0x3c);
-    fn_801CD480((int)vtable_ptr, val1, val2);
+void fn_801CCEA8(u8 *arg0) {
+    u8 *fn_801CD480(void *, s16, s16);
+    s16 x;
+    s16 y;
+    x = *(s16 *)(arg0 + 0x48);
+    y = *(s16 *)(arg0 + 0x4a);
+    fn_801CD480(*(void **)(arg0 + 0x3c), x, y);
 }
 
 void *fn_801CCF78(void) {
@@ -13762,18 +13764,17 @@ void fn_801DC150(s32 arg0, s8 arg1, s8 arg2, s32 arg3, s32 arg4, s8 arg5, void *
     *(s8 *)((u8 *)temp_r3 + 0x44) = arg5;
 }
 
-void fn_801DC1C8(void *arg0) {
-    void *temp_r4;
+#pragma global_optimizer off
+void fn_801DC1C8(u8 *arg0) {
+    u8 *base;
     s32 off;
-    s16 *p;
 
-    temp_r4 = *(void **)((char *)arg0 + 0x30);
-    *(s16 *)((char *)temp_r4 + 0x332) = 0xC8;
-    off = *(s32 *)((char *)arg0 + 0x40) * 0x14 + 0x51A;
-    p = (s16 *)((u8 *)temp_r4 + off);
-    *p = (s16)(*p & ~1);
+    base = *(u8 **)(arg0 + 0x30);
+    *(s16 *)(base + 0x332) = 0xC8;
+    off = *(s32 *)(arg0 + 0x40) * 0x14 + 0x51A;
+    *(s16 *)(base + off) = (s16)(*(s16 *)(base + off) & ~1);
 }
-
+#pragma global_optimizer on
 void fn_801DC1F0(void *arg0) {
     void fn_8000C188(void *);
     void fn_801475FC(void *, s32);
