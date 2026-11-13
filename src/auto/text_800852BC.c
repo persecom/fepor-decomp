@@ -1615,9 +1615,8 @@ void fn_800892E8(void *arg0) {
     u8 *obj;
     s32 size;
     void *tmp;
-    f32 f3c;
     f32 f38;
-
+    f32 f3c;
     obj = (u8 *)arg0;
     *(s32 *)(obj + 0x48) = 0;
     size = fn_80222420(0x260, 0x1C0, 4, 0, 0);
@@ -1627,8 +1626,8 @@ void fn_800892E8(void *arg0) {
     fn_802228D8(obj + 0x4C, 0, 0, 0, 0, 0, lbl_80369690, lbl_80369690, lbl_80369690);
     tmp = fn_8000CAF0(lbl_80289998, 6);
     *(void **)((u8 *)tmp + 0x54) = arg0;
-    f38 = lbl_803696A8;
     f3c = lbl_803696AC;
+    f38 = lbl_803696A8;
     *(f32 *)(obj + 0x38) = f38;
     *(f32 *)(obj + 0x3C) = f3c;
     *(u16 *)(obj + 0x34) = 0;
@@ -2828,12 +2827,7 @@ void fn_8008BC94(s32 arg0, s32 arg1, u8 arg2) {
     extern s32 lbl_803674F0;
     extern f64 lbl_803696E8;
     extern f64 lbl_803696F0;
-    struct {
-        u8 buf[0x20];
-        u16 x;
-        u16 y;
-    } sp;
-
+    struct { u8 buf[0x20]; u16 x; u16 y; } sp;
     fn_8006ECCC(lbl_803674F0, sp.buf, 0x14);
     sp.x = fn_80222A80(sp.buf);
     sp.y = fn_80222A90(sp.buf);
@@ -2842,12 +2836,10 @@ void fn_8008BC94(s32 arg0, s32 arg1, u8 arg2) {
     fn_8000A248();
     fn_80007898(2);
     fn_800077D8((f32)arg0, (f32)arg1, (f32)sp.y, (f32)sp.x);
-    if (arg2 != 0) {
-        fn_800076CC();
-        fn_800075D8();
-        fn_80007538();
-        fn_80007884();
-    }
+    if (arg2 != 0) fn_800076CC();
+    fn_800075D8();
+    fn_80007538();
+    fn_80007884();
 }
 
 void fn_8008BD90(s32 arg0, s32 arg1, u8 arg2) {
