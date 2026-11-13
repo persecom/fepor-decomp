@@ -8528,27 +8528,19 @@ void fn_800C0CDC(void *arg0) {
     *wgpipe = vals[1];
 }
 
-void fn_800C0EEC(s32 arg0, s32 arg1) {
-    s32 r5;
-    s32 r6;
-    
-    // Load values from struct at arg0  
-    r5 = *(s32*)((char*)arg0 + 0x28);
-    r6 = *(s32*)((char*)arg0 + 0x2C); 
-    
-    if (r5 >= r6) {
-        return;
-    }
-    
-    r5 = r5 + 1;
-    *(s32*)((char*)arg0 + 0x28) = r5;
-    
-    if (r5 < r6) {
-        return;
-    }
-    
-    // Call a helper function
-    fn_80166D8C();
+s32 fn_80222420(s32, s32, s32, s32, s32);
+void *fn_800C45B8(s32, void *, s32);
+void fn_80222644(void *, void *, s32, s32, s32, s32, s32, s32);
+void fn_802228D8(void *, s32, s32, s32, s32, s32, f32, f32, f32);
+void fn_800C0EEC(u8 *obj) {
+    extern char lbl_8026FDC0[];
+    extern f32 lbl_80369D28;
+    s32 size;
+
+    size = fn_80222420(0x260, 0x1E0, 4, 0, 0);
+    *(void **)(obj + 0x50) = fn_800C45B8(-size, lbl_8026FDC0 + 0x53, 0);
+    fn_80222644(obj + 0x30, *(void **)(obj + 0x50), 0x260, 0x1E0, 4, 0, 0, 0);
+    fn_802228D8(obj + 0x30, 1, 1, 0, 0, 0, lbl_80369D28, lbl_80369D28, lbl_80369D28);
 }
 
 void fn_800C0F94(void) {
