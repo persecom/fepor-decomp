@@ -12967,18 +12967,15 @@ extern "C" void *fn_800E805C(void *arg0, void *arg1, void *arg2) {
         virtual void v1() = 0;
         virtual void *v2(void *, void *) = 0;
     };
-    void *self;
-    void *str1;
-    void *result;
+    void *found;
+    void *p2;
 
-    self = arg0;
-    str1 = arg1;
-    result = fn_800C93EC(arg2);
-    result = ((Obj *)self)->v2(fn_800C93EC(str1), result);
-    if (result != NULL) {
-        fn_800DF664(result);
+    p2 = fn_800C93EC(arg2);
+    found = ((Obj *)arg0)->v2(fn_800C93EC(arg1), p2);
+    if (found != NULL) {
+        fn_800DF664(found);
     }
-    return result;
+    return found;
 }
 #pragma cplusplus reset
 
@@ -13033,31 +13030,27 @@ extern "C" void fn_800E8154(void *arg0) {
     ((Obj *)arg0)->v0();
 }
 #pragma cplusplus reset
-void *fn_800E8488(void *arg0, s32 arg1)
+void *fn_800E8488(void *arg0, s16 arg1)
 {
     extern u8 lbl_8028E200[];
-          extern void fn_800C9A60(void *, s32);
-      extern void fn_800E0140(void *, s32);
-      extern void fn_800C428C(void *);
+    void fn_800C9A60(void *, s32);
+    void fn_800E0140(void *, s32);
+    void fn_800C428C(void *);
+    void *self;
+    s16 n;
 
-    u8 *obj;
-
-    obj = (u8 *)arg0;
-
-    if (obj != 0) {
-        *(void **)(obj + 0x10) = lbl_8028E200;
-
-        fn_800C9A60(obj + 0x30, -1);
-        fn_800C9A60(obj + 0x14, -1);
-
-        fn_800E0140(obj, 0);
-
-        if ((s16)arg1 > 0) {
-            fn_800C428C(obj);
+    n = arg1;
+    self = arg0;
+    if (self != NULL) {
+        *(void **)((u8 *)self + 0x10) = lbl_8028E200;
+        fn_800C9A60((u8 *)self + 0x30, -1);
+        fn_800C9A60((u8 *)self + 0x14, -1);
+        fn_800E0140(self, 0);
+        if (n > 0) {
+            fn_800C428C(self);
         }
     }
-
-    return obj;
+    return self;
 }
 
 void *fn_800E86A4(void *arg0, s16 arg1) {
