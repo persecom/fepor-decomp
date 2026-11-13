@@ -11775,6 +11775,34 @@ s32 fn_801A0400(s32 arg0) {
     return 1;
 }
 
+s32 fn_801A05F4(u8 arg0, u8 arg1) {
+    void fn_8003BE50(void *);
+    void fn_8004E9D8(void *, s32);
+    void fn_80050C90(void *);
+    u8 fn_80105BC0(void *, s32);
+    extern u8 lbl_802B14E4[];
+    void *unit;
+
+    if (arg0 != 0) {
+        unit = lbl_802B14E4 + (arg0 - 1) * 0x280;
+    } else {
+        unit = NULL;
+    }
+    if (unit == NULL || *(u32 *)((u8 *)unit + 0x188) == 0) {
+        return 0;
+    }
+    if (arg1 != 0 && fn_80105BC0((u8 *)unit + 0x1BC, 9) != 0) {
+        return 0;
+    }
+    if (arg1 == 0 && fn_80105BC0((u8 *)unit + 0x1BC, 9) == 0) {
+        return 0;
+    }
+    fn_8003BE50(unit);
+    fn_8004E9D8(unit, 0);
+    fn_80050C90(unit);
+    return 1;
+}
+
 void fn_801A06CC(void) {
     M2C_UNK fn_8003BE50();
     fn_8003BE50();
