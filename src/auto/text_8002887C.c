@@ -3353,6 +3353,24 @@ void *fn_80032D4C(void) {
     return (u8 *)lbl_802695F0 + 0x14F;
 }
 
+void *fn_80032D5C(void) {
+    s32 fn_80019E24(u8);
+    void fn_8001D818(void *, s32);
+    void *fn_8010FF24(void *, u8, u8, s32);
+    extern u8 lbl_802EF4C8[];
+    extern u8 lbl_8032BB58[];
+    extern u8 lbl_80367278;
+    u8 *p;
+    void *temp;
+    s32 val;
+
+    p = lbl_802EF4C8;
+    temp = fn_8010FF24(lbl_8032BB58, p[0xD], p[0xE], 7);
+    val = fn_80019E24(*(u8 *)((u8 *)temp + 4));
+    fn_8001D818(&lbl_80367278, val);
+    return &lbl_80367278;
+}
+
 #pragma cplusplus on
 void fn_80032DB4(void *arg0, void *arg1) {
     M2C_UNK fn_8002FC64(s32, s32, s32);
