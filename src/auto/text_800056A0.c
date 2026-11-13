@@ -151,8 +151,9 @@ void fn_80005C40(void) {
 }
 
 void fn_80005C60(void) {
-    extern s32 lbl_802832FC;
-    fn_8000CAF0(&lbl_802832FC, 3);
+    void fn_8000CAF0(void *, s32);
+    extern u8 lbl_802832FC[];
+    fn_8000CAF0(lbl_802832FC, 3);
 }
 
 void fn_80005D88(void) {
