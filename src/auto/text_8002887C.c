@@ -2495,12 +2495,12 @@ void fn_8002F61C(void *arg0) {
     M2C_FIELD(arg0, s32 *, 4) = (s32) (M2C_FIELD(arg0, s32 *, 4) + 1);
 }
 
-void *fn_8002F62C(void *arg0) {
-    s32 temp_r3 = *(s32 *)((char *)arg0 + 4);
-    if (temp_r3 >= (s32)*((s32 *)arg0)) {
+void *fn_8002F62C(s32 *arg0) {
+    s32 idx = arg0[1];
+    if (idx >= *arg0) {
         return NULL;
     }
-    return (void *)(((char *)arg0) + ((temp_r3 * 0x14) + 8));
+    return (void *)((char *)arg0 + idx * 0x14 + 8);
 }
 
 void *fn_8002F658(s32 *arg0, s32 arg1) {
