@@ -3150,20 +3150,44 @@ s32 fn_801F1108(void) {
     return 0;
 }
 
-void fn_801F1110(void) {
-    // Function has no visible parameters from assembly but might have internal logic
-    int i;
-    
-    for (i = 0; i < 64; i++) {
-        // Just a placeholder loop with matching control flow and structure to match initial instructions
-        if (i >= 32) {
-            // Do nothing special, just keep the loop going
-        }
+#pragma cplusplus on
+extern "C" void fn_801F1110(void *arg0, void *arg1) {
+    struct Obj {
+        u8 pad[4];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4() = 0;
+        virtual void v5() = 0;
+        virtual void v6() = 0;
+        virtual void v7() = 0;
+        virtual void v8() = 0;
+        virtual void v9() = 0;
+        virtual void v10() = 0;
+        virtual void v11() = 0;
+        virtual void v12() = 0;
+        virtual void v13() = 0;
+        virtual void v14() = 0;
+        virtual void v15() = 0;
+        virtual void v16() = 0;
+        virtual void v17() = 0;
+        virtual void v18() = 0;
+        virtual void v19() = 0;
+        virtual s16 v20() = 0;
+    };
+    void *fn_8000B908(u8);
+    void fn_8006F9F4(void *, void *);
+    s32 i;
+    void *p;
+    u8 *a1 = (u8 *)arg1;
+
+    fn_8006F9F4(arg0, arg1);
+    for (i = 0; i < (s8)a1[0x60]; i++) {
+        p = fn_8000B908(a1[0x40 + i]);
+        *(s16 *)((u32)p + 0x32) -= ((Obj *)arg0)->v20();
     }
 }
-
-#pragma peephole off
-#pragma cplusplus on
 extern "C" void fn_801F11A4(void *arg0, void *arg1) {
     void fn_80007698(s32);
     void fn_800076AC(s32, s32, s32, s32);
