@@ -12376,6 +12376,26 @@ void fn_80198F8C(s32 arg0, s32 arg1) {
     fn_800C9B6C(arg0, arg1 + 0x138);
 }
 
+void fn_80198FB0(void *arg0) {
+    u32 fn_800E4C5C(void *, u32, u32, u8);
+    s32 fn_8001B9F4(void *);
+    void fn_80058970(void *, void *);
+    extern u32 lbl_802967E0[];
+    extern u32 lbl_80296810[];
+    s32 sp8;
+    u32 result;
+    void *p;
+    u32 idx;
+
+    idx = *(u32 *)((u8 *)arg0 + 0x124);
+    result = fn_800E4C5C(arg0, lbl_802967E0[idx], lbl_80296810[idx], 1);
+    p = *(void **)((u8 *)arg0 + 0x148);
+    if (p != NULL) {
+        sp8 = fn_8001B9F4(p);
+        fn_80058970((void *)result, &sp8);
+    }
+}
+
 s32 fn_80199028(void *arg0) {
     s32 fn_801518D0(void *, s32);
     void *p = *(void **)((u8 *)arg0 + 0x144);
