@@ -1458,40 +1458,37 @@ void fn_800157DC(void *arg0, void *arg1) {
 }
 
 void fn_800158A0(void *arg0) {
-    extern M2C_UNK lbl_802B14E4;
-    s32 var_ctr;
-    u32 temp_r4;
-    u8 var_r7;
-    void *var_r6;
+    extern u8 lbl_802B14E4[];
+    u8 *unit;
+    u32 temp;
+    s32 k;
+    s32 i;
 
-    M2C_FIELD(arg0, void **, 0) = NULL;
-    var_r7 = 1;
-    M2C_FIELD(arg0, void **, 4) = NULL;
-    var_ctr = 0x9F;
-loop_1:
-    if (var_r7 != 0) {
-        var_r6 = &lbl_802B14E4 + ((var_r7 - 1) * 0x280);
-    } else {
-        var_r6 = NULL;
-    }
-    if (((u8) M2C_FIELD(arg0, u8 *, 8) == (u8) M2C_FIELD(M2C_FIELD(var_r6, void **, 0x190), u8 *, 8)) && ((temp_r4 = M2C_FIELD(var_r6, u32 *, 0x180), ((temp_r4 == 0U) == 0)) || ((u32) M2C_FIELD(var_r6, u32 *, 0x184) != 0U))) {
-        if (temp_r4 == 0U) {
-            M2C_FIELD(arg0, void **, 0) = var_r6;
-        } else if ((u32) M2C_FIELD(var_r6, u32 *, 0x184) == 0U) {
-            M2C_FIELD(arg0, void **, 4) = var_r6;
+    *(void **)arg0 = NULL;
+    i = 1;
+    *(void **)((u8 *)arg0 + 4) = NULL;
+
+    for (k = 0x9F; k != 0; k--) {
+        if ((u8)i != 0) {
+            unit = lbl_802B14E4 + ((u8)i - 1) * 0x280;
+        } else {
+            unit = NULL;
         }
-        if (((void *) M2C_FIELD(arg0, void **, 0) == NULL) || ((void *) M2C_FIELD(arg0, void **, 4) == NULL)) {
-            goto block_13;
+        if (*(u8 *)((u8 *)arg0 + 8) == (*(u8 **)(unit + 0x190))[8]) {
+            temp = *(u32 *)(unit + 0x180);
+            if (temp != 0 || *(u32 *)(unit + 0x184) != 0) {
+                if (temp == 0) {
+                    *(void **)arg0 = unit;
+                } else if (*(u32 *)(unit + 0x184) == 0) {
+                    *(void **)((u8 *)arg0 + 4) = unit;
+                }
+                if (*(void **)arg0 != NULL && *(void **)((u8 *)arg0 + 4) != NULL) {
+                    return;
+                }
+            }
         }
-        return;
+        i += 1;
     }
-block_13:
-    var_r7 += 1;
-    var_ctr -= 1;
-    if (var_ctr == 0) {
-        return;
-    }
-    goto loop_1;
 }
 
 void fn_8001594C(void *arg0, s8 arg1) {
