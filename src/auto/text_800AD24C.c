@@ -8161,22 +8161,18 @@ s32 fn_800C03DC(void *arg0)
 
 s32 fn_800C044C(s32 arg0)
 {
-    extern void *fn_80013B60(s32);
-
+    void *fn_80013B60(void *);
     u8 *entry;
     s32 count;
 
     count = 0;
     entry = (u8 *)fn_80013B60(0);
-
     while (entry != 0) {
         if ((s8)entry[0xC] == arg0) {
             count++;
         }
-
-        entry = (u8 *)fn_80013B60(0);
+        entry = (u8 *)fn_80013B60(entry);
     }
-
     return count;
 }
 
