@@ -755,10 +755,8 @@ u32 fn_8023B788(s32 chan) {
     return status;
 }
 
-void fn_8023B804(s32 arg0, s32 arg1) {
-    s32 r3 = 0xCC006400;
-    s32 offset = (arg0 * 0xC);
-    *(s32*)(r3 + offset) = arg1;
+void fn_8023B804(s32 chan, u32 value) {
+    __SIRegs[chan * 3] = value;
 }
 
 void fn_8023B818(void) {
