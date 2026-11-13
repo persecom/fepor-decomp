@@ -288,10 +288,42 @@ f32 fn_80019C80(s32 unused, s32 idx) {
     return ((f32 *)local)[idx];
 }
 
-void *fn_80019CC0(void *arg0) {
-    void **table = (void**)0x80284258;
-    u32 index = *(u32*)arg0;
-    return table[index];
+s32 fn_80019CC0(char *arg0) {
+    if (arg0 == NULL) {
+        return 0;
+    }
+    if (arg0[1] == 'I' && arg0[2] == 'D' && arg0[3] == '_') {
+        switch (arg0[0]) {
+            case 'P':
+                return 1;
+            case 'J':
+                return 2;
+            case 'I':
+                return 3;
+            case 'F':
+                return 4;
+            case 'E':
+                return 6;
+            case 'A':
+                return 7;
+            case 'S':
+                return 9;
+            case 'R':
+                return 8;
+        }
+    }
+    if (arg0[0] == 'M') {
+        if (arg0[2] == '_') {
+            return 5;
+        }
+        if (arg0[4] == '_') {
+            return 5;
+        }
+        if (arg0[1] == 'Y') {
+            return 5;
+        }
+    }
+    return 0;
 }
 
 s32 fn_80019DA8(u8 arg0) {
@@ -1670,30 +1702,39 @@ void *fn_8001C690(void *arg0, void *arg1) {
     s32 fn_800C30CC(void *, s32);
     s32 fn_800C30DC(void *, s32, s32);
     s32 fn_800C3260(void *);
-    extern u16 lbl_803206EC;
-    u8 temp_r0;
-    u8 temp_r3;
-    u8 temp_r5;
-    u8 r7;
-    s32 r30;
+    extern u8 lbl_803206EC[];
+    typedef struct {
+        u8 pad : 1;
+        u8 flag : 1;
+        u8 rest : 6;
+    } Bit6;
+    Bit6 *dst;
+    u8 src5;
+    s32 word;
+    u8 byte4;
+    s32 mask;
+    s32 temp;
+    s32 pad;
+    s32 flag;
 
-    temp_r0 = *(u8*)((char*)arg1 + 5);
-    r7 = temp_r0 & 0x3F;
-    *(u8*)((char*)arg0 + 5) = (u8) (*(u8*)((char*)arg0 + 5) & ~0x3F);
-    *(s32*)((char*)arg0 + 0) = *(s32*)((char*)arg1 + 0);
-    *(u8*)((char*)arg0 + 4) = (u8) (*(u8*)((char*)arg1 + 4));
-    temp_r3 = (u8) ((*(u8*)((char*)arg0 + 5) & ~0x80) | ((((temp_r0 >> 7U) & 1) << 7) & 0x80));
-    *(u8*)((char*)arg0 + 5) = temp_r3;
-    temp_r5 = (u8) ((*(u8*)((char*)arg0 + 5) & ~0x40) | ((((temp_r0 >> 6U) & 1) << 6) & 0x40));
-    *(u8*)((char*)arg0 + 5) = temp_r5;
-    if (r7 != 0) {
-        r30 = fn_800C30CC(&lbl_803206EC, r7);
-        if (!((*(u8*)((char*)arg0 + 5)) & 0x3F)) {
-            temp_r3 = (u8) ((*(u8*)((char*)arg0 + 5) & ~0x3F) | (fn_800C3260(&lbl_803206EC) & 0x3F));
-            *(u8*)((char*)arg0 + 5) = temp_r3;
+    dst = (Bit6 *)((u8 *)arg0 + 5);
+    word = *(s32 *)arg1;
+    src5 = *((u8 *)arg1 + 5);
+    mask = src5 & 0x3F;
+    dst->rest = 0;
+    pad = (src5 >> 7) & 1;
+    flag = (src5 >> 6) & 1;
+    byte4 = *((u8 *)arg1 + 4);
+    *(s32 *)arg0 = word;
+    *((u8 *)arg0 + 4) = byte4;
+    dst->pad = pad;
+    dst->flag = flag;
+    if (mask != 0) {
+        temp = fn_800C30CC(lbl_803206EC, mask);
+        if (dst->rest == 0) {
+            dst->rest = fn_800C3260(lbl_803206EC);
         }
-        temp_r3 = (u8) ((*(u8*)((char*)arg0 + 5) & ~0x3F) | (fn_800C30DC(&lbl_803206EC, (*(u8*)((char*)arg0 + 5)) & 0x3F, r30) & 0x3F));
-        *(u8*)((char*)arg0 + 5) = temp_r3;
+        dst->rest = fn_800C30DC(lbl_803206EC, dst->rest, temp);
     }
     return arg0;
 }
@@ -2245,6 +2286,54 @@ s32 fn_8001D5F4(void *arg0, u8 arg1) {
         bf->flag = 0;
         if (bf->rest != 0) {
             fn_800C3220(lbl_803206EC, bf->rest);
+            bf->rest = 0;
+        }
+        return 1;
+    }
+    return 0;
+}
+
+s32 fn_8001D684(void *arg0) {
+    void fn_800C3220(void *, s32);
+    extern u8 lbl_80367220;
+    extern s32 lbl_80367228;
+    extern s32 lbl_8036722C;
+    extern u8 lbl_803206EC[];
+    typedef struct {
+        u8 pad : 1;
+        u8 flag : 1;
+        u8 rest : 6;
+    } Bit6;
+    unsigned long long *p;
+    Bit6 *bf;
+    s32 mask;
+
+    if ((s8)lbl_80367220 == 0) {
+        lbl_8036722C = 0;
+        lbl_80367228 = 0;
+        lbl_80367220 = 1;
+    }
+
+    if (*(void **)arg0 != 0) {
+        p = (unsigned long long *)((u8 *)*(void **)arg0 + 0x38);
+    } else {
+        p = (unsigned long long *)&lbl_80367228;
+    }
+
+    if ((*p & 0x10000000000ULL) != 0) {
+        return 0;
+    }
+
+    *((u8 *)arg0 + 4) = *((u8 *)arg0 + 4) - 1;
+    if (*((u8 *)arg0 + 4) == 0) {
+        *(void **)arg0 = 0;
+        *((u8 *)arg0 + 4) = 0;
+        bf = (Bit6 *)((u8 *)arg0 + 5);
+        bf->pad = 0;
+        bf->flag = 0;
+        mask = *((u8 *)arg0 + 5) & 0x3F;
+        if (mask != 0) {
+            fn_800C3220(lbl_803206EC, mask);
             bf->rest = 0;
         }
         return 1;
