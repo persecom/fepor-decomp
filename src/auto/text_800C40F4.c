@@ -11217,31 +11217,36 @@ void fn_800E43E8(void) {
 
 }
 
-void fn_800E43EC(void *arg0)
-{
-    u8 *obj;
-    u8 *target;
-    u32 values[2];
-    void **vtable;
-    void (*callback)(void *, void *);
-
-    obj = (u8 *)arg0;
-    target = *(u8 **)(obj + 0x54);
-
+#pragma cplusplus on
+extern "C" void fn_800E43EC(void *arg0) {
+    struct Vec2 {
+        s32 x;
+        s32 y;
+        Vec2() {}
+        Vec2(const Vec2 &v) : x(v.x), y(v.y) {}
+    };
+    struct Obj {
+        u8 pad[0x40];
+        virtual Vec2 v0() = 0;
+        virtual Vec2 v1() = 0;
+        virtual Vec2 v2() = 0;
+        virtual Vec2 v3() = 0;
+        virtual Vec2 v4() = 0;
+        virtual Vec2 v5() = 0;
+        virtual Vec2 v6() = 0;
+        virtual Vec2 v7() = 0;
+        virtual Vec2 v8() = 0;
+        virtual Vec2 v9() = 0;
+        virtual Vec2 v10() = 0;
+    };
+    void *target = *(void **)((u8 *)arg0 + 0x54);
     if (target != 0) {
-        vtable = *(void ***)(target + 0x40);
-        callback = (void (*)(void *, void *))vtable[0x30 / 4];
-
-        callback(values, target);
-
-        *(u32 *)(obj + 0x48) =
-            *(u32 *)(obj + 0x58) + values[0];
-
-        *(u32 *)(obj + 0x4C) =
-            *(u32 *)(obj + 0x5C) + values[1];
+        Vec2 v = ((Obj *)target)->v10();
+        *(s32 *)((u8 *)arg0 + 0x48) = *(s32 *)((u8 *)arg0 + 0x58) + v.x;
+        *(s32 *)((u8 *)arg0 + 0x4C) = *(s32 *)((u8 *)arg0 + 0x5C) + v.y;
     }
 }
-
+#pragma cplusplus reset
 void fn_800E4550(void *arg0, void *arg1)
 {
     extern void *fn_800C42D8(s32);
