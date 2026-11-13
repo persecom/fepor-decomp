@@ -8547,7 +8547,34 @@ void *fn_801CA3C8(void *arg0,s32 arg1,s32 arg2,s32 arg3) {
     return self;
 }
 
-void *fn_801CA77C(void *p,s16 n){extern u8 lbl_80298428[];void fn_800C9A60(void*,s32),fn_801CBFD0(void*,s32),fn_800DF724(void*,s32),fn_800C428C(void*); if(p){*(u8**)((u8*)p+0x40)=lbl_80298428;fn_800C9A60((u8*)p+0x60,-1);fn_800C9A60((u8*)p+0x54,-1);if((u8*)p+0x48 && (u8*)p+0x48)fn_801CBFD0((u8*)p+0x48,0);fn_800DF724(p,0);if(n>0)fn_800C428C(p);}return p;}
+void *fn_801CA77C(void *p, s16 n) {
+    extern u8 lbl_80298428[];
+    void fn_800C9A60(void *, s32);
+    void fn_801CBFD0(void *, s32);
+    void fn_800DF724(void *, s32);
+    void fn_800C428C(void *);
+    struct T {
+        u8 pad[0x48];
+        u8 sub;
+    } *t;
+
+    if (p != NULL) {
+        t = (struct T *)p;
+        *(u8 **)((u8 *)p + 0x40) = lbl_80298428;
+        fn_800C9A60((u8 *)p + 0x60, -1);
+        fn_800C9A60((u8 *)p + 0x54, -1);
+        if (&t->sub != NULL) {
+            if (&t->sub != NULL) {
+                fn_801CBFD0(&t->sub, 0);
+            }
+        }
+        fn_800DF724(p, 0);
+        if (n > 0) {
+            fn_800C428C(p);
+        }
+    }
+    return p;
+}
 
 #pragma use_lmw_stmw on
 #pragma global_optimizer off
@@ -12522,28 +12549,54 @@ void fn_801D3860(s32 arg0, s32 arg1, s32 arg2) {
     lbl_80331D00[arg0] = ((arg1 & 0xFFFF) << 0xA) | (arg2 & 0x3FF);
 }
 
-void fn_801D3A4C(s16 *a) {
+void fn_801D3A4C(u8 *arg0) {
+    s16 x;
     s16 four;
+    s16 y;
     s16 eight;
+    s16 a;
     s16 zero;
+    s16 b;
     s16 w;
     s16 h;
+    s16 v12;
+    s16 v16;
+    s16 v14;
+    s16 v18;
+    s16 t;
 
+    x = *(s16 *)(arg0 + 0xC);
     four = 4;
+    y = *(s16 *)(arg0 + 0x10);
     eight = 8;
+    a = *(s16 *)(arg0 + 0xA);
     zero = 0;
-    w = (s16)(a[8] - a[6]);
-    h = (s16)(a[7] - a[5]);
-    a[9] = four;
-    a[10] = eight;
-    a[11] = h - 4;
-    a[12] = w - 8;
-    a[0x2F] = (s16)((a[11] - a[9]) >> 1);
-    a[0x30] = zero;
-    a[0x31] = zero;
-    a[0x43] = (s16)((a[11] - a[9]) >> 1);
-    a[0x44] = a[12] - a[10];
-    a[0x45] = zero;
+    b = *(s16 *)(arg0 + 0xE);
+    w = (s16)(y - x);
+    *(s16 *)(arg0 + 0x12) = four;
+    h = (s16)(b - a);
+    *(s16 *)(arg0 + 0x14) = eight;
+    h = h - 4;
+    w = w - 8;
+    *(s16 *)(arg0 + 0x16) = h;
+    *(s16 *)(arg0 + 0x18) = w;
+
+    v12 = *(s16 *)(arg0 + 0x12);
+    v16 = *(s16 *)(arg0 + 0x16);
+    t = (s16)(v16 - v12);
+    *(s16 *)(arg0 + 0x5E) = t >> 1;
+    *(s16 *)(arg0 + 0x60) = zero;
+    *(s16 *)(arg0 + 0x62) = zero;
+
+    v12 = *(s16 *)(arg0 + 0x12);
+    v16 = *(s16 *)(arg0 + 0x16);
+    v14 = *(s16 *)(arg0 + 0x14);
+    t = (s16)(v16 - v12);
+    v18 = *(s16 *)(arg0 + 0x18);
+    t = t >> 1;
+    *(s16 *)(arg0 + 0x86) = t;
+    *(s16 *)(arg0 + 0x88) = v18 - v14;
+    *(s16 *)(arg0 + 0x8A) = zero;
 }
 
 void fn_801D3AE0(s32 arg0) {
