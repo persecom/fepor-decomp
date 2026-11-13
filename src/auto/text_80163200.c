@@ -12808,20 +12808,22 @@ s16 fn_8017D52C(struct { u8 pad[0x40]; s32 f40; } *arg0, s16 arg1) {
 }
 
 s16 fn_8017D604(s32 arg0, s16 arg1) {
-    f32 fn_80037818(u8);
-    u8 fn_80105BC0(s32, M2C_UNK);
+    f32 fn_80037818(s32, u8);
+    u8 fn_80105BC0(s32, s32);
     extern f32 lbl_8036ABD8;
     s16 var_r31;
+    s32 temp_r30;
 
+    temp_r30 = arg0;
     if (arg1 == 0) {
         return 0;
     }
-    var_r31 = (s16) (lbl_8036ABD8 + fn_80037818((u8) arg1));
-    if (fn_80105BC0(arg0 + 0x1BC, 0x4B) != 0) {
-        var_r31 = (s16) ((var_r31 * 0xA) / 7);
+    var_r31 = (s16)(lbl_8036ABD8 + fn_80037818(temp_r30, (u8)arg1));
+    if (fn_80105BC0(temp_r30 + 0x1BC, 0x4B) != 0) {
+        var_r31 = (s16)((var_r31 * 10) / 7);
     }
-    if (fn_80105BC0(arg0 + 0x1BC, 0xB) != 0) {
-        var_r31 = (s16) ((s32) (((u32) var_r31 >> 0x1FU) + var_r31) >> 1);
+    if (fn_80105BC0(temp_r30 + 0x1BC, 0xB) != 0) {
+        var_r31 = (s16)((s32)(((u32)var_r31 >> 31) + var_r31) >> 1);
     }
     if (var_r31 < 1) {
         var_r31 = 1;
