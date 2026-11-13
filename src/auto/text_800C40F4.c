@@ -2075,11 +2075,13 @@ String *fn_800C99A0(String *arg0, const String *arg1, u32 pos, u32 n) {
     void *memcpy(void *, const void *, u32);
     extern char __files[];
     extern char lbl_80270350[];
+    u32 lim;
     u32 size;
     u32 len;
     u32 rest;
 
-    if (pos > arg1->size) {
+    lim = arg1->size;
+    if (pos > lim) {
         fn_80232058(__files + 0xA0, lbl_80270350 + 0xEE);
         fn_8022CF78();
     }
@@ -19605,6 +19607,47 @@ u8 fn_800FB6FC(void) {
     return lbl_803678F0;
 }
 
+u8 fn_800FB7A8(void) {
+    extern u8 lbl_802EF4C8[];
+    extern u8 *lbl_803678F8;
+    extern u8 lbl_803678F0;
+    extern s32 lbl_803678F4;
+    extern u8 lbl_8032B3C0[];
+    extern u8 lbl_80273000[];
+    extern u8 lbl_80272FC8[];
+    void *fn_800FB918(void *, void *, s32 *, u8 *);
+
+    u8 *obj;
+    u8 *entry;
+    s32 val;
+    s32 off;
+    u8 flag;
+    s32 key;
+    s32 gap;
+
+    obj = *(u8 **)lbl_802EF4C8;
+    entry = lbl_80272FC8;
+    lbl_803678F8 = entry;
+    off = obj[0x250] * 0x1C;
+    lbl_803678F4 = 1;
+    lbl_803678F0 = 0;
+    entry += off;
+    lbl_803678F8 = entry;
+    obj[0x260] = 0x10;
+
+    val = *(s32 *)(entry + 8);
+    if (val != 0) {
+        *(s16 *)(lbl_8032B3C0 + 4) = (s16)val;
+    }
+
+    key = *(s32 *)entry;
+    flag = *(u8 *)&gap;
+    entry = (u8 *)fn_800FB918(lbl_80273000, lbl_80273000 + 0x1A0, &key, &flag);
+    (*(void (**)(void *, void *))(entry + 4))(obj, entry);
+
+    return lbl_803678F0;
+}
+
 u8 fn_800FB868(void) {
     extern u8 lbl_802EF4C8[];
     extern u8 *lbl_803678F8;
@@ -19694,9 +19737,50 @@ void fn_800FB9C0(s8 arg0, s32 arg1, s8 arg2, s8 arg3, s8 arg4, s8 arg5, s8 arg6)
     lbl_8032B3C0[0x21C] = 1;
 }
 
-void fn_800FB9F8(void) {
-    /* This is a placeholder for the actual function implementation */
-    return;
+s32 fn_800FB9F8(void *arg0) {
+    void fn_80037814(void);
+    void fn_8010C504(void *);
+    u8 fn_80017318(void *);
+    void fn_8018256C(void *);
+    void fn_80182B7C(void *);
+    void fn_80182AC4(void *);
+    void fn_80182A0C(void *);
+    void fn_80182704(void *);
+    void fn_80182670(void *);
+    void fn_80182574(void *);
+    void fn_8018286C(void *);
+    u8 v;
+
+    fn_80037814();
+    fn_8010C504(arg0);
+    v = fn_80017318((u8 *)arg0 + 0x236);
+    switch (v) {
+    case 1:
+        fn_80182B7C(arg0);
+        break;
+    case 2:
+        fn_80182AC4(arg0);
+        break;
+    case 3:
+        fn_80182A0C(arg0);
+        break;
+    case 4:
+        fn_80182704(arg0);
+        break;
+    case 5:
+        fn_80182670(arg0);
+        break;
+    case 6:
+        fn_80182574(arg0);
+        break;
+    case 7:
+        fn_8018286C(arg0);
+        break;
+    case 0:
+        fn_8018256C(arg0);
+        break;
+    }
+    return 1;
 }
 
 s32 fn_800FBAB8(void *arg0) {
