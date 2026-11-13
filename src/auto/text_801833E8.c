@@ -4322,34 +4322,31 @@ extern "C" void fn_801905FC(void *arg0, s32 **arg1) {
 #pragma cplusplus reset
 
 void *fn_80190818(void *arg0, s16 arg1) {
-    extern void *lbl_80296228;
-    extern void *lbl_80292230;
-    extern void *lbl_8028FDB0;
-    void fn_800616A0(void);
-    void fn_8005C7E8(void);
+    void fn_800616A0(void *);
+    void fn_8005C7E8(void *);
     void fn_800C428C(void *);
+    extern u8 lbl_80296228[];
+    extern u8 lbl_80292230[];
+    extern u8 lbl_8028FDB0[];
 
     if (arg0 != NULL) {
         *(void **)arg0 = lbl_80296228;
-        if (*(u32 *)((char *)arg0 + 0x40) != 0U) {
-            fn_800616A0();
+        if (*(void **)((u8 *)arg0 + 0x40) != NULL) {
+            fn_800616A0(*(void **)((u8 *)arg0 + 0x40));
         }
-        if (*(u32 *)((char *)arg0 + 0x54) != 0U) {
-            fn_8005C7E8();
+        if (*(void **)((u8 *)arg0 + 0x54) != NULL) {
+            fn_8005C7E8(*(void **)((u8 *)arg0 + 0x54));
         }
-
         if (arg0 != NULL) {
             *(void **)arg0 = lbl_80292230;
             if (arg0 != NULL) {
                 *(void **)arg0 = lbl_8028FDB0;
             }
         }
-
         if (arg1 > 0) {
             fn_800C428C(arg0);
         }
     }
-
     return arg0;
 }
 
@@ -9127,18 +9124,20 @@ void fn_8019B704(s32 arg0, s32 arg1) {
     extern u8 lbl_80296D5C[];
     extern u8 lbl_8027AA38[];
     void *temp_r30;
-    void *temp_r3;
     void *temp_r31;
 
     temp_r31 = fn_8000CAA0(lbl_80296D5C, arg0);
     fn_8019D51C(temp_r31, arg1, lbl_8027AA38 + 0x17A);
-    M2C_FIELD(temp_r31, u8 *, 0x5C) = 0;
-    temp_r3 = *(void **)(*(void **)((u8 *)temp_r31 + 0x34));
-    if (temp_r3 != NULL) {
-        temp_r30 = *(void **)((u8 *)temp_r3 + 0x280);
-        if (temp_r30 != NULL) {
-            fn_8004FC70(temp_r30, 8);
-            fn_8004FC70(temp_r30, 9);
+    temp_r30 = 0;
+    M2C_FIELD(temp_r31, u8 *, 0x5C) = (u8)(s32)temp_r30;
+    {
+        void *t = *(void **)(*(void **)((u8 *)temp_r31 + 0x34));
+        if (t != NULL) {
+            temp_r30 = *(void **)((u8 *)t + 0x280);
+            if (temp_r30 != NULL) {
+                fn_8004FC70(temp_r30, 8);
+                fn_8004FC70(temp_r30, 9);
+            }
         }
     }
 }
