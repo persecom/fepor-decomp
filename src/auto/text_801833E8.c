@@ -1980,7 +1980,7 @@ void fn_80188EF4(void *arg0) {
     void *self;
 
     self = arg0;
-    *(f32 *)((char *)self + 0x3C) = lbl_8036ACF8 + *(f32 *)((char *)self + 0x3C);
+    *(f32 *)((char *)self + 0x3C) = *(f32 *)((char *)self + 0x3C) + lbl_8036ACF8;
     if (*(f32 *)((char *)self + 0x3C) >= *(f32 *)((char *)self + 0x38)) {
         *(f32 *)((char *)self + 0x3C) = *(f32 *)((char *)self + 0x38);
         fn_8000C188();
@@ -9628,38 +9628,42 @@ void fn_8019BE54(void *arg0, void *arg1)
     );
 }
 
-void fn_8019BEA4(s32 arg0) {
-    M2C_UNK fn_8002F658(s32 *, s32);
-    s32 fn_8002F740();
-    M2C_UNK fn_80053658(void *, M2C_UNK, s32);
-    M2C_UNK fn_80053680(s32);
-    void *fn_80053C30(s32, s32);
-    extern M2C_UNK fn_8019BF5C;
-    extern s32 lbl_802EF4E0;
-    s32 temp_r29;
-    s32 var_r30;
-    void *temp_r3;
-    void *temp_r3_2;
+#pragma global_optimizer off
+void fn_8019BEA4(void *arg0) {
+    void fn_8002F658(s32 *, s32);
+    void *fn_8002F740(void);
+    void fn_80053658(void *, s32, void *);
+    void fn_80053680(void *, void *);
+    void *fn_80053C30(u8 *, void *);
+    extern void fn_8019BF5C(void);
+    extern s32 lbl_802EF4E0[];
+    s32 *table;
+    s32 i;
+    void *item;
+    void *obj;
 
-    var_r30 = 0;
-loop_4:
-    if (var_r30 < (s32) lbl_802EF4E0) {
-        fn_8002F658(&lbl_802EF4E0, var_r30);
-        temp_r29 = fn_8002F740();
-        temp_r3 = fn_80053C30(arg0 + 0x41, arg0);
-        if (temp_r3 != NULL) {
-            fn_80053680(temp_r29);
-            M2C_FIELD(M2C_FIELD(temp_r3, void **, 0x30), M2C_UNK **, 0x40) = &fn_8019BF5C;
-            fn_80053658(temp_r3, 0, arg0);
-            fn_80053658(temp_r3, 1, temp_r29);
-            temp_r3_2 = M2C_FIELD(temp_r3, void **, 0x30);
-            M2C_FIELD(temp_r3_2, s32 *, 8) = (s32) (M2C_FIELD(temp_r3_2, s32 *, 8) | 0x400);
-        }
-        var_r30 += 1;
-        goto loop_4;
+    table = lbl_802EF4E0;
+    i = 0;
+    goto check;
+loop:
+    fn_8002F658(table, i);
+    item = fn_8002F740();
+    obj = fn_80053C30((u8 *)arg0 + 0x41, arg0);
+    if (obj != NULL) {
+        fn_80053680(obj, item);
+        *(void **)((u8 *)*(void **)((u8 *)obj + 0x30) + 0x40) = (void *)&fn_8019BF5C;
+        fn_80053658(obj, 0, arg0);
+        fn_80053658(obj, 1, item);
+        *(s32 *)((u8 *)*(void **)((u8 *)obj + 0x30) + 8) =
+            *(s32 *)((u8 *)*(void **)((u8 *)obj + 0x30) + 8) | 0x400;
+    }
+    i += 1;
+check:
+    if (i < *table) {
+        goto loop;
     }
 }
-
+#pragma global_optimizer on
 s32 fn_8019BF5C(void *arg0) {
     void fn_80054C14(void *);
     u8 fn_8005F9B8(void *, s32);
@@ -10164,20 +10168,18 @@ s32 fn_8019CC80(void *arg0) {
     void *temp_r4;
     void *temp_r31;
     void *temp_r3;
+    void *temp_r4_2;
     u8 temp_r3_flags;
-    s32 val;
-    u8 byte;
+    u8 *base;
 
     temp_r4 = *(void **)((u8 *)arg0 + 0x30);
     temp_r3 = *(void **)((u8 *)temp_r4 + 0x5C);
     temp_r31 = *(void **)((u8 *)temp_r4 + 0x4C);
     if (temp_r3 != NULL && fn_8005F9B8(temp_r3, 0) != 0) {
-        temp_r4 = *(void **)((u8 *)temp_r31 + 0x38);
-        if (temp_r4 != NULL) {
-            byte = *(u8 *)((u8 *)temp_r4 + 0x1A6);
-            val = 4;
-            byte = __rlwimi(byte, val, 2, 27, 29);
-            *(u8 *)((u8 *)temp_r4 + 0x1A6) = byte;
+        temp_r4_2 = *(void **)((u8 *)temp_r31 + 0x38);
+        if (temp_r4_2 != NULL) {
+            base = (u8 *)temp_r4_2;
+            ((struct { u8 pad:3; u8 mid:3; u8 lo:2; } *)(base + 0x1A6))->mid = 4;
             fn_8002297C(lbl_802CA518);
             fn_800C1060(temp_r31);
         }
