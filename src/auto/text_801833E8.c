@@ -8098,43 +8098,45 @@ void fn_80199318(s32 arg0, s32 arg1) {
     fn_800C9B6C(arg0, arg1 + 0x118);
 }
 
-void fn_8019933C(f32 *arg0, void *arg1) {
-    extern f32 lbl_8036AEA8;
-
-    u8 *obj = (u8 *)arg1;
-    void *other;
-    f32 pos[3];
-    f32 x;
-    f32 z;
-
-    if (*(u8 *)(obj + 0x14D) != 0) {
-        x = *(f32 *)(obj + 0x15C);
-        z = *(f32 *)(obj + 0x164);
-    } else if (*(u8 *)(obj + 0x14C) != 0) {
-        x = *(f32 *)(obj + 0x48);
-        z = *(f32 *)(obj + 0x50);
-    } else {
-        other = *(void **)(obj + 0xEC);
-
-        if (other != 0) {
-            void (**vtable)(f32 *, void *, s32);
-
-            vtable = *(void (***)(f32 *, void *, s32))
-                ((u8 *)other + 0x40);
-
-            vtable[14](pos, other, 0);
-
-            x = pos[0];
-            z = pos[2];
-        } else {
-            x = *(f32 *)(obj + 0x48);
-            z = *(f32 *)(obj + 0x50);
-        }
+void fn_8019933C(f32 *arg0, void *arg1)
+{
+  extern f32 lbl_8036AEA8;
+  u8 *obj = (u8 *) arg1;
+  void *other;
+  f32 pos[3];
+  f32 x;
+  f32 z;
+  if ((*((u8 *) (obj + 0x14D))) != 0)
+  {
+    x = *((f32 *) (obj + 0x15C));
+    z = *((f32 *) (obj + 0x164));
+  }
+  else
+    if ((*((u8 *) (obj + 0x14C))) != 0)
+  {
+    x = *((f32 *) (obj + 0x48));
+    z = *((f32 *) (obj + 0x50));
+  }
+  else
+  {
+    ;
+    if ((*((void **) (obj + 0xEC))) != 0)
+    {
+      void (**vtable)(f32 *, void *, s32);
+      vtable = *((void (***)(f32 *, void *, s32)) (((u8 *) other) + 0x40));
+      vtable[14](pos, *((void **) (obj + 0xEC)), 0);
+      x = pos[0];
+      z = pos[2];
     }
-
-    arg0[0] = x;
-    arg0[1] = lbl_8036AEA8;
-    arg0[2] = z;
+    else
+    {
+      x = *((f32 *) (obj + 0x48));
+      z = *((f32 *) (obj + 0x50));
+    }
+  }
+  arg0[0] = x;
+  arg0[1] = lbl_8036AEA8;
+  arg0[2] = z;
 }
 
 extern s32 fn_8005F7B0(u32, u8);                         /* extern */
@@ -9613,6 +9615,34 @@ void fn_8019C4FC(s32 arg0, s32 arg1) {
     fn_8019D51C(fn_8000CAA0(lbl_80296B98, arg0), temp, 0);
 }
 
+void fn_8019C544(void *arg0) {
+    void *fn_80053C30(void *, void *);
+    void fn_800536CC(void *, void *);
+    void fn_800536D8(void *, void *);
+    void fn_8005306C(void *);
+    void fn_80053658(void *, s32, void *);
+    extern void fn_8019CC04(void);
+    void *temp;
+    void *p;
+
+    temp = fn_80053C30((u8 *)arg0 + 0x41, arg0);
+    if (temp) {
+        p = *(void **)((u8 *)arg0 + 0x30);
+        if (p) {
+            fn_800536CC(temp, *(void **)p);
+        }
+        p = *(void **)((u8 *)arg0 + 0x34);
+        if (p) {
+            fn_800536D8(temp, *(void **)p);
+        }
+        fn_8005306C(temp);
+        *(void **)((u8 *)*(void **)((u8 *)temp + 0x30) + 0x40) = fn_8019CC04;
+        fn_80053658(temp, 0, arg0);
+        p = *(void **)((u8 *)temp + 0x30);
+        *(u32 *)((u8 *)p + 8) |= 0x400;
+    }
+}
+
 void fn_8019C5EC(s32 arg0, s32 arg1) {
     void *fn_8000CAA0(void *, s32);
     void fn_8019D51C(void *, s32, s32);
@@ -10978,72 +11008,42 @@ s32 fn_8019FF68(void) {
 
 s32 fn_8019FFBC(s32 arg0, s32 arg1, s32 arg2) {
     void *fn_80018ADC(void);
-    void fn_800193CC(void *, f32, f32);
+    void fn_800193CC(void *, f32);
     void fn_800187F0(void);
     void *p;
-    f32 f0;
-    f32 f1;
+    s32 a;
+    s32 b;
+    s32 c;
+    f32 fa;
+    f32 fb;
 
+    a = arg0;
+    b = arg1;
+    c = arg2;
     p = fn_80018ADC();
-    f0 = (f32)arg0;
-    *(f32 *)((char *)p + 4) = f0;
-    f1 = (f32)arg1;
-    *(f32 *)((char *)p + 0x10) = f0;
-    *(f32 *)((char *)p + 8) = f1;
-    *(f32 *)((char *)p + 0x14) = f1;
-    fn_800193CC(p, (f32)arg2, f0);
+    fa = (f32)a;
+    *(f32 *)((u8 *)p + 4) = fa;
+    fb = (f32)b;
+    *(f32 *)((u8 *)p + 0x10) = fa;
+    *(f32 *)((u8 *)p + 8) = fb;
+    *(f32 *)((u8 *)p + 0x14) = fb;
+    fn_800193CC(p, (f32)c);
     fn_800187F0();
     return 1;
 }
 
 s32 fn_801A0060(s32 arg0, s32 arg1, s32 arg2) {
-    void *fn_80018ADC(s32);
-
-    extern f64 lbl_8036AF78;
+    void *fn_80018ADC(void);
     extern f32 lbl_8036AF88;
-
-    union IntToDouble {
-        f64 d;
-        struct {
-            u32 hi;
-            u32 lo;
-        } w;
-    };
-
-    union IntToDouble x;
-    union IntToDouble y;
-    union IntToDouble z;
-
-    u8 *obj;
-    f64 magic;
+    void *obj;
     f32 scale;
-    f32 fx;
-    f32 fy;
-    f32 fz;
 
-    obj = (u8 *)fn_80018ADC(arg0);
-
-    x.w.lo = (u32)arg0 ^ 0x80000000;
-    y.w.lo = (u32)arg1 ^ 0x80000000;
-    z.w.lo = (u32)arg2 ^ 0x80000000;
-
-    magic = lbl_8036AF78;
-
-    x.w.hi = 0x43300000;
-    y.w.hi = 0x43300000;
-    z.w.hi = 0x43300000;
-
+    obj = fn_80018ADC();
     scale = lbl_8036AF88;
-
-    fx = (f32)(x.d - magic);
-    fy = (f32)(y.d - magic);
-    fz = (f32)(z.d - magic);
-
-    *(f32 *)(obj + 0x04) = fx;
-    *(f32 *)(obj + 0x08) = fy;
-    *(f32 *)(obj + 0x0C) = fz;
-    *(f32 *)(obj + 0x70) = scale;
-
+    *(f32 *)((u8 *)obj + 4) = (f32)arg0;
+    *(f32 *)((u8 *)obj + 8) = (f32)arg1;
+    *(f32 *)((u8 *)obj + 0xC) = (f32)arg2;
+    *(f32 *)((u8 *)obj + 0x70) = scale;
     return 1;
 }
 
