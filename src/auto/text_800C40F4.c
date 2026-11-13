@@ -10007,28 +10007,25 @@ s32 fn_800DFFF4(void *arg0, s32 arg1) {
     return *(s32*)((char*)temp_r0);
 }
 
+#pragma use_lmw_stmw on
 void *fn_800E0020(void *arg0, const char *arg1, const char *arg2) {
     u8 fn_800DF298(void *, const char *);
-    s32 fn_800DF258(void *, const char *);
+    u8 fn_800DF258(void *, const char *);
 
-    u8 *obj;
     void *entry;
-    s32 index;
     s32 offset;
+    s32 index;
 
-    obj = (u8 *)arg0;
-
-    index = *(s32 *)(obj + 4) - 1;
+    index = *(s32 *)((u8 *)arg0 + 4) - 1;
     offset = index << 2;
 
     while (index >= 0) {
-        entry = *(void **)(*(u8 **)(obj + 8) + offset);
+        entry = *(void **)(*(u8 **)((u8 *)arg0 + 8) + offset);
 
-        if (fn_800DF298(entry, arg1) != 0) {
-            entry = *(void **)(*(u8 **)(obj + 8) + offset);
-
-            if (fn_800DF258(entry, arg2) != 0) {
-                return *(void **)(*(u8 **)(obj + 8) + offset);
+        if (fn_800DF298(entry, arg1)) {
+            entry = *(void **)(*(u8 **)((u8 *)arg0 + 8) + offset);
+            if (fn_800DF258(entry, arg2)) {
+                return *(void **)(*(u8 **)((u8 *)arg0 + 8) + offset);
             }
         }
 
@@ -10038,7 +10035,7 @@ void *fn_800E0020(void *arg0, const char *arg1, const char *arg2) {
 
     return NULL;
 }
-
+#pragma use_lmw_stmw reset
 void fn_800E00B0(s32 arg0, s32 arg1, s32* arg2)
 {
     s32 temp_r3;
@@ -10176,6 +10173,33 @@ s32 *fn_800E060C(s32 *arg0, s32 *arg1, s32 *arg2) {
     }
     return start;
 }
+
+#pragma dont_inline on
+void *fn_800E069C(void *arg0, void *arg1, s32 *arg2) {
+    s32 count;
+    void *key;
+    void **mid_ptr;
+    s32 mid;
+    s32 mid_val;
+    s32 key_val;
+
+    key = (void *)*arg2;
+    count = ((s32)arg1 - (s32)arg0) / 4;
+    while (count > 0) {
+        mid = count / 2;
+        mid_ptr = (void **)((u8 *)arg0 + (mid * 4));
+        mid_val = fn_800DF6B0(*mid_ptr);
+        key_val = fn_800DF6B0(key);
+        if (key_val > mid_val) {
+            arg0 = (u8 *)mid_ptr + 4;
+            count -= (u32)mid + 1;
+        } else {
+            count = mid;
+        }
+    }
+    return arg0;
+}
+#pragma dont_inline reset
 s32 *fn_800E0728(s32 *a, s32 *b, s32 *c, s32 d, s32 e, void *f, void *g, u8 h) {
     return a + e;
 }
