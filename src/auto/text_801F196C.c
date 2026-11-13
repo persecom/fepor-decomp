@@ -1717,39 +1717,40 @@ void fn_801F5DD0(void *arg0)
     fn_8000C188(arg0);
 }
 
+#pragma opt_common_subs off
 void fn_801F5E74(void *arg0) {
-    s16 temp_r4;
-    u32 temp_r8;
+    void fn_8000C070(void *, s32);
+    s32 fn_802655A8(void *, void *);
+    s32 fn_80266998(void *, void *, void *);
+    void fn_800056CC(const char *, ...);
+    void fn_8000C188(void *);
+    extern s8 *lbl_803683F0;
+    s8 *p;
 
-    temp_r4 = *(s16*)((char*)arg0 + 0x48);
-    *(s16*)((char*)arg0 + 0x48) = temp_r4 + 1;
-    if (temp_r4 + 1 > 0xF0) {
-        fn_8000C070(2);
+    *(s16 *)((u8 *)arg0 + 0x48) = *(s16 *)((u8 *)arg0 + 0x48) + 1;
+    if (*(s16 *)((u8 *)arg0 + 0x48) > 0xF0) {
+        fn_8000C070(arg0, 2);
         return;
     }
-
-    if (!(fn_802655A8(*(s32*)((char*)arg0 + 0x38), ((char*)arg0 + 0x4B)) == 0) || 
-        !(*(char*)((char*)arg0 + 0x4B) == 0x20) ||
-        !(fn_80266998(*(s32*)((char*)arg0 + 0x38), ((void*)(*(u32*)((char*)arg0 + 0x38) * 0x14)), ((char*)arg0 + 0x4B)) == 0)) {
+    if (fn_802655A8(*(void **)((u8 *)arg0 + 0x38), (u8 *)arg0 + 0x4B) != 0) {
         return;
     }
-    
-    if (!(fn_802655A8(*(s32*)((char*)arg0 + 0x38), ((char*)arg0 + 0x4B)) == 0) ||
-        !(*(char*)((char*)arg0 + 0x4B) == 0x30)) {
+    if (*(u8 *)((u8 *)arg0 + 0x4B) != 0x20) {
         return;
     }
-    
-    temp_r8 = *(u32*)((char*)arg0 + 0x40);
-    fn_800056CC((void*)((char*)&lbl_80280B58 + 0x149), 
-                (s8)(*(char*)(temp_r8 + 0x0)), 
-                (s8)(*(char*)(temp_r8 + 0x1)), 
-                (s8)(*(char*)(temp_r8 + 0x2)), 
-                (s8)(*(char*)(temp_r8 + 0x3)), 
-                *(u32*)((char*)arg0 + 0x40));
+    if (fn_80266998(*(void **)((u8 *)arg0 + 0x38), lbl_803683F0, (u8 *)arg0 + 0x4B) != 0) {
+        return;
+    }
+    fn_802655A8(*(void **)((u8 *)arg0 + 0x38), (u8 *)arg0 + 0x4B);
+    if (*(u8 *)((u8 *)arg0 + 0x4B) != 0x30) {
+        return;
+    }
+    p = lbl_803683F0;
+    fn_800056CC((char *)lbl_80280B58 + 0x149, (s32)p[0], (s32)p[1], (s32)p[2], (s32)p[3]);
     fn_8000C188(arg0);
-    *(s16*)((char*)arg0 + 0x48) = 0;
+    *(s16 *)((u8 *)arg0 + 0x48) = 0;
 }
-
+#pragma opt_common_subs on
 void fn_801F5F58(void *arg0) {
     extern s8 *lbl_803683F0;
     u32 v;
@@ -1764,33 +1765,41 @@ void fn_801F5F58(void *arg0) {
     }
 }
 
+#pragma opt_common_subs off
+#pragma global_optimizer off
 void fn_801F5FE0(void *arg0) {
-    s16 temp_r4;
-    u32 temp_r8;
+    void fn_8000C070(void *, s32);
+    s32 fn_8026569C(void *, void *);
+    s32 fn_802655A8(void *, void *);
+    s32 fn_80266840(void *, void *, void *);
+    void fn_800056CC(const char *, ...);
+    void fn_8000C188(void *);
+    u32 v;
 
-    temp_r4 = *(s16*)((char*)arg0 + 0x48);
-    *(s16*)((char*)arg0 + 0x48) = temp_r4 + 1;
-    if (temp_r4 + 1 > 0xF0) {
-        fn_8000C070(2);
+    *(s16 *)((u8 *)arg0 + 0x48) = *(s16 *)((u8 *)arg0 + 0x48) + 1;
+    if (*(s16 *)((u8 *)arg0 + 0x48) > 0xF0) {
+        fn_8000C070(arg0, 2);
         return;
     }
-    if (!(fn_8026569C(*(s32*)((char*)arg0 + 0x38), ((char*)arg0 + 0x4B)) == 0) || 
-        !(fn_802655A8(*(s32*)((char*)arg0 + 0x38), ((char*)arg0 + 0x4B)) == 0) ||
-        !(*(char*)((char*)arg0 + 0x4B) == 0x28) ||
-        !(fn_80266840(*(s32*)((char*)arg0 + 0x38), ((char*)arg0 + 0x40), ((char*)arg0 + 0x4B)) == 0)) {
+    if (fn_8026569C(*(void **)((u8 *)arg0 + 0x38), (u8 *)arg0 + 0x4B) != 0) {
         return;
     }
-    temp_r8 = *(u32*)((char*)arg0 + 0x40);
-    fn_800056CC((void*)((char*)&lbl_80280B58 + 0x164), 
-                temp_r8 >> 24, 
-                (u8)(temp_r8 >> 16), 
-                (u8)(temp_r8 >> 8), 
-                (u8)temp_r8, 
-                temp_r8);
-    *(s16*)((char*)arg0 + 0x48) = 0;
+    if (fn_802655A8(*(void **)((u8 *)arg0 + 0x38), (u8 *)arg0 + 0x4B) != 0) {
+        return;
+    }
+    if (*(u8 *)((u8 *)arg0 + 0x4B) != 0x28) {
+        return;
+    }
+    if (fn_80266840(*(void **)((u8 *)arg0 + 0x38), (u8 *)arg0 + 0x40, (u8 *)arg0 + 0x4B) != 0) {
+        return;
+    }
+    v = *(u32 *)((u8 *)arg0 + 0x40);
+    fn_800056CC((char *)lbl_80280B58 + 0x164, (s32)(v >> 24), (s32)((v >> 16) & 0xFF), (s32)((v >> 8) & 0xFF), (s32)(v & 0xFF));
+    *(s16 *)((u8 *)arg0 + 0x48) = 0;
     fn_8000C188(arg0);
 }
-
+#pragma global_optimizer on
+#pragma opt_common_subs on
 void fn_801F60B0(void *arg0) {
     void fn_8000C070(void *, s32);
     void fn_8000C188(void *);
