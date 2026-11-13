@@ -1738,19 +1738,13 @@ f32 fn_8002300C(void *arg0, s8 arg1, s8 arg2, u8 arg3)
 {
     u8 *base;
     s32 index;
-    s16 value;
-    f32 scale;
+    u8 *p;
 
     base = (u8 *)arg0 + 0x20000;
-
-    scale = *(f32 *)(base - 0x3D2C);
-
-    index = (s8)arg1 + ((s8)arg2 << 6);
-    index = (index << 2) + (u8)arg3;
-
-    value = *(s16 *)(base + (index << 1) - 0x3D28);
-
-    return (f32)value * scale;
+    index = arg1 + (arg2 << 6);
+    index = (u8)arg3 + (index << 2);
+    p = base + (index << 1);
+    return (f32)*(s16 *)(p - 0x3D28) * *(f32 *)(base - 0x3D2C);
 }
 
 void fn_80023068(u16 *a0, u16 *a1, f32 a2, f32 a3) {
@@ -3434,14 +3428,17 @@ void fn_800267F8(s32 arg0) {
 }
 
 void fn_80026850(s32 arg0) {
-    extern u16 lbl_802EF4C8[];
+    void fn_800913D4(s32, s32, s32);
+    s32 fn_80037BD0(s32, s8);
+    extern u8 lbl_802EF4C8[];
     s32 temp_r31;
     s8 temp_r4;
+    u8 *p;
 
-    temp_r31 = *(s32 *)((u8 *)lbl_802EF4C8 + 0);
-    temp_r4 = *(u8 *)((u8 *)lbl_802EF4C8 + 0xA);
-    fn_80037BD0(temp_r31, temp_r4);
-    fn_800913D4(arg0, temp_r31);
+    p = lbl_802EF4C8;
+    temp_r4 = p[0xA];
+    temp_r31 = *(s32 *)p;
+    fn_800913D4(fn_80037BD0(temp_r31, temp_r4), arg0, temp_r31);
 }
 
 s32 fn_800268A8(s32 arg0) {
@@ -3606,21 +3603,21 @@ s32 fn_80026D24(s32 arg0) {
 }
 
 void fn_80026E2C(s32 arg0) {
-    void fn_8012AA90(s32, s32, s32);
+    void fn_8012AA90(s8, s8, s32);
     extern u8 lbl_802EF4C8[];
     typedef struct {
         u8 pad : 5;
         u8 flags : 3;
     } Bits;
     u8 *base;
+    u8 *ptr;
     Bits *bits;
 
     base = lbl_802EF4C8;
-    {
-        u8 *p = *(u8 **)(base + 4);
-        fn_8012AA90((s8)p[0x19E], (s8)p[0x19F], arg0);
-    }
-    bits = (Bits *)(*(u8 **)(base + 4) + 0x1A5);
+    ptr = *(u8 **)(base + 4);
+    fn_8012AA90((s8)ptr[0x19E], (s8)ptr[0x19F], arg0);
+    ptr = *(u8 **)(base + 4);
+    bits = (Bits *)(ptr + 0x1A5);
     bits->flags = 1;
 }
 
@@ -3910,16 +3907,15 @@ void fn_800286C8(void *arg0) {
     void fn_8004B1B4(s32);
     u32 v;
     void *p;
-    v = *(u32 *)((u8 *)lbl_80330EAC + 0xcac);
-    if (!(v & 0x10)) goto done;
-    if (!(v & 0x10000000)) goto done;
-    fn_8000C070(arg0, 0x63);
+
+    v = *(u32 *)(lbl_80330EAC + 0xcac);
+    if ((v & 0x10) && (v & 0x10000000)) {
+        fn_8000C070(arg0, 0x63);
+    }
     p = fn_801A46BC(lbl_80330EAC);
     if (p != 0) {
         fn_8004B1B4(*(s32 *)((u8 *)p + 0x280));
     }
-done:
-    return;
 }
 
 void fn_80028724(void) {
