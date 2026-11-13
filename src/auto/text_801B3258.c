@@ -13764,12 +13764,14 @@ void fn_801DC150(s32 arg0, s8 arg1, s8 arg2, s32 arg3, s32 arg4, s8 arg5, void *
 
 void fn_801DC1C8(void *arg0) {
     void *temp_r4;
-    s32 temp_r0;
+    s32 off;
+    s16 *p;
 
-    temp_r4 = *(void**)((char*)arg0 + 0x30);
-    *(u8*)((char*)temp_r4 + 0x332) = 0xC8;
-    temp_r0 = (*(s32*)((char*)arg0 + 0x40) * 0x14) + 0x51A;
-    *(s16*)((char*)temp_r4 + temp_r0) = (*(s16*)((char*)temp_r4 + temp_r0)) & 0xFFFFFFFE;
+    temp_r4 = *(void **)((char *)arg0 + 0x30);
+    *(s16 *)((char *)temp_r4 + 0x332) = 0xC8;
+    off = *(s32 *)((char *)arg0 + 0x40) * 0x14 + 0x51A;
+    p = (s16 *)((u8 *)temp_r4 + off);
+    *p = (s16)(*p & ~1);
 }
 
 void fn_801DC1F0(void *arg0) {
