@@ -684,17 +684,18 @@ s32 fn_8001451C(void *arg0) {
     return 1;
 }
 
-s32 fn_80014558(void* arg0, void* arg1, s32 arg2) {
-    u32* temp_r3;
-    
-    if (arg0 == NULL || arg1 == NULL) {
-        return 0;
-    }
-    
-    temp_r3 = (u32*)M2C_FIELD(arg0, s32**, 0x4);
-    *temp_r3 = (u32)arg1;
-    
-    return (s32)M2C_FIELD(arg1, s32**, arg2);
+s32 fn_80014558(void *arg0) {
+    s32 fn_800C50FC(void *, void *);
+    void *temp;
+    void *a;
+    void *b;
+
+    temp = *(void **)((u8 *)arg0 + 4);
+    b = *(void **)((u8 *)temp + 8);
+    a = *(void **)((u8 *)temp + 4);
+    *(void **)((u8 *)arg0 + 4) = (void *) ((u8 *)temp + 0xC);
+    fn_800C50FC(a, b);
+    return 1;
 }
 
 s32 fn_80014594(void *arg0) {
