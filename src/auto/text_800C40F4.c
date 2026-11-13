@@ -2675,6 +2675,17 @@ void fn_800CB5CC(void *arg0, void *arg1)
     }
 }
 
+void fn_800CB8A4(void *arg0, void *arg1, s32 arg2) {
+    void fn_800C9B6C(void *, void *);
+    void *fn_800C99A0(void *, s32, s32, s32);
+    void *fn_800C9A60(void *, s32);
+    u8 sp[0x10];
+
+    fn_800C9B6C(sp, arg1);
+    fn_800C9B6C(arg0, fn_800C99A0(sp, arg2, 0, -1));
+    fn_800C9A60(sp, -1);
+}
+
 void fn_800CB90C(M2C_UNK *arg0, s32 arg2) {
     s32 fn_800C992C(M2C_UNK *, s32, s32);
     M2C_UNK sp8;
