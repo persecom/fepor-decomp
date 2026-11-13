@@ -357,14 +357,13 @@ void fn_80183B24(s32 arg0, s32 arg1) {
     obj[0x30 / 4] = arg0;
 }
 
-void *fn_80183B5C(void *arg0, s32 unused) {
-    void *fn_8000CA64(void *);
+void *fn_80183B5C(void *arg0, void *arg1) {
+    void *fn_8000CA64(void *, void *);
     u8 fn_800AA188(void);
-    extern u8 lbl_80295D8C[];
+    extern u16 lbl_80295D8C[];
     void *temp_r31;
 
-    (void)unused;
-    temp_r31 = fn_8000CA64(lbl_80295D8C);
+    temp_r31 = fn_8000CA64(lbl_80295D8C, arg1);
     *(void **)((u8 *)temp_r31 + 0x30) = arg0;
     *((u8 *)temp_r31 + 0x3D) = 0;
     *((u8 *)temp_r31 + 0x3C) = 1;
