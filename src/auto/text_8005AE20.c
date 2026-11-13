@@ -5880,25 +5880,20 @@ u8 fn_80069DB4(void) {
 }
 
 #pragma global_optimizer off
-void *fn_80069DBC(void)
-{
+void *fn_80069DBC(void) {
     extern u8 lbl_80367302;
     extern u8 lbl_8026B7F8[];
     extern void *lbl_80285EE8[];
-
     void fn_8006DA64(const char *, s32, const char *);
-
-    if (lbl_80367302 >= 8) {
-        fn_8006DA64(
-            (const char *)lbl_8026B7F8 + 1,
-            0x70,
-            (const char *)lbl_8026B7F8 + 0x25
-        );
-    }
-
-    return lbl_80285EE8[lbl_80367302++];
+    void **entry;
+    u8 idx;
+    if (lbl_80367302 >= 8)
+        fn_8006DA64((const char *)lbl_8026B7F8+1,0x70,(const char *)lbl_8026B7F8+0x25);
+    idx=lbl_80367302;
+    entry=&lbl_80285EE8[idx];
+    lbl_80367302 = ++idx;
+    return *entry;
 }
-
 #pragma global_optimizer off
 void *fn_80069E18(void) {
     extern u8 lbl_80367301;
