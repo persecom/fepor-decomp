@@ -198,7 +198,7 @@ u8 fn_80005E2C(void) {
 
 s32 fn_80005E98(void) {
     extern u8 lbl_80330708[];
-    return (*(u8 *)((uintptr_t)lbl_80330708 + 0x10) ^ 0x1D) == 0;
+    return lbl_80330708[0x10] == 0x1D;
 }
 
 void fn_80005EB4(void) {
