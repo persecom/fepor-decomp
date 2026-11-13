@@ -6553,6 +6553,7 @@ s32 fn_800D6F0C(void) {
     return 0;
 }
 
+#pragma dont_inline on
 s32 fn_800D6F34(void)
 {
     extern u8 *lbl_803678A8;
@@ -6587,7 +6588,7 @@ s32 fn_800D6F34(void)
 
     return 0;
 }
-
+#pragma dont_inline reset
 void fn_800D6FA4(void *arg0) {
     M2C_UNK fn_800C9B6C(M2C_UNK *);
     M2C_UNK fn_800DC518(s32, M2C_UNK *, M2C_UNK);
@@ -6598,15 +6599,37 @@ void fn_800D6FA4(void *arg0) {
     fn_800C9A60(&sp8, -1);
 }
 
-void fn_800D6FF0(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
-    M2C_UNK fn_800D7254();
-    void *temp_r3;
-
+#pragma cplusplus on
+extern "C" void fn_800D6FF0(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    void fn_800D7254(void);
+    struct Obj {
+        u8 pad[0x40];
+        virtual void v0(s32, s32, s32) = 0;
+        virtual void v1(s32, s32, s32) = 0;
+        virtual void v2(s32, s32, s32) = 0;
+        virtual void v3(s32, s32, s32) = 0;
+        virtual void v4(s32, s32, s32) = 0;
+        virtual void v5(s32, s32, s32) = 0;
+        virtual void v6(s32, s32, s32) = 0;
+        virtual void v7(s32, s32, s32) = 0;
+        virtual void v8(s32, s32, s32) = 0;
+        virtual void v9(s32, s32, s32) = 0;
+        virtual void v10(s32, s32, s32) = 0;
+        virtual void v11(s32, s32, s32) = 0;
+        virtual void v12(s32, s32, s32) = 0;
+        virtual void v13(s32, s32, s32) = 0;
+        virtual void v14(s32, s32, s32) = 0;
+        virtual void v15(s32, s32, s32) = 0;
+        virtual void v16(s32, s32, s32) = 0;
+        virtual void v17(s32, s32, s32) = 0;
+        virtual void v18(s32, s32, s32) = 0;
+        virtual void v19(s32, s32, s32) = 0;
+        virtual void v20(s32, s32, s32) = 0;
+    };
     fn_800D7254();
-    temp_r3 = M2C_FIELD(arg0, void **, 0x424);
-    M2C_FIELD(M2C_FIELD(temp_r3, void **, 0x40), M2C_UNK (**)(void *, s32, s32, s32), 0x58)(temp_r3, arg1, arg2, arg3);
+    (*(Obj **)((u8 *)arg0 + 0x424))->v20(arg1, arg2, arg3);
 }
-
+#pragma cplusplus reset
 void *fn_800D7060(void *arg0, s16 arg1) {
     void fn_800C428C(void *);
     
@@ -16426,15 +16449,12 @@ void fn_800F20E0(void) {
     void fn_80060060(void *);
     void fn_800F1C24(void *);
     s32 i;
-    s8 *p;
 
     fn_80060060(lbl_8032AC58 + 0x288);
     i = 0;
-    p = lbl_8032AC58;
     do {
         fn_80060060(lbl_8032AC58 + i * 0xA0 + 8);
         i += 1;
-        p += 0xA0;
     } while (i < 4);
     fn_800F1C24(lbl_8032AC58);
 }
