@@ -1434,38 +1434,42 @@ s8 fn_8001C084(u8 *arg0) {
 extern u8 lbl_80367220;
 extern s32 lbl_80367228;
 extern s32 lbl_8036722C;
-s32 fn_8001C0C8(void *arg0) {
-    s32 *var_r4;
-    u8 var_r5;
-    void *temp_r7;
+s32 fn_8001C0C8(u8 *arg0)
+{
+    extern u8 lbl_80367220;
+    extern s32 lbl_8036722C;
+    extern s32 lbl_80367228;
 
-    if ((s8) lbl_80367220 == 0) {
+    void *temp_r7;
+    unsigned long long *p;
+    u8 other;
+
+    if ((s8)lbl_80367220 == 0) {
         lbl_8036722C = 0;
         lbl_80367228 = 0;
         lbl_80367220 = 1;
     }
-    
-    temp_r7 = *(void**)arg0;
+
+    temp_r7 = *(void **)arg0;
     if (temp_r7 != NULL) {
-        var_r4 = (s32*)((char*)temp_r7 + 0x38);
+        p = (unsigned long long *)((u8 *)temp_r7 + 0x38);
     } else {
-        var_r4 = &lbl_80367228;
+        p = (unsigned long long *)&lbl_80367228;
     }
-    
-    if ((var_r4[0] & 0x318) != 0) {
+
+    if ((*p & 0x318ULL) != 0) {
         return 0;
     }
-    
+
     if (temp_r7 != NULL) {
-        var_r5 = *(u8*)((char*)temp_r7 + 0x18);
+        other = *((u8 *)temp_r7 + 0x18);
     } else {
-        var_r5 = 0;
+        other = 0;
     }
-    
-    if ((*(u8*)((char*)arg0 + 0x4) & 0xFF) == var_r5) {
+
+    if (arg0[4] == other) {
         return 0;
     }
-    
     return 1;
 }
 
@@ -1692,16 +1696,23 @@ void *fn_8001C76C(void *arg0) {
     return arg0;
 }
 
-void fn_8001C7F0(void *arg0) {
-    void* temp_r4;
-    if (arg0 != NULL) {
-        temp_r4 = *(void**)((char*)arg0 + 0x4);
-        if (temp_r4 == NULL) {
-            return;
-        }
-        *(u32*)((char*)arg0 + 0x44) = 0;
-        *(u32*)((char*)arg0 + 0xA8) = 0;
-        *(u32*)((char*)arg0 + 0xB0) = 0;
+void fn_8001C7F0(void *unused, void *arg1, void *arg2) {
+    void fn_80234450(void *, s32);
+    void fn_802343E0(void *, void *);
+    u32 fn_8000D354(void *);
+    extern void *lbl_80367230;
+    extern u8 lbl_802CA4FC[];
+    extern u8 lbl_80268820[];
+    struct { u8 pad[0xC]; void (*fn)(void *); } *s;
+
+    if (lbl_80367230 != arg1) {
+        lbl_80367230 = arg1;
+        fn_80234450(lbl_802CA4FC, *(s32 *)arg1);
+        fn_802343E0(lbl_802CA4FC, lbl_80268820 + 0x3C);
+    }
+    if (fn_8000D354(lbl_802CA4FC) == 0) {
+        s = NULL;
+        s->fn(arg2);
     }
 }
 
