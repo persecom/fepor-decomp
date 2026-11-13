@@ -2195,34 +2195,25 @@ void fn_801F7194(void *arg0) {
     }
 }
 
-void fn_801F7200(void *arg0)
-{
-    extern u16 lbl_80330708[700];
+void fn_801F7200(void *arg0) {
+    extern u8 lbl_80330708[];
     extern u8 lbl_80280D38[];
+    void fn_80147188(s32);
+    void fn_8006EEFC(void *, void *);
+    void fn_80162018(void);
+    u32 *obj;
+    u8 *base;
+    u32 t0;
 
-    extern void fn_80147188(s32);
-    extern void fn_8006EEFC(void *, const char *);
-    extern void fn_80162018(void);
-
-    u8 *obj;
-    u8 *data;
-
-    obj = *(u8 **)((u8 *)arg0 + 0x30);
-    data = (u8 *)lbl_80330708;
-
-    fn_80147188(1000);
-
-    *(u32 *)(obj + 0x00) = 0;
-    *(u32 *)(obj + 0x04) = 0;
-
-    *(u32 *)(obj + 0x0C) = *(u32 *)(data + 0x64);
-    *(u32 *)(obj + 0x08) = *(u32 *)(data + 0x60);
-
-    fn_8006EEFC(
-        obj + 0x10,
-        (const char *)lbl_80280D38 + 0x173
-    );
-
+    obj = *(u32 **)((u8 *)arg0 + 0x30);
+    fn_80147188(0x3E8);
+    obj[0] = 0;
+    obj[1] = 0;
+    base = lbl_80330708;
+    t0 = *(u32 *)(base + 0x60);
+    obj[3] = *(u32 *)(base + 0x64);
+    obj[2] = t0;
+    fn_8006EEFC(obj + 4, lbl_80280D38 + 0x173);
     fn_80162018();
 }
 
@@ -2887,43 +2878,43 @@ void fn_801F89AC(s32 arg0, s32 arg1) {
     }
 }
 
-s32 fn_801F8A18(s32 arg0) {
-    s32 temp_r0;
-    s32 *temp_r31 = (s32 *)arg0;
-    
-    if ((s32)arg0 <= 0) {
-        return -1;
+void fn_801F8A18(void *arg0) {
+    struct Node {
+        struct Node *prev;
+        struct Node *next;
+    };
+    struct List {
+        s32 unk0;
+        struct Node node;
+    };
+    struct Obj {
+        u8 pad[0x30];
+        struct List list;
+    };
+    void fn_8006EDA0(void *);
+    void fn_801FB220(void *, struct List *, struct Node **, struct Node **);
+    struct Node *sp10;
+    struct Node *spC;
+    u8 sp8[4];
+    struct Node *end;
+    struct Obj *self;
+
+    self = (struct Obj *)arg0;
+    if (*(u32 *)((u8 *)arg0 + 0x50) != 0) {
+        fn_8006EDA0((u8 *)self + 0x50);
     }
-    
-    temp_r0 = *(s32 *)((u8 *)temp_r31 + 0x50);
-    if (temp_r0 == 0) {
-        return -1;
+    if (self != NULL) {
+        if (&self->list != NULL) {
+            if (&self->list != NULL) {
+                if (&self->list != NULL) {
+                    end = &self->list.node;
+                    sp10 = end;
+                    spC = end->next;
+                    fn_801FB220(sp8, &self->list, &spC, &sp10);
+                }
+            }
+        }
     }
-    
-    arg0 = fn_8006EDA0((s32)temp_r31 + 0x50);
-    if (arg0 == 0) {
-        return -1;
-    }
-    
-    if ((s32)temp_r31 < 0) {
-        return -1;
-    }
-    
-    temp_r0 = ((s32)temp_r31 + 0x30);
-    if (temp_r0 == 0) {
-        return -1;
-    }
-    
-    temp_r0 = ((s32)temp_r31 + 0x30);
-    if (temp_r0 == 0) {
-        return -1;
-    }
-    
-    {
-        void fn_801FB220(void **, s32 *, void **, void **);
-        fn_801FB220((void **)((s32)temp_r31 + 0x34), (s32 *)((s32)temp_r31 + 0x30), (void **)((u32)temp_r31 + 0xC), (void **)((u32)temp_r31 + 0xC));
-    }
-    return 0;
 }
 
 #pragma optimization_level 2
@@ -3526,24 +3517,31 @@ void *fn_801F9D50(void *arg0)
 {
     extern u8 lbl_8029B32C[];
     extern f32 lbl_8036BA00;
+    void *fn_8000CAA0(void *, void *);
+    void fn_801FB048(void *, u32);
+    struct Entry {
+        u8 pad[0x30];
+        u32 unk30;
+        u32 unk34;
+        u32 unk38;
+        f32 unk3c;
+        u8 pad40[0xc];
+        u32 unk4c;
+    } *entry;
+    struct Entry *tmp;
+    u32 *p;
 
-    extern void *fn_8000CAA0(void *, void *);
-    extern void fn_801FB048(void *, s32, void *);
-
-    u8 *entry;
-
-    entry = (u8 *)fn_8000CAA0(lbl_8029B32C, arg0);
-
-    if (entry != 0) {
-        *(u32 *)(entry + 0x30) = 0;
-        *(u32 *)(entry + 0x34) = 0;
-        *(u32 *)(entry + 0x38) = 0;
-        *(f32 *)(entry + 0x3C) = lbl_8036BA00;
-        *(u32 *)(entry + 0x4C) = 0;
-
-        fn_801FB048(entry + 0x30, 0x28, entry);
+    entry = (struct Entry *)fn_8000CAA0(lbl_8029B32C, arg0);
+    tmp = entry;
+    if (tmp != NULL) {
+        p = &tmp->unk30;
+        tmp->unk30 = 0;
+        tmp->unk34 = 0;
+        p[2] = 0;
+        tmp->unk3c = lbl_8036BA00;
+        tmp->unk4c = 0;
+        fn_801FB048(p, 0x28);
     }
-
     return entry;
 }
 
