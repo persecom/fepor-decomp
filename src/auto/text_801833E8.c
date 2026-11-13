@@ -267,11 +267,7 @@ s32 fn_801838CC(void) {
 
 s32 fn_801838D4(void) {
     extern u8 lbl_803681F0;
-    s32 val = lbl_803681F0;
-    if (val < 0x33) {
-        return 0;
-    }
-    return 3;
+    return lbl_803681F0 != 0x33 ? 3 : 0;
 }
 
 void fn_801838F4(void) {
@@ -290,7 +286,7 @@ s32 fn_8018394C(void) {
 
 s32 fn_80183954(void) {
     extern u8 lbl_803681F0;
-    return 3 & ~((s32) ~((lbl_803681F0 - 0x32) | (0x32 - lbl_803681F0)) >> 0x1F);
+    return lbl_803681F0 != 0x32 ? 3 : 0;
 }
 
 s32 fn_80183974(void) {
@@ -2273,12 +2269,19 @@ void fn_8018B2C4(void *arg0) {
 }
 
 void fn_8018B2FC(void *arg0) {
-    void *temp_r4;
+    f32 *dst;
+    f32 value0;
+    f32 value1;
+    f32 value2;
 
-    temp_r4 = M2C_FIELD(arg0, void **, 0x30);
-    M2C_FIELD(temp_r4, f32 *, 4) = (f32) M2C_FIELD(arg0, f32 *, 0x34);
-    M2C_FIELD(temp_r4, f32 *, 8) = (f32) M2C_FIELD(arg0, f32 *, 0x38);
-    M2C_FIELD(temp_r4, f32 *, 0xC) = (f32) M2C_FIELD(arg0, f32 *, 0x3C);
+    value2 = *(f32 *)((u8 *)arg0 + 0x3C);
+    value1 = *(f32 *)((u8 *)arg0 + 0x38);
+    dst = *(f32 **)((u8 *)arg0 + 0x30);
+    value0 = *(f32 *)((u8 *)arg0 + 0x34);
+
+    dst[1] = value0;
+    dst[2] = value1;
+    dst[3] = value2;
 }
 
 void fn_8018B31C(void *arg0) {
@@ -2422,13 +2425,18 @@ void fn_8018B884(void *arg0) {
     *(f32 *)(ptr + 0x18) = value;
 }
 
+#pragma scheduling off
 void fn_8018B920(void *arg0) {
     extern f32 lbl_8036ACEC;
-    *(s32 *)((char *)arg0 + 0x40) = 0;
-    *(f32 *)((char *)arg0 + 0x44) = lbl_8036ACEC;
-}
+    s32 z;
+    f32 f;
 
-#pragma fp_contract on
+    z = 0;
+    f = lbl_8036ACEC;
+    *(s32 *)((char *)arg0 + 0x40) = z;
+    *(f32 *)((char *)arg0 + 0x44) = f;
+}
+#pragma scheduling reset
 void fn_8018B934(void *arg0) {
     f32 fn_8005A028(s32, f32, f32, f32, f32);
     void fn_8000C188(void *);
