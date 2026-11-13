@@ -9939,38 +9939,48 @@ extern "C" void fn_800DFD64(void *arg0) {
 }
 #pragma cplusplus reset
 
-void fn_800DFDF4(void *arg0, void *arg1) {
-    s32 temp_r0;
-    s32 temp_r5;
-    s32 var_ctr;
-    s32 var_r4;
+#pragma cplusplus on
+extern "C" void fn_800DFDF4(void *arg0, void *arg1) {
+    void fn_800DD87C(void *, s32);
+    struct Obj {
+        void *owner;
+        u8 pad[0x3C];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+        virtual void v3() = 0;
+        virtual void v4(s32) = 0;
+    };
+    struct List {
+        void *unk0;
+        s32 count;
+        Obj **items;
+    };
+    s32 off;
+    s32 n;
+    Obj **items;
 
-    var_r4 = 0;
-    temp_r0 = *(s32*)((char*)arg0 + 4);
-    var_ctr = temp_r0;
-    
-    if (temp_r0 > 0) {
-loop_1:
-        temp_r5 = *(s32*)((char*)arg0 + 8); 
-        if (*(void**)((char*)temp_r5 + var_r4) == arg1) {
-            fn_800DD87C((char*)temp_r5 + var_r4);
-            
-            if (arg1 != NULL) {
-                void (**func_ptr)(void*, s32) = (void (**)(void*, s32))((char*)arg1 + 0x40);
-                (*func_ptr)((char*)arg1 + 0x18, 1);
+    off = 0;
+    n = ((List *)arg0)->count;
+    if (n > 0) {
+        do {
+            items = ((List *)arg0)->items;
+            if (*(Obj **)((u8 *)items + off) == (Obj *)arg1) {
+                fn_800DD87C(arg0, (s32)((u8 *)items + off));
+                if (arg1 != NULL) {
+                    ((Obj *)arg1)->v4(1);
+                }
+                break;
             }
-        } else {
-            var_r4 += 4;
-            var_ctr -= 1;
-            if (var_ctr != 0) {
-                goto loop_1;
-            }
-        }
+            off += 4;
+        } while (--n != 0);
     }
 }
+#pragma cplusplus reset
 
 #pragma cplusplus on
 extern "C" void fn_800DFE74(void *arg0, s32 idx) {
+    void fn_800DD87C(void *, s32);
     struct Obj {
         void *owner;
         u8 pad[0x3C];
@@ -9991,7 +10001,7 @@ extern "C" void fn_800DFE74(void *arg0, s32 idx) {
         return;
     }
     delete ((List *)arg0)->items[idx];
-    fn_800DD87C(arg0, ((List *)arg0)->items + (u32)idx);
+    fn_800DD87C(arg0, (s32)(((List *)arg0)->items + (u32)idx));
 }
 #pragma cplusplus reset
 
