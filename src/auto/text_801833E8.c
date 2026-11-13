@@ -2877,16 +2877,14 @@ void fn_8018CCB8(void *arg0) {
 }
 
 void fn_8018CF08(void) {
-    void *fn_8000C0C0(M2C_UNK *);
-    extern u16 lbl_80296018;
-    void *r3;
+    void *fn_8000C0C0(void *);
+    extern u8 lbl_80296018[];
     void *temp_r3;
 
-    r3 = &lbl_80296018;
-    temp_r3 = fn_8000C0C0(r3);
+    temp_r3 = fn_8000C0C0(lbl_80296018);
     if (temp_r3 != NULL) {
-        M2C_FIELD(temp_r3, s32 *, 0x3C) = 1;
-        M2C_FIELD(temp_r3, s32 *, 0x40) = 0;
+        *(s32 *)((u8 *)temp_r3 + 0x3C) = 1;
+        *(s32 *)((u8 *)temp_r3 + 0x40) = 0;
     }
 }
 
@@ -6742,13 +6740,14 @@ void fn_80195880(void *arg0) {
 
 void fn_8019588C(void *arg0, s32 arg1) {
     extern f32 lbl_8036AE50;
-    f32 vals[2];
+    f32 v;
+    f32 z;
 
     *(f32 *)((u8 *)arg0 + 0x14) = *(f32 *)((u8 *)arg0 + 0x10);
-    vals[0] = (f32)arg1;
-    vals[1] = lbl_8036AE50;
-    *(f32 *)((u8 *)arg0 + 0x18) = vals[0];
-    *(f32 *)((u8 *)arg0 + 0x1C) = vals[1];
+    v = (f32)arg1;
+    z = lbl_8036AE50;
+    *(f32 *)((u8 *)arg0 + 0x18) = v;
+    *(f32 *)((u8 *)arg0 + 0x1C) = z;
 }
 
 #pragma dont_inline on
