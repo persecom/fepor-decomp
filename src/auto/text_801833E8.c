@@ -650,10 +650,11 @@ void fn_80184688(s32 arg0, s32 arg1, s32 arg2, u32 arg3) {
     s32 fn_80052B30(s32);
     void fn_80185078(void *, void *);
     extern u8 lbl_80295AC0[];
-    u8 spC[0x34];
+    u8 spC[0x44];
     u32 sp8;
     u32 var_r31;
     void *temp_r3;
+    u8 *p;
 
     var_r31 = arg3;
     M2C_FIELD(spC, void **, 0x30) = (void *)arg0;
@@ -665,10 +666,11 @@ void fn_80184688(s32 arg0, s32 arg1, s32 arg2, u32 arg3) {
     M2C_FIELD(temp_r3, s32 *, 0x30) = arg0;
     M2C_FIELD(temp_r3, s32 *, 0x40) = arg2;
     sp8 = fn_80052B30(arg1);
-    M2C_FIELD(temp_r3, u8 *, 0x38) = ((u8 *)&sp8)[0];
-    M2C_FIELD(temp_r3, u8 *, 0x39) = ((u8 *)&sp8)[1];
-    M2C_FIELD(temp_r3, u8 *, 0x3A) = ((u8 *)&sp8)[2];
-    M2C_FIELD(temp_r3, u8 *, 0x3B) = ((u8 *)&sp8)[3];
+    p = temp_r3;
+    p[0x38] = ((u8 *)&sp8)[0];
+    p[0x39] = ((u8 *)&sp8)[1];
+    p[0x3A] = ((u8 *)&sp8)[2];
+    p[0x3B] = ((u8 *)&sp8)[3];
 }
 
 extern u16 *gUnitArray;
@@ -3749,32 +3751,32 @@ extern "C" void fn_8018E98C(void *arg0, s32 arg1) {
 }
 #pragma cplusplus reset
 void fn_8018EBC0(void *arg0, s16 arg1) {
-    void *fn_8001C76C(void *);
+    void fn_8001C76C(void *);
     s32 fn_8001D2C8(void *);
     void fn_8001D818(void *, s32);
     void fn_8001C5F8(void *, s32);
-    void fn_8001019C(s16, s16, s32, void *, s32);
+    s32 fn_800102BC(s32, f32);
+    void fn_8001019C(s16, s16, s32, ...);
     void fn_8008CFB4(void *, s16, s16);
-    extern u16 lbl_80279C40[];
+    extern u8 lbl_80279C40[];
     extern f32 lbl_8036ADF0;
-    
-    void *sp8;
-    void *temp_r29;
-    s16 temp_r31;
-    s16 temp_r30;
-    s16 temp_r28;
-    s16 temp_r0;
+    u8 sp8[8];
+    void *self;
+    s16 y;
+    s16 half;
+    s16 x;
+    s32 w;
 
-    temp_r29 = arg0;
-    fn_8001C76C(&sp8);
-    fn_8001D818(&sp8, *(s32*)((char*)temp_r29 + 0x40));
-    temp_r31 = *(s16*)((char*)temp_r29 + 0x44);
-    temp_r0 = (s16) ((s32) (0x1C - fn_800102BC(-1, lbl_8036ADF0)) >> 1);
-    temp_r30 = temp_r0;
-    temp_r28 = arg1 + temp_r30;
-    fn_8001019C((s16) (temp_r31 + 0x18), temp_r28, 2, &lbl_80279C40[0x50/2], fn_8001D2C8(&sp8));
-    fn_8008CFB4(&sp8, temp_r31, temp_r28);
-    fn_8001C5F8(&sp8, -1);
+    self = arg0;
+    fn_8001C76C(sp8);
+    fn_8001D818(sp8, *(s32 *)((u8 *)self + 0x40));
+    y = *(s16 *)((u8 *)self + 0x44);
+    half = (s16)((0x1C - fn_800102BC(-1, lbl_8036ADF0)) >> 1);
+    w = fn_8001D2C8(sp8);
+    x = (s16)(arg1 + half);
+    fn_8001019C((s16)(y + 0x18), x, 2, lbl_80279C40 + 0x50, w);
+    fn_8008CFB4(sp8, y, x);
+    fn_8001C5F8(sp8, -1);
 }
 
 #pragma use_lmw_stmw on
@@ -12364,28 +12366,22 @@ s32 fn_801A1DB8(s32 arg0) {
 }
 
 s32 fn_801A1E6C(s8 arg0, s8 arg1) {
-    void *fn_8000C0C0(void *, void *);
-    f32 fn_80023430(void *, void *, f32, f32);
+    void *fn_8000C0C0(void *);
+    f32 fn_80023430(void *, f32, f32);
     extern u16 lbl_80296F90[];
     extern u8 lbl_802CA518[];
-    extern f64 lbl_8036AF78;
-    
-    void *temp_r3;
-    s32 var_r31;
-    s32 temp_r4;
-    s32 temp_r0;
+    void *temp;
+    s32 scale;
+    f32 f;
 
-    temp_r3 = fn_8000C0C0(&lbl_80296F90, &lbl_80296F90);
-    if (temp_r3 != NULL) {
-        var_r31 = *(s32 *)((char *)temp_r3 + 0x3C);
+    temp = fn_8000C0C0(lbl_80296F90);
+    if (temp != NULL) {
+        scale = *(s32 *)((u8 *)temp + 0x3C);
     } else {
-        var_r31 = 1;
+        scale = 1;
     }
-    
-    temp_r4 = (s32)arg0;
-    temp_r0 = (s32)arg1;
-    
-    return (s32)(fn_80023430(&lbl_802CA518, &lbl_802CA518, (f32)temp_r4, (f32)temp_r0) * (f32)var_r31);
+    f = fn_80023430(lbl_802CA518, (f32)arg0, (f32)arg1);
+    return (s32)(f * (f32)scale);
 }
 
 s32 fn_801A2004(s32 arg0) {
