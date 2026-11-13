@@ -6171,6 +6171,9 @@ void fn_80193E88(void *arg0) {
         fn_8003C15C(obj);
         fn_8000C070(arg0, 6);
         break;
+    case 0:
+    case 1:
+    case 2:
     default:
         fn_80183BE4(obj, arg0);
         break;
