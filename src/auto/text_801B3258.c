@@ -10495,25 +10495,22 @@ void fn_801CF8E4(void *arg0)
     fn_8006EDA0((u8 *)record + 4);
 }
 
-void fn_801CF92C(void *arg0) {
-    void fn_8000C188(void);
+void fn_801CF92C(void *arg0)
+{
+    void fn_8000C188(void *);
     void fn_801D15D4(void *);
     void fn_801D107C(void *);
-    typedef struct {
-        u8 unk[8];
-        u32 flags;
-        u8 rest[0x15C - 12];
-    } Rec;
-    extern u16 lbl_80331D00[];
-    Rec *entry;
+    u8 *table;
+    u8 *entry;
 
-    entry = &((Rec *)lbl_80331D00)[*(u8 *)((u8 *)arg0 + 0x30)];
-    if ((entry->flags & 1) == 0) {
-        fn_8000C188();
+    table = (u8 *)lbl_80331D00;
+    entry = table + *(u8 *)((u8 *)arg0 + 0x30) * 0x15C;
+    if ((*(u32 *)(entry + 8) & 1) == 0) {
+        fn_8000C188(arg0);
         return;
     }
     fn_801D15D4(entry);
-    fn_801D107C(&((Rec *)lbl_80331D00)[*(u8 *)((u8 *)arg0 + 0x30)]);
+    fn_801D107C((u8 *)lbl_80331D00 + *(u8 *)((u8 *)arg0 + 0x30) * 0x15C);
 }
 
 void fn_801CFA44(void *arg0)
