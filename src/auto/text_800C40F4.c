@@ -2686,10 +2686,11 @@ void fn_800CB8A4(void *arg0, void *arg1, s32 arg2) {
     fn_800C9A60(sp, -1);
 }
 
-void fn_800CB90C(M2C_UNK *arg0, s32 arg2) {
+void fn_800CB90C(M2C_UNK *arg0, M2C_UNK *unused, s32 arg2) {
     s32 fn_800C992C(M2C_UNK *, s32, s32);
     M2C_UNK sp8;
 
+    (void)unused;
     fn_800C9B6C(&sp8);
     fn_800C9B6C(arg0, fn_800C992C(&sp8, arg2, strlen(arg2)));
     fn_800C9A60(&sp8, -1);
