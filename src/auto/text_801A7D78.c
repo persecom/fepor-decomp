@@ -986,15 +986,15 @@ s32 fn_801A9FD0(void) {
 }
 
 #pragma optimization_level 1
-s32 fn_801A9FD8(void *arg0)
+s32 fn_801A9FD8(s32 arg0)
 {
     s32 z;
-    s32 x;
 
-    x = *(s32 *)((u8 *)arg0 + 0x1A0);
     z = 0;
-    x = (x >> 12) & 1;
-    return z & ~-x;
+    arg0 = *(s32 *)((u8 *)arg0 + 0x1A0);
+    arg0 = (arg0 >> 12) & 1;
+    arg0 = -arg0;
+    return z & ~arg0;
 }
 #pragma optimization_level reset
 s32 fn_801A9FF0(void) {
