@@ -5013,30 +5013,30 @@ void fn_801C19E4(u8 *arg0, u8 *arg1) {
     }
 }
 
+#pragma use_lmw_stmw on
 void fn_801C1A18(s8 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6) {
-    void *fn_8000CAF0(void *, s32, void *);
-    extern u16 lbl_80297FF8[];
+    void *fn_8000CAF0(void *, s32);
+    extern u8 lbl_80297FF8[];
     extern f64 lbl_8036B330;
     extern f32 lbl_8036B328;
+    void *obj;
+    union { f64 d; struct { u32 hi; u32 lo; } w; } conv;
+    s16 v;
 
-    // Prepare the struct pointer
-    void *temp_r3 = fn_8000CAF0(lbl_80297FF8, arg6, lbl_80297FF8);
-
-    *(u16 *)((u8 *)temp_r3 + 0x3c) = arg1;
-    *(u16 *)((u8 *)temp_r3 + 0x3e) = arg2;
-    *(u16 *)((u8 *)temp_r3 + 0x40) = arg3;
-    *(u32 *)((u8 *)temp_r3 + 0x44) = arg4;
-    *(u8 *)((u8 *)temp_r3 + 0x30) = arg0;
-    
-    // Directly compute the result of the division without intermediate variable to simplify
-    *(u16 *)((u8 *)temp_r3 + 0x36) = (s16) ((f32)arg5 / lbl_8036B328);
-    
-    *(u16 *)((u8 *)temp_r3 + 0x38) = -1;
-    *(u16 *)((u8 *)temp_r3 + 0x3a) = 0;
-    *(u8 *)((u8 *)temp_r3 + 0x48) = 1;
+    obj = fn_8000CAF0(lbl_80297FF8, arg6);
+    conv.w.hi = 0x43300000;
+    conv.w.lo = (u32)arg5 ^ 0x80000000;
+    v = (s16)((f32)(conv.d - lbl_8036B330) / lbl_8036B328);
+    *(s16 *)((u8 *)obj + 0x3C) = arg1;
+    *(s16 *)((u8 *)obj + 0x3E) = arg2;
+    *(s16 *)((u8 *)obj + 0x40) = arg3;
+    *(s32 *)((u8 *)obj + 0x44) = arg4;
+    *(s8 *)((u8 *)obj + 0x30) = arg0;
+    *(s16 *)((u8 *)obj + 0x36) = v;
+    *(s16 *)((u8 *)obj + 0x38) = -1;
+    *(s16 *)((u8 *)obj + 0x3A) = 0;
+    *(u8 *)((u8 *)obj + 0x48) = 1;
 }
-
-#pragma use_lmw_stmw on
 void fn_801C1BC0(s8 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, s32 arg5) {
     void *fn_8000CAF0(void *, s32);
     extern u8 lbl_80297FF8[];
@@ -7257,6 +7257,47 @@ void fn_801C777C(void){extern u8 lbl_802981D0[];void fn_8000BF00(void*);fn_8000B
 
 void fn_801C77A4(void) {
     fn_8000CAF0((void*)&lbl_802981D0, 4);
+}
+
+void fn_801C77D0(void *arg0) {
+    void fn_8000BF00(void *);
+    void fn_80057EDC(void);
+    void fn_8005376C(void);
+    void fn_800C4588(void *);
+    void fn_8005FA14(void *, s32);
+    void fn_800C428C(void *);
+    extern u8 lbl_802981D0[];
+    void **walk;
+    void **ptr;
+    s32 i;
+    s32 zero;
+    s32 base;
+
+    base = (s32)lbl_802981D0;
+    fn_8000BF00((void *)(base + 0x54));
+    fn_8000BF00((void *)(base + 0x7c));
+    fn_80057EDC();
+    fn_8000BF00((void *)(base + 0x24));
+    fn_8005376C();
+    ptr = *(void ***)((u8 *)arg0 + 0x30);
+    if (ptr != NULL) {
+        fn_800C4588(*ptr);
+        zero = 0;
+        walk = ptr;
+        *ptr = (void *)zero;
+        i = zero;
+        *ptr = (void *)zero;
+        do {
+            if (walk[1] != NULL) {
+                fn_8005FA14(walk[1], 0);
+                walk[1] = (void *)zero;
+            }
+            i += 1;
+            walk = (void **)((u8 *)walk + 0x14);
+        } while (i < 0x20);
+        fn_800C428C(ptr);
+    }
+    *(void **)((u8 *)arg0 + 0x30) = 0;
 }
 
 void fn_801C7880(void *arg0) {
@@ -10364,18 +10405,19 @@ fn_8000C188(arg0);fn_801475FC(lbl_8027DE48+0x2e,100);
 
 void fn_801CE744(s32 arg0) {
     void *fn_8013FF94(s32, s32, s32);
-    void *fn_8013F6B8(void *, s32 *);
+    void *fn_8013F6B8(void *, s32 *, s32 *);
     void fn_8013F748(void *, s32 *, s32 *);
     void fn_8013FF00(s32, void *);
     void *base;
     void *obj;
-    s32 tmp[2];
+    s32 tmp;
+
     base = fn_8013FF94(arg0, 0, 0);
     obj = fn_8013FF94(arg0, 2, 0);
-    tmp[0] = *(s32 *)((u8 *)base + 0x3E);
-    fn_8013F748(base, &tmp[0], &tmp[0]);
+    tmp = *(s32 *)((u8 *)base + 0x3E);
+    fn_8013F748(base, &tmp, &tmp);
     base = obj;
-    obj = fn_8013F6B8(base, &tmp[0]);
+    obj = fn_8013F6B8(base, &tmp, &tmp);
     *(s16 *)((u8 *)base + 0x4C) = *(s16 *)obj;
     *(s16 *)((u8 *)base + 0x4E) = *(s16 *)((u8 *)obj + 2);
     fn_8013FF00(arg0, fn_8013FF94(arg0, 2, 0));
@@ -10918,65 +10960,60 @@ void fn_801CFDBC(void *arg0, s32 arg1) {
     struct Ent { u8 flag; u8 pad[0xD]; };
     ((struct Ent *)((u8 *)arg0 + 0x60))[arg1].flag |= 1;
 }
-#pragma opt_strength_reduction on
-void fn_801CFDD4(void *a)
+#pragma global_optimizer off
+#pragma opt_strength_reduction off
+void fn_801CFDD4(s8 *a)
 {
-    u8* p = (u8*)a;
-    s8 x;
-    
-    x = *(s8*)(p + 0x61);
-    if (x) {
-        *(u8*)(p + 0x61) = 0x63;
-    }
+    s32 c;
+    s32 x;
+    s8 *p;
 
-    x = *(s8*)(p + 0x6f); 
+    c = 0x63;
+    x = a[0x61];
     if (x) {
-        *(u8*)(p + 0x6f) = 0x63;
+        a[0x61] = c;
     }
-    
+    x = a[0x6f];
+    if (x) {
+        a[0x6f] = c;
+    }
+    p = a;
     p += 0x1c;
-    
-    x = *(s8*)(p + 0x61);
+    x = p[0x61];
     if (x) {
-        *(u8*)(p + 0x61) = 0x63;
+        p[0x61] = c;
     }
-
-    x = *(s8*)(p + 0x6f);
+    x = p[0x6f];
     if (x) {
-        *(u8*)(p + 0x6f) = 0x63;
+        p[0x6f] = c;
     }
-
-    x = *(s8*)(p + 0x7d);
+    x = p[0x7d];
     if (x) {
-        *(u8*)(p + 0x7d) = 0x63;
+        p[0x7d] = c;
     }
-
-    x = *(s8*)(p + 0x8b);
+    x = p[0x8b];
     if (x) {
-        *(u8*)(p + 0x8b) = 0x63;
+        p[0x8b] = c;
     }
-
-    x = *(s8*)(p + 0x99);
+    x = p[0x99];
     if (x) {
-        *(u8*)(p + 0x99) = 0x63;
+        p[0x99] = c;
     }
-
-    x = *(s8*)(p + 0xa7);
+    x = p[0xa7];
     if (x) {
-        *(u8*)(p + 0xa7) = 0x63;
+        p[0xa7] = c;
     }
-
-    x = *(s8*)(p + 0xb5);
+    x = p[0xb5];
     if (x) {
-        *(u8*)(p + 0xb5) = 0x63;
+        p[0xb5] = c;
     }
-
-    x = *(s8*)(p + 0xc3);
+    x = p[0xc3];
     if (x) {
-        *(u8*)(p + 0xc3) = 0x63;
+        p[0xc3] = c;
     }
 }
-
+#pragma opt_strength_reduction on
+#pragma global_optimizer on
 void fn_801CFE80(void *arg0, s32 arg1) {
     u8 *p;
 
@@ -17578,27 +17615,22 @@ s32 fn_801E3620(void *arg0) {
     return M2C_FIELD(arg0, s32 *, 4) == 0x20050201;
 }
 
-void fn_801E3A60(void *arg0, s32 *arg1, s32 *arg2, s32 *arg3) {
-    s32 r3_1;
-    s32 temp_r4;
-    s32 temp_r5;
-    s32 temp_r6;
-    s32 temp_r7;
-    
-    temp_r4 = *(s32 *)((char *)arg0 + 0x58);
-    temp_r5 = *(s32 *)((char *)arg0 + 0x5C);
-    temp_r6 = *(s32 *)0x800000F8;
-    
-    r3_1 = temp_r4;
-    temp_r7 = __div2i(r3_1, temp_r5, 0, (u32)temp_r6 >> 2U);
-    
-    temp_r4 = temp_r7 % 60;
-    temp_r5 = (temp_r7 / 60) % 60;
-    temp_r6 = temp_r7 / 3600;
-    
-    *arg3 = temp_r4;
-    *arg2 = temp_r5;
-    *arg1 = temp_r6;
+void fn_801E3A60(void *arg0, u32 *hours, u32 *mins, u32 *secs) {
+    s64 __div2i(s32, s32, s32, s32);
+    u32 *sp;
+    u32 *hp;
+    u32 *mp;
+    u32 q;
+    s32 lo;
+
+    sp = secs;
+    hp = hours;
+    mp = mins;
+    lo = *(s32 *)((u8 *)arg0 + 0x5C);
+    q = (u32)__div2i(*(s32 *)((u8 *)arg0 + 0x58), lo, 0, (s32)(*(u32 *)0x800000F8 >> 2));
+    *sp = q % 60U;
+    *mp = (q / 60U) % 60U;
+    *hp = q / 3600U;
 }
 
 void fn_801E3B08(u8* arg0) {
