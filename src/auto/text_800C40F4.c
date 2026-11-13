@@ -18924,29 +18924,34 @@ checked:
                           M2C_FIELD(other, void **, 0x190)) == 1;
 }
 
-s32 fn_800FB548(s32 arg0, s32 arg1) {
-    s32 r4;
-    s32 r31;
-    s32 r30;
+s32 fn_800FB548(void *arg0)
+{
+    extern u8 *lbl_803678F8;
+    s32 fn_802342B8(void *, void *);
+    void *key;
+    void **list;
+    void *item;
+    u8 found;
 
-    // The original uses a complex access pattern with multiple registers
-    r4 = *(u32*)(arg0 + 0x188);
-    r31 = *(u32*)r4; 
-    r30 = *(u32*)(r31 + 0x14); 
+    key = **(void ***)((u8 *)arg0 + 0x188);
+    list = *(void ***)(lbl_803678F8 + 0x14);
 
-    if (r30 == 0) {
+    goto load;
+    do {
+        if (fn_802342B8(item, key) == 0) {
+            found = 1;
+            goto done;
+        }
+    load:
+        item = *list;
+        list++;
+    } while (item != NULL);
+    found = 0;
+done:
+    if (found == 0) {
         return 0;
     }
-
-    // The rest of the function
-    r30 = *(u32*)r30;
-    r30 += 4;
-    
-    if (r30 != 0) {
-        return 1;
-    } else {
-        return 0;
-    }
+    return 1;
 }
 
 s32 fn_800FB5C8(void *arg0) {
