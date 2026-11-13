@@ -9593,6 +9593,42 @@ void fn_8019B8A0(s32 arg0, s32 arg1) {
     M2C_FIELD(temp_r31, u8 *, 0x5C) = 2;
 }
 
+void fn_8019B904(void *arg0) {
+    void *fn_80053C30(void *, void *);
+    void fn_800536D8(void *, void *);
+    void fn_8005306C(void *);
+    void fn_80053658(void *, s32, void *);
+    void fn_80184C7C(void *, s32, s32, s32);
+    void fn_80184BE8(void *, s32, s32, s32);
+    extern void fn_8019B9F0(void);
+    void *temp;
+    void *unit;
+    void *p;
+    s32 mode;
+
+    temp = fn_80053C30((u8 *)arg0 + 0x41, arg0);
+    fn_800536D8(temp, *(void **)*(void **)((u8 *)arg0 + 0x34));
+    fn_8005306C(temp);
+    *(void **)((u8 *)*(void **)((u8 *)temp + 0x30) + 0x40) = fn_8019B9F0;
+    fn_80053658(temp, 0, arg0);
+    p = *(void **)*(void **)((u8 *)arg0 + 0x34);
+    if (p != NULL) {
+        unit = *(void **)((u8 *)p + 0x280);
+    } else {
+        unit = NULL;
+    }
+    if (unit != NULL && !(*(u32 *)((u8 *)unit + 0x1A0) & 0x010000DC)) {
+        mode = *(u8 *)((u8 *)arg0 + 0x5C);
+        switch (mode) {
+        case 0:
+        case 1:
+            fn_80184C7C(unit, 9, 0x10, 0);
+            fn_80184BE8(unit, 8, 0x10, 0);
+            break;
+        }
+    }
+}
+
 typedef struct { s32 x, y, z; } Word3B9;
 s32 fn_8019B9F0(void *arg0) {
     void *fn_80018ADC(void);
