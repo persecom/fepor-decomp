@@ -3241,6 +3241,23 @@ void *fn_80032B4C(void) {
     return (u8 *)lbl_802695F0 + 0x14F;
 }
 
+s32 fn_80032B5C(void *arg0, void *arg1) {
+    extern u8 lbl_802EF4C8[];
+    u8 *src;
+    u8 b0;
+    u8 b1;
+
+    src = *(u8 **)((u8 *)arg1 + 0x40);
+    if (src == NULL) {
+        return 0x10;
+    }
+    b1 = src[1];
+    b0 = src[0];
+    lbl_802EF4C8[0xF] = b0;
+    lbl_802EF4C8[0x10] = b1;
+    return 5;
+}
+
 #pragma cplusplus on
 extern "C" void fn_80090688(void *, s32, s32);
 extern "C" void fn_80032B90(void *arg0, void *arg1) {
