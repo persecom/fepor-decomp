@@ -121,6 +121,17 @@ s32 fn_80017290(u8 *arg0) {
     return *(u8 *)((char *)temp_r3 + 3);
 }
 
+s32 fn_800172D4(u8 *arg0) {
+    void *fn_8014C5A8(void *, u8);
+    void *temp_r3;
+
+    temp_r3 = fn_8014C5A8(lbl_80330708, *arg0);
+    if (temp_r3 == NULL) {
+        return -1;
+    }
+    return *(u8 *)((char *)temp_r3 + 2);
+}
+
 s32 fn_80017318(u8 *arg0) {
     u8 *p;
 
