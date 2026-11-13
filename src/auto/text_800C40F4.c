@@ -8675,7 +8675,6 @@ void *fn_800DDB94(void *arg0)
     extern void fn_800C9A60(void *, s32);
 
     u32 temp[3];
-    void *source;
     void *result;
 
     temp[1] = 0;
@@ -8683,19 +8682,15 @@ void *fn_800DDB94(void *arg0)
     temp[2] = 0;
     temp[1] = 0;
 
-    source = fn_800D59CC((u8 *)arg0 + 0x68);
-
     fn_800C9758(
         temp,
-        (u8 *)source + 0xC,
+        (void *)((u32)fn_800D59CC((u8 *)arg0 + 0x68) + 0xC),
         0,
         -1
     );
 
     result = fn_800C93EC(temp);
-
     fn_800C9A60(temp, -1);
-
     return result;
 }
 
@@ -13577,20 +13572,38 @@ void fn_800E9AE4(s32 arg0) {
     fn_8000CAA0(lbl_8028E484, arg0);
 }
 
+#pragma global_optimizer off
 void fn_800E9B10(void) {
+    struct CardWork {
+        u8 workArea[0xA000];
+        s32 chan;
+        volatile s32 result;
+        s32 sectorSize;
+        s32 unkA00C;
+        s32 unkA010;
+        s32 unkA014;
+        u8 unkA018;
+        u8 unkA019;
+        u8 busy;
+        u8 padA01B;
+        u8 buf[0x18];
+        s32 unkA034;
+    };
     s32 fn_8021BF10(s32, void *, void *);
-    M2C_UNK fn_8021C02C(void *);
-    extern M2C_UNK lbl_802725D8;
-    extern M2C_UNK lbl_80320C20;
-    void *temp_r31;
+    void fn_8021C02C(void *);
+    extern struct CardWork lbl_80320C20;
+    extern u8 lbl_802725D8[];
+    u8 *hi;
+    void *temp;
 
-    temp_r31 = &lbl_80320C20 + 0xA01C;
-    M2C_FIELD(&lbl_80320C20, s32 *, 0xA004) = fn_8021BF10(M2C_FIELD(&lbl_80320C20, s32 *, 0xA000), &lbl_802725D8 + 0x70, temp_r31);
-    if ((s32) M2C_FIELD(&lbl_80320C20, s32 *, 0xA004) != -4) {
-        fn_8021C02C(temp_r31);
+    hi = (u8 *)&lbl_80320C20 + 0x10000;
+    temp = hi - 0x5FE4;
+    lbl_80320C20.result = fn_8021BF10(*(s32 *)(hi - 0x6000), lbl_802725D8 + 0x70, temp);
+    if (lbl_80320C20.result != -4) {
+        fn_8021C02C(temp);
     }
 }
-
+#pragma global_optimizer reset
 void fn_800E9B80(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     struct CardWork {
         u8 workArea[0xA000];
