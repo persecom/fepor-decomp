@@ -639,6 +639,25 @@ s32 fn_801FE32C(void) {
     return fn_8000C0C0(&lbl_8029B634) != 0;
 }
 
+void *fn_801FE360(void) {
+    void *fn_8000CAF0(void *, s32);
+    extern s32 lbl_803682A4;
+    extern u8 lbl_80281F00[];
+    void *temp;
+
+    if (lbl_803682A4 & 0x20) {
+        return NULL;
+    }
+    if (lbl_803682A4 & 0x40) {
+        temp = fn_8000CAF0(lbl_8029B634, 3);
+        M2C_FIELD(temp, u8 **, 0x34) = lbl_80281F00 + 0x2F;
+        return temp;
+    }
+    temp = fn_8000CAF0(lbl_8029B634, 3);
+    M2C_FIELD(temp, u8 **, 0x34) = lbl_80281F00 + 0x3E;
+    return temp;
+}
+
 void fn_801FE3DC(void *arg0) {
     void fn_8003F670(u32);
     extern u32 lbl_80368438;
