@@ -356,6 +356,7 @@ s32 fn_80013D4C(void)
     u8 *node;
     u8 *prev;
     u8 *next;
+    u8 *head;
     void *entry;
     void *target;
     s32 offset;
@@ -392,9 +393,10 @@ s32 fn_80013D4C(void)
         offset += 4;
     }
 
-    prev = (u8 *)lbl_80367190;
+    head = (u8 *)lbl_80367190;
 
-    if (prev != node) {
+    if (head != node) {
+        prev = head;
         while ((next = *(u8 **)(prev + 0x1C)) != node) {
             prev = next;
         }
