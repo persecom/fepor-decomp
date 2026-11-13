@@ -9824,6 +9824,17 @@ void fn_8019D458(void *arg0) {
     fn_80184618(M2C_FIELD(arg0, s32 *, 0x30), arg0);
 }
 
+void fn_8019D4B4(void *arg0) {
+    void *fn_80018ADC(void);
+    void fn_8004BE88(void *, s32);
+    extern f32 lbl_8036AF40;
+    void *tmp;
+
+    tmp = fn_80018ADC();
+    *(f32 *)((u8 *)tmp + 0x70) = lbl_8036AF40;
+    fn_8004BE88(*(void **)((u8 *)arg0 + 0x30), 0);
+}
+
 void fn_8019D4F4(void *arg0) {
     M2C_UNK fn_8004FC70(s32, M2C_UNK);
     fn_8004FC70(M2C_FIELD(arg0, s32 *, 0x30), 5);
