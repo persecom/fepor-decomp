@@ -10913,6 +10913,32 @@ u8 fn_80179284(void) {
     return (u8)ret;
 }
 
+s32 fn_801792C8(s32 arg0, void *arg1, void *arg2) {
+    void *fn_8000CAA0(void *, void *);
+    void fn_8000C5B8(void *);
+    void fn_8000A430(void *);
+    extern u8 lbl_80294580[];
+    extern u16 lbl_80278080[];
+    extern u32 lbl_802EF4C8[];
+    void *obj;
+    f32 x;
+    f32 y;
+
+    if (*(u8 *)((u8 *)arg2 + 0x39) == 2) {
+        x = (f32)(*(s16 *)((u8 *)arg1 + 0x30) + *(s16 *)((u8 *)arg2 + 0x30));
+        y = (f32)(*(s16 *)((u8 *)arg1 + 0x32) + *(s16 *)((u8 *)arg2 + 0x32));
+        obj = fn_8000CAA0(lbl_80294580, arg1);
+        *(f32 *)((u8 *)obj + 0x30) = x;
+        *(f32 *)((u8 *)obj + 0x34) = y;
+        *(void **)((u8 *)obj + 0x54) = (u8 *)lbl_80278080 + 0x67e;
+        return 0;
+    }
+    *((u8 *)lbl_802EF4C8 + 8) = 0x80;
+    fn_8000C5B8(arg1);
+    fn_8000A430(arg1);
+    return 4;
+}
+
 void fn_801793B4(void) {
     M2C_UNK fn_80009B80(M2C_UNK);
     fn_8000A258();
@@ -12119,38 +12145,97 @@ void fn_8017B5F4(void *arg0, s16 arg1, s16 arg2, u8 arg3, void *arg4, s32 arg5, 
     fn_80009B8C(0xFF);
     fn_8000A248();
 }
-void fn_8017B728(void *arg0, s16 arg1, s16 arg2, s32 arg3, void *arg4, s32 arg5, u8 arg6) {
+#pragma use_lmw_stmw on
+void fn_8017B728(void *arg0, s32 arg1, s32 arg2, s32 arg3, void *arg4, s32 arg5, u8 arg6) {
     void fn_8000A258(void);
     void fn_8000A174(s32, u16);
     void fn_80009B8C(s32);
     void fn_8000A248(void);
     s32 fn_800102BC(s32, f32);
-    M2C_UNK fn_8001019C(s16, s16, u8, void *, s32);
-    M2C_UNK fn_8005AC24(void *, s16, s16, u8);
+    void fn_8001019C(s16, s16, s32, void *, ...);
+    void fn_8005AC24(void *, s16, s16, u8);
     s32 fn_8010586C(void *);
     extern u8 lbl_80278780[];
     extern u8 lbl_802F0350[];
     extern f32 lbl_8036AB94;
-    u8 var_r31;
-    s16 temp_r28;
-    (void)arg5;
+    void *self;
+    void *unit;
+    s32 color;
+    u8 flag;
+    s32 a2;
+    s32 a1;
+    s32 ret;
 
-    var_r31 = 0;
+    self = arg0;
+    a1 = arg1;
+    a2 = arg2;
+    color = arg3;
+    unit = arg4;
+    flag = 0;
     if (arg6 != 0) {
-        var_r31 = 0x12;
+        flag = 0x12;
     }
     fn_8000A258();
-    fn_8000A174(0, (u16) (M2C_FIELD(arg0, s32 *, 0x34) | 3));
-    fn_80009B8C(arg3);
+    fn_8000A174(0, (u16)(*(s32 *)((u8 *)self + 0x34) | 3));
+    fn_80009B8C(color);
     fn_8000A248();
-    temp_r28 = (s16) ((s32) (0x20 - fn_800102BC(-1, lbl_8036AB94)) >> 1);
-    fn_8001019C((s16) (arg1 + 0x20), (s16) (arg2 + temp_r28), var_r31, (u8 *)lbl_80278780 + 0xB3, fn_8010586C(arg4));
-    fn_8005AC24((void *)lbl_802F0350, arg1, arg2, M2C_FIELD(arg4, u8 *, 0x19));
+    color = (s16)((0x20 - fn_800102BC(-1, lbl_8036AB94)) >> 1);
+    ret = fn_8010586C(unit);
+    a1 = (s16)a1;
+    a2 = (s16)a2;
+    fn_8001019C((s16)(a1 + 0x20), (s16)(a2 + color), flag, lbl_80278780 + 0xB3, ret);
+    fn_8005AC24(lbl_802F0350, (s16)a1, (s16)a2, *((u8 *)unit + 0x19));
     fn_8000A258();
     fn_80009B8C(0xFF);
     fn_8000A248();
 }
 
+#pragma use_lmw_stmw on
+void fn_8017B810(void *arg0, s32 arg1, s32 arg2, s32 arg3, void *arg4, s32 arg5, u8 arg6) {
+    void fn_8000A258(void);
+    void fn_8000A174(s32, u16);
+    void fn_80009B8C(s32);
+    void fn_8000A248(void);
+    s32 fn_800102BC(s32, f32);
+    void fn_8001019C(s16, s16, s32, void *, ...);
+    void fn_8005AC24(void *, s16, s16, u8);
+    s32 fn_8010586C(void *);
+    extern u8 lbl_80278780[];
+    extern u8 lbl_802F0350[];
+    extern f32 lbl_8036AB94;
+    u8 flag;
+    s32 a2;
+    s32 a1;
+    s32 color;
+    void *unit;
+    void *self;
+
+    self = arg0;
+    a1 = arg1;
+    a2 = arg2;
+    color = arg3;
+    unit = arg4;
+    flag = 0;
+    if (arg6 != 0) {
+        flag = 0x11;
+    }
+    fn_8000A258();
+    fn_8000A174(0, (u16)(*(s32 *)((u8 *)self + 0x34) | 3));
+    fn_80009B8C(color);
+    fn_8000A248();
+    color = (s16)((0x20 - fn_800102BC(-1, lbl_8036AB94)) >> 1);
+    {
+        s32 ret;
+        ret = fn_8010586C(unit);
+        a1 = (s16)a1;
+        a2 = (s16)a2;
+        fn_8001019C((s16)(a1 + 0x20), (s16)(a2 + color), flag, lbl_80278780 + 0xB3, ret);
+    }
+    fn_8005AC24(lbl_802F0350, (s16)a1, (s16)a2, *((u8 *)unit + 0x19));
+    fn_8000A258();
+    fn_80009B8C(0xFF);
+    fn_8000A248();
+}
 s32 fn_8017B8F8(s32 unused, s32 arg1) {
     return arg1 != 0;
 }
