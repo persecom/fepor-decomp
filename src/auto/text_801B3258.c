@@ -12896,6 +12896,7 @@ void fn_801D3BD0(void *arg0) {
     fn_801457B4();
 }
 
+#pragma opt_common_subs off
 void fn_801D3C88(void *arg0) {
     void *fn_800C4638(s32, void *, s32);
     void fn_8006EEFC(void *, void *);
@@ -12906,22 +12907,23 @@ void fn_801D3C88(void *arg0) {
     extern u8 lbl_8027E258[];
     extern s32 lbl_803682E4;
     extern void fn_801D8E80(void);
+    void *obj;
 
-    void *obj = fn_800C4638(0x544, lbl_8027E258 + 0x27b, 0);
-    *(void **)((char*)arg0 + 0x30) = obj;
-    *(s32*)((char*)obj + 0xC) = 0;
-    *(s32*)((char*)obj + 8) = 0;
-    *(u8*)((char*)obj + 0x5A) = 0;
-    *(u8*)((char*)obj + 0x10) = *(u8*)((char*)arg0 + 0x34);
-    fn_8006EEFC((char*)obj + 8, lbl_8027E258 + 0x27c);
-    lbl_803682E4 = *(s32*)((char*)obj + 8);
+    obj = fn_800C4638(0x544, lbl_8027E258 + 0x27b, 0);
+    *(void **)((u8 *)arg0 + 0x30) = obj;
+    *(s32 *)((u8 *)obj + 0xC) = 0;
+    *(s32 *)((u8 *)obj + 8) = 0;
+    *(u8 *)((u8 *)obj + 0x5A) = 0;
+    *(u8 *)((u8 *)obj + 0x10) = *(s32 *)((u8 *)arg0 + 0x34);
+    fn_8006EEFC((u8 *)obj + 8, lbl_8027E258 + 0x27c);
+    lbl_803682E4 = *(s32 *)((u8 *)obj + 8);
     fn_80162054();
-    *(u8*)((char*)obj + 0x5A) = 1;
+    *(u8 *)((u8 *)obj + 0x5A) = 1;
     fn_80145828();
-    *(s32*)((char*)obj + 0xC) = fn_80059208(fn_801D8E80, arg0);
+    *(s32 *)((u8 *)obj + 0xC) = fn_80059208(fn_801D8E80, arg0);
     fn_8008A290(2, 0xfa);
 }
-
+#pragma opt_common_subs reset
 void fn_801D3D3C(void *arg0) {
  void *fn_800D3590(void *);
  void *fn_801DE370(void *);
