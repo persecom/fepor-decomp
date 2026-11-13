@@ -3,14 +3,11 @@
 #include "common.h"
 
 void fn_801B3220(void) {
-    void __register_global_object(void *, void *);
+    void *__register_global_object(void *, void (*)(void), void *);
     void *fn_8001C76C(void *);
-    extern void fn_8001C5F8;
+    void fn_8001C5F8(void);
     extern u8 lbl_80331C60[];
-    extern u8 lbl_80368230[];
+    extern u8 lbl_80368230;
 
-    void *temp_r3 = fn_8001C76C(lbl_80368230);
-    void *temp_r4 = &fn_8001C5F8;
-    void *temp_r5 = lbl_80331C60;
-    __register_global_object(temp_r4, temp_r5);
+    __register_global_object(fn_8001C76C(&lbl_80368230), fn_8001C5F8, lbl_80331C60);
 }
