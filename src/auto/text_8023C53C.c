@@ -4246,8 +4246,8 @@ s32 fn_8024B518(s32 arg0, s32 arg1, s32 arg2, s32 arg3, M2C_UNK arg_sp0) {
 }
 
 u16 fn_8024B594(s32 arg0, s32 arg1) {
-    extern M2C_UNK lbl_8034BDD0;
-    return *(&lbl_8034BDD0 + ((arg0 << 5) & 0x1FE0) + ((arg1 * 2) & 0x1FE));
+    extern u8 lbl_8034BDD0[];
+    return *(u16 *)(lbl_8034BDD0 + ((arg0 & 0xFF) << 5) + ((arg1 & 0xFF) << 1));
 }
 
 s32 fn_8024B5B0(u32 arg0) {
