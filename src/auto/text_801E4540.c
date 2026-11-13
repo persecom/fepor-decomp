@@ -7,6 +7,44 @@ struct UnkStruct {
     u32 field_8;
 };
 
+void fn_801E4540(void)
+{
+    void fn_800C0818(s32);
+    void fn_8008A290(s32, s32);
+    s32 fn_801270A4(void);
+    void *fn_8000CAA0(void *, s32);
+    void fn_80142060(void *);
+    void fn_8000C070(void *, s32);
+    extern u8 lbl_80299FE0[];
+    u8 *ptr;
+
+    fn_800C0818(1);
+    fn_8008A290(1, 0);
+    ptr = (u8 *)fn_8000CAA0(lbl_80299FE0, fn_801270A4());
+    if (ptr == 0) {
+        return;
+    }
+    *(u8 *)(ptr + 0x30) = 0;
+    *(u8 *)(ptr + 0x31) = 0;
+    *(u8 *)(ptr + 0x32) = 0;
+    *(u8 *)(ptr + 0x33) = 0;
+    *(u8 *)(ptr + 0x34) = 0;
+    *(u16 *)(ptr + 0x36) = 0;
+    *(u16 *)(ptr + 0x38) = 0;
+    *(u16 *)(ptr + 0x3A) = 8;
+    *(s16 *)(ptr + 0x3C) = -1;
+    *(s16 *)(ptr + 0x3E) = -1;
+    *(u32 *)(ptr + 0x40) = 0;
+    *(u32 *)(ptr + 0x44) = 0;
+    *(u32 *)(ptr + 0x48) = 0;
+    *(u32 *)(ptr + 0x4C) = 0;
+    fn_80142060(ptr + 0x50);
+    *(u32 *)(ptr + 0x5C) = 0;
+    *(u32 *)(ptr + 0x60) = 0;
+    *(u32 *)(ptr + 0x64) = 0;
+    fn_8000C070(ptr, 3);
+}
+
 s32 fn_801E45FC(void) {
     extern char lbl_80299FA8[];
     return *(s32*)((u8*)lbl_80299FA8 + 4);
@@ -2345,10 +2383,38 @@ s32 fn_801E91E8(void *arg0, u8 *arg1) {
     return var_r8;
 }
 
-s32 fn_801E960C(s32 arg0, s32 arg1)
-{
-    s32 temp = arg0 + 1;
-    return temp * arg1;
+void fn_801E960C(void *arg0) {
+    void fn_80105D4C(void *, u8);
+    void fn_80013A90(void *);
+    void fn_80013A6C(void *);
+    void fn_800138F4(void);
+    void fn_800C08AC(void *, void *);
+    extern u8 lbl_80330708[];
+    extern u8 lbl_8027EB78[];
+    void **node;
+    s8 idx;
+    u8 t;
+
+    t = *(u8 *)((u8 *)arg0 + 0x33);
+    node = *(void ***)((u8 *)arg0 + 0x58);
+    idx = (s8)t;
+    if (idx >= 0) {
+        while (idx > 0) {
+            node = (void **)node[1];
+            idx -= 1;
+        }
+    } else {
+        while (idx < 0) {
+            node = (void **)*node;
+            idx += 1;
+        }
+    }
+    fn_80105D4C(lbl_80330708 + 0x84, *(u8 *)node[2]);
+    fn_80013A90(lbl_8027EB78 + 0x1C7);
+    fn_80013A6C(*(void **)((u8 *)node[2] + 0x10));
+    fn_80013A6C(*(void **)((u8 *)node[2] + 0x14));
+    fn_800138F4();
+    fn_800C08AC(lbl_8027EB78 + 0x1D6, arg0);
 }
 
 void fn_801E96D0(void *arg0, void *arg1) {
