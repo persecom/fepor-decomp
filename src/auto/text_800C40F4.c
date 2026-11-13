@@ -13575,28 +13575,24 @@ void fn_800E8AA0(void *arg0, s32 arg1, f32 farg0, f32 farg1, s32 arg2) {
 }
 
 void fn_800E8AF0(void *arg0) {
-    f64 fn_80238638(f32);
-    extern f32 lbl_80369F78;
-    s32 temp1 = M2C_FIELD(arg0, s32 *, 0x120);
-    if (temp1 > 0) {
-        u8 temp2 = M2C_FIELD(arg0, u8 *, 0x124);
-        if (temp2 != 0) {
-            f64 d = fn_80238638(M2C_FIELD(arg0, f32 *, 0x114));
-            f32 c = (f32)d;
-            M2C_FIELD(arg0, f32 *, 0x11C) = M2C_FIELD(arg0, f32 *, 0x108) * c;
-            M2C_FIELD(arg0, f32 *, 0x118) = lbl_80369F78;
+    f64 fn_80238638(f64);
+
+    if (M2C_FIELD(arg0, s32 *, 0x120) > 0) {
+        if (M2C_FIELD(arg0, u8 *, 0x124) != 0) {
+            M2C_FIELD(arg0, f32 *, 0x11C) =
+                M2C_FIELD(arg0, f32 *, 0x108) * (f32)fn_80238638(M2C_FIELD(arg0, f32 *, 0x114));
+            M2C_FIELD(arg0, f32 *, 0x118) = 0.0f;
         } else {
-            f64 d = fn_80238638(M2C_FIELD(arg0, f32 *, 0x114));
-            f32 c = (f32)d;
-            M2C_FIELD(arg0, f32 *, 0x118) = M2C_FIELD(arg0, f32 *, 0x108) * c;
-            M2C_FIELD(arg0, f32 *, 0x11C) = lbl_80369F78;
+            M2C_FIELD(arg0, f32 *, 0x118) =
+                M2C_FIELD(arg0, f32 *, 0x108) * (f32)fn_80238638(M2C_FIELD(arg0, f32 *, 0x114));
+            M2C_FIELD(arg0, f32 *, 0x11C) = 0.0f;
         }
-        M2C_FIELD(arg0, f32 *, 0x114) = M2C_FIELD(arg0, f32 *, 0x114) + M2C_FIELD(arg0, f32 *, 0x10C);
-        M2C_FIELD(arg0, f32 *, 0x108) = M2C_FIELD(arg0, f32 *, 0x108) + M2C_FIELD(arg0, f32 *, 0x110);
-        if (M2C_FIELD(arg0, f32 *, 0x108) < lbl_80369F78) {
-            M2C_FIELD(arg0, f32 *, 0x108) = lbl_80369F78;
+        M2C_FIELD(arg0, f32 *, 0x114) += M2C_FIELD(arg0, f32 *, 0x10C);
+        M2C_FIELD(arg0, f32 *, 0x108) += M2C_FIELD(arg0, f32 *, 0x110);
+        if (M2C_FIELD(arg0, f32 *, 0x108) < 0.0f) {
+            M2C_FIELD(arg0, f32 *, 0x108) = 0.0f;
         }
-        M2C_FIELD(arg0, s32 *, 0x120) = M2C_FIELD(arg0, s32 *, 0x120) - 1;
+        M2C_FIELD(arg0, s32 *, 0x120)--;
     }
 }
 
