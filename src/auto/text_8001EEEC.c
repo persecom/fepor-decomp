@@ -2132,23 +2132,18 @@ void *fn_800241C8(void *arg0) {
     void *var_r5;
     void *var_r6;
 
-    var_r6 = M2C_FIELD(arg0, void **, 0x18);
+    var_r6 = *(void **)((u8 *)arg0 + 0x18);
     var_r5 = arg0;
 
-loop_6:
-    if (*(volatile u32 *)var_r6 != *(volatile u32 *)arg0) {
-        return var_r5;
-    }
-
-    if (var_r6 == NULL) {
-        return var_r5;
-    }
-
-    var_r5 = var_r6;
-    var_r6 = M2C_FIELD(var_r6, void **, 0x18);
-
-    if (var_r6 != NULL) {
-        goto loop_6;
+    while (var_r6 != NULL) {
+        if (*(u32 *)var_r6 != *(u32 *)arg0) {
+            return var_r5;
+        }
+        if (var_r6 == NULL) {
+            return var_r5;
+        }
+        var_r5 = var_r6;
+        var_r6 = *(void **)((u8 *)var_r6 + 0x18);
     }
 
     return NULL;
