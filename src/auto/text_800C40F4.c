@@ -1931,6 +1931,55 @@ void fn_800C908C(void *arg0, String *arg1, s32 *arg2) {
     fn_800C802C(arg0, 0);
 }
 
+#pragma use_lmw_stmw on
+#pragma auto_inline off
+void *fn_800C9120(void *arg0, s16 arg1) {
+    void fn_800C426C(void *);
+    void fn_800C428C(void *);
+    void *fn_800C9A60(void *, s16);
+
+    s32 off;
+    void *item;
+    s32 i;
+    s32 n;
+    void *self;
+
+    self = arg0;
+    if (self != NULL) {
+        i = 0;
+        off = 0;
+        while (i < (n = *(s32 *)((u8 *)self + 0x18))) {
+            if (i < n) {
+                item = *(void **)((u8 *)*(void **)((u8 *)self + 0x14) + off);
+            } else {
+                item = NULL;
+            }
+            if (*(u32 *)((u8 *)item + 4) != 0) {
+                fn_800C426C((u8 *)*(u32 *)((u8 *)item + 4) - 0x10);
+            }
+            fn_800C428C(item);
+            i += 1;
+            off += 4;
+        }
+        if ((s32)self + 0xC != 0) {
+            if ((u8 *)self + 0xC != NULL) {
+                if ((s32)((u8 *)self + (unsigned short)0xC) != 0) {
+                    if (*(void **)((u8 *)self + 0x14) != NULL) {
+                        fn_800C428C(*(void **)((u8 *)self + 0x14));
+                    }
+                }
+            }
+        }
+        fn_800C9A60(self, -1);
+        if (arg1 > 0) {
+            fn_800C428C(self);
+        }
+    }
+    return self;
+}
+#pragma auto_inline reset
+#pragma use_lmw_stmw reset
+
 void fn_800C91EC(void* arg0, void* arg1) {
     // This function is performing complex data initialization and copying
     if (arg0 != NULL && arg1 != NULL) {
