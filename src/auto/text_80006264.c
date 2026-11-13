@@ -2771,14 +2771,10 @@ void fn_8000B018(void *arg0) {
 }
 
 void fn_8000B050(void *arg0) {
-    s32 *node;
-    s32 *next;
-    u32 word;
-
-    node = ((s32 **)arg0)[1];
-    word = (u32)node[2];
-    next = node + 3;
-    ((s32 **)arg0)[1] = next;
+    void **p = (void **)((char *)arg0 + 4);
+    u32 *node = *p;
+    u32 word = *(u32 *)((char *)node + 8);
+    *p = (void *)((char *)node + 0xC);
     ((void (*)(void *, s16, s16))word)(arg0, (s16)word, (s16)(word >> 16));
 }
 
@@ -2831,15 +2827,11 @@ int fn_8000B128(void *arg0)
 }
 
 int fn_8000B180(void *arg0) {
-    void **callback_data;
-    int (*callback)(void *);
-
-    callback_data = *(void ***)((u8 *)arg0 + 4);
-    callback = (int (*)(void *))callback_data[1];
-
-    *(void **)((u8 *)arg0 + 4) = callback_data + 2;
-
-    return (u8)callback(callback_data[1]) == 0;
+    void **p = (void **)((char *)arg0 + 4);
+    void *obj = *p;
+    int (*fn)(void *) = *(int (**)(void *))((char *)obj + 4);
+    *p = (void *)((char *)obj + 8);
+    return (u8)fn(arg0) == 0;
 }
 
 void fn_8000B1C0(void *arg0) {
