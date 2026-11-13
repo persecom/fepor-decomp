@@ -4666,8 +4666,7 @@ loop_check:
 
 extern u16 lbl_8029B520[];
 s32 fn_801FBC30(s32 arg0) {
-    s32 temp = arg0 * 2;
-    return lbl_8029B520[temp];
+    return ((s32 **)lbl_8029B520)[1][arg0];
 }
 
 void fn_801FBC84(void);
