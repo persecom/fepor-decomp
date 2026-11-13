@@ -2075,9 +2075,9 @@ String *fn_800C99A0(String *arg0, const String *arg1, u32 pos, u32 n) {
     void *memcpy(void *, const void *, u32);
     extern char __files[];
     extern char lbl_80270350[];
-    u32 rest;
-    u32 len;
     u32 size;
+    u32 len;
+    u32 rest;
 
     if (pos > arg1->size) {
         fn_80232058(__files + 0xA0, lbl_80270350 + 0xEE);
