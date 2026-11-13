@@ -4452,6 +4452,34 @@ void fn_8003D2C4(void *arg0) {
     self->unk1A0 &= 0xFFFBFFFF;
     fn_800381EC(self, (s8)fn_8003B2D0(self));
 }
+
+s32 fn_8003D538(s32 arg0) {
+    u8 fn_80105BC0(s32, s32);
+    void *fn_8000D354(void *);
+    void *tmp;
+    void *resolved;
+
+    if (fn_80105BC0(arg0 + 0x1BC, 2) != 0) {
+        return 0;
+    }
+    if (fn_80105BC0(arg0 + 0x1BC, 8) != 0) {
+        return 0;
+    }
+    if (fn_80105BC0(arg0 + 0x1BC, 0x4D) != 0) {
+        return 0;
+    }
+    tmp = *(void **)((u8 *)*(void **)(arg0 + 0x18C) + 0xC);
+    if (tmp != NULL) {
+        resolved = fn_8000D354(tmp);
+    } else {
+        resolved = NULL;
+    }
+    if (resolved == NULL) {
+        return 0;
+    }
+    return (s8)*(u8 *)(arg0 + 0x19A) >= 0xA;
+}
+
 #pragma opt_strength_reduction reset
 void fn_8003D5FC(void *arg0, u8 arg1) {
     if (arg1 != 0) {
@@ -5684,6 +5712,52 @@ label_1:
 
     return 1;
 }
+
+#pragma use_lmw_stmw on
+void fn_8003FED8(u8 *arg0) {
+    void fn_8000D1D0(void *);
+    u32 j;
+    u8 *obj;
+    u32 *p30;
+    u8 *p29;
+    u32 *p28;
+    u32 *scan;
+    u32 count;
+    void *da;
+
+    obj = arg0;
+    j = 0;
+    {
+        u32 t4 = *(u32 *)(arg0 + 4);
+        u32 t8 = *(u32 *)(arg0 + 8);
+        u32 tC = *(u32 *)(arg0 + 0xC);
+        u32 t10 = *(u32 *)(obj + 0x10);
+        p30 = (u32 *)((u8 *)obj + (t4 & ~3u));
+        t8 <<= 2;
+        tC <<= 3;
+        t10 <<= 3;
+        p30 = (u32 *)((u8 *)p30 + 0x20);
+        p28 = (u32 *)((u8 *)p30 + t8);
+        p29 = (u8 *)p28 + tC + t10;
+    }
+
+    while (j < *(u32 *)(obj + 0xC)) {
+        scan = p30;
+        count = *(u32 *)(obj + 8);
+        da = p29 + p28[1];
+        for (; count != 0; count--) {
+            if (*p28 == *scan) {
+                break;
+            }
+            scan += 1;
+        }
+        fn_8000D1D0(da);
+        p28 += 2;
+        j += 1;
+    }
+    obj[0x1F] = 0;
+}
+#pragma use_lmw_stmw reset
 
 void fn_8003FF90(void *arg0, u32 arg1) {
     void *fn_8000CAF0(void *, s32);
