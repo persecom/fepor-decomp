@@ -15407,6 +15407,52 @@ void fn_801DF4A4(void *arg0, s32 arg1) {
     fn_80161AA8(0x10, arg1, h - 0x10, arg1, 0x10, &col);
 }
 
+#pragma cplusplus on
+extern "C" void *fn_801DF50C(void *arg0, s16 arg1) {
+    struct Obj {
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2() = 0;
+    };
+    struct Owner {
+        void *vtbl;
+        u8 pad4[0x4C];
+        void *sub50;
+        u8 pad54[0x24];
+        void *sub78;
+    };
+    void fn_800C428C(void *);
+    extern u8 lbl_80299D90[];
+    extern u8 lbl_80295478[];
+    extern u8 lbl_80292230[];
+    extern u8 lbl_8028FDB0[];
+    Owner *self;
+
+    self = (Owner *)arg0;
+    if (arg0) {
+        self->vtbl = lbl_80299D90;
+        if (&self->sub78) {
+            self->sub78 = lbl_80295478;
+            ((Obj *)&self->sub78)->v2();
+        }
+        if (&self->sub50) {
+            self->sub50 = lbl_80295478;
+            ((Obj *)&self->sub50)->v2();
+        }
+        if (arg0) {
+            self->vtbl = lbl_80292230;
+            if (arg0) {
+                self->vtbl = lbl_8028FDB0;
+            }
+        }
+        if (arg1 > 0) {
+            fn_800C428C(arg0);
+        }
+    }
+    return arg0;
+}
+#pragma cplusplus reset
+
 extern u8 lbl_80299F4C[];
 void fn_801DF5D8(void) {
     extern u8 lbl_80299F4C[];
