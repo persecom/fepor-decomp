@@ -2048,13 +2048,25 @@ void fn_80009C20(
 }
 
 void fn_80009D74(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
-    if (arg0 <= arg1) {
-        arg0 = arg1;
+    void fn_80202540(void *, f32, f32, f32);
+    void fn_802025C0(void *, f32, f32, f32);
+    void fn_80202024(void *, void *, void *);
+    void fn_80201FF0(void *, void *);
+    extern f32 lbl_80368B94;
+    extern u16 lbl_80367140;
+    f32 tmp[12];
+    f32 mtx[12];
+
+    if (lbl_80368B94 == arg3) {
+        fn_80202540(mtx, arg0, arg1, arg2);
+    } else {
+        fn_802025C0(tmp, arg3, arg3, lbl_80368B94);
+        fn_80202540(mtx, arg0, arg1, arg2);
+        fn_80202024(mtx, tmp, mtx);
     }
-    
-    if (arg2 <= arg3) {
-        arg2 = arg3;
-    }
+    fn_80201FF0(mtx, (*(u8 **)&lbl_80367140) + 0x60);
+    *(f32 *)((*(u8 **)&lbl_80367140) + 0x28) = arg2;
+    *(u16 *)((*(u8 **)&lbl_80367140) + 0x20) &= ~0x800;
 }
 
 #pragma peephole off
@@ -2675,70 +2687,27 @@ s32 fn_8000ACD8(void) {
     return 0;
 }
 
-s32 fn_8000ACE0(void *arg0)
-{
+s32 fn_8000ACE0(void *arg0) {
     extern u8 lbl_802A66D8[];
-
-    u8 *entry;
+    u8 *p;
     u32 value;
+    u32 zero;
     s32 i;
+    s32 j;
 
-    entry = lbl_802A66D8;
-    value = *(u32 *)(*(u8 **)((u8 *)arg0 + 4) + 4);
-
+    value = *(u32 *)((u8 *)*(void **)((u8 *)arg0 + 4) + 4);
+    p = lbl_802A66D8;
+    zero = 0;
     for (i = 0; i < 0x100; i++) {
-        if (*(u32 *)entry == value) {
-            *(u32 *)(entry + 0x10) = 0;
+        for (j = 0; j < 8; j++) {
+            if (*(u32 *)p == value) {
+                *(u32 *)(p + 0x10) = zero;
+            }
+            p += 0x70;
         }
-
-        entry += 0x70;
-
-        if (*(u32 *)entry == value) {
-            *(u32 *)(entry + 0x10) = 0;
-        }
-
-        entry += 0x70;
-
-        if (*(u32 *)entry == value) {
-            *(u32 *)(entry + 0x10) = 0;
-        }
-
-        entry += 0x70;
-
-        if (*(u32 *)entry == value) {
-            *(u32 *)(entry + 0x10) = 0;
-        }
-
-        entry += 0x70;
-
-        if (*(u32 *)entry == value) {
-            *(u32 *)(entry + 0x10) = 0;
-        }
-
-        entry += 0x70;
-
-        if (*(u32 *)entry == value) {
-            *(u32 *)(entry + 0x10) = 0;
-        }
-
-        entry += 0x70;
-
-        if (*(u32 *)entry == value) {
-            *(u32 *)(entry + 0x10) = 0;
-        }
-
-        entry += 0x70;
-
-        if (*(u32 *)entry == value) {
-            *(u32 *)(entry + 0x10) = 0;
-        }
-
-        entry += 0x70;
         i += 7;
     }
-
-    *(u32 *)((u8 *)arg0 + 4) += 8;
-
+    *(u8 **)((u8 *)arg0 + 4) = *(u8 **)((u8 *)arg0 + 4) + 8;
     return 1;
 }
 
@@ -3495,32 +3464,52 @@ void fn_8000B9A4(void *arg0, void (*arg1)(void *)) {
 }
 #pragma optimization_level 4
 void fn_8000BD98(u8 *arg0) {
+    void fn_8000C60C(void *);
     extern u8 lbl_802A66D8[];
-    u32 *p = (u32 *)lbl_802A66D8;
-    int i = 0;
-    while (i < 256) {
-        if (*p) {
-            s8 *a = (s8 *)(p + 5); // p+20/4
-            s8 *b = (s8 *)arg0;
+    u8 *var_r31;
+    s32 var_r30;
+    u8 *var_r29;
+
+    var_r31 = lbl_802A66D8;
+    var_r30 = 0;
+    var_r29 = arg0;
+    do {
+        if (*(u32 *)var_r31 != 0) {
+            s32 c1;
+            u8 *a;
+            u8 *b;
+            s32 c2;
+            s32 s2;
+            s32 s1;
             s32 d;
-            while (1) {
-                s8 x = *a++;
-                s8 y = *b++;
-                if (x != y) {
-                    d = x - y;
-                    break;
-                }
-                if (!x) {
-                    d = 0;
-                    break;
-                }
+
+            a = *(u8 **)(var_r31 + 0x14);
+            b = var_r29;
+            goto load;
+        compare:
+            if ((s8)c1 != (s8)c2) {
+                d = s1 - s2;
+                goto check;
             }
-            if (!d)
-                fn_8000C60C((u8 *)p);
+            a = a + 1;
+            b = b + 1;
+        load:
+            c1 = *a;
+            c2 = *b;
+            s1 = (s8)c1;
+            s2 = (s8)c2;
+            if ((s1 | s2) != 0) {
+                goto compare;
+            }
+            d = 0;
+        check:
+            if ((u32)d == 0) {
+                fn_8000C60C(var_r31);
+            }
         }
-        i++;
-        p += 28; // 112/4
-    }
+        var_r30 += 1;
+        var_r31 += 0x70;
+    } while (var_r30 < 0x100);
 }
 
 void fn_8000BE54(u32 arg0) {
