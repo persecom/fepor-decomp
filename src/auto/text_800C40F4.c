@@ -9035,14 +9035,16 @@ void fn_800DE9FC(void **arg0)
         }
         *arg0 = cur;
         return;
-    } else {
-        *arg0 = cur;
-        node = (void **)*arg0;
-        parent = (void **)((u32)node[2] & ~1);
-        if (node == (void **)*parent) {
-            *arg0 = parent;
-        }
     }
+    *arg0 = cur;
+    node = (void **)*arg0;
+    parent = (void **)((u32)node[2] & ~1);
+    if (node != (void **)*parent) {
+        goto done;
+    }
+    *arg0 = parent;
+done:
+    ;
 }
 #pragma peephole on
 void fn_800DEA50(s32 arg0, void *arg1) {
@@ -12721,12 +12723,20 @@ extern "C" void fn_800E7D10(void *arg0, String *arg1) {
 #pragma dont_inline reset
 #pragma cplusplus reset
 
-void fn_800E7DA4(void *arg0, s32 arg1) {
-    void *vtable_ptr = *(void **)((char *)arg0 + 0x10);
-    void *vtable_entry = *(void **)((char *)vtable_ptr + 0x10);
-    ((void (*)(s32))vtable_entry)(arg1);
-}
+#pragma cplusplus on
+extern "C" void fn_800E7DA4(void *arg0, void *arg1) {
+    void *fn_800C93EC(void *);
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void v2(char *, void *) = 0;
+    };
+    extern char lbl_80272230[];
 
+    ((Obj *)arg0)->v2(lbl_80272230 + 0x2E, fn_800C93EC(arg1));
+}
+#pragma cplusplus reset
 void fn_800E7DF8(void *arg0, void *arg1)
 {
     void *fn_800C93EC(void *);
