@@ -10945,16 +10945,8 @@ void fn_80146F0C(void)
 }
 
 s32 fn_8014716C(u8 arg0) {
-    extern s32 lbl_80367AF8;
-    s32 v = lbl_80367AF8;
-
-    if (arg0) {
-        v |= 2;
-    } else {
-        v &= ~2;
-    }
-    lbl_80367AF8 = v;
-    return v;
+ extern s32 lbl_80367AF8;
+ return lbl_80367AF8 = arg0 ? (lbl_80367AF8 | 2) : (lbl_80367AF8 & ~2);
 }
 
 #pragma use_lmw_stmw on
