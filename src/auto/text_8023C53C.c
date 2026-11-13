@@ -12684,11 +12684,26 @@ s32 fn_80260914(void *arg0) {
     return fn_802601EC(arg0, (u8 *)arg0 + 0x38C, *(u8 *)((u8 *)arg0 + 0x121), *(u8 *)((u8 *)arg0 + 0x122));
 }
 
-void fn_8026095C(struct unit* param_1, s32 param_2, s32 param_3) {
-    param_1->unk_0x8 = param_2;
-    param_1->unk_0xC = param_3;
-    lbl_803689A8 = 1;
-    lbl_80368B34(0);
+s32 fn_8026095C(void *arg0)
+{
+    s32 fn_802601EC(void *, void *, u8, u8);
+    u32 flags;
+
+    flags = *(u32 *)((u8 *)arg0 + 0x220);
+
+    if ((flags & 0x800) == 0) {
+        return *(u16 *)((u8 *)arg0 + 0x3D0);
+    }
+
+    flags &= ~0x800;
+    *(u32 *)((u8 *)arg0 + 0x220) = flags;
+
+    return fn_802601EC(
+        arg0,
+        (u8 *)arg0 + 0x3B0,
+        *(u8 *)((u8 *)arg0 + 0x121),
+        *(u8 *)((u8 *)arg0 + 0x122)
+    );
 }
 
 s32 fn_802609A4(void *arg0) {
