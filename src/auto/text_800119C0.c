@@ -143,11 +143,9 @@ s32 fn_80013880(void) {
     extern s32 lbl_803671A4;
     u8 *context;
     u32 *stack;
-    s32 ctx;
     s32 fn_80011EDC();
 
-    ctx = lbl_803671A4;
-    lbl_80367180 = ctx;
+    lbl_80367180 = lbl_803671A4;
     fn_80011EDC();
     context = (u8 *)lbl_80367180;
     stack = *(u32 **)(context + 0x18) - 1;
@@ -2123,12 +2121,13 @@ void fn_80016A3C(s32 arg0) {
 }
 
 s32 fn_80016A9C(s32 arg0) {
-    s32 fn_80037710(void);
+    s32 fn_80037710(s32);
     extern u32 lbl_802CA264[];
-    s32 v;
+    u32 v;
+
     v = lbl_802CA264[arg0 * 3];
     if (v != 0U) {
-        return fn_80037710();
+        return fn_80037710(v);
     }
     return 0;
 }
