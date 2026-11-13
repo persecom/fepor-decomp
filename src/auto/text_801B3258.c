@@ -2111,6 +2111,39 @@ void fn_801BA200(void *arg0) {
 }
 
 #pragma cplusplus on
+extern "C" void fn_801BA3E8(void *arg0) {
+    void *fn_8013FF94(void *, s32, s32);
+    void fn_8000C188(void *);
+    void fn_8000C070(void *, s32);
+    extern u8 lbl_802EF4C8[];
+    class Pair {
+    public:
+        s16 x, y;
+        Pair() {}
+        Pair(s16 a, s16 b) : x(a), y(b) {}
+        Pair(const Pair &o) { *(u32 *)this = *(u32 *)&o; }
+        Pair &operator=(const Pair &o) {
+            *(u32 *)this = *(u32 *)&o;
+            return *this;
+        }
+    };
+    void fn_80140258(void *, void *, const Pair &, s32);
+    void *temp;
+
+    temp = fn_8013FF94(arg0, 0x108, 0);
+    switch ((s32)lbl_802EF4C8[8]) {
+    case 0x81:
+        fn_8000C188(arg0);
+        return;
+    case 0x80:
+        fn_80140258(arg0, temp, Pair(0x260, *(s16 *)((u8 *)temp + 0xC)), 0);
+        fn_8000C070(arg0, 0x13);
+        return;
+    }
+}
+#pragma cplusplus reset
+
+#pragma cplusplus on
 extern "C" void fn_801BA71C(void *arg0) {
 void fn_8000C070(void *,s32); void fn_8000C188(void *);
 s32 fn_80105814(void *); u8 fn_80105BC0(void *,u8); void *fn_801362C8(void *);
