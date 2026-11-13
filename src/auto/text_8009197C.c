@@ -348,41 +348,22 @@ void fn_8009204C(void *arg0, void *arg1) {
 }
 
 s32 fn_80092198(u8 *arg0, s32 arg1) {
-    void fn_8001EDB8(u8 *, s32);
-    extern u8 lbl_80330708[1400];
-    s32 slot;
-    u8 fn_80105BC0(u8 *, s32);
-    s32 result;
-    u8 mask;
-    register u8 *p;
-    u8 sp8;
-
-    mask = arg1;
-    p = arg0;
-    if (fn_80105BC0(p + 0x1BC, 0x5B) != 0) {
-        result = -2;
-    } else if (fn_80105BC0(p + 0x1BC, 0x50) != 0 && *(s32 *)(lbl_80330708 + 0x18) >= 0x32) {
-        result = -2;
-    } else {
-        result = 0;
-        while (1) {
-            slot = *(s32 *)(p + 0x1EC);
-            if (((u32)(-slot | slot) >> 31) != 0) {
-                fn_8001EDB8(&sp8, slot);
-                if ((u8)(sp8 & mask) != 0) {
-                    break;
-                }
-                result += 1;
-                p += 8;
-                if (4 > result) {
-                    continue;
-                }
-            }
-            result = -1;
-            break;
-        }
-    }
-    return result;
+u8 fn_80105BC0(u8 *, s32);
+void fn_8001EDB8(u8 *, s32);
+u8 sp8; s32 result; u8 mask; u8 *p; s32 slot;
+mask=arg1; p=arg0;
+if(fn_80105BC0(p+0x1BC,0x5B)) result=-2;
+else if(fn_80105BC0(p+0x1BC,0x50) && *(s32*)(lbl_80330708+0x18)>=0x32) result=-2;
+else {
+for(result=0;result<4;result++,p+=8) {
+slot=*(s32*)(p+0x1EC);
+if(!((u32)(-slot|slot)>>31)) break;
+fn_8001EDB8(&sp8,slot);
+switch((u8)(sp8 & mask)) {case 0: break; default: goto done;}
+}
+result=-1;
+}
+done: return result;
 }
 
 s32 fn_8009226C(u8 *arg0, u8 *arg1) {
