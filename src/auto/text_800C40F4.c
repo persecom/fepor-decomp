@@ -17798,6 +17798,29 @@ bestX=result.x;score=result.score;bestY=result.y;bestItem=result.item;best=resul
 if(best)fn_800FB96C(ctx[8],(s8)bestX,(s8)bestY,best,best[0x19E],best[0x19F],(s8)bestItem,0,0);
 return lbl_8032B3C0[0x21C];
 }
+
+s32 fn_800F4D78(void *arg0, void *arg1, void **arg2) {
+    s32 fn_80230BCC(s32);
+    u8 fn_8001DD54(void *, void *);
+    s8 fn_8003A398(void *);
+    u8 b;
+    u8 a;
+    s32 dy;
+    s32 dist;
+    u8 bonus;
+
+    b = M2C_FIELD(arg1, u8 *, 0x19E);
+    a = M2C_FIELD(arg0, u8 *, 0x19E);
+    dy = fn_80230BCC((s8)M2C_FIELD(arg0, u8 *, 0x19F) - (s8)M2C_FIELD(arg1, u8 *, 0x19F));
+    dist = dy + fn_80230BCC((s8)a - (s8)b);
+    if (*arg2 != NULL) {
+        bonus = (u8)fn_8001DD54(*arg2, arg0);
+    } else {
+        bonus = 0;
+    }
+    return dist <= ((s8)fn_8003A398(arg0) + bonus);
+}
+
 #pragma use_lmw_stmw reset
 #pragma opt_common_subs on
 #pragma opt_loop_invariants reset
@@ -19069,22 +19092,35 @@ void fn_800F9E64(void *arg0) {
     M2C_FIELD(arg0, u8 *, 0x251) = (u8) (M2C_FIELD(arg0, u8 *, 0x251) + 1);
 }
 
-s32 fn_800FA0E4(Unit* unit) {
-    s32 result = 0;
-    
-    // First branch condition - similar to what I saw in other functions 
-    if (unit->field_0x1C != 0) {
-        if (unit->field_0x1B == 0x27) {
-            result = 1;
+void fn_800FA0E4(void *arg0) {
+    extern void *lbl_803678F8;
+    extern s32 lbl_803678F4;
+    s32 fn_8000CEE4(s32);
+    u8 fn_800F51A0(void (*)(void *), s32);
+    void fn_800F4E3C(void (*)(void *), s32);
+    void fn_800FB5C8(void *);
+    void fn_800FB548(void *);
+    void fn_800FB494(void *);
+    u8 *obj;
+    u8 *state;
+    void (*cb)(void *);
+
+    obj = (u8 *)arg0;
+    state = (u8 *)lbl_803678F8;
+
+    if (fn_8000CEE4(0x64) <= *(s32 *)(state + 4)) {
+        cb = *(u32 *)(state + 0x14) == 0 ? fn_800FB5C8
+            : (*(s32 *)(state + 0x10) != 0 ? fn_800FB494 : fn_800FB548);
+        if (fn_800F51A0(cb, 0xF) == 0) {
+            fn_800F4E3C(cb, 0xF);
         }
     }
-    
-    // Second part with field access
-    if (unit->field_0x250 != 0) {
-        result += unit->field_0x250; 
-    }
 
-    return result;
+    if (lbl_803678F4 == 0) {
+        obj[0x250]++;
+    } else {
+        obj[0x251]++;
+    }
 }
 
 void fn_800FA1A8(void *arg0) {
