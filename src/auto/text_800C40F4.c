@@ -2848,10 +2848,45 @@ void fn_800CAE9C(void *arg0) {
     }
 }
 
-void fn_800CB070(void) {
-    *(s32*)0x803620C4 = 0;
-    *(s32*)0x803821A0 = 0;
-    *(s32*)0x803821A4 = 0;
+void fn_800CAF74(void *arg0) {
+    extern char lbl_802704F8[];
+    extern u8 lbl_80367878;
+    extern u8 *lbl_8036787C;
+    extern u32 lbl_80330EAC[];
+    void fn_800C9ABC(String *, char *, void *);
+    String *fn_800C96F8(String *, char *, u32);
+    void fn_800C9B6C(void *, String *);
+    void *fn_800C9A60(String *, s32);
+    void fn_80231D94(char *, char *, ...);
+    s32 fn_8001D2C8(void);
+    u32 strlen(char *);
+    char buf[0x40];
+    String str;
+    u8 scratch;
+    u8 ch;
+    char *p;
+    void *obj;
+    void *self;
+
+    self = arg0;
+    fn_800C9ABC(&str, lbl_802704F8 + 0x1B0, &scratch);
+    if (lbl_80367878 != 0) {
+        p = (char *)lbl_8036787C + 0x268;
+        fn_800C96F8(&str, p, strlen(p));
+    } else if ((u8 *)lbl_80330EAC + 0x56C != 0) {
+        obj = *(void **)((u8 *)lbl_80330EAC + 0x56C);
+        if (obj != 0) {
+            ch = obj != 0 ? ((u8 *)obj)[0x15] : 0;
+            fn_80231D94(buf, lbl_802704F8 + 0x1B1, (u8)ch + 0x60, fn_8001D2C8());
+            fn_800C96F8(&str, buf, strlen(buf));
+        }
+    }
+    fn_800C9B6C(self, &str);
+    fn_800C9A60(&str, -1);
+}
+
+void fn_800CB070(String *arg0) {
+    (void)arg0;
 }
 
 void fn_800CB27C(void** arg0) {
