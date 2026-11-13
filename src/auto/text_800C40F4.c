@@ -12788,31 +12788,26 @@ void fn_800E7C88(void *arg0) {
 
 void fn_800E7C94(void *arg0, void *arg1, s32 arg2, f32 arg3)
 {
-    extern u8 lbl_80272230[];
-    extern void *fn_800C93EC(void *);
-
-    u8 *obj;
+    extern char lbl_80272230[];
+    void *fn_800C93EC(void *);
+    void *self;
+    s32 n;
+    f32 f;
     void *value;
-    u8 *result;
-    void *(*callback)(void *, void *, void *);
+    void *result;
+    void *(*callback)(void *, char *, void *);
 
-    obj = (u8 *)arg0;
-
+    self = arg0;
+    n = arg2;
+    f = arg3;
     value = fn_800C93EC(arg1);
-
-    callback = *(void *(**)(void *, void *, void *))(
-        *(u8 **)(obj + 0x10) + 0x10
+    callback = *(void *(**)(void *, char *, void *))(
+        *(u8 **)((u8 *)self + 0x10) + 0x10
     );
-
-    result = (u8 *)callback(
-        obj,
-        lbl_80272230 + 6,
-        value
-    );
-
-    if (result != 0) {
-        *(f32 *)(result + 0x70) = arg3;
-        *(s32 *)(result + 0x74) = arg2;
+    result = callback(self, lbl_80272230 + 6, value);
+    if (result != NULL) {
+        *(f32 *)((u8 *)result + 0x70) = f;
+        *(s32 *)((u8 *)result + 0x74) = n;
     }
 }
 
@@ -12967,12 +12962,26 @@ extern "C" void fn_800E8008(void *arg0, void *arg1) {
 
 #pragma dont_inline reset
 #pragma cplusplus reset
-void fn_800E805C(s32 arg0, void *arg1) {
-    M2C_UNK fn_800E7F94(void *, s32);
-    
-    fn_800E7F94(arg1, arg0);
-    return;
+#pragma cplusplus on
+extern "C" void *fn_800E805C(void *arg0, void *arg1, void *arg2) {
+    void *fn_800C93EC(void *);
+    void fn_800DF664(void *);
+    struct Obj {
+        u8 pad[0x10];
+        virtual void v0() = 0;
+        virtual void v1() = 0;
+        virtual void *v2(void *, void *) = 0;
+    };
+    void *result;
+
+    result = fn_800C93EC(arg2);
+    result = ((Obj *)arg0)->v2(fn_800C93EC(arg1), result);
+    if (result != NULL) {
+        fn_800DF664(result);
+    }
+    return result;
 }
+#pragma cplusplus reset
 
 void *fn_800E80D8(void *arg0, void *arg1, void *arg2)
 {
