@@ -18557,31 +18557,26 @@ extern "C" s32 fn_800F773C(s32 arg0, void *arg1) {
 #pragma cplusplus reset
 
 s32 fn_800F7994(s32 arg0, s8 arg1, s8 arg2) {
-    extern u16 lbl_802CA518;
-    void *fn_80019DBC(u8, void *, void *, void *);
+    void *fn_80019DBC(u8);
     u8 fn_80105BC0(s32, u32);
-    
-    s32 var_r4;
-    void *temp_r4;
-    void *temp_r31;
-    void *temp_r6;
-    void *temp_r6_2;
-    s32 temp_r5;
-    s32 temp_r30;
+    extern u8 lbl_802CA518[];
+    void *terrain;
+    u8 *tp;
+    s32 sum;
 
-    // Try using inline assembly to force addressing patterns
-    temp_r5 = (s32) &lbl_802CA518 + arg1 + (arg2 << 6);
-    temp_r4 = &lbl_802CA518 + arg1 + (arg2 << 6);
-    temp_r31 = fn_80019DBC(M2C_FIELD(temp_r4, u8 *, 0x100D), temp_r4, &lbl_802CA518, &lbl_802CA518);
-    temp_r30 = arg0 + 0x1BC;
-    if (fn_80105BC0(temp_r30, 4) != 0) {
-        temp_r6 = M2C_FIELD(temp_r31, void **, 8);
-        var_r4 = (s8) M2C_FIELD(temp_r6, u8 *, 3) + (s8) M2C_FIELD(temp_r6, u8 *, 4) + (s8) M2C_FIELD(temp_r6, u8 *, 5) + M2C_FIELD(temp_r6, u8 *, 6);
+    terrain = fn_80019DBC(M2C_FIELD(lbl_802CA518 + arg1 + (arg2 << 6), u8 *, 0x100D));
+    if (fn_80105BC0((s32)((u8 *)arg0 + 0x1BC), 4) != 0) {
+        tp = M2C_FIELD(terrain, u8 **, 8);
+        sum = (s8)tp[3] + (s8)tp[4];
+        sum += (s8)tp[5];
+        sum += tp[6];
     } else {
-        temp_r6_2 = M2C_FIELD(temp_r31, void **, 8);
-        var_r4 = (s8) M2C_FIELD(temp_r6_2, u8 *, 0) + (s8) M2C_FIELD(temp_r6_2, u8 *, 1) + (s8) M2C_FIELD(temp_r6_2, u8 *, 2) + M2C_FIELD(temp_r6_2, u8 *, 6);
+        tp = M2C_FIELD(terrain, u8 **, 8);
+        sum = (s8)tp[0] + (s8)tp[1];
+        sum += (s8)tp[2];
+        sum += tp[6];
     }
-    return var_r4 >> 1;
+    return sum >> 1;
 }
 
 #pragma use_lmw_stmw on
@@ -19428,6 +19423,39 @@ void fn_800FA6CC(void *arg0) {
         cb = *(u32 *)(state + 0x14) == 0 ? fn_800FB5C8
             : (*(s32 *)(state + 0x10) != 0 ? fn_800FB494 : fn_800FB548);
         fn_8018D4CC(obj, cb);
+    }
+
+    if (lbl_803678F4 == 0) {
+        obj[0x250]++;
+    } else {
+        obj[0x251]++;
+    }
+}
+
+void fn_800FA778(void *arg0) {
+    extern void *lbl_803678F8;
+    extern s32 lbl_803678F4;
+    extern u8 lbl_8032B3C0[];
+    s32 fn_8000CEE4(s32);
+    void fn_8010F7B4(void *, void (*)(void *));
+    void fn_800FB5C8(void *);
+    void fn_800FB548(void *);
+    void fn_800FB494(void *);
+    u8 *state;
+    u8 *obj;
+    void (*cb)(void *);
+    u8 *flag;
+
+    obj = (u8 *)arg0;
+    state = (u8 *)lbl_803678F8;
+
+    if (fn_8000CEE4(0x64) <= *(s32 *)(state + 4)) {
+        cb = *(u32 *)(state + 0x14) == 0 ? fn_800FB5C8
+            : (*(s32 *)(state + 0x10) != 0 ? fn_800FB494 : fn_800FB548);
+        flag = lbl_8032B3C0;
+        flag[1] |= 2;
+        fn_8010F7B4(obj, cb);
+        flag[1] &= ~2;
     }
 
     if (lbl_803678F4 == 0) {
