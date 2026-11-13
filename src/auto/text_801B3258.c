@@ -16396,7 +16396,9 @@ s32 fn_801E2568(s32 *arg0, s32 arg1) {
 }
 
 s32 fn_801E2580(s32 *arg0, s32 arg1) {
-    return (arg1 << 0xE) + *arg0 + 0x2000;
+    s32 x = *arg0;
+    x = (arg1 << 14) + x;
+    return x + 0x2000;
 }
 
 void fn_801E2594(u32 *arg0) {
