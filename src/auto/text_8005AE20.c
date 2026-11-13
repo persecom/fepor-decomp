@@ -2738,17 +2738,13 @@ s32 fn_8006135C(void *arg0, void *name) {
 body:
     node = *(void **)((u8 *)cur + 0x40);
     if (node == NULL) {
-        goto follow;
+        cur = *(void **)((u8 *)cur + 4);
+    check:
+        if (cur != NULL) {
+            goto body;
+        }
+        node = NULL;
     }
-    goto found;
-follow:
-    cur = *(void **)((u8 *)cur + 4);
-check:
-    if (cur != NULL) {
-        goto body;
-    }
-    node = NULL;
-found:
     entry = *(void **)((u8 *)node + 0xC);
     i = 0;
     goto inner_check;
@@ -4231,9 +4227,9 @@ s32 fn_80065484(void ***arg0, s32 arg1, u16 arg2) {
 s32 fn_8006555C(void ***arg0, s32 arg1, u32 arg2) {
     void **temp;
     u8 *base;
-    u16 n;
+    s32 n;
     u16 lim;
-    u32 key;
+    u16 key;
     s32 best;
     s32 i;
     s32 off_idx;
@@ -4242,7 +4238,8 @@ s32 fn_8006555C(void ***arg0, s32 arg1, u32 arg2) {
     u16 *off_table;
     u16 off;
     s32 ctr;
-    u16 val;
+    s32 j;
+    s32 val;
 
     if (arg0 == NULL) {
         base = NULL;
@@ -4276,8 +4273,8 @@ body:
     }
     ctr = *(u16 *)(group + 2);
     cursor = group;
-    if (ctr > 0) {
-        do {
+    {
+        for (j = 0; j < ctr; j++) {
             if (*(u16 *)(cursor + 4) == key) {
                 val = *(u16 *)group;
                 if ((s32)val < arg1) {
@@ -4287,7 +4284,7 @@ body:
                 }
             }
             cursor += 2;
-        } while (--ctr);
+        }
     }
     off_idx += 2;
     i += 1;
@@ -5122,18 +5119,18 @@ void *fn_80067440(s32 arg0) {
     return (u8 *)lbl_80366DDC + arg0 * 0x2c;
 }
 
-#pragma optimization_level 1
+#pragma peephole off
 void fn_80067460(void *arg0) {
     extern u8 lbl_80311B04[];
-    extern void *lbl_80366DDC;
-    if (arg0 != NULL) {
-        return;
-    } else {
-        lbl_80366DDC = lbl_80311B04;
+    extern u8 *lbl_80366DDC;
+    u8 *p;
+    if (arg0 != 0) {
         return;
     }
+    p = lbl_80311B04;
+    lbl_80366DDC = p;
 }
-#pragma optimization_level reset
+#pragma peephole on
 s32 fn_80067478(void) {
     extern s32 lbl_80366DDC;
     return lbl_80366DDC;
@@ -6508,6 +6505,51 @@ void fn_8006D66C(s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 
+f32 fn_8006D828(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 temp_r6;
+    s32 var_ctr;
+
+    temp_r6 = arg3 - 1;
+    var_ctr = temp_r6;
+    M2C_ERROR(/* unknown instruction: psq_lu $f6, 0x1($r5), 0x1, qr7 */);
+    M2C_ERROR(/* unknown instruction: psq_lu $f9, 0x8($r12), 0x0, qr0 */);
+    M2C_ERROR(/* unknown instruction: psq_lu $f10, 0x8($r12), 0x0, qr0 */);
+    M2C_ERROR(/* unknown instruction: psq_lu $f11, 0x8($r12), 0x0, qr0 */);
+    M2C_ERROR(/* unknown instruction: psq_lu $f12, 0x8($r12), 0x0, qr0 */);
+    M2C_ERROR(/* unknown instruction: psq_lu $f13, 0x8($r12), 0x0, qr0 */);
+    if (temp_r6 & temp_r6) {
+        M2C_ERROR(/* unknown instruction: ps_muls0 $f8, $f8, $f6 */);
+        M2C_ERROR(/* unknown instruction: ps_muls0 $f9, $f9, $f6 */);
+        M2C_ERROR(/* unknown instruction: ps_muls0 $f10, $f10, $f6 */);
+        M2C_ERROR(/* unknown instruction: ps_muls0 $f11, $f11, $f6 */);
+        M2C_ERROR(/* unknown instruction: ps_muls0 $f12, $f12, $f6 */);
+        M2C_ERROR(/* unknown instruction: ps_muls0 $f13, $f13, $f6 */);
+        do {
+            M2C_ERROR(/* unknown instruction: psq_lu $f6, 0x1($r5), 0x1, qr7 */);
+            M2C_ERROR(/* unknown instruction: psq_lu $f1, 0x8($r12), 0x0, qr0 */);
+            M2C_ERROR(/* unknown instruction: psq_lu $f2, 0x8($r12), 0x0, qr0 */);
+            M2C_ERROR(/* unknown instruction: psq_lu $f3, 0x8($r12), 0x0, qr0 */);
+            M2C_ERROR(/* unknown instruction: psq_lu $f4, 0x8($r12), 0x0, qr0 */);
+            M2C_ERROR(/* unknown instruction: psq_lu $f5, 0x8($r12), 0x0, qr0 */);
+            M2C_ERROR(/* unknown instruction: ps_madds0 $f8, $f0, $f6, $f8 */);
+            M2C_ERROR(/* unknown instruction: ps_madds0 $f9, $f1, $f6, $f9 */);
+            M2C_ERROR(/* unknown instruction: ps_madds0 $f10, $f2, $f6, $f10 */);
+            M2C_ERROR(/* unknown instruction: ps_madds0 $f11, $f3, $f6, $f11 */);
+            M2C_ERROR(/* unknown instruction: ps_madds0 $f12, $f4, $f6, $f12 */);
+            M2C_ERROR(/* unknown instruction: ps_madds0 $f13, $f5, $f6, $f13 */);
+            var_ctr -= 1;
+        } while (var_ctr != 0);
+    }
+    M2C_ERROR(/* unknown instruction: ps_merge00 $f0, $f8, $f10 */);
+    M2C_ERROR(/* unknown instruction: ps_merge11 $f2, $f8, $f10 */);
+    M2C_ERROR(/* unknown instruction: ps_merge11 $f3, $f12, $f7 */);
+    M2C_ERROR(/* unknown instruction: ps_merge00 $f4, $f9, $f11 */);
+    M2C_ERROR(/* unknown instruction: ps_merge01 $f5, $f13, $f7 */);
+    M2C_ERROR(/* unknown instruction: ps_merge11 $f6, $f9, $f11 */);
+    M2C_ERROR(/* unknown instruction: ps_merge11 $f7, $f13, $f7 */);
+    return M2C_ERROR(/* unknown instruction: ps_merge01 $f1, $f12, $f7 */);
+}
+
 void fn_8006D8E8(s32 arg0) {
     M2C_UNK fn_8006EDA0(s32 *);
     s32 sp8;
@@ -6546,11 +6588,11 @@ s32 fn_8006D980(char *s, char *pat)
         m = 0;
         for (;;) {
             c = *(u8 *)s;
-            if ((s8)c == 0) {
+            if (*s == 0) {
                 return 0;
             }
             if (m != 0) {
-                if ((s8)c == (s8)*m) {
+                if (*s == *m) {
                     if (m[1] == 0) {
                         if (s[1] == 0x5f) {
                             return 1;
@@ -6562,7 +6604,7 @@ s32 fn_8006D980(char *s, char *pat)
                     m = 0;
                 }
             } else {
-                t = (s8)c;
+                t = *s;
                 s++;
                 if (t == 0x5f) {
                     m = pat;
