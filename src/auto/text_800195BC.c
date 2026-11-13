@@ -2079,6 +2079,29 @@ u8 fn_8001D500(void *arg0) {
     return (u8)var;
 }
 
+void fn_8001D580(void *arg0) {
+    void fn_800C3220(void *, s32);
+    extern u8 lbl_803206EC[];
+    typedef struct {
+        u8 pad : 1;
+        u8 flag : 1;
+        u8 rest : 6;
+    } Bit6;
+    Bit6 *bf;
+    s32 mask;
+
+    *(s32 *)arg0 = 0;
+    *((u8 *)arg0 + 4) = 0;
+    bf = (Bit6 *)((u8 *)arg0 + 5);
+    bf->pad = 0;
+    bf->flag = 0;
+    mask = *((u8 *)arg0 + 5) & 0x3F;
+    if (mask != 0) {
+        fn_800C3220(lbl_803206EC, mask);
+        bf->rest = 0;
+    }
+}
+
 s32 fn_8001D5F4(void *arg0, u8 arg1) {
     void fn_800C3220(void *, s32);
     extern u8 lbl_803206EC[];
