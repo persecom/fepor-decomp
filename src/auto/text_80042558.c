@@ -1190,7 +1190,7 @@ f32 fn_80043DD8(void) {
 void fn_80043DEC(void) {
     M2C_UNK fn_802209FC();
     M2C_UNK fn_8022124C(s32, s32, u16, u16);
-    M2C_UNK fn_802212FC(u16, u16, s32, s32);
+    void fn_802212FC(u16, u16, s32, u8);
     M2C_UNK GXCopyTex(s32, s32);
     M2C_UNK fn_80222EB4();
     M2C_UNK fn_80067984(s32);

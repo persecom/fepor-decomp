@@ -384,71 +384,47 @@ void fn_80221FE8(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
     M2C_FIELD(arg0, f32 *, 0x30) = farg2;
 }
 
-#pragma optimization_level 2
-void fn_80221FF8(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
-    extern f32 lbl_8036BCE0;
-    extern f32 lbl_8036BCF8;
-    extern f32 lbl_8036BD20;
-    extern f64 lbl_8036BD10;
-    extern f64 lbl_8036BD18;
-    f32 x = -farg0;
-    f32 y = -farg1;
-    f32 z = lbl_8036BCF8 - farg2;
-    f32 xx;
-    f32 yy;
-    f32 zz;
-    f32 mag;
-    f32 scale;
-    f32 root;
-    volatile f32 sp18;
-    f64 r;
-    f64 t;
-    f32 px;
-    f32 py;
-    f32 pz;
+#pragma push
+#pragma fp_contract off
+static inline float sqrtf(float x) {
+    static const double _half = .5;
+    static const double _three = 3.0;
+    volatile float y;
 
-    xx = x * x;
-    yy = y * y;
-    zz = z * z;
-    mag = xx + yy;
-    mag = mag + zz;
-    scale = mag;
-    if (lbl_8036BCE0 != mag) {
-        if (scale > lbl_8036BCE0) {
-            r = __frsqrte(scale);
-            t = r * r;
-            r = lbl_8036BD10 * r;
-            t = (f64)scale * t;
-            t = lbl_8036BD18 - t;
-            r = r * t;
-            t = r * r;
-            r = lbl_8036BD10 * r;
-            t = (f64)scale * t;
-            t = lbl_8036BD18 - t;
-            r = r * t;
-            t = r * r;
-            r = lbl_8036BD10 * r;
-            t = (f64)scale * t;
-            t = lbl_8036BD18 - t;
-            r = r * t;
-            sp18 = (f32)((f64)scale * r);
-            root = sp18;
-        } else {
-            root = scale;
-        }
-        scale = lbl_8036BCF8 / root;
+    if (x > 0.0f) {
+        double guess = __frsqrte((double) x);
+        guess = _half * guess * (_three - guess * guess * x);
+        guess = _half * guess * (_three - guess * guess * x);
+        guess = _half * guess * (_three - guess * guess * x);
+        y = (float) (x * guess);
+        return y;
     }
-    *(f32 *)((u8 *)arg0 + 0x34) = x * scale;
-    *(f32 *)((u8 *)arg0 + 0x38) = y * scale;
-    *(f32 *)((u8 *)arg0 + 0x3C) = z * scale;
-    px = lbl_8036BD20 * farg0;
-    py = lbl_8036BD20 * farg1;
-    pz = lbl_8036BD20 * farg2;
-    *(f32 *)((u8 *)arg0 + 0x28) = px;
-    *(f32 *)((u8 *)arg0 + 0x2C) = py;
-    *(f32 *)((u8 *)arg0 + 0x30) = pz;
+    return x;
 }
-#pragma optimization_level reset
+
+void fn_80221FF8(void *arg0, f32 farg0, f32 farg1, f32 farg2) {
+    f32 mag;
+    f32 vx;
+    f32 vy;
+    f32 vz;
+
+    vx = -farg0;
+    vy = -farg1;
+    vz = -farg2 + 1.0f;
+
+    mag = (vx * vx) + (vy * vy) + (vz * vz);
+    if (mag != 0.0f) {
+        mag = 1.0f / sqrtf(mag);
+    }
+
+    *(f32 *)((u8 *)arg0 + 0x34) = vx * mag;
+    *(f32 *)((u8 *)arg0 + 0x38) = vy * mag;
+    *(f32 *)((u8 *)arg0 + 0x3C) = vz * mag;
+    *(f32 *)((u8 *)arg0 + 0x28) = farg0 * -1000000000000000000.0f;
+    *(f32 *)((u8 *)arg0 + 0x2C) = farg1 * -1000000000000000000.0f;
+    *(f32 *)((u8 *)arg0 + 0x30) = farg2 * -1000000000000000000.0f;
+}
+#pragma pop
 void fn_802220DC(void *arg0, s32 *arg1) {
     M2C_FIELD(arg0, s32 *, 0xC) = (s32) *arg1;
 }
@@ -688,88 +664,99 @@ void fn_802220E8(void *lt_obj_, u32 light_) {
     (*(GXData *const *)&__GXData)->bpSentNot = 1;
 }
 
-#pragma optimization_level 3
 void fn_80222164(s32 arg0, void *arg1) {
-    u32 value;
-    s32 index;
-    struct GXChanData { u16 unused; u16 dirty; u8 pad[0xA4]; u32 color[2]; } *gx;
+    u32 reg;
+    u32 rgb;
+    u32 colIdx;
+
     switch (arg0) {
-    case 0: index = 0; value = *(u32 *)((u8 *)__GXData + 0xA8); value = __rlwimi(value, *(u32 *)arg1, 0, 0, 23); break;
-    case 1: index = 1; value = *(u32 *)((u8 *)__GXData + 0xAC); value = __rlwimi(value, *(u32 *)arg1, 0, 0, 23); break;
-    case 2: index = 0; value = *(u32 *)((u8 *)__GXData + 0xA8); value = __rlwimi(value, ((u8 *)arg1)[3], 0, 24, 31); break;
-    case 3: index = 1; value = *(u32 *)((u8 *)__GXData + 0xAC); value = __rlwimi(value, ((u8 *)arg1)[3], 0, 24, 31); break;
-    case 4: value = *(u32 *)arg1; index = 0; break;
-    case 5: value = *(u32 *)arg1; index = 1; break;
-    default: return;
-    }
-    GXWGFifo.u8 = 0x10;
-    gx = (void *)__GXData;
-    GXWGFifo.u32 = (index + 0x100A) & 0xFFFFFFFFFFFFFFFF;
-    GXWGFifo.u32 = value;
-    gx->dirty = 1;
-    gx->color[index] = value;
-}
-#pragma optimization_level 3
-void GXSetChanMatColor(s32 arg0, void *arg1)
-{
-  s32 index;
-  u32 value;
-  struct GXChanData
-  {
-    u16 unused;
-    u16 dirty;
-    u8 pad[0xAC];
-    u32 color[2];
-  } *gx;
-  switch (arg0)
-  {
     case 0:
-      index = 0;
-      value = *((u32 *) (((u8 *) __GXData) + 0xB0));
-      value = __rlwimi(value, *((u32 *) arg1), 0, 0, 23);
-      break;
-
+        reg = *(u32 *)((u8 *)__GXData + 0xA8);
+        rgb = *(u32 *)arg1 >> 8;
+        reg = __rlwimi(reg, rgb, 8, 0, 23);
+        colIdx = 0;
+        break;
     case 1:
-      index = 1;
-      value = *((u32 *) (((u8 *) __GXData) + 0xB4));
-      value = __rlwimi(value, *((u32 *) arg1), 0, 0, 23);
-      break;
-
+        reg = *(u32 *)((u8 *)__GXData + 0xAC);
+        rgb = *(u32 *)arg1 >> 8;
+        reg = __rlwimi(reg, rgb, 8, 0, 23);
+        colIdx = 1;
+        break;
     case 2:
-      index = 0;
-      value = *((u32 *) (((u8 *) __GXData) + 0xB0));
-      value = __rlwimi(value, ((u8 *) arg1)[3], 0, 24, 31);
-      break;
-
+        reg = *(u32 *)((u8 *)__GXData + 0xA8);
+        reg = __rlwimi(reg, ((u8 *)arg1)[3], 0, 24, 31);
+        colIdx = 0;
+        break;
     case 3:
-      index = 1;
-      value = *((u32 *) (((u8 *) __GXData) + 0xB4));
-      value = __rlwimi(value, ((u8 *) arg1)[3], 0, 24, 31);
-      break;
-
+        reg = *(u32 *)((u8 *)__GXData + 0xAC);
+        reg = __rlwimi(reg, ((u8 *)arg1)[3], 0, 24, 31);
+        colIdx = 1;
+        break;
     case 4:
-      value = *((u32 *) arg1);
-      index = 0;
-      break;
-
+        reg = *(u32 *)arg1;
+        colIdx = 0;
+        break;
     case 5:
-      value = *((u32 *) arg1);
-      index = 1;
-      break;
-
+        reg = *(u32 *)arg1;
+        colIdx = 1;
+        break;
     default:
-      return;
+        return;
+    }
 
-  }
-
-  GXWGFifo.u8 = 0x10;
-  gx = (void *) __GXData;
-  GXWGFifo.u32 = (index + 0x100C) & 0xFFFFFFFFFFFFFFFF;
-  GXWGFifo.u32 = value;
-  gx->dirty = 1;
-  gx->color[index] = value;
+    GXWGFifo.u8 = 0x10;
+    GXWGFifo.u32 = 0x1000 + (colIdx + 10);
+    GXWGFifo.u32 = reg;
+    __GXData[1] = 1;
+    ((u32 *)((u8 *)__GXData + 0xA8))[colIdx] = reg;
 }
-#pragma optimization_level reset
+
+void GXSetChanMatColor(s32 arg0, void *arg1) {
+    u32 reg;
+    u32 rgb;
+    u32 colIdx;
+
+    switch (arg0) {
+    case 0:
+        reg = *(u32 *)((u8 *)__GXData + 0xB0);
+        rgb = *(u32 *)arg1 >> 8;
+        reg = __rlwimi(reg, rgb, 8, 0, 23);
+        colIdx = 0;
+        break;
+    case 1:
+        reg = *(u32 *)((u8 *)__GXData + 0xB4);
+        rgb = *(u32 *)arg1 >> 8;
+        reg = __rlwimi(reg, rgb, 8, 0, 23);
+        colIdx = 1;
+        break;
+    case 2:
+        reg = *(u32 *)((u8 *)__GXData + 0xB0);
+        reg = __rlwimi(reg, ((u8 *)arg1)[3], 0, 24, 31);
+        colIdx = 0;
+        break;
+    case 3:
+        reg = *(u32 *)((u8 *)__GXData + 0xB4);
+        reg = __rlwimi(reg, ((u8 *)arg1)[3], 0, 24, 31);
+        colIdx = 1;
+        break;
+    case 4:
+        reg = *(u32 *)arg1;
+        colIdx = 0;
+        break;
+    case 5:
+        reg = *(u32 *)arg1;
+        colIdx = 1;
+        break;
+    default:
+        return;
+    }
+
+    GXWGFifo.u8 = 0x10;
+    GXWGFifo.u32 = 0x1000 + (colIdx + 12);
+    GXWGFifo.u32 = reg;
+    __GXData[1] = 1;
+    ((u32 *)((u8 *)__GXData + 0xB0))[colIdx] = reg;
+}
 void GXSetCullMode(u32 arg0) {
 u32 *gxData = (u32*)__GXData;
 u32 count = (u8)arg0;

@@ -217,10 +217,36 @@ volatile PPCWGPipe GXWGFifo : 0xCC008000;
 
 #pragma peephole on
 
-f32 GXLoadPosMtxImm(s32 arg1) {
-    *(s8 *)0xCC008000 = 0x10;
-    *(s8 *)0xCC008000 = (s32) ((arg1 * 4) | 0xB0000);
-    return M2C_ERROR(/* psq_l unimplemented */);
+static inline void WriteMTXPS4x3(const register f32 mtx[3][4], register volatile f32 *dest) {
+    register f32 a00_a01;
+    register f32 a02_a03;
+    register f32 a10_a11;
+    register f32 a12_a13;
+    register f32 a20_a21;
+    register f32 a22_a23;
+    asm {
+psq_l a00_a01, 0x00(mtx), 0, 0
+psq_l a02_a03, 0x08(mtx), 0, 0
+psq_l a10_a11, 0x10(mtx), 0, 0
+psq_l a12_a13, 0x18(mtx), 0, 0
+psq_l a20_a21, 0x20(mtx), 0, 0
+psq_l a22_a23, 0x28(mtx), 0, 0
+psq_st a00_a01, 0(dest), 0, 0
+psq_st a02_a03, 0(dest), 0, 0
+psq_st a10_a11, 0(dest), 0, 0
+psq_st a12_a13, 0(dest), 0, 0
+psq_st a20_a21, 0(dest), 0, 0
+psq_st a22_a23, 0(dest), 0, 0
+    }
+}
+void GXLoadPosMtxImm(const f32 mtx[3][4], u32 id) {
+    u32 reg;
+    u32 addr;
+    addr = id * 4;
+    reg = addr | 0xB0000;
+    GXWGFifo.u8 = (u8)(0x10);
+    GXWGFifo.u32 = (u32)(reg);
+    WriteMTXPS4x3(mtx, &GXWGFifo.f32);
 }
 
 typedef f32 Mtx[3][4];

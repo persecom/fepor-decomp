@@ -22771,7 +22771,7 @@ void fn_800F047C(void) {
     void fn_80048478(void *, s32, s32, s32);
     void fn_80067984(s32);
     void fn_8022124C(s32, s32, s32, s32);
-    void fn_802212FC(s32, s32, s32, s32);
+    void fn_802212FC(u16, u16, s32, u8);
     void GXCopyTex(void *, s32);
     void fn_802209FC(void);
     void fn_80222EB4(void);

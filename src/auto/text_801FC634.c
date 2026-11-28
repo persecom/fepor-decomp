@@ -2981,10 +2981,24 @@ extern "C" void fn_8020197C(void *arg0, void *arg1) {
 #pragma global_optimizer reset
 #pragma dont_inline reset
 
-void PSMTXIdentity(f32 m[3][4]) {
- m[0][2] = m[0][3] = m[1][2] = m[1][3] = m[2][0] = m[2][1] = 0.0f;
- m[1][0] = m[0][1] = m[2][3] = 0.0f;
- m[1][1] = m[0][0] = m[2][2] = 1.0f;
+extern "C" void PSMTXIdentity(register f32 (*m)[4]) {
+    extern const f32 lbl_8036BC3C;
+    extern const f32 lbl_8036BC38;
+    register f32 c_zero = lbl_8036BC3C;
+    register f32 c_one = lbl_8036BC38;
+    register f32 c_01;
+    register f32 c_10;
+
+    asm {
+        psq_st c_zero, 8(m), 0, 0
+        ps_merge01 c_01, c_zero, c_one
+        psq_st c_zero, 24(m), 0, 0
+        ps_merge10 c_10, c_one, c_zero
+        psq_st c_zero, 32(m), 0, 0
+        psq_st c_01, 16(m), 0, 0
+        psq_st c_10, 0(m), 0, 0
+        psq_st c_10, 40(m), 0, 0
+    }
 }
 
 #pragma use_lmw_stmw reset
@@ -3064,30 +3078,45 @@ addi r1, r1, 64
 blr
 }
 
-void fn_802020F0(f32 *src, f32 *dst) {
-    extern f32 lbl_8036BC3C;
-    f32 zero;
-    __vec2x32float__ a;
-    __vec2x32float__ b;
-    __vec2x32float__ c;
-    __vec2x32float__ d;
-    f32 t0;
-    f32 t1;
-    f32 t2;
+#pragma push
+#pragma scheduling off
+void fn_802020F0(const register f32 (*src)[4], register f32 (*xPose)[4]) {
+    extern const f32 lbl_8036BC3C;
+    register f32 c_zero = lbl_8036BC3C;
+    register f32 row0a;
+    register f32 row1a;
+    register f32 row0b;
+    register f32 row1b;
+    register f32 trns0;
+    register f32 trns1;
+    register f32 trns2;
 
-    zero = lbl_8036BC3C;
-    dst[11] = zero;
-    a = *(__vec2x32float__ *)(src + 0);
-    b = *(__vec2x32float__ *)(src + 4);
-    t0 = src[2];
-    t1 = src[6];
-    *(__vec2x32float__ *)(dst + 0) = a;
-    c = *(__vec2x32float__ *)(src + 8);
-    *(__vec2x32float__ *)(dst + 4) = b;
-    d = *(__vec2x32float__ *)(src + 0);
-    *(__vec2x32float__ *)(dst + 8) = c;
-    dst[10] = src[10];
+    asm {
+        psq_l row0a, 0(src), 0, 0
+    }
+    xPose[2][3] = c_zero;
+    asm {
+        psq_l row1a, 16(src), 0, 0
+        ps_merge00 trns0, row0a, row1a
+        psq_l row0b, 8(src), 1, 0
+        ps_merge11 trns1, row0a, row1a
+        psq_l row1b, 24(src), 1, 0
+        psq_st trns0, 0(xPose), 0, 0
+        psq_l row0a, 32(src), 0, 0
+        ps_merge00 trns2, row0b, row1b
+        psq_st trns1, 16(xPose), 0, 0
+        ps_merge00 trns0, row0a, c_zero
+        psq_st trns2, 32(xPose), 0, 0
+        ps_merge10 trns1, row0a, c_zero
+        psq_st trns0, 8(xPose), 0, 0
+    }
+    row0b = src[2][2];
+    asm {
+        psq_st trns1, 24(xPose), 0, 0
+    }
+    xPose[2][2] = row0b;
 }
+#pragma pop
 
 asm u32 PSMTXInverse(const register Mtx src, register Mtx inv) {
 psq_l f0, 0(src), 1, 0

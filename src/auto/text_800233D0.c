@@ -3385,25 +3385,25 @@ void UiCtx_GetItemSlot(void *arg0) {
     void Unit_GetItemSlot(void *, s32);
     Unit_GetItemSlot(*(void **)arg0, *(s8 *)((u8 *)arg0 + 0xA));
 }
-#pragma scheduling off
-void fn_800285EC(void) {
-    extern u8 lbl_80367707;
+#pragma push
+#pragma scheduling on
+#pragma use_lmw_stmw off
+typedef struct { u8 pad[0xCAC]; u32 flags; } G_80330EAC;
+void fn_800285EC(s32 p) {
     extern u8 gBattle[];
-    u32 flags;
-    u8 *base;
-
+    extern u8 lbl_80367707;
+    void fn_80098A9C(s32);
+    void fn_800D5818(s32);
     if (lbl_80367707 == 0) {
-        base = gBattle;
-        flags = *(u32 *)(base + 0xCAC);
-        if ((flags & 0x80000000) != 0) {
-            fn_80098A9C();
+        if ((((G_80330EAC *)gBattle)->flags & 0x80000000) != 0) {
+            fn_80098A9C(p);
         } else {
-            *(u32 *)(base + 0xCAC) = flags | 0x10000000;
-            fn_800D5818();
+            ((G_80330EAC *)gBattle)->flags |= 0x10000000;
+            fn_800D5818(p);
         }
     }
 }
-#pragma scheduling reset
+#pragma pop
 void fn_8002863C(void) {
 
 }

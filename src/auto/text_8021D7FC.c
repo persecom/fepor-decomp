@@ -545,7 +545,7 @@ void __GXInitGX(void) {
     void GXSetVtxAttrFmtv(s32, void *);
     void fn_80220F44(s32, s32);
     void fn_80220F84(s32, s32);
-    void fn_80220FC4(s32, s32, s32);
+    void fn_80220FC4(u32, u8, u8);
     void GXLoadPosMtxImm(f32 *, s32);
     void fn_80224DCC(f32 *, s32);
     void GXSetCurrentMtx(s32);
@@ -2585,15 +2585,14 @@ void fn_80220F84(u32 arg0, u32 arg1) {
     *(u16 *)(gx + 2) = 0;
 }
 
-void fn_80220FC4(u32 arg0,u32 arg1,u32 arg2) {
-extern u32 __GXData;
-u8 *gx=(u8*)__GXData;
-u8 *reg=gx+arg0*4;
-*(u32*)(reg+0xB8)=__rlwimi(*(u32*)(reg+0xB8),arg1,18,13,13);
-*(u32*)(reg+0xB8)=__rlwimi(*(u32*)(reg+0xB8),(u8)arg2,19,12,12);
-*(volatile u8*)0xCC008000=0x61;
-*(volatile u32*)0xCC008000=*(u32*)(reg+0xB8);
-*(u16*)(gx+2)=0;
+void fn_80220FC4(u32 coord, u8 line_enable, u8 point_enable) {
+    extern u8 *const __GXData;
+
+    ((u32 *)(__GXData + 0xB8))[coord] = __rlwimi(((u32 *)(__GXData + 0xB8))[coord], line_enable, 18, 13, 13);
+    ((u32 *)(__GXData + 0xB8))[coord] = __rlwimi(((u32 *)(__GXData + 0xB8))[coord], point_enable, 19, 12, 12);
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = ((u32 *)(__GXData + 0xB8))[coord];
+    *(u16 *)(__GXData + 2) = 0;
 }
 
 void fn_8022100C(u32 arg0) {

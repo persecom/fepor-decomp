@@ -1893,6 +1893,14 @@ void fn_80228890(void *arg0, u32 arg1, u32 arg2)
     }
 }
 #pragma optimization_level reset
+#pragma push
+
+asm u32 fn_80228948() {
+    nofralloc
+    mfmsr r3
+    blr
+}
+#pragma pop
 asm void fn_80228950(register u32 v)
 {
 mtmsr v
@@ -1921,11 +1929,123 @@ sync
 blr
 }
 
-void TRKInterruptHandler(void)
-{
-    /* Register-preserving exception entry requires handwritten assembly. */
-    return;
+extern u8 gTRKState[];
+extern u8 TRK_saved_exceptionID_8033CA48[];
+extern u8 gTRKCPUState[1072];
+void TRKUARTInterruptHandler(void);
+extern u8 gTRKExceptionStatus_8029E574[];
+extern u8 gTRKSaveState[];
+void TRKExceptionHandler(u16 exceptionID);
+void TRKSaveExtended1Block(void);
+void TRKPostInterruptEvent(void);
+#pragma push
+asm void TRKInterruptHandler(void) {
+    nofralloc
+    mtsrr0 r2
+    mtsrr1 r4
+    mfsprg r4, 3
+    mfcr r2
+    mtsprg 3, r2
+    lis r2, gTRKState@h
+    ori r2, r2, gTRKState@l
+    lwz r2, 0x8c(r2)
+    ori r2, r2, 0x8002
+    xori r2, r2, 0x8002
+    sync
+    mtmsr r2
+    sync
+    lis r2, TRK_saved_exceptionID_8033CA48@h
+    ori r2, r2, TRK_saved_exceptionID_8033CA48@l
+    sth r3, 0x0(r2)
+    cmpwi r3, 0x500
+    bne L_80228A5C
+    lis r2, gTRKCPUState@h
+    ori r2, r2, gTRKCPUState@l
+    mflr r3
+    stw r3, 0x42c(r2)
+    bl TRKUARTInterruptHandler
+    lis r2, gTRKCPUState@h
+    ori r2, r2, gTRKCPUState@l
+    lwz r3, 0x42c(r2)
+    mtlr r3
+    lis r2, gTRKState@h
+    ori r2, r2, gTRKState@l
+    lwz r2, 0xa0(r2)
+    lbz r2, 0x0(r2)
+    cmpwi r2, 0x0
+    beq L_80228A40
+    lis r2, gTRKExceptionStatus_8029E574@h
+    ori r2, r2, gTRKExceptionStatus_8029E574@l
+    lbz r2, 0xc(r2)
+    cmpwi r2, 0x1
+    beq L_80228A40
+    lis r2, gTRKState@h
+    ori r2, r2, gTRKState@l
+    li r3, 0x1
+    stb r3, 0x9c(r2)
+    b L_80228A5C
+L_80228A40:
+    lis r2, gTRKSaveState@h
+    ori r2, r2, gTRKSaveState@l
+    lwz r3, 0x88(r2)
+    mtcrf 255, r3
+    lwz r3, 0xc(r2)
+    lwz r2, 0x8(r2)
+    rfi
+L_80228A5C:
+    lis r2, TRK_saved_exceptionID_8033CA48@h
+    ori r2, r2, TRK_saved_exceptionID_8033CA48@l
+    lhz r3, 0x0(r2)
+    lis r2, gTRKExceptionStatus_8029E574@h
+    ori r2, r2, gTRKExceptionStatus_8029E574@l
+    lbz r2, 0xc(r2)
+    cmpwi r2, 0x0
+    bne TRKExceptionHandler
+    lis r2, gTRKCPUState@h
+    ori r2, r2, gTRKCPUState@l
+    stw r0, 0x0(r2)
+    stw r1, 0x4(r2)
+    mfsprg r0, 1
+    stw r0, 0x8(r2)
+    sth r3, 0x2f8(r2)
+    sth r3, 0x2fa(r2)
+    mfsprg r0, 2
+    stw r0, 0xc(r2)
+    stmw r4, 0x10(r2)
+    mfsrr0 r27
+    mflr r28
+    mfsprg r29, 3
+    mfctr r30
+    mfxer r31
+    stmw r27, 0x80(r2)
+    bl TRKSaveExtended1Block
+    lis r2, gTRKExceptionStatus_8029E574@h
+    ori r2, r2, gTRKExceptionStatus_8029E574@l
+    li r3, 0x1
+    stb r3, 0xc(r2)
+    lis r2, gTRKState@h
+    ori r2, r2, gTRKState@l
+    lwz r0, 0x8c(r2)
+    sync
+    mtmsr r0
+    sync
+    lwz r0, 0x80(r2)
+    mtlr r0
+    lwz r0, 0x84(r2)
+    mtctr r0
+    lwz r0, 0x88(r2)
+    mtxer r0
+    lwz r0, 0x94(r2)
+    mtdsisr r0
+    lwz r0, 0x90(r2)
+    mtdar r0
+    lmw r3, 0xc(r2)
+    lwz r0, 0x0(r2)
+    lwz r1, 0x4(r2)
+    lwz r2, 0x8(r2)
+    b TRKPostInterruptEvent
 }
+#pragma pop
 
 typedef struct StopInfo_PPC {
     u32 PC;
@@ -1983,13 +2103,93 @@ mfsprg r2, 1
 mfsprg r3, 2
 rfi
 }
-
-void TRKInterruptHandlerEnableInterrupts(void) {
-    extern u8 gTRKState[];
-    void TRKPostInterruptEvent(void);
-    (void)gTRKState[0];
-    TRKPostInterruptEvent();
+extern u8 gTRKState[];
+void TRKInterruptHandlerEnableInterrupts(void);
+void TRKRestoreExtended1Block(void);
+extern u8 gTRKCPUState[1072];
+#pragma push
+asm M2C_UNK TRKSwapAndGo(void) {
+    nofralloc
+    lis r3, gTRKState@h
+    ori r3, r3, gTRKState@l
+    stmw r0, 0x0(r3)
+    mfmsr r0
+    stw r0, 0x8c(r3)
+    mflr r0
+    stw r0, 0x80(r3)
+    mfctr r0
+    stw r0, 0x84(r3)
+    mfxer r0
+    stw r0, 0x88(r3)
+    mfdsisr r0
+    stw r0, 0x94(r3)
+    mfdar r0
+    stw r0, 0x90(r3)
+    li r1, -0x7ffe
+    nor r1, r1, r1
+    mfmsr r3
+    and r3, r3, r1
+    mtmsr r3
+    lis r2, gTRKState@h
+    ori r2, r2, gTRKState@l
+    lwz r2, 0xa0(r2)
+    lbz r2, 0x0(r2)
+    cmpwi r2, 0x0
+    beq L_80228C40
+    lis r2, gTRKState@h
+    ori r2, r2, gTRKState@l
+    li r3, 0x1
+    stb r3, 0x9c(r2)
+    b TRKInterruptHandlerEnableInterrupts
+L_80228C40:
+    lis r2, gTRKExceptionStatus_8029E574@h
+    ori r2, r2, gTRKExceptionStatus_8029E574@l
+    li r3, 0x0
+    stb r3, 0xc(r2)
+    bl TRKRestoreExtended1Block
+    lis r2, gTRKCPUState@h
+    ori r2, r2, gTRKCPUState@l
+    lmw r27, 0x80(r2)
+    mtsrr0 r27
+    mtlr r28
+    mtcrf 255, r29
+    mtctr r30
+    mtxer r31
+    lmw r3, 0xc(r2)
+    lwz r0, 0x0(r2)
+    lwz r1, 0x4(r2)
+    lwz r2, 0x8(r2)
+    rfi
 }
+#pragma pop
+
+
+#pragma push
+asm void TRKInterruptHandlerEnableInterrupts(void) {
+    nofralloc
+    lis r2, gTRKState@h
+    ori r2, r2, gTRKState@l
+    lwz r0, 0x8c(r2)
+    sync
+    mtmsr r0
+    sync
+    lwz r0, 0x80(r2)
+    mtlr r0
+    lwz r0, 0x84(r2)
+    mtctr r0
+    lwz r0, 0x88(r2)
+    mtxer r0
+    lwz r0, 0x94(r2)
+    mtdsisr r0
+    lwz r0, 0x90(r2)
+    mtdar r0
+    lmw r3, 0xc(r2)
+    lwz r0, 0x0(r2)
+    lwz r1, 0x4(r2)
+    lwz r2, 0x8(r2)
+    b TRKPostInterruptEvent
+}
+#pragma pop
 
 #pragma intrinsic __mffs
 asm void fn_80228CDC(register f64*)
@@ -2037,7 +2237,7 @@ s32 fn_80228D24(s32 arg0, u32 arg1, s32 *arg2, s32 arg3) {
 }
 
 void TRKTargetSetInputPendingPtr(s32 arg0) {
-    extern u16 gTRKState[0xA4];
+    extern u8 gTRKState[];
     *(s32 *)((u8 *)gTRKState + 0xA0) = arg0;
 }
 
@@ -2060,7 +2260,7 @@ extern u8 gTRKCPUState[1072];
 void MWTRACE(u8 level, char *fmt, ...);
 
 static inline s32 TRKTargetDoStep(void) {
-    extern u16 gTRKState[];
+    extern u8 gTRKState[];
 
     lbl_8029E584.active = 1;
     MWTRACE(1, "TargetDoStep()\n");
@@ -2073,12 +2273,12 @@ static inline s32 TRKTargetDoStep(void) {
 }
 
 void TRKTargetSetStopped(s32 arg0) {
-    extern u16 gTRKState[0xA4];
+    extern u8 gTRKState[];
     *(s32 *)((u8 *)gTRKState + 0x98) = arg0;
 }
 
 s32 TRKTargetStopped(void) {
-    extern u16 gTRKState[];
+    extern u8 gTRKState[];
     return *(s32 *)((u8 *)gTRKState + 0x98);
 }
 
@@ -2991,28 +3191,119 @@ s32 fn_8022A230(u32 start, s32 length, s32 mode) {
 #pragma global_optimizer reset
 #pragma use_lmw_stmw reset
 
-u8 fn_8022A4E0(s32 command, s32 file_handle, s32 *length_ptr, s32 buffer_ptr) {
-    (void)command;
-    (void)file_handle;
-    (void)length_ptr;
-    (void)buffer_ptr;
-    return 0;
+#pragma push
+#pragma use_lmw_stmw off
+#pragma global_optimizer on
+/* TRKAccessFile: debugger file access. The trap is serviced by the host debugger,
+   which resumes with the result in r3. */
+asm u8 fn_8022A4E0(u8 command, s32 file_handle, s32 *length_ptr, s32 buffer_ptr) {
+    nofralloc
+    twi 31, r0, 0x0
+    blr
 }
+#pragma pop
 
-void fn_8022A4E8(void) {
+#pragma push
+#pragma use_lmw_stmw off
+#pragma global_optimizer on
+/* MetroTRK file-I/O trap stub (TRKOpenFile in MetroTRK). Nothing in GFEE01 calls it,
+   so its argument list can't be established from this binary; left as void(void). */
+asm void fn_8022A4E8(void) {
+    nofralloc
+    twi 31, r0, 0x0
+    blr
 }
+#pragma pop
 
-void InitMetroTRK_BBA(void) {
-    void TRKSaveExtended1Block(void);
-    s32 InitMetroTRKCommTable(s32);
-    void TRK_main(void);
-
-    TRKSaveExtended1Block();
-    if (InitMetroTRKCommTable(2) == 1) {
-        return;
-    }
-    TRK_main();
+extern u8 _db_stack_addr[];
+s32 InitMetroTRKCommTable(s32 arg0);
+void TRK_main(void);
+#pragma push
+asm void InitMetroTRK(void) {
+    nofralloc
+    subi r1, r1, 0x4
+    stw r3, 0x0(r1)
+    lis r3, gTRKCPUState@h
+    ori r3, r3, gTRKCPUState@l
+    stmw r0, 0x0(r3)
+    lwz r4, 0x0(r1)
+    addi r1, r1, 0x4
+    stw r1, 0x4(r3)
+    stw r4, 0xc(r3)
+    mflr r4
+    stw r4, 0x84(r3)
+    stw r4, 0x80(r3)
+    mfcr r4
+    stw r4, 0x88(r3)
+    mfmsr r4
+    ori r3, r4, 0x8000
+    xori r3, r3, 0x8000
+    mtmsr r3
+    mtsrr1 r4
+    bl TRKSaveExtended1Block
+    lis r3, gTRKCPUState@h
+    ori r3, r3, gTRKCPUState@l
+    opword 0xB8030000
+    li r0, 0x0
+    mtspr 1010, r0
+    mtspr 1013, r0
+    lis r1, _db_stack_addr@h
+    ori r1, r1, _db_stack_addr@l
+    mr r3, r5
+    bl InitMetroTRKCommTable
+    cmpwi r3, 0x1
+    bne L_8022A900
+    lwz r4, 0x84(r3)
+    mtlr r4
+    opword 0xB8030000
+    blr
+L_8022A900:
+    b TRK_main
 }
+#pragma pop
+#pragma push
+__declspec(weak) asm void InitMetroTRK_BBA(void) {
+    nofralloc
+    subi r1, r1, 0x4
+    stw r3, 0x0(r1)
+    lis r3, gTRKCPUState@h
+    ori r3, r3, gTRKCPUState@l
+    stmw r0, 0x0(r3)
+    lwz r4, 0x0(r1)
+    addi r1, r1, 0x4
+    stw r1, 0x4(r3)
+    stw r4, 0xc(r3)
+    mflr r4
+    stw r4, 0x84(r3)
+    stw r4, 0x80(r3)
+    mfcr r4
+    stw r4, 0x88(r3)
+    mfmsr r4
+    ori r3, r4, 0x8000
+    mtmsr r3
+    mtsrr1 r4
+    bl TRKSaveExtended1Block
+    lis r3, gTRKCPUState@h
+    ori r3, r3, gTRKCPUState@l
+    opword 0xB8030000
+    li r0, 0x0
+    mtspr 1010, r0
+    mtspr 1013, r0
+    lis r1, _db_stack_addr@h
+    ori r1, r1, _db_stack_addr@l
+    li r3, 0x2
+    bl InitMetroTRKCommTable
+    cmpwi r3, 0x1
+    bne L_8022A994
+    lwz r4, 0x84(r3)
+    mtlr r4
+    opword 0xB8030000
+    blr
+L_8022A994:
+    b TRK_main
+    blr
+}
+#pragma pop
 
 #pragma intrinsic __dcbi
 void fn_8022A99C(s32 arg0, u32 arg1, s32 *arg2) {
@@ -3221,11 +3512,53 @@ err=TRKTerminateNub(); TRK_mainError_8033CFD0[0]=err;
 }
 
 s32 TRKInitializeIntDrivenUART(s32 arg0, s32 arg1, s32 arg2, void *arg3);
-void TRKLoadContext(void);
+void TRKLoadContext(void *ctx, u32 exception);
 void TRK_main(void);
 u32 fn_8022AE34(u32 arg0);
-void TRKLoadContext(void) {
+void TRKInterruptHandler(void);
+#pragma push
+/* Restores the OSContext in r3 (no shared OSContext type in include/) and tail-branches to TRKInterruptHandler with the
+   exception id in r4; it does not return to its caller. */
+asm void TRKLoadContext(void *ctx, u32 exception) {
+    nofralloc
+    lwz r0, 0x0(r3)
+    lwz r1, 0x4(r3)
+    lwz r2, 0x8(r3)
+    lhz r5, 0x1a2(r3)
+    rlwinm. r6, r5, 0, 30, 30
+    beq L_8022AF2C
+    rlwinm r5, r5, 0, 31, 29
+    sth r5, 0x1a2(r3)
+    lmw r5, 0x14(r3)
+    b L_8022AF30
+L_8022AF2C:
+    lmw r13, 0x34(r3)
+L_8022AF30:
+    mr r31, r3
+    mr r3, r4
+    lwz r4, 0x80(r31)
+    mtcrf 255, r4
+    lwz r4, 0x84(r31)
+    mtlr r4
+    lwz r4, 0x88(r31)
+    mtctr r4
+    lwz r4, 0x8c(r31)
+    mtxer r4
+    mfmsr r4
+    rlwinm r4, r4, 0, 17, 15
+    rlwinm r4, r4, 0, 31, 29
+    mtmsr r4
+    mtsprg 1, r2
+    lwz r4, 0xc(r31)
+    mtsprg 2, r4
+    lwz r4, 0x10(r31)
+    mtsprg 3, r4
+    lwz r2, 0x198(r31)
+    lwz r4, 0x19c(r31)
+    lwz r31, 0x7c(r31)
+    b TRKInterruptHandler
 }
+#pragma pop
 
 void TRKUARTInterruptHandler(void) {
 
@@ -3392,9 +3725,8 @@ else {OSReport(base+0x80,device);OSReport(base+0xAC);OSReport(base+0xDC);}return
 #pragma pop
 void TRKEXICallBack(s32 arg0, s32 arg1) {
     M2C_UNK OSEnableScheduler();
-    M2C_UNK TRKLoadContext(s32, M2C_UNK);
     OSEnableScheduler();
-    TRKLoadContext(arg1, 0x500);
+    TRKLoadContext((void *)arg1, 0x500);
 }
 
 s32 TRKTargetContinue(void) {
@@ -3976,89 +4308,256 @@ extern u8 gTRKCPUState[1072];
 #include "common.h"
 extern u8 gTRKCPUState[1072];
 
-void TRKSaveExtended1Block(void) {
-    *(u32 *)gTRKCPUState = 0;
+/* TRKCloseFile: result returned in r3 by the debugger, see fn_8022B4AC. */
+asm u8 fn_8022A4F0(u8 command, s32 file_handle) {
+    nofralloc
+    twi 31, r0, 0x0
+    blr
 }
 
-void TRKRestoreExtended1Block(void) {
-    extern M2C_UNK gTRKRestoreFlags;
-    u8 temp_r3;
-
-    temp_r3 = M2C_FIELD(&gTRKRestoreFlags, u8 *, 0);
-    M2C_FIELD(&gTRKRestoreFlags, u8 *, 0) = 0U;
-    M2C_FIELD(&gTRKRestoreFlags, u8 *, 1) = 0U;
-    if ((s32) temp_r3 != 0) {
-        M2C_ERROR(/* unknown instruction: mttbl $r24 */);
-        M2C_ERROR(/* unknown instruction: mttbu $r25 */);
-    }
-    M2C_ERROR(/* unknown instruction: mtspr GQR0, $r20 */);
-    M2C_ERROR(/* unknown instruction: mtspr GQR1, $r21 */);
-    M2C_ERROR(/* unknown instruction: mtspr GQR2, $r22 */);
-    M2C_ERROR(/* unknown instruction: mtspr GQR3, $r23 */);
-    M2C_ERROR(/* unknown instruction: mtspr GQR4, $r24 */);
-    M2C_ERROR(/* unknown instruction: mtspr GQR5, $r25 */);
-    M2C_ERROR(/* unknown instruction: mtspr GQR6, $r26 */);
-    M2C_ERROR(/* unknown instruction: mtspr GQR7, $r27 */);
-    M2C_ERROR(/* unknown instruction: mtspr HID2, $r28 */);
-    M2C_ERROR(/* unknown instruction: mtspr DMA_U, $r30 */);
-    M2C_ERROR(/* unknown instruction: mtspr DMA_L, $r31 */);
-    M2C_ERROR(/* unknown instruction: mtspr DABR, $r19 */);
-    M2C_ERROR(/* unknown instruction: mtspr PMC1, $r20 */);
-    M2C_ERROR(/* unknown instruction: mtspr PMC2, $r21 */);
-    M2C_ERROR(/* unknown instruction: mtspr PMC3, $r22 */);
-    M2C_ERROR(/* unknown instruction: mtspr PMC4, $r23 */);
-    M2C_ERROR(/* unknown instruction: mtspr SIA, $r24 */);
-    M2C_ERROR(/* unknown instruction: mtspr MMCR0, $r25 */);
-    M2C_ERROR(/* unknown instruction: mtspr MMCR1, $r26 */);
-    M2C_ERROR(/* unknown instruction: mtspr THRM1, $r27 */);
-    M2C_ERROR(/* unknown instruction: mtspr THRM2, $r28 */);
-    M2C_ERROR(/* unknown instruction: mtspr THRM3, $r29 */);
-    M2C_ERROR(/* unknown instruction: mtspr ICTC, $r30 */);
-    M2C_ERROR(/* unknown instruction: mtspr L2CR, $r31 */);
-    M2C_ERROR(/* unknown instruction: mtsr 0x0, $r16 */);
-    M2C_ERROR(/* unknown instruction: mtsr 0x1, $r17 */);
-    M2C_ERROR(/* unknown instruction: mtsr 0x2, $r18 */);
-    M2C_ERROR(/* unknown instruction: mtsr 0x3, $r19 */);
-    M2C_ERROR(/* unknown instruction: mtsr 0x4, $r20 */);
-    M2C_ERROR(/* unknown instruction: mtsr 0x5, $r21 */);
-    M2C_ERROR(/* unknown instruction: mtsr 0x6, $r22 */);
-    M2C_ERROR(/* unknown instruction: mtsr 0x7, $r23 */);
-    M2C_ERROR(/* unknown instruction: mtsr 0x8, $r24 */);
-    M2C_ERROR(/* unknown instruction: mtsr 0x9, $r25 */);
-    M2C_ERROR(/* unknown instruction: mtsr 0xa, $r26 */);
-    M2C_ERROR(/* unknown instruction: mtsr 0xb, $r27 */);
-    M2C_ERROR(/* unknown instruction: mtsr 0xc, $r28 */);
-    M2C_ERROR(/* unknown instruction: mtsr 0xd, $r29 */);
-    M2C_ERROR(/* unknown instruction: mtsr 0xe, $r30 */);
-    M2C_ERROR(/* unknown instruction: mtsr 0xf, $r31 */);
-    M2C_ERROR(/* unknown instruction: mtspr HID0, $r12 */);
-    M2C_ERROR(/* unknown instruction: mtspr HID1, $r13 */);
-    M2C_ERROR(/* unknown instruction: mtsrr1 $r14 */);
-    M2C_ERROR(/* unknown instruction: mtspr PVR, $r15 */);
-    M2C_ERROR(/* unknown instruction: mtibatu 0x0, $r16 */);
-    M2C_ERROR(/* unknown instruction: mtibatl 0x0, $r17 */);
-    M2C_ERROR(/* unknown instruction: mtibatu 0x1, $r18 */);
-    M2C_ERROR(/* unknown instruction: mtibatl 0x1, $r19 */);
-    M2C_ERROR(/* unknown instruction: mtibatu 0x2, $r20 */);
-    M2C_ERROR(/* unknown instruction: mtibatl 0x2, $r21 */);
-    M2C_ERROR(/* unknown instruction: mtibatu 0x3, $r22 */);
-    M2C_ERROR(/* unknown instruction: mtibatl 0x3, $r23 */);
-    M2C_ERROR(/* unknown instruction: mtdbatu 0x0, $r24 */);
-    M2C_ERROR(/* unknown instruction: mtdbatl 0x0, $r25 */);
-    M2C_ERROR(/* unknown instruction: mtdbatu 0x1, $r26 */);
-    M2C_ERROR(/* unknown instruction: mtdbatl 0x1, $r27 */);
-    M2C_ERROR(/* unknown instruction: mtdbatu 0x2, $r28 */);
-    M2C_ERROR(/* unknown instruction: mtdbatl 0x2, $r29 */);
-    M2C_ERROR(/* unknown instruction: mtdbatu 0x3, $r30 */);
-    M2C_ERROR(/* unknown instruction: mtdbatl 0x3, $r31 */);
-    M2C_ERROR(/* unknown instruction: mtsdr1 $r22 */);
-    M2C_ERROR(/* unknown instruction: mtdar $r23 */);
-    M2C_ERROR(/* unknown instruction: mtdsisr $r24 */);
-    M2C_ERROR(/* unknown instruction: mtsprg 0x0, $r25 */);
-    M2C_ERROR(/* unknown instruction: mtsprg 0x1, $r26 */);
-    M2C_ERROR(/* unknown instruction: mtsprg 0x2, $r27 */);
-    M2C_ERROR(/* unknown instruction: mtsprg 0x3, $r28 */);
-    M2C_ERROR(/* unknown instruction: mtspr IABR, $r30 */);
-    M2C_ERROR(/* unknown instruction: mtear $r31 */);
+/* MetroTRK file-I/O trap stub (TRKPositionFile in MetroTRK). No callers in GFEE01;
+   left as void(void). */
+asm void fn_8022A4F8(void) {
+    nofralloc
+    twi 31, r0, 0x0
+    blr
 }
+
+#pragma push
+asm void TRKSaveExtended1Block(void) {
+    nofralloc
+    lis r2, gTRKCPUState@h
+    ori r2, r2, gTRKCPUState@l
+    mfsr r16, 0
+    mfsr r17, 1
+    mfsr r18, 2
+    mfsr r19, 3
+    mfsr r20, 4
+    mfsr r21, 5
+    mfsr r22, 6
+    mfsr r23, 7
+    mfsr r24, 8
+    mfsr r25, 9
+    mfsr r26, 10
+    mfsr r27, 11
+    mfsr r28, 12
+    mfsr r29, 13
+    mfsr r30, 14
+    mfsr r31, 15
+    stmw r16, 0x1a8(r2)
+    mftb r10, 268
+    mftb r11, 269
+    mfspr r12, 1008
+    mfspr r13, 1009
+    mfsrr1 r14
+    mfspr r15, 287
+    mfibatu r16, 0
+    mfibatl r17, 0
+    mfibatu r18, 1
+    mfibatl r19, 1
+    mfibatu r20, 2
+    mfibatl r21, 2
+    mfibatu r22, 3
+    mfibatl r23, 3
+    mfdbatu r24, 0
+    mfdbatl r25, 0
+    mfdbatu r26, 1
+    mfdbatl r27, 1
+    mfdbatu r28, 2
+    mfdbatl r29, 2
+    mfdbatu r30, 3
+    mfdbatl r31, 3
+    stmw r10, 0x1e8(r2)
+    mfsdr1 r22
+    mfdar r23
+    mfdsisr r24
+    mfsprg r25, 0
+    mfsprg r26, 1
+    mfsprg r27, 2
+    mfsprg r28, 3
+    li r29, 0x0
+    mfspr r30, 1010
+    mfear r31
+    stmw r22, 0x25c(r2)
+    mfspr r20, 912
+    mfspr r21, 913
+    mfspr r22, 914
+    mfspr r23, 915
+    mfspr r24, 916
+    mfspr r25, 917
+    mfspr r26, 918
+    mfspr r27, 919
+    mfspr r28, 920
+    mfspr r29, 921
+    mfspr r30, 922
+    mfspr r31, 923
+    stmw r20, 0x2fc(r2)
+    b L_8022A650
+    mfspr r16, 928
+    mfspr r17, 935
+    mfspr r18, 936
+    mfspr r19, 937
+    mfspr r20, 938
+    mfspr r21, 939
+    mfspr r22, 940
+    mfspr r23, 941
+    mfspr r24, 942
+    mfspr r25, 943
+    mfspr r26, 944
+    mfspr r27, 951
+    mfspr r28, 959
+    mfspr r29, 1014
+    mfspr r30, 1015
+    mfspr r31, 1023
+    stmw r16, 0x2b8(r2)
+L_8022A650:
+    mfspr r19, 1013
+    mfspr r20, 953
+    mfspr r21, 954
+    mfspr r22, 957
+    mfspr r23, 958
+    mfspr r24, 955
+    mfspr r25, 952
+    mfspr r26, 956
+    mfspr r27, 1020
+    mfspr r28, 1021
+    mfspr r29, 1022
+    mfspr r30, 1019
+    mfspr r31, 1017
+    stmw r19, 0x284(r2)
+    blr
+    mfspr r25, 976
+    mfspr r26, 977
+    mfspr r27, 978
+    mfspr r28, 979
+    mfspr r29, 980
+    mfspr r30, 981
+    mfspr r31, 982
+    stmw r25, 0x240(r2)
+    mfdec r31
+    stw r31, 0x278(r2)
+    blr
+}
+#pragma pop
+
+extern u8 gTRKRestoreFlags[];
+#pragma push
+asm void TRKRestoreExtended1Block(void) {
+    nofralloc
+    lis r2, gTRKCPUState@h
+    ori r2, r2, gTRKCPUState@l
+    lis r5, gTRKRestoreFlags@h
+    ori r5, r5, gTRKRestoreFlags@l
+    lbz r3, 0x0(r5)
+    lbz r6, 0x1(r5)
+    li r0, 0x0
+    stb r0, 0x0(r5)
+    stb r0, 0x1(r5)
+    cmpwi r3, 0x0
+    beq L_8022A6F4
+    lwz r24, 0x1e8(r2)
+    lwz r25, 0x1ec(r2)
+    mttbl r24
+    mttbu r25
+L_8022A6F4:
+    lmw r20, 0x2fc(r2)
+    mtspr 912, r20
+    mtspr 913, r21
+    mtspr 914, r22
+    mtspr 915, r23
+    mtspr 916, r24
+    mtspr 917, r25
+    mtspr 918, r26
+    mtspr 919, r27
+    mtspr 920, r28
+    mtspr 922, r30
+    mtspr 923, r31
+    b L_8022A740
+    lmw r26, 0x2e0(r2)
+    mtspr 944, r26
+    mtspr 951, r27
+    mtspr 1014, r29
+    mtspr 1015, r30
+    mtspr 1023, r31
+L_8022A740:
+    lmw r19, 0x284(r2)
+    mtspr 1013, r19
+    mtspr 953, r20
+    mtspr 954, r21
+    mtspr 957, r22
+    mtspr 958, r23
+    mtspr 955, r24
+    mtspr 952, r25
+    mtspr 956, r26
+    mtspr 1020, r27
+    mtspr 1021, r28
+    mtspr 1022, r29
+    mtspr 1019, r30
+    mtspr 1017, r31
+    b L_8022A7AC
+    cmpwi r6, 0x0
+    beq L_8022A78C
+    lwz r26, 0x278(r2)
+    mtdec r26
+L_8022A78C:
+    lmw r25, 0x240(r2)
+    mtspr 976, r25
+    mtspr 977, r26
+    mtspr 978, r27
+    mtspr 979, r28
+    mtspr 980, r29
+    mtspr 981, r30
+    mtspr 982, r31
+L_8022A7AC:
+    lmw r16, 0x1a8(r2)
+    mtsr 0, r16
+    mtsr 1, r17
+    mtsr 2, r18
+    mtsr 3, r19
+    mtsr 4, r20
+    mtsr 5, r21
+    mtsr 6, r22
+    mtsr 7, r23
+    mtsr 8, r24
+    mtsr 9, r25
+    mtsr 10, r26
+    mtsr 11, r27
+    mtsr 12, r28
+    mtsr 13, r29
+    mtsr 14, r30
+    mtsr 15, r31
+    lmw r12, 0x1f0(r2)
+    mtspr 1008, r12
+    mtspr 1009, r13
+    mtsrr1 r14
+    mtspr 287, r15
+    mtibatu 0, r16
+    mtibatl 0, r17
+    mtibatu 1, r18
+    mtibatl 1, r19
+    mtibatu 2, r20
+    mtibatl 2, r21
+    mtibatu 3, r22
+    mtibatl 3, r23
+    mtdbatu 0, r24
+    mtdbatl 0, r25
+    mtdbatu 1, r26
+    mtdbatl 1, r27
+    mtdbatu 2, r28
+    mtdbatl 2, r29
+    mtdbatu 3, r30
+    mtdbatl 3, r31
+    lmw r22, 0x25c(r2)
+    mtsdr1 r22
+    mtdar r23
+    mtdsisr r24
+    mtsprg 0, r25
+    mtsprg 1, r26
+    mtsprg 2, r27
+    mtsprg 3, r28
+    mtspr 1010, r30
+    mtear r31
+    blr
+}
+#pragma pop
 

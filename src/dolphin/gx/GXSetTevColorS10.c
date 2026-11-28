@@ -217,73 +217,60 @@ void fn_80222644(void *, void *, u16, u16, s32, s32, s32, u8);
 
 #pragma use_lmw_stmw reset
 
-#pragma scheduling off
-
 void fn_80223C14(s32 id, u32 *color)
 {
-  u16 *gx;
-  u8 cmd;
-  u32 idx;
-  u32 b;
-  u32 reg;
-  u32 a;
-  a = color[0];
-  idx = id << 1;
-  cmd = 0x61;
-  gx = (u16 *) (idx + 0xE0);
-  reg = ((u32) gx) << 24;
-  b = color[1];
-  gx = __GXData;
-  reg = __rlwimi(reg, a, 16, 21, 31);
-  GXWGFifo.u8 = cmd;
-  reg = __rlwimi(reg, b, 12, 9, 19);
-  GXWGFifo.u32 = reg;
-  idx += 0xE1;
-  idx <<= 24;
-  idx = __rlwimi(idx, b, 16, 21, 31);
-  GXWGFifo.u8 = cmd;
-  idx = __rlwimi(idx, a, 12, 9, 19);
-  GXWGFifo.u32 = idx;
-  GXWGFifo.u8 = cmd;
-  GXWGFifo.u32 = idx;
-  GXWGFifo.u8 = cmd;
-  GXWGFifo.u32 = idx;
-  gx[1] = 0;
-}
-#pragma scheduling on
-#pragma optimization_level 2
-#pragma opt_propagation off
-void fn_80223C78(s32 id, u32 *color) {
-    u32 idx = id << 1;
-    u32 c = *color;
-    u32 a = idx + 0xe0;
-    u32 lo;
-    u32 hi;
-    u32 eight;
-    u8 cmd;
-    u16 zero;
+  u32 sRG;
+  u32 sBA;
+  u32 regRA;
+  u32 regBG;
 
-    a <<= 24;
-    a = __rlwimi(a, c, 8, 24, 31);
-    lo = a;
-    cmd = 0x61;
-    GXWGFifo.u8 = cmd;
-    hi = idx + 0xe1;
-    hi <<= 24;
-    hi = __rlwimi(hi, c, 24, 24, 31);
-    eight = 8;
-    lo = __rlwimi(lo, c, 12, 12, 19);
-    lo = __rlwimi(lo, eight, 20, 8, 11);
-    GXWGFifo.u32 = lo;
-    hi = __rlwimi(hi, c, 28, 12, 19);
-    hi = __rlwimi(hi, eight, 20, 8, 11);
-    GXWGFifo.u8 = cmd;
-    zero = 0;
-    GXWGFifo.u32 = hi;
-    __GXData[1] = zero;
+  sRG = color[0];
+  sBA = color[1];
+
+  regRA = (0xE0 + id * 2) << 24;
+  regRA = __rlwimi(regRA, (sRG >> 16) & 0x7FF, 0, 21, 31);
+  regRA = __rlwimi(regRA, sBA & 0x7FF, 12, 9, 19);
+
+  regBG = (0xE1 + id * 2) << 24;
+  regBG = __rlwimi(regBG, (sBA >> 16) & 0x7FF, 0, 21, 31);
+  regBG = __rlwimi(regBG, sRG & 0x7FF, 12, 9, 19);
+
+  GXWGFifo.u8 = 0x61;
+  GXWGFifo.u32 = regRA;
+  GXWGFifo.u8 = 0x61;
+  GXWGFifo.u32 = regBG;
+  GXWGFifo.u8 = 0x61;
+  GXWGFifo.u32 = regBG;
+  GXWGFifo.u8 = 0x61;
+  GXWGFifo.u32 = regBG;
+
+  __GXData[1] = 0;
 }
-#pragma opt_propagation reset
-#pragma optimization_level reset
+
+void fn_80223C78(s32 id, u32 *color) {
+    u32 rgba;
+    u32 regRA;
+    u32 regBG;
+
+    rgba = *color;
+
+    regRA = (0xE0 + id * 2) << 24;
+    regRA = __rlwimi(regRA, rgba >> 24, 0, 24, 31);
+    regRA = __rlwimi(regRA, rgba & 0xFF, 12, 12, 19);
+    regRA = __rlwimi(regRA, 8, 20, 8, 11);
+
+    regBG = (0xE1 + id * 2) << 24;
+    regBG = __rlwimi(regBG, (rgba >> 8) & 0xFF, 0, 24, 31);
+    regBG = __rlwimi(regBG, (rgba >> 16) & 0xFF, 12, 12, 19);
+    regBG = __rlwimi(regBG, 8, 20, 8, 11);
+
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = regRA;
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = regBG;
+
+    __GXData[1] = 0;
+}
 void fn_80223CDC(s32 arg0, s32 arg1) {
     u8 cmd;
     u16 *gx;

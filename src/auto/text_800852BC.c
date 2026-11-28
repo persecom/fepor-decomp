@@ -1709,6 +1709,10 @@ void fn_80088FFC(void *arg0) {
     }
 }
 #pragma pop
+#pragma push
+#pragma use_lmw_stmw on
+#pragma opt_strength_reduction off
+#pragma scheduling on
 void fn_800892E8(void *arg0) {
     s32 GXGetTexBufferSize(s32, s32, s32, s32, s32);
     void *fn_800C45B8(s32, void *, s32);
@@ -1731,13 +1735,14 @@ void fn_800892E8(void *arg0) {
     GXInitTexObjLOD(obj + 0x4C, 0, 0, 0, 0, 0, gScreenOrigin, gScreenOrigin, gScreenOrigin);
     tmp = Process_Create(lbl_80289998, 6);
     *(void **)((u8 *)tmp + 0x54) = arg0;
-    f38 = lbl_803696A8;
-    f3c = lbl_803696AC;
+    f38 = 255.0f;
+    f3c = 127.0f;
     *(f32 *)(obj + 0x38) = f38;
     *(f32 *)(obj + 0x3C) = f3c;
     *(u16 *)(obj + 0x34) = 0;
     obj[0x30] = 0;
 }
+#pragma pop
 
 void fn_800893E0(void *arg0)
 {

@@ -171,7 +171,7 @@ void fn_8005956C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32
 #pragma pop
 void fn_800599D0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     void fn_8022124C(s32, s32, s32, s32);
-    void fn_802212FC(s32, s32, s32, s32);
+    void fn_802212FC(u16, u16, s32, u8);
     void GXCopyTex(s32, s32);
     void fn_802209FC(void);
     void fn_80222EB4(void);

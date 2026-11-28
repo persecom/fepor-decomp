@@ -118,8 +118,8 @@ extern void (*lbl_803684F8)();
 
 #pragma peephole reset
 
-extern u8 __OSSystemCallVectorStart[];
-extern u8 __OSSystemCallVectorEnd[];
+void __OSSystemCallVectorStart(void);
+void __OSSystemCallVectorEnd(void);
 
 #pragma use_lmw_stmw on
 
@@ -303,7 +303,21 @@ void OSSetGbsMode(u16 mode) {
     (void)pad;
 }
 
-void fn_80209DE4(void) { }
+#pragma push
+asm void fn_80209DE4(void) {
+entry __OSSystemCallVectorStart
+    nofralloc
+    mfspr r9, HID0
+    ori r10, r9, 0x8
+    mtspr HID0, r10
+    isync
+    sync
+    mtspr HID0, r9
+    rfi
+entry __OSSystemCallVectorEnd
+    nop
+}
+#pragma pop
 
 #pragma scheduling off
 #pragma opt_strength_reduction off

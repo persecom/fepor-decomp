@@ -314,7 +314,7 @@ void fn_80089680(void *arg0) {
 void fn_800898E4(void *arg0) {
     M2C_UNK fn_802209FC();
     M2C_UNK fn_8022124C(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
-    M2C_UNK fn_802212FC(M2C_UNK, M2C_UNK, M2C_UNK, M2C_UNK);
+    void fn_802212FC(u16, u16, s32, u8);
     M2C_UNK GXCopyTex(s32, M2C_UNK);
     M2C_UNK fn_80222EB4();
     void *temp_r31;

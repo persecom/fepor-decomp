@@ -819,7 +819,7 @@ void fn_80223494(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32
 void fn_80223500(s32 mtx_id, const f32 offset[2][3], s8 scale_exp) {
     s32 mtx[6];
     u32 reg;
-    s32 id;
+    u32 id;
 
     switch (mtx_id) {
     case 1:
@@ -842,8 +842,8 @@ void fn_80223500(s32 mtx_id, const f32 offset[2][3], s8 scale_exp) {
         break;
     }
 
-    mtx[0] = (s32)(1024.0f * offset[0][0]);
-    mtx[1] = (s32)(1024.0f * offset[1][0]);
+    mtx[0] = (int)(1024.0f * offset[0][0]) & 0x7FF;
+    mtx[1] = (int)(1024.0f * offset[1][0]) & 0x7FF;
     scale_exp += 17;
 
     reg = 0;
@@ -854,8 +854,8 @@ void fn_80223500(s32 mtx_id, const f32 offset[2][3], s8 scale_exp) {
     GXWGFifo.u8 = 0x61;
     GXWGFifo.u32 = reg;
 
-    mtx[2] = (s32)(1024.0f * offset[0][1]);
-    mtx[3] = (s32)(1024.0f * offset[1][1]);
+    mtx[2] = (int)(1024.0f * offset[0][1]) & 0x7FF;
+    mtx[3] = (int)(1024.0f * offset[1][1]) & 0x7FF;
 
     reg = 0;
     reg = __rlwimi(reg, mtx[2], 0, 21, 31);
@@ -865,8 +865,8 @@ void fn_80223500(s32 mtx_id, const f32 offset[2][3], s8 scale_exp) {
     GXWGFifo.u8 = 0x61;
     GXWGFifo.u32 = reg;
 
-    mtx[4] = (s32)(1024.0f * offset[0][2]);
-    mtx[5] = (s32)(1024.0f * offset[1][2]);
+    mtx[4] = (int)(1024.0f * offset[0][2]) & 0x7FF;
+    mtx[5] = (int)(1024.0f * offset[1][2]) & 0x7FF;
 
     reg = 0;
     reg = __rlwimi(reg, mtx[4], 0, 21, 31);

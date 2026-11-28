@@ -390,25 +390,45 @@ void fn_802212C8(s32 arg0) {
 }
 
 void fn_8022257C(s32, u16, u16, u32 *, u32 *, u32 *);
-void fn_802212FC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
- u32 x, y, z;
- u32 format = arg2 & 15;
- M2C_FIELD(__GXData, u8 *, 0x200) = 0;
- if (arg2 == 0x13) format = 11;
- switch(arg2) {
- case 0: case 1: case 2: case 3: case 0x26:
- M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC),3,15,15,16); break;
- default: M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC),2,15,15,16); break;
- }
- M2C_FIELD(__GXData,u8 *,0x200) = !((arg2 & 0x10) - 0x10);
- M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC),format,0,28,28);
- format &= 7;
- fn_8022257C(arg2,arg0,arg1,&x,&y,&z);
- M2C_FIELD(__GXData, u32 *, 0x1F8) = 0;
- M2C_FIELD(__GXData, u32 *, 0x1F8) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1F8),x*z,0,22,31);
- M2C_FIELD(__GXData, u32 *, 0x1F8) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1F8),0x4D,24,0,7);
- M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC),arg3,9,22,22);
- M2C_FIELD(__GXData, u32 *, 0x1FC) = __rlwimi(M2C_FIELD(__GXData, u32 *, 0x1FC),format,4,25,27);
+void fn_802212FC(u16 wd, u16 ht, s32 fmt, u8 mipmap) {
+    u32 rowTiles;
+    u32 colTiles;
+    u32 cmpTiles;
+    u32 peTexFmt;
+    u32 peTexFmtH;
+
+    *((u8 *)__GXData + 0x200) = 0;
+    peTexFmt = fmt & 0xF;
+
+    if (fmt == 0x13) {
+        peTexFmt = 0xB;
+    }
+
+    switch (fmt) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 0x26:
+        *(u32 *)((u8 *)__GXData + 0x1FC) = __rlwimi(*(u32 *)((u8 *)__GXData + 0x1FC), 3, 15, 15, 16);
+        break;
+    default:
+        *(u32 *)((u8 *)__GXData + 0x1FC) = __rlwimi(*(u32 *)((u8 *)__GXData + 0x1FC), 2, 15, 15, 16);
+        break;
+    }
+
+    *((u8 *)__GXData + 0x200) = 0x10 == (fmt & 0x10);
+    peTexFmtH = (peTexFmt >> 3) & 1;
+    !peTexFmt;
+    *(u32 *)((u8 *)__GXData + 0x1FC) = __rlwimi(*(u32 *)((u8 *)__GXData + 0x1FC), peTexFmtH, 3, 28, 28);
+    peTexFmt = peTexFmt & 7;
+    fn_8022257C(fmt, wd, ht, &rowTiles, &colTiles, &cmpTiles);
+
+    *(u32 *)((u8 *)__GXData + 0x1F8) = 0;
+    *(u32 *)((u8 *)__GXData + 0x1F8) = __rlwimi(*(u32 *)((u8 *)__GXData + 0x1F8), rowTiles * cmpTiles, 0, 22, 31);
+    *(u32 *)((u8 *)__GXData + 0x1F8) = __rlwimi(*(u32 *)((u8 *)__GXData + 0x1F8), 0x4D, 24, 0, 7);
+    *(u32 *)((u8 *)__GXData + 0x1FC) = __rlwimi(*(u32 *)((u8 *)__GXData + 0x1FC), mipmap, 9, 22, 22);
+    *(u32 *)((u8 *)__GXData + 0x1FC) = __rlwimi(*(u32 *)((u8 *)__GXData + 0x1FC), peTexFmt, 4, 25, 27);
 }
 
 void fn_8022142C(u32 arg0) {
@@ -429,158 +449,87 @@ void fn_80221450(u32 arg0) {
 extern const f64 lbl_8036BCD8;
 extern const f32 lbl_8036BCD0;
 s32 __cvt_fp2unsigned(f32);
+static inline u32 GX_GetNumXfbLines(u32 efbHt, u32 iScale) {
+    u32 count;
+    u32 realHt;
+    u32 iScaleD;
+
+    count = (efbHt - 1) * 0x100;
+    realHt = (count / iScale) + 1;
+
+    iScaleD = iScale;
+
+    if (iScaleD > 0x80 && iScaleD < 0x100) {
+        while (iScaleD % 2 == 0) {
+            iScaleD /= 2;
+        }
+
+        if (efbHt % iScaleD == 0) {
+            realHt++;
+        }
+    }
+
+    if (realHt > 0x400) {
+        realHt = 0x400;
+    }
+
+    return realHt;
+}
+
 #pragma use_lmw_stmw on
 f32 fn_802214A8(u16 efbHeight, u16 xfbHeight)
 {
-  f64 bias;
-  f32 f256;
-  f32 best;
-  f32 ratio;
-  u32 efb;
-  u32 fixed;
-  unsigned int new_var;
-  u32 xfbOrig;
-  u32 yScale;
-  u32 save0;
-  u32 efbOrig;
-  u32 save1;
-  u32 denom;
-  u32 lines;
-  u32 cmp;
-  f32 tmp;
-  f32 inv;
-  bias = lbl_8036BCD8;
-  f256 = lbl_8036BCD0;
-  yScale = xfbHeight;
-  efb = efbHeight;
-  save0 = efbHeight;
-  save1 = xfbHeight;
-  tmp = (f32) efb;
-  tmp = ((f32) yScale) / tmp;
-  inv = f256 / tmp;
-  ratio = tmp;
-  denom = ((u32) __cvt_fp2unsigned(inv)) & 0x1FF;
-  fixed = (efb - 1) << 8;
-  new_var = (fixed / denom) + 1;
-  lines = new_var;
-  if ((denom > 0x80U) && (denom < 0x100U))
-  {
-    while ((denom & 1) == 0)
-    {
-      denom >>= 1;
+    f32 fScale;
+    f32 yScale;
+    u32 iScale;
+    u32 tgtHt;
+    u32 realHt;
+
+    tgtHt = xfbHeight;
+    yScale = (f32)xfbHeight / (f32)efbHeight;
+    iScale = (u32)(256.0f / yScale) & 0x1FF;
+    realHt = GX_GetNumXfbLines(efbHeight, iScale);
+
+    while (realHt > xfbHeight) {
+        tgtHt--;
+        yScale = (f32)tgtHt / (f32)efbHeight;
+        iScale = (u32)(256.0f / yScale) & 0x1FF;
+        realHt = GX_GetNumXfbLines(efbHeight, iScale);
     }
 
-    if ((efb % denom) == 0)
-    {
-      lines += 1;
+    fScale = yScale;
+    while (realHt < xfbHeight) {
+        fScale = yScale;
+        tgtHt++;
+        yScale = (f32)tgtHt / (f32)efbHeight;
+        iScale = (u32)(256.0f / yScale) & 0x1FF;
+        realHt = GX_GetNumXfbLines(efbHeight, iScale);
     }
-  }
-  if (lines > 0x400U)
-  {
-    lines = 0x400U;
-    new_var = new_var;
-  }
-  cmp = lines;
-  xfbOrig = (u16) save1;
-  efbOrig = (u16) save0;
-  while (cmp > xfbOrig)
-  {
-    yScale -= 1;
-    tmp = ((f32) yScale) / ((f32) efbOrig);
-    inv = f256 / tmp;
-    ratio = tmp;
-    denom = ((u32) __cvt_fp2unsigned(inv)) & 0x1FF;
-    lines = (fixed / denom) + 1;
-    if ((denom > 0x80U) && (denom < 0x100U))
-    {
-      while ((denom & 1) == 0)
-      {
-        denom >>= 1;
-      }
 
-      if ((efb % denom) == 0)
-      {
-        lines += 1;
-      }
-    }
-    if (lines > 0x400U)
-    {
-      lines = 0x400U;
-    }
-    cmp = lines;
-  }
-
-  best = ratio;
-  bias = lbl_8036BCD8;
-  f256 = lbl_8036BCD0;
-  lines = xfbOrig;
-  efbOrig = (u16) save0;
-  while (cmp < lines)
-  {
-    yScale += 1;
-    best = ratio;
-    tmp = ((f32) yScale) / ((f32) efbOrig);
-    inv = f256 / tmp;
-    ratio = tmp;
-    denom = ((u32) __cvt_fp2unsigned(inv)) & 0x1FF;
-    lines = (fixed / denom) + 1;
-    if ((denom > 0x80U) && (denom < 0x100U))
-    {
-      while ((denom & 1) == 0)
-      {
-        denom >>= 1;
-      }
-
-      if ((efbHeight % denom) == 0)
-      {
-        lines += 1;
-      }
-    }
-    if (lines > 0x400U)
-    {
-      lines = 0x400U;
-    }
-    cmp = lines;
-  }
-
-  return best;
+    return fScale;
 }
 #pragma use_lmw_stmw reset
 
-#pragma push
-#pragma optimization_level 3
-u32 fn_802216E0(f32 scale)
+u32 fn_802216E0(f32 vscale)
 {
-    u32 yscale;
-    u32 enabled;
+    u8 enable;
+    u32 iScale;
+    u32 ht;
     u32 reg;
-    u32 height;
-    u32 result;
-    u32 y;
 
-    yscale = (u32)__cvt_fp2unsigned(lbl_8036BCD0 / scale) & 511;
-    enabled = 0x100 - yscale;
-    GXWGFifo.u8 = 0x61;
-    enabled = (enabled - 1) < enabled;
-    reg = __rlwimi(0, yscale, 0, 23, 31);
+    iScale = (u32)(lbl_8036BCD0 / vscale) & 0x1FF;
+    enable = (iScale != 256);
+
+    reg = 0;
+    reg = __rlwimi(reg, iScale, 0, 23, 31);
     reg = __rlwimi(reg, 0x4E, 24, 0, 7);
+    GXWGFifo.u8 = 0x61;
     GXWGFifo.u32 = reg;
     __GXData[1] = 0;
-    y = yscale;
-    *(u32 *)((u8 *)__GXData + 0x1EC) = __rlwimi(*(u32 *)((u8 *)__GXData + 0x1EC), enabled, 10, 21, 21);
-    height = ((*(u32 *)((u8 *)__GXData + 0x1E4) >> 10) & 1023) + 1;
-    result = ((height - 1) << 8) / yscale + 1;
-    if (yscale > 128 && yscale < 256) {
-        while (!(y & 1))
-            y >>= 1;
-        if (height % y == 0)
-            result++;
-    }
-    if (result > 1024)
-        result = 1024;
-    return result;
+    *(u32 *)((u8 *)__GXData + 0x1EC) = __rlwimi(*(u32 *)((u8 *)__GXData + 0x1EC), enable, 10, 21, 21);
+    ht = ((*(u32 *)((u8 *)__GXData + 0x1E4) >> 10) & 0x3FF) + 1;
+    return GX_GetNumXfbLines(ht, iScale);
 }
-#pragma pop
 void GXSetCopyClear(u8 *clear, u32 z) {
     u32 val;
 

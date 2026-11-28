@@ -463,26 +463,26 @@ void GXSetScissor(s32 left, s32 top, s32 wd, s32 ht)
   GXWGFifo.u32 = *((u32 *) (gx + 0xFC));
   *((u16 *) (gx + 2)) = 0;
 }
-#pragma scheduling off
-void fn_802250D0(s32 *arg0, s32 *arg1, s32 *arg2, s32 *arg3)
+#pragma push
+#pragma optimization_level 4
+void fn_802250D0(u32 *left, u32 *top, u32 *wd, u32 *ht)
 {
-  u32 temp_r8;
-  u32 temp_r7;
-  u32 temp_r9;
-  u32 width;
-  u32 bottom;
-  temp_r8 = *((u32 *) (((char *) __GXData) + 0xfc));
-  temp_r7 = *((u32 *) (((char *) __GXData) + 0xf8));
-  temp_r9 = (temp_r7 >> 12) & 0x7ff;
-  *arg0 = temp_r9 - 0x156;
-  temp_r7 &= 0x7ff;
-  *arg1 = temp_r7 - 0x156;
-  width = (((temp_r8 >> 12) & 0x7ff) - temp_r9) + 1;
-  bottom = temp_r8 & 0x7ff;
-  *arg2 = width;
-  *arg3 = (bottom - temp_r7) + 1;
+  u32 tp;
+  u32 lf;
+  u32 bm;
+  u32 rt;
+
+  tp = *(u32 *)((u8 *)__GXData + 0xF8) & 0x7FF;
+  lf = (*(u32 *)((u8 *)__GXData + 0xF8) & 0x7FF000) >> 12;
+  bm = *(u32 *)((u8 *)__GXData + 0xFC) & 0x7FF;
+  rt = (*(u32 *)((u8 *)__GXData + 0xFC) & 0x7FF000) >> 12;
+
+  *left = lf - 342;
+  *top = tp - 342;
+  *wd = rt - lf + 1;
+  *ht = bm - tp + 1;
 }
-#pragma scheduling reset
+#pragma pop
 
 #pragma peephole off
 void fn_80225118(s32 x, s32 y)

@@ -214,11 +214,27 @@ volatile PPCWGPipe GXWGFifo : 0xCC008000;
 #pragma optimization_level 3
 
 #pragma ppc_intrinsics on
+static inline void WriteProjPS(const register f32 proj[6], register volatile void *dest) {
+    register f32 p01, p23, p45;
+    asm {
+psq_l p01, 0(proj), 0, 0
+psq_l p23, 8(proj), 0, 0
+psq_l p45, 16(proj), 0, 0
+psq_st p01, 0(dest), 0, 0
+psq_st p23, 0(dest), 0, 0
+psq_st p45, 0(dest), 0, 0
+    }
+}
+static inline void __GXSetProjection(void) {
+    u32 reg = 0x00061020;
+    GXWGFifo.u8 = (u8)(0x10);
+    GXWGFifo.u32 = (u32)(reg);
+    WriteProjPS((f32 *)((u8 *)__GXData + 0x4DC), (volatile void *)0xCC008000);
+    GXWGFifo.u32 = (u32)(*(u32 *)((u8 *)__GXData + 0x4D8));
+}
 void GXSetProjection(f32 *mtx, s32 type)
 {
     u8 *gx;
-    f64 *dst;
-    register volatile f64 *fifo;
 
     gx = (u8 *)__GXData;
     *(s32 *)(gx + 0x4D8) = type;
@@ -233,17 +249,8 @@ void GXSetProjection(f32 *mtx, s32 type)
         *(f32 *)(gx + 0x4E0) = mtx[2];
         *(f32 *)(gx + 0x4E8) = mtx[6];
     }
-
-    gx = (u8 *)__GXData;
-    fifo = (volatile f64 *)0xCC008000;
-    *(volatile u8 *)fifo = 0x10;
-    *(volatile u32 *)fifo = 0x61020;
-    dst = (f64 *)(gx + 0x4DC);
-    fifo[0] = dst[0];
-    fifo[0] = dst[1];
-    fifo[0] = dst[2];
-    *(volatile u32 *)fifo = *(u32 *)(gx + 0x4D8);
-    *(u16 *)(gx + 2) = 1;
+    __GXSetProjection();
+    *(u16 *)((u8 *)__GXData + 2) = 1;
 }
 
 #pragma peephole off

@@ -4210,52 +4210,55 @@ void fn_8006720C(void *arg0) {
 }
 #pragma opt_propagation reset
 #pragma optimization_level reset
-#pragma global_optimizer off
-void fn_80067304(void *arg0) {
 #pragma push
-#pragma optimization_level 3
+#pragma global_optimizer on
+void fn_80067304(void *arg0) {
     typedef struct { f32 x, y, z; } Vec3;
+    typedef struct { u8 r, g, b, a; } Color;
+    typedef struct {
+        Color color0;
+        Color color;
+        Vec3 pos;
+        Vec3 dir;
+        f32 refDist;
+        f32 unk24;
+        f32 unk28;
+    } LightEntry;
     extern Vec3 lbl_8026B744;
     extern Vec3 lbl_8026B750;
     extern const f32 lbl_80369224;
     extern const f32 lbl_80369228;
-    extern s32 lbl_8036C444;
-    extern s32 lbl_8036C448;
-    Vec3 a;
-    Vec3 b;
-    f32 f20 = lbl_80369224;
-    f32 f24 = lbl_80369228;
-    u32 col1;
-    u32 col2;
+    extern Color lbl_8036C444;
+    extern Color lbl_8036C448;
+    LightEntry *light = (LightEntry *)arg0;
+    Vec3 dir;
+    Vec3 pos;
+    Color c0;
+    Color c1;
 
-    a = lbl_8026B744;
-    *(f32 *)((u8 *)arg0 + 0x14) = a.x;
-    *(f32 *)((u8 *)arg0 + 0x18) = a.y;
-    *(f32 *)((u8 *)arg0 + 0x1C) = a.z;
-
-    b = lbl_8026B750;
-    *(f32 *)((u8 *)arg0 + 0x08) = b.x;
-    *(f32 *)((u8 *)arg0 + 0x0C) = b.y;
-    *(f32 *)((u8 *)arg0 + 0x10) = b.z;
-    *(f32 *)((u8 *)arg0 + 0x20) = f20;
-
-    col1 = lbl_8036C444;
-    ((u8 *)arg0)[0] = ((u8 *)&col1)[0];
-    ((u8 *)arg0)[1] = ((u8 *)&col1)[1];
-    ((u8 *)arg0)[2] = ((u8 *)&col1)[2];
-    ((u8 *)arg0)[3] = ((u8 *)&col1)[3];
-
-    col2 = lbl_8036C448;
-    ((u8 *)arg0)[4] = ((u8 *)&col2)[0];
-    ((u8 *)arg0)[5] = ((u8 *)&col2)[1];
-    ((u8 *)arg0)[6] = ((u8 *)&col2)[2];
-    ((u8 *)arg0)[7] = ((u8 *)&col2)[3];
-
-    *(f32 *)((u8 *)arg0 + 0x24) = f24;
-    *(f32 *)((u8 *)arg0 + 0x28) = f24;
-#pragma pop
+    dir = lbl_8026B744;
+    light->dir.x = dir.x;
+    light->dir.y = dir.y;
+    light->dir.z = dir.z;
+    pos = lbl_8026B750;
+    light->pos.x = pos.x;
+    light->pos.y = pos.y;
+    light->pos.z = pos.z;
+    light->refDist = lbl_80369224;
+    c0 = lbl_8036C444;
+    light->color0.r = c0.r;
+    light->color0.g = c0.g;
+    light->color0.b = c0.b;
+    light->color0.a = c0.a;
+    c1 = lbl_8036C448;
+    light->color.r = c1.r;
+    light->color.g = c1.g;
+    light->color.b = c1.b;
+    light->color.a = c1.a;
+    light->unk24 = lbl_80369228;
+    light->unk28 = lbl_80369228;
 }
-#pragma global_optimizer reset
+#pragma pop
 void Light_CopyChannel(void *arg0, void *arg1) {
     typedef struct { s32 x; s32 y; } Pair;
     Pair t;
@@ -6954,87 +6957,68 @@ void fn_8006CC6C(s32 arg0) {
 
 #pragma push
 #pragma opt_propagation off
-void *fn_8006CCBC(char *name, s32 flags) {
-    extern u32 FileCache_GetFlags(void *);
-    void *Archive_LoadFlags(char *, s32);
-    u8 fresh = 1;
-    void *archive;
-    u32 *reloc;
-    s32 i;
-    s32 b, g, r;
-    u8 *material;
-    if (FileCache_GetFlags(name) & 0x4000) fresh = 0;
-    archive = Archive_LoadFlags(name, flags);
-    if (fresh) {
-        reloc = M2C_FIELD(archive, u32 **, 0x48);
-        if (reloc) {
-            reloc[0] += (u32)reloc;
-            reloc[1] += (u32)reloc;
-        }
-        for (i = 0; i < M2C_FIELD(archive, u16 *, 0x54); i++) {
-            material = M2C_FIELD(archive, u8 **, 0x34) + i * 0x20;
-            r = (s32)(1.25f * (f32)material[8]);
-            g = (s32)(1.25f * (f32)material[9]);
-            b = (s32)(1.25f * (f32)material[10]);
-            if (r > 255) r = 255;
-            if (g > 255) g = 255;
-            if (b > 255) b = 255;
-            material[8] = r;
-            material[9] = g;
-            material[10] = b;
-        }
+#pragma push
+#pragma inline_max_size(1000)
+#pragma optimization_level 4
+typedef struct Vtx20 {
+    u8 pad[8];
+    u8 r, g, b;
+    u8 pad2[0x20 - 0xb];
+} Vtx20;
+static inline void Reloc(u8 *m) {
+    u32 *h = *(u32 **)(m + 0x48);
+    if (h != NULL) {
+        h[0] += (u32)h;
+        h[1] += (u32)h;
     }
-    return archive;
+}
+static inline void Scale(u8 *m, s32 z) {
+    extern f32 lbl_803692AC;
+    s32 i;
+    f32 s = lbl_803692AC;
+    for (i = z; i < *(u16 *)(m + 0x54); i++) {
+        Vtx20 *v = &(*(Vtx20 **)(m + 0x34))[i];
+        s32 r = s * v->r;
+        s32 g = s * v->g;
+        s32 b = s * v->b;
+        if (r > 0xff) r = 0xff;
+        if (g > 0xff) g = 0xff;
+        if (b > 0xff) b = 0xff;
+        v->r = r; v->g = g; v->b = b;
+    }
+}
+void * fn_8006CCBC(char *id_, s32 k) {
+    void *Archive_LoadFlags(s32, u32);
+    u16 FileCache_GetFlags(char *);
+    u8 *m;
+    u8 ok = 1;
+    if (FileCache_GetFlags(id_) & 0x4000) ok = 0;
+    m = (u8 *)Archive_LoadFlags((s32)id_, (u32)k);
+    if (ok) {
+        Reloc(m);
+        Scale(m, 0);
+    }
+    return m;
 }
 #pragma pop
-void *fn_8006CE14(char *name) {
-    extern u32 FileCache_GetFlags(void *);
-    void *Archive_LoadFlags(char *, s32);
-    extern f32 lbl_803692AC;
-    u8 fresh;
-    void *archive;
-    u32 *reloc;
-    s32 b, g, r;
-    u8 *material;
-    s32 i;
-    s32 offset;
-    f32 factor;
-
-    fresh = 1;
-    if (FileCache_GetFlags(name) & 0x4000) {
-        fresh = 0;
+#pragma pop
+#pragma push
+#pragma inline_max_size(1000)
+#pragma optimization_level 4
+void * fn_8006CE14(char *id_) {
+    void *Archive_LoadFlags(s32, u32);
+    u16 FileCache_GetFlags(char *);
+    u8 *m;
+    u8 ok = 1;
+    if (FileCache_GetFlags(id_) & 0x4000) ok = 0;
+    m = (u8 *)Archive_LoadFlags((s32)id_, 0);
+    if (ok) {
+        Reloc(m);
+        Scale(m, 0);
     }
-    archive = Archive_LoadFlags(name, 0);
-    if (fresh) {
-        reloc = *(u32 **)((u8 *)archive + 0x48);
-        if (reloc != 0) {
-            reloc[0] += (u32)reloc;
-            reloc[1] += (u32)reloc;
-        }
-        i = fresh - 1;
-        factor = lbl_803692AC;
-        offset = i;
-        for (; i < *(u16 *)((u8 *)archive + 0x54); offset += 0x20, i++) {
-            material = *(u8 **)((u8 *)archive + 0x34) + offset;
-            r = (s32)(factor * (f32)(u32)material[8]);
-            g = (s32)(factor * (f32)(u32)material[9]);
-            b = (s32)(factor * (f32)(u32)material[10]);
-            if (r > 255) {
-                r = 255;
-            }
-            if (g > 255) {
-                g = 255;
-            }
-            if (b > 255) {
-                b = 255;
-            }
-            material[8] = (u8)r;
-            material[9] = (u8)g;
-            material[10] = (u8)b;
-        }
-    }
-    return archive;
+    return m;
 }
+#pragma pop
 
 #pragma use_lmw_stmw on
 void fn_8006CF60(void *arg0)

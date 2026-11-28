@@ -118,12 +118,31 @@ stfs c1, 0(m)
     }
 }
 
-f32 fn_80202574(f64 farg0, f64 farg1, f64 farg2) {
-    M2C_ERROR(/* unknown instruction: ps_sum1 $f5, $f1, $f5, $f5 */);
-    M2C_ERROR(/* unknown instruction: ps_sum1 $f7, $f2, $f7, $f7 */);
-    M2C_ERROR(/* unknown instruction: ps_sum1 $f8, $f3, $f8, $f8 */);
-    return (f32) farg0;
+#pragma push
+#pragma optimization_level 1
+asm void fn_80202574(const register Mtx src, register Mtx dst, register f32 xT, register f32 yT, register f32 zT) {
+    nofralloc
+    psq_l fp4, 0(src), 0, 0
+    frsp xT, xT
+    psq_l fp5, 8(src), 0, 0
+    frsp yT, yT
+    psq_l fp7, 24(src), 0, 0
+    frsp zT, zT
+    psq_l fp8, 40(src), 0, 0
+    psq_st fp4, 0(dst),  0, 0
+    ps_sum1 fp5, xT, fp5, fp5
+    psq_l fp6, 16(src), 0, 0
+    psq_st fp5, 8(dst), 0, 0
+    ps_sum1 fp7, yT, fp7, fp7
+    psq_l fp9, 32(src), 0, 0
+    psq_st fp6, 16(dst), 0, 0
+    ps_sum1 fp8, zT, fp8, fp8
+    psq_st fp7, 24(dst), 0, 0
+    psq_st fp9, 32(dst), 0, 0
+    psq_st fp8, 40(dst), 0, 0
+    blr
 }
+#pragma pop
 
 void PSMTXScale(register Mtx m, register f32 xS, register f32 yS, register f32 zS) {
     register f32 c0 = 0.0f;
@@ -139,41 +158,83 @@ stfs c0, 44(m)
     }
 }
 
-void fn_802025E8(f32 *src, f32 *dst, f32 x, f32 y, f32 z) {
-    dst[0] = src[0] * x;
-    dst[1] = src[1] * x;
-    dst[2] = src[2] * y;
-    dst[3] = src[3] * y;
-    dst[4] = src[4] * z;
-    dst[5] = src[5] * z;
+#pragma push
+#pragma optimization_level 1
+asm void fn_802025E8(const register Mtx src, register Mtx dst, register f32 xS, register f32 yS, register f32 zS) {
+    nofralloc
+    frsp xS, xS
+    psq_l fp4, 0(src), 0, 0
+    frsp yS, yS
+    psq_l fp5, 8(src), 0, 0
+    frsp zS, zS
+    ps_muls0 fp4, fp4, xS
+    psq_l fp6, 16(src), 0, 0
+    ps_muls0 fp5, fp5, xS
+    psq_l fp7, 24(src), 0, 0
+    ps_muls0 fp6, fp6, yS
+    psq_l fp8, 32(src), 0, 0
+    psq_st fp4, 0(dst), 0, 0
+    ps_muls0 fp7, fp7, yS
+    psq_l fp2, 40(src), 0, 0
+    psq_st fp5, 8(dst), 0, 0
+    ps_muls0 fp8, fp8, zS
+    psq_st fp6, 16(dst), 0, 0
+    ps_muls0 fp2, fp2, zS
+    psq_st fp7, 24(dst), 0, 0
+    psq_st fp8, 32(dst), 0, 0
+    psq_st fp2, 40(dst), 0, 0
+    blr
 }
+#pragma pop
 
-void fn_80202640(void) {
-    M2C_ERROR(/* unknown instruction: ps_mul $f6, $f4, $f4 */);
-    M2C_ERROR(/* unknown instruction: ps_merge10 $f9, $f4, $f4 */);
-    M2C_ERROR(/* unknown instruction: ps_madd $f8, $f5, $f5, $f6 */);
-    M2C_ERROR(/* unknown instruction: ps_mul $f7, $f5, $f5 */);
-    M2C_ERROR(/* unknown instruction: ps_sum0 $f3, $f8, $f8, $f8 */);
-    M2C_ERROR(/* unknown instruction: ps_muls1 $f10, $f9, $f5 */);
-    M2C_ERROR(/* unknown instruction: ps_sum1 $f8, $f7, $f8, $f6 */);
-    M2C_ERROR(/* unknown instruction: ps_nmsub $f3, $f3, $f11, $f2 */);
-    M2C_ERROR(/* unknown instruction: ps_muls1 $f7, $f5, $f5 */);
-    M2C_ERROR(/* unknown instruction: ps_mul $f3, $f11, $f3 */);
-    M2C_ERROR(/* unknown instruction: ps_sum0 $f6, $f6, $f6, $f6 */);
-    M2C_ERROR(/* unknown instruction: ps_madd $f11, $f4, $f9, $f7 */);
-    M2C_ERROR(/* unknown instruction: ps_msub $f7, $f4, $f9, $f7 */);
-    M2C_ERROR(/* unknown instruction: ps_nmsub $f6, $f6, $f3, $f1 */);
-    M2C_ERROR(/* unknown instruction: ps_nmsub $f8, $f8, $f3, $f1 */);
-    M2C_ERROR(/* unknown instruction: ps_mul $f11, $f11, $f3 */);
-    M2C_ERROR(/* unknown instruction: ps_mul $f7, $f7, $f3 */);
-    M2C_ERROR(/* unknown instruction: ps_madds0 $f9, $f4, $f5, $f10 */);
-    M2C_ERROR(/* unknown instruction: ps_merge00 $f5, $f11, $f8 */);
-    M2C_ERROR(/* unknown instruction: ps_nmsub $f10, $f10, $f2, $f9 */);
-    M2C_ERROR(/* unknown instruction: ps_merge10 $f4, $f8, $f7 */);
-    M2C_ERROR(/* unknown instruction: ps_mul $f9, $f9, $f3 */);
-    M2C_ERROR(/* unknown instruction: ps_mul $f10, $f10, $f3 */);
-    M2C_ERROR(/* unknown instruction: ps_merge10 $f7, $f10, $f0 */);
-    M2C_ERROR(/* unknown instruction: ps_merge01 $f11, $f10, $f9 */);
+void fn_80202640(register f32 (*m)[4], const register f32 *q) {
+    extern f32 lbl_8036BC38;
+    register f32 c_zero, c_one, c_two, scale;
+    register f32 tmp0, tmp1, tmp2, tmp3, tmp4;
+    register f32 tmp5, tmp6, tmp7, tmp8, tmp9;
+    c_one = lbl_8036BC38;
+
+	asm {
+        psq_l tmp0, 0(q), 0, 0
+        psq_l tmp1, 8(q), 0, 0
+        fsubs c_zero, c_one, c_one
+        fadds c_two, c_one, c_one
+        ps_mul tmp2, tmp0, tmp0
+        ps_merge10 tmp5, tmp0, tmp0
+        ps_madd tmp4, tmp1, tmp1, tmp2
+        ps_mul tmp3, tmp1, tmp1
+        ps_sum0 scale, tmp4, tmp4, tmp4
+        ps_muls1 tmp7, tmp5, tmp1
+        fres tmp9, scale
+        ps_sum1 tmp4, tmp3, tmp4, tmp2
+        ps_nmsub scale, scale, tmp9, c_two
+        ps_muls1 tmp6, tmp1, tmp1
+        ps_mul scale, tmp9, scale
+        ps_sum0 tmp2, tmp2, tmp2, tmp2
+        fmuls scale, scale, c_two
+        ps_madd tmp8, tmp0, tmp5, tmp6
+        ps_msub tmp6, tmp0, tmp5, tmp6
+        psq_st c_zero, 12(m), 1, 0
+        ps_nmsub tmp2, tmp2, scale, c_one
+        ps_nmsub tmp4, tmp4, scale, c_one
+        psq_st c_zero, 44(m), 1, 0
+        ps_mul tmp8, tmp8, scale
+        ps_mul tmp6, tmp6, scale
+        psq_st tmp2, 40(m), 1, 0
+        ps_madds0 tmp5, tmp0, tmp1, tmp7
+        ps_merge00 tmp1, tmp8, tmp4
+        ps_nmsub tmp7, tmp7, c_two, tmp5
+        ps_merge10 tmp0, tmp4, tmp6
+        psq_st tmp1, 16(m), 0, 0
+        ps_mul tmp5, tmp5, scale
+        ps_mul tmp7, tmp7, scale
+        psq_st tmp0, 0(m), 0, 0
+        psq_st tmp5, 8(m), 1, 0
+        ps_merge10 tmp3, tmp7, c_zero
+        ps_merge01 tmp9, tmp7, tmp5
+        psq_st tmp3, 24(m), 0, 0
+        psq_st tmp9, 32(m), 0, 0
+	}
 }
 
 #pragma push
@@ -258,28 +319,59 @@ void C_MTXLightOrtho(f32 *m, f32 t, f32 b, f32 l, f32 r, f32 sx, f32 sy, f32 tx,
   m[11] = lbl_8036BC38;
 }
 #pragma scheduling off
-f32 fn_802029C4(void) {
-    M2C_ERROR(/* unknown instruction: ps_mul $f4, $f2, $f0 */);
-    M2C_ERROR(/* unknown instruction: ps_madd $f5, $f3, $f1, $f4 */);
-    M2C_ERROR(/* unknown instruction: ps_sum0 $f6, $f5, $f6, $f5 */);
-    M2C_ERROR(/* unknown instruction: ps_mul $f10, $f8, $f0 */);
-    M2C_ERROR(/* unknown instruction: ps_madd $f11, $f9, $f1, $f10 */);
-    M2C_ERROR(/* unknown instruction: ps_sum0 $f12, $f11, $f12, $f11 */);
-    M2C_ERROR(/* unknown instruction: ps_mul $f4, $f2, $f0 */);
-    M2C_ERROR(/* unknown instruction: ps_madd $f5, $f3, $f1, $f4 */);
-    M2C_ERROR(/* unknown instruction: ps_sum0 $f6, $f5, $f6, $f5 */);
-    return M2C_ERROR(/* psq_l unimplemented */);
+#pragma push
+asm void fn_802029C4(const register f32 (*m)[4], const register f32 *src, register f32 *dst) {
+    nofralloc
+    psq_l f0, 0(src), 0, 0
+    psq_l f2, 0(m), 0, 0
+    psq_l f1, 8(src), 1, 0
+    ps_mul f4, f2, f0
+    psq_l f3, 8(m), 0, 0
+    ps_madd f5, f3, f1, f4
+    psq_l f8, 16(m), 0, 0
+    ps_sum0 f6, f5, f6, f5
+    psq_l f9, 24(m), 0, 0
+    ps_mul f10, f8, f0
+    psq_st f6, 0(dst), 1, 0
+    ps_madd f11, f9, f1, f10
+    psq_l f2, 32(m), 0, 0
+    ps_sum0 f12, f11, f12, f11
+    psq_l f3, 40(m), 0, 0
+    ps_mul f4, f2, f0
+    psq_st f12, 4(dst), 1, 0
+    ps_madd f5, f3, f1, f4
+    ps_sum0 f6, f5, f6, f5
+    psq_st f6, 8(dst), 1, 0
+    blr
 }
+#pragma pop
 
-void fn_80202A18(const f32 m[3][4], const f32 *v, f32 *out) {
-    f32 x=v[0], y=v[1], z=v[2];
-    f32 a=m[0][0]*x+m[0][1]*y;
-    f32 b=m[1][0]*x+m[1][1]*y;
-    f32 c=m[2][0]*x+m[2][1]*y;
-    out[0]=m[0][2]*z+a;
-    out[1]=m[1][2]*z+b;
-    out[2]=m[2][2]*z+c;
+#pragma push
+asm void fn_80202A18(const register f32 (*m)[4], const register f32 *src, register f32 *dst) {
+    nofralloc
+    psq_l f0, 0x0(m), 0, 0
+    psq_l f6, 0x0(src), 0, 0
+    psq_l f2, 0x10(m), 0, 0
+    ps_mul f8, f0, f6
+    psq_l f4, 0x20(m), 0, 0
+    ps_mul f10, f2, f6
+    psq_l f7, 0x8(src), 1, 0
+    ps_mul f12, f4, f6
+    psq_l f3, 0x18(m), 0, 0
+    ps_sum0 f8, f8, f8, f8
+    psq_l f5, 0x28(m), 0, 0
+    ps_sum0 f10, f10, f10, f10
+    psq_l f1, 0x8(m), 0, 0
+    ps_sum0 f12, f12, f12, f12
+    ps_madd f9, f1, f7, f8
+    psq_st f9, 0x0(dst), 1, 0
+    ps_madd f11, f3, f7, f10
+    psq_st f11, 0x4(dst), 1, 0
+    ps_madd f13, f5, f7, f12
+    psq_st f13, 0x8(dst), 1, 0
+    blr
 }
+#pragma pop
 
 #pragma scheduling on
 void fn_80202A6C(f32 *m, f32 farg0, f32 farg1, f32 farg2, f32 farg3) {
@@ -293,37 +385,36 @@ void fn_80202A6C(f32 *m, f32 farg0, f32 farg1, f32 farg2, f32 farg3) {
  m[10]=-farg2*r; m[11]=r*-(farg3*farg2); m[12]=z; m[13]=z; m[14]=lbl_8036BC64; m[15]=z;
 }
 #pragma scheduling reset
-void C_MTXOrtho(f32 *m, f32 t, f32 b, f32 l, f32 r, f32 n, f32 f)
-{
-  extern f32 lbl_8036BC58;
-  extern f32 lbl_8036BC5C;
-  extern f32 lbl_8036BC60;
-  extern f32 lbl_8036BC64;
-  f32 one = lbl_8036BC58;
-  f32 two = lbl_8036BC5C;
-  f32 rw = one / (r - l);
-  f32 rh = one / (t - b);
-  f32 rd;
-  f32 zero;
-  m[0] = rw * two;
-  zero = lbl_8036BC60;
-  m[1] = zero;
-  m[2] = zero;
-  m[3] = rw * (-(r + l));
-  m[4] = zero;
-  m[5] = rh * two;
-  m[6] = zero;
-  m[7] = rh * (-(t + b));
-  rd = one / (f - n);
-  m[8] = zero;
-  m[9] = zero;
-  m[10] = lbl_8036BC64 * rd;
-  m[11] = (-f) * rd;
-  m[12] = zero;
-  m[13] = zero;
-  m[14] = zero;
-  m[15] = one;
+#pragma push
+#pragma scheduling on
+void C_MTXOrtho(f32 (*m)[4], f32 t, f32 b, f32 l, f32 r, f32 n, f32 f) {
+    extern const f32 lbl_8036BC58;
+    extern const f32 lbl_8036BC5C;
+    extern const f32 lbl_8036BC60;
+    extern const f32 lbl_8036BC64;
+    f32 tmp;
+
+    tmp = lbl_8036BC58 / (r - l);
+    m[0][0] = lbl_8036BC5C * tmp;
+    m[0][1] = lbl_8036BC60;
+    m[0][2] = lbl_8036BC60;
+    m[0][3] = (tmp * -(r + l));
+    tmp = lbl_8036BC58 / (t - b);
+    m[1][0] = lbl_8036BC60;
+    m[1][1] = lbl_8036BC5C * tmp;
+    m[1][2] = lbl_8036BC60;
+    m[1][3] = (tmp * -(t + b));
+    m[2][0] = lbl_8036BC60;
+    m[2][1] = lbl_8036BC60;
+    tmp = lbl_8036BC58 / (f - n);
+    m[2][2] = (lbl_8036BC64 * tmp);
+    m[2][3] = (-f * tmp);
+    m[3][0] = lbl_8036BC60;
+    m[3][1] = lbl_8036BC60;
+    m[3][2] = lbl_8036BC60;
+    m[3][3] = lbl_8036BC58;
 }
+#pragma pop
 
 #pragma push
 typedef f32 Mtx44[4][4];
@@ -562,89 +653,211 @@ s32 fn_80202D1C(f32 *src, f32 *inv) {
     return 1;
 }
 
-void fn_8020310C(f32 *m, f32 *v, f32 *out) {
-    f32 x;
-    f32 y;
-    f32 z;
-    f32 w;
-    x = v[0];
-    y = v[1];
-    z = v[2];
-    w = x * m[12] + y * m[13] + z * m[14];
-    w = z / w;
-    out[0] = (x * m[0] + y * m[1]) * w;
-    out[1] = (x * m[4] + y * m[5]) * w;
-    out[2] = (x * m[8] + y * m[9]) * w;
+#pragma push
+asm void fn_8020310C(const register f32 (*m)[4], const register f32 *src, register f32 *dst) {
+    nofralloc
+    psq_l f0, 0x0(src), 0, 0
+    psq_l f2, 0x30(m), 0, 0
+    psq_l f1, 0x8(src), 1, 0
+    ps_mul f4, f0, f2
+    psq_l f3, 0x38(m), 0, 0
+    ps_madd f5, f1, f3, f4
+    ps_merge11 f12, f1, f1
+    ps_sum0 f13, f5, f5, f5
+    psq_l f4, 0x0(m), 0, 0
+    ps_merge00 f13, f13, f13
+    psq_l f5, 0x8(m), 0, 0
+    ps_div f13, f12, f13
+    psq_l f6, 0x10(m), 0, 0
+    psq_l f7, 0x18(m), 0, 0
+    psq_l f8, 0x20(m), 0, 0
+    psq_l f9, 0x28(m), 0, 0
+    ps_mul f4, f0, f4
+    ps_madd f2, f1, f5, f4
+    ps_mul f6, f0, f6
+    ps_madd f3, f1, f7, f6
+    ps_mul f8, f0, f8
+    ps_sum0 f2, f2, f2, f2
+    ps_madd f9, f1, f9, f8
+    ps_sum1 f2, f3, f2, f3
+    ps_sum0 f3, f9, f9, f9
+    ps_mul f2, f2, f13
+    psq_st f2, 0x0(dst), 0, 0
+    ps_mul f3, f3, f13
+    psq_st f3, 0x8(dst), 1, 0
+    blr
+}
+#pragma pop
+
+asm void fn_80203184(const register f32 *a, const register f32 *b, register f32 *ab) {
+    psq_l f2, 0(a), 0, 0
+    psq_l f4, 0(b), 0, 0
+    ps_add f6, f2, f4
+    psq_st f6, 0(ab), 0, 0
+    psq_l f3, 8(a), 1, 0
+    psq_l f5, 8(b), 1, 0
+    ps_add f7, f3, f5
+    psq_st f7, 8(ab), 1, 0
 }
 
-void fn_80203184(void) {
-    M2C_ERROR(/* unknown instruction: ps_add $f6, $f2, $f4 */);
-    M2C_ERROR(/* unknown instruction: ps_add $f7, $f3, $f5 */);
+asm void fn_802031A8(const register f32 *a, const register f32 *b, register f32 *ab) {
+    psq_l f2, 0(a), 0, 0
+    psq_l f4, 0(b), 0, 0
+    ps_sub f6, f2, f4
+    psq_st f6, 0(ab), 0, 0
+    psq_l f3, 8(a), 1, 0
+    psq_l f5, 8(b), 1, 0
+    ps_sub f7, f3, f5
+    psq_st f7, 8(ab), 1, 0
 }
 
-void fn_802031A8(float *arg0, float *arg1, float *arg2) {
-    arg2[0] = arg0[0] - arg1[0];
-    arg2[1] = arg0[1] - arg1[1];
+void fn_802031CC(const register f32 *src, register f32 *dst, register f32 scale) {
+    register f32 vxy, vz, rxy, rz;
+
+    asm {
+        psq_l vxy, 0x0(src), 0, 0
+        psq_l vz, 0x8(src), 1, 0
+        ps_muls0 rxy, vxy, scale
+        psq_st rxy, 0x0(dst), 0, 0
+        ps_muls0 rz, vz, scale
+        psq_st rz, 0x8(dst), 1, 0
+    }
 }
 
-void fn_802031CC(void *arg0, void *arg1) {
-    f64* a = (f64*)arg0;
-    f64* b = (f64*)arg1;
-    f64 c;
-    c = a[0] * 0.5; 
-    b[0] = c;
-    c = a[1] * 0.5;
-    b[1] = c;
-}
-
-void fn_802031E8(f32 *src, f32 *dst) {
-extern f32 lbl_8036BC70, lbl_8036BC74;
-f32 x=src[0], y=src[1], z=src[2];
-f32 mag=x*x+y*y+z*z;
-f32 est=__frsqrte(mag);
-f32 scale=(est*lbl_8036BC70)*(lbl_8036BC74-est*est*mag);
-dst[0]=x*scale; dst[1]=y*scale; dst[2]=z*scale;
-}
-
-f32 Vec_Length(void *arg0) {
+void fn_802031E8(const register f32 *src, register f32 *unit) {
     extern f32 lbl_8036BC70;
     extern f32 lbl_8036BC74;
-    f32 temp_f0;
-    f32 var_f1;
+    register f32 c_half = lbl_8036BC70;
+    register f32 c_three = lbl_8036BC74;
+    register f32 v1_xy;
+    register f32 v1_z;
+    register f32 xx_zz;
+    register f32 xx_yy;
+    register f32 sqsum;
+    register f32 rsqrt;
+    register f32 nwork0;
+    register f32 nwork1;
 
-    M2C_ERROR(/* unknown instruction: ps_mul $f0, $f0, $f0 */);
-    M2C_ERROR(/* unknown instruction: ps_madd $f1, $f1, $f1, $f0 */);
-    var_f1 = M2C_ERROR(/* unknown instruction: ps_sum0 $f1, $f1, $f0, $f0 */);
-    if (var_f1 != (lbl_8036BC70 - lbl_8036BC70)) {
-        temp_f0 = __frsqrte(var_f1);
-        var_f1 *= -((temp_f0 * temp_f0 * var_f1) - lbl_8036BC74) * (temp_f0 * lbl_8036BC70);
+    asm {
+        psq_l v1_xy, 0x0(src), 0, 0
+        ps_mul xx_yy, v1_xy, v1_xy
+        psq_l v1_z, 0x8(src), 1, 0
+        ps_madd xx_zz, v1_z, v1_z, xx_yy
+        ps_sum0 sqsum, xx_zz, v1_z, xx_yy
+        frsqrte rsqrt, sqsum
+        fmuls nwork0, rsqrt, rsqrt
+        fmuls nwork1, rsqrt, c_half
+        fnmsubs nwork0, nwork0, sqsum, c_three
+        fmuls rsqrt, nwork0, nwork1
+        ps_muls0 v1_xy, v1_xy, rsqrt
+        psq_st v1_xy, 0x0(unit), 0, 0
+        ps_muls0 v1_z, v1_z, rsqrt
+        psq_st v1_z, 0x8(unit), 1, 0
     }
-    return var_f1;
 }
 
-f32 fn_80203270(const f32 *a, const f32 *b) { return a[0]*b[0] + (a[1]*b[1] + a[2]*b[2]); }
-
-void fn_80203290(const f32 *a, const f32 *b, f32 *out) {
-f32 x=a[1]*b[2]-a[2]*b[1];
-f32 y=a[2]*b[0]-a[0]*b[2];
-f32 z=a[0]*b[1]-a[1]*b[0];
-out[0]=x; out[1]=y; out[2]=z;
-}
-
-f32 PSVECDistance(void) {
+f32 Vec_Length(const register f32 *v) {
     extern f32 lbl_8036BC70;
     extern f32 lbl_8036BC74;
-    f32 temp_f0;
-    f32 var_f1;
+    register f32 vxy, vzz;
+    register f32 sqmag, rmag;
+    register f32 nwork0, nwork1;
+    register f32 c_three, c_half, c_zero;
 
-    M2C_ERROR(/* unknown instruction: ps_sub $f2, $f0, $f1 */);
-    M2C_ERROR(/* unknown instruction: ps_mul $f2, $f2, $f2 */);
-    M2C_ERROR(/* unknown instruction: ps_sub $f0, $f0, $f1 */);
-    M2C_ERROR(/* unknown instruction: ps_madd $f1, $f0, $f0, $f2 */);
-    var_f1 = M2C_ERROR(/* unknown instruction: ps_sum0 $f1, $f1, $f2, $f2 */);
-    if ((lbl_8036BC70 - lbl_8036BC70) != var_f1) {
-        temp_f0 = __frsqrte(var_f1);
-        var_f1 *= -((temp_f0 * temp_f0 * var_f1) - lbl_8036BC74) * (temp_f0 * lbl_8036BC70);
+    c_half = lbl_8036BC70;
+
+    asm {
+        psq_l vxy, 0x0(v), 0, 0
+        ps_mul vxy, vxy, vxy
+        lfs vzz, 0x8(v)
+        fsubs c_zero, c_half, c_half
+        ps_madd sqmag, vzz, vzz, vxy
+        ps_sum0 sqmag, sqmag, vxy, vxy
+        fcmpu cr0, sqmag, c_zero
+        beq L_000005F0
+        frsqrte rmag, sqmag
     }
-    return var_f1;
+
+    c_three = lbl_8036BC74;
+
+    asm {
+        fmuls nwork0, rmag, rmag
+        fmuls nwork1, rmag, c_half
+        fnmsubs nwork0, nwork0, sqmag, c_three
+        fmuls rmag, nwork0, nwork1
+        fmuls sqmag, sqmag, rmag
+    L_000005F0:
+    }
+
+    return sqmag;
+}
+
+asm f32 fn_80203270(const register f32 *a, const register f32 *b) {
+    psq_l f2, 4(a), 0, 0
+    psq_l f3, 4(b), 0, 0
+    ps_mul f2, f2, f3
+    psq_l f5, 0(a), 0, 0
+    psq_l f4, 0(b), 0, 0
+    ps_madd f3, f5, f4, f2
+    ps_sum0 f1, f3, f2, f2
+}
+
+asm void fn_80203290(const register f32 *a, const register f32 *b, register f32 *axb) {
+    psq_l f1, 0(b), 0, 0
+    lfs f2, 8(a)
+    psq_l f0, 0(a), 0, 0
+    ps_merge10 f6, f1, f1
+    lfs f3, 8(b)
+    ps_mul f4, f1, f2
+    ps_muls0 f7, f1, f0
+    ps_msub f5, f0, f3, f4
+    ps_msub f8, f0, f6, f7
+    ps_merge11 f9, f5, f5
+    ps_merge01 f10, f5, f8
+    psq_st f9, 0(axb), 1, 0
+    ps_neg f10, f10
+    psq_st f10, 4(axb), 0, 0
+}
+
+f32 PSVECDistance(const register f32 *a, const register f32 *b) {
+    extern f32 lbl_8036BC70;
+    extern f32 lbl_8036BC74;
+    register f32 v0yz, v1yz, v0xy, v1xy, dyz, dxy;
+    register f32 sqdist, rdist;
+    register f32 nwork0, nwork1;
+    register f32 c_half, c_three, c_zero;
+
+    asm {
+        psq_l v0yz, 0x4(a), 0, 0
+        psq_l v1yz, 0x4(b), 0, 0
+        ps_sub dyz, v0yz, v1yz
+        psq_l v0xy, 0x0(a), 0, 0
+        psq_l v1xy, 0x0(b), 0, 0
+        ps_mul dyz, dyz, dyz
+        ps_sub dxy, v0xy, v1xy
+    }
+
+    c_half = lbl_8036BC70;
+
+    asm {
+        ps_madd sqdist, dxy, dxy, dyz
+        fsubs c_zero, c_half, c_half
+        ps_sum0 sqdist, sqdist, dyz, dyz
+        fcmpu cr0, c_zero, sqdist
+        beq L_00000CBC
+    }
+
+    c_three = lbl_8036BC74;
+
+    asm {
+        frsqrte rdist, sqdist
+        fmuls nwork0, rdist, rdist
+        fmuls nwork1, rdist, c_half
+        fnmsubs nwork0, nwork0, sqdist, c_three
+        fmuls rdist, nwork0, nwork1
+        fmuls sqdist, sqdist, rdist
+    L_00000CBC:
+    }
+
+    return sqdist;
 }

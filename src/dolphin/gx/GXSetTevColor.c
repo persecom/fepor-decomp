@@ -217,41 +217,29 @@ void fn_80222644(void *, void *, u16, u16, s32, s32, s32, u8);
 
 #pragma use_lmw_stmw reset
 
-#pragma scheduling off
-
-#pragma scheduling off
 void GXSetTevColor(s32 id, u32 *color) {
-    u16 *gx;
-    u8 cmd;
-    u32 idx;
-    u32 c;
-    u32 reg;
-    u16 zero;
+    u32 rgba;
+    u32 regRA;
+    u32 regBG;
 
-    idx = id << 1;
-    c = *color;
-    reg = idx + 0xE0;
-    gx = __GXData;
-    cmd = 0x61;
-    reg <<= 24;
-    reg = __rlwimi(reg, c, 8, 24, 31);
-    GXWGFifo.u8 = cmd;
-    reg = __rlwimi(reg, c, 12, 12, 19);
-    GXWGFifo.u32 = reg;
+    rgba = *color;
 
-    idx += 0xE1;
-    reg = idx << 24;
-    reg = __rlwimi(reg, c, 24, 24, 31);
-    GXWGFifo.u8 = cmd;
-    reg = __rlwimi(reg, c, 28, 12, 19);
-    GXWGFifo.u32 = reg;
+    regRA = (0xE0 + id * 2) << 24;
+    regRA = __rlwimi(regRA, rgba >> 24, 0, 24, 31);
+    regRA = __rlwimi(regRA, rgba & 0xFF, 12, 12, 19);
 
-    zero = 0;
-    GXWGFifo.u8 = cmd;
-    GXWGFifo.u32 = reg;
-    GXWGFifo.u8 = cmd;
-    GXWGFifo.u32 = reg;
+    regBG = (0xE1 + id * 2) << 24;
+    regBG = __rlwimi(regBG, (rgba >> 8) & 0xFF, 0, 24, 31);
+    regBG = __rlwimi(regBG, (rgba >> 16) & 0xFF, 12, 12, 19);
 
-    gx[1] = zero;
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = regRA;
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = regBG;
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = regBG;
+    GXWGFifo.u8 = 0x61;
+    GXWGFifo.u32 = regBG;
+
+    __GXData[1] = 0;
 }
-#pragma scheduling reset

@@ -1101,57 +1101,51 @@ void fn_80016498(void)
 
 #pragma global_optimizer off
 #pragma use_lmw_stmw on
+#pragma push
+#pragma global_optimizer on
+#pragma opt_loop_invariants off
+#pragma dont_inline off
+static inline void Debug_PrintUnitLists(u8 *list, const char *strings, s32 index)
+{
+    extern char lbl_802680A8[];
+    extern void DebugPrint(const char *, ...);
+    extern s32 Msg_ResolveName(void *);
+    u8 id;
+    s8 x;
+    s8 y;
+    u32 flags;
+    struct { u8 *ptr; } unit;
+    void *name;
+
+    do {
+        DebugPrint(strings + 0x23, index, fn_80015680((void **)list));
+        unit.ptr = *(u8 **)list;
+        while (unit.ptr != NULL) {
+            name = *(void **)(unit.ptr + 0x188);
+            if (name != NULL) {
+                flags = *(u32 *)(unit.ptr + 0x1A0);
+                y = *(s8 *)(unit.ptr + 0x19F);
+                x = *(s8 *)(unit.ptr + 0x19E);
+                id = *(u8 *)(unit.ptr + 0x198);
+                DebugPrint(lbl_802680A8 + 0x3B, id, x, y, flags, Msg_ResolveName(name));
+            } else {
+                DebugPrint(lbl_802680A8 + 0x59, *(u8 *)(unit.ptr + 0x198), *(s8 *)(unit.ptr + 0x19E),
+                           *(s8 *)(unit.ptr + 0x19F), *(u32 *)(unit.ptr + 0x1A0));
+            }
+            unit.ptr = *(u8 **)(unit.ptr + 0x184);
+        }
+        index++;
+        list += 0xC;
+    } while (index < 8);
+}
+
 void fn_80016538(void)
 {
-  extern u8 gUnitLists[];
-  extern char lbl_802680A8[];
-  extern s32 fn_80015680(void *);
-  extern void DebugPrint(const char *, ...);
-  extern s32 Msg_ResolveName(void *);
-  char *strings;
-  unsigned long long new_var;
-  s8 byte1;
-  s8 byte0;
-  u8 byte2;
-  s32 field;
-  u8 *slot;
-  s32 index;
-  u8 *node;
-  void *ptr;
-  s32 result;
-  char *fmt;
-  index = 0;
-  strings = lbl_802680A8;
-  do
-  {
-    DebugPrint(strings + 0x23, index, fn_80015680(slot));
-    node = *((u8 **) slot);
-    while (node != 0)
-    {
-      ptr = *((void **) (node + 0x188));
-      if (ptr != 0)
-      {
-        field = *((s32 *) (node + 0x1A0));
-        new_var = (byte2 = *((u8 *) (node + 0x198)));
-        byte1 = *((s8 *) (node + 0x19F));
-        byte0 = *((s8 *) (node + 0x19E));
-        result = Msg_ResolveName(ptr);
-        fmt = lbl_802680A8 + 0x3B;
-        DebugPrint(fmt, byte2, byte0, byte1, field, result);
-      }
-      else
-      {
-        DebugPrint(lbl_802680A8 + 0x59, *((u8 *) (node + 0x198)), *((s8 *) (node + 0x19E)), *((s8 *) (node + 0x19F)), *((s32 *) (node + 0x1A0)));
-      }
-      node = *((u8 **) (node + 0x184));
-    }
-
-    index += 1;
-    slot += 0xC;
-    slot = gUnitLists;
-  }
-  while (index < 8);
+    extern u8 gUnitLists[];
+    extern char lbl_802680A8[];
+    Debug_PrintUnitLists(gUnitLists, lbl_802680A8, 0);
 }
+#pragma pop
 #pragma global_optimizer on
 #pragma use_lmw_stmw on
 void fn_80016628(s32 arg0) {

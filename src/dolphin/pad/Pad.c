@@ -936,51 +936,36 @@ void PADMakeStatus(s32 chan, PADStatus* status, u32* data) {
     ClampU8(&status->triggerRight, origin[7]);
 }
 
-#pragma push
-#pragma optimization_level 2
-s32 fn_80213530(s32 arg0)
-{
-  s32 fn_8021275C(M2C_UNK);
-  int new_var;
-  M2C_UNK fn_8021364C(M2C_UNK);
-  s32 fn_8023ABD4();
+static inline BOOL PAD_Sync(void) {
+  s32 fn_8023ABD4(void);
   extern s32 lbl_80366FA4;
   extern u32 lbl_80368670;
-  extern u32 lbl_80368688;
+  return lbl_80368670 == 0 && lbl_80366FA4 == 32 && !fn_8023ABD4();
+}
+
+s32 fn_80213530(s32 final)
+{
+  s32 fn_8021275C(u32);
+  u32 fn_8021364C(u32);
+  extern void (*lbl_80368688)(void);
   extern s32 lbl_8036868C;
-  s32 var_r31;
-  s32 var_r3;
-  u32 t;
-  u8 pad[8];
-  if (lbl_80368688 != 0U)
-  {
+  BOOL sync;
+
+  if (lbl_80368688)
     fn_8021364C(0);
-  }
-  if (arg0 == 0)
-  {
-    t = lbl_80368670;
-    var_r31 = 0;
-    var_r3 = var_r31;
-    if (t == 0 && lbl_80366FA4 == 0x20)
-    {
-      var_r3 = 1;
-    }
-    new_var = 1;
-    if ((var_r3 != 0) && (fn_8023ABD4() == 0))
-    {
-      var_r31 = new_var;
-    }
-    if ((lbl_8036868C == 0) && (var_r31 != 0))
-    {
+
+  if (!final) {
+    sync = PAD_Sync();
+    if (!lbl_8036868C && sync) {
       lbl_8036868C = fn_8021275C(0xF0000000);
       return 0;
     }
-    return var_r31;
-  }
-  lbl_8036868C = 0;
+    return sync;
+  } else
+    lbl_8036868C = 0;
+
   return 1;
 }
-#pragma pop
 void fn_802135EC(s32 arg0, OSContext *context)
 {
     extern void (*lbl_80368688)(void);
@@ -1291,18 +1276,16 @@ lbl_803686A8=1;
 void fn_80213CB0(s32 arg0, OSContext *context)
 {
     extern void (*lbl_80368698)(u32);
-    OSContext tempContext;
-    OSContext *ctx;
-    *(u32 *)0xCC006C00 |= 8;
-    ctx = context;
-    OSClearContext(&tempContext);
-    OSSetCurrentContext(&tempContext);
-    if (lbl_80368698 != 0) {
-        u32 *regs = (u32 *)0xCC006C00;
-        lbl_80368698(regs[2]);
+    OSContext exceptionContext;
+
+    __AIRegs_abs[0] |= 8;
+    OSClearContext(&exceptionContext);
+    OSSetCurrentContext(&exceptionContext);
+    if (lbl_80368698) {
+        lbl_80368698(__AIRegs_abs[2]);
     }
-    OSClearContext(&tempContext);
-    OSSetCurrentContext(ctx);
+    OSClearContext(&exceptionContext);
+    OSSetCurrentContext(context);
 }
 #pragma optimization_level reset
 #pragma opt_lifetimes off

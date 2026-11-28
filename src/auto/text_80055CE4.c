@@ -1721,6 +1721,9 @@ void fn_8005926C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32
     }
 }
 #pragma use_lmw_stmw reset
+#pragma push
+#pragma opt_common_subs off
+#pragma scheduling on
 f32 Math_Angle2D(f32 farg0, f32 farg1, f32 farg2, f32 farg3) {
     f64 fn_80237E90(f32);
     extern f32 gF32_0;
@@ -1752,4 +1755,5 @@ f32 Math_Angle2D(f32 farg0, f32 farg1, f32 farg2, f32 farg3) {
     dx = dx - (f32)(s32)(dx / c) * c;
     return dx;
 }
+#pragma pop
 #pragma optimization_level 3

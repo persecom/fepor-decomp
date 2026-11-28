@@ -144,24 +144,16 @@ extern s32 RunQueueHint_8036851C;
 
 #pragma push
 #pragma optimization_level 3
-void OSClearStack(u8 fill) {
-    void *fn_80205B50(void);
-    u32 pattern;
-    u32 *sp;
-    u32 *p;
-    u32 size;
+void OSClearStack(u8 val) {
+    u32 fn_80205B50(void);
+    register u32 sp;
+    register u32 *p;
+    register u32 pattern;
 
-    pattern = ((u32)fill << 24) | ((u32)fill << 16) |
-              ((u32)fill << 8) | (u32)fill;
+    pattern = (val << 24) | (val << 16) | (val << 8) | val;
     sp = fn_80205B50();
-    p = *(u32 **)((u8 *)*(void **)0x800000E4 + 0x308) + 1;
-    size = (((u32)sp + 3) - (u32)p) >> 2;
-
-    if ((u32)p < (u32)sp) {
-        while (size != 0) {
-            *p++ = pattern;
-            size--;
-        }
+    for (p = *(u32 **)(*(u8 **)0x800000E4 + 0x308) + 1; (u32)p < sp; ++p) {
+        *p = pattern;
     }
 }
 #pragma pop

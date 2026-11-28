@@ -154,126 +154,159 @@ void OSDumpContext(OSContext *context);
 void fn_80206E1C(u32 bootDol, u32 resetCode, char **argv);
 s32 __OSSyncSram(void);
 
+#pragma push
 #pragma dont_inline on
-s32 PPCMfmsr(void) {
-    return M2C_ERROR(/* unknown instruction: mfmsr $r3 */);
-}
-#pragma dont_inline reset
-
-#pragma dont_inline on
-void PPCMtmsr(register u32 msr) {
-    (void)msr; /* mtmsr: not expressible in C */
+asm u32 PPCMfmsr(void) {
+    nofralloc
+    mfmsr r3
+    blr
 }
 
-s32 PPCMfhid0(void) {
-    return M2C_ERROR(/* unknown instruction: mfspr $r3, HID0 */);
+asm void PPCMtmsr(register u32 msr) {
+    nofralloc
+    mtmsr msr
+    blr
 }
 
-#pragma dont_inline reset
-
-void fn_80203790(u32 arg0) {
-    (void)arg0;
+asm u32 PPCMfhid0(void) {
+    nofralloc
+    mfspr r3, HID0
+    blr
 }
 
-u32 PPCMfl2cr(void) {
-    return 0;
+asm void fn_80203790(register u32 hid0) {
+    nofralloc
+    mtspr HID0, hid0
+    blr
 }
 
-#pragma dont_inline on
-void PPCMtl2cr(u32 arg0) {
-    extern u32 __SPR_1017;
-    __SPR_1017 = arg0;
-}
-#pragma dont_inline reset
-s32 PPCMtdec(void) {
-    return M2C_ERROR(/* unknown instruction: mtdec $r3 */);
+asm u32 PPCMfl2cr(void) {
+    nofralloc
+    mfspr r3, L2CR
+    blr
 }
 
-s32 PPCSync(void) {
-    return 0;
+asm void PPCMtl2cr(register u32 l2cr) {
+    nofralloc
+    mtspr L2CR, l2cr
+    blr
 }
 
-#pragma dont_inline on
-void PPCHalt(void) {
-    M2C_SYNC();
-loop_1:
-    goto loop_1;
+__declspec(weak) asm void PPCMtdec(register u32 dec) {
+    nofralloc
+    mtdec dec
+    blr
 }
 
-void PPCMtmmcr0(u32 arg0) {
-    extern volatile u32 __SPR_952;
-    volatile u32 *spr = &__SPR_952;
-    *spr = arg0;
+asm void PPCSync(void) {
+    nofralloc
+    sc
+    blr
 }
 
-void PPCMtmmcr1(u32 arg0) {
-    extern u32 __SPR_956;
-    __SPR_956 = arg0;
+__declspec(weak) asm void PPCHalt(void) {
+    nofralloc
+    sync
+loop:
+    nop
+    li r3, 0
+    nop
+    b loop
 }
 
-void PPCMtpmc3(u32 arg0) {
-    extern u32 __SPR_957;
-    __SPR_957 = arg0;
+asm void PPCMtmmcr0(register u32 v) {
+    nofralloc
+    mtspr MMCR0, v
+    blr
 }
 
-void PPCMtpmc4(u32 arg0) {
-    extern u32 __SPR_958;
-    __SPR_958 = arg0;
+asm void PPCMtmmcr1(register u32 v) {
+    nofralloc
+    mtspr MMCR1, v
+    blr
 }
 
-#pragma intrinsic __mffs
-u32 PPCMffpscr(void)
-{
-    f64 pad;
-    f64 value;
-    u32 result;
-
-    pad = value;
-    value = __mffs();
-    result = ((u32 *)&value)[1];
-    value = pad;
-    return result;
-}
-void PPCMtfpscr(u32 arg0)
-{
-    f64 pad;
-    f64 value;
-
-    pad = value;
-    ((u32 *)&value)[0] = 0;
-    ((u32 *)&value)[1] = arg0;
-    __mtfsf(255, value);
-    value = pad;
-}
-s32 PPCMfhid2(void) {
-    return M2C_ERROR(/* unknown instruction: mfspr $r3, HID2 */);
+asm void PPCMtpmc1(register u32 v) {
+    nofralloc
+    mtspr PMC1, v
+    blr
 }
 
-void PPCMthid2(u32 arg0) {
-    extern u32 __SPR_920;
-    __SPR_920 = arg0;
+asm void PPCMtpmc2(register u32 v) {
+    nofralloc
+    mtspr PMC2, v
+    blr
 }
 
-s32 fn_80203854(void) {
-    return 0;
+asm void PPCMtpmc3(register u32 v) {
+    nofralloc
+    mtspr PMC3, v
+    blr
 }
 
-#pragma dont_inline reset
-
-void PPCMtwpar(u32 wpar) {
-    extern u32 __SPR_921;
-    __SPR_921 = wpar;
+asm void PPCMtpmc4(register u32 v) {
+    nofralloc
+    mtspr PMC4, v
+    blr
 }
 
-#pragma dont_inline on
+u32 PPCMffpscr(void) {
+    union { f64 f; struct { u32 pad; u32 fpscr; } u; } m;
+
+    asm {
+        mffs fp31
+        stfd fp31, m.f;
+    }
+    return m.u.fpscr;
+}
+
+void PPCMtfpscr(register u32 fpscr) {
+    union { f64 f; struct { u32 pad; u32 fpscr; } u; } m;
+
+    asm {
+        li    r4, 0
+        stw   r4, m.u.pad;
+        stw   fpscr, m.u.fpscr
+        lfd   fp31, m.f
+        mtfsf 0xff, fp31
+    }
+}
+
+asm u32 PPCMfhid2(void) {
+    nofralloc
+    mfspr r3, 920
+    blr
+}
+
+asm void PPCMthid2(register u32 v) {
+    nofralloc
+    mtspr 920, v
+    blr
+}
+
+asm u32 fn_80203854(void) {
+    nofralloc
+    sync
+    mfspr r3, WPAR
+    blr
+}
+
+asm void PPCMtwpar(register u32 wpar) {
+    nofralloc
+    mtspr WPAR, wpar
+    blr
+}
+
 void PPCDisableSpeculation(void) {
     fn_80203790(PPCMfhid0() | 0x200);
 }
 
-void PPCSetFpNonIEEEMode(void) {
-    M2C_ERROR(/* unknown instruction: mtfsb1 cr7gt */);
+asm void PPCSetFpNonIEEEMode(void) {
+    nofralloc
+    mtfsb1 29
+    blr
 }
-#pragma dont_inline reset
+#pragma pop
 
 void DBInit(void) {
     extern u8 __DBExceptionDestination[];
@@ -307,50 +340,93 @@ s32 __DBIsExceptionMarked(u8 arg0) {
 void DBPrintf(u8 level, char *fmt, ...) {
 }
 
-M2C_UNK *__OSFPRInit(void) {
-    extern M2C_UNK ZeroPS_80368470;
-    s32 var_r3;
+extern u8 ZeroPS_80368470[];
+extern f64 ZeroF_80368468;
+#pragma push
+asm void __OSFPRInit(void) {
+    nofralloc
 
-    M2C_ERROR(/* unknown instruction: mfmsr $r3 */);
-    M2C_ERROR(/* unknown instruction: mtmsr $r3 */);
-    var_r3 = ((u32) M2C_ERROR(/* unknown instruction: mfspr $r3, HID2 */) >> 0x1DU) & 1;
-    if (var_r3 != 0) {
-        var_r3 = (s32) &ZeroPS_80368470;
-        M2C_ERROR(/* unknown instruction: ps_mr $f1, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f2, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f3, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f4, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f5, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f6, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f7, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f8, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f9, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f10, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f11, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f12, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f13, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f14, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f15, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f16, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f17, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f18, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f19, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f20, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f21, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f22, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f23, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f24, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f25, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f26, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f27, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f28, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f29, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f30, $f0 */);
-        M2C_ERROR(/* unknown instruction: ps_mr $f31, $f0 */);
-    }
-    M2C_ERROR(/* unknown instruction: mtfsf 0xff, $f0 */);
-    return (M2C_UNK *) var_r3;
+    mfmsr r3
+    ori r3, r3, 0x2000
+    mtmsr r3
+
+    mfspr r3, 0x398
+    rlwinm. r3, r3, 3, 0x1f, 0x1f
+    beq skip_ps_init
+
+    lis r3, ZeroPS_80368470@ha
+    addi r3, r3, ZeroPS_80368470@l
+    psq_l f0, 0(r3), 0, 0
+    ps_mr f1, f0
+    ps_mr f2, f0
+    ps_mr f3, f0
+    ps_mr f4, f0
+    ps_mr f5, f0
+    ps_mr f6, f0
+    ps_mr f7, f0
+    ps_mr f8, f0
+    ps_mr f9, f0
+    ps_mr f10, f0
+    ps_mr f11, f0
+    ps_mr f12, f0
+    ps_mr f13, f0
+    ps_mr f14, f0
+    ps_mr f15, f0
+    ps_mr f16, f0
+    ps_mr f17, f0
+    ps_mr f18, f0
+    ps_mr f19, f0
+    ps_mr f20, f0
+    ps_mr f21, f0
+    ps_mr f22, f0
+    ps_mr f23, f0
+    ps_mr f24, f0
+    ps_mr f25, f0
+    ps_mr f26, f0
+    ps_mr f27, f0
+    ps_mr f28, f0
+    ps_mr f29, f0
+    ps_mr f30, f0
+    ps_mr f31, f0
+
+skip_ps_init:
+    lfd f0, ZeroF_80368468(r13)
+    fmr f1, f0
+    fmr f2, f0
+    fmr f3, f0
+    fmr f4, f0
+    fmr f5, f0
+    fmr f6, f0
+    fmr f7, f0
+    fmr f8, f0
+    fmr f9, f0
+    fmr f10, f0
+    fmr f11, f0
+    fmr f12, f0
+    fmr f13, f0
+    fmr f14, f0
+    fmr f15, f0
+    fmr f16, f0
+    fmr f17, f0
+    fmr f18, f0
+    fmr f19, f0
+    fmr f20, f0
+    fmr f21, f0
+    fmr f22, f0
+    fmr f23, f0
+    fmr f24, f0
+    fmr f25, f0
+    fmr f26, f0
+    fmr f27, f0
+    fmr f28, f0
+    fmr f29, f0
+    fmr f30, f0
+    fmr f31, f0
+
+    mtfsf 0xff, f0
+    blr
 }
+#pragma pop
 
 #pragma peephole off
 u32 OSGetConsoleType(void)
@@ -657,23 +733,37 @@ void OSExceptionInit(void) {
 }
 #pragma pop
 
-void __OSDBIntegrator(void)
-{
-    register u32 *ptr;
-    register u32 lr;
-    register u32 value;
-
-    ptr = (u32 *)0x40;
-    lr = (u32)__builtin_return_address(0);
-    ptr[3] = lr;
-    value = ptr[2];
-    value |= 0x80000000;
-    __builtin_mtlr((void *)value);
-    __builtin_mtmsr(0x30);
+void __OSEVStart(void);
+void __OSEVEnd(void);
+void __OSEVSetNumber(void);
+void __DBVECTOR(void);
+void __OSDBINTSTART(void);
+void __OSDBINTEND(void);
+void __OSDBJUMPEND(void);
+#pragma push
+static asm void __OSDBIntegrator(void) {
+    nofralloc
+entry __OSDBINTSTART
+    li      r5, 0x40
+    mflr    r3
+    stw     r3, 0xC(r5)
+    lwz     r3, 0x8(r5)
+    oris    r3, r3, 0x8000
+    mtlr    r3
+    li      r3, 0x30 // MSR_IR | MSR_DR     // turn on memory addressing
+    mtmsr   r3
+    blr
+entry __OSDBINTEND
 }
+#pragma pop
 
-void fn_80204294(void) {
+#pragma push
+asm void fn_80204294(void) {
+    nofralloc
+    bla     0x60
+entry __OSDBJUMPEND
 }
+#pragma pop
 
 #pragma peephole off
 void *__OSSetExceptionHandler(u8 exception, void *handler) {
@@ -696,6 +786,91 @@ void *__OSGetExceptionHandler(u8 exception) {
     extern void **OSExceptionTable_8036847C;
     return OSExceptionTable_8036847C[exception];
 }
+
+void OSDefaultExceptionHandler(u8 exception, OSContext *context);
+#pragma push
+static asm void OSExceptionVector(void) {
+    nofralloc
+
+entry __OSEVStart
+    // Save r4 into SPRG0
+    mtsprg  0, r4
+
+    // Load current context physical address into r4
+    lwz     r4, 0x00C0
+
+    // Save r3 - r5 into the current context
+    stw     r3, 12(r4)
+    mfsprg  r3, 0
+    stw     r3, 16(r4)
+    stw     r5, 20(r4)
+
+    lhz     r3, 418(r4)
+    ori     r3, r3, 0x02
+    sth     r3, 418(r4)
+
+    // Save misc registers
+    mfcr    r3
+    stw     r3, 0x80(r4)
+    mflr    r3
+    stw     r3, 0x84(r4)
+    mfctr   r3
+    stw     r3, 0x88(r4)
+    mfxer   r3
+    stw     r3, 0x8C(r4)
+    mfsrr0  r3
+    stw     r3, 0x198(r4)
+    mfsrr1  r3
+    stw     r3, 0x19C(r4)
+    mr      r5, r3
+
+entry __DBVECTOR
+    nop
+
+    // Set SRR1[IR|DR] to turn on address
+    // translation at the next RFI
+    mfmsr   r3
+    ori     r3, r3, 0x30
+    mtsrr1  r3
+
+    // This lets us change the exception number based on the
+    // exception we're installing.
+entry __OSEVSetNumber
+    addi    r3, 0, 0x0000
+
+    // Load current context virtual address into r4
+    lwz     r4, 0xD4
+
+    // Check non-recoverable interrupt
+    rlwinm. r5, r5, 0, 30, 30
+    bne     recoverable
+    addis   r5, 0,  OSDefaultExceptionHandler@ha
+    addi    r5, r5, OSDefaultExceptionHandler@l
+    mtsrr0  r5
+    rfi
+    // NOT REACHED HERE
+
+recoverable:
+    // Locate exception handler.
+    rlwinm  r5, r3, 2, 22, 29               // r5 contains exception*4
+    lwz     r5, 0x3000(r5)
+    mtsrr0  r5
+
+    // Final state
+    // r3 - exception number
+    // r4 - pointer to context
+    // r5 - garbage
+    // srr0 - exception handler
+    // srr1 - address translation enalbed, not yet recoverable
+
+    rfi
+    // NOT REACHED HERE
+    // The handler will restore state
+
+entry __OSEVEnd
+    nop
+}
+#pragma pop
 
 #pragma push
 typedef u8 __OSException;
@@ -947,36 +1122,33 @@ void DecrementerExceptionCallback(u8 type, OSContext *context)
   extern s64 __OSGetSystemTime(void);
   extern void PPCMtdec(u32);
   extern void OSLoadContext(OSContext *);
-  extern void InsertAlarm(struct OSAlarm *, s64, void (*)(void *, OSContext *));
-  extern void OSDisableScheduler(void);
-  extern void OSEnableScheduler(void);
+  extern void InsertAlarm(void *, s64, void (*)(void *, OSContext *));
+  extern s32 OSDisableScheduler(void);
+  extern s32 OSEnableScheduler(void);
   extern void __OSReschedule(void);
-  u8 exceptionContext[0x2C0];
   struct OSAlarm *alarm;
   struct OSAlarm *next;
   void (*handler)(void *, OSContext *);
-  s64 now;
-  s64 new_var[2];
-  struct OSAlarm *head;
-  (void) type;
-  now = __OSGetSystemTime();
+  s64 time;
+  OSContext exceptionContext;
+
+  time = __OSGetSystemTime();
   alarm = AlarmQueue_80368490.head;
   if (alarm == NULL)
   {
     OSLoadContext(context);
   }
-  if (now < alarm->fire)
+  if (time < alarm->fire)
   {
-    now = __OSGetSystemTime();
-    new_var[0] = alarm->fire - now;
-    new_var[1] = (u32) new_var[0];
-    if (new_var[0] < 0)
+    struct OSAlarm *a = alarm;
+    s64 delta = a->fire - __OSGetSystemTime();
+    if (delta < 0)
     {
       PPCMtdec(0);
     }
-    else if (new_var[0] < 0x80000000LL)
+    else if (delta < 0x80000000)
     {
-      PPCMtdec(new_var[1]);
+      PPCMtdec((u32)delta);
     }
     else
     {
@@ -1000,19 +1172,17 @@ void DecrementerExceptionCallback(u8 type, OSContext *context)
   {
     InsertAlarm(alarm, 0, handler);
   }
-  head = AlarmQueue_80368490.head;
-  if (head != NULL)
+  if (AlarmQueue_80368490.head != NULL)
   {
-    now = __OSGetSystemTime();
-    new_var[0] = head->fire - now;
-    new_var[1] = (u32) new_var[0];
-    if (new_var[0] < 0)
+    struct OSAlarm *a = AlarmQueue_80368490.head;
+    s64 delta = a->fire - __OSGetSystemTime();
+    if (delta < 0)
     {
       PPCMtdec(0);
     }
-    else if (new_var[0] < 0x80000000LL)
+    else if (delta < 0x80000000)
     {
-      PPCMtdec(new_var[1]);
+      PPCMtdec((u32)delta);
     }
     else
     {
@@ -1020,10 +1190,10 @@ void DecrementerExceptionCallback(u8 type, OSContext *context)
     }
   }
   OSDisableScheduler();
-  OSClearContext((OSContext *)exceptionContext);
-  OSSetCurrentContext((OSContext *)exceptionContext);
+  OSClearContext(&exceptionContext);
+  OSSetCurrentContext(&exceptionContext);
   handler(alarm, context);
-  OSClearContext((OSContext *)exceptionContext);
+  OSClearContext(&exceptionContext);
   OSSetCurrentContext(context);
   OSEnableScheduler();
   __OSReschedule();
@@ -1893,18 +2063,45 @@ blr
 #pragma pop
 
 #pragma dont_inline on
-void OSSaveFPUContext(register void *ctx) {
-    void __OSSaveFPUContext(void *, void *, void *);
-    __OSSaveFPUContext(ctx, ctx, ctx);
+#pragma push
+asm void OSSaveFPUContext(register OSContext *fpucontext) {
+    nofralloc
+    addi    r5, fpucontext, 0
+    b       __OSSaveFPUContext
 }
-void OSSetCurrentContext(struct OSContext *arg0) {
-    *(s32 *)0x800000D4 = (s32)arg0;
-    *(s32 *)0x800000C0 = (s32)arg0 & 0x3FFFFFFF;
-    if ((s32) *(s32 *)0x800000D8 == (s32)arg0) {
-        M2C_FIELD((s32)arg0, s32 *, 0x19C) = (s32) (M2C_FIELD((s32)arg0, s32 *, 0x19C) | 0x2000);
-        return;
-    }
-    M2C_FIELD((s32)arg0, s32 *, 0x19C) = (s32) (M2C_FIELD((s32)arg0, s32 *, 0x19C) & 0xFFFFDFFF);
+#pragma pop
+asm void OSSetCurrentContext(register OSContext *context){
+    nofralloc
+
+    addis   r4, r0, 0x8000
+
+    stw     context, 0x00D4(r4)
+
+    clrlwi  r5, context, 2
+    stw     r5, 0x00C0(r4)
+
+    lwz     r5, 0x00D8(r4)
+    cmpw    r5, context
+    bne     _disableFPU
+
+    lwz     r6, context->srr1
+    ori     r6, r6, 0x2000
+    stw     r6, context->srr1
+    mfmsr   r6
+    ori     r6, r6, 2
+    mtmsr   r6
+    blr
+
+_disableFPU:
+    lwz     r6, context->srr1
+    rlwinm  r6, r6, 0, 19, 17
+    stw     r6, context->srr1
+    mfmsr   r6
+    rlwinm  r6, r6, 0, 19, 17
+    ori     r6, r6, 2
+    mtmsr   r6
+    isync
+    blr
 }
 
 #pragma dont_inline reset
@@ -1914,48 +2111,118 @@ s32 fn_802059EC(void) {
     return *(s32 *)0x800000D4;
 }
 
-void fn_802059F8(void) {
-    *(u32 *)0x8036C764 = 0;
-    *(u32 *)0x8036C768 = 0;
-    *(u32 *)0x8036C76C = 0;
+asm u32 fn_802059F8(register OSContext *context) {
+    nofralloc
+    stmw    r13, context->gpr[13]
+    mfspr   r0, GQR1
+    stw     r0, context->gqr[1]
+    mfspr   r0, GQR2
+    stw     r0, context->gqr[2]
+    mfspr   r0, GQR3
+    stw     r0, context->gqr[3]
+    mfspr   r0, GQR4
+    stw     r0, context->gqr[4]
+    mfspr   r0, GQR5
+    stw     r0, context->gqr[5]
+    mfspr   r0, GQR6
+    stw     r0, context->gqr[6]
+    mfspr   r0, GQR7
+    stw     r0, context->gqr[7]
+    mfcr    r0
+    stw     r0, context->cr
+    mflr    r0
+    stw     r0, context->lr
+    stw     r0, context->srr0
+    mfmsr   r0
+    stw     r0, context->srr1
+    mfctr   r0
+    stw     r0, context->ctr
+    mfxer   r0
+    stw     r0, context->xer
+    stw     r1, context->gpr[1]
+    stw     r2, context->gpr[2]
+    li      r0, 0x1
+    stw     r0, context->gpr[3]
+    li      r3, 0
+    blr
 }
 
-void OSLoadContext(void *arg0) {
-    OSContext *context = (OSContext *)arg0;
-    u32 srr0;
-    u16 state;
-    u32 msr;
+asm void OSLoadContext(register OSContext *context) {
+    nofralloc
 
-    srr0 = context->srr0;
-    if (srr0 > (u32)OSDisableInterrupts && srr0 < (u32)OSDisableInterrupts + 0xC) {
-        context->srr0 = (u32)OSDisableInterrupts;
-    }
-    state = context->state;
-    if (state & 2) {
-        context->state = state & ~2;
-    }
-    __mtspr(913, context->gqr[1]);
-    __mtspr(914, context->gqr[2]);
-    __mtspr(915, context->gqr[3]);
-    __mtspr(916, context->gqr[4]);
-    __mtspr(917, context->gqr[5]);
-    __mtspr(918, context->gqr[6]);
-    __mtspr(919, context->gqr[7]);
-    msr = __mfmsr();
-    msr &= ~0x8000;
-    msr &= ~2;
-    __mtmsr(msr);
-    __mtspr(26, context->srr0);
-    __mtspr(27, context->srr1);
-    __rfi();
+    lis      r4,OSDisableInterrupts@ha
+    lwz      r6,context->srr0
+    addi     r5,r4,OSDisableInterrupts@l
+    cmplw    r6,r5
+    ble      _notInRAS
+    lis      r4,(OSDisableInterrupts+0xC)@ha
+    addi     r0,r4,(OSDisableInterrupts+0xC)@l
+    cmplw    r6,r0
+    bge      _notInRAS
+    stw      r5,context->srr0
+
+_notInRAS:
+
+    lwz     r0, context->gpr[0]
+    lwz     r1, context->gpr[1]
+    lwz     r2, context->gpr[2]
+
+    lhz     r4, context->state
+    rlwinm. r5, r4, 0, 30, 30
+    beq     notexc
+    rlwinm  r4, r4, 0, 31, 29
+    sth     r4, context->state
+    lmw     r5, context->gpr[5]
+    b       misc
+notexc:
+    lmw    r13, context->gpr[13]
+    misc:
+
+    lwz     r4, context->gqr[1]
+    mtspr   GQR1, r4
+    lwz     r4, context->gqr[2]
+    mtspr   GQR2, r4
+    lwz     r4, context->gqr[3]
+    mtspr   GQR3, r4
+    lwz     r4, context->gqr[4]
+    mtspr   GQR4, r4
+    lwz     r4, context->gqr[5]
+    mtspr   GQR5, r4
+    lwz     r4, context->gqr[6]
+    mtspr   GQR6, r4
+    lwz     r4, context->gqr[7]
+    mtspr   GQR7, r4
+
+    lwz     r4, context->cr
+    mtcr    r4
+    lwz     r4, context->lr
+    mtlr    r4
+    lwz     r4, context->ctr
+    mtctr   r4
+    lwz     r4, context->xer
+    mtxer   r4
+
+    mfmsr   r4
+    rlwinm  r4, r4, 0, 17, 15
+    rlwinm  r4, r4, 0, 31, 29
+    mtmsr   r4
+
+    lwz     r4, context->srr0
+    mtsrr0  r4
+    lwz     r4, context->srr1
+    mtsrr1  r4
+
+    lwz     r4, context->gpr[4]
+    lwz     r3, context->gpr[3]
+
+    rfi
 }
 
-#pragma dont_inline on
-void *fn_80205B50(void) {
-    return 0; /* OSGetStackPointer: asm (mr r3, r1) */
+asm u32 fn_80205B50() {
+    nofralloc
+    mr r3, r1
+    blr
 }
-#pragma dont_inline reset
-
 #pragma dont_inline on
 #pragma peephole off
 void OSClearContext(OSContext *context) {
@@ -2087,10 +2354,50 @@ void OSDumpContext(OSContext *context) {
     }
 }
 #pragma pop
+#pragma push
+static asm void OSSwitchFPUContext(register u8 exception, register OSContext *context) {
+    nofralloc
+    mfmsr   r5
+    ori     r5, r5, 0x2000
+    mtmsr   r5
+    isync
+    lwz     r5, 0x19C(context)
+    ori     r5, r5, 0x2000
+    mtsrr1  r5
+    addis   r3, r0, 0x8000
+    lwz     r5, 0x00D8(r3)
+    stw     context, 0x00D8(r3)
+    cmpw    r5, r4
+    beq     _restoreAndExit
+    cmpwi   r5, 0x0
+    beq     _loadNewFPUContext
+    bl      __OSSaveFPUContext
+_loadNewFPUContext:
+    bl      __OSLoadFPUContext
+_restoreAndExit:
+    lwz     r3, 0x80(context)
+    mtcr    r3
+    lwz     r3, 0x84(context)
+    mtlr    r3
+    lwz     r3, 0x198(context)
+    mtsrr0  r3
+    lwz     r3, 0x88(context)
+    mtctr   r3
+    lwz     r3, 0x8C(context)
+    mtxer   r3
+    lhz     r3, context->state
+    rlwinm  r3, r3, 0, 31, 29
+    sth     r3, context->state
+    lwz     r5, 20(context)
+    lwz     r3, 12(context)
+    lwz     r4, 16(context)
+    rfi
+}
+#pragma pop
+
 void __OSContextInit(void)
 {
     void __OSSetExceptionHandler(s32, void *);
-    extern void OSSwitchFPUContext[];
     void DBPrintf(char *, ...);
     extern char lbl_8029BF94[];
 
@@ -2240,7 +2547,7 @@ extern s64 OSGetTime(void);
 extern void OSDisableScheduler(void);
 extern void OSEnableScheduler(void);
 extern void __OSReschedule(void);
-extern void OSLoadContext(void *);
+extern void OSLoadContext(OSContext *);
 
 #pragma push
 #pragma opt_dead_code off
@@ -2348,31 +2655,44 @@ dump:
 }
 #pragma push
 #pragma optimization_level 4
-s32 fn_80206658(u8 *buffer, s32 argc, char **argv) {
-    char *end;
-    u32 count;
-    u32 *table;
+s32 fn_80206658(u8 *addr, s32 argc, char **argv) {
+    void *memset(void *, s32, u32);
+    s32 strlen(const char *);
+    char *strcpy(char *, const char *);
+    s32 numArgs;
+    char *bootInfo2;
+    char *ptr;
+    char **list;
     u32 i;
-    memset(buffer, 0, 0x2000);
+
+    bootInfo2 = (char *)addr;
+    memset(bootInfo2, 0, 0x2000);
+
     if (argc == 0) {
-        *(u32 *)(buffer + 8) = 0;
+        *(u32 *)(bootInfo2 + 8) = 0;
     } else {
-        count = argc;
-        end = (char *)buffer + 0x2000;
+        numArgs = argc;
+        ptr = bootInfo2 + 0x2000;
         while (--argc >= 0) {
-            end -= strlen(argv[argc]) + 1;
-            strcpy(end, argv[argc]);
-            argv[argc] = (char *)(end - (char *)buffer);
+            ptr -= strlen(argv[argc]) + 1;
+            strcpy(ptr, argv[argc]);
+            argv[argc] = (char *)(ptr - bootInfo2);
         }
-        end = (char *)buffer + ((end - (char *)buffer) & ~3);
-        end -= (count + 1) * 4;
-        table = (u32 *)end;
-        for (i = 0; i < (u32)(count + 1); i++)
-            table[i] = (u32)argv[i];
-        end -= 4;
-        *(u32 *)end = count;
-        *(u32 *)(buffer + 8) = (u8 *)end - buffer;
+
+        ptr = bootInfo2 + ((ptr - bootInfo2) & ~0x3);
+        ptr -= ((numArgs + 1) * 4);
+        list = (char **)ptr;
+
+        for (i = 0; i < numArgs + 1; i++) {
+            list[i] = argv[i];
+        }
+
+        ptr -= 4;
+        *(u32 *)ptr = numArgs;
+
+        *(u32 *)(bootInfo2 + 8) = (ptr - bootInfo2);
     }
+
     return 1;
 }
 #pragma pop
@@ -3060,6 +3380,16 @@ return arg0;
 }
 #pragma pop
 #pragma push
+asm BOOL OSDisableInterrupts(void) {
+nofralloc
+mfmsr r3
+rlwinm r4, r3, 0, 17, 15
+mtmsr r4
+rlwinm r3, r3, 17, 31, 31
+blr
+}
+#pragma pop
+#pragma push
 asm BOOL OSEnableInterrupts(void) {
 nofralloc
 mfmsr r3
@@ -3573,10 +3903,17 @@ rfi
 }
 #pragma pop
 
-u32 RealMode(u32 addr)
-{
-    return addr & 0x3FFFFFFF;
+#pragma push
+static asm void RealMode(register u32 addr) {
+    nofralloc
+    clrlwi addr, addr, 2
+    mtsrr0 addr
+    mfmsr addr
+    rlwinm addr, addr, 0, 28, 25
+    mtsrr1 addr
+    rfi
 }
+#pragma pop
 
 #pragma push
 #pragma inline_depth(0)
@@ -3643,6 +3980,5 @@ check:
 
 extern u16 StopAtNextInt_80368530;
 extern u16 lbl_80368550;
-extern void OSSwitchFPUContext(void);
 extern void **OSExceptionTable_8036847C;
 extern u16 lbl_8029BBB0[20];

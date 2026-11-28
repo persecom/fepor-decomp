@@ -145,91 +145,90 @@ s32 __cvt_fp2unsigned(f32);
 
 #pragma use_lmw_stmw on
 
-void fn_80221824(u32 aa, const u8 sample_pattern[12][2], u8 vf, const u8 vfilter[7]) {
-    u32 i, j;
-    u32 reg53, reg54;
-    u32 reg4, reg3, reg2, reg1;
-    u32 k, l;
+void fn_80221824(u8 aa, const u8 sample_pattern[12][2], u8 vf, const u8 vfilter[7]) {
+    u32 msLoc[4];
+    u32 coeff0;
+    u32 coeff1;
 
-    if ((u8)aa) {
-        reg1 = 0;
-        reg1 = __rlwimi(reg1, sample_pattern[0][0], 0, 28, 31);
-        reg1 = __rlwimi(reg1, sample_pattern[0][1], 4, 24, 27);
-        reg1 = __rlwimi(reg1, sample_pattern[1][0], 8, 20, 23);
-        reg1 = __rlwimi(reg1, sample_pattern[1][1], 12, 16, 19);
-        reg1 = __rlwimi(reg1, sample_pattern[2][0], 16, 12, 15);
-        reg1 = __rlwimi(reg1, sample_pattern[2][1], 20, 8, 11);
-        reg1 = __rlwimi(reg1, 1, 24, 0, 7);
+    if (aa != 0) {
+        msLoc[0] = 0;
+        msLoc[0] = __rlwimi(msLoc[0], sample_pattern[0][0], 0, 28, 31);
+        msLoc[0] = __rlwimi(msLoc[0], sample_pattern[0][1], 4, 24, 27);
+        msLoc[0] = __rlwimi(msLoc[0], sample_pattern[1][0], 8, 20, 23);
+        msLoc[0] = __rlwimi(msLoc[0], sample_pattern[1][1], 12, 16, 19);
+        msLoc[0] = __rlwimi(msLoc[0], sample_pattern[2][0], 16, 12, 15);
+        msLoc[0] = __rlwimi(msLoc[0], sample_pattern[2][1], 20, 8, 11);
+        msLoc[0] = __rlwimi(msLoc[0], 1, 24, 0, 7);
 
-        reg2 = 0;
-        reg2 = __rlwimi(reg2, sample_pattern[3][0], 0, 28, 31);
-        reg2 = __rlwimi(reg2, sample_pattern[3][1], 4, 24, 27);
-        reg2 = __rlwimi(reg2, sample_pattern[4][0], 8, 20, 23);
-        reg2 = __rlwimi(reg2, sample_pattern[4][1], 12, 16, 19);
-        reg2 = __rlwimi(reg2, sample_pattern[5][0], 16, 12, 15);
-        reg2 = __rlwimi(reg2, sample_pattern[5][1], 20, 8, 11);
-        reg2 = __rlwimi(reg2, 2, 24, 0, 7);
+        msLoc[1] = 0;
+        msLoc[1] = __rlwimi(msLoc[1], sample_pattern[3][0], 0, 28, 31);
+        msLoc[1] = __rlwimi(msLoc[1], sample_pattern[3][1], 4, 24, 27);
+        msLoc[1] = __rlwimi(msLoc[1], sample_pattern[4][0], 8, 20, 23);
+        msLoc[1] = __rlwimi(msLoc[1], sample_pattern[4][1], 12, 16, 19);
+        msLoc[1] = __rlwimi(msLoc[1], sample_pattern[5][0], 16, 12, 15);
+        msLoc[1] = __rlwimi(msLoc[1], sample_pattern[5][1], 20, 8, 11);
+        msLoc[1] = __rlwimi(msLoc[1], 2, 24, 0, 7);
 
-        reg3 = 0;
-        reg3 = __rlwimi(reg3, sample_pattern[6][0], 0, 28, 31);
-        reg3 = __rlwimi(reg3, sample_pattern[6][1], 4, 24, 27);
-        reg3 = __rlwimi(reg3, sample_pattern[7][0], 8, 20, 23);
-        reg3 = __rlwimi(reg3, sample_pattern[7][1], 12, 16, 19);
-        reg3 = __rlwimi(reg3, sample_pattern[8][0], 16, 12, 15);
-        reg3 = __rlwimi(reg3, sample_pattern[8][1], 20, 8, 11);
-        reg3 = __rlwimi(reg3, 3, 24, 0, 7);
+        msLoc[2] = 0;
+        msLoc[2] = __rlwimi(msLoc[2], sample_pattern[6][0], 0, 28, 31);
+        msLoc[2] = __rlwimi(msLoc[2], sample_pattern[6][1], 4, 24, 27);
+        msLoc[2] = __rlwimi(msLoc[2], sample_pattern[7][0], 8, 20, 23);
+        msLoc[2] = __rlwimi(msLoc[2], sample_pattern[7][1], 12, 16, 19);
+        msLoc[2] = __rlwimi(msLoc[2], sample_pattern[8][0], 16, 12, 15);
+        msLoc[2] = __rlwimi(msLoc[2], sample_pattern[8][1], 20, 8, 11);
+        msLoc[2] = __rlwimi(msLoc[2], 3, 24, 0, 7);
 
-        reg4 = 0;
-        reg4 = __rlwimi(reg4, sample_pattern[9][0], 0, 28, 31);
-        reg4 = __rlwimi(reg4, sample_pattern[9][1], 4, 24, 27);
-        reg4 = __rlwimi(reg4, sample_pattern[10][0], 8, 20, 23);
-        reg4 = __rlwimi(reg4, sample_pattern[10][1], 12, 16, 19);
-        reg4 = __rlwimi(reg4, sample_pattern[11][0], 16, 12, 15);
-        reg4 = __rlwimi(reg4, sample_pattern[11][1], 20, 8, 11);
-        reg4 = __rlwimi(reg4, 4, 24, 0, 7);
+        msLoc[3] = 0;
+        msLoc[3] = __rlwimi(msLoc[3], sample_pattern[9][0], 0, 28, 31);
+        msLoc[3] = __rlwimi(msLoc[3], sample_pattern[9][1], 4, 24, 27);
+        msLoc[3] = __rlwimi(msLoc[3], sample_pattern[10][0], 8, 20, 23);
+        msLoc[3] = __rlwimi(msLoc[3], sample_pattern[10][1], 12, 16, 19);
+        msLoc[3] = __rlwimi(msLoc[3], sample_pattern[11][0], 16, 12, 15);
+        msLoc[3] = __rlwimi(msLoc[3], sample_pattern[11][1], 20, 8, 11);
+        msLoc[3] = __rlwimi(msLoc[3], 4, 24, 0, 7);
     } else {
-        reg1 = 0x01666666;
-        reg2 = 0x02666666;
-        reg3 = 0x03666666;
-        reg4 = 0x04666666;
+        msLoc[0] = 0x01666666;
+        msLoc[1] = 0x02666666;
+        msLoc[2] = 0x03666666;
+        msLoc[3] = 0x04666666;
     }
 
     GXWGFifo.u8 = 0x61;
-    GXWGFifo.u32 = reg1;
+    GXWGFifo.u32 = msLoc[0];
     GXWGFifo.u8 = 0x61;
-    GXWGFifo.u32 = reg2;
+    GXWGFifo.u32 = msLoc[1];
     GXWGFifo.u8 = 0x61;
-    GXWGFifo.u32 = reg3;
+    GXWGFifo.u32 = msLoc[2];
     GXWGFifo.u8 = 0x61;
-    GXWGFifo.u32 = reg4;
+    GXWGFifo.u32 = msLoc[3];
 
-    reg53 = 0;
-    reg53 = __rlwimi(reg53, 0x53, 24, 0, 7);
-    reg54 = 0;
-    reg54 = __rlwimi(reg54, 0x54, 24, 0, 7);
+    coeff0 = 0;
+    coeff0 = __rlwimi(coeff0, 0x53, 24, 0, 7);
+    coeff1 = 0;
+    coeff1 = __rlwimi(coeff1, 0x54, 24, 0, 7);
 
-    if (vf) {
-        reg53 = __rlwimi(reg53, vfilter[0], 0, 26, 31);
-        reg54 = __rlwimi(reg54, vfilter[4], 0, 26, 31);
-        reg53 = __rlwimi(reg53, vfilter[1], 6, 20, 25);
-        reg53 = __rlwimi(reg53, vfilter[2], 12, 14, 19);
-        reg54 = __rlwimi(reg54, vfilter[5], 6, 20, 25);
-        reg53 = __rlwimi(reg53, vfilter[3], 18, 8, 13);
-        reg54 = __rlwimi(reg54, vfilter[6], 12, 14, 19);
+    if (vf != 0) {
+        coeff0 = __rlwimi(coeff0, vfilter[0], 0, 26, 31);
+        coeff0 = __rlwimi(coeff0, vfilter[1], 6, 20, 25);
+        coeff0 = __rlwimi(coeff0, vfilter[2], 12, 14, 19);
+        coeff0 = __rlwimi(coeff0, vfilter[3], 18, 8, 13);
+        coeff1 = __rlwimi(coeff1, vfilter[4], 0, 26, 31);
+        coeff1 = __rlwimi(coeff1, vfilter[5], 6, 20, 25);
+        coeff1 = __rlwimi(coeff1, vfilter[6], 12, 14, 19);
     } else {
-        reg53 = __rlwimi(reg53, 0, 0, 26, 31);
-        reg53 = __rlwimi(reg53, 0, 6, 20, 25);
-        reg54 = __rlwimi(reg54, 0x15, 0, 26, 31);
-        reg53 = __rlwimi(reg53, 0x15, 12, 14, 19);
-        reg54 = __rlwimi(reg54, 0, 6, 20, 25);
-        reg54 = __rlwimi(reg54, 0, 12, 14, 19);
-        reg53 = __rlwimi(reg53, 0x16, 18, 8, 13);
+        coeff0 = __rlwimi(coeff0, 0, 0, 26, 31);
+        coeff0 = __rlwimi(coeff0, 0, 6, 20, 25);
+        coeff0 = __rlwimi(coeff0, 21, 12, 14, 19);
+        coeff0 = __rlwimi(coeff0, 22, 18, 8, 13);
+        coeff1 = __rlwimi(coeff1, 21, 0, 26, 31);
+        coeff1 = __rlwimi(coeff1,  0, 6, 20, 25);
+        coeff1 = __rlwimi(coeff1,  0, 12, 14, 19);
     }
 
     GXWGFifo.u8 = 0x61;
-    GXWGFifo.u32 = reg53;
+    GXWGFifo.u32 = coeff0;
     GXWGFifo.u8 = 0x61;
-    GXWGFifo.u32 = reg54;
-    *(u16 *)((u8 *)__GXData + 2) = 0;
+    GXWGFifo.u32 = coeff1;
+    __GXData[1] = 0;
 }
 #pragma use_lmw_stmw reset
